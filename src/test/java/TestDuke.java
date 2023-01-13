@@ -2,16 +2,22 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintStream;
 
 import org.junit.jupiter.api.Test;
 
 import Duke.Duke;
 public class TestDuke {
+    /**
+     * Test if the output message of Duke matches the expected default greet and exit message
+     * @throws IOException
+     */
     @Test
-    public void givenDuke_whenRun_thenOutputMessage(){
+    public void givenDuke_whenRun_thenOutputMessage() throws IOException{
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("text-ui-test/EXPECTED.TXT"));
+            BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/givenDuke_whenRun_thenOutputMessage.TXT"));
+            // BufferedReader reader = new BufferedReader(new FileReader("text-ui-test/EXPECTED.TXT"));
             StringBuilder stringBuilder = new StringBuilder();
             String line = null;
             String ls = System.getProperty("line.separator");
@@ -30,9 +36,9 @@ public class TestDuke {
             Duke.main(null);
             String lines = outContent.toString();
             
-            assertEquals(content,lines);
-        } catch (Exception e) {
-            // do nothing
+            assertEquals(content,lines.substring(0, lines.length() - 1));
+        } catch (IOException e) {
+            throw e;
         }
     }
 }
