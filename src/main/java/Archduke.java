@@ -18,10 +18,10 @@ class IO {
     }
 }
 
-public class Duke {
+public class Archduke {
     public static void main(String[] args) {
         IO.print_line();
-        IO.println("Hello! I'm Duke");
+        IO.println("Hello! I'm Archduke");
         IO.println("What can I do for you?");
         IO.print_line();
         IO.println("Bye. Hope to see you again soon!");
