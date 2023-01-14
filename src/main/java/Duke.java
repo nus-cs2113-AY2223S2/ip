@@ -1,5 +1,6 @@
 import java.util.Scanner;
 public class Duke {
+
     public static void main(String[] args) {
         String logo = "    ____________________________________________________________\n" +
                 "     Hello! I'm Duke\n" +
@@ -10,7 +11,7 @@ public class Duke {
 
         String line = "    ____________________________________________________________\n";
 
-        String[] tasks = new String[100];
+        Task[] tasks = new Task[100];
         Scanner in = new Scanner(System.in);
         String action = in.nextLine();
         int index = 0;
@@ -19,12 +20,27 @@ public class Duke {
             System.out.println(line);
 
             if(action.equals("list")) {
+                System.out.println("     Here are the tasks in your list:\n");
                 for(int i = 0; i<index; i = i + 1) {
                     int num = i+1;
-                    System.out.println("     " + num + ": " + tasks[i]);
+                    System.out.println("     " + num + ":[" + tasks[i].getStatusIcon() + "] " + tasks[i].getDescription());
                 }
+            } else if (action.startsWith("mark")) {
+                String[] inputs = action.split(" ");
+                int ind = Integer.parseInt(inputs[1]) - 1;
+                tasks[ind].mark();
+                System.out.println("     Nice! I've marked this task as done:\n");
+                System.out.println("       " + "[" + tasks[ind].getStatusIcon() + "] " + tasks[ind].getDescription());
+
+            } else if (action.startsWith("unmark")) {
+                String[] inputs = action.split(" ");
+                int ind = Integer.parseInt(inputs[1]) - 1;
+                tasks[ind].unmark();
+                System.out.println("     OK, I've marked this task as not done yet:\n");
+                System.out.println("       " + "[" + tasks[ind].getStatusIcon() + "] " + tasks[ind].getDescription());
+
             } else {
-                tasks[index] = action;
+                tasks[index] = new Task(action);
                 index = index + 1;
                 System.out.println("     added: " + action);
             }
