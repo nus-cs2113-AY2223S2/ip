@@ -15,10 +15,23 @@ public class Duke {
         Scanner scan = new Scanner(System.in);
         String input = scan.nextLine();
         String exit = "bye";
+        String list = "list";
+        String[] tasks = new String[100];
+        int count=0;
         while( !(input.equalsIgnoreCase (exit)) && !(input.isEmpty()) ) {
-            System.out.println ("____________________________________________________________");
-            System.out.println (input);
-            System.out.println ("____________________________________________________________");
+            if(input.equalsIgnoreCase (list)){
+                for(int i=0;i<count;i++){
+                    System.out.println ("____________________________________________________________");
+                    System.out.println ((i+1)+". "+ tasks[i]);
+                    System.out.println ("____________________________________________________________");
+                }
+            }else {
+                System.out.println ("____________________________________________________________");
+                System.out.println ("added: " + input);
+                tasks[count]=input;
+                count++;
+                System.out.println ("____________________________________________________________");
+            }
             input = scan.nextLine ();
         }
         System.out.println ("____________________________________________________________");
