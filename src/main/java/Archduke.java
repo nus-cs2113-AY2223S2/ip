@@ -10,8 +10,8 @@ class IO {
     }
 
     /**
-     * Prints a line of underscores, served as a divider between sections. Like
-     * the HTML's {@code hr} tag.
+     * Prints a line of underscores, served as a divider between sections. Like the
+     * HTML's {@code hr} tag.
      */
     public static void print_line() {
         System.out.println("____________________________________________________________");
