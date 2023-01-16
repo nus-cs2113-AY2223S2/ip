@@ -34,6 +34,7 @@ public class Addlist {
 
     public void AddList(){
         Task[] ListOfThings = new Task[100];
+        System.out.println("HEHE" + ListOfThings.length);
         Scanner newScanner = new Scanner(System.in);
         int index = 0;
         while(true)
@@ -58,19 +59,49 @@ public class Addlist {
             }
             else if (input.equals("mark") )
             {
-                int num = newScanner.nextInt();
-                System.out.println("Pikapi has marked the task as done\n");
-                System.out.println(addingToListPikachuLogo + "\n");
-                ListOfThings[num - 1].done = true;
-                System.out.println(". [" + ListOfThings[num - 1].getStatusIcon() + "] " + ListOfThings[num - 1].description);
+                while (true)
+                {
+                    int num = newScanner.nextInt();
+                    if (num > index)
+                    {
+                        System.out.println("You do not have that many items yet, Pikapi requests a correct number less than " + index  + "\n");
+                    }
+                    else if (num < 0)
+                    {
+                        System.out.println("PIKAPII you dont have negative number of tasks silly, please input a number between 1 and " + index);
+                    }
+                    else
+                    {
+                        System.out.println("Pikapi has marked the task as done\n");
+                        System.out.println(addingToListPikachuLogo + "\n");
+                        ListOfThings[num - 1].done = true;
+                        System.out.println(". [" + ListOfThings[num - 1].getStatusIcon() + "] " + ListOfThings[num - 1].description);
+                        break;
+                    }
+                }
             }
             else if (input.equals("unmark") )
             {
-                int num = newScanner.nextInt();
-                System.out.println("Pikapi has unmarked the task\n");
-                System.out.println(addingToListPikachuLogo + "\n");
-                ListOfThings[num - 1].done = false;
-                System.out.println(". [" + ListOfThings[num - 1].getStatusIcon() + "] " + ListOfThings[num - 1].description);
+                while (true)
+                {
+                    int num = newScanner.nextInt();
+                    if (num > index)
+                    {
+                        System.out.println("You do not have that many items yet, Pikapi requests a correct number less than " + index  + "\n");
+                    }
+                    else if (num < 0)
+                    {
+                        System.out.println("PIKAPII you dont have negative number of tasks silly, please input a number between 1 and " + index);
+                    }
+                    else
+                    {
+                        System.out.println("Pikapi has unmarked the task\n");
+                        System.out.println(addingToListPikachuLogo + "\n");
+                        ListOfThings[num - 1].done = false;
+                        System.out.println(". [" + ListOfThings[num - 1].getStatusIcon() + "] " + ListOfThings[num - 1].description);
+                        break;
+                    }
+                }
             }
             else
             {
