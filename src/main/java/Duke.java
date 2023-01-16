@@ -1,5 +1,5 @@
 public class Duke {
-    public static void main(String[] args) {
+    private static void printLogo() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -7,4 +7,8 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
     }
+
+    public static void main(String[] args) {
+        printLogo();
+   }
 }
