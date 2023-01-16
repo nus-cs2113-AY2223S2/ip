@@ -16,12 +16,12 @@ public class Echo {
                 + "⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿⣿ \n"
                 + "⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿\n";
 
-
+        Scanner myObj = new Scanner(System.in);
         System.out.println("PIKA is happy you're back, let me echo some stuff back at you PIKAPI");
         while(true)
         {
             System.out.println("______________________________________________");
-            Scanner myObj = new Scanner(System.in);
+
             String inputString = myObj.nextLine();
             System.out.println("______________________________________________");
             if (inputString.equals("bye"))
