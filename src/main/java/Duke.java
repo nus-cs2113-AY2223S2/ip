@@ -26,7 +26,7 @@ public class Duke {
 
 
         System.out.println("PIKAPIKAPI HELLOO\n" + logo);
-        Echo echo = new Echo();
-        echo.Echo();
+        Addlist addList = new Addlist();
+        addList.AddList();
     }
 }

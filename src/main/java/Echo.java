@@ -26,7 +26,7 @@ public class Echo {
             System.out.println("______________________________________________");
             if (inputString.equals("bye"))
             {
-                System.out.println("    *suprised Pikachu face* \n");
+                System.out.println("    *surprised Pikachu face* \n");
                 System.out.println(surprisedPikachuFaceLogo + "\n");
                 System.out.println("Pikapi is surprised to see you go, see you soon fwen\n");
                 System.exit((0));
