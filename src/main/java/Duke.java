@@ -37,7 +37,9 @@ public class Duke {
     // leaks
     try (Scanner sc = new Scanner(System.in)) {
       while (true) {
-        String[] tokens = sc.nextLine().split(" ");
+        System.out.print("> ");
+        String line = sc.nextLine();
+        String[] tokens = line.split(" ");
         String command = tokens[0];
         switch (command) {
           case "bye":
@@ -61,8 +63,8 @@ public class Duke {
             break;
           }
           default:
-            addTask(command);
-            printMessage("added: " + command);
+            addTask(line);
+            printMessage("added: " + line);
         }
       }
     }
