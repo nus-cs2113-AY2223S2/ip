@@ -1,6 +1,11 @@
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 public class Duke {
+
+  private ArrayList<String> tasks = new ArrayList<>();
+
   /**
    * Variadic print function wrapping System.out.println, printing the
    * lines out surrounded by 2 dividers and indented
@@ -9,7 +14,7 @@ public class Duke {
    *              text to be printed out
    *              on a new line
    */
-  public static void printMessage(String... lines) {
+  public void printMessage(String... lines) {
     System.out.println("\t────────────────────────────────────────────────────────────");
     for (String line : lines) {
       System.out.println("\t" + line);
@@ -17,7 +22,16 @@ public class Duke {
     System.out.println("\t────────────────────────────────────────────────────────────");
   }
 
-  public static void main(String[] args) {
+  public String[] getTasksFormatted() {
+    return IntStream.rangeClosed(1, tasks.size()).mapToObj(idx -> String.format("%d: %s", idx, tasks.get(idx - 1)))
+        .toArray(String[]::new);
+  }
+
+  public void addTask(String task) {
+    tasks.add(task);
+  }
+
+  public void run() {
     printMessage("Hello! I'm Duke", "What can I do for you?");
     // try-with-resources to close the scanner automatically, preventing resource
     // leaks
@@ -28,10 +42,19 @@ public class Duke {
           case "bye":
             printMessage("Bye. Hope to see you again soon!");
             return;
+          case "list":
+            printMessage(getTasksFormatted());
+            break;
           default:
-            printMessage(line);
+            addTask(line);
+            printMessage("added: " + line);
         }
       }
     }
+  }
+
+  public static void main(String[] args) {
+    Duke duke = new Duke();
+    duke.run();
   }
 }
