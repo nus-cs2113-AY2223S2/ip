@@ -4,7 +4,7 @@ import java.util.stream.IntStream;
 
 public class Duke {
 
-  private ArrayList<String> tasks = new ArrayList<>();
+  private ArrayList<Task> tasks = new ArrayList<>();
 
   /**
    * Variadic print function wrapping System.out.println, printing the
@@ -27,8 +27,8 @@ public class Duke {
         .toArray(String[]::new);
   }
 
-  public void addTask(String task) {
-    tasks.add(task);
+  public void addTask(String taskName) {
+    tasks.add(new Task(taskName));
   }
 
   public void run() {
@@ -36,18 +36,33 @@ public class Duke {
     // try-with-resources to close the scanner automatically, preventing resource
     // leaks
     try (Scanner sc = new Scanner(System.in)) {
-      String line;
       while (true) {
-        switch (line = sc.nextLine()) {
+        String[] tokens = sc.nextLine().split(" ");
+        String command = tokens[0];
+        switch (command) {
           case "bye":
             printMessage("Bye. Hope to see you again soon!");
             return;
           case "list":
             printMessage(getTasksFormatted());
             break;
+          case "mark": {
+            int idx = Integer.parseInt(tokens[1]) - 1;
+            Task task = tasks.get(idx);
+            task.markDone();
+            printMessage("Nice! I've marked this task as done:", "  " + task.toString());
+            break;
+          }
+          case "unmark": {
+            int idx = Integer.parseInt(tokens[1]) - 1;
+            Task task = tasks.get(idx);
+            task.unMarkDone();
+            printMessage("OK, I've marked this task as not done yet:", "  " + task.toString());
+            break;
+          }
           default:
-            addTask(line);
-            printMessage("added: " + line);
+            addTask(command);
+            printMessage("added: " + command);
         }
       }
     }
