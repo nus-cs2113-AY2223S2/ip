@@ -1,10 +1,14 @@
 public class Duke {
+    public static void HorizontalLines() {
+        System.out.println("____________________________________________________________");
+    }
     public static void main(String[] args) {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);
+        // prints to output the user greeting and farewell
+        HorizontalLines();
+        System.out.println("Hello, I'm Duke");
+        System.out.println("What can I do for you?");
+        HorizontalLines();
+        System.out.println("Bye. Hope to see you again soon!");
+        HorizontalLines();
     }
 }
