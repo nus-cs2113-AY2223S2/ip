@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class Duke {
     public static String logo = " ____        _        \n"
             + "|  _ \\ _   _| | _____ \n"
@@ -22,7 +24,22 @@ public class Duke {
     }
 
     public static void main(String[] args) {
+        Scanner s = new Scanner(System.in);
+
         StartUp();
-        ShutDown();
+
+        while(true) {
+            String userInput = s.next();
+            userInput += s.nextLine();
+
+            if (userInput.equals("bye")) {
+                ShutDown();
+                return;
+            } else {
+                System.out.println(HorizontalRule);
+                System.out.println(userInput);
+                System.out.println(HorizontalRule);
+            }
+        }
     }
 }
