@@ -3,7 +3,6 @@ import java.util.Scanner;
 import java.util.stream.IntStream;
 
 public class Duke {
-
     private ArrayList<Task> tasks = new ArrayList<>();
 
     /**
@@ -22,14 +21,30 @@ public class Duke {
         System.out.println("\t────────────────────────────────────────────────────────────");
     }
 
+    /**
+     * Get the current tasks formatted in the form:
+     * 1. Task1
+     * 2. Task2
+     * ...
+     *
+     * @return The list of task strings in formatted form
+     */
     public String[] getTasksFormatted() {
         return IntStream.rangeClosed(1, tasks.size())
             .mapToObj(idx -> String.format("%d: %s", idx, tasks.get(idx - 1)))
             .toArray(String[] ::new);
     }
 
+    /**
+     * Adds a new task to the task list
+     *
+     * @param taskName Name of the new task
+     */
     public void addTask(String taskName) { tasks.add(new Task(taskName)); }
 
+    /**
+     * Runner function of the class, executes the main loop
+     */
     public void run() {
         printMessage("Hello! I'm Duke", "What can I do for you?");
         // try-with-resources to close the scanner automatically, preventing resource leaks

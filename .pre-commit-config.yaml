@@ -4,4 +4,4 @@ repos:
     rev: v15.0.7
     hooks:
       - id: clang-format
-        args: [-i, --verbose, --style=Google]
+        args: [-i, --verbose]
