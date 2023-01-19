@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 public class Response {
     private void printLine() {
         System.out.println("____________________________________________________________");
@@ -27,6 +28,25 @@ public class Response {
         printLine();
         printSignature();
         System.out.println(toPrint);
+        printLine();
+    }
+
+    public void printAddTask(String task) {
+        printLine();
+        printSignature();
+        System.out.println("Added: " + task);
+        printLine();
+    }
+
+    public void printTaskList(ArrayList<String> task) {
+        printLine();
+        printSignature();
+        System.out.println("Printing Tasks...");
+        int index = 1;
+        for (String i : task) {
+            System.out.println(index + ". " + i);
+            index += 1;
+        }
         printLine();
     }
 
