@@ -1,8 +1,8 @@
-import java.util.*;
+import java.util.Scanner;
 
 public class Duke {
 
-  private static ArrayList<String> list = new ArrayList<String>();
+  private static Task taskManager = new Task();
 
   public static void printText(String text) {
     System.out.printf(
@@ -17,25 +17,27 @@ public class Duke {
     printText("Hello! I'm Obama\n" + "\tWhat can I do for you?");
   }
 
-  public static void printList() {
-    String s = "";
-    for (int i = 0; i < list.size(); i++) {
-      s += String.format("%d. %s\n\t", i + 1, list.get(i));
-    }
-    printText(s);
-  }
-
-  public static void curateList() {
+  public static void chat() {
     Scanner sc = new Scanner(System.in);
     while (true) {
       String ret = sc.nextLine();
       if (ret.equals("bye")) {
         break;
       } else if (ret.equals("list")) {
-        printList();
+        taskManager.printList();
+      } else if (ret.split(" ")[0].equals("mark")) {
+        printText(
+          "Nice! I've marked this task as done:\n\t" +
+          taskManager.markDone(Integer.parseInt(ret.split(" ")[1]))
+        );
+      } else if (ret.split(" ")[0].equals("unmark")) {
+        printText(
+          "OK, I've marked this task as not done yet:\n\t" +
+          taskManager.markUndone(Integer.parseInt(ret.split(" ")[1]))
+        );
       } else {
         printText("added: " + ret);
-        list.add(ret);
+        taskManager.add(ret);
       }
     }
   }
@@ -62,7 +64,7 @@ public class Duke {
       """;
     System.out.println("Hello from\n" + logo);
     greet();
-    curateList();
+    chat();
     exit();
   }
 }
