@@ -1,16 +1,49 @@
 import java.util.ArrayList;
-public class TaskOrganizer implements Cloneable {
-    private ArrayList<String> tasks;
+import java.util.HashMap;
+
+public class TaskOrganizer {
+    private int taskIndex;
+    private HashMap<Integer, Task> tasks;
 
     public TaskOrganizer() {
-        tasks = new ArrayList<String>();
+        taskIndex = 1;
+        tasks = new HashMap<Integer, Task>();
     }
 
-    public void addTask(String toAdd) {
-        tasks.add(toAdd);
+    public boolean outOfBounds(int index) {
+        if (index <= 0 || index >= taskIndex) {
+            return true;
+        }
+        return false;
     }
 
-    public ArrayList<String> getTaskList() {
-        return new ArrayList<String>(tasks);
+    public boolean isEmpty() {
+        return tasks.isEmpty();
+    }
+
+    public void addTask(String taskName) {
+        Task newTask = new Task(taskName, taskIndex);
+        tasks.put(taskIndex, newTask);
+        taskIndex += 1;
+    }
+
+    public void markTask(int serialNumber) {
+        tasks.get(serialNumber).markTask();
+    }
+
+    public void unmarkTask(int serialNumber) {
+        tasks.get(serialNumber).unmarkTask();
+    }
+
+    public String getTaskbySerial(int serialNumber) {
+        return tasks.get(serialNumber).getTaskName();
+    }
+
+    public ArrayList<Task> getTaskList() {
+        ArrayList<Task> copy =  new ArrayList<Task>();
+        for (int i = 1; i < taskIndex; i++) {
+            copy.add(tasks.get(i));
+        }
+        return copy;
     }
 }

@@ -38,16 +38,53 @@ public class Response {
         printLine();
     }
 
-    public void printTaskList(ArrayList<String> task) {
+    public void printMarkTask(String taskName) {
         printLine();
         printSignature();
-        System.out.println("Printing Tasks...");
+        System.out.println(taskName + " has been marked as complete.");
+        printLine();
+    }
+
+    public void printUnmarkTask(String taskName) {
+        printLine();
+        printSignature();
+        System.out.println(taskName + " has been marked as incomplete.");
+        printLine();
+    }
+
+    public void printTaskList(ArrayList<Task> task) {
+        printLine();
+        printSignature();
         int index = 1;
-        for (String i : task) {
-            System.out.println(index + ". " + i);
+        System.out.println("Printing Tasks...");
+        for (Task i : task) {
+            System.out.print(index + ". ");
+            i.printTaskName();
             index += 1;
         }
         printLine();
     }
+
+    public void emptyList() {
+        printLine();
+        printSignature();
+        System.out.println("The list is empty!");
+        printLine();
+    }
+
+    public void invalidCommand() {
+        printLine();
+        printSignature();
+        System.out.println("You have entered an invalid command!");
+        printLine();
+    }
+
+    public void outOfBounds() {
+        printLine();
+        printSignature();
+        System.out.println("You have entered an index that does not exist!");
+        printLine();
+    }
+
 
 }

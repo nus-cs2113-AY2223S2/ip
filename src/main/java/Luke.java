@@ -13,7 +13,7 @@ public class Luke {
                 break;
             }
 
-            String[] processedInput = input.split(" ", 2);
+            String[] processedInput = input.split(" ", 2); //Split input into [command] and [task]
             String command = processedInput[0];
             //Check if command add is invoked.
             if (command.equals("add")) {
@@ -23,7 +23,42 @@ public class Luke {
             }
             //Check if command list is invoked.
             else if (command.equals("list")) {
-                response.printTaskList(taskOrganizer.getTaskList());
+                if (!taskOrganizer.isEmpty()) {
+                    response.printTaskList(taskOrganizer.getTaskList());
+                }
+                else {
+                    response.emptyList();
+                }
+            }
+            else if (command.equals("mark")) {
+                try {
+                    int serialNumber = Integer.parseInt(processedInput[1]);
+                    if (!taskOrganizer.outOfBounds(serialNumber)) {
+                        taskOrganizer.markTask(serialNumber);
+                        response.printMarkTask(taskOrganizer.getTaskbySerial(serialNumber));
+                    }
+                    else {
+                        response.outOfBounds();
+                    }
+                }
+                catch (NumberFormatException e) {
+                    response.invalidCommand();
+                }
+            }
+            else if (command.equals("unmark")) {
+                try {
+                    int serialNumber = Integer.parseInt(processedInput[1]);
+                    if (!taskOrganizer.outOfBounds(serialNumber)) {
+                        taskOrganizer.unmarkTask(serialNumber);
+                        response.printUnmarkTask(taskOrganizer.getTaskbySerial(serialNumber));
+                    }
+                    else {
+                        response.outOfBounds();
+                    }
+                }
+                catch (NumberFormatException e) {
+                    response.invalidCommand();
+                }
             }
             //Else echo user input
             else {
