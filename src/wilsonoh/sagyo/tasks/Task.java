@@ -1,9 +1,11 @@
+package wilsonoh.sagyo.tasks;
+
 public class Task {
 
     private String name;
     boolean done;
 
-    Task(String taskName) {
+    public Task(String taskName) {
         this.name = taskName;
         this.done = false;
     }
