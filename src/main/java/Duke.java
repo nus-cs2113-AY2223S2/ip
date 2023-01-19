@@ -4,6 +4,6 @@ public class Duke {
         String prompt = " What can I do for you?\n";
         String farewell = " Bye. Hope to see you again soon!\n";
         String line = "____________________________________________________________\n";
-        System.out.println(line + Greeting + Prompt + line + Farewell + line);
+        System.out.println(line + greeting + prompt + line + farewell + line);
     }
 }
