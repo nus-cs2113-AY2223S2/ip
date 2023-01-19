@@ -1,6 +1,8 @@
-import java.util.Scanner;
+import java.util.*;
 
 public class Duke {
+
+  private static ArrayList<String> list = new ArrayList<String>();
 
   public static void printText(String text) {
     System.out.printf(
@@ -15,14 +17,26 @@ public class Duke {
     printText("Hello! I'm Obama\n" + "\tWhat can I do for you?");
   }
 
-  public static void echo() {
+  public static void printList() {
+    String s = "";
+    for (int i = 0; i < list.size(); i++) {
+      s += String.format("%d. %s\n\t", i + 1, list.get(i));
+    }
+    printText(s);
+  }
+
+  public static void curateList() {
     Scanner sc = new Scanner(System.in);
     while (true) {
       String ret = sc.nextLine();
       if (ret.equals("bye")) {
         break;
+      } else if (ret.equals("list")) {
+        printList();
+      } else {
+        printText("added: " + ret);
+        list.add(ret);
       }
-      printText(ret);
     }
   }
 
@@ -48,7 +62,7 @@ public class Duke {
       """;
     System.out.println("Hello from\n" + logo);
     greet();
-    echo();
+    curateList();
     exit();
   }
 }
