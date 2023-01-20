@@ -1,6 +1,7 @@
 import java.util.Objects;
 import java.util.Scanner;
-import java.util.Arrays;
+import java.util.StringJoiner;
+
 
 public class Duke {
     public static void main(String[] args) {
@@ -19,32 +20,67 @@ public class Duke {
         PrintHorizontalBar();
         System.out.println("Hello! I'm Duke! \n");
         PrintHorizontalBar();
+        String command;
 
-
-        String newTask;
-        String[] tasks = new String[100];
+        Task[] tasks = new Task[100];
         boolean hasTask = true;
-        int numberoftasks = 0;
+        int numberOfTasks = 0;
+        String latestResponse = "";
+        boolean hasLatestResponse = false;
 
-        while (hasTask && numberoftasks < 100) {
-            System.out.println("What can I do for your today?");
-            newTask = ReadTask();
+        while (hasTask && numberOfTasks < 100) {
+            command = latestResponse;
+            if (!hasLatestResponse) {
+                System.out.println("What can I do for your today?");
+                command = ReadTask();
+            }
             PrintHorizontalBar();
 
-            if (Objects.equals(newTask, "list")) {
-                printTaskList(tasks, numberoftasks);
-            } else if (Objects.equals(newTask, "bye")){
+            if (Objects.equals(command, "list")) {
+                printTaskList(tasks, numberOfTasks);
+            } else if (Objects.equals(command, "bye")) {
                 break;
-            }
+            } else if (command.contains("unmark")) {
+                String[] result = command.split(" ");
+                int taskNum = Integer.parseInt(result[1]);
+                if (taskNum > numberOfTasks || taskNum<=0) {
+                    System.out.println("Error! No such task exists!");
+                } else {
+                    Task target = tasks[taskNum - 1];
+                    target.isCompleted = false;
+                    System.out.println("OK, I've marked this task as not done yet:");
+                    System.out.println(target.getStatusIcon() + "   " + target.taskName);
+                }
 
 
-            else {
-                System.out.println("added:  " + newTask);
-                tasks[numberoftasks] = newTask;
-                numberoftasks++;
+            } else if (command.contains("mark")) {
+                String[] result = command.split(" ");
+                int taskNum = Integer.parseInt(result[1]);
+                if (taskNum > numberOfTasks || taskNum<=0) {
+                    System.out.println("Error! No such task exists!");
+                } else {
+                    Task target = tasks[taskNum - 1];
+                    target.isCompleted = true;
+                    System.out.println("Nice! I've marked this task as done:");
+                    System.out.println(target.getStatusIcon() + "   " + target.taskName);
+                }
+
+            } else {
+                Task newTask = new Task(command);
+                newTask.isCompleted = false;
+                newTask.taskName = command;
+                System.out.println("added:  " + newTask.taskName);
+                tasks[numberOfTasks] = newTask;
+                numberOfTasks++;
             }
             PrintHorizontalBar();
-            hasTask = CheckTask();
+            String response = CheckTask();
+            if (Objects.equals(response, "0")) {
+                hasTask = false;
+            } else {
+                latestResponse = response;
+                hasLatestResponse = true;
+            }
 
 
         }
@@ -55,16 +91,21 @@ public class Duke {
 
     }
 
-    private static void printTaskList(String[] list, int len) {
+    private static void printTaskList(Task[] list, int len) {
         int i = 1;
         while (i <= len) {
-            System.out.println(i + ": " + list[i - 1]);
+            if (!list[i - 1].isCompleted) {
+                System.out.print(i + ". [ ]");
+            } else {
+                System.out.print(i + ". [X]");
+            }
+            System.out.println(list[i - 1].taskName);
             i++;
         }
     }
 
     private static void PrintHorizontalBar() {
-        String horizontalBar = "-----------------------------------------\n";
+        String horizontalBar = "---------------------------------------------------\n";
         System.out.println(horizontalBar);
     }
 
@@ -76,25 +117,16 @@ public class Duke {
 
     }
 
-    private static boolean CheckTask() {
+    private static String CheckTask() {
 
-        System.out.println("Do you have any other task for me? Enter Y for 'Yes' and N for 'No'.");
+        System.out.println("Do you have any other task for me?  ");
         String response = ReadTask();
-        if (Objects.equals(response, "N")) {
-            return false;
-        } else if (!Objects.equals(response, "Y")) {
-            System.out.println("Invalid input. Enter Y for 'Yes' and N for 'No'.");
-            response = ReadTask();
-            if ( Objects.equals(response, "N")  ) {
-
-                return false;
-            }
-            else if (!Objects.equals(response, "Y") ) {
-                System.out.println("Invalid input. Closing App. :( ");
-                return false;
-            }
+        if (Objects.equals(response, "no")) {
+            return "0";
+        } else {
+            return response;
         }
-        return true;
+
 
     }
 
