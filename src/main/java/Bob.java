@@ -2,6 +2,9 @@ import java.util.Scanner;
 
 public class Bob {
 
+    static public String[] list = new String[100];
+    static public int listCount = 0;
+
     public static void hello() {
         String hello_art = "BBBBBBBBBBBBBBBBB       OOOOOOOOO    BBBBBBBBBBBBBBBBB           SSSSSSSSSSSSSSS             AAA          YYYYYYY       YYYYYYY  SSSSSSSSSSSSSSS      HHHHHHHHH     HHHHHHHHIIIIIIIIII\n" +
                 "B::::::::::::::::B    OO:::::::::OO  B::::::::::::::::B        SS:::::::::::::::S           A:::A         Y:::::Y       Y:::::YSS:::::::::::::::S     H:::::::H     H:::::::I::::::::I\n" +
@@ -21,10 +24,8 @@ public class Bob {
                 "BBBBBBBBBBBBBBBBB       OOOOOOOOO    BBBBBBBBBBBBBBBBB         SSSSSSSSSSSSSSSAAAAAAA                   AAAAAAYYYYYYYYYYYYY    SSSSSSSSSSSSSSS        HHHHHHHHH     HHHHHHHHIIIIIIIIII";
         System.out.println(hello_art);
     }
-    public static void query() {
-        System.out.println("What do you want from BOB?");
-    }
-    public static void shutdown(){
+
+    public static void shutdown() {
         String bye_art = "BBBBBBBBBBBBBBBBB       OOOOOOOOO    BBBBBBBBBBBBBBBBB           SSSSSSSSSSSSSSS             AAA          YYYYYYY       YYYYYYY  SSSSSSSSSSSSSSS      BBBBBBBBBBBBBBBBB  YYYYYYY       YYYYYYEEEEEEEEEEEEEEEEEEEEEE\n" +
                 "B::::::::::::::::B    OO:::::::::OO  B::::::::::::::::B        SS:::::::::::::::S           A:::A         Y:::::Y       Y:::::YSS:::::::::::::::S     B::::::::::::::::B Y:::::Y       Y:::::E::::::::::::::::::::E\n" +
                 "B::::::BBBBBB:::::B OO:::::::::::::OOB::::::BBBBBB:::::B      S:::::SSSSSS::::::S          A:::::A        Y:::::Y       Y:::::S:::::SSSSSS::::::S     B::::::BBBBBB:::::BY:::::Y       Y:::::E::::::::::::::::::::E\n" +
@@ -44,17 +45,35 @@ public class Bob {
         System.out.println(bye_art);
     }
 
+    public static void query() {
+        System.out.println("What do you want from BOB?");
+    }
+
+    public static void listOut() {
+        for (int i = 0; i < listCount; ++i) {
+            int j = i + 1;
+            System.out.println(j + ". " + list[i]);
+        }
+    }
+
     public static void command() {
         Scanner in = new Scanner(System.in);
         String cmd = in.nextLine();
         while (true) {
             if (cmd.equals("bye")) {
-                return ;
+                return;
             }
-            System.out.println(cmd);
+            if (cmd.equals("list")) {
+                listOut();
+            } else {
+                System.out.println("added: " + cmd);
+                list[listCount] = cmd;
+                ++listCount;
+            }
             cmd = in.nextLine();
         }
     }
+
     public static void main(String[] args) {
         hello();
         query();
