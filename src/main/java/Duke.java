@@ -8,7 +8,7 @@ public class Duke {
         System.out.println("Hello from\n" + logo);
 
 
-        //level-0
+        //level -0
         System.out.println("____________________________________");
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?\n");
