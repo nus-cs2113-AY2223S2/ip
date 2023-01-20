@@ -5,6 +5,21 @@ public class Duke {
                 + "| | | | | | | |/ / _ \\\n"
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);
+        System.out.println(logo);
+        greeting();
+    }
+
+    public static void greeting() {
+        horizontalLine();
+        System.out.println("Hello! I'm Duke");
+        System.out.println("What can I do for you?");
+        horizontalLine();
+
+        System.out.println("Bye. Hope to see you again soon!");
+        horizontalLine();
+    }
+
+    public static void horizontalLine() {
+        System.out.println("________________________________________");
     }
 }
