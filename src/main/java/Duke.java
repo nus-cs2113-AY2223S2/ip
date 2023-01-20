@@ -20,8 +20,11 @@ public class Duke {
         printHorizontalLine();
     }
 
-    public static void listInputs() {
-
+    public static void listInputs(ArrayList<String> listOfInputs) {
+        for (int i = 0; i < listOfInputs.size(); i++) {
+            System.out.println((i+1) + ": " + listOfInputs.get(i));
+        }
+        printHorizontalLine();
     }
     public static void main(String[] args) {
         String logo = " ____        _        \n"
@@ -42,10 +45,10 @@ public class Duke {
             printHorizontalLine();
             int instruction = checkInput(line);
             if (instruction == 1) {
-                addToList(line, listOfInputs);
+                listInputs(listOfInputs);
             }
             else if (instruction == 2) {
-                listInputs();
+                addToList(line, listOfInputs);
             }
             else {
                 break;
