@@ -2,7 +2,10 @@ import java.util.Scanner;
 
 public class Duke {
     static String line = "\t____________________________________________________________";
-    static String command_Bye = "bye";
+    static String commandBye = "bye";
+    static String commandList = "list";
+    static String[] texts = new String[100];
+    static int textCount = 0;
 
     public static void Greet() {
         System.out.println(line);
@@ -21,13 +24,27 @@ public class Duke {
         Greet();
         Scanner in = new Scanner(System.in);
         String user_command = new String();
-        user_command = in.nextLine();
-        while (!user_command.equals(command_Bye)) {
-            System.out.println(line);
-            System.out.println("\t" + user_command);
-            System.out.println(line);
+
+        do {
             user_command = in.nextLine();
-        }
-        Bye();
+            if (user_command.equals(commandList)) {
+                int count = 1;
+                System.out.println(line);
+                for (int index = 0; index < textCount; index++) {
+                    System.out.print("\t" + count + ". ");
+                    System.out.println("\t" + texts[index]);
+                    count++;
+                }
+                System.out.println(line);
+            } else if (user_command.equals((commandBye))) {
+                Bye();
+            } else {
+                texts[textCount] = user_command;
+                textCount++;
+                System.out.println(line);
+                System.out.println("\t" + "added: " + user_command);
+                System.out.println(line);
+            }
+        } while (!user_command.equals(commandBye));
     }
 }
