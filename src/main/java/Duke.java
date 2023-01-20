@@ -16,9 +16,7 @@ public class Duke {
         System.out.println("    What can I do for you?");
         System.out.println("    --------------------------------------------------\n");
 
-        // Echoes user input until "bye" is entered
-        String[] tasks = new String[100];
-        boolean[] done = new boolean[100];
+        Task[] tasks = new Task[100];
         String userInput = "";
         while (true) {
             Scanner in = new Scanner(System.in);
@@ -29,9 +27,8 @@ public class Duke {
                 System.out.println("    --------------------------------------------------");
                 System.out.println("    Here are the tasks in your list:");
                 for (int i = 0; i < 100; i++) {
-                    char doneChar = done[i] ? 'X' : ' ';
                     if (tasks[i] != null) {
-                        System.out.println("    " + (i + 1) + ".[" + doneChar + "] " + tasks[i]);
+                        System.out.println("    " + (i + 1) + "." + tasks[i].toString());
                     } else {
                         break;
                     }
@@ -39,26 +36,25 @@ public class Duke {
                 System.out.println("    --------------------------------------------------");
             } else if (userInput.startsWith("mark")) {
                 int taskNo = Integer.parseInt(userInput.substring(5));
+                tasks[taskNo - 1].setDone(true);
                 System.out.println("    --------------------------------------------------");
                 System.out.println("    Nice! I've marked this task as done:");
-                System.out.println("      [X] " + tasks[taskNo - 1]);
+                System.out.println("      " + tasks[taskNo - 1].toString());
                 System.out.println("    --------------------------------------------------");
-                done[taskNo - 1] = true;
             } else if (userInput.startsWith("unmark")) {
                 int taskNo = Integer.parseInt(userInput.substring(7));
+                tasks[taskNo - 1].setDone(false);
                 System.out.println("    --------------------------------------------------");
                 System.out.println("    I've marked this task as not done yet:");
-                System.out.println("      [ ] " + tasks[taskNo - 1]);
+                System.out.println("      " + tasks[taskNo - 1].toString());
                 System.out.println("    --------------------------------------------------");
-                done[taskNo - 1] = false;
             } else {
                 System.out.println("    --------------------------------------------------");
                 System.out.println("     added: " + userInput);
                 System.out.println("    --------------------------------------------------\n");
                 for (int i = 0; i < 100; i++) {
                     if (tasks[i] == null) {
-                        tasks[i] = userInput;
-                        done[i] = false;
+                        tasks[i] = new Task(userInput);
                         break;
                     }
                 }
