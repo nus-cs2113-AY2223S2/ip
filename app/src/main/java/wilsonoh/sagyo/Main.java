@@ -1,6 +1,7 @@
 package wilsonoh.sagyo;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 import wilsonoh.sagyo.tasks.Task;
@@ -45,13 +46,15 @@ public class Main {
                 String[] tokens = line.split(" ");
                 String command = tokens[0];
                 switch (command) {
-                case "bye":
+                case "bye": {
                     ui.printLines("Bye. Hope to see you again soon!");
                     isRunning = false;
                     break;
-                case "list":
+                }
+                case "list": {
                     ui.printLines(getTasksFormatted());
                     break;
+                }
                 case "mark": {
                     int idx = Integer.parseInt(tokens[1]) - 1;
                     Task task = tasks.get(idx);
@@ -66,9 +69,10 @@ public class Main {
                     ui.printLines("OK, I've marked this task as not done yet:", "  " + task.toString());
                     break;
                 }
-                default:
+                default: {
                     addTask(line);
                     ui.printLines("added: " + line);
+                }
                 }
             }
         }
