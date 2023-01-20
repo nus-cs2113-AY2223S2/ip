@@ -11,10 +11,11 @@ public class Duke {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
-        printHorizontalLine();Line();
+        printHorizontalLine();
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
         printHorizontalLine();
         System.out.println("Bye. Hope to see you again soon!");
+        printHorizontalLine();
     }
 }
