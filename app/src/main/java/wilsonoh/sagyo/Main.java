@@ -1,9 +1,9 @@
 package wilsonoh.sagyo;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 import java.util.stream.IntStream;
+
 import wilsonoh.sagyo.tasks.Task;
 import wilsonoh.sagyo.ui.TextFormatter;
 
@@ -29,7 +29,9 @@ public class Main {
      *
      * @param taskName Name of the new task
      */
-    public void addTask(String taskName) { tasks.add(new Task(taskName)); }
+    public void addTask(String taskName) {
+        tasks.add(new Task(taskName));
+    }
 
     /**
      * Runner function of the class, executes the main loop
@@ -78,5 +80,7 @@ public class Main {
         }
     }
 
-    public static void main(String[] args) { new Main().run(); }
+    public static void main(String[] args) {
+        new Main().run();
+    }
 }

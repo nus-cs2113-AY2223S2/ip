@@ -1,6 +1,7 @@
 package wilsonoh.sagyo.ui;
 
-import static wilsonoh.sagyo.ui.ColorCodes.*;
+import static wilsonoh.sagyo.ui.ColorCodes.BLUE;
+import static wilsonoh.sagyo.ui.ColorCodes.RESET;
 
 import java.util.Arrays;
 
@@ -9,7 +10,7 @@ import java.util.Arrays;
  */
 public class TextFormatter {
 
-    public final int DEFAULT_MAX_WIDTH = 50;
+    public static final int DEFAULT_MAX_WIDTH = 50;
     private int numIndent;
     private int maxWidth;
 
@@ -26,7 +27,9 @@ public class TextFormatter {
     /**
      * Clear screen method which only works on unix systems for now
      */
-    private void clearScreen() { System.out.print("\033\143"); }
+    private void clearScreen() {
+        System.out.print("\033\143");
+    }
 
     /**
      * Prints lines of text and prints them in a nice little box

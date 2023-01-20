@@ -3,17 +3,19 @@
  */
 package wilsonoh.sagyo;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
 import org.junit.Test;
 
 public class AppTest {
     @Test
-    public void test_addTasks() {
+    public void testAddTasks() {
         Main duke = new Main();
         duke.addTask("foo");
         duke.addTask("bar");
@@ -24,7 +26,7 @@ public class AppTest {
     }
 
     @Test
-    public void test_Resources() throws IOException {
+    public void testResources() throws IOException {
         InputStream resourceStream = AppTest.class.getClassLoader().getResourceAsStream("test.txt");
         BufferedReader br = new BufferedReader(new InputStreamReader(resourceStream));
         assertEquals(br.readLine(), "testing 123");
