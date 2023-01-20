@@ -14,11 +14,11 @@ plugins {
     id 'com.adarshr.test-logger' version '3.2.0'
 }
 
-checkstyle {
+/* checkstyle {
 	// use one common config file for all subprojects
 	configFile = project(':').file('config/checkstyle/checkstyle.xml')
 	configProperties = [ "suppressionFile" : project(':').file('config/checkstyle/suppressions.xml')]
-}
+} */
 
 java {
   archivesBaseName = "sagyo"
