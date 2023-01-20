@@ -2,7 +2,6 @@ import java.util.Scanner;
 public class Duke {
     public static void printHorizontalLine() {
         System.out.println("____________________________________________________________");
-        return;
     }
 
     public static void main(String[] args) {
