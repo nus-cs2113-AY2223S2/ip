@@ -78,7 +78,9 @@
     -->
     <module name="UnusedImports"/>
 
-    <module name="AvoidStarImport"/>
+    <module name="AvoidStarImport">
+      <property name="excludes" value="java.io,java.net,java.lang.Math,org.junit.Assert,wilsonoh.sagyo.ui.ColorCodes"/>
+    </module>
 
     <!--
     NAMING CHECKS

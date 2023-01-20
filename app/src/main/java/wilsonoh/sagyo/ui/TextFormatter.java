@@ -1,7 +1,6 @@
 package wilsonoh.sagyo.ui;
 
-import static wilsonoh.sagyo.ui.ColorCodes.BLUE;
-import static wilsonoh.sagyo.ui.ColorCodes.RESET;
+import static wilsonoh.sagyo.ui.ColorCodes.*;
 
 import java.util.Arrays;
 

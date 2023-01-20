@@ -3,8 +3,7 @@
  */
 package wilsonoh.sagyo;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
