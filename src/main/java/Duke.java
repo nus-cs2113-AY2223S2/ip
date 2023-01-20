@@ -1,65 +1,80 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import Entities.*;
+import Communication.*;
 
 public class Duke {
     public static void main(String[] args) {
-        Greetings.introduction();
         Scanner sc = new Scanner(System.in);
         ArrayList<Task> tasks = new ArrayList<Task>();
+        Task newTask = null;
+        String[] inputArray;
+        String command, taskName;
+        String startDate, endDate;
+        int startIdx, endIdx;
+
+        Greetings.introduction();
 
         String input = sc.nextLine();
         while (!input.equals("bye")) {
-            if (input.equalsIgnoreCase("list")) {
-                System.out.println("\t------------------------------------------------------------");
-                if (tasks.size() == 0) { 
-                    System.out.println("\tNo tasks added yet!"); 
-                }
-                for (int i = 0; i < tasks.size(); i++) {
-                    System.out.printf("\t%d. ", i+1); TaskPrinter.printTask(tasks.get(i));
-                }
-                System.out.println("\t------------------------------------------------------------\n");
-            } else if (input.contains("unmark")) {
-                try {
-                    int idx = Integer.parseInt(input.split(" ", 0)[1]) - 1;
-                    tasks.get(idx).setDone(false);
+            // Empty Input, Do Nothing
+            if (input.length() == 0) {
+                input = sc.nextLine();
+                continue;
+            }
 
-                    System.out.println("\t------------------------------------------------------------");
-                    System.out.println("\t OK, I've marked this task as not done yet:");
-                    System.out.printf("\t\t"); TaskPrinter.printTask(tasks.get(idx));
-                    System.out.println("\t------------------------------------------------------------\n");
-                } catch (Exception e) {
-                    System.out.println(e);
-                    System.out.println("An error occurred. Please use the syntax 'unmark x' to unmark task of index x\n");
-                }
-            } else if (input.contains("mark")) {
-                try {
-                    int idx = Integer.parseInt(input.split(" ", 0)[1]) - 1;
-                    tasks.get(idx).setDone(true);
+            inputArray = input.split(" ");
+            command = inputArray[0].toLowerCase();
+            newTask = null;
+            startIdx = endIdx = -1;
+            startDate = endDate = null;
 
-                    System.out.println("\t------------------------------------------------------------");
-                    System.out.println("\t Nice! I've marked this task as done:");
-                    System.out.printf("\t\t"); TaskPrinter.printTask(tasks.get(idx));
-                    System.out.println("\t------------------------------------------------------------\n");
-                } catch (Exception e) {
-                    System.out.println(e);
-                    System.out.println("An error occurred. Please use the syntax 'mark x' to mark task of index x\n");
-                }
-            } else if (input.length() > 0) {
-                boolean alreadyExists = false;
-                for (Task t: tasks) {
-                    if (t.getTaskName().equals(input)) {
-                        alreadyExists = true;
-                        break;
-                    }
-                }
-                System.out.println("\t------------------------------------------------------------");
-                if (alreadyExists) {
-                    System.out.printf("\t%s already exists in tasks!\n", input);
-                } else {
-                    tasks.add(new Task(input));
-                    System.out.printf("\tadded: %s\n", input);
-                }
-                System.out.println("\t------------------------------------------------------------\n");
+            switch (command) {
+                case "todo":
+                    taskName = input.substring(command.length() + 1);
+                    newTask = new Todo(taskName);
+                    break;
+
+                case "deadline":
+                    startIdx = input.indexOf("/by ");
+                    taskName = input.substring(command.length() + 1, startIdx);
+                    startDate = input.substring(startIdx + 4);
+                    newTask = new Deadline(taskName, startDate);
+                    break;
+
+                case "event":
+                    startIdx = input.indexOf("/from ");
+                    endIdx = input.indexOf("/to ");
+                    taskName = input.substring(command.length() + 1, startIdx);
+                    startDate = input.substring(startIdx + 6, endIdx-1);
+                    endDate = input.substring(endIdx + 4);
+                    newTask = new Event(taskName, startDate, endDate);
+                    break;
+
+                case "list":
+                    System.out.println(TaskPrinter.tasksToStringMessage(tasks));
+                    break;
+
+                case "mark":
+                    startIdx = Integer.parseInt(input.substring(command.length() + 1)) - 1;
+                    tasks.get(startIdx).setDone(true);
+                    System.out.println(TaskPrinter.markedMessage(tasks.get(startIdx)));
+                    break;
+                
+                case "unmark":
+                    startIdx = Integer.parseInt(input.substring(command.length() + 1)) - 1;
+                    tasks.get(startIdx).setDone(false);
+                    System.out.println(TaskPrinter.unmarkedMessage(tasks.get(startIdx)));
+                    break;
+
+                default:
+                    // throw unknown command exeception
+                    break;
+            }
+
+            if (newTask != null) {
+                tasks.add(newTask);
+                System.out.printf(TaskPrinter.taskAddedMessage(newTask, tasks.size()));
             }
 
             input = sc.nextLine();

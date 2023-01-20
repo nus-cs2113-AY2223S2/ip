@@ -1,6 +1,7 @@
+package Entities;
 public class Task {
-    private String taskName;
-    private boolean done;
+    protected String taskName;
+    protected boolean done;
 
     public Task(String taskName) {
         setTaskName(taskName);
@@ -25,5 +26,10 @@ public class Task {
 
     public String getTaskName() {
         return taskName;
+    }
+
+    @Override
+    public String toString() {
+        return "[" + (this.done ? "X" : " ") + "] " + this.getTaskName();
     }
 }
