@@ -9,3 +9,4 @@ repos:
     rev: v0.3.0
     hooks:
       - id: gradle-check
+        args: [--wrapper, --output]
