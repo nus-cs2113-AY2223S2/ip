@@ -1,3 +1,4 @@
+package Communication;
 public class Greetings {
     public static void introduction() {
         System.out.println("------------------------------------------------------------");
