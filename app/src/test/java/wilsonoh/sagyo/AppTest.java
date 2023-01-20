@@ -5,6 +5,10 @@ package wilsonoh.sagyo;
 
 import static org.junit.Assert.*;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import org.junit.Test;
 
 public class AppTest {
@@ -17,5 +21,12 @@ public class AppTest {
         String[] expected = new String[] {"1: [ ] foo", "2: [ ] bar", "3: [ ] baz"};
         String[] output = duke.getTasksFormatted();
         assertArrayEquals("Add tasks works", expected, output);
+    }
+
+    @Test
+    public void test_Resources() throws IOException {
+        InputStream resourceStream = AppTest.class.getClassLoader().getResourceAsStream("test.txt");
+        BufferedReader br = new BufferedReader(new InputStreamReader(resourceStream));
+        assertEquals(br.readLine(), "testing 123");
     }
 }
