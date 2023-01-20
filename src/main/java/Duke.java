@@ -14,15 +14,15 @@ public class Duke {
             return 2;
         }
     }
-    public static void addToList(String input, ArrayList<String> listOfInputs) {
+    public static void addToTasksList(String input, ArrayList<String> listOfInputs) {
         System.out.println("added: "+input);
         listOfInputs.add(input);
         printHorizontalLine();
     }
 
-    public static void listInputs(ArrayList<String> listOfInputs) {
-        for (int i = 0; i < listOfInputs.size(); i++) {
-            System.out.println((i+1) + ": " + listOfInputs.get(i));
+    public static void listTasks(ArrayList<String> listOfTasks) {
+        for (int i = 0; i < listOfTasks.size(); i++) {
+            System.out.println((i+1) + ": " + listOfTasks.get(i));
         }
         printHorizontalLine();
     }
@@ -38,17 +38,17 @@ public class Duke {
         System.out.println("What can I do for you?");
         printHorizontalLine();
         String line;
-        ArrayList<String> listOfInputs = new ArrayList<>();
+        ArrayList<String> listOfTasks = new ArrayList<>();
         do {
             Scanner in = new Scanner(System.in);
             line = in.nextLine();
             printHorizontalLine();
             int instruction = checkInput(line);
             if (instruction == 1) {
-                listInputs(listOfInputs);
+                listTasks(listOfTasks);
             }
             else if (instruction == 2) {
-                addToList(line, listOfInputs);
+                addToTasksList(line, listOfTasks);
             }
             else {
                 break;
