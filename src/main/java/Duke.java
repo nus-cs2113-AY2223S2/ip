@@ -14,7 +14,7 @@ public class Duke {
         System.out.println("Hello! I'm Duke \nWhat can I do for you?");
         System.out.println(line);
         Scanner in = new Scanner(System.in);
-        ArrayList<String> arr = new ArrayList<String>();
+        ArrayList<Task> checkLists = new ArrayList<Task>();
 
         String input;
         while(in.hasNext()){
@@ -22,42 +22,32 @@ public class Duke {
             if(input.equals("bye")){
                 break;
             }
-
+            //Display checkLists
             if(input.equals("list")){
                 System.out.println(line);
-                for(int i = 0;i<arr.size();i++){
+                for(int i = 0;i<checkLists.size();i++){
                     System.out.print(i+1+".");
-
-                    System.out.println(arr.get(i));
+                    System.out.println(checkLists.get(i).getStatusIcon()+checkLists.get(i).name);
                 }
-
             }else if(input.contains("unmark")){
                 System.out.println(line);
                 System.out.println("OK, I've marked this task as not done yet:");
-                Integer index = new Integer(0);
+                Integer indexOfItem;
                 String [] IndexArr = input.split(" ",2);
-                index = Integer.parseInt(IndexArr[1])-1;
-                String name = arr.get((int)index);
-                arr.remove((int)index);
-                String [] NameArr = name.split(" ",2);
-                arr.add(index,"[ ] "+NameArr[1]);
-                System.out.println(arr.get(index));
+                indexOfItem = Integer.parseInt(IndexArr[1])-1;
+                checkLists.get((int)indexOfItem).isDone = false;
+                System.out.println(checkLists.get(indexOfItem).getStatusIcon()+checkLists.get(indexOfItem).name);
             }else if(input.contains("mark")){
-                Integer index = new Integer(0);
+                Integer indexOfItem = new Integer(0);
                 String [] IndexArr = input.split(" ",2);
                 System.out.println(line);
                 System.out.println("Nice! I've marked this task as done:");
-                index = Integer.parseInt(IndexArr[1])-1;
-                String name = arr.get((int)index);
-                Task tasking = new Task(name,true);
-                arr.remove((int)index);
-                String [] NameArr = name.split(" ",3);
-                arr.add(index,tasking.getStatusIcon()+NameArr[2]);
-                System.out.println(arr.get(index));
+                indexOfItem = Integer.parseInt(IndexArr[1])-1;
+                checkLists.get(indexOfItem).isDone = true;
+                System.out.println(checkLists.get(indexOfItem).getStatusIcon()+checkLists.get(indexOfItem).name);
             }else{
-
-                arr.add("[ ] "+input);
                 System.out.println(line);
+                checkLists.add(checkLists.size(), new Task(input,false));
                 System.out.println("added: "+input);
             }
             System.out.println(line);
