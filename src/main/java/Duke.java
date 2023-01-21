@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Duke {
     public static void main(String[] args) {
@@ -13,29 +14,48 @@ public class Duke {
         System.out.println("What can I do for you?");
 
         Scanner in = new Scanner(System.in);
-        String line = "";
+        String userInput = "";
+        ArrayList<Task> listOfTasks = new ArrayList<Task>();
+        boolean isRunning = true;
 
-        //Array to store user inputs. maximum 100 inputs.
-        String[] userInputs = new String[100];
-        int countInputs = 0;
-        while(!line.equals("bye")) {
-            line = in.nextLine();
+        while(isRunning){
+            userInput = in.nextLine();
+            String[] userInputSplit = userInput.split(" ");
+            Task task;
 
-            if(line.equals("list")) {
-                for(int i = 0; i < countInputs; i++) {
-                    System.out.println(i+1 + ". " + userInputs[i]);
+            switch(userInputSplit[0]){
+            case "bye":
+                System.out.println("Bye. Hope to see you again soon!");
+                isRunning = false;
+                break;
+            case "list":
+                System.out.println("Here are the tasks in your list:");
+                for(int i = 0; i < listOfTasks.size(); i++){
+                    task = listOfTasks.get(i);
+                    System.out.println(i+1 + "." + task.description);
                 }
-            }else{
-                userInputs[countInputs] = line;
-                System.out.println("added: " + line);
-                countInputs += 1;
+                break;
+            case "mark":
+                int markTask = Integer.parseInt(userInputSplit[1]) - 1;
+                task = listOfTasks.get(markTask);
+                task.markAsDone();
+                System.out.println("Nice! I've marked this task as done:");
+                System.out.println(task.getDescription());
+                break;
+            case "unmark":
+                int unmarkTask = Integer.parseInt(userInputSplit[1]) - 1;
+                task = listOfTasks.get(unmarkTask);
+                task.markAsUndone();
+                System.out.println("OK, I've marked this task as not done yet: ");
+                System.out.println(task.getDescription());
+                break;
+            default:
+                Task newTask = new Task("[ ] " + userInput);
+                listOfTasks.add(newTask);
+                System.out.println("added: " + userInput);
+                break;
+
             }
-
-
-
         }
-        System.out.println("Bye. Hope to see you again soon!");
-
-
     }
 }
