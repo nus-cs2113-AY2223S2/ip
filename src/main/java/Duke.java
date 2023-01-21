@@ -22,19 +22,42 @@ public class Duke {
                 + breakLine());
     }
 
-    // reply according to the input
-    public static void reply(String text) {
+    // add a new task
+    public static void addTask(Task[] tasks, int totalTasks, String description) {
+        tasks[totalTasks] = new Task(description);
         System.out.print(breakLine()
-                + "added: " + text + '\n'
+                + "added: " + description + '\n'
                 + breakLine());
     }
 
-    public static void listTask(String[] tasks, int countTasks) {
+    // list all tasks
+    public static void listTask(Task[] tasks, int countTasks) {
         System.out.print(breakLine());
         for (int i = 0; i < countTasks; i++) {
-            System.out.print((i + 1) + ". " + tasks[i] + '\n');
+            Task currentTask = tasks[i];
+            System.out.print((i + 1) + ". " + currentTask.getStatusIcon() + ' ' + currentTask.description + '\n');
         }
         System.out.print(breakLine());
+    }
+
+    //mark the task
+    public static void markTask(Task[] tasks, int taskNumber) {
+        Task currentTask = tasks[taskNumber];
+        currentTask.markAsDone();
+        System.out.print(breakLine()
+                + "Wow! I've marked this task as done :D\n"
+                + currentTask.getStatusIcon() + " " + currentTask.description + '\n'
+                + breakLine());
+    }
+
+    // unmark the task
+    public static void unmarkTask(Task[] tasks, int taskNumber) {
+        Task currentTask = tasks[taskNumber];
+        currentTask.unmarkAsNotDone();
+        System.out.print(breakLine()
+                + "Oh. I've unmarked this task as not done yet :(\n"
+                + currentTask.getStatusIcon() + " " + currentTask.description + '\n'
+                + breakLine());
     }
 
     // exit
@@ -51,24 +74,32 @@ public class Duke {
         return in.nextLine();
     }
 
+    public static void printOut(String str) {
+        System.out.println("# " + str);
+    }
+
     public static void main(String[] args) {
-        String[] tasks = new String[100];
-        int countTasks = 0;
+        Task[] tasks = new Task[100];
+        int totalTasks = 0;
 
         printDuke();
         greet();
         String input = readInput();
-        while (!input.equals("bye")) {
+        String[] splitedInput = input.split(" ");
+        while (!splitedInput[0].equals("bye")) {
             if (input.equals("list")) {
-                listTask(tasks, countTasks);
+                listTask(tasks, totalTasks);
+            } else if (splitedInput[0].equals("mark")) {
+                markTask(tasks, Integer.parseInt(splitedInput[1]) - 1);
+            } else if (splitedInput[0].equals("unmark")) {
+                unmarkTask(tasks, Integer.parseInt(splitedInput[1]) - 1);
             } else {
-                tasks[countTasks] = input;
-                countTasks++;
-                reply(input);
+                addTask(tasks, totalTasks, input);
+                totalTasks++;
             }
             input = readInput();
+            splitedInput = input.split(" ");
         }
         exit();
     }
-
 }
