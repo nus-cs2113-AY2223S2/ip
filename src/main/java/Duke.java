@@ -1,21 +1,19 @@
 import java.util.Scanner;
+
 public class Duke {
 
-    public static void printSeperator(){
+    public static void printSeperator() {
         System.out.println("____________________________________________________________");
     }
+
     public static void greet() {
         printSeperator();
         System.out.println(" Hello! I'm Duke\n" + " What can I do for you?");
         printSeperator();
         System.out.println("");
     }
-    public static void echo(String sentence) {
-        printSeperator();
-        System.out.println(sentence);
-        printSeperator();
-        System.out.println("");
-    }
+
+
 
     public static void farewell() {
         printSeperator();
@@ -31,12 +29,23 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";
 
         greet();
+        List list = new List();
 
         Scanner in = new Scanner(System.in);
         String response = in.nextLine();
 
-        while (!response.equals("bye")){
-            echo(response);
+        while (!response.equals("bye")) {
+            if (response.equals("list"))
+            {
+                printSeperator();
+                list.listDisplay();
+                printSeperator();
+            }
+            else {
+                printSeperator();
+                list.listAdd(response);
+                printSeperator();
+            }
             response = in.nextLine();
         }
         // response is bye.
