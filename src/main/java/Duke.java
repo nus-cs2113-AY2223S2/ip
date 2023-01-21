@@ -28,7 +28,11 @@ public class Duke {
 
     public static void listTasks(ArrayList<Task> listOfTasks) {
         for (int i = 0; i < listOfTasks.size(); i++) {
-            System.out.println((i+1) + ": " + listOfTasks.get(i).getName());
+            if (listOfTasks.get(i).isDone()) {
+                System.out.println((i + 1) + ".[X] " + listOfTasks.get(i).getName());
+            } else {
+                System.out.println((i + 1) + ".[ ] " + listOfTasks.get(i).getName());
+            }
         }
         printHorizontalLine();
     }
