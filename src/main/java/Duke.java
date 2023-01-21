@@ -16,17 +16,32 @@ public class Duke {
 
     // Greet
     public static void greet() {
-        System.out.println(breakLine() + "Hello! I'm Lolo :)\n" + "What can I do for you?\n" + breakLine());
+        System.out.println(breakLine()
+                + "Hello! I'm Momo :)\n"
+                + "What can I do for you?\n"
+                + breakLine());
     }
 
-    // echo string
-    public static void echo(String text) {
-        System.out.print(breakLine() + text + '\n' + breakLine());
+    // reply according to the input
+    public static void reply(String text) {
+        System.out.print(breakLine()
+                + "added: " + text + '\n'
+                + breakLine());
+    }
+
+    public static void listTask(String[] tasks, int countTasks) {
+        System.out.print(breakLine());
+        for (int i = 0; i < countTasks; i++) {
+            System.out.print((i + 1) + ". " + tasks[i] + '\n');
+        }
+        System.out.print(breakLine());
     }
 
     // exit
     public static void exit() {
-        System.out.print(breakLine() + "Ba-bye. Hope to see you again soon :)\n" + breakLine());
+        System.out.print(breakLine()
+                + "Ba-bye. Hope to see you again soon :)\n"
+                + breakLine());
     }
 
     // read input
@@ -37,11 +52,20 @@ public class Duke {
     }
 
     public static void main(String[] args) {
+        String[] tasks = new String[100];
+        int countTasks = 0;
+
         printDuke();
         greet();
         String input = readInput();
         while (!input.equals("bye")) {
-            echo(input);
+            if (input.equals("list")) {
+                listTask(tasks, countTasks);
+            } else {
+                tasks[countTasks] = input;
+                countTasks++;
+                reply(input);
+            }
             input = readInput();
         }
         exit();
