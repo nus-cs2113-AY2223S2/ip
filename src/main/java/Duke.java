@@ -1,11 +1,20 @@
 import java.util.Scanner;
 
 public class Duke {
+    static final String INDENT = "    ";
     // commands
     static final String COMMAND_EXIT = "bye";
 
+    private static void printWithIndentation(String s) {
+        Scanner scan = new Scanner(s);
+        while (scan.hasNextLine()) {
+            System.out.println(INDENT + scan.nextLine());
+        }
+        scan.close();
+    }
+
     private static void printLine() {
-        System.out.println("____________________________________________________________");
+        printWithIndentation("____________________________________________________________\n");
     }
 
     private static void printLogo() {
@@ -14,23 +23,23 @@ public class Duke {
                 + "| | | | | | | |/ / _ \\\n"
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);
+        printWithIndentation("Hello from\n" + logo);
         printLine();
     }
 
     private static void greet() {
-        System.out.println("Hello! I'm Duke\n"
+        printWithIndentation("Hello! I'm Duke\n"
                 + "What can I do for you?");
         printLine();
     }
 
     private static void exit() {
-        System.out.println("Bye. How to see you again soon!");
+        printWithIndentation("Bye. How to see you again soon!");
         printLine();
     }
 
     private static void echo(String s) {
-        System.out.println(s);
+        printWithIndentation(s);
         printLine();
     }
 
