@@ -2,11 +2,11 @@ import java.util.ArrayList;
 
 public class Task {
     private String name;
-    private boolean done;
+    private boolean isCompleted;
 
-    public Task(String name, boolean done) {
+    public Task(String name, boolean isCompleted) {
         this.name = name;
-        this.done = done;
+        this.isCompleted = isCompleted;
     }
 
     public String getName() {
@@ -17,12 +17,12 @@ public class Task {
         this.name = name;
     }
 
-    public boolean isDone() {
-        return done;
+    public boolean getStatus() {
+        return isCompleted;
     }
 
-    public void setDone(boolean done) {
-        this.done = done;
+    public void setStatus(boolean isCompleted) {
+        this.isCompleted = isCompleted;
     }
 
     public static void addToTasksList(String input, ArrayList<Task> listOfTasks) {
@@ -33,7 +33,7 @@ public class Task {
 
     public static void listTasks(ArrayList<Task> listOfTasks) {
         for (int i = 0; i < listOfTasks.size(); i++) {
-            if (listOfTasks.get(i).isDone()) {
+            if (listOfTasks.get(i).getStatus()) {
                 System.out.println((i + 1) + ".[X] " + listOfTasks.get(i).getName());
             } else {
                 System.out.println((i + 1) + ".[ ] " + listOfTasks.get(i).getName());

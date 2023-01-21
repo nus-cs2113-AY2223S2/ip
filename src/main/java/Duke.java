@@ -47,6 +47,16 @@ public class Duke {
             case 1:
                 Task.listTasks(listOfTasks);
                 break;
+            case 2:
+                listOfTasks.get(Integer.parseInt(inputs[1])-1).setStatus(true);
+                System.out.println("Nice! I've marked this task as done:");
+                System.out.println("  [X] " + listOfTasks.get(Integer.parseInt(inputs[1])-1).getName());
+                break;
+            case 3:
+                listOfTasks.get(Integer.parseInt(inputs[1])-1).setStatus(false);
+                System.out.println("OK, I've marked this task as not done yet:");
+                System.out.println("  [ ] " + listOfTasks.get(Integer.parseInt(inputs[1])-1).getName());
+                break;
             default:
                 Task.addToTasksList(line, listOfTasks);
                 break;
