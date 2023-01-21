@@ -1,0 +1,42 @@
+/*
+* Use this class to store all text output for PAPA.
+* I'm wondering if it's a good idea to use this to store pre-made strings.
+* Logo, Greet, Exit, etc
+*/
+public class Message {
+    public static final String logo = "██████╗  █████╗ ██████╗  █████╗ \n" +
+                                      "██╔══██╗██╔══██╗██╔══██╗██╔══██╗\n" +
+                                      "██████╔╝███████║██████╔╝███████║\n" +
+                                      "██╔═══╝ ██╔══██║██╔═══╝ ██╔══██║\n" +
+                                      "██║     ██║  ██║██║     ██║  ██║\n" +
+                                      "╚═╝     ╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝";
+    public static final String intro = "Hello! I'm PAPA, your Personal Assistant, Personal Angel.\n"
+                                     + "What can I do for you?";
+    public static final String outro = "Bye. Hope to see you again soon!";
+
+    /**
+     * Prints a horizontal line.
+     */
+    public static void printHLine() {
+        System.out.println("================================");
+    }
+
+    /**
+     * Greets the user.
+     */
+    public static void greet() {
+        System.out.println("Hello from\n" + logo);
+        // Greet message
+        printHLine();
+        System.out.println(intro);
+        printHLine();
+    }
+
+    /**
+     * Exit, goodbye message.
+     */
+    public static void exit() {
+        System.out.println(outro);
+        printHLine();
+    }
+}

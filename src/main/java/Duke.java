@@ -1,32 +1,24 @@
+import java.util.Scanner;
+
 public class Duke {
     public static void main(String[] args) {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);
 
-        String intro = "Hello! I'm Duke\n"
-                + "What can I do for you?";
+        Message.greet();
 
-        String outro = "Bye. Hope to see you again soon!";
+        // Input variables initialised.
+        Scanner myScanner = new Scanner(System.in);
+        String userInput = new String();
 
-        // Greet message
-        printHLine();
-        System.out.println(intro);
-        printHLine();
+        // The main loop, which ends when user says Bye
+        while (!userInput.toLowerCase().equals("bye")) {
+            System.out.print("Input: ");
+            userInput = myScanner.nextLine();
+            Message.printHLine();
+            System.out.println(userInput);
+            Message.printHLine();
+        }
 
         // Exit message
-        System.out.println(outro);
-        printHLine();
-
-    }
-
-    /**
-     * Prints a horizontal line.
-     */
-    public static void printHLine() {
-        System.out.println("================================");
+        Message.exit();
     }
 }
