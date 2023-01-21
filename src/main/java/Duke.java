@@ -23,6 +23,39 @@ public class Duke {
         dashSeperator();
     }
 
+    public static void sayFeedback(Task item) {
+        String desc = item.getDescription();
+        System.out.println("[" + item.getStatusIcon() + "]" + " " + desc);
+    }
+
+
+    public static void handleRequest(String input, Task[] list) {
+        if (input.equals("list")) {
+            for (int i = 0; i < Task.getTaskNumber() + 1; i++) {
+                sayFeedback(list[i]);
+            }
+        } else {
+            if (input.contains("mark")) {
+                int whitespace = input.indexOf(" ");
+                int index = Integer.parseInt(input.substring(whitespace + 1));
+                if (input.indexOf("m") == 0) {
+                    list[index - 1].markAsDone();
+                    System.out.println("Nice! I've marked this task as done: ");
+                    sayFeedback(list[index - 1]);
+
+                } else {
+                    list[index - 1].markAsUndone();
+                    System.out.println("OK, I've marked this task as not done yet: ");
+                    sayFeedback(list[index - 1]);
+                }
+            } else {
+                Task newTask = new Task(input);
+                list[Task.getTaskNumber()] = newTask;
+                sayEcho(input);
+            }
+        }
+    }
+
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -33,24 +66,16 @@ public class Duke {
         sayGreeting();
         boolean byeFlag = false;
         Scanner line = new Scanner(System.in);
-        String[] userList = new String[100]; //no more than 100 tasks
-        int listSize = 0;
+        Task[] userList = new Task[100]; //no more than 100 tasks
         while (!byeFlag) {
             String userInput = line.nextLine();
             if (userInput.equals("bye")) {
                 byeFlag = true;
                 sayGoodbye();
             } else {
-                if (userInput.equals("list")) {
-                    for (int i = 0; i < listSize; i++) {
-                        System.out.println((i + 1) + ". " + userList[i]);
-                    }
-                } else {
-                    userList[listSize] = userInput;
-                    listSize += 1;
-                    sayEcho(userInput);
-                }
+                handleRequest(userInput, userList);
             }
+
         }
     }
 }
