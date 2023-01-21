@@ -36,11 +36,26 @@ public class Duke {
         System.out.println("Hello from\n" + logo);
         greetUser();
         String userInput = "";
-        ListManager myList = new ListManager();
+        taskManager myList = new taskManager();
         while(!userInput.equals("bye")){
             userInput = input.nextLine();
-            if(userInput.equals("list")){
+            String[] userArrayInput = userInput.split(" ");
+            if(userInput.equals("bye")){
+                break;
+            }
+            if(userArrayInput.length == 0 || userInput.equals("")){
+                continue;
+            }
+            if(userArrayInput[0].equals("list")){
                 myList.printList();
+            }
+            else if(userArrayInput[0].equals("mark")){
+                int taskIndex = Integer.parseInt(userArrayInput[1]) - 1;
+                myList.markAsDone(taskIndex);
+            }
+            else if(userArrayInput[0].equals("unmark")){
+                int taskIndex = Integer.parseInt(userArrayInput[1]) - 1;
+                myList.markAsUndone(taskIndex);
             }
             else{
                 myList.addToList(userInput);
