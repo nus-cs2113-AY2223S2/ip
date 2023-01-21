@@ -1,10 +1,11 @@
 import java.util.Scanner;
+
 public class Duke {
 
     /**
      * Prints out the greeting message to the user
      */
-    public static void greetUser(){
+    public static void greetUser() {
         String greetMessage = "Hello! I'm Duke\n"
                 + "Send me a list of things to remember!\n"
                 + "Type <bye> to exit";
@@ -14,12 +15,17 @@ public class Duke {
     /**
      * Prints out the exit message to the user
      */
-    public static void exitProgram(){
+    public static void exitProgram() {
         String byeEmoji = new String(Character.toChars(0x1F44B));
         String exitMessage = "Bye. Hope to see you again soon!" + byeEmoji;
         System.out.println(exitMessage);
     }
 
+    /**
+     * Greets user and responds to user commands from the command line
+     *
+     * @param args None taken
+     */
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         String logo = " .----------------.  .----------------.  .----------------.  .----------------. \n" +
@@ -36,28 +42,25 @@ public class Duke {
         System.out.println("Hello from\n" + logo);
         greetUser();
         String userInput = "";
-        taskManager myList = new taskManager();
-        while(!userInput.equals("bye")){
+        TaskManager myList = new TaskManager();
+        while (!userInput.equals("bye")) {
             userInput = input.nextLine();
             String[] userArrayInput = userInput.split(" ");
-            if(userInput.equals("bye")){
-                break;
+            if (userInput.equals("bye")) {
+                break; //end the program
             }
-            if(userArrayInput.length == 0 || userInput.equals("")){
-                continue;
+            if (userArrayInput.length == 0 || userInput.equals("")) {
+                continue; //input is invalid, skip
             }
-            if(userArrayInput[0].equals("list")){
+            if (userArrayInput[0].equals("list")) {
                 myList.printList();
-            }
-            else if(userArrayInput[0].equals("mark")){
+            } else if (userArrayInput[0].equals("mark")) {
                 int taskIndex = Integer.parseInt(userArrayInput[1]) - 1;
                 myList.markAsDone(taskIndex);
-            }
-            else if(userArrayInput[0].equals("unmark")){
+            } else if (userArrayInput[0].equals("unmark")) {
                 int taskIndex = Integer.parseInt(userArrayInput[1]) - 1;
                 myList.markAsUndone(taskIndex);
-            }
-            else{
+            } else {
                 myList.addToList(userInput);
             }
         }
