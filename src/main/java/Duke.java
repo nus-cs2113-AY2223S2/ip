@@ -6,12 +6,17 @@ public class Duke {
     }
 
     public static int checkInput(String input) {
+
         if (input.equals("bye")) {
             return 0;
         } else if (input.equals("list")) {
             return 1;
-        } else {
+        } else if (input.equals("mark")){
             return 2;
+        } else if (input.equals("unmark")) {
+            return 3;
+        } else {
+            return -1;
         }
     }
     public static void addToTasksList(String input, ArrayList<Task> listOfTasks) {
@@ -44,14 +49,14 @@ public class Duke {
             Scanner in = new Scanner(System.in);
             line = in.nextLine();
             printHorizontalLine();
-            int instruction = checkInput(line);
-            if (instruction == 1) {
-                listTasks(listOfTasks);
-            }
-            else if (instruction == 2) {
+            String[] inputs = new String[2];
+            inputs = line.split(" ");
+            int instruction = checkInput(inputs[0]);
+            if (instruction < 0) {
                 addToTasksList(line, listOfTasks);
-            }
-            else {
+            } else if (instruction == 1) {
+                listTasks(listOfTasks);
+            } else {
                 break;
             }
         } while (!line.equals("bye"));
