@@ -39,7 +39,7 @@ public class Duke {
         System.out.println("What can I do for you?");
         printHorizontalLine();
         String line;
-        ArrayList<String> listOfTasks = new ArrayList<>();
+        ArrayList<Task> listOfTasks = new ArrayList<>();
         do {
             Scanner in = new Scanner(System.in);
             line = in.nextLine();
