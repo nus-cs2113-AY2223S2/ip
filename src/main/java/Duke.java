@@ -12,13 +12,27 @@ public class Duke {
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
 
-
         Scanner in = new Scanner(System.in);
         String line = "";
+
+        //Array to store user inputs. maximum 100 inputs.
+        String[] userInputs = new String[100];
+        int countInputs = 0;
         while(!line.equals("bye")) {
-            //Take in user input and print out user input.
             line = in.nextLine();
-            System.out.println(line);
+
+            if(line.equals("list")) {
+                for(int i = 0; i < countInputs; i++) {
+                    System.out.println(i+1 + ". " + userInputs[i]);
+                }
+            }else{
+                userInputs[countInputs] = line;
+                System.out.println("added: " + line);
+                countInputs += 1;
+            }
+
+
+
         }
         System.out.println("Bye. Hope to see you again soon!");
 
