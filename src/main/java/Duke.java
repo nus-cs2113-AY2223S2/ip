@@ -9,27 +9,43 @@ public class Duke {
         // Variables needed
         Scanner scanner = new Scanner(System.in);
         String userInput;
-        String[] listOfInputs = new String[100];
+        Task[] listOfInputs = new Task[100];
         int inputCounter = 0;
+
         // Start of the program
         greet();
-
-        // Get first input
+        // Get first task
         userInput = scanner.nextLine();
-
-        // Loop for next inputs
+        // Loop for next tasks to add
         while (!userInput.equals("bye")) {
+
+            System.out.println(HORIZONTAL_LINE);
 
             // Print list upon user request
             if (userInput.equals("list")) {
                 printList(listOfInputs, inputCounter);
             }
+            // Mark as done
+            else if (userInput.startsWith("mark")) {
+                int taskIndex = Integer.parseInt(userInput.substring(userInput.length() - 1));
+                listOfInputs[taskIndex - 1].markAsDone();
+                System.out.println("Nice! I've marked this task as done:");
+                System.out.println("[X] " + listOfInputs[taskIndex - 1].getDescription());
+            }
 
-            // Add other user inputs into list
+            // Mark as undone
+            else if (userInput.startsWith("unmark")) {
+                int taskIndex = Integer.parseInt(userInput.substring(userInput.length() - 1));
+                listOfInputs[taskIndex - 1].markAsNotDone();
+                System.out.println("OK, I've marked this task as not done yet:");
+                System.out.println("[ ] " + listOfInputs[taskIndex - 1].getDescription());
+            }
+
+            // Add other tasks into list
             else {
-                System.out.println(HORIZONTAL_LINE);
                 System.out.println("added: " + userInput);
-                listOfInputs[inputCounter] = userInput;
+                Task newTask = new Task(userInput);
+                listOfInputs[inputCounter] = newTask;
                 inputCounter++;
             }
 
@@ -57,9 +73,11 @@ public class Duke {
         System.out.println(HORIZONTAL_LINE);
     }
 
-    public static void printList(String[] listOfInputs, int inputCounter) {
+    public static void printList(Task[] listOfInputs, int inputCounter) {
         for (int i = 0; i < inputCounter; i++) {
-            System.out.println(i + 1 + ". " + listOfInputs[i]);
+            System.out.println(i + 1 + ".[" + listOfInputs[i].getStatusIcon() + "] "
+                    + listOfInputs[i].getDescription());
         }
     }
+
 }
