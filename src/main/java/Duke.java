@@ -5,6 +5,10 @@ public class Duke {
     // commands
     static final String COMMAND_EXIT = "bye";
 
+    // data
+    static String[] tasks = new String[100];
+    static int numTasks = 0;
+
     private static void printWithIndentation(String s) {
         Scanner scan = new Scanner(s);
         while (scan.hasNextLine()) {
@@ -38,8 +42,10 @@ public class Duke {
         printLine();
     }
 
-    private static void echo(String s) {
-        printWithIndentation(s);
+    private static void addTask(String task) {
+        tasks[numTasks] = task;
+        ++numTasks;
+        printWithIndentation("added: " + task);
         printLine();
     }
 
@@ -49,7 +55,7 @@ public class Duke {
         if (command.equals(COMMAND_EXIT)) {
             return -1;
         }
-        echo(s);
+        addTask(s);
         return 0;
     }
 
