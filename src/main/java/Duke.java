@@ -14,16 +14,15 @@ public class Duke {
             return 2;
         }
     }
-    public static void addToTasksList(String input, ArrayList<Task> listOfTasks) {
+    public static void addToTasksList(String input, ArrayList<String> listOfInputs) {
         System.out.println("added: "+input);
-        Task task = new Task(input, false);
-        listOfTasks.add(task);
+        listOfInputs.add(input);
         printHorizontalLine();
     }
 
-    public static void listTasks(ArrayList<Task> listOfTasks) {
+    public static void listTasks(ArrayList<String> listOfTasks) {
         for (int i = 0; i < listOfTasks.size(); i++) {
-            System.out.println((i+1) + ": " + listOfTasks.get(i).getName());
+            System.out.println((i+1) + ": " + listOfTasks.get(i));
         }
         printHorizontalLine();
     }
@@ -39,7 +38,7 @@ public class Duke {
         System.out.println("What can I do for you?");
         printHorizontalLine();
         String line;
-        ArrayList<Task> listOfTasks = new ArrayList<>();
+        ArrayList<String> listOfTasks = new ArrayList<>();
         do {
             Scanner in = new Scanner(System.in);
             line = in.nextLine();
