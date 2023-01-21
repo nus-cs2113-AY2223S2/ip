@@ -6,19 +6,20 @@ public class Duke {
     }
 
     public static int checkInput(String input) {
-
-        if (input.equals("bye")) {
+        switch (input) {
+        case "bye":
             return 0;
-        } else if (input.equals("list")) {
+        case "list":
             return 1;
-        } else if (input.equals("mark")){
+        case "mark":
             return 2;
-        } else if (input.equals("unmark")) {
+        case "unmark":
             return 3;
-        } else {
+        default:
             return -1;
         }
     }
+
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -39,12 +40,16 @@ public class Duke {
             String[] inputs = new String[2];
             inputs = line.split(" ");
             int instruction = checkInput(inputs[0]);
-            if (instruction < 0) {
-                Task.addToTasksList(line, listOfTasks);
-            } else if (instruction == 1) {
-                Task.listTasks(listOfTasks);
-            } else {
+            switch(instruction) {
+            case 0:
                 System.out.println("Bye. Hope to see you again soon!");
+                break;
+            case 1:
+                Task.listTasks(listOfTasks);
+                break;
+            default:
+                Task.addToTasksList(line, listOfTasks);
+                break;
             }
             printHorizontalLine();
         } while (!line.equals("bye"));
