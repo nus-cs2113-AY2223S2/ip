@@ -2,12 +2,13 @@ import java.util.Scanner;
 
 public class Duke {
     static final String INDENT = "    ";
+
     // commands
     static final String COMMAND_EXIT = "bye";
     static final String COMMAND_LIST = "list";
 
     // data
-    static String[] tasks = new String[100];
+    static Task[] tasks = new Task[100];
     static int numTasks = 0;
 
     private static void printWithIndentation(String s) {
@@ -43,16 +44,16 @@ public class Duke {
         printLine();
     }
 
-    private static void addTask(String task) {
-        tasks[numTasks] = task;
+    private static void addTask(String taskName) {
+        tasks[numTasks] = new Task(taskName);
         ++numTasks;
-        printWithIndentation("added: " + task);
+        printWithIndentation("added: " + taskName);
         printLine();
     }
 
     private static void listTasks() {
         for (int i = 0; i < numTasks; ++i) {
-            printWithIndentation((i + 1) + ". " + tasks[i]);
+            printWithIndentation((i + 1) + ". " + tasks[i].getName());
         }
         printLine();
     }
