@@ -3,7 +3,7 @@ public class Task {
 
     protected boolean isDone;
 
-    public Task(String description){
+    public Task(String description) {
         this.description = description;
         this.isDone = false;
     }
@@ -24,12 +24,12 @@ public class Task {
         isDone = done;
     }
 
-    public void markAsDone(){
+    public void markAsDone() {
         setDone(true);
         setDescription(description.replace("[ ]", "[X]"));
     }
 
-    public void markAsUndone(){
+    public void markAsUndone() {
         setDone(false);
         setDescription(description.replace("[X]", "[ ]"));
     }

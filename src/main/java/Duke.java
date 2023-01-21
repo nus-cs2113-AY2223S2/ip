@@ -18,21 +18,21 @@ public class Duke {
         ArrayList<Task> listOfTasks = new ArrayList<Task>();
         boolean isRunning = true;
 
-        while(isRunning){
+        while (isRunning) {
             userInput = in.nextLine();
             String[] userInputSplit = userInput.split(" ");
             Task task;
 
-            switch(userInputSplit[0]){
+            switch (userInputSplit[0]) {
             case "bye":
                 System.out.println("Bye. Hope to see you again soon!");
                 isRunning = false;
                 break;
             case "list":
                 System.out.println("Here are the tasks in your list:");
-                for(int i = 0; i < listOfTasks.size(); i++){
+                for (int i = 0; i < listOfTasks.size(); i++) {
                     task = listOfTasks.get(i);
-                    System.out.println(i+1 + "." + task.description);
+                    System.out.println(i + 1 + "." + task.description);
                 }
                 break;
             case "mark":
