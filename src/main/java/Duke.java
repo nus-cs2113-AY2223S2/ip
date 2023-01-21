@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
@@ -14,6 +15,20 @@ public class Duke {
         System.out.println("    ____________________________________________________________");
     }
 
+    public static void printAddedTask(String addedTask) {
+        System.out.println("    ____________________________________________________________");
+        System.out.println("     added: " + addedTask);
+        System.out.println("    ____________________________________________________________");
+    }
+
+    public static void printList(ArrayList<String> taskList) {
+        System.out.println("    ____________________________________________________________");
+        for (int i = 0; i < taskList.size(); i++) {
+            System.out.println("     " + (i+1) + ". " + taskList.get(i));
+        }
+        System.out.println("    ____________________________________________________________");
+    }
+
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -23,12 +38,21 @@ public class Duke {
         System.out.println("Hello from\n" + logo);
         startDuke();
         Scanner input = new Scanner(System.in);
-        String nextInput = input.nextLine();
-        while (!nextInput.equals("bye")) {
-            System.out.println("    ____________________________________________________________");
-            System.out.println("     " + nextInput);
-            System.out.println("    ____________________________________________________________");
-            nextInput = input.nextLine();
+        ArrayList<String> taskList = new ArrayList<>();
+        while (input.hasNextLine()) {
+            String nextInput = input.nextLine();
+            if (nextInput.equals("bye")) {
+                break;
+            }
+            if (nextInput.isEmpty()) { 
+                continue;
+            }
+            if (nextInput.equals("list")) {
+                printList(taskList);
+                continue;
+            }
+            taskList.add(nextInput);
+            printAddedTask(nextInput);
         }
         endDuke();
     }
