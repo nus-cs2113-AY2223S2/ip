@@ -19,23 +19,6 @@ public class Duke {
             return -1;
         }
     }
-    public static void addToTasksList(String input, ArrayList<Task> listOfTasks) {
-        System.out.println("added: "+input);
-        Task task = new Task(input, false);
-        listOfTasks.add(task);
-        printHorizontalLine();
-    }
-
-    public static void listTasks(ArrayList<Task> listOfTasks) {
-        for (int i = 0; i < listOfTasks.size(); i++) {
-            if (listOfTasks.get(i).isDone()) {
-                System.out.println((i + 1) + ".[X] " + listOfTasks.get(i).getName());
-            } else {
-                System.out.println((i + 1) + ".[ ] " + listOfTasks.get(i).getName());
-            }
-        }
-        printHorizontalLine();
-    }
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -57,14 +40,13 @@ public class Duke {
             inputs = line.split(" ");
             int instruction = checkInput(inputs[0]);
             if (instruction < 0) {
-                addToTasksList(line, listOfTasks);
+                Task.addToTasksList(line, listOfTasks);
             } else if (instruction == 1) {
-                listTasks(listOfTasks);
+                Task.listTasks(listOfTasks);
             } else {
-                break;
+                System.out.println("Bye. Hope to see you again soon!");
             }
+            printHorizontalLine();
         } while (!line.equals("bye"));
-        System.out.println("Bye. Hope to see you again soon!");
-        printHorizontalLine();
     }
 }
