@@ -4,6 +4,7 @@ public class Duke {
     static final String INDENT = "    ";
     // commands
     static final String COMMAND_EXIT = "bye";
+    static final String COMMAND_LIST = "list";
 
     // data
     static String[] tasks = new String[100];
@@ -49,13 +50,24 @@ public class Duke {
         printLine();
     }
 
+    private static void listTasks() {
+        for (int i = 0; i < numTasks; ++i) {
+            printWithIndentation((i + 1) + ". " + tasks[i]);
+        }
+        printLine();
+    }
+
     private static int processInput(String s) {
         Scanner input = new Scanner(s);
         String command = input.next();
         if (command.equals(COMMAND_EXIT)) {
             return -1;
         }
-        addTask(s);
+        if (command.equals(COMMAND_LIST)) {
+            listTasks();
+        } else {
+            addTask(s);
+        }
         return 0;
     }
 
