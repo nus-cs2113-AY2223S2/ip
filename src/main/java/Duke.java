@@ -14,15 +14,16 @@ public class Duke {
             return 2;
         }
     }
-    public static void addToTasksList(String input, ArrayList<String> listOfInputs) {
+    public static void addToTasksList(String input, ArrayList<Task> listOfTasks) {
         System.out.println("added: "+input);
-        listOfInputs.add(input);
+        Task task = new Task(input, false);
+        listOfTasks.add(task);
         printHorizontalLine();
     }
 
-    public static void listTasks(ArrayList<String> listOfTasks) {
+    public static void listTasks(ArrayList<Task> listOfTasks) {
         for (int i = 0; i < listOfTasks.size(); i++) {
-            System.out.println((i+1) + ": " + listOfTasks.get(i));
+            System.out.println((i+1) + ": " + listOfTasks.get(i).getName());
         }
         printHorizontalLine();
     }
