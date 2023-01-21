@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Duke {
-    public static void dashSeperator() {
+    public static void dashSeperator() {//prints a dash line for separating text
         System.out.println("____________________________________________________________");
     }
 
@@ -19,7 +19,7 @@ public class Duke {
 
     public static void sayEcho(String input) {
         dashSeperator();
-        System.out.println(input);
+        System.out.println("added: " + input);
         dashSeperator();
     }
 
@@ -33,13 +33,23 @@ public class Duke {
         sayGreeting();
         boolean byeFlag = false;
         Scanner line = new Scanner(System.in);
+        String[] userList = new String[100]; //no more than 100 tasks
+        int listSize = 0;
         while (!byeFlag) {
             String userInput = line.nextLine();
             if (userInput.equals("bye")) {
                 byeFlag = true;
                 sayGoodbye();
             } else {
-                sayEcho(userInput);
+                if (userInput.equals("list")) {
+                    for (int i = 0; i < listSize; i++) {
+                        System.out.println((i + 1) + ". " + userList[i]);
+                    }
+                } else {
+                    userList[listSize] = userInput;
+                    listSize += 1;
+                    sayEcho(userInput);
+                }
             }
         }
     }
