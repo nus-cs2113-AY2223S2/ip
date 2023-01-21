@@ -1,7 +1,7 @@
-public class Duke {
+public class GrandDuke {
     public static void greet() {
         System.out.println("____________________________________________________________");
-        System.out.println("  Hello! I'm Duke\n" + "  What can I do for you?");
+        System.out.println("  Hello! I'm GrandDuke\n" + "  What can I do for you?");
         System.out.println("____________________________________________________________");
     }
     public static void exit() {
@@ -9,11 +9,13 @@ public class Duke {
         System.out.println("____________________________________________________________");
     }
     public static void main(String[] args) {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
+        String logo = "  _____                     _______       _        \n"
+        + "|  __ \\                   | |  _  \\     | |       \n"
+        + "| |  \\/_ __ __ _ _ __   __| | | | |_   _| | _____ \n"
+        + "| | __| '__/ _` | '_ \\ / _` | | | | | | | |/ / _ \\ \n"
+        + "| |_\\ \\ | | (_| | | | | (_| | |/ /| |_| |   <  __/\n"
+        + " \\____/_|  \\__,_|_| |_|\\__,_|___/  \\__,_|_|\\_\\___|\n";
+
         System.out.println("Hello from\n" + logo);
         greet();
         exit();
