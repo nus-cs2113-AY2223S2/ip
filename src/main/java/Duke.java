@@ -2,10 +2,13 @@ import java.util.Scanner;
 
 public class Duke {
     static final String INDENT = "    ";
+    static final String MARK = "X";
 
     // commands
     static final String COMMAND_EXIT = "bye";
     static final String COMMAND_LIST = "list";
+    static final String COMMAND_MARK = "mark";
+    static final String COMMAND_UNMARK = "unmark";
 
     // data
     static Task[] tasks = new Task[100];
@@ -53,9 +56,23 @@ public class Duke {
 
     private static void listTasks() {
         for (int i = 0; i < numTasks; ++i) {
-            printWithIndentation((i + 1) + ". " + tasks[i].getName());
+            printWithIndentation((i + 1) + "." // number
+                    + "[" + (tasks[i].getIsCompleted() ? MARK : " ") + "] " // mark
+                    + tasks[i].getName()); // name
         }
         printLine();
+    }
+
+    private static void setTaskStatus(int id, boolean isCompleted) {
+        tasks[id].setIsCompleted(isCompleted);
+        if (isCompleted) { // mark task
+            printWithIndentation("Nice! I've marked this task as done:\n");
+        } else { // unmark task
+            printWithIndentation("OK, I've marked this task as not done yet:\n");
+        }
+        printWithIndentation("[" + (isCompleted ? MARK : " ") + "] " + tasks[id].getName());
+        printLine();
+
     }
 
     private static int processInput(String s) {
@@ -66,6 +83,12 @@ public class Duke {
         }
         if (command.equals(COMMAND_LIST)) {
             listTasks();
+        } else if (command.equals(COMMAND_MARK)) { // mark task
+            int number = input.nextInt();
+            setTaskStatus(number - 1, true);
+        } else if (command.equals(COMMAND_UNMARK)) { // unmark task
+            int number = input.nextInt();
+            setTaskStatus(number - 1, false);
         } else {
             addTask(s);
         }
