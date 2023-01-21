@@ -1,6 +1,15 @@
 import java.util.Scanner;
 
 public class Duke {
+    public static String printLogo(){
+        return ("Hello I'm\n" +
+                "    ____        _        \n" +
+                "   |  _ \\ _   _| | _____ \n" +
+                "   | | | | | | | |/ / _ \\\n" +
+                "   | |_| | |_| |   <  __/\n" +
+                "   |____/ \\__,_|_|\\_\\___|");
+    }
+
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         String line;
@@ -9,7 +18,7 @@ public class Duke {
         int indexCount = 0;
         boolean isRunning = true;
         String lineBreak = "____________________________________________________________\n";
-        System.out.println(lineBreak + "Hello I'm Duke!\nWhat can I do for you?\n" +
+        System.out.println(lineBreak + Duke.printLogo() + "\nWhat can I do for you?\n" +
                 "Input your tasks and I'll keep track of them!\n" + lineBreak);
 
         do {
