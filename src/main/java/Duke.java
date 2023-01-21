@@ -6,7 +6,7 @@ public class Duke {
      */
     public static void greetUser(){
         String greetMessage = "Hello! I'm Duke\n"
-                + "I will echo whatever you type\n"
+                + "Send me a list of things to remember!\n"
                 + "Type <bye> to exit";
         System.out.println(greetMessage);
     }
@@ -18,13 +18,6 @@ public class Duke {
         String byeEmoji = new String(Character.toChars(0x1F44B));
         String exitMessage = "Bye. Hope to see you again soon!" + byeEmoji;
         System.out.println(exitMessage);
-    }
-
-    /**
-     * Prints out the echoed message to user
-     */
-    public static void echoUserInput(String userInput){
-        System.out.println(userInput);
     }
 
     public static void main(String[] args) {
@@ -43,9 +36,15 @@ public class Duke {
         System.out.println("Hello from\n" + logo);
         greetUser();
         String userInput = "";
+        ListManager myList = new ListManager();
         while(!userInput.equals("bye")){
             userInput = input.nextLine();
-            echoUserInput(userInput);
+            if(userInput.equals("list")){
+                myList.printList();
+            }
+            else{
+                myList.addToList(userInput);
+            }
         }
         exitProgram();
     }
