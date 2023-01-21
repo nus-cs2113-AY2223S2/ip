@@ -14,7 +14,6 @@ public class Duke {
     }
 
 
-
     public static void farewell() {
         printSeperator();
         System.out.println(" Bye. Hope to see you again soon!");
@@ -35,10 +34,17 @@ public class Duke {
         String response = in.nextLine();
 
         while (!response.equals("bye")) {
-            if (response.equals("list"))
-            {
+            if (response.equals("list")) {
                 printSeperator();
                 list.listDisplay();
+                printSeperator();
+            } else if (response.length() >= 5 && response.substring(0, 5).equals("mark ")) {
+                printSeperator();
+                list.markTask(response.substring(5));
+                printSeperator();
+            } else if  (response.length() >= 7 && response.substring(0, 7).equals("unmark ")) {
+                printSeperator();
+                list.unmarkTask(response.substring(7));
                 printSeperator();
             }
             else {
