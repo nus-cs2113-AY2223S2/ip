@@ -1,6 +1,8 @@
 import java.util.Scanner;
 public class Duke {
     public static boolean isSinglish = false;
+    public static String[] listOfItems = new String[100];
+    public static int index = 0;
 
     public static void changeLanguage() {
         if (isSinglish) {
@@ -13,7 +15,6 @@ public class Duke {
             System.out.println("Changing language mode to Singlish...");
             System.out.println("Singlish mode = ON");
             sayHello();
-
         }
     }
 
@@ -23,7 +24,6 @@ public class Duke {
         } else {
             System.out.println("____________________________________________________________");
         }
-
     }
 
     public static void sayGoodbye() {
@@ -48,6 +48,18 @@ public class Duke {
         }
         horizontalLines();
     }
+
+    public static void returnList() {
+        int counter = 1;
+        for (String item : listOfItems) {
+            if (item == null) {
+                break;
+            }
+            System.out.println(counter + ". " + item);
+            counter++;
+        }
+        horizontalLines();
+    }
     public static void main(String[] args) {
         sayHello();
 
@@ -59,10 +71,14 @@ public class Duke {
             if (commands[0].equals("bye")) {
                 sayGoodbye();
                 break;
-            } else if (commands[0].equals("change") && commands.length == 2 && commands[1].equals("lang")){
+            } else if (commands[0].equals("change") && commands.length == 2 && commands[1].equals("lang")) {
                 changeLanguage();
+            } else if (commands[0].equals("list") && commands.length == 1) {
+                returnList();
             } else {
-                System.out.println(line);
+                /*System.out.println(line);*/
+                listOfItems[index] = line;
+                index++;
                 horizontalLines();
             }
         }
