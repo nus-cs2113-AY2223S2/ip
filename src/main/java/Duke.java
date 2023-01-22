@@ -8,9 +8,28 @@ public class Duke {
         Scanner in = new Scanner(System.in);
         String line = in.nextLine();
 
+        ArrayList<String> tasks = new ArrayList<String>();
+
         while (!line.equals("bye")) {
-            if (line.length() > 0) {
-                System.out.printf("\t%s\n", line);
+            switch (line) {
+            case "list":
+                if (tasks.size() > 0 ) {
+                    for (int i = 0; i < tasks.size(); i += 1) {
+                        System.out.printf("\t%d. %s\n", i + 1, tasks.get(i));
+                    }
+                }
+                else {
+                    System.out.println("\tThere is no tasks\n");
+                }
+                break;
+            default:
+                if (line.length() == 0) {
+                    break;
+                }
+                else {
+                    tasks.add(line);
+                    System.out.printf("\tadded: %s\n", line);
+                }
             }
             line = in.nextLine();
         }
