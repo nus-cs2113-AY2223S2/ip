@@ -12,14 +12,19 @@ import java.io.InputStreamReader;
 
 import org.junit.Test;
 
+import wilsonoh.sagyo.tasks.DeadlineTask;
+import wilsonoh.sagyo.tasks.EventTask;
+import wilsonoh.sagyo.tasks.TodoTask;
+
 public class AppTest {
     @Test
     public void testAddTasks() {
         Main duke = new Main();
-        duke.addTask("foo");
-        duke.addTask("bar");
-        duke.addTask("baz");
-        String[] expected = new String[] {"1: [ ] foo", "2: [ ] bar", "3: [ ] baz"};
+        duke.addTask(new TodoTask("foo"));
+        duke.addTask(new DeadlineTask("bar", "Friday 4pm"));
+        duke.addTask(new EventTask("baz", "monday", "tuesday"));
+        String[] expected = new String[] {"1: [T][ ] foo", "2: [D][ ] bar (by: Friday 4pm)",
+                                          "3: [E][ ] baz (from: monday to: tuesday)"};
         String[] output = duke.getTasksFormatted();
         assertArrayEquals("Add tasks works", expected, output);
     }

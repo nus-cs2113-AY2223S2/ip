@@ -28,8 +28,6 @@ public class Main {
 
     /**
      * Adds a new task to the task list
-     *
-     * @param taskName Name of the new task
      */
     public void addTask(Task task) {
         tasks.add(task);
