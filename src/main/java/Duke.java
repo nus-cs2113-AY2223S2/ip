@@ -30,7 +30,7 @@ public class Duke {
                 int count = 0;
                 for (String task : tasks){
                     if(task != null){
-                        System.out.println(count++ +". " + task);
+                        System.out.println(++count +". " + task);
                     }
                 }
                 line = input.nextLine();
