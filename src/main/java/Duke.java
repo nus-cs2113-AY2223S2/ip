@@ -1,9 +1,9 @@
 public class Duke {
 
-    private static void printLines(String... params) {
+    private static void printLines(String... lines) {
         String divider = "____________________________________________________________";
-        for (String param: params) {
-            System.out.println(param);
+        for (String line: lines) {
+            System.out.println(line);
         }
         System.out.println(divider);
     }
