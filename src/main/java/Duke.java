@@ -40,15 +40,15 @@ public class Duke {
     public static void main(String[] args) {
         Greet();
         Scanner in = new Scanner(System.in);
-        String user_command;
+        String userCommand;
 
         do {
-            user_command = in.nextLine();
-            int checker = commandType(user_command);
+            userCommand = in.nextLine();
+            int checker = commandType(userCommand);
 
             if (checker == 0 || checker == 1) {
                 if (checker == 0) {
-                    int taskNum = Integer.parseInt(user_command.substring(user_command.indexOf(" ") + 1));
+                    int taskNum = Integer.parseInt(userCommand.substring(userCommand.indexOf(" ") + 1));
                     tasks[--taskNum].setStatus(true);
                     System.out.println(line);
                     System.out.println("\tNoted. Task " + (taskNum + 1) + " has been marked as \"complete\":");
@@ -56,7 +56,7 @@ public class Duke {
                     System.out.println(line);
                 }
                 if (checker == 1) {
-                    int taskNum = Integer.parseInt(user_command.substring(user_command.indexOf(" ") + 1));
+                    int taskNum = Integer.parseInt(userCommand.substring(userCommand.indexOf(" ") + 1));
                     tasks[--taskNum].setStatus(false);
                     System.out.println(line);
                     System.out.println("\tOh, ok. Task " + (taskNum + 1) + " has been marked as \"incomplete\":");
@@ -76,12 +76,12 @@ public class Duke {
             } else if (checker == 3) {
                 Bye();
             } else {
-                tasks[textCount] = new Task(user_command);
+                tasks[textCount] = new Task(userCommand);
                 textCount++;
                 System.out.println(line);
-                System.out.println("\t" + "Task added: " + user_command);
+                System.out.println("\t" + "Task added: " + userCommand);
                 System.out.println(line);
             }
-        } while (!user_command.equals(commandBye));
+        } while (!userCommand.equals(commandBye));
     }
 }

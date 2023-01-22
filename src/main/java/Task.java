@@ -1,8 +1,8 @@
 public class Task {
-    private boolean isDone;
-    private String taskName;
-    String done = "[X] ";
-    String notDone = "[ ] ";
+    protected boolean isDone;
+    protected String taskName;
+    static String done = "[X] ";
+    static String notDone = "[ ] ";
 
     public void setStatus(boolean status) {
         isDone = status;
