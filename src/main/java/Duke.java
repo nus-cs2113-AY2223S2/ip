@@ -13,9 +13,10 @@ public class Duke {
         line = in.nextLine();
         Task[] tasks = new Task[100];
         int taskCount = 0;
-        while(!line.equals("bye")) {
+        while (!line.equals("bye")) {
             String[] words = line.split(" ");
-            if (line.equals("list")) { // List out all the tasks added
+            if (line.equals("list")) {
+                // List out all the tasks added
                 System.out.println("\t____________________________________________________________");
                 System.out.println("Here are the tasks in your list:");
                 for (int i = 0; i < taskCount; i++) {
@@ -23,7 +24,8 @@ public class Duke {
                             + tasks[i].getDescription());
                 }
                 System.out.println("\t____________________________________________________________");
-            } else if (words[0].equals("unmark") && (words.length == 2)) { // Mark a task as not done
+            } else if (words[0].equals("unmark") && (words.length == 2)) {
+                // Mark a task as not done
                 int taskNumber = Integer.parseInt(words[1]);
                 tasks[taskNumber - 1].markAsNotDone();
                 // Printing out marked as not done message
@@ -32,7 +34,8 @@ public class Duke {
                 System.out.println("[" + tasks[taskNumber - 1].getStatusIcon() + "] " +
                         tasks[taskNumber - 1].getDescription());
                 System.out.println("\t____________________________________________________________");
-            } else if (words[0].equals("mark") && (words.length == 2)) { // Mark a task as done
+            } else if (words[0].equals("mark") && (words.length == 2)) {
+                // Mark a task as done
                 int taskNumber = Integer.parseInt(words[1]);
                 tasks[taskNumber - 1].markAsDone();
                 // Printing out marked as done message
@@ -41,7 +44,8 @@ public class Duke {
                 System.out.println("[" + tasks[taskNumber - 1].getStatusIcon() + "] " +
                         tasks[taskNumber - 1].getDescription());
                 System.out.println("\t____________________________________________________________");
-            } else { // Adding a task to the list
+            } else {
+                // Adding a task to the list
                 Task currentTask = new Task(line);
                 tasks[taskCount] = currentTask;
                 taskCount++;
