@@ -12,18 +12,12 @@ public class Bro {
         while (!endInput) {
             line = in.nextLine();
             switch (line) {
-            case "list":
-                reply = " list";
-                break;
-            case "blah":
-                reply = " blah";
-                break;
             case "bye":
                 reply = " Bye bye.";
                 endInput = true;
                 break;
             default:
-                reply = " I don't understand.";
+                reply = " " + line;
             }
             System.out.println(horizontalLine + reply + horizontalLine);
         }
