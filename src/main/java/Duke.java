@@ -20,7 +20,7 @@ public class Duke {
         String line;
         Scanner in = new Scanner(System.in);
         Task[] tasks = new Task[100];
-        int position = 0;
+        int taskCount = 0;
         while (true) {
             line = in.nextLine();
             if ("bye".equalsIgnoreCase(line)) {
@@ -32,7 +32,7 @@ public class Duke {
                 System.out.println("____________________________________________________________");
                 System.out.println(" Here are the tasks in your list:");
                 int index = 1;
-                for (int i = 0; i < position; i++) {
+                for (int i = 0; i < taskCount; i++) {
                     System.out.println(" " + index + ". [" + tasks[i].getStatusIcon() +"] " + tasks[i].getDescription());
                     index++;
                 }
@@ -52,8 +52,8 @@ public class Duke {
                 System.out.println(" [" + tasks[index-1].getStatusIcon() +"] " + tasks[index-1].getDescription());
                 System.out.println("____________________________________________________________");
             } else {
-                tasks[position] = new Task(line);
-                position++;
+                tasks[taskCount] = new Task(line);
+                taskCount++;
                 System.out.println("____________________________________________________________");
                 System.out.println(" added: " + line);
                 System.out.println("____________________________________________________________");
