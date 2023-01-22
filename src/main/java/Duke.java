@@ -1,16 +1,23 @@
 public class Duke {
+
+    private static void printLines(String... params) {
+        String divider = "____________________________________________________________";
+        for (String param: params) {
+            System.out.println(param);
+        }
+        System.out.println(divider);
+    }
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);
 
-        System.out.println("Hello! I'm Duke");
-        System.out.println("What can I do for you?");
-        System.out.println("____________________________________________________________");
+        printLines("Hello from", logo);
 
-        System.out.println("Bye. Hope to see you again soon!");
+        printLines("Hello! I'm Duke", "What can I do for you?");
+
+        printLines("Bye. Hope to see you again soon!");
     }
 }
