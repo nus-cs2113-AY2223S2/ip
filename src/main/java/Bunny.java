@@ -9,16 +9,16 @@ public class Bunny {
 
         bunny.printMessage("Hello! I'm Bunny.\nWhat can I do for you?");
 
-        while(true) {
+        while (true) {
             String input = in.nextLine();
-            if(input.equals("bye")) {
+            if (input.equals("bye")) {
                 break;
             } else if (input.equals("list")) {
                 if (bunny.numTodos() == 0) {
                     bunny.printMessage("Your TODO list is empty!");
                 } else {
                     ArrayList<String> messageLines = new ArrayList<>();
-                    for(int i = 0; i < bunny.numTodos(); i++) {
+                    for (int i = 0; i < bunny.numTodos(); i++) {
                         messageLines.add((i + 1) + ". " + bunny.getTodo(i));
                     }
                     bunny.printMessage(messageLines);

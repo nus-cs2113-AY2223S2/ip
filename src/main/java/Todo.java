@@ -26,7 +26,7 @@ public class Todo {
     @Override
     public String toString() {
         char marker = ' ';
-        if(this.done) {
+        if (this.done) {
             marker = 'X';
         }
         return "[" + marker + "] " + this.name;

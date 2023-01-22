@@ -1,11 +1,10 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class BunnySession {
-    private final static String divider = "____________________________________________________________";
-    private final static String globalIndentation = "\t";
-    private final static String messageIndentation = " ";
+    private final static String DIVIDER = "____________________________________________________________";
+    private final static String GLOBAL_INDENTATION = "\t";
+    private final static String MESSAGE_INDENTATION = " ";
 
     private ArrayList<Todo> todoList;
 
@@ -19,11 +18,11 @@ public class BunnySession {
 
     public void printMessage(Iterable<String> messageLines) {
         String output = "";
-        output += globalIndentation + divider + "\n";
+        output += GLOBAL_INDENTATION + DIVIDER + "\n";
         for (String line : messageLines) {
-            output += globalIndentation + messageIndentation + line + "\n";
+            output += GLOBAL_INDENTATION + MESSAGE_INDENTATION + line + "\n";
         }
-        output += globalIndentation + divider + "\n";
+        output += GLOBAL_INDENTATION + DIVIDER + "\n";
 
         System.out.print(output);
     }
