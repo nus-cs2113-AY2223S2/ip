@@ -38,7 +38,7 @@ public class Duke {
     public static void sayHello() {
         horizontalLines();
         if (isSinglish) {
-            System.out.println("Hello, my name is Uncle Simon, you can call me Simon");
+            System.out.println("Hello, my name is Uncle Simon, call me Simon can liao");
             System.out.println("You need my help?");
             System.out.println("(To turn off Singlish mode, type \"change lang\")");
         } else {
@@ -76,10 +76,17 @@ public class Duke {
             } else if (commands[0].equals("list") && commands.length == 1) {
                 returnList();
             } else {
-                /*System.out.println(line);*/
-                listOfItems[index] = line;
-                index++;
-                horizontalLines();
+                if (index < 100 && !line.isEmpty()) {
+                    listOfItems[index] = line;
+                    index++;
+                    horizontalLines();
+                } else if (index == 100){
+                    if (isSinglish) {
+                        System.out.println("Sorry ah, the list full already");
+                    } else {
+                        System.out.println("Sorry, the list is full.");
+                    }
+                }
             }
         }
     }
