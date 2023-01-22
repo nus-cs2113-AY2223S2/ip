@@ -49,7 +49,7 @@ public class TextFormatter {
         toPrint.append(String.format("┌%s┐\n", "─".repeat((numIndent * 2) + textWidth)));
         for (String line : lines) {
             if (line.length() > maxWidth - 3) {
-                line = line.substring(0, maxWidth - 3);
+                line = line.substring(0, maxWidth - 4);
                 line += "...";
             }
             String format = String.format("│%%s%%-%ds%%s│\n", textWidth);

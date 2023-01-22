@@ -1,6 +1,6 @@
 package wilsonoh.sagyo.tasks;
 
-public class Task {
+public abstract class Task {
 
     private String name;
     private boolean done;

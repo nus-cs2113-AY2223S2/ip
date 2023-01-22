@@ -1,33 +1,15 @@
 #!/usr/bin/env bash
 
-# create bin directory if it doesn't exist
-if [ ! -d "../bin" ]
-then
-    mkdir ../bin
-fi
+# Must run this script from the root directory
 
-# delete output from previous run
-if [ -e "./ACTUAL.TXT" ]
-then
-    rm ACTUAL.TXT
-fi
+# Build the jar file using gradle
+./gradlew jar -q
 
-# compile the code into the bin folder, terminates if error occurred
-if ! javac -cp ../src/main/java -Xlint:none -d ../bin ../src/main/java/*.java
-then
-    echo "********** BUILD FAILURE **********"
-    exit 1
-fi
-
-# run the program, feed commands from input.txt file and redirect the output to the ACTUAL.TXT
-java -classpath ../bin Duke < input.txt > ACTUAL.TXT
-
-# convert to UNIX format
-cp EXPECTED.TXT EXPECTED-UNIX.TXT
-dos2unix ACTUAL.TXT EXPECTED-UNIX.TXT
+# run the jar file, feed commands from input.txt file and redirect the output to the ACTUAL.TXT
+java -jar app/build/libs/sagyo.jar < text-ui-test/input.txt > text-ui-test/ACTUAL.TXT
 
 # compare the output to the expected output
-diff ACTUAL.TXT EXPECTED-UNIX.TXT
+diff text-ui-test/ACTUAL.TXT text-ui-test/EXPECTED.TXT
 if [ $? -eq 0 ]
 then
     echo "Test result: PASSED"

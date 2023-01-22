@@ -1,9 +1,11 @@
 package wilsonoh.sagyo;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
+import wilsonoh.sagyo.parser.TaskParser;
 import wilsonoh.sagyo.tasks.Task;
 import wilsonoh.sagyo.ui.TextFormatter;
 
@@ -29,8 +31,8 @@ public class Main {
      *
      * @param taskName Name of the new task
      */
-    public void addTask(String taskName) {
-        tasks.add(new Task(taskName));
+    public void addTask(Task task) {
+        tasks.add(task);
     }
 
     /**
@@ -38,7 +40,8 @@ public class Main {
      */
     public void run() {
         boolean isRunning = true;
-        TextFormatter ui = new TextFormatter(10);
+        TaskParser parser = new TaskParser();
+        TextFormatter ui = new TextFormatter(2, 120);
         ui.printLines("Welcome to sagyo, your task manager!", "What can I do for you?");
         // try-with-resources to close the scanner automatically, preventing resource leaks
         try (Scanner sc = new Scanner(System.in)) {
@@ -72,8 +75,14 @@ public class Main {
                     break;
                 }
                 default: {
-                    addTask(line);
-                    ui.printLines("added: " + line);
+                    Optional<Task> task = parser.parseInput(line);
+                    if (task.isEmpty()) {
+                        ui.printLines(String.format("%s is not a valid command or task syntax", line),
+                                      "Please try again.");
+                    } else {
+                        addTask(task.get());
+                        ui.printLines("added task: " + task.get());
+                    }
                 }
                 }
             }
