@@ -10,7 +10,7 @@ public class Duke {
         System.out.println(" What can I do for you?");
         System.out.println("____________________________________________________________");
 
-        String[] list = new String[100];
+        Task[] list = new Task[100];
         int nextEmptyIndex = 0;
 
         boolean done = false;
@@ -22,11 +22,26 @@ public class Duke {
             } else if (line.equals("list")) {
                 System.out.println("____________________________________________________________");
                 for (int i = 0; i < nextEmptyIndex; i++) {
-                    System.out.println((i+1) + ". " + list[i]);
+                    String prefix = (i+1) + ".[" + (list[i].getIsDone() ? "X" : " ") + "] ";
+                    System.out.println(prefix + list[i].getDesc());
                 }
                 System.out.println("____________________________________________________________");
+            } else if (line.split(" ")[0].equals("mark")) {
+                int index = Integer.parseInt(line.split(" ")[1])-1;
+                list[index].setIsDone(true);
+                System.out.println("____________________________________________________________");
+                System.out.println("Nice! I've marked this task as done:");
+                System.out.println("[X] " + list[index].getDesc());
+                System.out.println("____________________________________________________________");
+            } else if (line.split(" ")[0].equals("unmark")) {
+                int index = Integer.parseInt(line.split(" ")[1])-1;
+                list[index].setIsDone(false);
+                System.out.println("____________________________________________________________");
+                System.out.println("OK, I've marked this task as not done yet:");
+                System.out.println("[ ] " + list[index].getDesc());
+                System.out.println("____________________________________________________________");
             } else {
-                list[nextEmptyIndex] = line;
+                list[nextEmptyIndex] = new Task(line);
                 nextEmptyIndex++;
                 System.out.println("____________________________________________________________");
                 System.out.println("added: " + line);
