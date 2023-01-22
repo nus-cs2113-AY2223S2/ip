@@ -19,7 +19,8 @@ public class Duke {
 
         String line;
         Scanner in = new Scanner(System.in);
-        ArrayList<String> tasks = new ArrayList<>();
+        Task[] tasks = new Task[100];
+        int position = 0;
         while (true) {
             line = in.nextLine();
             if ("bye".equalsIgnoreCase(line)) {
@@ -29,16 +30,32 @@ public class Duke {
                 break;
             } else if ("list".equalsIgnoreCase(line)) {
                 System.out.println("____________________________________________________________");
+                System.out.println(" Here are the tasks in your list:");
                 int index = 1;
-                for (String item : tasks) {
-                    System.out.println(index + ". " + item);
+                for (int i = 0; i < position; i++) {
+                    System.out.println(" " + index + ". [" + tasks[i].getStatusIcon() +"] " + tasks[i].getDescription());
                     index++;
                 }
                 System.out.println("____________________________________________________________");
-            } else {
-                tasks.add(line);
+            } else if ((line.substring(0,4)).equals("mark")) {
                 System.out.println("____________________________________________________________");
-                System.out.println("added: " + line);
+                System.out.println(" Nice! I've marked this task as done:");
+                int index = Integer.parseInt(line.substring(5));
+                tasks[index-1].markAsDone();
+                System.out.println(" [" + tasks[index-1].getStatusIcon() +"] " + tasks[index-1].getDescription());
+                System.out.println("____________________________________________________________");
+            } else if ((line.substring(0,6)).equals("unmark")) {
+                System.out.println("____________________________________________________________");
+                System.out.println(" OK, I've marked this task as not done yet:");
+                int index = Integer.parseInt(line.substring(7));
+                tasks[index-1].markAsNotDone();
+                System.out.println(" [" + tasks[index-1].getStatusIcon() +"] " + tasks[index-1].getDescription());
+                System.out.println("____________________________________________________________");
+            } else {
+                tasks[position] = new Task(line);
+                position++;
+                System.out.println("____________________________________________________________");
+                System.out.println(" added: " + line);
                 System.out.println("____________________________________________________________");
             }
         }
