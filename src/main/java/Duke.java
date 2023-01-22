@@ -20,8 +20,20 @@ public class Duke {
         Scanner input = new Scanner(System.in);
         String line = input.nextLine();
         boolean isTerminated = false;
+
+        String[] tasks = new String[100];
+        int taskCount = 0;
+
         while(!isTerminated) {
             switch (line) {
+            case "list":
+                int count = 0;
+                for (String task : tasks){
+                    if(task != null){
+                        System.out.println(count++ +". " + task);
+                    }
+                }
+                line = input.nextLine();
             case "bye":
                 String ending = " Bye. Hope to see you again soon!\n" +
                         "____________________________________________________________";
@@ -30,7 +42,8 @@ public class Duke {
                 //not yet in use
                 System.exit(0);
             default:
-                System.out.println(line+"\n");
+                System.out.println("added: "+line+"\n");
+                tasks[taskCount++] = line;
                 line = input.nextLine();
             }
         }
