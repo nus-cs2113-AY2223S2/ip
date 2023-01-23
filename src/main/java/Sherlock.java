@@ -1,9 +1,9 @@
-public class Duke {
+public class Sherlock {
     public static void main(String[] args) {
 
         TaskListener.greet();
 
-        TaskListener listener = new TaskListener();
-        listener.listen();
+        TaskListener taskListener = new TaskListener(100);
+        taskListener.listen();
     }
 }

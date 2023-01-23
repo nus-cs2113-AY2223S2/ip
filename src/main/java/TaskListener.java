@@ -1,73 +1,77 @@
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class CommandsListener {
-    static final String divider = "--------------------------------------------------------------------";
+public class TaskListener {
+    static final String DIVIDER = "--------------------------------------------------------------------";
+    private TaskList taskList;
 
+    public TaskListener(int expectedTasksCount) {
+        this.taskList = new TaskList(expectedTasksCount);
+    }
     private static void printLines(String... lines) {
-        System.out.println(divider);
+        System.out.println(DIVIDER);
         for (String line: lines) {
             System.out.println(line);
         }
-        System.out.println(divider + System.lineSeparator());
+        System.out.println(DIVIDER + System.lineSeparator());
        }
 
    public static void greet() {
        String logo =
-
-                " ______ _   _  ___________ _     _____ _____  _   __" + "\n"
-               + "/  ___| | | ||  ___| ___ \\ |   |  _  /  __ \\| | / /" + "\n"
-               + "\\ `--.| |_| || |__ | |_/ / |   | | | | /  \\/| |/ /" + "\n"
-                + "`--. \\  _  ||  __||    /| |   | | | | |    |    \\" + "\n"
-               + "/\\__/ / | | || |___| |\\ \\| |___\\ \\_/ / \\__/\\| |\\  \\" + "\n"
-               + "\\____/\\_| |_/\\____/\\_| \\_\\_____/\\___/ \\____/\\_| \\_/";
+                "   _____ __  ____________  __    ____  ________ __\n" +
+                        "  / ___// / / / ____/ __ \\/ /   / __ \\/ ____/ //_/\n" +
+                        "  \\__ \\/ /_/ / __/ / /_/ / /   / / / / /   / ,<   \n" +
+                        " ___/ / __  / /___/ _, _/ /___/ /_/ / /___/ /| |  \n" +
+                        "/____/_/ /_/_____/_/ |_/_____/\\____/\\____/_/ |_|  ";
 
 
        printLines("Hello from", logo);
 
        printLines("Hello! I'm SHERLOCK", "What can I do for you?");
    }
-   public static void listen() {
+    public void listen() {
         Scanner in = new Scanner(System.in);
-        String line;
 
-         line = in.nextLine();
+        String line = in.nextLine();
+        String[] inputArray = line.split("\\s+");
 
-        if(line.equalsIgnoreCase("bye")) {
-          printLines("Bye. Hope to see you again soon!");
-          return;
-        }
-        printLines(line);
-        listen();
-    }
-    private static TaskList taskList = new TaskList(100);
-    public static void lisetnForTasks() {
-        Scanner in = new Scanner(System.in);
-        String line;
+        String command = inputArray[0];
+        String[] arguments = Arrays.copyOfRange(inputArray, 1, inputArray.length );
 
-        line = in.nextLine();
+        switch(command) {
+            case "list":
+                printLines(this.taskList.toString());
+                break;
+            case "mark":
+            case "unmark": {
+                String successMessage = command.equals("mark") ?  "Nice! I've marked this task as done:" : "OK, I've marked this task as not done yet:";
 
-        if (line.equalsIgnoreCase("list")) {
-            String[] tasks = taskList.getTasks();
-            int index = 1;
-            System.out.println(divider);
-            for (String task: tasks){
-                if(task != null) {
-                    System.out.println(String.format("%d. %s", index++, task ));
+                // isDone value that user wants to achieve
+                boolean intendedDoneValue = command.equals("mark");
+
+                int index = Integer.parseInt(arguments[0]) - 1;
+
+                // Invalid index handler
+                if(index < 0 || index > this.taskList.getTasks().length - 1) {
+                    printLines("No task at such index!");
+                    break;
                 }
+
+                Task task = this.taskList.getTasks()[index];
+                task.setIsDone(intendedDoneValue);
+                printLines(successMessage, task.toString());
+                break;
             }
-            System.out.println(divider);
+
+            case "bye":
+                printLines("Bye. Hope to see you again soon!");
+                return;
+
+            default:
+                this.taskList.addTask(line);
+                printLines("added: " + line);
         }
 
-        else if (line.equalsIgnoreCase("bye")) {
-            printLines("Bye. Hope to see you again soon!");
-            return;
-        }
-        else {
-            taskList.addTask(line);
-            printLines("added: " + line);
-        }
-
-        listen(expectedTasksCount);
+        listen();
     }
 }
