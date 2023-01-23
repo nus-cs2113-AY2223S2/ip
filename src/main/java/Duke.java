@@ -14,19 +14,34 @@ public class Duke {
 
         String command;
         Scanner in = new Scanner(System.in);
-        boolean isReading = true;
+        String commands[] = new String[100];
 
-        while (isReading) {
+        int i = 0;
+
+        while (i < 100) {
+
             command = in.nextLine();
 
             if (command.equals("bye")) {
                 System.out.println("Bye. Hope to see you again soon!");
-                isReading = false;
+                break;
+            }
+
+            else if (command.equals("list")) {
+
+                for (int j = 0; j < i; j += 1) {
+                    System.out.println(j+1 + ". " + commands[j]);
+                }
+
+
             }
 
             else {
-                System.out.println(command);
+                commands[i] = command;
+                System.out.println("added: " + commands[i]);
+                i += 1;
             }
         }
+
     }
 }
