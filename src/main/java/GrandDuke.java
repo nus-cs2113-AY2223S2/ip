@@ -8,7 +8,6 @@ public class GrandDuke {
         + " \\____/_|  \\__,_|_| |_|\\__,_|___/  \\__,_|_|\\_\\___|\n";
 
         System.out.println("Hello from\n" + logo);
-        IO.greet();
-        IO.exit();
+        IO.startup();
     }
 }
