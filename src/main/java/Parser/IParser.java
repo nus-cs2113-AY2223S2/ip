@@ -7,4 +7,5 @@ public interface IParser {
      */
     public String getMessage();
     public Command getCommand() throws EmptyCommandException;
+    public Argument getCommandArguments(Command command);
 }
