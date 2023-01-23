@@ -4,6 +4,7 @@ public class Duke {
     public static void main(String[] args) {
 
         Scanner console = new Scanner(System.in);
+
         String barrier = "____________________________________________________________";
 
         String logo = " ____        _        \n"
@@ -11,16 +12,30 @@ public class Duke {
                 + "| | | | | | | |/ / _ \\\n"
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
+                
         System.out.println("Hello from\n" + logo);
 
         String greeting = barrier + "\nHello! I'm Duke\nWhat can I do for you?\n" + barrier + "\n";
-        String exit = barrier + "\nBye. Hope to see you again soon!\n" + barrier;
+        String exit = barrier + "\n\nBye. Hope to see you again soon!\n" + barrier;
         System.out.println(greeting);
 
         String input = console.nextLine();
 
         while(!input.equals("bye")){
-            System.out.println( barrier +"\n" + input + "\n" + barrier + "\n");
+            switch(input){
+                case "list": {
+                    System.out.println(barrier + "\n");
+                    Task.printAllTasks();
+                    System.out.println(barrier + "\n");
+                    break;
+                }
+                default: {
+                    System.out.println(barrier + "\n");
+                    Task temp = new Task(input);
+                    System.out.println("added: " + temp.printTask());
+                    System.out.println(barrier + "\n");
+                }
+            }
             input = console.nextLine();
         }
 
