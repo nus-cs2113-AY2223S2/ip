@@ -1,24 +1,49 @@
 import java.util.Scanner;
 public class Duke {
 
-    public static void line () {
-        System.out.println("    =====================================================================================");
+    public static void drawLine () {
+        System.out.println("=====================================================================================");
     }
-    public static void greet () {
-        line();
-        System.out.println("    Hello! I'm Duke\n" + "    What can I do for you?\n");
-        line();
+
+    public static void dukeChatBox(){
+        System.out.println("Duke:\n");
     }
-    public static void sayGoodbye() {
-        line();
-        System.out.println("    Bye. Hope to see you again soon!\n");
-        line();
+
+    public static void userChatBox(String name){
+        System.out.println(name + ":\n");
+    }
+    public static String greetAndAskName () {
+        drawLine();
+        dukeChatBox();
+        System.out.println("Hello! I'm Duke\n" + "What is your name?");
+        drawLine();
+
+        System.out.print("Please enter your name here: ");
+        String name;
+        Scanner in = new Scanner(System.in);
+        name = in.nextLine();
+        drawLine();
+
+        dukeChatBox();
+        System.out.println("Nice to meet you! " + name + "!");
+        System.out.println("What can I do for you?");
+        drawLine();
+
+        return name;
+    }
+
+    public static void sayGoodbye(String name) {
+        drawLine();
+        dukeChatBox();
+        System.out.println("Goodbye! " + name + " Hope to see you again soon!");
+        drawLine();
     }
 
     public static void echo(String echoWords){
-        line();
-        System.out.println("    " + echoWords + "\n");
-        line();
+        drawLine();
+        dukeChatBox();
+        System.out.println(echoWords);
+        drawLine();
     }
 
     public static void main(String[] args) {
@@ -28,18 +53,19 @@ public class Duke {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
-        greet();
+
+        String name = greetAndAskName();
 
         String line;
         Scanner in = new Scanner(System.in);
+        userChatBox(name);
         line = in.nextLine();
 
         while(line.equals("bye") == false){
             echo(line);
+            userChatBox(name);
             line = in.nextLine();
         }
-
-        sayGoodbye();
+        sayGoodbye(name);
     }
-
 }
