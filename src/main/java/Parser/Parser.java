@@ -13,8 +13,7 @@ public class Parser implements IParser {
     public void getNextMessage() throws EmptyCommandException {
         try {
             message = sc.nextLine();
-        }
-        catch (NoSuchElementException e) {
+        } catch (NoSuchElementException e) {
             throw new EmptyCommandException("Empty command");
         }
         if (message.isBlank()){
