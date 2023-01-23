@@ -6,22 +6,21 @@ public class CommandManager {
         this.command = " ";
     }
 
-    public void readCommand(){
-        Scanner in = new Scanner(System.in);
+    public String readCommand(Scanner in){
         String inputCommand;
         inputCommand = in.nextLine();
         this.command = inputCommand;
+        return inputCommand;
     }
 
     public void manageCommand(){
         Echo echo = new Echo();
         Bye bye = new Bye();
+        Scanner in = new Scanner(System.in);
 
-        while(this.command!="bye"){
-            this.readCommand();
+        while(!this.readCommand(in).equals("bye")){
             echo.echoInput(this.command);
         }
-
         bye.printBye();
 
     }
