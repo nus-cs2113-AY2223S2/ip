@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
 public class Duke {
+
     private static final Task[] tasks = new Task[100];
     private static int counter = 0;
 
@@ -8,30 +9,36 @@ public class Duke {
      * Prints out the status of the task and the task name
      */
     private static void printTasks() {
+        System.out.println(Message.LIST_TASKS.getMessage());
         for (int i = 0; i < counter; ++i) {
             boolean isDone = tasks[i].isDone();
             String symbol = isDone ? "X" : " ";
-            System.out.printf("%d:[%s] %s\n", i + 1, symbol, tasks[i].getTaskName());
+            System.out.printf(
+                    "%d.[%s] %s\n",
+                    (i + 1),
+                    symbol,
+                    tasks[i].getTaskName()
+            );
         }
     }
 
     /**
      * Mark or unmark a task based on the command and index
      *
-     * @param line Command and Task Number
+     * @param line Command to mark or un-mark
+     * @param num  Index to mark or un-mark
      */
-    private static void markOrUnmarkTask(String line) {
-        // Split the text based on the spacing
-        String[] arr = line.split(" ");
-
+    private static void markOrUnmarkTask(String line, String num) {
         // Get the integer form of the index
-        int index = Integer.parseInt(arr[1]) - 1;
+        int index = Integer.parseInt(num) - 1;
 
         // Check if the command is to mark
-        boolean isMark = arr[0].equals("mark");
+        boolean isMark = line.equals("mark");
 
         // Determine the comment to make
-        String remark = isMark ? "Nice! I've marked this task as done:" : "OK, I've marked this task as not done yet:";
+        String remark = isMark
+                ? Message.MARKED.getMessage()
+                : Message.UNMARKED.getMessage();
 
         // Set the task status based on the command
         tasks[index].setDone(isMark);
@@ -43,7 +50,12 @@ public class Duke {
         String symbol = isDone ? "X" : " ";
 
         // Print
-        System.out.printf("%s\n[%s] %s\n", remark, symbol, tasks[index].getTaskName());
+        System.out.printf(
+                "%s\n[%s] %s\n",
+                remark,
+                symbol,
+                tasks[index].getTaskName()
+        );
     }
 
     /**
@@ -59,24 +71,33 @@ public class Duke {
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        System.out.println("Hello! I'm Duke\nWhat can I do for you?");
+        boolean isRunning = true;
+        System.out.println(Message.WELCOME.getMessage());
 
-        while (true) {
-            String line = in.nextLine();
-            if (line.equals("list")) {
+        while (isRunning) {
+            if (!in.hasNextLine()) { // Important to avoid error
+                break;
+            }
+            String line = in.nextLine().trim();
+            String[] instructions = line.split(" ", 2);
+            switch (instructions[0]) {
+            case "list":
                 printTasks();
-            } else if (line.contains("mark")) {
-                markOrUnmarkTask(line);
-            } else {
+                break;
+            case "mark":
+            case "unmark":
+                markOrUnmarkTask(instructions[0], instructions[1]);
+                break;
+            case "bye":
+                isRunning = false;
+                break;
+            default:
                 addTask(line);
-                if (line.equals("bye")) {
-                    break;
-                }
                 System.out.println("added: " + line);
+                break;
             }
         }
-
-        System.out.println("Bye. Hope to see you again soon!");
-        in.close();
+        System.out.println(Message.GOODBYE.getMessage());
+        in.close(); // Closed to prevent memory leak
     }
 }
