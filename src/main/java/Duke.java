@@ -1,5 +1,16 @@
 import java.util.Scanner;
+
 public class Duke {
+
+    private static void printList(String[] s, int count) {
+        System.out.println("---------------------------------------------");
+        for (int i = 0; i < count; ++i) {
+            String index = Integer.toString(i + 1);
+            System.out.println(index + ". " + s[i]);
+        }
+        System.out.println("---------------------------------------------");
+    }
+
     public static void main(String[] args) {
         /*String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -13,17 +24,24 @@ public class Duke {
         System.out.println("---------------------------------------------");
         boolean isRunning = true;
         String line;
-        while(isRunning)
-        {
+        String[] taskList = new String[100];
+        int count = 0;
+        while (isRunning) {
             Scanner in = new Scanner(System.in);
             line = in.nextLine();
-            if (line.equals("bye"))
-            {
+            switch (line) {
+            case "list":
+                printList(taskList, count);
+                break;
+            case "bye":
                 isRunning = false;
-            }
-            else
-            {
-                System.out.println(line);
+                break;
+
+            default:
+                System.out.println("---------------------------------------------");
+                taskList[count] = line;
+                count++;
+                System.out.println("added: " + line);
                 System.out.println("---------------------------------------------");
             }
         }
