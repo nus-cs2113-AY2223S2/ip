@@ -1,8 +1,10 @@
 import java.util.Scanner;
+
 public class Duke {
     private static Task[] tasks = new Task[100];
     private static int currentStoredTaskIndex = 0;
     private static final String indent = "      ";
+
     public static void main(String[] args) {
         printIntro();
         mainLoop();
@@ -12,7 +14,7 @@ public class Duke {
 
     public static void addToList(Task task) {
         tasks[currentStoredTaskIndex] = task;
-        currentStoredTaskIndex ++;
+        currentStoredTaskIndex++;
         printMessage("added: " + task.description);
     }
 
@@ -40,25 +42,26 @@ public class Duke {
         };
         printMessage(message);
     }
-    public static  void mainLoop() {
+
+    public static void mainLoop() {
         Scanner in = new Scanner(System.in);
         String currentInput = in.nextLine();
         while (!currentInput.equals("bye")) {
             String[] words = currentInput.split(" ");
             switch (words[0]) {
-                case "list":
-                    list();
-                    break;
-                case "mark":
-                    mark(words);
-                    break;
-                case "unmark" :
-                    unmark(words);
-                    break;
-                default:
-                    Task newTask = new Task(currentInput);
-                    addToList(newTask);
-                    break;
+            case "list":
+                list();
+                break;
+            case "mark":
+                mark(words);
+                break;
+            case "unmark":
+                unmark(words);
+                break;
+            default:
+                Task newTask = new Task(currentInput);
+                addToList(newTask);
+                break;
             }
             currentInput = in.nextLine();
         }
@@ -67,10 +70,11 @@ public class Duke {
     public static String getFormattedTask(Task task, int number) {
         return number + ". " + task.getDisplayString();
     }
+
     public static String[] getFormattedList() {
         String[] formattedList = new String[currentStoredTaskIndex + 1];
         formattedList[0] = "Here are the tasks in your list:";
-        for (int i = 0; i < currentStoredTaskIndex ; i ++) {
+        for (int i = 0; i < currentStoredTaskIndex; i++) {
             formattedList[i + 1] = getFormattedTask(tasks[i], i + 1);
         }
         return formattedList;
@@ -80,9 +84,11 @@ public class Duke {
         String[] intro = {"Hello! I'm Tom", "What can I do for you?"};
         printMessage(intro);
     }
+
     public static void printExit() {
         printMessage("Bye. Hope to see you again soon!");
     }
+
     public static void printMessage(String message) {
         printSeparator();
         printIndent();
@@ -102,6 +108,7 @@ public class Duke {
     public static void printIndent() {
         System.out.print(indent);
     }
+
     public static void printSeparator() {
         System.out.print("   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
     }
