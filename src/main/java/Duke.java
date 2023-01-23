@@ -67,13 +67,13 @@ public class Duke {
             }
 
             separator();
-            String outputMessage = String.format("OK, I've marked task %d as not done:", itemNumber);
+            String outputMessage = String.format("OK, I've marked task %d as not done:",
+                itemNumber);
             formatMessage(outputMessage);
             unmarkItem(itemNumber);
             formatMessage(displayItem(itemNumber));
             separator();
-        }
-        else {
+        } else {
             separator();
             addItem(inputMessage);
             separator();
@@ -93,28 +93,29 @@ public class Duke {
             formatMessage("List is empty!");
         } else {
             for (int i = 0; i < numItems; i++) {
-                String item = displayItem(i+1);
-                String outputMessage = String.format("%d.%s", i+1, item);
+                String item = displayItem(i + 1);
+                String outputMessage = String.format("%d.%s", i + 1, item);
                 formatMessage(outputMessage);
             }
         }
     }
 
     public String displayItem(int index) {
-        String itemStatus = userList.get(index-1).getStatusIcon();
-        String itemDescription = userList.get(index-1).getDescription();
+        String itemStatus = userList.get(index - 1).getStatusIcon();
+        String itemDescription = userList.get(index - 1).getDescription();
         return String.format("[%s] %s", itemStatus, itemDescription);
     }
 
     public void markItem(int index) {
-        userList.get(index-1).setAsDone();
+        userList.get(index - 1).setAsDone();
     }
 
     public void unmarkItem(int index) {
-        userList.get(index-1).setAsNotDone();
+        userList.get(index - 1).setAsNotDone();
     }
 
     public static class Task {
+
         protected String description;
         protected boolean isDone;
 
