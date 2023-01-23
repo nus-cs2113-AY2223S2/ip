@@ -1,3 +1,6 @@
+/**
+ * Print bye and exit code.CS
+ */
 public class Bye {
     private String bye = " Bye. Hope to see you again soon!\n";
 

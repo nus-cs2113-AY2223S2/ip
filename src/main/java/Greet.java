@@ -1,6 +1,7 @@
 /**
- * To print logo and hello
- * Private attributes are logo and hello, public method to print greeting
+ * Print logo and hello.
+ * Private attributes are logo and hello,
+ * Public method to print greeting.
  */
 public class Greet {
     private String[] logo = {" ____        _        "

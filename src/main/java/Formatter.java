@@ -4,9 +4,10 @@ public class Formatter {
     private int separationLineLength = 50;
 
     /**
-     * To print spaces for indentation purpose
-     * length 4 for horizontal line, length 6 for words
-     * @param size
+     * Prints spaces for indentation purpose.
+     * Length 4 for horizontal line, length 6 for words.
+     *
+     * @param size of indentation.
      */
     public void printIndentation(int size){
         this.indentationSize = size;
@@ -16,11 +17,11 @@ public class Formatter {
     }
 
     /**
-     * Adding indentation for each element of the string array
-     * Java array pass by reference
-     * Copy of pointers still point to the original object
-     * @param inputArray
-     * @return String[]
+     * Adds indentation for each element of the string array.
+     * Java array pass by reference.
+     * Copy of pointers still point to the original object.
+     *
+     * @param inputArray array.
      */
 
     public void addStringIndentation(String[] inputArray){
@@ -31,13 +32,13 @@ public class Formatter {
 
 
     /**
-     * To draw horizontal separation lines in between lines of text
-     * Use unicode box drawings light horizontal(0x2500)
-     * Important to note the code is in hex
-     * Character.toString(char c) converts a character to string to use print output the character
-     * Otherwise, use print(char) method of PrintStream class to output a single character
-     * @author: wenxin
-     * @param[in]: length/number of characters of the horizontal separation line
+     * Draws horizontal separation lines in between lines of text.
+     * Use unicode box drawings light horizontal(0x2500).
+     * Important to note the code is in hex.
+     * Character.toString(char c) converts character to string to print.
+     * Otherwise, use print(char) method of PrintStream class to output a single character.
+     *
+     * @param[in]: length/number of characters of the horizontal separation line.
      */
     public void drawSeparationLine(){
         printIndentation(4);

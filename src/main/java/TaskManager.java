@@ -1,9 +1,7 @@
 import java.util.Arrays;
 /**
- * Task manager with private attribute string array to store tasks
- * Add tasks
- * Update task status: done/undone
- * List and print tasks
+ * Task manager with private attribute task array to store tasks.
+ * Public methods to read/write tasks
  */
 public class TaskManager {
     private Task[] tasks = new Task[100];
@@ -13,6 +11,11 @@ public class TaskManager {
         this.count = 0;
     }
 
+    /**
+     * Add a new task into tasks array.
+     *
+     * @param task to be added.
+     */
     public void addTask(Task task){
         Echo echo = new Echo();
         this.tasks[count]=task;
@@ -20,6 +23,12 @@ public class TaskManager {
         echo.echoInput(task.taskDescription);
     }
 
+    /**
+     * Mark tasks as done/not done.
+     *
+     * @param inputWords splited input command.
+     * @param status mark/unmark.
+     */
     public void editTaskStatus(String[] inputWords, String status){
         Tool tool = new Tool();
         Formatter formatter = new Formatter();
@@ -32,7 +41,8 @@ public class TaskManager {
             }else{
                 tasks[index].undo();
             }
-            editedArray[i-1]="  "+ '[' + tasks[index].getTaskStatus()+"] "+tasks[index].taskDescription;
+            editedArray[i-1]="  "+ '[' + tasks[index].getTaskStatus()+"] "
+                    +tasks[index].taskDescription;
         }
         if(status.equals("mark")){
             System.out.println("      Nice! I've marked this task as done:");
@@ -44,6 +54,9 @@ public class TaskManager {
         formatter.drawSeparationLine();
     }
 
+    /**
+     * List all tasks.
+     */
     public void listTask(){
         Formatter formatter = new Formatter();
         Tool tool = new Tool();

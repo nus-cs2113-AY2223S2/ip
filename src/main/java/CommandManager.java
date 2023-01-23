@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
 /**
- * To manage input commands
- * Keep reading input command until 'bye'
+ * Manage input commands.
+ * Keep reading input command until 'bye'.
  */
 public class CommandManager {
     private String command;
@@ -19,11 +19,11 @@ public class CommandManager {
     }
 
     /**
-     * If command is 'bye', exit
-     * If command is 'list', list out all the tasks
-     * If command is mark, mark a particular task as done
-     * If command is unmark, mark a particular task as undone
-     * Else add new task
+     * If command is 'bye', exit.
+     * If command is 'list', list out all the tasks.
+     * If command is mark, mark a particular task as done.
+     * If command is unmark, mark a particular task as undone.
+     * Else add new task.
      */
     public void manageCommand(){
 
