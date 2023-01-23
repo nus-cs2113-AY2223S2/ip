@@ -32,25 +32,25 @@ public class Duke {
         do {
             try {
                 switch (parser.getCommand()) {
-				case EXIT:
-					isExit = true;
-					break;
-				case LIST:
-					list = taskController.getTask();
-					printSystemMessage(list);
-					break;
-				case TASK:
-					taskController.addTask(parser.getMessage());
-					printSystemMessage("added: " + parser.getMessage());
-					break;
-				case UNMARK:
-					printSystemMessage(taskController.markTask(parser.getCommandArguments(Command.UNMARK)));
-					break;
-				case MARK:
-					printSystemMessage(taskController.markTask(parser.getCommandArguments(Command.MARK)));
-					break;
-				default:
-					break;
+                case EXIT:
+                    isExit = true;
+                    break;
+                case LIST:
+                    list = taskController.getTask();
+                    printSystemMessage(list);
+                    break;
+                case TASK:
+                    taskController.addTask(parser.getMessage());
+                    printSystemMessage("added: " + parser.getMessage());
+                    break;
+                case UNMARK:
+                    printSystemMessage(taskController.markTask(parser.getCommandArguments(Command.UNMARK)));
+                    break;
+                case MARK:
+                    printSystemMessage(taskController.markTask(parser.getCommandArguments(Command.MARK)));
+                    break;
+                default:
+                    break;
                 }
             } catch (EmptyCommandException e) {
                 printSystemMessage("You passed an illegal command!\n\tI will stop here because I am angry Duke");
