@@ -4,14 +4,12 @@ public class Duke {
 
     static int taskLimit = 100;
 
-    static String[] tasks = new String[taskLimit];
+    static Task[] tasks = new Task[taskLimit];
     static int taskCount = 0;
-
-
 
     public static void addTask(String task){
         if(taskCount < taskLimit){
-            tasks[taskCount] = task;
+            tasks[taskCount] = new Task(task);
             taskCount++;
             println("____________________________________________________________");
             printf(" added: %s\n", task);
@@ -26,7 +24,33 @@ public class Duke {
     public static void listTasks(){
         println("____________________________________________________________");
         for(int i=1;i<=taskCount;i++){
-            printf(" %d. %s\n", i, tasks[i-1]);
+            Task currentTask = tasks[i-1];
+            String taskString = String.format("[%s] %s", currentTask.getStatusIcon(), currentTask.getDescription());
+            printf(" %d. %s\n", i, taskString);
+        }
+        println("____________________________________________________________");
+    }
+
+    public static void markTask(int index){
+        println("____________________________________________________________");
+        if(index >= taskCount || index < 0){
+            println(" Invalid index!");
+        } else {
+            tasks[index].setDone(true);
+            println(" Nice! I've marked this task as done:");
+            printf("   [X] %s\n", tasks[index].getDescription());
+        }
+        println("____________________________________________________________");
+    }
+
+    public static void unmarkTask(int index){
+        println("____________________________________________________________");
+        if(index >= taskCount || index < 0){
+            println(" Invalid index!");
+        } else {
+            tasks[index].setDone(false);
+            println(" OK, I've marked this task as not done yet:");
+            printf("   [ ] %s\n", tasks[index].getDescription());
         }
         println("____________________________________________________________");
     }
@@ -35,11 +59,21 @@ public class Duke {
         Scanner in = new Scanner(System.in);
         while(true){
             String input = in.nextLine();
-            switch(input){
+            String[] args = input.split(" ");
+            int index;
+            switch(args[0]){
             case "bye":
                 return;
             case "list":
                 listTasks();
+                break;
+            case "mark":
+                index = Integer.parseInt(args[1])-1;
+                markTask(index);
+                break;
+            case "unmark":
+                index = Integer.parseInt(args[1])-1;
+                unmarkTask(index);
                 break;
             default:
                 addTask(input);
