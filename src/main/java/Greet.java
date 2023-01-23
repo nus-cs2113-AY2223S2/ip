@@ -16,15 +16,15 @@ public class Greet {
     public void printHello(){
         Formatter formatter = new Formatter();
         Tool tool = new Tool();
-        formatter.addIndentation(logo);
-        formatter.addIndentation(hello);
+        formatter.addStringIndentation(logo);
+        formatter.addStringIndentation(hello);
 
-        formatter.drawSeparationLine(45);
+        formatter.drawSeparationLine();
         formatter.printIndentation(6);
         System.out.print("Hello from\n");
         tool.printStringArray(logo);
-        formatter.drawSeparationLine(45);
+        formatter.drawSeparationLine();
         tool.printStringArray(hello);
-        formatter.drawSeparationLine(45);
+        formatter.drawSeparationLine();
     }
 }

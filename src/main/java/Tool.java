@@ -6,10 +6,18 @@ public class Tool {
         }
     }
 
-    public String[] addIndex(String[] inputArray, int size){
+    /**
+     * Adding index and task status in front of the task description
+     * @param inputArray
+     * @param size
+     * @return
+     */
+    public String[] addIndex(Task[] inputArray, int size){
+        String[] indexedArray = new String[size];
         for (int i=1; i<=size; i+=1){
-            inputArray[i-1] = Integer.toString(i) + '.' + inputArray[i-1];
+
+            indexedArray[i-1] = Integer.toString(i) + '.' + '[' + inputArray[i-1].getTaskStatus() + "] " + inputArray[i-1].taskDescription;
         }
-        return Arrays.copyOf(inputArray, size);
+        return indexedArray;
     }
 }

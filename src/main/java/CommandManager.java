@@ -21,20 +21,29 @@ public class CommandManager {
     /**
      * If command is 'bye', exit
      * If command is 'list', list out all the tasks
-     * Else store input commands and echo to users
+     * If command is mark, mark a particular task as done
+     * If command is unmark, mark a particular task as undone
+     * Else add new task
      */
     public void manageCommand(){
-        Echo echo = new Echo();
+
         Bye bye = new Bye();
         Scanner in = new Scanner(System.in);
         TaskManager taskManager = new TaskManager();
 
         while(!this.readCommand(in).equals("bye")){
             if(this.command.toLowerCase().equals("list")){
-                taskManager.printTask();
+                taskManager.listTask();
             }else{
-                taskManager.addTask(this.command);
-                echo.echoInput(this.command);
+                String inputWords[] = this.command.split(" ");
+                if(inputWords[0].toLowerCase().equals("mark")){
+                    taskManager.editTaskStatus(inputWords, "mark");
+                }else if(inputWords[0].toLowerCase().equals("unmark")){
+                    taskManager.editTaskStatus(inputWords, "unmark");
+                }else{
+                    Task task = new Task(this.command);
+                    taskManager.addTask(task);
+                }
             }
         }
         bye.printBye();

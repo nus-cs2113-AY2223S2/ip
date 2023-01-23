@@ -5,9 +5,9 @@ public class Echo {
     public void echoInput(String inputCommand){
         this.command = inputCommand;
         Formatter formatter = new Formatter();
-        formatter.drawSeparationLine(45);
+        formatter.drawSeparationLine();
         formatter.printIndentation(6);
         System.out.print("Added: "+this.command+'\n');
-        formatter.drawSeparationLine(45);
+        formatter.drawSeparationLine();
     }
 }

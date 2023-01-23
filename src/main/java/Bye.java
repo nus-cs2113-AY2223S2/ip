@@ -3,9 +3,9 @@ public class Bye {
 
     public void printBye(){
         Formatter formatter = new Formatter();
-        formatter.drawSeparationLine(45);
+        formatter.drawSeparationLine();
         formatter.printIndentation(6);
         System.out.print(this.bye);
-        formatter.drawSeparationLine(45);
+        formatter.drawSeparationLine();
     }
 }
