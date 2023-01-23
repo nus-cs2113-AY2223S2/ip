@@ -1,10 +1,16 @@
 package Duke;
 
 import java.util.Scanner;
+import Parser.EmptyCommandException;
+import Parser.IParser;
+import Parser.Parser;
 
 public class Duke {
     static String LINEBREAK = "________________________________________\n";
-    static Scanner sc = new Scanner(System.in);
+    static String LINE_TAB_STRING = "    ";
+    static String COMMAND_TAB_STRING = "     ";
+    private static Scanner sc = new Scanner(System.in);
+    private static IParser parser = new Parser(sc);
     /**
      * Main program that runs the Duke program.
      * Greets users and exits.
@@ -12,6 +18,17 @@ public class Duke {
      */
     public static void main(String[] args) {
         greet();
+        try {
+            do {
+                parser.getNextMessage();
+                if (parser.isExit()) {
+                    break;
+                }
+                printSystemMessage(parser.getMessage());
+            } while(true);
+        } catch (EmptyCommandException e) {
+            printSystemMessage("You passed an illegal command!\n\tI will stop here because I am angry Duke");
+        }
         bye();
     }
     /**
@@ -23,11 +40,14 @@ public class Duke {
         System.out.println(LINEBREAK);
     }
     /**
-     * Gets the a message from console that user inputs
-     * @return String
+     * Prints message with a tab in front followed by a linebreak.
+     * Function used in contrast to printMessage to contrast user command and Duke response
+     * @param message Output message to print
      */
-    private static String getMessage() {
-        return sc.nextLine();
+    private static void printSystemMessage(String message) {
+        System.out.println(LINE_TAB_STRING + LINEBREAK
+                        + COMMAND_TAB_STRING + message + '\n'
+                        + LINE_TAB_STRING + LINEBREAK);
     }
     /**
      * Prints greet message to user
@@ -39,13 +59,13 @@ public class Duke {
         + "| |_| | |_| |   <  __/\n"
         + "|____/ \\__,_|_|\\_\\___|\n";
 
-        printMessage(logo);
-        printMessage("Hello! I'm Duke\nWhat can I do for you?");
+        System.out.println(logo);
+        printSystemMessage("Hello! I'm Duke\n     What can I do for you?");
     }
     /**
      * Prints bye messgae to user
      */
     private static void bye() {
-        printMessage("Bye. Hope to see you again soon!");
+        printSystemMessage("Bye. Hope to see you again soon!");
     }
 }
