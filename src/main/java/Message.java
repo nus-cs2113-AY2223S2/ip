@@ -1,0 +1,17 @@
+public enum Message {
+    GOODBYE("Bye. Hope to see you again soon!"),
+    LIST_TASKS("Here are the tasks in your list:"),
+    MARKED("Nice! I've marked this task as done:"),
+    UNMARKED("OK, I've marked this task as not done yet:"),
+    WELCOME("Hello! I'm Duke\nWhat can I do for you?");
+
+    private final String message;
+
+    Message(String message) {
+        this.message = message;
+    }
+
+    public String getMessage() {
+        return this.message;
+    }
+}
