@@ -1,9 +1,15 @@
 package Duke;
 
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.stream.IntStream;
+
 import Parser.EmptyCommandException;
 import Parser.IParser;
 import Parser.Parser;
+import Task.EmptyTaskList;
+import Task.ITaskController;
+import Task.TaskController;
 
 public class Duke {
     static String LINEBREAK = "________________________________________\n";
@@ -11,6 +17,7 @@ public class Duke {
     static String COMMAND_TAB_STRING = "     ";
     private static Scanner sc = new Scanner(System.in);
     private static IParser parser = new Parser(sc);
+    private static ITaskController taskController = new TaskController();
     /**
      * Main program that runs the Duke program.
      * Greets users and exits.
@@ -18,26 +25,32 @@ public class Duke {
      */
     public static void main(String[] args) {
         greet();
-        try {
-            do {
-                parser.getNextMessage();
-                if (parser.isExit()) {
-                    break;
+        boolean isExit = false;
+        do {
+            try {
+                switch (parser.getCommand()) {
+				case EXIT:
+					isExit = true;
+					break;
+				case LIST:
+					ArrayList<?> list = taskController.getTask();
+					printSystemMessage(list);
+					break;
+				case TASK:
+					taskController.addTask(parser.getMessage());
+					printSystemMessage("added: " + parser.getMessage());
+					break;
+				default:
+					break;
                 }
-                printSystemMessage(parser.getMessage());
-            } while(true);
-        } catch (EmptyCommandException e) {
-            printSystemMessage("You passed an illegal command!\n\tI will stop here because I am angry Duke");
-        }
+            } catch (EmptyCommandException e) {
+                printSystemMessage("You passed an illegal command!\n\tI will stop here because I am angry Duke");
+                break;
+            } catch (EmptyTaskList e) {
+                printSystemMessage(e.getMessage());
+            }
+        } while(!isExit);
         bye();
-    }
-    /**
-     * Prints message followed by a linebreak
-     * @param message Output message to print
-     */
-    private static void printMessage(String message) {
-        System.out.println(message);
-        System.out.println(LINEBREAK);
     }
     /**
      * Prints message with a tab in front followed by a linebreak.
@@ -48,6 +61,13 @@ public class Duke {
         System.out.println(LINE_TAB_STRING + LINEBREAK
                         + COMMAND_TAB_STRING + message + '\n'
                         + LINE_TAB_STRING + LINEBREAK);
+    }
+    private static <T> void printSystemMessage(ArrayList<T> list) {
+        System.out.println(LINE_TAB_STRING + LINEBREAK.substring(0, LINEBREAK.length()-1));
+        IntStream.range(0, list.size())
+            .mapToObj(index -> String.format("%s%d. %s", COMMAND_TAB_STRING, index+1, list.get(index)))
+            .forEach(System.out::println);
+        System.out.println(LINE_TAB_STRING + LINEBREAK);
     }
     /**
      * Prints greet message to user
