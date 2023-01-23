@@ -10,7 +10,21 @@ public class Parser implements IParser {
         this.sc = sc;
     }
     @Override
-    public void getNextMessage() throws EmptyCommandException {
+    public String getMessage() {
+        return message;
+    }
+    public boolean isList() {
+        return (message.toLowerCase().contains("list"));
+    }
+    public boolean isExit() {
+        return (message.toLowerCase().contains("bye"));
+    }
+    /**
+     * Gets the a message from console that user inputs.
+     * Checks if the input message is empty and raises Exception if empty.
+     * @exception EmptyCommandException
+     */
+    private void getNextMessage() throws EmptyCommandException {
         try {
             message = sc.nextLine();
         } catch (NoSuchElementException e) {
@@ -21,18 +35,19 @@ public class Parser implements IParser {
         }
     }
     @Override
-    public boolean isExit() {
+    public Command getCommand() throws EmptyCommandException {
+        getNextMessage();
         if (message == null) {
-            // Null message should never happen because getNextMessage would
-            // filter such cases.
-            // In the event that message becomes null,
-            // then this command should return true by definition.
-            return true;
+            throw new EmptyCommandException("Empty command");
         }
-        return (message.toLowerCase().contains("bye"));
-    }
-    @Override
-    public String getMessage() {
-        return message;
+        if (isExit()) {
+            return Command.EXIT;
+        }
+        else if (isList()) {
+            return Command.LIST;
+        }
+        else {
+            return Command.TASK;
+        }
     }
 }
