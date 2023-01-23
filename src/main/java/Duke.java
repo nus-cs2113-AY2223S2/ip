@@ -8,6 +8,12 @@ public class Duke {
         System.out.println("____________________________________________________________" + '\n');
     }
 
+    public static void initialGreeting() {
+        System.out.println("____________________________________________________________");
+        System.out.println(" Hello! I'm Duke");
+        System.out.println(" What can I do for you?");
+        System.out.println("____________________________________________________________");
+    }
 
     public static void bye() {
         System.out.println(" Bye. Hope to see you again soon!");
@@ -25,7 +31,14 @@ public class Duke {
         // Greet the user
         initialGreeting();
 
-        
+        // Echos
+        String line;
+        Scanner in = new Scanner(System.in);
+        line = in.nextLine();
+        while (!line.equals("bye")) {
+            echosCommands(line);
+            line = in.nextLine();
+        }
 
         // Bye and terminate the program
         bye();
