@@ -1,9 +1,11 @@
 package Duke;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
+import Parser.Command;
 import Parser.EmptyCommandException;
 import Parser.IParser;
 import Parser.Parser;
@@ -25,6 +27,7 @@ public class Duke {
      */
     public static void main(String[] args) {
         greet();
+        ArrayList<?> list;
         boolean isExit = false;
         do {
             try {
@@ -33,12 +36,18 @@ public class Duke {
 					isExit = true;
 					break;
 				case LIST:
-					ArrayList<?> list = taskController.getTask();
+					list = taskController.getTask();
 					printSystemMessage(list);
 					break;
 				case TASK:
 					taskController.addTask(parser.getMessage());
 					printSystemMessage("added: " + parser.getMessage());
+					break;
+				case UNMARK:
+					printSystemMessage(taskController.markTask(parser.getCommandArguments(Command.UNMARK)));
+					break;
+				case MARK:
+					printSystemMessage(taskController.markTask(parser.getCommandArguments(Command.MARK)));
 					break;
 				default:
 					break;
@@ -49,18 +58,23 @@ public class Duke {
             } catch (EmptyTaskList e) {
                 printSystemMessage(e.getMessage());
             }
+            catch (IllegalArgumentException e) {
+                printSystemMessage(e.getMessage());
+            }
         } while(!isExit);
         bye();
     }
     /**
-     * Prints message with a tab in front followed by a linebreak.
-     * Function used in contrast to printMessage to contrast user command and Duke response
+     * Streams message and prints each line of message based
+     * on new line feed.
      * @param message Output message to print
      */
     private static void printSystemMessage(String message) {
-        System.out.println(LINE_TAB_STRING + LINEBREAK
-                        + COMMAND_TAB_STRING + message + '\n'
-                        + LINE_TAB_STRING + LINEBREAK);
+        System.out.println(LINE_TAB_STRING + LINEBREAK.substring(0, LINEBREAK.length()-1));
+        Arrays.stream(message.split("\n"))
+                .map(item -> COMMAND_TAB_STRING + item + '\n')
+                .forEach(System.out::print);
+        System.out.println(LINE_TAB_STRING + LINEBREAK);
     }
     private static <T> void printSystemMessage(ArrayList<T> list) {
         System.out.println(LINE_TAB_STRING + LINEBREAK.substring(0, LINEBREAK.length()-1));
@@ -80,7 +94,7 @@ public class Duke {
         + "|____/ \\__,_|_|\\_\\___|\n";
 
         System.out.println(logo);
-        printSystemMessage("Hello! I'm Duke\n     What can I do for you?");
+        printSystemMessage("Hello! I'm Duke\nWhat can I do for you?");
     }
     /**
      * Prints bye messgae to user
