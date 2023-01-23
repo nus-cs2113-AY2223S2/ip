@@ -15,7 +15,7 @@ public class Duke {
     public static void addToList(Task task) {
         tasks[currentStoredTaskIndex] = task;
         currentStoredTaskIndex++;
-        printMessage("added: " + task.description);
+        printMessage("added: " + task.getDescription());
     }
 
     public static void list() {
@@ -25,7 +25,7 @@ public class Duke {
 
     public static void mark(String[] words) {
         int taskIndex = Integer.parseInt(words[1]) - 1;
-        tasks[taskIndex].markAsDone();
+        tasks[taskIndex].setDone(true);
         String[] message = {
                 "Cool! I've marked this task as done:",
                 tasks[taskIndex].getDisplayString()
@@ -35,7 +35,7 @@ public class Duke {
 
     public static void unmark(String[] words) {
         int taskIndex = Integer.parseInt(words[1]) - 1;
-        tasks[taskIndex].markAsNotDone();
+        tasks[taskIndex].setDone(false);
         String[] message = {
                 "Ok, I've marked this task as not done yet:",
                 tasks[taskIndex].getDisplayString()
