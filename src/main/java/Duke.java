@@ -35,14 +35,35 @@ public class Duke {
     public static void sayGoodbye(String name) {
         drawLine();
         dukeChatBox();
-        System.out.println("Goodbye! " + name + " Hope to see you again soon!");
+        System.out.println("Goodbye, " + name + "! Hope to see you again soon!");
         drawLine();
     }
 
-    public static void echo(String echoWords){
+    public static void addTask(String echoWords, String[] tasks, int numOfTasks){
         drawLine();
         dukeChatBox();
-        System.out.println(echoWords);
+
+        tasks[numOfTasks] = echoWords;
+
+        System.out.println("added: " + echoWords);
+        drawLine();
+    }
+
+    public static void listOutTasks(String[] tasks){
+        drawLine();
+        dukeChatBox();
+
+        System.out.println("Below is your task list");
+
+        int i = 1;
+        for(String task: tasks){
+            if(task == null){
+                break;
+            }
+            System.out.println(i + ". " + task);
+            i++;
+        }
+
         drawLine();
     }
 
@@ -61,8 +82,18 @@ public class Duke {
         userChatBox(name);
         line = in.nextLine();
 
+        String[] tasks = new String[100];
+        int numOfTasks = 0;
+
         while(line.equals("bye") == false){
-            echo(line);
+            if(line.equals("list")){
+                listOutTasks(tasks);
+            }
+            else {
+                addTask(line, tasks, numOfTasks);
+                numOfTasks ++;
+            }
+
             userChatBox(name);
             line = in.nextLine();
         }
