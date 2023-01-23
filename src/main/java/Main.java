@@ -9,17 +9,30 @@ public class Main {
         line = in.nextLine();
         while (!line.equals("bye")) {
             if (line.equals("list")) {
+                System.out.println("Here's the current list of tasks:");
                 for (Task item: todoList) {
                     item.printTask();
                 }
-                line = in.nextLine();
             } else {
-                System.out.println("Added: " + line);
-                Task newTask = new Task(line);
-                todoList.add(newTask);
-                line = in.nextLine();
+                String[] words = line.split(" ");
+                if (words[0].equals("mark")) {
+                    int indexToMark = Integer.parseInt(words[1]) - 1;
+                    todoList.get(indexToMark).markAsDone();
+                    System.out.println("Great! I have marked this task as done:");
+                    todoList.get(indexToMark).printTask();
+                } else if (words[0].equals("unmark")) {
+                    int indexToMark = Integer.parseInt(words[1]) - 1;
+                    todoList.get(indexToMark).markAsUndone();
+                    System.out.println("Hmmm! I will mark this task as not done:");
+                    todoList.get(indexToMark).printTask();
+                } else {
+                    Task newTask = new Task(line);
+                    todoList.add(newTask);
+                    System.out.println("Added: " + line);
+                }
             }
+            line = in.nextLine();
         }
-        System.out.println(System.lineSeparator() + "Bye. Hope to see you again soon!");
+        System.out.println("Bye. Hope to see you again soon!");
     }
 }
