@@ -6,7 +6,6 @@ public class Inu {
     public static final String greeting = " Woof Woof! I'm Inu! Your personal Shib-Assistant ^.^\n";
     public static final String prompt = " What can I do for you today?\n";
     public static final String farewell = " Bye. Hope to see you again soon ^.^!\n";
-    public static final String listInfo = " Here is your task list ^.^ \n";
     public static final String listMessage = " Woof! Here are your current tasks ^.^:\n";
     public static final String markMessage = " Woof! I've marked this task as completed for you:\n";
     public static final String unmarkMessage = " Woof! I've marked this task as incompleted for you:\n";
