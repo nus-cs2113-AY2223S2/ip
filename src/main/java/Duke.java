@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.*;
 
 public class
 Duke {
@@ -15,18 +16,30 @@ Duke {
                 + "____________________________________________________________\n"
         );
 
-        String goodBye = ("Bye. Hope to see you again soon!\n"
+        String goodBye = ("____________________________________________________________\n"
+                + "Bye. Hope to see you again soon!\n"
                 + "____________________________________________________________\n");
 
         System.out.println(greeting);
         Scanner myObj = new Scanner(System.in);
         String userInput;
         userInput = myObj.nextLine();
+        ArrayList<String> toDolist = new ArrayList<String>(100);
 
         while (!userInput.equals("bye")) {
-            System.out.println("____________________________________________________________\n"
-                    + userInput + "\n"
-                    + "____________________________________________________________\n");
+            int i = 1;
+            if (userInput.equals("list")) {
+                for (String item : toDolist) {
+                    System.out.println(i + "." + item);
+                    i += 1;
+                }
+                System.out.println("____________________________________________________________\n");
+            } else {
+                System.out.println("____________________________________________________________\n"
+                        + "added:" + userInput + "\n"
+                        + "____________________________________________________________");
+                toDolist.add(userInput);
+            }
             userInput = myObj.nextLine();
         }
         System.out.println(goodBye);
