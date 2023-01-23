@@ -3,15 +3,15 @@
  * Private attributes are logo and hello, public method to print greeting
  */
 public class Greet {
-    private String[] logo = {" ____        _        \n"
-                    , "|  _ \\ _   _| | _____ \n"
-                    , "| | | | | | | |/ / _ \\\n"
-                    , "| |_| | |_| |   <  __/\n"
-                    , "|____/ \\__,_|_|\\_\\___|\n"};
+    private String[] logo = {" ____        _        "
+                    , "|  _ \\ _   _| | _____ "
+                    , "| | | | | | | |/ / _ \\"
+                    , "| |_| | |_| |   <  __/"
+                    , "|____/ \\__,_|_|\\_\\___|"};
 
-    private String[] hello = {"Hello! I'm Duke, your task assistant.\n"
+    private String[] hello = {"Hello! I'm Duke, your task assistant."
                     , "Nice to meet you :D"
-                    , "What can I do for you?\n"};
+                    , "What can I do for you?"};
 
     public void printHello(){
         Formatter formatter = new Formatter();

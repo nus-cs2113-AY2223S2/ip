@@ -7,7 +7,7 @@ public class Echo {
         Formatter formatter = new Formatter();
         formatter.drawSeparationLine(45);
         formatter.printIndentation(6);
-        System.out.print(this.command+'\n');
+        System.out.print("Added: "+this.command+'\n');
         formatter.drawSeparationLine(45);
     }
 }
