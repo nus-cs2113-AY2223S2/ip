@@ -1,27 +1,44 @@
 import java.util.Scanner;
 public class Duke {
-    public static void horizontalLine() {
+    public static void createHorizontalLine() {
         System.out.println("____________________________________________________________");
     }
+
+    public static void printItems(String[] container) {
+        for (int i = 0; i < container.length; ++i) {
+            if (container[i] == null) {
+                break;
+            } else {
+                System.out.println((i + 1) + ". " + container[i]);
+            }
+        }
+    }
     public static void main(String[] args) {
-        horizontalLine();
+        createHorizontalLine();
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
 
         String userInput;
         Scanner in = new Scanner(System.in);
+        String[] tasks = new String[100];
+
+        int currentIndex = 0;
 
         while (true) {
-            horizontalLine();
+            createHorizontalLine();
             System.out.println();
             userInput = in.nextLine();
-            horizontalLine();
+            createHorizontalLine();
             if (userInput.equals("bye")) {
                 System.out.println("Bye. Hope to see you again soon!");
-                horizontalLine();
+                createHorizontalLine();
                 break;
+            } else if (userInput.equals("list")) {
+                printItems(tasks);
             } else {
-                System.out.println(userInput);
+                tasks[currentIndex] = userInput;
+                System.out.println("added: " + userInput);
+                ++currentIndex;
             }
         }
 
