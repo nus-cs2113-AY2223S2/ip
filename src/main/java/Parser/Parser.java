@@ -1,5 +1,6 @@
 package Parser;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Parser implements IParser {
@@ -10,7 +11,12 @@ public class Parser implements IParser {
     }
     @Override
     public void getNextMessage() throws EmptyCommandException {
-        message = sc.nextLine();
+        try {
+            message = sc.nextLine();
+        }
+        catch (NoSuchElementException e) {
+            throw new EmptyCommandException("Empty command");
+        }
         if (message.isBlank()){
             throw new EmptyCommandException("Empty command");
         }
