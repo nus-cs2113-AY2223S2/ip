@@ -19,44 +19,58 @@ public class Duke {
         System.out.println("Bye. Hope to see you again soon!");
         printDivider();
     }
-    public static void echoMessage(String message) {
-            printDivider();
-            if (message.equals("")) {
-                System.out.println("...");
-                printDivider();
-            }
-            System.out.println(message);
-    }
+
     public static void main(String[] args) {
 
         printGreeting();
 
         String input;
         Scanner in = new Scanner(System.in);
-        String[] tasks = new String[100];
+        Task[] tasks = new Task[100];
         int taskCounter = 0;
+
+        boolean status = true;
         do {
             input = in.nextLine();
-            if (input.equalsIgnoreCase("bye")) {
+            String action = input.split(" ")[0];
+            switch(action) {
+            case "bye":
+                status = false;
                 break;
-            }
-            if (input.equalsIgnoreCase("list")) {
+            case "list":
                 if (taskCounter == 0) {
                     System.out.println("You are free today :)");
                 } else {
                     for (int i = 0; i < taskCounter; ++i) {
-                        System.out.println(i + 1 + ". " + tasks[i]);
+                        System.out.print(i + 1 + ".");
+                        tasks[i].printDescWithStatus();
                     }
                 }
                 printDivider();
-            } else {
-                tasks[taskCounter] = input;
-                ++taskCounter;
-                System.out.println("added: " + input);
+                break;
+            case "mark":
+            case "unmark":
+                int index = Integer.parseInt(input.split(" ")[1])-1;
+                if (index < 0 || index >= taskCounter) {
+                    System.out.println("Task number does not exist in list");
+                    printDivider();
+                    break;
+                }
+                if (action.equals("mark")) {
+                    tasks[index].markDone();
+                } else {
+                    tasks[index].markUndone();
+                }
                 printDivider();
+                break;
+            default:
+                tasks[taskCounter] = new Task(input);
+                ++taskCounter;
+                System.out.println("Added: " + input);
+                printDivider();
+                break;
             }
-
-        } while (true);
+        } while (status);
 
         printBye();
     }
