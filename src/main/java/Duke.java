@@ -5,89 +5,112 @@ public class Duke {
         System.out.println("=====================================================================================");
     }
 
-    public static void dukeChatBox(){
+    public static void createDukeChatBox(){
         System.out.println("Duke:\n");
     }
 
-    public static void userChatBox(String name){
-        System.out.println(name + ":\n");
+    public static void createUserChatBox(String username){
+        System.out.println(username + ":\n");
     }
     public static String greetAndAskName () {
+        //greet and ask name
         drawLine();
-        dukeChatBox();
+        createDukeChatBox();
         System.out.println("Hello! I'm Duke\n" + "What is your name?");
         drawLine();
 
+        //for user to enter name
         System.out.print("Please enter your name here: ");
-        String name;
+        String username;
         Scanner in = new Scanner(System.in);
-        name = in.nextLine();
+        username = in.nextLine().trim();
         drawLine();
 
-        dukeChatBox();
-        System.out.println("Nice to meet you! " + name + "!");
+        //Greet with name (personalisation)
+        createDukeChatBox();
+        System.out.println(">o< Nice to meet you! " + username + "! >o<");
         System.out.println("What can I do for you?");
         drawLine();
 
-        return name;
+        return username;
     }
 
-    public static void sayGoodbye(String name) {
+    public static void sayGoodbye(String username) {
+        //say goodbye with name
         drawLine();
-        dukeChatBox();
-        System.out.println("Goodbye, " + name + "! Hope to see you again soon!");
+        createDukeChatBox();
+        System.out.println(">o< Goodbye, " + username + "! Hope to see you again soon! >o<");
         drawLine();
     }
 
-    public static void addTask(String line, int sequenceOfTask, Task[] taskList){
+    public static void addTask(String taskName, int indexOfTask, Task[] taskList){
         //add task
-        Task newTask = new Task(line);
-
-        //draw "add task" chat
-        drawLine();
-        dukeChatBox();
-        System.out.println("added: " + line);
-        drawLine();
+        Task newTask = new Task(taskName.trim());
 
         //add new task to list
-        taskList[sequenceOfTask] = newTask;
+        taskList[indexOfTask] = newTask;
+
+        //"add task" chat
+        drawLine();
+        createDukeChatBox();
+        System.out.println("added: " + newTask.getTaskName());
+        drawLine();
     }
 
-    public static void markAsDone(String line, Task[] taskList){
-        int spacePosition = line.indexOf(" ");
-        String numberString = line.substring(spacePosition+1);
-        int number = Integer.parseInt(numberString);
-        taskList[number-1].isDone = true;
+    public static void markTaskAsDone(String taskName, Task[] taskList, int indexOfTask){
+        //analyse what is the task to be marked as done
+        int spacePosition = taskName.indexOf(" ");
+        String numberString = taskName.substring(spacePosition+1);
+        int taskNumber = Integer.parseInt(numberString);
 
         //draw chat box
         drawLine();
-        dukeChatBox();
-        System.out.println("Nice! I've marked this task as done: ");
-        System.out.println("[" + taskList[number-1].getStatusIcon() + "] " + taskList[number-1].getTaskName());
+        createDukeChatBox();
+
+        if(taskNumber >  indexOfTask) {
+            System.out.println("): There is no Task number " + taskNumber + " yet! :(" );
+        } else {
+            //mark task as done
+            taskList[taskNumber - 1].isDone = true;
+
+            System.out.println("Nice! I've marked this task as done: ");
+            System.out.println("[" + taskList[taskNumber - 1].getStatusIcon() + "] " + taskList[taskNumber - 1].getTaskName());
+        }
+
         drawLine();
     }
 
-    public static void markAsUndone(String line, Task[] taskList){
-        int spacePosition = line.indexOf(" ");
-        String numberString = line.substring(spacePosition+1);
-        int number = Integer.parseInt(numberString);
-        taskList[number-1].isDone = false;
+    public static void markTaskAsUndone(String taskName, Task[] taskList, int indexOfTask) {
+        //analyse what is the task to be marked as undone
+        int spacePosition = taskName.indexOf(" ");
+        String numberString = taskName.substring(spacePosition + 1);
+        int taskNumber = Integer.parseInt(numberString);
 
         //draw chat box
         drawLine();
-        dukeChatBox();
-        System.out.println("Ok! I've marked this task as nor done yet: ");
-        System.out.println("[" + taskList[number-1].getStatusIcon() + "] " + taskList[number-1].getTaskName());
+        createDukeChatBox();
+
+        //if there is no such taskNumber being added yet
+        if (taskNumber > indexOfTask) {
+            System.out.println("): There is no Task number " + taskNumber + " yet! :(");
+        } else {
+            //mark task as undone
+            taskList[taskNumber - 1].isDone = false;
+
+            System.out.println("Ok! I've marked this task as nor done yet: ");
+            System.out.println("[" + taskList[taskNumber - 1].getStatusIcon() + "] " + taskList[taskNumber - 1].getTaskName());
+        }
         drawLine();
     }
 
-    public static void printList(Task[] taskList, int sequenceOfTask ){
+    public static void printList(Task[] taskList, int indexOfTask ){
         drawLine();
-        dukeChatBox();
+        createDukeChatBox();
 
         System.out.println("Below is your task list");
 
-        for (int i = 0; i < sequenceOfTask; ++i){
+        //printing out all the tasks
+        for (int i = 0; i < indexOfTask; ++i){
             System.out.println( (i+1) + ". [" + taskList[i].getStatusIcon() + "] " + taskList[i].getTaskName());
         }
 
@@ -102,35 +125,41 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
 
-        String name = greetAndAskName();
+        //greet and ask name and greet again
+        String username = greetAndAskName();
+        String input;
 
-        String line;
-        Scanner in = new Scanner(System.in);
-        userChatBox(name);
-        line = in.nextLine();
 
+        //create task list & index of task
         Task[] taskList = new Task[100];
-        int sequenceOfTask = 0;
+        int indexOfTask = 0;
 
-        while(!line.equals("bye")){
-            if(line.equals("list")){
-                printList(taskList, sequenceOfTask);
+        //user input what he or she wants the chatbot to do
+        Scanner in = new Scanner(System.in);
+        createUserChatBox(username);
+        input = in.nextLine().trim();
+
+        //according to the input, chatbot reply accordingly
+        //exit while loop only when userinput is "bye"
+        while(!input.equals("bye")){
+            if(input.equals("list")){
+                printList(taskList, indexOfTask);
             }
-            else if(line.contains("unmark")){
-                markAsUndone(line, taskList);
+            else if(input.contains("unmark")){
+                markTaskAsUndone(input, taskList, indexOfTask);
             }
-            else if(line.contains("mark")){
-                markAsDone(line, taskList);
+            else if(input.contains("mark")){
+                markTaskAsDone(input, taskList, indexOfTask);
             }
             else {
-                addTask(line, sequenceOfTask, taskList);
-                sequenceOfTask ++;
+                addTask(input, indexOfTask, taskList);
+                indexOfTask ++;
             }
 
-            userChatBox(name);
-            line = in.nextLine();
+            createUserChatBox(username);
+            input = in.nextLine().trim();
         }
 
-        sayGoodbye(name);
+        sayGoodbye(username);
     }
 }
