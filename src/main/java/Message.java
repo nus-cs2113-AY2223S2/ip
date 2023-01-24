@@ -39,4 +39,7 @@ public class Message {
         System.out.println(outro);
         printHLine();
     }
+
+    public static String taskDone = "Nice! I've marked this task as done: ";
+    public static String taskUndone = "Okay, I've marked this task as not done yet: ";
 }
