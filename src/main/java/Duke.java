@@ -1,27 +1,14 @@
 import java.util.Scanner;
 
 public class Duke {
-
     public static Task[] tasks = new Task[100];
     public static int tasksLength = 0;
-    public static void printSeperator(){
+
+    public static void printSeperator() {
         System.out.println("____________________________________________________________\n");
     }
 
-    public static void printWelcome(){
-        System.out.println(
-                "\tHello! I'm Duke\n" +
-                        "\tWhat can I do for you?\n");
-        printSeperator();
-    }
-
-    public static void printGoodbye(){
-        System.out.println(
-                "\tBye. Hope to see you again soon!\n"
-        );
-        printSeperator();
-    }
-    public static void printLogo(){
+    public static void printLogo() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -31,7 +18,21 @@ public class Duke {
         printSeperator();
     }
 
-    public static void addToList(String userInput){
+    public static void printWelcome() {
+        System.out.println(
+                "\tHello! I'm Duke\n" +
+                        "\tWhat can I do for you?\n");
+        printSeperator();
+    }
+
+    public static void printGoodbye() {
+        System.out.println(
+                "\tBye. Hope to see you again soon!\n"
+        );
+        printSeperator();
+    }
+
+    public static void addToList(String userInput) {
         Task newTask = new Task(userInput);
         tasks[tasksLength] = newTask;
         tasksLength += 1;
@@ -40,33 +41,36 @@ public class Duke {
         printSeperator();
     }
 
-    public static void printTasks(){
+    public static void printTasks() {
         printSeperator();
-        for (int i = 0; i < tasksLength; i++){
-            System.out.println("\t" + (i+1) + ".[" + tasks[i].getStatusIcon() + "] " + tasks[i].getTask());
+        for (int i = 0; i < tasksLength; i++) {
+            System.out.println("\t" + (i + 1) + ".[" + tasks[i].getStatusIcon() + "] " + tasks[i].getTask());
         }
         printSeperator();
     }
 
-    public static void mark(String userInput){
+    public static void mark(String userInput) {
         int taskNumber = Integer.parseInt(userInput);
-        tasks[taskNumber-1].MarkStatusDone();
+        tasks[taskNumber - 1].MarkStatusDone();
         printSeperator();
         System.out.println("\tNice! I've marked this task as done:\n" +
-                "\t\t[X] " + tasks[taskNumber-1].getTask());
+                "\t\t[X] " + tasks[taskNumber - 1].getTask());
         printSeperator();
     }
-    public static void unmark(String userInput){
+
+    public static void unmark(String userInput) {
         int taskNumber = Integer.parseInt(userInput);
-        tasks[taskNumber-1].MarkStatusUndone();
+        tasks[taskNumber - 1].MarkStatusUndone();
         printSeperator();
         System.out.println("\tOK, I've marked this task as not done yet:\n" +
-                "\t\t[ ] " + tasks[taskNumber-1].getTask());
+                "\t\t[ ] " + tasks[taskNumber - 1].getTask());
         printSeperator();
     }
-    public static void ChatPolling(){
+
+    public static void ChatPolling() {
         String userInput;
-        while(true) {
+
+        while (true) {
             Scanner in = new Scanner(System.in);
             userInput = in.nextLine();
 
@@ -74,26 +78,21 @@ public class Duke {
                 printSeperator();
                 break;
             }
+
             if (userInput.equals("list")) {
                 printTasks();
-            }
-            else if (userInput.contains("unmark")){
+            } else if (userInput.contains("unmark")) {
                 userInput = userInput.substring(7);
                 unmark(userInput);
-            }
-            else if (userInput.contains("mark")){
+            } else if (userInput.contains("mark")) {
                 userInput = userInput.substring(5);
                 mark(userInput);
-            }
-            else {
+            } else {
                 addToList(userInput);
             }
-
         }
     }
-
-
-    public static void main(String[] args) {
+    public static void main (String[]args){
         printLogo();
         printWelcome();
         ChatPolling();
