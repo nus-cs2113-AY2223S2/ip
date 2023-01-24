@@ -15,16 +15,25 @@ public class Duke {
 
         String command;
         Scanner in = new Scanner(System.in);
-        command = in.nextLine();
+        String[] list = new String[100];
+        int listCount = 0;
 
         while(true) {
-            Conversation.line();
-            Conversation.copy(command);
-            Conversation.line();
             command = in.nextLine();
-            if(command.equals("bye")) {
+            if(command.equals("list")) {
+                for(int i = 0; i < listCount; i += 1) {
+                    System.out.println((i + 1) + ". " + list[i]);
+                }
+            }
+            else if(command.equals("bye")) {
                 Conversation.farewell();
                 break;
+            }
+            else {
+                System.out.print("added: ");
+                Conversation.copy(command);
+                list[listCount] = command;
+                listCount += 1;
             }
         }
     }
