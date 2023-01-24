@@ -15,7 +15,7 @@ public class Duke {
         System.out.println("What can I do for you?");
         System.out.println("____________________________________________________________");
 
-        ArrayList<String> todo = new ArrayList<String>();//Create an arraylist object to store commands
+        ArrayList<Task> todo = new ArrayList<Task>();//Create an arraylist object to store commands
 
         while(true){
             String line = "";
@@ -25,13 +25,28 @@ public class Duke {
                 System.out.println("Bye. Hope to see you again soon!");
                 break;
             }
+            else if(line.split(" ")[0].equals("mark")){
+                int index = Integer.parseInt(line.split(" ")[1])-1;
+                todo.get(index).setDone(true);
+                System.out.println("Nice! I've marked this task as done:");
+                System.out.println("[X] "+todo.get(index).getDescription());
+            }
+            else if(line.split(" ")[0].equals("unmark")){
+                int index = Integer.parseInt(line.split(" ")[1])-1;
+                todo.get(index).setDone(false);
+                System.out.println("OK, I've marked this task as not done yet:");
+                System.out.println("[ ] "+todo.get(index).getDescription());
+            }
             else if(line.equals("list")){
+                System.out.println("Here are the tasks in your list: ");
                 for(int i = 0; i<todo.size(); i++){
-                    System.out.println(String.valueOf(i+1)+". "+todo.get(i));
+                    String status = todo.get(i).getStatusIcon();
+                    System.out.println(String.valueOf(i+1) + ". [" + status+"] " + todo.get(i).getDescription());
                 }
             }
-            else {
-                todo.add(line);
+            else{
+                Task t = new Task(line);
+                todo.add(t);
                 System.out.println("added: "+line);
             }
         }
