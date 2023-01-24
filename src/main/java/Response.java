@@ -1,13 +1,17 @@
 import java.util.ArrayList;
+
 public class Response {
+    /** Prints a line to indicate the start and end of a message */
     private void printLine() {
         System.out.println("____________________________________________________________");
     }
 
+    /** Prints a string indicating that the messages are coming from LUKE */
     private void printSignature() {
         System.out.print("[Luke]: ");
     }
 
+    /** Prints a hello message to the user */
     public void sayHi() {
         LukeLogo logo = new LukeLogo();
         printLine();
@@ -17,6 +21,7 @@ public class Response {
         printLine();
     }
 
+    /** Prints a goodbye message to the user */
     public void sayBye() {
         printLine();
         printSignature();
@@ -24,6 +29,11 @@ public class Response {
         printLine();
     }
 
+    /**
+     * Prints a string for the user.
+     *
+     * @param toPrint The string to be printed.
+     */
     public void printString(String toPrint) {
         printLine();
         printSignature();
@@ -31,13 +41,23 @@ public class Response {
         printLine();
     }
 
-    public void printAddTask(String task) {
+    /**
+     * Prints a confirmation to the user that a task have been successfully added to the TaskOrganizer.
+     *
+     * @param taskName The name of the task that has been added to the TaskOrganizer.
+     */
+    public void printAddTask(String taskName) {
         printLine();
         printSignature();
-        System.out.println("Added: " + task);
+        System.out.println("Added: " + taskName);
         printLine();
     }
 
+    /**
+     * Prints a confirmation to the user that a task have been marked as complete.
+     *
+     * @param taskName The name of the task that is designated to be marked.
+     */
     public void printMarkTask(String taskName) {
         printLine();
         printSignature();
@@ -45,6 +65,11 @@ public class Response {
         printLine();
     }
 
+    /**
+     * Prints a confirmation to the user that a task have been unmarked.
+     *
+     * @param taskName The name of the task that is designated to be unmarked.
+     */
     public void printUnmarkTask(String taskName) {
         printLine();
         printSignature();
@@ -52,39 +77,45 @@ public class Response {
         printLine();
     }
 
-    public void printTaskList(ArrayList<Task> task) {
+    /**
+     * Prints a list of all the task in the TaskOrganizer.
+     *
+     * @param tasks The list of all the tasks in the TaskOrganizer.
+     */
+    public void printTaskList(ArrayList<Task> tasks) {
         printLine();
         printSignature();
-        int index = 1;
+        int serialNumber = 1;
         System.out.println("Printing Tasks...");
-        for (Task i : task) {
-            System.out.print(index + ". ");
+        for (Task i : tasks) {
+            System.out.print(serialNumber + ". ");
             i.printTaskName();
-            index += 1;
+            serialNumber += 1;
         }
         printLine();
     }
 
-    public void emptyList() {
+    /** Prints a message telling the user that the task organizer is empty */
+    public void printEmptyList() {
         printLine();
         printSignature();
         System.out.println("The list is empty!");
         printLine();
     }
 
-    public void invalidCommand() {
+    /** Prints a message telling the user that he/she have entered an invalid command */
+    public void printInvalidCommand() {
         printLine();
         printSignature();
         System.out.println("You have entered an invalid command!");
         printLine();
     }
 
-    public void outOfBounds() {
+    /** Prints a message telling the user that the index entered is out of bounds */
+    public void printOutOfBounds() {
         printLine();
         printSignature();
         System.out.println("You have entered an index that does not exist!");
         printLine();
     }
-
-
 }

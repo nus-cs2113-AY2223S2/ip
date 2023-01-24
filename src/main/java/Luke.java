@@ -1,4 +1,5 @@
 import java.util.Scanner;
+
 public class Luke {
     public static void main(String[] args) {
         Response response = new Response();
@@ -15,54 +16,50 @@ public class Luke {
 
             String[] processedInput = input.split(" ", 2); //Split input into [command] and [task]
             String command = processedInput[0];
+
             //Check if command add is invoked.
-            if (command.equals("add")) {
+            switch (command) {
+            case "add":
                 String task = processedInput[1];
                 taskOrganizer.addTask(task);
                 response.printAddTask(task);
-            }
-            //Check if command list is invoked.
-            else if (command.equals("list")) {
+                break;
+            case "list":  //Check if command list is invoked.
                 if (!taskOrganizer.isEmpty()) {
                     response.printTaskList(taskOrganizer.getTaskList());
+                } else {
+                    response.printEmptyList();
                 }
-                else {
-                    response.emptyList();
-                }
-            }
-            else if (command.equals("mark")) {
+                break;
+            case "mark":
                 try {
-                    int serialNumber = Integer.parseInt(processedInput[1]);
-                    if (!taskOrganizer.outOfBounds(serialNumber)) {
-                        taskOrganizer.markTask(serialNumber);
-                        response.printMarkTask(taskOrganizer.getTaskbySerial(serialNumber));
+                    int taskID = Integer.parseInt(processedInput[1]);
+                    if (!taskOrganizer.isOutOfBounds(taskID)) {
+                        taskOrganizer.markTask(taskID);
+                        response.printMarkTask(taskOrganizer.getTaskByID(taskID));
+                    } else {
+                        response.printOutOfBounds();
                     }
-                    else {
-                        response.outOfBounds();
-                    }
+                } catch (NumberFormatException e) {
+                    response.printInvalidCommand();
                 }
-                catch (NumberFormatException e) {
-                    response.invalidCommand();
-                }
-            }
-            else if (command.equals("unmark")) {
+                break;
+            case "unmark":
                 try {
-                    int serialNumber = Integer.parseInt(processedInput[1]);
-                    if (!taskOrganizer.outOfBounds(serialNumber)) {
-                        taskOrganizer.unmarkTask(serialNumber);
-                        response.printUnmarkTask(taskOrganizer.getTaskbySerial(serialNumber));
+                    int taskID = Integer.parseInt(processedInput[1]);
+                    if (!taskOrganizer.isOutOfBounds(taskID)) {
+                        taskOrganizer.unmarkTask(taskID);
+                        response.printUnmarkTask(taskOrganizer.getTaskByID(taskID));
+                    } else {
+                        response.printOutOfBounds();
                     }
-                    else {
-                        response.outOfBounds();
-                    }
+                } catch (NumberFormatException e) {
+                    response.printInvalidCommand();
                 }
-                catch (NumberFormatException e) {
-                    response.invalidCommand();
-                }
-            }
-            //Else echo user input
-            else {
+                break;
+            default:  //Else echo user input
                 response.printString(input);
+                break;
             }
         }
         response.sayBye();
