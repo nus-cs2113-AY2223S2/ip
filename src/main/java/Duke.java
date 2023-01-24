@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Duke {
 
@@ -60,12 +61,26 @@ public class Duke {
         Scanner in = new Scanner(System.in);
 
         System.out.println("Hai, Ningensama-tachi! Kon-Nakiri!\n");
-        AsciiArtPrinter();
+
         String instruction = in.nextLine();
+        ArrayList<String> todolist = new ArrayList<String>();
+        int size = 0;
+
         while(!instruction.equals("bye")) {
-            System.out.println(instruction);
+            if(instruction.equals("list")) {
+                for(int i = 0; i < size; i += 1) {
+                    String print = String.format("%d. %s", i+1, todolist.get(i));
+                    System.out.println(print);
+                }
+            } else {
+                todolist.add(instruction);
+                size += 1;
+                System.out.print("added: ");
+                System.out.println(instruction);
+            }
             instruction = in.nextLine();
         }
+        AsciiArtPrinter();
         System.out.println("Otsu-Nakiri!");
         //CS2113T will not let students customise chatbots next sem onwards because of me
     }
