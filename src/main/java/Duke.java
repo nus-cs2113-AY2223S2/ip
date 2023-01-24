@@ -1,3 +1,4 @@
+import java.util.Scanner;
 public class Duke {
 
     public static void main(String[] args) {
@@ -7,13 +8,24 @@ public class Duke {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
-        Conversation.lines();
+        Conversation.line();
         Conversation.greeting();
         Conversation.question();
-        //Conversation.gap();
-        Conversation.lines();
-        Conversation.farewell();
-        //Conversation.gap();
-        Conversation.lines();
+        Conversation.line();
+
+        String command;
+        Scanner in = new Scanner(System.in);
+        command = in.nextLine();
+
+        while(true) {
+            Conversation.line();
+            Conversation.copy(command);
+            Conversation.line();
+            command = in.nextLine();
+            if(command.equals("bye")) {
+                Conversation.farewell();
+                break;
+            }
+        }
     }
 }

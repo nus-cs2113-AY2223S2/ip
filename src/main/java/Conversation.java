@@ -1,6 +1,6 @@
 public class Conversation {
     public static void greeting() {
-        System.out.println("Hello! I'm Duke");
+        System.out.println("Hello there! I'm Duke");
     }
     public static void question() {
         System.out.println("What can I do for you?");
@@ -8,10 +8,14 @@ public class Conversation {
     public static void farewell() {
         System.out.println("Bye. Hope to see you again soon!");        
     }
-    public static void lines() {
+    public static void line() {
         System.out.println("____________________________________________________________");
     }
     public static void gap() {
         System.out.println("");
+    }
+    public static void copy(String line) {
+        System.out.println(line);
+
     }
 }
