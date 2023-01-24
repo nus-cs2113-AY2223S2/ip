@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Duke {
     public static void main(String[] args) {
-        String line = ("\u2500".repeat(50));
+        String line = ("─".repeat(50));
         Task[] List = new Task[100];
 
         System.out.println(line);
@@ -13,24 +13,50 @@ public class Duke {
         int index = 0;
 
         while (true) {
-            String userInput = myObj.nextLine();
-            if (userInput.equals("bye")) {
+            String userInput = myObj.next();
+            switch (userInput) {
+            case "bye":
                 System.out.println(line);
                 System.out.println("Bye. Hope to see you again soon!");
                 System.out.println(line);
-                break;
-            } else if (userInput.equals("list")) {
+                return;
+            case "list":
                 System.out.println(line);
                 for (int i = 0; i < index; i++) {
-                    System.out.println((i + 1) + ". " + List[i].getTaskDescription());
+                    System.out.println((i + 1) + ". " + "[" + List[i].getStatusIcon() + "] " + List[i].getTaskDescription());
                 }
                 System.out.println(line);
-            } else {
+                break;
+            case "mark":
+            case "unmark":
                 System.out.println(line);
-                List[index] = new Task(userInput);
-                List[index].setTaskDescription(userInput);
+                if (myObj.hasNextInt()) {
+                    int taskNumber = myObj.nextInt();
+                    if (userInput.equals("mark")) {
+                        List[taskNumber - 1].setDone(true);
+                        System.out.println("Nice! I've marked this task as done:\n");
+                    } else {
+                        List[taskNumber - 1].setDone(false);
+                        System.out.println("OK, I've marked this task as not done yet:\n");
+                    }
+                    System.out.println("[" + List[taskNumber - 1].getStatusIcon() + "] " + List[taskNumber - 1].getTaskDescription());
+                    System.out.println(line);
+                } else {
+                    String taskDescription = userInput + " " + myObj.next();
+                    List[index] = new Task(taskDescription);
+                    List[index].setTaskDescription(taskDescription);
+                    index++;
+                    System.out.println("added: " + taskDescription);
+                    System.out.println(line);
+                }
+                break;
+            default:
+                System.out.println(line);
+                String taskDescription = userInput + myObj.nextLine();
+                List[index] = new Task(taskDescription);
+                List[index].setTaskDescription(taskDescription);
                 index++;
-                System.out.println("added: " + userInput);
+                System.out.println("added: " + taskDescription);
                 System.out.println(line);
             }
         }
