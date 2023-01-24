@@ -5,11 +5,11 @@ public class Duke {
         Scanner scanner = new Scanner(System.in);
 
         String logo =
-                  " __   __\n"
-                + "|  | |  |   ____     _  _   _    _\n"
-                + "|  |_|  |  / _  \\   | |/_\\ | |  | |\n"
-                + "|   _   | | |_|  \\  |  /   | \\_/  |\n"
-                + "|__| |__|  \\___/\\_\\ |_|     \\__/|_|\n";
+                " __   __\n"
+                        + "|  | |  |   ____     _  _   _    _\n"
+                        + "|  |_|  |  / _  \\   | |/_\\ | |  | |\n"
+                        + "|   _   | | |_|  \\  |  /   | \\_/  |\n"
+                        + "|__| |__|  \\___/\\_\\ |_|     \\__/|_|\n";
 
         String divider = "____________________________________________________________";
 
@@ -25,7 +25,6 @@ public class Duke {
         String[] storedUserTexts = new String[100];
         int userTextCount = 0;
         while(!exit){
-            System.out.println(userCommand);
             switch (userCommand){
                 case "list":
                     // display list
