@@ -2,6 +2,8 @@ import java.util.Scanner;
 
 public class Duke {
 
+    public static String[] list = new String[100];
+    public static int listLength = 0;
     public static void printSeperator(){
         System.out.println("____________________________________________________________\n");
     }
@@ -29,18 +31,39 @@ public class Duke {
         printSeperator();
     }
 
-    public static void echoChatTillBye(){
+    public static void addToList(String userInput){
+        list[listLength] = userInput;
+        listLength += 1;
+        printSeperator();
+        System.out.println("\tadded: " + userInput);
+        printSeperator();
+    }
+
+    public static void printList(){
+        printSeperator();
+        for (int i = 0; i < listLength; i++){
+            System.out.println("\t" + (i+1) + ". " + list[i]);
+        }
+        printSeperator();
+    }
+    public static void ChatPolling(){
         String userInput;
         while(true) {
             Scanner in = new Scanner(System.in);
             userInput = in.nextLine();
+
             if (userInput.equals("bye")) {
                 printSeperator();
                 break;
             }
-            printSeperator();
-            System.out.println("\t" + userInput);
-            printSeperator();
+
+            if (userInput.equals("list")) {
+                printList();
+            }
+            else {
+                addToList(userInput);
+            }
+
         }
     }
 
@@ -48,7 +71,7 @@ public class Duke {
     public static void main(String[] args) {
         printLogo();
         printWelcome();
-        echoChatTillBye();
+        ChatPolling();
         printGoodbye();
     }
 }
