@@ -6,16 +6,17 @@ public class Duke {
                 + "____________________________________________________________\n");
     }
 
-    public static void exit(){
+    public static void exit() {
         System.out.println("____________________________________________________________\n"
                 + "Bye. Hope to see you again soon!\n"
                 + "____________________________________________________________\n");
     }
 
-    public static void echo(String input){
+    public static void echo(String input) {
         System.out.println("____________________________________________________________\n"
-                + input + "\n____________________________________________________________\n");
+                + "added: " + input + "\n____________________________________________________________\n");
     }
+
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -23,15 +24,29 @@ public class Duke {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
-        
+        String[] tasks = new String[100];
+        int taskNumber = 0;
+        boolean byeCommand = false;
+
         greet();
-        while (true){
+        while (byeCommand == false){
             Scanner in = new Scanner(System.in);
             String userInput = in.nextLine();
-            if (userInput.equals("bye")) {
+            switch (userInput) {
+            case "bye":
+                byeCommand = true;
+                break;
+            case "list":
+                for (int i = 0; i < taskNumber; i += 1){
+                    System.out.println((i + 1) + ". " + tasks[i]);
+                }
+                break;
+            default:
+                echo(userInput);
+                tasks[taskNumber] = userInput;
+                taskNumber += 1;
                 break;
             }
-            echo(userInput);
         }
         exit();
     }
