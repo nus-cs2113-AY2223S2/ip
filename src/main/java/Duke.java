@@ -24,12 +24,18 @@ public class Duke {
         Scanner in = new Scanner(System.in);
         line = in.nextLine();
         
-        while (!line.matches("bye")) {
+        while (!line.equalsIgnoreCase("bye")) {
             String horizontalLine = "____________________________________________________________\n";
             System.out.print(horizontalLine);
             
-            if (line.matches("list")) {
+            if (line.equalsIgnoreCase("list")) {
                 list.printList();
+            } else if (line.startsWith("mark ")) {
+                String[] words = line.split(" ");
+                list.markTaskDone(Integer.parseInt(words[1]));
+            } else if (line.startsWith("unmark ")) {
+                String[] words = line.split(" ");
+                list.markTaskUndone(Integer.parseInt(words[1]));
             } else {
                 list.addList(line);
                 System.out.println("added: " + line);
