@@ -1,41 +1,63 @@
 import java.util.Scanner;
 public class Duke {
+    public static void printDivider() {
+        System.out.println("____________________________________________________________");
+    }
+    public static void printGreeting() {
+        String logo = " ____\n"
+                    + "|    \\ ___ _ _ ___\n"
+                    + "|  |  | .'| | | -_|\n"
+                    + "|____/|__,|\\_/|___|\n";
+
+        printDivider();
+        System.out.print(logo);
+        System.out.println("Hi, I'm Dave!\n"
+                + "What can I do for you?");
+        printDivider();
+    }
+    public static void printBye() {
+        System.out.println("Bye. Hope to see you again soon!");
+        printDivider();
+    }
+    public static void echoMessage(String message) {
+            printDivider();
+            if (message.equals("")) {
+                System.out.println("...");
+                printDivider();
+            }
+            System.out.println(message);
+    }
     public static void main(String[] args) {
-        String divider = "____________________________________________________________";
 
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-
-        System.out.println(divider);
-        System.out.println("Hello from\n" + logo);
-
-        System.out.println(divider);
-        System.out.println("Hello! I'm Duke\n"
-                         + "What can I do for you?");
-        System.out.println(divider);
+        printGreeting();
 
         String input;
         Scanner in = new Scanner(System.in);
+        String[] tasks = new String[100];
+        int taskCounter = 0;
         do {
-            input =in.nextLine();
-
-            if (input.toLowerCase().equals("bye")) {
+            input = in.nextLine();
+            if (input.equalsIgnoreCase("bye")) {
                 break;
             }
-            System.out.println(divider);
-            if (input.equals("")) {
-                System.out.println("Please enter a message to echo or 'bye' to exit.");
-                System.out.println(divider);
+            if (input.equalsIgnoreCase("list")) {
+                if (taskCounter == 0) {
+                    System.out.println("You are free today :)");
+                } else {
+                    for (int i = 0; i < taskCounter; ++i) {
+                        System.out.println(i + 1 + ". " + tasks[i]);
+                    }
+                }
+                printDivider();
+            } else {
+                tasks[taskCounter] = input;
+                ++taskCounter;
+                System.out.println("added: " + input);
+                printDivider();
             }
-            System.out.println(input);
+
         } while (true);
 
-        System.out.println(divider);
-        System.out.println("Bye. Hope to see you again soon!");
-
-        System.out.println(divider);
+        printBye();
     }
 }
