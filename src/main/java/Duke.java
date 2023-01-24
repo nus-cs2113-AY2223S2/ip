@@ -23,11 +23,11 @@ public class Duke {
         } else if (input.startsWith("mark")) {
             int itemIndex = Integer.parseInt(input.substring(5)) - 1;
             tasks[itemIndex].setTaskStatus(true);
-            output = "Nice! I've marked this task as done:\n\t" + getEachItemLine(itemIndex);
+            output = "\tNice! I've marked this task as done:\n\t" + getEachItemLine(itemIndex);
         } else if (input.startsWith("unmark")) {
             int itemIndex = Integer.parseInt(input.substring(7)) - 1;
             tasks[itemIndex].setTaskStatus(false);
-            output = "OK, I've marked this task as not done yet:\n\t" + getEachItemLine(itemIndex);
+            output = "\tOK, I've marked this task as not done yet:\n\t" + getEachItemLine(itemIndex);
         } else {
             tasks[numOfTasks] = new Task(input);
             numOfTasks++;
