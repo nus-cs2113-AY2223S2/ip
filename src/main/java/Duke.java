@@ -53,7 +53,7 @@ public class Duke {
     }
     public static void main(String[] args) {
         greet();
-        Task texts[] = new Task[100];
+        Task[] texts = new Task[100];
         int counter = 0;
         String input;
         Scanner in = new Scanner(System.in);
@@ -65,10 +65,12 @@ public class Duke {
                 String[] arrayOfInput = input.split(" ");
                 if (arrayOfInput[0].equals("mark")) {
                     texts[Integer.parseInt(arrayOfInput[1]) - 1].markAsDone();
-                    printMark(texts[Integer.parseInt(arrayOfInput[1]) - 1].isDone, texts[Integer.parseInt(arrayOfInput[1]) - 1].taskName);
+                    printMark(texts[Integer.parseInt(arrayOfInput[1]) - 1].isDone,
+                            texts[Integer.parseInt(arrayOfInput[1]) - 1].taskName);
                 } else if (arrayOfInput[0].equals("unmark")) {
                     texts[Integer.parseInt(arrayOfInput[1]) - 1].markAsNotDone();
-                    printMark(texts[Integer.parseInt(arrayOfInput[1]) - 1].isDone, texts[Integer.parseInt(arrayOfInput[1]) - 1].taskName);
+                    printMark(texts[Integer.parseInt(arrayOfInput[1]) - 1].isDone,
+                            texts[Integer.parseInt(arrayOfInput[1]) - 1].taskName);
                 } else {
                     add(texts, input, counter);
                     counter += 1;
