@@ -1,19 +1,35 @@
 import java.util.Scanner;
 
 public class Duke {
-    private static String[] tasks = new String[100];
+    private static Task[] tasks = new Task[100];
     private static int numOfTasks = 0;
+
+    public static String getEachItemLine(int itemNumber) {
+        String icon = tasks[itemNumber].getStatusIcon();
+        String output;
+        output = ("[" + icon + "] " + tasks[itemNumber].description);
+        return output;
+    }
     public static String getResponse(String input) {
-        String output = "";
+        String output;
         if (input.equals("list")) {
+            output = "\tHere are the tasks in your list:\n";
             for (int i = 0; i < numOfTasks; i++) {
-                output += ("\t" + Integer.toString(i + 1) + ". " + tasks[i]);
+                output += "\t" + Integer.toString(i + 1) + "." + getEachItemLine(i);
                 if (i != numOfTasks - 1) {
                     output += "\n";
                 }
             }
+        } else if (input.startsWith("mark")) {
+            int itemIndex = Integer.parseInt(input.substring(5)) - 1;
+            tasks[itemIndex].setTaskStatus(true);
+            output = "Nice! I've marked this task as done:\n\t" + getEachItemLine(itemIndex);
+        } else if (input.startsWith("unmark")) {
+            int itemIndex = Integer.parseInt(input.substring(7)) - 1;
+            tasks[itemIndex].setTaskStatus(false);
+            output = "OK, I've marked this task as not done yet:\n\t" + getEachItemLine(itemIndex);
         } else {
-            tasks[numOfTasks] = input;
+            tasks[numOfTasks] = new Task(input);
             numOfTasks++;
             output = "\tadded: " + input;
         }
@@ -29,7 +45,7 @@ public class Duke {
         String input;
         String chatOutput;
         Scanner in = new Scanner(System.in);
-        Boolean shouldContinueChat = true;
+        boolean shouldContinueChat = true;
         do {
             input = in.nextLine();
             if (input.equals("bye")) {
