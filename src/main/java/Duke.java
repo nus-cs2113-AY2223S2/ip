@@ -7,13 +7,26 @@ public class Duke {
         String line = "____________________________________________________________\n";
         System.out.println(line + greet); // Duke saying hello
         Scanner in = new Scanner(System.in);
+        String[] commands = new String[100];
+        int count = 0; // counter for how many commands
         while (true) {
             String command = in.nextLine();
+            commands[count] = command;
             if (command.equals("bye")) {
-                System.out.print(line + exit + line); // Duke saying goodbye and closes program
+                System.out.print(line + exit + System.lineSeparator() + line); // Duke saying goodbye and closes program
                 break;
             }
-            System.out.println(line + command + System.lineSeparator() + line); // Duke Echoing back commands
+            else if (command.equals("list")) { // List out all recorded commands
+                System.out.print(line);
+                for (int i = 0; i < count; ++i) {
+                    System.out.println((i+1) + ". " + commands[i]);
+                }
+                System.out.print(line);
+            }
+            else {
+                System.out.println(line + "added: " + command + System.lineSeparator() + line); // Duke Echoing back commands
+                count++;
+            }
         }
     }
 }
