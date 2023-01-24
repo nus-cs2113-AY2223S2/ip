@@ -1,22 +1,6 @@
 import java.util.Scanner;
 
 public class Duke {
-    public static void echoInstruction(String command, String[] list, int index) {
-        System.out.println("    ____________________________________________________________\n");
-        if (command.equals("bye")) {
-            System.out.println("    Bye. Hope to see you again soon!");
-        } else if (command.equals("giveList")) {
-            for (int i = 0; i < index; ++i) {
-                int counter = i+1;
-                System.out.print("    " + counter + ". ");
-                System.out.println(list[i]);
-            }
-
-        } else {
-            System.out.println("    " + "added: " + command);
-        }
-        System.out.println("    ____________________________________________________________\n");
-    }
 
     public static void main(String[] args) {
         String logo = "     ____        _        \n"
@@ -33,20 +17,26 @@ public class Duke {
         System.out.println(greet);
 
         String line;
-        String[] list = new String[100];
+        Task[] list = new Task[100];
         int index = 0;
 
         while (true) {
             Scanner in = new Scanner(System.in);
             line = in.nextLine();
-            echoInstruction(line, list, index);
-            if (line.equals("bye")) {
-                break;
+            Task newTask = new Task(line);
+
+            if (line.equals("list") || line.equals("bye") || line.startsWith("mark") || line.startsWith("unmark")) {
+                Task.conductInstruction(line, list, index);
+                if (line.equals("bye")) {
+                    System.out.println("    ____________________________________________________________\n");
+                    break;
+                }
+            } else {
+                System.out.println("    " + "added: " + line);
+                list[index] = newTask;
+                ++index;
             }
-            list[index] = line;
-            ++index;
+            System.out.println("    ____________________________________________________________\n");
         }
-
-
     }
 }
