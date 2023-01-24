@@ -18,13 +18,24 @@ public class Duke {
     }
     public static void main(String[] args) {
         greet();
+        List list = new List();
         
         String line;
         Scanner in = new Scanner(System.in);
         line = in.nextLine();
+        
         while (!line.matches("bye")) {
             String horizontalLine = "____________________________________________________________\n";
-            System.out.println(horizontalLine + line + '\n' + horizontalLine);
+            System.out.print(horizontalLine);
+            
+            if (line.matches("list")) {
+                list.printList();
+            } else {
+                list.addList(line);
+                System.out.println("added: " + line);
+            }
+            
+            System.out.println(horizontalLine);
             line = in.nextLine();
         }
         
