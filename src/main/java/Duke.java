@@ -39,29 +39,56 @@ public class Duke {
         drawLine();
     }
 
-    public static void addTask(String echoWords, String[] tasks, int numOfTasks){
+    public static void addTask(String line, int sequenceOfTask, Task[] taskList){
+        //add task
+        Task newTask = new Task(line);
+
+        //draw "add task" chat
         drawLine();
         dukeChatBox();
+        System.out.println("added: " + line);
+        drawLine();
 
-        tasks[numOfTasks] = echoWords;
+        //add new task to list
+        taskList[sequenceOfTask] = newTask;
+    }
 
-        System.out.println("added: " + echoWords);
+    public static void markAsDone(String line, Task[] taskList){
+        int spacePosition = line.indexOf(" ");
+        String numberString = line.substring(spacePosition+1);
+        int number = Integer.parseInt(numberString);
+        taskList[number-1].isDone = true;
+
+        //draw chat box
+        drawLine();
+        dukeChatBox();
+        System.out.println("Nice! I've marked this task as done: ");
+        System.out.println("[" + taskList[number-1].getStatusIcon() + "] " + taskList[number-1].getTaskName());
         drawLine();
     }
 
-    public static void listOutTasks(String[] tasks){
+    public static void markAsUndone(String line, Task[] taskList){
+        int spacePosition = line.indexOf(" ");
+        String numberString = line.substring(spacePosition+1);
+        int number = Integer.parseInt(numberString);
+        taskList[number-1].isDone = false;
+
+        //draw chat box
+        drawLine();
+        dukeChatBox();
+        System.out.println("Ok! I've marked this task as nor done yet: ");
+        System.out.println("[" + taskList[number-1].getStatusIcon() + "] " + taskList[number-1].getTaskName());
+        drawLine();
+    }
+
+    public static void printList(Task[] taskList, int sequenceOfTask ){
         drawLine();
         dukeChatBox();
 
         System.out.println("Below is your task list");
 
-        int i = 1;
-        for(String task: tasks){
-            if(task == null){
-                break;
-            }
-            System.out.println(i + ". " + task);
-            i++;
+        for (int i = 0; i < sequenceOfTask; ++i){
+            System.out.println( (i+1) + ". [" + taskList[i].getStatusIcon() + "] " + taskList[i].getTaskName());
         }
 
         drawLine();
@@ -82,21 +109,28 @@ public class Duke {
         userChatBox(name);
         line = in.nextLine();
 
-        String[] tasks = new String[100];
-        int numOfTasks = 0;
+        Task[] taskList = new Task[100];
+        int sequenceOfTask = 0;
 
-        while(line.equals("bye") == false){
+        while(!line.equals("bye")){
             if(line.equals("list")){
-                listOutTasks(tasks);
+                printList(taskList, sequenceOfTask);
+            }
+            else if(line.contains("unmark")){
+                markAsUndone(line, taskList);
+            }
+            else if(line.contains("mark")){
+                markAsDone(line, taskList);
             }
             else {
-                addTask(line, tasks, numOfTasks);
-                numOfTasks ++;
+                addTask(line, sequenceOfTask, taskList);
+                sequenceOfTask ++;
             }
 
             userChatBox(name);
             line = in.nextLine();
         }
+
         sayGoodbye(name);
     }
 }
