@@ -18,7 +18,7 @@ public class Duke {
     }
     public static void main(String[] args) {
         greet();
-        List list = new List();
+        Tasks list = new Tasks();
         
         String line;
         Scanner in = new Scanner(System.in);
@@ -37,7 +37,7 @@ public class Duke {
                 String[] words = line.split(" ");
                 list.markTaskUndone(Integer.parseInt(words[1]));
             } else {
-                list.addList(line);
+                list.addTask(line);
                 System.out.println("added: " + line);
             }
             
