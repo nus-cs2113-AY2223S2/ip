@@ -1,18 +1,27 @@
+import java.util.Scanner;
 public class Duke {
+    public static Boolean Exit(String args){
+        if(args.equals("bye")){
+            return true;
+        }else{
+            return false;
+        }
+    }
     public static void main(String[] args) {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);
-
         String greeting = "____________________________________________________________\n" +
-                " Hello! I'm Duke\n" +
+                " Hello! I'm Mike\n" +
                 " What can I do for you?\n" +
-                "____________________________________________________________\n" +
-                " Bye. Hope to see you again soon!\n" +
                 "____________________________________________________________\n";
         System.out.println(greeting);
+
+        Scanner sc= new Scanner(System.in);
+        String command = sc.nextLine();
+
+        while(Exit(command)==false) {
+            System.out.println(command);
+            command = sc.nextLine();
+        }
+        
+        System.out.println("Bye. Hope to see you again soon!");
     }
 }
