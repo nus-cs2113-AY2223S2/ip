@@ -2,8 +2,8 @@ import java.util.Scanner;
 
 public class Duke {
 
-    public static Task[] tasks = new Task[100];
-    public static int tasksLength = 0;
+    public static String[] list = new String[100];
+    public static int listLength = 0;
     public static void printSeperator(){
         System.out.println("____________________________________________________________\n");
     }
@@ -32,36 +32,18 @@ public class Duke {
     }
 
     public static void addToList(String userInput){
-        Task newTask = new Task(userInput);
-        tasks[tasksLength] = newTask;
-        tasksLength += 1;
+        list[listLength] = userInput;
+        listLength += 1;
         printSeperator();
         System.out.println("\tadded: " + userInput);
         printSeperator();
     }
 
-    public static void printTasks(){
+    public static void printList(){
         printSeperator();
-        for (int i = 0; i < tasksLength; i++){
-            System.out.println("\t" + (i+1) + ".[" + tasks[i].getStatusIcon() + "] " + tasks[i].getTask());
+        for (int i = 0; i < listLength; i++){
+            System.out.println("\t" + (i+1) + ". " + list[i]);
         }
-        printSeperator();
-    }
-
-    public static void mark(String userInput){
-        int taskNumber = Integer.parseInt(userInput);
-        tasks[taskNumber-1].MarkStatusDone();
-        printSeperator();
-        System.out.println("\tNice! I've marked this task as done:\n" +
-                "\t\t[X] " + tasks[taskNumber-1].getTask());
-        printSeperator();
-    }
-    public static void unmark(String userInput){
-        int taskNumber = Integer.parseInt(userInput);
-        tasks[taskNumber-1].MarkStatusUndone();
-        printSeperator();
-        System.out.println("\tOK, I've marked this task as not done yet:\n" +
-                "\t\t[ ] " + tasks[taskNumber-1].getTask());
         printSeperator();
     }
     public static void ChatPolling(){
@@ -74,16 +56,9 @@ public class Duke {
                 printSeperator();
                 break;
             }
+
             if (userInput.equals("list")) {
-                printTasks();
-            }
-            else if (userInput.contains("unmark")){
-                userInput = userInput.substring(7);
-                unmark(userInput);
-            }
-            else if (userInput.contains("mark")){
-                userInput = userInput.substring(5);
-                mark(userInput);
+                printList();
             }
             else {
                 addToList(userInput);
