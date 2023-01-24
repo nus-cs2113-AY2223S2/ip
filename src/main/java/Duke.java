@@ -9,95 +9,62 @@ public class Duke {
             + "|____/ \\__,_|_|\\_\\___|\n";
 
     // Horizontal Rule to act as a divider
-    public static String horizontalRule = "__________________________________________________";
+    public static String HorizontalRule = "__________________________________________________";
 
-    /**
-    * Start up function.
-    * Prints ASCII art and prompts users for input
-    */
-    public static void startUp(){
+    /* StartUp function
+       Prints DUKE ASCII, and startup sentence
+       Informs users that Duke is ready to accept commands */
+    public static void StartUp(){
         System.out.println(logo);
-        System.out.println(horizontalRule);
+        System.out.println(HorizontalRule);
         System.out.println("Hello! I'm Duke. \nWhat can I do for you?");
-        System.out.println(horizontalRule);
+        System.out.println(HorizontalRule);
     }
 
-    /**
-    * Shut down function.
-    * Informs users that Duke is no longer accepting commands
-    */
-    public static void shutDown(){
-        System.out.println(horizontalRule);
-        System.out.println("Shutting Down! Hope to see you again soon!");
-        System.out.println(horizontalRule);
+    /* ShutDown function
+       Informs users that Duke has shut down and is not accepting commands */
+    public static void ShutDown(){
+        System.out.println(HorizontalRule);
+        System.out.println("Bye! Hope to see you again soon!");
+        System.out.println(HorizontalRule);
     }
 
     public static void main(String[] args) {
         // taskArray for storing tasks + taskCounter to track next empty cell
-        Task[] taskArray = new Task[100];
+        String[] taskArray = new String[100];
         int taskCounter = 0;
 
-        // Setting up input reading
         Scanner s = new Scanner(System.in);
 
-        startUp();
+        StartUp();
 
         // Reads inputs until "bye" is sent
         while(true) {
             String userInput = s.next();
             userInput += s.nextLine();
 
-            // Extracts first word in input
-            // Used to check if tasks are to be marked/unmarked
-            String firstWord = userInput.split(" ", 2)[0];
-
             if (userInput.equals("bye")) {
-                shutDown();
+                ShutDown();
                 return;
 
             } else if (userInput.equals("list")) {
                 // Prints all contents of task Array
-                System.out.println(horizontalRule);
+                System.out.println(HorizontalRule);
                 for (int i = 0; i < taskCounter; i++) {
-                    System.out.println((i + 1) + ". " + "[" + taskArray[i].getStatus() + "] " + taskArray[i].getTask());
+                    System.out.println((i + 1) + ". " + taskArray[i]);
                 }
-
-                // Prints total number
-                System.out.println("Total number of tasks: " + taskCounter);
-                System.out.println(horizontalRule);
-
-            } else if (firstWord.equals("mark")) {
-                // Sets specified task to complete
-                int taskIndex = Integer.parseInt(userInput.split(" ", 2)[1]);
-                taskArray[taskIndex-1].setComplete();
-
-                // Prints acknowledgement
-                System.out.println(horizontalRule);
-                System.out.println("Marking task \"" + taskArray[taskIndex].getTask() + "\" as complete!");
-                System.out.println(horizontalRule);
-
-            } else if (firstWord.equals("unmark")) {
-                // Sets specified task to incomplete
-                int taskIndex = Integer.parseInt(userInput.split(" ", 2)[1]);
-                taskArray[taskIndex-1].setIncomplete();
-
-                // Prints acknowledgement
-                System.out.println(horizontalRule);
-                System.out.println("Marking task \"" + taskArray[taskIndex].getTask() + "\" as incomplete!");
-                System.out.println(horizontalRule);
+                System.out.println(HorizontalRule);
 
             } else {
-                // If none of the above, insert new task
                 // Update taskArray and taskCounter
-                Task newTask = new Task(userInput);
-                taskArray[taskCounter] = newTask;
+                taskArray[taskCounter] = userInput;
                 taskCounter += 1;
 
-                // Prints acknowledgement
-                System.out.println(horizontalRule);
-                System.out.println("Added task: " + userInput);
+                // Informs users that their task was successfully added
+                System.out.println(HorizontalRule);
+                System.out.println("Added: " + userInput);
                 System.out.println("Total Number of Tasks: " + taskCounter);
-                System.out.println(horizontalRule);
+                System.out.println(HorizontalRule);
             }
         }
     }
