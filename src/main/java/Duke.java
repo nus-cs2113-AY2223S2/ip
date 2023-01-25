@@ -16,7 +16,10 @@ public class Duke {
         Scanner scan = new Scanner(System.in);
         String input = scan.nextLine();
         boolean isBye = false;
-
+        String[] inputs;
+        inputs = new String[100];
+        int count = 0;
+        int number = 1;
 
         while (!isBye) {
 
@@ -24,12 +27,22 @@ public class Duke {
                 isBye = true;
                 break;
             }
-            System.out.println(input);
+            else if (Objects.equals(input, "list")) {
+                for (int i = 0; i < count; i++) {
+                    System.out.println(number + ". " + inputs[i]);
+                    number++;
+                }
+                number = 1;
+            }
+            else {
+                System.out.println("added: " + input);
+                inputs[count] = input;
+                count++;
+            }
             input = scan.nextLine();
         }
 
         System.out.println("Bye. Hope to see you again soon!\n");
-
 
     }
 }
