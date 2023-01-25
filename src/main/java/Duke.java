@@ -1,9 +1,11 @@
 import java.util.Objects;
 import java.util.Scanner;
 public class Duke {
+    static String[] list = new String[100];
+    static int listId = 0;
     public static void greet() {
         System.out.println("____________________________________________________________");
-        System.out.println("Hello! I'm Duke\n" + "What can I do for you?");
+        System.out.println("Hello! I'm Duke  U ´ᴥ` U\n" + "What can I do for you?");
         System.out.println("____________________________________________________________");
     }
     public static void goodBye() {
@@ -18,8 +20,19 @@ public class Duke {
             goodBye();
             return;
         }
-        System.out.println(s);
-        System.out.println("____________________________________________________________");
+        if (s.equals("list")) {
+            for (int i = 0; i < listId; i += 1) {
+                System.out.print(i+1);
+                System.out.println(". " + list[i]);
+            }
+            System.out.println("____________________________________________________________");
+        } else {
+            list[listId] = s;
+            System.out.println("____________________________________________________________");
+            System.out.println("added: " + s);
+            System.out.println("____________________________________________________________");
+            listId += 1;
+        }
         echo();
     }
     public static void main(String[] args) {
