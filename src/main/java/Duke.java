@@ -1,11 +1,13 @@
 import java.util.Arrays;
 import java.util.Scanner;
+
 public class Duke {
-    public static int isNumeric(String strNum, int count) { // Referenced from https://www.baeldung.com/java-check-string-number
+    public static int isNumeric(String strNum, int count) {
+        // Referenced from https://www.baeldung.com/java-check-string-number
+        int d = 0;
         if (strNum == null) {
             return -1;
         }
-        int d = 0;
         try {
             d = Integer.parseInt(strNum);
         } catch (NumberFormatException nfe) {
@@ -16,6 +18,7 @@ public class Duke {
         }
         return d; // Returns 1-index of Task or -1 if the input does not fit a number or is bigger than array size
     }
+
     public static void main(String[] args) {
         String greet = "Hello! I'm Duke\nWhat can I do for you?";
         String exit = "Bye. Hope to see you again soon!\n";
@@ -29,42 +32,41 @@ public class Duke {
             if (command.equals("bye")) {
                 System.out.print(line + exit + System.lineSeparator() + line); // Duke saying goodbye and closes program
                 break;
-            }
-            else if (command.equals("list")) { // List out all recorded commands
+            } else if (command.equals("list")) { // List out all recorded commands
                 System.out.print(line);
                 for (int i = 0; i < count; ++i) {
-                    System.out.println((i+1) + "." + tasks[i].getStatusIcon() + " " + tasks[i].description);
+                    System.out.println((i + 1) + "." + tasks[i].getStatusIcon() + " " + tasks[i].description);
                 }
                 System.out.print(line);
-            }
-            else if (command.startsWith("mark ") || command.startsWith("unmark ")) {
+            } else if (command.startsWith("mark ") || command.startsWith("unmark ")) {
                 String[] words = command.split(" ");
                 if (words.length == 2) {
-                    int indexOfMarking = isNumeric(words[1],count);
+                    int indexOfMarking = isNumeric(words[1], count);
                     if (indexOfMarking == -1) {
-                        System.out.println(line + "added: " + command + System.lineSeparator() + line); // Duke Echoing back commands
+                        // Duke Echoing back commands
+                        System.out.println(line + "added: " + command + System.lineSeparator() + line);
                         tasks[count] = new Task(command);
                         count++;
                         continue;
                     }
-                    indexOfMarking--;
+                    indexOfMarking--; // change to 0-index
                     tasks[indexOfMarking].setDone(words[0]);
                     if (command.startsWith("mark ")) {
                         System.out.println("Nice! I've marked this task as done:");
-                    }
-                    else {
+                    } else {
                         System.out.println("OK, I've marked this task as not done yet:");
                     }
-                    System.out.println("  " + tasks[indexOfMarking].getStatusIcon() + " " + tasks[indexOfMarking].description);
-                }
-                else {
-                    System.out.println(line + "added: " + command + System.lineSeparator() + line); // Duke Echoing back commands
+                    System.out.println("  " + tasks[indexOfMarking].getStatusIcon() + " "
+                            + tasks[indexOfMarking].description);
+                } else {
+                    // Duke Echoing back commands
+                    System.out.println(line + "added: " + command + System.lineSeparator() + line);
                     tasks[count] = new Task(command);
                     count++;
                 }
-            }
-            else {
-                System.out.println(line + "added: " + command + System.lineSeparator() + line); // Duke Echoing back commands
+            } else {
+                // Duke Echoing back commands
+                System.out.println(line + "added: " + command + System.lineSeparator() + line);
                 tasks[count] = new Task(command);
                 count++;
             }
