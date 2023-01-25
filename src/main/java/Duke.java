@@ -9,26 +9,26 @@ public class Duke {
 
     public static void listInput(){
         int idxCount = 1;
-        System.out.println("____________________________________________________________");
+        printHorizontalLine();
         System.out.println("Here are the tasks in your list:");
-        for (int i=0 ;i < taskCount;i++){
+        for (int i = 0 ; i < taskCount; i++){
             System.out.println(idxCount + ".[" + task[i].getStatusIcon() + "] " + task[i].getDescription());
             idxCount++;
         }
-        System.out.println("____________________________________________________________");
+        printHorizontalLine();
     }
     public static void addList(String input){
         if(taskCount == limitTask ){
-            System.out.println("____________________________________________________________");
+            printHorizontalLine();
             System.out.println("Too much tasks");
-            System.out.println("____________________________________________________________");
+            printHorizontalLine();
         }else{
             Task t = new Task(input);
             task[taskCount] = t;
             taskCount++;
-            System.out.println("____________________________________________________________");
+            printHorizontalLine();
             System.out.println("added: " + input);
-            System.out.println("____________________________________________________________");
+            printHorizontalLine();
         }
 
     }
@@ -36,20 +36,20 @@ public class Duke {
     public static void markTask(int index){
         if(index < taskCount && index >=0){
             task[index].markAsDone();
-            System.out.println("____________________________________________________________");
+            printHorizontalLine();
             System.out.println("Nice! I've marked this task as done:");
             System.out.println("[X] " + task[index].getDescription());
-            System.out.println("____________________________________________________________");
+            printHorizontalLine();
         }
     }
 
     public static void unmarkTask(int index){
         if(index < taskCount && index >=0){
             task[index].markAsNotDone();
-            System.out.println("____________________________________________________________");
+            printHorizontalLine();
             System.out.println("OK, I've marked this task as not done yet:");
             System.out.println("[ ] " + task[index].getDescription());
-            System.out.println("____________________________________________________________");
+            printHorizontalLine();
         }
     }
     public static void startBot(){
@@ -79,20 +79,17 @@ public class Duke {
         }
     }
     public static void main(String[] args) {
-//        String logo = " ____        _        \n"
-//                + "|  _ \\ _   _| | _____ \n"
-//                + "| | | | | | | |/ / _ \\\n"
-//                + "| |_| | |_| |   <  __/\n"
-//                + "|____/ \\__,_|_|\\_\\___|\n";
-//        System.out.println("Hello from\n" + logo);
-        System.out.println("____________________________________________________________\n" +
-                " Hello! I'm Duke\n" +
-                " What can I do for you?\n");
+        printHorizontalLine();
+        System.out.println( "Hello! I'm Duke\n" + " What can I do for you?\n");
+        printHorizontalLine();
 
         startBot();
-        System.out.println( "____________________________________________________________\n" +
-                " Bye. Hope to see you again soon!\n" +
-                "____________________________________________________________\n");
 
+        printHorizontalLine();
+        System.out.println(" Bye. Hope to see you again soon!\n");
+        printHorizontalLine();
+    }
+    public static void printHorizontalLine(){
+        System.out.println("____________________________________________________________");
     }
 }
