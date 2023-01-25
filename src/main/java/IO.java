@@ -22,6 +22,7 @@ public class IO {
 
     public static void printBoxBottomBorder() {
         printLineWithDelim(BoxDrawingCharacter.BOTTOM_LEFT_CORNER, BoxDrawingCharacter.BOTTOM_RIGHT_CORNER);
+        System.out.println("");
     }
 
     /**
