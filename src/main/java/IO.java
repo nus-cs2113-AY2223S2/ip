@@ -1,5 +1,12 @@
+import java.util.Scanner;
+
 public class IO {
+    Scanner scanner;
     static final int BOX_WIDTH = 80;
+
+    IO() {
+        this.scanner = new Scanner(System.in);
+    }
 
     static void printLineWithDelim(char leftDelim, char rightDelim) {
         System.out.print(leftDelim);
@@ -60,5 +67,17 @@ public class IO {
             currentLineLength += word.length() + 1;
         }
         printRightBorder(maxStringWidth - currentLineLength);
+    }
+
+    /**
+     * As the name suggests, this reads the user input until the end of the line and
+     * returns the input as string. However this function also prints a prompt
+     * character to make it looks hackerish.
+     * 
+     * @return The user input as a string.
+     */
+    public String readUserInput() {
+        System.out.print("> ");
+        return scanner.nextLine();
     }
 }
