@@ -27,11 +27,11 @@ public class Duke {
         int counter = 0;
 
 
-
+        //Processing inputs such as list, complete, & unmark
         while (!line.equalsIgnoreCase("bye")) {
 
+            //Marking tasks as done
             if (line.contains("complete")) {
-                //System.out.print("    Please enter Task number: ");
                 char[] chars = line.toCharArray();
                 StringBuilder sb = new StringBuilder();
                 for(char c : chars){
@@ -39,12 +39,6 @@ public class Duke {
                         sb.append(c);
                     }
                 }
-
-
-
-                //String numberStringFormat;
-                //Scanner inNumber = new Scanner(System.in);
-                //numberStringFormat = inNumber.nextLine();
                 int numberIntegerFormat = Integer.parseInt(String.valueOf(sb));
 
                 status[numberIntegerFormat - 1] = 1;
@@ -53,11 +47,10 @@ public class Duke {
                 System.out.println("    _________________________________________");
                 in = new Scanner(System.in);
                 line = in.nextLine();
-
             }
-            if (line.contains("unmark ")) {
-                //System.out.print("    Please enter Task number: ");
 
+            //Marking tasks as not done
+            if (line.contains("unmark ")) {
                 char[] chars = line.toCharArray();
                 StringBuilder sb = new StringBuilder();
                 for(char c : chars){
@@ -65,10 +58,6 @@ public class Duke {
                         sb.append(c);
                     }
                 }
-
-                //String numberStringFormat;
-                //Scanner inNumber = new Scanner(System.in);
-                //numberStringFormat = inNumber.nextLine();
                 int numberIntegerFormat = Integer.parseInt(String.valueOf(sb));
 
                 status[numberIntegerFormat - 1] = 0;
@@ -77,7 +66,6 @@ public class Duke {
                 System.out.println("    _________________________________________");
                 in = new Scanner(System.in);
                 line = in.nextLine();
-
             }
 
             //Adding user input to the list
@@ -99,7 +87,6 @@ public class Duke {
                     } else {
                         System.out.println("    " + (i + 1) + "." + "[X] " + list[i]);
                     }
-
                 }
                 System.out.println("    _________________________________________");
                 System.out.println("     ");
