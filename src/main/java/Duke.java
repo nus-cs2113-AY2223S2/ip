@@ -18,12 +18,12 @@ public class Duke {
                     System.out.print(". ");
                     tasks[i].printTask();
                 }
-            } else if (line.substring(0, 4).equals("mark")) { // if it's mark X, mark task X (looks like buggy if a task is called "mark ..."
+            } else if (line.length() > 4 && line.substring(0, 4).equals("mark")) { // if it's mark X, mark task X (looks like buggy if a task is called "mark ..."
                 int markIndex = Integer.parseInt(line.substring(5)) - 1;
                 tasks[markIndex].markTask();
                 System.out.println("Nice! I've marked this task as done:");
                 System.out.println("[X] " + tasks[markIndex].getTaskName());
-            } else if (line.substring(0, 6).equals("unmark")) { // if it's unmark task X, unmark task X
+            } else if (line.length() > 6 && line.substring(0, 6).equals("unmark")) { // if it's unmark task X, unmark task X
                 int unmarkIndex = Integer.parseInt(line.substring(7)) - 1;
                 tasks[unmarkIndex].unmarkTask();
                 System.out.println("OK, I've marked this task as not done yet:");
