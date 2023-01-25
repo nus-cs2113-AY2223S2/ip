@@ -5,7 +5,7 @@ public class Duke {
         System.out.println("____________________________________________________________");
     }
 
-    public static void printHeloMessage(String logo) {
+    public static void printHelloMessage(String logo) {
         System.out.println("Hello from\n" + logo);
         printHorizontalLine();
         System.out.println("Hello! I'm Duke");
@@ -33,7 +33,7 @@ public class Duke {
             Task.printUpdateStatusMessage(unmarkTask.getStatus(), unmarkTask);
             break;
         default:
-            Task.addToTasksList(input, listOfTasks);
+            Task.checkTaskType(input, listOfTasks);
             break;
         }
     }
@@ -44,7 +44,7 @@ public class Duke {
                 + "| | | | | | | |/ / _ \\\n"
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
-        printHeloMessage(logo);
+        printHelloMessage(logo);
         String input;
         ArrayList<Task> listOfTasks = new ArrayList<>();
         do {

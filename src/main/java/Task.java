@@ -25,29 +25,47 @@ public class Task {
         this.isCompleted = isCompleted;
     }
 
-    public static void addToTasksList(String input, ArrayList<Task> listOfTasks) {
-        System.out.println("added: "+input);
-        Task task = new Task(input, false);
-        listOfTasks.add(task);
+    public static void checkTaskType(String input, ArrayList<Task> listOfTasks) {
+        int endTaskTypeIndex = input.indexOf(" ");
+        String taskType = input.substring(0, endTaskTypeIndex);
+        switch (taskType) {
+        case "todo":
+            addTodoToTasksList(input, listOfTasks);
+            break;
+        default:
+            return;
+        }
+    }
+
+    public static void addTodoToTasksList(String input, ArrayList<Task> listOfTasks) {
+        int nameStartIndex = input.indexOf(" ");
+        String name = input.substring(nameStartIndex + 1);
+        Task todo = new Todo(name, false);
+        listOfTasks.add(todo);
+        System.out.println("Got it. I've added this task:");
+        System.out.println("  " + todo);
+        System.out.println("Now you have " + listOfTasks.size() + " task in the list.");
+    }
+
+    public String toString() {
+        if (this.isCompleted) {
+            return "[X] " + this.name;
+        }
+        return "[ ] " + this.name;
     }
 
     public static void listTasks(ArrayList<Task> listOfTasks) {
         for (int i = 0; i < listOfTasks.size(); i++) {
-            if (listOfTasks.get(i).getStatus()) {
-                System.out.println((i + 1) + ".[X] " + listOfTasks.get(i).getName());
-            } else {
-                System.out.println((i + 1) + ".[ ] " + listOfTasks.get(i).getName());
-            }
+                System.out.println((i + 1) + "." + listOfTasks.get(i));
         }
     }
 
     public static void printUpdateStatusMessage(boolean isDone, Task currentTask) {
-        if (isDone == true) {
+        if (isDone) {
             System.out.println("Nice! I've marked this task as done:");
-            System.out.println("  [X] " + currentTask.getName());
         } else {
             System.out.println("OK, I've marked this task as not done yet:");
-            System.out.println("  [ ] " + currentTask.getName());
         }
+        System.out.println("  " + currentTask);
     }
 }
