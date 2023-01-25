@@ -11,7 +11,7 @@ public class Duke {
 
 		System.out.println("    ____________________________________");
 		System.out.println("    Hello! I'm Duke");
-		System.out.println("    What can I do for you?\n");
+		System.out.println("    What can I do for you?");
 		System.out.println("    ____________________________________");
 
 		Task[] userInputs = new Task[100];
@@ -27,7 +27,8 @@ public class Duke {
 
 			String[] commands = text.split(" ", 2);
 
-			if (commands[0].equals("list")) {
+			switch (commands[0]) {
+			case "list":
 				System.out.println("    ____________________________________");
 				System.out.println("     Here are the tasks in your list:");
 
@@ -40,8 +41,10 @@ public class Duke {
 					System.out.println("[" + userInputs[i].getStatusIcon() + "] " + userInputs[i].description);
 				}
 				System.out.println("    ____________________________________");
+				break;
 
-			} else if (commands[0].equals("mark")) {
+			//brace added for different scopes
+			case "mark": {
 				int taskNumber = Integer.parseInt(commands[1]);
 				taskNumber -= 1;
 
@@ -52,8 +55,10 @@ public class Duke {
 				System.out.print("       [" + userInputs[taskNumber].getStatusIcon() + "] ");
 				System.out.println(userInputs[taskNumber].description);
 				System.out.println("    ____________________________________");
+				break;
+			}
 
-			} else if (commands[0].equals("unmark")) {
+			case "unmark": {
 				int taskNumber = Integer.parseInt(commands[1]);
 				taskNumber -= 1;
 
@@ -64,8 +69,10 @@ public class Duke {
 				System.out.print("       [" + userInputs[taskNumber].getStatusIcon() + "] ");
 				System.out.println(userInputs[taskNumber].description);
 				System.out.println("    ____________________________________");
+				break;
+			}
 
-			} else {
+			default:
 				Task t = new Task(text);
 
 				userInputs[index] = t;
@@ -74,6 +81,7 @@ public class Duke {
 				System.out.println("    ____________________________________");
 				System.out.println("     added: " + text);
 				System.out.println("    ____________________________________");
+				break;
 			}
 		}
 
