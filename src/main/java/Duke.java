@@ -7,8 +7,8 @@ public class Duke {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
-
-        System.out.println("Hello! I'm Duke\n");
+        Print.PrintEditor();
+        System.out.println("Hello! I'm Duke, edited by liuziyang\n");
         System.out.println("What can I do for you?\n");
 
         Print.PrintLine();
@@ -18,15 +18,17 @@ public class Duke {
             String line = in.nextLine();
             line = line.trim();
             String[] command = line.split(" ");
+            String secondword = line.substring(line.indexOf(" ")+1);
             switch (command[0]){
             case "bye":
                 Print.PrintString("Bye. Hope to see you again soon!");
+                Print.PrintGoodbye();
                 return;
             case "list":
-                Print.PrintString("list");
+                DukeList.list();
                 break;
             default:
-                Print.PrintString(line);//simply echos commands entered by the user
+                DukeList.added(line);
             }
         }
 
