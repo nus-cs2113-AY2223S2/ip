@@ -15,7 +15,10 @@ public class Messages {
   }
 
   public static void hello() {
+    Messages.line();
+    Messages.logo();
     System.out.println("Hello! I'm Duke\nWhat can I do for you?");
+    Messages.line();
   }
 
   public static void bye() {
