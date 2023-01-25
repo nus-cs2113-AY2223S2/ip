@@ -1,41 +1,76 @@
 import java.util.Scanner;
 
 public class Duke {
-    static int limit = 100;
-    static String[] task = new String[limit];
-    static int listCount = 0;
+    static int limitTask = 100;
+    static Task[] task = new Task[limitTask];
+    static int taskCount = 0;
+
+
+
     public static void listInput(){
         int idxCount = 1;
         System.out.println("____________________________________________________________");
-        for (int i=0 ;i < listCount;i++){
-            System.out.println(idxCount + ". " + task[i]);
+        System.out.println("Here are the tasks in your list:");
+        for (int i=0 ;i < taskCount;i++){
+            System.out.println(idxCount + ".[" + task[i].getStatusIcon() + "] " + task[i].getDescription());
             idxCount++;
         }
         System.out.println("____________________________________________________________");
     }
     public static void addList(String input){
-        if(listCount == limit ){
+        if(taskCount == limitTask ){
             System.out.println("____________________________________________________________");
             System.out.println("Too much tasks");
             System.out.println("____________________________________________________________");
         }else{
-            task[listCount] = input;
-            listCount++;
+            Task t = new Task(input);
+            task[taskCount] = t;
+            taskCount++;
             System.out.println("____________________________________________________________");
             System.out.println("added: " + input);
             System.out.println("____________________________________________________________");
         }
 
     }
+
+    public static void markTask(int index){
+        if(index < taskCount && index >=0){
+            task[index].markAsDone();
+            System.out.println("____________________________________________________________");
+            System.out.println("Nice! I've marked this task as done:");
+            System.out.println("[X] " + task[index].getDescription());
+            System.out.println("____________________________________________________________");
+        }
+    }
+
+    public static void unmarkTask(int index){
+        if(index < taskCount && index >=0){
+            task[index].markAsNotDone();
+            System.out.println("____________________________________________________________");
+            System.out.println("OK, I've marked this task as not done yet:");
+            System.out.println("[ ] " + task[index].getDescription());
+            System.out.println("____________________________________________________________");
+        }
+    }
     public static void startBot(){
         Scanner in = new Scanner((System.in));
         while(true){
             String input  = in.nextLine();
-            switch(input){
+            String[] args = input.split(" ");
+            int index;
+            switch(args[0]){
                 case "bye":
                     return;
                 case "list":
                     listInput();
+                    break;
+                case "mark":
+                    index = Integer.parseInt(args[1]) - 1;
+                    markTask(index);
+                    break;
+                case "unmark":
+                    index = Integer.parseInt(args[1]) - 1;
+                    unmarkTask(index);
                     break;
                 default:
                     addList(input);
