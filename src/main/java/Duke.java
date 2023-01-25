@@ -57,13 +57,13 @@ public class Duke {
 
                 case "mark":
                     startIdx = Integer.parseInt(input.substring(command.length() + 1)) - 1;
-                    tasks.get(startIdx).setDone(true);
+                    tasks.get(startIdx).setIsDone(true);
                     System.out.println(TaskPrinter.markedMessage(tasks.get(startIdx)));
                     break;
                 
                 case "unmark":
                     startIdx = Integer.parseInt(input.substring(command.length() + 1)) - 1;
-                    tasks.get(startIdx).setDone(false);
+                    tasks.get(startIdx).setIsDone(false);
                     System.out.println(TaskPrinter.unmarkedMessage(tasks.get(startIdx)));
                     break;
 

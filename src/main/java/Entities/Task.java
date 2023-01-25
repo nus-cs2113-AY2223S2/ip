@@ -1,23 +1,23 @@
 package Entities;
 public class Task {
     protected String taskName;
-    protected boolean done;
+    protected boolean isDone;
 
     public Task(String taskName) {
         setTaskName(taskName);
-        setDone(false);
+        setIsDone(false);
     }
 
     public boolean isDone() {
-        return this.done;
+        return this.isDone;
     }
 
-    public boolean getDone() {
-        return this.done;
+    public boolean getisDone() {
+        return this.isDone;
     }
 
-    public void setDone(boolean done) {
-        this.done = done;
+    public void setIsDone(boolean isDone) {
+        this.isDone = isDone;
     }
 
     public void setTaskName(String taskName) {
@@ -30,6 +30,6 @@ public class Task {
 
     @Override
     public String toString() {
-        return "[" + (this.done ? "X" : " ") + "] " + this.getTaskName();
+        return "[" + (this.isDone ? "X" : " ") + "] " + this.getTaskName();
     }
 }
