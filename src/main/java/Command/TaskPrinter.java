@@ -1,4 +1,4 @@
-package Communication;
+package Command;
 import java.util.ArrayList;
 import Entities.Task;
 

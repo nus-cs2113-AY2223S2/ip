@@ -1,8 +1,8 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import Command.*;
 import Entities.*;
 import Exceptions.*;
-import Communication.*;
 
 public class Duke {
     public static void main(String[] args) {
