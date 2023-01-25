@@ -28,7 +28,7 @@ public class Task {
      * @param index The index to be printed
      */
     public void printTask(int index) {
-        IO.printf("  %d: %c %s", index + 1, getStatusIcon(), getDescription());
+        IO.printf("%3d: %c %s", index + 1, getStatusIcon(), getDescription());
     }
 
     public boolean setAsCompleted() {
