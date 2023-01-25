@@ -15,8 +15,8 @@ public class Duke {
 
         System.out.println("Hello from\n" + logo);
 
-        String greeting = barrier + "\n\nHello! I'm Duke\nWhat can I do for you?\nFor a list of commands, please type 'help'\n" + barrier + "\n";
-        String exit = barrier + "\n\nBye. Hope to see you again soon!\n" + barrier;
+        String greeting = barrier + "\n\nAhoy there! I be Duke.\nWhat can I do for ye?\nFor a list of commands, type 'help' me hearties!\n" + barrier + "\n";
+        String exit = barrier + "\n\nFarewell! Hope to see ye again soon, ye scallywag!\n" + barrier;
         System.out.println(greeting);
 
         String input = console.nextLine();
@@ -26,7 +26,7 @@ public class Duke {
             if(input.indexOf("mark") > -1 && input.indexOf("unmark") == -1){
                 int index = Integer.parseInt(input.substring(5)) - 1;
                 if (index > Task.getTasksArray().size() - 1){
-                    System.out.println("\nOops! That task does not exist, please add tasks first!\n" + barrier + "\n");
+                    System.out.println("\nBlast! That task does not exist, please add tasks first, ye landlubbers!\n" + barrier + "\n");
                 } else {
                     Task.getTasksArray().get(index).mark();
                 }
@@ -36,7 +36,7 @@ public class Duke {
             if(input.indexOf("unmark") > -1){
                 int index = Integer.parseInt(input.substring(7)) - 1;
                 if (index > Task.getTasksArray().size() - 1){
-                    System.out.println("\nOops! That task does not exist, please add tasks first!\n" + barrier + "\n");
+                    System.out.println("\nBlast! That task does not exist, please add tasks first, ye landlubbers!\n" + barrier + "\n");
                 } else {
                     Task.getTasksArray().get(index).unmark();
                 }
@@ -47,7 +47,7 @@ public class Duke {
                 case "list": {
                     System.out.println(barrier + "\n");
                     if(Task.getTasksArray().size() == 0){
-                        System.out.println("You have no takss yet.");
+                        System.out.println("Ye have no tasks yet, ye lazy buccaneer!");
                     } else {
                         Task.printAllTasks();
                     }
@@ -76,6 +76,6 @@ public class Duke {
 
     public static void help(){
         String barrier = "____________________________________________________________";
-        System.out.println(barrier + "\n\nList of commands: \n- help: gives a list of commands\n- list: lists all current tasks\n- mark x: marks task x as complete\n- unmark x: unmarks task x as complete\n- bye: exists Dule\n- anything else: adds a task with the given description\n" + barrier + "\n");
+        System.out.println(barrier + "\n\nAvast! Here be the commands ye can use to make me do yer bidding!\n- list: lists all current tasks\n- mark x: marks task x as complete\n- unmark x: unmarks task x as complete\n- bye: exists Dule\n- anything else: adds a task with the given description\n" + barrier + "\n");
     }
 }

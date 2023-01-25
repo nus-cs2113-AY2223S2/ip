@@ -23,21 +23,21 @@ public class Task {
 
     public void mark (){
         if (this.isComplete){
-            System.out.println("\nOops! This task is already complete!\n" + barrier + "\n");
+            System.out.println("\nBlast! This task be already complete, ye swab!\n" + barrier + "\n");
             return;
         }
         this.isComplete = true;
-        System.out.println("\nNice! I've marked this task as done: \n");
+        System.out.println("\nNice! I've marked this task as done, me hearties!\n");
         System.out.println("     " + this.printTask() + "\n" + barrier + "\n");
     }
 
     public void unmark (){
         if (!this.isComplete){
-            System.out.println("\nOops! This task is already incomplete!\n" + barrier + "\n");
+            System.out.println("\nBlast! This task be already incomplete, ye bilge rat!\n" + barrier + "\n");
             return;
         }
         this.isComplete = false;
-        System.out.println("\nOk, I've marked this task as not done yet: \n");
+        System.out.println("\nAye, I've marked this task as not done yet, ye scallywag: \n");
         System.out.println("     " + this.printTask() + "\n"  + barrier + "\n");
     }
 
@@ -53,7 +53,7 @@ public class Task {
     }
 
     public static void printAllTasks(){
-        System.out.println("Time for a productive day! Here's your list of tasks:");
+        System.out.println("Time for a productive day, me hearties! Here be yer list of tasks: ");
         for(int i = 0; i<tasks.size(); i++){
             System.out.println((i+1) + ". " + tasks.get(i).printTask());
         }
