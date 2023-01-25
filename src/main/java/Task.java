@@ -34,6 +34,8 @@ public class Task {
             break;
         case "deadline":
             addDeadlineToTasksList(input, listOfTasks);
+        case "event":
+            addEventToTasksList(input, listOfTasks);
         default:
             return;
         }
@@ -51,13 +53,28 @@ public class Task {
 
     public static void addDeadlineToTasksList(String input, ArrayList<Task> listOfTasks) {
         int nameStartIndex = input.indexOf(" ");
-        int nameEndIndex = input.indexOf("/");
+        int nameEndIndex = input.indexOf("/by");
         String name = input.substring(nameStartIndex + 1, nameEndIndex -1);
         String dueDate = input.substring(nameEndIndex + 4);
         Task deadline = new Deadline(name, false, dueDate);
         listOfTasks.add(deadline);
         System.out.println("Got it. I've added this task:");
         System.out.println("  " + deadline);
+        System.out.println("Now you have " + listOfTasks.size() + " task in the list.");
+    }
+
+    public static void addEventToTasksList(String input, ArrayList<Task> listOfTasks) {
+        int nameStartIndex = input.indexOf(" ");
+        int nameEndIndex = input.indexOf("/from");
+        String name = input.substring(nameStartIndex + 1, nameEndIndex - 1);
+        String remainingInfo = input.substring(nameEndIndex + 6);
+        int toIndex = remainingInfo.indexOf("/to");
+        String start = remainingInfo.substring(0, toIndex - 1);
+        String end = remainingInfo.substring(toIndex + 4);
+        Task event = new Event(name, false, start, end);
+        listOfTasks.add(event);
+        System.out.println("Got it. I've added this task:");
+        System.out.println("  " + event);
         System.out.println("Now you have " + listOfTasks.size() + " task in the list.");
     }
 
