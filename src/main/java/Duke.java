@@ -16,8 +16,7 @@ public class Duke {
      * Prints out the exit message to the user
      */
     public static void exitProgram() {
-        String byeEmoji = new String(Character.toChars(0x1F44B));
-        String exitMessage = "Bye. Hope to see you again soon!" + byeEmoji;
+        String exitMessage = "Bye. Hope to see you again soon!";
         System.out.println(exitMessage);
     }
 

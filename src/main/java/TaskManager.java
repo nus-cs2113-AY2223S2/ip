@@ -1,7 +1,7 @@
 public class TaskManager {
     private Task[] taskList;
     private int listSize;
-    
+
     public TaskManager() {
         this.listSize = 0;
         this.taskList = new Task[100];
@@ -30,7 +30,7 @@ public class TaskManager {
         } else {
             String task = taskList[taskIndex].setAsDone();
             System.out.println("Noted sir, I have marked \n"
-                    + "[✔] " + task + "\n"
+                    + "[X] " + task + "\n"
                     + "as done.");
         }
     }

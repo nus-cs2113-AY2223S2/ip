@@ -34,7 +34,7 @@ public class Task {
      * @return the String indicating the status of the task
      */
     public String getStatusIcon() {
-        return (this.isDone ? "✔" : " ");
+        return (this.isDone ? "X" : " ");
     }
 
     /**
