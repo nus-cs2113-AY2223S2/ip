@@ -1,6 +1,12 @@
 import java.util.Scanner;
 public class Duke {
-
+    /**
+     * Returns false if the second string in the input cannot be converted into a numeric type, true if it
+     * can be converted.
+     *
+     * @param strNum The second string found in the user input.
+     * @return Boolean for whether string can be converted into a numeric type (int, double etc.).
+     */
     //@@author ngkaiwen123-reused
     //Reused from https://www.baeldung.com/java-check-string-number
     public static boolean isNumeric(String strNum) {
@@ -16,6 +22,11 @@ public class Duke {
     }
     //@@author
 
+    /**
+     * Executes the "Duke" program.
+     *
+     * @param args The command line arguments.
+     */
     public static void main(String[] args) {
         //Initialisation
         String line = "start";
@@ -45,38 +56,46 @@ public class Duke {
                     System.out.println("added: " + line);
                 }
                 break;
+
             //If the word "mark" is the first word in the line of strings.
             case "mark":
+                //If user wants to mark task as done.
                 if (command.length == 2 && isNumeric(command[1])) {
                     int taskNumber = Integer.parseInt(command[1]);
                     list[taskNumber - 1].markDone();
                     System.out.println("Nice! I've marked this task as done:");
                     System.out.println(list[taskNumber - 1].getDescription());
                 }
+                //If user wants to include "mark" as part of a new task description.
                 else {
                     list[listSize] = new Task(line);
                     listSize += 1;
                     System.out.println("added: " + line);
                 }
                 break;
+
             //If the word "unmark" is the first word in the line of strings.
             case "unmark":
+                //If user wants to unmark task as done.
                 if (command.length == 2 && isNumeric(command[1])) {
                     int taskNumber = Integer.parseInt(command[1]);
                     list[taskNumber - 1].unmarkDone();
                     System.out.println("OK, I've marked this task as not done yet:");
                     System.out.println(list[taskNumber - 1].getDescription());
                 }
+                //If user wants to include "unmark" as part of a new task description.
                 else {
                     list[listSize] = new Task(line);
                     listSize += 1;
                     System.out.println("added: " + line);
                 }
                 break;
+
             //To terminate program, if the word "bye" is the first word in the line of strings.
             case "bye":
                 break;
-            //Add normal user input to the list array.
+
+            //Add normal user input as part of new task description.
             default:
                 list[listSize] = new Task(line);
                 listSize += 1;
