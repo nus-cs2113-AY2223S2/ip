@@ -6,5 +6,17 @@ public class Duke {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
+        greet();
+    }
+
+    public static void greet() {
+        String greeting = "____________________________________________________________\n"
+                + "Hello! I'm Duke\n"
+                + "What can I do for you?\n"
+                + "____________________________________________________________\n"
+                + "Bye. Hope to see you again soon!\n"
+                + "____________________________________________________________\n"
+                + "\n";
+                System.out.println(greeting);
     }
 }
