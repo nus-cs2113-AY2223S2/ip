@@ -1,19 +1,39 @@
 import java.util.Scanner;
 
 public class Duke {
+    public static void greetUser(){
+         String divider = "______________________________";
+         String greeting = divider + System.lineSeparator() + "What can I do for you?"
+                 + System.lineSeparator() + divider + System.lineSeparator();
+         System.out.println(greeting);
+    }
+    public static void echoUserInput(String curr){
+        String divider = "______________________________";
+        String echo = divider +System.lineSeparator() + curr + System.lineSeparator()
+                + divider + System.lineSeparator();
+        System.out.println(echo);
+    }
+    public static void sayByeToUser(){
+        String divider = "______________________________";
+        String bye = divider + System.lineSeparator() + "Bye. Hope to see you again soon!"
+                + System.lineSeparator() + divider + System.lineSeparator();
+        System.out.println(bye);
+    }
     public static void main(String[] args) {
-        String line;
+        String input;
         Scanner in = new Scanner(System.in);
-        String divider = "______________________________\n";
-        System.out.println(divider + "Hello! I'm Duke\n" + "What can I do for you?\n" + divider);
-        line = in.nextLine();
+        greetUser();
+        boolean end = false;
 
-        //while (!(line = in.nextLine()).equals("bye"))
-        while(!(line).equals("bye"))
-        {
-            System.out.println(divider + line + "\n" + divider);
-            line = in.nextLine();
+        while(!end){
+            input = in.nextLine();
+            if(input.equals("bye")){
+                end = true;
+            }
+            else{
+                echoUserInput(input);
+            }
         }
-        System.out.println(divider + "Bye. Hope to see you again soon!\n" + divider);
+        sayByeToUser();
     }
 }
