@@ -13,7 +13,14 @@ public class Duke {
         
         do {
             userInput = inputScanner.nextLine();
-            Messages.echo(userInput);
+            //Messages.echo(userInput);
+            switch(userInput) {
+            case "list":
+                Lists.printList();
+                break;
+            default:
+                Lists.addItem(userInput);
+            }
         } while (!(userInput.equals("bye")));
 
         Messages.bye();
