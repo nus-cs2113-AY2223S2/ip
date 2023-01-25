@@ -16,7 +16,7 @@ public class Duke {
         System.out.println("Hello! I'm Duke\nWhat can I do for you?");
         System.out.println(line);
         
-        String[] tasks = new String[100];
+        Task[] tasks = new Task[100];
         int numTasks = 0;
 
         while(true){
@@ -32,7 +32,7 @@ public class Duke {
             if (cmd.equals("list")){
                 System.out.println(line);
                 for(int i = 0; i < numTasks; i++){
-                    System.out.println(Integer.toString(i+1) + ". " + tasks[i]);
+                    System.out.println(Integer.toString(i+1) + ". " + tasks[i].getDescription());
                 }
                 System.out.println(line);
             }
@@ -40,7 +40,7 @@ public class Duke {
                 System.out.println(line);
                 System.out.println("added: " + cmd);
                 System.out.println(line);
-                tasks[numTasks] = cmd;
+                tasks[numTasks] = new Task(cmd);
                 numTasks++;
             }
         }   
