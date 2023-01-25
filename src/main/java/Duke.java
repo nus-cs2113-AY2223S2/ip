@@ -10,24 +10,69 @@ public class Duke {
         System.out.println("Bye. Hope to see you again soon!");
     }
 
-    public static void addToList(String[] userTexts, int currentIndex, String userInput){
-        if(currentIndex >= userTexts.length){
-            System.out.println("Storage is full, cannot store user input.");
+    public static void addNewTask(Task[] tasks, String newTaskName){
+        if(Task.totalTasks >= tasks.length){
+            System.out.println("Storage is full, cannot store new task");
         }
-        userTexts[currentIndex] = userInput;
-        System.out.println("added: " + userInput);
+        Task newTask = new Task(newTaskName);
+        tasks[Task.totalTasks - 1] = newTask;
+        System.out.println("added: " + newTaskName);
     }
 
-    public static void printList(String[] userTexts){
-        for(int i = 0; i < userTexts.length; ++i) {
-            if(userTexts[i] == null)break;
-            System.out.println(Integer.toString(i + 1) + ". " + userTexts[i]);
+    public static void printTasks(Task[] tasks){
+        System.out.println("Here are the tasks in your list:");
+        for(int i = 0; i < Task.totalTasks; ++i) {
+            System.out.print(Integer.toString(i + 1) + ".");
+            if(tasks[i].isDone()){
+                System.out.print("[X] ");
+            }
+            else{
+                System.out.print("[ ] ");
+            }
+            System.out.println(tasks[i].getName());
         }
+    }
+    public static void markTask(Task[] tasks, String[] userInputs, boolean isDone){
+        if(userInputs.length == 1){
+            System.out.println("Please include the task number to be marked.");
+            return;
+        }
+        if(userInputs.length > 2){
+            System.out.println("Please only mark one task at a time. No tasks have been marked.");
+            return;
+        }
+        int taskIndex = Integer.parseInt(userInputs[1]);
+        if(taskIndex <= 0 || taskIndex > Task.totalTasks){
+            System.out.println("Please input a valid task number.");
+            return;
+        }
+        taskIndex -= 1;
+        if(isDone){
+            if(tasks[taskIndex].isDone()){
+                System.out.println("This task is already marked done:");
+                System.out.println("[X] " + tasks[taskIndex].getName());
+            }
+            else{
+                System.out.println("Nice! I've marked this task as done: ");
+                System.out.println("[X] "+ tasks[taskIndex].getName());
+                tasks[taskIndex].setDone(true);
+            }
+        }else{
+            if(!tasks[taskIndex].isDone()){
+                System.out.println("This task is already marked as not done:");
+                System.out.println("[ ] " + tasks[taskIndex].getName());
+            }
+            else{
+                System.out.println("OK, I've marked this task as not done yet: ");
+                System.out.println("[ ] " + tasks[taskIndex].getName());
+                tasks[taskIndex].setDone(false);
+            }
+        }
+
     }
 
     public static void main(String[] args) {
-        String[] userTexts = new String[100];
-        int currentIndex = 0;
+        Task[] tasks = new Task[100];
         Scanner in = new Scanner(System.in);
         printGreeting();
         while(true)
@@ -37,11 +82,19 @@ public class Duke {
                 break;
             }
             else if(userInput.equals("list")) {
-                printList(userTexts);
+                printTasks(tasks);
             }
             else {
-                addToList(userTexts,currentIndex,userInput);
-                ++currentIndex;
+                String[] userInputs = userInput.split(" ");
+                if(userInputs[0].equals("mark")){
+                    markTask(tasks,userInputs,true);
+                }
+                else if(userInputs[0].equals("unmark")){
+                    markTask(tasks,userInputs,false);
+                }
+                else {
+                    addNewTask(tasks, userInput);
+                }
             }
         }
         printFarewell();
