@@ -1,17 +1,25 @@
 public class Archduke {
     public static void main(String[] args) {
         IO io = new IO();
+
         IO.printBoxTopBorder();
         IO.printLogo();
-        IO.printf("Hello! I'm Archduke");
-        IO.printf("What can I do for you?");
+        IO.printf("Hello! I'm Archduke. What do you want to do?");
         IO.printBoxBottomBorder();
-        String command = io.readUserInput();
-        IO.printBoxTopBorder();
-        IO.printf("Your input is \"%s\"", command);
-        IO.printBoxBottomBorder();
-        IO.printBoxTopBorder();
-        IO.printf("Bye. Hope to see you again soon!");
-        IO.printBoxBottomBorder();
+
+        while (true) {
+            String command = io.readUserInput();
+
+            if (command.equals("bye")) {
+                IO.printBoxTopBorder();
+                IO.printf("Bye. Hope to see you again soon!");
+                IO.printBoxBottomBorder();
+                return;
+            }
+
+            IO.printBoxTopBorder();
+            IO.printf(command);
+            IO.printBoxBottomBorder();
+        }
     }
 }
