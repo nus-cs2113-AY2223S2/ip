@@ -1,3 +1,4 @@
+import java.util.Scanner;
 public class Nano {
     //print horizontal line of length = len * 10
     public static void print_hor_ln() {
@@ -20,6 +21,15 @@ public class Nano {
         print_hor_ln();
         System.out.println("How may I assist you?");
         print_hor_ln();
+
+        //receive commands
+        String command;
+        do {
+            Scanner in = new Scanner(System.in);
+            command = in.nextLine();
+            System.out.println(command + "!");
+            //exit when user types "bye"
+        } while(!command.equals("bye"));
 
         //chatbot exit message
         System.out.println("Sleep mode activated.");
