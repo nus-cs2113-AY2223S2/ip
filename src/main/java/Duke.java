@@ -2,34 +2,73 @@ import java.util.Scanner;
 
 public class Duke {
 	public static void main(String[] args) {
+		String logo = " ____        _        \n"
+				+ "|  _ \\ _   _| | _____ \n"
+				+ "| | | | | | | |/ / _ \\\n"
+				+ "| |_| | |_| |   <  __/\n"
+				+ "|____/ \\__,_|_|\\_\\___|\n";
+		System.out.println("Hello from\n" + logo);
 
-		//level-2
 		System.out.println("    ____________________________________");
 		System.out.println("    Hello! I'm Duke");
 		System.out.println("    What can I do for you?\n");
 		System.out.println("    ____________________________________");
 
-		String[] userInputs = new String[100];
+		Task[] userInputs = new Task[100];
 		int index = 0;
 
 		Scanner userInput = new Scanner(System.in);
 		while (true) {
 			String text = userInput.nextLine();
+
 			if ("bye".equalsIgnoreCase(text)) {
 				break;
 			}
 
-			if ("list".equalsIgnoreCase(text)) {
+			String[] commands = text.split(" ", 2);
+
+			if (commands[0].equals("list")) {
 				System.out.println("    ____________________________________");
+				System.out.println("     Here are the tasks in your list:");
+
 				for (int i = 0; i < userInputs.length; i += 1) {
 					if (userInputs[i] == null) {
 						break;
 					}
-					System.out.println("     " + (i + 1) + ". " + userInputs[i]);
+
+					System.out.print("     " + (i + 1) + ".");
+					System.out.println("[" + userInputs[i].getStatusIcon() + "] " + userInputs[i].description);
 				}
 				System.out.println("    ____________________________________");
+
+			} else if (commands[0].equals("mark")) {
+				int taskNumber = Integer.parseInt(commands[1]);
+				taskNumber -= 1;
+
+				userInputs[taskNumber].setDone();
+
+				System.out.println("    ____________________________________");
+				System.out.println("     Nice! I've marked this task as done:");
+				System.out.print("       [" + userInputs[taskNumber].getStatusIcon() + "] ");
+				System.out.println(userInputs[taskNumber].description);
+				System.out.println("    ____________________________________");
+
+			} else if (commands[0].equals("unmark")) {
+				int taskNumber = Integer.parseInt(commands[1]);
+				taskNumber -= 1;
+
+				userInputs[taskNumber].setNotDone();
+
+				System.out.println("    ____________________________________");
+				System.out.println("     OK, I've marked this task as not done yet:");
+				System.out.print("       [" + userInputs[taskNumber].getStatusIcon() + "] ");
+				System.out.println(userInputs[taskNumber].description);
+				System.out.println("    ____________________________________");
+
 			} else {
-				userInputs[index] = text;
+				Task t = new Task(text);
+
+				userInputs[index] = t;
 				index += 1;
 
 				System.out.println("    ____________________________________");
