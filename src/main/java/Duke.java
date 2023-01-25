@@ -22,7 +22,7 @@ public class Duke {
     public static void printTasks(Task[] tasks){
         System.out.println("Here are the tasks in your list:");
         for(int i = 0; i < Task.totalTasks; ++i) {
-            System.out.print(Integer.toString(i + 1) + ".");
+            System.out.print(i + 1 + ".");
             if(tasks[i].isDone()){
                 System.out.print("[X] ");
             }
@@ -41,7 +41,14 @@ public class Duke {
             System.out.println("Please only mark one task at a time. No tasks have been marked.");
             return;
         }
-        int taskIndex = Integer.parseInt(userInputs[1]);
+        int taskIndex;
+        try {
+            taskIndex = Integer.parseInt(userInputs[1]);
+        }
+        catch (Exception e){
+            System.out.println("Please input a valid task number.");
+            return;
+        }
         if(taskIndex <= 0 || taskIndex > Task.totalTasks){
             System.out.println("Please input a valid task number.");
             return;
