@@ -1,4 +1,5 @@
 
+import java.util.Arrays;
 import java.util.Scanner;
 public class Duke {
     public static void main(String[] args) {
@@ -8,19 +9,11 @@ public class Duke {
         String userCommand;
         Scanner in = new Scanner(System.in);
 
-
         Boolean isContinue = true;
         while (isContinue) {
             userCommand = in.nextLine();
+
             switch (userCommand) {
-
-            case "list":
-                System.out.println("list");
-                break;
-
-            case "blah":
-                System.out.println("blah");
-                break;
 
             case "bye":
                 System.out.println("Bye. Hope to see you again soon!");
@@ -28,7 +21,7 @@ public class Duke {
                 break;
 
             default:
-                System.out.println("Sorry, I do not understand what you input");
+                System.out.println(userCommand);
                 break;
             }
         }
