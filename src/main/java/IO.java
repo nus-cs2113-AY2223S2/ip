@@ -24,6 +24,36 @@ public class IO {
         printLineWithDelim(BoxDrawingCharacter.BOTTOM_LEFT_CORNER, BoxDrawingCharacter.BOTTOM_RIGHT_CORNER);
     }
 
+    /**
+     * Print the logo with padding and all.
+     * 
+     * @see {@link https://patorjk.com/software/taag/#p=display&f=Slant&t=archduke}
+     */
+    public static void printLogo() {
+        String left = BoxDrawingCharacter.VERTICAL_LINE + " ";
+        String right = " " + BoxDrawingCharacter.VERTICAL_LINE + "\n";
+        String[] lines = { "                   __        __      __      ",
+                "  ____ ___________/ /_  ____/ /_  __/ /_____ ", " / __ `/ ___/ ___/ __ \\/ __  / / / / //_/ _ \\",
+                "/ /_/ / /  / /__/ / / / /_/ / /_/ / ,< /  __/", "\\__,_/_/   \\___/_/ /_/\\__,_/\\__,_/_/|_|\\___/ ",
+                "                                             " };
+        int lineLength = lines[0].length();
+        int availableSpace = BOX_WIDTH - lineLength - 4;
+        int leftPadding = availableSpace / 2;
+        int rightPadding = availableSpace - leftPadding;
+
+        for (String line : lines) {
+            System.out.print(left);
+            for (int j = 0; j < leftPadding; j++) {
+                System.out.print(' ');
+            }
+            System.out.print(line);
+            for (int j = 0; j < rightPadding; j++) {
+                System.out.print(' ');
+            }
+            System.out.print(right);
+        }
+    }
+
     static void printRightBorder(int unusedSpace) {
         // = since we also have one space as padding
         for (int i = 0; i <= unusedSpace; i++) {

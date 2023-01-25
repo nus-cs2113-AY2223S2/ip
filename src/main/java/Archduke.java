@@ -2,6 +2,7 @@ public class Archduke {
     public static void main(String[] args) {
         IO io = new IO();
         IO.printBoxTopBorder();
+        IO.printLogo();
         IO.printf("Hello! I'm Archduke");
         IO.printf("What can I do for you?");
         IO.printBoxBottomBorder();
