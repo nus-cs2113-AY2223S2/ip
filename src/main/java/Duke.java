@@ -1,3 +1,4 @@
+import java.util.Scanner;
 public class Duke {
     public static void main(String[] args) {
         String logo = " ____        _        \n"
@@ -9,6 +10,25 @@ public class Duke {
 
         System.out.println("Hello! I'm Duke\n");
         System.out.println("What can I do for you?\n");
-        System.out.println("Bye. Hope to see you again soon!\n");
+
+        Print.PrintLine();
+
+        Scanner in = new Scanner(System.in);
+        while(true){
+            String line = in.nextLine();
+            line = line.trim();
+            String[] command = line.split(" ");
+            switch (command[0]){
+            case "bye":
+                Print.PrintString("Bye. Hope to see you again soon!");
+                return;
+            case "list":
+                Print.PrintString("list");
+                break;
+            default:
+                Print.PrintString(line);//simply echos commands entered by the user
+            }
+        }
+
     }
 }
