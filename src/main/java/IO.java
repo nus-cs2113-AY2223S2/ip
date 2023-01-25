@@ -1,14 +1,14 @@
 import java.util.Scanner;
 
 public class IO {
-    Scanner scanner;
-    static final int BOX_WIDTH = 80;
+    private Scanner scanner;
+    private static final int BOX_WIDTH = 80;
 
-    IO() {
+    public IO() {
         this.scanner = new Scanner(System.in);
     }
 
-    static void printLineWithDelim(char leftDelim, char rightDelim) {
+    private static void printLineWithDelim(char leftDelim, char rightDelim) {
         System.out.print(leftDelim);
         for (int i = 0; i < BOX_WIDTH - 2; i++) {
             System.out.print(BoxDrawingCharacter.HORIZONTAL_LINE);
@@ -55,7 +55,7 @@ public class IO {
         }
     }
 
-    static void printRightBorder(int unusedSpace) {
+    private static void printRightBorder(int unusedSpace) {
         // = since we also have one space as padding
         for (int i = 0; i <= unusedSpace; i++) {
             System.out.print(' ');

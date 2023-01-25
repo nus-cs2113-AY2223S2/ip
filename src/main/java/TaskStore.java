@@ -1,9 +1,9 @@
 import java.util.Arrays;
 
 public class TaskStore {
-    String[] tasks;
+    private String[] tasks;
 
-    TaskStore() {
+    public TaskStore() {
         this.tasks = new String[0];
     }
 
