@@ -32,6 +32,8 @@ public class Task {
         case "todo":
             addTodoToTasksList(input, listOfTasks);
             break;
+        case "deadline":
+            addDeadlineToTasksList(input, listOfTasks);
         default:
             return;
         }
@@ -44,6 +46,18 @@ public class Task {
         listOfTasks.add(todo);
         System.out.println("Got it. I've added this task:");
         System.out.println("  " + todo);
+        System.out.println("Now you have " + listOfTasks.size() + " task in the list.");
+    }
+
+    public static void addDeadlineToTasksList(String input, ArrayList<Task> listOfTasks) {
+        int nameStartIndex = input.indexOf(" ");
+        int nameEndIndex = input.indexOf("/");
+        String name = input.substring(nameStartIndex + 1, nameEndIndex -1);
+        String dueDate = input.substring(nameEndIndex + 4);
+        Task deadline = new Deadline(name, false, dueDate);
+        listOfTasks.add(deadline);
+        System.out.println("Got it. I've added this task:");
+        System.out.println("  " + deadline);
         System.out.println("Now you have " + listOfTasks.size() + " task in the list.");
     }
 
