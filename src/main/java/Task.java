@@ -34,8 +34,10 @@ public class Task {
             break;
         case "deadline":
             addDeadlineToTasksList(input, listOfTasks);
+            break;
         case "event":
             addEventToTasksList(input, listOfTasks);
+            break;
         default:
             return;
         }
@@ -46,9 +48,7 @@ public class Task {
         String name = input.substring(nameStartIndex + 1);
         Task todo = new Todo(name, false);
         listOfTasks.add(todo);
-        System.out.println("Got it. I've added this task:");
-        System.out.println("  " + todo);
-        System.out.println("Now you have " + listOfTasks.size() + " task in the list.");
+        printAddTaskMessage(todo, listOfTasks);
     }
 
     public static void addDeadlineToTasksList(String input, ArrayList<Task> listOfTasks) {
@@ -58,9 +58,7 @@ public class Task {
         String dueDate = input.substring(nameEndIndex + 4);
         Task deadline = new Deadline(name, false, dueDate);
         listOfTasks.add(deadline);
-        System.out.println("Got it. I've added this task:");
-        System.out.println("  " + deadline);
-        System.out.println("Now you have " + listOfTasks.size() + " task in the list.");
+        printAddTaskMessage(deadline, listOfTasks);
     }
 
     public static void addEventToTasksList(String input, ArrayList<Task> listOfTasks) {
@@ -73,9 +71,7 @@ public class Task {
         String end = remainingInfo.substring(toIndex + 4);
         Task event = new Event(name, false, start, end);
         listOfTasks.add(event);
-        System.out.println("Got it. I've added this task:");
-        System.out.println("  " + event);
-        System.out.println("Now you have " + listOfTasks.size() + " task in the list.");
+        printAddTaskMessage(event, listOfTasks);
     }
 
     public String toString() {
@@ -98,5 +94,11 @@ public class Task {
             System.out.println("OK, I've marked this task as not done yet:");
         }
         System.out.println("  " + currentTask);
+    }
+
+    public static void printAddTaskMessage(Task task, ArrayList<Task> listOfTasks) {
+        System.out.println("Got it. I've added this task:");
+        System.out.println("  " + task);
+        System.out.println("Now you have " + listOfTasks.size() + " task in the list.");
     }
 }
