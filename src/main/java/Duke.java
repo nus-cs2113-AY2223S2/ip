@@ -1,4 +1,11 @@
+import java.util.Scanner;
+
 public class Duke {
+    public static void echo(String args) {
+        String lineBreak = "____________________\n";
+        System.out.println(lineBreak + args + "\n" + lineBreak);
+    }
+
     public static void main(String[] args) {
         String logo = "   _____  __     _               __         \n"
                 + "  / ___/ / /_   (_)____  __  __ / /__ ____ _\n"
@@ -8,6 +15,16 @@ public class Duke {
         String lineBreak = "____________________\n";
         String greetingLine = "Hello, I am Shizuka.\nHow can I be of assistance?\n";
         String exitLine = "Goodbye.\n";
-        System.out.println(lineBreak + logo + lineBreak + greetingLine + lineBreak + exitLine + lineBreak);
+        System.out.println(lineBreak + logo + lineBreak + greetingLine + lineBreak);
+        Scanner in = new Scanner(System.in);
+        String line;
+        while (true) {
+            line = in.nextLine();
+            if (line.equals("bye")) {
+                break;
+            }
+            echo(line);
+        }
+        System.out.println(lineBreak + exitLine + lineBreak);
     }
 }
