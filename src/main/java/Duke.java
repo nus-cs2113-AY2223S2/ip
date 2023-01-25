@@ -31,13 +31,11 @@ public class Duke {
             startDate = endDate = null;
             
             try {
-                if (command.equals("list")) {
-                    System.out.println(TaskPrinter.tasksToStringMessage(tasks));
-                    input = sc.nextLine();
-                    continue;
-                }
-
                 switch (command) {
+                    case "list":
+                        System.out.println(TaskPrinter.tasksToStringMessage(tasks));
+                        break;
+
                     case "todo":
                         if (input.length() == command.length()) {
                             throw new NoDescriptionException(command);
