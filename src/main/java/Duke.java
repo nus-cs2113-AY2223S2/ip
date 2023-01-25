@@ -16,7 +16,7 @@ public class Duke extends DukeCommands{
         Scanner sc = new Scanner(System.in);
 
         String word = sc.nextLine();
-        // chatbot active
+        // chatbot active loop sequence
         while (!word.equals("bye")) {
             System.out.println(spacer);
             if (word.equals("list")) {
