@@ -4,19 +4,49 @@ public class Task {
     protected int taskNumber;
 
 
-    public Task(String description){
+
+    public Task(String description) {
         this.taskName = description;
         this.isCompleted = false;
     }
 
-    public String getStatusIcon(){
+
+    public void setTaskName(String name){
+        this.taskName = name;
+
+    }
+
+    public String getTaskName(){
+        return taskName;
+    }
+
+
+    public void printTask(){
+        if (this.isCompleted){
+            System.out.println( ".[T][X] " + this.taskName);
+        }else {
+            System.out.println( ".[T][ ] " + this.taskName);
+        }
+
+    }
+
+
+
+
+
+
+    public String getStatusIcon() {
         return (isCompleted ? "[X]" : "[ ]");
     }
 
-    public void markAsDone(){
+    public void markAsDone() {
         this.isCompleted = true;
     }
-    public void markAsNotDone(){
+
+    public void markAsNotDone() {
         this.isCompleted = false;
     }
+
+
+
 }
