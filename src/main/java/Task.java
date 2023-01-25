@@ -2,21 +2,17 @@ public class Task {
     private String taskName;
     private boolean isDone;
 
-    public String getTaskName() {
-        return taskName;
-    }
-
     public Task(String taskName, boolean isDone) {
         this.taskName = taskName;
         this.isDone = isDone;
     }
 
-    public void markTask() {
-        this.isDone = true;
+    public void setDone(boolean done) {
+        this.isDone = done;
     }
 
-    public void unmarkTask() {
-        this.isDone = false;
+    public String getTaskName() {
+        return taskName;
     }
 
     public void printTask() {

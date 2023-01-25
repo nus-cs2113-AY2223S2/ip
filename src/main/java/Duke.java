@@ -19,22 +19,20 @@ public class Duke {
                     tasks[i].printTask();
                 }
             } else if (line.length() > 4 && line.substring(0, 4).equals("mark")) { // if it's mark X, mark task X (looks like buggy if a task is called "mark ..."
-                int markIndex = Integer.parseInt(line.substring(5)) - 1;
-                tasks[markIndex].markTask();
+                int indexToBeMarked = Integer.parseInt(line.substring(5)) - 1;
+                tasks[indexToBeMarked].setDone(true);
                 System.out.println("Nice! I've marked this task as done:");
-                System.out.println("[X] " + tasks[markIndex].getTaskName());
+                System.out.println("[X] " + tasks[indexToBeMarked].getTaskName());
             } else if (line.length() > 6 && line.substring(0, 6).equals("unmark")) { // if it's unmark task X, unmark task X
-                int unmarkIndex = Integer.parseInt(line.substring(7)) - 1;
-                tasks[unmarkIndex].unmarkTask();
+                int indexToBeUnmarked = Integer.parseInt(line.substring(7)) - 1;
+                tasks[indexToBeUnmarked].setDone(false);
                 System.out.println("OK, I've marked this task as not done yet:");
-                System.out.println("[ ] " + tasks[unmarkIndex].getTaskName());
+                System.out.println("[ ] " + tasks[indexToBeUnmarked].getTaskName());
             } else { // if it's a task, add the task
                 tasks[tasksIndex] = new Task(line, false);
                 tasksIndex++;
             }
 
-
-            // read the next line
             line = in.nextLine();
         }
         System.out.println("Bye. Hope to see you again soon!");
