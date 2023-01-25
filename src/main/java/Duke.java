@@ -54,7 +54,7 @@ public class Duke {
                         
                         startIdx = input.indexOf("/by ");
                         if (startIdx == -1) {
-                            throw new InsufficientArgumentsException(command, "deadline /by [date]");
+                            throw new InsufficientArgumentsException(command, "deadline [task] /by [date]");
                         }
 
                         taskName = input.substring(command.length() + 1, startIdx);
