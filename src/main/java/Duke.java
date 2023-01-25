@@ -5,18 +5,36 @@ public class Duke {
         System.out.println("____________________________________________________________");
     }
 
-    public static int checkInput(String input) {
-        switch (input) {
+    public static void printHeloMessage(String logo) {
+        System.out.println("Hello from\n" + logo);
+        printHorizontalLine();
+        System.out.println("Hello! I'm Duke");
+        System.out.println("What can I do for you?");
+        printHorizontalLine();
+    }
+
+    public static void checkInput(String input, ArrayList<Task> listOfTasks) {
+        String[] inputs = input.split(" ");
+        switch (inputs[0]) {
         case "bye":
-            return 0;
+            System.out.println("Bye. Hope to see you again soon!");
+            break;
         case "list":
-            return 1;
+            Task.listTasks(listOfTasks);
+            break;
         case "mark":
-            return 2;
+            Task markTask = listOfTasks.get(Integer.parseInt(inputs[1])-1);
+            markTask.setStatus(true);
+            Task.printUpdateStatusMessage(markTask.getStatus(), markTask);
+            break;
         case "unmark":
-            return 3;
+            Task unmarkTask = listOfTasks.get(Integer.parseInt(inputs[1])-1);
+            unmarkTask.setStatus(false);
+            Task.printUpdateStatusMessage(unmarkTask.getStatus(), unmarkTask);
+            break;
         default:
-            return -1;
+            Task.addToTasksList(input, listOfTasks);
+            break;
         }
     }
 
@@ -26,42 +44,15 @@ public class Duke {
                 + "| | | | | | | |/ / _ \\\n"
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);
-        printHorizontalLine();
-        System.out.println("Hello! I'm Duke");
-        System.out.println("What can I do for you?");
-        printHorizontalLine();
-        String line;
+        printHeloMessage(logo);
+        String input;
         ArrayList<Task> listOfTasks = new ArrayList<>();
         do {
             Scanner in = new Scanner(System.in);
-            line = in.nextLine();
+            input = in.nextLine();
             printHorizontalLine();
-            String[] inputs = new String[2];
-            inputs = line.split(" ");
-            int instruction = checkInput(inputs[0]);
-            switch(instruction) {
-            case 0:
-                System.out.println("Bye. Hope to see you again soon!");
-                break;
-            case 1:
-                Task.listTasks(listOfTasks);
-                break;
-            case 2:
-                listOfTasks.get(Integer.parseInt(inputs[1])-1).setStatus(true);
-                System.out.println("Nice! I've marked this task as done:");
-                System.out.println("  [X] " + listOfTasks.get(Integer.parseInt(inputs[1])-1).getName());
-                break;
-            case 3:
-                listOfTasks.get(Integer.parseInt(inputs[1])-1).setStatus(false);
-                System.out.println("OK, I've marked this task as not done yet:");
-                System.out.println("  [ ] " + listOfTasks.get(Integer.parseInt(inputs[1])-1).getName());
-                break;
-            default:
-                Task.addToTasksList(line, listOfTasks);
-                break;
-            }
+            checkInput(input, listOfTasks);
             printHorizontalLine();
-        } while (!line.equals("bye"));
+        } while (!input.equals("bye"));
     }
 }
