@@ -1,17 +1,46 @@
 import java.util.Scanner;
 
 public class Duke {
+    static int limit = 100;
+    static String[] task = new String[limit];
+    static int listCount = 0;
+    public static void listInput(){
+        int idxCount = 1;
+        System.out.println("____________________________________________________________");
+        for (int i=0 ;i < listCount;i++){
+            System.out.println(idxCount + ". " + task[i]);
+            idxCount++;
+        }
+        System.out.println("____________________________________________________________");
+    }
+    public static void addList(String input){
+        if(listCount == limit ){
+            System.out.println("____________________________________________________________");
+            System.out.println("Too much tasks");
+            System.out.println("____________________________________________________________");
+        }else{
+            task[listCount] = input;
+            listCount++;
+            System.out.println("____________________________________________________________");
+            System.out.println("added: " + input);
+            System.out.println("____________________________________________________________");
+        }
+
+    }
     public static void startBot(){
         Scanner in = new Scanner((System.in));
         while(true){
             String input  = in.nextLine();
-            if(input.equals("bye")){
-                return;
-            }
-            System.out.println("____________________________________________________________");
-            System.out.println(input);
-            System.out.println("____________________________________________________________");
+            switch(input){
+                case "bye":
+                    return;
+                case "list":
+                    listInput();
+                    break;
+                default:
+                    addList(input);
 
+            }
         }
     }
     public static void main(String[] args) {
