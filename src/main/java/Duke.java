@@ -1,4 +1,6 @@
 import java.util.Scanner;
+// Now it is level 1
+
 
 public class Duke {
 
