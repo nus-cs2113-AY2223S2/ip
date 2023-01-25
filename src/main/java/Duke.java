@@ -22,18 +22,36 @@ public class Duke {
         while(true){
             System.out.println();
             String cmd = in.nextLine();
-        
+            String[] splitCmd = cmd.split(" ");
+
             if (cmd.equals("bye")){
                 System.out.println(line);
                 System.out.println("Bye. Hope to see you again soon!");
                 System.out.println(line);
                 break;
             }
-            if (cmd.equals("list")){
+            else if (cmd.equals("list")){
                 System.out.println(line);
+                System.out.println("Here are the tasks in your list:");
                 for(int i = 0; i < numTasks; i++){
-                    System.out.println(Integer.toString(i+1) + ". " + tasks[i].getDescription());
+                    System.out.println(Integer.toString(i+1) + "." + tasks[i].getStatusIcon() + " " + tasks[i].getDescription());
                 }
+                System.out.println(line);
+            }
+            else if (splitCmd[0].equals("mark")){
+                int toMark = Integer.parseInt(splitCmd[1]) - 1;
+                tasks[toMark].markDone();
+                System.out.println(line);
+                System.out.println("Nice! I've marked this task as done:");
+                System.out.println(tasks[toMark].getStatusIcon() + " " + tasks[toMark].getDescription());
+                System.out.println(line);
+            }
+            else if (splitCmd[0].equals("unmark")){
+                int toUnmark = Integer.parseInt(splitCmd[1]) - 1;
+                tasks[toUnmark].unMarkDone();
+                System.out.println(line);
+                System.out.println("Ok, I've marked this task as not done yet:");
+                System.out.println(tasks[toUnmark].getStatusIcon() + " " + tasks[toUnmark].getDescription());
                 System.out.println(line);
             }
             else{
