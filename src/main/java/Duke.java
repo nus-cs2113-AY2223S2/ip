@@ -17,14 +17,27 @@ public class Duke {
         String userInput;
         Scanner in = new Scanner(System.in);
         userInput = in.nextLine();
+        switch (userInput) {
+        case "list":
+            String[] userList = 
+            System.out.println();
+            break;
+
+        case "bye":
+            System.out.println("    ____________________________________________________________\n" +
+                    "     Bye. Hope to see you again soon!\n" +
+                    "    ____________________________________________________________\n");
+            return;
+
+        default:
+
+        }
         while (!userInput.equals("bye")) {
             System.out.println("    ____________________________________________________________\n" +
                     "     " + userInput + "\n" +
                     "    ____________________________________________________________\n ");
             userInput = in.nextLine();
         }
-        System.out.println("    ____________________________________________________________\n" +
-                "     Bye. Hope to see you again soon!\n" +
-                "    ____________________________________________________________\n");
+
     }
 }
