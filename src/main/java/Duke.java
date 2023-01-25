@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Arrays;
 public class Duke {
     public static void main(String[] args) {
         String logo = " ____        _        \n"
@@ -8,6 +9,9 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println(logo);
         greeting();
+        String[] itemList = new String[100];
+        int index = 0;
+
         boolean is_exit = false;
         while (!is_exit) {
             String messageFromUser;
@@ -16,9 +20,13 @@ public class Duke {
             if (messageFromUser.equals("bye")) {
                 exitGreeting();
                 is_exit = true;
+            } else if (messageFromUser.equals("list")) {
+                displayList(itemList, index);
             } else {
                 horizontalLine();
-                System.out.println(messageFromUser);
+                System.out.println("added: " + messageFromUser);
+                itemList[index] = messageFromUser;
+                index++;
                 horizontalLine();
             }
         }
@@ -36,6 +44,15 @@ public class Duke {
         horizontalLine();
     }
 
+    public static void displayList(String[] itemList, int index) {
+        int i = 1;
+        String[] filledList = Arrays.copyOf(itemList, index);
+        for (String item : filledList) {
+            System.out.println(i + ". " + item);
+            i += 1;
+        }
+        horizontalLine();
+    }
 
     public static void horizontalLine() {
         System.out.println("________________________________________");
