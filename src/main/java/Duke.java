@@ -10,6 +10,6 @@ public class Duke {
                               
 
         System.out.println(greetingLine + horizontalLine);
-        System.out.println(exitLine + horizontalLine);
+        System.out.println(exitLine + horizontalLine); //
     }
 }
