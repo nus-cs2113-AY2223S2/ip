@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.Random;
+// import java.util.Arrays;
 
 public class Duke extends DukeCommands{
     public static void main(String[] args) {
@@ -15,14 +16,17 @@ public class Duke extends DukeCommands{
         Scanner sc = new Scanner(System.in);
 
         String word = sc.nextLine();
-        String[] list = new String[100];
         // chatbot active
         while (!word.equals("bye")) {
             System.out.println(spacer);
             if (word.equals("list")) {
-                DukeCommands.listTasks(list);
+                DukeCommands.listTasks();
+            } else if (word.startsWith("mark ") && word.substring(5).matches("[0-9]{1,3}")) {
+                markTask(Integer.parseInt(word.substring(5)));
+            } else if (word.startsWith("unmark ") && word.substring(7).matches("[0-9]{1,3}")) {
+                unmarkTask(Integer.parseInt(word.substring(7)));
             } else {
-                DukeCommands.addToList(word, list);
+                DukeCommands.addToList(word);
             }
             word = sc.nextLine();
         }
@@ -40,7 +44,7 @@ public class Duke extends DukeCommands{
             break;
         
         default:
-            System.out.println("Nooo. Free me..." + spacer);
+            System.out.println("Nooo. Free me...\n" + spacer);
             break;
         }
     }
