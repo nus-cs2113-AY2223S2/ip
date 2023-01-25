@@ -1,6 +1,7 @@
 public class Archduke {
     public static void main(String[] args) {
         IO io = new IO();
+        TaskStore store = new TaskStore();
 
         IO.printBoxTopBorder();
         IO.printLogo();
@@ -10,16 +11,24 @@ public class Archduke {
         while (true) {
             String command = io.readUserInput();
 
-            if (command.equals("bye")) {
+            switch (command) {
+            case "list":
+                IO.printBoxTopBorder();
+                IO.printf("Here are your tasks:");
+                store.listTasks();
+                IO.printBoxBottomBorder();
+                continue;
+            case "bye":
                 IO.printBoxTopBorder();
                 IO.printf("Bye. Hope to see you again soon!");
                 IO.printBoxBottomBorder();
                 return;
+            default:
+                store.addTask(command);
+                IO.printBoxTopBorder();
+                IO.printf("Added task: %s", command);
+                IO.printBoxBottomBorder();
             }
-
-            IO.printBoxTopBorder();
-            IO.printf(command);
-            IO.printBoxBottomBorder();
         }
     }
 }
