@@ -11,6 +11,6 @@ public class Duke {
                 + "I have only been trained to greet you so far.\n"
                 + "Once my owner is more proficient in what he does, he will give me more functions!");
         //To be added to make sure user input is read.
-        System.out.println("Thats all from me! Goodbye!");
+        System.out.println("That's all from me! Goodbye!");
     }
 }
