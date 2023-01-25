@@ -14,11 +14,16 @@ public class Duke {
         boolean running = true;
         while (running) {
             String command = scanner.nextLine();
+            String[] commandByWord = command.split(" ");
             if (command.equals("bye")) { // whats the difference between equals and ==
                 speak(exiting);
                 running = false;
             } else if (command.equals("list")) {
                 speak(tasks.listTasks());
+            } else if (commandByWord[0].equals("mark")) {
+                speak(tasks.mark(Integer.parseInt(commandByWord[1])));
+            } else if (commandByWord[0].equals("unmark")) {
+                speak(tasks.unmark(Integer.parseInt(commandByWord[1])));
             } else {
                 speak(tasks.addTask(command));
             }
