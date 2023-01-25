@@ -13,18 +13,18 @@ class IO {
      * Prints a line of underscores, served as a divider between sections. Like the
      * HTML's {@code hr} tag.
      */
-    public static void print_line() {
+    public static void printLine() {
         System.out.println("____________________________________________________________");
     }
 }
 
 public class Archduke {
     public static void main(String[] args) {
-        IO.print_line();
+        IO.printLine();
         IO.println("Hello! I'm Archduke");
         IO.println("What can I do for you?");
-        IO.print_line();
+        IO.printLine();
         IO.println("Bye. Hope to see you again soon!");
-        IO.print_line();
+        IO.printLine();
     }
 }
