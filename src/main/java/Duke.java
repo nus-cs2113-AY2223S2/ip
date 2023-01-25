@@ -2,18 +2,16 @@ import java.util.Scanner;
 
 public class Duke {
     private static String logo = " ____        _        \n"
-            + "|  _ \\ _   _| | _____ \n"
-            + "| | | | | | | |/ / _ \\\n"
-            + "| |_| | |_| |   <  __/\n"
-            + "|____/ \\__,_|_|\\_\\___|\n";
+            + "|  _ \\ _   _| | _____ \n" + "| | | | | | | |/ / _ \\\n"
+            + "| |_| | |_| |   <  __/\n" + "|____/ \\__,_|_|\\_\\___|\n";
     private static String line = "____________________________________________________________\n";
     private static int taskCount = 0;
-    private static int maxTaskCount = 100;
-    private static Task[] tasks = new Task[maxTaskCount];
+    private static final int MAX_TASKS = 100;
+    private static Task[] tasks = new Task[MAX_TASKS];
 
     public static void main(String[] args) {
         greetUser();
-        doTask();
+        doCommand();
     }
 
     private static void greetUser() {
@@ -31,7 +29,7 @@ public class Duke {
 
     private static void addTask(String text) {
         System.out.print(line);
-        if (taskCount >= maxTaskCount) {
+        if (taskCount >= MAX_TASKS) {
             System.out.println("failed as task list is full\n" + line);
             return;
         }
@@ -44,7 +42,8 @@ public class Duke {
     private static void listTasks() {
         System.out.println(line + "Here are the tasks in your list:");
         for (int i = 0; i < taskCount; i++) {
-            System.out.println(Integer.toString(i+1) + ":[" + tasks[i].getStatusIcon() + "] " + tasks[i].getDescription());
+            System.out.println(Integer.toString(i + 1) + ":[" + tasks[i].getStatusIcon() + "] "
+                    + tasks[i].getDescription());
         }
         System.out.print(line);
     }
@@ -59,8 +58,9 @@ public class Duke {
     private static void markTask(String input) {
         int taskNum = Integer.parseInt(input.substring(5));
         if (isValidTask(taskNum)) {
-            tasks[taskNum-1].markDone();
-            System.out.print(line + "Nice! I've marked this task as done:\n[X] " + tasks[taskNum-1].getDescription() + "\n" + line);
+            tasks[taskNum - 1].markDone();
+            System.out.print(line + "Nice! I've marked this task as done:\n[X] "
+                    + tasks[taskNum - 1].getDescription() + "\n" + line);
         } else {
             System.out.print(line + "Invalid task number\n" + line);
         }
@@ -69,14 +69,15 @@ public class Duke {
     private static void unmarkTask(String input) {
         int taskNum = Integer.parseInt(input.substring(7));
         if (isValidTask(taskNum)) {
-            tasks[taskNum-1].unmarkDone();
-            System.out.print(line + "OK, I've marked this task as not done yet:\n[ ] " + tasks[taskNum-1].getDescription() + "\n" + line);
+            tasks[taskNum - 1].unmarkDone();
+            System.out.print(line + "OK, I've marked this task as not done yet:\n[ ] "
+                    + tasks[taskNum - 1].getDescription() + "\n" + line);
         } else {
             System.out.print(line + "Invalid task number\n" + line);
         }
     }
 
-    private static void doTask() {
+    private static void doCommand() {
         String input;
         Scanner in = new Scanner(System.in);
         while (true) {
@@ -91,7 +92,6 @@ public class Duke {
             } else if (input.matches("unmark \\d+")) {
                 unmarkTask(input);
             } else {
-                // echoString(input);
                 addTask(input);
             }
         }
