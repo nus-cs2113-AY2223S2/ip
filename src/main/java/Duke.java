@@ -1,12 +1,25 @@
 import java.util.Scanner;
-// Now it is level 1
+// Now it is level 2
 
 
 public class Duke {
+    public static String[] requestedList = new String [100]; // The size of this list is initialize to be 100
+    public static int listTailIndex = 0;
 
-    public static void echosCommands(String line) {
+    public static void add(String line) {
         System.out.println("____________________________________________________________");
-        System.out.println(" " + line);
+        System.out.println("added: " + line);
+        requestedList[listTailIndex] = line;
+        listTailIndex++;
+        System.out.println("____________________________________________________________");
+    }
+
+    public static void list() {
+        System.out.println("____________________________________________________________");
+        for (int i = 0; i < listTailIndex; i++) {
+            System.out.print(i + 1);
+            System.out.println(". " + requestedList[i]);
+        }
         System.out.println("____________________________________________________________" + '\n');
     }
 
@@ -38,7 +51,11 @@ public class Duke {
         Scanner in = new Scanner(System.in);
         line = in.nextLine();
         while (!line.equals("bye")) {
-            echosCommands(line);
+            if (line.equals("list")) {
+                list();
+            } else {
+                add(line);
+            }
             line = in.nextLine();
         }
 
