@@ -5,16 +5,17 @@ public class Rica {
     private static final String LINE = "____________________________________________________________";
     private static final String LIST_TRIGGER = "list";
     private static final String BYE_TRIGGER = "bye";
-    private static final String ADD_PHRASE = " I'll remember this: ";
+    private static final String ADD_PHRASE = " New task I'll remember: ";
     private static final String BYE_PHRASE = " Leaving so soon? Come back anytime, I'll be happy to help!";
-    private static ArrayList<String> pastTexts = new ArrayList<>();
+    private static ArrayList<Task> pastTasks = new ArrayList<>();
 
-    private static ArrayList<String> getPastTexts() {
-        return Rica.pastTexts;
+    private static ArrayList<Task> getPastTexts() {
+        return Rica.pastTasks;
     }
 
-    private static void addText(String text) {
-        Rica.pastTexts.add(text);
+    private static void addTask(String description) {
+        Task newTask = new Task(description);
+        Rica.pastTasks.add(newTask);
     }
 
     public static void main(String[] args) {
@@ -34,10 +35,10 @@ public class Rica {
     }
 
     private static void printTexts() {
-        ArrayList<String> texts = Rica.getPastTexts();
-        printlnWithIndent(" Here are the texts I remember:");
-        for (int i = 1; i <= texts.size(); i += 1) {
-            printlnWithIndent(" " + i + ". " + texts.get(i - 1));
+        ArrayList<Task> tasks = Rica.getPastTexts();
+        printlnWithIndent(" I think you have these tasks:");
+        for (int i = 1; i <= tasks.size(); i += 1) {
+            printlnWithIndent(" " + i + ". " + tasks.get(i - 1));
         }
     }
 
@@ -56,7 +57,7 @@ public class Rica {
                     break;
                 default:
                     printlnWithIndent(Rica.ADD_PHRASE + command);
-                    Rica.addText(command);
+                    Rica.addTask(command);
                     break;
             }
 
