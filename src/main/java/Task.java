@@ -12,17 +12,11 @@ public class Task {
         return (isDone ? "X" : " "); // mark done task with X
     }
     public static void markAsDone(Task task) {
-
         task.isDone = true;
-
-
     }
 
     public static void markAsNotDone(Task task) {
-
         task.isDone = false;
-
-
     }
 
     public String getDescription(){
