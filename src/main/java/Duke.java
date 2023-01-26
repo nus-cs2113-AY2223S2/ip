@@ -1,6 +1,8 @@
 import java.util.Scanner;
 
 public class Duke {
+    private static String[] list = new String[100];
+    private static int itemNo = 1;
 
     public static void greetUser() {
         System.out.println("____________________________________________________________");
@@ -27,9 +29,34 @@ public class Duke {
         System.out.println("Bye. Hope to see you again soon!");
         System.out.println("____________________________________________________________");
     }
+
+    public static void addToList(String item) {
+        list[itemNo] = item;
+        itemNo++;
+        System.out.println("added: " + item);
+        System.out.println("____________________________________________________________");
+    }
+
+    public static void listItems() {
+        for(int i = 1; i < itemNo; i++) {
+            System.out.println(i + ". " + list[i]);
+        }
+        System.out.println("____________________________________________________________");
+    }
     public static void main(String[] args) {
         greetUser();
-        echo();
+        //echo();
+        Scanner scanner = new Scanner(System.in);
+        String line = scanner.nextLine();
+        while(!line.equals("bye")) {
+            if (line.equals("list")) {
+                listItems();
+            } else {
+                addToList(line);
+            }
+            line = scanner.nextLine();
+        }
+        scanner.close();
         exit();
     }
 }
