@@ -5,6 +5,7 @@ public class Task {
     private boolean isDone;
 
     public Task(String itemName) {
+        itemName = itemName.substring(0,1).toUpperCase() + itemName.substring(1);
         this.itemName = itemName;
         itemCount++;
         this.itemId = itemCount;
