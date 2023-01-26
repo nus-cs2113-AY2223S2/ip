@@ -15,8 +15,8 @@ public class Duke {
         System.out.println("\t added: " + task.getContent());
     }
 
-    private static void markTask(int listID) {
-        int index = listID-1;
+    private static void markTask(int listId) {
+        int index = listId - 1;
         if (index < 0 || index >= taskList.size()) {
             System.err.println("\t Index out of range!");
         } else {
@@ -24,8 +24,8 @@ public class Duke {
         }
     }
 
-    private static void unmarkTask(int listID) {
-        int index = listID-1;
+    private static void unmarkTask(int listId) {
+        int index = listId - 1;
         if (index < 0 || index >= taskList.size()) {
             System.err.println("\t Index out of range!");
         } else {
@@ -49,12 +49,13 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
 
+        // greeting messages
         printDivider();
         System.out.println("\t Hello! I'm Duke");
         System.out.println("\t What can I do for you?");
         printDivider();
 
-        // user interaction: echo
+        // user interactions
         while (true) {
             String msg = scanner.nextLine();
             String[] msgArgs = msg.split(" ");
@@ -74,7 +75,7 @@ public class Duke {
             printDivider();
         }
 
-        // exit
+        // exit message
         System.out.println("\t Bye. Hope to see you again soon!");
         printDivider();
     }
