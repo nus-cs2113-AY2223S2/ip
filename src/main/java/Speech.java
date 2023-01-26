@@ -8,9 +8,18 @@ public class Speech {
     public static void printLine() {
         System.out.println("____________________________________________________________");
     }
-    public static void printEcho(String inLine){
+    public static void printResponse(String inLine){
         printLine();
-        System.out.println( "\t"+inLine);
+        System.out.println( "\t"+"added: "+inLine);
         printLine();
     }
+
+    public static void printTaskList(Task[] taskList, int numTasks){
+        printLine();
+        for (int listNum = 1; listNum <= numTasks; listNum++){
+            System.out.println("\t" + listNum + ". " +taskList[listNum-1].getTaskName());
+        }
+        printLine();
+    }
+
 }
