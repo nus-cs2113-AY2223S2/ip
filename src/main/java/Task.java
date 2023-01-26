@@ -1,6 +1,6 @@
 public class Task {
     private String taskName;
-    private boolean taskDone = false;
+    private boolean isDone = false;
     public Task(String taskName){
         this.taskName = taskName;
     }
@@ -8,9 +8,15 @@ public class Task {
     public String getTaskName() {
         return taskName;
     }
+    /**
+     * Returns identity of the current task including the following
+     * - [X] or [ ] for marked or unmarked tasks
+     * - task name
+     * @return tasks identity.
+     */
     public String getTaskIdentity(){
         String taskIdentity;
-        if(taskDone){
+        if(isDone){
             taskIdentity = "[X] " + taskName;
         } else {
             taskIdentity ="[ ] " + taskName;
@@ -22,12 +28,12 @@ public class Task {
         this.taskName = taskName;
     }
 
-    public boolean isTaskDone() {
-        return taskDone;
+    public boolean getIsDone() {
+        return isDone;
     }
 
-    public void setDoneTask(boolean taskDone) {
-        this.taskDone = taskDone;
+    public void setDone(boolean isDone) {
+        this.isDone = isDone;
     }
 }
 

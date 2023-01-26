@@ -29,14 +29,14 @@ public class Limey {
                 lineIn = lineIn.substring(i+1);
                 lineIn = lineIn.trim();
                 int taskIndex = Integer.parseInt(lineIn) - 1;
-                tasks[taskIndex].setDoneTask(true);
+                tasks[taskIndex].setDone(true);
                 Speech.printMarked(tasks[taskIndex]);
                 break;
             case "unmark":
                 lineIn = lineIn.substring(i+1);
                 lineIn = lineIn.trim();
                 int taskInd = Integer.parseInt(lineIn) - 1;
-                tasks[taskInd].setDoneTask(false);
+                tasks[taskInd].setDone(false);
                 Speech.printUnmarked(tasks[taskInd]);
                 break;
             default:
