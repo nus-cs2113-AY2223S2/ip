@@ -14,18 +14,32 @@ public class Duke {
         Scanner in = new Scanner(System.in);
 
         int textNum = 0;                            // number of texts stored
-        String[] storedTexts = new String[100];     // array of stored texts
+        Task[] storedTasks = new Task[100];         // array of stored texts
         while (!command.equals("bye")) {
             command = in.nextLine();
-            if (!command.equals("bye") && !command.equals("list")) {
-                System.out.println("added: " + command);
-                storedTexts[textNum] = command;
-                textNum++;
-            } else if (command.equals("list")) {
+            String[] commandWords = command.split(" ");
+            if (command.equals("list")) {
+                System.out.println("To-do: ");
+                System.out.println("________________________________________");
                 for(int i = 0; i < textNum; i++)
                 {
-                    System.out.println((i + 1) + ". " + storedTexts[i]);
+                    System.out.println((i + 1) + ". "+ storedTasks[i].getStatusIcon() + " " + storedTasks[i].getDescription());
                 }
+                System.out.println("________________________________________");
+            } else if (commandWords[0].equals("mark")) {
+                int taskIndex = Integer.parseInt(commandWords[1]) - 1;
+                storedTasks[taskIndex].setDone(true);
+                System.out.println("Nice! I've marked this task as done.");
+                System.out.println(storedTasks[taskIndex].getStatusIcon() + " " + storedTasks[taskIndex].getDescription());
+            } else if (commandWords[0].equals("unmark")) {
+                int taskIndex = Integer.parseInt(commandWords[1]) - 1;
+                storedTasks[taskIndex].setDone(false);
+                System.out.println("OK, I've marked this task as not done yet.");
+                System.out.println(storedTasks[taskIndex].getStatusIcon() + " " + storedTasks[taskIndex].getDescription());
+            } else if (!command.equals("bye")) {
+                System.out.println("added: " + command);
+                storedTasks[textNum] = new Task(command);
+                textNum++;
             }
 
         }
