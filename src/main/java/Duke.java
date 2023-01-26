@@ -1,10 +1,24 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
     private static final Scanner scanner = new Scanner(System.in);
+    private static final ArrayList<String> taskList = new ArrayList<>();
 
     private static void printDivider() {
         System.out.println("____________________________________________________________");
+    }
+
+    private static void addTask(String task) {
+        taskList.add(task);
+        System.out.println("\tadd: " + task);
+    }
+
+    private static void listTasks() {
+        int cnt = 0;
+        for (String task : taskList) {
+            System.out.printf("\t%d. %s\n", ++cnt, task);
+        }
     }
 
     public static void main(String[] args) {
@@ -25,14 +39,19 @@ public class Duke {
             String msg = scanner.nextLine();
             if (msg.equals("bye")) {
                 break;
+            } else if (msg.equals("list")) {
+                printDivider();
+                listTasks();
+                printDivider();
+            } else {
+                printDivider();
+                addTask(msg);
+                printDivider();
             }
-
-            printDivider();
-            System.out.println("\t" + msg);
-            printDivider();
         }
 
         // exit
+        printDivider();
         System.out.println("\tBye. Hope to see you again soon!");
         printDivider();
     }
