@@ -11,7 +11,7 @@ public class Duke {
 
     private static void addTask(String task) {
         taskList.add(task);
-        System.out.println("\t add: " + task);
+        System.out.println("\t added: " + task);
     }
 
     private static void listTasks() {
