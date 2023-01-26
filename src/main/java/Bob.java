@@ -134,8 +134,9 @@ public class Bob {
                 list[num - 1].setDone(false);
                 System.out.println("  " + list[num - 1].checkDone() + " " + list[num - 1].getTask());
             } else {
-                System.out.println("added: " + cmd);
-                list[listCount] = new Task(cmd, listCount + 1, false);
+                String next = in.nextLine();
+                System.out.println("added: " + cmd + next);
+                list[listCount] = new Task(cmd + next, listCount + 1, false);
                 ++listCount;
             }
         } while (true);
