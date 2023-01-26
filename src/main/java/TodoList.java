@@ -1,12 +1,7 @@
-import java.rmi.StubNotFoundException;
-
 public class TodoList {
     private static final int MAXLISTNUM = 100;
     private static final String SPLITTER = "    ____________________________________________________________";
-    // private String[] todoList = new String[MAXLISTNUM];
-    // private boolean[] marks = new boolean[MAXLISTNUM];
     private Task[] tasks = new Task[MAXLISTNUM];
-    // private Task[] tasks;
     private int listnum;
 
     TodoList(){

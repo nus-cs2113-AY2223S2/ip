@@ -19,8 +19,9 @@ public class Duke {
         TodoList todoList = new TodoList();
         while(true){
             Scanner in = new Scanner(System.in);
-            String line = in.nextLine();            // get user input
-            if(line.equals("bye")){             // quit
+            String line = in.nextLine();
+            if(line.equals("bye")){
+                // quit
                 System.out.println(exitPrompt);
                 break;
             }else{
