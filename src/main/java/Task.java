@@ -8,11 +8,11 @@ public class Task {
         this.isDone = false;
     }
 
-    public void markAsDone(){
+    public void markAsDone() {
         isDone = true;
     }
 
-    public void markAsUndone(){
+    public void markAsUndone() {
         isDone = false;
     }
 
@@ -23,6 +23,4 @@ public class Task {
     public String getDescription() {
         return description;
     }
-
-
 }
