@@ -1,7 +1,20 @@
+import java.util.Scanner;
+
 public class Duke {
-    public static void main(String[] args) {
-        System.out.println("Hi there! My name is Duke");
+    public static void read_Command() {
+        Scanner command = new Scanner(System.in);
+        String input_Command = command.nextLine();
+        if ("bye".equals(input_Command)) {
+            System.out.println("I look forward to seeing you again! Goodbye!");
+            return;
+        } else {
+            System.out.println(input_Command);
+            read_Command();
+        }
+    }
+    public static void main(String arguments[]) {
+        System.out.println("Hi there! My name is Coffee");
         System.out.println("How can I help you today?");
-        System.out.println("I look forward to seeing you again! Goodbye.");
+        read_Command();
     }
 }
