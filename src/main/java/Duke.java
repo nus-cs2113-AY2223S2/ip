@@ -8,9 +8,6 @@ public class Duke {
 		return taskNumber;
 	}
 
-	public static void printTaskList() {
-
-	}
 
 	public static void startDuke() {
 
@@ -28,6 +25,8 @@ public class Duke {
 
 		while (!shouldExit) {
 			userMessage = sc.nextLine();
+
+			//check the user message
 			if (userMessage.equals("bye")) {
 				shouldExit = true;
 				dukeGreeting.printExitLine();

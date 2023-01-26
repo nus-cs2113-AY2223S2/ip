@@ -30,6 +30,8 @@ public class Task {
 	}
 
 	void printTask() {
-		System.out.println("[" + getStatusIcon() + "] " + getDescription());
+		System.out.println("["
+				+getStatusIcon() + "] "
+				+ getDescription());
 	}
 }

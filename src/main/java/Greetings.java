@@ -6,13 +6,15 @@ public class Greetings {
 					+ "| |_| | |_| |   <  __/\n"
 					+ "|____/ \\__,_|_|\\_\\___|\n";
 	private static final String OPENING_LINE =
-			"Hello! I'm Duke" +
-					System.lineSeparator() + "What can I do for you?";
+			"Hello! I'm Duke"
+					+System.lineSeparator()
+					+ "What can I do for you?";
 	private static final String EXIT_LINE =
 			"Bye. Hope to see you again soon!";
 	private static final String DIVIDER =
 			"______________________________";
 	private static final String ERROR = "Hey! Error!";
+
 	public Greetings() {
 	}
 
@@ -37,6 +39,7 @@ public class Greetings {
 		System.lineSeparator();
 		System.out.println(DIVIDER);
 	}
+
 	public void printErrorMessage() {
 		printDivider();
 		System.out.println(ERROR);
