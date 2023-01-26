@@ -13,7 +13,7 @@ public class Duke {
         String command = "";
         Scanner in = new Scanner(System.in);
 
-        int textNum = 0;                            // number of texts stored
+        int taskNum = 0;                            // number of tasks stored
         Task[] storedTasks = new Task[100];         // array of stored texts
         while (!command.equals("bye")) {
             command = in.nextLine();
@@ -21,7 +21,7 @@ public class Duke {
             if (command.equals("list")) {
                 System.out.println("To-do: ");
                 System.out.println("________________________________________");
-                for(int i = 0; i < textNum; i++)
+                for(int i = 0; i < taskNum; i++)
                 {
                     System.out.println((i + 1) + ". "+ storedTasks[i].getStatusIcon() + " " + storedTasks[i].getDescription());
                 }
@@ -38,8 +38,8 @@ public class Duke {
                 System.out.println(storedTasks[taskIndex].getStatusIcon() + " " + storedTasks[taskIndex].getDescription());
             } else if (!command.equals("bye")) {
                 System.out.println("added: " + command);
-                storedTasks[textNum] = new Task(command);
-                textNum++;
+                storedTasks[taskNum] = new Task(command);
+                taskNum++;
             }
 
         }
