@@ -25,11 +25,15 @@ public class Duke {
 
             // Dynamic mark conditional
             if(input.indexOf("mark") > -1 && input.indexOf("unmark") == -1){
-                int index = Integer.parseInt(input.substring(5)) - 1;
-                if (index > Task.getTasksArray().size() - 1){
-                    System.out.println("\nBlast! That task does not exist, please add tasks first, ye landlubbers!\n" + barrier + "\n");
+                if(!Character.isDigit(input.charAt(5)) || Integer.parseInt(input.substring(5)) == 0){
+                    System.out.println("\nBlast! That isn't a valid number lad!\n" + barrier + "\n");
                 } else {
-                    Task.getTasksArray().get(index).markAsComplete();
+                    int index = Integer.parseInt(input.substring(5)) - 1;
+                    if (index > Task.getTasksArray().size() - 1){
+                        System.out.println("\nBlast! That task does not exist, please add tasks first, ye landlubbers!\n" + barrier + "\n");
+                    } else {
+                        Task.getTasksArray().get(index).markAsComplete();
+                    }
                 }
                 // Label the input as handled to dodge the switch
                 input = "handled";
@@ -37,12 +41,17 @@ public class Duke {
 
             // Dynamic unmark conditional
             if(input.indexOf("unmark") > -1){
-                int index = Integer.parseInt(input.substring(7)) - 1;
-                if (index > Task.getTasksArray().size() - 1){
-                    System.out.println("\nBlast! That task does not exist, please add tasks first, ye landlubbers!\n" + barrier + "\n");
+                if(!Character.isDigit(input.charAt(5)) || Integer.parseInt(input.substring(5)) == 0){
+                    System.out.println("\nBlast! That isn't a valid number lad!\n" + barrier + "\n");
                 } else {
-                    Task.getTasksArray().get(index).unmarkAsComplete();
+                    int index = Integer.parseInt(input.substring(7)) - 1;
+                    if (index > Task.getTasksArray().size() - 1){
+                        System.out.println("\nBlast! That task does not exist, please add tasks first, ye landlubbers!\n" + barrier + "\n");
+                    } else {
+                        Task.getTasksArray().get(index).unmarkAsComplete();
+                    }
                 }
+
                 // Label the input as handled to dodge the switch
                 input = "handled";
             }
