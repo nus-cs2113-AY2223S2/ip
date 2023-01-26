@@ -2,26 +2,25 @@ import java.util.Scanner;
 
 public class Duke {
     public static void main(String[] args) {
-        String logo = "   _____  __     _               __         \n"
+        final String LOGO = "   _____  __     _               __         \n"
                 + "  / ___/ / /_   (_)____  __  __ / /__ ____ _\n"
                 + "  \\__ \\ / __ \\ / //_  / / / / // //_// __ `/\n"
                 + " ___/ // / / // /  / /_/ /_/ // ,<  / /_/ / \n"
                 + "/____//_/ /_//_/  /___/\\__,_//_/|_| \\__,_/  \n";
-        String lineBreak = "____________________\n";
-        String greetingLine = "Hello, I am Shizuka.\nHow can I be of assistance?\n";
-        String exitLine = "Goodbye.\n";
-        System.out.println(lineBreak + logo + lineBreak + greetingLine + lineBreak);
+        final String LINE_BREAK = "____________________\n";
+        final String GREETING = "Hello, I am Shizuka.\nHow can I be of assistance?\n";
+        final String EXIT = "Goodbye.\n";
+        System.out.println(LINE_BREAK + LOGO + LINE_BREAK + GREETING + LINE_BREAK);
         Scanner in = new Scanner(System.in);
         String line;
         do {
             line = in.nextLine();
             String lineTrimmed = line.trim();
-            int wordEnd = lineTrimmed.indexOf(' ')+1;
+            int wordEnd = lineTrimmed.indexOf(' ') + 1;
             String command;
             if (wordEnd != 0) {
                 command = lineTrimmed.substring(0, wordEnd - 1);
-            }
-            else{
+            } else {
                 command = lineTrimmed;
             }
             int taskNum;
@@ -44,6 +43,6 @@ public class Duke {
             }
         }
         while (!line.equals("bye"));
-        System.out.println(lineBreak + exitLine + lineBreak);
+        System.out.println(LINE_BREAK + EXIT + LINE_BREAK);
     }
 }

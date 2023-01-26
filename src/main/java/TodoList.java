@@ -1,37 +1,37 @@
 public class TodoList {
-    static String lineBreak = "____________________\n";
-    static String listing = "This is your todo list.\n";
-    static String addBefore = "I have added ";
-    static String addAfter = " to your todo list.\n";
-    static String markBefore = "I have marked Task ";
-    static String unmarkBefore = "I have unmarked Task ";
-    static String markingAfter = " in your todo list.\n";
+    static final String LINE_BREAK = "____________________\n";
+    static final String YOUR_TODO_LIST = "This is your todo list.\n";
+    static final String HAVE_ADDED = "I have added ";
+    static final String TO_LIST = " to your todo list.\n";
+    static final String MARKED_TASK = "I have marked Task ";
+    static final String UNMARKED_TASK = "I have unmarked Task ";
+    static final String IN_LIST = " in your todo list.\n";
     private static int tasksNumber = 0;
-    private static Task[] todo = new Task[100];
+    private static Task[] tasks = new Task[100];
 
     public static void add(String item) {
-        todo[tasksNumber] = new Task(item);
+        tasks[tasksNumber] = new Task(item);
         tasksNumber += 1;
-        System.out.println(lineBreak + addBefore + item + addAfter + lineBreak);
+        System.out.println(LINE_BREAK + HAVE_ADDED + item + TO_LIST + LINE_BREAK);
     }
 
     public static void list() {
-        System.out.print(lineBreak + listing + lineBreak);
+        System.out.print(LINE_BREAK + YOUR_TODO_LIST + LINE_BREAK);
         for (int i = 0; i < tasksNumber; i += 1) {
-            System.out.println(i + 1 + ". [" + todo[i].getStatusIcon() + "] " + todo[i].description);
+            System.out.println(i + 1 + ". [" + tasks[i].getStatusIcon() + "] " + tasks[i].description);
         }
-        System.out.print(lineBreak);
+        System.out.print(LINE_BREAK);
     }
 
     public static void mark(int num) {
-        todo[num - 1].isDone = true;
-        System.out.println(lineBreak + markBefore + num + markingAfter + "[" + todo[num - 1].getStatusIcon()
-                + "] " + todo[num - 1].description + "\n" + lineBreak);
+        tasks[num - 1].isDone = true;
+        System.out.println(LINE_BREAK + MARKED_TASK + num + IN_LIST + "[" + tasks[num - 1].getStatusIcon()
+                + "] " + tasks[num - 1].description + "\n" + LINE_BREAK);
     }
 
     public static void unmark(int num) {
-        todo[num - 1].isDone = false;
-        System.out.println(lineBreak + unmarkBefore + num + markingAfter + "[" + todo[num - 1].getStatusIcon()
-                + "] " + todo[num - 1].description + "\n" + lineBreak);
+        tasks[num - 1].isDone = false;
+        System.out.println(LINE_BREAK + UNMARKED_TASK + num + IN_LIST + "[" + tasks[num - 1].getStatusIcon()
+                + "] " + tasks[num - 1].description + "\n" + LINE_BREAK);
     }
 }
