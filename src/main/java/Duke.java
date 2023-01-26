@@ -5,13 +5,6 @@ import java.util.Scanner;
 public class Duke {
 
     /**
-     * Chatbot interface strings
-     */
-    private static final String GREET_STR = "Hello! I'm Duke\nWhat can I do for you?";
-    private static final String PROMPT_STR = "> ";
-    private static final String EXIT_STR = "Bye. Hope to see you again soon!";
-
-    /**
      * User commands
      */
     private static final String COMMAND_EXIT = "BYE";
@@ -58,7 +51,7 @@ public class Duke {
     }
 
     private static String getUserCommand() {
-        System.out.print(PROMPT_STR);
+        System.out.print("> ");
         return scanner.nextLine();
     }
 
@@ -90,7 +83,7 @@ public class Duke {
 
     public static void main(String[] args) {
         printDivider();
-        System.out.println(GREET_STR);
+        System.out.println("Hello! I'm Duke\nWhat can I do for you?");
 
         // Initializations
         isRunning = true;
@@ -104,6 +97,6 @@ public class Duke {
         }
 
         printDivider();
-        System.out.println(EXIT_STR);
+        System.out.println("Bye. Hope to see you again soon!");
     }
 }
