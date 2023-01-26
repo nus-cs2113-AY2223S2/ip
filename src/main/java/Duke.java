@@ -1,6 +1,17 @@
 import java.util.Scanner;
 
 public class Duke {
+
+	public static int findTaskNumber(String input) {
+		String number = input.replaceAll("[^0-9]", "");
+		int taskNumber = Integer.parseInt(number);
+		return taskNumber;
+	}
+
+	public static void printTaskList() {
+
+	}
+
 	public static void startDuke() {
 
 		Greetings dukeGreeting = new Greetings();
@@ -8,13 +19,12 @@ public class Duke {
 		dukeGreeting.printOpeningLine();
 		Scanner sc = new Scanner(System.in);
 
-		String[] tasks = new String[100];
+		Task[] tasks = new Task[100];
 		int taskCount = 0;
 
 		String userMessage;
 
 		boolean shouldExit = false;
-
 
 		while (!shouldExit) {
 			userMessage = sc.nextLine();
@@ -27,24 +37,47 @@ public class Duke {
 				dukeGreeting.printDivider();
 			} else if (userMessage.equals("list")) {
 				dukeGreeting.printDivider();
-				if (taskCount == 0) {
+				if (taskCount == 0 || taskCount < 0) {
 					System.out.println("No task！");
 				} else {
+					System.out.println("Here are the tasks in your list: ");
 					for (int i = 0; i < taskCount; i += 1) {
-						System.out.println((i + 1) + ". " + tasks[i]);
+						int serialNumber = i + 1;
+						System.out.print(serialNumber + ".");
+						tasks[i].printTask();
 					}
 				}
 				dukeGreeting.printDivider();
+			} else if (userMessage.startsWith("mark")) {
+				int no = findTaskNumber(userMessage);
+				if (no == 0 || no < 0) {
+					dukeGreeting.printErrorMessage();
+				} else {
+					dukeGreeting.printDivider();
+					tasks[no - 1].markAsDone();
+					tasks[no - 1].printTask();
+					dukeGreeting.printDivider();
+				}
+			} else if (userMessage.startsWith("unmark")) {
+				int no = findTaskNumber(userMessage);
+				if (no == 0 || no < 0) {
+					dukeGreeting.printErrorMessage();
+				} else {
+					dukeGreeting.printDivider();
+					tasks[no - 1].unmarkAsUndone();
+					tasks[no - 1].printTask();
+					dukeGreeting.printDivider();
+				}
 			} else {
-				tasks[taskCount] = userMessage;
+				Task t = new Task(userMessage);
+				tasks[taskCount] = t;
 				dukeGreeting.printDivider();
-				System.out.println("Added: " + userMessage);
+				System.out.println("Added: " + tasks[taskCount].getDescription());
+				taskCount += 1;
 				dukeGreeting.printDivider();
+			}
 		}
-		taskCount += 1;
 	}
-
-}
 
 	public static void main(String[] args) {
 		startDuke();
