@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Limey {
@@ -10,23 +9,54 @@ public class Limey {
         Speech.sayHi();
         Scanner in = new Scanner(System.in);
         lineIn = in.nextLine();
-        //switch case to decide what to do
-        while(!lineIn.equals("bye")) {
-            switch(lineIn) {
+        lineIn = lineIn.trim();
+        int i = lineIn.indexOf(' ');
+        String firstWord;
+        if(i!=-1){
+            firstWord = lineIn.substring(0, i);
+        }
+        else {
+            firstWord = lineIn;
+        }
+        //loop until bye
+        while(!firstWord.equals("bye")) {
+            //switch case to decide what to do
+            switch(firstWord) {
             case "list":
                 Speech.printTaskList(tasks, numTasks);
+                break;
+            case "mark":
+                lineIn = lineIn.substring(i+1);
+                lineIn = lineIn.trim();
+                int taskIndex = Integer.parseInt(lineIn) - 1;
+                tasks[taskIndex].setDoneTask(true);
+                Speech.printMarked(tasks[taskIndex]);
+                break;
+            case "unmark":
+                lineIn = lineIn.substring(i+1);
+                lineIn = lineIn.trim();
+                int taskInd = Integer.parseInt(lineIn) - 1;
+                tasks[taskInd].setDoneTask(false);
+                Speech.printUnmarked(tasks[taskInd]);
                 break;
             default:
                 Task taskIn = new Task(lineIn);
                 tasks[numTasks] = taskIn;
-                Speech.printResponse(lineIn);
+                Speech.printAdded(lineIn);
+                numTasks++;
                 break;
             }
-            //update new line and numTasks for next iteration
+            //update new line for next iteration
             lineIn = in.nextLine();
-            numTasks++;
+            lineIn = lineIn.trim();
+            i = lineIn.indexOf(' ');
+            if(i!=-1){
+                firstWord = lineIn.substring(0, i);
+            }
+            else {
+                firstWord = lineIn;
+            }
         }
-
         Speech.sayBye();
     }
 

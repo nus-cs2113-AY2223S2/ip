@@ -1,6 +1,6 @@
 public class Task {
     private String taskName;
-    private boolean doneTask = false;
+    private boolean taskDone = false;
     public Task(String taskName){
         this.taskName = taskName;
     }
@@ -8,17 +8,26 @@ public class Task {
     public String getTaskName() {
         return taskName;
     }
+    public String getTaskIdentity(){
+        String taskIdentity;
+        if(taskDone){
+            taskIdentity = "[X] " + taskName;
+        } else {
+            taskIdentity ="[ ] " + taskName;
+        }
+        return taskIdentity;
+    }
 
     public void setTaskName(String taskName) {
         this.taskName = taskName;
     }
 
-    public boolean isDoneTask() {
-        return doneTask;
+    public boolean isTaskDone() {
+        return taskDone;
     }
 
-    public void setDoneTask(boolean doneTask) {
-        this.doneTask = doneTask;
+    public void setDoneTask(boolean taskDone) {
+        this.taskDone = taskDone;
     }
 }
 
