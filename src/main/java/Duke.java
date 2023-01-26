@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Duke {
     public static void main(String[] args) {
         String Horizontal_line = "____________________________________________________________";
@@ -11,6 +13,48 @@ public class Duke {
         System.out.println(Horizontal_line+"\n");
         System.out.println("Hello! I'm Duke\nWhat can I do for you?\n");
         System.out.println(Horizontal_line+"\n");
-        System.out.println("Bye. Hope to see you again soon!\n");
+        Scanner in = new Scanner(System.in);
+        Task[] list = new Task[100];
+        int counter = 0;
+        boolean op = true;
+        while(op){
+            String ins = in.nextLine();
+            switch (ins){
+                case "list":
+                    if (counter == 0) System.out.println("Your day is clear!");
+                    else {
+                        System.out.println(Horizontal_line+"\n");
+                        for (int i = 0; i < counter; i++){
+                            System.out.println((i+1) + ".[" + list[i].getStatusIcon() +"]" + list[i].description);
+                        }
+                        System.out.println(Horizontal_line+"\n");
+                    }
+                    break;
+
+                case "mark":
+
+                case "bye":
+                    op = false;
+                    System.out.println(Horizontal_line+"\n");
+                    System.out.println("Bye! See you next time!");
+                    System.out.println(Horizontal_line+"\n");
+                    break;
+                default:
+                    if (ins.contains("mark")){
+                        break;
+                    }
+                    else if (ins.contains("unmark")){
+                        break;
+                    }
+                    else {
+                        System.out.println(Horizontal_line + "\n");
+                        list[counter] = new Task(ins);
+                        counter++;
+                        System.out.println("Added: " + ins);
+                        System.out.println(Horizontal_line + "\n");
+                        break;
+                    }
+            }
+        }
     }
 }
