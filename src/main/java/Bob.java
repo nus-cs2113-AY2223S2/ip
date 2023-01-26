@@ -126,9 +126,11 @@ public class Bob {
             if (cmd.equals("bye")) {
                 return;
             }
-            if (cmd.equals("list")) {
+            switch (cmd) {
+            case "list":
                 listOut();
-            } else if (cmd.equals("mark")) {
+                break;
+            case "mark": {
                 String str = in.next();
                 //For error handling
                 int num = convertString(str);
@@ -138,7 +140,9 @@ public class Bob {
                 System.out.println("Bob commends you!");
                 list[num - 1].setDone(true);
                 System.out.println("  " + list[num - 1].checkDone() + " " + list[num - 1].getTask());
-            } else if (cmd.equals("unmark")) {
+                break;
+            }
+            case "unmark": {
                 String str = in.next();
                 //For error handling
                 int num = convertString(str);
@@ -148,11 +152,14 @@ public class Bob {
                 System.out.println("Boo a mistake!");
                 list[num - 1].setDone(false);
                 System.out.println("  " + list[num - 1].checkDone() + " " + list[num - 1].getTask());
-            } else {
+                break;
+            }
+            default:
                 String next = in.nextLine();
                 System.out.println("added: " + cmd + next);
                 list[listCount] = new Task(cmd + next, listCount + 1, false);
                 ++listCount;
+                break;
             }
         } while (true);
     }
