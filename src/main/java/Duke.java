@@ -3,6 +3,9 @@ import java.util.Scanner;
 // TODO: Add docstrings for the functions
 public class Duke {
     private static boolean keepAlive;
+    private static String[] tasklist = new String[100];
+    private static int numTasks;
+
 
     public static void setKeepAlive(boolean keepAlive) {
         Duke.keepAlive = keepAlive;
@@ -22,14 +25,24 @@ public class Duke {
     // TODO: Add a '$' Symbol to hint user to type in a command
     public static void handleCommand(String cmd){
         // Update the keepAlive flag
-        if(cmd.equals("Bye")){
+        // TODO: Refactor into a switch case when commands start to get bloated
+        if(cmd.equals("Bye") || cmd.equals("bye") || cmd.equals("exit")){
             // Termination
             setKeepAlive(false);
+        }else if (cmd.equals("list")){
+            PrintBorder();
+            for(int i=0; i<numTasks; ++i){
+                System.out.println(i+1 + ". " + tasklist[i]);
+            }
+            PrintBorder();
         }else{
             // Echo out the command
             PrintBorder();
-            System.out.println(cmd);
+            System.out.println("Okay, adding: \"" + cmd +"\"!");
             PrintBorder();
+            // Insert command into tasklist
+            tasklist[numTasks] = cmd;
+            ++numTasks;
         }
     }
 
@@ -46,9 +59,17 @@ public class Duke {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
+
         Greet();
         setKeepAlive(true);
+
+        // Init tasks subsystem
+        numTasks = 0;
+
+        // Init IO
         Scanner input = new Scanner(System.in);
+
+        // Event driver loop
         while(keepAlive){
             String command = input.nextLine();
             handleCommand(command);
