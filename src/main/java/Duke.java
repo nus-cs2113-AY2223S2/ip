@@ -6,18 +6,18 @@ public class Duke {
     private static final ArrayList<String> taskList = new ArrayList<>();
 
     private static void printDivider() {
-        System.out.println("____________________________________________________________");
+        System.out.println("\t____________________________________________________________");
     }
 
     private static void addTask(String task) {
         taskList.add(task);
-        System.out.println("\tadd: " + task);
+        System.out.println("\t add: " + task);
     }
 
     private static void listTasks() {
         int cnt = 0;
         for (String task : taskList) {
-            System.out.printf("\t%d. %s\n", ++cnt, task);
+            System.out.printf("\t %d. %s\n", ++cnt, task);
         }
     }
 
@@ -30,8 +30,8 @@ public class Duke {
         System.out.println("Hello from\n" + logo);
 
         printDivider();
-        System.out.println("\tHello! I'm Duke");
-        System.out.println("\tWhat can I do for you?");
+        System.out.println("\t Hello! I'm Duke");
+        System.out.println("\t What can I do for you?");
         printDivider();
 
         // user interaction: echo
@@ -52,7 +52,7 @@ public class Duke {
 
         // exit
         printDivider();
-        System.out.println("\tBye. Hope to see you again soon!");
+        System.out.println("\t Bye. Hope to see you again soon!");
         printDivider();
     }
 }
