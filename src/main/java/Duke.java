@@ -6,7 +6,6 @@ public class Duke {
         String input_Command = command.nextLine();
         if ("bye".equals(input_Command)) {
             System.out.println("I look forward to seeing you again! Goodbye!");
-            return;
         } else {
             System.out.println(input_Command);
             read_Command();
