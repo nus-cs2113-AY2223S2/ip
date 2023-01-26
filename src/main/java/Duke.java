@@ -45,7 +45,10 @@ public class Duke {
         while (!line.equals("bye")) {
             if (line.equals("list")) {
                 taskList.listTasks();
-                ;
+            } else if (line.substring(0, 4).equals("mark")) {
+                taskList.markDone(Integer.parseInt(line.substring(5)));
+            } else if (line.substring(0, 6).equals("unmark")) {
+                taskList.unmarkDone(Integer.parseInt(line.substring(7)));
             } else {
                 taskList.addTask(line);
             }
