@@ -6,7 +6,7 @@ public class Duke {
     private static int numTasks;
 
 
-    public static void setKeepAlive(boolean keepListening) {
+    public static void setIsListening(boolean keepListening) {
         Duke.isListening = keepListening;
     }
 
@@ -26,7 +26,7 @@ public class Duke {
         case "Bye":
         case "bye":
         case "exit":
-            setKeepAlive(false);
+            setIsListening(false);
             Exit();
             break;
         case "list":
@@ -94,7 +94,7 @@ public class Duke {
         System.out.println("Hello from\n" + logo);
 
         Greet();
-        setKeepAlive(true);
+        setIsListening(true);
 
         // Init tasks subsystem
         numTasks = 0;
