@@ -39,11 +39,11 @@ Duke {
         ArrayList<Task> toDoList = new ArrayList<Task>(100);
 
         while (!userInput.equals("bye")) {
-            if (!containsNumbers(userInput)){
+            if (!containsNumbers(userInput)) {
                 if (userInput.equals("list")) {
                     System.out.println("Here are the tasks in your list:\n");
                     for (Task item : toDoList) {
-                        System.out.print((toDoList.indexOf(item)+1) + ".");
+                        System.out.print((toDoList.indexOf(item) + 1) + ".");
                         System.out.print(item.getStatusIcon());
                         System.out.println(item.getDescription());
                     }
@@ -56,14 +56,14 @@ Duke {
                 }
             } else {
                 int itemNumber = Integer.parseInt(userInput.replaceAll("[^0-9]", "")) - 1;
-                if (userInput.contains("unmark")){
+                if (userInput.contains("unmark")) {
                     toDoList.get(itemNumber).markAsUnDone();
                     System.out.println("OK, I've marked this task as not done yet:\n" + "    "
                             + toDoList.get(itemNumber).getStatusIcon() + toDoList.get(itemNumber).getDescription());
                 } else {
                     toDoList.get(itemNumber).markAsDone();
                     System.out.println("Nice! I've marked this task as done:\n" + "    "
-                    + toDoList.get(itemNumber).getStatusIcon() + toDoList.get(itemNumber).getDescription());
+                            + toDoList.get(itemNumber).getStatusIcon() + toDoList.get(itemNumber).getDescription());
                 }
             }
             userInput = myObj.nextLine();
