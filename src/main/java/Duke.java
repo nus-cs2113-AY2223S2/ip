@@ -110,7 +110,8 @@ public class Duke {
         }
         currentTask.markDone();
 
-        String markMessage = "\tNice! I've marked this task as done:\n" + "\t  " + currentTask.toString();
+        String markMessage = "\tNice! I've marked this task as done:\n" 
+                                + "\t  " + currentTask.toString();
         printDivider();
         System.out.println(markMessage);
         printDivider();
@@ -124,7 +125,8 @@ public class Duke {
         }
         currentTask.markUndone();
 
-        String unmarkMessage = "\tOK, I've marked this task as not done yet:" + "\t  " + currentTask.toString();
+        String unmarkMessage = "\tOK, I've marked this task as not done yet:\n" 
+                                    + "\t  " + currentTask.toString();
 
         printDivider();
         System.out.println(unmarkMessage);
