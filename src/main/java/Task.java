@@ -14,9 +14,9 @@ public class Task {
 		this.name = name;
 	}
 	
-	public void printTask() {
+	public void printAddTask() {
 		 System.out.println("\t____________________________________________________________\r\n"
-	        		+ "\t "+getName()+"\r\n"
+	        		+ "\t added: "+getName()+"\r\n"
 	        		+ "\t____________________________________________________________\r\n");
 	}
 }
