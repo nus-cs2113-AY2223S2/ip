@@ -1,8 +1,8 @@
 public class DukeTask {
-    protected String description;
+    protected String TaskName;
     protected boolean isDone;
-    public DukeTask(String description) {
-        this.description = description;
+    public DukeTask(String TaskName) {
+        this.TaskName = TaskName;
         this.isDone = false;
     }
     public String getStatusIcon() {
@@ -21,6 +21,6 @@ public class DukeTask {
         this.isDone = false;
     }
     public void printTask(int i) {
-        System.out.println((i+1) + ".[" + this.getStatusIcon() + "] " + this.description);
+        System.out.println((i+1) + ".[" + this.getStatusIcon() + "] " + this.TaskName);
     }
 }
