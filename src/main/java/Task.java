@@ -1,14 +1,14 @@
 /**
- * The Task class represents real-world tasks with content and finish status.
+ * The Task class represents real-world tasks with content and marking status.
  */
 public class Task {
 
     private String content;
-    private boolean finished;
+    private boolean isMarked;
 
     /**
      * Default constructor for the Task class.
-     * Initialize task content to be empty and set finished to be false.
+     * Initialize task content to be empty and set isMarked to be false.
      */
     public Task() {
         this("", false);
@@ -16,7 +16,7 @@ public class Task {
 
     /**
      * Another constructor for the Task class.
-     * Initialize task content to be the parameter and set finished to be false.
+     * Initialize task content to be the parameter and set isMarked to be false.
      * @param content content of the task
      */
     public Task(String content) {
@@ -26,11 +26,11 @@ public class Task {
     /**
      * Another constructor for the Task class.
      * @param content content of the task.
-     * @param finished finish status of the task.
+     * @param isMarked marking status of the task.
      */
-    public Task(String content, boolean finished) {
+    public Task(String content, boolean isMarked) {
         this.content = content;
-        this.finished = finished;
+        this.isMarked = isMarked;
     }
 
     public String getContent() {
@@ -41,25 +41,25 @@ public class Task {
         this.content = content;
     }
 
-    public boolean isFinished() {
-        return finished;
+    public boolean getMarked() {
+        return isMarked;
     }
 
     /**
-     * Prints the finish status of the task following by the content.
+     * Prints the marking status of the task following by the content.
      */
     public void printTask() {
         System.out.println(this);
     }
 
     /**
-     * Marks the finish status of the task, i.e. set finished to be true.
+     * Marks the marking status of the task, i.e. set isMarked to be true.
      * Prints a reply message after successfully mark the task.
      * Prints an error message if the task is already marked.
      */
     public void mark() {
-        if (!finished) {
-            finished = true;
+        if (!isMarked) {
+            isMarked = true;
             System.out.println("\t Nice! I've marked this task as done:");
             System.out.println("\t " + this);
         } else {
@@ -68,13 +68,13 @@ public class Task {
     }
 
     /**
-     * Unmarks the finish status of the task, i.e. set finished to be false.
+     * Unmarks the marking status of the task, i.e. set isMarked to be false.
      * Prints a reply message after successfully unmark the task.
      * Prints an error message if the task is already unchecked.
      */
     public void unmark() {
-        if (finished) {
-            finished = false;
+        if (isMarked) {
+            isMarked = false;
             System.out.println("\t OK, I've marked this task as not done yet:");
             System.out.println("\t " + this);
         } else {
@@ -83,13 +83,13 @@ public class Task {
     }
 
     /**
-     * Converts the task to a string containing finished status and content.
-     * e.g. For finished task: [X] a finished task.
-     * e.g. For unfinished task: [ ] an unfinished task.
-     * @return a string containing finished status and task content
+     * Converts the task to a string containing marking status and content.
+     * e.g. For a marked task: [X] a marked task.
+     * e.g. For an unmarked task: [ ] an unmarked task.
+     * @return a string containing marking status and task content
      */
     @Override
     public String toString() {
-        return "[" + (finished ? "X" : " ") + "]" + " " + content;
+        return "[" + (isMarked ? "X" : " ") + "]" + " " + content;
     }
 }
