@@ -17,16 +17,12 @@ public class Duke {
         ArrayList<Task> tasks = new ArrayList<Task>();
 
 //        Task[] tasks = new Task[100];
-
-
-
         String input;
         while(in.hasNext()){
             input = in.nextLine();
             if(input.equals("bye")){
                 break;
             }
-
             if(input.equals("list")){
                 System.out.println(line);
                 for(int i = 0;i<tasks.size();i++){
@@ -86,10 +82,9 @@ public class Duke {
                 System.out.println("Got it. I've added this task:");
                 System.out.println(tasks.get(lastIndexOfTasks).toString());
                 System.out.println("Now you have "+tasks.size()+" tasks in the list.");
-            }else{
-                tasks.add(new Task(input,false));
-                System.out.println(line);
-                System.out.println("added: "+input);
+            }else {
+                tasks.add(new Task(input, false));
+                System.out.println("Added: "+input);
             }
             System.out.println(line);
         }
