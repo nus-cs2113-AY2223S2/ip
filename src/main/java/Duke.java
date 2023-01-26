@@ -1,10 +1,6 @@
 import java.util.Scanner;
 
 public class Duke {
-    public static void echo(String args) {
-        String lineBreak = "____________________\n";
-        System.out.println(lineBreak + args + "\n" + lineBreak);
-    }
     public static void main(String[] args) {
         String logo = "   _____  __     _               __         \n"
                 + "  / ___/ / /_   (_)____  __  __ / /__ ____ _\n"
@@ -17,17 +13,37 @@ public class Duke {
         System.out.println(lineBreak + logo + lineBreak + greetingLine + lineBreak);
         Scanner in = new Scanner(System.in);
         String line;
-        while (true) {
+        do {
             line = in.nextLine();
-            if (line.equals("bye")) {
+            String lineTrimmed = line.trim();
+            int wordEnd = lineTrimmed.indexOf(' ')+1;
+            String command;
+            if (wordEnd != 0) {
+                command = lineTrimmed.substring(0, wordEnd - 1);
+            }
+            else{
+                command = lineTrimmed;
+            }
+            int taskNum;
+            switch (command) {
+            case "bye":
                 break;
+            case "list":
+                TodoList.list();
+                break;
+            case "mark":
+                taskNum = Integer.parseInt(lineTrimmed.substring(wordEnd));
+                TodoList.mark(taskNum);
+                break;
+            case "unmark":
+                taskNum = Integer.parseInt(lineTrimmed.substring(wordEnd));
+                TodoList.unmark(taskNum);
+                break;
+            default:
+                TodoList.add(line);
             }
-            if(line.equals("list")){
-                todoList.list();
-                continue;
-            }
-            todoList.add(line);
         }
+        while (!line.equals("bye"));
         System.out.println(lineBreak + exitLine + lineBreak);
     }
 }
