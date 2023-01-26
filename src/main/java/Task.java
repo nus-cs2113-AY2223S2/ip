@@ -1,32 +1,36 @@
-public class Task {
+public class Task
+{
 
     private String taskName;
     private boolean isDone;
 
 
-    public Task (String taskName){
+    public Task (String taskName)
+    {
         this.taskName = taskName;
         this.isDone = false;
     }
 
-    public void setDone(){
+    public void setDone ()
+    {
         isDone = true;
     }
 
-    public void setNotDone(){
+    public void setNotDone ()
+    {
         isDone = false;
     }
 
-    public String getTaskStatus(){
+    public String getTaskStatus ()
+    {
         String taskStatus = "[";
         if (isDone) {
             taskStatus += "X";
-        }
-        else{
+        } else {
             taskStatus += " ";
         }
         taskStatus += ("] " + taskName);
-        return  taskStatus;
+        return taskStatus;
 
     }
 
