@@ -1,21 +1,25 @@
 public class Task {
     private String task;
-    private char complete;
+    private boolean complete;
+
     public Task(String name) {
         this.task = name;
-        this.complete = ' ';
+        this.complete = false;
     }
     public String getTask() {
         return this.task;
     }
     public char getComplete() {
-        return this.complete;
+        if(this.complete) {
+            return 'X';
+        }
+        return ' ';
     }
     public void setComplete() {
-        this.complete = 'X';
+        this.complete = true;
     }
     public void setIncomplete() {
-        this.complete = ' ';
+        this.complete = false;
     }
 }
 

@@ -3,8 +3,9 @@ import java.util.ArrayList;
 
 public class Duke {
 
-    public static void AyameWhenOutOfBounds() {
-        System.out.println("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢿⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n" +
+    public static void printErrorMessage() {
+        System.out.println(
+                "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢿⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n" +
                 "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠰⣶⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠺⣟⣶⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n" +
                 "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿⣆⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⡈⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n" +
                 "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⢮⡻⣦⡀⠀⠀⠀⢀⣀⣀⣀⣘⡇⢸⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n" +
@@ -59,55 +60,52 @@ public class Duke {
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-
         System.out.println("Hai, Ningensama-tachi! Kon-Nakiri!\n");
 
-        String instruction = in.nextLine();
-        ArrayList<Task> todolist = new ArrayList<Task>();
-        int size = 0;
-        Task temp;
-        while(!instruction.equals("bye")) {
-            if(instruction.equals("list")) {
-                for(int i = 0; i < size; i += 1) {
-                    temp = todolist.get(i);
-                    String print = String.format("%d.[%c] %s", i+1, temp.getComplete(), temp.getTask());
-                    System.out.println(print);
+        String inputMessage = in.nextLine();
+        ArrayList<Task> todoList = new ArrayList<Task>();
+        int sizeOfTodoList = 0;
+        Task currentTask;
+
+        while(!inputMessage.equals("bye")) {
+            if(inputMessage.equals("list")) {
+                for(int i = 0; i < sizeOfTodoList; i += 1) {
+                    currentTask = todoList.get(i);
+                    String printedMessage = String.format("%d.[%c] %s", i+1, currentTask.getComplete(), currentTask.getTask());
+                    System.out.println(printedMessage);
                 }
-            } else if (instruction.length() >= 4 && instruction.substring(0,4).equals("mark")) {
-                instruction = instruction.substring(5);
-                int index = Integer.parseInt(instruction);
-                if(index > size) {
-                    AyameWhenOutOfBounds();
+            } else if (inputMessage.length() >= 4 && inputMessage.substring(0,4).equals("mark")) {
+                int taskIndex = Integer.parseInt(inputMessage.substring(5));
+                if(taskIndex > sizeOfTodoList) {
+                    printErrorMessage();
                 } else {
-                    temp = todolist.get(index - 1);
-                    temp.setComplete();
+                    currentTask = todoList.get(taskIndex - 1);
+                    currentTask.setComplete();
                     System.out.println("Nice! I've marked this task as done!");
-                    String print = String.format("[X] %s", temp.getTask());
-                    System.out.println(print);
+                    String printedMessage = String.format("[X] %s", currentTask.getTask());
+                    System.out.println(printedMessage);
                 }
 
-            } else if (instruction.length() >= 6 && instruction.substring(0,6).equals("unmark")) {
-                instruction = instruction.substring(7);
-                int index = Integer.parseInt(instruction);
-                if(index > size) {
-                    AyameWhenOutOfBounds();
+            } else if (inputMessage.length() >= 6 && inputMessage.substring(0,6).equals("unmark")) {
+                int taskIndex = Integer.parseInt(inputMessage.substring(7));
+                if(taskIndex > sizeOfTodoList) {
+                    printErrorMessage();
                     continue;
                 } else {
-                    temp = todolist.get(index - 1);
-                    temp.setIncomplete();
+                    currentTask = todoList.get(taskIndex - 1);
+                    currentTask.setIncomplete();
                     System.out.println("Why are you being lazy? >:(");
-                    String print = String.format("[ ] %s", temp.getTask());
-                    System.out.println(print);
+                    String printedMessage = String.format("[ ] %s", currentTask.getTask());
+                    System.out.println(printedMessage);
                 }
 
             } else {
-                temp = new Task(instruction);
-                todolist.add(temp);
-                size += 1;
-                System.out.print("added: ");
-                System.out.println(instruction);
+                Task newTask = new Task(inputMessage);
+                todoList.add(newTask);
+                sizeOfTodoList += 1;
+                System.out.println("Done! Added: " + inputMessage);
             }
-            instruction = in.nextLine();
+            inputMessage = in.nextLine();
         }
         System.out.println("Otsu-Nakiri!");
         //CS2113T will not let students customise chatbots next sem onwards because of me
