@@ -15,13 +15,29 @@ public class Duke {
 
         String command;
         Scanner in = new Scanner(System.in);
+        String[] list = new String[100]; //store items in an array
+        int count = 0; //keep track of number of items in list
 
         command = in.nextLine();
         while (!(command.equals("bye"))) {
-            System.out.println("____________________________________________________________");
-            System.out.println(command);
-            System.out.println("____________________________________________________________");
-            command = in.nextLine();
+            if (command.equals("list"))
+            {
+                System.out.println("____________________________________________________________");
+                for (int i = 1; i <= count; i++ )
+                {
+                    System.out.println(i + ". " + list[i-1]);
+                }
+                System.out.println("____________________________________________________________");
+                command = in.nextLine(); //read next command
+
+            } else {
+                System.out.println("____________________________________________________________");
+                System.out.println("added: " + command); //new item added
+                System.out.println("____________________________________________________________");
+                list[count] = command;
+                count++;
+                command = in.nextLine(); //read next command
+            }
         }
 
         System.out.println("____________________________________________________________");
