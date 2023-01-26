@@ -5,8 +5,11 @@ public class Duke {
         String line;
         Scanner in = new Scanner(System.in);
         System.out.println("____________________________________________________________\n" +
-                " Hello! I'm Duke\n" +
-                " What can I do for you?\n" +
+                " Hello! I'm Duke! \n" +
+                " Enter \"list\" to see all tasks \n" +
+                " Enter \"mark [idx]\" to mark task as done \n" +
+                " Enter \"unmark [idx]\" to mark task as not done \n" +
+                " Enter \"bye\" to exit the program \n" +
                 "____________________________________________________________\n");
         Task[] store = new Task[100];
         int counter = 0;
