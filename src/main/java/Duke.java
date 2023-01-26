@@ -2,15 +2,13 @@ import java.util.Scanner;
 
 public class Duke {
     public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        Task[] list = new Task[100];
+        int currentIndex = 0;
         System.out.println("____________________________________________________________");
         System.out.println(" Hello! I'm Duke");
         System.out.println(" What can I do for you?");
         System.out.println("____________________________________________________________");
-
-        Scanner in = new Scanner(System.in);
-        Task[] list = new Task[100];
-        int currentIndex = 0;
-
         while (true) {
             String input;
             input = in.nextLine();
@@ -37,7 +35,6 @@ public class Duke {
                 System.out.println("Nice! I've marked this task as done:");
                 System.out.println("[" + curTask.getStatusIcon() + "] " + curTask.getDescription());
                 System.out.println("____________________________________________________________");
-
             } else if (input.startsWith("unmark")) {
                 String[] temp = input.split(" ", 2);
                 int taskIndex = Integer.valueOf(temp[1]);
