@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Duke {
@@ -13,6 +15,8 @@ public class Duke {
      * User commands
      */
     private static final String COMMAND_EXIT = "BYE";
+    private static final String COMMAND_LIST = "LIST";
+    private static List<String> storedUserInputs = new ArrayList<>();
 
     private static boolean isRunning;
     private static Scanner scanner;
@@ -35,9 +39,13 @@ public class Duke {
         String cmd = userInput.trim().toUpperCase();
         if (cmd.equals(COMMAND_EXIT)) {
             isRunning = false;
+        } else if (cmd.equals(COMMAND_LIST)) {
+            for (int index = 1; index <= storedUserInputs.size(); index++) {
+                System.out.println(index + ". " + storedUserInputs.get(index - 1));
+            }
         } else {
-            // Just print out user input as is
-            System.out.println(userInput);
+            storedUserInputs.add(userInput);
+            System.out.println("added: " + userInput);
         }
     }
 
