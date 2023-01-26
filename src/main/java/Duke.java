@@ -4,7 +4,7 @@ public class Duke {
 
     private static Task[] taskList = new Task[100];
     private static int counter = 0;
-    private static final String line = "___________________________________________";
+    private static final String LINE = "___________________________________________";
 
     public static void printList() {
         System.out.println("\t" + line);
