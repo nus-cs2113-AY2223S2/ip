@@ -1,5 +1,5 @@
 public class Item {
-    private String description;
+    private String description; // item name
     private boolean isDone;
 
     public Item (String description) {
