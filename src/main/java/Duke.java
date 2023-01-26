@@ -1,4 +1,8 @@
+import java.util.Scanner;
+
 public class Duke {
+    private static final Scanner scanner = new Scanner(System.in);
+
     private static void printDivider() {
         System.out.println("____________________________________________________________");
     }
@@ -12,10 +16,24 @@ public class Duke {
         System.out.println("Hello from\n" + logo);
 
         printDivider();
-        System.out.println(" Hello! I'm Duke");
-        System.out.println(" What can I do for you?");
+        System.out.println("\tHello! I'm Duke");
+        System.out.println("\tWhat can I do for you?");
         printDivider();
-        System.out.println(" Bye. Hope to see you again soon!");
+
+        // user interaction: echo
+        while (true) {
+            String msg = scanner.nextLine();
+            if (msg.equals("bye")) {
+                break;
+            }
+
+            printDivider();
+            System.out.println("\t" + msg);
+            printDivider();
+        }
+
+        // exit
+        System.out.println("\tBye. Hope to see you again soon!");
         printDivider();
     }
 }
