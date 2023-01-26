@@ -1,10 +1,17 @@
 public class Duke {
     public static void main(String[] args) {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);
+
+        String GREETING = " Hello! I'm Duke\n"
+                + " What can I do for you?";
+
+        String GOODBYE = " Bye. Hope to see you again soon!";
+
+        String LINE_DIVIDER = "____________________________________________________________";
+
+        System.out.println(LINE_DIVIDER);
+        System.out.println(GREETING);
+        System.out.println(LINE_DIVIDER);
+        System.out.println(GOODBYE);
+
     }
 }
