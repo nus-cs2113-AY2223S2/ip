@@ -1,9 +1,16 @@
 import java.util.Scanner;
 public class Duke {
+    /** Language state of the program. */
     public static boolean isSinglish = false;
+    /** A fixed sized array to store all the tasks entered from the user. */
     public static Task[] tasks = new Task[100];
-    public static int index = 0;
+    /** The index of the latest entered tasks. */
+    public static int lastIndexOfTasks = 0;
 
+    /**
+     * Toggles the language setting between normal and Singlish mode.
+     * Prints to the output the changes made.
+     */
     public static void changeLanguage() {
         if (isSinglish) {
             isSinglish = false;
@@ -18,7 +25,10 @@ public class Duke {
         }
     }
 
-    public static void horizontalLines() {
+    /**
+     * Prints out horizontal lines for formatting.
+     */
+    public static void printHorizontalLines() {
         if (isSinglish) {
             System.out.println("************************************************************");
         } else {
@@ -26,8 +36,11 @@ public class Duke {
         }
     }
 
+    /**
+     * Prints out the greeting message.
+     */
     public static void sayHello() {
-        horizontalLines();
+        printHorizontalLines();
         if (isSinglish) {
             System.out.println("Hello, my name is Uncle Simon, call me Simon can liao");
             System.out.println("You need my help?");
@@ -37,43 +50,63 @@ public class Duke {
             System.out.println("What can I do for you?");
             System.out.println("(To turn on Singlish mode, type \"change lang\").");
         }
-        horizontalLines();
+        printHorizontalLines();
     }
 
+    /**
+     * Prints out the farewell message.
+     */
     public static void sayGoodbye() {
         if (isSinglish) {
             System.out.println("Ok bye bye, come back soon ah!");
         } else {
             System.out.println("Bye. Hope to see you again soon!");
         }
-        horizontalLines();
+        printHorizontalLines();
     }
 
+    /**
+     * Adds the entered task to the list of tasks.
+     * if the list of tasks is full, informs the user that the task list is full and no new tasks can be added.
+     *
+     * @param line The task entered by the user.
+     */
     public static void addToList(String line) {
-        if (index < 100 && !line.isEmpty()) {
+        if (lastIndexOfTasks < 100 && !line.isEmpty()) {
             Task item = new Task(line);
-            tasks[index] = item;
-            index++;
-        } else if (index == 100){
+            tasks[lastIndexOfTasks] = item;
+            lastIndexOfTasks++;
+        } else if (lastIndexOfTasks == 100){
             if (isSinglish) {
                 System.out.println("Sorry ah, the list full already");
             } else {
                 System.out.println("Sorry, the list is full.");
             }
         }
-        horizontalLines();
+        printHorizontalLines();
     }
 
-    public static void returnList() {
+    /**
+     * Prints out the entire list of tasks entered by the user.
+     */
+    public static void printList() {
         for (int i = 0; i < tasks.length; i++) {
             if (tasks[i] == null) {
                 break;
             }
             System.out.println(i + 1 + ".[" + tasks[i].getStatusIcon() + "] " + tasks[i].getDescription());
         }
-        horizontalLines();
+        printHorizontalLines();
     }
 
+    /**
+     * Marks or Unmark the selected task whether it is done, prints out the selected task alongside its state.
+     * If the user gives an invalid index, informs the user about it.
+     * Does nothing if the user trys to mark a marked task and vice versa/
+     *
+     * @param index The index of the task selected to be marked or unmarked.
+     * @param isMark Whether to mark or unmark the task.
+     */
     public static void markTask(int index, boolean isMark) {
         index--;
         if (index < 0 || index > 99 || tasks[index] == null) {
@@ -97,7 +130,10 @@ public class Duke {
 
     }
 
-    public static void wrongSyntax() {
+    /**
+     * Prints out a message informing the user that it has typed a command with invalid syntax
+     */
+    public static void warnWrongSyntax() {
         if (isSinglish) {
             System.out.println("Eh you typed wrongly, can try typing again?");
         } else {
@@ -119,13 +155,13 @@ public class Duke {
             } else if (commands[0].equals("change") && commands.length == 2 && commands[1].equals("lang")) {
                 changeLanguage();
             } else if (commands[0].equals("list") && commands.length == 1) {
-                returnList();
+                printList();
             } else if ((commands[0].equals("mark") || commands[0].equals("unmark")) && commands.length == 2) {
                 if (commands[1].matches("\\d+?")) {
                     boolean isMark = commands[0].equals("mark");
                     markTask(Integer.parseInt(commands[1]), isMark);
                 } else {
-                    wrongSyntax();
+                    warnWrongSyntax();
                 }
             } else {
                 addToList(line);
