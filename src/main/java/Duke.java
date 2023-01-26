@@ -15,7 +15,6 @@ public class Duke {
         int counter = 0;
         while (true) {
             line = in.nextLine();
-
             if (line.equals("bye")) {
                 // exit program
                 System.out.println("____________________________________________________________\n" +
@@ -34,24 +33,54 @@ public class Duke {
 
             } else if (line.startsWith("mark ")) {
                 // mark task as done
-                int idx = Integer.parseInt(line.substring(5)) - 1;
-                store[idx].setDone();
-                System.out.println("____________________________________________________________\n" +
-                        "Nice!, I've marked this task as done:\n" +
-                        "[X] " + store[idx].getDescription() + "\n" +
-                        "____________________________________________________________\n");
+                try {
+                    int idx = Integer.parseInt(line.substring(5)) - 1;
+                    if (idx < 0 || idx >= counter) {
+                        System.out.println("____________________________________________________________\n" +
+                                "Please enter [idx] in the form of an integer from 1 to " + counter + ". \n" +
+                                "____________________________________________________________\n");
+                        continue;
+                    }
+                    store[idx].setDone();
+                    System.out.println("____________________________________________________________\n" +
+                            "Nice!, I've marked this task as done:\n" +
+                            "[X] " + store[idx].getDescription() + "\n" +
+                            "____________________________________________________________\n");
+                } catch (NumberFormatException ex) {
+                    System.out.println("____________________________________________________________\n" +
+                            "Please enter [idx] in the form of an integer from 1 to " + counter + ". \n" +
+                            "____________________________________________________________\n");
+                }
 
             } else if (line.startsWith("unmark ")) {
                 // mark task as NOT done
-                int idx = Integer.parseInt(line.substring(7)) - 1;
-                store[idx].setNotDone();
-                System.out.println("____________________________________________________________\n" +
-                        "OK, I've marked this task as not done yet:\n" +
-                        "[ ] " + store[idx].getDescription() + "\n" +
-                        "____________________________________________________________\n");
+                try {
+                    int idx = Integer.parseInt(line.substring(7)) - 1;
+                    if (idx < 0 || idx >= counter) {
+                        System.out.println("____________________________________________________________\n" +
+                                "Please enter [idx] in the form of an integer from 1 to " + counter + ". \n" +
+                                "____________________________________________________________\n");
+                        continue;
+                    }
+                    store[idx].setNotDone();
+                    System.out.println("____________________________________________________________\n" +
+                            "OK, I've marked this task as not done yet:\n" +
+                            "[ ] " + store[idx].getDescription() + "\n" +
+                            "____________________________________________________________\n");
+                } catch (NumberFormatException ex) {
+                    System.out.println("____________________________________________________________\n" +
+                            "Please enter [idx] in the form of an integer from 1 to " + counter + ". \n" +
+                            "____________________________________________________________\n");
+                }
 
             } else {
                 // store new task
+                if (counter == 100) {
+                    System.out.println("____________________________________________________________\n" +
+                            "Maximum number of tasks reached. \n" +
+                            "____________________________________________________________\n");
+                    continue;
+                }
                 store[counter] = new Task(line);
                 counter++;
                 System.out.println("____________________________________________________________\n" +
