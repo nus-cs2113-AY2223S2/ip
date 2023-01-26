@@ -14,16 +14,35 @@ public class Duke {
     	
     	while (!taskName.equals("bye")) {
     		taskName = sc.next();
-    		if (taskName.equals("list")) {
-    			 System.out.println("\t____________________________________________________________\r\n");
-    			 for(int i=0; i<taskList.size(); i++) {
-    				 System.out.println("\t "+(i+1)+". "+taskList.get(i).getName());
-    			 }
-    			 System.out.println("\n\t____________________________________________________________\r\n");
-    		} else if (!taskName.equals("bye")) {
-				Task newTask = new Task(taskName);
-				newTask.printAddTask();
-				taskList.add(newTask);
+    		
+    		if(!taskName.equals("bye")) {
+    			int indexTask;
+    			switch (taskName) {
+    			case "list":
+    				 System.out.println("\t____________________________________________________________\r\n");
+        			 for(int i=0; i<taskList.size(); i++) {
+        				 System.out.println("\t "+(i+1)+". ["+taskList.get(i).getStatusIcon()+"] "+taskList.get(i).getName());
+        			 }
+        			 System.out.println("\n\t____________________________________________________________\r\n");
+        			 break;
+        			 
+    			case "mark":
+    				indexTask = sc.nextInt()-1;
+    				taskList.get(indexTask).setStatus(true);
+    				taskList.get(indexTask).printMarkMessage();
+    				break;
+    			
+    			case "unmark":
+    				indexTask = sc.nextInt()-1;
+    				taskList.get(indexTask).setStatus(false);
+    				taskList.get(indexTask).printUnmarkMessage();
+    				break;
+    				
+    			default:
+    				Task newTask = new Task(taskName);
+    				newTask.printAddTask();
+    				taskList.add(newTask);
+    			}
     		}
     	}
         System.out.println("\t____________________________________________________________\r\n"
