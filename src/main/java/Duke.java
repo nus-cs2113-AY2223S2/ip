@@ -16,7 +16,10 @@ public class Duke {
      */
     private static final String COMMAND_EXIT = "BYE";
     private static final String COMMAND_LIST = "LIST";
-    private static List<String> storedUserInputs = new ArrayList<>();
+    private static final String COMMAND_MARK = "MARK";
+    private static final String COMMAND_UNMARK = "UNMARK";
+
+    private static List<Task> userTasks = new ArrayList<>();
 
     private static boolean isRunning;
     private static Scanner scanner;
@@ -30,21 +33,57 @@ public class Duke {
         System.out.println("_".repeat(width));
     }
 
+    private static void printUserTasks() {
+        for (int index = 1; index <= userTasks.size(); index++) {
+            System.out.println(index + ". " + userTasks.get(index - 1));
+        }
+    }
+
+    private static void setUserTaskState(int userIndex, boolean isDone) {
+        // Tasks are 0-indexed, user index is 1-indexed
+        int index = userIndex - 1;
+        if (index < 0 || index >= userTasks.size()) {
+            System.out.println("Oops, not quite sure what task you're referring to...");
+            return;
+        }
+
+        userTasks.get(index).setTaskState(isDone);
+        if (isDone) {
+            System.out.println("Nice! I've marked this task as done");
+            System.out.println(userTasks.get(index));
+        } else {
+            System.out.println("Ok, I've marked this task as not done yet:");
+            System.out.println(userTasks.get(index));
+        }
+    }
+
     private static String getUserCommand() {
         System.out.print(PROMPT_STR);
         return scanner.nextLine();
     }
 
     private static void handleUserInput(String userInput) {
-        String cmd = userInput.trim().toUpperCase();
+        String[] splitInput = userInput.split("\\s+");
+        String cmd = splitInput[0].trim().toUpperCase();
+
         if (cmd.equals(COMMAND_EXIT)) {
             isRunning = false;
+
         } else if (cmd.equals(COMMAND_LIST)) {
-            for (int index = 1; index <= storedUserInputs.size(); index++) {
-                System.out.println(index + ". " + storedUserInputs.get(index - 1));
-            }
+            printUserTasks();
+
+        } else if (cmd.equals(COMMAND_MARK)) {
+            int index = Integer.parseInt(splitInput[1]);
+            setUserTaskState(index, true);
+
+        } else if (cmd.equals(COMMAND_UNMARK)) {
+            int index = Integer.parseInt(splitInput[1]);
+            setUserTaskState(index, false);
+
         } else {
-            storedUserInputs.add(userInput);
+            Task task = new Task(userInput);
+            userTasks.add(task);
+
             System.out.println("added: " + userInput);
         }
     }
