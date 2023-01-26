@@ -32,6 +32,24 @@ public class Duke {
                 if(line.equals("list")){
                     // show to-do list
                     todoList.showList();
+                }else if(func.equals("mark")){
+                    // mark work as done
+                    int index;
+                    try {                        
+                        index = Integer.parseInt(line.substring(funcIdx+1, line.length())) - 1;
+                    } catch (Exception e) {
+                        index = -1;
+                    }
+                    todoList.markItem(index, true);
+                }else if(func.equals("unmark")){
+                    // mark work as unfinished
+                    int index;
+                    try {                        
+                        index = Integer.parseInt(line.substring(funcIdx+1, line.length())) - 1;
+                    } catch (Exception e) {
+                        index = -1;
+                    }
+                    todoList.markItem(index, false);
                 }else{
                     // add item to to-do list
                     todoList.addItem(line);
