@@ -2,17 +2,21 @@ public class Task {
     protected String name;
     protected boolean isDone;
 
-    public Task(String name, boolean isDone) {
-        this.name = name;
-        this.isDone = isDone;
-    }
-
     public Task() {
     }
 
-    public String getStatusIcon(){
-        return(isDone?"[X] ":" ");
+    public Task(String description) {
+        this.name = description;
     }
+    public Task(String description, boolean isDone) {
+        this.name = description;
+        this.isDone = isDone;
+    }
+
+    public String toString(){
+        return(isDone?"[X] "+this.name:"[ ] "+this.name);
+    }
+
 
 
 }
