@@ -143,17 +143,7 @@ public class Duke {
                     System.out.printf(TaskPrinter.taskAddedMessage(newTask, tasks.size()));
                 }
 
-            } catch (NoDescriptionException e) {
-                System.out.println(e.getMessage());
-            } catch (InsufficientArgumentsException e) {
-                System.out.println(e.getMessage());
-            } catch (EmptyArgumentException e) {
-                System.out.println(e.getMessage());
-            } catch(UnknownInputException e) {
-                System.out.println(e.getMessage());
-            } catch (NonPositiveNumberException e) {
-                System.out.println(e.getMessage());
-            } catch (InvalidTaskIndexException e) {
+            } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
 
