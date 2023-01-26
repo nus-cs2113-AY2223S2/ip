@@ -27,7 +27,14 @@ public class Rica {
     private static Task markDone(int indexOfTask) {
         Task selectedTask = Rica.getPastTexts().remove(indexOfTask);
         selectedTask = selectedTask.setDone();
-        Rica.addTask(selectedTask);
+        Rica.getPastTexts().add(indexOfTask, selectedTask);
+        return selectedTask;
+    }
+
+    private static Task unmarkDone(int indexOfTask) {
+        Task selectedTask = Rica.getPastTexts().remove(indexOfTask);
+        selectedTask = selectedTask.setNotDone();
+        Rica.getPastTexts().add(indexOfTask, selectedTask);
         return selectedTask;
     }
 
@@ -63,12 +70,17 @@ public class Rica {
             printlnWithIndent(Rica.LINE);
             if (command.contains(Rica.MARK_TRIGGER)) {
                 String[] params = command.split(" ");
-                int indexOfTask = Integer.valueOf(params[1]) - 1;
-                Task markedTask = Rica.markDone(indexOfTask);
-                printlnWithIndent(" Shall remember that this task as done: " +
-                        markedTask.getDescription());
-            } else if (command.contains(Rica.UNMARK_TRIGGER)) {
-
+                if (params[0].equals(Rica.MARK_TRIGGER)) {
+                    int indexOfTask = Integer.valueOf(params[1]) - 1;
+                    Task markedTask = Rica.markDone(indexOfTask);
+                    printlnWithIndent(" Shall remember that this task as done: " +
+                            markedTask.getDescription());
+                } else if (params[0].equals(Rica.UNMARK_TRIGGER)) {
+                    int indexOfTask = Integer.valueOf(params[1]) - 1;
+                    Task unmarkedTask = Rica.unmarkDone(indexOfTask);
+                    printlnWithIndent(" (Why??) Anyway, I've marked this task as not done yet: " +
+                            unmarkedTask.getDescription());
+                }
             } else {
                 switch (command) {
                     case Rica.LIST_TRIGGER:
