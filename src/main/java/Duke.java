@@ -1,10 +1,10 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Duke {
 
-    public static String[] Tasks= new String[100]; 
+    public static ArrayList<Task> tasks = new ArrayList<Task>();
     
-    public static int numberOfTasks = 0;
 
     public static void printLine(){
         String horizontalLine = "\t――――――――――――――――――――――――――――――――――――――――――";
@@ -24,15 +24,9 @@ public class Duke {
         printLine();
     }
 
-    /*public static void echoUserInput(String userInput){
-        printLine();
-        System.out.println(userInput);  
-        printLine();
-    }  */
 
     public static void addToList(String userInput){
-        Tasks[numberOfTasks] = userInput;
-        numberOfTasks += 1;
+        tasks.add(new Task(userInput));
         printLine();
         System.out.println("\tadded: " + userInput);
         printLine(); 
@@ -40,10 +34,28 @@ public class Duke {
 
     public static void displayTaskList(){
         printLine();
-        for (int i = 0; i < numberOfTasks; i++){
+        for (int i = 0; i < tasks.size(); i++){
             String taskNumber = Integer.toString(i+1);
-            System.out.println("\t" + taskNumber + ". " + Tasks[i]);
+            Task currentTask = tasks.get(i);      
+            System.out.println("\t" + taskNumber + "." +currentTask.getStatusIcon() + currentTask.description);
+        
         }
+        printLine();
+    }
+
+    public static void markTask(int index){
+        Task currentTask = tasks.get(index-1); 
+        currentTask.markAsDone();
+        printLine();
+        System.out.println("\t"+'"'+currentTask.description+'"'+" is marked as done! Good Job :)" );
+        printLine();
+    }
+
+    public static void unmarkTask(int index){
+        Task currentTask = tasks.get(index-1); 
+        currentTask.markAsUndone();
+        printLine();
+        System.out.println("\t"+'"'+currentTask.description+'"'+" is marked as undone. Jiayou!" );
         printLine();
     }
 
@@ -53,12 +65,20 @@ public class Duke {
         while (true){
             String userInput;
             userInput = in.nextLine();
-            switch (userInput){
+            String [] userInputArray = userInput.split(" ");
+            String command = userInputArray[0];
+            switch (command){
             case "bye": 
                 printGoodbye();
                 return;
             case "list":
                 displayTaskList();
+                break;
+            case "mark":
+                markTask(Integer.parseInt(userInputArray[1]));
+                break;
+            case "unmark":
+                unmarkTask(Integer.parseInt(userInputArray[1]));
                 break;
             default:
                 addToList(userInput);
