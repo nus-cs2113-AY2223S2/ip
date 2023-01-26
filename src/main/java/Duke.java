@@ -11,10 +11,28 @@ public class Duke {
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you ?");
         Scanner ScanObj = new Scanner(System.in);
-        String UserCmd = "no";
+        String[] listofItems = new String[100];
+        String UserCmd = ScanObj.nextLine();
+        int counter = 0;
         while (!UserCmd.equals("bye")) {
+            if (UserCmd.equals("list")) {
+                int j = 1;
+                for (String i : listofItems) {
+                    System.out.print(j);
+                    System.out.print(". ");
+                    System.out.println(i);
+                    j++;
+                    if (j > counter) {
+                        break;
+                    }
+                }
+            } else {
+                System.out.print("added: ");
+                System.out.println(UserCmd);
+                listofItems[counter] = UserCmd;
+                counter++;
+            }
             UserCmd = ScanObj.nextLine();
-            System.out.println(UserCmd);
         }
         System.out.println("Bye. Hope to see you again soon !");
     }
