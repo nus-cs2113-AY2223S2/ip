@@ -43,14 +43,13 @@ public class Duke {
             switch(command[0]) {
             //If the word "list" is the first word in the line of strings.
             case "list":
-                //If user just wants to view the list of tasks.
                 if (command.length == 1) {
+                    //If user just wants to view the list of tasks.
                     for (int x = 0; x < listSize; x += 1) {
                         System.out.println((x + 1) + ".[" + list[x].getStatusIcon() + "] " + list[x].getDescription());
                     }
-                }
-                //If user wants to include the word "list" as part of the task description.
-                else {
+                } else {
+                    //If user wants to include the word "list" as part of the task description.
                     list[listSize] = new Task(line);
                     listSize += 1;
                     System.out.println("added: " + line);
@@ -59,15 +58,20 @@ public class Duke {
 
             //If the word "mark" is the first word in the line of strings.
             case "mark":
-                //If user wants to mark task as done.
                 if (command.length == 2 && isNumeric(command[1])) {
+                    //If user wants to mark task as done.
                     int taskNumber = Integer.parseInt(command[1]);
-                    list[taskNumber - 1].markDone();
-                    System.out.println("Nice! I've marked this task as done:");
-                    System.out.println(list[taskNumber - 1].getDescription());
-                }
-                //If user wants to include "mark" as part of a new task description.
-                else {
+                    if (taskNumber > 0 && taskNumber <= listSize) {
+                        //If valid task number is given.
+                        list[taskNumber - 1].markDone();
+                        System.out.println("Nice! I've marked this task as done:");
+                        System.out.println("[X] " + list[taskNumber - 1].getDescription());
+                    } else {
+                        //If task number given exceeds total tasks.
+                        System.out.println("Please key in a valid task number!");
+                    }
+                } else {
+                    //If user wants to include "mark" as part of a new task description.
                     list[listSize] = new Task(line);
                     listSize += 1;
                     System.out.println("added: " + line);
@@ -76,15 +80,20 @@ public class Duke {
 
             //If the word "unmark" is the first word in the line of strings.
             case "unmark":
-                //If user wants to unmark task as done.
                 if (command.length == 2 && isNumeric(command[1])) {
+                    //If user wants to unmark task as done.
                     int taskNumber = Integer.parseInt(command[1]);
-                    list[taskNumber - 1].unmarkDone();
-                    System.out.println("OK, I've marked this task as not done yet:");
-                    System.out.println(list[taskNumber - 1].getDescription());
-                }
-                //If user wants to include "unmark" as part of a new task description.
-                else {
+                    if (taskNumber > 0 && taskNumber <= listSize) {
+                        //If valid task number is given.
+                        list[taskNumber - 1].unmarkDone();
+                        System.out.println("OK, I've marked this task as not done yet:");
+                        System.out.println("[ ] " + list[taskNumber - 1].getDescription());
+                    } else {
+                        //If task number given exceeds total tasks in the list.
+                        System.out.println("Please key in a valid task number!");
+                    }
+                } else {
+                    //If user wants to include "unmark" as part of a new task description.
                     list[listSize] = new Task(line);
                     listSize += 1;
                     System.out.println("added: " + line);
