@@ -1,13 +1,38 @@
+import java.util.Scanner;
+
+// TODO: Add docstrings for the functions
 public class Duke {
+    private static boolean keepAlive;
+
+    public static void setKeepAlive(boolean keepAlive) {
+        Duke.keepAlive = keepAlive;
+    }
 
     public static void PrintBorder(){
         System.out.println("____________________________________________________________");
     }
 
     public static void Exit(){
-        System.out.println("Bye. Hope to see you again soon!");
+        PrintBorder();
+        System.out.print("Goodbye! Thank you for using Duke.\n");
         PrintBorder();
     }
+
+    // TODO: Add more robust command string handling
+    // TODO: Add a '$' Symbol to hint user to type in a command
+    public static void handleCommand(String cmd){
+        // Update the keepAlive flag
+        if(cmd.equals("Bye")){
+            // Termination
+            setKeepAlive(false);
+        }else{
+            // Echo out the command
+            PrintBorder();
+            System.out.println(cmd);
+            PrintBorder();
+        }
+    }
+
     public static void Greet(){
         PrintBorder();
         System.out.println("Hello! I'm Duke");
@@ -22,6 +47,12 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
         Greet();
+        setKeepAlive(true);
+        Scanner input = new Scanner(System.in);
+        while(keepAlive){
+            String command = input.nextLine();
+            handleCommand(command);
+        }
         Exit();
     }
 }
