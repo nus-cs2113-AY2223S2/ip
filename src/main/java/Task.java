@@ -1,9 +1,9 @@
 class Task {
-    private final boolean status;
+    private final boolean isDone;
     private final String taskDescription;
 
-    Task(boolean s, String td) {
-        this.status = s;
+    Task(boolean id, String td) {
+        this.isDone = id;
         this.taskDescription = td;
     }
 
@@ -20,7 +20,7 @@ class Task {
     @Override
     public String toString() {
         String checkbox = "[X] ";
-     if (!status) {
+     if (!isDone) {
         checkbox = "[ ] ";
      }
      return checkbox + this.taskDescription;

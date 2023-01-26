@@ -11,14 +11,15 @@ public class Duke {
 
         String inputt = io.nextLine();
         while (!inputt.equals("bye")) {
-            //if list is detected
             if (inputt.equals("list")) {
+                //if list is detected
                 System.out.println("Here are the tasks in your list:");
                 for (int i = 0; i < taskList.size(); i++) {
                     int index = i + 1;
                     System.out.println(index + "." + taskList.get(i).toString());
                 }
             } else if (inputt.contains("mark")) {
+                //if mark / unmark is detected
                 int index = Integer.parseInt(inputt.split(" ")[1]) - 1;
                 Task updatedTask = taskList.get(index).mark();
                 if (inputt.contains("unmark")) {
@@ -30,6 +31,7 @@ public class Duke {
                 taskList.set(index, updatedTask);
                 System.out.println(updatedTask.toString());
             } else {
+                //else add task to array
                 Task newTask = new Task(false, inputt);
                 taskList.add(newTask);
                 System.out.println("added: " + inputt);
