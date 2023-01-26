@@ -31,8 +31,6 @@ public class Duke {
                     }
                     break;
 
-                case "mark":
-
                 case "bye":
                     op = false;
                     System.out.println(Horizontal_line+"\n");
@@ -40,15 +38,27 @@ public class Duke {
                     System.out.println(Horizontal_line+"\n");
                     break;
                 default:
-                    if (ins.contains("mark")){
+                    if (ins.contains("unmark")){
+                        int idx = 5;
+                        System.out.println(Horizontal_line + "\n");
+                        int num = Integer.parseInt(ins.substring(idx+2));
+                        System.out.println("Okay, I have unmarked Task " + num);
+                        System.out.println(Horizontal_line + "\n");
+                        list[num - 1].isDone = false;
                         break;
                     }
-                    else if (ins.contains("unmark")){
+                    else if (ins.contains("mark")){
+                        System.out.println(Horizontal_line + "\n");
+                        int idx = 3;
+                        int num = Integer.parseInt(ins.substring(idx+2));
+                        System.out.println("Nice! You have done Task " + num);
+                        list[num - 1].isDone = true;
+                        System.out.println(Horizontal_line + "\n");
                         break;
                     }
                     else {
                         System.out.println(Horizontal_line + "\n");
-                        list[counter] = new Task(ins);
+                        list[counter] = new Task(ins,counter + 1);
                         counter++;
                         System.out.println("Added: " + ins);
                         System.out.println(Horizontal_line + "\n");
