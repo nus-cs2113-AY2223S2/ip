@@ -1,3 +1,5 @@
+package task;
+
 public class Task {
 
     protected String description;
@@ -14,6 +16,6 @@ public class Task {
 
     @Override
     public String toString() {
-        return "[" + (isDone ? "x" : " ") + "] " + description;
+        return "[T][" + (isDone ? "x" : " ") + "] " + description;
     }
 }
