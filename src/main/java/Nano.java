@@ -22,14 +22,33 @@ public class Nano {
         System.out.println("How may I assist you?");
         print_hor_ln();
 
+        // initialise list of 100 items
+        String[] list = new String[100];
+        int listCount = 0;
+
         //receive commands
-        String command;
-        do {
+        String text;
+        boolean exit = false;
+        while (!exit) {
             Scanner in = new Scanner(System.in);
-            command = in.nextLine();
-            System.out.println(command + "!");
-            //exit when user types "bye"
-        } while(!command.equals("bye"));
+            text = in.nextLine();
+            if (text.equals("bye")) {
+                //chatbot exit when user types "bye"
+                exit = true;
+            }
+            else if (text.equals("list")) {
+                // display list
+                for (int i = 0; i < listCount; i += 1) {
+                    System.out.println((i + 1) + ". " + list[i]);
+                }
+            }
+            else {
+                // add text to list
+                list[listCount] = text;
+                listCount += 1;
+                System.out.println("Added " + text + " to list.");
+            }
+        }
 
         //chatbot exit message
         System.out.println("Sleep mode activated.");
