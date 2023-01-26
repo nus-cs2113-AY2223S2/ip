@@ -43,8 +43,8 @@ public class Duke {
                     tasks.get(index).setDone(false);
                     System.out.println("\tOK, I've marked this task as not done yet:");
                     System.out.printf("\t[ ] %s\n", tasks.get(index).getDescription());
-                } catch (Exception error) {
-                    System.out.println(error);
+                } catch (Exception exception) {
+                    System.out.println(exception);
                 }
                 break;
             case "mark":
@@ -59,8 +59,8 @@ public class Duke {
                     System.out.println("\tNice! I've marked this task as done:");
                     System.out.printf("\t[X] %s\n", tasks.get(index).getDescription());
 
-                } catch (Exception error) {
-                    System.out.println(error);
+                } catch (Exception exception) {
+                    System.out.println(exception);
                 }
                 break;
             default:
