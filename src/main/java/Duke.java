@@ -8,6 +8,7 @@ public class Duke {
             + "____________________________________________________________";
         System.out.println(greeting_word);
     }
+    
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
