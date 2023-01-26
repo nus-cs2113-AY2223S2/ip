@@ -5,7 +5,6 @@ public class Duke {
         String lineBreak = "____________________\n";
         System.out.println(lineBreak + args + "\n" + lineBreak);
     }
-
     public static void main(String[] args) {
         String logo = "   _____  __     _               __         \n"
                 + "  / ___/ / /_   (_)____  __  __ / /__ ____ _\n"
@@ -23,7 +22,11 @@ public class Duke {
             if (line.equals("bye")) {
                 break;
             }
-            echo(line);
+            if(line.equals("list")){
+                todoList.list();
+                continue;
+            }
+            todoList.add(line);
         }
         System.out.println(lineBreak + exitLine + lineBreak);
     }
