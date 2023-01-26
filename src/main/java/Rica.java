@@ -4,6 +4,8 @@ import java.util.Scanner;
 public class Rica {
     private static final String LINE = "____________________________________________________________";
     private static final String LIST_TRIGGER = "list";
+    private static final String MARK_TRIGGER = "mark";
+    private static final String UNMARK_TRIGGER = "unmark";
     private static final String BYE_TRIGGER = "bye";
     private static final String ADD_PHRASE = " New task I'll remember: ";
     private static final String BYE_PHRASE = " Leaving so soon? Come back anytime, I'll be happy to help!";
@@ -15,7 +17,18 @@ public class Rica {
 
     private static void addTask(String description) {
         Task newTask = new Task(description);
-        Rica.pastTasks.add(newTask);
+        Rica.getPastTexts().add(newTask);
+    }
+
+    private static void addTask(Task newTask) {
+        Rica.getPastTexts().add(newTask);
+    }
+
+    private static Task markDone(int indexOfTask) {
+        Task selectedTask = Rica.getPastTexts().remove(indexOfTask);
+        selectedTask = selectedTask.setDone();
+        Rica.addTask(selectedTask);
+        return selectedTask;
     }
 
     public static void main(String[] args) {
@@ -48,17 +61,27 @@ public class Rica {
         do {
             command = in.nextLine();
             printlnWithIndent(Rica.LINE);
-            switch (command) {
-                case Rica.BYE_TRIGGER:
-                    printlnWithIndent(Rica.BYE_PHRASE);
-                    break;
-                case Rica.LIST_TRIGGER:
-                    printTexts();
-                    break;
-                default:
-                    printlnWithIndent(Rica.ADD_PHRASE + command);
-                    Rica.addTask(command);
-                    break;
+            if (command.contains(Rica.MARK_TRIGGER)) {
+                String[] params = command.split(" ");
+                int indexOfTask = Integer.valueOf(params[1]) - 1;
+                Task markedTask = Rica.markDone(indexOfTask);
+                printlnWithIndent(" Shall remember that this task as done: " +
+                        markedTask.getDescription());
+            } else if (command.contains(Rica.UNMARK_TRIGGER)) {
+
+            } else {
+                switch (command) {
+                    case Rica.LIST_TRIGGER:
+                        printTexts();
+                        break;
+                    case Rica.BYE_TRIGGER:
+                        printlnWithIndent(Rica.BYE_PHRASE);
+                        break;
+                    default:
+                        printlnWithIndent(Rica.ADD_PHRASE + command);
+                        Rica.addTask(command);
+                        break;
+                }
             }
 
             printlnWithIndent(Rica.LINE);
