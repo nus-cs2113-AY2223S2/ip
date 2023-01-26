@@ -1,3 +1,4 @@
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Duke {
@@ -11,7 +12,7 @@ public class Duke {
         System.out.println("Hello from\n" + logo);
         System.out.println("what can i do for you");
         String input = myObj.nextLine();
-        while(!input.equals("bye"))
+        while(!input.equalsIgnoreCase("bye"))
         {
             System.out.println(input);
             input = myObj.nextLine();
