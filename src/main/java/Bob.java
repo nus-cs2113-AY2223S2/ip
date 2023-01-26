@@ -104,6 +104,21 @@ public class Bob {
         }
     }
 
+    public static boolean isNumeric(String str) {
+        return str != null && str.matches("[0-9]+");
+    }
+
+    public static int convertString(String str) {
+        int num = -1;
+        if (isNumeric(str)) {
+            num = Integer.parseInt(str);
+        }
+        if (num < 1 || num > listCount + 1) {
+            System.out.println("Invalid entry");
+        }
+        return num;
+    }
+
     public static void command() {
         Scanner in = new Scanner(System.in);
         do {
@@ -114,20 +129,20 @@ public class Bob {
             if (cmd.equals("list")) {
                 listOut();
             } else if (cmd.equals("mark")) {
-                int num = in.nextInt();
+                String str = in.next();
                 //For error handling
-                if (num < 1 || num > listCount + 1) {
-                    System.out.println("Invalid entry");
+                int num = convertString(str);
+                if (num == -1) {
                     continue;
                 }
                 System.out.println("Bob commends you!");
                 list[num - 1].setDone(true);
                 System.out.println("  " + list[num - 1].checkDone() + " " + list[num - 1].getTask());
             } else if (cmd.equals("unmark")) {
-                int num = in.nextInt();
+                String str = in.next();
                 //For error handling
-                if (num < 1 || num > listCount + 1) {
-                    System.out.println("Invalid entry");
+                int num = convertString(str);
+                if (num == -1) {
                     continue;
                 }
                 System.out.println("Boo a mistake!");
