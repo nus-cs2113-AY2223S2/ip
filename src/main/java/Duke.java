@@ -2,14 +2,17 @@ import java.util.Scanner;
 
 public class Duke {
 
-    private static final Task[] tasks = new Task[100];
+    private static int MAX_TASKS = 100;
+
+    private static final Task[] tasks = new Task[MAX_TASKS];
+
     private static int counter = 0;
 
     /**
      * Prints out the status of the task and the task name
      */
     private static void printTasks() {
-        System.out.println(Message.LIST_TASKS.getMessage());
+        System.out.println(Message.LIST_TASKS.message);
         for (int i = 0; i < counter; ++i) {
             boolean isDone = tasks[i].isDone();
             String symbol = isDone ? "X" : " ";
@@ -37,8 +40,8 @@ public class Duke {
 
         // Determine the comment to make
         String remark = isMark
-                ? Message.MARKED.getMessage()
-                : Message.UNMARKED.getMessage();
+                ? Message.MARKED.message
+                : Message.UNMARKED.message;
 
         // Set the task status based on the command
         tasks[index].setDone(isMark);
@@ -72,12 +75,14 @@ public class Duke {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         boolean isRunning = true;
-        System.out.println(Message.WELCOME.getMessage());
+        System.out.println(Message.WELCOME.message);
 
         while (isRunning) {
-            if (!in.hasNextLine()) { // Important to avoid error
+            // MARK: It is important to check for error.
+            if (!in.hasNextLine()) { 
                 break;
             }
+
             String line = in.nextLine().trim();
             String[] instructions = line.split(" ", 2);
             switch (instructions[0]) {
@@ -97,7 +102,7 @@ public class Duke {
                 break;
             }
         }
-        System.out.println(Message.GOODBYE.getMessage());
+        System.out.println(Message.GOODBYE.message);
         in.close(); // Closed to prevent memory leak
     }
 }

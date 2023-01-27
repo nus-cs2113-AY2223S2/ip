@@ -5,13 +5,10 @@ public enum Message {
     UNMARKED("OK, I've marked this task as not done yet:"),
     WELCOME("Hello! I'm Duke\nWhat can I do for you?");
 
-    private final String message;
+    public final String message;
 
     Message(String message) {
-        this.message = message;
-    }
 
-    public String getMessage() {
-        return this.message;
+        this.message = message;
     }
 }
