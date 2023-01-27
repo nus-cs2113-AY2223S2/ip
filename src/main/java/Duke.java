@@ -1,10 +1,11 @@
 import java.util.Scanner;
 import java.util.Arrays;
+
 public class Duke {
     public static void main(String[] args) {
         String lineBreak = "---------------------------------------------";
         String line = "";
-        String[] list = new String[100];
+        Task[] list = new Task[100];
         int index = 0;
         Scanner in = new Scanner(System.in);
         /*String logo = " ____        _        \n"
@@ -19,21 +20,34 @@ public class Duke {
         System.out.println(lineBreak);
         while (true) {
             line = in.nextLine();
+            String[] words = line.split(" ");
             System.out.println(lineBreak);
-            if (line.equals("list")) {
+            if (line.contains("list")) {
+                System.out.println("Here are the tasks in your list:");
                 int itemNumber = 1;
-                String[] fullList = Arrays.copyOf(list, index);
-                for (String item : fullList) {
-                    System.out.println(itemNumber + ". " + item);
+                for (Task item : list) {
+                    if ((itemNumber - 1) == index) {
+                        break;
+                    }
+                    System.out.println(itemNumber + ".[" + list[itemNumber - 1].getStatusIcon() + "] " + list[itemNumber - 1].description);
                     itemNumber++;
                 }
                 System.out.println(lineBreak);
+            }
+            else if (words[0].equals("mark")) {
+                int itemNumber = Integer.parseInt(words[1]);
+                list[itemNumber - 1].markAsDone();
+            }
+            else if (words[0].equals("unmark")) {
+                int itemNumber = Integer.parseInt(words[1]);
+                list[itemNumber - 1].markAsUndone();
             }
             else if (line.equals("bye")) {
                 break;
             }
             else {
-                list[index] = line;
+                Task item = new Task(line);
+                list[index] = item;
                 index++;
                 System.out.println("added: " + line);
                 System.out.println(lineBreak);
