@@ -3,15 +3,14 @@ import java.util.Scanner;
 
 public class Duke {
 
-    private ArrayList<String> userInput;
-
     public Duke() {
-        this.userInput = new ArrayList<>();
+
     }
 
     public static void main(String[] args) {
 
         Duke duke = new Duke();
+        ArrayList<String> userInput = new ArrayList<>();
         boolean isRun = true;
         Scanner scan = new Scanner(System.in);
         String logo = " ____        _        \n"
@@ -25,17 +24,33 @@ public class Duke {
 
         while (true) {
             String input = scan.nextLine();
-            duke.userInput.add(input);
             if (input.equals("bye")) {
                 break;
+            } else if (input.equals("list")) {
+                list(userInput);
             }
-            echoCmd(input);
+            //echoCmd(input);
+            addToList(input, userInput);
 
 
         }
         exit();
     }
+    public static void addToList(String cmd, ArrayList<String> userInput) {
+        System.out.println("\t____________________________________________________________");
+        System.out.println("\tadded: " + cmd);
+        System.out.println("\t____________________________________________________________");
+        userInput.add(cmd);
+    }
 
+    public static void list(ArrayList<String> userInput) {
+        System.out.println("\t____________________________________________________________");
+        for (int i = 0; i < userInput.size(); i++) {
+            System.out.println("\t" + (i + 1) + ". " + userInput.get(i));
+        }
+        System.out.println("\t____________________________________________________________");
+
+    }
     public static void echoCmd(String cmd) {
         System.out.println("\t____________________________________________________________");
         System.out.println("\t " + cmd);
