@@ -39,18 +39,49 @@ public class Duke {
         int numOfItems = 0;
         while(!line.equals("bye")) {
             if(line.equals("list")) { // users wants to know all text so far
-                String[] subList = Arrays.copyOf(list, numOfItems);
-                for(int i = 0; i < subList.length; ++i)
-                {
-                    System.out.println(subList[i]);
-                }
+                printCurrentList(list, numOfItems);
+            }
+            else if(line.startsWith("mark")){
+                mark(line, list);
+                printCurrentList(list, numOfItems);
+            }
+            else if(line.startsWith("unmark")){
+                unmark(line,list);
+                printCurrentList(list, numOfItems);
             }
             else { // text from user
-                String item = (numOfItems + 1) + ". " + line; // convert to 1-based
+                String item = (numOfItems + 1) + ".[ ] " + line; // convert to 1-based
                 list[numOfItems] = item;
                 ++numOfItems;
             }
-            line = in.nextLine();
+            line = in.nextLine(); // read in next line of text
+        }
+    }
+
+    public static void mark(String task, String[] list)
+    {
+        String locationOfTask = task.substring(5); // get the number of task to be marked
+        String taskToBeMarked = list[Integer.parseInt(locationOfTask) - 1];
+        String taskMarked = taskToBeMarked.replace("[ ]", "[X]");
+        list[Integer.parseInt(locationOfTask) - 1] = taskMarked;
+        System.out.println("Sir, your task has been marked as completed.");
+    }
+
+    public static void unmark(String task, String[] list)
+    {
+        String locationOfTask = task.substring(7);
+        String taskToBeUnmarked = list[Integer.parseInt(locationOfTask) - 1];
+        String taskUnmarked = taskToBeUnmarked.replace("[X]", "[ ]");
+        list[Integer.parseInt(locationOfTask) - 1] = taskUnmarked;
+        System.out.println("Sir, your task has been unmarked as requested.");
+    }
+
+    public static void printCurrentList(String[] list, int numOfItems)
+    {
+        String[] subList = Arrays.copyOf(list, numOfItems);
+        for(int i = 0; i < subList.length; ++i)
+        {
+            System.out.println(subList[i]);
         }
     }
 }
