@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -16,20 +17,42 @@ public class Duke {
     }
 
     public static void dukeAddList(Scanner inputScanner) {
-        Set<String> list = new HashSet<>();
+        ArrayList<Task> list = new ArrayList<>();
         while (true) {
             String echo = inputScanner.nextLine();
             if (echo.equals("list")) {
-                int counter = 1;
-                for (String string : list) {
-                    System.out.println(counter + ". " + string);
-                    counter += 1;
+                System.out.println("Here are the tasks in your list:");
+                for (Task task : list) {
+                    if (task.isDone()) {
+                        System.out.println(task.getIndex() + ". [X] " + task.getTaskName());
+                    } else {
+                        System.out.println(task.getIndex() + ". [ ] " + task.getTaskName());
+                    }
+                }
+            } else if (echo.split(" ", 0)[0].equals("mark")) {
+                String[] inputArray = echo.split(" ", 0);
+                if (inputArray.length != 2) {
+                    continue;
+                }
+                int index;
+                try {
+                    index = Integer.parseInt(inputArray[1]);
+                } catch (NumberFormatException e) {
+                    continue;
+                }
+                if (index > list.size() - 1) {
+                    continue;
+                }
+                Task task = list.get(index);
+                if (!task.isDone()) {
+                    task.doTask();
                 }
             } else if (echo.equals("bye")) {
                     System.out.println("Bye. Hope to see you again soon!");
                     return;
-                } else {
-                list.add(echo);
+            } else {
+                Task newTask = new Task(echo, false, list.size());
+                list.add(newTask);
             }
         }
     }
