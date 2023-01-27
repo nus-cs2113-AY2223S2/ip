@@ -1,3 +1,5 @@
+import commands.Command;
+import commands.Parser;
 import io.In;
 import io.Out;
 import tasks.Store;
@@ -12,10 +14,17 @@ public class Archduke {
         Out.printBox("Added task: %s", description);
     }
 
-    private static void toggleTaskCompleteness(int index) {
-        Task task = store.getTask(index);
-        task.toggleCompleted();
-        Out.printTaskCompleteness(store, index);
+    private static void toggleTaskCompleteness(String body) {
+        try {
+            int index = Integer.parseInt(body) - 1;
+            Task task = store.getTask(index);
+            task.toggleCompleted();
+            Out.printTaskCompleteness(store, index);
+        } catch (NumberFormatException e) {
+            Out.printError("The provided index is not a valid integer.");
+        } catch (IndexOutOfBoundsException e) {
+            Out.printError("The task can not be found.");
+        }
     }
 
     public static void main(String[] args) {
@@ -25,30 +34,26 @@ public class Archduke {
         Out.greet();
 
         while (true) {
-            String command = in.readUserInput();
+            Command command = Parser.parse(in.readUserInput());
+            String type = command.getType();
 
-            switch (command) {
+            switch (type) {
             case "list":
                 Out.printTasks(store);
+                continue;
+            case "mark":
+            case "unmark":
+                toggleTaskCompleteness(command.getBody());
+                continue;
+            case "add":
+                addTask(command.getBody());
                 continue;
             case "bye":
                 Out.bye();
                 return;
             default:
-                if (command.startsWith("mark") || command.startsWith("unmark")) {
-                    try {
-                        String[] parts = command.split(" ");
-                        int index = Integer.parseInt(parts[1]) - 1;
-                        toggleTaskCompleteness(index);
-                    } catch (NumberFormatException e) {
-                        Out.printError("The provided index is not a valid integer.");
-                    } catch (IndexOutOfBoundsException e) {
-                        Out.printError("The task can not be found.");
-                    }
-                    continue;
-                }
-
-                addTask(command);
+                Out.printError(type
+                        + " is not a valid command. \"list\", \"mark\", \"unmark\", \"add\" and \"bye\" are valid commands.");
             }
         }
     }
