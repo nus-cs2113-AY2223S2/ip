@@ -6,7 +6,7 @@ public class Duke {
 
         final String DOTTED_LINE = "    --------------------------------------------------";
         final String TAB_SIZE = "     ";
-        ArrayList<String> todoList = new ArrayList<>();
+        ArrayList<ArrayList<String>> todoList = new ArrayList<ArrayList<String>>();
 
         // greets user
         System.out.println(DOTTED_LINE);
@@ -15,23 +15,31 @@ public class Duke {
         System.out.println(DOTTED_LINE + '\n');
 
         String userCommand;
+        String[] userSplitInputs;
 
-        // ask for user inputs and echo those inputs
         do {
             Scanner scanner = new Scanner(System.in);
             userCommand = scanner.nextLine();
+            userSplitInputs = userCommand.split(" ");
 
             // top dotted line
             System.out.println(DOTTED_LINE);
 
             // body
-
-            if (userCommand.equals("bye")) {
+            if (userSplitInputs[0].equals("bye")) {
 
                 sayBye(TAB_SIZE);
-            } else if (userCommand.equals("list")) {
+            } else if (userSplitInputs[0].equals("list")) {
 
                 listItems(todoList, TAB_SIZE);
+            } else if (userSplitInputs[0].equals("done")) {
+
+                markTasks(todoList, Integer.parseInt(userSplitInputs[1]),
+                        TAB_SIZE);
+            } else if (userSplitInputs[0].equals("undone")) {
+
+                unMarkTasks(todoList, Integer.parseInt(userSplitInputs[1]),
+                        TAB_SIZE);
             } else {
 
                 add(todoList, userCommand, TAB_SIZE);
@@ -85,9 +93,13 @@ public class Duke {
      * @param toAdd the item to be added to todoList
      * @param TAB_SIZE white spaces in front of the printed text for aesthetic purposes
      */
-    public static void add(ArrayList<String> todoList, String toAdd, final String TAB_SIZE) {
+    public static void add(ArrayList<ArrayList<String>> todoList,
+                           String toAdd, final String TAB_SIZE) {
 
-        todoList.add(toAdd);
+        ArrayList<String> tempToAdd = new ArrayList<>();
+        tempToAdd.add(toAdd);
+        tempToAdd.add("undone");
+        todoList.add(tempToAdd);
 
         System.out.println(TAB_SIZE + "You have added [" + toAdd + "] to your todo list");
     }
@@ -99,7 +111,8 @@ public class Duke {
      * @param todoList the ArrayLists that contains the stored items
      * @param TAB_SIZE white spaces in front of the printed text for aesthetic purposes
      */
-    public static void listItems(ArrayList<String> todoList, final String TAB_SIZE) {
+    public static void listItems(ArrayList<ArrayList<String>> todoList,
+                                 final String TAB_SIZE) {
 
         if (todoList.size() == 0) {
             System.out.println(TAB_SIZE + "Your todo list is current void of task,"
@@ -109,9 +122,31 @@ public class Duke {
         }
 
         for (int i = 1; i <= todoList.size(); i++) {
+            boolean isDone = todoList.get(i - 1).get(1).equals("done");
+            if (isDone) {
+                System.out.println(TAB_SIZE + TAB_SIZE + i
+                        + ".[✔] " + todoList.get(i - 1).get(0));
+            } else {
+                System.out.println(TAB_SIZE + TAB_SIZE + i
+                        + ".[ ] " + todoList.get(i - 1).get(0));
+            }
 
-            System.out.println(TAB_SIZE + TAB_SIZE + i
-                    + ". " + todoList.get(i - 1));
         }
+    }
+
+    public static void markTasks(ArrayList<ArrayList<String>> todoList, int taskNumber,
+                                 final String TAB_SIZE) {
+
+        todoList.get(taskNumber - 1).set(1, "done");
+        System.out.println(TAB_SIZE + "Nice! I've marked this task as done:");
+        System.out.println(TAB_SIZE + " [✔] " + todoList.get(taskNumber - 1).get(0));
+    }
+
+    public static void unMarkTasks(ArrayList<ArrayList<String>> todoList, int taskNumber,
+                                   final String TAB_SIZE) {
+
+        todoList.get(taskNumber - 1).set(1, "undone");
+        System.out.println(TAB_SIZE + "Ok! I've marked this task as undone:");
+        System.out.println(TAB_SIZE + " [ ] " + todoList.get(taskNumber - 1).get(0));
     }
 }
