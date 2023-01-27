@@ -32,6 +32,8 @@ public class Duke {
             return;
         } else if (input.equals("list")) {
             tasks.printContents();
+        } else if (input.equals("help")) {
+            System.out.println(Message.helpMessage);
         } else {
             tasks.addTask(input);
             System.out.println("added: " + input);

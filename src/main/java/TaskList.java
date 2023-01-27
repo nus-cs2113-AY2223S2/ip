@@ -33,6 +33,7 @@ public class TaskList {
         System.out.print(Message.taskDone);
         System.out.println(tasks[taskNumber-1].getTaskListing());
     }
+
     public void markAsUndone(int taskNumber) {
         tasks[taskNumber - 1].markAsUndone();
         System.out.print(Message.taskUndone);

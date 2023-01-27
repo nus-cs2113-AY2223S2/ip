@@ -25,7 +25,7 @@ public class Message {
      * Greets the user.
      */
     public static void greet() {
-        System.out.println("Hello from\n" + logo);
+        System.out.println(logo);
         // Greet message
         printHLine();
         System.out.println(intro);
@@ -42,4 +42,11 @@ public class Message {
 
     public static String taskDone = "Nice! I've marked this task as done: ";
     public static String taskUndone = "Okay, I've marked this task as not done yet: ";
+
+    public static final String helpMessage = "Options:\n" +
+                                             "  help        Show these tips.\n" +
+                                             "  list        List out existing tasks.\n" +
+                                             "  bye         Exit PAPA.\n" +
+                                             "  mark <n>    Mark the n-th task as done.\n" +
+                                             "  unmark <n>  Mark the n-th task as undone.";
 }

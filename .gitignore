@@ -16,6 +16,10 @@ bin/
 /text-ui-test/ACTUAL.TXT
 text-ui-test/EXPECTED-UNIX.TXT
 
-# Week 2: Level-0
+# User-supplied .gitignore files
 # Remember not to commit .class files.
 *.class
+# These are for myself
+notes.txt
+
+
