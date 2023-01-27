@@ -18,7 +18,7 @@ public class Tool {
         String[] indexedArray = new String[size];
         for (int i=1; i<=size; i+=1){
 
-            indexedArray[i-1] = Integer.toString(i) + '.'
+            indexedArray[i-1] = Integer.toString(i) + '.' + '[' + inputArray[i-1].getTaskType()+']'
                     + '[' + inputArray[i-1].getTaskStatus() + "] "
                     + inputArray[i-1].taskDescription;
         }

@@ -48,4 +48,11 @@ public class Formatter {
         }
         System.out.print("\n");
     }
+
+    public String[] formatTasks(Task[] tasks, int count){
+        Tool tool = new Tool();
+        String[] indexedTasks = tool.addIndex(tasks, count);
+        addStringIndentation(indexedTasks);
+        return indexedTasks;
+    }
 }

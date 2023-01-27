@@ -18,6 +18,7 @@ public class Task {
      * @return X or ' '
      */
     public String getTaskStatus() {
+
         return (isDone ? "X" : " "); // mark done task with X
     }
 
@@ -25,6 +26,7 @@ public class Task {
      * Mark task as done.
      */
     public void markDone(){
+
         this.isDone = true;
     }
 
@@ -32,7 +34,13 @@ public class Task {
      * Mark task as not done.
      */
     public void undo(){
+
         this.isDone = false;
     }
 
+    @Override
+    public String toString(){
+        String taskObjectString = "[" + getTaskStatus() + "]" + this.taskDescription;
+        return taskObjectString;
+    }
 }

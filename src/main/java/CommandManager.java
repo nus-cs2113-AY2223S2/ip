@@ -5,17 +5,25 @@ import java.util.Scanner;
  * Keep reading input command until 'bye'.
  */
 public class CommandManager {
-    private String command;
+    private String inputCommand;
+    private String commandType;
+    private String commandDescription;
 
-    public CommandManager() {
-        this.command = " ";
+    public void setCommand(String command) {
+        Parser parseCommand = new Parser();
+        this.inputCommand = command;
+        this.commandType = parseCommand.getCommandType(command);
+        this.commandDescription = parseCommand.getCommandDescription(command);
     }
 
-    public String readCommand(Scanner in){
-        String inputCommand;
-        inputCommand = in.nextLine();
-        this.command = inputCommand;
-        return inputCommand.toLowerCase();
+    public void sayHello(){
+        Greet hello = new Greet();
+        hello.printHello();
+    }
+
+    public void sayBye(){
+        Bye bye = new Bye();
+        bye.printBye();
     }
 
     /**
@@ -25,28 +33,27 @@ public class CommandManager {
      * If command is unmark, mark a particular task as undone.
      * Else add new task.
      */
-    public void manageCommand(){
+    public void executeCommand(){
 
-        Bye bye = new Bye();
-        Scanner in = new Scanner(System.in);
+
+        UI readInputCommandLoop = new UI();
         TaskManager taskManager = new TaskManager();
+        Parser parseCommand = new Parser();
 
-        while(!this.readCommand(in).equals("bye")){
-            if(this.command.toLowerCase().equals("list")){
+        while(!this.commandType.equals("bye")){
+            //String inputCommandLowerCase = parseCommand.changeCommandLowerCase(commandType);
+            if(commandType.equals("list")){
                 taskManager.listTask();
+            }else if(commandType.equals("mark")){
+                taskManager.editTaskStatus(this.commandDescription, "mark");
+            }else if(commandType.equals("unmark")){
+                taskManager.editTaskStatus(this.commandDescription, "unmark");
             }else{
-                String inputWords[] = this.command.split(" ");
-                if(inputWords[0].toLowerCase().equals("mark")){
-                    taskManager.editTaskStatus(inputWords, "mark");
-                }else if(inputWords[0].toLowerCase().equals("unmark")){
-                    taskManager.editTaskStatus(inputWords, "unmark");
-                }else{
-                    Task task = new Task(this.command);
-                    taskManager.addTask(task);
-                }
+                //Task task = new Task(this.commandDescription);
+                taskManager.addTask(this.commandType, this.commandDescription);
             }
+            setCommand(readInputCommandLoop.readInput());
         }
-        bye.printBye();
-
+        sayBye();
     }
 }
