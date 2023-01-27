@@ -25,7 +25,7 @@ public class Duke {
             line = in.nextLine();
             Task newTask = new Task(line);
 
-            if (line.equals("list") || line.equals("bye") || line.startsWith("mark") || line.startsWith("unmark")) {
+            if (line.equals("list") || line.equals("bye") || line.matches("mark \\d") || line.startsWith("mark \\d")) {
                 Task.conductInstruction(line, list, index);
                 if (line.equals("bye")) {
                     System.out.println("    ____________________________________________________________\n");

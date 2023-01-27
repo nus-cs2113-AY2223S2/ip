@@ -46,14 +46,14 @@ public class Task {
                 System.out.println(listOfTasks[i].description);
 
             }
-        } else if (command.startsWith("mark")) {
+        } else if (command.matches("mark \\d" )) {
             String[] seperated = command.split(" ");
             int number = Integer.parseInt(seperated[1])-1;
             listOfTasks[number].setDone(true);
             System.out.println("Nice! I've marked this task as done:");
             System.out.println("    [X] " + listOfTasks[number].description);
 
-        } else if (command.startsWith("unmark")) {
+        } else if (command.matches("unmark \\d")) {
             String[] seperated = command.split(" ");
             int number = Integer.parseInt(seperated[1])-1;
             listOfTasks[number].setDone(false);
