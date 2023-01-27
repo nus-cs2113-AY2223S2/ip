@@ -16,8 +16,13 @@ public class Rica {
     }
 
     private static void addTask(String description) {
+        if (description.isBlank()) {
+            printlnWithIndent(" Did you forget something? Don't think there's any task with no name");
+            return;
+        }
         Task newTask = new Task(description);
         Rica.getPastTexts().add(newTask);
+        printlnWithIndent(Rica.ADD_PHRASE + description);
     }
 
     private static void addTask(Task newTask) {
@@ -118,7 +123,6 @@ public class Rica {
                         printlnWithIndent(Rica.BYE_PHRASE);
                         break;
                     default:
-                        printlnWithIndent(Rica.ADD_PHRASE + command);
                         Rica.addTask(command);
                         break;
                 }
