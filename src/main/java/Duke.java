@@ -6,23 +6,33 @@ public class Duke {
     public static void addList() {
         Scanner in = new Scanner(System.in);
 
-        String[] inputList = new String[100];
+        Task[] inputList = new Task[101];
         String userInput = in.nextLine();
         boolean exit = false;
-        int length = 0;
+        int length = 1;
         while (!exit) {
             if (userInput.equals("bye")) {
                 break;
             } else if (userInput.equals("list")) {
-                for (int i = 0; i < length; i++) {
-                    System.out.println((i+1) + ". " +inputList[i]);
+                for (int i = 1; i < length; i++) {
+                    System.out.print((i) + ".");
+                    inputList[i].printTask();
                 }
                 System.out.println(line);
+            } else if (userInput.contains("unmark")) {
+                String taskNum = userInput.substring(userInput.length()-1);
+                int x = Integer.parseInt(taskNum);
+                inputList[x].unmark();
+            } else if (userInput.contains("mark")) {
+                String taskNum = userInput.substring(userInput.length()-1);
+                int x = Integer.parseInt(taskNum);
+                inputList[x].markAsDone();
             } else {
+                Task t = new Task(userInput);
                 System.out.println(line);
                 System.out.println("added: " + userInput);
                 System.out.println(line);
-                inputList[length] = userInput;
+                inputList[length] = t;
                 length++;
             }
             userInput = in.nextLine();
