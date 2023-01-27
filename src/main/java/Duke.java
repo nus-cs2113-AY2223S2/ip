@@ -37,7 +37,7 @@ public class Duke {
         System.out.println(divider);
     }
 
-    public static void markAsDone(Task[]tasks, int taskNum, int taskSum){
+    public static void markAsDone(Task[]tasks, int taskNum, int taskSum) {
         String divider = "______________________________";
         int taskIndex = taskNum - 1;
         if (taskNum > taskSum) {
@@ -52,7 +52,7 @@ public class Duke {
         }
     }
 
-    public static void markAsNotDone(Task[]tasks, int taskNum, int taskSum){
+    public static void markAsNotDone(Task[]tasks, int taskNum, int taskSum) {
         String divider = "______________________________";
         int taskIndex = taskNum - 1;
         if (taskNum > taskSum) {
@@ -78,7 +78,7 @@ public class Duke {
         int taskNum;
         boolean end = false;
 
-        while(!end){
+        while(!end) {
             input = in.nextLine();
             String[] inputText = input.split(" ");
             if(input.equals("bye")) {
