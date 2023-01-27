@@ -21,8 +21,9 @@ public class Duke {
             String ins = in.nextLine();
             switch (ins){
                 case "list":
-                    if (counter == 0) System.out.println("Your day is clear!");
-                    else {
+                    if (counter == 0) {
+                        System.out.println("Your day is clear!");
+                    } else {
                         System.out.println(Horizontal_line+"\n");
                         for (int i = 0; i < counter; i++){
                             System.out.println((i+1) + ".[" + list[i].getStatusIcon() +"]" + list[i].description);
@@ -37,6 +38,7 @@ public class Duke {
                     System.out.println("Bye! See you next time!");
                     System.out.println(Horizontal_line+"\n");
                     break;
+
                 default:
                     if (ins.contains("unmark")){
                         int idx = 5;
@@ -46,8 +48,7 @@ public class Duke {
                         System.out.println(Horizontal_line + "\n");
                         list[num - 1].isDone = false;
                         break;
-                    }
-                    else if (ins.contains("mark")){
+                    } else if (ins.contains("mark")){
                         System.out.println(Horizontal_line + "\n");
                         int idx = 3;
                         int num = Integer.parseInt(ins.substring(idx+2));
@@ -55,8 +56,7 @@ public class Duke {
                         list[num - 1].isDone = true;
                         System.out.println(Horizontal_line + "\n");
                         break;
-                    }
-                    else {
+                    } else {
                         System.out.println(Horizontal_line + "\n");
                         list[counter] = new Task(ins,counter + 1);
                         counter++;
