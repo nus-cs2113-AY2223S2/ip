@@ -22,7 +22,7 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-        ArrayList<String> userTexts = new ArrayList<String>();
+        ArrayList<Task> tasks = new ArrayList<Task>();
 
         greeting();
         Scanner sc = new Scanner(System.in);
@@ -36,14 +36,37 @@ public class Duke {
             String firstWord = userInput.split(" ", 2)[0];
 
             System.out.println(HORIZONTAL_LINE);
+
             if (firstWord.equals("list")) {
-                for (int i = 0; i < userTexts.size(); i++) {
-                    System.out.println((i + 1) + ". " + userTexts.get(i));
+                System.out.println("Here are the tasks in your list:");
+                for (int i = 0; i < tasks.size(); i++) {
+                    Task task = tasks.get(i);
+                    System.out.println((i + 1) + ". [" + task.getStatusIcon() + "] " + task.getDescription());
                 }
+
+            } else if (firstWord.equals("mark")) {
+                int index = Integer.parseInt(userInput.split(" ", 2)[1]) - 1;
+                Task task = tasks.get(index);
+                task.setIsDone(true);
+
+                System.out.println("Nice! I've marked this task as done:");
+                System.out.println("[" + task.getStatusIcon() + "] " + task.getDescription());
+
+            } else if (firstWord.equals("unmark")) {
+                int index = Integer.parseInt(userInput.split(" ", 2)[1]) - 1;
+                Task task = tasks.get(index);
+                task.setIsDone(false);
+
+                System.out.println("OK, I've marked this task as not done yet:");
+                System.out.println("[" + task.getStatusIcon() + "] " + task.getDescription());
+
             } else {
-                userTexts.add(userInput);
-                System.out.println("added: " + userInput);
+                Task task = new Task(userInput, false);
+                tasks.add(task);
+
+                System.out.println("added: " + task.getDescription());
             }
+
             System.out.println(HORIZONTAL_LINE + '\n');
         }
 
