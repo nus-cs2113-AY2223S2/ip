@@ -1,8 +1,6 @@
 public class Event extends Task{
-
-    protected String eventDetails;
-    protected String eventDetailsPartOne;// = eventDetails.substring(0,index);
-    protected String eventDetailsPartTwo;// = eventDetailsPartOne.substring(index + 4);
+    protected String eventDetailsPartOne;
+    protected String eventDetailsPartTwo;
 
     public Event(String description, String eventDetailsPartOne, String eventDetailsPartTwo) {
         super(description);
@@ -10,7 +8,6 @@ public class Event extends Task{
         this.eventDetailsPartTwo = eventDetailsPartTwo;
     }
 
-    // Override
     public String toString() {
         return "[E]" + super.toString() + " (from: " + eventDetailsPartOne + " to: " + eventDetailsPartTwo + ")";
     }
