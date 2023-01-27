@@ -24,4 +24,8 @@ public class Task {
     public String getTaskNameAndStatus() {
         return Completed() + taskName;
     }
+
+    public String toString() {
+        return Completed() + taskName;
+    }
 }
