@@ -1,4 +1,8 @@
 import java.util.Scanner;
+
+/**
+ * Incorrect Tags have been resolved, all commits have been tagged appropriately
+ */
 public class Duke {
     public static void main(String[] args) {
         String logo = " ____        _        \n"
