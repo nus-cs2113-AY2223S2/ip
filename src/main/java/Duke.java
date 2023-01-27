@@ -9,11 +9,19 @@ public class Duke {
 //                + "| |_| | |_| |   <  __/\n"
 //                + "|____/ \\__,_|_|\\_\\___|\n";
 //        System.out.println("Hello from\n" + logo);
-
-
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter some text: ");
-        String input = scanner.nextLine();
-        System.out.println("You entered: " + input);
+        while (true) {
+            System.out.print("あなたの願いを入力下さい");
+            String input = scanner.nextLine();
+
+            if (input.equals("bye")) {
+                break;
+            } else {
+                System.out.println("You entered: " + input);
+
+            }
+
+        }
+        System.out.println("じゃねえ～");
     }
 }
