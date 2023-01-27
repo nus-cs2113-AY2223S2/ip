@@ -2,14 +2,38 @@ public class Task {
     protected String description;
     protected boolean isDone;
 
+    protected Status taskStatus;
+
     public Task(String description) {
         this.description = description;
         this.isDone = false;
+    }
+
+    public Task(String description, Status taskStatus) {
+        this.description = description;
+        this.taskStatus = taskStatus;
+        this.isDone = false;
+
     }
 
     public String getStatusIcon() {
         return (isDone ? "X" : " "); // mark done task with X
     }
 
+    public String getStatus() {
+        if (this.taskStatus.equals(Status.T)) {
+            return "[T]";
+        } else if (this.taskStatus.equals(Status.D)) {
+            return "[D]";
+        } else if (this.taskStatus.equals(Status.E)) {
+            return "[E]";
+        } else {
+            return "";
+        }
+    }
+
+    public String showTask() {
+        return this.getStatus() + "[" + this.getStatusIcon() + "] " + this.description;
+    }
 
 }

@@ -1,29 +1,92 @@
 import java.util.Scanner;
-// Now it is level 3
+// Now it is level 4
 
 
 public class Duke {
     public static Task[] taskList = new Task [100]; // The size of this list is initialize to be 100
     public static int listTailIndex = 0;
 
-    public static void add(String line) {
-        System.out.println("____________________________________________________________");
-        System.out.println("added: " + line);
-        Task currentTask = new Task(line);
-        taskList[listTailIndex] = currentTask;
-        listTailIndex++;
-        System.out.println("____________________________________________________________");
-    }
-
     public static void list() {
         System.out.println("____________________________________________________________");
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < listTailIndex; i++) {
             System.out.print(i + 1);
-            System.out.println(".[" + taskList[i].getStatusIcon() + "] " + taskList[i].description);
+            System.out.println(". " + taskList[i].showTask());
         }
         System.out.println("____________________________________________________________" + '\n');
     }
+
+    // Mark and Unmark method
+    public static void markMethod(String line) {
+        int taskNumber = Integer.parseInt(line.substring(5));
+        taskList[taskNumber - 1].isDone = true;
+        System.out.println("____________________________________________________________");
+        System.out.println("Nice! I've marked this task as done:");
+        System.out.println("  " + taskList[taskNumber - 1].showTask());
+        System.out.println("____________________________________________________________");
+    }
+
+    public static void unmarkMethod(String line) {
+        int taskNumber = Integer.parseInt(line.substring(7));
+        taskList[taskNumber - 1].isDone = false;
+        System.out.println("____________________________________________________________");
+        System.out.println("OK, I've marked this task as not done yet:");
+        System.out.println("  " + taskList[taskNumber - 1].showTask());
+        System.out.println("____________________________________________________________");
+    }
+
+    //Status related method (Totally three methods)
+
+    public static void statusMethod (String line) {
+        System.out.println("____________________________________________________________");
+        System.out.println("Got it. I've added: this task:");
+        int indexOfSpace = line.indexOf(" ");
+        String firstLetter = line.substring(0, indexOfSpace);
+
+        // Information is the content without the first letter
+        String information = line.substring(indexOfSpace + 1);
+        information = transformString(information);
+
+        if (firstLetter.equals("todo")) {
+            Task currentTask = new Task(information, Status.T);
+            taskList[listTailIndex] = currentTask;
+        } else if (firstLetter.equals("deadline")) {
+            Task currentTask = new Task(information, Status.D);
+            taskList[listTailIndex] = currentTask;
+        } else if (firstLetter.equals("event")) {
+            Task currentTask = new Task(information, Status.E);
+            taskList[listTailIndex] = currentTask;
+        }
+        System.out.println("  " + taskList[listTailIndex].showTask());
+        listTailIndex++;
+        System.out.println("Now you have " + Integer.toString(listTailIndex) + " tasks in the list.");
+        System.out.println("____________________________________________________________");
+    }
+
+    // Transform the line with "/" to common
+    public static String transformString(String line) {
+        String transformedLine = "";
+        String[] wordsListOfLine = line.split(" ");
+        boolean firstTimeOccurence = true; // Indicates the occurrence time of "/"
+
+        if (line.contains("/")) {
+            for (int i = 0; i < wordsListOfLine.length; i++) {
+                if (wordsListOfLine[i].startsWith("/")) {
+                    if (firstTimeOccurence) {
+                        wordsListOfLine[i] = "(" + wordsListOfLine[i].substring(1) + ":";
+                        firstTimeOccurence = false;
+                    }
+
+                }
+            }
+            transformedLine = String.join(" ", wordsListOfLine) + ")";
+        } else {
+            transformedLine = line;
+        }
+
+        return transformedLine;
+    }
+
 
     public static void initialGreeting() {
         System.out.println("____________________________________________________________");
@@ -56,23 +119,12 @@ public class Duke {
             if (line.equals("list")) {
                 list();
             } else if (line.startsWith("mark")) {
-                int taskNumber = Integer.parseInt(line.substring(5));
-                taskList[taskNumber - 1].isDone = true;
-                System.out.println("____________________________________________________________");
-                System.out.println("Nice! I've marked this task as done:");
-                System.out.println("  [X] "+ taskList[taskNumber - 1].description);
-                System.out.println("____________________________________________________________");
+                markMethod(line);
 
             } else if (line.startsWith("unmark")) {
-                int taskNumber = Integer.parseInt(line.substring(7));
-                taskList[taskNumber - 1].isDone = false;
-                System.out.println("____________________________________________________________");
-                System.out.println("OK, I've marked this task as not done yet:");
-                System.out.println("  [ ] "+ taskList[taskNumber - 1].description);
-                System.out.println("____________________________________________________________");
-
-            } else {
-                add(line);
+                unmarkMethod(line);
+            } else if (line.startsWith("todo") || line.startsWith("deadline") || line.startsWith("event")) {
+                statusMethod(line);
             }
             line = in.nextLine();
         }
@@ -82,3 +134,8 @@ public class Duke {
 
     }
 }
+
+
+
+
+
