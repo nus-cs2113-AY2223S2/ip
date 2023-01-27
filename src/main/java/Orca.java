@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Duke {
+public class Orca {
     public static void main(String[] args) {
         String logo = "     _______  ______    _______  _______ \n"
                 + "    |       ||    _ |  |       ||   _   | \n"
@@ -33,21 +33,21 @@ public class Duke {
                         break;
                     }
                 }
-                System.out.println("    --------------------------------------------------");
+                System.out.println("    --------------------------------------------------\n");
             } else if (userInput.startsWith("mark")) {
                 int taskNo = Integer.parseInt(userInput.substring(5));
                 tasks[taskNo - 1].setDone(true);
                 System.out.println("    --------------------------------------------------");
                 System.out.println("    Nice! I've marked this task as done:");
                 System.out.println("      " + tasks[taskNo - 1].toString());
-                System.out.println("    --------------------------------------------------");
+                System.out.println("    --------------------------------------------------\n");
             } else if (userInput.startsWith("unmark")) {
                 int taskNo = Integer.parseInt(userInput.substring(7));
                 tasks[taskNo - 1].setDone(false);
                 System.out.println("    --------------------------------------------------");
                 System.out.println("    I've marked this task as not done yet:");
                 System.out.println("      " + tasks[taskNo - 1].toString());
-                System.out.println("    --------------------------------------------------");
+                System.out.println("    --------------------------------------------------\n");
             } else {
                 System.out.println("    --------------------------------------------------");
                 System.out.println("     added: " + userInput);
