@@ -4,14 +4,17 @@ import io.In;
 import io.Out;
 import tasks.Store;
 import tasks.Task;
+import tasks.ToDo;
+import tasks.Deadline;
+import tasks.Event;
 
 public class Archduke {
     private static In in;
     private static Store store;
 
-    private static void addTask(String description) {
-        store.addTask(description);
-        Out.printBox("Added task: %s", description);
+    private static void addTask(Task task) {
+        store.addTask(task);
+        Out.printTaskAddition(task, store.getTaskCount());
     }
 
     private static void toggleTaskCompleteness(String body) {
@@ -45,15 +48,20 @@ public class Archduke {
             case "unmark":
                 toggleTaskCompleteness(command.getBody());
                 continue;
-            case "add":
-                addTask(command.getBody());
+            case "todo":
+                addTask(new ToDo(command.getBody()));
+                continue;
+            case "deadline":
+                addTask(new Deadline(command.getBody(), command.getBy()));
+                continue;
+            case "event":
+                addTask(new Event(command.getBody(), command.getFrom(), command.getTo()));
                 continue;
             case "bye":
                 Out.bye();
                 return;
             default:
-                Out.printError(type
-                        + " is not a valid command. \"list\", \"mark\", \"unmark\", \"add\" and \"bye\" are valid commands.");
+                Out.printError("\"%s\" is not a valid command. Try again.", type);
             }
         }
     }

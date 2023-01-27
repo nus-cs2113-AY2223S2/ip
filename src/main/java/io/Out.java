@@ -115,14 +115,22 @@ public class Out {
         printBox("Bye. Hope to see you again soon!");
     }
 
-    public static void printError(String err) {
-        printBox("ERROR: %s", err);
+    public static void printError(String format, Object... args) {
+        printBox("ERROR: %s", String.format(format, args));
     }
 
     public static void printTasks(Store store) {
         printBoxTopBorder();
         printf("Here are your tasks:");
         store.listTasks();
+        printBoxBottomBorder();
+    }
+
+    public static void printTaskAddition(Task task, int storeSize) {
+        printBoxTopBorder();
+        printf("Added task:");
+        printf("  %s", task.toString());
+        printf("You now have %d task(s) in the list.", storeSize);
         printBoxBottomBorder();
     }
 

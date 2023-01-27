@@ -5,6 +5,9 @@ public class Task {
     private boolean isCompleted;
 
     public Task(String description) {
+        if (description == null) {
+            throw new IllegalArgumentException("Description cannot be null");
+        }
         this.description = description;
         this.isCompleted = false;
     }
