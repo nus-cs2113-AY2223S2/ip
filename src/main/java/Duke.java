@@ -42,12 +42,11 @@ public class Duke {
                 printSeperator();
                 list.markTask(response.substring(5));
                 printSeperator();
-            } else if  (response.length() >= 7 && response.substring(0, 7).equals("unmark ")) {
+            } else if (response.length() >= 7 && response.substring(0, 7).equals("unmark ")) {
                 printSeperator();
                 list.unmarkTask(response.substring(7));
                 printSeperator();
-            }
-            else {
+            } else {
                 printSeperator();
                 list.listAdd(response);
                 printSeperator();
