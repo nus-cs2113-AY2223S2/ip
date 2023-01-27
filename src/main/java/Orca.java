@@ -17,6 +17,7 @@ public class Orca {
         System.out.println("    --------------------------------------------------\n");
 
         Task[] tasks = new Task[100];
+        int taskCount = 0;
         String userInput = "";
         while (true) {
             Scanner in = new Scanner(System.in);
@@ -48,16 +49,36 @@ public class Orca {
                 System.out.println("    I've marked this task as not done yet:");
                 System.out.println("      " + tasks[taskNo - 1].toString());
                 System.out.println("    --------------------------------------------------\n");
-            } else {
-                System.out.println("    --------------------------------------------------");
-                System.out.println("     added: " + userInput);
-                System.out.println("    --------------------------------------------------\n");
-                for (int i = 0; i < 100; i++) {
-                    if (tasks[i] == null) {
-                        tasks[i] = new Task(userInput);
-                        break;
-                    }
-                }
+            } else if (userInput.startsWith("todo")) {
+                tasks[taskCount] = new Todo(userInput.substring(5));
+                taskCount++;
+                System.out.println(" --------------------------------------------------");
+                System.out.println("      Got it. I've added this task:");
+                System.out.println("          " + tasks[taskCount - 1]);
+                System.out.println("        Now you have " + taskCount + " tasks in the list.");
+                System.out.println(" --------------------------------------------------\n");
+            } else if (userInput.startsWith("deadline")) {
+                String[] deadline = userInput.substring(9).split(" /by ");
+                tasks[taskCount] = new Deadline(deadline[0], deadline[1]);
+                taskCount++;
+                System.out.println(" --------------------------------------------------");
+                System.out.println("      Got it. I've added this task:");
+                System.out.println("          " + tasks[taskCount - 1]);
+                System.out.println("        Now you have " + taskCount + " tasks in the list.");
+                System.out.println(" --------------------------------------------------\n");
+            } else if (userInput.startsWith("event")) {
+                int fromIndex = userInput.indexOf(" /from ");
+                int toIndex = userInput.indexOf(" /to ");
+                String description = userInput.substring(6, fromIndex);
+                String from = userInput.substring(fromIndex + 7, toIndex);
+                String to = userInput.substring(toIndex + 5);
+                tasks[taskCount] = new Event(description, from, to);
+                taskCount++;
+                System.out.println(" --------------------------------------------------");
+                System.out.println("      Got it. I've added this task:");
+                System.out.println("          " + tasks[taskCount - 1]);
+                System.out.println("        Now you have " + taskCount + " tasks in the list.");
+                System.out.println(" --------------------------------------------------\n");
             }
         }
         System.out.println("    -----------------------------------");
