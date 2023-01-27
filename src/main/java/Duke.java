@@ -14,44 +14,33 @@ public class Duke {
                             + "What I can do for you?\n"
                             + "____________________________________________________________\n"
                             );
+        Task[] tasks = new Task[100];
         String inputText;
         String outputMessage;
-        String[] inputList = new String[100];
-        int inputCount = 0;
-        boolean exit = false;
         while (true) {
             inputText = scanner.nextLine();
-            switch(inputText) {
-                case "list":
-                    outputMessage = getListInputs(inputList, inputCount);
-                    break; 
-                case "bye":
-                    exit = true;
-                    outputMessage = "Bye. Hope to see you again soon!";
-                    break;
-                default: 
-                    addInput(inputText, inputList, inputCount++);
-                    outputMessage = "added: " + inputText;
+            if (inputText.equals("list")) {
+                outputMessage = Task.getListInputs(tasks);
+            } else if (inputText.startsWith("mark")) {
+                int taskIndex = Integer.parseInt(inputText.split(" ")[1]) - 1;
+                tasks[taskIndex].markAsDone();
+                outputMessage = "Nice! I've marked this task as done: " + "\n\t\t"
+                        + tasks[taskIndex].toString();
+            } else if (inputText.startsWith("unmark")) {
+                int taskIndex = Integer.parseInt(inputText.split(" ")[1]) - 1;
+                tasks[taskIndex].unmarkAsDone();
+                outputMessage = "Ok, I've marked this task as not done: " + "\n\t\t"
+                        + tasks[taskIndex].toString();
+            } else if (inputText.equals("bye")) {
+                outputMessage = "Bye. Hope to see you again soon!";
+                break;
+            } else {
+                tasks[Task.numberOfTasks] = new Task(inputText);
+                outputMessage = "added: " + inputText;
             }
             System.out.println("\t____________________________________________________________");
             System.out.println("\t" + outputMessage);
             System.out.println("\t____________________________________________________________");
-            if (exit) {
-                break;
-            }
         }
-
     }
-    public static String getListInputs (String[] inputList, int inputCount){
-        String listInputs = "";
-        for (int i = 0; i < inputCount; i++) {
-            listInputs +=  String.format("%3d. ", (i+1)) + inputList[i] + "\n\t";
-        }
-        return listInputs;
-    }
-    public static void addInput (String inputText, String[] inputList, int inputCount){
-        inputList[inputCount] = inputText;
-    }
-
-
 }
