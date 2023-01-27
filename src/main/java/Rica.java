@@ -29,7 +29,13 @@ public class Rica {
             printlnWithIndent(" You alright? I can't mark a task that doesn't exist as done xD");
             return null;
         }
-        Task selectedTask = Rica.getPastTexts().remove(indexOfTask);
+        Task selectedTask = Rica.getPastTexts().get(indexOfTask);
+        if (selectedTask.getIsDone()) {
+            printlnWithIndent(" Take a break maybe? Alright marked as done my friend:");
+            printlnWithIndent("    " + selectedTask);
+            return selectedTask;
+        }
+        Rica.getPastTexts().remove(indexOfTask);
         selectedTask = selectedTask.setDone();
         Rica.getPastTexts().add(indexOfTask, selectedTask);
         printlnWithIndent(" Shall remember that this task as done:");
@@ -42,7 +48,13 @@ public class Rica {
             printlnWithIndent(" You alright? I don't think that task exists xD");
             return null;
         }
-        Task selectedTask = Rica.getPastTexts().remove(indexOfTask);
+        Task selectedTask = Rica.getPastTexts().get(indexOfTask);
+        if (!selectedTask.getIsDone()) {
+            printlnWithIndent(" Getting a little ahead of yourself are you xD It's not even done:");
+            printlnWithIndent("    " + selectedTask);
+            return selectedTask;
+        }
+        Rica.getPastTexts().remove(indexOfTask);
         selectedTask = selectedTask.setNotDone();
         Rica.getPastTexts().add(indexOfTask, selectedTask);
         printlnWithIndent(" (Why??) Anyway, I've marked this task as not done yet:");
