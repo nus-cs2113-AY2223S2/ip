@@ -1,7 +1,5 @@
 package tasks;
 
-import io.Out;
-
 public class Task {
     private String description;
     private boolean isCompleted;
@@ -27,11 +25,12 @@ public class Task {
         return isCompleted;
     }
 
-    public void print() {
-        Out.printf("  %c %s", getStatusIcon(), getDescription());
-    }
-
     public void toggleCompleted() {
         this.isCompleted = !this.isCompleted;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%c %s", getStatusIcon(), getDescription());
     }
 }

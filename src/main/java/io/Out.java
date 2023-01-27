@@ -130,7 +130,7 @@ public class Out {
         Task task = store.getTask(index);
         printBoxTopBorder();
         printf("The following task has been marked as %s", task.isCompleted() ? "done" : "undone");
-        task.print();
+        printf("  %s", task.toString());
         printBoxBottomBorder();
     }
 }

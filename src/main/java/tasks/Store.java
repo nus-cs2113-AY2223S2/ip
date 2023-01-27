@@ -2,6 +2,8 @@ package tasks;
 
 import java.util.Arrays;
 
+import io.Out;
+
 public class Store {
     private Task[] tasks;
 
@@ -17,7 +19,7 @@ public class Store {
 
     public void listTasks() {
         for (Task task : tasks) {
-            task.print();
+            Out.printf("  %s", task.toString());
         }
     }
 
