@@ -1,3 +1,5 @@
+package io;
+
 /**
  * The box drawing characters used to make decent boxes in the terminal
  * 

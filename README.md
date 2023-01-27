@@ -33,35 +33,35 @@ Current output (as of [Level 3](https://nus-cs2113-ay2223s2.github.io/website/sc
 > list
 ╭──────────────────────────────────────────────────────────────────────────────╮
 │ Here are your tasks:                                                         │
-│   1: □ buy tenten kakumei                                                    │
-│   2: □ read tenten kakumei                                                   │
-│   3: □ rate it 10/10                                                         │
+│   □ buy tenten kakumei                                                       │
+│   □ read tenten kakumei                                                      │
+│   □ rate it 10/10                                                            │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 
 > mark 1
 ╭──────────────────────────────────────────────────────────────────────────────╮
-│ Understood. This task has been marked as done.                               │
-│   1: ■ buy tenten kakumei                                                    │
+│ The following task has been marked as done                                   │
+│   ■ buy tenten kakumei                                                       │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 
 > mark 2
 ╭──────────────────────────────────────────────────────────────────────────────╮
-│ Understood. This task has been marked as done.                               │
-│   2: ■ read tenten kakumei                                                   │
+│ The following task has been marked as done                                   │
+│   ■ read tenten kakumei                                                      │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 
 > unmark 1
 ╭──────────────────────────────────────────────────────────────────────────────╮
-│ Understood. This task has been marked as not done yet.                       │
-│   1: □ buy tenten kakumei                                                    │
+│ The following task has been marked as undone                                 │
+│   □ buy tenten kakumei                                                       │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 
 > list
 ╭──────────────────────────────────────────────────────────────────────────────╮
 │ Here are your tasks:                                                         │
-│   1: □ buy tenten kakumei                                                    │
-│   2: ■ read tenten kakumei                                                   │
-│   3: □ rate it 10/10                                                         │
+│   □ buy tenten kakumei                                                       │
+│   ■ read tenten kakumei                                                      │
+│   □ rate it 10/10                                                            │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 
 > bye

@@ -1,12 +1,10 @@
-import java.util.Scanner;
+package io;
 
-public class IO {
-    private Scanner scanner;
+import tasks.Store;
+import tasks.Task;
+
+public class Out {
     private static final int BOX_WIDTH = 80;
-
-    public IO() {
-        this.scanner = new Scanner(System.in);
-    }
 
     private static void printLineWithDelim(char leftDelim, char rightDelim) {
         System.out.print(leftDelim);
@@ -16,13 +14,21 @@ public class IO {
         System.out.println(rightDelim);
     }
 
-    public static void printBoxTopBorder() {
+    private static void printBoxTopBorder() {
         printLineWithDelim(BoxDrawingCharacter.TOP_LEFT_CORNER, BoxDrawingCharacter.TOP_RIGHT_CORNER);
     }
 
-    public static void printBoxBottomBorder() {
+    private static void printBoxBottomBorder() {
         printLineWithDelim(BoxDrawingCharacter.BOTTOM_LEFT_CORNER, BoxDrawingCharacter.BOTTOM_RIGHT_CORNER);
         System.out.println("");
+    }
+
+    private static void printBoxRightBorder(int unusedSpace) {
+        // = since we also have one space as padding
+        for (int i = 0; i <= unusedSpace; i++) {
+            System.out.print(' ');
+        }
+        System.out.println(BoxDrawingCharacter.VERTICAL_LINE);
     }
 
     /**
@@ -30,7 +36,7 @@ public class IO {
      * 
      * @see {@link https://patorjk.com/software/taag/#p=display&f=Slant&t=archduke}
      */
-    public static void printLogo() {
+    private static void printLogo() {
         String left = BoxDrawingCharacter.VERTICAL_LINE + " ";
         String right = " " + BoxDrawingCharacter.VERTICAL_LINE + "\n";
         String[] lines = { "                   __        __      __      ",
@@ -53,14 +59,6 @@ public class IO {
             }
             System.out.print(right);
         }
-    }
-
-    private static void printRightBorder(int unusedSpace) {
-        // = since we also have one space as padding
-        for (int i = 0; i <= unusedSpace; i++) {
-            System.out.print(' ');
-        }
-        System.out.println(BoxDrawingCharacter.VERTICAL_LINE);
     }
 
     /**
@@ -90,25 +88,49 @@ public class IO {
                 throw new IllegalArgumentException("Word too long to fit in box: " + word);
             }
             if (currentLineLength + word.length() > maxStringWidth) {
-                printRightBorder(maxStringWidth - currentLineLength);
+                printBoxRightBorder(maxStringWidth - currentLineLength);
                 System.out.print(BoxDrawingCharacter.VERTICAL_LINE + " ");
                 currentLineLength = 0;
             }
             System.out.print(word + ' ');
             currentLineLength += word.length() + 1;
         }
-        printRightBorder(maxStringWidth - currentLineLength);
+        printBoxRightBorder(maxStringWidth - currentLineLength);
     }
 
-    /**
-     * As the name suggests, this reads the user input until the end of the line and
-     * returns the input as string. However this function also prints a prompt
-     * character to make it looks hackerish.
-     * 
-     * @return The user input as a string.
-     */
-    public String readUserInput() {
-        System.out.print("> ");
-        return scanner.nextLine();
+    public static void printBox(String format, Object... args) {
+        printBoxTopBorder();
+        printf(format, args);
+        printBoxBottomBorder();
+    }
+
+    public static void greet() {
+        printBoxTopBorder();
+        printLogo();
+        printf("Hello! I'm Archduke. What do you want to do?");
+        printBoxBottomBorder();
+    }
+
+    public static void bye() {
+        printBox("Bye. Hope to see you again soon!");
+    }
+
+    public static void printError(String err) {
+        printBox("ERROR: %s", err);
+    }
+
+    public static void printTasks(Store store) {
+        printBoxTopBorder();
+        printf("Here are your tasks:");
+        store.listTasks();
+        printBoxBottomBorder();
+    }
+
+    public static void printTaskCompleteness(Store store, int index) {
+        Task task = store.getTask(index);
+        printBoxTopBorder();
+        printf("The following task has been marked as %s", task.isCompleted() ? "done" : "undone");
+        task.print();
+        printBoxBottomBorder();
     }
 }

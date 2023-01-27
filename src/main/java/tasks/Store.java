@@ -1,9 +1,11 @@
+package tasks;
+
 import java.util.Arrays;
 
-public class TaskStore {
+public class Store {
     private Task[] tasks;
 
-    public TaskStore() {
+    public Store() {
         this.tasks = new Task[0];
     }
 
@@ -14,8 +16,8 @@ public class TaskStore {
     }
 
     public void listTasks() {
-        for (int i = 0; i < this.tasks.length; i++) {
-            this.tasks[i].printTask(i);
+        for (Task task : tasks) {
+            task.print();
         }
     }
 
