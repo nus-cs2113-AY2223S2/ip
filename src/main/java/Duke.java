@@ -20,7 +20,9 @@ public class Duke {
         String input;
         input = in.nextLine();
         while ((input.compareTo("bye") != 0)){
+            System.out.println("________________________________");
             TaskManager.handleCommand(input);
+            System.out.println("________________________________");
             input = in.nextLine();
         }
         bye();
