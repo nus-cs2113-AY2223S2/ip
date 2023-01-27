@@ -1,8 +1,8 @@
 public class Task {
-
-    private String task;
-    private int number;
-    private boolean isDone;
+    protected String task;
+    protected int number;
+    protected boolean isDone;
+    protected String type;
 
     public String getTask() {
         return task;
@@ -27,6 +27,13 @@ public class Task {
         return "[ ]";
     }
 
+    public String checkType() {
+        if (type != null) {
+            return "[" + type + "]";
+        }
+        return "[ ]";
+    }
+
     public void setDone(boolean done) {
         isDone = done;
     }
@@ -35,5 +42,10 @@ public class Task {
         this.task = task;
         this.number = number;
         this.isDone = isDone;
+    }
+
+    @Override
+    public String toString() {
+        return "  " + this.checkType() + this.checkDone() + " " + this.getTask();
     }
 }

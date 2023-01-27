@@ -1,8 +1,7 @@
 import java.util.Scanner;
 
 public class Bob {
-
-    static private final String hello_art = "BBBBBBBBBBBBBBBBB       OOOOOOOOO    BBBBBBBBBBBBBBBBB           SSSSSSS" +
+    static private final String HI = "BBBBBBBBBBBBBBBBB       OOOOOOOOO    BBBBBBBBBBBBBBBBB           SSSSSSS" +
             "SSSSSSSS             AAA          YYYYYYY       YYYYYYY  SSSSSSSSSSSSSSS      HHHHHHHHH     HHHHHHHHIIII" +
             "IIIIII\n" +
             "B::::::::::::::::B    OO:::::::::OO  B::::::::::::::::B        SS:::::::::::::::S           A:::A       " +
@@ -35,7 +34,7 @@ public class Bob {
             ":::::AY:::::::::::Y   S:::::::::::::::SS      H:::::::H     H:::::::I::::::::I\n" +
             "BBBBBBBBBBBBBBBBB       OOOOOOOOO    BBBBBBBBBBBBBBBBB         SSSSSSSSSSSSSSSAAAAAAA                   " +
             "AAAAAAYYYYYYYYYYYYY    SSSSSSSSSSSSSSS        HHHHHHHHH     HHHHHHHHIIIIIIIIII";
-    static private final String bye_art = "BBBBBBBBBBBBBBBBB       OOOOOOOOO    BBBBBBBBBBBBBBBBB           SSSSSSSSS" +
+    static private final String BYE = "BBBBBBBBBBBBBBBBB       OOOOOOOOO    BBBBBBBBBBBBBBBBB           SSSSSSSSS" +
             "SSSSSS             AAA          YYYYYYY       YYYYYYY  SSSSSSSSSSSSSSS      BBBBBBBBBBBBBBBBB  YYYYYYY  " +
             "     YYYYYYEEEEEEEEEEEEEEEEEEEEEE\n" +
             "B::::::::::::::::B    OO:::::::::OO  B::::::::::::::::B        SS:::::::::::::::S           A:::A       " +
@@ -83,24 +82,31 @@ public class Bob {
             "BBBBBBBBBBBBBBBBB       OOOOOOOOO    BBBBBBBBBBBBBBBBB         SSSSSSSSSSSSSSSAAAAAAA                   " +
             "AAAAAAYYYYYYYYYYYYY    SSSSSSSSSSSSSSS        BBBBBBBBBBBBBBBBB      YYYYYYYYYYYYY   EEEEEEEEEEEEEEEEEEE" +
             "EEE";
-    static private final Task[] list = new Task[100];
-    static private int listCount = 0;
+    static private final String DIV = "\n===========================================================================\n";
+    static private final Task[] tasks = new Task[100];
+    static private int taskCount = 0;
 
     public static void hello() {
-        System.out.println(hello_art);
+        System.out.println(HI);
     }
 
     public static void shutdown() {
-        System.out.println(bye_art);
+        System.out.println("\n" + BYE);
     }
 
     public static void query() {
-        System.out.println("What do you want from BOB?");
+        System.out.println(DIV + "\nWhat do you want from me boss?\n" + DIV);
     }
 
     public static void listOut() {
-        for (int i = 0; i < listCount; ++i) {
-            System.out.println(list[i].getNumber() + "." + list[i].checkDone() + " " + list[i].getTask());
+        if (taskCount == 0) {
+            System.out.println("*Tumbleweed passes by*\nUh oh! Looks like your list is empty!");
+            return;
+        } else {
+            System.out.println("Here's your list boss! *Crosses arms and nods* : ");
+        }
+        for (int i = 0; i < taskCount; ++i) {
+            System.out.println(tasks[i].getNumber() + "." + tasks[i]);
         }
     }
 
@@ -108,59 +114,114 @@ public class Bob {
         return str != null && str.matches("[0-9]+");
     }
 
+    public static  void printError() {
+        System.out.println("Wrong words boss! Try again!");
+    }
+
     public static int convertString(String str) {
         int num = -1;
+        str = str.trim();
         if (isNumeric(str)) {
             num = Integer.parseInt(str);
         }
-        if (num < 1 || num > listCount + 1) {
-            System.out.println("Invalid entry");
+        if (num < 1 || num > taskCount) {
+            System.out.println("This does not exist boss! Try again! *Shakes head* ");
+            num = -1;
         }
         return num;
+    }
+
+    public static boolean checkSameDone(int index, boolean changeTo, String type) {
+        if (tasks[index - 1].isDone == changeTo) {
+            System.out.println("It is already " + type + "ed! *Shakes head* ");
+            return true;
+        }
+        return false;
     }
 
     public static void command() {
         Scanner in = new Scanner(System.in);
         do {
+            System.out.print("What do you want: ");
             String cmd = in.next();
+            String checkCmd = cmd.toLowerCase();
             if (cmd.equals("bye")) {
                 return;
             }
-            switch (cmd) {
-            case "list":
+            System.out.println(DIV);
+            switch (checkCmd) {
+            case "list": {
                 listOut();
                 break;
+            }
             case "mark": {
-                String str = in.next();
+                String next = in.nextLine();
                 //For error handling
-                int num = convertString(str);
-                if (num == -1) {
-                    continue;
+                int num = convertString(next);
+                if (num == -1 || checkSameDone(num, true, checkCmd)) {
+                    break;
                 }
-                System.out.println("Bob commends you!");
-                list[num - 1].setDone(true);
-                System.out.println("  " + list[num - 1].checkDone() + " " + list[num - 1].getTask());
+                System.out.println("Bob commends you! *Nods head* ");
+                tasks[num - 1].setDone(true);
+                System.out.println(tasks[num - 1]);
                 break;
             }
             case "unmark": {
-                String str = in.next();
+                String next = in.nextLine();
                 //For error handling
-                int num = convertString(str);
-                if (num == -1) {
-                    continue;
+                int num = convertString(next);
+                if (num == -1 || checkSameDone(num, false, checkCmd)) {
+                    break;
                 }
-                System.out.println("Boo a mistake!");
-                list[num - 1].setDone(false);
-                System.out.println("  " + list[num - 1].checkDone() + " " + list[num - 1].getTask());
+                System.out.println("A mistake! *Shakes head* ");
+                tasks[num - 1].setDone(false);
+                System.out.println(tasks[num - 1]);
+                break;
+            }
+            case "todo": {
+                String next = in.nextLine();
+                System.out.println("Understood! *Salutes* Task added!");
+                tasks[taskCount] = new ToDo(next.stripLeading(), taskCount + 1, false);
+                System.out.println(tasks[taskCount]);
+                ++taskCount;
+                break;
+            }
+            case "deadline": {
+                String next = in.nextLine();
+                if (!next.contains("/by")) {
+                    printError();
+                    break;
+                }
+                String[] deadline = next.split("/by", 2);
+                System.out.println("Understood *Salutes* Task with deadline added!\n"
+                        + "Remember to complete it by the deadline!");
+                tasks[taskCount] = new Deadline(deadline[0].trim(), taskCount + 1, false,
+                        deadline[1].trim());
+                System.out.println(tasks[taskCount]);
+                ++taskCount;
+                break;
+            }
+            case "event": {
+                String next = in.nextLine();
+                if (!next.contains("/from") || !next.contains("/to")) {
+                    printError();
+                    break;
+                }
+                String[] eventName = next.split("/from", 2);
+                String[] eventTime = eventName[1].split("/to", 2);
+                System.out.println("Understood *Salutes* Event added!\n"
+                        + "Remember the starting time! Don't be late!");
+                tasks[taskCount] = new Event(eventName[0].trim(), taskCount + 1, false,
+                        eventTime[0].trim(), eventTime[1].trim());
+                System.out.println(tasks[taskCount]);
+                ++taskCount;
                 break;
             }
             default:
-                String next = in.nextLine();
-                System.out.println("added: " + cmd + next);
-                list[listCount] = new Task(cmd + next, listCount + 1, false);
-                ++listCount;
-                break;
+                printError();
+                in.nextLine();
             }
+            System.out.println(DIV);
         } while (true);
     }
 
