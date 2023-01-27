@@ -19,10 +19,13 @@ public class Duke {
         Scanner in = new Scanner(System.in);
         String input;
         input = in.nextLine();
-        while (input.compareTo("bye") != 0){
-            System.out.println("________________________________");
-            System.out.println(input);
-            System.out.println("________________________________");
+        while ((input.compareTo("bye") != 0)){
+            if (input.compareTo("list") != 0){
+                ItemList.addItem(input);
+            }
+            else{
+                ItemList.listItems();
+            }
             input = in.nextLine();
         }
         bye();
