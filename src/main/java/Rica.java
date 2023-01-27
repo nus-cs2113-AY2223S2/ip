@@ -28,6 +28,8 @@ public class Rica {
         Task selectedTask = Rica.getPastTexts().remove(indexOfTask);
         selectedTask = selectedTask.setDone();
         Rica.getPastTexts().add(indexOfTask, selectedTask);
+        printlnWithIndent(" Shall remember that this task as done:");
+        printlnWithIndent("   " + selectedTask);
         return selectedTask;
     }
 
@@ -35,6 +37,8 @@ public class Rica {
         Task selectedTask = Rica.getPastTexts().remove(indexOfTask);
         selectedTask = selectedTask.setNotDone();
         Rica.getPastTexts().add(indexOfTask, selectedTask);
+        printlnWithIndent(" (Why??) Anyway, I've marked this task as not done yet:");
+        printlnWithIndent("   " + selectedTask);
         return selectedTask;
     }
 
@@ -80,14 +84,10 @@ public class Rica {
                 String[] params = command.split(" ");
                 if (params[0].equals(Rica.MARK_TRIGGER)) {
                     int indexOfTask = Integer.valueOf(params[1]) - 1;
-                    Task markedTask = Rica.markDone(indexOfTask);
-                    printlnWithIndent(" Shall remember that this task as done:");
-                    printlnWithIndent("   " + markedTask);
+                    Rica.markDone(indexOfTask);
                 } else if (params[0].equals(Rica.UNMARK_TRIGGER)) {
                     int indexOfTask = Integer.valueOf(params[1]) - 1;
-                    Task unmarkedTask = Rica.unmarkDone(indexOfTask);
-                    printlnWithIndent(" (Why??) Anyway, I've marked this task as not done yet:");
-                    printlnWithIndent("   " + unmarkedTask);
+                    Rica.unmarkDone(indexOfTask);
                 }
             } else {
                 switch (command) {
