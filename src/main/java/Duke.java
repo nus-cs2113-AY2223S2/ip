@@ -31,8 +31,8 @@ public class Duke {
             } else { // if it's a task, add the task
                 tasks[tasksIndex] = new Task(line, false);
                 tasksIndex++;
+                System.out.println("added: " + line);
             }
-
             line = in.nextLine();
         }
         System.out.println("Bye. Hope to see you again soon!");
