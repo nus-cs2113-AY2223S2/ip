@@ -20,12 +20,7 @@ public class Duke {
         String input;
         input = in.nextLine();
         while ((input.compareTo("bye") != 0)){
-            if (input.compareTo("list") != 0){
-                ItemList.addItem(input);
-            }
-            else{
-                ItemList.listItems();
-            }
+            TaskManager.handleCommand(input);
             input = in.nextLine();
         }
         bye();
