@@ -14,6 +14,18 @@ public class TaskList {
         System.out.print(tasks[taskNo].getName());
     }
 
+    private boolean isValidTaskNo(int taskNo) {
+        if (taskNo <= 0) {
+            System.out.println("Negative task number entered, please don't try to crash the program a**h***.");
+            return false;
+        }
+        if (taskNo > noOfTasks) {
+            System.out.println("Task number does not exist, there are only " + noOfTasks + " tasks in total.");
+            return false;
+        }
+        return true;
+    }
+
     public TaskList(int size) {
         this.tasks = new Task[size];
         noOfTasks = 0;
@@ -37,6 +49,9 @@ public class TaskList {
     }
 
     public void markDone(int taskNo) {
+        if (!isValidTaskNo(taskNo)) {
+            return;
+        }
         if (tasks[taskNo].isDone()) {
             System.out.println("Already done.");
         } else {
@@ -49,6 +64,9 @@ public class TaskList {
     }
 
     public void unmarkDone(int taskNo) {
+        if (!isValidTaskNo(taskNo)) {
+            return;
+        }
         if (!tasks[taskNo].isDone()) {
             System.out.println("Not done yet. Please finish it.");
         } else {
