@@ -5,11 +5,13 @@ import java.util.HashSet;
 public class Duke {
     // Messages
     private static final String BOT_NAME = "Duke";
-    private static final String INITIAL_MSG = String.format("    Hello! I'm %s\n   What can I do for you?", BOT_NAME); 
+    private static final String INITIAL_MSG = String.format("    Hello! I'm %s\n    What can I do for you?", BOT_NAME); 
     private static final String BYE_MSG = "     Bye. Hope to see you again soon!";
     private static final String MARK_MSG = "     Nice! I've marked this task as done";
     private static final String UNMARK_MSG = "     OK, I've marked this task as not done yet:";
     private static final String INVALID_MSG = "    Invalid Message please try again";
+    private static final String SHOW_ITEMS_MSG = "    Here are the tasks in your list:";
+    private static final String ADDED_MSG = "    Got it. I've added this task:\n      %s\n    Now you have %d tasks in your list.";
     // Constants 
     private static final int MAX_ITEMS = 100;
     private static Todo[] itemList = new Todo[MAX_ITEMS];
@@ -110,14 +112,14 @@ public class Duke {
 
     private static void addItem(Todo item) {
         itemList[numItems++] = item;
-        printResponse("    added: " + item.toString());
+        printResponse(String.format(ADDED_MSG, item.toString(), numItems));
     }
 
     private static void printItems() {
-        String response = "";
+        String response = SHOW_ITEMS_MSG + "\n";
         for (int i = 0; i < numItems; i++) {
             Todo item = itemList[i];
-            response += String.format("   %d.%s\n", i+1, item.toString());
+            response += String.format("    %d.%s\n", i+1, item.toString());
         }
         printResponse(response);
     }
