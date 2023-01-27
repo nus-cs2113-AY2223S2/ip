@@ -14,18 +14,24 @@ public class Duke {
                             + "What I can do for you?\n"
                             + "____________________________________________________________\n"
                             );
-        String userInput;
+        String inputText;
         String outputMessage;
+        String[] inputList = new String[100];
+        int inputCount = 0;
         boolean exit = false;
         while (true) {
-            userInput = scanner.nextLine();
-            switch(userInput) {
+            inputText = scanner.nextLine();
+            switch(inputText) {
+                case "list":
+                    outputMessage = getListInputs(inputList, inputCount);
+                    break; 
                 case "bye":
                     exit = true;
                     outputMessage = "Bye. Hope to see you again soon!";
                     break;
-                default:
-                    outputMessage = userInput;
+                default: 
+                    addInput(inputText, inputList, inputCount++);
+                    outputMessage = "added: " + inputText;
             }
             System.out.println("\t____________________________________________________________");
             System.out.println("\t" + outputMessage);
@@ -36,7 +42,16 @@ public class Duke {
         }
 
     }
-
+    public static String getListInputs (String[] inputList, int inputCount){
+        String listInputs = "";
+        for (int i = 0; i < inputCount; i++) {
+            listInputs +=  String.format("%3d. ", (i+1)) + inputList[i] + "\n\t";
+        }
+        return listInputs;
+    }
+    public static void addInput (String inputText, String[] inputList, int inputCount){
+        inputList[inputCount] = inputText;
+    }
 
 
 }
