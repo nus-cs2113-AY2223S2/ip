@@ -25,6 +25,10 @@ public class Rica {
     }
 
     private static Task markDone(int indexOfTask) {
+        if (indexOfTask < 0 || indexOfTask >= Rica.getPastTexts().size()) {
+            printlnWithIndent(" You alright? I can't mark a task that doesn't exist as done xD");
+            return null;
+        }
         Task selectedTask = Rica.getPastTexts().remove(indexOfTask);
         selectedTask = selectedTask.setDone();
         Rica.getPastTexts().add(indexOfTask, selectedTask);
@@ -34,6 +38,10 @@ public class Rica {
     }
 
     private static Task unmarkDone(int indexOfTask) {
+        if (indexOfTask < 0 || indexOfTask >= Rica.getPastTexts().size()) {
+            printlnWithIndent(" You alright? I don't think that task exists xD");
+            return null;
+        }
         Task selectedTask = Rica.getPastTexts().remove(indexOfTask);
         selectedTask = selectedTask.setNotDone();
         Rica.getPastTexts().add(indexOfTask, selectedTask);
