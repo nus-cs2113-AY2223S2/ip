@@ -81,13 +81,13 @@ public class Rica {
                 if (params[0].equals(Rica.MARK_TRIGGER)) {
                     int indexOfTask = Integer.valueOf(params[1]) - 1;
                     Task markedTask = Rica.markDone(indexOfTask);
-                    printlnWithIndent(" Shall remember that this task as done: " +
-                            markedTask.getDescription());
+                    printlnWithIndent(" Shall remember that this task as done:");
+                    printlnWithIndent("   " + markedTask);
                 } else if (params[0].equals(Rica.UNMARK_TRIGGER)) {
                     int indexOfTask = Integer.valueOf(params[1]) - 1;
                     Task unmarkedTask = Rica.unmarkDone(indexOfTask);
-                    printlnWithIndent(" (Why??) Anyway, I've marked this task as not done yet: " +
-                            unmarkedTask.getDescription());
+                    printlnWithIndent(" (Why??) Anyway, I've marked this task as not done yet:");
+                    printlnWithIndent("   " + unmarkedTask);
                 }
             } else {
                 switch (command) {
