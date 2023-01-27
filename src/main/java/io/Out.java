@@ -23,6 +23,13 @@ public class Out {
         System.out.println("");
     }
 
+    private static void printBoxBottomBorder(boolean withBottomMargin) {
+        printLineWithDelim(BoxDrawingCharacter.BOTTOM_LEFT_CORNER, BoxDrawingCharacter.BOTTOM_RIGHT_CORNER);
+        if (withBottomMargin) {
+            System.out.println("");
+        }
+    }
+
     private static void printBoxRightBorder(int unusedSpace) {
         // = since we also have one space as padding
         for (int i = 0; i <= unusedSpace; i++) {
@@ -112,7 +119,9 @@ public class Out {
     }
 
     public static void bye() {
-        printBox("Bye. Hope to see you again soon!");
+        printBoxTopBorder();
+        printf("Bye. Hope to see you again soon!");
+        printBoxBottomBorder(false);
     }
 
     public static void printError(String format, Object... args) {
