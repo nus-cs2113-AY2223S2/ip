@@ -1,37 +1,66 @@
 import java.util.Locale;
 import java.util.Scanner;
 import java.util.ArrayList;
+
 public class Duke {
-    public static String linePrint = "____________________________________________________________\n";
-    public static void addList(String s, ArrayList<String> myList){
+    public static String LINE_PRINT = "____________________________________________________________\n";
+
+    /**
+     * Adds the text entered by the user into the list and prints the added text
+     *
+     * @param s
+     * @param myList
+     */
+    public static void addList(String s, ArrayList<String> myList) {
         myList.add("[ ] " + s);
-        System.out.println(linePrint + "added: " + s + "\n" + linePrint);
+        System.out.println(LINE_PRINT + "added: " + s + "\n" + LINE_PRINT);
     }
-    public static void printList(ArrayList<String> myList){
-        System.out.println(linePrint);
+
+    /**
+     * Prints all the items in the list
+     *
+     * @param myList
+     */
+    public static void printList(ArrayList<String> myList) {
+        System.out.println(LINE_PRINT);
         for (int i = 0; i < myList.size(); ++i) {
-            System.out.println(i+1 + ". " + myList.get(i));
+            System.out.println(i + 1 + ". " + myList.get(i));
         }
-        System.out.println(linePrint);
+        System.out.println(LINE_PRINT);
     }
-    public static void markDone(String s, ArrayList<String> myList){
+
+    /**
+     * Marks the given item in the list with an "X"
+     *
+     * @param s
+     * @param myList
+     */
+    public static void markDone(String s, ArrayList<String> myList) {
         String taskToMarkString = s.substring(s.length() - 1);
         int taskToMark = Integer.parseInt(taskToMarkString) - 1;
-        myList.set(taskToMark,myList.get(taskToMark).replaceFirst(" ", "X"));
-        System.out.println(linePrint
+        myList.set(taskToMark, myList.get(taskToMark).replaceFirst(" ", "X"));
+        System.out.println(LINE_PRINT
                 + "Nice! I've marked this task as done:\n"
                 + myList.get(taskToMark) + "\n"
-                + linePrint);
+                + LINE_PRINT);
     }
-    public static void markUndone(String s, ArrayList<String> myList){
+
+    /**
+     * Unmarks the given item in the list
+     *
+     * @param s
+     * @param myList
+     */
+    public static void markUndone(String s, ArrayList<String> myList) {
         String taskToUnmarkString = s.substring(s.length() - 1);
         int taskToUnmark = Integer.parseInt(taskToUnmarkString) - 1;
-        myList.set(taskToUnmark,myList.get(taskToUnmark).replaceFirst("X", " "));
-        System.out.println(linePrint
+        myList.set(taskToUnmark, myList.get(taskToUnmark).replaceFirst("X", " "));
+        System.out.println(LINE_PRINT
                 + "OK, I've marked this task as not done yet:\n"
                 + myList.get(taskToUnmark) + "\n"
-                + linePrint);
+                + LINE_PRINT);
     }
+
     public static void main(String[] args) {
         String logo = "____________________________________________________________\n"
                 + "Hello! I'm Duke\n"
@@ -39,29 +68,25 @@ public class Duke {
                 + "____________________________________________________________\n";
         String byeLine = "Bye. Hope to see you again soon!\n";
         System.out.println(logo);
-        boolean flag = false;
+        boolean canExit = false;
         ArrayList<String> myList = new ArrayList<String>();
 
-        while (!flag){
+        while (!canExit) {
             Scanner in = new Scanner(System.in);
             String s = in.nextLine();
             String sArray[] = s.split(" ");
             String firstWord = sArray[0];
 
-            if (s.toLowerCase().equals("bye")){
+            if (s.toLowerCase().equals("bye")) {
                 System.out.println(byeLine);
-                flag = true;
-            }
-            else if (s.toLowerCase().equals("list")){
+                canExit = true;
+            } else if (s.toLowerCase().equals("list")) {
                 printList(myList);
-            }
-            else if (firstWord.toLowerCase().equals("mark")){
-                markDone(s,myList);
-            }
-            else if (firstWord.toLowerCase().equals("unmark")){
-                markUndone(s,myList);
-            }
-            else {
+            } else if (firstWord.toLowerCase().equals("mark")) {
+                markDone(s, myList);
+            } else if (firstWord.toLowerCase().equals("unmark")) {
+                markUndone(s, myList);
+            } else {
                 addList(s, myList);
             }
         }
