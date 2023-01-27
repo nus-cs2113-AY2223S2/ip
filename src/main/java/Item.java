@@ -1,4 +1,4 @@
-public class Item {
+public abstract class Item {
     private String description; // item name
     private boolean isDone;
 
@@ -7,19 +7,16 @@ public class Item {
         this.isDone = false;
     }
 
-    public String getDescription() {
-        return this.description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getStatus() {
         return (this.isDone ? "X" : " "); // mark done task with X
     }
 
     public void setStatus(boolean isDone) {
         this.isDone = isDone;
+    }
+
+    @Override
+    public String toString() {
+        return "[" + getStatus() + "] " + description;
     }
 }
