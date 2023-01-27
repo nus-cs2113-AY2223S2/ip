@@ -1,0 +1,6 @@
+todo buy a movie ticket
+deadline CS2311 ip Assignment /by Monday
+event Movie /from Sat 4pm /to 6pm
+list
+mark 2
+bye
