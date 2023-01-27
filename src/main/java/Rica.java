@@ -38,6 +38,10 @@ public class Rica {
         return selectedTask;
     }
 
+    private static boolean hasAnyTasks() {
+        return !Rica.getPastTexts().isEmpty();
+    }
+
     public static void main(String[] args) {
         // Define horizontal line in a variable since it's printed multiple times
 
@@ -55,10 +59,14 @@ public class Rica {
     }
 
     private static void printTexts() {
-        ArrayList<Task> tasks = Rica.getPastTexts();
-        printlnWithIndent(" I think you have these tasks:");
-        for (int i = 1; i <= tasks.size(); i += 1) {
-            printlnWithIndent(" " + i + ". " + tasks.get(i - 1));
+        if (!Rica.hasAnyTasks()) {
+            printlnWithIndent(" Hope I'm not amnesiac, but I don't remember any tasks?");
+        } else {
+            ArrayList<Task> tasks = Rica.getPastTexts();
+            printlnWithIndent(" I think you have these tasks:");
+            for (int i = 1; i <= tasks.size(); i += 1) {
+                printlnWithIndent(" " + i + ". " + tasks.get(i - 1));
+            }
         }
     }
 
