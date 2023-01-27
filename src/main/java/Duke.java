@@ -11,19 +11,19 @@ public class Duke {
         System.out.println("Hello from\n" + logo);
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?\n");
-        ArrayList<String> inputList = new ArrayList<String>();
+        ArrayList<String> inputs = new ArrayList<String>();
         Scanner scan = new Scanner(System.in);
         String input = scan.nextLine();
         while (!input.equals("bye")) {
             if (input.equals("list")) {
                 int a = 1;
-                for (String i : inputList) {
+                for (String i : inputs) {
                     System.out.println(a + ". " + i);
                     a++;
                 }
             } else {
                 System.out.println("added: " + input);
-                inputList.add(input);
+                inputs.add(input);
             }
             input = scan.nextLine();
         }
