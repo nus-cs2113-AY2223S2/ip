@@ -1,51 +1,36 @@
-import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.ByteArrayInputStream;
 import java.util.Scanner;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import Parser.EmptyCommandException;
-import Parser.Parser;
+import parser.Command;
+import parser.EmptyCommandException;
+import parser.Parser;
 
 public class TestParser {
     Parser parser;
     ByteArrayInputStream inContent;
     
-    @DisplayName("givenNull_whenGetNextMessage_thenEmptyCommandException successful")
     @Test
-    public void givenNull_whenGetNextMessage_thenEmptyCommandException() throws EmptyCommandException {
+    public void givenNull_whenGetCommand_thenEmptyCommandException() {
         String message = "";
         ByteArrayInputStream inContent = new ByteArrayInputStream(message.getBytes());
         System.setIn(inContent);
         parser = new Parser(new Scanner(System.in));
         assertThrows(EmptyCommandException.class, () -> {
-            parser.getNextMessage();
+            parser.getCommand();
        });
     }
 
-    @DisplayName("givenBlank_whenGetNextMessage_thenEmptyCommandException successful")
     @Test
-    public void givenBlank_whenGetNextMessage_thenEmptyCommandException() throws EmptyCommandException {
-        String message = "   ";
+    public void givenToDo_whenGetCommand_thenEmptyCommandException() throws EmptyCommandException {
+        String message = "todo eat rice";
         ByteArrayInputStream inContent = new ByteArrayInputStream(message.getBytes());
         System.setIn(inContent);
         parser = new Parser(new Scanner(System.in));
-        assertThrows(EmptyCommandException.class, () -> {
-            parser.getNextMessage();
-       });
-    }
-
-    @DisplayName("givenMessage_whenGetMessage_thenEmptyCommandException successful")
-    @Test
-    public void givenNull_whenGetMessage_thenEmptyCommandException() throws EmptyCommandException {
-        String message = "Some random message";
-        ByteArrayInputStream inContent = new ByteArrayInputStream(message.getBytes());
-        System.setIn(inContent);
-        parser = new Parser(new Scanner(System.in));
-        parser.getNextMessage();
-        assertEquals(message, parser.getMessage());
-
+        assertEquals(Command.TASK, parser.getCommand());
     }
 }

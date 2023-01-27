@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import org.junit.jupiter.api.Test;
 
-import Duke.Duke;
+import duke.Duke;
 
 public class TestDuke {
     /**
