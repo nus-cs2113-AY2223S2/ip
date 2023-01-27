@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Task {
     protected String details;
     protected boolean isDone;
@@ -28,5 +30,62 @@ public class Task {
 
     public String toString() {
         return "[" + this.getStatusIcon() + "] " + this.details;
+    }
+
+    public static void printAddedTask(Task addedTask, int numOfTasks) {
+        System.out.println("    ____________________________________________________________");
+        System.out.println("     Got it. I've added this task:");
+        System.out.println("       " + addedTask);
+        System.out.println("     Now you have " + numOfTasks + " tasks in the list.");
+        System.out.println("    ____________________________________________________________");
+    }
+
+    public static void printTaskList(ArrayList<Task> taskList) {
+        System.out.println("    ____________________________________________________________");
+        System.out.println("     Here are the tasks in your list:");
+        for (int i = 0; i < taskList.size(); i++) {
+            System.out.println("     " + (i+1) + "." + taskList.get(i));
+        }
+        System.out.println("    ____________________________________________________________");
+    }
+
+    public static void printMarkedTask(int taskNumber, ArrayList<Task> taskList) {
+        System.out.println("    ____________________________________________________________");
+        System.out.println("     Nice! I've marked this task as done:");
+        System.out.println("       " + taskList.get(taskNumber));
+        System.out.println("    ____________________________________________________________");
+    }
+
+    public static void printUnmarkedTask(int taskNumber, ArrayList<Task> taskList) {
+        System.out.println("    ____________________________________________________________");
+        System.out.println("     OK, I've marked this task as not done yet:");
+        System.out.println("       " + taskList.get(taskNumber));
+        System.out.println("    ____________________________________________________________");
+    }
+
+    public static void addTodoTask(String description, ArrayList<Task> taskList) {
+        Todo newTodoTask = new Todo(description);
+        taskList.add(newTodoTask);
+        Task.printAddedTask(newTodoTask, taskList.size());
+    }
+
+    public static void addDeadlineTask(String description, ArrayList<Task> taskList) {
+        int firstSlashIndex = description.indexOf("/");
+        String details = description.substring(0, firstSlashIndex - 1);
+        String by = description.substring(firstSlashIndex + 4);
+        Deadline newDeadlineTask = new Deadline(details, by);
+        taskList.add(newDeadlineTask);
+        Task.printAddedTask(newDeadlineTask, taskList.size());
+    }
+
+    public static void addEventTask(String description, ArrayList<Task> taskList) {
+        int firstSlashIndex = description.indexOf("/");
+        int secondSlashIndex = description.indexOf("/", firstSlashIndex + 1);
+        String details = description.substring(0, firstSlashIndex - 1);
+        String from = description.substring(firstSlashIndex + 6, secondSlashIndex - 1);
+        String to = description.substring(secondSlashIndex + 4);
+        Event newEventTask = new Event(details, from, to);
+        taskList.add(newEventTask);
+        Task.printAddedTask(newEventTask, taskList.size());
     }
 }
