@@ -20,14 +20,14 @@ public class Duke {
         while (true) {
             inputText = scanner.nextLine();
             if (inputText.equals("list")) {
-                outputMessage = Task.getListInputs(tasks);
+                outputMessage = Task.getTasksList(tasks);
             } else if (inputText.startsWith("mark")) {
-                int taskIndex = Integer.parseInt(inputText.split(" ")[1]) - 1;
+                int taskIndex = getTaskIndexFromInput(inputText);
                 tasks[taskIndex].markAsDone();
                 outputMessage = "Nice! I've marked this task as done: " + "\n\t\t"
                         + tasks[taskIndex].toString();
             } else if (inputText.startsWith("unmark")) {
-                int taskIndex = Integer.parseInt(inputText.split(" ")[1]) - 1;
+                int taskIndex = getTaskIndexFromInput(inputText);
                 tasks[taskIndex].unmarkAsDone();
                 outputMessage = "Ok, I've marked this task as not done: " + "\n\t\t"
                         + tasks[taskIndex].toString();
@@ -42,5 +42,9 @@ public class Duke {
             System.out.println("\t" + outputMessage);
             System.out.println("\t____________________________________________________________");
         }
+    }
+
+    public static int getTaskIndexFromInput (String inputText) {
+        return Integer.parseInt(inputText.split(" ")[1]) - 1;
     }
 }

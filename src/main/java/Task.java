@@ -13,12 +13,12 @@ public class Task {
         this.isDone = isDone;
     }
 
-    public static String getListInputs (Task[] tasks){
-        String listInputs = "";
+    public static String getTasksList(Task[] tasks){
+        String tasksList = "";
         for (int i = 0; i < numberOfTasks; i++) {
-            listInputs +=  String.format("%3d. ", (i+1)) + tasks[i].toString() + "\n\t";
+            tasksList +=  String.format("%3d. ", (i+1)) + tasks[i].toString() + "\n\t";
         }
-        return listInputs;
+        return tasksList;
     }
 
     public void markAsDone () {
