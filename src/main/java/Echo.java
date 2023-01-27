@@ -38,20 +38,6 @@ public class Echo {
         line = in.nextLine();
 
         while (!(line.equals("Bye") || line.equals("bye"))) {
-//            if (!line.equals("list")) {
-//                System.out.println("added: " + line);
-//                //tasks[count] = line;
-//                tasks[count] = new Task(line);
-//                ++count;
-//            } else {
-//                int index = 1;
-//                for (int i = 0; i < count; ++i) {
-//                    System.out.println(index + ": " + tasks[i]);
-//                    ++index;
-//                }
-//
-//            }
-//            line = in.nextLine();
             if (line.equals("list")) {
                 int index = 1;
                 for (int i = 0; i < count; ++i) {
