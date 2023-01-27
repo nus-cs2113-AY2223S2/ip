@@ -2,16 +2,20 @@ public class Task {
     private boolean isDone = false;
     public static int maxTaskNumber = 1;
     private String taskName;
+
     public String getDone() {
-        return isDone ? "X": " ";
+        return isDone ? "X" : " ";
     }
-    public String getTaskName(){
+
+    public String getTaskName() {
         return taskName;
     }
+
     public void setDone() {
         isDone = true;
     }
-    public void unsetDone(){
+
+    public void unsetDone() {
         isDone = false;
     }
 

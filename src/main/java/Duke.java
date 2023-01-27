@@ -10,7 +10,6 @@ public class Duke {
                 + HorizontalLine);
         Scanner in = new Scanner(System.in);
         String input = in.nextLine();
-
         while (!input.equals("bye")) {
             String[] inputWords = input.split(" ");
             if (inputWords[0].equals("list")) {
@@ -48,7 +47,6 @@ public class Duke {
                 System.out.println(HorizontalLine + "Task added: " + input + "\n" + HorizontalLine);
             }
             input = in.nextLine();
-
         }
         System.out.println(HorizontalLine + "Goodbye!" + "\n" + HorizontalLine);
     }
