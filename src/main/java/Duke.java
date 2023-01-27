@@ -1,7 +1,5 @@
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Scanner;
-import java.util.Set;
 
 public class Duke {
     public static void main(String[] args) {
@@ -56,6 +54,7 @@ public class Duke {
             }
         }
     }
+
     public static void dukeEcho(Scanner inputScanner) {
         while (true) {
             String echo = inputScanner.nextLine();
