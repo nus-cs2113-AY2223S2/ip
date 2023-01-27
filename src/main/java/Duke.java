@@ -9,10 +9,11 @@ public class Duke {
     private static final String BYE_MSG = "     Bye. Hope to see you again soon!";
     private static final String MARK_MSG = "     Nice! I've marked this task as done";
     private static final String UNMARK_MSG = "     OK, I've marked this task as not done yet:";
+    private static final String INVALID_MSG = "    Invalid Message please try again";
     // Constants 
     private static final int MAX_ITEMS = 100;
-    private static String[] itemList = new String[MAX_ITEMS];
-    private static Set<String> markedItems = new HashSet<String>(MAX_ITEMS);
+    private static Todo[] itemList = new Todo[MAX_ITEMS];
+    // private static Set<String> markedItems = new HashSet<String>(MAX_ITEMS);
     private static int numItems = 0;
 
     public static void main(String[] args) {
@@ -37,6 +38,51 @@ public class Duke {
         String command = lineParts[0];
         if (command.equals("bye")) {
             printResponse(BYE_MSG);
+        } else if (command.equals("todo")) {
+            line = line.substring(command.length() + 1);
+            addItem(new Todo(line));
+        } else if (command.equals("deadline")) {
+            String itemDescription = "";
+            String itemDeadline = "";
+            int i = 1;
+            for (; i < lineParts.length; i++) {
+                if (lineParts[i].equals("/by")) {
+                    i++;
+                    break;
+                } else {
+                    itemDescription += lineParts[i];
+                }
+            }
+            for (; i < lineParts.length; i++) {
+                itemDeadline += lineParts[i];
+            }
+            addItem(new Deadline(itemDescription, itemDeadline));
+        } else if (command.equals("event")) {
+            String itemDescription = "";
+            String itemFrom = "";
+            String itemTo = "";
+            int i = 1;
+            for (; i < lineParts.length; i++) {
+                if (lineParts[i].equals("/from")) {
+                    i++;
+                    break;
+                } else {
+                    itemDescription += lineParts[i];
+                }
+            }
+            for (; i < lineParts.length; i++) {
+                if (lineParts[i].equals("/to")) {
+                    i++;
+                    break;
+                } else {
+                    itemFrom += lineParts[i];
+                }
+            }
+            for (; i < lineParts.length; i++) {
+                itemTo += lineParts[i];
+            }
+            addItem(new Event(itemDescription, itemFrom, itemTo));
+            
         } else if (command.equals("list")) {
             printItems();
         } else if (command.equals("mark")) {
@@ -46,37 +92,32 @@ public class Duke {
             // String item = line.substring(6); // if want to unmark by name
             unmarkItem(Integer.parseInt(lineParts[1]));
         } else { // add item
-            addItem(line);
+            printResponse(INVALID_MSG);
         }
     }
 
     private static void markItem(int itemNo) {
-        String item = itemList[itemNo - 1];
-        markedItems.add(item);
-        printResponse("    " + MARK_MSG + "\n" + "        [X] " + item);
+        Todo item = itemList[itemNo - 1];
+        item.setDone(true);
+        printResponse("    " + MARK_MSG + "\n" + "    " + item.toString());
     }
 
     private static void unmarkItem(int itemNo) {
-        String item = itemList[itemNo - 1];
-        markedItems.remove(item);
-        printResponse("    " + UNMARK_MSG + "\n" + "        [ ] " + item);
+        Todo item = itemList[itemNo - 1];
+        item.setDone(false);
+        printResponse("    " + UNMARK_MSG + "\n" + "    " + item.toString());
     }
 
-    private static void addItem(String item) {
+    private static void addItem(Todo item) {
         itemList[numItems++] = item;
-        printResponse("    added: " + item);
+        printResponse("    added: " + item.toString());
     }
 
     private static void printItems() {
         String response = "";
         for (int i = 0; i < numItems; i++) {
-            char mark;
-            if (markedItems.contains(itemList[i])) {
-                mark = 'X';
-            } else {
-                mark = ' ';
-            }
-            response += String.format("   %d.[%c] %s\n", i+1, mark, itemList[i]);
+            Todo item = itemList[i];
+            response += String.format("   %d.%s\n", i+1, item.toString());
         }
         printResponse(response);
     }
