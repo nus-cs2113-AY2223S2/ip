@@ -11,26 +11,26 @@ public class Duke {
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you ?");
         Scanner ScanObj = new Scanner(System.in);
-        String[] listofItems = new String[100];
+
+        TaskManager listofItems = new TaskManager();
         String UserCmd = ScanObj.nextLine();
-        int counter = 0;
+        int taskId = 0;
         while (!UserCmd.equals("bye")) {
+            String[] WordsinUserCmd = UserCmd.split(" ");
+            System.out.println(WordsinUserCmd[0]);
             if (UserCmd.equals("list")) {
-                int j = 1;
-                for (String i : listofItems) {
-                    System.out.print(j);
-                    System.out.print(". ");
-                    System.out.println(i);
-                    j++;
-                    if (j > counter) {
-                        break;
-                    }
-                }
+                listofItems.listTask();
+            } else if (WordsinUserCmd[0].equals("mark")) {
+                System.out.println("this is a mark command");
+                listofItems.markTask(Integer.parseInt(WordsinUserCmd[1]) - 1);
+            } else if (WordsinUserCmd[0].equals("unmark")) {
+                System.out.println("this is a unmark command");
+                listofItems.unmarkTask(Integer.parseInt(WordsinUserCmd[1]) - 1);
             } else {
                 System.out.print("added: ");
                 System.out.println(UserCmd);
-                listofItems[counter] = UserCmd;
-                counter++;
+                listofItems.addTask(UserCmd, taskId);
+                taskId++;
             }
             UserCmd = ScanObj.nextLine();
         }
