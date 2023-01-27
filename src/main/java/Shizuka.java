@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Duke {
+public class Shizuka {
     public static void main(String[] args) {
         final String LOGO = "   _____  __     _               __         \n"
                 + "  / ___/ / /_   (_)____  __  __ / /__ ____ _\n"

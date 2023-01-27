@@ -6,8 +6,9 @@ public class TodoList {
     static final String MARKED_TASK = "I have marked Task ";
     static final String UNMARKED_TASK = "I have unmarked Task ";
     static final String IN_LIST = " in your todo list.\n";
+    public static final int MAX_TASKS = 100;
     private static int tasksNumber = 0;
-    private static Task[] tasks = new Task[100];
+    private static Task[] tasks = new Task[MAX_TASKS];
 
     public static void add(String item) {
         tasks[tasksNumber] = new Task(item);
