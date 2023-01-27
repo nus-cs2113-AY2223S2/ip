@@ -1,8 +1,8 @@
-package Task;
+package task;
 
 import java.util.ArrayList;
 
-import Parser.Argument;
+import parser.Argument;
 
 public interface ITaskController {
 	public ArrayList<Task> getTask() throws EmptyTaskList;

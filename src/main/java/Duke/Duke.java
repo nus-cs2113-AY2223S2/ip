@@ -1,17 +1,17 @@
-package Duke;
+package duke;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
-import Parser.Command;
-import Parser.EmptyCommandException;
-import Parser.IParser;
-import Parser.Parser;
-import Task.EmptyTaskList;
-import Task.ITaskController;
-import Task.TaskController;
+import parser.Command;
+import parser.EmptyCommandException;
+import parser.IParser;
+import parser.Parser;
+import task.EmptyTaskList;
+import task.ITaskController;
+import task.TaskController;
 
 public class Duke {
     static String LINEBREAK = "________________________________________\n";

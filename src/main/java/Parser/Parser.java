@@ -1,6 +1,5 @@
-package Parser;
+package parser;
 
-import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 

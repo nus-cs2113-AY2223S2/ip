@@ -1,11 +1,11 @@
-package Task;
+package task;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import Parser.Argument;
-import Parser.Command;
+import parser.Argument;
+import parser.Command;
 
 
 public class TaskController implements ITaskController{
