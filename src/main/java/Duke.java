@@ -16,7 +16,10 @@ public class Duke {
     private static void printTasks() {
         System.out.println(Message.LIST_TASKS.message);
         for (int i = 0; i < counter; ++i) {
-            System.out.printf("%d. %s\n", (i + 1), tasks[i].getDescriptionText());
+            System.out.printf("%d. %s\n",
+                    (i + 1),
+                    tasks[i].getDescriptionText()
+            );
         }
     }
 
