@@ -5,8 +5,8 @@ public class Duke {
     public static void main(String[] args) {
         printBanner();
         Scanner in = new Scanner(System.in);
-        String userInput = "";
-        ArrayList<Task> listOfTasks = new ArrayList<Task>();
+        String userInput;
+        ArrayList<Task> listOfTasks = new ArrayList<>();
         boolean isRunning = true;
 
         while (isRunning) {
@@ -20,8 +20,8 @@ public class Duke {
     /**
      * Run the command the user typed.
      *
-     * @param userInput What the user inputted into the command line.
-     * @param listOfTasks An arraylist storing the list of tasks the user created.
+     * @param userInput      What the user inputted into the command line.
+     * @param listOfTasks    An arraylist storing the list of tasks the user created.
      * @param userInputSplit An array storing the user input but split by " ".
      * @return false only if "bye" is typed. true otherwise.
      */
@@ -82,7 +82,7 @@ public class Duke {
      * Add user task to and ArrayList and print out the task added.
      *
      * @param listOfTasks An arraylist storing the list of tasks the user created.
-     * @param task Store the type of task the user ask to create.
+     * @param task        Store the type of task the user ask to create.
      */
     private static void addAndPrintTask(ArrayList<Task> listOfTasks, Task task) {
         listOfTasks.add(task);
