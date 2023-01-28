@@ -18,4 +18,8 @@ public class Task {
     public String getTaskName() {
         return taskName;
     }
+
+    public String getDescriptionText() {
+        return "";
+    }
 }

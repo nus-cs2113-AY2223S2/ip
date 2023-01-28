@@ -12,4 +12,14 @@ public class Deadline extends Task {
         super(taskName);
         this.endDate = endDate;
     }
+
+    @Override
+    public String getDescriptionText() {
+        String symbol = super.isDone() ? "X" : " ";
+        return String.format("[E][%s] %s (by: %s)",
+                symbol,
+                super.getTaskName(),
+                this.endDate
+        );
+    }
 }

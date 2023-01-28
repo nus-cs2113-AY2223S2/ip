@@ -13,4 +13,15 @@ public class Event extends Task {
         this.from = from;
         this.to = to;
     }
+
+    @Override
+    public String getDescriptionText() {
+        String symbol = super.isDone() ? "X" : " ";
+        return String.format("[E][%s] %s (from: %s to: %s)",
+                symbol,
+                super.getTaskName(),
+                this.from,
+                this.to
+        );
+    }
 }
