@@ -9,7 +9,8 @@ public class Event extends Task {
         this.eventFrom = eventFrom;
         this.eventTo = eventTo;
     }
+
     public String toString() {
-        return "[E]" + super.toString() + "(from: " + eventFrom + " to: " + eventTo + ")";
+        return "[E]" + super.toString() + " (from: " + eventFrom + " to: " + eventTo + ")";
     }
 }

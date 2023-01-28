@@ -7,6 +7,7 @@ public class Deadline extends Task {
         super(description);
         this.deadline = deadline;
     }
+
     public String toString() {
         return "[D]" + super.toString() + " (by: " + deadline + ")";
     }
