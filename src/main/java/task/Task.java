@@ -1,17 +1,18 @@
+package task;
+
 public class Task {
     protected String description;
-    protected boolean isDone;
+    protected boolean isDone = false;
 
     public Task(String description) {
         this.description = description;
-        this.isDone = false;
     }
 
-    public void mark(boolean isDone) {
+    public void setDone(boolean isDone) {
         this.isDone = isDone;
     }
 
     public String toString() {
-        return " [" + (isDone ? "X" : " ") + "] " + description;
+        return "[" + (isDone ? "X" : " ") + "] " + description;
     }
 }
