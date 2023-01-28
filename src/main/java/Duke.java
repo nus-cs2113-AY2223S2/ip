@@ -1,72 +1,75 @@
 import java.util.Scanner;
 import java.util.Arrays;
 public class Duke {
+    public static final int MAX_TASK_NUM = 100;
     public static void main(String[] args) {
         showGreetings();
+        processInputs();
+        showGoodbye();
+    }
 
+    private static void processInputs() {
         Scanner in = new Scanner (System.in);
-
-        Task[] store_values = new Task[100];
+        Task[] storeValues = new Task[MAX_TASK_NUM];
         int counter = 0;
 
         String line = in.nextLine();
         while (!line.equals("bye")) {
             if (line.equals("list")) {
-                printList(store_values, counter);
+                printList(storeValues, counter);
             } else if (line.startsWith("mark ")) {
-                markItem(store_values, line);
+                markItem(storeValues, line);
             } else if (line.startsWith("unmark ")) {
-                unmarkItem(store_values, line);
+                unmarkItem(storeValues, line);
             } else {
-                counter = addTask(store_values, counter, line);
+                counter = addTask(storeValues, counter, line);
             }
             line = in.nextLine();
         }
-        showGoodbye();
     }
 
-    private static int addTask(Task[] store_values, int counter, String line) {
+    private static int addTask(Task[] storeValues, int counter, String line) {
         formattingLine();
         System.out.println("added: " + line);
         formattingLine();
         //store value in line into list
         Task newInput = new Task(line);
-        store_values[counter] = newInput;
+        storeValues[counter] = newInput;
         counter += 1;
         return counter;
     }
 
-    private static void unmarkItem(Task[] store_values, String line) {
+    private static void unmarkItem(Task[] storeValues, String line) {
         int length = line.length();
-        String item_to_mark = line.substring(7, length);
-        int num_to_mark = Integer.parseInt(item_to_mark);
+        String itemToMark = line.substring(7, length);
+        int numToMark = Integer.parseInt(itemToMark);
         //unmark the item
-        store_values[num_to_mark-1].unmarkAsDone();
+        storeValues[numToMark-1].unmarkAsDone();
         formattingLine();
         System.out.println("OK, I've marked this task as not done yet: \n" +
-                "[ ] " + store_values[num_to_mark-1].description + "\n");
+                "[ ] " + storeValues[numToMark-1].description + "\n");
         formattingLine();
     }
 
-    private static void markItem(Task[] store_values, String line) {
+    private static void markItem(Task[] storeValues, String line) {
         int length = line.length();
-        String item_to_mark = line.substring(5, length);
-        int num_to_mark = Integer.parseInt(item_to_mark);
+        String itemToMark = line.substring(5, length);
+        int numToMark = Integer.parseInt(itemToMark);
         //mark the item as complete
-        store_values[num_to_mark-1].markAsDone();
+        storeValues[numToMark-1].markAsDone();
         formattingLine();
         System.out.println("Nice! I've marked this task as done: \n" +
-                "[X] " + store_values[num_to_mark-1].description + "\n");
+                "[X] " + storeValues[numToMark-1].description + "\n");
         formattingLine();
     }
 
-    private static void printList(Task[] store_values, int counter) {
-        int curr_value = 0;
-        Task[] existing_values = Arrays.copyOf(store_values, counter);
+    private static void printList(Task[] storeValues, int counter) {
+        int currValue = 0;
+        Task[] existingValues = Arrays.copyOf(storeValues, counter);
         formattingLine();
-        for (Task value : existing_values) {
-            System.out.println((curr_value+1) + ".[" + value.getStatusIcon() + "] " + value.description);
-            curr_value += 1;
+        for (Task value : existingValues) {
+            System.out.println((currValue+1) + ".[" + value.getStatusIcon() + "] " + value.description);
+            currValue += 1;
         }
         formattingLine();
     }
@@ -95,7 +98,7 @@ public class Duke {
     }
 
     private static void formattingLine() {
-        String formatting_line = "____________________________________________________________\n";
-        System.out.println(formatting_line);
+        String lineFormatting = "____________________________________________________________\n";
+        System.out.println(lineFormatting);
     }
 }
