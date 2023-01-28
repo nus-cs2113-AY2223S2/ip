@@ -1,8 +1,9 @@
 import java.util.Scanner;
-public class Greet {
+public class Greeting {
     public static void main(String[] args) {
         String greet = "    ____________________________________________________________\n" +
-                "     Hello! I'm Duke\n" +
+                "     Hello" +
+                "! I'm Duke\n" +
                 "     What can I do for you?\n" +
                 "    ____________________________________________________________";
         System.out.println(greet);
