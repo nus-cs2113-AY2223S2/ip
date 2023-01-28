@@ -33,7 +33,7 @@ public class Duke {
         } else if (input.equals("list")) {
             tasks.printContents();
         } else if (input.equals("help")) {
-            System.out.println(Message.helpMessage);
+            System.out.println(Message.HELP_MESSAGE);
         } else {
             tasks.addTask(input);
             System.out.println("added: " + input);

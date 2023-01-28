@@ -30,13 +30,13 @@ public class TaskList {
     // -1 to account for zero-indexing.
     public void markAsDone(int taskNumber) {
         tasks[taskNumber - 1].markAsDone();
-        System.out.print(Message.taskDone);
+        System.out.print(Message.TASK_DONE);
         System.out.println(tasks[taskNumber-1].getTaskListing());
     }
 
     public void markAsUndone(int taskNumber) {
         tasks[taskNumber - 1].markAsUndone();
-        System.out.print(Message.taskUndone);
+        System.out.print(Message.TASK_UNDONE);
         System.out.println(tasks[taskNumber-1].getTaskListing());
     }
 
