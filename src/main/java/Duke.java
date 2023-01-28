@@ -2,40 +2,30 @@ import java.util.Scanner;
 
 public class Duke
 {
-    public static final String GREETING = " Hello! I'm Duke\n"
-            + " What can I do for you?";
-
+    /* immutable Strings below
+     *
+     *
+     */
+    public static final String GREETING = " Hello! I'm Duke! What can I do for you?";
     public static final String GOODBYE = " Bye. Hope to see you again soon!";
-
     public static final String LINE_DIVIDER = "____________________________________________________________";
+    public static final int INT = 101;
 
-    public static void lineBreak ()
-    {
-        System.out.println (LINE_DIVIDER);
-    }
+    /* Storage and variables below
+     *
+     *
+     */
+    private static int indexBaseOne = 1;
+    private static Task[] tasks;
+    private static final Scanner SCANNER = new Scanner (System.in);
 
-    public static void greet ()
-    {
-        lineBreak ();
-        System.out.println (GREETING);
-        lineBreak ();
-    }
-
-    public static void goodbye ()
-    {
-        System.out.println (GOODBYE);
-        lineBreak ();
-    }
 
     public static void main (String[] args)
     {
         greet ();
-
-        int index = 1;
         String line;
-        Task[] tasks = new Task[101];
-        Scanner in = new Scanner (System.in);
-        line = in.nextLine ();
+        initTasks ();
+        line = SCANNER.nextLine ();
 
         while (true) {
 
@@ -47,7 +37,7 @@ public class Duke
 
             if (line.equals ("list"))
             {
-                for (int i = 1; i < index; i++) {
+                for (int i = 1; i < indexBaseOne; i++) {
                     System.out.println (i + ": " + tasks[i].getTaskStatus ());
                 }
 
@@ -71,14 +61,44 @@ public class Duke
             else
             {
                 System.out.println ("added: " + line);
-                tasks[index] = new Task (line);
-                index += 1;
+                tasks[indexBaseOne] = new Task (line);
+                indexBaseOne += 1;
             }
 
             lineBreak ();
-            line = in.nextLine ();
+            line = SCANNER.nextLine ();
 
 
         }
     }
+
+    /* Methods below
+     * note: can declare method after calling them as long as they are in same class
+     * since calling any method technically does Class.method()
+     *
+     */
+    public static void lineBreak ()
+    {
+        System.out.println (LINE_DIVIDER);
+    }
+
+    public static void greet ()
+    {
+        lineBreak ();
+        System.out.println (GREETING);
+        lineBreak ();
+    }
+
+    public static void goodbye ()
+    {
+        System.out.println (GOODBYE);
+        lineBreak ();
+    }
+
+    public static void initTasks ()
+    {
+        tasks = new Task[INT];
+    }
+
+
 }
