@@ -1,13 +1,15 @@
+package duke.task;
+
 public class ToDo extends Task{
 
 
     public ToDo(String taskName) {
         super(taskName);
-        super.type = Types.TODO;
+        super.type = "[T]";
     }
 
     @Override
-    public String listDescription(){
+    public String toString(){
         return checkBoxOutput() + this.getTaskName();
     }
 }

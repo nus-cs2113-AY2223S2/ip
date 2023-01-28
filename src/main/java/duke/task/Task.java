@@ -1,8 +1,10 @@
+package duke.task;
+
 public class Task {
     protected String taskName;
     protected static int indexCount = 0;
     protected boolean isDone;
-    protected Types type;
+    protected String type;
 
     public Task(String taskName) {
         this.taskName = taskName;
@@ -26,32 +28,18 @@ public class Task {
         isDone = done;
     }
 
-    public Types getType(){
+    public String getType(){
         return type;
     }
 
-    public String listDescription(){
+    @Override
+    public String toString(){
         return "";
     }
 
     public String checkBoxOutput(){
         String checkMark = isDone ? " [X] " : " [ ] ";
-        String taskType = "";
-
-        switch (type) {
-
-        case DEADLINE:
-            taskType = "[D]";
-            break;
-
-        case EVENT:
-            taskType = "[E]";
-            break;
-
-        default:
-            taskType = "[T]";
-            break;
-        }
+        String taskType = getType();
 
         return  taskType + checkMark;
     }
@@ -67,7 +55,7 @@ public class Task {
             word1 = "are ";
             word2 = " tasks";
         }
-        System.out.println("Got it. I've added this task:\n " + listDescription());
+        System.out.println("Got it. I've added this task:\n " + this);
         System.out.println("Now there " + word1 + getIndexCount() + word2 + " in your list");
     }
 }

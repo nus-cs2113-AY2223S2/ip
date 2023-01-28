@@ -1,10 +1,12 @@
+package duke.task;
+
 public class Deadline extends ToDo {
 
     protected String deadline;
 
     public Deadline(String taskName, String deadline) {
         super(taskName);
-        super.type = Types.DEADLINE;
+        super.type = "[D]";
         this.deadline = deadline;
     }
 
@@ -14,7 +16,7 @@ public class Deadline extends ToDo {
 
 
     @Override
-    public String listDescription(){
+    public String toString(){
         return  checkBoxOutput() +this.getTaskName() + " (by: " + this.getDeadline() + ")";
     }
 }

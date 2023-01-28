@@ -1,3 +1,5 @@
+package duke.task;
+
 public class Events extends ToDo {
 
     protected String start;
@@ -5,7 +7,7 @@ public class Events extends ToDo {
 
     public Events(String taskName, String start, String end) {
         super(taskName);
-        super.type = Types.EVENT;
+        super.type = "[E]";
         this.start = start;
         this.end = end;
     }
@@ -19,7 +21,7 @@ public class Events extends ToDo {
     }
 
     @Override
-    public String listDescription(){
+    public String toString(){
         return checkBoxOutput() + this.getTaskName() + " (from: " + this.getStart() + " to: "+ this.getEnd() + ")";
     }
 }
