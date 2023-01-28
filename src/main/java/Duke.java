@@ -22,16 +22,16 @@ public class Duke {
                 taskCount++;
                 printTaskAddedDescription(tasks, taskCount);
             } else if((line.substring(0,8)).equalsIgnoreCase("deadline")) {
-                int dividerPosition = line.indexOf("/by"); //index of due date/time
+                int dividerPosition = line.indexOf("/by"); //index of deadline due date/time
                 String taskDescription = line.substring(9, dividerPosition);
                 String deadline = line.substring(dividerPosition+4);
                 tasks[taskCount] = new Deadline(taskDescription, deadline);
                 taskCount++;
                 printTaskAddedDescription(tasks, taskCount);
             } else if((line.substring(0,5)).equalsIgnoreCase("event")) {
-                int divider1 = line.indexOf("/from"); //index of start date/time
+                int divider1 = line.indexOf("/from"); //index of event start date/time
                 String event = line.substring(6, divider1);
-                int divider2 = line.indexOf("/to"); //index of end date/time
+                int divider2 = line.indexOf("/to"); //index of event end date/time
                 String eventStart = line.substring(divider1+6, divider2);
                 String eventEnd = line.substring(divider2+4);
                 tasks[taskCount] = new Event(event, eventStart, eventEnd);
@@ -50,10 +50,11 @@ public class Duke {
                 + "| | | | | | | |/ / _ \\\n"
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
+
         System.out.println("Hello from\n" + logo);
 
         System.out.println("____________________________________________________________");
-        System.out.println(" Hello! I'm Duke");
+        System.out.println(" Hello! I'm Duke, your personal task manager.");
         System.out.println(" What can I do for you?");
         System.out.println("____________________________________________________________");
     }
@@ -90,14 +91,14 @@ public class Duke {
     private static void printTaskAddedDescription(Task[] tasks, int taskCount) {
         System.out.println("____________________________________________________________");
         System.out.println(" Got it. I've added this task:");
-        System.out.println(tasks[taskCount-1].toString());
+        System.out.println(tasks[taskCount-1].toString()); //print Task Description
         System.out.println(" Now you have " + taskCount + " tasks in your list.");
         System.out.println("____________________________________________________________");
     }
 
     private static void printByeMessage() {
         System.out.println("____________________________________________________________");
-        System.out.println("Bye. Hope to see you again soon!");
+        System.out.println(" Bye. Hope to see you again soon!");
         System.out.println("____________________________________________________________");
     }
 }
