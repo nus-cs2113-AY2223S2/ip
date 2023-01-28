@@ -6,10 +6,10 @@ import duke.task.TaskList;
 public class Duke {
 
     public static void main(String[] args) {
-        UI newUser = new UI();
+        UI applicationProcess = new UI();
         TaskList newTaskList = new TaskList();
-        newUser.greet();
-        newUser.inputFunction(newTaskList);
-        newUser.sayBye();
+        applicationProcess.greet();
+        applicationProcess.inputFunction(newTaskList);
+        applicationProcess.sayBye();
     }
 }
