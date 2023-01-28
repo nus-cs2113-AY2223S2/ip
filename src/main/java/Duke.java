@@ -4,14 +4,24 @@ public class Duke {
     private static final String LINE = "____________________________________________________________";
     private static final String INVALID_COMMAND_PRINTER = "One hour of lifespan has been deducted, in accordance with our Terms and Services.";
     private static final String VALID_COMMAND_PRINTER = "Command acknowledged. Reducing user lifespan by 30 minutes.";
+    private static final String LOGO =
+              "    // | |     //   ) )  // | |  \\\\ / / \\\\    / / //   ) ) \n"
+            + "   //__| |    //___/ /  //__| |   \\  /   \\\\  / / ((        \n"
+            + "  / ___  |   / ___ (   / ___  |   / /     \\\\/ /    \\\\      \n"
+            + " //    | |  //   | |  //    | |  / /\\\\     / /       ) )   \n"
+            + "//     | | //    | | //     | | / /  \\\\   / / ((___ / /    ";
+    private static String command;
     private static ArrayList<Task>tasks = new ArrayList<>();
     private static Scanner in = new Scanner(System.in);
+    private enum taskType{
+        TODO,DEADLINE,EVENT,INVALID
+    }
     private static void printList(){
         System.out.println(LINE);
         System.out.println(VALID_COMMAND_PRINTER);
         for(int i=0;i<tasks.size();i++){
-            System.out.print(i+1+":["+tasks.get(i).getStatusIcon()+"]///////");
-            System.out.println(tasks.get(i).getDescription());
+            System.out.print(i+1+":");
+            System.out.println(tasks.get(i).toString());
         }
         System.out.println(LINE);
     }
@@ -43,7 +53,7 @@ public class Duke {
             System.out.println(LINE);
             System.out.println(VALID_COMMAND_PRINTER);
             System.out.println("Task has been marked as: completed");
-            System.out.println("[X] "+tasks.get(index).getDescription());
+            System.out.println(tasks.get(index).toString());
             System.out.println(LINE);
         }
     }
@@ -75,12 +85,68 @@ public class Duke {
             System.out.println(LINE);
             System.out.println(VALID_COMMAND_PRINTER);
             System.out.println("Task has been marked as: not completed");
-            System.out.println("[ ] "+tasks.get(index).getDescription());
+            System.out.println(tasks.get(index).toString());
             System.out.println(LINE);
         }
     }
+    private static taskType getTaskType(String command){
+        String[] commands = command.split(" ");
+        if(commands[0].equals("deadline")){
+            return taskType.DEADLINE;
+        }else if(commands[0].equals("event")){
+            return taskType.EVENT;
+        }else if(commands[0].equals("todo")){
+            return taskType.TODO;
+        }
+        return taskType.INVALID;
+    }
+    private static boolean checkCommandValidity(String command, taskType currentTaskType){
+        if(currentTaskType==taskType.DEADLINE){
+            if(command.contains("/by")){
+                return true;
+            }
+            return false;
+        }else if(currentTaskType==taskType.EVENT){
+            if(command.contains("/from")&&command.contains("/to")){
+                return true;
+            }
+            return false;
+        }else if(currentTaskType==taskType.TODO){
+            if(command.split(" ").length<=1){
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
     private static void addTask(String command){
-        tasks.add(new Task(command));
+        taskType currentTaskType = getTaskType(command);
+        if(currentTaskType==taskType.INVALID){
+            System.out.println(LINE+'\n'+"Invalid task type specified."+'\n'+LINE);
+            System.out.println(INVALID_COMMAND_PRINTER);
+            return;
+        }else if(currentTaskType==taskType.TODO){
+            if(!checkCommandValidity(command,currentTaskType)){
+                System.out.println(LINE+'\n'+"Syntax: todo {task}"+'\n'+LINE);
+                System.out.println(INVALID_COMMAND_PRINTER);
+                return;
+            }
+            tasks.add(new Todo(command));
+        }else if(currentTaskType==taskType.DEADLINE){
+            if(!checkCommandValidity(command,currentTaskType)){
+                System.out.println(LINE+'\n'+"Syntax: deadline {task} /by {endDate}"+'\n'+LINE);
+                System.out.println(INVALID_COMMAND_PRINTER);
+                return;
+            }
+            tasks.add(new Deadline(command));
+        }else if(currentTaskType==taskType.EVENT){
+            if(!checkCommandValidity(command,currentTaskType)){
+                System.out.println(LINE+'\n'+"Syntax: event {task} /from {startDate} /to {endDate}"+'\n'+LINE);
+                System.out.println(INVALID_COMMAND_PRINTER);
+                return;
+            }
+            tasks.add(new Event(command));
+        }
         System.out.println(VALID_COMMAND_PRINTER);
         System.out.println(LINE+'\n'+"New task has been added: "+command+'\n'+LINE);
     }
@@ -93,7 +159,7 @@ public class Duke {
     private static void executeCommand(String command){
         if(command.equals("bye")){
             System.out.println(LINE+'\n'+"Goodbye. To reach customer service, just look outside your window."+'\n'+LINE);
-            return;
+            System.exit(0);
         }
         if(command.equals("list")){
             printList();
@@ -108,21 +174,20 @@ public class Duke {
             }
         }
     }
-    public static void main(String[] args) {
-        String logo = "    // | |     //   ) )  // | |  \\\\ / / \\\\    / / //   ) ) \n"
-                + "   //__| |    //___/ /  //__| |   \\  /   \\\\  / / ((        \n"
-                + "  / ___  |   / ___ (   / ___  |   / /     \\\\/ /    \\\\      \n"
-                + " //    | |  //   | |  //    | |  / /\\\\     / /       ) )   \n"
-                + "//     | | //    | | //     | | / /  \\\\   / / ((___ / /    ";
-        System.out.println(LINE+'\n'+logo+'\n'+LINE);
+    private static void greet() {
+        System.out.println(LINE+'\n'+LOGO+'\n'+LINE);
         System.out.println("Welcome to Araxys Systems, the only system powered by LifeForce™");
         System.out.println("How may I help you today?");
         System.out.println(LINE);
-        String command;
+    }
+    public static void main(String[] args) {
+        greet();
         while(true){
             command = getCommand();
             command = transformCommand(command);
             executeCommand(command);
         }
     }
+
+
 }
