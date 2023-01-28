@@ -10,11 +10,25 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
         System.out.println("what can i do for you");
+
         String input = myObj.nextLine();
-        while(!input.equalsIgnoreCase("bye"))
-        {
-            System.out.println(input);
+        String[] todo = new String[100];
+        int c = 0;
+        while(!input.equalsIgnoreCase("bye")) {
+            if (input.equalsIgnoreCase("list")) {
+                System.out.println("----------------------");
+                for (int i = 0; i < todo.length && todo[i] != null; i++) {
+                    System.out.println(i + ". " + todo[i]);
+                }
+                System.out.println("----------------------");
+            } else {
+                todo[c] = input;
+                System.out.println("Added: " + input);
+
+            }
             input = myObj.nextLine();
+            c++;
+
         }
         System.out.println("Bye! see you soon!");
     }
