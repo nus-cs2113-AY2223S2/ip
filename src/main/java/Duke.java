@@ -47,7 +47,7 @@ public class Duke {
 
         String tasksListString = "";
         for(int i = 0; i < tasksList.size() ; i++){
-            tasksListString +=(i+1) + "." + tasksList.get(i).getStatusIcon() + " " + tasksList.get(i).getDescription() + "\n";
+            tasksListString += (i + 1) + "." + tasksList.get(i).getStatusIcon() + " " + tasksList.get(i).getDescription() + "\n";
         }
         return tasksListString;
     }
