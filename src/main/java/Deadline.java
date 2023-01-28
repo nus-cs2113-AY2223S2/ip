@@ -16,7 +16,7 @@ public class Deadline extends Task {
     @Override
     public String getDescriptionText() {
         String symbol = super.isDone() ? "X" : " ";
-        return String.format("[E][%s] %s (by: %s)",
+        return String.format("[D][%s] %s (by: %s)",
                 symbol,
                 super.getTaskName(),
                 this.endDate
