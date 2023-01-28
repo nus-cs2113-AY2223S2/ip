@@ -14,13 +14,20 @@ public class Duke {
             return false;
         }
         try {
-            double d = Double.parseDouble(strNum);
+            Double.parseDouble(strNum);
         } catch (NumberFormatException nfe) {
             return false;
         }
         return true;
     }
     //@@author
+
+    /**
+     * Prints a long string of lines ("___") to separate the outputs.
+     */
+    public static void lineSeparator() {
+        System.out.println("___________________________________________________________________________________");
+    }
 
     /**
      * Executes the "Duke" program.
@@ -44,15 +51,17 @@ public class Duke {
             //If the word "list" is the first word in the line of strings.
             case "list":
                 if (command.length == 1) {
-                    //If user just wants to view the list of tasks.
-                    for (int x = 0; x < listSize; x += 1) {
-                        System.out.println((x + 1) + ".[" + list[x].getStatusIcon() + "] " + list[x].getDescription());
+                    //If user wants to view the list of tasks.
+                    lineSeparator();
+                    for (int increment = 0; increment < listSize; increment += 1) {
+                        System.out.println((increment + 1) + ". " + list[increment].toString());
                     }
+                    lineSeparator();
                 } else {
-                    //If user wants to include the word "list" as part of the task description.
-                    list[listSize] = new Task(line);
-                    listSize += 1;
-                    System.out.println("added: " + line);
+                    //If user typed "list" as the first part of a sequence of strings.
+                    lineSeparator();
+                    System.out.println("Invalid command. Please try again.");
+                    lineSeparator();
                 }
                 break;
 
@@ -64,17 +73,21 @@ public class Duke {
                     if (taskNumber > 0 && taskNumber <= listSize) {
                         //If valid task number is given.
                         list[taskNumber - 1].markDone();
+                        lineSeparator();
                         System.out.println("Nice! I've marked this task as done:");
-                        System.out.println("[X] " + list[taskNumber - 1].getDescription());
+                        System.out.println("  " + list[taskNumber - 1].toString());
+                        lineSeparator();
                     } else {
                         //If task number given exceeds total tasks.
+                        lineSeparator();
                         System.out.println("Please key in a valid task number!");
+                        lineSeparator();
                     }
                 } else {
-                    //If user wants to include "mark" as part of a new task description.
-                    list[listSize] = new Task(line);
-                    listSize += 1;
-                    System.out.println("added: " + line);
+                    //If user types non-integer inputs after "unmark".
+                    lineSeparator();
+                    System.out.println("Please key in a valid task number!");
+                    lineSeparator();
                 }
                 break;
 
@@ -86,32 +99,90 @@ public class Duke {
                     if (taskNumber > 0 && taskNumber <= listSize) {
                         //If valid task number is given.
                         list[taskNumber - 1].unmarkDone();
+                        lineSeparator();
                         System.out.println("OK, I've marked this task as not done yet:");
-                        System.out.println("[ ] " + list[taskNumber - 1].getDescription());
+                        System.out.println("  " + list[taskNumber - 1].toString());
+                        lineSeparator();
                     } else {
                         //If task number given exceeds total tasks in the list.
+                        lineSeparator();
                         System.out.println("Please key in a valid task number!");
+                        lineSeparator();
                     }
                 } else {
-                    //If user wants to include "unmark" as part of a new task description.
-                    list[listSize] = new Task(line);
-                    listSize += 1;
-                    System.out.println("added: " + line);
+                    //If user types non-integer inputs after "unmark".
+                    lineSeparator();
+                    System.out.println("Please key in a valid task number!");
+                    lineSeparator();
                 }
+                break;
+
+            //If user wants to create a new "todo" task.
+            case "todo":
+                //Create new entry by detecting the start of the first spacing after the "todo" string.
+                list[listSize] = new ToDo(line.substring(line.indexOf(' ') + 1));
+                lineSeparator();
+                System.out.println("Got it. I've added this task:");
+                System.out.println("  " + list[listSize].toString());
+                listSize += 1;
+                System.out.println("Now you have " + listSize + " tasks in the list.");
+                lineSeparator();
+                break;
+
+            //If user wants to create a new "deadline" task.
+            case "deadline":
+                int byIndex = line.indexOf("/by");
+                String deadline = line.substring(line.indexOf("deadline") + 9, byIndex - 1);
+                list[listSize] = new Deadline(deadline , line.substring(byIndex + 4));
+                lineSeparator();
+                System.out.println("Got it. I've added this task:");
+                System.out.println("  " + list[listSize].toString());
+                listSize += 1;
+                System.out.println("Now you have " + listSize + " tasks in the list.");
+                lineSeparator();
+                break;
+
+            //If user wants to create a new "event" task.
+            case "event":
+                int fromIndex = line.indexOf("/from");
+                int toIndex = line.indexOf("/to");
+                String event;
+                String startDate;
+                String endDate;
+                if (fromIndex < toIndex) {
+                    //If user typed "/from" before "/to".
+                    event = line.substring(line.indexOf("event") + 5, fromIndex - 1);
+                    startDate = line.substring(fromIndex + 6, toIndex - 1);
+                    endDate = line.substring(toIndex + 4);
+                } else {
+                    //If user typed "/to" before "/from".
+                    event = line.substring(line.indexOf("event") + 5, toIndex - 1);
+                    startDate = line.substring(toIndex + 4, fromIndex - 1);
+                    endDate = line.substring(fromIndex + 6);
+                }
+                list[listSize] = new Event(event, startDate, endDate);
+                lineSeparator();
+                System.out.println("Got it. I've added this task:");
+                System.out.println("  " + list[listSize].toString());
+                listSize += 1;
+                System.out.println("Now you have " + listSize + " tasks in the list.");
+                lineSeparator();
                 break;
 
             //To terminate program, if the word "bye" is the first word in the line of strings.
             case "bye":
                 break;
 
-            //Add normal user input as part of new task description.
+            //If first string is not one of the above cases, ask user to retype.
             default:
-                list[listSize] = new Task(line);
-                listSize += 1;
-                System.out.println("added: " + line);
+                lineSeparator();
+                System.out.println("Invalid command. Please try again.");
+                lineSeparator();
                 break;
             }
         }
+        lineSeparator();
         System.out.println("Bye. Hope to see you again soon!");
+        lineSeparator();
     }
 }
