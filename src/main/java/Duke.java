@@ -1,27 +1,24 @@
-import java.util.Scanner;
 public class Duke {
     public static void main(String[] args) {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);
-        System.out.println("Hello! I'm Duke, your personal assistant.\n");
+        showWelcomeMessage();
 
         IO inOut = new IO();
+
+        String userName = getUserName(inOut);
+
         TaskMaster compileItems = new TaskMaster();
 
-        System.out.println("What is your name? (Please enter name)\n");
-        String userName = inOut.readInput();
-        System.out.println("Hello, " + userName + ". You may enter 'See list' to view your current To-Do list.");
+        instantiateList(inOut, userName, compileItems);
 
-        while(true){
+    }
+
+    private static void instantiateList(IO inOut, String userName, TaskMaster compileItems) {
+        while (true) {
             String userCommand = inOut.readInput();
             //change to switch case
-            switch(userCommand){
+            switch (userCommand) {
 
-            case("Done"):
+            case ("Done"):
                 System.out.println("Bye, " + userName + "." + " Hope to see you again soon!\n");
                 return;
 
@@ -36,8 +33,22 @@ public class Duke {
                 System.out.println("Understood. Added task: " + userCommand + "." + " Anything else?");
             }
         }
-        //prompt user to enter a new command
-        //to do: make everything modular and neater
-        //have classes to: handle IO, tasks, and store tasks
+    }
+
+    private static String getUserName(IO inOut) {
+        System.out.println("What is your name? (Please enter name)\n");
+        String userName = inOut.readInput();
+        System.out.println("Hello, " + userName + ". You may enter 'See list' to view your current To-Do list.");
+        return userName;
+    }
+
+    private static void showWelcomeMessage() {
+        String logo = " ____        _        \n"
+                + "|  _ \\ _   _| | _____ \n"
+                + "| | | | | | | |/ / _ \\\n"
+                + "| |_| | |_| |   <  __/\n"
+                + "|____/ \\__,_|_|\\_\\___|\n";
+        System.out.println("Hello from\n" + logo);
+        System.out.println("Hello! I'm Duke, your personal assistant.\n");
     }
 }

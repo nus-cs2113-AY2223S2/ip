@@ -5,10 +5,12 @@ import java.util.Scanner;
 //Easier than typing scanner scanner
 public class IO {
     Scanner toRead;
-    IO(){
+
+    IO() {
         this.toRead = new Scanner(System.in);
     }
-    public String readInput(){
+
+    public String readInput() {
         System.out.print(">> ");
         return toRead.nextLine();
     }
