@@ -4,11 +4,24 @@ public class Task
     private String taskName;
     private boolean isDone;
 
-
     public Task (String taskName)
     {
+        this (taskName, false);
+    }
+    
+    public Task (String taskName, boolean isDone)
+    {
         this.taskName = taskName;
-        this.isDone = false;
+        this.isDone = isDone;
+    }
+
+    public String getTaskName ()
+    {
+        return taskName;
+    }
+
+    public String getStatusIcon () {
+        return (isDone ? "X" : " ");
     }
 
     public void setDone ()
@@ -23,15 +36,7 @@ public class Task
 
     public String getTaskStatus ()
     {
-        String taskStatus = "[";
-        if (isDone) {
-            taskStatus += "X";
-        } else {
-            taskStatus += " ";
-        }
-        taskStatus += ("] " + taskName);
-        return taskStatus;
-
+        return "[" + getStatusIcon () + "]" + getTaskName ();
     }
 
 }
