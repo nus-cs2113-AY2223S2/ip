@@ -30,7 +30,7 @@ public class TaskManager {
         int indexEnd = taskDescription.indexOf("/to");
         String eventContent = taskDescription.substring(0,indexStart-1);
         String eventStartTime = taskDescription.substring(indexStart+6, indexEnd-1);
-        String eventEndTime = taskDescription.substring(indexEnd-1);
+        String eventEndTime = taskDescription.substring(indexEnd+4);
         Event newEvent = new Event(eventContent, eventStartTime, eventEndTime);
         return newEvent;
     }
@@ -57,55 +57,45 @@ public class TaskManager {
         Task newTask = generateNewTask(taskType, taskDescription);
         this.tasks[count]=newTask;
         this.count+=1;
-        Parser parseEchoContent = new Parser();
-        String[] echoContent = parseEchoContent.parseStringToArrayOneElement("      Added: "+newTask.taskDescription);
-        String[] captions = {};
         UI echoAddedTask = new UI();
-        echoAddedTask.printOutput(captions,echoContent);
+        echoAddedTask.echoNewTask(count,newTask);
 
     }
 
     /**
      * Mark tasks as done/not done.
      *
-     * @param inputTasks splited input command.
+     * @param taskIndex splited input command.
      * @param status mark/unmark.
      */
-    public void editTaskStatus(String inputTasks, String status){
+    public void editTaskStatus(String taskIndex, String status){
         UI printEditedTasks = new UI();
-        Parser parseEditedTask = new Parser();
+//        Parser parseEditedTask = new Parser();
 
-        int index = Integer.parseInt(inputTasks)-1;
+        int index = Integer.parseInt(taskIndex)-1;
         if(status.equals("mark")){
             tasks[index].markDone();
         }else{
             tasks[index].undo();
         }
 
-        String captions;
-        String editedTaskContent="      "+ '[' + tasks[index].getTaskStatus()+"] "
-                    +tasks[index].taskDescription;
-
+        String caption;
         if(status.equals("mark")){
-            captions = "      Nice! I've marked this task as done:";
+            caption = "      Nice! I've marked this task as done:";
         }else{
-            captions = "      OK, I've marked this task as not done yet:";
+            caption = "      OK, I've marked this task as not done yet:";
         }
 
-        String[] captionsArray = parseEditedTask.parseStringToArrayOneElement(captions);
-        String[] editedTaskContentArray = parseEditedTask.parseStringToArrayOneElement(editedTaskContent);
-        printEditedTasks.printOutput(captionsArray, editedTaskContentArray);
+        printEditedTasks.updateTaskStatus(tasks[index], caption);
     }
 
     /**
      * List all tasks.
      */
     public void listTask(){
-        Formatter formatter = new Formatter();
+
         UI printTasks = new UI();
-        Parser parseListCaption = new Parser();
-        String[] formattedTasks = formatter.formatTasks(this.tasks, this.count);
-        String[] captions = parseListCaption.parseStringToArrayOneElement("      Here are the tasks in your list:");
-        printTasks.printOutput(captions,formattedTasks);
+        printTasks.listCurrentTasks(this.tasks, this.count);
+
     }
 }

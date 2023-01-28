@@ -8,9 +8,6 @@ public class Parser {
     public String getCommandType(String inputWords){
         String[] commandWords = splitCommand(inputWords);
         String command = changeCommandLowerCase(commandWords[0]);
-//        if(!(command.equals("list")||command.equals("bye")||command.equals("mark")||command.equals("unmark"))){
-//            command = "Add";
-//        }
         return command;
     }
 
@@ -19,7 +16,6 @@ public class Parser {
     }
 
     public String getCommandDescription(String inputWords){
-        //String[] commandWords = splitCommand(inputWords);
         String command = getCommandType(inputWords);
         if(command.equals("bye")||command.equals("list")){
             return inputWords;
@@ -30,8 +26,8 @@ public class Parser {
         }
     }
 
-    public String[] parseStringToArrayOneElement(String input){
-        String[] output = {input};
-        return output;
-    }
+//    public String[] parseStringToArrayOneElement(String input){
+//        String[] output = {input};
+//        return output;
+//    }
 }

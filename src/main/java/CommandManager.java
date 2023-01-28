@@ -38,10 +38,8 @@ public class CommandManager {
 
         UI readInputCommandLoop = new UI();
         TaskManager taskManager = new TaskManager();
-        Parser parseCommand = new Parser();
 
         while(!this.commandType.equals("bye")){
-            //String inputCommandLowerCase = parseCommand.changeCommandLowerCase(commandType);
             if(commandType.equals("list")){
                 taskManager.listTask();
             }else if(commandType.equals("mark")){
@@ -49,7 +47,6 @@ public class CommandManager {
             }else if(commandType.equals("unmark")){
                 taskManager.editTaskStatus(this.commandDescription, "unmark");
             }else{
-                //Task task = new Task(this.commandDescription);
                 taskManager.addTask(this.commandType, this.commandDescription);
             }
             setCommand(readInputCommandLoop.readInput());
