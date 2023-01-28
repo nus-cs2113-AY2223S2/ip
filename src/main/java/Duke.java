@@ -24,7 +24,6 @@ public class Duke {
                 System.out.println("     Here are the tasks in your list:\n");
                 for (int i = 0; i < index; i = i + 1) {
                     int num = i + 1;
-                    // System.out.println("     " + num + ":[" + tasks[i].getStatusIcon() + "] " + tasks[i].getDescription());
                     System.out.println("     " + num
                                         + ".[" + tasks[i].getTypeOfTask()
                                         + "][" + tasks[i].getStatusIcon()
@@ -35,14 +34,18 @@ public class Duke {
                 int ind = Integer.parseInt(inputs[1]) - 1;
                 tasks[ind].mark();
                 System.out.println("     Nice! I've marked this task as done:\n");
-                System.out.println("       " + "[" + tasks[ind].getStatusIcon() + "] " + tasks[ind].getDescription());
+                System.out.println("       "
+                                    + "[" + tasks[ind].getStatusIcon() + "] "
+                                    + tasks[ind].getDescription());
 
             } else if (action.startsWith("unmark")) {
                 String[] inputs = action.split(" ");
                 int ind = Integer.parseInt(inputs[1]) - 1;
                 tasks[ind].unmark();
                 System.out.println("     OK, I've marked this task as not done yet:\n");
-                System.out.println("       " + "[" + tasks[ind].getStatusIcon() + "] " + tasks[ind].getDescription());
+                System.out.println("       "
+                                    + "[" + tasks[ind].getStatusIcon() + "] "
+                                    + tasks[ind].getDescription());
 
             } else if (action.startsWith("todo")) {
                 String[] inputs = action.split(" ", 2);
@@ -51,7 +54,9 @@ public class Duke {
                 index = index + 1;
                 System.out.println("     Got it. I've added this task:");
                 System.out.println("       [T][ ] " + todoTask);
-                System.out.println("     Now you have " + index + (index > 1 ? " tasks " : " task ") + "in the list.");
+                System.out.println("     Now you have "
+                                    + index + (index > 1 ? " tasks " : " task ")
+                                    + "in the list.");
 
             } else if (action.startsWith("deadline")) {
                 String[] inputs = action.split(" ", 2);
@@ -63,7 +68,9 @@ public class Duke {
                 index = index + 1;
                 System.out.println("     Got it. I've added this task:");
                 System.out.println("       [D][ ] " + theTask + " (by: " + dueBy + ")");
-                System.out.println("     Now you have " + index + (index > 1 ? " tasks " : " task ") + "in the list.");
+                System.out.println("     Now you have "
+                                    + index + (index > 1 ? " tasks " : " task ")
+                                    + "in the list.");
 
             } else if (action.startsWith("event")) {
                 String[] inputs = action.split(" ", 2);
@@ -78,7 +85,9 @@ public class Duke {
                 index = index + 1;
                 System.out.println("     Got it. I've added this task:");
                 System.out.println("       [E][ ] " + theTask + " (from: " + start + " to: " + end + ")");
-                System.out.println("     Now you have " + index + (index > 1 ? " tasks " : " task ") + "in the list.");
+                System.out.println("     Now you have "
+                                    + index + (index > 1 ? " tasks " : " task ")
+                                    + "in the list.");
 
             } else {
                 tasks[index] = new Task(action);
