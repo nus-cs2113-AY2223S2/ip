@@ -13,22 +13,18 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-        /*String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);*/
         System.out.println("---------------------------------------------");
         System.out.println("Hello I'm Duke");
         System.out.println("What can I do for you?");
         System.out.println("---------------------------------------------");
-        boolean isRunning = true;
-        String line;
+
+        boolean shouldRun = true;
         Task[] taskList = new Task[100];
         int count = 0;
         int index = 0;
-        while (isRunning) {
+        String line;
+
+        while (shouldRun) {
             Scanner in = new Scanner(System.in);
             line = in.nextLine();
             String[] cases = line.split(" ");
@@ -65,7 +61,7 @@ public class Duke {
                 System.out.println("---------------------------------------------");
                 break;
             case "bye":
-                isRunning = false;
+                shouldRun = false;
                 break;
             default:
                 System.out.println("---------------------------------------------");
