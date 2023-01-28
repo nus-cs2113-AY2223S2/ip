@@ -29,71 +29,22 @@ public class UI {
         System.out.println("Aww you're going? Hope to see you again soon!\n" + lineBreak);
     }
 
-    public String parseCommand(String line){
-        return line.contains(" ") ? line.split(" ")[0] : line;
-    }
-
     public void inputFunction(TaskList taskList){
         Scanner in = new Scanner(System.in);
-        String line;
+        CommandHandler newProcess = new CommandHandler();
 
+        String line;
         boolean isRunning = true;
 
         do {
             System.out.print("Enter Your Command Here: ");
             line = in.nextLine().trim();
             System.out.println(lineBreak);
-
+            newProcess.updateLine(line);
             if (line.equalsIgnoreCase("bye")) {
                 isRunning = false;
             } else {
-
-                String command = parseCommand(line);
-
-                switch (command) {
-
-                case "todo":
-                    ToDoCommand newTodo = new ToDoCommand();
-                    newTodo.handleCommand(line, taskList);
-                    break;
-
-                case "deadline":
-                    DeadlineCommand newDeadline = new DeadlineCommand();
-                    newDeadline.handleCommand(line, taskList);
-                    break;
-
-                case "event":
-                    EventCommand newEvent = new EventCommand();
-                    newEvent.handleCommand(line, taskList);
-                    break;
-
-                case "":
-                    Command newCommand = new Command();
-                    newCommand.handleCommand(line, taskList);
-                    break;
-
-                case "list":
-                    ListCommand newList = new ListCommand();
-                    newList.handleCommand(line, taskList);
-                    break;
-
-                case "mark":
-                    MarkCommand newMark = new MarkCommand();
-                    newMark.handleCommand(line, taskList);
-                    break;
-
-                case "unmark":
-                    UnmarkCommand newUnmark = new UnmarkCommand();
-                    newUnmark.handleCommand(line, taskList);
-                    break;
-
-                case "help":
-
-
-                default:
-                    DukeException.printError();
-                    System.out.println(lineBreak);
-                }
+                newProcess.handleCommand(taskList);
             }
 
         } while (isRunning);

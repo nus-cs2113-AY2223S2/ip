@@ -15,7 +15,7 @@ public class UnmarkCommand extends Command{
 
             String undone = line.split(" ")[1];
             if (indexCount == 0) {
-                Duke.emptyList();
+                DukeException.emptyList();
                 return;
             }
 

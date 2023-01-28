@@ -11,7 +11,7 @@ public class ListCommand extends Command{
         int indexCount = Task.getIndexCount();
         String lineBreak = UI.getLineBreak();
         if (indexCount == 0) {
-            Duke.emptyList();
+            DukeException.emptyList();
             return;
         }
 

@@ -1,16 +1,9 @@
 package duke.main;
 
 import duke.commands.UI;
-import duke.task.*;
-import duke.commands.DukeException;
-
-import java.util.Scanner;
+import duke.task.TaskList;
 
 public class Duke {
-
-    public static void emptyList() {
-        System.out.println("Your list is empty!\n" + UI.getLineBreak());
-    }
 
     public static void main(String[] args) {
         UI newUser = new UI();

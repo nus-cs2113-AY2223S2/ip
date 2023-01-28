@@ -15,7 +15,7 @@ public class MarkCommand extends Command{
 
             String done = line.split(" ")[1];
             if (indexCount == 0) {
-                Duke.emptyList();
+                DukeException.emptyList();
                 return;
             }
             indexSelect = Integer.parseInt(done) - 1;
