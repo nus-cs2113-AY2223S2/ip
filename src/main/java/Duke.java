@@ -1,119 +1,64 @@
 import java.util.Objects;
 import java.util.Scanner;
-import java.util.StringJoiner;
 
 
 public class Duke {
 
-    private static Task[] tasks = new Task[100];
-    private static int numberOfTasks = 0;
+    private static final Task[] tasks = new Task[100];
 
     public static void main(String[] args) {
-        String logo = """
-                 ____        _       \s
-                |  _ \\ _   _| | _____\s
-                | | | | | | | |/ / _ \\
-                | |_| | |_| |   <  __/
-                |____/ \\__,_|_|\\_\\___|
-                """;
 
-
-        System.out.println("Hello from\n" + logo);
-
-        //to greet user
-        printHorizontalBar();
-        System.out.println("Hello! I'm Duke! \n");
-        printHorizontalBar();
         String command;
-
-
-        boolean hasTask = true;
         int numberOfTasks = 0;
         String latestResponse = "";
-        boolean hasLatestResponse = false;
+        boolean hasAdditionalTask = false;
 
-        while (hasTask && numberOfTasks < 100) {
+        greetUser();
+
+        while (numberOfTasks < 100) {
             command = latestResponse;
-            if (!hasLatestResponse) {
+            if (!hasAdditionalTask) {
                 System.out.println("What can I do for your today?");
-                command = ReadTask();
+                command = readTask();
             }
             printHorizontalBar();
 
             if (Objects.equals(command, "list")) {
-                printTaskList(tasks);
+                printTaskList();
+
             } else if (Objects.equals(command, "bye")) {
                 break;
+
             } else if (command.contains("unmark")) {
-                String[] result = command.split(" ");
-                int taskNum = Integer.parseInt(result[1]);
-                if (taskNum > numberOfTasks || taskNum <= 0) {
-                    System.out.println("Error! No such task exists!");
-                } else {
-                    Task target = tasks[taskNum - 1];
-                    target.markAsNotDone();
-                    System.out.println("OK, I've marked this task as not done yet:");
-                    System.out.println(target.getStatusIcon() + "   " + target.taskName);
-                }
+                unmarkTask(command, numberOfTasks);
 
 
             } else if (command.contains("mark")) {
-                String[] result = command.split(" ");
-                int taskNum = Integer.parseInt(result[1]);
-                if (taskNum > numberOfTasks || taskNum <= 0) {
-                    System.out.println("Error! No such task exists!");
-                } else {
-                    Task target = tasks[taskNum - 1];
-                    target.markAsDone();
-                    System.out.println("Nice! I've marked this task as done:");
-                    System.out.println(target.getStatusIcon() + "   " + target.taskName);
-                }
+                markTask(command, numberOfTasks);
 
             } else if (command.contains("deadline")) {
-                String content = command.substring(8);
-                String[] contents = content.split("/");
-                String title = contents[0];
-                String dueDate = contents[1];
-                Deadline newDeadline = new Deadline(title);
-                newDeadline.setEndTime(dueDate);
-                tasks[numberOfTasks] = newDeadline;
+                createDeadline(command, numberOfTasks);
                 numberOfTasks++;
-                System.out.println("Got it. I've added this new task '" + newDeadline.taskName);
-                System.out.println("with a deadline of: " + newDeadline.getEndTime());
-                System.out.println("Now you have " + numberOfTasks + " tasks in the list");
+
 
             } else if (command.contains("event")) {
-                String content = command.substring(5);
-                String[] contents = content.split("/");
-                String title = contents[0];
-                String startTime = contents[1];
-                String endTime = contents[2];
-                Event newEvent = new Event(title);
-                newEvent.setStartTime(startTime);
-                newEvent.setEndTime(endTime);
-                tasks[numberOfTasks] = newEvent;
+                createEvent(command, numberOfTasks);
                 numberOfTasks++;
-                System.out.println("Got it. I've added this new event '" + newEvent.taskName);
-                System.out.println("with a start time of: " + newEvent.getStartTime());
-                System.out.println("and an ending time of: " + newEvent.getEndTime());
-                System.out.println("Now you have " + numberOfTasks + " tasks in the list");
+
 
             } else {
-                Task task = new Task(command);
-                task.isCompleted = false;
-                task.taskName = command;
-                System.out.println("added:  " + task.taskName);
-                tasks[numberOfTasks] = task;
+                createTask(command, numberOfTasks);
                 numberOfTasks++;
 
             }
+
+
+            System.out.println(numberOfTasks + " task(s) in the list");
             printHorizontalBar();
-            String response = CheckTask();
-            if (Objects.equals(response, "0")) {
-                hasTask = false;
-            } else {
-                latestResponse = response;
-                hasLatestResponse = true;
+            latestResponse = checkForAdditionalTask();
+            hasAdditionalTask = true;
+            if (Objects.equals(latestResponse, "no")) {
+                break;
             }
 
 
@@ -125,15 +70,91 @@ public class Duke {
 
     }
 
-    private static void printTaskList(Task[] list) {
+    private static void greetUser() {
+        String logo = """
+                 ____        _       \s
+                |  _ \\ _   _| | _____\s
+                | | | | | | | |/ / _ \\
+                | |_| | |_| |   <  __/
+                |____/ \\__,_|_|\\_\\___|
+                """;
+
+
+        System.out.println(logo);
+        printHorizontalBar();
+        System.out.println("Hello! I'm Duke! \n");
+        printHorizontalBar();
+    }
+
+
+    private static void createTask(String command, int numberOfTasks) {
+        Task task = new Task(command);
+        task.isCompleted = false;
+        task.taskName = command;
+        System.out.println("added:  " + task.taskName);
+        tasks[numberOfTasks] = task;
+    }
+
+    private static void createEvent(String command, int numberOfTasks) {
+        String content = command.substring(5);
+        String[] contents = content.split("/");
+        String title = contents[0];
+        String startTime = contents[1];
+        String endTime = contents[2];
+        Event newEvent = new Event(title);
+        newEvent.setStartTime(startTime);
+        newEvent.setEndTime(endTime);
+        tasks[numberOfTasks] = newEvent;
+        newEvent.newEventResponse();
+    }
+
+    private static void createDeadline(String command, int numberOfTasks) {
+        String content = command.substring(8);
+        String[] contents = content.split("/");
+        String title = contents[0];
+        String dueDate = contents[1];
+        Deadline newDeadline = new Deadline(title);
+        newDeadline.setEndTime(dueDate);
+        tasks[numberOfTasks] = newDeadline;
+        newDeadline.newDeadlineResponse();
+    }
+
+    private static void markTask(String command, int numberOfTasks) {
+        String[] result = command.split(" ");
+        int taskNum = Integer.parseInt(result[1]);
+        if (taskNum > numberOfTasks || taskNum <= 0) {
+            System.out.println("Error! No such task exists!");
+        } else {
+            Task target = tasks[taskNum - 1];
+            target.markAsDone();
+            System.out.println("Nice! I've marked this task as done:");
+            System.out.println(target.getStatusIcon() + "   " + target.taskName);
+        }
+    }
+
+    private static void unmarkTask(String command, int numberOfTasks) {
+        String[] result = command.split(" ");
+        int taskNum = Integer.parseInt(result[1]);
+        if (taskNum > numberOfTasks || taskNum <= 0) {
+            System.out.println("Error! No such task exists!");
+        } else {
+            Task target = tasks[taskNum - 1];
+            target.markAsNotDone();
+            System.out.println("OK, I've marked this task as not done yet:");
+            System.out.println(target.getStatusIcon() + "   " + target.taskName);
+        }
+    }
+
+    private static void printTaskList() {
         int i = 1;
-        for (Task a : list) {
+        for (Task a : Duke.tasks) {
             if (a != null) {
                 System.out.print(i);
                 a.printTask();
                 i++;
             }
         }
+
 
     }
 
@@ -143,7 +164,7 @@ public class Duke {
         System.out.println(horizontalBar);
     }
 
-    private static String ReadTask() {
+    private static String readTask() {
         String line;
         Scanner in = new Scanner(System.in);
         line = in.nextLine();
@@ -151,15 +172,10 @@ public class Duke {
 
     }
 
-    private static String CheckTask() {
+    private static String checkForAdditionalTask() {
 
         System.out.println("Do you have any other task for me?  ");
-        String response = ReadTask();
-        if (Objects.equals(response, "no")) {
-            return "0";
-        } else {
-            return response;
-        }
+        return readTask();
 
 
     }

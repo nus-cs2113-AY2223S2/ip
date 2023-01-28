@@ -6,7 +6,7 @@ public class Deadline extends Task {
         this.endTime = endTime;
     }
 
-    public String getEndTime(){
+    public String getEndTime() {
         return endTime;
     }
 
@@ -14,11 +14,18 @@ public class Deadline extends Task {
         super(description);
     }
 
+    public void newDeadlineResponse() {
+        System.out.println("Got it. I've added \"" + this.taskName +"\"");
+        System.out.println("with a deadline of: " + this.getEndTime());
+
+
+    }
+
     @Override
-    public void printTask(){
-        if (this.isCompleted){
+    public void printTask() {
+        if (this.isCompleted) {
             System.out.println(".[D][X]" + this.taskName + " (by: " + this.getEndTime() + ")");
-        }else {
+        } else {
             System.out.println(".[D][ ]" + this.taskName + " (by: " + this.getEndTime() + ")");
         }
 
