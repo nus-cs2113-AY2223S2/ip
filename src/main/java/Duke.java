@@ -1,11 +1,10 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 public class Duke {
     /** Language state of the program. */
     public static boolean isSinglish = false;
     /** A fixed sized array to store all the tasks entered from the user. */
-    public static Task[] tasks = new Task[100];
-    /** The index of the latest entered tasks. */
-    public static int lastIndexOfTasks = 0;
+    public static ArrayList<Task> tasks = new ArrayList<>();
 
     /**
      * Toggles the language setting between normal and Singlish mode.
@@ -72,17 +71,8 @@ public class Duke {
      * @param line The task entered by the user.
      */
     public static void addToList(String line) {
-        if (lastIndexOfTasks < 100 && !line.isEmpty()) {
-            Task item = new Task(line);
-            tasks[lastIndexOfTasks] = item;
-            lastIndexOfTasks++;
-        } else if (lastIndexOfTasks == 100){
-            if (isSinglish) {
-                System.out.println("Sorry ah, the list full already");
-            } else {
-                System.out.println("Sorry, the list is full.");
-            }
-        }
+        Task item = new Task(line, tasks.size() + 1);
+        tasks.add(item);
         printHorizontalLines();
     }
 
@@ -90,44 +80,10 @@ public class Duke {
      * Prints out the entire list of tasks entered by the user.
      */
     public static void printList() {
-        for (int i = 0; i < tasks.length; i++) {
-            if (tasks[i] == null) {
-                break;
-            }
-            System.out.println(i + 1 + ".[" + tasks[i].getStatusIcon() + "] " + tasks[i].getDescription());
+        for (Task task : tasks) {
+            System.out.println(task.index + ".[" + task.getStatusIcon() + "] " + task.getDescription());
         }
         printHorizontalLines();
-    }
-
-    /**
-     * Marks or Unmark the selected task whether it is done, prints out the selected task alongside its state.
-     * If the user gives an invalid index, informs the user about it.
-     * Does nothing if the user trys to mark a marked task and vice versa/
-     *
-     * @param index The index of the task selected to be marked or unmarked.
-     * @param isMark Whether to mark or unmark the task.
-     */
-    public static void markTask(int index, boolean isMark) {
-        index--;
-        if (index < 0 || index > 99 || tasks[index] == null) {
-            if (isSinglish) {
-                System.out.println("Eh, your list dun have a task at that index lah");
-            } else {
-                System.out.println(("The list does not have a task of that index"));
-            }
-        } else {
-            if (tasks[index].getIsDone() != isMark) {
-                tasks[index].switchIsDone();
-            }
-
-            if (isSinglish) {
-                System.out.println("Ok I updated it:");
-            } else {
-                System.out.println("Updated the following task:");
-            }
-            System.out.println(index + 1 + ".[" + tasks[index].getStatusIcon() + "] " + tasks[index].getDescription());
-        }
-
     }
 
     /**
@@ -140,6 +96,39 @@ public class Duke {
             System.out.println("Invalid syntax, please try again");
         }
     }
+
+    /**
+     * Marks or Unmark the selected task whether it is done, prints out the selected task alongside its state.
+     * If the user gives an invalid index, informs the user about it.
+     * Does nothing if the user trys to mark a marked task and vice versa/
+     *
+     * @param index The index of the task selected to be marked or unmarked.
+     * @param isMark Whether to mark or unmark the task.
+     */
+    public static void markTask(int index, boolean isMark) {
+        index--;
+        if (index < 0 || index >= tasks.size()) {
+            if (isSinglish) {
+                System.out.println("Eh, your list dun have a task at that index lah");
+            } else {
+                System.out.println(("The list does not have a task of that index"));
+            }
+        } else {
+            if (tasks.get(index).getIsDone() != isMark) {
+                tasks.get(index).switchIsDone();
+            }
+
+            if (isSinglish) {
+                System.out.println("Ok I updated it:");
+            } else {
+                System.out.println("Updated the following task:");
+            }
+            System.out.println(index + 1 + ".[" + tasks.get(index).getStatusIcon() + "] "
+                                                + tasks.get(index).getDescription());
+        }
+    }
+
+
 
     public static void main(String[] args) {
         sayHello();
