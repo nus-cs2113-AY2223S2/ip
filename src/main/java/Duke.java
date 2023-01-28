@@ -26,7 +26,7 @@ public class Duke {
         }
 
         String task;
-        int firstSpaceAfterTaskType,firstSlashSeperator,secondSlashSeperator;
+        int firstSpaceAfterTaskType,firstSlashSeparator,secondSlashSeparator;
 
         switch (taskType){
             case "todo":
@@ -39,9 +39,9 @@ public class Duke {
             case "deadline":
                 //ex: deadline return book /by 2pm
                 firstSpaceAfterTaskType = input.indexOf(" ");
-                firstSlashSeperator = input.indexOf('/');
+                firstSlashSeparator = input.indexOf('/');
 
-                task = input.substring(firstSpaceAfterTaskType + 1,firstSlashSeperator - 1);
+                task = input.substring(firstSpaceAfterTaskType + 1,firstSlashSeparator - 1);
                 String by = input.substring(input.indexOf("/") + 4);
                 tasks[taskCount] = new Deadline(task,by);
                 break;
@@ -49,12 +49,12 @@ public class Duke {
             case "event":
                 //event meeting /from 2pm /to 4pm
                 firstSpaceAfterTaskType = input.indexOf(" ");
-                firstSlashSeperator = input.indexOf('/');
-                secondSlashSeperator = input.indexOf('/',input.indexOf('/') + 1);
+                firstSlashSeparator = input.indexOf('/');
+                secondSlashSeparator = input.indexOf('/',input.indexOf('/') + 1);
 
-                task = input.substring(firstSpaceAfterTaskType + 1,firstSlashSeperator - 1);
-                String from  = input.substring(firstSlashSeperator + 6, secondSlashSeperator - 1);
-                String to = input.substring(secondSlashSeperator + 4);
+                task = input.substring(firstSpaceAfterTaskType + 1,firstSlashSeparator - 1);
+                String from  = input.substring(firstSlashSeparator + 6, secondSlashSeparator - 1);
+                String to = input.substring(secondSlashSeparator + 4);
                 tasks[taskCount] = new Event(task, from, to);
                 break;
         }
