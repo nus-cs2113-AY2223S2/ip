@@ -1,11 +1,13 @@
 public class Todo extends Task {
 
-    public Todo (String description){
+    // Call task constructor after the word todo
+    public Todo(String description) {
         super(description.substring(description.indexOf(" ") + 1));
     }
 
-    public String printTask (){
-        if (this.isComplete){
+    // Overriden printTask method
+    public String printTask() {
+        if (this.isComplete) {
             return "[T][X] " + this.description;
         }
         return "[T][ ] " + this.description; 

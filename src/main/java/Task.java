@@ -2,7 +2,10 @@ import java.util.ArrayList;
 
 public class Task {
     
-    // Static ArrayList of all tasks
+    /*
+     ArrayList of all tasks
+     All subclasses of Task call the parent constructor, which adds them to the list
+    */
     public static ArrayList<Task> tasks = new ArrayList<Task>(); 
 
     // Task class attributes
@@ -10,46 +13,46 @@ public class Task {
     boolean isComplete;
 
     // Reusable barrier
-    public static String barrier = "____________________________________________________________";
+    public static final String BARRIER = "____________________________________________________________";
 
     // Sets default task to no description and incomplete then adds to list
-    public Task (){
+    public Task() {
         this.description = "";
         this.isComplete = false;
         tasks.add(this);
     }
 
     // Dynamic task constructor
-    public Task (String description) {
+    public Task(String description) {
         this.description = description;
         this.isComplete = false;
         tasks.add(this);
     }
 
     // Changes task isComplete attribute to true
-    public void markAsComplete (){
-        if (this.isComplete){
-            System.out.println("\nBlast! This task be already complete, ye swab!\n" + barrier + "\n");
+    public void markAsComplete() {
+        if (this.isComplete) {
+            System.out.println("\nBlast! This task be already complete, ye swab!\n" + BARRIER + "\n");
             return;
         }
         this.isComplete = true;
         System.out.println("\nNice! I've marked this task as done, me hearties!\n");
-        System.out.println("     " + this.printTask() + "\n" + barrier + "\n");
+        System.out.println("     " + this.printTask() + "\n" + BARRIER + "\n");
     }
 
     // Changes task isComplete attribute to true
-    public void unmarkAsComplete (){
-        if (!this.isComplete){
-            System.out.println("\nBlast! This task be already incomplete, ye bilge rat!\n" + barrier + "\n");
+    public void unmarkAsComplete() {
+        if (!this.isComplete) {
+            System.out.println("\nBlast! This task be already incomplete, ye bilge rat!\n" + BARRIER + "\n");
             return;
         }
         this.isComplete = false;
         System.out.println("\nAye, I've marked this task as not done yet, ye scallywag: \n");
-        System.out.println("     " + this.printTask() + "\n"  + barrier + "\n");
+        System.out.println("     " + this.printTask() + "\n"  + BARRIER + "\n");
     }
 
     // Prints the task completion status and description
-    public String printTask (){
+    public String printTask() {
         if (this.isComplete){
             return "[X] " + this.description;
         }
@@ -57,12 +60,12 @@ public class Task {
     }
 
     // Accessor method for the list of tasks
-    public static ArrayList<Task> getTasksArray(){
+    public static ArrayList<Task> getTasksArray() {
         return tasks;
     }
 
     // Prints all tasks
-    public static void printAllTasks(){
+    public static void printAllTasks() {
         System.out.println("Time for a productive day, me hearties! Here be yer list of tasks: ");
         for(int i = 0; i<tasks.size(); i++){
             System.out.println((i+1) + ". " + tasks.get(i).printTask());

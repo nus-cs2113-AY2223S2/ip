@@ -1,16 +1,19 @@
 public class Event extends Task {
     
+    // Attributes
     public String startTime;
     public String endTime;
 
-    public Event(String description, String start, String end){
+    // Constructor
+    public Event(String description, String start, String end) {
         super(description);
         this.startTime = start;
         this.endTime = end;
     }
     
-    public String printTask (){
-        if (this.isComplete){
+    // Overriden printTask method
+    public String printTask() {
+        if (this.isComplete) {
             return "[E][X] " + this.description;
         }
         return "[E][ ] " + this.description; 
