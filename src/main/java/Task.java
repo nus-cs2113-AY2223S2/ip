@@ -29,8 +29,11 @@ public class Task {
         return description;
     }
 
+    public String toString(){
+        return "[" + this.getStatusIcon() + "]" + " " + this.getDescription();
+    }
     public void printTaskDetails() {
         String desc = this.getDescription();
-        System.out.print("[" + this.getStatusIcon() + "]" + " " + desc+"\n");
+        System.out.print("[" + this.getStatusIcon() + "]" + " " + desc);
     }
 }

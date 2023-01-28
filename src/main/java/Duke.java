@@ -1,8 +1,9 @@
 import java.util.Scanner;
 
 public class Duke {
-    public static void printSeparator() {//prints a dash line for separating text
-        System.out.println("____________________________________________________________");
+
+    public static void printSeparator(){
+        System.out.println("_____________________________________________________");
     }
 
     public static void printGreeting() {
@@ -22,7 +23,7 @@ public class Duke {
         System.out.println("added: " + input);
         printSeparator();
     }
-
+    /*
     public static void handleRequest(String input, TaskManager dukeManager) { //TO be implemented in own class
         if (input.equals("list")) {
             dukeManager.listTasks();
@@ -36,7 +37,7 @@ public class Duke {
             printEcho(input);
         }
     }
-
+    */
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -55,7 +56,7 @@ public class Duke {
                 byeFlag = true;
                 printGoodbye();
             } else {
-                handleRequest(userInput, dukeManager);
+                dukeManager.handleCommand(userInput);
             }
         }
     }
