@@ -5,6 +5,7 @@ public class Duke {
         int byIndex = input.indexOf("/by");
         String description = (input.substring(0, byIndex)).trim();
         String restOfInput = input.substring(byIndex);
+
         int startingIndex = (restOfInput).indexOf(" ");
         String by = restOfInput.substring(startingIndex + 1);
         Task.tasks[Task.numOfTasks] = new Deadline(description, by);
@@ -14,6 +15,7 @@ public class Duke {
         int descriptionIndex = input.indexOf("/from");
         String description = (input.substring(0, descriptionIndex)).trim();
         String restOfInput = input.substring(descriptionIndex);
+        
         int fromIndex = restOfInput.indexOf(" ");
         int toIndex = restOfInput.indexOf("/to");
         String from = (restOfInput.substring(fromIndex, toIndex)).trim();
