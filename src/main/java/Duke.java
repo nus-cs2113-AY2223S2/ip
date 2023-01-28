@@ -7,150 +7,128 @@ public class Duke {
     public static boolean isCompleted = false;
     private static final List<Task> userList = new ArrayList<>();
 
-    public void welcomeMessage() {
+    public static void welcomeMessage() {
         separator();
-        formatMessage("Hello! I'm Duke");
-        formatMessage("What can I do for you?");
+        printMessage("Hello! I'm Duke");
+        printMessage("What can I do for you?");
         separator();
     }
 
-    public void endingMessage() {
-        formatMessage("Bye. Hope to see you again soon!");
+    public static void endingMessage() {
+        separator();
+        printMessage("Bye. Hope to see you again soon!");
+        separator();
     }
 
-    public void separator() {
+    public static void separator() {
         String separatorLine = "-".repeat(60);
         System.out.println(separatorLine);
     }
 
-    public void formatMessage(String message) {
+    public static void printMessage(String message) {
         String outputMessage = String.format("| %-57s|", message);
         System.out.println(outputMessage);
     }
 
-    public void checkInput(String inputMessage) {
+    public static void checkInput(String inputMessage) {
         if (inputMessage.equalsIgnoreCase("bye")) {
             isCompleted = true;
-            separator();
-            endingMessage();
-            separator();
-        } else if (inputMessage.equalsIgnoreCase("list")) {
-            separator();
-            displayList();
-            separator();
-        } else if (inputMessage.startsWith("mark")) {
-            String[] message = inputMessage.split(" ");
-            int itemNumber = Integer.parseInt(message[1]);
-            if (itemNumber > userList.size()) {
-                String errorMessage = String.format("List only has %d items!", userList.size());
-                separator();
-                formatMessage(errorMessage);
-                separator();
-                return;
-            }
-
-            separator();
-            String outputMessage = String.format("Nice! I've marked task %d as done:", itemNumber);
-            formatMessage(outputMessage);
-            markItem(itemNumber);
-            formatMessage(displayItem(itemNumber));
-            separator();
-        } else if (inputMessage.startsWith("unmark")) {
-            String[] message = inputMessage.split(" ");
-            int itemNumber = Integer.parseInt(message[1]);
-            if (itemNumber > userList.size()) {
-                String errorMessage = String.format("List only has %d items!", userList.size());
-                separator();
-                formatMessage(errorMessage);
-                separator();
-                return;
-            }
-
-            separator();
-            String outputMessage = String.format("OK, I've marked task %d as not done:",
-                itemNumber);
-            formatMessage(outputMessage);
-            unmarkItem(itemNumber);
-            formatMessage(displayItem(itemNumber));
-            separator();
-        } else {
-            separator();
-            addItem(inputMessage);
-            separator();
+            return;
         }
+        if (inputMessage.equalsIgnoreCase("list")) {
+            displayList();
+            return;
+        }
+        if (inputMessage.startsWith("mark")) {
+            markItem(inputMessage);
+            return;
+        }
+        if (inputMessage.startsWith("unmark")) {
+            unmarkItem(inputMessage);
+            return;
+        }
+
+        addItem(inputMessage);
+    }
+    
+    public static int checkValidTask(String inputMessage) {
+        String[] message = inputMessage.split(" ");
+        int itemNumber = Integer.parseInt(message[1]);
+        return itemNumber > userList.size() ? -1 : itemNumber;
     }
 
-    public void addItem(String item) {
+    public static void addItem(String item) {
+        separator();
         Task t = new Task(item);
         userList.add(t);
         String outputMessage = String.format("added: %s", item);
-        formatMessage(outputMessage);
+        printMessage(outputMessage);
+        separator();
     }
 
-    public void displayList() {
+    public static void displayList() {
+        separator();
         int numItems = userList.size();
         if (numItems == 0) {
-            formatMessage("List is empty!");
-        } else {
-            for (int i = 0; i < numItems; i++) {
-                String item = displayItem(i + 1);
-                String outputMessage = String.format("%d.%s", i + 1, item);
-                formatMessage(outputMessage);
-            }
+            printMessage("List is empty!");
+            return;
         }
+
+        for (int i = 0; i < numItems; i++) {
+            String item = displayItem(i + 1);
+            String outputMessage = String.format("%d.%s", i + 1, item);
+            printMessage(outputMessage);
+        }
+        separator();
     }
 
-    public String displayItem(int index) {
+    public static String displayItem(int index) {
         String itemStatus = userList.get(index - 1).getStatusIcon();
         String itemDescription = userList.get(index - 1).getDescription();
         return String.format("[%s] %s", itemStatus, itemDescription);
     }
 
-    public void markItem(int index) {
-        userList.get(index - 1).setAsDone();
+    public static void markItem(String inputMessage) {
+        separator();
+        int itemNumber = checkValidTask(inputMessage);
+        if (itemNumber == -1) {
+            String errorMessage = String.format("List only has %d items!", userList.size());
+            printMessage(errorMessage);
+        } else {
+            userList.get(itemNumber - 1).setAsDone();
+            String outputMessage = String.format("Nice! I've marked task %d as done:", itemNumber);
+            printMessage(outputMessage);
+            printMessage(displayItem(itemNumber));
+        }
+        separator();
     }
 
-    public void unmarkItem(int index) {
-        userList.get(index - 1).setAsNotDone();
-    }
-
-    public static class Task {
-
-        protected String description;
-        protected boolean isDone;
-
-        public Task(String description) {
-            this.description = description;
-            this.isDone = false;
+    public static void unmarkItem(String inputMessage) {
+        separator();
+        int itemNumber = checkValidTask(inputMessage);
+        if (itemNumber == -1) {
+            String errorMessage = String.format("List only has %d items!", userList.size());
+            printMessage(errorMessage);
+        } else {
+            userList.get(itemNumber - 1).setAsNotDone();
+            String outputMessage = String.format("OK, I've marked task %d as not done yet:", itemNumber);
+            printMessage(outputMessage);
+            printMessage(displayItem(itemNumber));
         }
-
-        public String getStatusIcon() {
-            return ((this.isDone) ? "X" : " ");
-        }
-
-        public String getDescription() {
-            return this.description;
-        }
-
-        public void setAsDone() {
-            this.isDone = true;
-        }
-
-        public void setAsNotDone() {
-            this.isDone = false;
-        }
+        separator();
     }
 
     public static void main(String[] args) {
-        Duke chatBot = new Duke();
-        chatBot.welcomeMessage();
+        welcomeMessage();
 
         String line;
         Scanner in = new Scanner(System.in);
 
         do {
             line = in.nextLine();
-            chatBot.checkInput(line);
+            checkInput(line);
         } while (!isCompleted);
+        
+        endingMessage();
     }
 }
