@@ -2,9 +2,9 @@ import java.util.Arrays;
 
 public class TaskMaster {
     //initialise an array to store the tasks
-    String[] toDo;
+    private String[] toDo;
 
-    TaskMaster() {
+    public TaskMaster() {
         this.toDo = new String[0];
     }
 

@@ -4,9 +4,9 @@ import java.util.Scanner;
 // ">>" is merely for UI purposes to prompt users to type in their next command
 //Easier than typing scanner scanner
 public class IO {
-    Scanner toRead;
+    private Scanner toRead;
 
-    IO() {
+    public IO() {
         this.toRead = new Scanner(System.in);
     }
 
