@@ -7,11 +7,11 @@ public class Task {
         this.isDone = false;
     }
 
-    public String getStatusIcon() {
+    public String toString() {
         if (isDone) {
-            return "[X]";
+            return "[X] " + description;
         }
-        return "[ ]";
+        return "[ ] " + description;
     }
 
     public void setDone(String mark) {
@@ -21,5 +21,10 @@ public class Task {
             this.isDone = false;
         }
     }
+
+    public String addTaskMessage() {
+        return "Got it. I've added this task:\n  " + this.toString() + System.lineSeparator();
+    }
+
 
 }
