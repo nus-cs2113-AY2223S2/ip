@@ -1,5 +1,8 @@
 import java.util.Scanner;
 public class Rolex {
+    public static void printLines(){
+        System.out.println("--------------------------------------------------");
+    }
 
     public static void main(String[] args) {
 
@@ -15,9 +18,9 @@ public class Rolex {
             String UserInput = ReadInput.nextLine();
 
             if(UserInput.equalsIgnoreCase("bye")){
-                System.out.println("--------------------------------------------------");
+                printLines();
                 System.out.println("Bye. Hope to see you again soon!\n");
-                System.out.println("--------------------------------------------------");
+                printLines();
                 System.exit(0);
             }
 
@@ -28,27 +31,16 @@ public class Rolex {
             else if(UserInput.startsWith("mark")){
                 int index = Integer.parseInt(UserInput.substring(5));
                 task[index-1].MarkTask();
-                System.out.println("--------------------------------------------------");
-                System.out.println("Well Done. This task is marked as done:");
-                System.out.println("[" + task[index-1].TaskStatus() + "] " + task[index-1].TaskName);
-                System.out.println("--------------------------------------------------");
             }
 
             else if(UserInput.startsWith("unmark")){
                 int index = Integer.parseInt(UserInput.substring(7));
                 task[index-1].unMarkTask();
-                System.out.println("--------------------------------------------------");
-                System.out.println("Oh no, I've unmarked this task as it is not done:");
-                System.out.println("[" + task[index-1].TaskStatus() + "] " + task[index-1].TaskName);
-                System.out.println("--------------------------------------------------");
             }
 
             else{
                 task[taskCount] = new Tasks(UserInput);
                 taskCount++;
-                System.out.println("--------------------------------------------------");
-                System.out.println(" I've added this task: " + UserInput);
-                System.out.println("--------------------------------------------------");
             }
         }
     }
