@@ -70,10 +70,25 @@ public class Duke {
      *
      * @param line The task entered by the user.
      */
-    public static void addToList(String line) {
-        Task item = new Task(line, tasks.size() + 1);
-        tasks.add(item);
+    public static void addToList(String line, TypeOfTask typeOfTask) {
+        if (typeOfTask.equals(TypeOfTask.TODO)) {
+            Todo item = new Todo(line, tasks.size() + 1);
+            tasks.add(item);
+        } else if (typeOfTask.equals(TypeOfTask.DEADLINE)) {
+            Deadline item = new Deadline(line, tasks.size() + 1);
+            tasks.add(item);
+        } else if (typeOfTask.equals(TypeOfTask.EVENT))  {
+            Event item = new Event(line, tasks.size() + 1);
+            tasks.add(item);
+        }
         printHorizontalLines();
+    }
+
+    /**
+     * Prints out the task passed into it
+     */
+    public static void printTask(Task task) {
+        System.out.println(task.index + ".[" + task.getStatusForTypeOfTask() + "]" + "[" + task.getStatusIcon() + "] " + task.getDescription());
     }
 
     /**
@@ -81,7 +96,7 @@ public class Duke {
      */
     public static void printList() {
         for (Task task : tasks) {
-            System.out.println(task.index + ".[" + task.getStatusIcon() + "] " + task.getDescription());
+            printTask(task);
         }
         printHorizontalLines();
     }
@@ -123,12 +138,12 @@ public class Duke {
             } else {
                 System.out.println("Updated the following task:");
             }
-            System.out.println(index + 1 + ".[" + tasks.get(index).getStatusIcon() + "] "
-                                                + tasks.get(index).getDescription());
+            System.out.println((index + 1) +
+                            ".[" + tasks.get(index).getStatusForTypeOfTask() + "]" +
+                            "[" + tasks.get(index).getStatusIcon() + "] " +
+                            tasks.get(index).getDescription());
         }
     }
-
-
 
     public static void main(String[] args) {
         sayHello();
@@ -152,8 +167,15 @@ public class Duke {
                 } else {
                     warnWrongSyntax();
                 }
-            } else {
-                addToList(line);
+            } else if (commands[0].equals("todo") ) {
+                String desc = line.substring(6, line.length());
+                addToList(desc, TypeOfTask.TODO);
+            } else if (commands[0].equals("deadline") ) {
+                String desc = line.substring(10, line.length());
+                addToList(desc, TypeOfTask.DEADLINE);
+            } else if (commands[0].equals("event") ) {
+                String desc = line.substring(7, line.length());
+                addToList(desc, TypeOfTask.EVENT);
             }
         }
     }
