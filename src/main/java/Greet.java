@@ -16,16 +16,11 @@ public class Greet {
 
     public void printHello(){
         Formatter formatter = new Formatter();
-        Tool tool = new Tool();
-        formatter.addStringIndentation(logo);
-        formatter.addStringIndentation(hello);
+        formatter.addStringIndentation(this.logo);
+        formatter.addStringIndentation(this.hello);
 
-        formatter.drawSeparationLine();
-        formatter.printIndentation(6);
-        System.out.print("Hello from\n");
-        tool.printStringArray(logo);
-        formatter.drawSeparationLine();
-        tool.printStringArray(hello);
-        formatter.drawSeparationLine();
+        UI sayHello = new UI();
+        sayHello.greet(this.logo, this.hello);
+
     }
 }

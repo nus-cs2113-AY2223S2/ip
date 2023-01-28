@@ -12,12 +12,25 @@ public class TaskManager {
         this.count = 0;
     }
 
-    public Todo generateNewTodo(String taskDescription){
+    /**
+     * Create new todoTask.
+     *
+     * @param taskDescription
+     * @return
+     */
+    public Todo createNewTodo(String taskDescription){
         Todo newTodo = new Todo(taskDescription);
         return newTodo;
     }
 
-    public Deadline generateNewDeadline(String taskDescription){
+    /**
+     * Create new deadline task.
+     * Get deadline from command.
+     *
+     * @param taskDescription
+     * @return
+     */
+    public Deadline createNewDeadline(String taskDescription){
         int index = taskDescription.indexOf("/by");
         String deadlineContent = taskDescription.substring(0,index-1);
         String deadlineDate = taskDescription.substring(index+4);
@@ -25,7 +38,14 @@ public class TaskManager {
         return newDeadline;
     }
 
-    public Event generateNewEvent(String taskDescription){
+    /**
+     * Create new event.
+     * Get duration from input command.
+     *
+     * @param taskDescription
+     * @return
+     */
+    public Event createNewEvent(String taskDescription){
         int indexStart = taskDescription.indexOf("/from");
         int indexEnd = taskDescription.indexOf("/to");
         String eventContent = taskDescription.substring(0,indexStart-1);
@@ -35,14 +55,21 @@ public class TaskManager {
         return newEvent;
     }
 
+    /**
+     * Create new task obejcts based on the type of the task.
+     *
+     * @param taskType
+     * @param taskDescription
+     * @return
+     */
     public Task generateNewTask(String taskType, String taskDescription){
         Task newTask;
         if(taskType.equals("todo")){
-            newTask = generateNewTodo(taskDescription);
+            newTask = createNewTodo(taskDescription);
         }else if(taskType.equals("deadline")){
-            newTask = generateNewDeadline(taskDescription);
+            newTask = createNewDeadline(taskDescription);
         }else{
-            newTask = generateNewEvent(taskDescription);
+            newTask = createNewEvent(taskDescription);
         }
         return newTask;
     }
@@ -65,27 +92,23 @@ public class TaskManager {
     /**
      * Mark tasks as done/not done.
      *
-     * @param taskIndex splited input command.
+     * @param taskIndex index of the task to be edited.
      * @param status mark/unmark.
      */
     public void editTaskStatus(String taskIndex, String status){
         UI printEditedTasks = new UI();
-//        Parser parseEditedTask = new Parser();
-
         int index = Integer.parseInt(taskIndex)-1;
         if(status.equals("mark")){
             tasks[index].markDone();
         }else{
             tasks[index].undo();
         }
-
         String caption;
         if(status.equals("mark")){
             caption = "      Nice! I've marked this task as done:";
         }else{
             caption = "      OK, I've marked this task as not done yet:";
         }
-
         printEditedTasks.updateTaskStatus(tasks[index], caption);
     }
 
