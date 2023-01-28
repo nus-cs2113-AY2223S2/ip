@@ -15,6 +15,7 @@ bin/
 
 #  Any other stuff that should not be committed
 *.class
+*.xml
 
 /text-ui-test/ACTUAL.TXT
 text-ui-test/EXPECTED-UNIX.TXT
