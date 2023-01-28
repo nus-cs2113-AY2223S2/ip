@@ -2,9 +2,7 @@ import java.util.*;
 
 public class Duke {
 
-    public static final int TASK_LENGTH = 100;
-    static String[] tasksList = new String[TASK_LENGTH];
-    static int tasksListIndex = 0;
+    static ArrayList<Task> tasksList = new ArrayList<Task>();
 
     public static void sendLogo(){
         String logo = " ____        _        \n"
@@ -42,24 +40,58 @@ public class Duke {
         return commandTypeAndParams;
     }
 
-    public static String executeListCommand(){
+    public static String executeListCommand(String commandParams){
+        if(commandParams != null){
+            return "ListParamsError: List command do not have Params!";
+        }
+
         String tasksListString = "";
-        int sequence = 1;
-        for(String task: tasksList){
-            if(task == null)break;
-            tasksListString += sequence + ". " + task + "\n";
-            sequence += 1;
+        for(int i = 0; i < tasksList.size() ; i++){
+            tasksListString +=(i+1) + "." + tasksList.get(i).getStatusIcon() + " " + tasksList.get(i).getDescription() + "\n";
         }
         return tasksListString;
     }
 
-    public static String executeAddTaskCommand(String newTask){
-        if(newTask == null)return "";
+    public static String executeAddTaskCommand(String newTaskString){
+        if(newTaskString == null)return "";
 
-        tasksList[tasksListIndex] = newTask;
-        tasksListIndex += 1;
+        Task newTaskObject = new Task(newTaskString);
+        tasksList.add(newTaskObject);
 
-        String feedback = "added: " + newTask;
+        String feedback = "added: " + newTaskString;
+        return feedback;
+    }
+
+    public static String executeMarkUnmarkTaskCommand(String taskToMarkIndexString, boolean IsMarkAsDone){
+        int index;
+        String feedback;
+
+        //Input cannot format into an Index
+        try{
+            index = Integer.parseInt(taskToMarkIndexString);
+        }catch (NumberFormatException nfe){
+            feedback = "TaskIndexFormatError: Cannot format your input to a Task Index!";
+            return feedback;
+        }
+
+        //Input Index out of range
+        index = index - 1;
+        if(index < 0 || index >= tasksList.size()){
+            feedback = "TaskIndexNotFoundError: Cannot find the index in TasksList!";
+            return feedback;
+        }
+
+        //set mark or unmark status, and get feedback
+        Task taskToMark = tasksList.get(index);
+        taskToMark.setStatus(IsMarkAsDone);
+
+        if(IsMarkAsDone == true){
+            feedback = "Nice! I've marked this task as done:\n"
+                    + taskToMark.getStatusIcon()  + taskToMark.getDescription();
+        }else{
+            feedback = "OK, I've marked this task as not done yet:\n"
+                    + taskToMark.getStatusIcon()  + taskToMark.getDescription();
+        }
         return feedback;
     }
 
@@ -68,14 +100,28 @@ public class Duke {
         String commandType = commandTypeAndParams[0];
         String commandParams = commandTypeAndParams[1];
 
-//        System.out.println("commandType="+commandType);
-//        System.out.println("commandParams="+commandParams);
-
         String feedback = null;
-        if(commandType.equals("list")){
-            feedback = executeListCommand();
-        }else{//add an item
-            feedback = executeAddTaskCommand(commandParams);
+        switch (commandType){
+            case("list"):{
+                feedback = executeListCommand(commandParams);
+                break;
+            }
+            case("add"):{
+                feedback = executeAddTaskCommand(commandParams);
+                break;
+            }
+            case("mark"):{
+                feedback = executeMarkUnmarkTaskCommand(commandParams, true);
+                break;
+            }
+            case("unmark"):{
+                feedback = executeMarkUnmarkTaskCommand(commandParams, false);
+                break;
+            }
+            default:{
+                feedback = "CommandError: I can't understand \"" + userCommand +"\"!";
+                break;
+            }
         }
         return feedback;
     }
@@ -93,8 +139,6 @@ public class Duke {
         }
         scanner.close();
         System.out.println("\t------------------------------------------------------------");
-
-        return;
     }
 
     public static void main(String[] args) {
@@ -108,6 +152,5 @@ public class Duke {
             String feedback = executeCommand(userCommand);
             showResultToUser(feedback);
         }
-        return;
     }
 }
