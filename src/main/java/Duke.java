@@ -23,42 +23,19 @@ public class Duke {
         printSeparator();
     }
 
-    public static void printTaskDetails(Task item) {
-        String desc = item.getDescription();
-        System.out.print("[" + item.getStatusIcon() + "]" + " " + desc+"\n");
-    }
-
-
-    public static void handleRequest(String input, Task[] taskList) {
+    public static void handleRequest(String input, TaskManager dukeManager) { //TO be implemented in own class
         if (input.equals("list")) {
-            for (int i = 0; i < Task.getTaskNumber() + 1; i++) {
-                System.out.print((i + 1) + ".");
-                printTaskDetails(taskList[i]);
-            }
+            dukeManager.listTasks();
             printSeparator();
         } else if (input.contains("mark")) {
-            markTask(input, taskList);
+            dukeManager.markTask(input);
         } else {
             Task newTask = new Task(input);
-            taskList[Task.getTaskNumber()] = newTask;
+            //taskList[Task.getTaskNumber()] = newTask;
+            dukeManager.addTask(newTask);
             printEcho(input);
         }
     }
-
-    private static void markTask(String input, Task[] taskList) {
-        int whitespaceIndex = input.indexOf(" ");
-        int startingIndex = Integer.parseInt(input.substring(whitespaceIndex + 1));
-        if (input.indexOf("m") == 0) {
-            taskList[startingIndex - 1].markAsDone();
-            System.out.println("Nice! I've marked this task as done: ");
-        } else {
-            taskList[startingIndex - 1].markAsUndone();
-            System.out.println("OK, I've marked this task as not done yet: ");
-        }
-        printTaskDetails(taskList[startingIndex - 1]);
-        printSeparator();
-    }
-
 
     public static void main(String[] args) {
         String logo = " ____        _        \n"
@@ -70,14 +47,15 @@ public class Duke {
         printGreeting();
         boolean byeFlag = false;
         Scanner line = new Scanner(System.in);
-        Task[] userList = new Task[100]; //no more than 100 tasks
+        TaskManager dukeManager = new TaskManager(100);
+        //Task[] userList = new Task[100]; //no more than 100 tasks
         while (!byeFlag) {
             String userInput = line.nextLine();
             if (userInput.equals("bye")) {
                 byeFlag = true;
                 printGoodbye();
             } else {
-                handleRequest(userInput, userList);
+                handleRequest(userInput, dukeManager);
             }
         }
     }

@@ -29,5 +29,8 @@ public class Task {
         return description;
     }
 
-
+    public void printTaskDetails() {
+        String desc = this.getDescription();
+        System.out.print("[" + this.getStatusIcon() + "]" + " " + desc+"\n");
+    }
 }
