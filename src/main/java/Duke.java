@@ -12,43 +12,26 @@ public class Duke {
         while (true) {
             line = in.nextLine();
             if ("list".equalsIgnoreCase(line)) {
-                System.out.println("____________________________________________________________");
-                System.out.println(" Here are the tasks in your list:");
-                int index = 1;
-                for (int i = 0; i < taskCount; i++) {
-                    System.out.println("  " + index + "." + tasks[i].toString());
-                    index++;
-                }
-                System.out.println("____________________________________________________________");
+                printAllTasks(tasks, taskCount);
             } else if ((line.substring(0,4)).equalsIgnoreCase("mark")) {
-                System.out.println("____________________________________________________________");
-                System.out.println(" Nice! I've marked this task as done:");
-                int index = Integer.parseInt(line.substring(5));
-                tasks[index-1].markAsDone();
-                System.out.println(tasks[index-1].toString());
-                System.out.println("____________________________________________________________");
+                markTaskAsComplete(line, tasks);
             } else if ((line.substring(0,6)).equalsIgnoreCase("unmark")) {
-                System.out.println("____________________________________________________________");
-                System.out.println(" Okay, I've marked this task as not done yet:");
-                int index = Integer.parseInt(line.substring(7));
-                tasks[index-1].markAsNotDone();
-                System.out.println(tasks[index-1].toString());
-                System.out.println("____________________________________________________________");
+                markTaskAsNotComplete(line, tasks);
             } else if((line.substring(0,4)).equalsIgnoreCase("todo")) {
                 tasks[taskCount] = new Todo(line.substring(5));
                 taskCount++;
                 printTaskAddedDescription(tasks, taskCount);
             } else if((line.substring(0,8)).equalsIgnoreCase("deadline")) {
-                int dividerPosition = line.indexOf("/by");
+                int dividerPosition = line.indexOf("/by"); //index of due date/time
                 String taskDescription = line.substring(9, dividerPosition);
                 String deadline = line.substring(dividerPosition+4);
                 tasks[taskCount] = new Deadline(taskDescription, deadline);
                 taskCount++;
                 printTaskAddedDescription(tasks, taskCount);
             } else if((line.substring(0,5)).equalsIgnoreCase("event")) {
-                int divider1 = line.indexOf("/from");
+                int divider1 = line.indexOf("/from"); //index of start date/time
                 String event = line.substring(6, divider1);
-                int divider2 = line.indexOf("/to");
+                int divider2 = line.indexOf("/to"); //index of end date/time
                 String eventStart = line.substring(divider1+6, divider2);
                 String eventEnd = line.substring(divider2+4);
                 tasks[taskCount] = new Event(event, eventStart, eventEnd);
@@ -75,6 +58,35 @@ public class Duke {
         System.out.println("____________________________________________________________");
     }
 
+    private static void printAllTasks(Task[] tasks, int taskCount) {
+        System.out.println("____________________________________________________________");
+        System.out.println(" Here are the tasks in your list:");
+        int index = 1;
+        for (int i = 0; i < taskCount; i++) {
+            System.out.println("  " + index + "." + tasks[i].toString()); //print Task Description
+            index++;
+        }
+        System.out.println("____________________________________________________________");
+    }
+
+    private static void markTaskAsNotComplete(String line, Task[] tasks) {
+        System.out.println("____________________________________________________________");
+        System.out.println(" Okay, I've marked this task as not done yet:");
+        int index = Integer.parseInt(line.substring(7));
+        tasks[index-1].markAsNotDone();
+        System.out.println(tasks[index-1].toString()); //print Task Description
+        System.out.println("____________________________________________________________");
+    }
+
+    private static void markTaskAsComplete(String line, Task[] tasks) {
+        System.out.println("____________________________________________________________");
+        System.out.println(" Nice! I've marked this task as done:");
+        int index = Integer.parseInt(line.substring(5));
+        tasks[index-1].markAsDone();
+        System.out.println(tasks[index-1].toString()); //print Task Description
+        System.out.println("____________________________________________________________");
+    }
+
     private static void printTaskAddedDescription(Task[] tasks, int taskCount) {
         System.out.println("____________________________________________________________");
         System.out.println(" Got it. I've added this task:");
@@ -88,5 +100,4 @@ public class Duke {
         System.out.println("Bye. Hope to see you again soon!");
         System.out.println("____________________________________________________________");
     }
-
 }
