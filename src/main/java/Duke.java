@@ -2,6 +2,8 @@
 import java.util.List;
 import java.util.Scanner;
 import java.util.ArrayList;
+
+
 public class Duke {
     public static void main(String[] args) {
         String logo = " ____        _        \n"
@@ -15,20 +17,40 @@ public class Duke {
                 " What can I do for you?\n" +
                 "____________________________________________________________\n");
         String line;
-        List <String> tasks = new ArrayList<>();
+        List<Task> tasks = new ArrayList<>();
         Scanner in = new Scanner(System.in);
         line = in.nextLine();
         while(!line.equals("bye")) {
             System.out.println("____________________________________________________________\n");
             if (line.equals("list")) {
                 for (int i = 0; i < tasks.size(); i++) {
-                    System.out.println("\t" + (i+1) + "." + " " + tasks.get(i));
+                    Task todo = tasks.get(i);
+                    System.out.println("\t" + (i+1) + todo.getStatusIcon() + todo.description);
                 }
                 System.out.println("____________________________________________________________\n");
-            } else {
+            }
+            else if (line.contains("unmark")) {
+                int index = line.indexOf("") + 1;
+                Task taskUnmarked = tasks.get(index - 1);
+                taskUnmarked.markUndone();
+                System.out.printf("" + "Okay, I've marked this task as not done yet:\n" + "\t" + " " + "[" +
+                        taskUnmarked.getStatusIcon() + "]" + " "+ taskUnmarked.description + "\n");
+                System.out.println("____________________________________________________________\n");
+            }
+            else if (line.contains("mark")) {
+                int index = line.indexOf("") + 1;
+                Task taskMarked = tasks.get(index - 1);
+                taskMarked.markDone();
+                System.out.printf(" " + "Nice! I've marked this task as done:\n" + "\t" + " " + "[" +
+                        taskMarked.getStatusIcon() + "]" + " "+ taskMarked.description + "\n");
+                System.out.println("____________________________________________________________\n");
+            }
+            else {
                 System.out.println("\t" + "added: " + line);
                 System.out.println("____________________________________________________________\n");
-                tasks.add(line);
+                Task newTask = new Task(line);
+                tasks.add(newTask);
+
             }
             line = in.nextLine();
         }
