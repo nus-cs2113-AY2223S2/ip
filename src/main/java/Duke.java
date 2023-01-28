@@ -24,8 +24,8 @@ public class Duke {
             System.out.println("____________________________________________________________\n");
             if (line.equals("list")) {
                 for (int i = 0; i < tasks.size(); i++) {
-                    Task todo = tasks.get(i);
-                    System.out.println("\t" + (i+1) + todo.getStatusIcon() + todo.description);
+                    Task todoList = tasks.get(i);
+                    System.out.println("\t" + (i+1) + todoList.getStatusIcon() + todoList.description);
                 }
                 System.out.println("____________________________________________________________\n");
             }
