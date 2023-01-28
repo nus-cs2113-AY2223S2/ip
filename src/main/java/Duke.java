@@ -22,48 +22,41 @@ public class Duke {
                 + "the list of tasks.");
     }
 
-    /*
-     * public static void echo() {
-     * Scanner scanner = new Scanner(System.in);
-     * while (true) {
-     * String line = scanner.nextLine();
-     * System.out.println(
-     * "____________________________________________________________");
-     * System.out.println(line);
-     * System.out.println(
-     * "____________________________________________________________");
-     * if (line.equals("bye")) {
-     * scanner.close();
-     * break;
-     * }
-     * }
-     * }
-     */
-
     public static void exit() {
         printLine();
         System.out.println("Bye. Hope to see you again soon!");
         printLine();
     }
 
+    public static boolean parseUserInput(String input) {
+        String[] split = input.trim().split("\\s+", 2);
+        String command = split[0];
+        String args = split.length == 2 ? split[1] : "";
+        switch (command) {
+        case "bye":
+            return false;
+        case "list":
+            taskList.listTasks();
+        case "help":
+            help();
+        case "mark":
+            taskList.markDone(Integer.parseInt(args));
+        case "unmark":
+            taskList.unmarkDone(Integer.parseInt(args));
+        default:
+            taskList.addTask(command);
+        }
+        return true;
+    }
+
+    public static TaskList taskList = new TaskList(100);
     public static void main(String[] args) {
         greetUser();
         // echo();
-        TaskList taskList = new TaskList(100);
+
         Scanner scanner = new Scanner(System.in);
         String line = scanner.nextLine();
-        while (!line.equals("bye")) {
-            if (line.equals("list")) {
-                taskList.listTasks();
-            } else if (line.equals("help")) {
-                help();
-            } else if (line.length() >= 4 && line.substring(0, 4).equals("mark")) {
-                taskList.markDone(Integer.parseInt(line.substring(5)));
-            } else if (line.length() >= 6 && line.substring(0, 6).equals("unmark")) {
-                taskList.unmarkDone(Integer.parseInt(line.substring(7)));
-            } else {
-                taskList.addTask(line);
-            }
+        while (parseUserInput(line)) {
             printLine();
             line = scanner.nextLine();
         }
