@@ -50,7 +50,7 @@ public class Duke {
             } else if (action.startsWith("todo")) {
                 String[] inputs = action.split(" ", 2);
                 String todoTask = inputs[1];
-                tasks[index] = new Todos(todoTask);
+                tasks[index] = new Todo(todoTask);
                 index = index + 1;
                 System.out.println("     Got it. I've added this task:");
                 System.out.println("       [T][ ] " + todoTask);
@@ -64,7 +64,7 @@ public class Duke {
                 String[] taskAndDeadline = todoTask.split(" /by ");
                 String theTask = taskAndDeadline[0];
                 String dueBy = taskAndDeadline[1];
-                tasks[index] = new Deadlines(theTask, dueBy);
+                tasks[index] = new Deadline(theTask, dueBy);
                 index = index + 1;
                 System.out.println("     Got it. I've added this task:");
                 System.out.println("       [D][ ] " + theTask + " (by: " + dueBy + ")");
@@ -81,7 +81,7 @@ public class Duke {
                 String[] startAndEnd = dueBy.split(" /to ");
                 String start = startAndEnd[0];
                 String end = startAndEnd[1];
-                tasks[index] = new Events(theTask, start, end);
+                tasks[index] = new Event(theTask, start, end);
                 index = index + 1;
                 System.out.println("     Got it. I've added this task:");
                 System.out.println("       [E][ ] " + theTask + " (from: " + start + " to: " + end + ")");
