@@ -18,7 +18,7 @@ public class Task {
     public void unmarkAsDone() {
         this.isDone = false;
     }
-    
+
     public String describeTask() {
         return "[" + getStatusIcon() + "] " + description;
     }

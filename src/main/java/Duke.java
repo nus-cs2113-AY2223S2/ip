@@ -56,25 +56,25 @@ public class Duke {
             String firstWord = getFirstWord(line);
 
             switch (firstWord) {
-                case "mark":
-                    markTask(taskList, Integer.parseInt(getSecondWord(line)));
+            case "mark":
+                markTask(taskList, Integer.parseInt(getSecondWord(line)));
+                break;
+            case "unmark":
+                unmarkTask(taskList, Integer.parseInt(getSecondWord(line)));
+                break;
+            default:
+                switch (line) {
+                case "list":
+                    listTask(taskList);
                     break;
-                case "unmark":
-                    unmarkTask(taskList, Integer.parseInt(getSecondWord(line)));
+                case "bye":
+                    isComplete = true;
                     break;
                 default:
-                    switch (line) {
-                        case "list":
-                            listTask(taskList);
-                            break;
-                        case "bye":
-                            isComplete = true;
-                            break;
-                        default:
-                            taskList[count] = new Task(line);
-                            count++;
-                            System.out.println("added: " + line + "\n");
-                    }
+                    taskList[count] = new Task(line);
+                    count++;
+                    System.out.println("added: " + line + "\n");
+                }
             }
         }
 
