@@ -1,6 +1,5 @@
 public class Task {
     protected String description;
-
     protected boolean isDone;
 
     public Task(String description) {
@@ -32,5 +31,9 @@ public class Task {
     public void markAsUndone() {
         setDone(false);
         setDescription(description.replace("[X]", "[ ]"));
+    }
+
+    public String toString() {
+        return "[" + getStatusIcon() +  "]" + description;
     }
 }
