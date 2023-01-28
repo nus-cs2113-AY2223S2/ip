@@ -50,7 +50,7 @@ public class Duke {
             int unmarkTask = Integer.parseInt(userInputSplit[1]) - 1;
             task = listOfTasks.get(unmarkTask);
             task.markAsUndone();
-            System.out.println("OK, I've marked this task as not done yet: ");
+            System.out.println("OK, I've marked this task as not done yet:");
             System.out.println(task);
             break;
         case "todo":
@@ -86,7 +86,7 @@ public class Duke {
      */
     private static void addAndPrintTask(ArrayList<Task> listOfTasks, Task task) {
         listOfTasks.add(task);
-        System.out.println("Got it. I've added this task: ");
+        System.out.println("Got it. I've added this task:");
         System.out.println(task);
         System.out.println("Now you have " + listOfTasks.size() + " tasks in the list.");
     }
