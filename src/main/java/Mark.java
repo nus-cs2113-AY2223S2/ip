@@ -42,10 +42,11 @@ public class Mark {
                 }
                 line = in.nextLine();
             } else {
-                System.out.println("    ____________________________________________________________\n    You have added the following task: \n    " +
+                System.out.println("    ____________________________________________________________\n    " +
+                        "You have added the following task: \n    " +
                         line +
                         "\n    ____________________________________________________________");
-                tasks[total] = new Task(line);
+                tasks[total] = new Task(line, "T");
                 line = in.nextLine();
                 total++;
             }
