@@ -3,7 +3,6 @@ import java.util.Scanner;
 
 public class Duke {
 
-
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -19,85 +18,103 @@ public class Duke {
                 + "____________________________________________________________\n";
 
         System.out.println(greeting);
-        Scanner in=new Scanner(System.in);
+        Scanner in= new Scanner(System.in);
         String[] list= new String[100];
-        String[] result= new String[100];
+        Task[] tasks = new Task[100];
+
         //if mark or unmarked
-        boolean mark=false;
         boolean skip;
-
         int indexing=1;
-
         int i=0;
+
         while(true)
         {
             skip=false;
             String line=in.nextLine();
+            //if bye
             if(line.equalsIgnoreCase("bye"))
             {
                 break;
             }
+            //getting index and line
             list[i]=line;
-            String[] to_get = line.split(" ");
-            if(line.toLowerCase().contains("un"))
-            {
-                mark=false;
+            String[] find_index = line.split(" ");
 
-                indexing=Integer.parseInt(to_get[1]);
-
-            }
-            else if(line.toLowerCase().contains("mark"))
-            {
-                mark=true;
-
-                indexing=Integer.parseInt(to_get[1]);
-
-            }
-
-
+            //Task description
             String desc;
-            result[i]=" ";
 
-            if(mark)
-            {
-                 desc="mark";
-            }
-            else
-            {
-                 desc="unmarked";
-            }
+            desc=line;
             Task t = new Task(desc);
-            if(mark)
-            {
-                result[indexing-1]=t.markAsDone(true);
 
-            }
-            else {
-                result[indexing-1]=t.markAsUnDone(false);
-            }
 
-            if(line.toLowerCase().contains("un"))
+            if(line.toLowerCase().contains("unmark"))
             {
+                indexing=Integer.parseInt(find_index[1]);
+                tasks[indexing-1].markAsUnDone();
+
+
+
                 skip=true;
                 System.out.println("____________________________________________________________");
                 System.out.println("OK, I've marked this task as not done yet:\n"+
-                        "["+result[indexing-1]+"] "+ list[indexing-1]);
+                        "["+tasks[indexing-1].getStatusIcon()+"] "+ list[indexing-1]);
                 System.out.println("____________________________________________________________\n");
             }
+
 
             else if(line.toLowerCase().contains("mark"))
             {
+                indexing=Integer.parseInt(find_index[1]);
+                tasks[indexing-1].markAsDone();
+
+
+
                 skip=true;
                 System.out.println("____________________________________________________________");
                 System.out.println("Nice! I've marked this task as done:\n"+
-                       "["+result[indexing-1]+"] "+ list[indexing-1]);
+                       "["+tasks[indexing-1].getStatusIcon()+"] "+ list[indexing-1]);
                 System.out.println("____________________________________________________________\n");
 
             }
 
+            else if(line.toLowerCase().contains("todo") || line.toLowerCase().contains("deadline") || line.toLowerCase().contains("event") )
+            {
 
 
-            //added ^
+                if(line.toLowerCase().contains("todo"))
+                {
+                    String TodoTask =line.toLowerCase().substring(5,line.length());
+                    list[i]=TodoTask;
+                    tasks[i] = new Todo(TodoTask);
+
+                }
+                else if(line.toLowerCase().contains("deadline")) {
+                    String[] ToSplitDeadline=line.split("/");
+                    String DeadlineTask =ToSplitDeadline[0].toLowerCase().substring(9,ToSplitDeadline[0].length()-1);
+                    list[i]=DeadlineTask;
+                    tasks[i] = new Deadline(DeadlineTask, ToSplitDeadline[1].substring(3,ToSplitDeadline[1].length()));
+                }
+                else if(line.toLowerCase().contains("event"))
+                {
+                    String[] ToSplitEvent=line.split("/");
+                    String EventTask =ToSplitEvent[0].toLowerCase().substring(6,ToSplitEvent[0].length());
+                    list[i]=EventTask;
+                    tasks[i] = new Event(EventTask, ToSplitEvent[1].substring(5,ToSplitEvent[1].length()),ToSplitEvent[2].substring(3,ToSplitEvent[2].length()));
+
+                }
+                skip=true;
+
+                System.out.println("____________________________________________________________");
+                System.out.println("Got it. I've added this task:\n"+
+                                "  "+ tasks[i]+ "\n"+
+                        "Now you have "+ (i+1) +" tasks in the list.");
+
+                System.out.println("____________________________________________________________\n");
+                i+=1;
+
+
+            }
+
 
             if(line.equalsIgnoreCase("list"))
             {
@@ -105,12 +122,19 @@ public class Duke {
                 System.out.println("____________________________________________________________\n"+
                         "Here are the tasks in your list:");
 
-
                 for(int m=0;m<i;m+=1)
                 {
                     int index=m+1;
-                    //the [X] or []
-                    System.out.println(index + "."+"[" + result[m] + "] " + list[m] );
+                    if(tasks[m]==null)
+                    {
+                        System.out.println(index + "." +"["+ t.getStatusIcon()+ "] "+list[m]);
+
+                    }
+                    else {
+                        //the [X] or []
+                        System.out.println(index + "." + tasks[m]);
+                    }
+
                 }
                 System.out.println( "____________________________________________________________");
 
@@ -118,7 +142,6 @@ public class Duke {
             else {
                 if(!skip) {
                     i += 1;
-
                     System.out.println("____________________________________________________________\n" + "added: " + line);
                     System.out.println("____________________________________________________________\n");
                 }
