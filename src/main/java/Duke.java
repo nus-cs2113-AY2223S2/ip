@@ -11,17 +11,17 @@ public class Duke {
 
     public static void printLogo() {
         String logo = "\t ____        _        \n"
-                + "\t|  _ \\ _   _| | _____ \n"
-                + "\t| | | | | | | |/ / _ \\\n"
-                + "\t| |_| | |_| |   <  __/\n"
-                + "\t|____/ \\__,_|_|\\_\\___|\n";
+                    + "\t|  _ \\ _   _| | _____ \n"
+                    + "\t| | | | | | | |/ / _ \\\n"
+                    + "\t| |_| | |_| |   <  __/\n"
+                    + "\t|____/ \\__,_|_|\\_\\___|\n";
 
         System.out.println(logo);
     }
 
     public static void printWelcome() {
-        String welcomeMessage = "\tHello! I'm Duke\n" 
-                            + "\tWhat can I do for you?";
+        String welcomeMessage = "\tHello! I'm Duke\n"
+                + "\tWhat can I do for you?";
 
         printDivider();
         printLogo();
@@ -54,8 +54,8 @@ public class Duke {
         taskList[listSize] = todo;
         listSize++;
 
-        String addedMessage = "\tGot it. I've added this task:\n" 
-                                + "\t  " + todo.toString();
+        String addedMessage = "\tGot it. I've added this task:\n"
+                + "\t  " + todo.toString();
         String sizeMessage = "\tNow you have " + listSize + " tasks in the list.";
 
         printDivider();
@@ -73,8 +73,8 @@ public class Duke {
         taskList[listSize] = deadline;
         listSize++;
 
-        String addedMessage = "\tGot it. I've added this task:\n" 
-                                + "\t  " + deadline.toString();
+        String addedMessage = "\tGot it. I've added this task:\n"
+                + "\t  " + deadline.toString();
         String sizeMessage = "\tNow you have " + listSize + " tasks in the list.";
 
         printDivider();
@@ -92,8 +92,8 @@ public class Duke {
         taskList[listSize] = event;
         listSize++;
 
-        String addedMessage = "\tGot it. I've added this task:\n" 
-                                + "\t  " + event.toString();
+        String addedMessage = "\tGot it. I've added this task:\n"
+                + "\t  " + event.toString();
         String sizeMessage = "\tNow you have " + listSize + " tasks in the list.";
 
         printDivider();
@@ -104,14 +104,14 @@ public class Duke {
 
     public static void markTask(int taskNum) {
         Task currentTask = taskList[taskNum - 1];
-        if (taskNum > listSize || taskNum <= 0){
+        if (taskNum > listSize || taskNum <= 0) {
             System.out.println("\tNo such task exists! Please try again");
             return;
         }
         currentTask.markDone();
 
-        String markMessage = "\tNice! I've marked this task as done:\n" 
-                                + "\t  " + currentTask.toString();
+        String markMessage = "\tNice! I've marked this task as done:\n"
+                + "\t  " + currentTask.toString();
         printDivider();
         System.out.println(markMessage);
         printDivider();
@@ -119,14 +119,14 @@ public class Duke {
 
     public static void unmarkTask(int taskNum) {
         Task currentTask = taskList[taskNum - 1];
-        if (taskNum > listSize || taskNum <= 0){
+        if (taskNum > listSize || taskNum <= 0) {
             System.out.println("\tNo such task exists! Please try again");
             return;
         }
         currentTask.markUndone();
 
-        String unmarkMessage = "\tOK, I've marked this task as not done yet:\n" 
-                                    + "\t  " + currentTask.toString();
+        String unmarkMessage = "\tOK, I've marked this task as not done yet:\n"
+                + "\t  " + currentTask.toString();
 
         printDivider();
         System.out.println(unmarkMessage);
@@ -140,7 +140,7 @@ public class Duke {
 
         while (input.hasNextLine()) {
             String inputString = input.nextLine();
-            String[] inputArray = inputString.split(" ",2);
+            String[] inputArray = inputString.split(" ", 2);
             String command = inputArray[0];
 
             switch (command) {
@@ -150,12 +150,12 @@ public class Duke {
                 break;
 
             case "deadline":
-                if (!inputArray[1].contains("/by")){
+                if (!inputArray[1].contains("/by")) {
                     System.out.println("\tWrong format! Please include /by.");
                     break;
                 }
-                
-                String[] deadlineDetails = inputArray[1].split(" /by ",2);
+
+                String[] deadlineDetails = inputArray[1].split(" /by ", 2);
                 String deadlineDescription = deadlineDetails[0];
                 String by = deadlineDetails[1];
                 addDeadline(deadlineDescription, by);
@@ -167,7 +167,7 @@ public class Duke {
                     break;
                 }
 
-                String[] eventDetails = inputArray[1].split(" /from | /to ",3);
+                String[] eventDetails = inputArray[1].split(" /from | /to ", 3);
                 String eventDescription = eventDetails[0];
                 String from = eventDetails[1];
                 String to = eventDetails[2];
@@ -192,7 +192,7 @@ public class Duke {
                 printExit();
                 System.exit(0);
                 break;
-            
+
             default:
                 break;
             }
