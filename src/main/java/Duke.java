@@ -16,13 +16,14 @@ public class Duke {
         String action = in.nextLine();
         int index = 0;
         String bye = "bye";
-        while(!action.equals(bye)){
+
+        while (!action.equals(bye)) {
             System.out.println(line);
 
-            if(action.equals("list")) {
+            if (action.equals("list")) {
                 System.out.println("     Here are the tasks in your list:\n");
                 for(int i = 0; i<index; i = i + 1) {
-                    int num = i+1;
+                    int num = i + 1;
                     System.out.println("     " + num + ":[" + tasks[i].getStatusIcon() + "] " + tasks[i].getDescription());
                 }
             } else if (action.startsWith("mark")) {
@@ -48,10 +49,11 @@ public class Duke {
             System.out.println(line);
             action = in.nextLine();
         }
+
         System.out.println(line);
         System.out.println("     " + "Bye. Hope to see you again soon!");
         System.out.println(line);
 
-
     }
+
 }
