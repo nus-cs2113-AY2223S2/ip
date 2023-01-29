@@ -35,12 +35,13 @@ public class Duke {
                     isExit = true;
                     break;
                 case LIST:
-                    list = taskController.getTask();
+                    list = taskController.getTasks();
                     printSystemMessage(list);
                     break;
                 case TASK:
-                    taskController.addTask(parser.getMessage());
-                    printSystemMessage("added: " + parser.getMessage());
+                    printSystemMessage("Got it. I've added this task:\n " +
+                    taskController.addTask(parser.getCommandArguments(Command.TASK)).toString() +
+                    String.format("\nNow you have %d tasks in the list.", taskController.getCount()));
                     break;
                 case UNMARK:
                     printSystemMessage(taskController.markTask(parser.getCommandArguments(Command.UNMARK)));
@@ -54,7 +55,7 @@ public class Duke {
             } catch (DukeException e) {
                 printSystemMessage(e.getMessage());
                 if (e instanceof EmptyCommandException) {
-                    printSystemMessage("You passed an illegal command!\n   I will stop here because I am angry Duke");
+                    printSystemMessage("You passed an illegal empty command!\nI will stop here because I am angry Duke");
                     break;
                 }
         } while(!isExit);
