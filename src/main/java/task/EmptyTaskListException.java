@@ -4,8 +4,8 @@ import duke.DukeException;
 
 public class EmptyTaskListException extends DukeException {
     /**
-     * Custom exception for empty message or message with only blank spaces
-     * being passed into console.
+     * Exception for when task list is empty and user request to print
+     * task list.
      * @param message Error message to raise
      */
     public EmptyTaskListException(String message, Throwable err) {

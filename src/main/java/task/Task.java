@@ -46,5 +46,11 @@ public abstract class Task{
         }
         this.mark = newMark;
     }
+    /**
+     * Parses user input arugment and sets the private attributes accordingly
+     * @param arguments
+     * @throws InvalidCommandException
+     * @throws EmptyDescriptionException
+     */
     public abstract void parseArgument(String arguments) throws InvalidCommandException, EmptyDescriptionException;
 }

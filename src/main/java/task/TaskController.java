@@ -38,9 +38,17 @@ public class TaskController implements ITaskController  {
     public String unmarkTask(int taskIndex) throws TaskIndexOutOfRangeException, TaskMarkException {
         return handleTaskMark(false, taskIndex);
     }
-
-    private String handleTaskMark(boolean isMark, int taskIndex)
-            throws TaskIndexOutOfRangeException, TaskMarkException {
+    /**
+     * Marks/Unmarks the task based on isMark and task index. Throws and exception when task index
+     * is not valid or when task mark status does not change.
+     * Private method to abstract the implementation from the public methods that call it.
+     * @param isMark
+     * @param taskIndex
+     * @return String message for Duke to display to user
+     * @throws TaskIndexOutOfRangeException
+     * @throws TaskMarkException
+     */
+    private String handleTaskMark(boolean isMark, int taskIndex) throws TaskIndexOutOfRangeException, TaskMarkException {
         if (taskIndex <= 0 || taskIndex > list.size()) {
             // Bad index input by user
             throw new TaskIndexOutOfRangeException("Invalid index given to mark!", new IllegalArgumentException());

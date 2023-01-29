@@ -15,5 +15,10 @@ public interface IParser {
      */
     public Command getCommand() throws EmptyCommandException;
     public Task getTask() throws InvalidCommandException;
+        /**
+     * Returns the index of the task specified by user input
+     * @return int value specifying index of task
+     * @throws InvalidCommandException
+     */
     public int getTaskIndex() throws InvalidCommandException;
 }
