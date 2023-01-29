@@ -1,29 +1,29 @@
 import java.util.ArrayList;
 
 public class TaskList {
-    private static ArrayList<Task> TaskList = new ArrayList<>();
+    private static ArrayList<Task> list = new ArrayList<>();
 
     public void AddTask(String taskName) {
         Task t = new Task(taskName);
-        TaskList.add(t);
+        list.add(t);
     }
 
     public boolean MarkTask(int taskNumber, boolean mark) {
-        if (taskNumber <= 0 || taskNumber > TaskList.size()) {
+        if (taskNumber <= 0 || taskNumber > list.size()) {
             return false;
         } else {
-            if (mark && TaskList.get(taskNumber - 1).IsCompleted()) {
+            if (mark && list.get(taskNumber - 1).IsCompleted()) {
                 System.out.println("Task already marked as completed!");
-            } else if (!mark && !TaskList.get(taskNumber - 1).IsCompleted()) {
+            } else if (!mark && !list.get(taskNumber - 1).IsCompleted()) {
                 System.out.println("Task already marked as not completed!");
             } else {
-                TaskList.get(taskNumber - 1).SetCompleted(mark);
+                list.get(taskNumber - 1).SetCompleted(mark);
                 if (mark) {
                     System.out.println("Nice! I've marked this task as done:");
-                    System.out.println("[X] " + TaskList.get(taskNumber - 1).GetTaskName());
+                    System.out.println("[X] " + list.get(taskNumber - 1).GetTaskName());
                 } else {
                     System.out.println("OK, I've marked this task as not done yet:");
-                    System.out.println("[ ] " + TaskList.get(taskNumber - 1).GetTaskName());
+                    System.out.println("[ ] " + list.get(taskNumber - 1).GetTaskName());
                 }
             }
             return true;
@@ -32,11 +32,11 @@ public class TaskList {
 
     public void ListTask() {
         System.out.println("Here are the tasks in your list:");
-        for (int i = 0; i < TaskList.size(); i++) {
-            if (TaskList.get(i).IsCompleted()) {
-                System.out.println(i + 1 + ".[X] " + TaskList.get(i).GetTaskName());
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).IsCompleted()) {
+                System.out.println(i + 1 + ".[X] " + list.get(i).GetTaskName());
             } else {
-                System.out.println(i + 1 + ".[ ] " + TaskList.get(i).GetTaskName());
+                System.out.println(i + 1 + ".[ ] " + list.get(i).GetTaskName());
             }
 
         }
