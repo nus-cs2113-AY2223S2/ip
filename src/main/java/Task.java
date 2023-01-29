@@ -1,6 +1,7 @@
 public class Task {
     protected String description;
     protected boolean isDone;
+    protected String label;
 
     public Task(String description) {
         this.description = description;
@@ -8,7 +9,7 @@ public class Task {
     }
 
     public String getStatusIcon() {
-        return (isDone ? "X" : " "); // mark done task with X
+        return (isDone ? "[X]" : "[ ]"); // mark done task with X
     }
 
     public String getDescription() {
@@ -30,38 +31,43 @@ public class Task {
     protected static Task[] totalTasks = new Task[100];
 
     public static void conductInstruction(String command, Task[] listOfTasks, int index) {
-        System.out.println("    ____________________________________________________________\n");
+        System.out.print("    ____________________________________________________________\n");
         if (command.equals("bye")) {
             System.out.println("    Bye. Hope to see you again soon!");
         } else if (command.equals("list")) {
-            System.out.println("    Here are the tasks in your list:");
-            for (int i = 0; i < index; ++i) {
-                int counter = i + 1;
-                System.out.print("    " + counter + ".[");
-                if (listOfTasks[i].isDone) {
-                    System.out.print("X] ");
-                } else {
-                    System.out.print(" ] ");
-                }
-                System.out.println(listOfTasks[i].description);
-
-            }
-        } else if (command.matches("mark \\d" )) {
-            String[] seperated = command.split(" ");
-            int number = Integer.parseInt(seperated[1])-1;
-            listOfTasks[number].setDone(true);
-            System.out.println("Nice! I've marked this task as done:");
-            System.out.println("    [X] " + listOfTasks[number].description);
+            list(listOfTasks, index);
+        } else if (command.matches("mark \\d")) {
+            mark(command, listOfTasks);
 
         } else if (command.matches("unmark \\d")) {
-            String[] seperated = command.split(" ");
-            int number = Integer.parseInt(seperated[1])-1;
-            listOfTasks[number].setDone(false);
-            System.out.println("OK, I've marked this task as not done yet:");
-            System.out.println("    [ ] " + listOfTasks[number].description);
-
-
+            unmark(command, listOfTasks);
         }
+    }
+
+    protected static void unmark(String command, Task[] listOfTasks) {
+        String[] seperated = command.split(" ");
+        int number = Integer.parseInt(seperated[1]) - 1;
+        listOfTasks[number].setDone(false);
+        System.out.println("OK, I've marked this task as not done yet:");
+        System.out.println("    " + listOfTasks[number].getStatusIcon()+ " " + listOfTasks[number].description);
+    }
+
+    protected static void mark(String command, Task[] listOfTasks) {
+        String[] seperated = command.split(" ");
+        int number = Integer.parseInt(seperated[1]) - 1;
+        listOfTasks[number].setDone(true);
+        System.out.println("Nice! I've marked this task as done:");
+        System.out.println("    " + listOfTasks[number].getStatusIcon()+ " " + listOfTasks[number].description);
+    }
+
+    private static void list(Task[] listOfTasks, int index) {
+        System.out.println("    Here are the tasks in your list:");
+        for (int i = 0; i < index; ++i) {
+            int counter = i + 1;
+            System.out.print("    " + counter + "." + listOfTasks[i].label + listOfTasks[i].getStatusIcon());
+            System.out.println(listOfTasks[i].description);
+        }
+        System.out.println("    ____________________________________________________________\n");
     }
 
 

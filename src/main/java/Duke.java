@@ -23,20 +23,47 @@ public class Duke {
         while (true) {
             Scanner in = new Scanner(System.in);
             line = in.nextLine();
-            Task newTask = new Task(line);
+            String[] splitLine = line.split(" ", 2);
+            String type = splitLine[0];
 
-            if (line.equals("list") || line.equals("bye") || line.matches("mark \\d") || line.startsWith("mark \\d")) {
-                Task.conductInstruction(line, list, index);
-                if (line.equals("bye")) {
-                    System.out.println("    ____________________________________________________________\n");
-                    break;
-                }
-            } else {
-                System.out.println("    " + "added: " + line);
+            if (type.matches("todo")) {
+                System.out.print("    ____________________________________________________________\n");
+                System.out.println("    Got it. I've added this task:");
+                Todo newTask = new Todo(line);
+                System.out.println("      " + newTask.label + newTask.getStatusIcon() + " " + newTask.description);
                 list[index] = newTask;
                 ++index;
+                System.out.println("    Now you have " + index + " tasks in the list.");
+                System.out.println("    ____________________________________________________________\n");
+            } else if (type.matches("deadline")) {
+                System.out.print("    ____________________________________________________________\n");
+                System.out.println("    Got it. I've added this task:");
+                Deadline newTask = new Deadline(line);
+                System.out.println("      " + newTask.label + newTask.getStatusIcon() + " " + newTask.description + " " + newTask.whenDue);
+                list[index] = newTask;
+                ++index;
+                System.out.println("    Now you have " + index + " tasks in the list.");
+                System.out.println("    ____________________________________________________________\n");
+            } else if (type.matches("event")) {
+                System.out.print("    ____________________________________________________________\n");
+                System.out.println("    Got it. I've added this task:");
+                Event newTask = new Event(line);
+                System.out.println("      "+ newTask.label + newTask.getStatusIcon() + " " + newTask.description + " " + newTask.start + newTask.end);
+                list[index] = newTask;
+                ++index;
+                System.out.println("    Now you have " + index + " tasks in the list.");
+                System.out.println("    ____________________________________________________________\n");
+            } else if (line.matches("list") || line.matches("bye") || line.matches("mark \\d") || line.matches("unmark \\d")) {
+                Task.conductInstruction(line, list, index);
+                if (line.equals("bye")) {
+                    break;
+                }
             }
-            System.out.println("    ____________________________________________________________\n");
         }
+
+
+        System.out.println("    ____________________________________________________________\n");
     }
 }
+
+
