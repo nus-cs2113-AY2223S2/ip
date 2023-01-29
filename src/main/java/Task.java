@@ -38,15 +38,6 @@ public class Task {
     }
 
     /**
-     * get name of the current task
-     *
-     * @return String describing the task
-     */
-    public String getTask() {
-        return task;
-    }
-
-    /**
      * gets the type of task (todo type)
      *
      * @return letter representing type of task

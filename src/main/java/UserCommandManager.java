@@ -1,16 +1,53 @@
 import java.util.Scanner;
 
 public class UserCommandManager {
-
     TaskManager myList = new TaskManager();
 
     /**
-     * Prints out the exit message to the user
+     * checks if user input is valid and adds the event to list
+     *
+     * @param userInputArray array of string containing user deadline details
      */
-    public static void exitProgram() {
-        String exitMessage = "Bye. Hope to see you again soon!";
-        System.out.println(exitMessage);
-        System.exit(0);
+
+    public void handleDeadlineCommand(String[] userInputArray) {
+        if (userInputArray.length < 2) {
+            System.out.println("Invalid input, make sure you use /by <date>");
+            return;
+        }
+        String description = userInputArray[0];
+        String dueBy = userInputArray[1];
+        myList.addToList(description, dueBy);
+    }
+
+    /**
+     * checks if user input is valid and adds the event to list
+     *
+     * @param userInput String containing user event details
+     */
+
+    public void handleEventCommand(String userInput) {
+        final String[] userInputArray = userInput.trim().split("/from|/to");
+        if (userInputArray.length < 3) {
+            System.out.println("Invalid input, make sure you use /from <start> and /to <end>");
+            return;
+        }
+        String description = userInputArray[0];
+        String startTime = userInputArray[1];
+        String endTime = userInputArray[2];
+        myList.addToList(description, startTime, endTime);
+    }
+
+    /**
+     * prints instructions to use the program if
+     * an unknown command is entered
+     */
+
+    public static void handleUnknownCommand() {
+        System.out.println("I don't understand...\n" +
+                "Try these commands: <event> /from <start> /to <end>\n" +
+                "<deadline> /by <end> \n" +
+                "<todo>\n" +
+                "<list>");
     }
 
     /**
@@ -20,59 +57,31 @@ public class UserCommandManager {
      * @param userCommand type of action user wants to perform
      * @param userInput   arguments to the action (i.e. task description)
      */
-
+    
     public void handleCommands(String userCommand, String userInput) {
         Scanner scanner = new Scanner(userInput);
-
-        if (userCommand.equals("bye")) {
-            exitProgram();
-        }
-        int taskIndex;
-        String description;
         switch (userCommand) {
         case "list":
             myList.printList();
             break;
         case "mark":
-            taskIndex = scanner.nextInt() - 1;
-            myList.markAsDone(taskIndex);
+            myList.markAsDone(scanner.nextInt() - 1);
             break;
         case "unmark":
-            taskIndex = scanner.nextInt() - 1;
-            myList.markAsUndone(taskIndex);
+            myList.markAsUndone(scanner.nextInt() - 1);
             break;
         case "todo":
-            userInput = scanner.nextLine();
-            myList.addToList(userInput);
+            myList.addToList(scanner.nextLine());
             break;
         case "deadline":
-            userInput = scanner.nextLine();
-            final String[] splitArgs = userInput.trim().split("/by");
-            if (splitArgs.length < 2) {
-                System.out.println("Invalid input, make sure you use /by <date>");
-                break;
-            }
-            description = splitArgs[0];
-            String dueBy = splitArgs[1];
-            myList.addToList(description, dueBy);
+            handleDeadlineCommand(scanner.nextLine().trim().split("/by"));
             break;
         case "event":
-            final String[] splitDuration = userInput.trim().split("/from|/to");
-            if (splitDuration.length < 3) {
-                System.out.println("Invalid input, make sure you use /from <start> and /to <end>");
-                break;
-            }
-            description = splitDuration[0];
-            String startDate = splitDuration[1];
-            String endDate = splitDuration[2];
-            myList.addToList(description, startDate, endDate);
+            handleEventCommand(userInput);
             break;
         default:
-            System.out.println("I don't understand...\n" +
-                    "Try these commands: <event> /from <start> /to <end>\n" +
-                    "<deadline> /by <end> \n" +
-                    "<todo>\n" +
-                    "<list>");
+            handleUnknownCommand();
+            break;
         }
     }
 }
