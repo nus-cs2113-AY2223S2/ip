@@ -3,8 +3,8 @@
  */
 public class Task {
 
-    private String content;
-    private boolean isMarked;
+    protected String content;
+    protected boolean isMarked;
 
     /**
      * Default constructor for the Task class.
