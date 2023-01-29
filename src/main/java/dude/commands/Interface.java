@@ -10,6 +10,7 @@ public abstract class Interface {
             + " ║║║║║ ║║║║║║╔══╣╔═╗║║ ║║ ║║\n"
             + "╔╝╚╝║╚═╝╠╝╚╝║╚══╣╚═╝║╚═╝║ ║║\n"
             + "╚═══╩═══╩═══╩═══╩═══╩═══╝ ╚╝\n";
+
     public static void printGreeting(){
         System.out.println("Hello from\n" + DUDE_LOGO);
         System.out.println(LINE);
@@ -17,6 +18,7 @@ public abstract class Interface {
         System.out.println(LINE);
         System.out.println();
     }
+
     public static void printBye(){
         System.out.println(LINE);
         System.out.println("Goodbye, it was a pleasure to be of service to you");
@@ -24,22 +26,32 @@ public abstract class Interface {
         System.out.println();
     }
 
-    public static void echoCommand(String command){
-        System.out.println(LINE);
-        System.out.println(command);
-        System.out.println(LINE);
-        System.out.println();
+    public static void listFullMessage(){
+        System.out.println(Interface.LINE);
+        System.out.println("Im terribly sorry but the list is full, I am unable to add your entry");
+        System.out.println("Yours Sincerely, Dude_Bot");
+        System.out.println(Interface.LINE);
     }
+
+    public static void addedMessage(String input){
+        System.out.println(Interface.LINE);
+        System.out.println("added: " + input);
+        System.out.println(Interface.LINE);
+    }
+
     public static void readInput(){
         Scanner in = new Scanner(System.in);
-        String input;
+        String userInput;
         while(true){
-            input = in.nextLine();
-            if(input.equals("bye")){
-                break;
+            userInput = in.nextLine();
+            if (userInput.equals("bye")){
+                in.close();
+                return;
+            } else if (userInput.equals("list")) {
+                ListManager.printList();
+            } else {
+                ListManager.addToList(userInput);
             }
-            echoCommand(input);
         }
-        in.close();
     }
 }
