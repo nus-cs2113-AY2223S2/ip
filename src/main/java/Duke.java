@@ -111,7 +111,7 @@ public class Duke {
         System.out.println("Hello, " + userName + ". You may enter 'See list' to view your current To-Do list.");
         return userName;
     }
-    
+
     private static void showHelpMessage() {
         System.out.println("=============================================================================================================== \n");
         System.out.println("Here are some useful commands to get you started!\n");
