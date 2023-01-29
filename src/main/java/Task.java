@@ -14,6 +14,7 @@ public class Task {
     public void markDone() {
         isDone = true;
     }
+
     public void markUndone() {
         isDone = false;
     }
