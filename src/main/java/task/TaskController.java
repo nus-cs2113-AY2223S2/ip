@@ -5,37 +5,8 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import parser.Argument;
-import parser.Command;
-
 public class TaskController implements ITaskController  {
     ArrayList<Task> list = new ArrayList<Task>();
-    
-    public Task addTask(Argument arg) throws EmptyDescriptionException{
-        Task newTask = null;
-        try {
-            switch ((TaskType) arg.getCommand()) {
-            case DEADLINE:
-                newTask = new Deadline(arg.getVariableArguments().get("description"),
-                        arg.getVariableArguments().get("endDate"));
-                list.add(newTask);
-                break;
-            case EVENT:
-                newTask = new Event(arg.getVariableArguments().get("description"),
-                                        arg.getVariableArguments().get("startDate"),
-                                        arg.getVariableArguments().get("endDate"));
-                list.add(newTask);
-                break;
-            case TODO:
-                newTask = new ToDo(arg.getVariableArguments().get("description"));
-                list.add(newTask);
-                break;
-            }
-        } catch (EmptyDescriptionException e) {
-            throw e;
-        }
-        return newTask;
-    }
     public Task addTask(Task newTask) {
         list.add(newTask);
         return newTask;
@@ -53,29 +24,43 @@ public class TaskController implements ITaskController  {
                                 .collect(Collectors.joining("\n"));
         return Text;
     }
-
-    @Override
-    public String markTask(Argument arg) throws TaskIndexOutOfRangeException {
-        if (arg.getIndex() < 0 || arg.getIndex()>list.size()) {
-            // Bad index input by user
-            throw new TaskIndexOutOfRangeException("Invalid index given to mark!", new IllegalArgumentException());
-        }
-        String dukeMessage;
-        if (arg.getCommand().equals(Command.MARK)) {
-            list.get(arg.getIndex()-1).setMark(true);
-            dukeMessage = "Nice! I've marked this task as done:";
-        }
-        else {
-            list.get(arg.getIndex()-1).setMark(false);
-            dukeMessage = "OK, I've marked this task as not done yet:";
-        }
-        return String.format("%s\n %s",
-                        dukeMessage,
-                        list.get(arg.getIndex()-1).toString());
-    }
-
     @Override
     public int getCount() {
         return list.size();
+    }
+
+    @Override
+    public String markTask(int taskIndex) throws TaskIndexOutOfRangeException, TaskMarkException {
+        return handleTaskMark(true, taskIndex);
+    }
+
+    @Override
+    public String unmarkTask(int taskIndex) throws TaskIndexOutOfRangeException, TaskMarkException {
+        return handleTaskMark(false, taskIndex);
+    }
+
+    private String handleTaskMark(boolean isMark, int taskIndex)
+            throws TaskIndexOutOfRangeException, TaskMarkException {
+        if (taskIndex <= 0 || taskIndex > list.size()) {
+            // Bad index input by user
+            throw new TaskIndexOutOfRangeException("Invalid index given to mark!", new IllegalArgumentException());
+        }
+        try {
+            String dukeMessage;
+
+            if (isMark) {
+                list.get(taskIndex - 1).setMark(true);
+                dukeMessage = "Nice! I've marked this task as done:";
+            } else {
+                list.get(taskIndex - 1).setMark(false);
+                dukeMessage = "OK, I've marked this task as not done yet:";
+            }
+
+            return String.format("%s\n %s",
+                    dukeMessage,
+                    list.get(taskIndex - 1).toString());
+        } catch (TaskMarkException e) {
+            throw e;
+        }
     }
 }

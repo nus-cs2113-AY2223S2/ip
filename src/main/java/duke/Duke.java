@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
-import parser.Command;
 import parser.EmptyCommandException;
 import parser.IParser;
 import parser.Parser;
@@ -44,10 +43,10 @@ public class Duke {
                     String.format("\nNow you have %d tasks in the list.", taskController.getCount()));
                     break;
                 case UNMARK:
-                    printSystemMessage(taskController.markTask(parser.getCommandArguments(Command.UNMARK)));
+                    printSystemMessage(taskController.unmarkTask(parser.getTaskIndex()));
                     break;
                 case MARK:
-                    printSystemMessage(taskController.markTask(parser.getCommandArguments(Command.MARK)));
+                    printSystemMessage(taskController.markTask(parser.getTaskIndex()));
                     break;
                 default:
                     break;
@@ -58,6 +57,7 @@ public class Duke {
                     printSystemMessage("You passed an illegal empty command!\nI will stop here because I am angry Duke");
                     break;
                 }
+            } 
         } while(!isExit);
         bye();
     }

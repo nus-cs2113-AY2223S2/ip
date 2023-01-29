@@ -38,7 +38,12 @@ public abstract class Task{
     public boolean isMark() {
         return mark;
     }
-    public void setMark(boolean newMark) {
+    public void setMark(boolean newMark) throws TaskMarkException {
+        if (newMark == mark) {
+            // We are trying to mark the task with the same boolean flag
+            // This is a user error
+            throw new TaskMarkException(String.format("The task is already marked as %s", String.valueOf(newMark)), new IllegalArgumentException());
+        }
         this.mark = newMark;
     }
     public abstract void parseArgument(String arguments) throws InvalidCommandException, EmptyDescriptionException;

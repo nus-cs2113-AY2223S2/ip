@@ -1,6 +1,6 @@
 package parser;
 
-import Duke.DukeException;
+import duke.DukeException;
 
 public class InvalidCommandException extends DukeException {
     public InvalidCommandException(String message, Throwable err) {
