@@ -2,11 +2,14 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Duke {
+
+    // global variables
+    private static final String DOTTED_LINE = "    --------------------------------------------------";
+    private static final String TAB_SIZE = "     "; // 5 spaces
+
     public static void main(String[] args) {
 
-        final String DOTTED_LINE = "    --------------------------------------------------";
-        final String TAB_SIZE = "     ";
-        ArrayList<ArrayList<String>> todoList = new ArrayList<ArrayList<String>>();
+        ArrayList<Task> todoList = new ArrayList<>();
 
         // greets user
         System.out.println(DOTTED_LINE);
@@ -27,22 +30,17 @@ public class Duke {
 
             // body
             if (userSplitInputs[0].equals("bye")) {
-
-                sayBye(TAB_SIZE);
+                sayBye();
             } else if (userSplitInputs[0].equals("list")) {
-
-                listItems(todoList, TAB_SIZE);
+                listItems(todoList);
             } else if (userSplitInputs[0].equals("done")) {
-
-                markTasks(todoList, Integer.parseInt(userSplitInputs[1]),
-                        TAB_SIZE);
+                errorCheckingForMarkTasks("done", userSplitInputs,
+                        todoList);
             } else if (userSplitInputs[0].equals("undone")) {
-
-                unMarkTasks(todoList, Integer.parseInt(userSplitInputs[1]),
-                        TAB_SIZE);
+                errorCheckingForMarkTasks("undone", userSplitInputs,
+                        todoList);
             } else {
-
-                add(todoList, userCommand, TAB_SIZE);
+                add(todoList, userCommand);
             }
 
             // bottom dotted line
@@ -69,7 +67,9 @@ public class Duke {
         System.out.println(logo);
     }
 
-    /** greets the user */
+    /**
+     * greets the user
+     */
     public static void greetUser(final String TAB_SIZE) {
 
         System.out.println(TAB_SIZE + "Hello! I'm Bob the Bot, aka BtB.");
@@ -78,10 +78,8 @@ public class Duke {
 
     /**
      * Say bye to the user
-     *
-     * @param TAB_SIZE white spaces in front of the printed text for aesthetic purposes
      */
-    public static void sayBye(final String TAB_SIZE) {
+    public static void sayBye() {
 
         System.out.println(TAB_SIZE + "Bye. Hope to see you again sooooooon (┬┬﹏┬┬)!");
     }
@@ -89,19 +87,17 @@ public class Duke {
     /**
      * add items to an ArrayList
      *
-     * @param todoList the ArrayList that stores the item added
-     * @param toAdd the item to be added to todoList
-     * @param TAB_SIZE white spaces in front of the printed text for aesthetic purposes
+     * @param todoList the ArrayList that stores the task added
+     * @param taskDescription the item to be added to todoList
      */
-    public static void add(ArrayList<ArrayList<String>> todoList,
-                           String toAdd, final String TAB_SIZE) {
+    public static void add(ArrayList<Task> todoList,
+                           String taskDescription) {
 
-        ArrayList<String> tempToAdd = new ArrayList<>();
-        tempToAdd.add(toAdd);
-        tempToAdd.add("undone");
-        todoList.add(tempToAdd);
+        Task task = new Task(taskDescription);
+        todoList.add(task);
 
-        System.out.println(TAB_SIZE + "You have added [" + toAdd + "] to your todo list");
+        System.out.println(TAB_SIZE + "You have added [" + taskDescription +
+                "] to your todo list");
     }
 
     /**
@@ -109,44 +105,82 @@ public class Duke {
      * them to the terminal
      *
      * @param todoList the ArrayLists that contains the stored items
-     * @param TAB_SIZE white spaces in front of the printed text for aesthetic purposes
      */
-    public static void listItems(ArrayList<ArrayList<String>> todoList,
-                                 final String TAB_SIZE) {
+    public static void listItems(ArrayList<Task> todoList) {
 
         if (todoList.size() == 0) {
-            System.out.println(TAB_SIZE + "Your todo list is current void of task,"
-                    + " please add some tasks.");
+            System.out.println(TAB_SIZE + "Your todo list is current void of task," +
+                    " please add some tasks.");
         } else {
             System.out.println(TAB_SIZE + "TODO LIST:");
         }
 
         for (int i = 1; i <= todoList.size(); i++) {
-            boolean isDone = todoList.get(i - 1).get(1).equals("done");
-            if (isDone) {
-                System.out.println(TAB_SIZE + TAB_SIZE + i
-                        + ".[✔] " + todoList.get(i - 1).get(0));
-            } else {
-                System.out.println(TAB_SIZE + TAB_SIZE + i
-                        + ".[ ] " + todoList.get(i - 1).get(0));
-            }
 
+            System.out.println(TAB_SIZE + TAB_SIZE +
+                    i + "." + todoList.get(i-1).getStatusIcon() +
+                    todoList.get(i-1).getDescription());
         }
     }
 
-    public static void markTasks(ArrayList<ArrayList<String>> todoList, int taskNumber,
-                                 final String TAB_SIZE) {
+    /**
+     * marks the task number that user had completed
+     *
+     * @param todoList ArrayList that contains the tasks
+     * @param taskNumber task number that the user wants to mark as completed
+     */
+    public static void markTasks(ArrayList<Task> todoList, int taskNumber) {
 
-        todoList.get(taskNumber - 1).set(1, "done");
+        todoList.get(taskNumber - 1).setDone(true);
         System.out.println(TAB_SIZE + "Nice! I've marked this task as done:");
-        System.out.println(TAB_SIZE + " [✔] " + todoList.get(taskNumber - 1).get(0));
+        System.out.println(TAB_SIZE + " [✔] " +
+                todoList.get(taskNumber - 1).getDescription());
     }
 
-    public static void unMarkTasks(ArrayList<ArrayList<String>> todoList, int taskNumber,
-                                   final String TAB_SIZE) {
+    /**
+     * unmarks the task number from the todo list
+     *
+     * @param todoList ArrayList that contains the tasks
+     * @param taskNumber task number that the user wants to mark as incomplete
+     */
+    public static void unMarkTasks(ArrayList<Task> todoList, int taskNumber) {
 
-        todoList.get(taskNumber - 1).set(1, "undone");
+        todoList.get(taskNumber - 1).setDone(false);
         System.out.println(TAB_SIZE + "Ok! I've marked this task as undone:");
-        System.out.println(TAB_SIZE + " [ ] " + todoList.get(taskNumber - 1).get(0));
+        System.out.println(TAB_SIZE + " [ ] " + todoList.get(taskNumber - 1).getDescription());
+    }
+
+
+    /**
+     * checks for potential errors in markTasks and unMarkTasks function
+     *
+     * @param command the command that the user inputs
+     * @param userSplitInputs String array that contains the split user command
+     * @param todoList Array List that contains the tasks
+     */
+    public static void errorCheckingForMarkTasks(String command, String[] userSplitInputs,
+                                                 ArrayList<Task> todoList) {
+
+        if (userSplitInputs.length == 1) {
+
+            System.out.println(TAB_SIZE+ "Please try again and include a task number.");
+            System.out.println(TAB_SIZE + "i.e., done 1");
+
+            return;
+        }
+
+        if (todoList.size() == 0) {
+            System.out.println(TAB_SIZE + "The todo list is currently empty. \n" +
+                    TAB_SIZE + "Please add some tasks before marking as done.");
+
+            return;
+        }
+
+        if (command.equals("done")) {
+            markTasks(todoList, Integer.parseInt(userSplitInputs[1]));
+        } else {
+            unMarkTasks(todoList, Integer.parseInt(userSplitInputs[1]));
+        }
+
     }
 }
