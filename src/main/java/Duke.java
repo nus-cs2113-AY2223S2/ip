@@ -9,26 +9,39 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println(logo);
         greeting();
-        String[] itemList = new String[100];
-        int index = 0;
+        Task[] taskStorage = new Task[100];
 
         boolean is_exit = false;
         while (!is_exit) {
+
             String messageFromUser;
             Scanner in = new Scanner(System.in);
             messageFromUser = in.nextLine();
-            if (messageFromUser.equals("bye")) {
+
+            if (messageFromUser.startsWith("mark") || messageFromUser.startsWith("unmark"))  {
+                changeTaskStatus(messageFromUser, taskStorage);
+            } else if (messageFromUser.equals("bye")) {
                 exitGreeting();
                 is_exit = true;
             } else if (messageFromUser.equals("list")) {
-                displayList(itemList, index);
+                displayList(taskStorage);
             } else {
-                addToList(itemList, index, messageFromUser);
-                index++;
+                addToList(messageFromUser, taskStorage);
             }
         }
     }
 
+    public static void changeTaskStatus(String sentence, Task[] taskStorage) {
+        String[] splitMessage = sentence.split(" ");
+        int taskNumber = Integer.parseInt(splitMessage[1]);
+        Task t = taskStorage[taskNumber];
+        if (splitMessage[0].trim().equals("mark")) {
+            t.markAsDone();
+        } else {
+            t.markAsUndone();
+        }
+        horizontalLine();
+    }
     public static void greeting() {
         horizontalLine();
         System.out.println("Hello! I'm Duke");
@@ -41,20 +54,24 @@ public class Duke {
         horizontalLine();
     }
 
-    public static void displayList(String[] itemList, int numberOfItems) {
-        int currentIndex = 1;
-        String[] filledList = Arrays.copyOf(itemList, numberOfItems);
-        for (String item : filledList) {
-            System.out.println(currentIndex + ". " + item);
-            currentIndex += 1;
+    public static void displayList(Task[] taskStorage) {
+        int totalNumberOfTasks = Task.getNumberOfTasks();
+        if (totalNumberOfTasks > 0) {
+            System.out.println("Here are the tasks in your list: ");
+            for (int i = 1; i <= totalNumberOfTasks; i += 1) {
+                Task currTask = taskStorage[i];
+                System.out.println(i + "." + currTask.getStatus() + currTask.getTaskInfo());
+            }
         }
         horizontalLine();
     }
 
-    public static void addToList(String[] itemList, int index, String messageFromUser) {
+    public static void addToList(String messageFromUser, Task[] taskStorage) {
         horizontalLine();
         System.out.println("added: " + messageFromUser);
-        itemList[index] = messageFromUser;
+        Task newTask = new Task(messageFromUser);
+        int currIndexInTaskStorage = Task.getNumberOfTasks();
+        taskStorage[currIndexInTaskStorage] = newTask;
         horizontalLine();
     }
 
