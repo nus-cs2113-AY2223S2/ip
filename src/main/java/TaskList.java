@@ -13,19 +13,24 @@ public class TaskList {
         return Arrays.copyOfRange(this.tasks, 0,  tasksCount);
     }
 
+    public int getTasksCount() {
+        return tasksCount;
+    }
+
     public String toString() {
         int index = 1;
         StringBuilder output = new StringBuilder();
         for (Task task: getTasks()) {
             if(task != null) {
-                output.append(index++).append(". ").append(task);
+                output.append(index).append(". ").append(task).append(System.lineSeparator());
+                index++;
             }
         }
         return output.toString();
     }
 
-    public void addTask(String taskName) {
-        this.tasks[tasksCount] = new Task(taskName, false);
+    public void addTask(Task task) {
+        this.tasks[tasksCount] = task;
         tasksCount += 1;
     }
 }

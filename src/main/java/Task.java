@@ -8,10 +8,6 @@ public class Task {
         this.isDone = isDone;
     }
 
-    public String toString() {
-        String checker = this.isDone ? "[X]" : "[ ]";
-        return String.format("%s %s \n", checker, this.name);
-    }
     public String getName() {
         return name;
     }
@@ -26,5 +22,10 @@ public class Task {
 
     public void setIsDone(Boolean done) {
         isDone = done;
+    }
+
+    public String toString() {
+        String checker = this.isDone ? "[X]" : "[ ]";
+        return String.format(checker + " " + this.name);
     }
 }
