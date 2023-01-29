@@ -2,44 +2,16 @@ import java.util.Scanner;
 
 public class Duke {
 
-    public static Task[] list = new Task[100];
+    public static Task[] tasks = new Task[100];
     public static int counter = 0;
 
     public static void printLine() {
         System.out.println("____________________________________________________________");
     }
 
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        printWelcomeMessage();
-        String input;
-        input = in.nextLine();
-        while (!input.equals("bye")) {
-            if (input.equals("list")) {
-                addToList();
-            } else if (input.startsWith("mark")) {
-                markAsDone(input);
-            } else if (input.startsWith("unmark")) {
-                markAsUndone(input);
-            } else {
-                addToList(input);
-            }
-            input = in.nextLine();
-        }
-        printByeMessage();
-    }
-
     private static void printByeMessage() {
         printLine();
         System.out.println("Bye. Hope to see you again soon! :)");
-        printLine();
-    }
-
-    private static void addToList(String input) {
-        list[counter] = new Task(input);
-        counter++;
-        printLine();
-        System.out.println("added : " + input);
         printLine();
     }
 
@@ -51,9 +23,9 @@ public class Duke {
             System.out.println("Sorry, this task does not exist.");
             printLine();
         } else {
-            list[taskNumber - 1].markUndone();
+            tasks[taskNumber - 1].markUndone();
             System.out.println("OK, I've marked this task as not done yet:");
-            System.out.println("[" + list[taskNumber - 1].getStatusIcon() + "] " + list[taskNumber - 1].description);
+            System.out.println(tasks[taskNumber - 1]);
             printLine();
         }
     }
@@ -66,19 +38,54 @@ public class Duke {
             System.out.println("Sorry, this task does not exist.");
             printLine();
         } else {
-            list[taskNumber - 1].markDone();
+            tasks[taskNumber - 1].markDone();
             System.out.println("Great! I have marked this task as done:");
-            System.out.println("[" + list[taskNumber - 1].getStatusIcon() + "] " + list[taskNumber - 1].description);
+            System.out.println(tasks[taskNumber - 1]);
             printLine();
         }
     }
 
-    private static void addToList() {
+    private static void printList() {
         printLine();
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < counter; i++) {
-            System.out.println((i + 1) + ". " + "[" + list[i].getStatusIcon() + "] " + list[i].description);
+            System.out.println(tasks[i]);
         }
+        printLine();
+    }
+
+    private static void addTodo(String input) {
+        Todo todo = new Todo(input.substring(5));
+        tasks[counter++] = todo;
+        printLine();
+        System.out.println("Got it. I've added this task:");
+        System.out.print("\t  ");
+        System.out.println(todo);
+        System.out.println("Now you have " + counter + " tasks in the list.");
+        printLine();
+    }
+
+    private static void addDeadline(String input) {
+        String wordDeadline[] = input.substring(9).split("/");
+        Deadline deadline = new Deadline(wordDeadline[0].trim(), wordDeadline[1].substring(3));
+        tasks[counter++] = deadline;
+        printLine();
+        System.out.println("Got it. I've added this task:");
+        System.out.print("\t  ");
+        System.out.println(deadline);
+        System.out.println("Now you have " + counter + " tasks in the list.");
+        printLine();
+    }
+
+    private static void addEvent(String input) {
+        String wordEvent[] = input.substring(5).split("/", 3);
+        Event event = new Event(wordEvent[0].trim(), wordEvent[1].substring(5), wordEvent[2].substring(3));
+        tasks[counter++] = event;
+        printLine();
+        System.out.println("Got it. I've added this task:");
+        System.out.print("\t  ");
+        System.out.println(event);
+        System.out.println("Now you have " + counter + " tasks in the list.");
         printLine();
     }
 
@@ -87,5 +94,33 @@ public class Duke {
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
         printLine();
+    }
+
+    public static void main(String[] args) {
+        printWelcomeMessage();
+        Scanner in = new Scanner(System.in);
+        String input;
+        input = in.nextLine();
+        while (!input.equals("bye")) {
+            if (input.equals("list")) {
+                printList();
+            } else if (input.startsWith("mark")) {
+                markAsDone(input);
+            } else if (input.startsWith("unmark")) {
+                markAsUndone(input);
+            } else {
+                if (input.startsWith("todo")) {
+                    addTodo(input);
+                }
+                if (input.startsWith("deadline")) {
+                    addDeadline(input);
+                }
+                if (input.startsWith("event")) {
+                    addEvent(input);
+                }
+            }
+            input = in.nextLine();
+        }
+        printByeMessage();
     }
 }
