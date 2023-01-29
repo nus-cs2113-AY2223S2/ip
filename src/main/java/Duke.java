@@ -5,6 +5,7 @@ public class Duke {
         Scanner in = new Scanner(System.in);
         Task[] list = new Task[100];
         int currentIndex = 0;
+
         System.out.println("____________________________________________________________");
         System.out.println(" Hello! I'm Duke");
         System.out.println(" What can I do for you?");
