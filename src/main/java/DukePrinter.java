@@ -17,10 +17,11 @@ public class DukePrinter {
         System.out.println("    " + message);
         printHorizontalLine();
     }
-    public static void printMessages(String[] messages, int messageCount) {
+    public static void printTasks(Task[] tasks, int taskCount) {
         printHorizontalLine();
-        for (int i = 0; i < messageCount; i += 1) {
-            System.out.println("    " + (i + 1) + ". " + messages[i]);
+        System.out.println("    Here are the tasks in your list:");
+        for (int i = 0; i < taskCount; i += 1) {
+            System.out.println("    " + (i + 1) + '.' + tasks[i].getTaskString());
         }
         printHorizontalLine();
     }
