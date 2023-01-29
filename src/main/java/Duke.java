@@ -18,6 +18,23 @@ public class Duke {
         }
     }
 
+    private static void markTask(String listIdStr) {
+        try {
+            markTask(Integer.parseInt(listIdStr));
+        } catch (NumberFormatException e) {
+            System.err.println("\t Invalid input!");
+            System.err.println("\t Valid input format: mark [list id of the task]");
+        }
+    }
+
+    private static void unmarkTask(String listIdStr) {
+        try {
+            unmarkTask(Integer.parseInt(listIdStr));
+        } catch (NumberFormatException e) {
+            System.err.println("\t Invalid input!");
+            System.err.println("\t Valid input format: unmark [list id of the task]");
+        }
+    }
 
     private static void markTask(int listId) {
         int index = listId - 1;
@@ -45,7 +62,8 @@ public class Duke {
             System.out.println("\t\t" + task);
             System.out.println("\t Now you have " + taskList.size() + " tasks in the list. ");
         } catch (IllegalArgumentException e) {
-            System.err.println(e.getMessage());
+            System.err.println("\t Invalid task type!");
+            System.err.println("\t Valid task types: todo, deadline, event.");
         }
     }
 
@@ -147,9 +165,9 @@ public class Duke {
             } else if (cmd.equals("list")) {
                 listTasks();
             } else if (cmdArgs[0].equals("mark")) {
-                markTask(Integer.parseInt(cmdArgs[1]));
+                markTask(cmdArgs[1]);
             } else if (cmdArgs[0].equals("unmark")) {
-                unmarkTask(Integer.parseInt(cmdArgs[1]));
+                unmarkTask(cmdArgs[1]);
             } else {
                 addTask(cmd);
             }
