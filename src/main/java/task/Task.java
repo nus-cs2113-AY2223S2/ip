@@ -1,18 +1,25 @@
 package task;
 
+import java.lang.NullPointerException;
+
 public class Task{
-    private String description;
-    private boolean mark;
-    public Task(String description) {
+    protected String description;
+    protected boolean mark;
+
+    public Task(String description) throws EmptyDescriptionException {
         setDescription(description);
         mark = false;
     }
     public String getDescription() {
         return description;
     }
-    public void setDescription(String newDescription) {
+    public void setDescription(String newDescription) throws EmptyDescriptionException {
+        if (newDescription == null || newDescription.isEmpty()) {
+            throw new EmptyDescriptionException("Description given is empty!", new NullPointerException());
+        }
         description = newDescription;
     }
+    @Override
     public String toString() {
         return String.format("[%c] %s", getStatusIcon(), description);
     }

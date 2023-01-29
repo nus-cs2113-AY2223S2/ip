@@ -8,29 +8,54 @@ import java.util.stream.IntStream;
 import parser.Argument;
 import parser.Command;
 
-
-public class TaskController implements ITaskController{
+public class TaskController implements ITaskController  {
     ArrayList<Task> list = new ArrayList<Task>();
-    public void addTask(String description) {
-        list.add(new Task(description));
+    
+    public Task addTask(Argument arg) throws EmptyDescriptionException{
+        Task newTask = null;
+        try {
+            switch ((TaskType) arg.getCommand()) {
+            case DEADLINE:
+                newTask = new Deadline(arg.getVariableArguments().get("description"),
+                        arg.getVariableArguments().get("endDate"));
+                list.add(newTask);
+                break;
+            case EVENT:
+                newTask = new Event(arg.getVariableArguments().get("description"),
+                                        arg.getVariableArguments().get("startDate"),
+                                        arg.getVariableArguments().get("endDate"));
+                list.add(newTask);
+                break;
+            case TODO:
+                newTask = new ToDo(arg.getVariableArguments().get("description"));
+                list.add(newTask);
+                break;
+            }
+        } catch (EmptyDescriptionException e) {
+            throw e;
+        }
+        return newTask;
     }
-    public ArrayList<Task> getTask() throws EmptyTaskListException {
+
+    public ArrayList<Task> getTasks() throws EmptyTaskListException {
         if (list.isEmpty()) {
             throw new EmptyTaskListException("*** Empty List", new NoSuchElementException());
         }
         return list;
     }
+
     public String toString() {
         String Text = IntStream.range(0, list.size())
                                 .mapToObj(index -> String.format("%d. %s\n", index+1, list.get(index)))
                                 .collect(Collectors.joining("\n"));
         return Text;
     }
+
     @Override
-    public String markTask(Argument arg) throws IllegalArgumentException {
+    public String markTask(Argument arg) throws TaskIndexOutOfRangeException {
         if (arg.getIndex() < 0 || arg.getIndex()>list.size()) {
             // Bad index input by user
-            throw new IllegalArgumentException("Invalid index given to mark!");
+            throw new TaskIndexOutOfRangeException("Invalid index given to mark!", new IllegalArgumentException());
         }
         String dukeMessage;
         if (arg.getCommand().equals(Command.MARK)) {
@@ -41,9 +66,13 @@ public class TaskController implements ITaskController{
             list.get(arg.getIndex()-1).setMark(false);
             dukeMessage = "OK, I've marked this task as not done yet:";
         }
-        return String.format("%s\n [%c] %s",
+        return String.format("%s\n %s",
                         dukeMessage,
-                        list.get(arg.getIndex()-1).getStatusIcon(),
-                        list.get(arg.getIndex()-1).getDescription());
+                        list.get(arg.getIndex()-1).toString());
+    }
+
+    @Override
+    public int getCount() {
+        return list.size();
     }
 }

@@ -10,17 +10,19 @@ public interface ITaskController {
 	 * @return ArrayList<Task>
 	 * @throws EmptyTaskListException
 	 */
-	public ArrayList<Task> getTask() throws EmptyTaskListException;
+	public ArrayList<Task> getTasks() throws EmptyTaskListException;
 	/**
 	 * Adds new task to controller. Task will be stored in ArrayList.
 	 * @param description
+	 * @return Task object
 	 */
-	public void addTask(String description);
-    /**
+	public Task addTask(Argument arg) throws EmptyDescriptionException;
+	/**
 	 * 
 	 * @param arg
 	 * @return
 	 * @throws IllegalArgumentException
 	 */
-	public String markTask(Argument arg) throws IllegalArgumentException;
+	public String markTask(Argument arg) throws TaskIndexOutOfRangeException;
+	public int getCount();
 }
