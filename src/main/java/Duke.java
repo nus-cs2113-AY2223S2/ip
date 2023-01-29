@@ -9,6 +9,13 @@ public class Duke {
         System.out.println("____________________________________________________________");
     }
 
+    private static void printWelcomeMessage() {
+        printLine();
+        System.out.println("Hello! I'm Duke");
+        System.out.println("What can I do for you?");
+        printLine();
+    }
+
     private static void printByeMessage() {
         printLine();
         System.out.println("Bye. Hope to see you again soon! :)");
@@ -49,6 +56,7 @@ public class Duke {
         printLine();
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < counter; i++) {
+            System.out.print("\t" + (i + 1) + ".");
             System.out.println(tasks[i]);
         }
         printLine();
@@ -66,7 +74,7 @@ public class Duke {
     }
 
     private static void addDeadline(String input) {
-        String wordDeadline[] = input.substring(9).split("/");
+        String[] wordDeadline = input.substring(9).split("/");
         Deadline deadline = new Deadline(wordDeadline[0].trim(), wordDeadline[1].substring(3));
         tasks[counter++] = deadline;
         printLine();
@@ -78,7 +86,7 @@ public class Duke {
     }
 
     private static void addEvent(String input) {
-        String wordEvent[] = input.substring(5).split("/", 3);
+        String[] wordEvent = input.substring(5).split("/", 3);
         Event event = new Event(wordEvent[0].trim(), wordEvent[1].substring(5), wordEvent[2].substring(3));
         tasks[counter++] = event;
         printLine();
@@ -89,15 +97,7 @@ public class Duke {
         printLine();
     }
 
-    private static void printWelcomeMessage() {
-        printLine();
-        System.out.println("Hello! I'm Duke");
-        System.out.println("What can I do for you?");
-        printLine();
-    }
-
-    public static void main(String[] args) {
-        printWelcomeMessage();
+    private static void runDuke() {
         Scanner in = new Scanner(System.in);
         String input;
         input = in.nextLine();
@@ -108,19 +108,22 @@ public class Duke {
                 markAsDone(input);
             } else if (input.startsWith("unmark")) {
                 markAsUndone(input);
-            } else {
-                if (input.startsWith("todo")) {
-                    addTodo(input);
-                }
-                if (input.startsWith("deadline")) {
-                    addDeadline(input);
-                }
-                if (input.startsWith("event")) {
-                    addEvent(input);
-                }
+            } else if (input.startsWith("todo")) {
+                addTodo(input);
+            } else if (input.startsWith("deadline")) {
+                addDeadline(input);
+            } else if (input.startsWith("event")) {
+                addEvent(input);
             }
             input = in.nextLine();
         }
+    }
+
+
+    public static void main(String[] args) {
+        printWelcomeMessage();
+        runDuke();
         printByeMessage();
     }
 }
+
