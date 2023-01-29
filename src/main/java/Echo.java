@@ -34,37 +34,61 @@ public class Echo {
         int count = 0;
 
         Scanner in = new Scanner(System.in);
-        String line;
-        line = in.nextLine();
+        String readInput = in.nextLine();
+        String readInputAsArray[] = readInput.split(" ", 2);
+        String command = readInputAsArray[0];
+        String task = " ";
+        if(readInputAsArray.length > 1) {
+            task = readInputAsArray[1];
+        }
 
-        while (!(line.equals("Bye") || line.equals("bye"))) {
-            if (line.equals("list")) {
+
+        while (!(command.equals("Bye") || command.equals("bye"))) {
+            if (command.equals("list")) {
+                System.out.println("Here are the tasks in your list:");
                 int index = 1;
                 for (int i = 0; i < count; ++i) {
-                    System.out.println(index + "." + "[" + tasks[i].getStatusIcon() + "] " + tasks[i].description);
+                    System.out.println(index + "." + tasks[i].toString());
                     ++index;
                 }
-            } else if (line.contains("unmark")) {
-                int positionOfSpace = line.indexOf(' ');
-                String taskNoString = line.substring(positionOfSpace + 1);
-                int taskNoInt = Integer.parseInt(taskNoString);
+            } else if (command.equals("unmark")) {
+                int taskNoInt = Integer.parseInt(task);
                 tasks[taskNoInt - 1].markAsUndone();
                 System.out.println("OK, I've marked this task as not done yet:");
-                System.out.println("[ ] " + tasks[taskNoInt - 1].description);
-            } else if (line.contains("mark")) {
-                int positionOfSpace = line.indexOf(' ');
-                String taskNoString = line.substring(positionOfSpace + 1);
-                int taskNoInt = Integer.parseInt(taskNoString);
+                System.out.println(tasks[taskNoInt - 1].toString());
+            } else if (command.equals("mark")) {
+                int taskNoInt = Integer.parseInt(task);
                 tasks[taskNoInt - 1].markAsDone();
                 System.out.println("Nice! I've marked this task as done:");
-                System.out.println("[X] " + tasks[taskNoInt - 1].description);
-            } else {
-                System.out.println("added: " + line);
-                tasks[count] = new Task(line);
+                System.out.println(tasks[taskNoInt - 1].toString());
+            } else if (command.equals("todo")){
+                System.out.println("Got it. I've added this task:");
+                tasks[count] = new Todo(task);
+                System.out.println(tasks[count].toString());
                 ++count;
+                System.out.println("Now you have " + count + " tasks in the list.");
+            } else if (command.equals("deadline")) {
+                System.out.println("Got it. I've added this task:");
+                String taskAsArray[] = task.split("/");
+                tasks[count] = new Deadline(taskAsArray[0], taskAsArray[1]);
+                System.out.println(tasks[count].toString());
+                ++count;
+                System.out.println("Now you have " + count + " tasks in the list.");
+            } else if (command.equals("event")) {
+                System.out.println("Got it. I've added this task:");
+                String taskAsArray[] = task.split("/");
+                tasks[count] = new Event(taskAsArray[0], taskAsArray[1], taskAsArray[2]);
+                System.out.println(tasks[count].toString());
+                ++count;
+                System.out.println("Now you have " + count + " tasks in the list.");
             }
 
-            line = in.nextLine();
+            readInput = in.nextLine();
+            readInputAsArray = readInput.split(" ", 2);
+            command = readInputAsArray[0];
+            if(readInputAsArray.length > 1) {
+                task = readInputAsArray[1];
+            }
         }
 
         System.out.println("Bye. Hope to see you again!\n");
