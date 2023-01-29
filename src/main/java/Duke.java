@@ -70,15 +70,15 @@ public class Duke {
      *
      * @param line The task entered by the user.
      */
-    public static void addToList(String line, TypeOfTask typeOfTask) {
+    public static void addToList(String line, TypeOfTask typeOfTask, String startDate, String endDate) {
         if (typeOfTask.equals(TypeOfTask.TODO)) {
-            Todo item = new Todo(line, tasks.size() + 1);
+            Todo item = new Todo(line, tasks.size());
             tasks.add(item);
         } else if (typeOfTask.equals(TypeOfTask.DEADLINE)) {
-            Deadline item = new Deadline(line, tasks.size() + 1);
+            Deadline item = new Deadline(line, tasks.size(), startDate);
             tasks.add(item);
         } else if (typeOfTask.equals(TypeOfTask.EVENT))  {
-            Event item = new Event(line, tasks.size() + 1);
+            Event item = new Event(line, tasks.size(), startDate, endDate);
             tasks.add(item);
         }
         printHorizontalLines();
@@ -88,7 +88,7 @@ public class Duke {
      * Prints out the task passed into it
      */
     public static void printTask(Task task) {
-        System.out.println(task.index + ".[" + task.getStatusForTypeOfTask() + "]" + "[" + task.getStatusIcon() + "] " + task.getDescription());
+        task.printTask();
     }
 
     /**
@@ -138,10 +138,7 @@ public class Duke {
             } else {
                 System.out.println("Updated the following task:");
             }
-            System.out.println((index + 1) +
-                            ".[" + tasks.get(index).getStatusForTypeOfTask() + "]" +
-                            "[" + tasks.get(index).getStatusIcon() + "] " +
-                            tasks.get(index).getDescription());
+            tasks.get(index).printTask();
         }
     }
 
@@ -168,14 +165,36 @@ public class Duke {
                     warnWrongSyntax();
                 }
             } else if (commands[0].equals("todo") ) {
+                // 6 for "deadline " length
                 String desc = line.substring(6, line.length());
-                addToList(desc, TypeOfTask.TODO);
+                addToList(desc, TypeOfTask.TODO, null, null);
             } else if (commands[0].equals("deadline") ) {
-                String desc = line.substring(10, line.length());
-                addToList(desc, TypeOfTask.DEADLINE);
+                int indexOfDate = line.indexOf("/by");
+                if (indexOfDate == -1) {
+                    warnWrongSyntax();
+                } else {
+                    // +4 for "/by " length
+                    String startOfDate = line.substring(indexOfDate + 4, line.length());
+                    // 10 for "deadline " length
+                    String descOfTask = line.substring(10, indexOfDate);
+                    addToList(descOfTask, TypeOfTask.DEADLINE, startOfDate, null);
+                }
             } else if (commands[0].equals("event") ) {
-                String desc = line.substring(7, line.length());
-                addToList(desc, TypeOfTask.EVENT);
+                int indexOfStartDate = line.indexOf("/from");
+                int indexOfEndDate = line.indexOf("/to");
+                if (indexOfStartDate == -1 || indexOfEndDate == -1) {
+                    warnWrongSyntax();
+                } else {
+                    // +6 for "/from " length
+                    String startOfDate = line.substring(indexOfStartDate + 6, indexOfEndDate);
+                    // +5 for "/to ? length
+                    String endOfDate = line.substring(indexOfEndDate + 4);
+                    // 7 for "event " length
+                    String descOfTask = line.substring(7, indexOfStartDate);
+                    addToList(descOfTask, TypeOfTask.EVENT, startOfDate, endOfDate);
+                }
+            } else {
+                warnWrongSyntax();
             }
         }
     }

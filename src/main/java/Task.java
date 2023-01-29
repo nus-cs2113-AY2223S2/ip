@@ -77,5 +77,13 @@ public class Task {
         }
         return "ERROR";
     }
+
+    public void printTask() {
+        System.out.println((this.index + 1) +
+                            ".[" + this.getStatusForTypeOfTask() + "]" +
+                            "[" + this.getStatusIcon() + "] " +
+                            this.getDescription());
+    }
+
 }
 
