@@ -4,7 +4,7 @@ public class Task{
     private String description;
     private boolean mark;
     public Task(String description) {
-        this.description = description;
+        setDescription(description);
         mark = false;
     }
     public String getDescription() {

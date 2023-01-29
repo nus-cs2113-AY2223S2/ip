@@ -4,8 +4,8 @@ public class Argument {
     private Command command;
     private int index;
     public Argument(Command command, int index) {
-        this.command = command;
-        this.index = index;
+        setCommand(command);
+        setIndex(index);
     }
     public Argument() {
         this(null,-1);
