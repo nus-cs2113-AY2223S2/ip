@@ -27,34 +27,13 @@ public class Duke {
             String type = splitLine[0];
 
             if (type.matches("todo")) {
-                System.out.print("    ____________________________________________________________\n");
-                System.out.println("    Got it. I've added this task:");
-                Todo newTask = new Todo(line);
-                System.out.println("      " + newTask.label + newTask.getStatusIcon() + " " + newTask.description);
-                list[index] = newTask;
-                ++index;
-                System.out.println("    Now you have " + index + " tasks in the list.");
-                System.out.println("    ____________________________________________________________\n");
+                index = Todo.addForToDo(line, list, index);
             } else if (type.matches("deadline")) {
-                System.out.print("    ____________________________________________________________\n");
-                System.out.println("    Got it. I've added this task:");
-                Deadline newTask = new Deadline(line);
-                System.out.println("      " + newTask.label + newTask.getStatusIcon() + " " + newTask.description + " " + newTask.whenDue);
-                list[index] = newTask;
-                ++index;
-                System.out.println("    Now you have " + index + " tasks in the list.");
-                System.out.println("    ____________________________________________________________\n");
+                index = Deadline.addForDeadline(line, list, index);
             } else if (type.matches("event")) {
-                System.out.print("    ____________________________________________________________\n");
-                System.out.println("    Got it. I've added this task:");
-                Event newTask = new Event(line);
-                System.out.println("      "+ newTask.label + newTask.getStatusIcon() + " " + newTask.description + " " + newTask.start + newTask.end);
-                list[index] = newTask;
-                ++index;
-                System.out.println("    Now you have " + index + " tasks in the list.");
-                System.out.println("    ____________________________________________________________\n");
+                index = Event.addForEvent(line, list, index);
             } else if (line.matches("list") || line.matches("bye") || line.matches("mark \\d") || line.matches("unmark \\d")) {
-                Task.conductInstruction(line, list, index);
+                Task.instructionLessAdd(line, list, index);
                 if (line.equals("bye")) {
                     break;
                 }

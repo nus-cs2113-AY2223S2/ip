@@ -28,9 +28,7 @@ public class Task {
         isDone = done;
     }
 
-    protected static Task[] totalTasks = new Task[100];
-
-    public static void conductInstruction(String command, Task[] listOfTasks, int index) {
+    public static void instructionLessAdd(String command, Task[] listOfTasks, int index) {
         System.out.print("    ____________________________________________________________\n");
         if (command.equals("bye")) {
             System.out.println("    Bye. Hope to see you again soon!");

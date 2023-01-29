@@ -16,4 +16,16 @@ public class Event extends Task {
         this.isDone = false;
         this.label = "[E]";
     }
+
+    public static int addForEvent(String line, Task[] list, int index) {
+        System.out.print("    ____________________________________________________________\n");
+        System.out.println("    Got it. I've added this task:");
+        Event newTask = new Event(line);
+        System.out.println("      "+ newTask.label + newTask.getStatusIcon() + " " + newTask.description + " " + newTask.start + newTask.end);
+        list[index] = newTask;
+        ++index;
+        System.out.println("    Now you have " + index + " tasks in the list.");
+        System.out.println("    ____________________________________________________________\n");
+        return index;
+    }
 }
