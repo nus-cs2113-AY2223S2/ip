@@ -10,13 +10,8 @@ public class Deadline extends ToDo {
         this.deadline = deadline;
     }
 
-    public String getDeadline(){
-        return this.deadline;
-    }
-
-
     @Override
     public String toString(){
-        return  checkBoxOutput() +this.getTaskName() + " (by: " + this.getDeadline() + ")";
+        return  checkBoxOutput() +this.taskName + " (by: " + this.deadline + ")";
     }
 }

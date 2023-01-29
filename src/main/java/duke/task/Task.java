@@ -12,24 +12,12 @@ public class Task {
         indexCount++;
     }
 
-    public static int getIndexCount() {
-        return indexCount;
-    }
-
-    public String getTaskName() {
-        return taskName;
-    }
-
-    public boolean getIsDone() {
-        return isDone;
-    }
-
     public void setDone(boolean done) {
         isDone = done;
     }
 
-    public String getType(){
-        return type;
+    public static int getIndexCount(){
+       return indexCount;
     }
 
     @Override
@@ -39,13 +27,13 @@ public class Task {
 
     public String checkBoxOutput(){
         String checkMark = isDone ? " [X] " : " [ ] ";
-        String taskType = getType();
+        String taskType = type;
 
         return  taskType + checkMark;
     }
 
     public void printAdded(){
-        int taskCount = getIndexCount();
+        int taskCount = indexCount;
         String word1;
         String word2;
         if (taskCount == 1){
@@ -56,6 +44,6 @@ public class Task {
             word2 = " tasks";
         }
         System.out.println("Got it. I've added this task:\n " + this);
-        System.out.println("Now there " + word1 + getIndexCount() + word2 + " in your list");
+        System.out.println("Now there " + word1 + indexCount + word2 + " in your list");
     }
 }

@@ -10,6 +10,6 @@ public class ToDo extends Task{
 
     @Override
     public String toString(){
-        return checkBoxOutput() + this.getTaskName();
+        return checkBoxOutput() + this.taskName;
     }
 }

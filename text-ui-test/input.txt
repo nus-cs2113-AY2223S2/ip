@@ -4,3 +4,4 @@ event lecture /from mon 1pm /to mon 3pm
 list
 mark 1
 unmark 1
+bye
