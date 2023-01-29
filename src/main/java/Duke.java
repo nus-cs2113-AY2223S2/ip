@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Duke {
@@ -9,11 +10,21 @@ public class Duke {
         System.out.println("\t____________________________________________________________");
     }
 
+    private static void addTask(String cmd) {
+        Task task = createTask(cmd);
+        taskList.add(task);
+        System.out.println("\t Got it, I have added this task: ");
+        System.out.println("\t\t" + task);
+        System.out.println("\t Now you have " + taskList.size() + " tasks in the list. ");
+    }
+
     private static Task createTask(String cmd) {
         String[] cmdArgs = cmd.split(" ");
         switch (cmdArgs[0]) {
         case "todo":
             return createTodo(cmdArgs);
+        case "deadline":
+            return createDeadline(cmdArgs);
         default:
             System.err.println("Unknown task type!");
             return null;
@@ -29,14 +40,25 @@ public class Duke {
         return new Todo(content.toString());
     }
 
-
-    private static void addTask(String cmd) {
-        Task task = createTask(cmd);
-        taskList.add(task);
-        System.out.println("\t Got it, I have added this task: ");
-        System.out.println("\t\t" + task);
-        System.out.println("\t Now you have " + taskList.size() + " tasks in the list. ");
+    private static Deadline createDeadline(String[] cmdArgs) {
+        assert cmdArgs[0].equals("deadline");
+        StringBuilder content = new StringBuilder();
+        StringBuilder byDate = new StringBuilder();
+        boolean buildContent = true;
+        for (int i = 1; i < cmdArgs.length; ++i) {
+            if (cmdArgs[i].equals("/by")) {
+                buildContent = false;
+                continue;
+            }
+            if (buildContent) {
+                content.append(cmdArgs[i]).append(" ");
+            } else {
+                byDate.append(cmdArgs[i]).append(" ");
+            }
+        }
+        return new Deadline(content.toString(), byDate.toString());
     }
+
 
     private static void markTask(int listId) {
         int index = listId - 1;
