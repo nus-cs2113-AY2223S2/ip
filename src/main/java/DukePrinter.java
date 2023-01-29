@@ -17,6 +17,13 @@ public class DukePrinter {
         System.out.println("    " + message);
         printHorizontalLine();
     }
+    public static void printMessages(String[] messages, int messageCount) {
+        printHorizontalLine();
+        for (int i = 0; i < messageCount; i += 1) {
+            System.out.println("    " + (i + 1) + ". " + messages[i]);
+        }
+        printHorizontalLine();
+    }
     public static void printWelcomeMessage() {
         printMessage("Hello from\n" + LOGO + "    Hello! I'm Duke\n" + "    What can I do for you?");
     }
