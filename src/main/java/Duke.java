@@ -1,4 +1,10 @@
 public class Duke {
+    /**
+     * The markAsDone method marks a task as done.
+     *
+     * @param compileItems The TaskMaster object that contains the task list.
+     * @param index        The index of the task to mark as done.
+     */
     static void markAsDone(TaskMaster compileItems, int index) {
         TaskManager toBeDone = compileItems.getTask(index);
         boolean hasDukeMarked = toBeDone.markAsDone();
@@ -10,6 +16,12 @@ public class Duke {
         toBeDone.printTaskAndStatus(index);
     }
 
+    /**
+     * The markAsNotDone method marks a task as not done.
+     *
+     * @param compileItems The TaskMaster object that contains the task list.
+     * @param index        The index of the task to mark as not done.
+     */
     static void markAsNotDone(TaskMaster compileItems, int index) {
         TaskManager toBeDone = compileItems.getTask(index);
         boolean hasDukeUnMarked = toBeDone.markAsUndone();
@@ -21,6 +33,12 @@ public class Duke {
         toBeDone.printTaskAndStatus(index);
     }
 
+    /**
+     * The main method is the entry point of the program. It prompts the user for their name,
+     * instantiates a TaskMaster object, and handles user commands.
+     *
+     * @param args Command-line arguments passed to the program.
+     */
     public static void main(String[] args) {
 
         showWelcomeMessage();
@@ -48,6 +66,13 @@ public class Duke {
         System.out.println("=============================================================================================================== \n");
     }
 
+    /**
+     * The instantiateList method handles user commands and updates the task list.
+     *
+     * @param inOut        The IO object used for reading user input.
+     * @param userName     The name of the user.
+     * @param compileItems The TaskMaster object that contains the task list.
+     */
     private static void instantiateList(IO inOut, String userName, TaskMaster compileItems) {
         while (true) {
             String userCommand = inOut.readInput();
@@ -98,11 +123,7 @@ public class Duke {
     }
 
     private static void showWelcomeMessage() {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
+        String logo = " ____        _        \n" + "|  _ \\ _   _| | _____ \n" + "| | | | | | | |/ / _ \\\n" + "| |_| | |_| |   <  __/\n" + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
         System.out.println("Hello! I'm Duke, your personal assistant.\n");
 
