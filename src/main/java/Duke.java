@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -51,36 +52,29 @@ public class Duke {
             return;
         }
 
-        addItem(inputMessage);
-    }
-
-    public static boolean isValidTaskNumber(int taskNumber) {
-        return taskNumber > userList.size() ? false : true;
-    }
-
-    public static void addItem(String item) {
-        separator();
-        Task t = new Task(item);
-        userList.add(t);
-        String outputMessage = String.format("added: %s", item);
-        printMessage(outputMessage);
-        separator();
-    }
-
-    public static void displayList() {
-        separator();
-        int numItems = userList.size();
-        if (numItems == 0) {
-            printMessage("List is empty!");
+        if (message.length > 1 && message[0].equalsIgnoreCase("todo")) {
+            String todoDescription = inputMessage.substring(5);
+            addTodo(todoDescription);
             return;
         }
 
-        for (int i = 0; i < numItems; i++) {
-            String item = userList.get(i).toString();
-            String outputMessage = String.format("%d.%s", i + 1, item);
-            printMessage(outputMessage);
+        if (message.length > 1 && message[0].equalsIgnoreCase("deadline")) {
+            String[] deadlineInfo = parseDeadline(message);
+            addDeadline(deadlineInfo[0], deadlineInfo[1]);
+            return;
         }
-        separator();
+
+        if (message.length > 1 && message[0].equalsIgnoreCase("event")) {
+            String[] eventInfo = parseEvent(message);
+            addEvent(eventInfo[0], eventInfo[1], eventInfo[2]);
+            return;
+        }
+
+        addTask(inputMessage);
+    }
+
+    public static boolean isValidTaskNumber(int taskNumber) {
+        return taskNumber <= userList.size();
     }
 
     public static void markItem(int taskNumber) {
@@ -109,6 +103,117 @@ public class Duke {
             String outputMessage = String.format("OK, I've marked task %d as not done yet:", taskNumber);
             printMessage(outputMessage);
             printMessage(userList.get(taskNumber - 1).toString());
+        }
+        separator();
+    }
+
+    public static String[] parseDeadline(String[] message) {
+        int descriptionStartIndex = 1;
+        int descriptionEndIndex = 0;
+        int endDateStartIndex = 0;
+        int endDateEndIndex = message.length;
+
+        for (int i = 2; i < message.length; i++) {
+            if (message[i].equalsIgnoreCase("/by")) {
+                descriptionEndIndex = i;
+                endDateStartIndex = i + 1;
+                break;
+            }
+        }
+
+        String[] descriptionArray = Arrays.copyOfRange(message, descriptionStartIndex, descriptionEndIndex);
+        String[] endDateArray = Arrays.copyOfRange(message, endDateStartIndex, endDateEndIndex);
+
+        String[] deadlineArray = new String[2];
+        deadlineArray[0] = String.join(" ", descriptionArray);
+        deadlineArray[1] = String.join(" ", endDateArray);
+        return deadlineArray;
+    }
+
+    public static String[] parseEvent(String[] message) {
+        int descriptionStartIndex = 1;
+        int descriptionEndIndex = 0;
+        int startDateStartIndex = 0;
+        int startDateEndIndex = 0;
+        int endDateStartIndex = 0;
+        int endDateEndIndex = message.length;
+
+        for (int i = 2; i < message.length; i++) {
+            if (message[i].equalsIgnoreCase("/from")) {
+                descriptionEndIndex = i;
+                startDateStartIndex = i + 1;
+
+            }
+            if (message[i].equalsIgnoreCase("/to")) {
+                startDateEndIndex = i;
+                endDateStartIndex = i + 1;
+                break;
+            }
+        }
+
+        String[] descriptionArray = Arrays.copyOfRange(message, descriptionStartIndex, descriptionEndIndex);
+        String[] startDateArray = Arrays.copyOfRange(message, startDateStartIndex, startDateEndIndex);
+        String[] endDateArray = Arrays.copyOfRange(message, endDateStartIndex, endDateEndIndex);
+
+        String[] eventArray = new String[3];
+        eventArray[0] = String.join(" ", descriptionArray);
+        eventArray[1] = String.join(" ", startDateArray);
+        eventArray[2] = String.join(" ", endDateArray);
+        return eventArray;
+    }
+
+    public static void addTask(String description) {
+        separator();
+        Task t = new Task(description);
+        userList.add(t);
+        String outputMessage = String.format("added: %s", description);
+        printMessage(outputMessage);
+        separator();
+    }
+
+    public static void addTodo(String description) {
+        separator();
+        Todo todo = new Todo(description);
+        userList.add(todo);
+        printMessage("Got it. I've added this todo:");
+        printMessage(String.format(" %s", todo));
+        printMessage(String.format("Now you have %d tasks in the list.", userList.size()));
+        separator();
+    }
+
+    public static void addDeadline(String description, String endDate) {
+        separator();
+        Deadline deadline = new Deadline(description, endDate);
+        userList.add(deadline);
+        printMessage("Got it. I've added this deadline:");
+        printMessage(String.format(" %s", deadline));
+        printMessage(String.format("Now you have %d tasks in the list.", userList.size()));
+        separator();
+    }
+
+    public static void addEvent(String description, String startDate, String endDate) {
+        separator();
+        Event event = new Event(description, startDate, endDate);
+        userList.add(event);
+        printMessage("Got it. I've added this event:");
+        printMessage(String.format(" %s", event));
+        printMessage(String.format("Now you have %d tasks in the list.", userList.size()));
+        separator();
+    }
+
+    public static void displayList() {
+        separator();
+        int numItems = userList.size();
+        if (numItems == 0) {
+            printMessage("List is empty!");
+            return;
+        }
+
+        printMessage("Here are the tasks in your list:");
+        for (int i = 0; i < numItems; i++) {
+            String item = userList.get(i).toString();
+            String outputMessage = String.format("%d.%s", i + 1, item);
+            printMessage(outputMessage);
         }
         separator();
     }
