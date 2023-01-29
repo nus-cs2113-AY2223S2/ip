@@ -48,7 +48,7 @@ public class TaskMaster {
     public void printList() {
         //this is only for UX purposes
         if (this.toDo.length == 0) {
-            System.out.println("Hm... It looks like you have not added any tasks.");
+            System.out.println("Hm... It looks like you have not added any tasks.\n");
         }
         for (int i = 0; i < this.toDo.length; i++) {
             this.toDo[i].printTaskAndStatus(i);

@@ -99,7 +99,7 @@ public class Duke {
     }
 
     private static void seeList(TaskMaster compileItems) {
-        System.out.println("Understood. Retrieving To-Do list...");
+        System.out.println("Understood. Retrieving To-Do list...\n");
         compileItems.printList();
         System.out.println("Would you like to add more tasks? Enter 'Done' if you are satisfied with this list.");
     }
@@ -118,7 +118,7 @@ public class Duke {
         System.out.println("=============================================================================================================== \n");
         System.out.println("'See list': Take a look at your To-Do list to get your day started!");
         System.out.println("'mark <task number>': Marks task as done. Try entering 'mark 1' to mark your first task as done!");
-        System.out.println("'unmark <task number>': Unmarks task as not done. Try entering 'unmark 1' to mark your first task as not done!");
+        System.out.println("'unmark <task_number>': Unmarks task as not done. Try entering 'unmark 1' to mark your first task as not done.");
         System.out.println("'Help': If you forgot how to use me, don't be afraid to ask!");
         System.out.println("To add a task, enter a description of said task and I will add it into the list for you :) \n");
         System.out.println("=============================================================================================================== \n");
