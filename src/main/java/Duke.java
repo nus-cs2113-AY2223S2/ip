@@ -1,31 +1,6 @@
 import java.util.Scanner;  // Import the Scanner class
 public class Duke {
 
-    //Create a task class
-    public static class Task {
-        private String taskName;
-        private boolean isDone;
-        public Task(String taskName){
-            this.taskName = taskName;
-            this.isDone = false;
-        }
-        //method to mark as done
-        public void markAsDone(){
-            this.isDone = true;
-        }
-        //method to mark as not done
-        public void markAsNotDone(){
-            this.isDone = false;
-        }
-        //toString method to print the status of the task followed by the task name
-        public String toString(){
-            if(this.isDone){
-                return "[X] " + this.taskName;
-            }else{
-                return "[ ] " + this.taskName;
-            }
-        }
-    }
     //Function to check if an input has mark as the first word
     public static boolean isMark(String input){
         if(input.length()>=4){
@@ -35,10 +10,41 @@ public class Duke {
         }
         return false;
     }
+
     //Function to check if an input has unmark as the first word
     public static boolean isUnmark(String input){
         if(input.length()>=6){
             if("unmark".equalsIgnoreCase(input.substring(0,6))){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //Function to check if an input has deadline as the first word
+    public static boolean isDeadline(String input){
+        if(input.length()>=8){
+            if("deadline".equalsIgnoreCase(input.substring(0,8))){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //Function to check if an input has event as the first word
+    public static boolean isEvent(String input){
+        if(input.length()>=5){
+            if("event".equalsIgnoreCase(input.substring(0,5))){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //Function to check if an input has todo as the first word
+    public static boolean isTodo(String input){
+        if(input.length()>=4){
+            if("todo".equalsIgnoreCase(input.substring(0,4))){
                 return true;
             }
         }
@@ -100,6 +106,55 @@ public class Duke {
                 System.out.println("Nice! I've marked this task as done:");
                 System.out.println(tasks[taskNumber-1]);
                 userInput = userScan.nextLine();  // Get user input again              
+            }
+
+            //If userInput is "todo" add a todo task to the list
+            else if(isTodo(userInput)){
+                //get the task name
+                String taskName = userInput.substring(5);
+                //create a todo task
+                tasks[taskCount] = new Todo(taskName);
+                //increment the task count
+                taskCount++;
+                //print out the task that was added
+                System.out.println("Got it. I've added this task:");
+                System.out.println(tasks[taskCount-1]);
+                System.out.println("Now you have " + taskCount + " tasks in the list.");
+                userInput = userScan.nextLine();  // Get user input again
+            }
+
+            //If userInput is "deadline" add a deadline task to the list
+            else if(isDeadline(userInput)){
+                //get the task name
+                String taskName = userInput.substring(9,userInput.indexOf("/"));
+                //get the deadline string without any "/"
+                String deadline = userInput.substring(userInput.indexOf("/")).replace("/","");
+                //create a deadline task
+                tasks[taskCount] = new Deadline(taskName,deadline);
+                //increment the task count
+                taskCount++;
+                //print out the task that was added
+                System.out.println("Got it. I've added this task:");
+                System.out.println(tasks[taskCount-1]);
+                System.out.println("Now you have " + taskCount + " tasks in the list.");
+                userInput = userScan.nextLine();  // Get user input again
+            }
+
+            //If userInput is "event" add an event task to the list
+            else if(isEvent(userInput)){
+                //get the task name
+                String taskName = userInput.substring(6,userInput.indexOf("/"));
+                //get the event time without any "/"
+                String eventTime = userInput.substring(userInput.indexOf("/")).replace("/","");
+                //create an event task
+                tasks[taskCount] = new Event(taskName,eventTime);
+                //increment the task count
+                taskCount++;
+                //print out the task that was added
+                System.out.println("Got it. I've added this task:");
+                System.out.println(tasks[taskCount-1]);
+                System.out.println("Now you have " + taskCount + " tasks in the list.");
+                userInput = userScan.nextLine();  // Get user input again
             }
 
             //If userInput is not any of the commands add the task to the list
