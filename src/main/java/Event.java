@@ -6,7 +6,7 @@ public class Event extends Task{
         this.start = start;
         this.end = end;
     }
-    
+
     @Override
     public String toString() {
         return "[E]" + super.toString() + " (from: " + start + "to: " + end + ")";
