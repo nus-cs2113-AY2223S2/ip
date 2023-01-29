@@ -25,6 +25,8 @@ public class Duke {
             return createTodo(cmdArgs);
         case "deadline":
             return createDeadline(cmdArgs);
+        case "event":
+            return createEvent(cmdArgs);
         default:
             System.err.println("Unknown task type!");
             return null;
@@ -57,6 +59,36 @@ public class Duke {
             }
         }
         return new Deadline(content.toString(), byDate.toString());
+    }
+
+    private static Event createEvent(String[] cmdArgs) {
+        assert cmdArgs[0].equals("event");
+        StringBuilder content = new StringBuilder();
+        StringBuilder fromDate = new StringBuilder();
+        StringBuilder toDate = new StringBuilder();
+        int buildingSteps = 0; // 0: content, 1: from, 2: to
+        for (int i = 1; i < cmdArgs.length; ++i) {
+            if (cmdArgs[i].equals("/from")) {
+                buildingSteps = 1;
+                continue;
+            } else if (cmdArgs[i].equals("/to")) {
+                buildingSteps = 2;
+                continue;
+            }
+
+            switch (buildingSteps) {
+            case (0):
+                content.append(cmdArgs[i]).append(" ");
+                break;
+            case (1):
+                fromDate.append(cmdArgs[i]).append(" ");
+                break;
+            case (2):
+                toDate.append(cmdArgs[i]).append(" ");
+                break;
+            }
+        }
+        return new Event(content.toString(), fromDate.toString(), toDate.toString());
     }
 
 
