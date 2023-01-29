@@ -48,23 +48,15 @@ public class Task {
     /**
      * Set the task status as done
      */
-    public void markDone() {
-        this.isDone = true;
+    public void markDone(boolean isDone) {
+        this.isDone = isDone;
         Io.printLine();
-        Io.printOutput("Alright!, I helped you mark this task as done:");
+        if (this.isDone) {
+            Io.printOutput("Alright!, I helped you mark this task as done:");
+        } else {
+            Io.printOutput("OK, I helped you mark this task as not done yet:");
+        }
         Io.printOutput("  " + getTaskPrint());
         Io.printLine();
     }
-
-    /**
-     * Set the task status as not done
-     */
-    public void markNotDone() {
-        this.isDone = false;
-        Io.printLine();
-        Io.printOutput("OK, I helped you mark this task as not done yet:");
-        Io.printOutput("  " + getTaskPrint());
-        Io.printLine();
-    }
-
 }

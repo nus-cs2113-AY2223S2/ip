@@ -3,8 +3,9 @@ package grandduke.task;
 import java.util.ArrayList;
 
 import grandduke.command.Io;
+import grandduke.command.Parser;
 
-public class TaskList {
+public abstract class TaskList {
     // ArrayList used as a list for tasks
     private static ArrayList<Task> tasks = new ArrayList<>();
 
@@ -23,10 +24,15 @@ public class TaskList {
      * @param input
      *            the description of the new task to be added
      */
-    public static void addTask(String input) {
-        Task newTask = new Task(input);
+    public static void addTask(String input, String type) {
+        Task newTask;
+
+        newTask = Parser.parseNewTask(input, type);
+
         tasks.add(newTask);
-        Io.printOutput("added: " + input);
+        Io.printOutput("Got it. I've added this task:");
+        Io.printOutput("  " + newTask.getTaskPrint());
+        Io.printOutput("Now you have " + tasks.size() + " tasks in the list.");
     }
 
     /**
@@ -49,7 +55,7 @@ public class TaskList {
         int taskNum = Integer.parseInt(inputList[1]) - 1;
 
         if (taskNum < tasks.size()) {
-            tasks.get(taskNum).markDone();
+            tasks.get(taskNum).markDone(true);
         } else {
             Io.printOutput("Task number exceeds list size");
         }
@@ -66,7 +72,7 @@ public class TaskList {
         int taskNum = Integer.parseInt(inputList[1]) - 1;
 
         if (taskNum < tasks.size()) {
-            tasks.get(taskNum).markNotDone();
+            tasks.get(taskNum).markDone(false);
         } else {
             Io.printOutput("Task number exceeds list size");
         }
