@@ -45,4 +45,24 @@ public class Task {
     public String getTask() {
         return task;
     }
+
+    /**
+     * gets the type of task (todo type)
+     *
+     * @return letter representing type of task
+     */
+
+    public String getTaskType() {
+        return "[T]";
+    }
+
+    /**
+     * Shows the full task status and description
+     *
+     * @return task status and description
+     */
+
+    public String getTaskStatus() {
+        return "[T]" + "[" + getStatusIcon() + "]" + task;
+    }
 }
