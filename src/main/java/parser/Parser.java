@@ -5,7 +5,12 @@ import java.util.HashMap;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Optional;
+import task.Deadline;
+import task.EmptyDescriptionException;
+import task.Event;
+import task.Task;
 import task.TaskType;
+import task.ToDo;
 
 public class Parser implements IParser {
     private Scanner sc;
@@ -122,28 +127,51 @@ public class Parser implements IParser {
         return currentCommand;
     }
     @Override
-    public Argument getCommandArguments(Command command) throws InvalidCommandException {
+    public Argument getCommandArguments(Command command) {
         if (currentCommand.compareTo(command) != 0){
             // Mismatch in request
             // TODO Throw error
         }
+        Argument arg = new Argument();
+        if (command.equals(Command.MARK) || command.equals(Command.UNMARK)) {
+            arg.setCommand(command);
+            arg.setIndex(Integer.parseInt(message.split(" ")[1]));
+        }
+        else {
+            // TODO Handle error
+        }
+        return arg;
+
+    }
+    @Override
+    public Task getTask() throws InvalidCommandException {
+        TaskType tasking = typeOfTask();
+
+        if (message.split(" ", 2).length == 1) {
+            // Only command given but no arguments
+            // Raise error
+            throw new InvalidCommandException("No arguments given in command", new IllegalArgumentException());
+        }
+        String arguments = message.split(" ", 2)[1];
         try {
-            Argument arg = new Argument();
-            if (command.equals(Command.MARK) || command.equals(Command.UNMARK)) {
-                arg.setCommand(command);
-                arg.setIndex(Integer.parseInt(message.split(" ")[1]));
+            Task task = null;
+            switch (tasking) {
+                case DEADLINE:
+                    task = new Deadline();
+                    break;
+                case EVENT:
+                    task = new Event();
+                    break;
+                case TODO:
+                    task = new ToDo();
+                    break;
             }
-            else if (command.equals(Command.TASK)) {
-                TaskType tasking = typeOfTask();
-                arg.setCommand(tasking);
-                arg.setVariableArguments(parseTask(tasking));
-            }
-            else {
-                // TODO Handle error
-            }
-            return arg;
+            task.parseArgument(arguments);
+            return task;
         } catch (InvalidCommandException e) {
             throw e;
+        } catch (StringIndexOutOfBoundsException | EmptyDescriptionException e) {
+            throw new InvalidCommandException("Command could not be understood",e);
         }
     }
 }

@@ -17,6 +17,7 @@ public interface ITaskController {
 	 * @return Task object
 	 */
 	public Task addTask(Argument arg) throws EmptyDescriptionException;
+    public Task addTask(Task newTask);
 	/**
 	 * 
 	 * @param arg

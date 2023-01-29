@@ -1,13 +1,21 @@
 package task;
 
 import java.lang.NullPointerException;
+import parser.InvalidCommandException;
 
-public class Task{
+public abstract class Task{
     protected String description;
     protected boolean mark;
 
     public Task(String description) throws EmptyDescriptionException {
         setDescription(description);
+        mark = false;
+    }
+        /**
+     * Used for creating an empty class to be filled in Parser
+     */
+    public Task() {
+        description = null;
         mark = false;
     }
     public String getDescription() {
@@ -33,4 +41,5 @@ public class Task{
     public void setMark(boolean newMark) {
         this.mark = newMark;
     }
+    public abstract void parseArgument(String arguments) throws InvalidCommandException, EmptyDescriptionException;
 }

@@ -40,7 +40,7 @@ public class Duke {
                     break;
                 case TASK:
                     printSystemMessage("Got it. I've added this task:\n " +
-                    taskController.addTask(parser.getCommandArguments(Command.TASK)).toString() +
+                    taskController.addTask(parser.getTask()).toString() +
                     String.format("\nNow you have %d tasks in the list.", taskController.getCount()));
                     break;
                 case UNMARK:

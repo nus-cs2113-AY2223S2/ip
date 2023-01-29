@@ -36,7 +36,10 @@ public class TaskController implements ITaskController  {
         }
         return newTask;
     }
-
+    public Task addTask(Task newTask) {
+        list.add(newTask);
+        return newTask;
+    }
     public ArrayList<Task> getTasks() throws EmptyTaskListException {
         if (list.isEmpty()) {
             throw new EmptyTaskListException("*** Empty List", new NoSuchElementException());
