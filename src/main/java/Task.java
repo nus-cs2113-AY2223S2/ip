@@ -22,6 +22,7 @@ public class Task {
             System.out.println(this.getStatus() + this.taskInfo);
         }
     }
+
     public void markAsUndone() {
         if (!isDone) {
             System.out.println("Task was already marked as undone!");

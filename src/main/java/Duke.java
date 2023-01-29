@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.Arrays;
+
 public class Duke {
     public static void main(String[] args) {
         String logo = " ____        _        \n"
@@ -18,7 +19,7 @@ public class Duke {
             Scanner in = new Scanner(System.in);
             messageFromUser = in.nextLine();
 
-            if (messageFromUser.startsWith("mark") || messageFromUser.startsWith("unmark"))  {
+            if (messageFromUser.startsWith("mark") || messageFromUser.startsWith("unmark")) {
                 changeTaskStatus(messageFromUser, taskStorage);
             } else if (messageFromUser.equals("bye")) {
                 exitGreeting();
@@ -32,16 +33,17 @@ public class Duke {
     }
 
     public static void changeTaskStatus(String sentence, Task[] taskStorage) {
-        String[] splitMessage = sentence.split(" ");
-        int taskNumber = Integer.parseInt(splitMessage[1]);
+        String[] words = sentence.split(" ");
+        int taskNumber = Integer.parseInt(words[1]);
         Task t = taskStorage[taskNumber];
-        if (splitMessage[0].trim().equals("mark")) {
+        if (words[0].trim().equals("mark")) {
             t.markAsDone();
         } else {
             t.markAsUndone();
         }
         horizontalLine();
     }
+
     public static void greeting() {
         horizontalLine();
         System.out.println("Hello! I'm Duke");
@@ -59,8 +61,8 @@ public class Duke {
         if (totalNumberOfTasks > 0) {
             System.out.println("Here are the tasks in your list: ");
             for (int i = 1; i <= totalNumberOfTasks; i += 1) {
-                Task currTask = taskStorage[i];
-                System.out.println(i + "." + currTask.getStatus() + currTask.getTaskInfo());
+                Task currentTask = taskStorage[i];
+                System.out.println(i + "." + currentTask.getStatus() + currentTask.getTaskInfo());
             }
         }
         horizontalLine();
@@ -70,8 +72,8 @@ public class Duke {
         horizontalLine();
         System.out.println("added: " + messageFromUser);
         Task newTask = new Task(messageFromUser);
-        int currIndexInTaskStorage = Task.getNumberOfTasks();
-        taskStorage[currIndexInTaskStorage] = newTask;
+        int currentIndexInTaskStorage = Task.getNumberOfTasks();
+        taskStorage[currentIndexInTaskStorage] = newTask;
         horizontalLine();
     }
 
