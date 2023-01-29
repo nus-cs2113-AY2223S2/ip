@@ -17,3 +17,4 @@ event attend /to
 deadline /by
 todo todo
 list
+bye

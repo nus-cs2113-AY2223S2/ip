@@ -72,3 +72,13 @@ Got it! Added
 [T][ ] todo
 to the list.
 Now you have 7 task(s) in the list.
+Here are the tasks in your list:
+1. [T][X] Buy milk
+2. [T][X] Buy eggs
+3. [T][X] Buy flour
+4. [D][ ] bake a cake (by: 17/02/2023)
+5. [D][X] sell the cake (by: 18/02/2023)
+6. [E][ ] attend baking course (from: 16/02/2023 to: 19/02/2023)
+7. [T][ ] todo
+Now you have 7 tasks in the list.
+Bye. Hope to see you again soon!
