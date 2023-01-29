@@ -27,11 +27,11 @@ public class Duke {
             String type = splitLine[0];
 
             if (type.matches("todo")) {
-                index = Todo.addForToDo(line, list, index);
+                index = Todo.add(line, list, index);
             } else if (type.matches("deadline")) {
-                index = Deadline.addForDeadline(line, list, index);
+                index = Deadline.add(line, list, index);
             } else if (type.matches("event")) {
-                index = Event.addForEvent(line, list, index);
+                index = Event.add(line, list, index);
             } else if (line.matches("list") || line.matches("bye") || line.matches("mark \\d") || line.matches("unmark \\d")) {
                 Task.instructionLessAdd(line, list, index);
                 if (line.equals("bye")) {

@@ -42,6 +42,10 @@ public class Task {
         }
     }
 
+    protected static int add(String line, Task[] list, int index){
+        return index;
+    }
+
     protected static void unmark(String command, Task[] listOfTasks) {
         String[] seperated = command.split(" ");
         int number = Integer.parseInt(seperated[1]) - 1;

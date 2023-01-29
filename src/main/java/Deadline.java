@@ -12,7 +12,7 @@ public class Deadline extends Task {
         this.isDone = false;
         this.label = "[D]";
     }
-    public static int addForDeadline(String line, Task[] list, int index) {
+    public static int add(String line, Task[] list, int index) {
         System.out.print("    ____________________________________________________________\n");
         System.out.println("    Got it. I've added this task:");
         Deadline newTask = new Deadline(line);

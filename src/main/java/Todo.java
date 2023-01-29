@@ -6,7 +6,7 @@ public class Todo extends Task{
         this.label = "[T]";
     }
 
-    public static int addForToDo(String line, Task[] list, int index) {
+    public static int add(String line, Task[] list, int index) {
         System.out.print("    ____________________________________________________________\n");
         System.out.println("    Got it. I've added this task:");
         Todo newTask = new Todo(line);

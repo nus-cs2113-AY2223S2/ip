@@ -17,7 +17,7 @@ public class Event extends Task {
         this.label = "[E]";
     }
 
-    public static int addForEvent(String line, Task[] list, int index) {
+    public static int add(String line, Task[] list, int index) {
         System.out.print("    ____________________________________________________________\n");
         System.out.println("    Got it. I've added this task:");
         Event newTask = new Event(line);
