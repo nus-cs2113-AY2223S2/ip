@@ -21,6 +21,12 @@ public class Greeting {
         printSeperator();
     }
 
+    public static void printHelp() {
+        System.out.println(
+                "\tPlease Type a valid command!\n");
+        printSeperator();
+    }
+
     public static void printGoodbye() {
         System.out.println(
                 "\tBye. Hope to see you again soon!\n"
