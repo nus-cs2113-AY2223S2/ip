@@ -1,5 +1,5 @@
 public class Tasks {
-    private Task[] tasks;
+    protected Task[] tasks;
     private int tasksCount;
     
     public Tasks() {
@@ -8,16 +8,18 @@ public class Tasks {
         tasksCount = 1;
     }
     
-    public void addTask(String text) {
-        Task newTask = new Task(text);
+    public void addTask(Task newTask) {
         tasks[tasksCount] = newTask;
+        
+        System.out.println("Got it. I've added this task:" + System.lineSeparator() + newTask.toString() + System.lineSeparator() + "Now you have " + tasksCount + " tasks in the list.");
+        
         tasksCount++;
     }
     
-    public void markTaskDone(int task) {
-        tasks[task].markTask(true);
+    public void markTaskDone(int taskNumber) {
+        tasks[taskNumber].markTask(true);
         System.out.println("Nice! I've marked this task as done:");
-        System.out.println("[X] " + tasks[task].getDescription());
+        System.out.println("[X] " + tasks[taskNumber].getDescription());
     }
     
     public void markTaskUndone(int task) {
@@ -30,7 +32,7 @@ public class Tasks {
         System.out.println("Here are the tasks in your list:");
         
         for (int i = 1; i < tasksCount; i++) {
-            System.out.println(i + ".[" + tasks[i].getStatusIcon() + "] " + tasks[i].getDescription());
+            System.out.println(i + "." + tasks[i].toString());
         }
     }
 }

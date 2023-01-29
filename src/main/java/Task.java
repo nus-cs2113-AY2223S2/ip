@@ -1,5 +1,5 @@
 public class Task {
-    private String description;
+    protected String description;
     private boolean isDone;
     
     public Task(String description) {
@@ -17,5 +17,9 @@ public class Task {
     
     public void markTask(boolean isDone) {
         this.isDone = isDone;
+    }
+    
+    public String toString() {
+        return "[" + getStatusIcon() + "] " + description;
     }
 }
