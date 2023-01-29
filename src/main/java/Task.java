@@ -68,16 +68,12 @@ public class Task {
      * @return The symbol depending on whether it's a TODO, DEADLINE, or EVENT task
      */
     public String getStatusForTypeOfTask() {
-        if (typeOfTask.equals(TypeOfTask.TODO)) {
-            return "T";
-        } else if (typeOfTask.equals(TypeOfTask.DEADLINE)) {
-            return "D";
-        } else if (typeOfTask.equals(TypeOfTask.EVENT)) {
-            return "E";
-        }
-        return "ERROR";
+        return "Task";
     }
 
+    /**
+     * Prints out the task according to a format
+     */
     public void printTask() {
         System.out.println((this.index + 1) +
                             ".[" + this.getStatusForTypeOfTask() + "]" +

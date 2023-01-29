@@ -7,6 +7,18 @@ public class Event extends Task{
         this.endDate = endDate;
     }
 
+    /**
+     * Returns the symbol for EVENT task
+     * @return "E"
+     */
+    @Override
+    public String getStatusForTypeOfTask() {
+        return "E";
+    }
+
+    /**
+     * Prints out the event according to a format
+     */
     @Override
     public void printTask() {
         System.out.println((this.index + 1) +
