@@ -2,71 +2,145 @@ import java.util.Scanner;
 
 public class Duke {
     
+    public static final String DIVIDER = "____________________________________________________________\n";
+    
+    public static void main(String[] args) {
+        greet();
+        
+        Tasks list = new Tasks();
+        Scanner in = new Scanner(System.in);
+        String line = in.nextLine();
+        
+        while (!line.equalsIgnoreCase("bye")) {
+            System.out.print(DIVIDER);
+            runCommand(list, line);
+            System.out.println(DIVIDER);
+            line = in.nextLine();
+        }
+        exit();
+    }
     public static void greet() {
-        String greet = "____________________________________________________________\n" +
+        String greet = DIVIDER +
                 "Hello! I'm Bob\n" +
                 "What can I do for you?\n" +
-                "____________________________________________________________\n";
+                DIVIDER;
         System.out.println(greet);
     }
     
-    public static void exit() {
-        String exit = "____________________________________________________________\n" +
-                "Bye. Hope to see you again soon!\n" +
-                "____________________________________________________________\n";
-        System.out.println(exit);
-    }
-    public static void main(String[] args) {
-        greet();
-        Tasks list = new Tasks();
-        
-        String line;
-        Scanner in = new Scanner(System.in);
-        line = in.nextLine();
-        
-        while (!line.equalsIgnoreCase("bye")) {
-            String horizontalLine = "____________________________________________________________\n";
-            System.out.print(horizontalLine);
-    
-            runCommand(list, line);
-    
-            System.out.println(horizontalLine);
-            line = in.nextLine();
-        }
-        
-        exit();
-    }
-    
     private static void runCommand(Tasks list, String line) {
-        if (line.equalsIgnoreCase("list")) {
+        String[] commandAndArg = splitCommandAndArgs(line);
+        String command = commandAndArg[0];
+        String arg = commandAndArg[1];
+        
+        switch(command) {
+        case "list":
             list.printList();
-        } else if (line.equalsIgnoreCase("help")) {
+            break;
+        case "help":
             printHelp();
-        } else if (line.startsWith("mark ")) {
-            String[] words = line.split(" ");
-            list.markTaskDone(Integer.parseInt(words[1]));
-        } else if (line.startsWith("unmark ")) {
-            String[] words = line.split(" ");
-            list.markTaskUndone(Integer.parseInt(words[1]));
-        } else if (line.startsWith("todo ")) {
-            list.addTask(new Todo(line.substring(4)));
-        } else if (line.startsWith("event ")) {
-            String[] terms = line.split("/");
-            String description = terms[0].substring(5);
-            list.addTask((new Event(description, terms[1].substring(5), terms[2].substring(4))));
-        } else if (line.startsWith("deadline ")) {
-            String[] terms = line.split("/");
-            String description = terms[0].substring(8);
-            list.addTask(new Deadline(description, terms[1].substring(3)));
-        } else {
-            // to change to error
-            System.out.println("Error: invalid command, below are the commands available");
+            break;
+        case "mark":
+            runMark(list, arg);
+            break;
+        case "unmark":
+            runUnmark(list, arg);
+            break;
+        case "todo":
+            addTodo(list, arg);
+            break;
+        case "event":
+            addEvent(list, arg);
+            break;
+        case "deadline":
+            addDeadline(list, arg);
+            break;
+        default:
+            printUnknownCommandMessage();
             printHelp();
+            break;
+            
         }
+    }
+    
+    /**
+     * Splits line from user input into an array of 2 Strings: Command and Argument separately
+     * If no argument, second element to be ""
+     *
+     * @param line Input from user
+     * @return String array of size 2 containing Command and Argument
+     */
+    private static String[] splitCommandAndArgs(String line) {
+        final String[] splitStrings = line.split(" ", 2);
+        return splitStrings.length == 2 ? splitStrings : new String[]{splitStrings[0], ""};
     }
     
     private static void printHelp() {
         // TODO
         System.out.println("list, todo, event, deadline, mark, unmark");
+    }
+    
+    private static void runMark(Tasks list, String arg) {
+        int taskNumber = Integer.parseInt(arg);
+        if (taskNumber <= list.getTasksCount()) {
+            list.markTaskDone(taskNumber);
+        } else {
+            System.out.println("Error: task number given out of range");
+        }
+    }
+    
+    private static void runUnmark(Tasks list, String arg) {
+        int taskNumber = Integer.parseInt(arg);
+        if (taskNumber <= list.getTasksCount()) {
+            list.markTaskUndone(taskNumber);
+        } else {
+            System.out.println("Error: task number given out of range");
+        }
+    }
+    
+    private static void addTodo(Tasks list, String arg) {
+        Todo newTodo = new Todo(arg);
+        list.addTask(newTodo);
+    }
+    
+    private static void addEvent(Tasks list, String arg) {
+        String[] descriptionFromAndTo = splitEventArg(arg);
+        String description = descriptionFromAndTo[0];
+        String from = descriptionFromAndTo[1];
+        String to = descriptionFromAndTo[2];
+        
+        Event newEvent = new Event(description, from, to);
+        list.addTask(newEvent);
+    }
+    
+    private static String[] splitEventArg(String arg) {
+        String[] splitDescription = arg.split("/from", 2); // separate the argument into description and fromAndTo
+        String[] splitFromAndTo = splitDescription[1].split("/to", 2); // separate fromAndTo into from and to
+        return new String[] {splitDescription[0].trim(), splitFromAndTo[0].trim(), splitFromAndTo[1].trim()};
+    }
+    
+    private static void addDeadline(Tasks list, String arg) {
+        String[] descriptionAndBy = splitDeadlineArg(arg);
+        String description = descriptionAndBy[0];
+        String by = descriptionAndBy[1];
+        
+        Deadline newDeadline = new Deadline(description, by);
+        list.addTask(newDeadline);
+    }
+    
+    private static String[] splitDeadlineArg(String arg) {
+        String[] splitDescriptionAndBy = arg.split("/by", 2);
+        return new String[] {splitDescriptionAndBy[0].trim(), splitDescriptionAndBy[1].trim()};
+    }
+    
+    private static void printUnknownCommandMessage() {
+        System.out.println("Unknown command detected, please use the following commands only");
+    }
+    
+    public static void exit() {
+        String exit = DIVIDER +
+                "Bye. Hope to see you again soon!\n" +
+                DIVIDER;
+        
+        System.out.println(exit);
     }
 }
