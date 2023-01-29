@@ -35,11 +35,11 @@ public class Duke {
                 markTask(tasks, taskCount, words);
             } else {
                 // Adding a task to the list
-                Task currentTask = new Task(line);
-                tasks[taskCount] = currentTask;
-                taskCount++;
+                addTask(line, tasks, taskCount);
+
                 // Printing out added task message
-                addedTaskMessage(currentTask);
+                addedTaskMessage(tasks[taskCount], taskCount);
+                taskCount++;
             }
             line = in.nextLine();
         }
@@ -48,15 +48,34 @@ public class Duke {
         exitMessage();
     }
 
+    private static void addTask(String line, Task[] tasks, int taskCount) {
+        if (line.contains(" /by")) {
+            // Adding a Deadline
+            String description = line.substring(0, line.indexOf("/by")).trim();
+            String deadline = line.substring(line.indexOf("/by") + 3).trim();
+            tasks[taskCount] = new Deadline(description, deadline);
+        } else if (line.contains(" /from") && line.contains(" /to")) {
+            // Adding an Event
+            String description = line.substring(0, line.indexOf("/from")).trim();
+            String start = line.substring(line.indexOf("/from") + 5, line.indexOf("/to")).trim();
+            String end = line.substring(line.indexOf("/to") + 3).trim();
+            tasks[taskCount] = new Event(description, start, end);
+        } else {
+            // Adding a _Todo_
+            tasks[taskCount] = new Todo(line);
+        }
+    }
+
     private static void exitMessage() {
         System.out.println("\t____________________________________________________________");
         System.out.println("\t Bye. Hope to see you again soon!");
         System.out.println("\t____________________________________________________________");
     }
 
-    private static void addedTaskMessage(Task currentTask) {
+    private static void addedTaskMessage(Task currentTask, int taskCount) {
         System.out.println("\t____________________________________________________________");
-        System.out.println("\t added: " + currentTask.getDescription());
+        System.out.println("\t Alright, I have added this task: \n\t\t" + currentTask);
+        System.out.println("\t You now have " + (taskCount + 1) + " tasks in your list.");
         System.out.println("\t____________________________________________________________");
     }
 
@@ -72,8 +91,7 @@ public class Duke {
             // Printing out marked as done message
             System.out.println("\t____________________________________________________________");
             System.out.println("\t Understood. I've marked this task as done:");
-            System.out.println("\t [" + tasks[taskNumber - 1].getStatusIcon() + "] " +
-                    tasks[taskNumber - 1].getDescription());
+            System.out.println("\t " + tasks[taskNumber - 1]);
             System.out.println("\t____________________________________________________________");
         }
     }
@@ -90,8 +108,7 @@ public class Duke {
             // Printing out marked as not done message
             System.out.println("\t____________________________________________________________");
             System.out.println("\t Understood. I've marked this task as not done yet:");
-            System.out.println("\t [" + tasks[taskNumber - 1].getStatusIcon() + "] " +
-                    tasks[taskNumber - 1].getDescription());
+            System.out.println("\t " + tasks[taskNumber - 1]);
             System.out.println("\t____________________________________________________________");
         }
     }
@@ -100,8 +117,7 @@ public class Duke {
         System.out.println("\t____________________________________________________________");
         System.out.println("\t Here are the tasks in your list:");
         for (int i = 0; i < taskCount; i++) {
-            System.out.println("\t " + (i + 1) + "." + "[" + tasks[i].getStatusIcon() + "] "
-                    + tasks[i].getDescription());
+            System.out.println("\t " + (i + 1) + "." + tasks[i]);
         }
         System.out.println("\t____________________________________________________________");
     }
@@ -115,6 +131,14 @@ public class Duke {
         System.out.println("\t - unmark <task_number>: I'll mark that task as undone.");
         System.out.println("\t - bye: I will shut down my program.");
         System.out.println("\t - Anything else will be recorded as a task. \n");
+        System.out.println("\t Format for tasks:");
+        System.out.println("\t   Deadlines: <description> /by <deadline>");
+        System.out.println("\t              (eg. Eat bread /by Thursday)");
+        System.out.println("\t      Events: <description> /from <start date/time> /to <end date/time>");
+        System.out.println("\t              (eg. Meeting /from March 3 8pm /to 9pm)");
+        System.out.println("\t        Todo: <description>");
+        System.out.println("\t              (eg. Water the plants)");
+        System.out.println("\t Wrong formats for Deadlines and Events will default to a Todo task. \n");
         System.out.println("\t What can I do for you?");
         System.out.println("\t____________________________________________________________");
     }
