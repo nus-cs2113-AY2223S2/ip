@@ -1,4 +1,26 @@
 public class Duke {
+
+    /**
+     * The main method is the entry point of the program. It prompts the user for their name,
+     * instantiates a TaskMaster object, and handles user commands.
+     *
+     * @param args Command-line arguments passed to the program.
+     */
+    public static void main(String[] args) {
+
+        showWelcomeMessage();
+        showHelpMessage();
+
+        IO inOut = new IO();
+
+        String userName = getUserName(inOut);
+
+        TaskMaster compileItems = new TaskMaster();
+
+        instantiateList(inOut, userName, compileItems);
+
+    }
+
     /**
      * The markAsDone method marks a task as done.
      *
@@ -33,38 +55,6 @@ public class Duke {
         toBeDone.printTaskAndStatus(index);
     }
 
-    /**
-     * The main method is the entry point of the program. It prompts the user for their name,
-     * instantiates a TaskMaster object, and handles user commands.
-     *
-     * @param args Command-line arguments passed to the program.
-     */
-    public static void main(String[] args) {
-
-        showWelcomeMessage();
-        showHelpMessage();
-
-        IO inOut = new IO();
-
-        String userName = getUserName(inOut);
-
-        TaskMaster compileItems = new TaskMaster();
-
-        instantiateList(inOut, userName, compileItems);
-
-    }
-
-    private static void showHelpMessage() {
-        System.out.println("=============================================================================================================== \n");
-        System.out.println("Here are some useful commands to get you started!\n");
-        System.out.println("=============================================================================================================== \n");
-        System.out.println("'See list': Take a look at your To-Do list to get your day started!");
-        System.out.println("'mark <task number>': Marks task as done. Try entering 'mark 1' to mark your first task as done!");
-        System.out.println("'unmark <task number>': Unmarks task as not done. Try entering 'unmark 1' to mark your first task as not done!");
-        System.out.println("'Help': If you forgot how to use me, don't be afraid to ask!");
-        System.out.println("To add a task, enter a description of said task and I will add it into the list for you :) \n");
-        System.out.println("=============================================================================================================== \n");
-    }
 
     /**
      * The instantiateList method handles user commands and updates the task list.
@@ -120,6 +110,18 @@ public class Duke {
         String userName = inOut.readInput();
         System.out.println("Hello, " + userName + ". You may enter 'See list' to view your current To-Do list.");
         return userName;
+    }
+    
+    private static void showHelpMessage() {
+        System.out.println("=============================================================================================================== \n");
+        System.out.println("Here are some useful commands to get you started!\n");
+        System.out.println("=============================================================================================================== \n");
+        System.out.println("'See list': Take a look at your To-Do list to get your day started!");
+        System.out.println("'mark <task number>': Marks task as done. Try entering 'mark 1' to mark your first task as done!");
+        System.out.println("'unmark <task number>': Unmarks task as not done. Try entering 'unmark 1' to mark your first task as not done!");
+        System.out.println("'Help': If you forgot how to use me, don't be afraid to ask!");
+        System.out.println("To add a task, enter a description of said task and I will add it into the list for you :) \n");
+        System.out.println("=============================================================================================================== \n");
     }
 
     private static void showWelcomeMessage() {
