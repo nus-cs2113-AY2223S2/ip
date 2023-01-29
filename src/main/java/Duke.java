@@ -16,10 +16,11 @@ public class Duke {
                 System.out.println(count + ". " + item.describeTask());
                 count++;
             } else {
-                System.out.println("\n");
-                break;
+                continue;
             }
         }
+
+        System.out.println("\nYou have " + (count - 1) + " tasks in the list.\n");
     }
 
     public static String getFirstWord(String s) {
@@ -46,14 +47,13 @@ public class Duke {
     public static void main(String[] args) {
         System.out.println("Hello! I'm Duke\nWhat can I do for you?");
         Scanner in = new Scanner(System.in);
-        int count = 0;
         boolean isComplete = false;
-        Task[] taskList = new Task[100];
 
         while (!isComplete) {
 
             String line = in.nextLine();
             String firstWord = getFirstWord(line);
+            Task[] taskList = Task.getTaskList();
 
             switch (firstWord) {
             case "mark":
@@ -62,23 +62,64 @@ public class Duke {
             case "unmark":
                 unmarkTask(taskList, Integer.parseInt(getSecondWord(line)));
                 break;
+            case "list":
+                listTask(taskList);
+                break;
+            case "todo":
+                getTodoDetails(line);
+                break;
+            case "deadline":
+                getDealineDetails(line);
+                break;
+            case "event":
+                getEventDetails(line);
+                break;
+            case "bye":
+                isComplete = true;
+                break;
             default:
-                switch (line) {
-                case "list":
-                    listTask(taskList);
-                    break;
-                case "bye":
-                    isComplete = true;
-                    break;
-                default:
-                    taskList[count] = new Task(line);
-                    count++;
-                    System.out.println("added: " + line + "\n");
-                }
+                System.out.println("Unrecognized command. Please try again.");
+                break;
             }
         }
 
         in.close();
         System.out.println("Bye. Hope to see you again soon!");
+    }
+
+    private static void getTodoDetails(String line) {
+        String todoLine = getSecondWord(line);
+        Todo todoTask = new Todo(todoLine);
+        Task.addTask(todoTask);
+        Task.upTaskCount();
+        System.out.println("Got it. I've added this task:\n" + todoTask.describeTask());
+        System.out.println("\nNow you have " + Task.getTaskCount() + " tasks in the list.\n");
+    }
+
+    private static void getDealineDetails(String line) {
+        String deadlineLine = getSecondWord(line);
+        int index = deadlineLine.indexOf("/");
+        String deadlineDescription = deadlineLine.substring(0, index - 1);
+        String deadlineDate = deadlineLine.substring(index + 4);
+        Deadline deadlineTask = new Deadline(deadlineDescription, deadlineDate);
+        Task.addTask(deadlineTask);
+        Task.upTaskCount();
+        System.out.println("Got it. I've added this task:\n" + deadlineTask.describeTask());
+        System.out.println("\nNow you have " + Task.getTaskCount() + " tasks in the list.\n");
+    }
+
+    private static void getEventDetails(String line) {
+        String eventLine = getSecondWord(line);
+        int index2 = eventLine.indexOf("/");
+        String eventDescription = eventLine.substring(0, index2 - 1);
+        String eventDate = eventLine.substring(index2 + 4);
+        int index3 = eventDate.indexOf("/");
+        String eventFrom = eventDate.substring(2, index3 - 1);
+        String eventTo = eventDate.substring(index3 + 4);
+        Event eventTask = new Event(eventDescription, eventFrom, eventTo);
+        Task.addTask(eventTask);
+        Task.upTaskCount();
+        System.out.println("Got it. I've added this task:\n" + eventTask.describeTask());
+        System.out.println("\nNow you have " + Task.getTaskCount() + " tasks in the list.\n");
     }
 }
