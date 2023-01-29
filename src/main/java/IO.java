@@ -1,18 +1,34 @@
 import java.util.Scanner;
 
-//Purpose of this class is to handle user inputs to Duke
-// ">>" is merely for UI purposes to prompt users to type in their next command
-//Easier than typing scanner scanner
+/**
+
+ The IO class is responsible for handling user inputs for the program.
+
+ It uses a Scanner object to read input from the user, and provides a
+
+ readInput() method to retrieve the input as a string.
+
+ ">>" is used as a prompt for the user to enter their next command.
+
+ */
 public class IO {
     private Scanner toRead;
 
+    /**
+
+     The constructor IO creates a new instance of the class and initializes
+     a Scanner object to read input from the user.
+     */
     public IO() {
         this.toRead = new Scanner(System.in);
     }
+    /**
 
+     The readInput() method retrieves a line of input from the user and returns it as a string.
+     @return A string containing the input entered by the user.
+     */
     public String readInput() {
         System.out.print(">> ");
         return toRead.nextLine();
     }
-
 }

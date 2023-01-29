@@ -42,6 +42,7 @@ public class TaskManager {
 
     //Acknowledgement: https://www.baeldung.com/java-printstream-printf
     public void printTaskAndStatus(int index) {
-        System.out.printf("%d: %c %s", index + 1, setCheckMark(), getAboutTask());
+        System.out.printf("%d: %c %s %n", index + 1, setCheckMark(), getAboutTask());
+
     }
 }
