@@ -14,10 +14,29 @@ public class Task {
     }
 
     public void markAsDone() {
-        isDone = true;
+        if (isDone) {
+            System.out.println("Task was already marked as done!");
+        } else {
+            isDone = true;
+            System.out.println("Good job! I've marked it as done!");
+            System.out.println(this.getStatus() + this.taskInfo);
+        }
     }
     public void markAsUndone() {
-        isDone = false;
+        if (!isDone) {
+            System.out.println("Task was already marked as undone!");
+        } else {
+            isDone = false;
+            System.out.println("Alright, I've marked the task as undone.");
+            System.out.println(this.getStatus() + this.taskInfo);
+        }
+    }
+
+    public String getStatus() {
+        if (isDone) {
+            return "[X] ";
+        }
+        return "[ ] ";
     }
 
 
@@ -32,7 +51,7 @@ public class Task {
     public void setTaskInfo(String taskInfo) {
         this.taskInfo = taskInfo;
     }
-    
+
     public static int getNumberOfTasks() {
         return numberOfTasks;
     }
