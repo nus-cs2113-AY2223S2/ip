@@ -55,7 +55,7 @@ public class Duke {
         }
     }
      */
-     public static boolean actionCommand(String args){
+     public static boolean shouldExit(String args){
          String command = filter(args);
          int dividerPosition = args.indexOf(" ");
          String taskNumber = args.substring(dividerPosition + 1, args.length());
