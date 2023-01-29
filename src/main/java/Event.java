@@ -10,6 +10,12 @@ public class Event extends Task {
     }
 
     @Override
+    /**
+     * Overrides string representation for todos, with a [E] to indicate event class and 
+     * conveying information about time.
+     *
+     * @return String Representation.
+     */
     public String toString() {
         return "[E]" + super.toString() + " (from: " + this.from + " to: " + this.to + ")";
     }

@@ -2,6 +2,14 @@ import java.util.Scanner;
 
 public class Duke {
 
+    /**
+     * Encapsulates print statements for whenever a task is added
+     * (as either a todo, deadline, or event).
+     * 
+     * @param task Reference to task that is added.
+     * @param numTasks Total number of tasks in the list.
+     *
+     */
     private static void printAddTaskConfirmation(Task task, int numTasks) {
         String line = "____________________________________________________________";
         System.out.println(line);
@@ -29,6 +37,8 @@ public class Duke {
         while (true) {
             System.out.println();
             String cmd = in.nextLine();
+
+            // Splits into only two sections, one for command name and one for arguments
             String[] splitIntoArgs = cmd.split(" ", 2);
 
             if (cmd.equals("bye")) {
@@ -64,19 +74,21 @@ public class Duke {
                 numTasks++;
                 printAddTaskConfirmation(todo, numTasks);
             } else if (splitIntoArgs[0].equals("deadline")) {
+                //Uses regex to split into arguments for description and by field
                 String[] argsList = splitIntoArgs[1].split(" /by ");
                 Deadline deadline = new Deadline(argsList[0], argsList[1]);
                 tasks[numTasks] = deadline;
                 numTasks++;
                 printAddTaskConfirmation(deadline, numTasks);
             } else if (splitIntoArgs[0].equals("event")) {
+                //Uses regex to split into arguments for description, from field, and to field.
                 String[] argsList = splitIntoArgs[1].split(" \\/(from|to) ");
                 Event event = new Event(argsList[0], argsList[1], argsList[2]);
                 tasks[numTasks] = event;
                 numTasks++;
                 printAddTaskConfirmation(event, numTasks);
             }
-            else{
+            else {
                 System.out.println(line);
                 System.out.println("added: " + cmd);
                 System.out.println(line);
