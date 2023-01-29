@@ -7,6 +7,8 @@ public class Duke {
     private static final String SEPARATOR = "____________________________________________________________";
     private static final Scanner SCANNER = new Scanner(System.in);
     private static final String COMMAND_LIST_WORD = "list";
+    private static final String COMMAND_MARK_WORD = "mark";
+    private static final String COMMAND_UNMARK_WORD = "unmark";
     private static final String COMMAND_EXIT_WORD = "bye";
     private static final String LINE_PREFIX = "    ";
 
@@ -35,9 +37,18 @@ public class Duke {
 
     private static void executeCommand(String userInputString) {
         showToUser(SEPARATOR);
-        switch (userInputString) {
+        final String[] commandTypeAndParams = splitCommandWordAndArgs(userInputString);
+        final String commandType = commandTypeAndParams[0];
+        final String commandArgs = commandTypeAndParams[1];
+        switch (commandType) {
         case COMMAND_LIST_WORD:
             listTask();
+            break;
+        case COMMAND_MARK_WORD:
+            markAsDone(commandArgs);
+            break;
+        case COMMAND_UNMARK_WORD:
+            markAsNotDone(commandArgs);
             break;
         case COMMAND_EXIT_WORD:
             exitProgram();
@@ -59,14 +70,34 @@ public class Duke {
         showToUser("added: " + newTaskDescription);
     }
 
+    private static void markAsDone(String taskNumber) {
+        Task task = taskList[Integer.parseInt(taskNumber) - 1];
+        task.isDone = true;
+        showToUser("Nice! I've marked this task as done:");
+        showToUser(task.getStatusIcon() + " " + task.description);
+    }
+
+    private static void markAsNotDone(String taskNumber) {
+        Task task = taskList[Integer.parseInt(taskNumber) - 1];
+        task.isDone = false;
+        showToUser("OK, I've marked this task as not done yet:");
+        showToUser(task.getStatusIcon() + " " + task.description);
+    }
+
     private static void listTask() {
         for (int i = 0; i < taskCount; i++) {
-            showToUser((i+1) + ". " + taskList[i].description);
+            showToUser((i + 1) + ". " + taskList[i].getStatusIcon() + " " + taskList[i].description);
         }
     }
 
     private static void exitProgram() {
         showToUser(BYE_MESSAGE, SEPARATOR);
         System.exit(0);
+    }
+
+    //reused from Contacts1.java
+    private static String[] splitCommandWordAndArgs(String rawUserInput) {
+        final String[] split = rawUserInput.trim().split("\\s+", 2);
+        return split.length == 2 ? split : new String[]{split[0], ""}; // else case: no parameters
     }
 }
