@@ -2,92 +2,194 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Duke {
-    static final String line = "____________________________________________________________";
+    private static ArrayList<Item> items = new ArrayList<Item>(); // List of items
 
     public static void main(String[] args) {
-        // Greet the user
-        System.out.println(line);
-        System.out.println("Hello! I'm your personal shopping checklist.");
-        System.out.println("What items do you need to buy today?");
-        System.out.println(line);
+        printWelcomeMessage();
 
-        // Take in user inputs and loop until user says bye
         Scanner in = new Scanner(System.in);
-        ArrayList<Item> items = new ArrayList<Item>();
         while (true) {
+            String input = in.nextLine();
+            System.out.println(Message.LINE);
+
             try {
-                String input = in.nextLine();
-                System.out.println(line);
+                Command command = getCommand(input);
+                String parameters = getParameters(input);
 
-                if (input.equals("list")) {
-                    // Prints the list of items user has added
-                    System.out.println("Here are the items in your shopping list:");
-                    for (int i = 0; i < items.size(); i++) {
-                        Item item = items.get(i);
-                        System.out.println((i+1) + ". " + item);
-                    }
-                } else if (input.split(" ")[0].equals("mark")) {
-                    // Mark the item that user has done
-                    int num = Integer.parseInt(input.split(" ")[1]);
-                    Item item = items.get(num-1);
-                    item.setStatus(true);
-
-                    System.out.println("Good job! I've marked this item as done:");
-                    System.out.println(item);
-                } else if (input.split(" ")[0].equals("unmark")) {
-                    // Unmark the item that user has not done
-                    int num = Integer.parseInt(input.split(" ")[1]);
-                    Item item = items.get(num-1);
-                    item.setStatus(false);
-
-                    System.out.println("OK, I've marked this item as not done yet:");
-                    System.out.println(item);
-                } else if (input.equals("bye")) {
-                    // Exits user
-                    System.out.println("Bye. Thanks for using me!");
-                    System.out.println(line);
+                switch(command) {
+                case LIST:
+                    printList();
                     break;
-                } else if (input.split(" ")[0].equals("todo")) {
-                    String description = input.split(" ", 2)[1];
-                    Item newTodo = new Todo(description);
-                    items.add(newTodo);
-
-                    System.out.println("Got it. I've added this task:");
-                    System.out.println(newTodo);
-                    System.out.println("Now you have "+items.size()+" tasks in the list.");
-                } else if (input.split(" ")[0].equals("deadline")) {
-                    String inputs[] = input.split(" ", 2)[1].split(" /by ");
-                    String description = inputs[0];
-                    String by = inputs[1];
-
-                    Item newDeadline = new Deadline(description, by);
-                    items.add(newDeadline);
-
-                    System.out.println("Got it. I've added this task:");
-                    System.out.println(newDeadline);
-                    System.out.println("Now you have "+items.size()+" tasks in the list.");
-                } else if (input.split(" ")[0].equals("event")) {
-                    String inputs[] = input.split(" ", 2)[1].split(" /from ");
-                    String description = inputs[0];
-                    String from = inputs[1].split(" /to ")[0];
-                    String to = inputs[1].split(" /to ")[1];
-
-                    Item newEvent = new Event(description, from, to);
-                    items.add(newEvent);
-
-                    System.out.println("Got it. I've added this task:");
-                    System.out.println(newEvent);
-                    System.out.println("Now you have "+items.size()+" tasks in the list.");
-                } else {
-                    System.out.println("Please input a valid command.");
+                case MARK:
+                    markItem(parameters, true);
+                    break;
+                case UNMARK:
+                    markItem(parameters, false);
+                    break;
+                case REMIND:
+                    addRemind(parameters);
+                    break;
+                case DEADLINE:
+                    addDeadline(parameters);
+                    break;
+                case EVENT:
+                    addEvent(parameters);
+                    break;
+                case EXIT:
+                    in.close();
+                    exitProgram();
                 }
-            } catch(Exception e) {
-                // When user enters a list no. that is out of arraylist for mark/unmark
-                System.out.println("Please input a valid command.");
+
+                System.out.println(Message.LINE);
+            } catch (Exception err) {
+                System.out.println(err.getMessage());
             }
-            
-            System.out.println(line);
         }
-        in.close();
+    }
+
+    /**
+     * Retrieve the command from the user's entered input.
+     * Invalid command will return an error.
+     * 
+     * @param input the user inputted text
+     * @return command specified by the user
+     */
+    private static Command getCommand(String input) throws IllegalArgumentException {
+        try {
+            String[] splitInput = input.split(" ", 2);
+            Command command = Command.valueOf(splitInput[0].toUpperCase());
+            return command;
+        } catch (IllegalArgumentException err) {
+            throw new IllegalArgumentException(Message.ERROR_INVALID_COMMAND.toString());
+        }
+    }
+
+    /**
+     * Retrieve the parameters from the user's entered input.
+     * If there is no parameters specified, return empty string.
+     * 
+     * @param input the user inputted text
+     * @return parameters specified by the user
+     */
+    private static String getParameters(String input) {
+        if (input.contains(" ")) {
+            return input.split(" ", 2)[1];
+        }
+
+        return "";
+    }
+
+    /**
+     * Prints the list of items.
+     */
+    private static void printList() {
+        System.out.println(Message.INFO_LIST);
+        for (int i = 0; i < items.size(); i++) {
+            Item item = items.get(i);
+            System.out.println((i+1) + ". " + item);
+        }
+    }
+
+    /**
+     * Marks an item in the list as done/not done based on the item no.
+     * If item no. is cannot be converted to int or invalid, returns an error.
+     * 
+     * @param parameters Find the item no. specified
+     * @param isMark to mark/unmark the item in the list
+     */
+    private static void markItem(String parameters, boolean isMark) throws NumberFormatException {
+        try {
+            int num = Integer.parseInt(parameters);
+            Item item = items.get(num - 1);
+            item.setStatus(isMark);
+
+            System.out.println(isMark ? Message.INFO_MARK : Message.INFO_UNMARK);
+            System.out.println(item);
+        } catch (NumberFormatException err) {
+            throw new NumberFormatException(Message.ERROR_MARK_INVALID_PARAMETER.toString());
+        } catch (IndexOutOfBoundsException err) {
+            throw new NumberFormatException(Message.ERROR_MARK_OUT_OF_BOUNDS.toString());
+        }
+    }
+
+    /**
+     * Adds a Todo item into the list.
+     * 
+     * @param parameters Gets the item description
+     */
+    private static void addRemind(String parameters) {
+        Item newTodo = new Remind(parameters);
+        items.add(newTodo);
+
+        printAddItemMessage(newTodo);
+    }
+
+    /**
+     * Adds a Deadline item into the list.
+     * 
+     * @param parameters Gets the description and deadline of the item.
+     */
+    private static void addDeadline(String parameters) throws Exception {
+        if (parameters.contains(" /by ")) {
+            String[] attributes = parameters.split(" /by ");
+            String description = attributes[0];
+            String by = attributes[1];
+
+            Item newDeadline = new Deadline(description, by);
+            items.add(newDeadline);
+
+            printAddItemMessage(newDeadline);
+        } else {
+            throw new Exception(Message.ERROR_DEADLINE_MISSING_PARAMETER.toString());
+        }
+    }
+
+    /**
+     * Adds a Event item into the list.
+     * 
+     * @param parameters Gets the description and from/to of the item.
+     */
+    private static void addEvent(String parameters) throws Exception {
+        if (parameters.contains(" /from ") && parameters.contains(" /to ")) {
+            String[] attributes = parameters.split(" /from ");
+            String description = attributes[0];
+            
+            attributes = attributes[1].split(" /to ");
+            String from = attributes[0];
+            String to = attributes[1];
+
+            Item newEvent = new Event(description, from, to);
+            items.add(newEvent);
+
+            printAddItemMessage(newEvent);
+        } else {
+            throw new Exception(Message.ERROR_EVENT_MISSING_PARAMETER.toString());
+        }
+    }
+
+    /**
+     * Prints the welcome message when application is launched.
+     */
+    private static void printWelcomeMessage() {
+        System.out.println(Message.LINE);
+        System.out.println(Message.INFO_WELCOME);
+        System.out.println(Message.LINE);
+    }
+
+    /**
+     * Prints the message after an item is added.
+     */
+    private static void printAddItemMessage(Item item) {
+        System.out.println(Message.INFO_ITEM_ADD);
+        System.out.println(item);
+        System.out.printf(Message.INFO_ITEM_COUNT.toString(), items.size());
+    }
+
+    /**
+     * Prints a bye message and exits the application.
+     */
+    private static void exitProgram() {
+        System.out.println(Message.INFO_EXIT);
+        System.exit(0);
     }
 }
