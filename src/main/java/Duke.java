@@ -1,56 +1,6 @@
 import java.util.Scanner;  // Import the Scanner class
 public class Duke {
 
-    //Function to check if an input has mark as the first word
-    public static boolean isMark(String input){
-        if(input.length()>=4){
-            if("mark".equalsIgnoreCase(input.substring(0,4))){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    //Function to check if an input has unmark as the first word
-    public static boolean isUnmark(String input){
-        if(input.length()>=6){
-            if("unmark".equalsIgnoreCase(input.substring(0,6))){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    //Function to check if an input has deadline as the first word
-    public static boolean isDeadline(String input){
-        if(input.length()>=8){
-            if("deadline".equalsIgnoreCase(input.substring(0,8))){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    //Function to check if an input has event as the first word
-    public static boolean isEvent(String input){
-        if(input.length()>=5){
-            if("event".equalsIgnoreCase(input.substring(0,5))){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    //Function to check if an input has todo as the first word
-    public static boolean isTodo(String input){
-        if(input.length()>=4){
-            if("todo".equalsIgnoreCase(input.substring(0,4))){
-                return true;
-            }
-        }
-        return false;
-    }
-
     //Initialize create a list of tasks
     public static Task[] tasks = new Task[100];
     public static int taskCount = 0;
@@ -85,7 +35,7 @@ public class Duke {
             }
 
             //If userInput is "unmark" get the task number and unmark the task as done
-            else if(isUnmark(userInput)){
+            else if(Check.isUnmark(userInput)){
                 //get the task number
                 int taskNumber = Integer.parseInt(userInput.substring(7));
                 //mark the task as done
@@ -97,7 +47,7 @@ public class Duke {
             }
 
             //If userInput is "mark" get the task number and mark the task as done
-            else if(isMark(userInput)){
+            else if(Check.isMark(userInput)){
                 //get the task number
                 int taskNumber = Integer.parseInt(userInput.substring(5));
                 //mark the task as done
@@ -109,7 +59,7 @@ public class Duke {
             }
 
             //If userInput is "todo" add a todo task to the list
-            else if(isTodo(userInput)){
+            else if(Check.isTodo(userInput)){
                 //get the task name
                 String taskName = userInput.substring(5);
                 //create a todo task
@@ -124,7 +74,7 @@ public class Duke {
             }
 
             //If userInput is "deadline" add a deadline task to the list
-            else if(isDeadline(userInput)){
+            else if(Check.isDeadline(userInput)){
                 //get the task name
                 String taskName = userInput.substring(9,userInput.indexOf("/"));
                 //get the deadline string without any "/"
@@ -141,7 +91,7 @@ public class Duke {
             }
 
             //If userInput is "event" add an event task to the list
-            else if(isEvent(userInput)){
+            else if(Check.isEvent(userInput)){
                 //get the task name
                 String taskName = userInput.substring(6,userInput.indexOf("/"));
                 //get the event time without any "/"
