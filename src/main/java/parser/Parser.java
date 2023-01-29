@@ -34,18 +34,17 @@ public class Parser implements IParser {
     private void getNextMessage() throws EmptyCommandException {
         try {
             message = sc.nextLine();
+            if (message.isBlank()){
+                throw new NoSuchElementException();
+            }
         } catch (NoSuchElementException e) {
-            throw new EmptyCommandException("Empty command");
-        }
-        if (message.isBlank()){
-            throw new EmptyCommandException("Empty command");
-        }
+            throw new EmptyCommandException("Empty command", e);
     }
     @Override
     public Command getCommand() throws EmptyCommandException {
         getNextMessage();
         if (message == null) {
-            throw new EmptyCommandException("Empty command");
+            throw new EmptyCommandException("Empty command",new NoSuchElementException());
         }
         if (isExit()) {
             currentCommand = Command.EXIT;

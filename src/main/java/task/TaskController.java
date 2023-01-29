@@ -1,6 +1,7 @@
 package task;
 
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -13,9 +14,9 @@ public class TaskController implements ITaskController{
     public void addTask(String description) {
         list.add(new Task(description));
     }
-    public ArrayList<Task> getTask() throws EmptyTaskList {
+    public ArrayList<Task> getTask() throws EmptyTaskListException {
         if (list.isEmpty()) {
-            throw new EmptyTaskList("*** Empty List");
+            throw new EmptyTaskListException("*** Empty List", new NoSuchElementException());
         }
         return list;
     }

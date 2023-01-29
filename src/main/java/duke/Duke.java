@@ -9,7 +9,6 @@ import parser.Command;
 import parser.EmptyCommandException;
 import parser.IParser;
 import parser.Parser;
-import task.EmptyTaskList;
 import task.ITaskController;
 import task.TaskController;
 
@@ -52,15 +51,12 @@ public class Duke {
                 default:
                     break;
                 }
-            } catch (EmptyCommandException e) {
-                printSystemMessage("You passed an illegal command!\n\tI will stop here because I am angry Duke");
-                break;
-            } catch (EmptyTaskList e) {
+            } catch (DukeException e) {
                 printSystemMessage(e.getMessage());
-            }
-            catch (IllegalArgumentException e) {
-                printSystemMessage(e.getMessage());
-            }
+                if (e instanceof EmptyCommandException) {
+                    printSystemMessage("You passed an illegal command!\n   I will stop here because I am angry Duke");
+                    break;
+                }
         } while(!isExit);
         bye();
     }
