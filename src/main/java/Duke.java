@@ -2,6 +2,13 @@ import java.util.Scanner;
 
 public class Duke {
 
+    /**
+     * Returns boolean value of true if input String is an integer,
+     * else returns boolean value of false
+     *
+     * @param word
+     * @return true if input String is an integer, otherwise false
+     */
     public static boolean isNumeric(String word) {
         int valueToConvert;
         try {
@@ -22,7 +29,7 @@ public class Duke {
         Task[] tasks = new Task[100];
         int taskCount = 0;
 
-        while (!line.equals("bye")) {
+        while (!line.equals("bye")) { // Exits the program if input is "bye"
             String[] words = line.split(" ");
             if (line.equals("list")) {
                 // List out all the tasks added
