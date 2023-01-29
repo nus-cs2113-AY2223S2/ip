@@ -58,54 +58,116 @@ public class Duke {
                 "⠀⣼⡿⣻⣾⣿⡿⢛⣥⣾⣿⣿⣿⣿⣿⠿⣋⣴⡙⣿⣿⣿⣿⣷⣍⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⠀⠀⠀⠀⠘⠁⠀⣤⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀⠀⠀⠀⠀⠰⠁⠀⠹⣿⣿⣿⣿⣿⣧⣽⣿⢸⠀");
     }
 
+    public static String[] processInputMessage(Scanner in) {
+        String input = in.nextLine();
+        String[] newInput = input.split(" ", 2);
+        return newInput;
+    }
+
+    public static String[] processEventMessage(String input) {
+        String[] eventArray = new String[3];
+        String[] inputArray = input.split(" /from ", 2);
+        if(inputArray.length == 1) {
+            eventArray[0] = "";
+            return eventArray;
+        }
+        eventArray[0] = inputArray[0];
+        inputArray = inputArray[1].split(" /to ", 2);
+        if(inputArray.length == 1) {
+            eventArray[0] = "";
+            return eventArray;
+        }
+        eventArray[1] = inputArray[0];
+        eventArray[2] = inputArray[1];
+        return eventArray;
+    }
+
+    public static String[] processDeadlineMessage(String input) {
+        String[] deadlineArray = input.split(" /by ", 2);
+        if(deadlineArray .length == 1) {
+            deadlineArray [0] = "";
+        }
+        return deadlineArray ;
+    }
+
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
         System.out.println("Hai, Ningensama-tachi! Kon-Nakiri!\n");
 
-        String inputMessage = in.nextLine();
         ArrayList<Task> todoList = new ArrayList<Task>();
         int sizeOfTodoList = 0;
         Task currentTask;
 
-        while(!inputMessage.equals("bye")) {
-            if(inputMessage.equals("list")) {
+        Scanner in = new Scanner(System.in);
+        String[] inputMessage = processInputMessage(in);
+        while(!inputMessage[0].equals("bye")) {
+            switch (inputMessage[0]) {
+            case "list":
                 for(int i = 0; i < sizeOfTodoList; i += 1) {
                     currentTask = todoList.get(i);
-                    String printedMessage = String.format("%d.[%c] %s", i+1, currentTask.getComplete(), currentTask.getTask());
+                    String printedMessage = String.format("%d.%s", i+1, currentTask);
                     System.out.println(printedMessage);
                 }
-            } else if (inputMessage.length() >= 4 && inputMessage.substring(0,4).equals("mark")) {
-                int taskIndex = Integer.parseInt(inputMessage.substring(5));
+                inputMessage = processInputMessage(in);
+                break;
+            case "mark":
+                int taskIndex = Integer.parseInt(inputMessage[1]);
                 if(taskIndex > sizeOfTodoList) {
                     printErrorMessage();
                 } else {
                     currentTask = todoList.get(taskIndex - 1);
                     currentTask.setComplete();
                     System.out.println("Nice! I've marked this task as done!");
-                    String printedMessage = String.format("[X] %s", currentTask.getTask());
-                    System.out.println(printedMessage);
+                    System.out.println(currentTask);
                 }
-
-            } else if (inputMessage.length() >= 6 && inputMessage.substring(0,6).equals("unmark")) {
-                int taskIndex = Integer.parseInt(inputMessage.substring(7));
-                if(taskIndex > sizeOfTodoList) {
+                inputMessage = processInputMessage(in);
+                break;
+            case "unmark":
+                taskIndex = Integer.parseInt(inputMessage[1]);
+                if (taskIndex > sizeOfTodoList) {
                     printErrorMessage();
-                    continue;
                 } else {
                     currentTask = todoList.get(taskIndex - 1);
                     currentTask.setIncomplete();
                     System.out.println("Why are you being lazy? >:(");
-                    String printedMessage = String.format("[ ] %s", currentTask.getTask());
-                    System.out.println(printedMessage);
+                    System.out.println(currentTask);
                 }
-
-            } else {
-                Task newTask = new Task(inputMessage);
+                inputMessage = processInputMessage(in);
+                break;
+            case "todo":
+                Task newTask = new Task(inputMessage[1]);
                 todoList.add(newTask);
                 sizeOfTodoList += 1;
-                System.out.println("Done! Added: " + inputMessage);
+                System.out.println("Done! Added: " + newTask);
+                inputMessage = processInputMessage(in);
+                break;
+            case "deadline":
+                inputMessage = processDeadlineMessage(inputMessage[1]);
+                if (inputMessage[0].equals("")){
+                    printErrorMessage();
+                } else {
+                    sizeOfTodoList += 1;
+                    Deadline newDeadline = new Deadline(inputMessage[0], inputMessage[1]);
+                    todoList.add(newDeadline);
+                    System.out.println("Done! Added: " + newDeadline);
+                }
+                inputMessage = processInputMessage(in);
+                break;
+            case "event":
+                inputMessage = processEventMessage(inputMessage[1]);
+                if (inputMessage[0].equals("")){
+                    printErrorMessage();
+                } else {
+                    sizeOfTodoList += 1;
+                    Event newEvent = new Event(inputMessage[0], inputMessage[1], inputMessage[2]);
+                    todoList.add(newEvent);
+                    System.out.println("Done! Added: " + newEvent);
+                }
+                inputMessage = processInputMessage(in);
+                break;
+            default:
+                printErrorMessage();
+                inputMessage = processInputMessage(in);
             }
-            inputMessage = in.nextLine();
         }
         System.out.println("Otsu-Nakiri!");
         //CS2113T will not let students customise chatbots next sem onwards because of me
