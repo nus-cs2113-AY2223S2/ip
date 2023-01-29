@@ -10,15 +10,31 @@ public class Duke {
         String exit = "Bye. Hope to see you again soon! \n";
         String border = "____________________________________________________________ \n";
 
+        String[] arr;
+        arr = new String[100];
+        int listCount = 0;
 
         System.out.println(logo + border + greeting + border);
 
         Scanner input = new Scanner(System.in);
-        String entry = input.next();
+        String entry = input.nextLine();
+
 
         while (!entry.equals("bye")){
-            System.out.println(border + entry + "\n" + border);
-            entry = input.next();
+            if(entry.equals("list")){
+                System.out.println(border);
+                for(int i = 0; i < listCount; i++){
+                    System.out.println(i+1 + ". " + arr[i]);
+                }
+                System.out.println(border);
+                entry = input.nextLine();
+            }
+            else {
+                arr[listCount] = entry;
+                listCount ++;
+                System.out.println(border + "added: " + entry + "\n" + border);
+                entry = input.nextLine();
+            }
         }
 
         System.out.println(border + exit + border);
