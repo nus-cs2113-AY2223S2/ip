@@ -49,4 +49,24 @@ public class Check {
         return false;
     }
 
+    //Function to check if an input has list as the first word
+    public static boolean isList(String input){
+        if(input.length()>=4){
+            if("list".equalsIgnoreCase(input.substring(0,4))){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //Function to check if an input has bye as the first word
+    public static boolean isBye(String input){
+        if(input.length()>=3){
+            if("bye".equalsIgnoreCase(input.substring(0,3))){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

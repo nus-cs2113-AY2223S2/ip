@@ -22,10 +22,10 @@ public class Duke {
         String userInput = userScan.nextLine();  // Get user input
 
         //Echo the arguments provided unless it is "bye" which quits the program
-        while(!"bye".equalsIgnoreCase(userInput)){
+        while( !(Check.isBye(userInput)) ){
 
             //If userInput is "list" print all tasks
-            if("list".equalsIgnoreCase(userInput)){
+            if(Check.isEvent(userInput)){
                 //Print out the list of tasks
                 System.out.println("Here are the tasks in your list:");
                 for(int i=0;i<taskCount;i++){
