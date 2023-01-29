@@ -31,30 +31,31 @@ public class Duke {
     }
 
     public static void checkInput(String inputMessage) {
-        if (inputMessage.equalsIgnoreCase("bye")) {
+        String[] message = inputMessage.split(" ");
+        if (message.length == 1 && message[0].equalsIgnoreCase("bye")) {
             isCompleted = true;
             return;
         }
-        if (inputMessage.equalsIgnoreCase("list")) {
+
+        if (message.length == 1 && message[0].equalsIgnoreCase("list")) {
             displayList();
             return;
         }
-        if (inputMessage.startsWith("mark")) {
-            markItem(inputMessage);
+
+        if (message.length == 2 && message[0].equalsIgnoreCase("mark")) {
+            markItem(Integer.parseInt(message[1]));
             return;
         }
-        if (inputMessage.startsWith("unmark")) {
-            unmarkItem(inputMessage);
+        if (message.length == 2 && message[0].equalsIgnoreCase("unmark")) {
+            unmarkItem(Integer.parseInt(message[1]));
             return;
         }
 
         addItem(inputMessage);
     }
-    
-    public static int checkValidTask(String inputMessage) {
-        String[] message = inputMessage.split(" ");
-        int itemNumber = Integer.parseInt(message[1]);
-        return itemNumber > userList.size() ? -1 : itemNumber;
+
+    public static boolean isValidTaskNumber(int taskNumber) {
+        return taskNumber > userList.size() ? false : true;
     }
 
     public static void addItem(String item) {
@@ -75,45 +76,39 @@ public class Duke {
         }
 
         for (int i = 0; i < numItems; i++) {
-            String item = displayItem(i + 1);
+            String item = userList.get(i).toString();
             String outputMessage = String.format("%d.%s", i + 1, item);
             printMessage(outputMessage);
         }
         separator();
     }
 
-    public static String displayItem(int index) {
-        String itemStatus = userList.get(index - 1).getStatusIcon();
-        String itemDescription = userList.get(index - 1).getDescription();
-        return String.format("[%s] %s", itemStatus, itemDescription);
-    }
-
-    public static void markItem(String inputMessage) {
+    public static void markItem(int taskNumber) {
         separator();
-        int itemNumber = checkValidTask(inputMessage);
-        if (itemNumber == -1) {
+        boolean isValidTask = isValidTaskNumber(taskNumber);
+        if (!isValidTask) {
             String errorMessage = String.format("List only has %d items!", userList.size());
             printMessage(errorMessage);
         } else {
-            userList.get(itemNumber - 1).setAsDone();
-            String outputMessage = String.format("Nice! I've marked task %d as done:", itemNumber);
+            userList.get(taskNumber - 1).setAsDone();
+            String outputMessage = String.format("Nice! I've marked task %d as done:", taskNumber);
             printMessage(outputMessage);
-            printMessage(displayItem(itemNumber));
+            printMessage(userList.get(taskNumber - 1).toString());
         }
         separator();
     }
 
-    public static void unmarkItem(String inputMessage) {
+    public static void unmarkItem(int taskNumber) {
         separator();
-        int itemNumber = checkValidTask(inputMessage);
-        if (itemNumber == -1) {
+        boolean isValidTask = isValidTaskNumber(taskNumber);
+        if (!isValidTask) {
             String errorMessage = String.format("List only has %d items!", userList.size());
             printMessage(errorMessage);
         } else {
-            userList.get(itemNumber - 1).setAsNotDone();
-            String outputMessage = String.format("OK, I've marked task %d as not done yet:", itemNumber);
+            userList.get(taskNumber - 1).setAsNotDone();
+            String outputMessage = String.format("OK, I've marked task %d as not done yet:", taskNumber);
             printMessage(outputMessage);
-            printMessage(displayItem(itemNumber));
+            printMessage(userList.get(taskNumber - 1).toString());
         }
         separator();
     }
@@ -128,7 +123,7 @@ public class Duke {
             line = in.nextLine();
             checkInput(line);
         } while (!isCompleted);
-        
+
         endingMessage();
     }
 }

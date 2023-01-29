@@ -1,9 +1,13 @@
 public class Task {
     protected String description;
+    protected String startDate;
+    protected String endDate;
     protected boolean isDone;
 
     public Task(String description) {
         this.description = description;
+        this.startDate = "";
+        this.endDate = "";
         this.isDone = false;
     }
 
@@ -21,5 +25,12 @@ public class Task {
 
     public void setAsNotDone() {
         this.isDone = false;
+    }
+
+    @Override
+    public String toString() {
+        String itemStatus = this.getStatusIcon();
+        String itemDescription = this.getDescription();
+        return String.format("[%s] %s", itemStatus, itemDescription);
     }
 }
