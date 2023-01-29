@@ -1,9 +1,11 @@
 public class Task {
     private String name;
     private boolean completed;
+    private String type;
 
     public Task(String name) {
         this.name = name;
+        this.type = null;
         this.completed = false;
     }
 
@@ -25,6 +27,12 @@ public class Task {
     public void setUncompleted() {
         this.completed = false;
     }
+    public String getType() {
+        return type;
+    }
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String mark() {      // Method to return completion mark "✔"
         if (this.completed) {
@@ -33,5 +41,10 @@ public class Task {
         else {
             return " ";
         }
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }
