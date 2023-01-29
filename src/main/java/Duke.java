@@ -1,84 +1,164 @@
 import java.util.Scanner;
 public class Duke {
-    public static void greet() {
-        String line = "____________________________________________________________";
-        String greeting = " Hello! I'm Duke\n"
+    private static final String SEGMENT_LINE = "____________________________________________________________";
+    public static final int MAX_TASKS = 100;
+
+    public static void printGreeting() {
+        String greetingText = " Hello! I'm Duke" + System.lineSeparator()
                 + " What can I do for you?";
-        System.out.println(line);
-        System.out.println(greeting);
-        System.out.println(line + "\n");
+        System.out.println(SEGMENT_LINE);
+        System.out.println(greetingText);
+        System.out.println(SEGMENT_LINE + System.lineSeparator());
     }
-    public static void bye() {
-        String line = "____________________________________________________________";
-        String goodbye = " Bye. Hope to see you again soon!";
-        System.out.println(line);
-        System.out.println(goodbye);
-        System.out.print(line + "\n");
+
+    public static void printBye() {
+        String goodbyeText = " Bye. Hope to see you again soon!";
+        System.out.println(SEGMENT_LINE);
+        System.out.println(goodbyeText);
+        System.out.print(SEGMENT_LINE + System.lineSeparator());
     }
-    public static void echo(String input) {
-        String line = "____________________________________________________________";
-        System.out.println(line);
-        System.out.println(" added: " + input);
-        System.out.println(line + "\n");
+
+    public static String readInput() {
+        String input;
+        Scanner in;
+        in = new Scanner(System.in);
+        input = in.nextLine();
+        return input;
     }
-    public static void add(Task[] texts, String input, int counter) {
-        texts[counter] = new Task(input);
-        echo(input);
+
+    public static String RunCommandAndReadNext(String input, Task[] tasks) {
+        if (input.equals("list")) {
+            listTasks(tasks);
+        } else {
+            String[] arrayOfInput = input.split(" ");
+            if (arrayOfInput.length == 2 && arrayOfInput[0].equals("mark")
+                    && isStringInteger(arrayOfInput[1])) {
+                // if command is "mark <digit>"
+                tasks[Integer.parseInt(arrayOfInput[1]) - 1].markAsDone();
+                printMarkStatement(tasks[Integer.parseInt(arrayOfInput[1]) - 1].isDone,
+                        tasks[Integer.parseInt(arrayOfInput[1]) - 1].taskName);
+            } else if (arrayOfInput.length == 2 && arrayOfInput[0].equals("unmark")
+                    && isStringInteger(arrayOfInput[1])) {
+                // if command is "unmark <digit>"
+                tasks[Integer.parseInt(arrayOfInput[1]) - 1].markAsNotDone();
+                printMarkStatement(tasks[Integer.parseInt(arrayOfInput[1]) - 1].isDone,
+                        tasks[Integer.parseInt(arrayOfInput[1]) - 1].taskName);
+            } else {
+                addTask(input, tasks, arrayOfInput);
+            }
+        }
+        input = readInput();
+        return input;
     }
-    public static void list(Task[] texts, int counter) {
-        String line = "____________________________________________________________";
-        System.out.println(line);
-        if (counter == 0) {
+
+    public static void addTask(String input, Task[] tasks, String[] arrayOfInput) {
+        if (arrayOfInput[0].equals("todo")) {
+            String taskName = "";
+            for (int i = 1; i < arrayOfInput.length; i += 1) {
+                taskName += arrayOfInput[i];
+                taskName += " ";
+            }
+            tasks[Task.totalTasks] = new Todo(taskName.trim());
+        } else if (arrayOfInput[0].equals("deadline")) {
+            String taskName = "";
+            String deadline = "";
+            int arrayOfInputIndex = 1;
+            while (arrayOfInputIndex < arrayOfInput.length && !arrayOfInput[arrayOfInputIndex].equals("/by")) {
+                taskName += arrayOfInput[arrayOfInputIndex];
+                taskName += " ";
+                arrayOfInputIndex += 1;
+            }
+            arrayOfInputIndex += 1;
+            while (arrayOfInputIndex < arrayOfInput.length) {
+                deadline += arrayOfInput[arrayOfInputIndex];
+                deadline += " ";
+                arrayOfInputIndex += 1;
+            }
+            tasks[Task.totalTasks] = new Deadline(taskName.trim(), deadline.trim());
+        } else if (arrayOfInput[0].equals("event")) {
+            String taskName = "";
+            String startDateTime = "";
+            String endDateTime = "";
+            int arrayOfInputIndex = 1;
+            while (arrayOfInputIndex < arrayOfInput.length && !arrayOfInput[arrayOfInputIndex].equals("/from")) {
+                taskName += arrayOfInput[arrayOfInputIndex];
+                taskName += " ";
+                arrayOfInputIndex += 1;
+            }
+            arrayOfInputIndex += 1;
+            while (arrayOfInputIndex < arrayOfInput.length && !arrayOfInput[arrayOfInputIndex].equals("/to")) {
+                startDateTime += arrayOfInput[arrayOfInputIndex];
+                startDateTime += " ";
+                arrayOfInputIndex += 1;
+            }
+            arrayOfInputIndex += 1;
+            while (arrayOfInputIndex < arrayOfInput.length) {
+                endDateTime += arrayOfInput[arrayOfInputIndex];
+                endDateTime += " ";
+                arrayOfInputIndex += 1;
+            }
+            tasks[Task.totalTasks] = new Event(taskName.trim(), startDateTime.trim(), endDateTime.trim());
+        } else {
+            tasks[Task.totalTasks] = new Task(input);
+        }
+        echoAddTasks(tasks);
+        Task.incrementTotalTasks();
+    }
+
+    public static void echoAddTasks(Task[] tasks) { // check this output, alignment
+        System.out.println(SEGMENT_LINE);
+        int numberOfTasks = Task.totalTasks + 1;
+        String output = " The following task has been added:" + System.lineSeparator()
+                + "   " + tasks[Task.totalTasks].getFullTaskDetail() + System.lineSeparator()
+                + " There is now " + numberOfTasks + " task[s] in total.";
+        System.out.println(output);
+        System.out.println(SEGMENT_LINE + System.lineSeparator());
+    }
+
+    public static void listTasks(Task[] tasks) {
+        System.out.println(SEGMENT_LINE);
+        if (Task.totalTasks == 0) {
             System.out.println(" The list is empty!");
         } else {
             System.out.println(" Here are the tasks in your lists:");
-            for (int i = 0; i < counter; i += 1) { 
-                System.out.println(" " + (i + 1) + ".[" + texts[i].getStatusIcon() + "] " + texts[i].taskName);
+            for (int i = 0; i < Task.totalTasks; i += 1) {
+                System.out.println(" " + (i + 1) + "." + tasks[i].getFullTaskDetail());
+                //System.out.println(" " + (i + 1) + ".[" + tasks[i].getStatusIcon() + "] " + tasks[i].taskName);
             }
         }
-        System.out.println(line + "\n");
+        System.out.println(SEGMENT_LINE + System.lineSeparator());
     }
 
-    public static void printMark(boolean isDone, String taskName) {
-        String line = "____________________________________________________________";
-        System.out.println(line);
-        if (isDone == true) {
+    public static boolean isStringInteger(String input) {
+        // takes in a string and checks whether the string only contains digits
+        char[] inputInArray = input.toCharArray();
+        for (int i = 0; i < inputInArray.length; i += 1) {
+            if (!Character.isDigit(inputInArray[i])) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void printMarkStatement(boolean isDone, String taskName) {
+        System.out.println(SEGMENT_LINE);
+        if (isDone) {
             System.out.println(" Nice! I've marked this task as done:");
             System.out.println("   [X] " + taskName);
         } else {
             System.out.println(" OK, I've marked this task as not done yet:");
             System.out.println("   [ ] " + taskName);
         }
-        System.out.println(line + "\n");
+        System.out.println(SEGMENT_LINE + System.lineSeparator());
     }
+
     public static void main(String[] args) {
-        greet();
-        Task[] texts = new Task[100];
-        int counter = 0;
-        String input;
-        Scanner in = new Scanner(System.in);
-        input = in.nextLine();
-        while (input.equals("bye") == false) {
-            if (input.equals("list")) {
-                list(texts, counter);
-            } else {
-                String[] arrayOfInput = input.split(" ");
-                if (arrayOfInput[0].equals("mark")) {
-                    texts[Integer.parseInt(arrayOfInput[1]) - 1].markAsDone();
-                    printMark(texts[Integer.parseInt(arrayOfInput[1]) - 1].isDone,
-                            texts[Integer.parseInt(arrayOfInput[1]) - 1].taskName);
-                } else if (arrayOfInput[0].equals("unmark")) {
-                    texts[Integer.parseInt(arrayOfInput[1]) - 1].markAsNotDone();
-                    printMark(texts[Integer.parseInt(arrayOfInput[1]) - 1].isDone,
-                            texts[Integer.parseInt(arrayOfInput[1]) - 1].taskName);
-                } else {
-                    add(texts, input, counter);
-                    counter += 1;
-                }
-            }
-            in = new Scanner(System.in);
-            input = in.nextLine();
+        printGreeting();
+        Task[] tasks = new Task[MAX_TASKS];
+        String input = readInput();
+        while (!input.equals("bye")) {
+            input = RunCommandAndReadNext(input, tasks);
         }
-        bye();
+        printBye();
     }
 }
