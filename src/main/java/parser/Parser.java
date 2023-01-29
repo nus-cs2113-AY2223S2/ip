@@ -43,7 +43,7 @@ public class Parser implements IParser {
             return answer.get();
         }
         else {
-            throw new InvalidCommandException("Invalid command given", new IllegalArgumentException());
+            throw new InvalidCommandException("Invalid format!!!\nKeyword must be in the form of <Keyword> <Args>", new IllegalArgumentException());
         }
     }
     /**
@@ -63,10 +63,15 @@ public class Parser implements IParser {
     }
     @Override
     public Command getCommand() throws EmptyCommandException {
-        getNextMessage();
-        if (message == null) {
-            throw new EmptyCommandException("Empty command",new NoSuchElementException());
+        try {
+            getNextMessage();
+        } catch (EmptyCommandException e) {
+            throw e;
         }
+
+        // Assert assumption that the message is not null
+        // after calling getNextMessage
+        assert message != null;
         if (isExit()) {
             currentCommand = Command.EXIT;
         }
@@ -91,7 +96,7 @@ public class Parser implements IParser {
         if (message.split(" ", 2).length == 1) {
             // Only command given but no arguments
             // Raise error
-            throw new InvalidCommandException("No arguments given in command", new IllegalArgumentException());
+            throw new InvalidCommandException("No arguments passed!!!\nKeyword must be in the form of <Keyword> <Args>", new IllegalArgumentException());
         }
         String arguments = message.split(" ", 2)[1];
         try {
@@ -111,8 +116,10 @@ public class Parser implements IParser {
             return task;
         } catch (InvalidCommandException e) {
             throw e;
-        } catch (StringIndexOutOfBoundsException | EmptyDescriptionException e) {
-            throw new InvalidCommandException("Command could not be understood",e);
+        } catch (StringIndexOutOfBoundsException e) {
+            throw new InvalidCommandException(e.getMessage(),e);
+        } catch (EmptyDescriptionException e) {
+            throw new InvalidCommandException(e.getMessage(),e);
         }
     }
     @Override

@@ -53,10 +53,6 @@ public class Duke {
                 }
             } catch (DukeException e) {
                 printSystemMessage(e.getMessage());
-                if (e instanceof EmptyCommandException) {
-                    printSystemMessage("You passed an illegal empty command!\nI will stop here because I am angry Duke");
-                    break;
-                }
             } 
         } while(!isExit);
         bye();
