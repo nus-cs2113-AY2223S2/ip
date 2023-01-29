@@ -2,13 +2,13 @@ import java.util.Scanner;
 
 public class Duke {
 
-    static int taskLimit = 100;
+    static final int TASK_LIMIT = 100;
 
-    static Task[] tasks = new Task[taskLimit];
+    static Task[] tasks = new Task[TASK_LIMIT];
     static int taskCount = 0;
 
     public static void addTask(String task){
-        if(taskCount < taskLimit){
+        if(taskCount < TASK_LIMIT){
             tasks[taskCount] = new Task(task);
             taskCount++;
             println("____________________________________________________________");
@@ -55,39 +55,47 @@ public class Duke {
         println("____________________________________________________________");
     }
 
-    public static void beginInput(){
+    public static void beginInputLoop(){
         Scanner in = new Scanner(System.in);
         while(true){
-            String input = in.nextLine();
-            String[] args = input.split(" ");
-            int index;
-            switch(args[0]){
-            case "bye":
-                return;
-            case "list":
-                listTasks();
-                break;
-            case "mark":
-                index = Integer.parseInt(args[1])-1;
-                markTask(index);
-                break;
-            case "unmark":
-                index = Integer.parseInt(args[1])-1;
-                unmarkTask(index);
-                break;
-            default:
-                addTask(input);
-                break;
+            try {
+                String input = in.nextLine();
+                String[] args = input.split(" ");
+                int index;
+                switch (args[0]) {
+                case "bye":
+                    return;
+                case "list":
+                    listTasks();
+                    break;
+                case "mark":
+                    index = Integer.parseInt(args[1]) - 1;
+                    markTask(index);
+                    break;
+                case "unmark":
+                    index = Integer.parseInt(args[1]) - 1;
+                    unmarkTask(index);
+                    break;
+                default:
+                    addTask(input);
+                    break;
+                }
+            } catch(Exception e) {
+                println("____________________________________________________________");
+                System.out.println("Something went wrong: "+ e);
+                println("____________________________________________________________");
             }
 
         }
     }
 
+    // println adds indentation before each println output string
     public static void println(String x){
         System.out.print("\t");
         System.out.println(x);
     }
 
+    // printf adds indentation before each printf output string
     public static void printf(String format, Object ...args){
         System.out.print("\t");
         System.out.printf(format, args);
@@ -99,7 +107,7 @@ public class Duke {
         println(" What can I do for you?");
         println("____________________________________________________________");
 
-        beginInput();
+        beginInputLoop();
 
         println("____________________________________________________________");
         println(" Bye. Hope to see you again soon!");
