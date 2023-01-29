@@ -17,5 +17,5 @@ public interface IParser {
      * @param command type of command to obtain arguments for
      * @return Argument class containing arguments from user
      */
-    public Argument getCommandArguments(Command command);
+    public Argument getCommandArguments(Command command) throws InvalidCommandException;
 }
