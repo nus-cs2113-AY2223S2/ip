@@ -5,16 +5,21 @@
 public class Deadline extends Task {
     protected String by;
 
+    /**
+     * Constructor initializing the content and deadline of the Deadline task.
+     * The task is unmarked by default.
+     * @param content content of the Deadline task
+     * @param by deadline of the Deadline task
+     */
     public Deadline(String content, String by) {
         super(content);
         this.by = by;
     }
 
-    public Deadline(String content, boolean isDone, String by) {
-        super(content, isDone);
-        this.by = by;
-    }
-
+    /**
+     * Converts the task to a string with label, mark status and deadline.
+     * @return a string containing the task's label, mark status and deadline.
+     */
     @Override
     public String toString() {
         return "[D]" + super.toString() + "(by: " + by + ")";
