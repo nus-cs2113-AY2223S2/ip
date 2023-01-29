@@ -2,29 +2,50 @@ import java.util.Scanner;
 
 public class Alex {
     public static void main(String[] args) {
-        String[] instructions = new String[100];
-        int numberOfInstructions = 0;
+        Task[] allTasks = new Task[100];
+        int numberOfTasks = 0;
         Scanner myObj = new Scanner(System.in);  // Create a Scanner object
         greeting();
         boolean isBye = false;
         while(!isBye){
             String userInput = myObj.nextLine();
-            if(userInput.toLowerCase().equals("list")){
-                for(int i = 1; i <= numberOfInstructions; i++){
+            String[] words = userInput.split(" ");
+            if(words[0].toLowerCase().equals("list")){
+                for(int i = 1; i <= numberOfTasks; i++){
                     System.out.print(i);
-                    System.out.println(". " + instructions[i-1]);
+                    System.out.println(". " + "[" + allTasks[i-1].getStatusIcon() + "]" + " " + allTasks[i-1].getDescription());
                 }
                 printLine();
 
             }
-            else if(userInput.toLowerCase().equals("bye")){
+            else if(words[0].toLowerCase().equals("bye")){
                 exit();
                 isBye = true;
                 break;
             }
+            else if(words[0].toLowerCase().equals("mark")){
+                printLine();
+                System.out.println("Good job! I have marked this task as completed:");
+                int number = Integer.parseInt(words[1]);
+                allTasks[number - 1].markAsDone();
+                System.out.println("[" + allTasks[number - 1].getStatusIcon() + "]" + " " + allTasks[number - 1].getDescription());
+                printLine();
+
+            }
+            else if(words[0].toLowerCase().equals("unmark")){
+                printLine();
+                System.out.println("Got it! I have marked this task as not yet completed:");
+                int number = Integer.parseInt(words[1]);
+                allTasks[number - 1].unmark();
+                System.out.println("[" + allTasks[number - 1].getStatusIcon() + "]" + " " + allTasks[number - 1].getDescription());
+                printLine();
+
+
+            }
             else{
-                instructions[numberOfInstructions] = userInput;
-                numberOfInstructions += 1;
+                Task t = new Task(userInput);
+                allTasks[numberOfTasks] = t;
+                numberOfTasks += 1;
                 printLine();
                 echoResponse(userInput);
             }
@@ -44,7 +65,7 @@ public class Alex {
     }
     public static void greeting(){
         printLine();
-        String greet = "Greetings! I'm Alex\nWhat can I do for you today?";
+        String greet = "Hello! I'm Alex\nWhat can I do for you today?";
         //String question = "What can I do for you today?";
         System.out.println(greet);
         //System.out.println(question);
