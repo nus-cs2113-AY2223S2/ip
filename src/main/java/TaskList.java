@@ -20,9 +20,13 @@ public class TaskList {
     public String toString() {
         int index = 1;
         StringBuilder output = new StringBuilder();
-        for (Task task: getTasks()) {
+        for (Task task: tasks) {
             if(task != null) {
-                output.append(index).append(". ").append(task).append(System.lineSeparator());
+                output.append(index).append(". ").append(task);
+
+                if(index != tasksCount){
+                    output.append(System.lineSeparator());
+                }
                 index++;
             }
         }

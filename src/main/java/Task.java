@@ -26,6 +26,6 @@ public class Task {
 
     public String toString() {
         String checker = this.isDone ? "[X]" : "[ ]";
-        return String.format(checker + " " + this.name);
+        return checker + " " + this.name;
     }
 }
