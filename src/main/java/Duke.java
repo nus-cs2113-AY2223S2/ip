@@ -2,17 +2,23 @@ import java.util.Scanner;
 import java.util.Arrays;
 
 public class Duke {
-    public static void main(String[] args) {
-        String openingMsg = "Hello! I'm Dukebot\n\tWhat can I do for you?";
-        String closingMsg = "Goodbye! Hope to see you again soon ^^!";
-        String horizontal = "---------------------------------";
-        Task[] list = new Task[100];
 
-        System.out.println(horizontal + "\n\t" + openingMsg + "\n" + horizontal);
+    //TODO make methods for the different operations
+    protected static Task[] list = new Task[100];
+    public static final String OPENING_MSG = "Hello! I'm Dukebot\n\tWhat can I do for you?";
+    public static final String CLOSING_MSG = "Goodbye! Hope to see you again soon ^^!";
+    public static final String HORIZONTAL = "---------------------------------";
+    public static final String MARK_MSG = "Nice! I've marked this task as done:";
+
+    public static final String UNMARK_MSG = "Oki! I've marked this task as not done yet:";
+
+    public static void main(String[] args) {
+
+        System.out.println(HORIZONTAL + "\n\t" + OPENING_MSG + "\n" + HORIZONTAL);
 
         Scanner in = new Scanner(System.in);
         String line = in.nextLine().toLowerCase();
-        String lineAr[] = new String[2];
+
         int listNum;
 
         int item = 0;
@@ -20,7 +26,7 @@ public class Duke {
         while (!line.equals("bye")) {
             if (!(line.equals("list") || line.startsWith("mark") || line.startsWith("unmark"))) {
                 list[item] = new Task(line);
-                System.out.println(horizontal + "\n\tadded: " + list[item].description + "\n" + horizontal);
+                System.out.println(HORIZONTAL + "\n\tadded: " + list[item].description + "\n" + HORIZONTAL);
                 item++;
             }
 
@@ -28,58 +34,56 @@ public class Duke {
 
             // display list
             if (line.equals("list")) {
-                System.out.println(horizontal + "\n\tHere are the tasks in your list:");
+                System.out.println(HORIZONTAL + "\n\tHere are the tasks in your list:");
                 for (int i = 0; i < item; i++) {
                     System.out.println("\n\t" + (i + 1) + ". [" + list[i].getStatusIcon() + "] " + list[i].description + "\n");
                 }
-                System.out.println(horizontal);
+                System.out.println(HORIZONTAL);
             }
 
-            // mark item as done
+            // mark item as done: constraint - user input begins with "mark"
             if (line.startsWith("mark")) {
 
+                StatusToggle(line, item, MARK_MSG, true);
 
-                lineAr = line.split(" ");
-                listNum = Integer.parseInt(lineAr[1]) - 1;
-
-                // check the list item number is in range
-
-                if (listNum < item) {
-                    list[listNum].isDone = true;
-                    System.out.println(horizontal + "\n\tNice! I've marked this task as done:");
-                    System.out.println("\n\t\t" + "[" + list[listNum].getStatusIcon() + "] " + list[listNum].description + "\n");
-                    System.out.println(horizontal);
-                }
-                else {
-                    System.out.println("Item number " + (listNum + 1) + " does not exist yet");
-                }
-
-                // TODO maybe do some checks like if it is already done
             }
 
-            // unmark item
+            // unmark item: constraint - user input begins with "mark"
             if (line.startsWith("unmark")) {
 
-                // check the list item number is in range
-                lineAr = line.split(" ");
-                listNum = Integer.parseInt(lineAr[1]) - 1;
+                StatusToggle(line, item, UNMARK_MSG, false);
 
-                if (listNum < item) {
-                    list[listNum].isDone = false;
-                    System.out.println(horizontal + "\n\tOki! I've marked this task as not done yet:");
-                    System.out.println("\n\t\t" + "[" + list[listNum].getStatusIcon() + "] " + list[listNum].description + "\n");
-                    System.out.println(horizontal);
-                }
-                else {
-                    System.out.println("Item number " + (listNum + 1) + " does not exist yet");
-                }
-
-                // TODO maybe do some checks like if it is already not done
             }
 
         }
 
-        System.out.println(horizontal + "\n\t" + closingMsg + "\n" + horizontal);
+        System.out.println(HORIZONTAL + "\n\t" + CLOSING_MSG + "\n" + HORIZONTAL);
+
+    }
+
+    public static void StatusToggle(String line, int item, String msg, boolean status) {
+        String lineAr[] = new String[2];
+
+        lineAr = line.split(" ");
+        int listNum = Integer.parseInt(lineAr[1]) - 1;
+
+        if (listNum >= 0 && listNum < item) {
+
+            // check if it is already done/not done in list
+
+            if (list[listNum].isDone != status) {
+                list[listNum].isDone = status;
+
+                System.out.println(HORIZONTAL + "\n\t" + msg);
+                System.out.println("\n\t\t" + "[" + list[listNum].getStatusIcon() + "] " + list[listNum].description + "\n");
+                System.out.println(HORIZONTAL);
+            } else {
+                System.out.println("No change, task was already as is");
+            }
+
+        } else {
+            System.out.println("Item number " + (listNum + 1) + " does not exist yet");
+        }
 
     }
 }
