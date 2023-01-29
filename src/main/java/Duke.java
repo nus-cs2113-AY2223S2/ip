@@ -23,11 +23,8 @@ public class Duke {
             } else if (messageFromUser.equals("list")) {
                 displayList(itemList, index);
             } else {
-                horizontalLine();
-                System.out.println("added: " + messageFromUser);
-                itemList[index] = messageFromUser;
+                addToList(itemList, index, messageFromUser);
                 index++;
-                horizontalLine();
             }
         }
     }
@@ -44,13 +41,20 @@ public class Duke {
         horizontalLine();
     }
 
-    public static void displayList(String[] itemList, int index) {
-        int i = 1;
-        String[] filledList = Arrays.copyOf(itemList, index);
+    public static void displayList(String[] itemList, int numberOfItems) {
+        int currentIndex = 1;
+        String[] filledList = Arrays.copyOf(itemList, numberOfItems);
         for (String item : filledList) {
-            System.out.println(i + ". " + item);
-            i += 1;
+            System.out.println(currentIndex + ". " + item);
+            currentIndex += 1;
         }
+        horizontalLine();
+    }
+
+    public static void addToList(String[] itemList, int index, String messageFromUser) {
+        horizontalLine();
+        System.out.println("added: " + messageFromUser);
+        itemList[index] = messageFromUser;
         horizontalLine();
     }
 
