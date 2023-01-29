@@ -1,7 +1,15 @@
 package parser;
 
+import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.Optional;
+import task.Deadline;
+import task.EmptyDescriptionException;
+import task.Event;
+import task.Task;
+import task.TaskTypeEnum;
+import task.ToDo;
 
 public class Parser implements IParser {
     private Scanner sc;
@@ -26,6 +34,18 @@ public class Parser implements IParser {
     private boolean isUnmark(){
         return (message.split(" ")[0].toLowerCase().equals("unmark"));
     }
+    private TaskTypeEnum typeOfTask() throws InvalidCommandException {
+        String task = message.split(" ")[0].toUpperCase();
+        Optional<TaskTypeEnum> answer = Arrays.stream(TaskTypeEnum.values())
+                                        .filter(x -> x.toString().equals(task))
+                                        .findFirst();
+        if (answer.isPresent()) {
+            return answer.get();
+        }
+        else {
+            throw new InvalidCommandException("Invalid format!!!\nKeyword must be in the form of <Keyword> <Args>", new IllegalArgumentException());
+        }
+    }
     /**
      * Gets the a message from console that user inputs.
      * Checks if the input message is empty and raises Exception if empty.
@@ -33,20 +53,25 @@ public class Parser implements IParser {
      */
     private void getNextMessage() throws EmptyCommandException {
         try {
-            message = sc.nextLine();
+            message = sc.nextLine().trim();
+            if (message.isBlank()){
+                throw new NoSuchElementException();
+            }
         } catch (NoSuchElementException e) {
-            throw new EmptyCommandException("Empty command");
-        }
-        if (message.isBlank()){
-            throw new EmptyCommandException("Empty command");
+            throw new EmptyCommandException("Empty command", e);
         }
     }
     @Override
     public Command getCommand() throws EmptyCommandException {
-        getNextMessage();
-        if (message == null) {
-            throw new EmptyCommandException("Empty command");
+        try {
+            getNextMessage();
+        } catch (EmptyCommandException e) {
+            throw e;
         }
+
+        // Assert assumption that the message is not null
+        // after calling getNextMessage
+        assert message != null;
         if (isExit()) {
             currentCommand = Command.EXIT;
         }
@@ -65,20 +90,44 @@ public class Parser implements IParser {
         return currentCommand;
     }
     @Override
-    public Argument getCommandArguments(Command command) {
-        if (currentCommand.compareTo(command) != 0){
-            // Mismatch in request
-            // TODO Throw error
-        }
+    public Task getTask() throws InvalidCommandException {
+        TaskTypeEnum tasking = typeOfTask();
 
-        Argument arg = new Argument();
-        if (command.equals(Command.MARK) || command.equals(Command.UNMARK)) {
-            arg.setCommand(command);
-            arg.setIndex(Integer.parseInt(message.split(" ")[1]));
+        if (message.split(" ", 2).length == 1) {
+            // Only command given but no arguments
+            // Raise error
+            throw new InvalidCommandException("No arguments passed!!!\nKeyword must be in the form of <Keyword> <Args>", new IllegalArgumentException());
         }
-        else {
-            // TODO Handle error
+        String arguments = message.split(" ", 2)[1];
+        try {
+            Task task = null;
+            switch (tasking) {
+            case DEADLINE:
+                task = new Deadline();
+                break;
+            case EVENT:
+                task = new Event();
+                break;
+            case TODO:
+                task = new ToDo();
+                break;
+            }
+            task.parseArgument(arguments);
+            return task;
+        } catch (InvalidCommandException e) {
+            throw e;
+        } catch (StringIndexOutOfBoundsException e) {
+            throw new InvalidCommandException(e.getMessage(),e);
+        } catch (EmptyDescriptionException e) {
+            throw new InvalidCommandException(e.getMessage(),e);
         }
-        return arg;
     }
+    @Override
+	public int getTaskIndex() throws InvalidCommandException{
+        try {
+            return Integer.parseInt(message.split(" ")[1]);
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            throw new InvalidCommandException("Invalid task index", e);
+        }
+	}
 }

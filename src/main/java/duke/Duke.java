@@ -5,11 +5,9 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
-import parser.Command;
 import parser.EmptyCommandException;
 import parser.IParser;
 import parser.Parser;
-import task.EmptyTaskList;
 import task.ITaskController;
 import task.TaskController;
 
@@ -36,31 +34,26 @@ public class Duke {
                     isExit = true;
                     break;
                 case LIST:
-                    list = taskController.getTask();
+                    list = taskController.getTasks();
                     printSystemMessage(list);
                     break;
                 case TASK:
-                    taskController.addTask(parser.getMessage());
-                    printSystemMessage("added: " + parser.getMessage());
+                    printSystemMessage("Got it. I've added this task:\n " +
+                    taskController.addTask(parser.getTask()).toString() +
+                    String.format("\nNow you have %d tasks in the list.", taskController.getCount()));
                     break;
                 case UNMARK:
-                    printSystemMessage(taskController.markTask(parser.getCommandArguments(Command.UNMARK)));
+                    printSystemMessage(taskController.unmarkTask(parser.getTaskIndex()));
                     break;
                 case MARK:
-                    printSystemMessage(taskController.markTask(parser.getCommandArguments(Command.MARK)));
+                    printSystemMessage(taskController.markTask(parser.getTaskIndex()));
                     break;
                 default:
                     break;
                 }
-            } catch (EmptyCommandException e) {
-                printSystemMessage("You passed an illegal command!\n\tI will stop here because I am angry Duke");
-                break;
-            } catch (EmptyTaskList e) {
+            } catch (DukeException e) {
                 printSystemMessage(e.getMessage());
-            }
-            catch (IllegalArgumentException e) {
-                printSystemMessage(e.getMessage());
-            }
+            } 
         } while(!isExit);
         bye();
     }
