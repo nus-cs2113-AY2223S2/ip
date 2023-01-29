@@ -10,6 +10,8 @@ public class Duke {
                 indentations + horizontalLines);
         Scanner in = new Scanner(System.in);
         String readLine;
+        String[] tasks = new String[100];
+        int taskIndex = 0;
         while(true) {
             readLine = in.nextLine();
             if(readLine.equals("bye")) {
@@ -17,10 +19,22 @@ public class Duke {
                         indentations + "Bye. Hope to see you again soon!\n" +
                         indentations + horizontalLines);
                 break;
+            } else if (readLine.equals("list")) {
+                System.out.println(indentations + horizontalLines);
+
+                for (int i = 0; i < taskIndex; ++i) {
+                    int taskNumber = i+1;
+                    System.out.println(indentations + taskNumber + ". " + tasks[i]);
+                }
+
+                System.out.println(indentations + horizontalLines);
+
             } else {
+                tasks[taskIndex] = readLine;
                 System.out.println(indentations + horizontalLines +
-                        indentations + readLine + '\n' +
+                        indentations + "added: " + readLine + '\n' +
                         indentations + horizontalLines);
+                taskIndex++;
             }
         }
 
