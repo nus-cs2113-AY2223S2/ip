@@ -1,4 +1,4 @@
-public class Task {
+public abstract class Task {
 
     protected String description;
     protected boolean isDone;
@@ -11,6 +11,10 @@ public class Task {
     public String getStatusIcon() {
         return (isDone ? "X" : " "); // mark done task with X
     }
+
+    public abstract char getTypeIcon();
+
+
     public static void markAsDone(Task task) {
         task.isDone = true;
     }
@@ -19,7 +23,7 @@ public class Task {
         task.isDone = false;
     }
 
-    public String getDescription(){
-        return(this.description);
+    public String getDescription() {
+        return (this.description);
     }
 }
