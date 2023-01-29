@@ -57,8 +57,7 @@ public class Parser implements IParser {
             if (message.isBlank()){
                 throw new NoSuchElementException();
             }
-        }
-        catch (NoSuchElementException e) {
+        } catch (NoSuchElementException e) {
             throw new EmptyCommandException("Empty command", e);
         }
     }
@@ -98,15 +97,15 @@ public class Parser implements IParser {
         try {
             Task task = null;
             switch (tasking) {
-                case DEADLINE:
-                    task = new Deadline();
-                    break;
-                case EVENT:
-                    task = new Event();
-                    break;
-                case TODO:
-                    task = new ToDo();
-                    break;
+            case DEADLINE:
+                task = new Deadline();
+                break;
+            case EVENT:
+                task = new Event();
+                break;
+            case TODO:
+                task = new ToDo();
+                break;
             }
             task.parseArgument(arguments);
             return task;
