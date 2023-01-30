@@ -25,7 +25,10 @@ public class Duke {
 
     public static void markTask(Task[] tasks, int currentID, boolean isDone) {
         drawLine("_");
-        if (isDone) {
+        if (currentID < 0 || currentID >= Task.getTaskCount()) {
+            System.out.println("Cannot find this task!");
+        }
+        else if (isDone) {
             tasks[currentID].markDone();
             System.out.println("Nice! I've marked this task as done:");
             System.out.println("   ");
