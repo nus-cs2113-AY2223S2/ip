@@ -11,6 +11,13 @@ public class Psyduck {
         tasks[taskCount] = newTask;
         taskCount++;
     }
+
+    public static void addDeadline(String description, String by) {
+        Deadline newTask = new Deadline(description, by);
+        tasks[taskCount] = newTask;
+        taskCount++;
+    }
+
     public static void listTasks() {
         linePrint();
         for (int i = 0; i < taskCount; i ++) {
@@ -35,6 +42,7 @@ public class Psyduck {
         System.out.println("Hi I am Psyduck! How can I help you?");
         linePrint();
         do {
+            String description;
             input = in.nextLine();
             int space = input.indexOf(" ");
             String command;
@@ -67,11 +75,44 @@ public class Psyduck {
                 System.out.println("You have unmarked the task: " + tasks[taskNum-1].getDescription());
                 linePrint();
                 break;
-            default:
-                String description = input;
+            case "todo":
+                if (space == -1) {
+                    linePrint();
+                    System.out.println("Todo task cannot be empty! >:(");
+                    linePrint();
+                    break;
+                }
+                description = input.substring(space+1);
                 addToDo(description);
                 linePrint();
-                System.out.println("Psyduck has added the task: " + description);
+                System.out.println("Psyduck has added the task: " + tasks[taskCount-1]);
+                linePrint();
+                break;
+            case "deadline":
+                if (space == -1) {
+                    System.out.println("Deadline task cannot be empty! >:(");
+                    linePrint();
+                    break;
+                }
+                int slashPos = input.indexOf("/by");
+                if (slashPos == -1) {
+                    linePrint();
+                    System.out.println("Psyduck needs a deadline.");
+                    System.out.println("Remember to use the <deadline> <description> </by> <date> format for your input");
+                    linePrint();
+                    break;
+                }
+                description = input.substring(space + 1, slashPos);
+                String by = input.substring(slashPos + 4);
+                addDeadline(description, by);
+                linePrint();
+                System.out.println("Psyduck has added the task: " + tasks[taskCount-1]);
+                linePrint();
+                break;
+            default:
+                linePrint();
+                System.out.println("Invalid command, Psyduck does not understand.");
+                System.out.println("Please enter a valid command.");
                 linePrint();
             }
         } while (shouldExit == false);
