@@ -1,7 +1,7 @@
 package duke.commands.taskCommands;
 
 import duke.commands.Command;
-import duke.execptions.InvalidTaskException;
+import duke.exceptions.InvalidTaskException;
 import duke.tasks.Events;
 import duke.tasks.Task;
 import duke.tasks.TaskList;

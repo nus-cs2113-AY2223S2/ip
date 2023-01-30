@@ -1,6 +1,6 @@
 package duke.commands;
 
-import duke.execptions.EmptyListException;
+import duke.exceptions.EmptyListException;
 import duke.tasks.Task;
 import duke.tasks.TaskList;
 
