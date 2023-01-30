@@ -4,14 +4,6 @@ public class ToDo extends Task{
     }
 
     public String toString() {
-        String status = null;
-        if (isDone) {
-            status = "X";
-        } else {
-            status = " ";
-        }
-        return super.toString() + "[T]" + "[" + status + "]" + description;
+        return super.toString() + "[T]" + "[" + getStatusIcon() + "] " + getDescription();
     }
-
-
 }

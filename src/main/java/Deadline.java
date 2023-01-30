@@ -12,12 +12,6 @@ public class Deadline extends Task{
 
     @Override
     public String toString() {
-        String status = null;
-        if (isDone) {
-            status = "X";
-        } else {
-            status = " ";
-        }
-        return super.toString() + "[D]" + "[" + status + "]" + getDescription() + "(by: " + getBy() + ")";
+        return super.toString() + "[D]" + "[" + getStatusIcon() + "] " + getDescription() + " (by: " + getBy() + ")";
     }
 }

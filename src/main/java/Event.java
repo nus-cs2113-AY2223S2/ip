@@ -18,12 +18,6 @@ public class Event extends Task{
 
     @Override
     public String toString() {
-        String status = null;
-        if (isDone) {
-            status = "X";
-        } else {
-            status = " ";
-        }
-        return super.toString() + "[E]" + "[" + status + "]" + getDescription() + "(from: " + getFrom() + " to: " + getTo();
+        return super.toString() + "[E]" + "[" + getStatusIcon() + "] " + getDescription() + " (from: " + getFrom() + " to: " + getTo() + ")";
     }
 }
