@@ -1,0 +1,18 @@
+todo return books
+todo return laundry
+list
+deadline assignment 1 /by Next monday
+deadline lab 10 /by Next tues
+list
+garbage 12323
+garbage asdasda
+event funfair 1 /from 21 jan /to 4 feb
+event fund raising /from 30 feb /to 31 mar
+list
+mark 3
+mark 5
+mark 100
+unmark 2
+unmark 3
+mark 5
+list
