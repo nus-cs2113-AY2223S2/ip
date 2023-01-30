@@ -1,3 +1,9 @@
+package duke.command;
+
+import duke.task.Deadline;
+import duke.task.Task;
+import duke.task.Event;
+
 public class TaskManager {
     private Task[] taskList;
     private int listSize;
@@ -13,6 +19,7 @@ public class TaskManager {
      *
      * @param description: user task to remember
      */
+
     public void addToList(String description) {
         Task task = new Task(description);
         taskList[this.listSize] = task;
@@ -28,11 +35,12 @@ public class TaskManager {
      *
      * @param description: user Deadline to remember
      */
+
     public void addToList(String description, String dueBy) {
         Deadline event = new Deadline(description, dueBy);
         taskList[this.listSize] = event;
         this.listSize += 1;
-        String eventDuration = event.getdueDate();
+        String eventDuration = event.getDueDate();
         System.out.println("Got it! Added \n"
                 + "[D][ ] " + description + eventDuration + "\n"
                 + "to the list.");
@@ -44,6 +52,7 @@ public class TaskManager {
      *
      * @param description: user event to remember
      */
+
     public void addToList(String description, String startDate, String endDate) {
         Event event = new Event(description, startDate, endDate);
         taskList[this.listSize] = event;
@@ -60,6 +69,7 @@ public class TaskManager {
      *
      * @param taskIndex index in which the task is stored in the array
      */
+
     public void markAsDone(int taskIndex) {
         if (taskIndex >= listSize || taskIndex < 0) {
             System.out.println("Task not found within the list!");
@@ -77,6 +87,7 @@ public class TaskManager {
      *
      * @param taskIndex index in which the task is stored in the array
      */
+
     public void markAsUndone(int taskIndex) {
         if (taskIndex >= listSize || taskIndex < 0) {
             System.out.println("Task not found within the list!");
@@ -92,6 +103,7 @@ public class TaskManager {
     /**
      * prints all tasks stored in the list
      */
+    
     public void printList() {
         System.out.println("Here are the tasks in your list:");
         for (int i = 1; i < this.listSize + 1; i++) {

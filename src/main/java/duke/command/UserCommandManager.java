@@ -1,3 +1,5 @@
+package duke.command;
+
 import java.util.Scanner;
 
 public class UserCommandManager {
@@ -57,31 +59,31 @@ public class UserCommandManager {
      * @param userCommand type of action user wants to perform
      * @param userInput   arguments to the action (i.e. task description)
      */
-    
+
     public void handleCommands(String userCommand, String userInput) {
         Scanner scanner = new Scanner(userInput);
         switch (userCommand) {
-        case "list":
-            myList.printList();
-            break;
-        case "mark":
-            myList.markAsDone(scanner.nextInt() - 1);
-            break;
-        case "unmark":
-            myList.markAsUndone(scanner.nextInt() - 1);
-            break;
-        case "todo":
-            myList.addToList(scanner.nextLine());
-            break;
-        case "deadline":
-            handleDeadlineCommand(scanner.nextLine().trim().split("/by"));
-            break;
-        case "event":
-            handleEventCommand(userInput);
-            break;
-        default:
-            handleUnknownCommand();
-            break;
+            case "list":
+                myList.printList();
+                break;
+            case "mark":
+                myList.markAsDone(scanner.nextInt() - 1);
+                break;
+            case "unmark":
+                myList.markAsUndone(scanner.nextInt() - 1);
+                break;
+            case "todo":
+                myList.addToList(scanner.nextLine());
+                break;
+            case "deadline":
+                handleDeadlineCommand(scanner.nextLine().trim().split("/by"));
+                break;
+            case "event":
+                handleEventCommand(userInput);
+                break;
+            default:
+                handleUnknownCommand();
+                break;
         }
     }
 }

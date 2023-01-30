@@ -1,3 +1,7 @@
+package duke.main;
+
+import duke.command.UserCommandManager;
+
 import java.util.Scanner;
 
 public class Duke {
@@ -34,6 +38,7 @@ public class Duke {
      *
      * @param args None taken
      */
+    @SuppressWarnings("InfiniteLoopStatement")
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         greetUser();
