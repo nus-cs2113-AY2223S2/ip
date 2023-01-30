@@ -14,11 +14,12 @@ public class Task {
         this.taskName = taskName;
     }
 
-    public void markDone(){
+    public void markDone() {
+
         isDone = true;
     }
 
-    public void unmarkDone(){
+    public void unmarkDone() {
         isDone = false;
     }
 }
