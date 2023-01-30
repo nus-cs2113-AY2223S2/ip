@@ -1,6 +1,10 @@
 import java.util.Scanner;
 
 public class Duke {
+    private enum State {
+        SUCCESS, EXIT, INVALID
+    }
+
     static final String INDENT = "    ";
 
     // commands
@@ -72,11 +76,11 @@ public class Duke {
         printLine();
     }
 
-    private static int processInput(String s) {
+    private static State processInput(String s) {
         Scanner input = new Scanner(s);
         String command = input.next();
         if (command.equals(COMMAND_EXIT)) {
-            return -1;
+            return State.EXIT;
         }
         if (command.equals(COMMAND_LIST)) {
             listTasks();
@@ -89,7 +93,8 @@ public class Duke {
         } else {
             addTask(s);
         }
-        return 0;
+
+        return State.SUCCESS;
     }
 
     public static void main(String[] args) {
@@ -101,8 +106,8 @@ public class Duke {
         do {
             input = scan.nextLine();
             printLine();
-            int state = processInput(input);
-            if (state == -1) {
+            State result = processInput(input);
+            if (result == State.EXIT) {
                 exit();
                 break;
             }
