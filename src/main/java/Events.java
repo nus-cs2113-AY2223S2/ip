@@ -6,7 +6,7 @@ public class Events extends Task{
         super(itemName);
         int indexOfStartTime = itemName.indexOf("/from");
         int indexOfEndTime = itemName.indexOf("/to");
-        this.itemName = itemName.substring(0, indexOfStartTime);
+        this.itemName = super.getItemName().substring(0, indexOfStartTime);
         this.startTime = itemName.substring(indexOfStartTime + 6, indexOfEndTime);
         this.endTime = itemName.substring(indexOfEndTime + 4);
     }

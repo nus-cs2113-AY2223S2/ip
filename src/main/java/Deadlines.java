@@ -5,7 +5,7 @@ public class Deadlines extends Task{
     public Deadlines(String itemName) {
         super(itemName);
         int indexOfDivider = itemName.indexOf("/by");
-        this.itemName = itemName.substring(0,indexOfDivider);
+        this.itemName = super.getItemName().substring(0,indexOfDivider);
         this.deadline = itemName.substring(indexOfDivider + 4);
     }
 
