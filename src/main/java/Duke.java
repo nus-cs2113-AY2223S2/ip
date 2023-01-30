@@ -43,6 +43,9 @@ public class Duke {
     }
     public static void handleAddTask(String input) {
         Task addedTask = addTask(input);
+        if (addedTask == null) {
+            return;
+        }
         String[] message = {
                 "Got it. I've added this task:",
                 indent + addedTask.toString(),
@@ -71,16 +74,25 @@ public class Duke {
             );
             break;
         default:
-            taskToAdd = new ToDo(
-                    taskDescription
-            );
-            break;
+            printInvalidInputMessage();
+            return null;
         }
         tasks[currentStoredTaskIndex] = taskToAdd;
         currentStoredTaskIndex ++;
         return taskToAdd;
     }
-
+    public static void printInvalidInputMessage() {
+        String[] message = {
+                "Invalid input. Available commands are:",
+                "- list",
+                "- mark [TASK NUMBER]",
+                "- unmark [TASK NUMBER]",
+                "- todo [TASK DESCRIPTION]",
+                "- event [EVENT DESCRIPTION] /from [START DATE] /to [END DATE]",
+                "- deadline [DEADLINE DESCRIPTION] /by [DUE DATE]"
+        };
+        printMessage(message);
+    }
     public static void mainLoop() {
         Scanner in = new Scanner(System.in);
         String currentInput = in.nextLine();
@@ -102,6 +114,7 @@ public class Duke {
                 unmark(words);
                 break;
             default:
+                printInvalidInputMessage();
                 break;
             }
             currentInput = in.nextLine();
