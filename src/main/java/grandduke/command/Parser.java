@@ -5,7 +5,6 @@ import grandduke.task.Deadline;
 import grandduke.task.Event;
 import grandduke.task.Task;
 import grandduke.task.Todo;
-import grandduke.command.Io;
 
 public abstract class Parser {
     /**
@@ -52,7 +51,6 @@ public abstract class Parser {
         default:
             newTask = null;
             break;
-
         }
 
         return newTask;

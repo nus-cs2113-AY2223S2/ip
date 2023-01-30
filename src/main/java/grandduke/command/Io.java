@@ -73,6 +73,7 @@ public abstract class Io {
             }
 
             printLine();
+
             try {
                 Parser.parseCommand(input);
             } catch (Exception e) {
