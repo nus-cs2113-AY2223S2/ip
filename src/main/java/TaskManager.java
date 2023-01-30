@@ -49,8 +49,11 @@ public class TaskManager {
             generateDeadline(input);
         } else if (input.contains("event")){
             generateEvent(input);
+        } else{
+            printHelp();
         }
     }
+
     private void generateToDo(String input) {
         String job = input.substring(5);
         //System.out.println(job);
@@ -64,7 +67,7 @@ public class TaskManager {
         String job = input.substring(8);
         int indexSeparator = job.indexOf("/");
         String taskDescription = job.substring(0,indexSeparator);
-        String taskDue = job.substring(indexSeparator+5);
+        String taskDue = job.substring(indexSeparator+4);
         Deadline newTask = new Deadline(taskDescription, taskDue);
         this.addTask(newTask);
         System.out.println("Got it. I've added this to task:");
@@ -83,5 +86,22 @@ public class TaskManager {
         this.addTask(newTask);
         System.out.println("Got it. I've added this to task:");
         System.out.println("    " + newTask.toString());
+    }
+
+    private void printHelp(){ //Duke prints this if none of the commands below are used
+        System.out.println("Looks like you did not enter a valid command.\n");
+        System.out.println("Command list:");
+        System.out.println("    1. todo: Adds a task to be done");
+        System.out.println("        Usage example: todo eat dinner");
+        System.out.println("    2. deadline: Adds a task to be done, use /by to specify when it is due");
+        System.out.println("        Usage example: deadline submit homework /by 3pm tonight");
+        System.out.println("    3. event: Adds an upcoming event. Use /from and /to to specify when it starts " +
+                "and ends respectively.");
+        System.out.println("        Usage example: event lecture this evening /from 4pm /to 6pm");
+        System.out.println("    4. list: lists all tasks recorded by duke. Only enter the keyword.");
+        System.out.println("    5. mark: Marks a specific task as done. Command requires a specific " +
+                "index starting from 1");
+        System.out.println("        Usage example: mark 2 (assuming that there are more than two tasks in the list");
+        System.out.println("    6. bye: Exits duke");
     }
 }

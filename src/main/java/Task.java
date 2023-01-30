@@ -33,7 +33,6 @@ public class Task {
         return "[" + this.getStatusIcon() + "]" + " " + this.getDescription();
     }
     public void printTaskDetails() {
-        String desc = this.getDescription();
-        System.out.print("[" + this.getStatusIcon() + "]" + " " + desc);
+        System.out.print("[" + this.getStatusIcon() + "]" + " " + this.getDescription());
     }
 }

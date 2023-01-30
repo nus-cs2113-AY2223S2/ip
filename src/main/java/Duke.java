@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class Duke {
 
     public static void printSeparator(){
-        System.out.println("_____________________________________________________");
+        System.out.println("_______________________________________________________________");
     }
 
     public static void printGreeting() {
@@ -23,21 +23,7 @@ public class Duke {
         System.out.println("added: " + input);
         printSeparator();
     }
-    /*
-    public static void handleRequest(String input, TaskManager dukeManager) { //TO be implemented in own class
-        if (input.equals("list")) {
-            dukeManager.listTasks();
-            printSeparator();
-        } else if (input.contains("mark")) {
-            dukeManager.markTask(input);
-        } else {
-            Task newTask = new Task(input);
-            //taskList[Task.getTaskNumber()] = newTask;
-            dukeManager.addTask(newTask);
-            printEcho(input);
-        }
-    }
-    */
+
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -57,6 +43,7 @@ public class Duke {
                 printGoodbye();
             } else {
                 dukeManager.handleCommand(userInput);
+                printSeparator();
             }
         }
     }
