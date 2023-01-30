@@ -11,12 +11,11 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
         greet();
-        echo();
+        generateOutput();
     }
 
-    private static String[] list = new String[100];
+    private static Task[] taskList = new Task[100];
     private static int listCount = 0;
-
 
     public static void greet() {
         String greeting = "____________________________________________________________\n"
@@ -33,26 +32,44 @@ public class Duke {
     }
 
     public static void addTask(String userInput) {
-        list[listCount] = userInput;
+        taskList[listCount] = new Task(userInput);
         listCount ++;
+        System.out.println("added: " + userInput + "\n" + "____________________________________________________________");
     }
 
-    public static void echo() {
+    public static void farewell() {
+        System.out.println("Bye. Hope to see you again soon!\n" + "____________________________________________________________");
+    }
+
+    public static void printList() {
+        for (int y = 0; y < listCount; y += 1) {
+            int taskN = y + 1;
+            System.out.println(taskN + ".[" + taskList[y].status + "] " + taskList[y].taskName);
+        }
+        System.out.println("____________________________________________________________");
+    }
+
+    public static void generateOutput() {
         for (int x = 0; x < 100; x += 1) {
             String command = getUserInput();
             System.out.println("____________________________________________________________");
             if (command.compareTo("bye") == 0) {
-                System.out.println("Bye. Hope to see you again soon!\n" + "____________________________________________________________");
+                farewell();
                 break;
             } else if (command.compareTo("list") == 0) {
-                for (int y = 0; y < listCount; y += 1) {
-                    int taskN = y + 1;
-                    System.out.println(taskN + ". " + list[y]);
-                }
-                System.out.println("____________________________________________________________");
+                printList();
+            } else if (command.contains("unmark ") == true) {
+                String taskN = command.substring(7);
+                int taskNum = Integer.parseInt(taskN);
+                taskList[taskNum - 1].setStatusChar(" ");
+                System.out.println(taskNum + ".[" + taskList[taskNum - 1].status + "] " + taskList[taskNum - 1].taskName + "\n____________________________________________________________");
+            } else if (command.contains("mark ") == true) {
+                String taskN = command.substring(5);
+                int taskNum = Integer.parseInt(taskN);
+                taskList[taskNum - 1].setStatusChar("X");
+                System.out.println(taskNum + ".[" + taskList[taskNum - 1].status + "] " + taskList[taskNum -1].taskName + "\n____________________________________________________________");
             } else {
                 addTask(command);
-                System.out.println("added: " + command + "\n" + "____________________________________________________________");
             }
         }
     }
