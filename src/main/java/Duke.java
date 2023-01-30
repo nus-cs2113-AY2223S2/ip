@@ -33,7 +33,7 @@ public class Duke {
     }
 
     public static void showAvailableInput(){
-        System.out.println("These are what I can do:");
+        System.out.println("These are what You can do:");
         System.out.println("* |Add todo| ex) todo individual project" );
         System.out.println("* |Add deadline| ex) deadline do coursemology /by Tuesday");
         System.out.println("* |Add event| ex) event tutorial /from Wednesday 12pm /to 1pm");
@@ -41,7 +41,6 @@ public class Duke {
         System.out.println("* |Mark a task as Done| ex) mark 2");
         System.out.println("* |Unmark a task as Undone| ex) unmark 2");
         System.out.println("* |Exit| ex) bye");
-        System.out.println();
     }
 
     public static void exitProgram(){
