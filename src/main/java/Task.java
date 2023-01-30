@@ -16,7 +16,6 @@ public class Task {
     public Task(String description, int taskID) {
         this.description = description;
         this.taskID = taskID;
-        taskCount += 1;
     }
 
     public String getDescription() {
@@ -31,12 +30,12 @@ public class Task {
         return taskCount;
     }
 
-    public void printTask() {
+    public String toString() {
         if(isDone){
-            System.out.println("[X] " +  description);
+            return "[X] " +  description;
         }
         else{
-            System.out.println("[ ] " +  description);
+            return "[ ] " +  description;
         }
     }
 }
