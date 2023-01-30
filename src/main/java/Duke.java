@@ -9,20 +9,31 @@ public class Duke {
      * @param commandArgs full string of commands, not yet split
      */
     private static void addNewTask(String command, String commandArgs) {
+        Task newTask;
         switch(command) {
         case "todo":
+            newTask = new Todo(commandArgs, TaskList.getNextTaskNumber());
             //args should just be the Description
-            tasks.addTask(new Todo(commandArgs, TaskList.getNumberOfTasks()));
+            tasks.addTask(newTask);
+            Command.printTaskAdded(newTask);
             break;
         case "deadline":
             String[] deadlineArgs = commandArgs.split("/by");
-            tasks.addTask(new Deadline(deadlineArgs[0], TaskList.getNumberOfTasks(), deadlineArgs[1]));
+            newTask = new Deadline(deadlineArgs[0], TaskList.getNextTaskNumber(), deadlineArgs[1]);
+
+            tasks.addTask(newTask);
+            Command.printTaskAdded(newTask);
             break;
         case "event":
-            String[] eventArgs = commandArgs.split("/from")[1].split("/to");
-            tasks.addTask(new Event(eventArgs[0], TaskList.getNumberOfTasks(), eventArgs[1], eventArgs[2]));
+            // Split based on regex: /from or /to (With any number of trailing/leading whitespace)
+            String[] eventArgs = commandArgs.split("\\s+\\/from\\s+|\\s+\\/to\\s+");
+            newTask = new Event(eventArgs[0], TaskList.getNextTaskNumber(), eventArgs[1], eventArgs[2]);
+
+            tasks.addTask(newTask);
+            Command.printTaskAdded(newTask);
             break;
         }
+
     }
     // handle commands by the user.
     private static void handleInput(String input) {

@@ -42,4 +42,9 @@ public class TaskList {
     public static int getNumberOfTasks() {
         return numberOfTasks;
     }
+
+    // A bit unoptimised, but this is to get the next number for numbering purposes.
+    public static int getNextTaskNumber() {
+        return numberOfTasks +1;
+    }
 }

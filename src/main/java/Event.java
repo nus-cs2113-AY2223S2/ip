@@ -19,7 +19,7 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        String eventTime = String.format("from %s to %s", this.timeStart, this.timeEnd);
+        String eventTime = String.format(" from %s to %s", this.timeStart, this.timeEnd);
         return "[E]" + super.toString() + eventTime;
     }
 }

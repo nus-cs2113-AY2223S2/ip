@@ -4,7 +4,6 @@
 * Use this class to verify input as well.
 */
 public final class Command {
-
     /**
      * Inputs go here
      */
@@ -39,6 +38,10 @@ public final class Command {
             "Hello! I'm PAPA, your Personal Assistant, Personal Angel.\n" +
             "What can I do for you? Type 'help' for a list of commands.";
     public static final String MESSAGE_OUTRO = "Bye. Hope to see you again soon!";
+    private static final String MESSAGE_TASK_ADDED =
+            "Great! I've added the task for you:";
+    private static final String MESSAGE_TASK_COUNT =
+            "Now you have %d tasks"; // Format at runtime.
     public static final String MESSAGE_TASKS_EMPTY =
             "Looks like you don't have anything to do. Nice!";
     public static final String MESSAGE_TASK_DONE =
@@ -72,6 +75,15 @@ public final class Command {
     public static void exit() {
         System.out.println(MESSAGE_OUTRO);
         printHLine();
+    }
+
+    /**
+     * Task added
+     */
+    public static void printTaskAdded(Task task) {
+        System.out.println(MESSAGE_TASK_ADDED);
+        System.out.println(task);
+        System.out.println("Total number of tasks: " + TaskList.getNumberOfTasks());
     }
 
     /**
