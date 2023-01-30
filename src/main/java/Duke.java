@@ -3,8 +3,19 @@ import java.util.ArrayList;
 
 public class Duke {
 
-    public static void printErrorMessage() {
-        System.out.println(
+    public static final String GREETING_MESSAGE = "Hai, Ningensama-tachi! Kon-Nakiri!";
+    public static final String GOODBYE_MESSAGE = "Otsu-Nakiri!";
+    public static final String ACTION_LIST = "list";
+    public static final String ACTION_MARK_COMPLETE = "mark";
+    public static final String ACTION_MARK_UNCOMPLETE = "unmark";
+    public static final String ACTION_NEW_TODO = "todo";
+    public static final String ACTION_NEW_DEADLINE = "deadline";
+    public static final String ACTION_NEW_EVENT = "event";
+    public static final String ACTION_GOODBYE = "bye";
+    public static final String COMPLETED_TASK_MESSAGE = "Nice! I've marked this task as done!";
+    public static final String INCOMPLETE_TASK_MESSAGE = "Why are you being lazy? >:(";
+    public static final String ADDED_TASK_MESSAGE = "Done! Added: ";
+    public static final String CUSTOM_ERROR_MESSAGE =
                 "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢿⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n" +
                 "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠰⣶⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠺⣟⣶⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n" +
                 "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿⣆⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⡈⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n" +
@@ -55,8 +66,8 @@ public class Duke {
                 "⠀⠀⠀⠀⣼⠃⢌⣼⣿⣿⣿⣿⠿⣛⣭⣶⣿⡿⠟⢋⣭⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀⠀⠀⠈⡄⠈⠉⠙⠁⠀⠀⠀⠀⣠⣾⣿⣿⣿⣿⣎⢸⢔⠝⠉⠀⠀⠀⠀⠀⠰⣙⣷⣶⣿⣿⣿⣿⣿⣿⣷⣀\n" +
                 "⠀⠀⠀⣼⣃⣴⣿⡿⠟⣋⣥⣶⣿⡿⠟⣋⣥⣶⣿⣷⣝⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠁⠀⠀⠀⠀⠃⡜⠀⠀⠀⠀⠀⣠⣶⣿⣿⣿⣿⣿⣿⣿⡦⠂⠀⠀⠀⠀⠀⠀⣠⣿⣿⣿⣿⣿⣿⣿⣿⣼⣿⣿⡟\n" +
                 "⠀⠀⣼⣿⡿⣛⣭⣶⣿⡿⢟⣫⣵⣶⣿⣿⣿⣿⣿⣿⣿⣷⣌⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⡰⠁⠀⠀⢀⣤⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⡰⠙⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀\n" +
-                "⠀⣼⡿⣻⣾⣿⡿⢛⣥⣾⣿⣿⣿⣿⣿⠿⣋⣴⡙⣿⣿⣿⣿⣷⣍⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⠀⠀⠀⠀⠘⠁⠀⣤⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀⠀⠀⠀⠀⠰⠁⠀⠹⣿⣿⣿⣿⣿⣧⣽⣿⢸⠀");
-    }
+                "⠀⣼⡿⣻⣾⣿⡿⢛⣥⣾⣿⣿⣿⣿⣿⠿⣋⣴⡙⣿⣿⣿⣿⣷⣍⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⠀⠀⠀⠀⠘⠁⠀⣤⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀⠀⠀⠀⠀⠰⠁⠀⠹⣿⣿⣿⣿⣿⣧⣽⣿⢸⠀";
+
 
     public static String[] processInputMessage(Scanner in) {
         String input = in.nextLine();
@@ -85,23 +96,35 @@ public class Duke {
     public static String[] processDeadlineMessage(String input) {
         String[] deadlineArray = input.split(" /by ", 2);
         if(deadlineArray .length == 1) {
-            deadlineArray [0] = "";
+            deadlineArray[0] = "";
         }
         return deadlineArray ;
     }
 
-    public static void main(String[] args) {
-        System.out.println("Hai, Ningensama-tachi! Kon-Nakiri!\n");
+    public static int checkInputValidity(String input, int limit) {
+        try {
+            int taskIndex = Integer.parseInt(input);
+            if(taskIndex > limit) {
+                return -1;
+            }
+            return taskIndex - 1;
+        } catch (Exception notInteger) {
+            return -1;
+        }
+    }
 
+    public static void main(String[] args) {
+        System.out.println(GREETING_MESSAGE);
+        
         ArrayList<Task> todoList = new ArrayList<Task>();
         int sizeOfTodoList = 0;
         Task currentTask;
 
         Scanner in = new Scanner(System.in);
         String[] inputMessage = processInputMessage(in);
-        while(!inputMessage[0].equals("bye")) {
+        while(!inputMessage[0].equals(ACTION_GOODBYE)) {
             switch (inputMessage[0]) {
-            case "list":
+            case ACTION_LIST:
                 for(int i = 0; i < sizeOfTodoList; i += 1) {
                     currentTask = todoList.get(i);
                     String printedMessage = String.format("%d.%s", i+1, currentTask);
@@ -109,67 +132,67 @@ public class Duke {
                 }
                 inputMessage = processInputMessage(in);
                 break;
-            case "mark":
-                int taskIndex = Integer.parseInt(inputMessage[1]);
-                if(taskIndex > sizeOfTodoList) {
-                    printErrorMessage();
+            case ACTION_MARK_COMPLETE:
+                int taskIndex = checkInputValidity(inputMessage[1], sizeOfTodoList);
+                if(taskIndex == -1) {
+                    System.out.println(CUSTOM_ERROR_MESSAGE);
                 } else {
-                    currentTask = todoList.get(taskIndex - 1);
+                    currentTask = todoList.get(taskIndex);
                     currentTask.setComplete();
-                    System.out.println("Nice! I've marked this task as done!");
+                    System.out.println(COMPLETED_TASK_MESSAGE);
                     System.out.println(currentTask);
                 }
                 inputMessage = processInputMessage(in);
                 break;
-            case "unmark":
-                taskIndex = Integer.parseInt(inputMessage[1]);
-                if (taskIndex > sizeOfTodoList) {
-                    printErrorMessage();
+            case ACTION_MARK_UNCOMPLETE:
+                taskIndex = checkInputValidity(inputMessage[1], sizeOfTodoList);
+                if(taskIndex == -1) {
+                    System.out.println(CUSTOM_ERROR_MESSAGE);
                 } else {
-                    currentTask = todoList.get(taskIndex - 1);
+                    currentTask = todoList.get(taskIndex);
                     currentTask.setIncomplete();
-                    System.out.println("Why are you being lazy? >:(");
+                    System.out.println(INCOMPLETE_TASK_MESSAGE);
                     System.out.println(currentTask);
                 }
                 inputMessage = processInputMessage(in);
                 break;
-            case "todo":
+            case ACTION_NEW_TODO:
                 Task newTask = new Task(inputMessage[1]);
                 todoList.add(newTask);
                 sizeOfTodoList += 1;
-                System.out.println("Done! Added: " + newTask);
+                System.out.println(ADDED_TASK_MESSAGE + newTask);
                 inputMessage = processInputMessage(in);
                 break;
-            case "deadline":
+            case ACTION_NEW_DEADLINE:
                 inputMessage = processDeadlineMessage(inputMessage[1]);
                 if (inputMessage[0].equals("")){
-                    printErrorMessage();
+                    System.out.println(CUSTOM_ERROR_MESSAGE);
                 } else {
                     sizeOfTodoList += 1;
                     Deadline newDeadline = new Deadline(inputMessage[0], inputMessage[1]);
                     todoList.add(newDeadline);
-                    System.out.println("Done! Added: " + newDeadline);
+                    System.out.println(ADDED_TASK_MESSAGE + newDeadline);
                 }
                 inputMessage = processInputMessage(in);
                 break;
-            case "event":
+            case ACTION_NEW_EVENT:
                 inputMessage = processEventMessage(inputMessage[1]);
                 if (inputMessage[0].equals("")){
-                    printErrorMessage();
+                    System.out.println(CUSTOM_ERROR_MESSAGE);
                 } else {
                     sizeOfTodoList += 1;
                     Event newEvent = new Event(inputMessage[0], inputMessage[1], inputMessage[2]);
                     todoList.add(newEvent);
-                    System.out.println("Done! Added: " + newEvent);
+                    System.out.println(ADDED_TASK_MESSAGE + newEvent);
                 }
                 inputMessage = processInputMessage(in);
                 break;
             default:
-                printErrorMessage();
+                System.out.println(CUSTOM_ERROR_MESSAGE);
                 inputMessage = processInputMessage(in);
             }
         }
-        System.out.println("Otsu-Nakiri!");
+        System.out.println(GOODBYE_MESSAGE);
         //CS2113T will not let students customise chatbots next sem onwards because of me
     }
 }
