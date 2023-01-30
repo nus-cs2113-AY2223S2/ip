@@ -7,9 +7,9 @@ public class Task {
         isDone = false;
     }
 
-    public Task(String taskName, Boolean isDone) {
+    public Task(String taskName) {
         this.taskName = taskName;
-        this.isDone = isDone;
+        isDone = false;
     }
 
     public String getTaskName() {
@@ -26,6 +26,14 @@ public class Task {
 
     public void setisDone(Boolean isDone) {
         this.isDone = isDone;
+    }
+
+    public String toString() {
+        if (isDone) {
+            return "[X] " + taskName;
+        } else {
+            return "[ ] " + taskName;
+        }
     }
 }
 
