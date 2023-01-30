@@ -33,7 +33,7 @@ public class Duke {
         } else if (input.equals("list")) {
             tasks.printContents();
         } else if (input.equals("help")) {
-            System.out.println(Message.HELP_MESSAGE);
+            System.out.println(Command.MESSAGE_HELP);
         } else {
             tasks.addTask(input);
             System.out.println("added: " + input);
@@ -42,7 +42,7 @@ public class Duke {
 
     public static void main(String[] args) {
 
-        Message.greet();
+        Command.greet();
 
         // Input variables initialised.
         Scanner myScanner = new Scanner(System.in);
@@ -53,10 +53,10 @@ public class Duke {
             System.out.print("> ");
             userInput = myScanner.nextLine();
             handleInput(userInput.toLowerCase());
-            Message.printHLine();
+            Command.printHLine();
         }
 
         // Exit message
-        Message.exit();
+        Command.exit();
     }
 }
