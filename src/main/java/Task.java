@@ -2,8 +2,11 @@ public class Task {
     protected String description;
     protected boolean isDone;
 
+    static int totalNumberOfTasks = 0;
+
     public Task(String description) {
         this.description = description;
+        totalNumberOfTasks++;
         this.isDone = false;
     }
 
@@ -17,5 +20,9 @@ public class Task {
 
     public void markAsUndone() {
         this.isDone = false;
+    }
+
+    public String toString() {
+      return "[D][" + this.getStatusIcon()+ "] " + description;
     }
 }

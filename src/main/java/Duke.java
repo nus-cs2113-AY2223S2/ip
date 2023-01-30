@@ -10,7 +10,7 @@ public class Duke {
         System.out.println("\t" + LINE);
         System.out.println("\t Here are the tasks for your list: ");
         for(int i=0; i< counter; i++) {
-            System.out.println("\t" + (i+1) + ". [" + taskList[i].getStatusIcon() + "] " +  taskList[i].description);
+            System.out.println("\t " + (i+1) + "." + taskList[i]  +  taskList[i].description);
         }
         System.out.println("\t" + LINE);
     }
@@ -42,6 +42,17 @@ public class Duke {
         System.out.println("\t [" + taskList[taskIndex].getStatusIcon() + "] " +  taskList[taskIndex].description);
         System.out.println("\t" + LINE);
     }
+
+    public static void printTask(Task task) {
+        System.out.println("\t" + LINE);
+        System.out.println("\t Got it. I've added this task:");
+        System.out.println("\t  " + task);
+        System.out.println("\t Now you have " + counter + " tasks in your list.");
+        System.out.println("\t" + LINE);
+    }
+
+
+
 
     public static void main(String[] args) {
         System.out.println("\t" + LINE);
@@ -76,12 +87,41 @@ public class Duke {
                 continue;
             }
 
-            taskList[counter] = new Task(input);
-            counter++;
+            int spaceIndex=  input.indexOf(' ');
+            String taskType = input.substring(0,spaceIndex);
+            String remainingWords = input.substring(spaceIndex);
+            String[] taskInfoArr = remainingWords.split(" /",3);
+            String taskDescription = taskInfoArr[0];
 
-            System.out.println("\t" + LINE);
-            System.out.println("\t" + "added: " + input );
-            System.out.println("\t" + LINE);
+
+            if (taskType.equals("todo")) {
+                Task newTask = new Task(taskDescription);
+                taskList[counter] = newTask;
+                counter++;
+                printTask(newTask);
+                continue;
+            }
+
+            if (taskType.equals("deadline" )) {
+                String dueBy = taskInfoArr[1].substring(3);
+                Deadline newDeadline = new Deadline(taskDescription, dueBy);
+                taskList[counter] = newDeadline;
+                counter++;
+                printTask(newDeadline);
+                continue;
+            }
+
+            if (taskType.equals("event")) {
+                String fromStr = taskInfoArr[1].substring(5);
+                String toStr = taskInfoArr[2].substring(3);
+                Event newEvent = new Event(taskDescription, fromStr, toStr);
+                taskList[counter] = newEvent;
+                counter++;
+                printTask(newEvent);
+                continue;
+            }
+
+
         }
         
        
