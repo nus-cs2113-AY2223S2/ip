@@ -2,6 +2,10 @@ public class Task {
     private boolean isComplete;
     private String taskName;
 
+    public Task() {
+        isComplete = false;
+        taskName = null;
+    }
     public Task(String taskName) {
         isComplete = false;
         this.taskName = taskName;
@@ -21,6 +25,11 @@ public class Task {
 
     public boolean getIsComplete() {
         return isComplete;
+    }
+
+    // return value doesnt matter because overridden by child class
+    public String listTask(){
+        return null;
     }
 
 }
