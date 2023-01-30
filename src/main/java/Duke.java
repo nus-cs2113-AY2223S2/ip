@@ -58,9 +58,9 @@ public class Duke {
         try {
             Task task = createTask(cmd);
             taskList.add(task);
-            System.out.println("\t Got it, I have added this task: ");
+            System.out.println("\t Got it. I've added this task:");
             System.out.println("\t\t" + task);
-            System.out.println("\t Now you have " + taskList.size() + " tasks in the list. ");
+            System.out.println("\t Now you have " + taskList.size() + " tasks in the list.");
         } catch (IllegalArgumentException e) {
             System.err.println("\t Invalid task type!");
             System.err.println("\t Valid task types: todo, deadline, event.");
