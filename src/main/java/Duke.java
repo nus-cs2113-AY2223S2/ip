@@ -73,6 +73,9 @@ public class Duke {
                     inputSections[2].replaceFirst("to", "")
             );
             break;
+        case "todo":
+            taskToAdd = new ToDo(taskDescription);
+            break;
         default:
             printInvalidInputMessage();
             return null;
