@@ -12,10 +12,21 @@ public class Duke {
     private static String userInput;
     private static Scanner scan = new Scanner(System.in);
 
+    private enum taskType {
+        TODO, DEADLINE, EVENT
+    }
+
     public static void greetUser() {
         System.out.println(LINE);
         System.out.println("Hello from\n" + LOGO);
-        System.out.println("How can I help you?");
+        System.out.println("How can I help you?\n");
+        System.out.println("Here are some possibly useful commands:");
+        System.out.println(LINE);
+        System.out.println("/task {description} - Add a specific task to ur task list.");
+        System.out.println("/list - List out all the tasks in ur task list.");
+        System.out.println("/mark {numerical index} - Mark a specific task done.");
+        System.out.println("/unmark {numerical index} - Mark a specific task undone.");
+        System.out.println("/bye - Terminate the program.");
         System.out.println(LINE);
     }
 
@@ -25,6 +36,54 @@ public class Duke {
         System.out.println("Bye! Hope to see you again soon!");
         System.out.println(LINE);
         System.exit(0);
+    }
+
+    public static void addTask(String[] userInputArray, taskType variation) {
+        if (variation == taskType.TODO) {
+            String taskDescription = "";
+            for (int i = 1; i < userInputArray.length; i++) {
+                taskDescription = taskDescription.concat(userInputArray[i]);
+                if (i != userInputArray.length - 1) {
+                    taskDescription = taskDescription.concat(" ");
+                }
+            }
+            Task t = new Task(taskDescription);
+            userTaskList[userInputCount] = t;
+            userInputCount++;
+            System.out.println(LINE);
+            System.out.println("Added task: " + taskDescription);
+            System.out.println(LINE);
+        } else if (variation == taskType.DEADLINE) {
+            String deadlineDescription = "";
+            String deadlineCutoff = "";
+            Integer userInputArrayIndex = 1;
+            for (int i = 1; i < userInputArray.length; i++) {
+                if (userInputArray[i].equals("/by")) {
+                    break;
+                } else {
+                    userInputArrayIndex++;
+                    deadlineDescription = deadlineDescription.concat(userInputArray[i]);
+                    if (i != userInputArray.length - 1) {
+                        deadlineDescription = deadlineDescription.concat(" ");
+                    }
+                }
+            }
+            userInputArrayIndex++;
+            for (int j = userInputArrayIndex; j < userInputArray.length; j++) {
+                deadlineCutoff = deadlineCutoff.concat(userInputArray[j]);
+                if (j != userInputArray.length - 1) {
+                    deadlineCutoff = deadlineCutoff.concat(" ");
+                }
+            }
+            Task d = new Deadline(deadlineDescription, deadlineCutoff);
+            userTaskList[userInputCount] = d;
+            userInputCount++;
+            System.out.println(LINE);
+            System.out.println(
+                    "Added deadline: " + deadlineDescription + " (To be completed by: " + deadlineCutoff + ")");
+            System.out.println(LINE);
+        }
+
     }
 
     public static void listTasks() {
@@ -74,29 +133,41 @@ public class Duke {
         }
     }
 
+    public static void echo(String userString) {
+        System.out.println(LINE);
+        System.out.println(userInput);
+        System.out.println(LINE);
+    }
+
     public static void processUserInput() {
         userInput = scan.nextLine();
+        // handle single-word input commands with no arguments
         if (userInput.equals("/bye")) {
             goodbyeUser();
         }
         if (userInput.equals("/list")) {
             listTasks();
-        } else {
+        } else { // handle multi-word input commands with required arguments
             String[] userInputArray = userInput.split(" ");
-            if (userInputArray[0].equals("/mark")) {
+            if (userInputArray[0].equals("/task")) {
+                addTask(userInputArray, taskType.TODO);
+            } else if (userInputArray[0].equals("/deadline")) {
+                if (!userInput.contains("/by")) {
+                    System.out.println(LINE);
+                    System.out.println("Please specify a deadline via the /by command!");
+                    System.out.println(LINE);
+                    return;
+                }
+                addTask(userInputArray, taskType.DEADLINE);
+            } else if (userInputArray[0].equals("/event")) {
+                addTask(userInputArray, taskType.EVENT);
+            } else if (userInputArray[0].equals("/mark")) {
                 markTask(userInputArray);
-                return;
             } else if (userInputArray[0].equals("/unmark")) {
                 unmarkTask(userInputArray);
-                return;
+            } else { // handle non-command inputs
+                echo(userInput);
             }
-            Task t = new Task(userInput);
-            System.out.println(LINE);
-            System.out.println("Added task: " + userInput);
-            System.out.println(LINE);
-            userTaskList[userInputCount] = t;
-            userInputCount++;
-
         }
     }
 
