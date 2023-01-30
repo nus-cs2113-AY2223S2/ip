@@ -26,23 +26,27 @@ public final class Command {
             String.format("%s        List out existing tasks.\n", COMMAND_LIST) +
             String.format("%s         Exit PAPA.\n", COMMAND_BYE) +
             String.format("%s <n>    Mark the n-th task as done.\n", COMMAND_MARK) +
-            String.format("%s <n>  Mark the n-th task as undone.", COMMAND_UNMARK);
+            String.format("%s <n>  Mark the n-th task as undone.\n", COMMAND_UNMARK);
 
-    public static final String MESSAGE_LOGO = "██████╗  █████╗ ██████╗  █████╗ \n" +
+    public static final String MESSAGE_LOGO =
+            "██████╗  █████╗ ██████╗  █████╗ \n" +
             "██╔══██╗██╔══██╗██╔══██╗██╔══██╗\n" +
             "██████╔╝███████║██████╔╝███████║\n" +
             "██╔═══╝ ██╔══██║██╔═══╝ ██╔══██║\n" +
             "██║     ██║  ██║██║     ██║  ██║\n" +
             "╚═╝     ╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝";
-
-    public static final String MESSAGE_INTRO = "Hello! I'm PAPA, your Personal Assistant, Personal Angel.\n"
-            + "What can I do for you? Type 'help' for a list of commands.";
-
+    public static final String MESSAGE_INTRO =
+            "Hello! I'm PAPA, your Personal Assistant, Personal Angel.\n" +
+            "What can I do for you? Type 'help' for a list of commands.";
     public static final String MESSAGE_OUTRO = "Bye. Hope to see you again soon!";
-
-    public static final String MESSAGE_TASKS_EMPTY = "Looks like you don't have anything to do. Nice!";
-    public static final String MESSAGE_TASK_DONE = "Great! This task is now done: ";
-    public static final String MESSAGE_TASK_UNDONE = "Okay, I've marked this task as not done yet: ";
+    public static final String MESSAGE_TASKS_EMPTY =
+            "Looks like you don't have anything to do. Nice!";
+    public static final String MESSAGE_TASK_DONE =
+            "Great! This task is now done: ";
+    public static final String MESSAGE_TASK_UNDONE =
+            "Okay, I've marked this task as not done yet: ";
+    private static final String MESSAGE_INVALID_COMMAND =
+            "Oops, I don't understand you. Type 'help' for commands you can use!";
 
     /**
      * Prints a horizontal line of 32 '=' characters.
@@ -72,12 +76,29 @@ public final class Command {
 
     /**
      * Split input into 1st arg and subsequent line.
-     * Taken from Lecture - Contacts (Wk 4 content)
-     * @param rawUserInput A line of input.
+     * Taken from Lecture - Contacts (Wk 4 content) as it is relevant.
+     * @param inputLine A line of input.
      */
-    private static String[] splitCommandAndArgs(String rawUserInput) {
+    public static String[] splitCommandAndArgs(String inputLine) {
         // Trim whitespace, then split once. Output is [command, args].
-        final String[] split = rawUserInput.trim().split("\\s+", 2);
-        return split.length == 2 ? split : new String[]{split[0], ""}; // else case: no parameters
+        final String[] split = inputLine.trim().split("\\s+", 2);
+        // Else case: no parameters
+        return split.length == 2 ? split : new String[]{split[0], ""};
+    }
+
+    public static String executeCommand(String inputLine) {
+        final String[] commandTypeAndArgs = splitCommandAndArgs(inputLine);
+        final String command = commandTypeAndArgs[0];
+        final String commandArgs = commandTypeAndArgs[1];
+
+        // Check command against the set list of commands.
+        switch(command) {
+        case COMMAND_HELP:
+            return MESSAGE_HELP;
+        case COMMAND_LIST:
+            return TaskList.getTaskListString();
+        default:
+            return MESSAGE_INVALID_COMMAND;
+        }
     }
 }

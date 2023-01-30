@@ -6,8 +6,8 @@ public class Deadline extends Task {
      * @param description Name of task
      * @param by Deadline
      */
-    public Deadline(String description, String by) {
-        super(description);
+    public Deadline(String description, int taskNumber, String by) {
+        super(description, taskNumber);
         this.by = by;
     }
 

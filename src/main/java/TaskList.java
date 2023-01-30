@@ -1,28 +1,26 @@
 import java.util.Arrays;
 
 public class TaskList {
-    private final Task[] tasks = new Task[100];
+    private static final Task[] tasks = new Task[100];
     private static int numberOfTasks = 0;
 
     /**
-     * Print the contents of tasks
+     * Print the contents of Task List
      */
-    public void printContents() {
-        System.out.println("Your tasks:");
-
-        int number = 1;
+    public static String getTaskListString() {
+        String output = "Your Tasks: \n";
         for (Task task : Arrays.copyOf(tasks, numberOfTasks)) {
-            System.out.printf("%d. %s\n", number, task.toString());
-            number++;
+            output += task.getTaskNumber() + task.toString() + '\n';
         }
+        return output;
     }
 
     /**
      * Adds a String task to the list of strings.
      * @param taskName: Name of task, String to be added
      */
-    public void addTask(String taskName) {
-        tasks[numberOfTasks] = new Task(taskName);
+    public void addTask(Task task) {
+        tasks[numberOfTasks] = task;
         numberOfTasks++;
     }
 

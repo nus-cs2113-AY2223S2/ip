@@ -5,11 +5,13 @@
 public class Task {
     protected String description;
     protected boolean isDone;
+    protected int taskNumber;
 
     // Constructor
-    public Task(String description) {
+    public Task(String description, int taskNumber) {
         this.description = description;
         this.isDone = false;
+        this.taskNumber = taskNumber;
     }
 
     // To be used to list out the task.
@@ -21,6 +23,10 @@ public class Task {
     // return a string to indicate done or not done.
     private String getDoneIcon() {
         return (this.isDone ? "[X]" : "[ ]"); // mark done task with X
+    }
+
+    protected String getTaskNumber() {
+        return (this.taskNumber + ".");
     }
 
     // use "mark" to mark done

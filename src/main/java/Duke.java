@@ -3,6 +3,27 @@ import java.util.Scanner;
 public class Duke {
     private static final TaskList tasks = new TaskList();
 
+    /**
+     * addTask based on command
+     * @param command ["todo", "deadline", or "event"]
+     * @param commandArgs full string of commands, not yet split
+     */
+    private static void addNewTask(String command, String commandArgs) {
+        switch(command) {
+        case "todo":
+            //args should just be the Description
+            tasks.addTask(new Todo(commandArgs, TaskList.getNumberOfTasks()));
+            break;
+        case "deadline":
+            String[] deadlineArgs = commandArgs.split("/by");
+            tasks.addTask(new Deadline(deadlineArgs[0], TaskList.getNumberOfTasks(), deadlineArgs[1]));
+            break;
+        case "event":
+            String[] eventArgs = commandArgs.split("/from")[1].split("/to");
+            tasks.addTask(new Event(eventArgs[0], TaskList.getNumberOfTasks(), eventArgs[1], eventArgs[2]));
+            break;
+        }
+    }
     // handle commands by the user.
     private static void handleInput(String input) {
         // If string contains mark, could be mark or unmark
@@ -31,12 +52,12 @@ public class Duke {
         if (input.equals("bye")) {
             return;
         } else if (input.equals("list")) {
-            tasks.printContents();
+            System.out.print(tasks.getTaskListString());
         } else if (input.equals("help")) {
-            System.out.println(Command.MESSAGE_HELP);
+            System.out.print(Command.MESSAGE_HELP);
         } else {
-            tasks.addTask(input);
-            System.out.println("added: " + input);
+            String[] commands = Command.splitCommandAndArgs(input);
+            addNewTask(commands[0], commands[1]);
         }
     }
 
