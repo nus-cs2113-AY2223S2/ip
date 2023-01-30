@@ -6,6 +6,12 @@ public class Duke {
     private static int counter = 0;
     private static final String LINE = "___________________________________________";
 
+    public static void printGreeting() {
+        System.out.println("\t" + LINE);
+        System.out.println("\t Hello I'm Duke, your personal chatbot.");
+        System.out.println("\t Is there anything I can do for you");
+        System.out.println("\t" + LINE);
+    }
     public static void printList() {
         System.out.println("\t" + LINE);
         System.out.println("\t Here are the tasks for your list: ");
@@ -15,6 +21,19 @@ public class Duke {
         System.out.println("\t" + LINE);
     }
 
+    public static void printTask(Task task) {
+        System.out.println("\t" + LINE);
+        System.out.println("\t Got it. I've added this task:");
+        System.out.println("\t  " + task);
+        System.out.println("\t Now you have " + counter + " tasks in your list.");
+        System.out.println("\t" + LINE);
+    }
+
+    public static void printBye() {
+        System.out.println("\t" + LINE);
+        System.out.println("\t Bye! Do let me know if you need any further assistance");
+        System.out.println("\t" + LINE);
+    }
     public static void markTaskAndPrint(int taskIndex) {
         if(taskIndex < 0  || taskList[taskIndex] == null) {
             System.out.println("\t" + LINE);
@@ -43,58 +62,44 @@ public class Duke {
         System.out.println("\t" + LINE);
     }
 
-    public static void printTask(Task task) {
-        System.out.println("\t" + LINE);
-        System.out.println("\t Got it. I've added this task:");
-        System.out.println("\t  " + task);
-        System.out.println("\t Now you have " + counter + " tasks in your list.");
-        System.out.println("\t" + LINE);
-    }
-
-
-
-
     public static void main(String[] args) {
-        System.out.println("\t" + LINE);
-        System.out.println("\t Hello I'm Duke, your personal chatbot.");
-        System.out.println("\t Is there anything I can do for you");
-        System.out.println("\t" + LINE);
-
-        String input = "";
+        printGreeting();
+        String input;
         Scanner in = new Scanner(System.in);
 
         while(true) {
             input = in.nextLine();
 
             if (input.equals("bye")) {
-                System.out.println("\t" + LINE);
-                System.out.println("\t Bye! Do let me know if you need any further assistance");
-                System.out.println("\t" + LINE);
+                printBye();
                 break;
             }
             if (input.equals("list")) {
                 printList();
                 continue;
-            } 
-            if (input.length() >= 4 && input.substring(0,4).equals("mark")){
+            }
+
+            int spaceIndex=  input.indexOf(' ');
+            String firstWord = input.substring(0,spaceIndex);
+
+            if (firstWord.equals("mark")){
                 int indexToMark = Integer.parseInt(input.substring(5))-1; //convert to 0-based index
                 markTaskAndPrint(indexToMark);
                 continue;
             }
-            if (input.length() >= 6 && input.substring(0,6).equals("unmark")){
+            if (firstWord.equals("unmark")){
                 int indexToUnmark = Integer.parseInt(input.substring(7))-1; //convert to 0-based index
                 unmarkTaskAndPrint(indexToUnmark);
                 continue;
             }
 
-            int spaceIndex=  input.indexOf(' ');
-            String taskType = input.substring(0,spaceIndex);
+
             String remainingWords = input.substring(spaceIndex);
             String[] taskInfoArr = remainingWords.split(" /",3);
             String taskDescription = taskInfoArr[0];
 
 
-            if (taskType.equals("todo")) {
+            if (firstWord.equals("todo")) {
                 Task newTask = new Task(taskDescription);
                 taskList[counter] = newTask;
                 counter++;
@@ -102,7 +107,7 @@ public class Duke {
                 continue;
             }
 
-            if (taskType.equals("deadline" )) {
+            if (firstWord.equals("deadline" )) {
                 String dueBy = taskInfoArr[1].substring(3);
                 Deadline newDeadline = new Deadline(taskDescription, dueBy);
                 taskList[counter] = newDeadline;
@@ -111,7 +116,7 @@ public class Duke {
                 continue;
             }
 
-            if (taskType.equals("event")) {
+            if (firstWord.equals("event")) {
                 String fromStr = taskInfoArr[1].substring(5);
                 String toStr = taskInfoArr[2].substring(3);
                 Event newEvent = new Event(taskDescription, fromStr, toStr);
@@ -120,10 +125,6 @@ public class Duke {
                 printTask(newEvent);
                 continue;
             }
-
-
         }
-        
-       
     }
 }
