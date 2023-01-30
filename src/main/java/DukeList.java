@@ -1,13 +1,16 @@
 import java.util.ArrayList;
 public class DukeList {
-    protected static ArrayList<DukeTask> TaskList = new ArrayList<>();
-    public static void addTask(String s) {
+    private static ArrayList<DukeTask> TaskList = new ArrayList<>();
+    public static void addTask(DukeTask T) {
         if(TaskList.size() == 100){
             DukePrinter.printString("Sorry, the list is full!");
             return;
         }
-        TaskList.add(new DukeTask(s));
-        DukePrinter.printString("added: " + s);
+        TaskList.add(T);
+        System.out.println("Got it. I've added this task:");
+        T.printTask();
+        System.out.println("Now you have " + TaskList.size() + " tasks in the list.");
+        DukePrinter.printLine();
     }
     public static void listTask() {
         System.out.println("Here are the tasks in your list:");
@@ -27,7 +30,7 @@ public class DukeList {
         if(checkID(i)) {
             TaskList.get(i).markAsDone();
             System.out.println("Nice! I've marked this task as done:");
-            System.out.println("[X] " + TaskList.get(i).TaskName);
+            TaskList.get(i).printTask();
             DukePrinter.printLine();
         }
     }
@@ -35,7 +38,7 @@ public class DukeList {
         if(checkID(i)) {
             TaskList.get(i).unmarkAsDone();
             System.out.println("OK, I've marked this task as not done yet:");
-            System.out.println("[ ] " + TaskList.get(i).TaskName);
+            TaskList.get(i).printTask();
             DukePrinter.printLine();
         }
     }
