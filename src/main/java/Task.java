@@ -2,7 +2,16 @@ public class Task {
     protected String description;
     protected static int taskCount = 0;
     protected int taskID;
+    protected boolean isDone = false;
 
+
+    public void markDone() {
+        isDone = true;
+    }
+
+    public void unmarkDone() {
+        isDone = false;
+    }
 
     public Task(String description, int taskID) {
         this.description = description;
@@ -23,6 +32,11 @@ public class Task {
     }
 
     public void printTask() {
-        System.out.println((taskID + 1) + ". " + description);
+        if(isDone){
+            System.out.println((taskID + 1) + ".[ ] " +  description);
+        }
+        else{
+            System.out.println((taskID + 1) + ".[X] " +  description);
+        }
     }
 }
