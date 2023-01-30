@@ -6,21 +6,22 @@ public class Psyduck {
 
     private static int taskCount = 0;
 
-    public static void addTodo(String description) {
-        ToDo newTask = ToDo(description);
-        tasks[taskCount-1] = newTask;
+    public static void addToDo(String description) {
+        ToDo newTask = new ToDo(description);
+        tasks[taskCount] = newTask;
+        taskCount++;
     }
     public static void listTasks() {
         linePrint();
         for (int i = 0; i < taskCount; i ++) {
+            System.out.print(Integer.toString(i+1) + ".");
             System.out.println(tasks[i]);
         }
         linePrint();
     }
     public static void linePrint() {
         for (int i = 0; i < 100; i++) {
-            System.out.print(Integer.toString(i+1) + ".");
-            System.out.print(tasks[i]);
+            System.out.print("-");
         }
         System.out.println();
     }
@@ -68,7 +69,7 @@ public class Psyduck {
                 break;
             default:
                 String description = input;
-                addTodo(description);
+                addToDo(description);
                 linePrint();
                 System.out.println("Psyduck has added the task: " + description);
                 linePrint();

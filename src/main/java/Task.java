@@ -1,8 +1,20 @@
 public class Task {
-    private String description;
+    protected String description;
+    protected boolean isDone;
 
+    public boolean isDone() {
+        return isDone;
+    }
     public String getDescription() {
         return description;
+    }
+
+    public void markDone() {
+        isDone = true;
+    }
+
+    public void unmarkDone() {
+        isDone = false;
     }
 
     public Task(String description) {
@@ -11,7 +23,13 @@ public class Task {
 
     @Override
     public String toString() {
-        return description;
+        String status;
+        if (isDone) {
+            status = "[X] ";
+        } else {
+            status = "[ ] ";
+        }
+        return status + description;
     }
 
 }
