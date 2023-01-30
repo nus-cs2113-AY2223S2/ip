@@ -26,7 +26,7 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + "(from: " + getFrom() + "to " + getTo() + ")";
+        return "[E]" + super.toString() + "(from: " + getFrom() + "to: " + getTo() + ")";
     }
 
 }
