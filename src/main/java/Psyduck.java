@@ -2,10 +2,25 @@ import java.util.Scanner;
 
 public class Psyduck {
 
+    private static Task[] tasks = new Task[100];
 
+    private static int taskCount = 0;
+
+    public static void addTodo(String description) {
+        ToDo newTask = ToDo(description);
+        tasks[taskCount-1] = newTask;
+    }
+    public static void listTasks() {
+        linePrint();
+        for (int i = 0; i < taskCount; i ++) {
+            System.out.println(tasks[i]);
+        }
+        linePrint();
+    }
     public static void linePrint() {
-        for (long i = 0; i < 100; i++) {
-            System.out.print("-");
+        for (int i = 0; i < 100; i++) {
+            System.out.print(Integer.toString(i+1) + ".");
+            System.out.print(tasks[i]);
         }
         System.out.println();
     }
@@ -15,7 +30,6 @@ public class Psyduck {
         int taskNum;
         boolean shouldExit = false;
         Scanner in = new Scanner(System.in);
-        ToDoList list = new ToDoList();
         linePrint();
         System.out.println("Hi I am Psyduck! How can I help you?");
         linePrint();
@@ -36,27 +50,25 @@ public class Psyduck {
                 shouldExit = true;
                 break;
             case "list":
-                linePrint();
-                list.listTasks();
-                linePrint();
+                listTasks();
                 break;
             case "mark":
                 taskNum = Integer.parseInt(input.substring(space + 1));
-                list.markTask(taskNum);
+                tasks[taskNum-1].markDone();
                 linePrint();
-                System.out.println("You have marked the task: " + list.getTaskDescription(taskNum));
+                System.out.println("You have marked the task: " + tasks[taskNum-1].getDescription());
                 linePrint();
                 break;
             case "unmark":
                 taskNum = Integer.parseInt(input.substring(space + 1));
-                list.unmarkTask(taskNum);
+                tasks[taskNum-1].unmarkDone();
                 linePrint();
-                System.out.println("You have unmarked the task: " + list.getTaskDescription(taskNum));
+                System.out.println("You have unmarked the task: " + tasks[taskNum-1].getDescription());
                 linePrint();
                 break;
             default:
                 String description = input;
-                list.createTask(description);
+                addTodo(description);
                 linePrint();
                 System.out.println("Psyduck has added the task: " + description);
                 linePrint();

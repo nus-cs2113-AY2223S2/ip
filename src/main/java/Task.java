@@ -1,25 +1,17 @@
 public class Task {
-    private String taskName;
-    private boolean isDone;
+    private String description;
 
-    public String getTaskName() {
-        return taskName;
+    public String getDescription() {
+        return description;
     }
 
-    public boolean isDone() {
-        return isDone;
+    public Task(String description) {
+        this.description = description;
     }
 
-    public Task(String taskName) {
-        this.taskName = taskName;
+    @Override
+    public String toString() {
+        return description;
     }
 
-    public void markDone() {
-
-        isDone = true;
-    }
-
-    public void unmarkDone() {
-        isDone = false;
-    }
 }
