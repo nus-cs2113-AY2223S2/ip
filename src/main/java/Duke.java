@@ -14,10 +14,28 @@ public class Duke {
         drawLine("_");
     }
 
-    public static void printTaskList(Task[] tasks, int taskID){
+    public static void printTaskList(Task[] tasks, int taskID) {
         drawLine("_");
-        for(int i = 0; i < taskID; i++){
+        for (int i = 0; i < taskID; i++) {
+            System.out.print((i + 1) + ".");
             tasks[i].printTask();
+        }
+        drawLine("_");
+    }
+
+    public static void markTask(Task[] tasks, int currentID, boolean isDone) {
+        drawLine("_");
+        if (isDone) {
+            tasks[currentID].markDone();
+            System.out.println("Nice! I've marked this task as done:");
+            System.out.println("   ");
+            tasks[currentID].printTask();
+        }
+        else {
+            tasks[currentID].unmarkDone();
+            System.out.println("OK, I've marked this task as not done yet:");
+            System.out.println("   ");
+            tasks[currentID].printTask();
         }
         drawLine("_");
     }
@@ -27,8 +45,21 @@ public class Duke {
         int taskID = 0;
         String text = in.nextLine();
         while(!text.equals("bye")){
-            if(text.equals("list")){
+            if (text.equals("list")) {
                 printTaskList(tasks, taskID);
+                text = in.nextLine();
+            }
+            else if (text.contains("mark")) {
+                int currentID = Integer.parseInt(text.substring(text.length() - 1)) - 1;
+                boolean isDone;
+                if (text.contains("unmark")) {
+                    isDone = false;
+                    markTask(tasks, currentID, isDone);
+                }
+                else {
+                    isDone = true;
+                    markTask(tasks, currentID, isDone);
+                }
                 text = in.nextLine();
             }
             else {

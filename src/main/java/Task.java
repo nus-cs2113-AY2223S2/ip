@@ -33,10 +33,10 @@ public class Task {
 
     public void printTask() {
         if(isDone){
-            System.out.println((taskID + 1) + ".[ ] " +  description);
+            System.out.println("[X] " +  description);
         }
         else{
-            System.out.println((taskID + 1) + ".[X] " +  description);
+            System.out.println("[ ] " +  description);
         }
     }
 }
