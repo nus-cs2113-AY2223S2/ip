@@ -13,12 +13,13 @@ public class Task {
     }
 
     // To be used to list out the task.
-    public String getTaskListing() {
-        return (this.getStatusIcon() + " " + this.description);
+    @Override
+    public String toString() {
+        return (this.getDoneIcon() + " " + this.description);
     }
 
     // return a string to indicate done or not done.
-    private String getStatusIcon() {
+    private String getDoneIcon() {
         return (this.isDone ? "[X]" : "[ ]"); // mark done task with X
     }
 
