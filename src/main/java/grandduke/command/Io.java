@@ -77,7 +77,7 @@ public abstract class Io {
             try {
                 Parser.parseCommand(input);
             } catch (Exception e) {
-                System.out.println("not a valid input");
+                printOutput("not a valid input");
             }
 
             printLine();
