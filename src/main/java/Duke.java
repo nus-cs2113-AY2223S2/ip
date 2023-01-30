@@ -17,10 +17,12 @@ public class Duke {
                 taskNo = Character.getNumericValue(word.charAt(word.length()-1));
                 if (word.contains("un")) {
                     items[taskNo-1].unmarkAsDone();
-                    System.out.println("This task is not done: " + "[" + items[taskNo-1].getStatusIcon() + "] " + items[taskNo-1].description);
+                    System.out.println("This task is not done: " + "[" + items[taskNo-1].getStatusIcon() +
+                            "] " + items[taskNo-1].description);
                 } else {
                     items[taskNo-1].markAsDone();
-                    System.out.println("This task is done: " + "[" + items[taskNo-1].getStatusIcon() + "] " + items[taskNo-1].description);
+                    System.out.println("This task is done: " + "[" + items[taskNo-1].getStatusIcon() + "] " +
+                            items[taskNo-1].description);
                 }
             } else {
                 System.out.println("added: " + word);
