@@ -9,18 +9,29 @@ public class CommandHandler {
 
     private String line;
 
-    public CommandHandler(){
-
-    }
-
+    /**
+     * Constructor for CommandHandler
+     *
+     * @param line User input represented as a String
+     */
     public void updateLine(String line){
         this.line = line;
     }
 
+    /**
+     * Parses the command from user input
+     *
+     * @return String containing the command
+     */
     private String parseCommand(){
         return line.contains(" ") ? line.split(" ")[0] : line;
     }
 
+    /**
+     * Handles the command based on user input
+     *
+     * @param taskList List containing the tasks input by user
+     */
     public void handleCommand(TaskList taskList){
         String lineBreak = UI.getLineBreak();
         String command = parseCommand();

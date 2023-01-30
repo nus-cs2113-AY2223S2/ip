@@ -2,7 +2,11 @@ package duke.task;
 
 public class ToDo extends Task{
 
-
+    /**
+     * Constructor for ToDo
+     *
+     * @param taskName description of task
+     */
     public ToDo(String taskName) {
         super(taskName);
         super.type = "[T]";

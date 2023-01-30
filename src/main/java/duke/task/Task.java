@@ -6,25 +6,46 @@ public class Task {
     protected boolean isDone;
     protected String type;
 
+    /**
+     * Constructor for Task class
+     *
+     * @param taskName Task description
+     */
     public Task(String taskName) {
         this.taskName = taskName;
         this.isDone = false;
         indexCount++;
     }
 
+    /**
+     * Setters for isDone
+     *
+     * @param done true if task is done, false if task is not done
+     */
     public void setDone(boolean done) {
         isDone = done;
     }
 
+    /**
+     * Getters for indexCount
+     *
+     * @return indexCount
+     */
     public static int getIndexCount(){
        return indexCount;
     }
+
 
     @Override
     public String toString(){
         return "";
     }
 
+    /**
+     * Outputs a checkmark if task is done, and a blank space if task is not done
+     *
+     * @return a string with a checkmark if task is done, and a blank space if task is not done
+     */
     public String checkBoxOutput(){
         String checkMark = isDone ? " [X] " : " [ ] ";
         String taskType = type;
@@ -32,6 +53,9 @@ public class Task {
         return  taskType + checkMark;
     }
 
+    /**
+     * Outputs a message when task is added
+     */
     public void printAdded(){
         int taskCount = indexCount;
         String word1;

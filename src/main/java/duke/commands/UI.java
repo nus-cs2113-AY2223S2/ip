@@ -1,20 +1,20 @@
 package duke.commands;
 
-import duke.commands.taskCommands.DeadlineCommand;
-import duke.commands.taskCommands.EventCommand;
-import duke.commands.taskCommands.ToDoCommand;
 import duke.task.TaskList;
 
 import java.util.Scanner;
 
 public class UI {
 
-    private static String lineBreak = "____________________________________________________________\n";
+    private final static String lineBreak = "____________________________________________________________\n";
 
     public static String getLineBreak() {
         return lineBreak;
     }
 
+    /**
+     * Prints a greeting message to the user
+     */
     public void greet() {
         System.out.println(lineBreak + "Hello I'm\n" +
                 "    ____        _        \n" +
@@ -25,10 +25,18 @@ public class UI {
                 "Input your tasks and I'll keep track of them!\n" + lineBreak);
     }
 
+    /**
+     * Prints a farewell message to the user
+     */
     public void sayBye() {
         System.out.println("Aww you're going? Hope to see you again soon!\n" + lineBreak);
     }
 
+    /**
+     * Takes in user input and processes it until the user inputs "bye"
+     *
+     * @param taskList List containing the tasks input by user
+     */
     public void inputFunction(TaskList taskList){
         Scanner in = new Scanner(System.in);
         CommandHandler newProcess = new CommandHandler();
