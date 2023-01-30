@@ -46,20 +46,32 @@ public class Duke {
     }
 
     public static void markTask(String[] userInputArray) {
-        int taskIndex = Integer.parseInt(userInputArray[1]);
-        taskIndex--;
-        userTaskList[taskIndex].markAsDone();
-        System.out.println(LINE + System.lineSeparator() + "The following task has been marked done: [X] "
-                + userTaskList[taskIndex].description + System.lineSeparator() + LINE);
+        try {
+            int taskIndex = Integer.parseInt(userInputArray[1]);
+            taskIndex--;
+            userTaskList[taskIndex].markAsDone();
+            System.out.println(LINE + System.lineSeparator() + "The following task has been marked done: [X] "
+                    + userTaskList[taskIndex].description + System.lineSeparator() + LINE);
+        } catch (Exception e) {
+            System.out.println(
+                    LINE + System.lineSeparator() + "ERROR OCCURED: Please enter a valid numerical index of the task!"
+                            + System.lineSeparator() + LINE);
+        }
 
     }
 
     public static void unmarkTask(String[] userInputArray) {
-        int taskIndex = Integer.parseInt(userInputArray[1]);
-        taskIndex--;
-        userTaskList[taskIndex].markAsUndone();
-        System.out.println(LINE + System.lineSeparator() + "The following task has been marked undone: [ ] "
-                + userTaskList[taskIndex].description + System.lineSeparator() + LINE);
+        try {
+            int taskIndex = Integer.parseInt(userInputArray[1]);
+            taskIndex--;
+            userTaskList[taskIndex].markAsUndone();
+            System.out.println(LINE + System.lineSeparator() + "The following task has been marked undone: [ ] "
+                    + userTaskList[taskIndex].description + System.lineSeparator() + LINE);
+        } catch (Exception e) {
+            System.out.println(
+                    LINE + System.lineSeparator() + "ERROR OCCURED: Please enter a valid numerical index of the task!"
+                            + System.lineSeparator() + LINE);
+        }
     }
 
     public static void processUserInput() {
@@ -71,14 +83,12 @@ public class Duke {
             listTasks();
         } else {
             String[] userInputArray = userInput.split(" ");
-            if (userInputArray.length > 1) {
-                if (userInputArray[0].equals("/mark")) {
-                    markTask(userInputArray);
-                    return;
-                } else if (userInputArray[0].equals("/unmark")) {
-                    unmarkTask(userInputArray);
-                    return;
-                }
+            if (userInputArray[0].equals("/mark")) {
+                markTask(userInputArray);
+                return;
+            } else if (userInputArray[0].equals("/unmark")) {
+                unmarkTask(userInputArray);
+                return;
             }
             Task t = new Task(userInput);
             System.out.println(LINE);
