@@ -7,7 +7,6 @@ public class Task {
         this.description = description;
         this.isDone = false;
         total++;
-
     }
 
     public String getStatusIcon() {
@@ -20,6 +19,17 @@ public class Task {
 
     public void setMark(boolean done) {
         this.isDone = done;
+    }
+    public String toString() {
+        return "[" + getStatusIcon() + "] " + getDescription();
+    }
+
+    public void printMessage(){
+        System.out.println("\t____________________________________________________________\r\n"
+                + "\t Got it. I've added this task:\r\n"
+                + "\t  " + toString() + "\r\n"
+                + "\t Now you have " + total + " tasks in the list.\r\n"
+                + "\t____________________________________________________________\r\n");
     }
 
 
