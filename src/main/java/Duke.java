@@ -10,30 +10,32 @@ public class Duke {
         System.out.println("Hello from\n" + logo);
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you ?");
-        Scanner ScanObj = new Scanner(System.in);
-
+        Scanner scanObj = new Scanner(System.in);
         TaskManager listofItems = new TaskManager();
-        String UserCmd = ScanObj.nextLine();
+        String userCmd = scanObj.nextLine();
         int taskId = 0;
-        while (!UserCmd.equals("bye")) {
-            String[] WordsinUserCmd = UserCmd.split(" ");
-            System.out.println(WordsinUserCmd[0]);
-            if (UserCmd.equals("list")) {
+
+        while (!userCmd.equals("bye")) {
+            String[] userCmdasWords = userCmd.split(" ");
+            System.out.println(userCmdasWords[0]);
+            if (userCmd.equals("list")) {
                 listofItems.listTask();
-            } else if (WordsinUserCmd[0].equals("mark")) {
+            } else if (userCmdasWords[0].equals("mark")) {
                 System.out.println("this is a mark command");
-                listofItems.markTask(Integer.parseInt(WordsinUserCmd[1]) - 1);
-            } else if (WordsinUserCmd[0].equals("unmark")) {
+                listofItems.markTask(Integer.parseInt(userCmdasWords[1]) - 1);
+            } else if (userCmdasWords[0].equals("unmark")) {
                 System.out.println("this is a unmark command");
-                listofItems.unmarkTask(Integer.parseInt(WordsinUserCmd[1]) - 1);
+                listofItems.unmarkTask(Integer.parseInt(userCmdasWords[1]) - 1);
             } else {
                 System.out.print("added: ");
-                System.out.println(UserCmd);
-                listofItems.addTask(UserCmd, taskId);
+                System.out.println(userCmd);
+                listofItems.addTask(userCmd, taskId);
                 taskId++;
             }
-            UserCmd = ScanObj.nextLine();
+            userCmd = scanObj.nextLine();
         }
+
+        scanObj.close();
         System.out.println("Bye. Hope to see you again soon !");
     }
 }

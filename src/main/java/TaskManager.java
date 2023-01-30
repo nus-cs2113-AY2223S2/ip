@@ -1,27 +1,27 @@
 public class TaskManager {
-    private Task[] Tasks = new Task[100];
-    private int TasksCount = 0;
+    private Task[] tasks = new Task[100];
+    private int tasksCount = 0;
 
     public void addTask(String name, int id) {
-        Tasks[TasksCount] = new Task(name, false, id);
-        TasksCount++;
+        tasks[tasksCount] = new Task(name, false, id);
+        tasksCount++;
     }
 
     public void markTask(int id) {
-        Tasks[id].setIsDone(true);
+        tasks[id].setIsDone(true);
         System.out.println("The task has been marked as done!");
-        System.out.println("[X] " + Tasks[id].getName());
+        System.out.println("[X] " + tasks[id].getName());
     }
 
     public void unmarkTask(int id) {
-        Tasks[id].setIsDone(false);
+        tasks[id].setIsDone(false);
         System.out.println("The task has been marked as NOT done!");
-        System.out.println("[ ] " + Tasks[id].getName());
+        System.out.println("[ ] " + tasks[id].getName());
     }
 
     public void listTask() {
         int j = 1;
-        for (Task i : Tasks) {
+        for (Task i : tasks) {
             if (i.getIsDone() == true) {
                 System.out.print(j);
                 System.out.print(" [X] ");
@@ -32,7 +32,7 @@ public class TaskManager {
                 System.out.println(i.getName());
             }
             j++;
-            if (j > TasksCount) {
+            if (j > tasksCount) {
                 break;
             }
         }
