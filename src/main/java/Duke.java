@@ -28,12 +28,12 @@ public class Duke {
                 break;
 
             tgt = Integer.parseInt(input_text.replaceAll("[^0-9]",""));
-            if(input_text.contains("mark")) {
-                t[tgt].markAsDone();
-                mark = true;
-            }else if(input_text.contains("unmark")) {
+            if(input_text.contains("un")) {
                 t[tgt].markAsUnDone();
                 mark = false;
+            }else if(input_text.contains("mark")) {
+                t[tgt].markAsDone();
+                mark = true;
             }else {
                 System.out.println("unsupported command!");
                 continue;
