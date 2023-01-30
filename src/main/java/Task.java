@@ -14,15 +14,13 @@ public class Task {
         return (isDone ? "X" : " "); // mark done task with X
     }
 
-    public String getDescription(){
+    public String getDescription() {
         return description;
     }
 
-    public void setMark(boolean done){
-        this.isDone =  done;
+    public void setMark(boolean done) {
+        this.isDone = done;
     }
-    
-
 
 
     //...
