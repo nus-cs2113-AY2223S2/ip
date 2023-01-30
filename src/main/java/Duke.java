@@ -23,42 +23,39 @@ public class Duke {
                 switch (taskName) {
                 case "list":
                     System.out.println("\t____________________________________________________________\r\n"
-                    		+"\t Here are the tasks in your list:");
+                            + "\t Here are the tasks in your list:");
                     for (int i = 0; i < taskList.size(); i++) {
                         System.out.println("\t " + (i + 1) + ". " + taskList.get(i).toString());
                     }
                     System.out.println("\n\t____________________________________________________________\r\n");
                     break;
-                    
+
                 case "todo":
-                	prompt = sc.nextLine();
-                	newTask = new Todo(prompt.trim());
-                    newTask.addTask();
+                    prompt = sc.nextLine();
+                    newTask = new Todo(prompt.trim());
                     taskList.add(newTask);
-                	break;
-                	
+                    break;
+
                 case "deadline":
-                	prompt = sc.nextLine();
-                	int dividerPosition = prompt.indexOf("/by");
-                	description = prompt.substring(0,dividerPosition).trim();
-                	String by = prompt.substring(dividerPosition+3).trim();
-                	newTask = new Deadline(description, by);
-                    newTask.addTask();
+                    prompt = sc.nextLine();
+                    int dividerPosition = prompt.indexOf("/by");
+                    description = prompt.substring(0, dividerPosition).trim();
+                    String by = prompt.substring(dividerPosition + 3).trim();
+                    newTask = new Deadline(description, by);
                     taskList.add(newTask);
-                	break;
-                	
+                    break;
+
                 case "event":
-                	prompt = sc.nextLine();
-                	int divider1Position = prompt.indexOf("/from");
-                	int divider2Position = prompt.indexOf("/to");
-                	description = prompt.substring(0,divider1Position).trim();
-                	String from = prompt.substring(divider1Position+5,divider2Position).trim();
-                	String to = prompt.substring(divider2Position+3).trim();
-                	newTask = new Event(description, from, to);
-                    newTask.addTask();
+                    prompt = sc.nextLine();
+                    int divider1Position = prompt.indexOf("/from");
+                    int divider2Position = prompt.indexOf("/to");
+                    description = prompt.substring(0, divider1Position).trim();
+                    String from = prompt.substring(divider1Position + 5, divider2Position).trim();
+                    String to = prompt.substring(divider2Position + 3).trim();
+                    newTask = new Event(description, from, to);
                     taskList.add(newTask);
-                	break;
-                	
+                    break;
+
                 case "mark":
                     indexTask = sc.nextInt() - 1;
                     taskList.get(indexTask).setStatus(true);
