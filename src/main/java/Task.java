@@ -8,10 +8,12 @@ public class Task {
     }
 
     public String getTaskDescription() {
+
         return taskDescription;
     }
 
     public void setTaskDescription(String taskDescription) {
+
         this.taskDescription = taskDescription;
     }
 
@@ -24,6 +26,7 @@ public class Task {
     }
 
     public String getStatusIcon(){
+
         return (isDone? "X": " "); //Marks a task done with an X
     }
 }
