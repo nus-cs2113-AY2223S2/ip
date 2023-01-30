@@ -2,16 +2,15 @@ package duke.commands.taskCommands;
 
 import duke.commands.Command;
 import duke.commands.DukeException;
-import duke.commands.UI;
-import duke.task.Task;
-import duke.task.TaskList;
-import duke.task.ToDo;
+import duke.tasks.Task;
+import duke.tasks.TaskList;
+import duke.tasks.ToDo;
+import static duke.constants.Constants.LINEBREAK;
 
 public class ToDoCommand extends Command {
 
     @Override
     public void handleCommand(String line, TaskList taskList){
-        String lineBreak = UI.getLineBreak();
         int markIndex;
         int indexCount = Task.getIndexCount();
         String description;
@@ -19,7 +18,7 @@ public class ToDoCommand extends Command {
             markIndex = line.indexOf(' ');
             if (markIndex == -1) {
                 DukeException.printError();
-                System.out.println(lineBreak);
+                System.out.println(LINEBREAK);
                 return;
             }
 
@@ -28,7 +27,7 @@ public class ToDoCommand extends Command {
             taskList.addTask(indexCount, newTask);
         } catch (Exception e) {
             DukeException.printError();
-            System.out.println(lineBreak);
+            System.out.println(LINEBREAK);
         }
     }
 }

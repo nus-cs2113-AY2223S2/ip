@@ -1,4 +1,4 @@
-package duke.task;
+package duke.tasks;
 
 public class Task {
     protected String taskName;
@@ -7,9 +7,9 @@ public class Task {
     protected String type;
 
     /**
-     * Constructor for Task class
+     * Constructor for Task class.
      *
-     * @param taskName Task description
+     * @param taskName Task description.
      */
     public Task(String taskName) {
         this.taskName = taskName;
@@ -18,9 +18,9 @@ public class Task {
     }
 
     /**
-     * Setters for isDone
+     * Setters for isDone.
      *
-     * @param done true if task is done, false if task is not done
+     * @param done true if task is done, false if task is not done.
      */
     public void setDone(boolean done) {
         isDone = done;
@@ -42,9 +42,9 @@ public class Task {
     }
 
     /**
-     * Outputs a checkmark if task is done, and a blank space if task is not done
+     * Outputs a checkmark if task is done, and a blank space if task is not done.
      *
-     * @return a string with a checkmark if task is done, and a blank space if task is not done
+     * @return a string with a checkmark if task is done, and a blank space if task is not done.
      */
     public String checkBoxOutput(){
         String checkMark = isDone ? " [X] " : " [ ] ";

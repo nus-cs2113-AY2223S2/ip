@@ -3,7 +3,9 @@ package duke.commands;
 import duke.commands.taskCommands.DeadlineCommand;
 import duke.commands.taskCommands.EventCommand;
 import duke.commands.taskCommands.ToDoCommand;
-import duke.task.TaskList;
+import duke.tasks.TaskList;
+
+import static duke.constants.Constants.LINEBREAK;
 
 public class CommandHandler {
 
@@ -28,12 +30,11 @@ public class CommandHandler {
     }
 
     /**
-     * Handles the command based on user input
+     * Handles the command based on user input.
      *
-     * @param taskList List containing the tasks input by user
+     * @param taskList List containing the tasks input by user.
      */
     public void handleCommand(TaskList taskList){
-        String lineBreak = UI.getLineBreak();
         String command = parseCommand();
         switch (command) {
 
@@ -77,7 +78,7 @@ public class CommandHandler {
 
         default:
             DukeException.printError();
-            System.out.println(lineBreak);
+            System.out.println(LINEBREAK);
         }
     }
 }

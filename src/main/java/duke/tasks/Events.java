@@ -1,4 +1,4 @@
-package duke.task;
+package duke.tasks;
 
 public class Events extends ToDo {
 
@@ -6,11 +6,11 @@ public class Events extends ToDo {
     protected String end;
 
     /**
-     * Constructor for Events class
+     * Constructor for Events class.
      *
-     * @param taskName Task description
-     * @param start Start time of event
-     * @param end  End time of event
+     * @param taskName Task description.
+     * @param start Start time of event.
+     * @param end  End time of event.
      */
     public Events(String taskName, String start, String end) {
         super(taskName);

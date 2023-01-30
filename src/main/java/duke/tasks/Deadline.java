@@ -1,14 +1,14 @@
-package duke.task;
+package duke.tasks;
 
 public class Deadline extends ToDo {
 
     protected String deadline;
 
     /**
-     * Constructor for Deadline class
+     * Constructor for Deadline class.
      *
-     * @param taskName Task description
-     * @param deadline Deadline of task
+     * @param taskName Task description.
+     * @param deadline Deadline of task.
      */
     public Deadline(String taskName, String deadline) {
         super(taskName);

@@ -1,15 +1,14 @@
 package duke.commands;
 
-import duke.main.Duke;
-import duke.task.Task;
-import duke.task.TaskList;
+import duke.tasks.Task;
+import duke.tasks.TaskList;
+import static duke.constants.Constants.LINEBREAK;
 
 public class ListCommand extends Command{
 
     @Override
     public void handleCommand(String line, TaskList taskList){
         int indexCount = Task.getIndexCount();
-        String lineBreak = UI.getLineBreak();
         if (indexCount == 0) {
             DukeException.emptyList();
             return;
@@ -18,6 +17,6 @@ public class ListCommand extends Command{
         for (int i = 0; i < indexCount; i++) {
             System.out.println(i + 1 + ". " + taskList.getTask(i));
         }
-        System.out.println(lineBreak);
+        System.out.println(LINEBREAK);
     }
 }

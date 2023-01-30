@@ -1,7 +1,7 @@
 package duke.main;
 
 import duke.commands.UI;
-import duke.task.TaskList;
+import duke.tasks.TaskList;
 
 public class Duke {
 

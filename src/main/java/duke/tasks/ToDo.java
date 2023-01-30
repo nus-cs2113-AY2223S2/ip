@@ -1,11 +1,11 @@
-package duke.task;
+package duke.tasks;
 
 public class ToDo extends Task{
 
     /**
-     * Constructor for ToDo
+     * Constructor for ToDo.
      *
-     * @param taskName description of task
+     * @param taskName description of task.
      */
     public ToDo(String taskName) {
         super(taskName);

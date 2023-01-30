@@ -2,17 +2,17 @@ package duke.commands.taskCommands;
 
 import duke.commands.Command;
 import duke.commands.DukeException;
-import duke.commands.UI;
-import duke.task.Deadline;
-import duke.task.Task;
-import duke.task.TaskList;
-import duke.task.ToDo;
+import duke.tasks.Deadline;
+import duke.tasks.Task;
+import duke.tasks.TaskList;
+import duke.tasks.ToDo;
+
+import static duke.constants.Constants.LINEBREAK;
 
 public class DeadlineCommand extends Command {
 
     @Override
     public void handleCommand(String line, TaskList taskList){
-        String lineBreak = UI.getLineBreak();
         int markIndex;
         int indexCount = Task.getIndexCount();
         String description;
@@ -23,7 +23,7 @@ public class DeadlineCommand extends Command {
             markIndex = line.indexOf("/by");
             if (markIndex == -1) {
                 DukeException.printError();
-                System.out.println(lineBreak);
+                System.out.println(LINEBREAK);
                 return;
             }
 
@@ -31,17 +31,17 @@ public class DeadlineCommand extends Command {
 
             if (deadline.equals("")) {
                 DukeException.printError();
-                System.out.println(lineBreak);
+                System.out.println(LINEBREAK);
                 return;
             }
 
             ToDo newDeadline = new Deadline(description, deadline);
             taskList.addTask(indexCount, newDeadline);
             newDeadline.printAdded();
-            System.out.println(lineBreak);
+            System.out.println(LINEBREAK);
         } catch (Exception e) {
             DukeException.printError();
-            System.out.println(lineBreak);
+            System.out.println(LINEBREAK);
         }
     }
 }

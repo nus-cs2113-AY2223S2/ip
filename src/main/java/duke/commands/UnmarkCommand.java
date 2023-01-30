@@ -1,7 +1,8 @@
 package duke.commands;
 
-import duke.task.Task;
-import duke.task.TaskList;
+import duke.tasks.Task;
+import duke.tasks.TaskList;
+import static duke.constants.Constants.LINEBREAK;
 
 public class UnmarkCommand extends Command{
 
@@ -10,7 +11,6 @@ public class UnmarkCommand extends Command{
         try {
             int indexCount = Task.getIndexCount();
             int indexSelect;
-            String lineBreak = UI.getLineBreak();
 
             String undone = line.split(" ")[1];
             if (indexCount == 0) {
@@ -27,7 +27,7 @@ public class UnmarkCommand extends Command{
             taskList.getTask(indexSelect).setDone(false);
             System.out.println("OK, I've marked this task as not done yet:");
             System.out.println(taskList.getTask(indexSelect));
-            System.out.println(lineBreak);
+            System.out.println(LINEBREAK);
         } catch (Exception e) {
             DukeException.printError();
         }
