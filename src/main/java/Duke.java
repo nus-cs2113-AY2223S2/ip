@@ -1,9 +1,18 @@
 import java.util.Scanner;
 import java.util.Arrays;
 public class Duke {
+    private static final String[] INVALID_INPUT_MESSAGE = {
+            "Invalid input. Available commands are:",
+            "- list",
+            "- mark [TASK NUMBER]",
+            "- unmark [TASK NUMBER]",
+            "- todo [TASK DESCRIPTION]",
+            "- event [EVENT DESCRIPTION] /from [START DATE] /to [END DATE]",
+            "- deadline [DEADLINE DESCRIPTION] /by [DUE DATE]"
+    };
+    private static final String INDENT = "      ";
     private static Task[] tasks = new Task[100];
     private static int currentStoredTaskIndex = 0;
-    private static final String indent = "      ";
 
     public static void main(String[] args) {
         printIntro();
@@ -12,12 +21,35 @@ public class Duke {
 
     }
 
-    public static void addToList(Task task) {
-        tasks[currentStoredTaskIndex] = task;
-        currentStoredTaskIndex++;
-        printMessage("added: " + task.getDescription());
+    public static void mainLoop() {
+        Scanner in = new Scanner(System.in);
+        String currentInput = in.nextLine();
+        while (!currentInput.equals("bye")) {
+            String[] words = currentInput.split(" ");
+            switch (words[0]) {
+            case "deadline":
+            case "todo":
+            case "event":
+                handleAddTask(currentInput);
+                break;
+            case "list":
+                list();
+                break;
+            case "mark":
+                mark(words);
+                break;
+            case "unmark":
+                unmark(words);
+                break;
+            default:
+                printInvalidInputMessage();
+                break;
+            }
+            currentInput = in.nextLine();
+        }
     }
 
+    // COMMAND HANDLERS
     public static void list() {
         printMessage(getFormattedList());
     }
@@ -46,12 +78,16 @@ public class Duke {
         if (addedTask == null) {
             return;
         }
+        String[] message = getAddTaskMessage(addedTask);
+        printMessage(message);
+    }
+    public static String[] getAddTaskMessage(Task addedTask) {
         String[] message = {
                 "Got it. I've added this task:",
-                indent + addedTask.toString(),
+                INDENT + addedTask.toString(),
                 "Now you have " + (currentStoredTaskIndex) + " tasks in the list."
         };
-        printMessage(message);
+        return message;
     }
     public static Task addTask(String input) {
         String[] inputSections = input.split("/");
@@ -61,67 +97,44 @@ public class Duke {
         Task taskToAdd;
         switch (taskType) {
         case "deadline":
-            taskToAdd = new Deadline(
-                    taskDescription,
-                    inputSections[1].replaceFirst("by", "")
-            );
+            taskToAdd = getNewDeadline(taskDescription, inputSections);
             break;
         case "event":
-            taskToAdd = new Event(
-                    taskDescription,
-                    inputSections[1].replaceFirst("from", ""),
-                    inputSections[2].replaceFirst("to", "")
-            );
+            taskToAdd = getNewEvent(taskDescription, inputSections);
             break;
         case "todo":
-            taskToAdd = new ToDo(taskDescription);
+            taskToAdd = getNewTodo(taskDescription);
             break;
         default:
             printInvalidInputMessage();
             return null;
         }
+
         tasks[currentStoredTaskIndex] = taskToAdd;
         currentStoredTaskIndex ++;
         return taskToAdd;
     }
-    public static void printInvalidInputMessage() {
-        String[] message = {
-                "Invalid input. Available commands are:",
-                "- list",
-                "- mark [TASK NUMBER]",
-                "- unmark [TASK NUMBER]",
-                "- todo [TASK DESCRIPTION]",
-                "- event [EVENT DESCRIPTION] /from [START DATE] /to [END DATE]",
-                "- deadline [DEADLINE DESCRIPTION] /by [DUE DATE]"
-        };
-        printMessage(message);
+    public static Deadline getNewDeadline(String taskDescription, String[] inputSections) {
+        return new Deadline(
+                taskDescription,
+                inputSections[1].replaceFirst("by", "")
+        );
     }
-    public static void mainLoop() {
-        Scanner in = new Scanner(System.in);
-        String currentInput = in.nextLine();
-        while (!currentInput.equals("bye")) {
-            String[] words = currentInput.split(" ");
-            switch (words[0]) {
-            case "deadline":
-            case "todo":
-            case "event":
-                handleAddTask(currentInput);
-                break;
-            case "list":
-                list();
-                break;
-            case "mark":
-                mark(words);
-                break;
-            case "unmark":
-                unmark(words);
-                break;
-            default:
-                printInvalidInputMessage();
-                break;
-            }
-            currentInput = in.nextLine();
-        }
+    public static Event getNewEvent(String taskDescription, String[] inputSections) {
+        return new Event(
+                taskDescription,
+                inputSections[1].replaceFirst("from", ""),
+                inputSections[2].replaceFirst("to", "")
+        );
+    }
+    public static ToDo getNewTodo(String taskDescription) {
+        return new ToDo(taskDescription);
+    }
+
+    // PRINTING UTILITIES
+
+    public static void printInvalidInputMessage() {
+        printMessage(INVALID_INPUT_MESSAGE);
     }
 
     public static String getFormattedTask(Task task, int number) {
@@ -163,7 +176,7 @@ public class Duke {
     }
 
     public static void printIndent() {
-        System.out.print(indent);
+        System.out.print(INDENT);
     }
 
     public static void printSeparator() {
