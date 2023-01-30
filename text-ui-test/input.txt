@@ -1,0 +1,12 @@
+todo eat breakfast
+deadline do homework /by Friday
+event lunch /from noon /to 1 pm
+watch Netflix
+list
+mark 1
+mark 1
+unmark 1
+unmark 1
+help
+list
+bye
