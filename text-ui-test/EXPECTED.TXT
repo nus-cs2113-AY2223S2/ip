@@ -21,9 +21,9 @@
       Now you have 2 tasks in the list.
     __________________________________________________
     __________________________________________________
-    Here are the tasks in your list:
-      1.[T][ ]borrow book
-      2.[T][ ]CS2113 IP
+      Here are the tasks in your list:
+        1.[T][ ]borrow book
+        2.[T][ ]CS2113 IP
     __________________________________________________
     __________________________________________________
       Got it. I've added this task:
@@ -46,51 +46,50 @@
       Now you have 6 tasks in the list.
     __________________________________________________
     __________________________________________________
-    Here are the tasks in your list:
-      1.[T][ ]borrow book
-      2.[T][ ]CS2113 IP
-      3.[D][ ]return book (by: Sunday)
-      4.[E][ ]project meeting (from: Mon 2pm to: 4pm)
-      5.[D][ ]EE2211 Tutorial (by: Sunday)
-      6.[E][ ]Career Fair (from: Wed 2pm to: 5pm)
+      Here are the tasks in your list:
+        1.[T][ ]borrow book
+        2.[T][ ]CS2113 IP
+        3.[D][ ]return book (by: Sunday)
+        4.[E][ ]project meeting (from: Mon 2pm to: 4pm)
+        5.[D][ ]EE2211 Tutorial (by: Sunday)
+        6.[E][ ]Career Fair (from: Wed 2pm to: 5pm)
     __________________________________________________
     __________________________________________________
       Nice! I've marked this task as done:
-      [T][X]borrow book
+        [T][X]borrow book
     __________________________________________________
     __________________________________________________
-    Here are the tasks in your list:
-      1.[T][X]borrow book
-      2.[T][ ]CS2113 IP
-      3.[D][ ]return book (by: Sunday)
-      4.[E][ ]project meeting (from: Mon 2pm to: 4pm)
-      5.[D][ ]EE2211 Tutorial (by: Sunday)
-      6.[E][ ]Career Fair (from: Wed 2pm to: 5pm)
+      Here are the tasks in your list:
+        1.[T][X]borrow book
+        2.[T][ ]CS2113 IP
+        3.[D][ ]return book (by: Sunday)
+        4.[E][ ]project meeting (from: Mon 2pm to: 4pm)
+        5.[D][ ]EE2211 Tutorial (by: Sunday)
+        6.[E][ ]Career Fair (from: Wed 2pm to: 5pm)
     __________________________________________________
     __________________________________________________
       Nice! I've marked this task as done:
-      [T][X]CS2113 IP
+        [T][X]CS2113 IP
     __________________________________________________
     __________________________________________________
-    Here are the tasks in your list:
-      1.[T][X]borrow book
-      2.[T][X]CS2113 IP
-      3.[D][ ]return book (by: Sunday)
-      4.[E][ ]project meeting (from: Mon 2pm to: 4pm)
-      5.[D][ ]EE2211 Tutorial (by: Sunday)
-      6.[E][ ]Career Fair (from: Wed 2pm to: 5pm)
+      Here are the tasks in your list:
+        1.[T][X]borrow book
+        2.[T][X]CS2113 IP
+        3.[D][ ]return book (by: Sunday)
+        4.[E][ ]project meeting (from: Mon 2pm to: 4pm)
+        5.[D][ ]EE2211 Tutorial (by: Sunday)
+        6.[E][ ]Career Fair (from: Wed 2pm to: 5pm)
     __________________________________________________
     __________________________________________________
       OK, I've marked this task as not done yet:
-      [T][ ]borrow book
+        [T][ ]borrow book
     __________________________________________________
     __________________________________________________
-    Here are the tasks in your list:
-      1.[T][ ]borrow book
-      2.[T][X]CS2113 IP
-      3.[D][ ]return book (by: Sunday)
-      4.[E][ ]project meeting (from: Mon 2pm to: 4pm)
-      5.[D][ ]EE2211 Tutorial (by: Sunday)
-      6.[E][ ]Career Fair (from: Wed 2pm to: 5pm)
+      Here are the tasks in your list:
+        1.[T][ ]borrow book
+        2.[T][X]CS2113 IP
+        3.[D][ ]return book (by: Sunday)
+        4.[E][ ]project meeting (from: Mon 2pm to: 4pm)
+        5.[D][ ]EE2211 Tutorial (by: Sunday)
+        6.[E][ ]Career Fair (from: Wed 2pm to: 5pm)
     __________________________________________________
-
