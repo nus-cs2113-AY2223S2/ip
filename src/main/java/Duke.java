@@ -2,7 +2,6 @@ import java.util.Scanner;
 
 public class Duke {
     static final String INDENT = "    ";
-    static final String MARK = "X";
 
     // commands
     static final String COMMAND_EXIT = "bye";
@@ -57,8 +56,7 @@ public class Duke {
     private static void listTasks() {
         for (int i = 0; i < numTasks; ++i) {
             printWithIndentation((i + 1) + "." // number
-                    + "[" + (tasks[i].getIsCompleted() ? MARK : " ") + "] " // mark
-                    + tasks[i].getName()); // name
+                    + tasks[i].describe());
         }
         printLine();
     }
@@ -70,9 +68,8 @@ public class Duke {
         } else { // unmark task
             printWithIndentation("OK, I've marked this task as not done yet:\n");
         }
-        printWithIndentation("[" + (isCompleted ? MARK : " ") + "] " + tasks[id].getName());
+        printWithIndentation(tasks[id].describe());
         printLine();
-
     }
 
     private static int processInput(String s) {
