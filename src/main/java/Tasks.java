@@ -1,6 +1,6 @@
 public class Tasks {
-    private String task;
-    private boolean isDone;
+    protected String task;
+    protected boolean isDone;
     public Tasks(String task) {
         this.task = task;
         this.isDone = false;
@@ -17,5 +17,8 @@ public class Tasks {
     public String getStatus() {
         return (isDone ? "X" : " ");
     }
-
+    @Override
+    public String toString() {
+        return "[" + this.getStatus() + "] " + this.getTask();
+    }
 }
