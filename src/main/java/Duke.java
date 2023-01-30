@@ -7,14 +7,25 @@ public class Duke {
         System.out.println(logo);
         Scanner in = new Scanner(System.in);
         String line;
-        //String[] todo = new String[100];
+        String[] todo = new String[100];
+        int i=0;
         while(true) {
             line = in.nextLine();
-            if (line.equals("bye")) {
+            if(line.equals("list")) {
+                for(int j=0;j<i;j++){
+                    System.out.println((j+1) + "." + todo[j]);
+                }
+            }
+            else if (line.equals("bye")) {
                 System.out.println("Bye. Hope to see you again soon!");
                 return;
             }
-            System.out.println("added:"+ line);
+            else{
+                todo[i]=line;
+                i++;
+                System.out.println("added:"+ line);
+            }
+
         }
     }
 }
