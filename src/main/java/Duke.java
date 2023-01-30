@@ -1,4 +1,4 @@
-
+import java.util.Scanner;
 
 public class Duke {
 
@@ -9,14 +9,15 @@ public class Duke {
 
     public static void useDuke(){
         UI readInputCommand = new UI();
-//        String inputCommand = readInputCommand.readInput();
         CommandManager commandManager = new CommandManager();
+        //Only use one scanner object, otherwise there will be errors
+        Scanner in = new Scanner(System.in);
+
         while(true){
-            commandManager.setCommand(readInputCommand.readInput());
-            //commandManager.setCommand(inputCommand);
+            String input = readInputCommand.readInput(in);
+            commandManager.setCommand(input);
             commandManager.executeCommand();
         }
-
     }
 
     public static void main(String[] args) {

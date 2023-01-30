@@ -4,8 +4,8 @@ import java.util.Arrays;
  * Public methods to read/write tasks
  */
 public class TaskManager {
-    private Task[] tasks = new Task[100];
-    private int count;
+    private static Task[] tasks = new Task[100];
+    private static int count;
 
     public TaskManager() {
 

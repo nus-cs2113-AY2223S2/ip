@@ -7,8 +7,11 @@ import java.util.Scanner;
  */
 public class UI {
 
-    private static final Scanner SCANNER = new Scanner(System.in);
-    private static final char INPUT_COMMENT_MARKER = '#';
+ //   private static final Scanner SCANNER = new Scanner(System.in);
+
+//    public void setClose(){
+//        SCANNER.close();
+//    }
     /**
      * Print the list of tasks.
      *
@@ -98,22 +101,16 @@ public class UI {
      *
      * @return
      */
-    public String readInput() {
-//        Scanner in = new Scanner(System.in);
-//        String inputCommand = in.nextLine();
-//        return inputCommand;
+    public String readInput(Scanner in) {
         String inputLine;
-        if(SCANNER.hasNextLine()){
-            inputLine = SCANNER.nextLine();
-        }else{
-            inputLine = null;
-            System.exit(0);
-        }
-
-        // silently consume all blank and comment lines
-//        while (inputLine.trim().isEmpty() || inputLine.trim().charAt(0) == INPUT_COMMENT_MARKER) {
+//        if(SCANNER.hasNextLine()){
 //            inputLine = SCANNER.nextLine();
+//        }else{
+//            inputLine = null;
+//            System.exit(0);
 //        }
+        inputLine = in.nextLine();
+
         return inputLine;
     }
 
