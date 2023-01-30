@@ -1,6 +1,6 @@
-
 import java.util.Scanner;
 import java.util.ArrayList;
+
 public class Duke {
     public static void createHorizontalLine() {
         System.out.println("____________________________________________________________");
@@ -34,12 +34,14 @@ public class Duke {
                         + "]" + container.get(lastCharacterInInteger - 1).getContent());
             }
         } catch (NumberFormatException error) {
-            System.out.println("The mark request is not valid");
+            System.out.println("Please give your command in the following format\n" + command + ": Number");
         }
     }
+
     public static void main(String[] args) {
         createHorizontalLine();
         System.out.println("Hello! I'm Duke");
+        System.out.println("If you do not want to use command keywords, please add * at the start of the input");
         System.out.println("What can I do for you?");
 
         String userInput;
@@ -51,20 +53,28 @@ public class Duke {
             System.out.println();
             userInput = in.nextLine();
             createHorizontalLine();
-            if (userInput.equals("bye")) {
-                System.out.println("Bye. Hope to see you again soon!");
-                createHorizontalLine();
-                break;
-            } else if (userInput.equals("list")) {
-                printItems(tasks);
-            } else if (userInput.substring(0,5).equals("mark ") || userInput.substring(0,7).equals("unmark ")) {
-                changeTaskStatus(userInput, tasks);
-            } else {
-                Task task = new Task(userInput);
+            int firstSpace = userInput.indexOf(" ");
+            boolean hasAsterisk = (userInput.startsWith("*")) ? true : false;
+
+            if (hasAsterisk) {
+                Task task = new Task(userInput.substring(1));
                 tasks.add(task);
-                System.out.println("added: " + userInput);
+                System.out.println("added: " + userInput.substring(1));
+            } else {
+                if (userInput.equals("bye")) {
+                    System.out.println("Bye. Hope to see you again soon!");
+                    createHorizontalLine();
+                    break;
+                } else if (userInput.equals("list")) {
+                    printItems(tasks);
+                } else if (userInput.startsWith("mark ") || userInput.startsWith("unmark ")) {
+                    changeTaskStatus(userInput, tasks);
+                } else {
+                    Task task = new Task(userInput);
+                    tasks.add(task);
+                    System.out.println("added: " + userInput);
+                }
             }
         }
-
     }
 }
