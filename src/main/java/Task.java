@@ -4,6 +4,7 @@ public class Task {
     private int itemId;
     private boolean isDone;
 
+
     public Task(String itemName) {
         itemName = itemName.substring(0,1).toUpperCase() + itemName.substring(1);
         this.itemName = itemName;
@@ -23,6 +24,11 @@ public class Task {
     public int getItemId() {
         return itemId;
     }
+
+    public boolean isDone() {
+        return isDone;
+    }
+
     public void markAsDone() {
         this.isDone = true;
     }
@@ -37,5 +43,11 @@ public class Task {
             status = "[ ]";
         }
         System.out.println(this.itemId + "." + status + " " + this.itemName);
+    }
+
+    public void printTaskWithoutId() {
+        System.out.println(this.itemName);
+        OutputDialogueManager.printInteraction(DialogueTypes.COUNT_OF_TASKS);
+        System.out.println(itemCount);
     }
 }
