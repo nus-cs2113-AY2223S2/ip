@@ -11,7 +11,7 @@ public class TaskList {
     public String toString(){
         String str = "";
         for(int i=1; i<totalTaskNum+1; i++){
-            str = str.concat(i + ". " + taskArray[i-1] + "\n");
+            str = str.concat(i + "." + taskArray[i-1] + "\n");
         }
         return str;
     }
@@ -26,15 +26,33 @@ public class TaskList {
 }
 
 class Task{
-    String contents;
-    Boolean done = false;
+    private String contents;
+    private Boolean isDone = false;
 
     Task(String userInput){
         contents = userInput;
     }
 
+
     @Override
     public String toString(){
+        if(isDone) return "[O] " + contents;
+        return "[ ] " + contents;
+    }
+
+    public String getContents(){
         return contents;
+    }
+
+    public Boolean getIsDone(){
+        return isDone;
+    }
+
+    public void mark(){
+        isDone = true;
+    }
+
+    public void unmark(){
+        isDone = false;
     }
 }

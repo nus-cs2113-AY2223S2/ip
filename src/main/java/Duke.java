@@ -4,6 +4,8 @@ public class Duke {
     public static String HORIZONTAL_LINE = "____________________________________________________________";
     public static final String COMMAND_BYE = "bye";
     public static final String COMMAND_LIST = "list";
+    public static final String COMMAND_MARK = "mark";
+    public static final String COMMAND_UNMARK = "unmark";
     private static TaskList TASKLIST = new TaskList();
 
     public static void main(String[] args) {
@@ -42,11 +44,16 @@ public class Duke {
     }
 
     public static void executeCommand(String command){
-        switch(command){
+        String[] commandsSplited = command.split(" ");
+        switch(commandsSplited[0]){
             case COMMAND_BYE:
                 exitProgram(); break;
             case COMMAND_LIST:
                 list(); break;
+            case COMMAND_MARK:
+                mark(commandsSplited[1]); break;
+            case COMMAND_UNMARK:
+                unmark(commandsSplited[1]); break;
             default:
                 add(command);
         }
@@ -61,17 +68,37 @@ public class Duke {
 
     public static void add(String userInput){
         TASKLIST.addTask(userInput);
+        //Duke's Comment
         System.out.println(HORIZONTAL_LINE);
-        System.out.println("[Duke] added: " + TASKLIST.getTaskArray()[TASKLIST.getTotalTaskNum()-1]);
+        System.out.println("[Duke] added: " + TASKLIST.getTaskArray()[TASKLIST.getTotalTaskNum()-1].getContents());
         System.out.println(HORIZONTAL_LINE);
     }
 
     public static void list(){
         System.out.println(HORIZONTAL_LINE);
-        System.out.println("[Duke]");
+        System.out.println("[Duke] Here are the tasks in your list: ");
         System.out.print(TASKLIST);
         System.out.println(HORIZONTAL_LINE);
     }
 
+    public static void mark(String taskNum){
+        int taskNumInt = Integer.parseInt(taskNum);
+        TASKLIST.getTaskArray()[taskNumInt-1].mark();
+        //Duke's Comment
+        System.out.println(HORIZONTAL_LINE);
+        System.out.println("[Duke] Nice! I marked this task as done: ");
+        System.out.println(TASKLIST.getTaskArray()[taskNumInt-1]);
+        System.out.println(HORIZONTAL_LINE);
+    }
+
+    public static void unmark(String taskNum) {
+        int taskNumInt = Integer.parseInt(taskNum);
+        TASKLIST.getTaskArray()[taskNumInt-1].unmark();
+        //Duke's Comment
+        System.out.println(HORIZONTAL_LINE);
+        System.out.println("[Duke] OK, I've marked this task as not done yet: ");
+        System.out.println(TASKLIST.getTaskArray()[taskNumInt-1]);
+        System.out.println(HORIZONTAL_LINE);
+    }
 
 }
