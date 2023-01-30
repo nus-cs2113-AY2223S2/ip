@@ -1,12 +1,12 @@
 public class Deadline extends Task {
     private String dueDate;
 
-    public Deadline (String taskName, String dueDate)
-    {
+    public Deadline(String taskName, String dueDate) {
         super(taskName); // invoke superclass constructor
         this.dueDate = dueDate;
     }
-    public String listTask () {
+
+    public String listTask() {
         if (getIsComplete()) {
             return "[D][X] " + getTaskName() + " (by: " + dueDate + ')';
         } else {

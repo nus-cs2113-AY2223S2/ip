@@ -20,12 +20,27 @@ public class Duke {
         printSeperator();
     }
 
+    private static void parseResponse(String response, List list) {
+        if (response.equals("list")) {
+            printSeperator();
+            list.listDisplay();
+            printSeperator();
+        } else if (response.length() >= 5 && response.substring(0, 5).equals("mark ")) {
+            printSeperator();
+            list.markTask(response.substring(5));
+            printSeperator();
+        } else if (response.length() >= 7 && response.substring(0, 7).equals("unmark ")) {
+            printSeperator();
+            list.unmarkTask(response.substring(7));
+            printSeperator();
+        } else { // add task
+            printSeperator();
+            list.listAdd(response);
+            printSeperator();
+        }
+    }
+
     public static void main(String[] args) {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
 
         greet();
         List list = new List();
@@ -34,23 +49,7 @@ public class Duke {
         String response = in.nextLine();
 
         while (!response.equals("bye")) {
-            if (response.equals("list")) {
-                printSeperator();
-                list.listDisplay();
-                printSeperator();
-            } else if (response.length() >= 5 && response.substring(0, 5).equals("mark ")) {
-                printSeperator();
-                list.markTask(response.substring(5));
-                printSeperator();
-            } else if (response.length() >= 7 && response.substring(0, 7).equals("unmark ")) {
-                printSeperator();
-                list.unmarkTask(response.substring(7));
-                printSeperator();
-            } else {
-                printSeperator();
-                list.listAdd(response);
-                printSeperator();
-            }
+            parseResponse(response, list);
             response = in.nextLine();
         }
         // response is bye.

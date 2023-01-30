@@ -1,11 +1,12 @@
 import com.sun.source.util.TaskListener;
 
 public class List {
+    private static final int TASKLIST_SIZE = 100;
     private int numItems = 0;
     private Task[] taskList;
 
     public List() {
-        taskList = new Task[100]; // Note: only initialise array of obj, but not individual obj
+        taskList = new Task[TASKLIST_SIZE]; // Note: only initialise array of obj, but not individual obj
     }
 
     public void listDisplay() {
@@ -26,6 +27,36 @@ public class List {
 
     }
 
+    private void listAddToDo(String sentence, int spaceIndex) {
+        String taskName = sentence.substring(spaceIndex + 1); // taskname rest of string
+        taskList[numItems] = new ToDo(taskName);
+    }
+
+    private void listAddDeadline(String sentence, int spaceIndex) {
+        int byIndex = sentence.indexOf(" /by ");
+        if (byIndex == -1) {
+            System.out.println("Invalid deadline command! Please specify due date.");
+            return;
+        }
+        String taskName = sentence.substring(spaceIndex + 1, byIndex);
+        String dueDate = sentence.substring(byIndex + 5); // rest of string after " /by "
+        taskList[numItems] = new Deadline(taskName, dueDate);
+    }
+
+    private void listAddEvent(String sentence, int spaceIndex) {
+        int fromIndex = sentence.indexOf(" /from ");
+        int toIndex = sentence.indexOf(" /to ");
+        if (fromIndex == -1 || toIndex == -1) {
+            System.out.println("Invalid event command! Please specify start and end time.");
+            return;
+        }
+        String taskName = sentence.substring(spaceIndex + 1, fromIndex);
+        String startTime = sentence.substring(fromIndex + 7, toIndex);
+        String endTime = sentence.substring(toIndex + 5);
+        taskList[numItems] = new Event(taskName, startTime, endTime);
+    }
+
+
     public void listAdd(String sentence) {
         int spaceIndex = sentence.indexOf(' ');
         if (spaceIndex == -1) {
@@ -37,31 +68,11 @@ public class List {
 
 
         if (taskType.equals("todo")) {
-            String taskName = sentence.substring(spaceIndex + 1); // taskname rest of string
-            taskList[numItems] = new ToDo(taskName);
+            listAddToDo(sentence, spaceIndex);
         } else if (taskType.equals("deadline")) {
-            int byIndex = sentence.indexOf(" /by ");
-            if (byIndex == -1) {
-                System.out.println("Invalid deadline command! Please specify due date.");
-                return;
-            }
-            String taskName = sentence.substring(spaceIndex + 1, byIndex);
-            String dueDate = sentence.substring(byIndex + 5); // rest of string after " /by "
-            taskList[numItems] = new Deadline(taskName, dueDate);
-
+            listAddDeadline(sentence, spaceIndex);
         } else if (taskType.equals("event")) {
-            int fromIndex = sentence.indexOf(" /from ");
-            int toIndex = sentence.indexOf(" /to ");
-            if (fromIndex == -1 || toIndex == -1) {
-                System.out.println("Invalid event command! Please specify start and end time.");
-                return;
-            }
-            String taskName = sentence.substring(spaceIndex + 1, fromIndex);
-            String startTime = sentence.substring(fromIndex + 7, toIndex);
-            String endTime = sentence.substring(toIndex + 5);
-            taskList[numItems] = new Event(taskName, startTime, endTime);
-
-
+            listAddEvent(sentence, spaceIndex);
         } else {
             System.out.println("Invalid task type!");
             return;
@@ -71,46 +82,47 @@ public class List {
         printSuccessfulAddMessage(numItems, taskList[numItems - 1]);
     }
 
-    public void markTask(String index) {
+
+    // check if index represented by string is valid, if valid, return index in integer form.
+    // else return -1.
+    private int parseIndex(String index) {
         int i;
         // ensure its a number
         // https://stackoverflow.com/questions/1486077/good-way-to-encapsulate-integer-parseint
         try {
             i = Integer.parseInt(index);
             i -= 1; // convert to 0-index
-
             if (i >= numItems) {
                 System.out.println(" Invalid task number!");
-                return;
+                return -1;
             }
-
-            taskList[i].setIsComplete(true);
-            System.out.println(" Nice! I've marked this task as done:");
-            System.out.print("   [X] ");
-            System.out.println(taskList[i].getTaskName());
         } catch (NumberFormatException e) {
             System.out.println("NOT A NUMBER!");
+            i = -1;
+        }
+        return i;
+    }
+
+
+    public void markTask(String stringIndex) {
+        int index = parseIndex(stringIndex);
+        if (index != -1) {
+            taskList[index].setIsComplete(true);
+            System.out.println(" Nice! I've marked this task as done:");
+            System.out.print("   [X] ");
+            System.out.println(taskList[index].getTaskName());
         }
     }
 
-    public void unmarkTask(String index) {
-        int i;
-        // ensure its a number
-        // https://stackoverflow.com/questions/1486077/good-way-to-encapsulate-integer-parseint
-        try {
-            i = Integer.parseInt(index);
-            i -= 1; // convert to 0-index
 
-            if (i >= numItems) {
-                System.out.println(" Invalid task number!");
-                return;
-            }
-            taskList[i].setIsComplete(false);
+    public void unmarkTask(String stringIndex) {
+        int index = parseIndex(stringIndex);
+
+        if (index != -1) {
+            taskList[index].setIsComplete(false);
             System.out.println(" OK, I've marked this task as not done yet:");
             System.out.print("   [ ] ");
-            System.out.println(taskList[i].getTaskName());
-        } catch (NumberFormatException e) {
-            System.out.println("NOT A NUMBER!");
+            System.out.println(taskList[index].getTaskName());
         }
     }
 }
