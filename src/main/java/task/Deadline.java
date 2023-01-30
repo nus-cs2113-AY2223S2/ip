@@ -1,7 +1,7 @@
 package task;
 
 public class Deadline extends Task {
-    public static String DELIMITER = "/by ";
+    public static final String DELIMITER = "/by ";
     protected String by;
 
     public Deadline(String description, String by) {

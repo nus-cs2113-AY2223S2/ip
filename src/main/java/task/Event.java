@@ -1,7 +1,7 @@
 package task;
 
 public class Event extends Task {
-    public static String DELIMITER = "/from | /to ";
+    public static final String DELIMITER = "/from | /to ";
     protected String from;
     protected String to;
 
