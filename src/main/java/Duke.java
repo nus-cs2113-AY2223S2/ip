@@ -29,7 +29,7 @@ public class Duke {
                 System.out.println("____________________________________________________________");
             } else if (input.startsWith("mark")) {
                 String[] temp = input.split(" ", 2);
-                int taskIndex = Integer.valueOf(temp[1]);
+                int taskIndex = Integer.parseInt(temp[1]);
                 Task curTask = tasks[taskIndex - 1];
                 curTask.markAsDone();
                 System.out.println("____________________________________________________________");
@@ -38,7 +38,7 @@ public class Duke {
                 System.out.println("____________________________________________________________");
             } else if (input.startsWith("unmark")) {
                 String[] temp = input.split(" ", 2);
-                int taskIndex = Integer.valueOf(temp[1]);
+                int taskIndex = Integer.parseInt(temp[1]);
                 Task curTask = tasks[taskIndex - 1];
                 curTask.unmarkAsDone();
                 System.out.println("____________________________________________________________");
@@ -52,7 +52,9 @@ public class Duke {
                 tasks[currentIndex] = todo;
                 currentIndex++;
                 System.out.println("____________________________________________________________");
-                System.out.println("added: " + todo.toString());
+                System.out.println("Got it. I've added this task:");
+                System.out.println(todo);
+                System.out.println("Now you have " + currentIndex + " tasks in the list.");
                 System.out.println("____________________________________________________________");
             }
             else if (input.startsWith("deadline")){
@@ -64,7 +66,9 @@ public class Duke {
                 tasks[currentIndex] = deadline;
                 currentIndex++;
                 System.out.println("____________________________________________________________");
-                System.out.println("added: " + deadline.toString());
+                System.out.println("Got it. I've added this task:");
+                System.out.println(deadline);
+                System.out.println("Now you have " + currentIndex + " tasks in the list.");
                 System.out.println("____________________________________________________________");
             }
             else if (input.startsWith("event")){
@@ -78,7 +82,9 @@ public class Duke {
                 tasks[currentIndex] = event;
                 currentIndex++;
                 System.out.println("____________________________________________________________");
-                System.out.println("added: " + event.toString());
+                System.out.println("Got it. I've added this task:");
+                System.out.println(event);
+                System.out.println("Now you have " + currentIndex + " tasks in the list.");
                 System.out.println("____________________________________________________________");
             }
         }
