@@ -1,4 +1,4 @@
-package util; 
+package util;
 
 public class Task {
     protected String description;
@@ -8,7 +8,7 @@ public class Task {
         this.description = description;
         this.isDone = false;
     }
-    
+
     public Task() {
         this("");
     }
@@ -32,8 +32,9 @@ public class Task {
     public void setDone(boolean isDone) {
         this.isDone = isDone;
     }
-    
 
-    
+    public String toString() {
+        return "[" + this.getStatusIcon() + "] " + this.getDescription();
+    }
+
 }
-
