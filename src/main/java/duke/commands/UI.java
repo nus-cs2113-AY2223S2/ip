@@ -46,7 +46,12 @@ public class UI {
             if (line.equalsIgnoreCase("bye")) {
                 isRunning = false;
             } else {
-                newProcess.handleCommand(taskList);
+                try{
+                    newProcess.handleCommand(taskList);
+                } catch (InvalidTaskException e){
+                    System.out.println(e.getMessage());
+                }
+
             }
 
         } while (isRunning);

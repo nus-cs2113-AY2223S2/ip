@@ -1,7 +1,7 @@
 package duke.commands.taskCommands;
 
 import duke.commands.Command;
-import duke.commands.DukeException;
+import duke.commands.InvalidTaskException;
 import duke.tasks.Events;
 import duke.tasks.Task;
 import duke.tasks.TaskList;
@@ -25,18 +25,14 @@ public class EventCommand extends Command {
             markIndex = line.indexOf("/from");
             markIndex1 = line.indexOf("/to");
             if (markIndex == -1 || markIndex1 == -1) {
-                DukeException.printError();
-                System.out.println(LINEBREAK);
-                return;
+                throw new InvalidTaskException();
             }
 
             from = line.substring(markIndex + 5, markIndex1).trim();
             to = line.substring(markIndex1 + 3).trim();
 
             if (from.equals("")) {
-                DukeException.printError();
-                System.out.println(LINEBREAK);
-                return;
+                throw new InvalidTaskException();
             }
 
             ToDo newDeadline = new Events(description, from, to);
@@ -44,8 +40,8 @@ public class EventCommand extends Command {
 
             newDeadline.printAdded();
             System.out.println(LINEBREAK);
-        } catch (Exception e) {
-            DukeException.printError();
+        } catch (InvalidTaskException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

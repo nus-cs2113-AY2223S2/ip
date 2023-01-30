@@ -34,51 +34,51 @@ public class CommandHandler {
      *
      * @param taskList List containing the tasks input by user.
      */
-    public void handleCommand(TaskList taskList){
+    public void handleCommand(TaskList taskList) throws InvalidTaskException {
         String command = parseCommand();
+        Command newCommand;
         switch (command) {
 
         case "todo":
-            ToDoCommand newTodo = new ToDoCommand();
-            newTodo.handleCommand(line, taskList);
+            newCommand = new ToDoCommand();
+            newCommand.handleCommand(line, taskList);
             break;
 
         case "deadline":
-            DeadlineCommand newDeadline = new DeadlineCommand();
-            newDeadline.handleCommand(line, taskList);
+            newCommand = new DeadlineCommand();
+            newCommand.handleCommand(line, taskList);
             break;
 
         case "event":
-            EventCommand newEvent = new EventCommand();
-            newEvent.handleCommand(line, taskList);
+            newCommand = new EventCommand();
+            newCommand.handleCommand(line, taskList);
             break;
 
         case "":
-            Command newCommand = new Command();
+            newCommand = new EmptyCommand();
             newCommand.handleCommand(line, taskList);
             break;
 
         case "list":
-            ListCommand newList = new ListCommand();
-            newList.handleCommand(line, taskList);
+            newCommand = new ListCommand();
+            newCommand.handleCommand(line, taskList);
             break;
 
         case "mark":
-            MarkCommand newMark = new MarkCommand();
-            newMark.handleCommand(line, taskList);
+            newCommand = new MarkCommand();
+            newCommand.handleCommand(line, taskList);
             break;
 
         case "unmark":
-            UnmarkCommand newUnmark = new UnmarkCommand();
-            newUnmark.handleCommand(line, taskList);
+            newCommand = new UnmarkCommand();
+            newCommand.handleCommand(line, taskList);
             break;
 
         case "help":
 
 
         default:
-            DukeException.printError();
-            System.out.println(LINEBREAK);
+            throw new InvalidTaskException();
         }
     }
 }

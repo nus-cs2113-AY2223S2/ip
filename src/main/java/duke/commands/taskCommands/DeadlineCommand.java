@@ -1,7 +1,7 @@
 package duke.commands.taskCommands;
 
 import duke.commands.Command;
-import duke.commands.DukeException;
+import duke.commands.InvalidTaskException;
 import duke.tasks.Deadline;
 import duke.tasks.Task;
 import duke.tasks.TaskList;
@@ -22,26 +22,21 @@ public class DeadlineCommand extends Command {
             description = line.substring(line.indexOf(' ') + 1, line.indexOf('/')).trim();
             markIndex = line.indexOf("/by");
             if (markIndex == -1) {
-                DukeException.printError();
-                System.out.println(LINEBREAK);
-                return;
+                throw new InvalidTaskException();
             }
 
             deadline = line.substring(markIndex + 3).trim();
 
             if (deadline.equals("")) {
-                DukeException.printError();
-                System.out.println(LINEBREAK);
-                return;
+                throw new InvalidTaskException();
             }
 
             ToDo newDeadline = new Deadline(description, deadline);
             taskList.addTask(indexCount, newDeadline);
             newDeadline.printAdded();
             System.out.println(LINEBREAK);
-        } catch (Exception e) {
-            DukeException.printError();
-            System.out.println(LINEBREAK);
+        } catch (InvalidTaskException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

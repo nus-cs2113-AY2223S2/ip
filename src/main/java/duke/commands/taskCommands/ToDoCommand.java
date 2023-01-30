@@ -1,7 +1,7 @@
 package duke.commands.taskCommands;
 
 import duke.commands.Command;
-import duke.commands.DukeException;
+import duke.commands.InvalidTaskException;
 import duke.tasks.Task;
 import duke.tasks.TaskList;
 import duke.tasks.ToDo;
@@ -17,17 +17,14 @@ public class ToDoCommand extends Command {
         try {
             markIndex = line.indexOf(' ');
             if (markIndex == -1) {
-                DukeException.printError();
-                System.out.println(LINEBREAK);
-                return;
+                throw new InvalidTaskException();
             }
 
             description = line.substring(markIndex + 1).trim();
             ToDo newTask = new ToDo(description);
             taskList.addTask(indexCount, newTask);
-        } catch (Exception e) {
-            DukeException.printError();
-            System.out.println(LINEBREAK);
+        } catch (InvalidTaskException e) {
+            System.out.println(e.getMessage());
         }
     }
 }
