@@ -2,7 +2,7 @@ package grandduke;
 
 import grandduke.command.Io;
 
-public abstract class GrandDuke {
+public class GrandDuke {
 
     /**
      * Starts GrandDuke

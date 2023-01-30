@@ -1,8 +1,6 @@
 package grandduke.command;
 
 import java.util.Scanner;
-import grandduke.task.TaskList;
-import grandduke.command.Parser;
 
 public abstract class Io {
     public static final String LOGO = "  _____                     _______       _        \n"
@@ -46,6 +44,7 @@ public abstract class Io {
         printLine();
         printOutput("Hello! I'm GrandDuke\n" + "        What can I do for you?");
         printLine();
+        System.out.print(System.lineSeparator());
     }
 
     /**
@@ -55,6 +54,7 @@ public abstract class Io {
         printLine();
         printOutput("Bye. Hope to see you again soon!");
         printLine();
+        System.out.print(System.lineSeparator());
     }
 
     /**
@@ -81,6 +81,7 @@ public abstract class Io {
             }
 
             printLine();
+            System.out.print(System.lineSeparator());
 
         }
         in.close();
