@@ -1,5 +1,5 @@
 import java.util.Scanner;
-
+import java.util.Arrays;
 public class Duke {
     private static Task[] tasks = new Task[100];
     private static int currentStoredTaskIndex = 0;
@@ -19,7 +19,6 @@ public class Duke {
     }
 
     public static void list() {
-
         printMessage(getFormattedList());
     }
 
@@ -28,7 +27,7 @@ public class Duke {
         tasks[taskIndex].setDone(true);
         String[] message = {
                 "Cool! I've marked this task as done:",
-                tasks[taskIndex].getDisplayString()
+                tasks[taskIndex].toString()
         };
         printMessage(message);
     }
@@ -38,9 +37,48 @@ public class Duke {
         tasks[taskIndex].setDone(false);
         String[] message = {
                 "Ok, I've marked this task as not done yet:",
-                tasks[taskIndex].getDisplayString()
+                tasks[taskIndex].toString()
         };
         printMessage(message);
+    }
+    public static void handleAddTask(String input) {
+        Task addedTask = addTask(input);
+        String[] message = {
+                "Got it. I've added this task:",
+                indent + addedTask.toString(),
+                "Now you have " + (currentStoredTaskIndex) + " tasks in the list."
+        };
+        printMessage(message);
+    }
+    public static Task addTask(String input) {
+        String[] inputSections = input.split("/");
+        String taskType = inputSections[0].split(" ", 2)[0];
+        String taskDescription = inputSections[0].split(" ", 2)[1];
+
+        Task taskToAdd;
+        switch (taskType) {
+        case "deadline":
+            taskToAdd = new Deadline(
+                    taskDescription,
+                    inputSections[1].replaceFirst("by", "")
+            );
+            break;
+        case "event":
+            taskToAdd = new Event(
+                    taskDescription,
+                    inputSections[1].replaceFirst("from", ""),
+                    inputSections[2].replaceFirst("to", "")
+            );
+            break;
+        default:
+            taskToAdd = new ToDo(
+                    taskDescription
+            );
+            break;
+        }
+        tasks[currentStoredTaskIndex] = taskToAdd;
+        currentStoredTaskIndex ++;
+        return taskToAdd;
     }
 
     public static void mainLoop() {
@@ -49,6 +87,11 @@ public class Duke {
         while (!currentInput.equals("bye")) {
             String[] words = currentInput.split(" ");
             switch (words[0]) {
+            case "deadline":
+            case "todo":
+            case "event":
+                handleAddTask(currentInput);
+                break;
             case "list":
                 list();
                 break;
@@ -59,8 +102,6 @@ public class Duke {
                 unmark(words);
                 break;
             default:
-                Task newTask = new Task(currentInput);
-                addToList(newTask);
                 break;
             }
             currentInput = in.nextLine();
@@ -68,7 +109,7 @@ public class Duke {
     }
 
     public static String getFormattedTask(Task task, int number) {
-        return number + ". " + task.getDisplayString();
+        return number + ". " + task.toString();
     }
 
     public static String[] getFormattedList() {
