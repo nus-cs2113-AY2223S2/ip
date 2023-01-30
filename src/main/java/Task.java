@@ -5,6 +5,7 @@ public class Task {
     public boolean isDone() {
         return isDone;
     }
+
     public String getDescription() {
         return description;
     }
@@ -19,6 +20,7 @@ public class Task {
 
     public Task(String description) {
         this.description = description;
+        this.isDone = false;
     }
 
     @Override

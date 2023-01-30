@@ -18,6 +18,12 @@ public class Psyduck {
         taskCount++;
     }
 
+    public static void addEvent(String description, String from, String to) {
+        Event newTask = new Event(description, from, to);
+        tasks[taskCount] = newTask;
+        taskCount++;
+    }
+
     public static void listTasks() {
         linePrint();
         for (int i = 0; i < taskCount; i ++) {
@@ -28,7 +34,7 @@ public class Psyduck {
     }
     public static void linePrint() {
         for (int i = 0; i < 100; i++) {
-            System.out.print("-");
+            System.out.print("=");
         }
         System.out.println();
     }
@@ -94,17 +100,40 @@ public class Psyduck {
                     linePrint();
                     break;
                 }
-                int slashPos = input.indexOf("/by");
-                if (slashPos == -1) {
+                int byPos = input.indexOf("/by");
+                if (byPos == -1) {
                     linePrint();
                     System.out.println("Psyduck needs a deadline.");
                     System.out.println("Remember to use the <deadline> <description> </by> <date> format for your input");
                     linePrint();
                     break;
                 }
-                description = input.substring(space + 1, slashPos);
-                String by = input.substring(slashPos + 4);
+                description = input.substring(space + 1, byPos);
+                String by = input.substring(byPos + 4);
                 addDeadline(description, by);
+                linePrint();
+                System.out.println("Psyduck has added the task: " + tasks[taskCount-1]);
+                linePrint();
+                break;
+            case "event":
+                if (space == -1) {
+                    System.out.println("Event task cannot be empty! >:(");
+                    linePrint();
+                    break;
+                }
+                int fromPos = input.indexOf("/from");
+                int toPos = input.indexOf("/to");
+                if (fromPos == -1 || toPos == -1) {
+                    linePrint();
+                    System.out.println("Psyduck needs a start or end date.");
+                    System.out.println("Remember to use the <deadline> <description> </from> <date> </to> <date> format for your input");
+                    linePrint();
+                    break;
+                }
+                description = input.substring(space + 1, fromPos);
+                String from = input.substring(fromPos + 6, toPos);
+                String to = input.substring(toPos + 4);
+                addEvent(description, from, to);
                 linePrint();
                 System.out.println("Psyduck has added the task: " + tasks[taskCount-1]);
                 linePrint();
