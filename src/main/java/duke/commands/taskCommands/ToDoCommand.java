@@ -1,11 +1,10 @@
 package duke.commands.taskCommands;
 
 import duke.commands.Command;
-import duke.commands.InvalidTaskException;
+import duke.execptions.InvalidTaskException;
 import duke.tasks.Task;
 import duke.tasks.TaskList;
 import duke.tasks.ToDo;
-import static duke.constants.Constants.LINEBREAK;
 
 public class ToDoCommand extends Command {
 

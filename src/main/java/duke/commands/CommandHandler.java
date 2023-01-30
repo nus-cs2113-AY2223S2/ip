@@ -3,9 +3,8 @@ package duke.commands;
 import duke.commands.taskCommands.DeadlineCommand;
 import duke.commands.taskCommands.EventCommand;
 import duke.commands.taskCommands.ToDoCommand;
+import duke.execptions.InvalidTaskException;
 import duke.tasks.TaskList;
-
-import static duke.constants.Constants.LINEBREAK;
 
 public class CommandHandler {
 

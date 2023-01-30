@@ -1,4 +1,4 @@
-package duke.commands;
+package duke.execptions;
 
 import static duke.constants.Constants.LINEBREAK;
 
