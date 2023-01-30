@@ -2,35 +2,36 @@ import java.util.Scanner;
 import java.util.Arrays;
 import java.util.ArrayList;
 public class Duke{
-    public static void main(String[] args){
+    public static void main(String[] args) {
         String dash = "__________________________________";
-        String greet = dash+"\nHello I'm Duke\nWhat can I do for you?\n"+dash;
+        String greet = dash + "\nHello I'm Duke\nWhat can I do for you?\n" + dash;
         System.out.println(greet);
 
-        ArrayList<String> array =new ArrayList<String>();
+        ToDoList toDo = new ToDoList();
 
-        while(true){
+        while (true) {
             Scanner scan = new Scanner(System.in);
-            String message= scan.nextLine();
-            if(message.equals("bye")){
-                System.out.println(dash+"\nBye. Hope to see you again soon!\n"+dash);
+            String input = scan.nextLine();
+            String[] Temp = input.split(" ");
+            if(Temp[0].equals("mark")|Temp[0].equals("unmark")){
+                int numberToMark = Integer.parseInt(Temp[1]);
+                toDo.mark(toDo.at(numberToMark));
+            }
+            else if (input.equals("bye")) {
+                System.out.println(dash + "\nBye. Hope to see you again soon!\n" + dash);
                 break;
             }
-            else if (message.equals("list")) {
-                String[] outputArray = new String[array.size()];
-                outputArray = array.toArray(outputArray);
-                System.out.println(dash+"\n");
-                for(int a =0;a<array.size();a++) {
-                    System.out.println(Integer.toString(a+1)+". "+outputArray[a]+"\n");
-                }
-                System.out.println(dash+"\n");
+            else if (input.equals("list")) {
+                toDo.printList();
             }
-            else{
-                array.add(message);
-                System.out.println(dash+"\nadded: "+message+"\n"+dash);
+            else {
+                Task task= new Task(input, toDo.size()+1);
+                toDo.addToList(task);
             }
         }
     }
+
+
 }
 
 
