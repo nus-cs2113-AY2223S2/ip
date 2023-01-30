@@ -14,7 +14,7 @@ public interface ITaskController {
 	 * @param description task specified by user
 	 * @return Task object
 	 */
-	public Task addTask(Task newTask);
+	public String addTask(Task newTask);
 	/**
      * Marks task based on task index specified
      * @param taskIndex
