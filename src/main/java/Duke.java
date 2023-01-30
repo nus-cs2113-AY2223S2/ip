@@ -10,8 +10,7 @@ public class Duke {
         String exit = "Bye. Hope to see you again soon! \n";
         String border = "____________________________________________________________ \n";
 
-        String[] arr;
-        arr = new String[100];
+        Task[] tasks = new Task[100];
         int listCount = 0;
 
         System.out.println(logo + border + greeting + border);
@@ -23,14 +22,34 @@ public class Duke {
         while (!entry.equals("bye")){
             if(entry.equals("list")){
                 System.out.println(border);
-                for(int i = 0; i < listCount; i++){
-                    System.out.println(i+1 + ". " + arr[i]);
+
+                int counter = 1;
+                for (Task t: tasks){
+                    if (t== null){
+                        break;
+                    }
+                    else{
+                        System.out.println(counter + ". " + t);
+                        counter++;
+                    }
+
                 }
                 System.out.println(border);
                 entry = input.nextLine();
             }
+
+//            else if (entry.contains("mark")){
+//                Task task_mark = entry.substring(5);
+//                task_mark.setStatus("mark");
+//            }
+//
+//            else if (entry.contains("unmark")){
+//                Task task_mark = entry.substring(5);
+//                task_mark.setStatus("unmark");
+//            }
+
             else {
-                arr[listCount] = entry;
+                tasks[listCount] = new Task(entry);
                 listCount ++;
                 System.out.println(border + "added: " + entry + "\n" + border);
                 entry = input.nextLine();
