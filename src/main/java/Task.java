@@ -23,4 +23,6 @@ public class Task {
         this.taskName = taskName;
     }
 
+    public void getTaskStatus() {
+    }
 }
