@@ -4,8 +4,18 @@ public class TaskList {
     private static ArrayList<Task> list = new ArrayList<>();
 
     public void AddTask(String taskName) {
-        Task t = new Task(taskName);
+        Todo t = new Todo(taskName);
         list.add(t);
+    }
+
+    public void AddTask(String taskName, String byWhen) {
+        Deadline d = new Deadline(taskName, byWhen);
+        list.add(d);
+    }
+
+    public void AddTask(String taskName, String startWhen, String endWhen) {
+        Event e = new Event(taskName, startWhen, endWhen);
+        list.add(e);
     }
 
     public boolean MarkTask(int taskNumber, boolean mark) {
@@ -33,13 +43,13 @@ public class TaskList {
     public void ListTask() {
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).IsCompleted()) {
-                System.out.println(i + 1 + ".[X] " + list.get(i).GetTaskName());
-            } else {
-                System.out.println(i + 1 + ".[ ] " + list.get(i).GetTaskName());
-            }
-
+            System.out.print(i + 1);
+            System.out.println(list.get(i).toString());
         }
+    }
+
+    public int GetTaskCount() {
+        return list.size();
     }
 }
 

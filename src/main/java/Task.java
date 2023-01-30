@@ -18,4 +18,10 @@ public class Task {
     public boolean IsCompleted() {
         return completed;
     }
+
+    public String toString() {
+        return "";
+    }
+
+    ;
 }
