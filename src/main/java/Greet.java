@@ -4,8 +4,8 @@
  * Public method to print greeting.
  */
 public class Greet {
-    private String[] logo = {" ____        _        "
-                    , "|  _ \\ _   _| | _____ "
+    private String[] logo = {" ____        _"
+                    , "|  _ \\ _   _| | _____"
                     , "| | | | | | | |/ / _ \\"
                     , "| |_| | |_| |   <  __/"
                     , "|____/ \\__,_|_|\\_\\___|"};

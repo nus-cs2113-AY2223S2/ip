@@ -6,6 +6,9 @@ import java.util.Scanner;
  * Print output.
  */
 public class UI {
+
+    private static final Scanner SCANNER = new Scanner(System.in);
+    private static final char INPUT_COMMENT_MARKER = '#';
     /**
      * Print the list of tasks.
      *
@@ -16,9 +19,9 @@ public class UI {
         Formatter formatter = new Formatter();
         Tool tool = new Tool();
         formatter.drawSeparationLine();
-        System.out.println("    Here are the tasks in your list: ");
+        System.out.println("      Here are the tasks in your list:");
         for (int i=1; i<=count; i+=1){
-            formatter.printIndentation(6);
+            formatter.printIndentation(8);
             System.out.print(i+".");
             System.out.print(tasks[i-1]);
             System.out.print('\n');
@@ -52,7 +55,7 @@ public class UI {
         Formatter formatter = new Formatter();;
         formatter.drawSeparationLine();
         System.out.println(caption);
-        formatter.printIndentation(6);
+        formatter.printIndentation(8);
         System.out.println(task);
         formatter.drawSeparationLine();
 
@@ -96,9 +99,22 @@ public class UI {
      * @return
      */
     public String readInput() {
-        Scanner in = new Scanner(System.in);
-        String inputCommand = in.nextLine();
-        return inputCommand;
+//        Scanner in = new Scanner(System.in);
+//        String inputCommand = in.nextLine();
+//        return inputCommand;
+        String inputLine;
+        if(SCANNER.hasNextLine()){
+            inputLine = SCANNER.nextLine();
+        }else{
+            inputLine = null;
+            System.exit(0);
+        }
+
+        // silently consume all blank and comment lines
+//        while (inputLine.trim().isEmpty() || inputLine.trim().charAt(0) == INPUT_COMMENT_MARKER) {
+//            inputLine = SCANNER.nextLine();
+//        }
+        return inputLine;
     }
 
 }

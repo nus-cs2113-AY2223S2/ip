@@ -42,7 +42,7 @@ public class Formatter {
      */
     public void drawSeparationLine(){
         printIndentation(4);
-        String s = Character.toString(0x2500);
+        String s = "_";
         for (int i=0; i<this.separationLineLength; i+=1){
             System.out.print(s);
         }

@@ -9,10 +9,14 @@ public class Duke {
 
     public static void useDuke(){
         UI readInputCommand = new UI();
-        String inputCommand = readInputCommand.readInput();
+//        String inputCommand = readInputCommand.readInput();
         CommandManager commandManager = new CommandManager();
-        commandManager.setCommand(inputCommand);
-        commandManager.executeCommand();
+        while(true){
+            commandManager.setCommand(readInputCommand.readInput());
+            //commandManager.setCommand(inputCommand);
+            commandManager.executeCommand();
+        }
+
     }
 
     public static void main(String[] args) {
