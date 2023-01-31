@@ -1,5 +1,7 @@
 package wilsonoh.sagyo.tasks;
 
+import wilsonoh.sagyo.commands.CommandType;
+
 public class EventTask extends Task {
 
     private String from;
@@ -9,6 +11,11 @@ public class EventTask extends Task {
         super(taskName);
         this.from = from;
         this.to = to;
+    }
+
+    @Override
+    public String getTaskType() {
+        return CommandType.EVENT.name().toLowerCase();
     }
 
     @Override

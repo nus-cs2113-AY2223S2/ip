@@ -1,5 +1,7 @@
 package wilsonoh.sagyo.tasks;
 
+import wilsonoh.sagyo.commands.CommandType;
+
 public class DeadlineTask extends Task {
 
     private String by;
@@ -7,6 +9,11 @@ public class DeadlineTask extends Task {
     public DeadlineTask(String taskName, String by) {
         super(taskName);
         this.by = by;
+    }
+
+    @Override
+    public String getTaskType() {
+        return CommandType.DEADLINE.name().toLowerCase();
     }
 
     @Override
