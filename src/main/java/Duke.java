@@ -5,23 +5,23 @@ import util.Event;
 import util.Deadline;
 
 public class Duke {
-    public static int next_index = 1;
+    public static int nextIndexInList = 1;
 
     public static Task[] createList() {
-        Task[] commands_list = new Task[100];
-        return commands_list;
+        Task[] commands = new Task[100];
+        return commands;
     }
 
-    public static void addToList(String line, Task[] commands_list) {
-        commands_list[next_index] = new Task(line);
-        next_index++;
+    public static void addTaskToList(String line, Task[] commands) {
+        commands[nextIndexInList] = new Task(line);
+        nextIndexInList++;
     }
 
-    public static void displayCommandsList(Task[] commands_list) {
+    public static void displayCommandsList(Task[] commands) {
         int i = 1;
         System.out.println("\t_____________________________________________________");
-        while (i < next_index) {
-            System.out.println("\t" + i + "." + commands_list[i]);
+        while (i < nextIndexInList) {
+            System.out.println("\t" + i + "." + commands[i]);
             i++;
         }
         System.out.println("\t_____________________________________________________");
@@ -38,7 +38,7 @@ public class Duke {
         System.out.println("\t_____________________________________________________");
     }
 
-    public static void main(String[] args) {
+    public static void printWelcomeMessage() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -48,61 +48,71 @@ public class Duke {
         System.out.println(" Hello! I'm Duke ");
         System.out.println(" What can I do for you? \n");
         System.out.println("____________________________________________________________\n");
-        Task[] commands_list = createList();
+    }
+
+    public static void printByeMessage() {
+        System.out.println("____________________________________________________________\n");
+        System.out.println("\t Bye. Hope to see you again soon!\n");
+        System.out.println("____________________________________________________________\n");
+    }
+
+    public static void printSpecificTask(int index, Task[] commands, String message) {
+        if (!message.equals("")) {
+            System.out.println("\t " + message);
+        }
+        System.out.println("\t" + index + "." + commands[index]);
+    }
+
+    public static void main(String[] args) {
+        printWelcomeMessage();
+        Task[] commands = createList();
         boolean not_finished = true;
         while (not_finished == true) {
             String line = ask();
             if (line.equals("bye")) {
-                System.out.println("____________________________________________________________\n");
-                System.out.println("\t Bye. Hope to see you again soon!\n");
-                System.out.println("____________________________________________________________\n");
+                printByeMessage();
                 not_finished = false;
             } else if (line.equals("list")) {
-                displayCommandsList(commands_list);
+                displayCommandsList(commands);
             } else if (line.length() > 5 && line.substring(0, 4).equals("mark")) {
                 int index = Integer.parseInt(line.substring(5, 6));
-                commands_list[index].setDone(true);
+                commands[index].setDone(true);
                 printDashLine();
-                System.out.println("\t Nice! I've marked this task as done:");
-                System.out.println("\t" + index + "." + commands_list[index]);
+                printSpecificTask(index, commands, "Nice! I've marked this task as done:");
                 printDashLine();
             } else if (line.length() > 7 && line.substring(0, 6).equals("unmark")) {
                 int index = Integer.parseInt(line.substring(7, 8));
-                commands_list[index].setDone(false);
+                commands[index].setDone(false);
                 printDashLine();
-                System.out.println("\t OK, I've marked this task as not done yet:");
-                System.out.println("\t" + index + "." + commands_list[index]);
+                printSpecificTask(index, commands, "OK, I've marked this task as not done yet:");
                 printDashLine();
             } else if (line.length() > 4 && line.substring(0, 4).equals("todo")) {
-                commands_list[next_index] = new Todo(line);
-                next_index++;
+                commands[nextIndexInList] = new Todo(line);
+                nextIndexInList++;
                 printDashLine();
-                System.out.println("\t Got it. I've added this task:");
-                System.out.println("\t" + commands_list[next_index - 1]);
+                printSpecificTask(nextIndexInList - 1, commands, "Got it. I've added this task:");
                 printDashLine();
             } else if (line.length() > 5 && line.substring(0, 5).equals("event")) {
-                int index_from = line.indexOf("/");
-                int index_to = line.indexOf("/", index_from + 1);
-                commands_list[next_index] = new Event(line.substring(0, index_from - 1),
-                        line.substring(index_from + 6, index_to - 1), line.substring(index_to + 4));
-                next_index++;
+                int indexFrom = line.indexOf("/");
+                int indexTo = line.indexOf("/", indexFrom + 1);
+                commands[nextIndexInList] = new Event(line.substring(0, indexFrom - 1),
+                        line.substring(indexFrom + 6, indexTo - 1), line.substring(indexTo + 4));
+                nextIndexInList++;
                 printDashLine();
-                System.out.println("\t Got it. I've added this task:");
-                System.out.println("\t" + commands_list[next_index - 1]);
+                printSpecificTask(nextIndexInList - 1, commands, "Got it. I've added this task:");
                 printDashLine();
             } else if (line.length() > 8 && line.substring(0, 8).equals("deadline")) {
                 int index_by = line.indexOf("/");
-                commands_list[next_index] = new Deadline(line.substring(0, index_by - 1), line.substring(index_by + 4));
-                next_index++;
+                commands[nextIndexInList] = new Deadline(line.substring(0, index_by - 1), line.substring(index_by + 4));
+                nextIndexInList++;
                 printDashLine();
-                System.out.println("\t Got it. I've added this task:");
-                System.out.println("\t" + commands_list[next_index - 1]);
+                printSpecificTask(nextIndexInList - 1, commands, "Got it. I've added this task:");
                 printDashLine();
             } else {
-                addToList(line, commands_list);
-                System.out.println("\t_____________________________________________________");
-                System.out.println("\t added: " + commands_list[next_index - 1]);
-                System.out.println("\t_____________________________________________________");
+                addTaskToList(line, commands);
+                printDashLine();
+                printSpecificTask(nextIndexInList - 1, commands, "Got it. I've added this task:");
+                printDashLine();
             }
         }
 
