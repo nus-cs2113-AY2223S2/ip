@@ -7,16 +7,6 @@ public class Task {
         this.isDone = false;
     }
 
-    public String getTaskDescription() {
-
-        return taskDescription;
-    }
-
-    public void setTaskDescription(String taskDescription) {
-
-        this.taskDescription = taskDescription;
-    }
-
     public boolean isDone() {
         return isDone;
     }
@@ -25,8 +15,7 @@ public class Task {
         isDone = done;
     }
 
-    public String getStatusIcon(){
-
-        return (isDone? "X": " "); //Marks a task done with an X
+    public String getStatusIcon() {
+        return (isDone ? "X" : " "); //Marks a task done with an X
     }
 }
