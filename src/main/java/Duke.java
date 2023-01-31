@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class Duke {
 
+    static final int MAX_COMMANDS = 100;
 
     public static void main(String[] args) {
         String logo = " ____        _        \n"
@@ -14,7 +15,7 @@ public class Duke {
         generateOutput();
     }
 
-    private static Task[] taskList = new Task[100];
+    private static Task[] taskList = new Task[MAX_COMMANDS];
     private static int listCount = 0;
 
     public static void greet() {
@@ -50,7 +51,7 @@ public class Duke {
     }
 
     public static void generateOutput() {
-        for (int x = 0; x < 100; x += 1) {
+        for (int x = 0; x < MAX_COMMANDS; x += 1) {
             String command = getUserInput();
             System.out.println("____________________________________________________________");
             if (command.compareTo("bye") == 0) {
