@@ -24,17 +24,21 @@ public class Main {
     public void run() {
         TextFormatter ui = new TextFormatter(2, 120);
         CommandParser cmdParser = new CommandParser(tasks);
+        boolean isRunning = true;
         ui.printLines(GREETING);
         // try-with-resources to close the scanner automatically, preventing resource leaks
         try (Scanner sc = new Scanner(System.in)) {
             // Loop will break on execution of the ByeCommand
-            while (true) {
+            while (isRunning) {
                 System.out.print(PROMPT);
                 String line = sc.nextLine();
                 try {
                     Command cmd = cmdParser.parseCommand(line);
                     cmd.executeCommand();
                     ui.printLines(cmd.getCommandMessage());
+                    if (cmd.isExit) {
+                        isRunning = false;
+                    }
                 } catch (SagyoException e) {
                     ui.printLines(e.getMessage());
                 }

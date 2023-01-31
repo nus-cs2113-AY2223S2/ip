@@ -7,7 +7,7 @@ public enum CommandType {
     UNMARK("^\\s*unmark\\s*(?<idx>-?\\d+)?\\s*$"),
     BYE("^\\s*bye\\s*$"),
     EVENT("^\\s*(event|e)\\s*((?<name>.+?)\\s*(/from\\s*(?<from>.+?))?\\s*(/to\\s*(?<to>.+))?)?\\s*$"),
-    DEADLINE("^\\s*(deadline|d)\\s*((?<name>.+?)\\s*(/by\\s*(?<by>.+))?)?\\s*$"),
+    DEADLINE("^\\s*(deadline|dl)\\s*((?<name>.+?)\\s*(/by\\s*(?<by>.+))?)?\\s*$"),
     TODO("^\\s*(todo|t)\\s*(?<name>.+)?$");
 
     private String regexPattern;
