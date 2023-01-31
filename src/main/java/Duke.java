@@ -10,7 +10,7 @@ public class Duke {
     public static void main(String[] args) {
 
         Duke duke = new Duke();
-        ArrayList<String> userInput = new ArrayList<>();
+        ArrayList<String> userInputs = new ArrayList<>();
         boolean isRun = true;
         Scanner scan = new Scanner(System.in);
         String logo = " ____        _        \n"
@@ -28,15 +28,15 @@ public class Duke {
                 break;
             }
             if (input.equals("list")) {
-                list(userInput);
+                listOut(userInputs);
             } else if (input.length() >= 4 && input.substring(0, 4).equals("mark")) {
                 String[] tmpArr = input.split(" ");
-                markDone(Integer.parseInt(tmpArr[1]), userInput, true);
+                markDone(Integer.parseInt(tmpArr[1]), userInputs, true);
             } else if (input.length() >= 6 && input.substring(0, 6).equals("unmark")) {
                 String[] tmpArr = input.split(" ");
-                markDone(Integer.parseInt(tmpArr[1]), userInput, false);
+                markDone(Integer.parseInt(tmpArr[1]), userInputs, false);
             } else {
-                addToList(input, userInput);
+                addToList(input, userInputs);
             }
             //echoCmd(input);
 
@@ -44,40 +44,40 @@ public class Duke {
         }
         exit();
     }
-    public static void markDone(int index, ArrayList<String> userInput, boolean mark) {
-        if (mark) {
-            String org = userInput.get(index - 1);
+    public static void markDone(int index, ArrayList<String> userInputs, boolean isMark) {
+        if (isMark) {
+            String org = userInputs.get(index - 1);
             String newStr = org.replace("[ ]", "[X]");
             System.out.println(newStr);
-            userInput.set(index - 1, newStr);
+            userInputs.set(index - 1, newStr);
         } else {
-            String org = userInput.get(index - 1);
+            String org = userInputs.get(index - 1);
             String newStr = org.replace("[X]", "[ ]");
             System.out.println(newStr);
-            userInput.set(index - 1, newStr);
+            userInputs.set(index - 1, newStr);
         }
         System.out.println("\t____________________________________________________________");
-        if (mark) {
+        if (isMark) {
             System.out.println("\t Nice! I've marked this task as done:");
         } else {
             System.out.println("\t OK, I've marked this task as not done yet:");
         }
-        int idx = userInput.get(index - 1).indexOf("[");
-        System.out.println("\t" + "  " + userInput.get(index - 1).substring(idx));
+        int idx = userInputs.get(index - 1).indexOf("[");
+        System.out.println("\t" + "  " + userInputs.get(index - 1).substring(idx));
         System.out.println("\t____________________________________________________________");
     }
-    public static void addToList(String cmd, ArrayList<String> userInput) {
+    public static void addToList(String cmd, ArrayList<String> userInputs) {
         System.out.println("\t____________________________________________________________");
         System.out.println("\tadded: " + cmd);
         System.out.println("\t____________________________________________________________");
-        userInput.add(cmd);
-        userInput.set(userInput.size() - 1, userInput.size() + ". [ ] " + userInput.get(userInput.size() - 1));
+        userInputs.add(cmd);
+        userInputs.set(userInputs.size() - 1, userInputs.size() + ". [ ] " + userInputs.get(userInputs.size() - 1));
     }
 
-    public static void list(ArrayList<String> userInput) {
+    public static void listOut(ArrayList<String> userInputs) {
         System.out.println("\t____________________________________________________________");
-        for (int i = 0; i < userInput.size(); i++) {
-            System.out.println("\t" + userInput.get(i));
+        for (int i = 0; i < userInputs.size(); i++) {
+            System.out.println("\t" + userInputs.get(i));
         }
         System.out.println("\t____________________________________________________________");
 
