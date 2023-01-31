@@ -28,19 +28,12 @@ public class Methods {
                 + action.toString());
     }
     public static void printDoneMarkingTasks(Task action) {
-        Methods.print("Done!\n"
-                + action.toString()
-        );
+        Methods.print("Done!\n" + action.toString());
     }
     public static String findTaskDetails(String line) {
         return line.substring(line.indexOf(" ") + 1);
     }
     public static void printAcknowledgement(Task action, int actionCounter) {
-        System.out.println("Got it. I've added this task:\n"
-                + action.toString()
-                + System.lineSeparator()
-                + "Now you have "
-                + actionCounter
-                + " tasks in the list.");
+        System.out.println("Got it. I've added this task:\n" + action.toString() + System.lineSeparator() + "Now you have " + actionCounter + " tasks in the list.");
     }
 }
