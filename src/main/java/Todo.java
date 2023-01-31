@@ -7,6 +7,4 @@ public class Todo extends Task{
         String todoSymbol = "[T]";
         return todoSymbol + super.getTaskIdentity();
     }
-
-
 }

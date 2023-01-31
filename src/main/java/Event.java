@@ -1,6 +1,6 @@
 public class Event extends Task{
-    private String fromDate;
-    private String toDate;
+    private final String fromDate;
+    private final String toDate;
     public Event(String inLine){
             super(inLine);
             int indexOfFrom = inLine.indexOf("/from");
@@ -11,8 +11,8 @@ public class Event extends Task{
         }
     @Override
     public String getTaskIdentity() {
-        String todoSymbol = "[E]";
-        return todoSymbol + super.getTaskIdentity();
+        String eventSymbol = "[E]";
+        return eventSymbol + super.getTaskIdentity();
     }
     public String getFromDate(){
         return fromDate.trim();

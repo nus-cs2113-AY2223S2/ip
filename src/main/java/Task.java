@@ -35,10 +35,6 @@ public class Task {
         this.taskName = taskName;
     }
 
-    public boolean getIsDone() {
-        return isDone;
-    }
-
     public void setDone(boolean isDone) {
         this.isDone = isDone;
     }

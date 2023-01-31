@@ -3,7 +3,6 @@ import java.util.Arrays;
 public class Parser {
     public static String getFirstWord(String line) {
         String firstWord;
-        //line = line.trim();
         int firstSpace = line.indexOf(' ');
         if (firstSpace != -1) {
             firstWord = line.substring(0, firstSpace).toLowerCase();
@@ -13,7 +12,6 @@ public class Parser {
         return firstWord;
     }
     public static String[] splitInput(String inLine){
-        inLine = inLine.trim();
         int nextSpace = inLine.indexOf(' ');
         int numStrings = 1;
         String[] wordList = new String[numStrings];
@@ -27,6 +25,15 @@ public class Parser {
             nextSpace = inLine.indexOf(' ');
         }
         return wordList;
+    }
+
+    public static boolean isParsable(String input) {
+        try {
+            Integer.parseInt(input);
+            return true;
+        } catch (final NumberFormatException e) {
+            return false;
+        }
     }
 
     /*public static int findIndexOf(String[] wordList, String searchItem){
