@@ -29,7 +29,7 @@ public class Duke {
             switch (command) {
             case "list":
                 if (wordList.length != 1) {
-                    System.out.println(" wrong number of arguments for list");
+                    System.out.println("Wrong number of arguments for list");
                     break;
                 }
                 if (tasks.size() > 0) {
@@ -42,12 +42,11 @@ public class Duke {
                 }
                 break;
             case "unmark":
+                if (wordList.length != 2) {
+                    System.out.println("Wrong number of arguments for unmark");
+                    break;
+                }
                 try {
-                    if (wordList.length != 2) {
-                        System.out.println("Wrong number of arguments for unmark");
-                        line = in.nextLine();
-                        continue;
-                    }
                     int index = Integer.parseInt(wordList[1]) - 1;
                     tasks.get(index).setDone(false);
                     System.out.println("OK, I've marked this task as not done yet:");
@@ -57,12 +56,11 @@ public class Duke {
                 }
                 break;
             case "mark":
+                if (wordList.length != 2) {
+                    System.out.println("Wrong number of arguments for mark");
+                    break;
+                }
                 try {
-                    if (wordList.length != 2) {
-                        System.out.println("Wrong number of arguments for mark");
-                        line = in.nextLine();
-                        continue;
-                    }
                     int index = Integer.parseInt(wordList[1]) - 1;
                     tasks.get(index).setDone(true);
                     System.out.println("Nice! I've marked this task as done:");
