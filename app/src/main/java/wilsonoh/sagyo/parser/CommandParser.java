@@ -10,21 +10,17 @@ import wilsonoh.sagyo.commands.Command;
 import wilsonoh.sagyo.commands.CommandType;
 import wilsonoh.sagyo.commands.ListCommand;
 import wilsonoh.sagyo.commands.MarkTaskCommand;
-import wilsonoh.sagyo.commands.SaveTasksCommand;
 import wilsonoh.sagyo.commands.UnMarkTaskCommand;
 import wilsonoh.sagyo.exceptions.InvalidCommandException;
 import wilsonoh.sagyo.exceptions.InvalidTaskException;
-import wilsonoh.sagyo.storage.Storage;
 import wilsonoh.sagyo.tasks.Task;
 
 public class CommandParser {
 
     private ArrayList<Task> tasks;
-    private Storage storage;
 
-    public CommandParser(ArrayList<Task> tasks, Storage storage) {
+    public CommandParser(ArrayList<Task> tasks) {
         this.tasks = tasks;
-        this.storage = storage;
     }
 
     public Command parseCommand(String input) throws InvalidCommandException, InvalidTaskException {
@@ -43,8 +39,6 @@ public class CommandParser {
                     return new ByeCommand();
                 case LIST:
                     return new ListCommand(this.tasks);
-                case WRITE:
-                    return new SaveTasksCommand(this.tasks, this.storage);
                 case DEADLINE:
                 case EVENT:
                 case TODO:

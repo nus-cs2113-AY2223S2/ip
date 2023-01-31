@@ -31,7 +31,7 @@ public class Main {
         } catch (InvalidTaskException e) {
             System.out.println(e.getMessage());
         }
-        CommandParser cmdParser = new CommandParser(tasks, storage);
+        CommandParser cmdParser = new CommandParser(tasks);
         boolean isRunning = true;
         ui.printLines(GREETING);
         // try-with-resources to close the scanner automatically, preventing resource leaks
@@ -50,6 +50,7 @@ public class Main {
                 } catch (SagyoException e) {
                     ui.printLines(e.getMessage());
                 }
+                storage.writeTasksToJSON(tasks);
             }
         }
     }
