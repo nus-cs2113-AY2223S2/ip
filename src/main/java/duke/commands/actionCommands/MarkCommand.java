@@ -1,11 +1,12 @@
-package duke.commands;
+package duke.commands.actionCommands;
 
+import duke.commands.Command;
 import duke.exceptions.EmptyListException;
 import duke.tasks.Task;
 import duke.tasks.TaskList;
 import static duke.constants.Constants.LINEBREAK;
 
-public class MarkCommand extends Command{
+public class MarkCommand extends Command {
 
     @Override
     public void handleCommand(String line, TaskList taskList){

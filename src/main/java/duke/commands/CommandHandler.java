@@ -1,5 +1,9 @@
 package duke.commands;
 
+import duke.commands.actionCommands.HelpCommand;
+import duke.commands.actionCommands.ListCommand;
+import duke.commands.actionCommands.MarkCommand;
+import duke.commands.actionCommands.UnmarkCommand;
 import duke.commands.taskCommands.DeadlineCommand;
 import duke.commands.taskCommands.EventCommand;
 import duke.commands.taskCommands.ToDoCommand;
@@ -53,11 +57,6 @@ public class CommandHandler {
             newCommand.handleCommand(line, taskList);
             break;
 
-        case "":
-            newCommand = new EmptyCommand();
-            newCommand.handleCommand(line, taskList);
-            break;
-
         case "list":
             newCommand = new ListCommand();
             newCommand.handleCommand(line, taskList);
@@ -74,7 +73,9 @@ public class CommandHandler {
             break;
 
         case "help":
-
+            newCommand = new HelpCommand();
+            newCommand.handleCommand(line, taskList);
+            break;
 
         default:
             throw new InvalidTaskException();

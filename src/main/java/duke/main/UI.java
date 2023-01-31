@@ -1,5 +1,6 @@
-package duke.commands;
+package duke.main;
 
+import duke.commands.CommandHandler;
 import duke.exceptions.InvalidTaskException;
 import duke.tasks.TaskList;
 import java.util.Scanner;
@@ -17,7 +18,8 @@ public class UI {
                 "   | | | | | | | |/ / _ \\\n" +
                 "   | |_| | |_| |   <  __/\n" +
                 "   |____/ \\__,_|_|\\_\\___|" + "\nWhat can I do for you?\n" +
-                "Input your tasks and I'll keep track of them!\n" + LINEBREAK);
+                "Input your tasks and I'll keep track of them!\n" +
+                "If you're unsure of how to use me, type \"help\" to see what I can do!\n" + LINEBREAK);
     }
 
     /**
