@@ -47,7 +47,7 @@ public class Duke {
                     taskDescription = taskDescription.concat(" ");
                 }
             }
-            Task t = new Task(taskDescription);
+            Task t = new Todo(taskDescription);
             userTaskList[userInputCount] = t;
             userInputCount++;
             System.out.println(LINE);
@@ -97,8 +97,8 @@ public class Duke {
                 System.out.println(LINE);
                 int index = i;
                 index++;
-                System.out.println(
-                        index + ".[" + userTaskList[i].getStatusIcon() + "] " + userTaskList[i].description);
+                System.out.print(index + ".");
+                System.out.println(userTaskList[i]);
                 System.out.println(LINE);
             }
         }
