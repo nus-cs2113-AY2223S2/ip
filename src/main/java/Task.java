@@ -39,9 +39,9 @@ public class Task {
     }
 
     public Task(String task, int number, boolean isDone) {
-        this.task = task;
-        this.number = number;
-        this.isDone = isDone;
+        setTask(task);
+        setNumber(number);
+        setDone(isDone);
     }
 
     @Override
