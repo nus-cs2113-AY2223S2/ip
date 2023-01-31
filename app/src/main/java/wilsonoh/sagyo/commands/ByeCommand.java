@@ -2,9 +2,12 @@ package wilsonoh.sagyo.commands;
 
 public class ByeCommand extends Command {
 
+    public ByeCommand() {
+        this.isExit = true;
+    }
+
     @Override
     public void executeCommand() {
-        System.exit(0);
     }
 
     @Override

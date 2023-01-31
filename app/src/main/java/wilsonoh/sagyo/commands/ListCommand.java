@@ -15,7 +15,8 @@ public class ListCommand extends Command {
 
     @Override
     public String[] getCommandMessage() {
-        return TextFormatter.getFormattedTaskStrings(tasks);
+        return tasks.isEmpty() ? new String[] {"Task list is currently empty.", "Try adding some tasks!"}
+                               : TextFormatter.getFormattedTaskStrings(tasks);
     }
 
     @Override
