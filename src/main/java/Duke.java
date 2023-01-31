@@ -8,7 +8,10 @@ public class Duke {
     private static void addTasks(Task a) {
         list.add(a);
     }
-
+    private static void printMarking(int i){
+        System.out.println(String.format(" [%s] [%s] %s",
+                list.get(i).getTypeIcon(), list.get(i).getStatusIcon(), list.get(i).getDescription()));
+    }
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -41,27 +44,27 @@ public class Duke {
                 System.out.println("You are crushing it,1 task down!");
                 Task.markAsDone(list.get(Integer.parseInt(arr[1]) - 1));
                 int i = Integer.parseInt(arr[1]) - 1;
-                System.out.println(String.format(" [%s] [%s] %s",
-                        list.get(i).getTypeIcon(), list.get(i).getStatusIcon(), list.get(i).getDescription()));
+                printMarking(i);
 
             } else if (arr[0].equals("unmark")) {
                 System.out.println("I have unchecked it for you");
                 Task.markAsNotDone(list.get(Integer.parseInt(arr[1]) - 1));
                 int i = Integer.parseInt(arr[1]) - 1;
-                System.out.println(String.format(" [%s] [%s] %s",
-                        list.get(i).getTypeIcon(), list.get(i).getStatusIcon(), list.get(i).getDescription()));
+                printMarking(i);
 
             } else if (arr[0].equals("todo")) {
                 addTasks(new Todo(arr[1]));
                 System.out.println("Added!");
                 System.out.println(String.format(" [%s] [%s] %s", 'T', " ", arr[1]));
                 System.out.println("Now you have " + list.size() + " tasks in your list");
+
             } else if (arr[0].equals("deadline")) {
                 String[] parts = arr[1].split("/");
                 addTasks(new Deadline(parts[0], parts[1]));
                 System.out.println("Added!");
                 System.out.println(String.format(" [%s] [%s] %s (%s)", 'D', " ", parts[0], parts[1]));
                 System.out.println("Now you have " + list.size() + " tasks in your list");
+
             } else if (arr[0].equals("event")) {
                 String[] parts = arr[1].split("/");
                 addTasks(new Event(parts[0], parts[1], parts[2]));
