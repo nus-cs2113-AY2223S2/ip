@@ -1,18 +1,16 @@
 public class Task {
-    private final String desc;
-    private boolean isDone;
+    final String description;
+    boolean isDone;
 
     public Task(String desc) {
-        this.desc = desc;
+        this.description = desc;
         this.isDone = false;
     }
 
-    public String getDesc() {
-        return this.desc;
-    }
-
-    public boolean getIsDone() {
-        return this.isDone;
+    public String getLabel() {
+        String typeIndicator = "[T]";
+        String doneIndicator = "[" + (this.isDone ? "X" : " ") + "]";
+        return typeIndicator + doneIndicator + " " + this.description;
     }
 
     public void setIsDone(boolean isDone) {
