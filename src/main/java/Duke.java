@@ -26,27 +26,58 @@ public class Duke {
             String input = scan.nextLine();
             if (input.equals("bye")) {
                 break;
-            } else if (input.equals("list")) {
+            }
+            if (input.equals("list")) {
                 list(userInput);
+            } else if (input.length() >= 4 && input.substring(0, 4).equals("mark")) {
+                String[] tmpArr = input.split(" ");
+                markDone(Integer.parseInt(tmpArr[1]), userInput, true);
+            } else if (input.length() >= 6 && input.substring(0, 6).equals("unmark")) {
+                String[] tmpArr = input.split(" ");
+                markDone(Integer.parseInt(tmpArr[1]), userInput, false);
+            } else {
+                addToList(input, userInput);
             }
             //echoCmd(input);
-            addToList(input, userInput);
 
 
         }
         exit();
+    }
+    public static void markDone(int index, ArrayList<String> userInput, boolean mark) {
+        if (mark) {
+            String org = userInput.get(index - 1);
+            String newStr = org.replace("[ ]", "[X]");
+            System.out.println(newStr);
+            userInput.set(index - 1, newStr);
+        } else {
+            String org = userInput.get(index - 1);
+            String newStr = org.replace("[X]", "[ ]");
+            System.out.println(newStr);
+            userInput.set(index - 1, newStr);
+        }
+        System.out.println("\t____________________________________________________________");
+        if (mark) {
+            System.out.println("\t Nice! I've marked this task as done:");
+        } else {
+            System.out.println("\t OK, I've marked this task as not done yet:");
+        }
+        int idx = userInput.get(index - 1).indexOf("[");
+        System.out.println("\t" + "  " + userInput.get(index - 1).substring(idx));
+        System.out.println("\t____________________________________________________________");
     }
     public static void addToList(String cmd, ArrayList<String> userInput) {
         System.out.println("\t____________________________________________________________");
         System.out.println("\tadded: " + cmd);
         System.out.println("\t____________________________________________________________");
         userInput.add(cmd);
+        userInput.set(userInput.size() - 1, userInput.size() + ". [ ] " + userInput.get(userInput.size() - 1));
     }
 
     public static void list(ArrayList<String> userInput) {
         System.out.println("\t____________________________________________________________");
         for (int i = 0; i < userInput.size(); i++) {
-            System.out.println("\t" + (i + 1) + ". " + userInput.get(i));
+            System.out.println("\t" + userInput.get(i));
         }
         System.out.println("\t____________________________________________________________");
 
