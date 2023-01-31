@@ -7,9 +7,11 @@ public class Tasks {
         this.taskList = new ArrayList<Task>();
     }
 
-    String addTask(String task) {
-        taskList.add(new Task(task));
-        return "added: " + task;
+    String addTask(Task task) {
+        taskList.add(task);
+        return "Got it. I've added this task:\n    " +
+                task.toString() + "\n" +
+                "  Now you have " + taskList.size() + " tasks in the list.";
     }
 
     String mark(int index) {

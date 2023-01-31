@@ -1,21 +1,21 @@
 public class Task {
     private String content;
-    private boolean completed;
+    private boolean isCompleted;
 
     Task(String content) {
         this.content = content;
-        this.completed = false;
+        this.isCompleted = false;
     }
 
     void markAsComplete() {
-        this.completed = true;
+        this.isCompleted = true;
     }
 
     void markAsIncomplete() {
-        this.completed = false;
+        this.isCompleted = false;
     }
 
     public String toString() {
-        return (this.completed ? "[X] " : "[ ] ") + this.content;
+        return (this.isCompleted ? "[X] " : "[ ] ") + this.content;
     }
 }

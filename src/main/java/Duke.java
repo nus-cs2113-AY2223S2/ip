@@ -1,22 +1,21 @@
 import java.util.Scanner;
 
 public class Duke {
-    private static String lineBreak = " ____________________________________________________________";
-    private static String greeting = "Hello! I'm Duke\n  What can I do for you?";
-    private static String exiting = "Bye. Hope to see you again soon!";
-
-    private static Tasks tasks = new Tasks();
+    private final static String LINE_BREAK = " ____________________________________________________________";
+    private final static String GREETING = "Hello! I'm Duke\n  What can I do for you?";
+    private final static String EXITING = "Bye. Hope to see you again soon!";
+    private final static Tasks tasks = new Tasks();
 
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        speak(greeting);
+        speak(GREETING);
         boolean running = true;
         while (running) {
             String command = scanner.nextLine();
             String[] commandByWord = command.split(" ");
             if (command.equals("bye")) { // whats the difference between equals and ==
-                speak(exiting);
+                speak(EXITING);
                 running = false;
             } else if (command.equals("list")) {
                 speak(tasks.listTasks());
@@ -24,16 +23,20 @@ public class Duke {
                 speak(tasks.mark(Integer.parseInt(commandByWord[1])));
             } else if (commandByWord[0].equals("unmark")) {
                 speak(tasks.unmark(Integer.parseInt(commandByWord[1])));
-            } else {
-                speak(tasks.addTask(command));
+            } else if (commandByWord[0].equals("deadline")) {
+                speak(tasks.addTask(Deadline.createDeadline(commandByWord)));
+            } else if (commandByWord[0].equals("event")) {
+                speak(tasks.addTask(Event.createEvent(commandByWord)));
+            } else if (commandByWord[0].equals("todo")) {
+                speak(tasks.addTask(ToDo.createToDo(commandByWord)));
             }
         }
     }
 
     static void speak(String message) {
-        System.out.println(lineBreak);
+        System.out.println(LINE_BREAK);
         System.out.println("  " + message);
-        System.out.println(lineBreak);
+        System.out.println(LINE_BREAK);
         System.out.println();
     }
 }
