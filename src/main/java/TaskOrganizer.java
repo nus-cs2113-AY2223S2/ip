@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class TaskOrganizer {
@@ -37,10 +38,34 @@ public class TaskOrganizer {
      *
      * @param taskName The name of the task to be added to the list tasks.
      */
-    public void addTask(String taskName) {
-        Task newTask = new Task(taskName, newTaskID);
+    public String addTask(String taskInfo) {
+        String[] taskInfos = taskInfo.split(" ", 2);
+        String taskType = taskInfos[0];
+        String taskName = taskInfos[1];
+        Task newTask;
+        switch (taskType) {
+        case "todo":
+            newTask = new ToDo(taskName, newTaskID);
+            break;
+        case "deadline":
+            String[] temp = taskName.split(" ", 2);
+            String taskName2 = temp[0];
+            String deadlineDate = temp[1];
+            newTask = new Deadline(taskName2, newTaskID, deadlineDate);
+            break;
+        case "event":
+            String[] temp2 = taskName.split(" ", 3);
+            String taskName3 = temp2[0];
+            String startDateEvent = temp2[1];
+            String endDateEvent = temp2[2];
+            newTask = new Event(taskName3, newTaskID, startDateEvent, endDateEvent);
+            break;
+        default:
+            newTask = new Task(taskName, newTaskID);
+        }
         tasks.put(newTaskID, newTask);
         newTaskID += 1;
+        return taskName;
     }
 
     /**

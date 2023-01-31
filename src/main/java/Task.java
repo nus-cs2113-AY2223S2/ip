@@ -6,15 +6,20 @@ public class Task {
     private boolean isMarked;
 
     /** Check box to display the state of the task */
-    private CheckBox checkBox;
+    protected CheckBox checkBox;
+
+    /** Label to indicate the type of task */
+    protected Label label;
 
     /** The unique ID assgied to this task */
     private int taskID;
+
 
     public Task(String name, int ID) {
         this.taskName = name;
         this.taskID = ID;
         this.checkBox = new CheckBox();
+        this.label = new Label();
         this.isMarked = false;
     }
 

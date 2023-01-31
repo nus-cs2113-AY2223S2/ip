@@ -14,15 +14,16 @@ public class Luke {
                 break;
             }
 
-            String[] processedInput = input.split(" ", 2); //Split input into [command] and [task]
-            String command = processedInput[0];
+            //Split input into [command] and [task]
+            String[] processedInputs = input.split(" ", 2);
+            String command = processedInputs[0];
 
             //Check if command add is invoked.
             switch (command) {
             case "add":
-                String task = processedInput[1];
-                taskOrganizer.addTask(task);
-                response.printAddTask(task);
+                String taskInfo = processedInputs[1];
+                String taskName = taskOrganizer.addTask(taskInfo);
+                response.printAddTask(taskName);
                 break;
             case "list":  //Check if command list is invoked.
                 if (!taskOrganizer.isEmpty()) {
@@ -33,7 +34,7 @@ public class Luke {
                 break;
             case "mark":
                 try {
-                    int taskID = Integer.parseInt(processedInput[1]);
+                    int taskID = Integer.parseInt(processedInputs[1]);
                     if (!taskOrganizer.isOutOfBounds(taskID)) {
                         taskOrganizer.markTask(taskID);
                         response.printMarkTask(taskOrganizer.getTaskByID(taskID));
@@ -46,7 +47,7 @@ public class Luke {
                 break;
             case "unmark":
                 try {
-                    int taskID = Integer.parseInt(processedInput[1]);
+                    int taskID = Integer.parseInt(processedInputs[1]);
                     if (!taskOrganizer.isOutOfBounds(taskID)) {
                         taskOrganizer.unmarkTask(taskID);
                         response.printUnmarkTask(taskOrganizer.getTaskByID(taskID));
