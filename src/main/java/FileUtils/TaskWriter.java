@@ -16,7 +16,8 @@ public class TaskWriter {
         FileWriter fw;
         String taskString;
 
-        if (!file.exists()) {
+        if (!file.getParentFile().exists()) {
+            file.getParentFile().mkdirs();
             file.createNewFile();
         }
         fw = new FileWriter(file);

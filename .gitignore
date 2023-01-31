@@ -18,3 +18,6 @@ src/main/java/*.class
 
 /text-ui-test/ACTUAL.TXT
 text-ui-test/EXPECTED-UNIX.TXT
+
+# jar files
+*.jar

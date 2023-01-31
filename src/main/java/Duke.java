@@ -18,14 +18,14 @@ public class Duke {
         String startDate, endDate;
         int startDateIdx, endDateIdx;
 
-        Greetings.introduction();
-
         try {
             tasks = TaskReader.readAndReturnTasks(filePath);
         } catch (FileNotFoundException e) {
-            System.out.println("File does not exist! Initialising empty tasks list..");
+            System.out.println("File does not exist! Initialising empty tasks list..\n");
             tasks = new ArrayList<Task>();
         }
+
+        Greetings.introduction();
 
         String input = sc.nextLine();
         while (!input.equals("bye")) {
