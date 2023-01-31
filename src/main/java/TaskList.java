@@ -50,9 +50,9 @@ public class TaskList {
         String name = args.substring(0, indexOfFrom);
         name = name.trim();
         indexOfFrom+=5;
-        String from = args.substring(indexOfFrom);
-        from = from.trim();
         int indexOfTo = args.indexOf("/to");
+        String from = args.substring(indexOfFrom, indexOfTo);
+        from = from.trim();
         indexOfTo+=3;
         String to = args.substring(indexOfTo);
         to=to.trim();
@@ -62,7 +62,7 @@ public class TaskList {
 
     public void listTasks() {
         if (noOfTasks == 0) {
-            System.out.println("No tasks yet. Please input a task");
+            System.out.println("No tasks yet. Please input a task.");
         }
         for (int i = 1; i <= noOfTasks; i++) {
             System.out.print(i + ". "); //TODO: Refactor into print task number
