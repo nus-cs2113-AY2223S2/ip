@@ -18,25 +18,25 @@ public class TaskList {
         list.add(e);
     }
 
-    public boolean MarkTask(int taskNumber, boolean mark) {
+    public void UnmarkTask(int taskNumber, Display UI) {
         if (taskNumber <= 0 || taskNumber > list.size()) {
-            return false;
+            UI.TaskNotFound();
+        } else if (!list.get(taskNumber - 1).IsCompleted()) {
+            UI.InvalidUnmark();
         } else {
-            if (mark && list.get(taskNumber - 1).IsCompleted()) {
-                System.out.println("Task already marked as completed!");
-            } else if (!mark && !list.get(taskNumber - 1).IsCompleted()) {
-                System.out.println("Task already marked as not completed!");
-            } else {
-                list.get(taskNumber - 1).SetCompleted(mark);
-                if (mark) {
-                    System.out.println("Nice! I've marked this task as done:");
-                    System.out.println("[X] " + list.get(taskNumber - 1).GetTaskName());
-                } else {
-                    System.out.println("OK, I've marked this task as not done yet:");
-                    System.out.println("[ ] " + list.get(taskNumber - 1).GetTaskName());
-                }
-            }
-            return true;
+            list.get(taskNumber - 1).SetCompleted(false);
+            UI.ValidUnmark(list, taskNumber);
+        }
+    }
+
+    public void MarkTask(int taskNumber, Display UI) {
+        if (taskNumber <= 0 || taskNumber > list.size()) {
+            UI.TaskNotFound();
+        } else if (list.get(taskNumber - 1).IsCompleted()) {
+            UI.InvalidMark();
+        } else {
+            list.get(taskNumber - 1).SetCompleted(true);
+            UI.ValidMark(list, taskNumber);
         }
     }
 
