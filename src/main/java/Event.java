@@ -1,6 +1,6 @@
 public class Event extends Task {
-    String byDate;
-    String fromDate;
+    protected String byDate;
+    protected String fromDate;
 
     public Event(String task, int number, boolean isDone, String byDate, String fromDate) {
         super(task, number, isDone);
