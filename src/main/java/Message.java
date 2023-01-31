@@ -16,9 +16,9 @@ public enum Message {
     ERROR_INVALID_COMMAND("Please enter a valid command."),
     ERROR_MARK_INVALID_PARAMETER("Please specify an integer."),
     ERROR_MARK_OUT_OF_BOUNDS("Invalid item."),
-    ERROR_REMIND_MISSING_PARAMETER("Missing parameter"),
-    ERROR_DEADLINE_MISSING_PARAMETER("Missing parameter: /by"),
-    ERROR_EVENT_MISSING_PARAMETER("Missing parameter: /from /to ");
+    ERROR_REMIND_MISSING_PARAMETER("Parameters contain missing fields. Example: remind to eat"),
+    ERROR_DEADLINE_MISSING_PARAMETER("Parameters contain missing fields. Example: deadline to eat /by tomorrow"),
+    ERROR_EVENT_MISSING_PARAMETER("Parameters contain missing fields. Example: event to eat /from 2pm /to 4pm");
 
     private final String message;
 
