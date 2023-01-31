@@ -7,6 +7,7 @@ public class Event extends Task{
         this.fromDate = fromDate;
         this.toDate = toDate;
     }
+
     @Override
     public String toString() {
         return "[E]" + super.toString() + " (from: " + fromDate + " to: " + toDate + ")";
