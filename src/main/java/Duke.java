@@ -7,6 +7,8 @@ public class Duke {
         Scanner input = dukeStart();
         dukeAddList(input);
     }
+
+    // Printing the startup code
     public static Scanner dukeStart() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -18,6 +20,33 @@ public class Duke {
         System.out.println("Hello! I'm Duke\n" + "What can I do for you?");
         return input;
     }
+
+    // The bulk of the logic (should change name soon)
+    public static void dukeAddList(Scanner inputScanner) {
+        ArrayList<Task> list = new ArrayList<>();
+        while (true) {
+            String nextLine = inputScanner.nextLine();
+            if (nextLine.equals("list")) {
+                System.out.println("Here are the tasks in your list:");
+                dukeCommandList(list);
+            } else if (nextLine.split(" ", 0)[0].equals("mark")) {
+                dukeCommandMark(nextLine, list);
+            } else if (nextLine.split(" ", 0)[0].equals("deadline")) {
+                dukeCommandDeadline(nextLine, list);
+            } else if (nextLine.split(" ", 0)[0].equals("todo")) {
+                dukeCommandToDo(nextLine, list);
+            } else if (nextLine.split(" ", 0)[0].equals("event")) {
+                dukeCommandEvent(nextLine, list);
+            } else if (nextLine.equals("bye")) {
+                System.out.println("Bye. Hope to see you again soon!");
+                return;
+            } else {
+                continue;
+            }
+        }
+    }
+
+
     public static void dukeCommandList (List<Task> list) {
         for (Task task : list) {
             if (task instanceof Event) {
@@ -27,11 +56,10 @@ public class Duke {
             } else {
                 printTodo(task);
             }
-
         }
     }
 
-
+    // Helper functions for dukeCommandList
     private static void printEvent(Event event) {
         if (event.isDone()) {
             System.out.println(event.getIndex() + ". [E][X] " + event.getTaskName() +
@@ -39,7 +67,6 @@ public class Duke {
         } else {
             System.out.println(event.getIndex() + ". [E][ ] " + event.getTaskName() +
                     " (from: " + event.getStart() + " to:" + event.getDeadline() + ")");
-
         }
     }
     private static void printDeadline(Deadline deadline) {
@@ -49,7 +76,6 @@ public class Duke {
         } else {
             System.out.println(deadline.getIndex() + ". [D][ ] " + deadline.getTaskName() +
                     " (by: " + deadline.getDeadline() + ")");
-
         }
     }
 
@@ -60,6 +86,7 @@ public class Duke {
             System.out.println(task.getIndex() + ". [T][ ] " + task.getTaskName());
         }
     }
+
 
     public static void dukeCommandMark(String nextLine, List<Task> list) {
         String[] inputArray = nextLine.split(" ", 0);
@@ -80,6 +107,8 @@ public class Duke {
             task.doTask();
         }
     }
+
+
     public static void dukeCommandEvent(String nextLine, List<Task> list) {
         String lineWithoutCommand;
         try {
@@ -125,30 +154,12 @@ public class Duke {
         list.add(task);
 
     }
-    public static void dukeAddList(Scanner inputScanner) {
-        ArrayList<Task> list = new ArrayList<>();
-        while (true) {
-            String nextLine = inputScanner.nextLine();
-            if (nextLine.equals("list")) {
-                System.out.println("Here are the tasks in your list:");
-                dukeCommandList(list);
-            } else if (nextLine.split(" ", 0)[0].equals("mark")) {
-                dukeCommandMark(nextLine, list);
-            } else if (nextLine.split(" ", 0)[0].equals("deadline")) {
-                dukeCommandDeadline(nextLine, list);
-            } else if (nextLine.split(" ", 0)[0].equals("todo")) {
-                dukeCommandToDo(nextLine, list);
-            } else if (nextLine.split(" ", 0)[0].equals("event")) {
-                dukeCommandEvent(nextLine, list);
-            } else if (nextLine.equals("bye")) {
-                System.out.println("Bye. Hope to see you again soon!");
-                return;
-            } else {
-                continue;
-            }
-        }
-    }
 
+
+
+
+
+    //Code not needed for Level-1
     public static void dukeEcho(Scanner inputScanner) {
         while (true) {
             String echo = inputScanner.nextLine();
