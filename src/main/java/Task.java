@@ -18,6 +18,6 @@ public class Task {
         if (this.isDone) {
             done = "X";
         }
-        return "[" + done + "]" + description ;
+        return "[" + done + "] " + description ;
     }
 }
