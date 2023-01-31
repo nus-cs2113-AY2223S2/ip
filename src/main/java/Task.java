@@ -22,6 +22,7 @@ public class Task {
     public void resetDone() {
         isDone = false;
     }
+
     public String getStatusIcon() {
         return (isDone ? "X" : " "); // mark done task with X
     }
