@@ -155,15 +155,6 @@ public class Duke {
             input = sc.nextLine();
         };
 
-        try {
-            TaskWriter.writeTasksToFile(filePath, tasks);
-            System.out.printf("Saved tasks to %s\n\n", filePath);
-        } catch (IOException e) {
-            System.out.println(e);
-            System.out.println(e.getStackTrace());
-            System.out.println("Something went wrong when saving tasks!");
-            System.out.println("Aborting...\n");
-        }
         Greetings.goodbye();
     }
 }
