@@ -26,4 +26,13 @@ public class Task {
     public String getStatusIcon() {
         return (isDone ? "X" : " "); // mark done task with X
     }
+
+    @Override
+    public String toString() {
+        if (this.isDone) {
+            return "[X] " + this.description;
+        } else {
+            return "[ ] " + this.description;
+        }
+    }
 }
