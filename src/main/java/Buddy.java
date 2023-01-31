@@ -1,6 +1,8 @@
 import java.util.Scanner;
 import java.util.Arrays;
 
+// camelCase used as a coding standard
+
 public class Buddy {
     public static void main(String[] args) {
         String greeting = "Hello there! I'm Buddy\n"
