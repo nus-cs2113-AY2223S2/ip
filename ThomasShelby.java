@@ -4,7 +4,10 @@ import java.util.ArrayList;
 public class ThomasShelby {
     static final int MAX_TASKS = 100;
 
-    private static void listTasks(Task[] taskManager, int taskCount) {
+    static Task[] taskManager = new Task[MAX_TASKS];
+    static int taskCount = 0;
+
+    private static void listTasks() {
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < taskCount; i++) {
             System.out.println((i + 1) + ". "
@@ -13,16 +16,15 @@ public class ThomasShelby {
         }
     }
 
-    private static int addTask(Task[] taskManager, int taskCount, String[] cmdSplit) {
+    private static void addTask(String[] cmdSplit) {
         Task newTask = new Task(cmdSplit[1]);
         newTask.setDescription(cmdSplit[1]);
         taskManager[taskCount] = newTask;
         taskCount++;
         System.out.println("added: " + cmdSplit[1]);
-        return taskCount;
     }
 
-    private static void markTask(Task[] taskManager, String[] cmdSplit) {
+    private static void markTask(String[] cmdSplit) {
         int whichTask;
         whichTask = Integer.parseInt(cmdSplit[1]) - 1; // shift back index
         taskManager[whichTask].setIsDone(true);
@@ -31,7 +33,7 @@ public class ThomasShelby {
                 + " " + taskManager[whichTask].getDescription());
     }
 
-    private static void unmarkTask(Task[] taskManager, String[] cmdSplit) {
+    private static void unmarkTask(String[] cmdSplit) {
         int whichTask;
         whichTask = Integer.parseInt(cmdSplit[1]) - 1; // shift back index
         taskManager[whichTask].setIsDone(false);
@@ -41,8 +43,6 @@ public class ThomasShelby {
     }
 
     public static void main(String[] args) {
-        Task[] taskManager = new Task[MAX_TASKS];
-        int taskCount = 0;
         System.out.print("Good day, I'm Thomas Shelby.\nTo what do I owe the pleasure?\n");
         Scanner in = new Scanner(System.in);
         while (true) {
@@ -54,16 +54,16 @@ public class ThomasShelby {
                 System.out.println("Cheers.");
                 return;
             case "list":
-                listTasks(taskManager, taskCount);
+                listTasks();
                 break;
             case "add":
-                taskCount = addTask(taskManager, taskCount, cmdSplit);
+                addTask(cmdSplit);
                 break;
             case "mark":
-                markTask(taskManager, cmdSplit);
+                markTask(cmdSplit);
                 break;
             case "unmark":
-                unmarkTask(taskManager, cmdSplit);
+                unmarkTask(cmdSplit);
                 break;
             default:
                 System.out.println(cmd); // echo cmd
