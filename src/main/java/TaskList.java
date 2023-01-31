@@ -2,29 +2,6 @@ public class TaskList {
     private Task[] tasks;
     private int noOfTasks;
 
-    private void printTaskType(int taskNo) {
-        System.out.print('[' + tasks[taskNo].getTaskType() + ']');
-    }
-
-    private void printStatus(int taskNo) {
-        if (tasks[taskNo].isDone()) {
-            System.out.print("[X]");
-        } else {
-            System.out.print("[ ]");
-        }
-    }
-
-    private void printTaskName(int taskNo) {
-        System.out.print(tasks[taskNo].getName());
-    }
-
-    private void printDescription(int taskNo) {
-        switch(tasks[taskNo].getTaskType()) {
-            case "d":
-            case "e":
-        }
-    }
-
     private boolean isValidTaskNo(int taskNo) {
         if (taskNo <= 0) {
             System.out.println("Negative task number entered, please don't try to crash the program a**h***.");
@@ -44,11 +21,7 @@ public class TaskList {
 
     private void printAddTaskMessage(int taskNo) {
         System.out.println("Got it. I have added this task:");
-        printTaskType(taskNo);
-        printStatus(taskNo);
-        printTaskName(taskNo);
-        printDescription(taskNo);
-        System.out.println();
+        System.out.println(tasks[noOfTasks].toString());
         System.out.println("Now you have " + noOfTasks + " tasks in the list");
     }
 
@@ -93,10 +66,7 @@ public class TaskList {
         }
         for (int i = 1; i <= noOfTasks; i++) {
             System.out.print(i + ". "); //TODO: Refactor into print task number
-            printTaskType(i);
-            printStatus(i);
-            printTaskName(i);
-            printDescription(i);
+            System.out.println(tasks[i].toString());
         }
     }
 
@@ -109,9 +79,7 @@ public class TaskList {
         } else {
             tasks[taskNo].setStatus(true);
             System.out.println("Nice! I have marked this task as done.");
-            printStatus(taskNo);
-            printTaskName(taskNo);
-            System.out.println();
+            System.out.println(tasks[taskNo].toString());
         }
     }
 
@@ -124,9 +92,7 @@ public class TaskList {
         } else {
             tasks[taskNo].setStatus(false);
             System.out.println("Ok I have marked this as not done yet.");
-            printStatus(taskNo);
-            printTaskName(taskNo);
-            System.out.println();
+            System.out.println(tasks[taskNo].toString());
         }
     }
 }

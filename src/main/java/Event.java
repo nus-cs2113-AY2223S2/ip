@@ -15,4 +15,8 @@ public class Event extends Task {
     public String getToWhen() {
         return this.toWhen;
     }
+
+    public String toString() {
+        return super.toString() + " from: " + fromWhen + " to: " + toWhen;
+    }
 }

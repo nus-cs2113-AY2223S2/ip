@@ -24,4 +24,10 @@ public class Task {
     public boolean isDone() {
         return this.completionStatus;
     }
+
+    public String toString() {
+        String completionStatusString = completionStatus?"[X]":"[ ]";
+        String taskTypeString = '[' + taskType + ']';
+        return taskTypeString + completionStatusString + ' ' + name;
+    }
 }

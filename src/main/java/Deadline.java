@@ -9,4 +9,8 @@ public class Deadline extends Task {
     public String getByWhen() {
         return byWhen;
     }
+
+    public String toString() {
+        return super.toString() + " by: " + byWhen;
+    }
 }
