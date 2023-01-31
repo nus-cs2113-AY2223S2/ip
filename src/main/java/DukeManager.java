@@ -18,56 +18,33 @@ class DukeManager {
         String inputt = io.nextLine();
         while (!inputt.equals("bye")) {
             if (inputt.equals("list")) {
-                //if list is detected
                 printTasklist();
             } else if (inputt.contains("mark")) {
                 //if mark / unmark is detected
-                markTask(inputt);
+                markTask(inputt, this.taskList);
             } else {
-                //else add task to array
-
-                //creating task based on input by user
-                String[] inputtArray;
-                String description;
+                //else add task to array; create task based on input by user
+                boolean isValidInput = false;
                 if (inputt.contains("todo")) {
-                    description = inputt.substring(TODO, inputt.length());
-                    ToDo toDo = new ToDo(false, description);
-                    this.taskList.add(toDo);
+                    isValidInput = true;
+                    createToDo(inputt, this.taskList);
                 } else if (inputt.contains("deadline")) {
-                    inputtArray = inputt.split("/");
-                    description = inputtArray[0].substring(DukeManager.DEADLINE, inputtArray[0].length());
-                    String deadline = inputtArray[1].substring(DukeManager.BY, inputtArray[1].length());
-                    Deadline deadlineTask = new Deadline(false, description, deadline);
-                    this.taskList.add(deadlineTask);
-                } else {
-                    inputtArray = inputt.split("/");
-                    description = inputtArray[0].substring(DukeManager.EVENT, inputtArray[0].length());
-                    String from = inputtArray[1].substring(DukeManager.FROM, inputtArray[1].length());
-                    String to = inputtArray[2].substring(DukeManager.TO, inputtArray[2].length());
-                    Event event = new Event(false, description, from, to);
-                    this.taskList.add(event);
+                    isValidInput = true;
+                    createDeadline(inputt, this.taskList);
+                } else if (inputt.contains("event")){
+                    isValidInput = true;
+                    createEvent(inputt, this.taskList);
                 }
 
-                //printing to terminal to notify user
-                System.out.println("Got it. I've added this task:");
-                System.out.println(this.taskList.get(this.taskList.size() - 1).toString());
-                System.out.println("Now you have " + this.taskList.size() + " tasks in the list");
+                if (isValidInput) {
+                    //printing to terminal to notify user
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println(this.taskList.get(this.taskList.size() - 1).toString());
+                    System.out.println("Now you have " + this.taskList.size() + " tasks in the list");
+                }
             }
             inputt = io.nextLine();
         }
-    }
-
-    public void markTask(String inputt) {
-        int index = Integer.parseInt(inputt.split(" ")[1]) - 1;
-        Task updatedTask = this.taskList.get(index).mark();
-        if (inputt.contains("unmark")) {
-            updatedTask = updatedTask.unmark();
-            System.out.println("OK, I've marked this task as not done yet:");
-        } else {
-            System.out.println("Nice! I've marked this task as done:");
-        }
-        this.taskList.set(index, updatedTask);
-        System.out.println(updatedTask.toString());
     }
 
     public void printTasklist() {
@@ -78,5 +55,42 @@ class DukeManager {
         }
     }
 
+    public void markTask(String inputt, ArrayList<Task> taskList) {
+        int index = Integer.parseInt(inputt.split(" ")[1]) - 1;
+        Task updatedTask = taskList.get(index).mark();
+        if (inputt.contains("unmark")) {
+            updatedTask = updatedTask.unmark();
+            System.out.println("OK, I've marked this task as not done yet:");
+        } else {
+            System.out.println("Nice! I've marked this task as done:");
+        }
+        taskList.set(index, updatedTask);
+        System.out.println(updatedTask.toString());
+    }
+
+    public void createToDo(String inputt, ArrayList<Task> taskList) {
+        String description = inputt.substring(TODO, inputt.length());
+        ToDo toDo = new ToDo(false, description);
+        taskList.add(toDo);
+    }
+
+    public void createDeadline(String inputt, ArrayList<Task> taskList) {
+        String[] inputtArray = inputt.split("/");
+        String description = inputtArray[0].substring(DukeManager.DEADLINE, inputtArray[0].length());
+        String deadline = inputtArray[1].substring(DukeManager.BY, inputtArray[1].length());
+
+        Deadline deadlineTask = new Deadline(false, description, deadline);
+        taskList.add(deadlineTask);
+    }
+
+    public void createEvent(String inputt, ArrayList<Task> taskList) {
+        String[] inputtArray = inputt.split("/");
+        String description = inputtArray[0].substring(DukeManager.EVENT, inputtArray[0].length());
+        String from = inputtArray[1].substring(DukeManager.FROM, inputtArray[1].length());
+        String to = inputtArray[2].substring(DukeManager.TO, inputtArray[2].length());
+
+        Event event = new Event(false, description, from, to);
+        taskList.add(event);
+    }
 
 }
