@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.regex.PatternSyntaxException;
 
 public class Duke {
     static private final String HI = "\n" +
@@ -42,17 +41,17 @@ public class Duke {
         }
     }
 
-    public static  void printError() {
-        System.out.println("Wrong words boss! Try again!");
+    public static void printError() {
+        System.out.println("Wrong command boss! Try again!");
     }
 
     public static int convertString(String str) throws DukeException {
-        int num = -1;
-        str = str.trim();
+        int num;
         try {
             num = Integer.parseInt(str);
         } catch (NumberFormatException e) {
             System.out.println("This is not a number boss! Try again!");
+            throw new DukeException();
         }
         if (num < 1 || num > taskCount) {
             System.out.println("Wrong number boss! Try again!");
@@ -87,7 +86,7 @@ public class Duke {
                 String next = in.nextLine();
                 int num;
                 try {
-                                        num = convertString(next);
+                    num = convertString(next.trim());
                     checkSameDone(num, false, checkCmd);
                 } catch (DukeException e) {
                     break;
@@ -101,7 +100,7 @@ public class Duke {
                 String next = in.nextLine();
                 int num;
                 try {
-                    num = convertString(next);
+                    num = convertString(next.trim());
                     checkSameDone(num, true, checkCmd);
                 } catch (DukeException e) {
                     break;
@@ -121,36 +120,33 @@ public class Duke {
             }
             case "deadline": {
                 String next = in.nextLine();
-                String[] deadline;
                 try {
-                    deadline = next.split("/by", 2);
-                } catch (PatternSyntaxException e) {
+                    String[] deadline = next.split("/by", 2);
+                    tasks[taskCount] = new Deadline(deadline[0].trim(), taskCount + 1, false,
+                            deadline[1].trim());
+                } catch (ArrayIndexOutOfBoundsException e) {
                     printError();
                     break;
                 }
                 System.out.println("Understood *Salutes* Task with deadline added!\n"
                         + "Remember to complete it by the deadline!");
-                tasks[taskCount] = new Deadline(deadline[0].trim(), taskCount + 1, false,
-                        deadline[1].trim());
                 System.out.println(tasks[taskCount]);
                 ++taskCount;
                 break;
             }
             case "event": {
                 String next = in.nextLine();
-                String[] eventName;
-                String[] eventTime;
                 try {
-                    eventName = next.split("/from", 2);
-                    eventTime = eventName[1].split("/to", 2);
-                } catch (PatternSyntaxException e) {
+                    String[] eventName = next.split("/from", 2);
+                    String[] eventTime = eventName[1].split("/to", 2);
+                    tasks[taskCount] = new Event(eventName[0].trim(), taskCount + 1, false,
+                            eventTime[0].trim(), eventTime[1].trim());
+                } catch (ArrayIndexOutOfBoundsException e) {
                     printError();
                     break;
                 }
                 System.out.println("Understood *Salutes* Event added!\n"
                         + "Remember the starting time! Don't be late!");
-                tasks[taskCount] = new Event(eventName[0].trim(), taskCount + 1, false,
-                        eventTime[0].trim(), eventTime[1].trim());
                 System.out.println(tasks[taskCount]);
                 ++taskCount;
                 break;
