@@ -1,17 +1,48 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Duke {
-    private static String line = "____________________________________________________________";
-    public static final int MAX_SIZE = 100;
+    private static String LINE = "____________________________________________________________";
+    private static ArrayList<Task> list = new ArrayList<Task>();
+
     public static void greet() {
-        System.out.println(line);
+        System.out.println(LINE);
         System.out.println("Hello! I'm Duke\n" + "What can I do for you?");
-        System.out.println(line);
+        System.out.println(LINE);
     }
     public static void bye() {
-        System.out.println(line);
+        System.out.println(LINE);
         System.out.println("Bye. Hope to see you again soon!");
-        System.out.println(line);
+        System.out.println(LINE);
+    }
+
+    public static void printList() {
+        System.out.println(LINE);
+        int numTask = list.size();
+        if (numTask == 0) {
+            System.out.println("No task added yet");
+            System.out.println(LINE);
+        }
+        else {
+            System.out.println("Here are the tasks in your list:");
+            for (int i = 0; i < list.size(); i++) {
+                System.out.println((i+1) + ".[" + list.get(i).getStatusIcon() + "] " + list.get(i).description);
+            }
+            System.out.println(LINE);
+        }
+    }
+
+    public static void markTask(int idx) {
+        System.out.println(LINE);
+        list.get(idx).markDone();
+        System.out.println("Awesome! I've mark this task as done:");
+        System.out.println("[" + list.get(idx).getStatusIcon() + "] " + list.get(idx).description);
+    }
+    public static void unmarkTask(int idx) {
+        System.out.println(LINE);
+        list.get(idx).markUndone();
+        System.out.println("What!?!? OK, I've marked this task as not done yet:");
+        System.out.println("[" + list.get(idx).getStatusIcon() + "] " + list.get(idx).description);
     }
     public static void main(String[] args) {
         String logo = " ____        _        \n"
@@ -19,38 +50,35 @@ public class Duke {
                 + "| | | | | | | |/ / _ \\\n"
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);
+        System.out.println(logo);
         greet();
-        String input;
-        String[] list = new String[MAX_SIZE];
+        String input, command;
         int inputCounter = 0;
         while (true) {
             Scanner in = new Scanner(System.in);
             input = in.nextLine();
-            list[inputCounter] = input;
-            if (input.equalsIgnoreCase("bye")) {
+            command = input.split(" ")[0];
+            if (command.equalsIgnoreCase("bye")) {
                 bye();
                 break;
             }
-            else if (input.equalsIgnoreCase("list")){
-                System.out.println(line);
-                for (int i = 0; i < inputCounter; i++) {
-                    if (i == 0) {
-                        System.out.println((i+1) + ". " + list[i]);
-                    }
-                    else if (i == (inputCounter - 1)) {
-                        System.out.println((i+1) + ". " + list[i]);
-                        System.out.println(line);
-                    }
-                    else {
-                        System.out.println((i+1) + ". " + list[i]);
-                    }
-                }
+            else if (command.equalsIgnoreCase("list")) {
+                printList();
+            }
+            else if (command.equalsIgnoreCase("mark")) {
+                int taskIdx = Integer.parseInt(input.split(" ")[1]) - 1;
+                markTask(taskIdx);
+            }
+            else if (command.equalsIgnoreCase("unmark")) {
+                int taskIdx = Integer.parseInt(input.split(" ")[1]) - 1;
+                unmarkTask(taskIdx);
             }
             else {
-                System.out.println(line);
-                System.out.println("added: " + list[inputCounter]);
-                System.out.println(line);
+                Task t = new Task(input);
+                list.add(t);
+                System.out.println(LINE);
+                System.out.println("Task added: " + list.get(inputCounter).description);
+                System.out.println(LINE);
                 inputCounter++;
             }
         }
