@@ -17,8 +17,8 @@ public class Duke {
         System.out.println(greet);
 
         String line;
-        Task[] list = new Task[100];
-        int index = 0;
+        Task[] list = new Task[100]; // Array of Tasks
+        int index = 0; // Keep track of the number of tasks in array
 
         while (true) {
             Scanner in = new Scanner(System.in);
