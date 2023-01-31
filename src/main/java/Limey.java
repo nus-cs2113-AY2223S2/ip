@@ -1,64 +1,84 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Limey {
+    public static final int MAX_NUM_TASKS = 100;
     public static void main(String[] args) {
-        Task[] tasks = new Task[100];
-        int numTasks = 0;
-        String lineIn;
-
+        Task[] tasks = new Task[MAX_NUM_TASKS];
+        //numTasks = 0;
+        String inLine;
+        String[] wordList;
         Speech.sayHi();
         Scanner in = new Scanner(System.in);
-        lineIn = in.nextLine();
-        lineIn = lineIn.trim();
-        int i = lineIn.indexOf(' ');
-        String firstWord;
-        if(i!=-1){
-            firstWord = lineIn.substring(0, i);
-        }
-        else {
-            firstWord = lineIn;
-        }
-        //loop until bye
-        while(!firstWord.equals("bye")) {
+        inLine = in.nextLine().trim();
+        wordList = Parser.splitInput(inLine);
+        String firstWord = wordList[0];
+        int firstSpace = inLine.indexOf(' ');
+        //loop until input 'bye'
+        while (!firstWord.equals("bye")) {
             //switch case to decide what to do
-            switch(firstWord) {
+            switch (firstWord) {
             case "list":
-                Speech.printTaskList(tasks, numTasks);
+                Speech.printTaskList(tasks, Task.numTasks);
                 break;
             case "mark":
-                lineIn = lineIn.substring(i+1);
-                lineIn = lineIn.trim();
-                int taskIndex = Integer.parseInt(lineIn) - 1;
-                tasks[taskIndex].setDone(true);
-                Speech.printMarked(tasks[taskIndex]);
+                int taskIndex = -1;
+                if(wordList.length > 1) { //input has at least 2 space separated strings
+                    inLine = inLine.substring(firstSpace + 1);
+                    taskIndex = Integer.parseInt(inLine) - 1;
+                }
+                if (taskIndex >= 0 && taskIndex + 1 <= Task.numTasks) {
+                    tasks[taskIndex].setDone(true);
+                    Speech.printMarked(tasks[taskIndex]);
+                } else {
+                    Speech.invalidMessage();
+                }
                 break;
             case "unmark":
-                lineIn = lineIn.substring(i+1);
-                lineIn = lineIn.trim();
-                int taskInd = Integer.parseInt(lineIn) - 1;
-                tasks[taskInd].setDone(false);
-                Speech.printUnmarked(tasks[taskInd]);
+                taskIndex = -1;
+                if(wordList.length > 1) { //input has at least 2 space separated strings
+                    inLine = inLine.substring(firstSpace + 1);
+                    taskIndex = Integer.parseInt(inLine) - 1;
+                }
+                if (taskIndex + 1 <= Task.numTasks) {
+                    tasks[taskIndex].setDone(false);
+                    Speech.printUnmarked(tasks[taskIndex]);
+                } else {
+                    Speech.invalidMessage();
+                }
+
                 break;
             default:
-                Task taskIn = new Task(lineIn);
-                tasks[numTasks] = taskIn;
-                Speech.printAdded(lineIn);
-                numTasks++;
+                makeNewTask(tasks, inLine, firstWord);
                 break;
             }
             //update new line for next iteration
-            lineIn = in.nextLine();
-            lineIn = lineIn.trim();
-            i = lineIn.indexOf(' ');
-            if(i!=-1){
-                firstWord = lineIn.substring(0, i);
-            }
-            else {
-                firstWord = lineIn;
-            }
+            inLine = in.nextLine().trim();
+            wordList = Parser.splitInput(inLine);
+            firstWord = wordList[0];
+            firstSpace = inLine.indexOf(' ');
         }
         Speech.sayBye();
     }
+
+    private static void makeNewTask(Task[] tasks,String inLine, String firstWord) {
+        Task taskIn;
+        switch (firstWord) {
+        case "deadline":
+            taskIn = new Deadline(inLine);
+            break;
+        case "event":
+            taskIn = new Event(inLine);
+            break;
+        default: // currently default create a todo object
+            taskIn = new Todo(inLine);
+            break;
+        }
+        tasks[Task.numTasks] = taskIn;
+        Task.numTasks++;
+        Speech.printAdded(taskIn, Task.numTasks);
+    }
+
 
 }
 

@@ -1,13 +1,20 @@
 public class Task {
     private String taskName;
     private boolean isDone = false;
-    public Task(String taskName){
-        this.taskName = taskName;
+    public static int numTasks = 0;
+    public Task(String inLine) {
+        int firstSpace = inLine.indexOf(" ");
+        if (inLine.contains("/")){
+            int firstSlash = inLine.indexOf("/");
+            this.taskName = inLine.substring(firstSpace + 1, firstSlash);
+        } else {
+            this.taskName = inLine.substring(firstSpace + 1);
+        }
     }
-
     public String getTaskName() {
         return taskName;
     }
+
     /**
      * Returns identity of the current task including the following
      * - [X] or [ ] for marked or unmarked tasks

@@ -8,9 +8,10 @@ public class Speech {
     public static void printLine() {
         System.out.println("____________________________________________________________");
     }
-    public static void printAdded(String inLine){
+    public static void printAdded(Task task, int numTasks){
         printLine();
-        System.out.println( "\t"+"added: "+inLine);
+        System.out.println( "\t"+"added: "+ task.getTaskName());
+        System.out.println("\tTotal number of current tasks: " + numTasks);
         printLine();
     }
     public static void printMarked(Task task){
@@ -19,6 +20,10 @@ public class Speech {
         System.out.println("\t"+task.getTaskIdentity());
         printLine();
     }
+    public static void invalidMessage(){
+        System.out.println("\tSorry that was an invalid command.");
+    }
+
     public static void printUnmarked(Task task){
         printLine();
         System.out.println("\t"+"This task has been marked as not done yet:");
