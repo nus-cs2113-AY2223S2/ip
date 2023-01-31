@@ -11,7 +11,7 @@ public class DukeCommands {
      * @param taskName Name of task added
      */
     public static void addToList(String taskName) {
-        list[taskLength] = new DukeTasks(taskName);
+        DukeSortInputTask.dukeSortInputTask(list, taskLength, taskName);
         taskLength += 1;
         System.out.println("added: " + taskName);
         System.out.println(spacer);
@@ -24,7 +24,7 @@ public class DukeCommands {
             if (taskIndex > taskLength) {
                 break;
             }
-            System.out.println(taskIndex + ".[" + task.getStatusIcon() + "] " + task.getDescription());
+            System.out.println(taskIndex + ".[" + task.getTaskType() + "] " + "[" + task.getStatusIcon() + "] " + task.getDescription());
             taskIndex += 1;
         }
         System.out.println(spacer);

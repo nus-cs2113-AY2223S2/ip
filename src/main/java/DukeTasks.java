@@ -16,6 +16,10 @@ public class DukeTasks {
         return (isDone ? "X" : " ");
     }
 
+    public String getTaskType() {
+        return (" ");
+    }
+
     public String getDescription() {
         return this.description;
     }
