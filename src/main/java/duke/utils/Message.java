@@ -1,3 +1,5 @@
+package duke.utils;
+
 public enum Message {
     LINE("_________________"),
     INFO_WELCOME("Hello! I'm Duke, your friendly remainder chatbot!\n" +

@@ -1,3 +1,5 @@
+package duke.utils;
+
 public enum Command {
     LIST,
     MARK,

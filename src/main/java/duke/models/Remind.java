@@ -1,3 +1,5 @@
+package duke.models;
+
 public class Remind extends Item {
     public Remind(String description) {
         super(description);
