@@ -26,29 +26,57 @@ public class Duke {
     }
 
     public static void doCommandMark(int taskNum) {
-        tasks[--taskNum].setStatus(true);
-        System.out.println(LINE);
-        System.out.println("\tNoted. Task " + (taskNum + 1) + " has been marked as \"complete\":");
-        System.out.println("\t  " + tasks[taskNum].getTaskNameAndStatus());
-        System.out.println(LINE);
+        try {
+            tasks[--taskNum].setStatus(true);
+            System.out.println(LINE);
+            System.out.println("\tNoted. Task " + (taskNum + 1) + " has been marked as \"complete\":");
+            System.out.println("\t  " + tasks[taskNum].getTaskNameAndStatus());
+            System.out.println(LINE);
+        } catch (ArrayIndexOutOfBoundsException out_mark_b) {
+            System.out.println(LINE);
+            System.out.println("\t☹ Error! Invalid task number given.");
+            System.out.println("\tPlease use \"list\" command to see your task numbers.");
+            System.out.println(LINE);
+        } catch (NullPointerException null_mark_a) {
+            System.out.println(LINE);
+            System.out.println("\t☹ Error! Invalid task number given.");
+            System.out.println("\tPlease use \"list\" command to see your task numbers.");
+            System.out.println(LINE);
+        }
     }
 
     public static void doCommandUnmark(int taskNum) {
-        tasks[--taskNum].setStatus(false);
-        System.out.println(LINE);
-        System.out.println("\tOh, ok. Task " + (taskNum + 1) + " has been marked as \"incomplete\":");
-        System.out.println("\t  " + tasks[taskNum].getTaskNameAndStatus());
-        System.out.println(LINE);
+        try {
+            tasks[--taskNum].setStatus(false);
+            System.out.println(LINE);
+            System.out.println("\tOh, ok. Task " + (taskNum + 1) + " has been marked as \"incomplete\":");
+            System.out.println("\t  " + tasks[taskNum].getTaskNameAndStatus());
+            System.out.println(LINE);
+        } catch (ArrayIndexOutOfBoundsException out_unmark_b) {
+            System.out.println(LINE);
+            System.out.println("\t☹ Error! Invalid task number given.");
+            System.out.println("\tPlease use \"list\" command to see your task numbers.");
+            System.out.println(LINE);
+        } catch (NullPointerException null_unmark_a) {
+            System.out.println(LINE);
+            System.out.println("\t☹ Error! Invalid task number given.");
+            System.out.println("\tPlease use \"list\" command to see your task numbers.");
+            System.out.println(LINE);
+        }
     }
 
     public static void doCommandList() {
         System.out.println(LINE);
-        System.out.println("\tHere are your tasks:");
         int count = 1;
-        for (int index = 0; index < textCount; index++) {
-            System.out.print("\t" + count + ".");
-            System.out.println(tasks[index]);
-            count++;
+        if (textCount == 0) {
+            System.out.println("\tYou have no pending tasks! ☺");
+        } else {
+            System.out.println("\tHere are your tasks:");
+            for (int index = 0; index < textCount; index++) {
+                System.out.print("\t" + count + ".");
+                System.out.println(tasks[index]);
+                count++;
+            }
         }
         System.out.println(LINE);
     }
@@ -87,11 +115,33 @@ public class Duke {
         String[] extractFirstWord = userCommand.split(" ", 2);
         String firstWord = extractFirstWord[0];
         if (firstWord.equals(COMMAND_MARK)) {
-            int taskNum = Integer.parseInt(extractFirstWord[1]);
-            doCommandMark(taskNum);
+            try {
+                int taskNum = Integer.parseInt(extractFirstWord[1]);
+                doCommandMark(taskNum);
+            } catch (ArrayIndexOutOfBoundsException out_mark_a) {
+                System.out.println(LINE);
+                System.out.println("\t☹ Error! \"mark\" command requires a task number.");
+                System.out.println(LINE);
+            } catch (NumberFormatException num_mark_a) {
+                System.out.println(LINE);
+                System.out.println("\t☹ Error! Invalid input.");
+                System.out.println("\tPlease provide a integer number for \"mark\" command.");
+                System.out.println(LINE);
+            }
         } else if (firstWord.equals(COMMAND_UNMARK)) {
-            int taskNum = Integer.parseInt(extractFirstWord[1]);
-            doCommandUnmark(taskNum);
+            try {
+                int taskNum = Integer.parseInt(extractFirstWord[1]);
+                doCommandUnmark(taskNum);
+            } catch (ArrayIndexOutOfBoundsException out_unmark_a) {
+                System.out.println(LINE);
+                System.out.println("\t☹ Error! \"unmark\" command requires a task number.");
+                System.out.println(LINE);
+            } catch (NumberFormatException num_unmark_a) {
+                System.out.println(LINE);
+                System.out.println("\t☹ Error! Invalid input.");
+                System.out.println("\tPlease provide a integer number for \"unmark\" command.");
+                System.out.println(LINE);
+            }
         } else if (firstWord.equals(COMMAND_LIST)) {
             doCommandList();
         } else if (firstWord.equals(COMMAND_BYE)) {
