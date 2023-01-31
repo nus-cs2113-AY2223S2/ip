@@ -11,7 +11,12 @@ public class Duke {
 
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
-        
+        Scanner userInput = new Scanner(System.in); //create Scanner object
+        String inputCommand = userInput.nextLine(); //read user input
+        while (!inputCommand.equals("bye")){
+            System.out.println(inputCommand);
+            inputCommand = userInput.nextLine();
+        }
         System.out.println("Bye. Hope to see you again soon!");
     }
 }
