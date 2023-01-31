@@ -4,11 +4,6 @@ public class Task {
 
     protected Status taskStatus;
 
-    public Task(String description) {
-        this.description = description;
-        this.isDone = false;
-    }
-
     public Task(String description, Status taskStatus) {
         this.description = description;
         this.taskStatus = taskStatus;

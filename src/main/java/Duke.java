@@ -1,7 +1,6 @@
 import java.util.Scanner;
 // Now it is level 4
 
-
 public class Duke {
     public static Task[] taskList = new Task [100]; // The size of this list is initialize to be 100
     public static int listTailIndex = 0;
@@ -13,7 +12,7 @@ public class Duke {
             System.out.print(i + 1);
             System.out.println(". " + taskList[i].showTask());
         }
-        System.out.println("____________________________________________________________" + '\n');
+        System.out.println("____________________________________________________________");
     }
 
     // Mark and Unmark method
@@ -45,7 +44,7 @@ public class Duke {
 
         // Information is the content without the first letter
         String information = line.substring(indexOfSpace + 1);
-        information = transformString(information);
+        information = transformString.transformString(information);
 
         if (firstLetter.equals("todo")) {
             Task currentTask = new Task(information, Status.T);
@@ -62,31 +61,6 @@ public class Duke {
         System.out.println("Now you have " + Integer.toString(listTailIndex) + " tasks in the list.");
         System.out.println("____________________________________________________________");
     }
-
-    // Transform the line with "/" to common
-    public static String transformString(String line) {
-        String transformedLine = "";
-        String[] wordsListOfLine = line.split(" ");
-        boolean firstTimeOccurence = true; // Indicates the occurrence time of "/"
-
-        if (line.contains("/")) {
-            for (int i = 0; i < wordsListOfLine.length; i++) {
-                if (wordsListOfLine[i].startsWith("/")) {
-                    if (firstTimeOccurence) {
-                        wordsListOfLine[i] = "(" + wordsListOfLine[i].substring(1) + ":";
-                        firstTimeOccurence = false;
-                    }
-
-                }
-            }
-            transformedLine = String.join(" ", wordsListOfLine) + ")";
-        } else {
-            transformedLine = line;
-        }
-
-        return transformedLine;
-    }
-
 
     public static void initialGreeting() {
         System.out.println("____________________________________________________________");
@@ -107,11 +81,9 @@ public class Duke {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
-
         // Greet the user
         initialGreeting();
 
-        // Echos
         String line;
         Scanner in = new Scanner(System.in);
         line = in.nextLine();
@@ -131,11 +103,5 @@ public class Duke {
 
         // Bye and terminate the program
         bye();
-
     }
 }
-
-
-
-
-
