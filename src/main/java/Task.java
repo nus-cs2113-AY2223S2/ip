@@ -51,7 +51,7 @@ public class Task {
         int number = Integer.parseInt(seperated[1]) - 1;
         listOfTasks[number].setDone(false);
         System.out.println("OK, I've marked this task as not done yet:");
-        System.out.println("    " + listOfTasks[number].getStatusIcon() + " " + listOfTasks[number].description);
+        System.out.println("    " + listOfTasks[number].label + listOfTasks[number].getStatusIcon() + " " + listOfTasks[number].description);
     }
 
     protected static void mark(String command, Task[] listOfTasks) {
@@ -59,7 +59,7 @@ public class Task {
         int number = Integer.parseInt(seperated[1]) - 1;
         listOfTasks[number].setDone(true);
         System.out.println("Nice! I've marked this task as done:");
-        System.out.println("    " + listOfTasks[number].getStatusIcon() + " " + listOfTasks[number].description);
+        System.out.println("    " + listOfTasks[number].label + listOfTasks[number].getStatusIcon() + " " + listOfTasks[number].description);
     }
 
     private static void list(Task[] listOfTasks, int index) {
