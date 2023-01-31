@@ -54,6 +54,7 @@ public class TaskList {
 
     public void addToDo(String args) {
         noOfTasks++;
+        args = args.trim();
         tasks[noOfTasks] = new ToDo(args);
         printAddTaskMessage(noOfTasks);
     }
