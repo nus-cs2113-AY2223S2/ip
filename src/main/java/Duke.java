@@ -39,10 +39,10 @@ public class Duke {
                     in.close();
                     exitProgram();
                 }
-
-                System.out.println(Message.LINE);
             } catch (Exception err) {
                 System.out.println(err.getMessage());
+            } finally {
+                System.out.println(Message.LINE);
             }
         }
     }
@@ -53,14 +53,15 @@ public class Duke {
      * 
      * @param input the user inputted text
      * @return command specified by the user
+     * @throws DukeException when an invalid command is entered
      */
-    private static Command getCommand(String input) throws IllegalArgumentException {
+    private static Command getCommand(String input) throws DukeException {
         try {
             String[] splitInput = input.split(" ", 2);
             Command command = Command.valueOf(splitInput[0].toUpperCase());
             return command;
         } catch (IllegalArgumentException err) {
-            throw new IllegalArgumentException(Message.ERROR_INVALID_COMMAND.toString());
+            throw new DukeException(Message.ERROR_INVALID_COMMAND.toString());
         }
     }
 
@@ -80,6 +81,22 @@ public class Duke {
     }
 
     /**
+     * Checks for empty/whitespace parameters input by the user.
+     * Throws an IllegalArgumentException if check fails.
+     * 
+     * @param input the user inputted text
+     * @return parameters specified by the user
+     * @throws IllegalArgumentException when check fails
+     */
+    private static void areValidParameters(String[] parameters) throws IllegalArgumentException {
+        for (String parameter : parameters) {
+            if (parameter.trim().isEmpty()) {
+                throw new IllegalArgumentException();
+            }
+        }
+    }
+
+    /**
      * Prints the list of items.
      */
     private static void printList() {
@@ -96,8 +113,9 @@ public class Duke {
      * 
      * @param parameters Find the item no. specified
      * @param isMark to mark/unmark the item in the list
+     * @throws DukeException when parseInt fails or User tries to access element that is out of bounds
      */
-    private static void markItem(String parameters, boolean isMark) throws NumberFormatException {
+    private static void markItem(String parameters, boolean isMark) throws DukeException {
         try {
             int num = Integer.parseInt(parameters);
             Item item = items.get(num - 1);
@@ -106,9 +124,9 @@ public class Duke {
             System.out.println(isMark ? Message.INFO_MARK : Message.INFO_UNMARK);
             System.out.println(item);
         } catch (NumberFormatException err) {
-            throw new NumberFormatException(Message.ERROR_MARK_INVALID_PARAMETER.toString());
+            throw new DukeException(Message.ERROR_MARK_INVALID_PARAMETER.toString());
         } catch (IndexOutOfBoundsException err) {
-            throw new NumberFormatException(Message.ERROR_MARK_OUT_OF_BOUNDS.toString());
+            throw new DukeException(Message.ERROR_MARK_OUT_OF_BOUNDS.toString());
         }
     }
 
@@ -116,31 +134,41 @@ public class Duke {
      * Adds a Todo item into the list.
      * 
      * @param parameters Gets the item description
+     * @throws DukeException when areValidParameters check fails
      */
-    private static void addRemind(String parameters) {
-        Item newTodo = new Remind(parameters);
-        items.add(newTodo);
+    private static void addRemind(String parameters) throws Exception {
+        try {
+            areValidParameters(new String[] {parameters});
 
-        printAddItemMessage(newTodo);
+            Item newTodo = new Remind(parameters);
+            items.add(newTodo);
+
+            printAddItemMessage(newTodo);
+        } catch (Exception err) {
+            throw new DukeException(Message.ERROR_REMIND_MISSING_PARAMETER.toString());
+        }
     }
 
     /**
      * Adds a Deadline item into the list.
      * 
      * @param parameters Gets the description and deadline of the item.
+     * @throws DukeException when there are missing parameters or areValidParameters check fails
      */
     private static void addDeadline(String parameters) throws Exception {
-        if (parameters.contains(" /by ")) {
-            String[] attributes = parameters.split(" /by ");
+        try {
+            String[] attributes = parameters.split(" /by ", 2);
             String description = attributes[0];
             String by = attributes[1];
+
+            areValidParameters(new String[] {description, by});
 
             Item newDeadline = new Deadline(description, by);
             items.add(newDeadline);
 
             printAddItemMessage(newDeadline);
-        } else {
-            throw new Exception(Message.ERROR_DEADLINE_MISSING_PARAMETER.toString());
+        } catch (Exception err) {
+            throw new DukeException(Message.ERROR_DEADLINE_MISSING_PARAMETER.toString());
         }
     }
 
@@ -148,22 +176,25 @@ public class Duke {
      * Adds a Event item into the list.
      * 
      * @param parameters Gets the description and from/to of the item.
+     * @throws DukeException when there are missing parameters or areValidParameters check fails
      */
     private static void addEvent(String parameters) throws Exception {
-        if (parameters.contains(" /from ") && parameters.contains(" /to ")) {
-            String[] attributes = parameters.split(" /from ");
+        try {
+            String[] attributes = parameters.split(" /from ", 2);
             String description = attributes[0];
             
-            attributes = attributes[1].split(" /to ");
+            attributes = attributes[1].split(" /to ", 2);
             String from = attributes[0];
             String to = attributes[1];
+
+            areValidParameters(new String[] {description, from, to});
 
             Item newEvent = new Event(description, from, to);
             items.add(newEvent);
 
             printAddItemMessage(newEvent);
-        } else {
-            throw new Exception(Message.ERROR_EVENT_MISSING_PARAMETER.toString());
+        } catch (Exception err) {
+            throw new DukeException(Message.ERROR_EVENT_MISSING_PARAMETER.toString());
         }
     }
 
@@ -178,6 +209,8 @@ public class Duke {
 
     /**
      * Prints the message after an item is added.
+     * 
+     * @param item Prints the description and status of the item
      */
     private static void printAddItemMessage(Item item) {
         System.out.println(Message.INFO_ITEM_ADD);
