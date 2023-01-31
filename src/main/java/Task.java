@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Task {
     private final String name;
     private boolean isCompleted;
@@ -30,5 +34,16 @@ public class Task {
 
     public String describe() {
         return getCheckbox(isCompleted) + " " + name;
+    }
+
+    public static boolean isValidInput(String input, Pattern pattern) {
+        Matcher matcher = pattern.matcher(input.trim());
+        return matcher.find();
+    }
+
+    public static ArrayList<String> convertInputIntoDetails(String input) {
+        ArrayList<String> result = new ArrayList<>();
+        result.add(input);
+        return result;
     }
 }
