@@ -1,6 +1,39 @@
 import java.util.Scanner;
 
 public class Duke {
+
+    public static final int MARK_TASK_NUMBER_INDEX = 5;
+    public static final int UNMARK_TASK_NUMBER_INDEX = 7;
+
+    public static String markTask(String input) {
+        int itemIndex = Integer.parseInt(input.substring(MARK_TASK_NUMBER_INDEX)) - 1;
+        Task.tasks[itemIndex].setTaskStatus(true);
+        return "\tNice! I've marked this task as done:" + System.lineSeparator() + "\t\t"
+                + Task.tasks[itemIndex];
+    }
+
+    public static String unmarkTask(String input) {
+        int itemIndex = Integer.parseInt(input.substring(UNMARK_TASK_NUMBER_INDEX)) - 1;
+        Task.tasks[itemIndex].setTaskStatus(false);
+        return "\tOK, I've marked this task as not done yet:" + System.lineSeparator() + "\t\t"
+                + Task.tasks[itemIndex];
+    }
+
+    public static String getList() {
+        String output = "\tHere are the tasks in your list:" + System.lineSeparator();
+        for (int i = 0; i < Task.numOfTasks; i++) {
+            output += "\t" + (i + 1) + "." + Task.tasks[i];
+            if (i != Task.numOfTasks - 1) {
+                output += System.lineSeparator();
+            }
+        }
+        return output;
+    }
+
+    public static void createTodoTask(String input) {
+        Task.tasks[Task.numOfTasks] = new Todo(input);
+    }
+
     public static void createDeadlineTask(String input) {
         int byIndex = input.indexOf("/by");
         String description = (input.substring(0, byIndex)).trim();
@@ -27,7 +60,7 @@ public class Duke {
         String output = "\tGot it. I've added this task:" + System.lineSeparator() + "\t";
         switch (itemType) {
         case "todo":
-            Task.tasks[Task.numOfTasks] = new Todo(restOfInput);
+            createTodoTask(restOfInput);
             break;
         case "deadline":
             createDeadlineTask(restOfInput);
@@ -43,30 +76,25 @@ public class Duke {
     }
 
     public static String getResponse(String input) {
-        String output = "";
+        String output;
 
         // get first word from input
         String firstWord;
         String restOfInput = "";
         int indexOfFirstSpace = input.indexOf(" ");
         if (indexOfFirstSpace != -1) {
+            // separate first word from the rest of input
             firstWord = input.substring(0, indexOfFirstSpace);
             restOfInput = input.substring(indexOfFirstSpace + 1);
         } else {
+            // only 1 word in input
             firstWord = input;
         }
-        int itemIndex;
 
         // determine the type of command
         switch (firstWord) {
         case "list":
-            output = "\tHere are the tasks in your list:" + System.lineSeparator();
-            for (int i = 0; i < Task.numOfTasks; i++) {
-                output += "\t" + (i + 1) + "." + Task.tasks[i];
-                if (i != Task.numOfTasks - 1) {
-                    output += System.lineSeparator();
-                }
-            }
+            output = getList();
             break;
         case "todo":
         case "deadline":
@@ -74,16 +102,10 @@ public class Duke {
             output = addTask(firstWord, restOfInput);
             break;
         case "mark":
-            itemIndex = Integer.parseInt(input.substring(5)) - 1;
-            Task.tasks[itemIndex].setTaskStatus(true);
-            output = "\tNice! I've marked this task as done:" + System.lineSeparator() + "\t\t"
-                    + Task.tasks[itemIndex];
+            output = markTask(input);
             break;
         case "unmark":
-            itemIndex = Integer.parseInt(input.substring(7)) - 1;
-            Task.tasks[itemIndex].setTaskStatus(false);
-            output = "\tOK, I've marked this task as not done yet:" + System.lineSeparator() + "\t\t"
-                    + Task.tasks[itemIndex];
+            output = unmarkTask(input);
             break;
         default:
             output = "\tInvalid command.";
