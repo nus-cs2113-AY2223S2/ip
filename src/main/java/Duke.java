@@ -1,5 +1,6 @@
 import java.util.Scanner;
 public class Duke {
+
     public static void printDivider() {
         System.out.println("____________________________________________________________");
     }
@@ -17,6 +18,11 @@ public class Duke {
         printDivider();
     }
 
+    private static void printTaskAdded(Task[] tasks, int taskCounter) {
+        System.out.println("Got it. I've added this task:\n  " + tasks[taskCounter -1]
+                + "\nNow you have " + taskCounter + " tasks in the list.");
+        printDivider();
+    }
     public static void printBye() {
         System.out.println("Bye. Hope to see you again soon!");
         printDivider();
@@ -31,49 +37,67 @@ public class Duke {
         Task[] tasks = new Task[100];
         int taskCounter = 0;
 
-        boolean isLooping = true;
-        do {
-            input = in.nextLine();
+        input = in.nextLine();
+        while (!input.equals("bye")) {
             String action = input.split(" ")[0];
-            switch(action) {
-            case "bye":
-                isLooping = false;
-                break;
+            switch (action) {
             case "list":
                 if (taskCounter == 0) {
                     System.out.println("You are free today :)");
                 } else {
                     for (int i = 0; i < taskCounter; ++i) {
                         System.out.print(i + 1 + ".");
-                        tasks[i].printDescWithStatus();
+                        System.out.println(tasks[i]);
                     }
                 }
                 printDivider();
                 break;
             case "mark":
             case "unmark":
-                int index = Integer.parseInt(input.split(" ")[1]) - 1;
-                if (index < 0 || index >= taskCounter) {
+                int indexOfTask = Integer.parseInt(input.split(" ")[1]) - 1;
+                if (indexOfTask < 0 || indexOfTask >= taskCounter) {
                     System.out.println("Task number does not exist in list");
                     printDivider();
                     break;
                 }
                 if (action.equals("mark")) {
-                    tasks[index].markDone();
+                    tasks[indexOfTask].markDone();
                 } else {
-                    tasks[index].markUndone();
+                    tasks[indexOfTask].markUndone();
                 }
                 printDivider();
                 break;
-            default:
-                tasks[taskCounter] = new Task(input);
+            case "todo":
+                tasks[taskCounter] = new ToDo(input.substring(action.length() + 1));
                 ++taskCounter;
-                System.out.println("Added: " + input);
-                printDivider();
+                printTaskAdded(tasks, taskCounter);
                 break;
+            case "deadline":
+                int indexOfBy = input.indexOf(" /by ");
+                tasks[taskCounter] = new Deadline(input.substring(action.length() + 1, indexOfBy)
+                        , input.substring(indexOfBy + (" /by ").length()));
+                ++taskCounter;
+                printTaskAdded(tasks, taskCounter);
+                break;
+            case "event":
+                int indexOfFrom = input.indexOf(" /from ");
+                int indexOfTo = input.indexOf(" /to ");
+                tasks[taskCounter] = new Event(input.substring(action.length() + 1, indexOfFrom)
+                        , input.substring(indexOfFrom + (" /from ").length(), indexOfTo)
+                        , input.substring(indexOfTo + (" /to ").length()));
+                ++taskCounter;
+                printTaskAdded(tasks, taskCounter);
+                break;
+            default:
+                System.out.println("Not a valid command, please try again");
+                printDivider();
             }
-        } while (isLooping);
+
+            input = in.nextLine();
+        }
 
         printBye();
     }
+
+
 }

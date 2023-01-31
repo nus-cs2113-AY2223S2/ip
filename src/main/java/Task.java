@@ -10,13 +10,13 @@ public class Task {
     public void markDone() {
         isDone = true;
         System.out.println("Nice! I've marked this task as done:");
-        printDescWithStatus();
+        System.out.println(this);
     }
 
     public void markUndone() {
         isDone = false;
         System.out.println("Ok, I've marked this task as not done yet:");
-        printDescWithStatus();
+        System.out.println(this);
     }
 
     public String getDescription() {
@@ -27,8 +27,9 @@ public class Task {
         return (isDone ? "X" : " ");
     }
 
-    public void printDescWithStatus() {
-        System.out.println("[" + getStatusIcon() + "] " + getDescription());
+    @Override
+    public String toString() {
+        return "[" + getStatusIcon() + "] " + getDescription();
     }
 }
 
