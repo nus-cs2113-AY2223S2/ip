@@ -44,6 +44,7 @@ dependencies {
 
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:31.1-jre'
+    implementation 'com.google.code.gson:gson:2.10.1'
 }
 
 application {
@@ -58,5 +59,9 @@ run {
 jar {
   manifest {
     attributes("Main-Class": "wilsonoh.sagyo.Main")
+  }
+
+  from {
+    configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
   }
 }
