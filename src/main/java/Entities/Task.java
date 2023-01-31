@@ -12,10 +12,6 @@ public class Task {
         return this.isDone;
     }
 
-    public boolean getisDone() {
-        return this.isDone;
-    }
-
     public void setIsDone(boolean isDone) {
         this.isDone = isDone;
     }
@@ -25,7 +21,7 @@ public class Task {
     }
 
     public String getTaskName() {
-        return taskName;
+        return this.taskName;
     }
 
     @Override

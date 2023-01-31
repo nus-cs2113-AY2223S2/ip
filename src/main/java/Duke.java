@@ -12,7 +12,7 @@ public class Duke {
         String[] inputArray;
         String command, taskName;
         String startDate, endDate;
-        int startIdx, endIdx;
+        int startDateIdx, endDateIdx;
 
         Greetings.introduction();
 
@@ -27,9 +27,9 @@ public class Duke {
             inputArray = input.split(" ");
             command = inputArray[0].toLowerCase();
             newTask = null;
-            startIdx = endIdx = -1;
+            startDateIdx = endDateIdx = -1;
             startDate = endDate = null;
-            
+
             try {
                 switch (command) {
                     case "list":
@@ -49,14 +49,14 @@ public class Duke {
                         if (input.length() == command.length()) {
                             throw new NoDescriptionException(command);
                         }
-                        
-                        startIdx = input.indexOf("/by ");
-                        if (startIdx == -1) {
+                    
+                        startDateIdx = input.indexOf("/by ");
+                        if (startDateIdx == -1) {
                             throw new InsufficientArgumentsException(command, "deadline [task] /by [date]");
                         }
 
-                        taskName = input.substring(command.length() + 1, startIdx);
-                        startDate = input.substring(startIdx + 4);
+                        taskName = input.substring(command.length() + 1, startDateIdx);
+                        startDate = input.substring(startDateIdx + 4);
                         if (taskName.length() == 0 || startDate.length() == 0) {
                             String emptyArgument = 
                                 taskName.length() == 0 
@@ -73,15 +73,15 @@ public class Duke {
                             throw new NoDescriptionException(command);
                         }
 
-                        startIdx = input.indexOf("/from ");
-                        endIdx = input.indexOf("/to ");
-                        if (startIdx == -1 || endIdx == -1) {
+                        startDateIdx = input.indexOf("/from ");
+                        endDateIdx = input.indexOf("/to ");
+                        if (startDateIdx == -1 || endDateIdx == -1) {
                             throw new InsufficientArgumentsException(command, "event [task] /from [startDate] /to [startDate]");
                         }
 
-                        taskName = input.substring(command.length() + 1, startIdx);
-                        startDate = input.substring(startIdx + 6, endIdx-1);
-                        endDate = input.substring(endIdx + 4);
+                        taskName = input.substring(command.length() + 1, startDateIdx);
+                        startDate = input.substring(startDateIdx + 6, endDateIdx-1);
+                        endDate = input.substring(endDateIdx + 4);
 
                         if (taskName.length() == 0 || startDate.length() == 0 || endDate.length() == 0) {
                             String emptyArgument = 
@@ -102,17 +102,17 @@ public class Duke {
                         }
 
                         try {
-                            startIdx = Integer.parseInt(input.substring(command.length() + 1)) - 1;
+                            startDateIdx = Integer.parseInt(input.substring(command.length() + 1)) - 1;
                         } catch (NumberFormatException e) {
                             throw new NonPositiveNumberException(e);
                         }
 
                         try {
-                            tasks.get(startIdx).setIsDone(true);
+                            tasks.get(startDateIdx).setIsDone(true);
                         } catch (IndexOutOfBoundsException e) {
                             throw new InvalidTaskIndexException(tasks.size(), e);
                         }
-                        System.out.println(TaskPrinter.markedMessage(tasks.get(startIdx)));
+                        System.out.println(TaskPrinter.markedMessage(tasks.get(startDateIdx)));
                         break;
                     
                     case "unmark":
@@ -121,17 +121,17 @@ public class Duke {
                         }
 
                         try {
-                            startIdx = Integer.parseInt(input.substring(command.length() + 1)) - 1;
+                            startDateIdx = Integer.parseInt(input.substring(command.length() + 1)) - 1;
                         } catch (NumberFormatException e) {
                             throw new NonPositiveNumberException(e);
                         }
 
                         try {
-                            tasks.get(startIdx).setIsDone(false);
+                            tasks.get(startDateIdx).setIsDone(false);
                         } catch (IndexOutOfBoundsException e) {
                             throw new InvalidTaskIndexException(tasks.size(), e);
                         }
-                        System.out.println(TaskPrinter.unmarkedMessage(tasks.get(startIdx)));
+                        System.out.println(TaskPrinter.unmarkedMessage(tasks.get(startDateIdx)));
                         break;
     
                     default:
