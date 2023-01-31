@@ -9,7 +9,6 @@ public class Duke {
     public static final String CLOSING_MSG = "Goodbye! Hope to see you again soon ^^!";
     public static final String HORIZONTAL = "---------------------------------";
     public static final String MARK_MSG = "Nice! I've marked this task as done:";
-
     public static final String UNMARK_MSG = "Oki! I've marked this task as not done yet:";
 
     public static void main(String[] args) {
@@ -41,14 +40,14 @@ public class Duke {
                 System.out.println(HORIZONTAL);
             }
 
-            // mark item as done: constraint - user input begins with "mark"
+            // Mark item as done: constraint - user input begins with "mark"
             if (line.startsWith("mark")) {
 
                 StatusToggle(line, item, MARK_MSG, true);
 
             }
 
-            // unmark item: constraint - user input begins with "mark"
+            // Unmark item: constraint - user input begins with "mark"
             if (line.startsWith("unmark")) {
 
                 StatusToggle(line, item, UNMARK_MSG, false);
@@ -69,8 +68,7 @@ public class Duke {
 
         if (listNum >= 0 && listNum < item) {
 
-            // check if it is already done/not done in list
-
+            // Check if it is already done/not done in list
             if (list[listNum].isDone != status) {
                 list[listNum].isDone = status;
 
