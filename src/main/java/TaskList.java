@@ -2,11 +2,15 @@ public class TaskList {
     private Task[] tasks;
     private int noOfTasks;
 
+    private void printTaskType(int taskNo) {
+        System.out.print('[' + tasks[taskNo].getTaskType() + ']');
+    }
+
     private void printStatus(int taskNo) {
         if (tasks[taskNo].isDone()) {
-            System.out.print("[X] ");
+            System.out.print("[X]");
         } else {
-            System.out.print("[ ] ");
+            System.out.print("[ ]");
         }
     }
 
@@ -31,10 +35,48 @@ public class TaskList {
         noOfTasks = 0;
     }
 
-    public void addTask(String taskName) {
+    private void printAddTaskMessage(int taskNo) {
+        System.out.println("Got it. I have added this task:");
+        printTaskType(taskNo);
+        printStatus(taskNo);
+        printTaskName(taskNo);
+        printDescription(taskNo);
+        System.out.println();
+        System.out.println("Now you have " + noOfTasks + " tasks in the list");
+    }
+
+    public void addToDo(String args) {
         noOfTasks++;
-        tasks[noOfTasks] = new Task(taskName);
-        System.out.println("added: " + taskName);
+        tasks[noOfTasks] = new ToDo(args);
+        printAddTaskMessage(noOfTasks);
+    }
+
+    public void addDeadline(String args) {
+        noOfTasks++;
+        int indexOfBy = args.indexOf("/by");
+        String name = args.substring(0, indexOfBy);
+        name = name.trim();
+        indexOfBy+=3;
+        String by = args.substring(indexOfBy);
+        by = by.trim();
+        tasks[noOfTasks] = new Deadline(name, by);
+        printAddTaskMessage(noOfTasks);
+    }
+
+    public void addEvent(String args) {
+        noOfTasks++;
+        int indexOfFrom = args.indexOf("/from");
+        String name = args.substring(0, indexOfFrom);
+        name = name.trim();
+        indexOfFrom+=5;
+        String from = args.substring(indexOfFrom);
+        from = from.trim();
+        int indexOfTo = args.indexOf("/to");
+        indexOfTo+=3;
+        String to = args.substring(indexOfTo);
+        to=to.trim();
+        tasks[noOfTasks] = new Event(name, from, to);
+        printAddTaskMessage(noOfTasks);
     }
 
     public void listTasks() {
