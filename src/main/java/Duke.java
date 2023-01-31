@@ -1,6 +1,16 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 
+import duke.models.Deadline;
+import duke.models.Event;
+import duke.models.Item;
+import duke.models.Remind;
+
+import duke.utils.Command;
+import duke.utils.Message;
+
+import duke.exceptions.DukeException;
+
 public class Duke {
     private static ArrayList<Item> items = new ArrayList<Item>(); // List of items
 

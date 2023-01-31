@@ -1,3 +1,5 @@
+package duke.models;
+
 public abstract class Item {
     private String description; // item name
     private boolean isDone;

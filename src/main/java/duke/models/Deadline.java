@@ -1,3 +1,5 @@
+package duke.models;
+
 public class Deadline extends Item {
     private String by;
     
