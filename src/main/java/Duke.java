@@ -1,10 +1,13 @@
 import java.util.Scanner;
+import java.io.IOException;
 import java.util.ArrayList;
 import Command.*;
 import Entities.*;
 import Exceptions.*;
+import FileUtils.*;
 
 public class Duke {
+    private static final String filePath = "data/duke.txt";
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         ArrayList<Task> tasks = new ArrayList<Task>();
@@ -42,7 +45,7 @@ public class Duke {
                         }
 
                         taskName = input.substring(command.length() + 1);
-                        newTask = new Todo(taskName);
+                        newTask = new Todo(taskName, false);
                         break;
     
                     case "deadline":
@@ -65,7 +68,7 @@ public class Duke {
                             throw new EmptyArgumentException(emptyArgument);
                         }
 
-                        newTask = new Deadline(taskName, startDate);
+                        newTask = new Deadline(taskName, false, startDate);
                         break;
     
                     case "event":
@@ -93,7 +96,7 @@ public class Duke {
                             throw new EmptyArgumentException(emptyArgument);
                         }
 
-                        newTask = new Event(taskName, startDate, endDate);
+                        newTask = new Event(taskName, false, startDate, endDate);
                         break;
     
                     case "mark":
@@ -150,6 +153,15 @@ public class Duke {
             input = sc.nextLine();
         };
 
+        try {
+            TaskWriter.writeTasksToFile(filePath, tasks);
+            System.out.printf("Saved tasks to %s\n\n", filePath);
+        } catch (IOException e) {
+            System.out.println(e);
+            System.out.println(e.getStackTrace());
+            System.out.println("Something went wrong when saving tasks!");
+            System.out.println("Aborting...\n");
+        }
         Greetings.goodbye();
     }
 }

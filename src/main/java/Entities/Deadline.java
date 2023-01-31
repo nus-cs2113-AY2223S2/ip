@@ -8,8 +8,8 @@ public class Deadline extends Task {
     // private static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy HH:mm");
     protected String endDate;
 
-    public Deadline(String taskName, String endDate) {
-        super(taskName);
+    public Deadline(String taskDescription, boolean isDone, String endDate) {
+        super(taskDescription, isDone);
         setEndDate(endDate);
     }
 

@@ -1,8 +1,8 @@
 package Entities;
 
 public class Todo extends Task {
-    public Todo(String taskName) {
-        super(taskName);
+    public Todo(String taskDescription, boolean isDone) {
+        super(taskDescription, isDone);
     }
 
     @Override

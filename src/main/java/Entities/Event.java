@@ -10,8 +10,8 @@ public class Event extends Task {
     protected String startDate;
     protected String endDate;
 
-    public Event(String taskName, String startDate, String endDate) {
-        super(taskName);
+    public Event(String taskDescription, boolean isDone, String startDate, String endDate) {
+        super(taskDescription, isDone);
         setStartDate(startDate);
         setEndDate(endDate);
     }

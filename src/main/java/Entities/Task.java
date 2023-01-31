@@ -1,11 +1,11 @@
 package Entities;
 public class Task {
-    protected String taskName;
+    protected String taskDescription;
     protected boolean isDone;
 
-    public Task(String taskName) {
-        setTaskName(taskName);
-        setIsDone(false);
+    public Task(String taskDescription, boolean isDone) {
+        setTaskDescription(taskDescription);
+        setIsDone(isDone);
     }
 
     public boolean isDone() {
@@ -16,16 +16,16 @@ public class Task {
         this.isDone = isDone;
     }
 
-    public void setTaskName(String taskName) {
-        this.taskName = taskName;
+    public void setTaskDescription(String taskDescription) {
+        this.taskDescription = taskDescription;
     }
 
-    public String getTaskName() {
-        return this.taskName;
+    public String getTaskDescription() {
+        return this.taskDescription;
     }
 
     @Override
     public String toString() {
-        return "[" + (this.isDone ? "X" : " ") + "] " + this.getTaskName();
+        return "[" + (this.isDone ? "X" : " ") + "] " + this.getTaskDescription();
     }
 }
