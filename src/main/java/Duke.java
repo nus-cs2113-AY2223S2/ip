@@ -1,5 +1,26 @@
 import java.util.Scanner;
 public class Duke {
+
+    public static final String EXIT_PROGRAM = "bye";
+    public static final int TASK_ARRAY_SIZE = 100;
+    public static final String LOGO = "   _____  .__   _____                   .___\n" +
+            "  /  _  \\ |  |_/ ____\\______   ____   __| _/\n" +
+            " /  /_\\  \\|  |\\   __\\\\_  __ \\_/ __ \\ / __ |\n" +
+            "/    |    \\  |_|  |   |  | \\/\\  ___// /_/ |\n" +
+            "\\____|__  /____/__|   |__|    \\___  >____ |\n" +
+            "        \\/                        \\/     \\/\n";
+    public static final String WELCOME_MESSAGE = "Hello from\n";
+    public static final String DIVIDER = "____________________________________________________________\n";
+    public static final String GREETINGS = " Hello! I'm Alfred Pennyworth.\n What can I do for you?\n";
+    public static final String ENDING = " Bye. Hope to see you again soon!\n";
+    public static final String ADDED_TASK = "Got it. I've added this task:\n  ";
+    public static final String BY_DELIMITER = "/by ";
+    public static final String FROM_DELIMITER = "/from ";
+    public static final String TO_DELIMITER = "/to ";
+    public static final String MARKED_THIS_TASK_AS_DONE = "Nice! I've marked this task as done: ";
+    public static final String UNMARKED_THIS_TASK_AS_DONE = "Okay, I've marked this task as not done yet: ";
+    public static final String ECHO_MESSAGE = "added: ";
+
     public static void main(String[] args) {
 
         Duke.logo();
@@ -8,10 +29,9 @@ public class Duke {
         Scanner input = new Scanner(System.in);
         String line = "";
 
-        Task[] tasks = new Task[100];
-        //int tasksCount = 0;
+        Task[] tasks = new Task[TASK_ARRAY_SIZE];
 
-        while (!(line = input.nextLine()).equals("bye")) {
+        while (!(line = input.nextLine()).equals(EXIT_PROGRAM)) {
            Duke.processInput(line, tasks);
         }
 
@@ -21,32 +41,18 @@ public class Duke {
     }
 
     public static void logo(){
-        String logo =
-                "   _____  .__   _____                   .___\n" +
-                        "  /  _  \\ |  |_/ ____\\______   ____   __| _/\n" +
-                        " /  /_\\  \\|  |\\   __\\\\_  __ \\_/ __ \\ / __ |\n" +
-                        "/    |    \\  |_|  |   |  | \\/\\  ___// /_/ |\n" +
-                        "\\____|__  /____/__|   |__|    \\___  >____ |\n" +
-                        "        \\/                        \\/     \\/\n";
-
-        System.out.println("Hello from\n" + logo);
+        System.out.println(WELCOME_MESSAGE + LOGO);
     }
 
     public static void greeting(){
-        String intro = "____________________________________________________________\n" +
-                " Hello! I'm Alfred Pennyworth.\n" +
-                " What can I do for you?\n" +
-                "____________________________________________________________\n";
-        System.out.println(intro);
+        System.out.println(DIVIDER + GREETINGS + DIVIDER);
     }
 
     public static void ending(){
-        String ending = " Bye. Hope to see you again soon!\n" +
-                "____________________________________________________________";
-        System.out.println(ending);
+        System.out.println(ENDING + DIVIDER);
     }
     public static void printAddTaskMessage(Task t){
-        System.out.println("Got it. I've added this task:\n  " + t + "\nNow you have " + t.getNumberOfTasks() +" tasks in the list.");
+        System.out.println(ADDED_TASK + t + "\nNow you have " + t.getNumberOfTasks() +" tasks in the list.");
     }
     public static void processInput(String line, Task[] tasks){
 
@@ -60,24 +66,23 @@ public class Duke {
 
         switch (command) {
         case "todo":
-            line = words[1]; // to remove the command
             Task td = new Todo(words[1]);
             tasks[tasksCount] = td;
             printAddTaskMessage(td);
             break;
         case "deadline":
             line = words[1]; // to remove the command
-            String[] deadlineDetails = line.split(("/by "));
+            String[] deadlineDetails = line.split(BY_DELIMITER);
             Task d = new Deadline(deadlineDetails[0],deadlineDetails[1]);
-            tasks[tasksCount++] = d;
+            tasks[tasksCount] = d;
             printAddTaskMessage(d);
             break;
         case "event":
             line = words[1]; // to remove the command
-            String[] eventDetails = line.split(("/from "));
+            String[] eventDetails = line.split(FROM_DELIMITER);
             String eventName = eventDetails[0];
-            String from = line.substring(line.indexOf("/from ") + 6, line.indexOf(" /to"));
-            eventDetails = line.split(("/to "));
+            String from = line.substring(line.indexOf(FROM_DELIMITER) + FROM_DELIMITER.length(), line.indexOf(TO_DELIMITER));
+            eventDetails = line.split(TO_DELIMITER);
             String to = eventDetails[1];
             Task e = new Event(eventName,from,to);
             tasks[tasksCount] = e;
@@ -85,14 +90,14 @@ public class Duke {
             break;
 
         case "mark":
-            int markIndex = Integer.parseInt(words[1]) - 1;
-            System.out.println("Nice! I've marked this task as done: ");
+            int markIndex = Integer.parseInt(words[1]) - 1; // 0 indexing
+            System.out.println(MARKED_THIS_TASK_AS_DONE);
             tasks[markIndex].markAsDone();
             System.out.println(tasks[markIndex]);
             break;
         case "unmark":
-            int unmarkIndex = Integer.parseInt(words[1]) - 1;
-            System.out.println("Okay, I've marked this task as not done yet: ");
+            int unmarkIndex = Integer.parseInt(words[1]) - 1; // 0 indexing
+            System.out.println(UNMARKED_THIS_TASK_AS_DONE);
             tasks[unmarkIndex].markAsNotDone();
             System.out.println(tasks[unmarkIndex]);
             break;
@@ -106,7 +111,7 @@ public class Duke {
             break;
 
         default:
-            System.out.println("added: "+line+"\n");
+            System.out.println(ECHO_MESSAGE +line+"\n");
             Task t = new Task(line);
             tasks[tasksCount] = t;
         }

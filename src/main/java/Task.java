@@ -1,4 +1,6 @@
 public class Task {
+    public static final String DONE_ICON = "X";
+    public static final String NOT_DONE_ICON = " ";
     protected String description;
     protected boolean isDone;
     private static int numberOfTasks = 0;
@@ -17,7 +19,7 @@ public class Task {
 
 
     public String getStatusIcon() {
-        return (isDone ? "X" : " "); // mark done task with X
+        return (isDone ? DONE_ICON : NOT_DONE_ICON); // mark done task with X
     }
 
 //    public String getDescription() {
