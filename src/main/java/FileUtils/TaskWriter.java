@@ -16,12 +16,10 @@ public class TaskWriter {
         FileWriter fw;
         String taskString;
 
-        if (file.exists()) {
-            fw = new FileWriter(file, true);
-        } else {
+        if (!file.exists()) {
             file.createNewFile();
-            fw = new FileWriter(file);
         }
+        fw = new FileWriter(file);
 
         for (Task t : tasks) {
             try {

@@ -25,7 +25,7 @@ public class TaskReader {
     }
 
     private static Task lineToTask(String line) {
-        String[] taskInformation = line.split(" | ");
+        String[] taskInformation = line.split(" \\| ");
         Task task = null;
         String taskType = taskInformation[0];
         boolean isDone = taskInformation[1].equals("1") ? true : false;
