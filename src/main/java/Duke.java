@@ -20,17 +20,17 @@ public class Duke {
         String inputString;
         Scanner in;
 
-        boolean exit = false;
-
         //Set up list to store user inputs
         Todo[] tasks = new Todo[100];
         int counter = 0;
 
+        //setup of exit flag
+        boolean exit = false;
         while (!exit) {
             in = new Scanner(System.in);
             inputString = in.nextLine();
 
-            //switch cases for all specified types of input
+            //switch cases for all specified input types
             switch(inputString) {
 
             case "bye" :
@@ -39,46 +39,27 @@ public class Duke {
 
             case "list" :
                 System.out.println("    _________________________________________");
-                for (int i = 0; i < counter; ++i) {
-                    if (tasks[i].isDone) {
-                        System.out.print("    " + (i + 1) + ".");
-                        tasks[i].printInList();
-                    } else {
-                        System.out.print("    " + (i + 1) + ".");
-                        tasks[i].printInList();
-                    }
-                }
-                System.out.println("    _________________________________________");
-                System.out.println("     ");
+                printListContents(tasks, counter);
                 break;
 
             case "mark" :
                 System.out.println("    Please specify task number: ");
-                in = new Scanner(System.in);
-                inputString = in.nextLine();
-                int taskNumber = Integer.parseInt(inputString);
+                int taskNumber = getTaskNumber();
                 tasks[taskNumber - 1].setDone(true);
-                System.out.println("    _________________________________________");
-                System.out.println("    " + (taskNumber) + "." + "[X] " + tasks[taskNumber - 1].getDescription());
-                System.out.println("    _________________________________________");
+                printMarkedAcknowledgement(tasks, taskNumber);
                 break;
 
             case "unmark" :
                 System.out.println("    Please specify task number: ");
-                in = new Scanner(System.in);
-                inputString = in.nextLine();
-                taskNumber = Integer.parseInt(inputString);
+                taskNumber = getTaskNumber();
                 tasks[taskNumber - 1].setDone(false);
-                System.out.println("    _________________________________________");
-                System.out.println("    " + (taskNumber) + "." + "[ ] " + tasks[taskNumber - 1].getDescription());
-                System.out.println("    _________________________________________");
+                printUnmarkedAcknowledgement(tasks, taskNumber);
                 break;
 
             case "todo" :
                 System.out.println("    _________________________________________");
                 System.out.println("    Please specify task: ");
-                in = new Scanner(System.in);
-                inputString = in.nextLine();
+                inputString = getInputString();
                 tasks[counter] = new Todo(inputString);
                 tasks[counter].print();
                 counter++;
@@ -88,8 +69,7 @@ public class Duke {
             case "deadline" :
                 System.out.println("    _________________________________________");
                 System.out.println("    Please specify task: ");
-                in = new Scanner(System.in);
-                inputString = in.nextLine();
+                inputString = getInputString();
                 inputString += '\0';
                 int deadlinePosition = inputString.indexOf("/");
                 int endPosition = inputString.indexOf("\0");
@@ -103,8 +83,7 @@ public class Duke {
             case "event" :
                 System.out.println("    _________________________________________");
                 System.out.println("    Please specify task: ");
-                in = new Scanner(System.in);
-                inputString = in.nextLine();
+                inputString = getInputString();
                 inputString += '\0';
                 int deadlineStartPosition = inputString.indexOf("/");
                 int deadlineEndPosition = inputString.indexOf("|");
@@ -117,7 +96,6 @@ public class Duke {
                 counter++;
                 break;
 
-
             default:
                 in = new Scanner(System.in);
                 inputString = in.nextLine();
@@ -127,6 +105,45 @@ public class Duke {
 
         //When user types "bye"
         System.out.println("    Bye. Hope to see you again soon!");
+        System.out.println("    _________________________________________");
+        System.out.println("     ");
+    }
+
+    private static String getInputString() {
+        Scanner in;
+        String inputString;
+        in = new Scanner(System.in);
+        inputString = in.nextLine();
+        return inputString;
+    }
+
+    private static void printUnmarkedAcknowledgement(Todo[] tasks, int taskNumber) {
+        System.out.println("    _________________________________________");
+        System.out.println("    " + taskNumber + "." + "[ ] " + tasks[taskNumber - 1].getDescription());
+        System.out.println("    _________________________________________");
+    }
+
+    private static void printMarkedAcknowledgement(Todo[] tasks, int taskNumber) {
+        System.out.println("    _________________________________________");
+        System.out.println("    " + taskNumber + "." + "[X] " + tasks[taskNumber - 1].getDescription());
+        System.out.println("    _________________________________________");
+    }
+
+    private static int getTaskNumber() {
+        String inputString = getInputString();
+        return Integer.parseInt(inputString);
+    }
+
+    private static void printListContents(Todo[] tasks, int counter) {
+        for (int i = 0; i < counter; ++i) {
+            if (tasks[i].isDone) {
+                System.out.print("    " + (i + 1) + ".");
+                tasks[i].printInList();
+            } else {
+                System.out.print("    " + (i + 1) + ".");
+                tasks[i].printInList();
+            }
+        }
         System.out.println("    _________________________________________");
         System.out.println("     ");
     }
