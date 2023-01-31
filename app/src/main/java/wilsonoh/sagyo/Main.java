@@ -27,7 +27,7 @@ public class Main {
         TextFormatter ui = new TextFormatter(2, 120);
         Storage storage = new Storage();
         try {
-            this.tasks = storage.getTaskListFromJSON();
+            this.tasks.addAll(storage.getTaskListFromJSON());
         } catch (InvalidTaskException e) {
             System.out.println(e.getMessage());
         }

@@ -1,6 +1,7 @@
 package wilsonoh.sagyo.commands;
 
 public enum CommandType {
+    WRITE("^\\s*write\\s*$"),
     LIST("^\\s*list\\s*$"),
     MARK("^\\s*mark\\s*(?<idx>-?\\d+)?\\s*$"),
     UNMARK("^\\s*unmark\\s*(?<idx>-?\\d+)?\\s*$"),
