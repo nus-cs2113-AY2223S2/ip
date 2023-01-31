@@ -1,13 +1,14 @@
 import java.util.Scanner;
 
 public class Shizuka {
-    public static String parseCommand(String args) {
-        String command;
+    public static String[] parseCommand(String args) {
+        String[] command = new String[2];
         int endIndex = args.indexOf(' ') + 1;
         if (endIndex != 0) {
-            command = args.substring(0, endIndex - 1);
+            command[0] = args.substring(0, endIndex - 1);
+            command[1] = args.substring(endIndex);
         } else {
-            command = args;
+            command[0] = args;
         }
         return command;
     }
@@ -26,29 +27,41 @@ public class Shizuka {
         final String LINE_BREAK = "____________________\n";
         final String GREETING = "Hello, I am Shizuka.\nHow can I be of assistance?\n";
         final String EXIT = "Goodbye.\n";
+        final String PARSE_ERROR = "I'm sorry, but I don't recognise that command.\n";
         System.out.println(LINE_BREAK + LOGO + LINE_BREAK + GREETING + LINE_BREAK);
         Scanner in = new Scanner(System.in);
-        String line, lineTrimmed;
+        String line, lineTrimmed, command, commandArgs;
         do {
             line = in.nextLine();
             lineTrimmed = line.trim();
+            command = parseCommand(lineTrimmed)[0];
+            commandArgs = parseCommand(lineTrimmed)[1];
             int taskNum;
-            switch (parseCommand(line)) {
+            switch (command) {
             case "bye":
                 break;
             case "list":
                 TodoList.list();
                 break;
             case "mark":
-                taskNum = parseNumber(lineTrimmed);
+                taskNum = parseNumber(commandArgs);
                 TodoList.mark(taskNum);
                 break;
             case "unmark":
-                taskNum = parseNumber(lineTrimmed);
+                taskNum = parseNumber(commandArgs);
                 TodoList.unmark(taskNum);
                 break;
+            case "todo":
+                TodoList.addTodo(commandArgs);
+                break;
+            case "deadline":
+                TodoList.addDeadline(commandArgs);
+                break;
+            case "event":
+                TodoList.addEvent(commandArgs);
+                break;
             default:
-                TodoList.add(lineTrimmed);
+                System.out.println(LINE_BREAK + PARSE_ERROR + LINE_BREAK);
             }
         }
         while (!lineTrimmed.equals("bye"));
