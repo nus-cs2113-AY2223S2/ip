@@ -5,10 +5,10 @@ import duke.tasks.TaskList;
 public class Duke {
 
     public static void main(String[] args) {
-        UI applicationProcess = new UI();
+        Ui applicationProcess = new Ui();
         TaskList newTaskList = new TaskList();
         applicationProcess.greet();
-        applicationProcess.inputFunction(newTaskList);
+        applicationProcess.run(newTaskList);
         applicationProcess.sayBye();
     }
 }

@@ -10,26 +10,35 @@ import duke.commands.taskCommands.ToDoCommand;
 import duke.exceptions.InvalidTaskException;
 import duke.tasks.TaskList;
 
-public class CommandHandler {
+public class Parser {
 
     private String line;
 
     /**
-     * Constructor for CommandHandler
+     * Constructor for CommandHandler.
      *
-     * @param line User input represented as a String
+     * @param line User input represented as a String.
      */
     public void updateLine(String line){
         this.line = line;
     }
 
     /**
-     * Parses the command from user input
+     * Parses the command from user input.
      *
-     * @return String containing the command
+     * @return String containing the command.
      */
     private String parseCommand(){
         return line.contains(" ") ? line.split(" ")[0] : line;
+    }
+
+    /**
+     * Checks if the user input is "bye". Signals whether to exit the loop.
+     *
+     * @return true if the user input is "bye", false otherwise.
+     */
+    public boolean isExit(){
+        return line.equals("bye");
     }
 
     /**

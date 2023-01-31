@@ -1,12 +1,12 @@
 package duke.main;
 
-import duke.commands.CommandHandler;
+import duke.commands.Parser;
 import duke.exceptions.InvalidTaskException;
 import duke.tasks.TaskList;
 import java.util.Scanner;
 import static duke.constants.Constants.LINEBREAK;
 
-public class UI {
+public class Ui {
 
     /**
      * Prints a greeting message to the user.
@@ -34,9 +34,9 @@ public class UI {
      *
      * @param taskList List containing the tasks input by user.
      */
-    public void inputFunction(TaskList taskList){
+    public void run(TaskList taskList){
         Scanner in = new Scanner(System.in);
-        CommandHandler newProcess = new CommandHandler();
+        Parser newProcess = new Parser();
 
         String line;
         boolean isRunning = true;
@@ -46,7 +46,7 @@ public class UI {
             line = in.nextLine().trim();
             System.out.println(LINEBREAK);
             newProcess.updateLine(line);
-            if (line.equalsIgnoreCase("bye")) {
+            if (newProcess.isExit()) {
                 isRunning = false;
             } else {
                 try{
