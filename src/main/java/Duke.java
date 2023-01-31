@@ -5,11 +5,7 @@ public class Duke {
     private static final String BLANK = "    ";
 
     public static void main(String[] args) {
-        String logo = BLANK + LINE + "\n"
-                + BLANK + "Hello! I'm Duke\n"
-                + BLANK + "What can I do for you?\n"
-                + BLANK + LINE;
-        System.out.println("\n" + logo);
+        printWelcome();
         Scanner in = new Scanner(System.in);
         String inputString;
         Task[] tasks = new Task[100];
@@ -50,6 +46,14 @@ public class Duke {
                 printAddTask(tasks, numberOfTasks - 1);
             }
         }
+    }
+
+    private static void printWelcome() {
+        String logo = BLANK + LINE + "\n"
+                + BLANK + "Hello! I'm Duke\n"
+                + BLANK + "What can I do for you?\n"
+                + BLANK + LINE;
+        System.out.println("\n" + logo);
     }
 
     private static void doList(Task[] tasks, int numberOfTasks) {
