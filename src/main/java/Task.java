@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Task {
     private String content;
     private boolean isMarked;
@@ -22,4 +24,5 @@ public class Task {
     public String getContent() {
         return this.content;
     }
+
 }
