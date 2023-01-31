@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Bob {
+public class Duke {
     static private final String HI = "BBBBBBBBBBBBBBBBB       OOOOOOOOO    BBBBBBBBBBBBBBBBB           SSSSSSS" +
             "SSSSSSSS             AAA          YYYYYYY       YYYYYYY  SSSSSSSSSSSSSSS      HHHHHHHHH     HHHHHHHHIIII" +
             "IIIIII\n" +
