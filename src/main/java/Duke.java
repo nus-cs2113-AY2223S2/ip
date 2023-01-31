@@ -1,13 +1,12 @@
-import java.util.Objects;
 import java.util.Scanner;
 public class Duke {
     public static final int MAX_TASKS = 100;
-    private static int listId = 0;
-    static Task[] list = new Task[MAX_TASKS];
+    private static int taskCount = 0;
+    static Task[] tasks = new Task[MAX_TASKS];
 
     public static void addTask(Task t){
-        list[listId] = t;
-        listId++;
+        tasks[taskCount] = t;
+        taskCount++;
     }
     public static void printLine() {
         System.out.println("____________________________________________________________");
@@ -25,7 +24,6 @@ public class Duke {
     public static void info() {
         printLine();
         System.out.println("This command is not valid, please read through the info and try again :)");
-        System.out.println("Example 1: ");
         System.out.println("Type: [todo] [something], and the system will add a new todo item to your list");
         System.out.println("Type: [event] [something] /from [when] /to [when], and the system will add an event and the timing");
         System.out.println("Type: [deadline] [something] /by[when], and the system will add a deadline");
@@ -35,11 +33,10 @@ public class Duke {
         System.out.println("Hope it helps!! woof a nice day ੯•໒꒱❤︎");
         printLine();
     }
-    public static void echo() {
+    public static void startProgram() {
         Scanner scan = new Scanner(System.in);
         String s;
         s = scan.nextLine();
-        // check input
         while (s.trim().isEmpty() || s.trim().charAt(0) == '#') {
             s = scan.nextLine();
         }
@@ -47,73 +44,100 @@ public class Duke {
         final String[] commandTypeAndParams = split.length == 2 ? split : new String[]{split[0], ""};
         final String commandType = commandTypeAndParams[0];
         final String commandArgs = commandTypeAndParams[1];
-        // System.out.println(commandArgs + " " + commandType);
         switch (commandType) {
         case "bye":
             goodBye();
             return;
         case "list":
-            for (int i = 0; i < listId; i += 1) {
-                System.out.print(i+1);
-                System.out.print(". ");
-                System.out.println(list[i]);
-            }
-            printLine();
+            printListOfTasks();
             break;
         case "todo":
-            addTask(new Todo(commandArgs));
-            printLine();
-            System.out.println("Added \n" +list[listId-1]);
-            printLine();
+            addTodo(commandArgs);
             break;
         case "deadline":
-            final int indexOfDeadline = commandArgs.indexOf("/by");
-            String deadlineDescription = commandArgs.substring(0,indexOfDeadline).trim();
-            String deadline = commandArgs.substring(indexOfDeadline, commandArgs.length()).trim().replace("/by", "");
-            addTask(new Deadline(deadlineDescription, deadline));
-            printLine();
-            System.out.println("Added \n" + list[listId-1]);
-            printLine();
+            addDeadline(commandArgs);
             break;
         case "event":
-            final int indexOfFrom = commandArgs.indexOf("/from");
-            final int indexOfTo = commandArgs.indexOf("/to");
-            String eventDescription = commandArgs.substring(0,indexOfFrom).trim();
-            String from = commandArgs.substring(indexOfFrom, indexOfTo).trim().replace("/from", "");
-            String to = commandArgs.substring(indexOfTo, commandArgs.length()).trim().replace("/to", "");
-            addTask(new Event(eventDescription, from, to));
-            printLine();
-            System.out.println("Added \n" + list[listId-1]);
-            printLine();
+            addEvent(commandArgs);
             break;
         case "mark":
-            final int markId = Integer.parseInt(commandArgs)-1;
-            if (list[markId].isDone) {
-                System.out.println("This task has already been marked as done ੯•໒꒱❤︎");
-            } else {
-                list[markId].markAsDone();
-                System.out.println("I've marked this task as done ੯•໒꒱❤︎:");
-                System.out.println(list[markId]);
-            }
-            printLine();
+            markTask(commandArgs);
             break;
         case "unmark":
-            final int unmarkId = Integer.parseInt(commandArgs)-1;
-            if (!list[unmarkId].isDone) {
-                System.out.println("This task hasn't been marked as done yet ∪･ω･∪");
-            } else {
-                list[unmarkId].markAsNotDone();
-                System.out.println("I've unmarked this task ∪･ω･∪:");
-                System.out.println(list[unmarkId]);
-            }
-            printLine();
+            unmarkTask(commandArgs);
             break;
         default:
             info();
         }
 
-        echo();
+        startProgram();
     }
+
+    private static void unmarkTask(String commandArgs) {
+        final int unmarkId = Integer.parseInt(commandArgs)-1;
+        if (!tasks[unmarkId].isDone) {
+            System.out.println("This task hasn't been marked as done yet ∪･ω･∪");
+        } else {
+            tasks[unmarkId].markAsNotDone();
+            System.out.println("I've unmarked this task ∪･ω･∪:");
+            System.out.println(tasks[unmarkId]);
+        }
+        printLine();
+    }
+
+    private static void markTask(String commandArgs) {
+        final int markId = Integer.parseInt(commandArgs)-1;
+        if (tasks[markId].isDone) {
+            System.out.println("This task has already been marked as done ੯•໒꒱❤︎");
+        } else {
+            tasks[markId].markAsDone();
+            System.out.println("I've marked this task as done ੯•໒꒱❤︎:");
+            System.out.println(tasks[markId]);
+        }
+        printLine();
+    }
+
+    private static void addEvent(String commandArgs) {
+        final int indexOfFrom = commandArgs.indexOf("/from");
+        final int indexOfTo = commandArgs.indexOf("/to");
+        String eventDescription = commandArgs.substring(0,indexOfFrom).trim();
+        String from = commandArgs.substring(indexOfFrom, indexOfTo).trim().replace("/from", "");
+        String to = commandArgs.substring(indexOfTo, commandArgs.length()).trim().replace("/to", "");
+        addTask(new Event(eventDescription, from, to));
+        printLine();
+        System.out.println("Got it. I've added this task: \n" + tasks[taskCount -1]);
+        System.out.println("Now you have " + taskCount + " tasks in your list.");
+        printLine();
+    }
+
+    private static void addDeadline(String commandArgs) {
+        final int indexOfDeadline = commandArgs.indexOf("/by");
+        String deadlineDescription = commandArgs.substring(0,indexOfDeadline).trim();
+        String deadline = commandArgs.substring(indexOfDeadline, commandArgs.length()).trim().replace("/by", "");
+        addTask(new Deadline(deadlineDescription, deadline));
+        printLine();
+        System.out.println("Got it. I've added this task: \n" + tasks[taskCount -1]);
+        System.out.println("Now you have " + taskCount + " tasks in your list.");
+        printLine();
+    }
+
+    private static void addTodo(String commandArgs) {
+        addTask(new Todo(commandArgs));
+        printLine();
+        System.out.println("Got it. I've added this task: \n" + tasks[taskCount -1]);
+        System.out.println("Now you have " + taskCount + " tasks in your list.");
+        printLine();
+    }
+
+    private static void printListOfTasks() {
+        for (int i = 0; i < taskCount; i += 1) {
+            System.out.print(i+1);
+            System.out.print(". ");
+            System.out.println(tasks[i]);
+        }
+        printLine();
+    }
+
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -122,6 +146,6 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
         greet();
-        echo();
+        startProgram();
     }
 }
