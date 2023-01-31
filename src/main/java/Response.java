@@ -16,7 +16,7 @@ public class Response {
         LukeLogo logo = new LukeLogo();
         printLine();
         printSignature();
-        System.out.println("Hello I'm\n" + logo.getRandLogo());
+        System.out.println("Hello I'm\n" + logo.getLogo(0));
         System.out.println("What can I do for you?");
         printLine();
     }
