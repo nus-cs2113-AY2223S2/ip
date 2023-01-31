@@ -19,6 +19,8 @@ public class Duke {
 
         Greetings.introduction();
 
+        tasks = TaskReader.readAndReturnTasks(filePath);
+
         String input = sc.nextLine();
         while (!input.equals("bye")) {
             // Empty Input, Do Nothing

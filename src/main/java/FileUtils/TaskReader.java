@@ -7,6 +7,8 @@ import Entities.*;
 import Exceptions.InvalidTaskException;
 
 public class TaskReader {
+    private static final String delimiter = " \\| ";
+
     public static ArrayList<Task> readAndReturnTasks(String filePath) {
         ArrayList<Task> savedTasks = new ArrayList<Task>();
         Task currentTask;
@@ -29,7 +31,7 @@ public class TaskReader {
     }
 
     private static Task lineToTask(String line) {
-        String[] taskInformation = line.split(" | ");
+        String[] taskInformation = line.split(delimiter);
         Task task = null;
         String taskType = taskInformation[0];
         boolean isDone = taskInformation[1].equals("1") ? true : false;
