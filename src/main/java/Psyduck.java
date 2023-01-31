@@ -34,6 +34,7 @@ public class Psyduck {
         tasks[taskCount] = newTask;
         taskCount++;
     }
+
     public static void createDeadline(String input, int space) {
         if (space == -1) {
             System.out.println("Deadline task cannot be empty! >:(");
@@ -55,6 +56,7 @@ public class Psyduck {
         System.out.println("Psyduck has added the task: " + tasks[taskCount - 1]);
         linePrint();
     }
+
     public static void addEvent(String description, String from, String to) {
         Event newTask = new Event(description, from, to);
         tasks[taskCount] = newTask;
@@ -129,6 +131,7 @@ public class Psyduck {
         System.out.println("Please enter a valid command.");
         linePrint();
     }
+
     public static void processCommands() {
         String description;
         int taskNum;
