@@ -18,6 +18,13 @@ public class TaskList {
         System.out.print(tasks[taskNo].getName());
     }
 
+    private void printDescription(int taskNo) {
+        switch(tasks[taskNo].getTaskType()) {
+            case "d":
+            case "e":
+        }
+    }
+
     private boolean isValidTaskNo(int taskNo) {
         if (taskNo <= 0) {
             System.out.println("Negative task number entered, please don't try to crash the program a**h***.");
