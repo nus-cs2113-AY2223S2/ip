@@ -1,15 +1,18 @@
 package dude.commands;
 
+import dude.task.ListManager;
+
+import java.util.List;
 import java.util.Scanner;
 
 public abstract class Interface {
     public static final String LINE = "__________________________________";
-    public static final String DUDE_LOGO = "╔═══╦╗─╔╦═══╦═══╦══╗╔═══╦════╗\n"
-            + "╚╗╔╗║║ ║╠╗╔╗║╔══╣╔╗║║╔═╗║╔╗╔╗║\n"
-            + " ║║║║║ ║║║║║║╚══╣╚╝╚╣║ ║╠╝║║╚╝\n"
-            + " ║║║║║ ║║║║║║╔══╣╔═╗║║ ║║ ║║\n"
-            + "╔╝╚╝║╚═╝╠╝╚╝║╚══╣╚═╝║╚═╝║ ║║\n"
-            + "╚═══╩═══╩═══╩═══╩═══╩═══╝ ╚╝\n";
+    public static final String DUDE_LOGO = "██████╗░██╗░░░██╗██████╗░███████╗  ██████╗░░█████╗░████████╗\n"
+      + "██╔══██╗██║░░░██║██╔══██╗██╔════╝  ██╔══██╗██╔══██╗╚══██╔══╝\n"
+      + "██║░░██║██║░░░██║██║░░██║█████╗░░  ██████╦╝██║░░██║░░░██║░░░\n"
+      + "██║░░██║██║░░░██║██║░░██║██╔══╝░░  ██╔══██╗██║░░██║░░░██║░░░\n"
+      + "██████╔╝╚██████╔╝██████╔╝███████╗  ██████╦╝╚█████╔╝░░░██║░░░\n"
+      + "╚═════╝░░╚═════╝░╚═════╝░╚══════╝  ╚═════╝░░╚════╝░░░░╚═╝░░░\n";
 
     public static void printGreeting(){
         System.out.println("Hello from\n" + DUDE_LOGO);
@@ -39,19 +42,56 @@ public abstract class Interface {
         System.out.println(Interface.LINE);
     }
 
+    public static void markDoneMessage(){
+        System.out.println(Interface.LINE);
+        System.out.println("Nice! I've marked this task as done:");
+    }
+
+    public static void markUndoneMessage(){
+        System.out.println(Interface.LINE);
+        System.out.println("I have Unmarked this task:");
+    }
+
+    public static void parseInput(String input){
+        String[] commands = input.split(" ");
+        switch(commands[0]) {
+
+        case "bye":
+            printBye();
+            System.exit(0);
+        case "list":
+            ListManager.printList();
+            break;
+        case "mark":
+            int index = Integer.parseInt(commands[1]) - 1;
+            if (index <= ListManager.getSize()) {
+                ListManager.markDone(index);
+            } else {
+                System.out.println("That task does not exist!");
+            }
+            break;
+        case "unmark":
+            int id = Integer.parseInt(commands[1]) - 1;
+            if (id <= ListManager.getSize()) {
+                ListManager.markUndone(id);
+            } else {
+                System.out.println("That task does not exist!");
+            }
+            break;
+        case "":
+            System.out.println("Input a task");
+            break;
+        default:
+            ListManager.addToList(input);
+        }
+    }
+
     public static void readInput(){
         Scanner in = new Scanner(System.in);
         String userInput;
         while(true){
             userInput = in.nextLine();
-            if (userInput.equals("bye")){
-                in.close();
-                return;
-            } else if (userInput.equals("list")) {
-                ListManager.printList();
-            } else {
-                ListManager.addToList(userInput);
-            }
+            parseInput(userInput);
         }
     }
 }
