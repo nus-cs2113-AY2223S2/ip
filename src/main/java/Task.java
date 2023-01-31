@@ -12,7 +12,10 @@ public class Task {
     }
 
     public Character getStatus() {
-        return ( isComplete ? 'X' : ' ');
+        if (isComplete) {
+            return 'X';
+        }
+        return ' ';
     }
 
     public void setComplete() {
