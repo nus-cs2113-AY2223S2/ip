@@ -7,4 +7,7 @@ public class Event extends Todo {
         this.startDate = args[1];
         this.endDate = args[2];
     }
+    public String printTask(){
+        return this.getTaskIcon() + this.getStatusIcon() + ' ' + this.description + " (from: " + startDate + " to: " + endDate + ")";
+    }
 }

@@ -19,11 +19,11 @@ public class Shizuka {
     }
 
     public static void main(String[] args) {
-        final String LOGO = "   _____  __     _               __         \n"
+        final String LOGO = "   _____  __     _               __        \n"
                 + "  / ___/ / /_   (_)____  __  __ / /__ ____ _\n"
                 + "  \\__ \\ / __ \\ / //_  / / / / // //_// __ `/\n"
-                + " ___/ // / / // /  / /_/ /_/ // ,<  / /_/ / \n"
-                + "/____//_/ /_//_/  /___/\\__,_//_/|_| \\__,_/  \n";
+                + " ___/ // / / // /  / /_/ /_/ // ,<  / /_/ /\n"
+                + "/____//_/ /_//_/  /___/\\__,_//_/|_| \\__,_/ \n";
         final String LINE_BREAK = "____________________\n";
         final String GREETING = "Hello, I am Shizuka.\nHow can I be of assistance?\n";
         final String EXIT = "Goodbye.\n";
@@ -34,8 +34,9 @@ public class Shizuka {
         do {
             line = in.nextLine();
             lineTrimmed = line.trim();
-            command = parseCommand(lineTrimmed)[0];
-            commandArgs = parseCommand(lineTrimmed)[1];
+            String[] commandArray = parseCommand(lineTrimmed);
+            command = commandArray[0];
+            commandArgs = commandArray[1];
             int taskNum;
             switch (command) {
             case "bye":
@@ -52,13 +53,13 @@ public class Shizuka {
                 TodoList.unmark(taskNum);
                 break;
             case "todo":
-                TodoList.addTodo(commandArgs);
+                TodoList.add(commandArray);
                 break;
             case "deadline":
-                TodoList.addDeadline(commandArgs);
+                TodoList.add(commandArray);
                 break;
             case "event":
-                TodoList.addEvent(commandArgs);
+                TodoList.add(commandArray);
                 break;
             default:
                 System.out.println(LINE_BREAK + PARSE_ERROR + LINE_BREAK);

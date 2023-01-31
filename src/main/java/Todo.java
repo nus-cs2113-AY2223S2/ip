@@ -17,4 +17,7 @@ public class Todo {
         return '[' + taskType + ']';
     }
 
+    public String printTask(){
+        return this.getTaskIcon() + getStatusIcon() + ' ' + this.description;
+    }
 }
