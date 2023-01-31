@@ -15,6 +15,7 @@ public class Task {
         this.isCompleted = true;
         completedTaskCount += 1;
     }
+
     // unmark task to become uncompleted
     public void unmarkTask() {
         this.isCompleted = false;
@@ -23,10 +24,15 @@ public class Task {
     public String getTaskName() {
         return this.name;
     }
+
     public boolean getTaskStatus() {
         return this.isCompleted;
     }
+
     public static int getTaskCount() {
         return taskCount;
+    }
+    public static int getCompletedTaskCount() {
+        return completedTaskCount;
     }
 }

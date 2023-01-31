@@ -1,10 +1,13 @@
 import java.util.Scanner;
 
 public class Nano {
-    //print horizontal line of length = length * 10
+
+    final static int HORIZONTAL_LINE_LENGTH = 100;
+    final static int MAX_TASK_COUNT = 100;
+
+    //print horizontal line
     public static void printHorizontalLine() {
-        final int LENGTH = 10;
-        for (int i = 0; i < LENGTH; i += 1) {
+        for (int i = 0; i < HORIZONTAL_LINE_LENGTH / 10; i += 1) {
             System.out.print("__________");
         }
         System.out.println();
@@ -24,8 +27,8 @@ public class Nano {
         System.out.println("How may I assist you?");
         printHorizontalLine();
 
-        // initialise list of 100 tasks 1-index
-        Task[] tasks = new Task[101];
+        // initialise list of tasks 1-index
+        Task[] tasks = new Task[MAX_TASK_COUNT + 1];
 
         //receive commands
         String text;
@@ -43,6 +46,7 @@ public class Nano {
                 int dividerIndex = text.indexOf(" ");
                 if (dividerIndex == -1 && text.equals("list")) {
                     // display list
+                    System.out.println("You have completed " + Task.getCompletedTaskCount() + " tasks. " + (Task.getTaskCount() - Task.getCompletedTaskCount()) + " more to go!");
                     for (int i = 1; i <= Task.getTaskCount(); i += 1) {
                         System.out.print(i + ". ");
                         if (tasks[i].getTaskStatus()) {
@@ -56,7 +60,6 @@ public class Nano {
                     // split command and taskName into 2 strings
                     String command = text.substring(0, dividerIndex);
                     String taskName = text.substring(dividerIndex + 1);
-                    System.out.println(taskName);
 
                     switch (command) {
                     case "mark":
