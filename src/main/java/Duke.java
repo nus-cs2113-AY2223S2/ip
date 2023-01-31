@@ -17,82 +17,79 @@ public class Duke {
         System.out.println("     ");
 
         //Read in input from user
-        String line;
-        Scanner in = new Scanner(System.in);
-        line = in.nextLine();
+        String inputString;
+        Scanner in;
+
+        boolean exit = false;
 
         //Set up list to store user inputs
-        String[] list = new String[100];
-        int[] status = new int[100];
+        Todo[] tasks = new Todo[100];
         int counter = 0;
 
+        while (!exit) {
+            in = new Scanner(System.in);
+            inputString = in.nextLine();
 
-        //Processing inputs such as list, complete, & unmark
-        while (!line.equalsIgnoreCase("bye")) {
+            //switch cases for all specified types of input
+            switch(inputString) {
 
-            //Marking tasks as done
-            if (line.contains("complete")) {
-                char[] chars = line.toCharArray();
-                StringBuilder sb = new StringBuilder();
-                for(char c : chars){
-                    if(Character.isDigit(c)){
-                        sb.append(c);
-                    }
-                }
-                int numberIntegerFormat = Integer.parseInt(String.valueOf(sb));
+            case "bye" :
+                exit = true;
+                break;
 
-                status[numberIntegerFormat - 1] = 1;
-                System.out.println("    _________________________________________");
-                System.out.println("    " + (numberIntegerFormat) + "." + "[X] " + list[numberIntegerFormat - 1]);
-                System.out.println("    _________________________________________");
-                in = new Scanner(System.in);
-                line = in.nextLine();
-            }
-
-            //Marking tasks as not done
-            if (line.contains("unmark ")) {
-                char[] chars = line.toCharArray();
-                StringBuilder sb = new StringBuilder();
-                for(char c : chars){
-                    if(Character.isDigit(c)){
-                        sb.append(c);
-                    }
-                }
-                int numberIntegerFormat = Integer.parseInt(String.valueOf(sb));
-
-                status[numberIntegerFormat - 1] = 0;
-                System.out.println("    _________________________________________");
-                System.out.println("    " + (numberIntegerFormat) + "." + "[ ] " + list[numberIntegerFormat - 1]);
-                System.out.println("    _________________________________________");
-                in = new Scanner(System.in);
-                line = in.nextLine();
-            }
-
-            //Adding user input to the list
-            if (!line.equalsIgnoreCase("list")) {
-                list[counter] = line;
-                counter++;
-                status[counter] = 0;
-                System.out.println("    _________________________________________");
-                System.out.println("    " + "added: " + line);
-                System.out.println("    _________________________________________");
-                System.out.println("    ");
-            }
-            //Recalling list items
-            if (line.equalsIgnoreCase("list")) {
+            case "list" :
                 System.out.println("    _________________________________________");
                 for (int i = 0; i < counter; ++i) {
-                    if (status[i] == 0) {
-                        System.out.println("    " + (i + 1) + "." + "[ ] " + list[i]);
+                    if (tasks[i].isDone) {
+                        System.out.println("    " + (i + 1) + "." + "[X] " + tasks[i].getDescription());
                     } else {
-                        System.out.println("    " + (i + 1) + "." + "[X] " + list[i]);
+                        System.out.println("    " + (i + 1) + "." + "[ ] " + tasks[i].getDescription());
                     }
                 }
                 System.out.println("    _________________________________________");
                 System.out.println("     ");
+                break;
+
+            case "mark" :
+                System.out.println("    Please specify task number: ");
+                in = new Scanner(System.in);
+                inputString = in.nextLine();
+                int taskNumber = Integer.parseInt(inputString);
+                tasks[taskNumber - 1].setDone(true);
+                System.out.println("    _________________________________________");
+                System.out.println("    " + (taskNumber) + "." + "[X] " + tasks[taskNumber - 1].getDescription());
+                System.out.println("    _________________________________________");
+                break;
+
+            case "unmark" :
+                System.out.println("    Please specify task number: ");
+                in = new Scanner(System.in);
+                inputString = in.nextLine();
+                taskNumber = Integer.parseInt(inputString);
+                tasks[taskNumber - 1].setDone(false);
+                System.out.println("    _________________________________________");
+                System.out.println("    " + (taskNumber) + "." + "[ ] " + tasks[taskNumber - 1].getDescription());
+                System.out.println("    _________________________________________");
+                break;
+
+            case "add" :
+                System.out.println("    _________________________________________");
+                System.out.println("    Please specify task: ");
+                in = new Scanner(System.in);
+                inputString = in.nextLine();
+                tasks[counter] = new Todo(inputString);
+                counter++;
+                System.out.println("    _________________________________________");
+                System.out.println("    " + "added: " + inputString);
+                System.out.println("    _________________________________________");
+                System.out.println("    ");
+                break;
+
+            default:
+                in = new Scanner(System.in);
+                inputString = in.nextLine();
+                break;
             }
-            in = new Scanner(System.in);
-            line = in.nextLine();
         }
 
         //When user types "bye"
