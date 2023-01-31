@@ -6,56 +6,34 @@ public class Duke {
         Task[] tasks = new Task[100];
         int currentIndex = 0;
 
-        System.out.println("____________________________________________________________");
-        System.out.println(" Hello! I'm Duke");
-        System.out.println(" What can I do for you?");
-        System.out.println("____________________________________________________________");
+        printHelloStatement();
         while (true) {
             String input;
             input = in.nextLine();
             if (input.equals("bye")) {
-                System.out.println("____________________________________________________________");
-                System.out.println(" Bye. Hope to see you again soon!");
-                System.out.println("____________________________________________________________");
+                printByeStatement();
                 break;
             } else if (input.equals("list")) {
-                System.out.println("____________________________________________________________");
-                System.out.println("Here are the tasks in your list:");
-                for (Task task : tasks) {
-                    if (task != null) {
-                        System.out.println(task);
-                    }
-                }
-                System.out.println("____________________________________________________________");
+                printAllTasks(tasks);
             } else if (input.startsWith("mark")) {
                 String[] temp = input.split(" ", 2);
                 int taskIndex = Integer.parseInt(temp[1]);
                 Task curTask = tasks[taskIndex - 1];
                 curTask.markAsDone();
-                System.out.println("____________________________________________________________");
-                System.out.println("Nice! I've marked this task as done:");
-                System.out.println("[" + curTask.getStatusIcon() + "] " + curTask.getDescription());
-                System.out.println("____________________________________________________________");
+                printTaskStatusStatement(curTask,"mark");
             } else if (input.startsWith("unmark")) {
                 String[] temp = input.split(" ", 2);
                 int taskIndex = Integer.parseInt(temp[1]);
                 Task curTask = tasks[taskIndex - 1];
                 curTask.unmarkAsDone();
-                System.out.println("____________________________________________________________");
-                System.out.println("OK, I've marked this task as not done yet:");
-                System.out.println("[" + curTask.getStatusIcon() + "] " + curTask.getDescription());
-                System.out.println("____________________________________________________________");
+                printTaskStatusStatement(curTask,"unmark");
             } else if (input.startsWith("todo")){
                 String[] temp = input.split(" ", 2);
                 String description = temp[1];
                 ToDo todo = new ToDo(currentIndex + 1, description);
                 tasks[currentIndex] = todo;
                 currentIndex++;
-                System.out.println("____________________________________________________________");
-                System.out.println("Got it. I've added this task:");
-                System.out.println(todo);
-                System.out.println("Now you have " + currentIndex + " tasks in the list.");
-                System.out.println("____________________________________________________________");
+                printTaskAddedStatement(currentIndex, todo);
             }
             else if (input.startsWith("deadline")){
                 String[] temp1 = input.split(" /by ", 2);
@@ -65,11 +43,7 @@ public class Duke {
                 Deadline deadline = new Deadline(currentIndex + 1, description, by);
                 tasks[currentIndex] = deadline;
                 currentIndex++;
-                System.out.println("____________________________________________________________");
-                System.out.println("Got it. I've added this task:");
-                System.out.println(deadline);
-                System.out.println("Now you have " + currentIndex + " tasks in the list.");
-                System.out.println("____________________________________________________________");
+                printTaskAddedStatement(currentIndex, deadline);
             }
             else if (input.startsWith("event")){
                 String[] temp1 = input.split(" /to ", 2);
@@ -81,13 +55,61 @@ public class Duke {
                 Event event = new Event(currentIndex + 1, description, from, to);
                 tasks[currentIndex] = event;
                 currentIndex++;
-                System.out.println("____________________________________________________________");
-                System.out.println("Got it. I've added this task:");
-                System.out.println(event);
-                System.out.println("Now you have " + currentIndex + " tasks in the list.");
-                System.out.println("____________________________________________________________");
+                printTaskAddedStatement(currentIndex, event);
+            }
+            else {
+                break;
             }
         }
+    }
+
+    private static void printAllTasks(Task[] tasks) {
+        System.out.println("____________________________________________________________");
+        System.out.println("Here are the tasks in your list:");
+        for (Task task : tasks) {
+            if (task != null) {
+                System.out.println(task);
+            }
+        }
+        System.out.println("____________________________________________________________");
+    }
+
+    private static void printHelloStatement() {
+        System.out.println("____________________________________________________________");
+        System.out.println(" Hello! I'm Duke");
+        System.out.println(" What can I do for you?");
+        System.out.println("____________________________________________________________");
+    }
+
+    private static void printByeStatement() {
+        System.out.println("____________________________________________________________");
+        System.out.println(" Bye. Hope to see you again soon!");
+        System.out.println("____________________________________________________________");
+    }
+
+    private static void printTaskStatusStatement(Task curTask, String status) {
+        System.out.println("____________________________________________________________");
+        if (status.equals("mark")){
+            System.out.println("Nice! I've marked this task as done:");
+        }
+        else {
+            System.out.println("OK, I've marked this task as not done yet:");
+        }
+        System.out.println(curTask);
+        System.out.println("____________________________________________________________");
+    }
+
+    private static void printTaskAddedStatement(int currentIndex, Task task) {
+        System.out.println("____________________________________________________________");
+        System.out.println("Got it. I've added this task:");
+        System.out.println(task);
+        if (currentIndex == 1) {
+            System.out.println("Now you have " + currentIndex + " task in the list.");
+        }
+        else {
+            System.out.println("Now you have " + currentIndex + " tasks in the list.");
+        }
+        System.out.println("____________________________________________________________");
     }
 }
 
