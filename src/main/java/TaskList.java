@@ -91,9 +91,11 @@ public class TaskList {
             System.out.println("No tasks yet. Please input a task");
         }
         for (int i = 1; i <= noOfTasks; i++) {
-            System.out.print(i + ". ");
+            System.out.print(i + ". "); //TODO: Refactor into print task number
+            printTaskType(i);
             printStatus(i);
-            System.out.println(tasks[i].getName());
+            printTaskName(i);
+            printDescription(i);
         }
     }
 
