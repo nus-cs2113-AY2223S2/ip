@@ -24,7 +24,7 @@ public class Buddy {
             int index = 1;
             if (command.equals("list")){
                 for (int i = 0; i < currentPosition; i++){ // while not null
-                    System.out.println(index + ". [" + listOfThings[index - 1].getStatusIcon() + "] " + listOfThings[index-1].description);
+                    System.out.println(index + "." + listOfThings[index - 1]);
                     index++;
                 }
             }
@@ -33,10 +33,10 @@ public class Buddy {
                 int taskNumber = Integer.parseInt(command.substring(5));
                 // have to parse
                 Task currentTask = listOfThings[taskNumber - 1];
-                currentTask .setDone(true);
+                currentTask.setDone(true);
                 System.out.println(divider);
                 System.out.println("Great work on completing this task! Marked as done! :)");
-                System.out.println("[" + currentTask.getStatusIcon() + "] " + currentTask.description);
+                System.out.println(currentTask);
                 System.out.println(divider);
             }
 
@@ -46,22 +46,74 @@ public class Buddy {
                 currentTask.setDone(false);
                 System.out.println(divider);
                 System.out.println("Remember to come back to this task! Marked as undone!");
-                System.out.println("[" + currentTask.getStatusIcon() + "] " + currentTask.description);
+                System.out.println(currentTask);
                 System.out.println(divider);
 
             }
 
-            else { // adding tasks
+            /*else { // adding tasks
                 listOfThings[currentPosition] = new Task(command); // have to write in
                 //Task t = new Task(command);
                 System.out.println(divider);
                 System.out.println("added: " + command);
                 System.out.println(divider);
                 currentPosition++;
+            }*/
+
+            else{ //todo or deadline or event --> put together so don't have to repeat the same code thrice
+                System.out.println(divider);
+                System.out.println("Got it! I have added this task: ");
+                if (command.startsWith("todo")){
+                    Todo todoBeingAdded = new Todo(command.substring(5));
+                    listOfThings[currentPosition] = todoBeingAdded;
+                    // Task is not a Todo but Todo is a task
+                    System.out.println(todoBeingAdded);
+                }
+
+                else if (command.startsWith("deadline")){
+                    Task taskBeingAdded = new Task(command.substring(9)); // task + date + slash (Description)
+                    // filter the description and date
+                    String taskWithDate = taskBeingAdded.description;
+                    int indexOfSlash = taskWithDate.indexOf('/');
+                    String taskDescription = taskWithDate.substring(0, (indexOfSlash - 1));   // substring goes to the one before the second index!!!!
+                    String date = taskWithDate.substring(indexOfSlash + 4);
+                    Deadline deadlineBeingAdded = new Deadline(taskDescription, date);
+                    listOfThings[currentPosition] = deadlineBeingAdded;
+                    System.out.println(deadlineBeingAdded);
+
+                }
+
+                else if (command.startsWith("event")){
+                    Task taskBeingAdded = new Task(command.substring(6));
+                    // filter the description, from and to
+                    String wholeLine = taskBeingAdded.description;
+                    int indexOfFirstSlash = wholeLine.indexOf('/');
+                    String taskDescription = wholeLine.substring(0, (indexOfFirstSlash - 1));
+                    int indexOfSecondSlash = wholeLine.indexOf('/', (indexOfFirstSlash + 1));  //searches from index after first slash
+                    String from = wholeLine.substring( (indexOfFirstSlash + 6), (indexOfSecondSlash));
+                    String to = wholeLine.substring(indexOfSecondSlash + 4);
+                    Event eventBeingAdded = new Event(taskDescription, from, to);
+                    listOfThings[currentPosition] = eventBeingAdded;
+                    System.out.println(eventBeingAdded);
+                }
+
+                currentPosition++;
+                System.out.print("You currently have " + currentPosition);
+                if (currentPosition == 1){
+                    System.out.println(" task remaining! Let's finish it quickly!");
+                }
+                else{
+                    System.out.println(" tasks remaining! You got this, buddy!");  // all these same for all three subtasks so put at the bottom
+                }
+
+
             }
             command = in.nextLine();
 
+
         }
+
+
 
         System.out.println(divider);
         System.out.println(exitMessage);

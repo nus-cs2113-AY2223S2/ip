@@ -18,4 +18,9 @@ public class Task {
     public void setDone(boolean isDone){
         this.isDone = isDone;
     }
+
+    @Override
+    public String toString() {                      // overrides --> print task prints this!
+        return "[" + this.getStatusIcon() + "] " + this.description;
+    }
 }
