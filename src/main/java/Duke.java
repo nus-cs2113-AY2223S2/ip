@@ -15,11 +15,12 @@ public class Duke {
     public static void help() {
         System.out.println("List of commands:");
         System.out.println("list: Lists all tasks.");
+        System.out.println("todo <name>: Adds a ToDo task.");
+        System.out.println("deadline <name> /by <by when>: Adds a deadline task with specified deadline.");
+        System.out.println("event <name> /from <from when> /to <to when>: Adds an event with specified time period.");
         System.out.println("mark <task number>: Marks the task specified as done.");
         System.out.println("unmark <task number>: Marks the task specified as not done.");
         System.out.println("bye: Exits the program.");
-        System.out.println("Anything entered that is not a command will be automatically added to "
-                + "the list of tasks.");
     }
 
     public static void exit() {
