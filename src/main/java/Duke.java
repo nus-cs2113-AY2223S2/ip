@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import Command.*;
@@ -10,7 +11,7 @@ public class Duke {
     private static final String filePath = "data/duke.txt";
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        ArrayList<Task> tasks = new ArrayList<Task>();
+        ArrayList<Task> tasks;
         Task newTask = null;
         String[] inputArray;
         String command, taskName;
@@ -18,6 +19,13 @@ public class Duke {
         int startDateIdx, endDateIdx;
 
         Greetings.introduction();
+
+        try {
+            tasks = TaskReader.readAndReturnTasks(filePath);
+        } catch (FileNotFoundException e) {
+            System.out.println("File does not exist! Initialising empty tasks list..");
+            tasks = new ArrayList<Task>();
+        }
 
         String input = sc.nextLine();
         while (!input.equals("bye")) {
@@ -152,6 +160,14 @@ public class Duke {
 
             input = sc.nextLine();
         };
+
+        try {
+            TaskWriter.writeTasksToFile(filePath, tasks);
+        } catch (IOException e) {
+            System.out.println("Oops! Something went wrong when writing to database!");
+            System.out.println("Error: " + e.getMessage());
+            System.out.println("Aborting...");
+        }
 
         Greetings.goodbye();
     }

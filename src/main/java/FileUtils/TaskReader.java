@@ -7,24 +7,20 @@ import Entities.*;
 import Exceptions.InvalidTaskException;
 
 public class TaskReader {
-    public static ArrayList<Task> readAndReturnTasks(String filePath) {
+    public static ArrayList<Task> readAndReturnTasks(String filePath) throws FileNotFoundException {
         ArrayList<Task> savedTasks = new ArrayList<Task>();
         Task currentTask;
 
         File f = new File(filePath);
-        try {
-            Scanner s = new Scanner(f);
-            while (s.hasNext()) {
-                currentTask = lineToTask(s.nextLine());
-                if (currentTask != null) {
-                    savedTasks.add(currentTask);
-                }
+        Scanner s = new Scanner(f);
+        while (s.hasNext()) {
+            currentTask = lineToTask(s.nextLine());
+            if (currentTask != null) {
+                savedTasks.add(currentTask);
             }
-            s.close();
-            
-        } catch (FileNotFoundException e) {
-            System.out.println("File does not exist! Returning empty task list");
         }
+        s.close();
+            
         return savedTasks;
     }
 
