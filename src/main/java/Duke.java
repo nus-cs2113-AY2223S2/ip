@@ -10,7 +10,7 @@ public class Duke {
                 indentations + horizontalLines);
         Scanner in = new Scanner(System.in);
         String readLine;
-        String[] tasks = new String[100];
+        Task[] tasks = new Task[100];
         int taskIndex = 0;
         while(true) {
             readLine = in.nextLine();
@@ -20,17 +20,39 @@ public class Duke {
                         indentations + horizontalLines);
                 break;
             } else if (readLine.equals("list")) {
-                System.out.println(indentations + horizontalLines);
+                // list out the tasks and status in todo
+                System.out.println(indentations + horizontalLines +
+                        indentations + "Here are the tasks in your list: ");
 
                 for (int i = 0; i < taskIndex; ++i) {
                     int taskNumber = i+1;
-                    System.out.println(indentations + taskNumber + ". " + tasks[i]);
+                    System.out.println(indentations + taskNumber + "." +
+                            "[" + tasks[i].getStatusIcon() + "] " + tasks[i].getTaskDescription());
                 }
 
                 System.out.println(indentations + horizontalLines);
 
-            } else {
-                tasks[taskIndex] = readLine;
+            } else if (readLine.startsWith("mark")) {
+                String toMark = readLine.substring(5);
+                toMark = toMark.trim();
+                int indexToMark = Integer.parseInt(toMark) - 1;
+                tasks[indexToMark].setDone(true);
+                System.out.println(indentations + "Nice! I've marked this task as done:\n" +
+                        indentations + "  [X] " + tasks[indexToMark].getTaskDescription() + '\n' +
+                        indentations + horizontalLines);
+
+            } else if (readLine.startsWith("unmark")) {
+                String toMark = readLine.substring(7);
+                toMark = toMark.trim();
+                int indexToMark = Integer.parseInt(toMark) - 1;
+                tasks[indexToMark].setDone(false);
+                System.out.println(indentations + "OK, I've marked this task as not done yet: \n" +
+                        indentations + "  [ ] " + tasks[indexToMark].getTaskDescription() + '\n' +
+                        indentations + horizontalLines);
+                
+            }else {
+                // add new tasks into todo
+                tasks[taskIndex] = new Task(readLine);
                 System.out.println(indentations + horizontalLines +
                         indentations + "added: " + readLine + '\n' +
                         indentations + horizontalLines);
