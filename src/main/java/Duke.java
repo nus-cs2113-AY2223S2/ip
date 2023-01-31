@@ -38,14 +38,28 @@ public class Duke {
             return false;
         case "list":
             taskList.listTasks();
+            break;
         case "help":
             help();
+            break;
         case "mark":
             taskList.markDone(Integer.parseInt(args));
+            break;
         case "unmark":
             taskList.unmarkDone(Integer.parseInt(args));
+            break;
+        case "todo":
+            taskList.addToDo(args);
+            break;
+        case "deadline":
+            taskList.addDeadline(args);
+            break;
+        case "event":
+            taskList.addEvent(args);
+            break;
         default:
-            taskList.addTask(command);
+            System.out.println("Invalid command entered, please enter 'help' to see " + 
+            "the list of commands.");
         }
         return true;
     }
@@ -53,7 +67,6 @@ public class Duke {
     public static TaskList taskList = new TaskList(100);
     public static void main(String[] args) {
         greetUser();
-        // echo();
 
         Scanner scanner = new Scanner(System.in);
         String line = scanner.nextLine();
