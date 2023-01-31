@@ -157,9 +157,11 @@ public class Duke {
             return;
         }
         // handle different task types
-        if (variation == taskType.TODO) { // HANDLE TODO
+        if (variation == taskType.TODO) {
+            // HANDLE TODO
             addTodo(userInputArray);
-        } else if (variation == taskType.DEADLINE) { // HANDLE DEADLINE
+        } else if (variation == taskType.DEADLINE) {
+            // HANDLE DEADLINE
             addDeadline(userInputArray);
         } else if (variation == taskType.EVENT) {
             addEvent(userInputArray);
@@ -224,7 +226,8 @@ public class Duke {
         }
         if (userInput.equals("/list")) {
             listTasks();
-        } else { // handle multi-word input commands with required arguments
+        } else {
+            // handle multi-word input commands with required arguments
             String[] userInputArray = userInput.split(" ");
             if (userInputArray[0].equals("/todo")) {
                 addTask(userInputArray, taskType.TODO);
@@ -236,7 +239,8 @@ public class Duke {
                 markTask(userInputArray);
             } else if (userInputArray[0].equals("/unmark")) {
                 unmarkTask(userInputArray);
-            } else { // handle non-command inputs
+            } else {
+                // handle non-command inputs
                 echo(userInput);
             }
         }
