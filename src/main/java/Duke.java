@@ -37,11 +37,9 @@ public class Duke {
     }
 
     public static void goodbyeUser() {
-        scan.close();
         System.out.println(LINE);
         System.out.println("Bye! Hope to see you again soon!");
         System.out.println(LINE);
-        System.exit(0);
     }
 
     public static void addTodo(String[] userInputArray) {
@@ -221,6 +219,8 @@ public class Duke {
         // handle single-word input commands with no arguments
         if (userInput.equals("/bye")) {
             goodbyeUser();
+            scan.close();
+            System.exit(0);
         }
         if (userInput.equals("/list")) {
             listTasks();
@@ -244,7 +244,7 @@ public class Duke {
 
     public static void main(String[] args) {
         greetUser();
-        while (true) {
+        while (scan.hasNextLine()) {
             processUserInput();
         }
     }
