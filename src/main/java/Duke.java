@@ -5,11 +5,17 @@ public class Duke {
     private static final Scanner scanner = new Scanner(System.in);
     private static final ArrayList<Task> taskList = new ArrayList<>();
 
+    /**
+     * Helper method to print a horizontal line.
+     */
     private static void printDivider() {
         System.out.println("\t____________________________________________________________");
     }
 
 
+    /**
+     * Prints all tasks in the list.
+     */
     private static void listTasks() {
         System.out.println("\t Here are the tasks in your list:");
         int cnt = 0;
@@ -18,6 +24,10 @@ public class Duke {
         }
     }
 
+    /**
+     * Checks validity of listID and then marks the corresponding task in the task list.
+     * @param listIdStr id of the task in the task list in a string.
+     */
     private static void markTask(String listIdStr) {
         try {
             markTask(Integer.parseInt(listIdStr));
@@ -26,6 +36,11 @@ public class Duke {
             System.err.println("\t Valid input format: mark [list id of the task]");
         }
     }
+
+    /**
+     * Checks validity of listID and then unmark the corresponding task in the task list.
+     * @param listIdStr id of the task in the task list in a string.
+     */
 
     private static void unmarkTask(String listIdStr) {
         try {
@@ -36,6 +51,10 @@ public class Duke {
         }
     }
 
+    /**
+     * Marks a task in the task list
+     * @param listId id of the task in the task list in an int.
+     */
     private static void markTask(int listId) {
         int index = listId - 1;
         if (index < 0 || index >= taskList.size()) {
@@ -45,6 +64,10 @@ public class Duke {
         }
     }
 
+    /**
+     * Unmarks a task in the task list.
+     * @param listId id of the task in the task list in an int.
+     */
     private static void unmarkTask(int listId) {
         int index = listId - 1;
         if (index < 0 || index >= taskList.size()) {
@@ -54,6 +77,10 @@ public class Duke {
         }
     }
 
+    /**
+     * Add a task from user's command.
+     * @param cmd user's input command.
+     */
     private static void addTask(String cmd) {
         try {
             Task task = createTask(cmd);
@@ -67,6 +94,12 @@ public class Duke {
         }
     }
 
+    /**
+     * Create a task from user's input command.
+     * @param cmd user command.
+     * @return a task instance (can be event, deadline, etc).
+     * @throws IllegalArgumentException when user input an invalid command
+     */
     private static Task createTask(String cmd) {
         String[] cmdArgs = cmd.split(" ");
         switch (cmdArgs[0]) {
@@ -81,6 +114,11 @@ public class Duke {
         }
     }
 
+    /**
+     * Creates a Todo instance from user input arguments.
+     * @param cmdArgs an array of command words, including contents.
+     * @return a Todo instance.
+     */
     private static Todo createTodo(String[] cmdArgs) {
         assert cmdArgs[0].equals("todo");
         StringBuilder content = new StringBuilder();
@@ -90,6 +128,11 @@ public class Duke {
         return new Todo(content.toString().trim());
     }
 
+    /**
+     * Creates a Deadline instance from user input arguments.
+     * @param cmdArgs an array of command words, including contents, by date.
+     * @return a Deadline instance.
+     */
     private static Deadline createDeadline(String[] cmdArgs) {
         assert cmdArgs[0].equals("deadline");
         StringBuilder content = new StringBuilder();
@@ -109,6 +152,11 @@ public class Duke {
         return new Deadline(content.toString().trim(), by.toString().trim());
     }
 
+    /**
+     * Creates an Event instance from user input arguments.
+     * @param cmdArgs an array of command words, including content, from time, to time.
+     * @return an Event instance.
+     */
     private static Event createEvent(String[] cmdArgs) {
         assert cmdArgs[0].equals("event");
         StringBuilder content = new StringBuilder();
