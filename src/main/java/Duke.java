@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 public class Duke {
     private final static ArrayList<Task> taskList = new ArrayList<>();
+
     public static void main(String[] args) {
         String lineBreak = "-----------------";
         System.out.println(lineBreak + '\n' + "Hello! I'm Duke" + '\n'
@@ -54,7 +55,7 @@ public class Duke {
                 }
                 taskList.add(t);
                 System.out.println(lineBreak + '\n' + "Got it. I've added this task:");
-                System.out.println('\t'+t.toString());
+                System.out.println('\t' + t.toString());
                 System.out.println("Now you have " + taskList.size() + " tasks in the list." + '\n' + lineBreak);
             }
         }
