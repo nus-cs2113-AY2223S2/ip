@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
-    private static ArrayList<Task> taskList = new ArrayList<>();
+    private final static ArrayList<Task> taskList = new ArrayList<>();
 
     public static void main(String[] args) {
         String lineBreak = "-----------------";
@@ -35,7 +35,7 @@ public class Duke {
                 }
                 System.out.println(taskList.get(toMark - 1).toString() + '\n' + lineBreak);
             } else {
-                Task t = null;
+                Task t;
                 if (instruction.toLowerCase().contains("deadline")) {
                     String description = instruction.substring(instruction.indexOf(' ') + 1, instruction.indexOf('/'));
                     String ddl = instruction.substring(instruction.indexOf('/') + 1);
@@ -54,7 +54,8 @@ public class Duke {
                     t = new Task(instruction);
                 }
                 taskList.add(t);
-                System.out.println(lineBreak + '\n' + "Got it. I've added this task:" + '\n' + '\t' + t.toString());
+                System.out.println(lineBreak + '\n' + "Got it. I've added this task:");
+                System.out.println('\t'+t.toString());
                 System.out.println("Now you have " + taskList.size() + " tasks in the list." + '\n' + lineBreak);
             }
         }
