@@ -16,7 +16,7 @@ public class Duke {
                 System.out.println("Here are the tasks in your list:");
                 for (int i = 0; i < tasksIndex; i++) {
                     System.out.print(i + 1);
-                    System.out.print(". ");
+                    System.out.print(".");
                     System.out.println(tasks[i].toString());
                 }
             } else if (line.substring(0, 4).equals("mark")) { // if it's mark X, mark task X (looks like buggy if a task is called "mark ..."
@@ -45,7 +45,7 @@ public class Duke {
                     tasksIndex++;
                     System.out.println("Now you have " + tasksIndex + " tasks in the list.");
                 } else if(line.substring(0,4).equals("todo")) {
-                    tasks[tasksIndex] = new ToDo(line.substring(4));
+                    tasks[tasksIndex] = new ToDo(line.substring(5));
                     System.out.println("Got it. I've added this task:\n" + "  " + tasks[tasksIndex].toString());
                     tasksIndex++;
                     System.out.println("Now you have " + tasksIndex + " tasks in the list.");
