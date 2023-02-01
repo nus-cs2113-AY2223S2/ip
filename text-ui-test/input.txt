@@ -1,0 +1,23 @@
+list
+todo Foobar
+deadline badArgument
+deadline badArgument -by foobar
+deadline deadline1 --by Sunday
+deadline deadline2 --by Some--day
+event badArgument
+event missingArg --from Foo
+event missingArg1 --by Foo
+event event1 --from Foo --to Bar
+event event2 --to Baz --from Zulu
+list
+mark -1
+mark 0
+mark 1
+mark 2
+mark 100
+list
+unmark -1
+unmark 1
+unmark 100
+list
+exit
