@@ -35,6 +35,15 @@ public abstract class Parser {
         }
     }
 
+    /**
+     * Parses the input and creates a new task based on the type of task
+     * 
+     * @param input
+     *            the input from the user
+     * @param type
+     *            the type of task
+     * @return the new task
+     */
     public static Task parseNewTask(String input, String type) {
         Task newTask;
 
@@ -56,10 +65,24 @@ public abstract class Parser {
         return newTask;
     }
 
+    /**
+     * Creates a new Todo task
+     * 
+     * @param input
+     *            the input from the user
+     * @return the new Todo task
+     */
     public static Task createTodo(String input) {
         return new Todo(input);
     }
 
+    /**
+     * Creates a new Deadline task
+     * 
+     * @param input
+     *            the input from the user
+     * @return the new Deadline task
+     */
     public static Task createDeadline(String input) {
         String[] inputList = input.split(" /by ");
         String taskDesc = inputList[0];
@@ -67,6 +90,13 @@ public abstract class Parser {
         return new Deadline(taskDesc, deadline);
     }
 
+    /**
+     * Creates a new Event task
+     * 
+     * @param input
+     *            the input from the user
+     * @return the new Event task
+     */
     public static Task createEvent(String input) {
         String[] inputList = input.split(" /from ");
         String[] inputList2 = inputList[1].split(" /to ");
