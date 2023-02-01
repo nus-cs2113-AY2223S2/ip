@@ -1,9 +1,9 @@
 public class Task {
-    private boolean isDone;
-    private String name;
+    protected boolean isDone;
+    protected String description;
 
-    public Task(String name) {
-        this.name = name;
+    public Task(String description) {
+        this.description = description;
         isDone = false;
     }
 
@@ -11,11 +11,15 @@ public class Task {
         return (isDone ? "X" : " ");
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 
     public void setDone(boolean isDone) {
         this.isDone = isDone;
+    }
+
+    public String toString() {
+        return "[" + this.getStatus() + "] " + this.getDescription();
     }
 }
