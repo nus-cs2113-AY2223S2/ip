@@ -172,17 +172,18 @@ public class Duke {
     public static void listTasks() {
         if (userInputCount == 0) {
             reportError("You have no tasks added!");
-        } else {
-            System.out.println("These are the following tasks you have:");
-            for (int i = 0; i < userInputCount; i++) {
-                System.out.println(LINE);
-                int index = i;
-                index++;
-                System.out.print(index + ".");
-                System.out.println(userTaskList[i]);
-                System.out.println(LINE);
-            }
+            return;
         }
+        System.out.println("These are the following tasks you have:");
+        for (int i = 0; i < userInputCount; i++) {
+            System.out.println(LINE);
+            int index = i;
+            index++;
+            System.out.print(index + ".");
+            System.out.println(userTaskList[i]);
+            System.out.println(LINE);
+        }
+
     }
 
     public static void markTask(String[] userInputArray) {
@@ -194,6 +195,7 @@ public class Duke {
                     + userTaskList[taskIndex].description + System.lineSeparator() + LINE);
         } catch (Exception e) {
             reportError("Please enter a valid numerical index of the task!");
+            return;
         }
 
     }
