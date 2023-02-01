@@ -6,10 +6,10 @@ public class BunnySession {
     private final static String GLOBAL_INDENTATION = "\t";
     private final static String MESSAGE_INDENTATION = " ";
 
-    private ArrayList<Todo> todoList;
+    private ArrayList<Task> taskList;
 
     public BunnySession() {
-        this.todoList = new ArrayList<>();
+        this.taskList = new ArrayList<>();
     }
 
     public void printMessage(String message) {
@@ -27,15 +27,15 @@ public class BunnySession {
         System.out.print(output);
     }
 
-    public void addTodo(Todo todo) {
-        this.todoList.add(todo);
+    public void addTask(Task task) {
+        this.taskList.add(task);
     }
 
-    public Todo getTodo(int index) {
-        return this.todoList.get(index);
+    public Task getTask(int index) {
+        return this.taskList.get(index);
     }
 
-    public int numTodos() {
-        return this.todoList.size();
+    public int numTasks() {
+        return this.taskList.size();
     }
 }
