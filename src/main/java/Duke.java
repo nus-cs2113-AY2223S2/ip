@@ -63,10 +63,10 @@ public class Duke {
     private static void printEvent(Event event) {
         if (event.isDone()) {
             System.out.println(event.getIndex() + ". [E][X] " + event.getTaskName() +
-                    " (from: " + event.getStart() + " to:" + event.getDeadline() + ")");
+                    " (from: " + event.getStart() + " to: " + event.getDeadline() + ")");
         } else {
             System.out.println(event.getIndex() + ". [E][ ] " + event.getTaskName() +
-                    " (from: " + event.getStart() + " to:" + event.getDeadline() + ")");
+                    " (from: " + event.getStart() + " to: " + event.getDeadline() + ")");
         }
     }
     private static void printDeadline(Deadline deadline) {
@@ -122,7 +122,7 @@ public class Duke {
         }
         String eventName = regexOutput[0];
         String startDate = regexOutput[1];
-        String endDate = regexOutput[1];
+        String endDate = regexOutput[2];
         Deadline deadline = new Event(eventName, list.size(), startDate, endDate);
         list.add(deadline);
     }
