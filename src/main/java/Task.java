@@ -2,13 +2,21 @@ public class Task {
     protected String description;
     protected boolean isDone;
 
+    protected static int taskCount = 0;
+
     /**
      * Initialization of the object
+     *
      * @param description
      */
     public Task(String description) {
         this.description = description;
         this.isDone = false;
+        ++taskCount;
+    }
+
+    public static void printMessage() {
+        System.out.println("error in printing");
     }
 
     /**
@@ -32,5 +40,13 @@ public class Task {
     public void unmarkDone() {
         this.isDone = false;
         System.out.println("OK, I've marked this task as not done yet:");
+    }
+
+    public String statusMessage() {
+        return getStatusIcon() + " " + description;
+    }
+
+    public String addedMessage() {
+        return "added: " + description;
     }
 }
