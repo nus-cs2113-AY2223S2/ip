@@ -84,7 +84,8 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-        Task[] tasks = new Task[100];
+        final int MAX_TASKS = 100;
+        Task[] tasks = new Task[MAX_TASKS];
         Scanner in = new Scanner(System.in);
         printGreeting();
         boolean isProgramRunning = true;
