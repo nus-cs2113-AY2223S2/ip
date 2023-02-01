@@ -11,9 +11,11 @@ public class Bunny {
 
         while (true) {
             String input = in.nextLine();
-            if (input.equals("bye")) {
+            ParsedCommand inputCommand = new ParsedCommand(input);
+
+            if (inputCommand.getCommand().equals("bye")) {
                 break;
-            } else if (input.equals("list")) {
+            } else if (inputCommand.getCommand().equals("list")) {
                 if (bunny.numTodos() == 0) {
                     bunny.printMessage("Your TODO list is empty!");
                 } else {
@@ -23,9 +25,9 @@ public class Bunny {
                     }
                     bunny.printMessage(messageLines);
                 }
-            } else if (input.startsWith("mark")) {
+            } else if (inputCommand.getCommand().equals("mark")) {
                 try {
-                    int markIndex = Integer.parseInt(input.split(" ")[1]) - 1;
+                    int markIndex = Integer.parseInt(inputCommand.getPositionalArgument()) - 1;
                     bunny.getTodo(markIndex).markAsDone();
                     bunny.printMessage("Nice! I've marked this task as done:\n\t" + bunny.getTodo(markIndex));
                 } catch (IndexOutOfBoundsException e) {
@@ -33,9 +35,9 @@ public class Bunny {
                 } catch (NumberFormatException e) {
                     bunny.printMessage("To mark a TODO as done, provide a valid TODO number like so: \"mark 1\"");
                 }
-            } else if (input.startsWith("unmark")) {
+            } else if (inputCommand.getCommand().equals("unmark")) {
                 try {
-                    int unmarkIndex = Integer.parseInt(input.split(" ")[1]) - 1;
+                    int unmarkIndex = Integer.parseInt(inputCommand.getPositionalArgument()) - 1;
                     bunny.getTodo(unmarkIndex).markAsNotDone();
                     bunny.printMessage("Nice! I've marked this task as not done yet:\n\t" + bunny.getTodo(unmarkIndex));
                 } catch (IndexOutOfBoundsException e) {
@@ -43,9 +45,11 @@ public class Bunny {
                 } catch (NumberFormatException e) {
                     bunny.printMessage("To unmark a TODO as done, provide a valid TODO number like so: \"unmark 1\"");
                 }
-            } else {
-                bunny.addTodo(new Todo(input));
+            } else if (inputCommand.getCommand().equals("todo")){
+                bunny.addTodo(new Todo(inputCommand.getPositionalArgument()));
                 bunny.printMessage("added: " + input);
+            } else {
+                bunny.printMessage("That is not a valid command!");
             }
         }
 
