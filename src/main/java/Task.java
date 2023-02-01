@@ -25,7 +25,9 @@ public class Task {
         return tasksList;
     }
 
-    public void markAsDone () { this.isDone = true; }
+    public void markAsDone () {
+        this.isDone = true;
+    }
     public void unmarkAsDone () {
     this.isDone = false;
     }
