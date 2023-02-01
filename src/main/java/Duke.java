@@ -68,23 +68,33 @@ public class Duke {
         Scanner input = new Scanner(System.in);
         System.out.println("Hello! I'm Duke\n");
         System.out.println("What can I do for you?\n");
-        String[] tasks = new String[100];
+        Task[] tasks = new Task[100];
         int taskCount = 0;
         boolean run = true;
         while (run) {
             String command = input.nextLine();
-            switch (command) {
+            String[] commandCheck = command.split(" ");
+            switch (commandCheck[0]) {
                 case "bye":
                     System.out.println("Bye. Hope to see you again soon!\n");
                     run = false;
                     break;
                 case "list":
                     for (int i = 0; i < taskCount; i++) {
-                        System.out.println((i + 1) + ". " + tasks[i]);
+                        System.out.println((i + 1) + "." + "[" + tasks[i].getStatusIcon() + "]" + " " + tasks[i].getDescription());
                     }
                     break;
+                case "mark":
+                    tasks[Integer.parseInt(commandCheck[1]) - 1].markAsDone();
+                    System.out.println(tasks[Integer.parseInt(commandCheck[1]) - 1].printTask());
+                    break;
+                case "unmark":
+                    tasks[Integer.parseInt(commandCheck[1]) - 1].markAsUndone();
+                    System.out.println(tasks[Integer.parseInt(commandCheck[1]) - 1].printTask());
+                    break;
                 default:
-                    tasks[taskCount] = command;
+                    Task t = new Task(command);
+                    tasks[taskCount] = t;
                     System.out.println("added: " + command);
                     taskCount++;
                     break;
@@ -92,7 +102,7 @@ public class Duke {
         }
         System.out.println(symbol);
         input.close();
-        }
     }
+}
 
 
