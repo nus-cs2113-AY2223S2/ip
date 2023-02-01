@@ -29,8 +29,7 @@ public class MarkCommand extends Command {
             System.out.println(LINEBREAK);
 
         } catch (EmptyListException e) {
-            System.out.println("The list is empty. Please add a task first.");
-            System.out.println(LINEBREAK);
+            System.out.println(e.getMessage());
 
         } catch (NumberFormatException e) {
             System.out.println("Invalid command. Please try again.");

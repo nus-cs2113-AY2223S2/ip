@@ -7,11 +7,6 @@ import static duke.constants.Constants.LINEBREAK;
 
 public class HelpCommand extends Command {
 
-        public static final String COMMAND_WORD = "help";
-
-        public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows program usage instructions.\n"
-                + "Example: " + COMMAND_WORD;
-
         public static final String MESSAGE_HELP = "Here are the commands you can use:\n"
                 + "1. todo <task name> - Adds a todo task to the list.\n"
                 + "2. deadline <task name> /by <date> - Adds a deadline task to the list.\n"
@@ -22,9 +17,6 @@ public class HelpCommand extends Command {
                 + "7. help - Shows program usage instructions.\n"
                 + "8. bye - Exits the program.\n"
                 + LINEBREAK;
-
-
-
 
     @Override
     public void handleCommand(String line, TaskList taskList) {

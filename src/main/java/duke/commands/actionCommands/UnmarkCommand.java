@@ -14,12 +14,12 @@ public class UnmarkCommand extends Command {
             int indexCount = Task.getIndexCount();
             int indexSelect;
 
-            String undone = line.split(" ")[1];
+            String undo = line.split(" ")[1];
             if (indexCount == 0) {
                 throw new EmptyListException();
             }
 
-            indexSelect = Integer.parseInt(undone) - 1;
+            indexSelect = Integer.parseInt(undo) - 1;
 
             taskList.getTask(indexSelect).setDone(false);
             System.out.println("OK, I've marked this task as not done yet:");
@@ -31,8 +31,7 @@ public class UnmarkCommand extends Command {
             System.out.println(LINEBREAK);
 
         } catch (EmptyListException e) {
-            System.out.println("The list is empty. Please add a task first.");
-            System.out.println(LINEBREAK);
+            System.out.println(e.getMessage());
 
         } catch (NumberFormatException e) {
             System.out.println("Invalid command. Please try again.");
