@@ -18,4 +18,8 @@ public class Task {
     public void unmarkAsDone() {
         isDone = false;
     }
+    @Override
+    public String toString() {
+        return "[" + getStatusIcon()+ "] " + description;
+    }
 }

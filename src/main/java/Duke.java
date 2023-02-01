@@ -21,19 +21,50 @@ public class Duke {
                 markItem(storeValues, line);
             } else if (line.startsWith("unmark ")) {
                 unmarkItem(storeValues, line);
+            } else if (line.startsWith("deadline")) {
+                int forwardSlash = line.indexOf('/');
+                int endOfTask = forwardSlash - 1;
+                int dates = forwardSlash + 4;
+
+                Deadline deadlineInput = new Deadline(line.substring(9,endOfTask), line.substring(dates));
+                /* System.out.println(deadlineInput.toString());
+                deadlineInput.markAsDone();*/
+                //System.out.println(deadlineInput);
+                counter = addTask(storeValues, counter, deadlineInput);
+            } else if (line.startsWith("todo")) {
+                String removeCommand = line.substring(5);
+                Todo todoInput= new Todo(removeCommand);
+                //System.out.println(todoInput.toString());
+                //todoInput.markAsDone();
+                //System.out.println(todoInput.getStatusIcon());
+                //System.out.println(todoInput.toString());
+                counter = addTask(storeValues, counter, todoInput/*.toString()*/);
+            } else if (line.startsWith("event")) {
+                int firstForwardSlash = line.indexOf('/');
+                String taskName = line.substring(6,firstForwardSlash-1);
+                String duration = line.substring(firstForwardSlash+6);
+                int secondForwardSlash = duration.indexOf('/');
+                String startingTime = duration.substring(0,secondForwardSlash-1);
+                String endingTime = duration.substring(secondForwardSlash+4);
+                Event eventInput = new Event(taskName, startingTime, endingTime);
+
+                counter = addTask(storeValues, counter, eventInput);
             } else {
-                counter = addTask(storeValues, counter, line);
+                //commands that are not listed above
+                System.out.println("Invalid command, try again! \n");
+                //counter = addTask(storeValues, counter, line);
             }
             line = in.nextLine();
         }
     }
 
-    private static int addTask(Task[] storeValues, int counter, String line) {
+    private static int addTask(Task[] storeValues, int counter, Task line) {
         formattingLine();
-        System.out.println("added: " + line);
+        System.out.println("Got it. I've added this task: \n" + line.toString() + "\n"+
+                "Now you have " + (counter + 1) + " tasks in the list.\n");
         formattingLine();
         //store value in line into list
-        Task newInput = new Task(line);
+        Task newInput = line;
         storeValues[counter] = newInput;
         counter += 1;
         return counter;
@@ -47,7 +78,7 @@ public class Duke {
         storeValues[numToMark-1].unmarkAsDone();
         formattingLine();
         System.out.println("OK, I've marked this task as not done yet: \n" +
-                "[ ] " + storeValues[numToMark-1].description + "\n");
+                storeValues[numToMark-1].toString() + "\n");
         formattingLine();
     }
 
@@ -57,9 +88,10 @@ public class Duke {
         int numToMark = Integer.parseInt(itemToMark);
         //mark the item as complete
         storeValues[numToMark-1].markAsDone();
+        //System.out.println(storeValues[numToMark-1].getStatusIcon());
         formattingLine();
-        System.out.println("Nice! I've marked this task as done: \n" +
-                "[X] " + storeValues[numToMark-1].description + "\n");
+        System.out.println("Nice! I've marked this task as done: \n"
+                /*"[" + storeValues[numToMark-1].getStatusIcon() + "] " */+ storeValues[numToMark-1].toString() + "\n");
         formattingLine();
     }
 
@@ -67,8 +99,9 @@ public class Duke {
         int currValue = 0;
         Task[] existingValues = Arrays.copyOf(storeValues, counter);
         formattingLine();
+        System.out.println("Here are the tasks in your list:");
         for (Task value : existingValues) {
-            System.out.println((currValue+1) + ".[" + value.getStatusIcon() + "] " + value.description);
+            System.out.println((currValue+1) + "." + value.toString());
             currValue += 1;
         }
         formattingLine();
