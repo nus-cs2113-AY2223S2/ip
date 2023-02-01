@@ -21,11 +21,11 @@ public class Duke {
         Scanner userScan = new Scanner(System.in);  // Create scanner object
         String userInput = userScan.nextLine();  // Get user input
 
-        //Echo the arguments provided unless it is "bye" which quits the program
+        //Check the arguments provided unless it is "bye" which quits the program
         while( !(Check.isBye(userInput)) ){
 
             //If userInput is "list" print all tasks
-            if(Check.isEvent(userInput)){
+            if(Check.isList(userInput)){
                 //Print out the list of tasks
                 System.out.println("Here are the tasks in your list:");
                 for(int i=0;i<taskCount;i++){
