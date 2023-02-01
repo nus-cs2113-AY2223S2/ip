@@ -68,7 +68,11 @@ public class HinaBot {
 
     public static void unmarkTask(int taskIndex) {
         taskList[taskIndex - 1].setDone(false);
+<<<<<<< HEAD
         System.out.println("Roger that! This task is marked as done: ");
+=======
+        System.out.println("Roger that! This task is marked as not done: ");
+>>>>>>> bab6548 (Add Task class, add code to mark and unmark tasks)
         System.out.println("[ ] " + taskList[taskIndex - 1].getDescription());
     }
 }
