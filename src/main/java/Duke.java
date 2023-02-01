@@ -8,20 +8,16 @@ public class Duke {
     public static void drawLine() {
         System.out.println("=====================================================================================");
     }
-
-    public static void createSiriChatBox() {
-        System.out.println("Siri:\n");
+    public static void createDukeChatBox() {
+        System.out.println("Duke:\n");
     }
-
     public static void createUserChatBox(String username) {
         System.out.println(username + ":\n");
     }
-
-
     public static String greetAndAskName() {
         //greet and ask name
         drawLine();
-        createSiriChatBox();
+        createDukeChatBox();
         System.out.println("Hey, I'm Siri\n" + "What is your name?");
         drawLine();
 
@@ -33,27 +29,41 @@ public class Duke {
         drawLine();
 
         //Greet with name (personalisation)
-        createSiriChatBox();
+        createDukeChatBox();
         System.out.println(">o< Nice to meet you! " + username + "! >o<");
         System.out.println("What can I do for you?");
         drawLine();
 
         return username;
     }
-
     public static void sayGoodbye(String username) {
         //say goodbye with name
         drawLine();
-        createSiriChatBox();
+        createDukeChatBox();
         System.out.println(">o< Goodbye, " + username + "! Hope to see you again soon! >o<");
         drawLine();
     }
 
+    public static void printThisTask(){
+        System.out.println("Got it. I've added this task:");
+        System.out.println("  " + tasks[indexOfTask].toString());
+        System.out.println("Now you have " + (indexOfTask+1) + " tasks in the list." );
+    }
 
-    public static void printTaskList() {
-        System.out.println("Below is your task list");
-        for (int i = 0; i < indexOfTask; ++i) {
-            System.out.println((i + 1) + ". " + tasks[i].toString());
+    //Task Description = taskD
+    public static void addTask(String taskCommand, String taskD){
+        switch (taskCommand){
+        case "todo":
+            tasks[indexOfTask] = new ToDo(taskD.trim());
+            break;
+        case "deadline":
+            String[] deadlineTaskD = taskD.split("/by ", 2);
+            tasks[indexOfTask] = new Deadline(deadlineTaskD[0],deadlineTaskD[1]);
+            break;
+        case "event":
+            String[] eventName = taskD.split("/from ", 2);
+            String[] eventDate = eventName[1].split("/to ", 2);
+            tasks[indexOfTask] = new Event(eventName[0], eventDate[0], eventDate[1] );
         }
     }
 
@@ -76,27 +86,11 @@ public class Duke {
         }
     }
 
-    //Task Description = taskD
-    public static void addTask(String taskCommand, String taskD){
-        switch (taskCommand){
-        case "todo":
-            tasks[indexOfTask] = new ToDo(taskD.trim());
-            break;
-        case "deadline":
-            String[] deadlineTaskD = taskD.split("/by ", 2);
-            tasks[indexOfTask] = new Deadline(deadlineTaskD[0],deadlineTaskD[1]);
-            break;
-        case "event":
-            String[] eventName = taskD.split("/from ", 2);
-            String[] eventDate = eventName[1].split("/to ", 2);
-            tasks[indexOfTask] = new Event(eventName[0], eventDate[0], eventDate[1] );
+    public static void printList() {
+        System.out.println("Below is your task list");
+        for (int i = 0; i < indexOfTask; ++i) {
+            System.out.println((i + 1) + ". " + tasks[i].toString());
         }
-    }
-
-    public static void printThisTask(){
-        System.out.println("Got it. I've added this task:");
-        System.out.println("  " + tasks[indexOfTask].toString());
-        System.out.println("Now you have " + (indexOfTask+1) + " tasks in the list." );
     }
 
     public static void readUserInput(String input){
@@ -105,7 +99,7 @@ public class Duke {
 
         switch (command[0]){
         case "list":
-            printTaskList();
+            printList();
             break;
         case "mark":
         case "unmark":
@@ -137,23 +131,22 @@ public class Duke {
 
         //greet and ask name and greet again
         String username = greetAndAskName();
+        String input;
+
 
         //user input what he or she wants the chatbot to do
-        createUserChatBox(username);
         Scanner in = new Scanner(System.in);
-        String input = in.nextLine().trim();
+        createUserChatBox(username);
+        input = in.nextLine().trim();
 
         //according to the input, chatbot reply accordingly
         //exit while loop only when userinput is "bye"
         while (!input.equals("bye")) {
             drawLine();
-            createSiriChatBox();
-
+            createDukeChatBox();
             readUserInput(input);
-
             drawLine();
             createUserChatBox(username);
-
             input = in.nextLine().trim();
         }
 
