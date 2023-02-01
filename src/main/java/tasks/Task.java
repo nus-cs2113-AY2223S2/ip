@@ -1,3 +1,5 @@
+package tasks;
+
 public class Task {
     protected boolean isDone;
     protected String description;
@@ -15,6 +17,11 @@ public class Task {
         return (isDone ? "X" : " "); // mark done task with X
     }
 
+    public String getTaskSymbol() {
+        // U for Unknown/Undefined
+        return "U";
+    }
+
     public void setDone(boolean done) {
         isDone = done;
     }
@@ -25,6 +32,10 @@ public class Task {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String toString(){
+        return description;
     }
 
 }
