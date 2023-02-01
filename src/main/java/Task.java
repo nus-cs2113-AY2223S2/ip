@@ -18,7 +18,7 @@ public class Task {
         for (int i = 0; i < numberOfTasks; i++) {
             tasksList +=  String.format("%3d. ", (i+1)) + tasks[i].toString();
             if (i < numberOfTasks - 1) {
-                tasksList += "\n\t";
+                tasksList += System.lineSeparator()+ "\t";
             }
 
         }
