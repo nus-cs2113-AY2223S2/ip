@@ -74,6 +74,26 @@ public class Duke {
         System.out.println("____________________________________________________________");
     }
 
+    public static boolean exceptionCheck(String line) {
+        try {
+            catchError.validateMeaningful(line.split(" ")[0]);
+        } catch (DukeException e) {
+            System.out.println("____________________________________________________________");
+            System.out.println(" ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+            System.out.println("____________________________________________________________");
+            return true;
+        }
+        try {
+            catchError.validateEmpty(line);
+        } catch (DukeException e) {
+            System.out.println("____________________________________________________________");
+            System.out.println(" ☹ OOPS!!! The description of a todo cannot be empty.");
+            System.out.println("____________________________________________________________");
+            return true;
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -88,16 +108,23 @@ public class Duke {
         Scanner in = new Scanner(System.in);
         line = in.nextLine();
         while (!line.equals("bye")) {
-            if (line.equals("list")) {
-                list();
-            } else if (line.startsWith("mark")) {
-                markMethod(line);
+            String firstWord = line.split(" ")[0];
+            boolean hasError = false;
+            hasError = exceptionCheck(line);
 
-            } else if (line.startsWith("unmark")) {
-                unmarkMethod(line);
-            } else if (line.startsWith("todo") || line.startsWith("deadline") || line.startsWith("event")) {
-                statusMethod(line);
+            if (!hasError) {
+                if (firstWord.equals("list")) {
+                    list();
+                } else if (firstWord.equals("mark")) {
+                    markMethod(line);
+
+                } else if (firstWord.equals("unmark")) {
+                    unmarkMethod(line);
+                } else if (firstWord.equals("todo") || firstWord.equals("deadline") || firstWord.equals("event")) {
+                    statusMethod(line);
+                }
             }
+
             line = in.nextLine();
         }
 
