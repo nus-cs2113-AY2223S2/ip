@@ -24,8 +24,8 @@ public class Task {
     public void markAsDone () {
         this.isDone = true;
     }
-    public void unmarkAsDone (){
-        this.isDone = false;
+    public void unmarkAsDone () {
+    this.isDone = false;
     }
     public String getStatusIcon (){
         return this.isDone ? "X" : " ";
