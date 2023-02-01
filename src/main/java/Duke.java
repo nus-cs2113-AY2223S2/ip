@@ -36,7 +36,7 @@ public class Duke {
         } else if (processedInputs[0].equals("unmark")) {
             int indexToBeUnmarked = Integer.parseInt(processedInputs[1]) - 1; // 0-indexed
             tasks[indexToBeUnmarked].setDone(false);
-            printNotification(tasks[indexToBeUnmarked], "unmark",tasksIndex + 1);
+            printNotification(tasks[indexToBeUnmarked], "unmark", tasksIndex + 1);
         } else if (processedInputs[0].equals("todo")) {
             tasks[tasksIndex] = new ToDo(processedInputs[1]);
             printNotification(tasks[tasksIndex], "todo", tasksIndex + 1);
@@ -55,16 +55,16 @@ public class Duke {
     }
 
     private static String[] furtherProcessInputForDeadline(String[] processedInputs) {
-        String[] taskNameAndIdentifierAndBy = processedInputs[1].split("/",2);
-        String[] identifierAndBy = taskNameAndIdentifierAndBy[1].split(" ",2);
+        String[] taskNameAndIdentifierAndBy = processedInputs[1].split("/", 2);
+        String[] identifierAndBy = taskNameAndIdentifierAndBy[1].split(" ", 2);
         String[] taskNameAndBy = {taskNameAndIdentifierAndBy[0], identifierAndBy[1]};
         return taskNameAndBy;
     }
 
     private static String[] furtherProcessInputForEvent(String[] processedInputs) {
         String[] taskNameAndFromAndTo = processedInputs[1].split("/", 3);
-        String[] identifierAndFrom = taskNameAndFromAndTo[1].split(" ",2);
-        String[] identifierAndTo = taskNameAndFromAndTo[2].split(" ",2);
+        String[] identifierAndFrom = taskNameAndFromAndTo[1].split(" ", 2);
+        String[] identifierAndTo = taskNameAndFromAndTo[2].split(" ", 2);
         String[] fromAndToAndTaskName = {identifierAndFrom[1], identifierAndTo[1], taskNameAndFromAndTo[0]};
         return fromAndToAndTaskName;
     }
