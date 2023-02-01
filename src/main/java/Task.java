@@ -1,11 +1,13 @@
 public class Task {
-	private String name;
-
-	public Task(String name) {
+	protected String name;
+	protected boolean isCompleted;
+	public Task(String name, boolean isCompleted) {
 		this.name = name;
+		isCompleted = false;
 	}
 
-	public String printName() {
-		return name;
+	public String markTask (){
+		return(isCompleted?"[X]":"[ ]");
 	}
 }
+
