@@ -26,46 +26,75 @@ public class Duke {
         } else if (processedInputs[0].equals("mark")) {
             int indexToBeMarked = Integer.parseInt(processedInputs[1]) - 1; // 0-indexed
             tasks[indexToBeMarked].setDone(true);
-            printNotification(tasks[indexToBeMarked], "mark");
+            printNotification(tasks[indexToBeMarked], "mark", tasksIndex + 1);
         } else if (processedInputs[0].equals("unmark")) {
             int indexToBeUnmarked = Integer.parseInt(processedInputs[1]) - 1; // 0-indexed
             tasks[indexToBeUnmarked].setDone(false);
-            printNotification(tasks[indexToBeUnmarked], "unmark");
+            printNotification(tasks[indexToBeUnmarked], "unmark",tasksIndex + 1);
         } else if (processedInputs[0].equals("todo")) {
             tasks[tasksIndex] = new ToDo(processedInputs[1]);
-            printNotification(tasks[tasksIndex], "todo");
+            printNotification(tasks[tasksIndex], "todo", tasksIndex + 1);
             tasksIndex++;
-        } else if (processedInputs.length == 2) { // now, if the array has 2 elements, then it is "deadline" case
-            String[] furtherProcessedInput = processedInputs[1].split(" "); //
+        } else if (processedInputs[0].equals("deadline")) { // now, if the array has 2 elements, then it is "deadline" case
+            /*
+            processedInputs = processedInputs[1].split("/", 2);
+            String[] furtherProcessedInput = processedInputs[1].split(" ");
             tasks[tasksIndex] = new Deadline(processedInputs[0], furtherProcessedInput[1]);
-            printNotification(tasks[tasksIndex], "deadline");
+            */
+            String by = furtherProcessInputForDeadline(processedInputs);
+            tasks[tasksIndex] = new Deadline(processedInputs[0], by);
+            printNotification(tasks[tasksIndex], "deadline", tasksIndex + 1);
             tasksIndex++;
         } else { // must be "event" case
+            /*
+            processedInputs = processedInputs[1].split("/", 3);
             String[] furtherProcessedInput1 = processedInputs[1].split(" ",2);
             String[] furtherProcessedInput2 = processedInputs[2].split(" ",2);
-            tasks[tasksIndex] = new Event(processedInputs[0], furtherProcessedInput1[1], furtherProcessedInput2[1]);
-            printNotification(tasks[tasksIndex], "event");
+            */
+            String[] fromAndTo = furtherProcessInputForEvent(processedInputs);
+            tasks[tasksIndex] = new Event(processedInputs[0], fromAndTo[0], fromAndTo[1]);
+            printNotification(tasks[tasksIndex], "event", tasksIndex + 1);
             tasksIndex++;
         }
         return;
     }
 
+    private static String furtherProcessInputForDeadline(String[] processedInputs) {
+        String[] taskNameAndIdentifierAndBy = processedInputs[1].split("/",2);
+        String[] identifierAndBy = taskNameAndIdentifierAndBy[1].split(" ",2);
+        String by = identifierAndBy[1];
+        return by;
+    }
+    private static String[] furtherProcessInputForEvent(String[] processedInputs) {
+        String[] taskNameAndFromAndTo = processedInputs[1].split("/", 3);
+        String[] identifierAndFrom = taskNameAndFromAndTo[1].split(" ",2);
+        String[] identifierAndTo = taskNameAndFromAndTo[2].split(" ",2);
+        String[] fromAndTo = {identifierAndFrom[1], identifierAndTo[1]};
+        return fromAndTo;
+    }
 
-    private static void printNotification(Task task, String modification) {
+
+    private static void printNotification(Task task, String modification, int numberOfTasks) {
+        boolean isRequiredToShowNumberOfTasks = false;
         if (modification.equals("unmark")) {
             System.out.println("OK, I've marked this task as not done yet:");
         } else if (modification.equals("mark")) {
             System.out.println("Nice! I've marked this task as done:");
         } else { // adding either deadline, event or todo
             System.out.print("Got it. I've added this task:\n" + "  ");
+            isRequiredToShowNumberOfTasks = true;
         }
         task.printTask();
+        if (isRequiredToShowNumberOfTasks) {
+            System.out.println("Now you have " + numberOfTasks + " tasks in your list.");
+        }
     }
     private static void printExitMessage() {
         System.out.println("Bye. Hope to see you again soon!");
     }
 
     private static void listTasks(Task[] tasks) {
+        System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < tasksIndex; i++) {
             System.out.print(i + 1);
             System.out.print(".");
@@ -85,9 +114,12 @@ public class Duke {
     }
 
 
+
     private static String[] processUserInput(String userInput) {
         // first, split up the string ONCE with " " delimiter to find the command ("(un)mark"/"todo"/"deadline"/"event"/"list")
-        String[] processedInputs = userInput.split(" ", 2); // inputs[0] is command, inputs[1] is the rest
+        // processedInputs[0] is command, processedInputs[1] is the information
+        String[] processedInputs = userInput.split(" ", 2);
+        /*
         switch (processedInputs[0]) {
         // for "deadline", split the rest of the string ONCE using "/" as the delimiter -> 2 strings
         case "deadline":
@@ -101,6 +133,7 @@ public class Duke {
         default:
             break;
         }
+        */
         return processedInputs;
     }
 }
