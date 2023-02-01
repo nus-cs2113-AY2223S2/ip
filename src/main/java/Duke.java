@@ -7,11 +7,14 @@ public class Duke {
     public static boolean isInUse = true;
 
     public static void main(String[] args) {
+        // how do i abstract these 2 things into a function? can i initialize inside a function?
         Task[] tasks = new Task[MAX_NUMBER_OF_TASKS];
+        Scanner in = new Scanner(System.in);
+        // how to deal with "Exception in thread "main" java.util.NoSuchElementException: No line found"?
 
         greetUser();
         while (isInUse) {
-            String userInput = getUserInput();
+            String userInput = getUserInput(in);
             String[] processedInputs = processUserInput(userInput);
             showResultToUser(tasks, processedInputs);
         }
@@ -36,41 +39,33 @@ public class Duke {
             printNotification(tasks[tasksIndex], "todo", tasksIndex + 1);
             tasksIndex++;
         } else if (processedInputs[0].equals("deadline")) { // now, if the array has 2 elements, then it is "deadline" case
-            /*
-            processedInputs = processedInputs[1].split("/", 2);
-            String[] furtherProcessedInput = processedInputs[1].split(" ");
-            tasks[tasksIndex] = new Deadline(processedInputs[0], furtherProcessedInput[1]);
-            */
-            String by = furtherProcessInputForDeadline(processedInputs);
-            tasks[tasksIndex] = new Deadline(processedInputs[0], by);
+            String[] taskNameAndBy = furtherProcessInputForDeadline(processedInputs);
+            tasks[tasksIndex] = new Deadline(taskNameAndBy[0], taskNameAndBy[1]);
             printNotification(tasks[tasksIndex], "deadline", tasksIndex + 1);
             tasksIndex++;
         } else { // must be "event" case
-            /*
-            processedInputs = processedInputs[1].split("/", 3);
-            String[] furtherProcessedInput1 = processedInputs[1].split(" ",2);
-            String[] furtherProcessedInput2 = processedInputs[2].split(" ",2);
-            */
-            String[] fromAndTo = furtherProcessInputForEvent(processedInputs);
-            tasks[tasksIndex] = new Event(processedInputs[0], fromAndTo[0], fromAndTo[1]);
+            String[] fromAndToAndTaskName = furtherProcessInputForEvent(processedInputs);
+            tasks[tasksIndex] = new Event(fromAndToAndTaskName[2], fromAndToAndTaskName[0], fromAndToAndTaskName[1]);
             printNotification(tasks[tasksIndex], "event", tasksIndex + 1);
             tasksIndex++;
         }
         return;
     }
 
-    private static String furtherProcessInputForDeadline(String[] processedInputs) {
+    private static String[] furtherProcessInputForDeadline(String[] processedInputs) {
+        // not sure what names to use for the variables
         String[] taskNameAndIdentifierAndBy = processedInputs[1].split("/",2);
         String[] identifierAndBy = taskNameAndIdentifierAndBy[1].split(" ",2);
-        String by = identifierAndBy[1];
-        return by;
+        String [] taskNameAndBy = {taskNameAndIdentifierAndBy[0], identifierAndBy[1]};
+        return taskNameAndBy;
     }
     private static String[] furtherProcessInputForEvent(String[] processedInputs) {
+        // not sure what names to use for the variables
         String[] taskNameAndFromAndTo = processedInputs[1].split("/", 3);
         String[] identifierAndFrom = taskNameAndFromAndTo[1].split(" ",2);
         String[] identifierAndTo = taskNameAndFromAndTo[2].split(" ",2);
-        String[] fromAndTo = {identifierAndFrom[1], identifierAndTo[1]};
-        return fromAndTo;
+        String[] fromAndToAndTaskName = {identifierAndFrom[1], identifierAndTo[1], taskNameAndFromAndTo[0]};
+        return fromAndToAndTaskName;
     }
 
 
@@ -86,7 +81,7 @@ public class Duke {
         }
         task.printTask();
         if (isRequiredToShowNumberOfTasks) {
-            System.out.println("Now you have " + numberOfTasks + " tasks in your list.");
+            System.out.println("Now you have " + numberOfTasks + " tasks in the list.");
         }
     }
     private static void printExitMessage() {
@@ -107,8 +102,8 @@ public class Duke {
         System.out.println("What can I do for you?\n");
     }
 
-    private static String getUserInput() {
-        Scanner in = new Scanner(System.in);
+    private static String getUserInput(Scanner in) {
+        // Scanner in = new Scanner(System.in);
         String userInput = in.nextLine();
         return userInput;
     }
@@ -116,24 +111,9 @@ public class Duke {
 
 
     private static String[] processUserInput(String userInput) {
-        // first, split up the string ONCE with " " delimiter to find the command ("(un)mark"/"todo"/"deadline"/"event"/"list")
+        // first, split up the string ONCE with " " delimiter to separate the command & information
         // processedInputs[0] is command, processedInputs[1] is the information
         String[] processedInputs = userInput.split(" ", 2);
-        /*
-        switch (processedInputs[0]) {
-        // for "deadline", split the rest of the string ONCE using "/" as the delimiter -> 2 strings
-        case "deadline":
-            processedInputs = processedInputs[1].split("/", 2);
-            break;
-        // for "event", split the rest of the string TWICE using "/" as the delimiter -> 3 strings
-        case "event":
-            processedInputs = processedInputs[1].split("/", 3);
-            break;
-        // for "unmark", "mark", "todo", "list"and "bye", don't need to split anymore, can just return inputs
-        default:
-            break;
-        }
-        */
         return processedInputs;
     }
 }
