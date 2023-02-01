@@ -5,15 +5,17 @@ public class Greetings {
 					+ "| | | | | | | |/ / _ \\\n"
 					+ "| |_| | |_| |   <  __/\n"
 					+ "|____/ \\__,_|_|\\_\\___|\n";
-	private static final String OPENING_LINE =
-			"Hello! I'm Duke"
-					+System.lineSeparator()
+	private static final String OPENING_LINE = "Hello! I'm Duke"
+					+ System.lineSeparator()
 					+ "What can I do for you?";
+
 	private static final String EXIT_LINE =
 			"Bye. Hope to see you again soon!";
 	private static final String DIVIDER =
 			"______________________________";
 	private static final String ERROR = "Hey! Error!";
+
+	private static final String COMMAND = "todo / deadline / event";
 
 	public Greetings() {
 	}
@@ -43,6 +45,10 @@ public class Greetings {
 	public void printErrorMessage() {
 		printDivider();
 		System.out.println(ERROR);
+
 		printDivider();
 	}
+
 }
+
+

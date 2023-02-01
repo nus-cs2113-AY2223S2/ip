@@ -2,13 +2,6 @@ import java.util.Scanner;
 
 public class Duke {
 
-	public static int findTaskNumber(String input) {
-		String number = input.replaceAll("[^0-9]", "");
-		int taskNumber = Integer.parseInt(number);
-		return taskNumber;
-	}
-
-
 	public static void startDuke() {
 
 		Greetings dukeGreeting = new Greetings();
@@ -23,57 +16,82 @@ public class Duke {
 
 		boolean shouldExit = false;
 
+
 		while (!shouldExit) {
 			userMessage = sc.nextLine();
 
-			//check the user message
-			if (userMessage.equals("bye")) {
-				shouldExit = true;
-				dukeGreeting.printExitLine();
-			} else if (userMessage.equals("hello") || userMessage.equals("echo")) {
+			if (userMessage.startsWith("todo")) {
+				userMessage.substring(6);
+				tasks[taskCount] = new Todo(userMessage);
+				dukeGreeting.printDivider();
+				System.out.println("Got it. I've added this task: ");
+				tasks[taskCount].printTask();
+				taskCount += 1;
+				System.out.println("Now you have " + taskCount + " tasks in the list.");
+				dukeGreeting.printDivider();
+
+			} else if (userMessage.startsWith("deadline")) {
+				userMessage.substring(10);
+				String[] message = userMessage.split(" /by ");
+				tasks[taskCount] = new Deadline(message[0], message[1]);
+				dukeGreeting.printDivider();
+				System.out.println("Got it. I've added this task: ");
+				tasks[taskCount].printTask();
+				taskCount += 1;
+				System.out.println("Now you have " + taskCount + " tasks in the list.");
+				dukeGreeting.printDivider();
+			} else if (userMessage.startsWith("event")) {
+				userMessage.substring(7);
+				String[] messages = userMessage.split(" /from ");
+				String description = messages[0];
+				String[] dates = messages[1].split(" /to");
+				String from = dates[0];
+				String to = dates[1];
+				tasks[taskCount] = new Event(description, from, to);
+				dukeGreeting.printDivider();
+				System.out.println("Got it. I've added this task: ");
+				tasks[taskCount].printTask();
+				taskCount += 1;
+				System.out.println("Now you have " + taskCount + " tasks in the list.");
+				dukeGreeting.printDivider();
+			} else if (userMessage.startsWith("mark")) {
+				dukeGreeting.printDivider();
+				String[] messages = userMessage.split(" ");
+				int taskNumber = Integer.parseInt(messages[1]);
+				tasks[taskNumber-1].markAsDone();
+				System.out.println("Niceee! I've marked this task as done: ");
+				tasks[taskCount-1].printTask();
+				dukeGreeting.printDivider();
+			} else if (userMessage.startsWith("unmark")) {
+				dukeGreeting.printDivider();
+				String[] messages = userMessage.split(" ");
+				int taskNumber = Integer.parseInt(messages[1]);
+				tasks[taskNumber-1].markAsUndone();
+				System.out.println("Fine...I've marked this task as undone: ");
+				tasks[taskCount-1].printTask();
+				dukeGreeting.printDivider();
+			} else if (userMessage.equalsIgnoreCase("Hello")) {
 				dukeGreeting.printDivider();
 				System.out.println(userMessage);
 				dukeGreeting.printDivider();
-			} else if (userMessage.equals("list")) {
+			} else if (userMessage.equalsIgnoreCase("list")) {
 				dukeGreeting.printDivider();
-				if (taskCount == 0 || taskCount < 0) {
-					System.out.println("No task！");
-				} else {
-					System.out.println("Here are the tasks in your list: ");
-					for (int i = 0; i < taskCount; i += 1) {
-						int serialNumber = i + 1;
-						System.out.print(serialNumber + ".");
+				if (taskCount > 0) {
+					for(int i = 0; i < taskCount; i += 1){
+						System.out.println("Here are the tasks in your list: ");
+						System.out.print(i + 1);
+						System.out.print(".");
 						tasks[i].printTask();
 					}
+				} else {
+					System.out.println("You have no task right now!!");
 				}
 				dukeGreeting.printDivider();
-			} else if (userMessage.startsWith("mark")) {
-				int no = findTaskNumber(userMessage);
-				if (no == 0 || no < 0) {
-					dukeGreeting.printErrorMessage();
-				} else {
-					dukeGreeting.printDivider();
-					tasks[no - 1].markAsDone();
-					tasks[no - 1].printTask();
-					dukeGreeting.printDivider();
-				}
-			} else if (userMessage.startsWith("unmark")) {
-				int no = findTaskNumber(userMessage);
-				if (no == 0 || no < 0) {
-					dukeGreeting.printErrorMessage();
-				} else {
-					dukeGreeting.printDivider();
-					tasks[no - 1].unmarkAsUndone();
-					tasks[no - 1].printTask();
-					dukeGreeting.printDivider();
-				}
+			} else if (userMessage.equalsIgnoreCase("Exit")) {
+				shouldExit = true;
+				dukeGreeting.printExitLine();
 			} else {
-				Task t = new Task(userMessage);
-				tasks[taskCount] = t;
-				dukeGreeting.printDivider();
-				System.out.println("Added: " + tasks[taskCount].getDescription());
-				taskCount += 1;
-				dukeGreeting.printDivider();
+				dukeGreeting.printErrorMessage();
 			}
 		}
 	}
