@@ -14,9 +14,10 @@ public class Task {
         isDone = true;
     }
 
-    public void markUndone(){
+    public void markUndone() {
         isDone = false;
     }
+
     public String getStatusIcon() {
         return (isDone ? "X" : "");
     }
@@ -31,5 +32,10 @@ public class Task {
 
     public static int getNumberOfTasks(){
         return numberOfTasks;
+    }
+
+    @Override
+    public String toString() {
+        return "[" + getStatusIcon() + "] " + description;
     }
 }
