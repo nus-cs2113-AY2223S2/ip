@@ -10,29 +10,33 @@ public class Task {
         taskCount += 1;
     }
 
-    // mark task as completed
-    public void markTask() {
+    public void completeTask() {
         this.isCompleted = true;
         completedTaskCount += 1;
     }
 
-    // unmark task to become uncompleted
-    public void unmarkTask() {
+    public void incompleteTask() {
         this.isCompleted = false;
+        completedTaskCount -= 1;
     }
 
     public String getTaskName() {
         return this.name;
     }
 
-    public boolean getTaskStatus() {
+    public boolean getTaskCompletionStatus() {
         return this.isCompleted;
     }
 
     public static int getTaskCount() {
         return taskCount;
     }
+
     public static int getCompletedTaskCount() {
         return completedTaskCount;
+    }
+
+    public static int getUncompletedTaskCount() {
+        return taskCount - completedTaskCount;
     }
 }
