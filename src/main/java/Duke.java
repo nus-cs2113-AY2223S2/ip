@@ -2,8 +2,26 @@ import java.util.Scanner;
 
 public class Duke {
 
-    public static String LONG_LINE = "--------------------------------------------";
-    public final int MAX_ARRAY_SIZE = 100;
+    public static final String LONG_LINE = "____________________________________________________________";
+    public static final int MAX_ARRAY_SIZE = 100;
+
+    public static void main(String[] args) {
+        printGreetings();
+        Task[] taskList = new Task[100];
+        String line = "Start";
+        Scanner in = new Scanner(System.in);
+        int listCount = 0;
+        while (!line.equals("bye")) {
+            line = in.nextLine();
+            if (!line.equals("bye")) {
+                listCount = handleUserInputs(line, taskList, listCount);
+            }
+            System.out.println(LONG_LINE);
+        }
+        printExit();
+        return;
+    }
+
 
     private static void printList(Task[] s, int listCount) {
         System.out.println("Here are the tasks in your list:");
@@ -31,22 +49,6 @@ public class Duke {
         System.out.println(LONG_LINE);
     }
 
-    public static void main(String[] args) {
-        printGreetings();
-        Task[] taskList = new Task[100];
-        String line = "Start";
-        Scanner in = new Scanner(System.in);
-        int listCount = 0;
-        while (!line.equals("bye")) {
-            line = in.nextLine();
-            if (!line.equals("bye")) {
-                listCount = handleUserInputs(line, taskList, listCount);
-            }
-            System.out.println(LONG_LINE);
-        }
-        printExit();
-        return;
-    }
 
     private static void createTodo(Task[] taskList, int listCount, String input) {
         taskList[listCount] = new Todo(input);
