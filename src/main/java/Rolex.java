@@ -38,9 +38,25 @@ public class Rolex {
                 task[index-1].unMarkTask();
             }
 
-            else{
-                task[taskCount] = new Tasks(UserInput);
-                taskCount++;
+            else if(UserInput.startsWith("todo")){
+                String todoName = UserInput.substring(5);
+                task[taskCount] = new Todo(todoName);
+            }
+
+            else if(UserInput.startsWith("deadline")){
+                int indexOfby =   UserInput.indexOf("/by");
+                String deadlineName = UserInput.substring(9,indexOfby);
+                String by = UserInput.substring(indexOfby+3);
+                task[taskCount] = new Deadline(deadlineName, by);
+            }
+
+            else if(UserInput.startsWith("event")){
+                int indexOfFrom = UserInput.indexOf("/from");
+                int indexOfTo = UserInput.indexOf("/to");
+                String eventName = UserInput.substring(5,indexOfFrom-1);
+                String startTime = UserInput.substring(indexOfFrom+1,indexOfTo-1);
+                String endTime = UserInput.substring(indexOfTo+1);
+                task[taskCount] = new Event(eventName, startTime, endTime);
             }
         }
     }

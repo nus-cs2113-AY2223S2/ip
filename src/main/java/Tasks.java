@@ -32,7 +32,7 @@ public class Tasks {
     }
 
     public String TaskStatus(){
-        return (isDone ? "x" : " ");
+        return (isDone ? "X" : " ");
     }
 
     public static void ListTasks(Tasks[] TASK){
