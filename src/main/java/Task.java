@@ -21,4 +21,15 @@ public class Task {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String toString() {
+        String mark;
+        if (isDone) {
+            mark = "X";
+        }
+        else {
+            mark = " ";
+        }
+        return String.format("[T][%s] %s", mark, description);
+    }
 }

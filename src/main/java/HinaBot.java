@@ -34,8 +34,14 @@ public class HinaBot {
             int taskIndex = Integer.parseInt(command.split(" ")[1]);
             unmarkTask(taskIndex);
         }
-        else {
-            addTask(command);
+        else if (command.split(" ")[0].equalsIgnoreCase("todo")){
+            addTask(command.substring(5));
+        }
+        else if (command.split(" ")[0].equalsIgnoreCase("deadline")) {
+            addDeadline(command.substring(9));
+        }
+        else if (command.split(" ")[0].equalsIgnoreCase("event")) {
+            addEvent(command.substring(6));
         }
     }
 
@@ -43,36 +49,61 @@ public class HinaBot {
         Task newTask = new Task(description);
         taskList[taskCount] = newTask;
         taskCount++;
-        System.out.println("added: " + description);
+        System.out.println("Noted! This task has been added:");
+        System.out.println(newTask.toString());
+        getTaskCount();
     }
 
     public static void listTasks() {
         for (int i = 0; i < taskCount; i++) {
             System.out.print(i + 1);
             System.out.print(". ");
-            if (taskList[i].isDone()) {
-                System.out.print("[X] ");
-            }
-            else {
-                System.out.print("[ ] ");
-            }
-            System.out.println(taskList[i].getDescription());
+            System.out.println(taskList[i].toString());
         }
     }
 
     public static void markTask(int taskIndex) {
         taskList[taskIndex - 1].setDone(true);
         System.out.println("Roger that! This task is marked as done: ");
-        System.out.println("[X] " + taskList[taskIndex - 1].getDescription());
+        System.out.println(taskList[taskIndex - 1].toString());
     }
 
     public static void unmarkTask(int taskIndex) {
         taskList[taskIndex - 1].setDone(false);
+<<<<<<< HEAD
 <<<<<<< HEAD
         System.out.println("Roger that! This task is marked as done: ");
 =======
         System.out.println("Roger that! This task is marked as not done: ");
 >>>>>>> bab6548 (Add Task class, add code to mark and unmark tasks)
         System.out.println("[ ] " + taskList[taskIndex - 1].getDescription());
+=======
+        System.out.println("Roger that! This task is marked as not done: ");
+        System.out.println(taskList[taskIndex - 1].toString());
+    }
+
+    public static void addDeadline(String deadline) {
+        String[] details = deadline.split("/");
+        Deadline newDeadline = new Deadline(details[0], details[1].substring(3));
+        taskList[taskCount] = newDeadline;
+        taskCount++;
+        System.out.println("Noted! This task has been added:");
+        System.out.println(newDeadline.toString());
+        getTaskCount();
+    }
+
+    public static void addEvent(String event) {
+        String[] details = event.split("/");
+        Event newEvent = new Event(details[0], details[1].substring(5).trim(), details[2].substring(3));
+        taskList[taskCount] = newEvent;
+        taskCount++;
+        System.out.println("Noted! This task has been added:");
+        System.out.println(newEvent.toString());
+        getTaskCount();
+    }
+
+    public static void getTaskCount() {
+        System.out.printf("There are %d items on your list.\n", taskCount);
+>>>>>>> 7e758c3a91d41d43006c379c502de1ceb83a4e1f
     }
 }
