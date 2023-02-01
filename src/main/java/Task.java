@@ -9,13 +9,8 @@ public class Task
 
     public Task (String taskName)
     {
-        this (taskName, false);
-    }
-    
-    public Task (String taskName, boolean isDone)
-    {
         this.taskName = taskName;
-        this.isDone = isDone;
+        this.isDone = false;
     }
 
     public String getTaskName ()
@@ -23,15 +18,19 @@ public class Task
         return taskName;
     }
 
-    public String getStatusIcon () {
+    public String getStatusIcon ()
+    {
         return (isDone ? "X" : " ");
     }
 
-    public String getTaskType () {
-        if (taskType == null) { //need to figure this out later
+    public String getTaskType ()
+    {
+        if (taskType == null) //need to figure this out later
+        {
             return " ";
         }
-        switch (taskType) {
+        switch (taskType)
+        {
             case TO_DO:
                 return "T";
             case DEAD_LINE:
