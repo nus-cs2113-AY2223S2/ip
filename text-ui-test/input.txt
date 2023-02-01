@@ -1,2 +1,16 @@
 add todo todoTask1
+list
+add todo
+add deadline deadlineTask1 dueDate1
+list
+mark 1
+add deadline errorDeadlineTask1
+add event eventTask1 start1 end1
+list
+mark 2
+unmark 1
+list
+mark 1
+mark 3
+list
 bye
