@@ -1,4 +1,5 @@
 public class CheckBox {
+    /** Visual representation of the checkbox */
     private String checkBox;
 
     public CheckBox() {

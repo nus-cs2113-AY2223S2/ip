@@ -9,9 +9,25 @@ public class TaskOrganizer {
     /** A container containing all tasks added */
     private HashMap<Integer, Task> tasks;
 
+    /** A list containing all valid task types */
+    private ArrayList<String> taskTypes;
+
     public TaskOrganizer() {
         newTaskID = 1;
         tasks = new HashMap<Integer, Task>();
+        taskTypes = new ArrayList<String>(
+                Arrays.asList("todo", "event", "deadline")
+        );
+    }
+
+    /**
+     * Checks if the type given is a valid task type.
+     *
+     * @param type The type to be checked.
+     * @return True if type is a valid task type, False if type is not a valid task type.
+     */
+    public boolean isTaskType(String type) {
+        return taskTypes.contains(type);
     }
 
     /**
@@ -36,36 +52,41 @@ public class TaskOrganizer {
     /**
      * Adds a task to the list of tasks.
      *
-     * @param taskName The name of the task to be added to the list tasks.
+     * @param taskType The type of the task to be added.
+     * @param taskName The name of the task to be added.
+     * @param taskDate A string containing the dates of the task (E.g deadline or start and end date).
+     * @return True as task have been added without any errors, False if there are errors when adding the task.
      */
-    public String addTask(String taskInfo) {
-        String[] taskInfos = taskInfo.split(" ", 2);
-        String taskType = taskInfos[0];
-        String taskName = taskInfos[1];
+    public boolean addTask(String taskType, String taskName, String taskDate) {
         Task newTask;
         switch (taskType) {
         case "todo":
             newTask = new ToDo(taskName, newTaskID);
             break;
         case "deadline":
-            String[] temp = taskName.split(" ", 2);
-            String taskName2 = temp[0];
-            String deadlineDate = temp[1];
-            newTask = new Deadline(taskName2, newTaskID, deadlineDate);
+            if (taskDate == null) {
+                return false;
+            }
+            newTask = new Deadline(taskName, newTaskID, taskDate);
             break;
         case "event":
-            String[] temp2 = taskName.split(" ", 3);
-            String taskName3 = temp2[0];
-            String startDateEvent = temp2[1];
-            String endDateEvent = temp2[2];
-            newTask = new Event(taskName3, newTaskID, startDateEvent, endDateEvent);
+            if (taskDate == null) {
+                return false;
+            }
+            String[] taskDates = taskDate.split(" ", 2);
+            if (taskDates.length <= 1) {
+                return false;
+            }
+            String startDate = taskDates[0];
+            String endDate = taskDates[1];
+            newTask = new Event(taskName, newTaskID, startDate, endDate);
             break;
         default:
             newTask = new Task(taskName, newTaskID);
         }
         tasks.put(newTaskID, newTask);
         newTaskID += 1;
-        return taskName;
+        return true;
     }
 
     /**
