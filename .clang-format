@@ -2,5 +2,6 @@ Language: Java
 
 IndentWidth: 4
 ColumnLimit: 120
+SeparateDefinitionBlocks: Always
 AllowShortFunctionsOnASingleLine: None
 JavaImportGroups: ['java', 'org.junit','wilsonoh']
