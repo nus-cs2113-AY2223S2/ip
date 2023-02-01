@@ -25,9 +25,12 @@ public class Task {
         this.isCompleted = isCompleted;
     }
 
-    public static void checkTaskType(String input, ArrayList<Task> listOfTasks) {
+    public static void checkTaskType(String input, ArrayList<Task> listOfTasks) throws InvalidTaskTypeException {
+        String taskType = input;
         int endTaskTypeIndex = input.indexOf(" ");
-        String taskType = input.substring(0, endTaskTypeIndex);
+        if (endTaskTypeIndex > 0) {
+            taskType = input.substring(0, endTaskTypeIndex);
+        }
         switch (taskType) {
         case "todo":
             addTodoToTasksList(input, listOfTasks);
@@ -39,37 +42,46 @@ public class Task {
             addEventToTasksList(input, listOfTasks);
             break;
         default:
-            return;
+            throw new InvalidTaskTypeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
         }
     }
 
     public static void addTodoToTasksList(String input, ArrayList<Task> listOfTasks) {
+        //check length of input, less than min required amount, fail
         int nameStartIndex = input.indexOf(" ");
         String name = input.substring(nameStartIndex + 1);
+        //check name length
         Task todo = new Todo(name, false);
         listOfTasks.add(todo);
         printAddTaskMessage(todo, listOfTasks);
     }
 
     public static void addDeadlineToTasksList(String input, ArrayList<Task> listOfTasks) {
+        //check min length
         int nameStartIndex = input.indexOf(" ");
         int nameEndIndex = input.indexOf("/by");
         String name = input.substring(nameStartIndex + 1, nameEndIndex -1);
+        //check name length
         String dueDate = input.substring(nameEndIndex + 4);
+        //check due date legnth
         Task deadline = new Deadline(name, false, dueDate);
         listOfTasks.add(deadline);
         printAddTaskMessage(deadline, listOfTasks);
     }
 
     public static void addEventToTasksList(String input, ArrayList<Task> listOfTasks) {
+        //check min length
         int nameStartIndex = input.indexOf(" ");
         int nameEndIndex = input.indexOf("/from");
         String name = input.substring(nameStartIndex + 1, nameEndIndex - 1);
+        //check name
         String remainingInfo = input.substring(nameEndIndex + 6);
         int toIndex = remainingInfo.indexOf("/to");
-        String start = remainingInfo.substring(0, toIndex - 1);
-        String end = remainingInfo.substring(toIndex + 4);
-        Task event = new Event(name, false, start, end);
+        String eventStart = remainingInfo.substring(0, toIndex - 1);
+        //check eventStart
+        String eventEnd = remainingInfo.substring(toIndex + 4);
+        //check eventEnd
+        Task event = new Event(name, false, eventStart, eventEnd);
         listOfTasks.add(event);
         printAddTaskMessage(event, listOfTasks);
     }

@@ -33,8 +33,12 @@ public class Duke {
             Task.printUpdateStatusMessage(unmarkTask.getStatus(), unmarkTask);
             break;
         default:
-            Task.checkTaskType(input, listOfTasks);
-            break;
+            try {
+                Task.checkTaskType(input, listOfTasks);
+                break;
+            } catch (InvalidTaskTypeException e) {
+                System.out.println(e);
+            }
         }
     }
 
