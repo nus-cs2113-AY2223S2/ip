@@ -23,16 +23,16 @@ public class Task {
         setDone(false);
     }
 
-    public String getStatusIcon() {
+    private String getStatusIcon() {
         if (isDone) {
             return "X";
-        }
-        else {
+        } else {
             return " ";
         }
     }
 
     public String getTaskString() {
-        return '[' + getStatusIcon() + "] " + getDescription();
+        return '[' + this.getClass().getSimpleName().substring(0, 1) + "][" + getStatusIcon() + "] " + getDescription();
     }
 }
+
