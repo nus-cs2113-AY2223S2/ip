@@ -2,6 +2,9 @@ public class Task
 {
 
     private String taskName;
+
+    protected TaskType taskType;
+
     private boolean isDone;
 
     public Task (String taskName)
@@ -24,6 +27,22 @@ public class Task
         return (isDone ? "X" : " ");
     }
 
+    public String getTaskType () {
+        if (taskType == null) { //need to figure this out later
+            return " ";
+        }
+        switch (taskType) {
+            case TO_DO:
+                return "T";
+            case DEAD_LINE:
+                return "D";
+            case EVENT:
+                return "E";
+            default:
+                return " "; //technically unreachable
+        }
+    }
+
     public void setDone ()
     {
         isDone = true;
@@ -36,7 +55,7 @@ public class Task
 
     public String getTaskStatus ()
     {
-        return "[" + getStatusIcon () + "]" + getTaskName ();
+        return "[" + getTaskType () + "][" + getStatusIcon () + "]" + getTaskName ();
     }
 
 }

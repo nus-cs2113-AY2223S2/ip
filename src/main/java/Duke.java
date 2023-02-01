@@ -61,7 +61,7 @@ public class Duke
             else
             {
                 System.out.println ("added: " + line);
-                tasks[indexBaseOne] = new Task (line);
+                tasks[indexBaseOne] = new ToDo (line); //temp usage
                 indexBaseOne += 1;
             }
 
