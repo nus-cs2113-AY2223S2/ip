@@ -3,7 +3,6 @@ import java.util.Scanner;
 
 public class Duke {
     private final static ArrayList<Task> taskList = new ArrayList<>();
-
     public static void main(String[] args) {
         String lineBreak = "-----------------";
         System.out.println(lineBreak + '\n' + "Hello! I'm Duke" + '\n'
