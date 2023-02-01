@@ -26,12 +26,12 @@ public class Duke {
             } else if (inputText.startsWith("mark")) {
                 int taskIndex = getTaskIndexFromInput(inputText);
                 tasks[taskIndex].markAsDone();
-                outputMessage = "Nice! I've marked this task as done: " + "\n\t\t"
+                outputMessage = "Nice! I've marked this task as done: " + "\n\t"
                         + tasks[taskIndex].toString();
             } else if (inputText.startsWith("unmark")) {
                 int taskIndex = getTaskIndexFromInput(inputText);
                 tasks[taskIndex].unmarkAsDone();
-                outputMessage = "Ok, I've marked this task as not done: " + "\n\t\t"
+                outputMessage = "Ok, I've marked this task as not done: " + "\n\t"
                         + tasks[taskIndex].toString();
             } else if (inputText.startsWith("task")) {
                 String taskDescription = inputText.split("/")[0].split("task")[1].trim();
