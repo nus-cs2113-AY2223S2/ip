@@ -1,4 +1,5 @@
 package dude.task;
+
 public class Task {
     private final String description;
     private boolean isDone;
@@ -9,21 +10,19 @@ public class Task {
     }
 
     public String getStatusIcon() {
-        return (isDone ? "X" : " "); // mark done dude.task with X
+        return (isDone ? "X" : " ");
     }
 
-    public void setDone(){
+    public void setDone() {
         this.isDone = true;
     }
 
-    public void setUndone(){
+    public void setUndone() {
         this.isDone = false;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "[" + getStatusIcon() + "] " + description;
     }
-
 }
-
