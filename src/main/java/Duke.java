@@ -2,10 +2,15 @@ import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import Command.*;
-import Entities.*;
+import Command.Greetings;
+import Command.TaskPrinter;
+import Entities.Task;
+import Entities.Event;
+import Entities.Deadline;
+import Entities.Todo;
+import FileUtils.TaskReader;
+import FileUtils.TaskWriter;
 import Exceptions.*;
-import FileUtils.*;
 
 public class Duke {
     private static final String filePath = "data/duke.txt";
