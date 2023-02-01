@@ -1,7 +1,5 @@
 package wilsonoh.sagyo.ui;
 
-import static wilsonoh.sagyo.ui.ColorCodes.*;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.IntStream;
@@ -16,15 +14,22 @@ public class TextFormatter {
     public static final int DEFAULT_MAX_WIDTH = 50;
     private int numIndent;
     private int maxWidth;
+    private ColorCodes errorColor;
+    private ColorCodes normalColor;
 
-    public TextFormatter(int indentation, int maxWidth) {
+    public TextFormatter(int indentation, int maxWidth, ColorCodes errorColor, ColorCodes normalColor) {
         this.numIndent = indentation;
         this.maxWidth = maxWidth;
+        this.errorColor = errorColor;
+        this.normalColor = normalColor;
+    }
+
+    public TextFormatter(int indentation, int maxWidth) {
+        this(indentation, maxWidth, ColorCodes.RED, ColorCodes.BLUE);
     }
 
     public TextFormatter(int indentation) {
-        this.numIndent = indentation;
-        this.maxWidth = DEFAULT_MAX_WIDTH;
+        this(indentation, DEFAULT_MAX_WIDTH);
     }
 
     /**
@@ -48,9 +53,9 @@ public class TextFormatter {
      *
      * @param lines Variable argument. Takes in any number of lines to be printed in a box
      */
-    public void printLines(String... lines) {
+    private void printLines(ColorCodes colorCode, String... lines) {
         clearScreen();
-        System.out.println(BLUE);
+        System.out.println(colorCode.getAnsiCode());
         String indentation = " ".repeat(numIndent);
         // Stream and map the lines into their respectives lengths, and then get the max length
         // while making sure it does not exceed the maxWidth set
@@ -67,6 +72,14 @@ public class TextFormatter {
         }
         toPrint.append(String.format("└%s┘\n", "─".repeat((numIndent * 2) + textWidth)));
         System.out.println(toPrint);
-        System.out.println(RESET);
+        System.out.println(ColorCodes.RESET.getAnsiCode());
+    }
+
+    public void printLinesInfo(String... lines) {
+        printLines(this.normalColor, lines);
+    }
+
+    public void printLinesError(String... lines) {
+        printLines(this.errorColor, lines);
     }
 }
