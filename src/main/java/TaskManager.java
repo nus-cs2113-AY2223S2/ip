@@ -15,41 +15,57 @@ public class TaskManager {
             int task_number = Integer.parseInt(command.substring(7)) - 1;
             unmarkTask(task_number);
         }
-        else{
-            Task task = new Task(command);
-            addTask(task);
+        else if (command.matches("^todo .*$")){
+            ToDo todo = new ToDo(command.substring(5));
+            addToList(todo);
+        }
+        else if (command.matches("^deadline .*$")){
+            int separator_idx = command.indexOf("/by");
+            String description = command.substring(9, separator_idx - 1);
+            String by = command.substring(separator_idx + 4);
+            Deadline deadline = new Deadline(description, by);
+            addToList(deadline);
+        }
+        else if (command.matches("^event .*$")){
+            int from_idx = command.indexOf("/from");
+            int to_idx = command.indexOf("/to");
+            String description = command.substring(6, from_idx - 1);
+            String from = command.substring(from_idx + 6, to_idx - 1);
+            String to = command.substring(to_idx + 4);
+            Event event = new Event(description, from, to);
+            addToList(event);
         }
     }
 
-    public static void addTask(Task task) {
+    public static void addToList(Task task){
         tasks[task_count] = task;
         task_count++;
-        System.out.println("added: " + task.getDescription());
+        System.out.println("Got it. I've added this task:");
+        System.out.println(task.toString());
+        if (task_count == 1){
+            System.out.println("Now you have 1 task in the list.");
+        }
+        else{
+            System.out.printf("Now you have %d tasks in the list.\n", task_count);
+        }
     }
 
     public static void markTask(int task_number){
         tasks[task_number].setDone(true);
         System.out.println("Nice! I've marked this task as done:");
-        System.out.printf("[X] %s\n", tasks[task_number].getDescription());
+        System.out.println(tasks[task_number].toString());
     }
 
     public static void unmarkTask(int task_number){
         tasks[task_number].setDone(false);
         System.out.println("OK, I've marked this task as not done yet:");
-        System.out.printf("[ ] %s\n", tasks[task_number].getDescription());
+        System.out.println(tasks[task_number].toString());
     }
 
     public static void listTasks() {
         System.out.println("Here are the tasks in your list:");
         for (int idx = 0; idx < task_count; idx++) {
-            String task_status;
-            if (tasks[idx].isDone()){
-                task_status = "X";
-            }
-            else{
-                task_status = " ";
-            }
-            System.out.printf("%d.[%s] %s\n", idx + 1, task_status, tasks[idx].getDescription());
+            System.out.println(tasks[idx].toString());
         }
     }
 }

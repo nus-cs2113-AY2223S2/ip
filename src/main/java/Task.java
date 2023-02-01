@@ -1,4 +1,4 @@
-public class Task {
+public abstract class Task {
     protected String description;
     protected boolean isDone;
 
@@ -16,6 +16,21 @@ public class Task {
     }
     public boolean isDone() {
         return isDone;
+    }
+
+    @Override
+    public String toString(){
+        String task_status;
+
+        if (isDone()){
+            task_status = "X";
+        }
+        else{
+            task_status = " ";
+        }
+
+        String result = "[" + task_status + "] " + description;
+        return result;
     }
 
 }
