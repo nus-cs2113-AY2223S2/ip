@@ -1,0 +1,21 @@
+public class Deadline extends Task {
+    private String due;
+
+    public String getDue() {
+        return due;
+    }
+
+    public Deadline(String description, String due) {
+        super(description);
+        this.due = due;
+    }
+
+    @Override
+    public String getTaskType() {
+        return "D";
+    }
+
+    public String getSummary() {
+        return super.getSummary() + " (by: " + getDue() + ")";
+    }
+}

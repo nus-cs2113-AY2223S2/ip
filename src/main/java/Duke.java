@@ -27,23 +27,51 @@ public class Duke {
         System.out.println(line + "\n " + input + "\n" + line);
     }
 
-    private static void addTask(String text) {
-        System.out.println(line);
-        if (taskCount >= MAX_TASKS) {
-            System.out.println("failed as task list is full\n" + line);
+    private static Task createTask(String input) {
+        if (input.matches("todo .+")) {
+            String description = input.split("todo ")[1];
+            return new Todo(description);
+        } else if (input.matches("deadline .+")) {
+            String removedKeyword = input.split("deadline ")[1];
+            String[] splitString = removedKeyword.split(" /by ");
+            String description= splitString[0];
+            String due = splitString[1];
+            return new Deadline(description, due);
+        } else if (input.matches("event .+")) {
+            String removedKeyword = input.split("event ")[1];
+            String[] splitString = removedKeyword.split(" /from ");
+            String description= splitString[0];
+            splitString = splitString[1].split(" /to ");
+            String start = splitString[0];
+            String end = splitString[1];
+            return new Event(description,start, end);
+        } else {
+            return new Task(input);
+        }
+}
+    private static boolean isTasksFree() {
+        return taskCount < MAX_TASKS;
+    }
+
+    private static void addTask(Task task) {
+        if (!isTasksFree()) {
+            System.out.println(line + "\nfailed as tasks is full\n" + line);
             return;
         }
-        tasks[taskCount] = new Task(text);
+        tasks[taskCount] = task;
         taskCount += 1;
-        System.out.println("added: " + text);
+        System.out.println(line);
+        System.out.println("Got it. I've added this task:");
+        System.out.println(task.getSummary());
+        System.out.printf("Now you have %d tasks in the list.\n", taskCount);
         System.out.println(line);
     }
 
     private static void listTasks() {
         System.out.println(line + "\nHere are the tasks in your list:");
         for (int i = 0; i < taskCount; i++) {
-            System.out.println(Integer.toString(i + 1) + ":[" + tasks[i].getStatusIcon() + "] "
-                    + tasks[i].getDescription());
+            System.out.print(i+1);
+            System.out.println(":" + tasks[i].getSummary());
         }
         System.out.println(line);
     }
@@ -89,7 +117,8 @@ public class Duke {
             } else if (input.matches("unmark \\d+")) {
                 unmarkTask(input);
             } else {
-                addTask(input);
+                Task newTask = createTask(input);
+                addTask(newTask);
             }
         }
     }

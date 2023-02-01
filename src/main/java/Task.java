@@ -22,4 +22,13 @@ public class Task {
     public String getDescription() {
         return this.description;
     }
+
+    public String getTaskType() {
+        return " ";
+    }
+
+    public String getSummary() {
+        return "[" + getTaskType() + "][" + getStatusIcon() + "] " + getDescription();
+
+    }
 }
