@@ -46,13 +46,28 @@ public class Duke {
         drawLine("_");
     }
 
+    public static void printMenu() {
+        drawLine("_");
+        System.out.println("Try the following commands:");
+        System.out.println("1. list: show the list of tasks;");
+        System.out.println("2. todo: add a task without starting time/deadline to the list;");
+        System.out.println("3. deadline: add a task with deadline to the list;");
+        System.out.println("4. event: add a task with specific starting and ending time");
+        System.out.println("5, mark: mark a task as 'done' state;");
+        System.out.println("6. unmark: unmark a task from 'done' state;");
+        drawLine("_");
+    }
+
     public static void doCommand(Task[] tasks, String text) {
         String splittedText[] = text.split(" ", 2);
         String command = splittedText[0];
-            String content = splittedText[splittedText.length - 1];
+        String content = splittedText[splittedText.length - 1];
         switch (command) {
         case "list":
             printTaskList(tasks);
+            break;
+        case "menu":
+            printMenu();
             break;
         case "mark":
         case "unmark":
@@ -85,13 +100,13 @@ public class Duke {
         default:
             drawLine("_");
             System.out.println("You have done nothing...?" + System.lineSeparator()
-                               + "if you need more instruction, please type 'menu'.");
+                    + "if you need more instruction, please type 'menu'.");
             drawLine("_");
             break;
         }
     }
 
-    public static void loopCommand(Task[] tasks){
+    public static void loopCommand(Task[] tasks) {
         Scanner in = new Scanner(System.in);
         String text = in.nextLine();
         while(!text.equals("bye")){
@@ -109,7 +124,7 @@ public class Duke {
         System.out.println("Hello from\n" + logo);
         drawLine("_");
         System.out.println("Hello! I'm Duke");
-        System.out.println("What can I do for you?");
+        System.out.println("What can I do for you?" + System.lineSeparator() + "Type 'menu' to know the commands.");
         drawLine("_");
         loopCommand(tasks);
         drawLine("_");
