@@ -2,7 +2,7 @@ public class Task {
     protected String taskDiscription;
     protected boolean isDone;
 
-    public Task(String task){
+    public Task(String task) {
         this.taskDiscription = task;
         this.isDone = false;
     }
@@ -15,11 +15,18 @@ public class Task {
         return (this.isDone ? "X" : " ");
     }
 
-    public void markAsDone(){
+    public void markAsDone() {
         this.isDone = true;
     }
 
     public void unmark() {
         this.isDone = false;
     }
+
+    public String toString() {
+        return "[" + getTaskStatus() + "] " + this.taskDiscription;
+    }
+
 }
+
+
