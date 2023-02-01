@@ -1,18 +1,9 @@
-public class Todo {
-    private String name;
+public class Todo extends Task {
     private boolean done;
 
     public Todo(String name) {
-        this.name = name;
+        super(name);
         this.done = false;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public void markAsDone() {
@@ -29,6 +20,6 @@ public class Todo {
         if (this.done) {
             marker = 'X';
         }
-        return "[" + marker + "] " + this.name;
+        return "[" + marker + "] " + this.getName();
     }
 }
