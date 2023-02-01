@@ -1,14 +1,13 @@
-import java.util.Optional;
 public class DukeEvent extends DukeTask {
-    protected String EventFrom;
-    protected String EventTo;
-    public DukeEvent(String TaskName, String EventFrom, String EventTo) {
-        super(TaskName);
-        this.EventFrom = EventFrom;
-        this.EventTo = EventTo;
+    protected String eventFrom;
+    protected String eventTo;
+    public DukeEvent(String taskName, String eventFrom, String eventTo) {
+        super(taskName);
+        this.eventFrom = eventFrom;
+        this.eventTo = eventTo;
     }
     @Override
-    public void printTask(int i) { System.out.println((i+1) + ".[E] [" + this.getStatusIcon() + "] " + this.TaskName + " (from: " + this.EventFrom + " to: " + this.EventTo + ")"); }
+    public void printTask(int i) { System.out.println((i+1) + ".[E] [" + this.getStatusIcon() + "] " + this.taskName + " (from: " + this.eventFrom + " to: " + this.eventTo + ")"); }
     @Override
-    public void printTask() { System.out.println("[E] [" + this.getStatusIcon() + "] " + this.TaskName + " (from: " + this.EventFrom + " to: " + this.EventTo + ")"); }
+    public void printTask() { System.out.println("[E] [" + this.getStatusIcon() + "] " + this.taskName + " (from: " + this.eventFrom + " to: " + this.eventTo + ")"); }
 }

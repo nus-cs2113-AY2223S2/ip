@@ -1,13 +1,11 @@
-import java.util.Optional;
-
 public class DukeDeadline extends DukeTask {
-    protected String Deadline;
-    public DukeDeadline(String TaskName, String Deadline) {
-        super(TaskName);
-        this.Deadline = Deadline;
+    protected String deadline;
+    public DukeDeadline(String taskName, String deadline) {
+        super(taskName);
+        this.deadline = deadline;
     }
     @Override
-    public void printTask(int i) { System.out.println((i+1) + ".[D] [" + this.getStatusIcon() + "] " + this.TaskName + " (by: " + this.Deadline + ")"); }
+    public void printTask(int i) { System.out.println((i+1) + ".[D] [" + this.getStatusIcon() + "] " + this.taskName + " (by: " + this.deadline + ")"); }
     @Override
-    public void printTask() { System.out.println("[D] [" + this.getStatusIcon() + "] " + this.TaskName + " (by: " + this.Deadline + ")"); }
+    public void printTask() { System.out.println("[D] [" + this.getStatusIcon() + "] " + this.taskName + " (by: " + this.deadline + ")"); }
 }

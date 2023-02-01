@@ -1,10 +1,8 @@
-import java.util.Optional;
-
 public class DukeTask {
-    protected String TaskName;
+    protected String taskName;
     protected boolean isDone;
-    public DukeTask(String TaskName) {
-        this.TaskName = TaskName;
+    public DukeTask(String taskName) {
+        this.taskName = taskName;
         this.isDone = false;
     }
     public String getStatusIcon() {
@@ -23,9 +21,9 @@ public class DukeTask {
         this.isDone = false;
     }
     public void printTask(){
-        System.out.println("[T] [" + this.getStatusIcon() + "] " + this.TaskName);
+        System.out.println("[T] [" + this.getStatusIcon() + "] " + this.taskName);
     }
     public void printTask(int i) {
-        System.out.println((i+1) + ".[T] [" + this.getStatusIcon() + "] " + this.TaskName);
+        System.out.println((i+1) + ".[T] [" + this.getStatusIcon() + "] " + this.taskName);
     }
 }

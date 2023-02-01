@@ -1,44 +1,46 @@
 import java.util.ArrayList;
 public class DukeList {
-    private static ArrayList<DukeTask> TaskList = new ArrayList<>();
-    public static void addTask(DukeTask T) {
-        if(TaskList.size() == 100){
+    private static ArrayList<DukeTask> taskList = new ArrayList<>();
+    private static final int maxTask = 100;
+    public static void addTask(DukeTask task) {
+        if(taskList.size() == maxTask) {
             DukePrinter.printString("Sorry, the list is full!");
             return;
         }
-        TaskList.add(T);
+        taskList.add(task);
         System.out.println("Got it. I've added this task:");
-        T.printTask();
-        System.out.println("Now you have " + TaskList.size() + " tasks in the list.");
+        task.printTask();
+        System.out.println("Now you have " + taskList.size() + " tasks in the list.");
         DukePrinter.printLine();
     }
     public static void listTask() {
         System.out.println("Here are the tasks in your list:");
-        for(int i = 0; i < TaskList.size(); i++) {
-            TaskList.get(i).printTask(i);
+        for(int i = 0; i < taskList.size(); i++) {
+            taskList.get(i).printTask(i);
         }
         DukePrinter.printLine();
     }
     public static boolean checkID(int id) {
-        if(id >= TaskList.size() || id < 0) {
+        boolean isIDInValid = id < 0 || id >= taskList.size();
+        if(isIDInValid) {
             System.err.println("Sorry, the id is invalid!");
             DukePrinter.printLine();
             return false;
         } else { return true; }
     }
-    public static void markDone(int i) {
-        if(checkID(i)) {
-            TaskList.get(i).markAsDone();
+    public static void markDone(int id) {
+        if(checkID(id)) {
+            taskList.get(id).markAsDone();
             System.out.println("Nice! I've marked this task as done:");
-            TaskList.get(i).printTask();
+            taskList.get(id).printTask();
             DukePrinter.printLine();
         }
     }
-    public static void unmarkDone(int i) {
-        if(checkID(i)) {
-            TaskList.get(i).unmarkAsDone();
+    public static void unmarkDone(int id) {
+        if(checkID(id)) {
+            taskList.get(id).unmarkAsDone();
             System.out.println("OK, I've marked this task as not done yet:");
-            TaskList.get(i).printTask();
+            taskList.get(id).printTask();
             DukePrinter.printLine();
         }
     }

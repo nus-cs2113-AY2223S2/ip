@@ -7,8 +7,8 @@ public class Duke {
             String line = in.nextLine();
             line = line.trim();
             String[] command = line.split(" ");
-            String LineRemainder = line.substring(line.indexOf(" ")+1);
-            LineRemainder = LineRemainder.trim();
+            String lineRemainder = line.substring(line.indexOf(" ")+1);
+            lineRemainder = lineRemainder.trim();
             int id;
             switch (command[0]){
             case "bye":
@@ -20,7 +20,7 @@ public class Duke {
                 break;
             case "mark":
                 try {
-                    id = Integer.parseInt(LineRemainder);
+                    id = Integer.parseInt(lineRemainder);
                 } catch (NumberFormatException integerException) {
                     System.err.println("Sorry, the id is invalid!");
                     DukePrinter.printLine();
@@ -30,7 +30,7 @@ public class Duke {
                 break;
             case "unmark":
                 try {
-                    id = Integer.parseInt(LineRemainder);
+                    id = Integer.parseInt(lineRemainder);
                 } catch (NumberFormatException integerException) {
                     System.err.println("Sorry, the id is invalid!");
                     DukePrinter.printLine();
@@ -39,20 +39,20 @@ public class Duke {
                 DukeList.unmarkDone(id-1);
                 break;
             case "todo":
-                if(LineRemainder.equals("")) {
+                if(lineRemainder.equals("")) {
                     System.err.println("Sorry, the description of a todo cannot be empty.");
                     DukePrinter.printLine();
                     break;
                 }
-                DukeList.addTask(new DukeTask(LineRemainder));
+                DukeList.addTask(new DukeTask(lineRemainder));
                 break;
             case "deadline":
                 try {
-                    String DeadlineName = LineRemainder.substring(0, LineRemainder.indexOf("/by"));
-                    DeadlineName = DeadlineName.trim();
-                    String DeadlineTime = LineRemainder.substring(LineRemainder.indexOf("/by")+4);
-                    DeadlineTime = DeadlineTime.trim();
-                    DukeList.addTask(new DukeDeadline(DeadlineName, DeadlineTime));
+                    String deadlineName = lineRemainder.substring(0, lineRemainder.indexOf("/by"));
+                    deadlineName = deadlineName.trim();
+                    String deadlineTime = lineRemainder.substring(lineRemainder.indexOf("/by")+4);
+                    deadlineTime = deadlineTime.trim();
+                    DukeList.addTask(new DukeDeadline(deadlineName, deadlineTime));
                 } catch (StringIndexOutOfBoundsException e) {
                     System.err.println("Sorry, the deadline time/name is invalid!");
                     DukePrinter.printLine();
@@ -60,13 +60,13 @@ public class Duke {
                 break;
             case "event":
                 try {
-                    String EventName = LineRemainder.substring(0, LineRemainder.indexOf("/from")-1);
-                    EventName = EventName.trim();
-                    String EventTimeFrom = LineRemainder.substring(LineRemainder.indexOf("/from")+6, LineRemainder.indexOf("/to")-1);
-                    EventTimeFrom = EventTimeFrom.trim();
-                    String EventTimeTo = LineRemainder.substring(LineRemainder.indexOf("/to")+4);
-                    EventTimeTo = EventTimeTo.trim();
-                    DukeList.addTask(new DukeEvent(EventName, EventTimeFrom, EventTimeTo));
+                    String eventName = lineRemainder.substring(0, lineRemainder.indexOf("/from")-1);
+                    eventName = eventName.trim();
+                    String eventTimeFrom = lineRemainder.substring(lineRemainder.indexOf("/from")+6, lineRemainder.indexOf("/to")-1);
+                    eventTimeFrom = eventTimeFrom.trim();
+                    String eventTimeTo = lineRemainder.substring(lineRemainder.indexOf("/to")+4);
+                    eventTimeTo = eventTimeTo.trim();
+                    DukeList.addTask(new DukeEvent(eventName, eventTimeFrom, eventTimeTo));
                 } catch (StringIndexOutOfBoundsException e) {
                     System.err.println("Sorry, the event time/name is invalid!");
                     DukePrinter.printLine();
