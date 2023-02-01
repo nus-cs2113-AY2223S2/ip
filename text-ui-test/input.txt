@@ -1,0 +1,17 @@
+list
+todo a b c d
+list
+deadline e f g /by h i
+list
+event j k /from l m /to n o p
+list
+mark 1
+list
+unmark 1
+list
+mark 2
+mark 3
+list
+unmark 3
+list
+bye
