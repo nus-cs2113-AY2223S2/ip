@@ -39,7 +39,6 @@ public class Duke {
         System.out.println(LINE + System.lineSeparator() + "Got it. I've added this task:");
         System.out.println("   > " + taskDiscription.toString());
         System.out.println(
-
                 "Now you have " + Integer.toString(taskNum) + " tasks in the list." + System.lineSeparator() + LINE);
     }
 
