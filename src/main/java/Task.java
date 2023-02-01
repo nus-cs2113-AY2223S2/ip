@@ -1,3 +1,6 @@
+/**
+ * Task class used to have a text (description) and isDone attributes
+ */
 public class Task {
 
     private String text;

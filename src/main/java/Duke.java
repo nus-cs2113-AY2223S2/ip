@@ -1,5 +1,8 @@
 import java.util.Scanner;
 
+/**
+ * A class that acts as a CLI that keeps tracks of tasks you write and mark down
+ */
 public class Duke {
 
     public static void main(String[] args) {
@@ -82,7 +85,6 @@ public class Duke {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
-
         System.out.println("____________________________________________________________");
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
