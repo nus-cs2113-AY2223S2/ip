@@ -13,6 +13,7 @@ public class Duke {
         line = in.nextLine();
         while (!line.equals("bye")) {
             if (line.equals("list")) { // if it's list, list all the tasks and their current marked status
+                System.out.println("Here are the tasks in your list:");
                 for (int i = 0; i < tasksIndex; i++) {
                     System.out.print(i + 1);
                     System.out.print(". ");
@@ -51,7 +52,7 @@ public class Duke {
                 } else if(line.substring(0,5).equals("event")) {
                     // split the line
                     String[] words = line.split("/");
-                    tasks[tasksIndex] = new Event(words[0].substring(4), words[1].substring(5),
+                    tasks[tasksIndex] = new Event(words[0].substring(6), words[1].substring(5),
                             words[2].substring(3));
                     System.out.println("Got it. I've added this task:\n" + "  " + tasks[tasksIndex].toString());
                     tasksIndex++;
