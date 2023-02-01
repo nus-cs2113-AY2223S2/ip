@@ -3,40 +3,69 @@ import java.util.ArrayList;
 public class TaskList {
     private static ArrayList<Task> list = new ArrayList<>();
 
-    public void AddTask(String taskName) {
+    /**
+     * This method instantiate a Todo object and add the Todo object to the TaskList
+     *
+     * @param taskName The name of the TODO task to be added
+     **/
+    public void addTask(String taskName) {
         Todo t = new Todo(taskName);
         list.add(t);
     }
 
-    public void AddTask(String taskName, String byWhen) {
+    /**
+     * This method instantiate a Todo object and add the Todo object to the TaskList
+     *
+     * @param taskName a string that represents the name of the TODO task to add.
+     **/
+    public void addTask(String taskName, String byWhen) {
         Deadline d = new Deadline(taskName, byWhen);
         list.add(d);
     }
 
-    public void AddTask(String taskName, String startWhen, String endWhen) {
+    /**
+     * This method instantiate an Event object and add the Event object to the TaskList
+     *
+     * @param taskName  a string that represents the name of the EVENT task to add.
+     * @param startWhen a string that represents the start date and time of the EVENT task.
+     * @param endWhen   a string that represents the end date and time of the EVENT task.
+     */
+    public void addTask(String taskName, String startWhen, String endWhen) {
         Event e = new Event(taskName, startWhen, endWhen);
         list.add(e);
     }
 
-    public void UnmarkTask(int taskNumber, Display UI) {
+    /**
+     * Unmarks a completed task.
+     *
+     * @param taskNumber an integer that represents the index of the task to unmark (1-Indexed).
+     * @param UI         an object of the Display class that provides the user interface.
+     */
+    public void unmarkTask(int taskNumber, Display UI) {
         if (taskNumber <= 0 || taskNumber > list.size()) {
-            UI.TaskNotFound();
+            UI.taskNotFound();
         } else if (!list.get(taskNumber - 1).IsCompleted()) {
-            UI.InvalidUnmark();
+            UI.invalidUnmark();
         } else {
             list.get(taskNumber - 1).SetCompleted(false);
-            UI.ValidUnmark(list, taskNumber);
+            UI.validUnmark(list, taskNumber);
         }
     }
 
-    public void MarkTask(int taskNumber, Display UI) {
+    /**
+     * Marks a completed task.
+     *
+     * @param taskNumber an integer that represents the index of the task to mark (1-Indexed).
+     * @param UI         an object of the Display class that provides the user interface.
+     */
+    public void markTask(int taskNumber, Display UI) {
         if (taskNumber <= 0 || taskNumber > list.size()) {
-            UI.TaskNotFound();
+            UI.taskNotFound();
         } else if (list.get(taskNumber - 1).IsCompleted()) {
-            UI.InvalidMark();
+            UI.invalidMark();
         } else {
             list.get(taskNumber - 1).SetCompleted(true);
-            UI.ValidMark(list, taskNumber);
+            UI.validMark(list, taskNumber);
         }
     }
 

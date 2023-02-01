@@ -6,35 +6,43 @@ public class Sage {
         Display UI = new Display();
         TaskList taskList = new TaskList();
         Scanner s = new Scanner(System.in);
-        UI.WelcomeUser();
+        UI.welcomeUser();
         while (s.hasNextLine()) {
             String[] output;
             String input = s.nextLine();
-            if (input.equals("bye")) {
-                UI.GoodByeUser();
+            switch (input) {
+            case "bye":
+                UI.goodByeUser();
+                return;
+            case "list":
+                UI.displayTask(taskList);
                 break;
-            } else if (input.equals("list")) {
-                UI.DisplayTask(taskList);
-            } else if (input.contains("unmark")) {
+            case "unmark":
                 output = input.split(" ");
-                taskList.UnmarkTask(Integer.parseInt(output[1]), UI);
-            } else if (input.contains("mark")) {
+                taskList.unmarkTask(Integer.parseInt(output[1]), UI);
+                break;
+            case "mark":
                 output = input.split(" ");
-                taskList.MarkTask(Integer.parseInt(output[1]), UI);
-            } else if (input.contains("todo")) {
-                taskList.AddTask(input.substring(5));
+                taskList.markTask(Integer.parseInt(output[1]), UI);
+                break;
+            case "todo":
                 output = input.split("/");
-                UI.AddedTask(output, TaskType.TODO, taskList);
-            } else if (input.contains("deadline")) {
+                taskList.addTask(input);
+                UI.addedTask(output, TaskType.TODO, taskList);
+                break;
+            case "deadline":
                 output = input.split("/");
-                taskList.AddTask(output[0].substring(9), output[1].substring(3));
-                UI.AddedTask(output, TaskType.DEADLINE, taskList);
-            } else if (input.contains("event")) {
+                taskList.addTask(output[0].substring(9), output[1].substring(3));
+                UI.addedTask(output, TaskType.DEADLINE, taskList);
+                break;
+            case "event":
                 output = input.split("/");
-                taskList.AddTask(output[0].substring(6), output[1].substring(5), output[2].substring(3));
-                UI.AddedTask(output, TaskType.EVENT, taskList);
-            } else {
-                UI.UnknownInput();
+                taskList.addTask(output[0].substring(6), output[1].substring(5), output[2].substring(3));
+                UI.addedTask(output, TaskType.EVENT, taskList);
+                break;
+            default:
+                UI.unknownInput();
+                break;
             }
         }
     }

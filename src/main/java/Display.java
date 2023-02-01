@@ -1,12 +1,12 @@
 import java.util.ArrayList;
 
 public class Display {
-    private static String line =
+    private static String LINE =
             "█████╗█████╗█████╗█████╗█████╗█████╗█████╗\n" +
                     "╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝";
 
-    public void WelcomeUser() {
-        String logo = "░██████╗░█████╗░░██████╗░███████╗\n" +
+    public void welcomeUser() {
+        String LOGO = "░██████╗░█████╗░░██████╗░███████╗\n" +
                 "██╔════╝██╔══██╗██╔════╝░██╔════╝\n" +
                 "╚█████╗░███████║██║░░██╗░█████╗░░\n" +
                 "░╚═══██╗██╔══██║██║░░╚██╗██╔══╝░░\n" +
@@ -14,11 +14,11 @@ public class Display {
                 "╚═════╝░╚═╝░░╚═╝░╚═════╝░╚══════╝";
         String welcome = "Hello! I'm SAGE, the knowledgeable one\n"
                 + "What can I do for you today?\n";
-        System.out.println(logo);
+        System.out.println(LOGO);
         System.out.println(welcome);
     }
 
-    public void GoodByeUser() {
+    public void goodByeUser() {
         System.out.println("Bye. Hope to see you again soon!");
     }
 
@@ -27,10 +27,10 @@ public class Display {
      *
      * @param taskList The TaskList object that contains the tasks to be displayed.
      */
-    public void DisplayTask(TaskList taskList) {
-        System.out.println(line);
+    public void displayTask(TaskList taskList) {
+        System.out.println(LINE);
         taskList.ListTask();
-        System.out.println(line);
+        System.out.println(LINE);
     }
 
     /**
@@ -41,8 +41,8 @@ public class Display {
      * @param taskType  The type of task being added (TODO, EVENT or DEADLINE)
      * @param taskList  The list of tasks to which the new task is being added
      **/
-    public void AddedTask(String[] userInput, TaskType taskType, TaskList taskList) {
-        System.out.println(line);
+    public void addedTask(String[] userInput, TaskType taskType, TaskList taskList) {
+        System.out.println(LINE);
         switch (taskType) {
         case TODO:
             System.out.println("Got it. I've added this task:");
@@ -51,31 +51,33 @@ public class Display {
             break;
         case EVENT:
             System.out.println("Got it. I've added this task:");
-            System.out.println("[E][ ] " + userInput[0].substring(6) + "(from: " + userInput[1].substring(5) + " to: " + userInput[2].substring(3) + ")");
+            System.out.println("[E][ ] " + userInput[0].substring(6) + "(from: "
+                    + userInput[1].substring(5) + " to: " + userInput[2].substring(3) + ")");
             System.out.println("Now you have " + taskList.GetTaskCount() + " tasks in the list");
             break;
         case DEADLINE:
             System.out.println("Got it. I've added this task:");
-            System.out.println("[D][ ] " + userInput[0].substring(9) + "(by: " + userInput[1].substring(3) + ")");
+            System.out.println("[D][ ] " + userInput[0].substring(9) + "(by: "
+                    + userInput[1].substring(3) + ")");
             System.out.println("Now you have " + taskList.GetTaskCount() + " tasks in the list");
             break;
         }
-        System.out.println(line);
+        System.out.println(LINE);
     }
 
-    public void TaskNotFound() {
+    public void taskNotFound() {
         System.out.println("Uh-oh! Task Not Found!");
     }
 
-    public void UnknownInput() {
+    public void unknownInput() {
         System.out.println("I don't understand what you mean, please try again!");
     }
 
-    public void InvalidUnmark() {
+    public void invalidUnmark() {
         System.out.println("Task already marked as not completed!");
     }
 
-    public void InvalidMark() {
+    public void invalidMark() {
         System.out.println("Task already marked as completed!");
     }
 
@@ -85,7 +87,7 @@ public class Display {
      * @param list       the list of tasks
      * @param taskNumber the taskNumber index that is to be unmarked
      */
-    public void ValidUnmark(ArrayList<Task> list, int taskNumber) {
+    public void validUnmark(ArrayList<Task> list, int taskNumber) {
         System.out.println("OK, I've marked this task as not done yet:");
         System.out.println("[ ] " + list.get(taskNumber - 1).GetTaskName());
     }
@@ -96,7 +98,7 @@ public class Display {
      * @param list       the list of tasks
      * @param taskNumber the taskNumber index that is to be marked
      */
-    public void ValidMark(ArrayList<Task> list, int taskNumber) {
+    public void validMark(ArrayList<Task> list, int taskNumber) {
         System.out.println("Nice! I've marked this task as done:");
         System.out.println("[X] " + list.get(taskNumber - 1).GetTaskName());
     }
