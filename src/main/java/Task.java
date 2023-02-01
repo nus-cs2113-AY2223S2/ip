@@ -18,9 +18,6 @@ public class Task {
         }
     }
 
-//    public void printTask(){
-//
-//    }
 
     public String toString(){
         String checkbox = "[ ]";
@@ -29,19 +26,6 @@ public class Task {
             checkbox = "[X]";
         }
 
-//        switch(type){
-//            case "todo":
-//                typeIndicator = "[T]";
-//                break;
-//
-//            case "deadline":
-//                typeIndicator = "[D]";
-//                break;
-//
-//            case "event":
-//                typeIndicator = "[E]";
-//                break;
-//        }
         return  checkbox + " " + name;
     }
 }

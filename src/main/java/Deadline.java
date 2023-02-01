@@ -5,13 +5,13 @@ public class Deadline extends Task {
         super(name);
         this.deadline = deadline;
     }
-
+    @Override
     public String toString() {
         String checkbox = "[ ]";
         String typeIndicator = null;
         if(status){
             checkbox = "[X]";
         }
-        return "[D]" + checkbox + " " + name + " (by: " + deadline + ")";
+        return "[D]" + checkbox + " " + name + " (by:" + deadline + ")";
     }
 }

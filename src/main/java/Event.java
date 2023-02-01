@@ -7,6 +7,7 @@ public class Event extends Task{
         this.end = end;
     }
 
+    @Override
     public String toString() {
         String checkbox = "[ ]";
         if(status){
