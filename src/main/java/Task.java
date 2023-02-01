@@ -25,4 +25,20 @@ public class Task {
         return this.content;
     }
 
+    public String getClassSymbol() {
+        return "";
+    }
+
+    public String getDate() {
+        return "";
+    }
+
+    public String getBeginDate() {
+        return "";
+    }
+
+    public String getEndDate() {
+        return "";
+    }
+
 }

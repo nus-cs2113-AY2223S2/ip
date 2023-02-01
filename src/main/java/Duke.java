@@ -11,31 +11,43 @@ public class Duke {
 
         while (true) {
             userInput = getInput(in);
-            boolean hasAsterisk = userInput.startsWith("*");
-
-            if (hasAsterisk) {
-                addTask(userInput.substring(1), tasks);
-                continue;
-            }
-
-            String[] seperatedWords = userInput.split(" ");
-            if (userInput.equals("bye")) {
-                System.out.println("Bye. Hope to see you again soon!");
-                createHorizontalLine();
-                break;
-            } else if (userInput.equals("help")) {
-                showHelpMessage();
-            } else if (userInput.equals("list")) {
-                printItems(tasks);
-            } else if (userInput.startsWith("mark ") || userInput.startsWith("unmark ")) {
-                if (seperatedWords.length != 2) {
-                    System.out.println("Please give your command in the following format\n" + seperatedWords[0] + ": Number");
-                } else {
-                    changeTaskStatus(tasks, seperatedWords);
+            try {
+                String[] seperatedWords = userInput.split(" ", 2);
+                CommandKeywords keyword = CommandKeywords.valueOf(seperatedWords[0]);
+                if (userInput.equals("bye")) {
+                    System.out.println("Bye. Hope to see you again soon!");
+                    createHorizontalLine();
+                    break;
+                } else if (userInput.equals("help")) {
+                    showHelpMessage();
+                } else if (userInput.equals("list")) {
+                    printItems(tasks);
+                } else if (seperatedWords[0].equals("todo")) {
+                    if (handleException(seperatedWords,1)) {
+                        continue;
+                    }
+                    addTodoTask(seperatedWords[1], tasks);
+                } else if (seperatedWords[0].equals("deadline")) {
+                    if (handleException(seperatedWords,1)) {
+                        continue;
+                    }
+                    addDeadlineTask(seperatedWords[1], tasks);
+                } else if (seperatedWords[0].equals("event")) {
+                    if (handleException(seperatedWords,1)) {
+                        continue;
+                    }
+                    addEventTask(seperatedWords[1], tasks);
+                } else if (seperatedWords[0].equals("mark") || seperatedWords[0].equals("unmark")) {
+                    if (userInput.split(" ").length != 2) {
+                        System.out.println("Please give your command in the following format\n" + seperatedWords[0] + ": Number");
+                    } else {
+                        changeTaskStatus(tasks, seperatedWords);
+                    }
                 }
-            } else {
-                addTask(userInput, tasks);
+            } catch (IllegalArgumentException ex) {
+                System.out.println("This is an invalid input");
             }
+
         }
     }
 
@@ -61,6 +73,15 @@ public class Duke {
         }
     }
 
+    private static boolean handleException(String[] stringArray, int index) {
+        try {
+            String a = stringArray[index];
+            return false;
+        } catch (ArrayIndexOutOfBoundsException error) {
+            System.out.println("This is an invalid input");
+            return true;
+        }
+    }
     private static void showHelpMessage() {
         System.out.println("This is the list of our commands\n");
         System.out.println("help: to view the instructions for all commands\n");
@@ -69,7 +90,13 @@ public class Duke {
         System.out.println("mark: to mark a task as done");
         System.out.println("Format: mark {Number}\n");
         System.out.println("unmark: to unmark a task as not done yet");
-        System.out.println("Format: unmark {Number}");
+        System.out.println("Format: unmark {Number}\n");
+        System.out.println("todo: to add a todo task in your list");
+        System.out.println("Format: todo {your task}\n");
+        System.out.println("deadline: to add a deadline task in your list");
+        System.out.println("Format: deadline {your task} /by {deadline date}\n");
+        System.out.println("event: to add an event task in your list");
+        System.out.println("Format: event {your task} /from {begin date} /to {end date}\n");
     }
 
     private static void showWelcomeMessage() {
@@ -92,19 +119,74 @@ public class Duke {
         return userInput;
     }
 
-    private static void addTask(String userInput, ArrayList<Task> tasks) {
-        Task task = new Task(userInput);
+    private static void addTodoTask(String userInput, ArrayList<Task> tasks) {
+        Task task = new ToDo(userInput);
         tasks.add(task);
-        System.out.println("added: " + userInput);
+        System.out.println("Got it. I've added this task:");
+        System.out.println("[T][] " + userInput);
+        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
     }
 
+    private static int addDeadlineTask(String userInput, ArrayList<Task> tasks) {
+        String[] seperatedWords = userInput.split(" /");
+        if (handleException(seperatedWords, 1)) {
+            return 0;
+        }
+        if (seperatedWords[1].startsWith("by ")) {
+            String date = seperatedWords[1].split(" ", 2)[1];
+            String taskContent = seperatedWords[0];
+            Task task = new Deadline(taskContent,date);
+            tasks.add(task);
+            System.out.println("Got it. I've added this task:");
+            System.out.println("[D][] " + taskContent + " (by: " + date + ")");
+            System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+            return 0;
+        } else {
+            System.out.println("This is an invalid input");
+            return 0;
+        }
+    }
+
+    private static int addEventTask(String userInput, ArrayList<Task> tasks) {
+        String[] seperatedWords = userInput.split(" /");
+        if (handleException(seperatedWords,2)) {
+            return 0;
+        }
+        String beginDate = seperatedWords[1].split(" ", 2)[1];
+        if (handleException(seperatedWords[2].split(" ", 2),1)) {
+            return 0;
+        }
+        String endDate = seperatedWords[2].split(" ", 2)[1];
+
+        if (seperatedWords[1].startsWith("from ") && seperatedWords[2].startsWith("to ")) {
+            String taskContent = seperatedWords[0];
+            Task task = new Event(taskContent,beginDate,endDate);
+            tasks.add(task);
+            System.out.println("Got it. I've added this task:");
+            System.out.println("[E][] " + taskContent + " (from: " + beginDate + " to: " + endDate + ")");
+            System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+            return 1;
+        } else {
+            System.out.println("This is an invalid input");
+            return 1;
+        }
+    }
 
     private static void printItems(ArrayList<Task> container) {
         for (int i = 0; i < container.size(); ++i) {
-            if (container.get(i) == null) {
+            Task item = container.get(i);
+            if (item == null) {
                 break;
-            } else {
-                System.out.println((i + 1) + ". " + "[" + container.get(i).getMarkingStatus() + "]" + container.get(i).getContent());
+            } else if (item.getClassSymbol().equals("T")) {
+                System.out.println((i + 1) + ". " + "[" + item.getClassSymbol() + "]" + "["
+                        + item.getMarkingStatus() + "] " + item.getContent());
+            } else if (item.getClassSymbol().equals("D")) {
+                System.out.println((i + 1) + ". " + "[" + item.getClassSymbol() + "]" + "["
+                        + item.getMarkingStatus() + "] " + item.getContent() + "(by: " + item.getDate() + ")");
+            } else if (item.getClassSymbol().equals("E")) {
+                System.out.println((i + 1) + ". " + "[" + item.getClassSymbol() + "]" + "["
+                        + item.getMarkingStatus() + "] " + item.getContent() + "(from: " + item.getBeginDate()
+                        + " to: " + item.getEndDate() + ")");
             }
         }
     }
