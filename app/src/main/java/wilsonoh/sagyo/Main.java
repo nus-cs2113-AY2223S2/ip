@@ -25,7 +25,7 @@ public class Main {
         TextFormatter ui = new TextFormatter(2, 120);
         CommandParser cmdParser = new CommandParser(tasks);
         boolean isRunning = true;
-        ui.printLines(GREETING);
+        ui.printLinesInfo(GREETING);
         // try-with-resources to close the scanner automatically, preventing resource leaks
         try (Scanner sc = new Scanner(System.in)) {
             // Loop will break on execution of the ByeCommand
@@ -35,12 +35,12 @@ public class Main {
                 try {
                     Command cmd = cmdParser.parseCommand(line);
                     cmd.executeCommand();
-                    ui.printLines(cmd.getCommandMessage());
+                    ui.printLinesInfo(cmd.getCommandMessage());
                     if (cmd.isExit) {
                         isRunning = false;
                     }
                 } catch (SagyoException e) {
-                    ui.printLines(e.getMessage());
+                    ui.printLinesError(e.getMessage());
                 }
             }
         }
