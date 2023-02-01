@@ -13,27 +13,26 @@ public class Duke {
         Conversation.question();
         Conversation.line();
 
-        ArrayList<Task> ListOfTasks = TaskList.initTaskList();
         boolean isContinue = true;
         while(isContinue) {
             String command = Conversation.readCommand();
-            String[] arrOfCommand = command.split(" ");
-            switch(arrOfCommand[0]) {
+            String keyword = command.split(" ")[0];
+            switch(keyword) {
             case "list":
-                TaskList.listOut(ListOfTasks);
+                TaskList.listTasks();
                 break;
             case "mark":
-                TaskList.mark(arrOfCommand[1], ListOfTasks);
+                TaskList.mark(command);
                 break;
             case "unmark":
-                TaskList.unmark(arrOfCommand[1], ListOfTasks);
+                TaskList.unmark(command);
                 break;
             case "bye":
                 Conversation.farewell();
                 isContinue = false;
                 break;
             default:
-                TaskList.addToList(command, ListOfTasks);
+                TaskList.addToList(command);
                 break;
             }
 

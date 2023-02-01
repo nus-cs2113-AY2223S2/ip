@@ -14,4 +14,9 @@ public class Task {
     public void markAsNotDone() {
         this.isDone = false;
     }
+    public String fullDescription() {
+        String full;
+        full = (isDone ? "[X] " : "[ ] ") + this.description;
+        return full;
+    }
 }
