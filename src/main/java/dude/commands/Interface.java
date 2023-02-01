@@ -36,9 +36,10 @@ public abstract class Interface {
         System.out.println(Interface.LINE);
     }
 
-    public static void addedMessage(String input) {
+    public static void addedMessage(int index) {
         System.out.println(Interface.LINE);
-        System.out.println("added: " + input);
+        System.out.println("added: " + ListManager.getString(index));
+        System.out.println("Now you have " + (index + 1)+ " tasks in the list");
         System.out.println(Interface.LINE);
     }
 
@@ -52,46 +53,12 @@ public abstract class Interface {
         System.out.println("I have Unmarked this task:");
     }
 
-    public static void parseInput(String input) {
-        String[] commands = input.split(" ");
-        switch (commands[0]) {
-
-        case "bye":
-            printBye();
-            System.exit(0);
-        case "list":
-            ListManager.printList();
-            break;
-        case "mark":
-            int index = Integer.parseInt(commands[1]) - 1;
-            if (index <= ListManager.getSize()) {
-                ListManager.markDone(index);
-            } else {
-                System.out.println("That task does not exist!");
-            }
-            break;
-        case "unmark":
-            int id = Integer.parseInt(commands[1]) - 1;
-            if (id <= ListManager.getSize()) {
-                ListManager.markUndone(id);
-            } else {
-                System.out.println("That task does not exist!");
-            }
-            break;
-        case "":
-            System.out.println("Input a task");
-            break;
-        default:
-            ListManager.addToList(input);
-        }
-    }
-
     public static void readInput() {
         Scanner in = new Scanner(System.in);
         String userInput;
         while (true) {
             userInput = in.nextLine();
-            parseInput(userInput);
+            Parser.parseInput(userInput);
         }
     }
 }
