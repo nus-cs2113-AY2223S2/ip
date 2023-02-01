@@ -1,0 +1,12 @@
+todo borrow book
+deadline return book /by 4pm
+deadline file taxes /by Sunday
+event NOC interview /from Friday 11.30am /to Friday 12pm
+list
+mark 3
+unmark 3
+list
+mark 2
+mark 1
+list
+bye
