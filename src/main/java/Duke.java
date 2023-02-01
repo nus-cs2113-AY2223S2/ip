@@ -8,7 +8,7 @@ public class Duke {
         System.out.println("________________________________");
     }
 
-    public static void bye(){
+    public static void bye() {
         System.out.println("________________________________");
         System.out.println("Bye. Hope to see you again soon!");
         System.out.println("________________________________");
@@ -19,7 +19,7 @@ public class Duke {
         Scanner in = new Scanner(System.in);
         String input;
         input = in.nextLine();
-        while ((input.compareTo("bye") != 0)){
+        while ((input.compareTo("bye") != 0)) {
             System.out.println("________________________________");
             TaskManager.handleCommand(input);
             System.out.println("________________________________");
