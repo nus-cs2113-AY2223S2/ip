@@ -18,9 +18,12 @@ public class Task {
     public String toString() {
         if (isDone) {
             return "[X] " + taskName;
-        }
-        else {
+        } else {
             return "[ ] " + taskName;
         }
+    }
+
+    void printTask() {
+        System.out.println(this.toString());
     }
 }
