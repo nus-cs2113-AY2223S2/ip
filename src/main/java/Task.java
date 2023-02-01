@@ -1,22 +1,26 @@
 public class Task {
-    protected String taskDescription;
+    protected String description;
     protected boolean isDone;
 
     public Task(){
-        taskDescription = null;
+        description = null;
         isDone = false;
     }
 
     public Task (String description){
-        this.taskDescription = description;
+        this.description = description;
         this.isDone = false;
     }
 
     public String getTaskName(){
-        return taskDescription;
+        return description;
     }
 
     public String getStatusIcon(){
         return (isDone ? "X" : " ");
+    }
+
+    public String toString() {
+        return "[" + getStatusIcon() + "] " + description ;
     }
 }
