@@ -16,7 +16,7 @@ public class Duke {
         String[] inputArray;
         String command, taskName;
         String startDate, endDate;
-        int startDateIdx, endDateIdx;
+        int startDateIdx, endDateIdx, taskIdx;
 
         try {
             tasks = TaskReader.readAndReturnTasks(filePath);
@@ -38,7 +38,7 @@ public class Duke {
             inputArray = input.split(" ");
             command = inputArray[0].toLowerCase();
             newTask = null;
-            startDateIdx = endDateIdx = -1;
+            startDateIdx = endDateIdx = taskIdx = -1;
             startDate = endDate = null;
 
             try {
@@ -113,17 +113,17 @@ public class Duke {
                         }
 
                         try {
-                            startDateIdx = Integer.parseInt(input.substring(command.length() + 1)) - 1;
+                            taskIdx = Integer.parseInt(input.substring(command.length() + 1)) - 1;
                         } catch (NumberFormatException e) {
                             throw new NonPositiveNumberException(e);
                         }
 
                         try {
-                            tasks.get(startDateIdx).setIsDone(true);
+                            tasks.get(taskIdx).setIsDone(true);
                         } catch (IndexOutOfBoundsException e) {
                             throw new InvalidTaskIndexException(tasks.size(), e);
                         }
-                        System.out.println(TaskPrinter.markedMessage(tasks.get(startDateIdx)));
+                        System.out.println(TaskPrinter.markedMessage(tasks.get(taskIdx)));
                         break;
                     
                     case "unmark":
@@ -132,17 +132,36 @@ public class Duke {
                         }
 
                         try {
-                            startDateIdx = Integer.parseInt(input.substring(command.length() + 1)) - 1;
+                            taskIdx = Integer.parseInt(input.substring(command.length() + 1)) - 1;
                         } catch (NumberFormatException e) {
                             throw new NonPositiveNumberException(e);
                         }
 
                         try {
-                            tasks.get(startDateIdx).setIsDone(false);
+                            tasks.get(taskIdx).setIsDone(false);
                         } catch (IndexOutOfBoundsException e) {
                             throw new InvalidTaskIndexException(tasks.size(), e);
                         }
-                        System.out.println(TaskPrinter.unmarkedMessage(tasks.get(startDateIdx)));
+                        System.out.println(TaskPrinter.unmarkedMessage(tasks.get(taskIdx)));
+                        break;
+                    
+                    case "delete":
+                        if (input.length() == command.length()) {
+                            throw new NoDescriptionException(command);
+                        }
+
+                        try {
+                            taskIdx = Integer.parseInt(input.substring(command.length() + 1)) - 1;
+                        } catch (NumberFormatException e) {
+                            throw new NonPositiveNumberException(e);
+                        }
+
+                        try {
+                            Task deletedTask = tasks.remove(taskIdx);
+                            System.out.println(TaskPrinter.deletedMessage(deletedTask, tasks.size()));
+                        } catch (IndexOutOfBoundsException e) {
+                            throw new InvalidTaskIndexException(tasks.size(), e);
+                        }
                         break;
     
                     default:
