@@ -1,5 +1,6 @@
-public class Deadline extends Task{
+public class Deadline extends Task {
     protected String deadlineBy;
+
     public Deadline(String description, String deadlineBy) {
         super(description);
         this.deadlineBy = deadlineBy;
