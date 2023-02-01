@@ -47,10 +47,14 @@ public class Task {
     }
 
     public static void addTodoToTasksList(String input, ArrayList<Task> listOfTasks) {
-        //check length of input, less than min required amount, fail
+        try {
+            DukeExceptionTest.checkMissingTodoName(input);
+        } catch (MissingTaskNameException e) {
+            System.out.println(e);
+            return;
+        }
         int nameStartIndex = input.indexOf(" ");
         String name = input.substring(nameStartIndex + 1);
-        //check name length
         Task todo = new Todo(name, false);
         listOfTasks.add(todo);
         printAddTaskMessage(todo, listOfTasks);
