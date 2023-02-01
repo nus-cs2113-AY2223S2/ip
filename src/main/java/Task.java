@@ -10,8 +10,9 @@ public class Task {
         this.isDone = false;
     }
 
+    /** Mark done task with X */
     public String getStatusIcon() {
-        return (isDone ? "[X]" : "[ ]"); // mark done task with X
+        return (isDone ? "[X]" : "[ ]");
     }
 
     public String getDescription() {

@@ -44,10 +44,11 @@ public class Duke {
                 if (line.matches("list") || line.matches("bye") || line.matches("mark \\d") || line.matches("unmark \\d")) {
                     Task.executeNonAdd(line, list, currentNumber);
                     System.out.println("    ____________________________________________________________\n");
-                    if (line.equals("bye")) {
-                        break;
-                    }
+                    break;
                 }
+            }
+            if (line.matches("bye")) {
+                break;
             }
         }
     }
