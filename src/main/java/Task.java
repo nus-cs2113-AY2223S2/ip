@@ -3,6 +3,8 @@ public class Task {
     protected boolean isDone;
     protected String label;
 
+    static final int TASK_NUMBER_OFFSET = 1;
+
     public Task(String description) {
         this.description = description;
         this.isDone = false;
@@ -48,28 +50,27 @@ public class Task {
 
     protected static void unmark(String command, Task[] listOfTasks) {
         String[] seperated = command.split(" ");
-        int number = Integer.parseInt(seperated[1]) - 1;
+        int number = Integer.parseInt(seperated[1]) - TASK_NUMBER_OFFSET;
         listOfTasks[number].setDone(false);
-        System.out.println("OK, I've marked this task as not done yet:");
-        System.out.println("    " + listOfTasks[number].label + listOfTasks[number].getStatusIcon() + " " + listOfTasks[number].description);
+        System.out.println("     OK, I've marked this task as not done yet:");
+        System.out.println("     " + listOfTasks[number].label + listOfTasks[number].getStatusIcon() + " " + listOfTasks[number].description);
     }
 
     protected static void mark(String command, Task[] listOfTasks) {
         String[] seperated = command.split(" ");
-        int number = Integer.parseInt(seperated[1]) - 1;
+        int number = Integer.parseInt(seperated[1]) - TASK_NUMBER_OFFSET;
         listOfTasks[number].setDone(true);
-        System.out.println("Nice! I've marked this task as done:");
-        System.out.println("    " + listOfTasks[number].label + listOfTasks[number].getStatusIcon() + " " + listOfTasks[number].description);
+        System.out.println("     Nice! I've marked this task as done:");
+        System.out.println("     " + listOfTasks[number].label + listOfTasks[number].getStatusIcon() + " " + listOfTasks[number].description);
     }
 
     private static void list(Task[] listOfTasks, int index) {
         System.out.println("     Here are the tasks in your list:");
         for (int i = 0; i < index; ++i) {
-            int counter = i + 1;
-            System.out.print("     " + counter + "." + listOfTasks[i].label + listOfTasks[i].getStatusIcon());
+            int counter = i + TASK_NUMBER_OFFSET;
+            System.out.print("     " + counter + "." + listOfTasks[i].label + listOfTasks[i].getStatusIcon() + " ");
             System.out.println(listOfTasks[i].description);
         }
-        System.out.println("    ____________________________________________________________\n");
     }
 
 
