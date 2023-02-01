@@ -29,16 +29,17 @@ public class Duke {
                     if ((itemNumber - 1) == index) {
                         break;
                     }
-                    System.out.println(itemNumber + ".[" + list[itemNumber - 1].getStatusIcon() + "] " + list[itemNumber - 1].description);
+                    System.out.println(itemNumber + ".[" + list[itemNumber - 1].getTypeIcon() + "]"
+                            + "["  + list[itemNumber - 1].getStatusIcon() + "] " + list[itemNumber - 1].description);
                     itemNumber++;
                 }
                 System.out.println(lineBreak);
             }
-            else if (words[0].equals("mark")) {
+            else if (line.startsWith("mark")) {
                 int itemNumber = Integer.parseInt(words[1]);
                 list[itemNumber - 1].markAsDone();
             }
-            else if (words[0].equals("unmark")) {
+            else if (line.startsWith("unmark")) {
                 int itemNumber = Integer.parseInt(words[1]);
                 list[itemNumber - 1].markAsUndone();
             }
@@ -46,10 +47,42 @@ public class Duke {
                 break;
             }
             else {
-                Task item = new Task(line);
-                list[index] = item;
-                index++;
-                System.out.println("added: " + line);
+                Task item;
+                if (line.startsWith("todo")) {
+                    String[] inputLine = line.split(" ", 2);
+                    item = new Todo(inputLine[1]);
+                    list[index] = item;
+                    index++;
+                    System.out.println("Got it. I've added this task: " + "[" + item.getTypeIcon() + "]"
+                            + "["  + item.getStatusIcon() + "] " + item.description);
+                }
+                else if (line.startsWith("deadline")) {
+                    String[] inputLine = line.split(" ", 2);
+                    inputLine = inputLine[1].split("/by ");
+                    String description = inputLine[0];
+                    String deadline = inputLine[1];
+                    item = new Deadline(description, deadline);
+                    list[index] = item;
+                    index++;
+                    System.out.println("Got it. I've added this task: " + "[" + item.getTypeIcon() + "]"
+                            + "["  + item.getStatusIcon() + "] " + item.description);
+                }
+                else if (line.startsWith("event")) {
+                    String[] inputLine = line.split(" ", 2);
+                    inputLine = inputLine[1].split("/from ");
+                    String description = inputLine[0];
+                    inputLine = inputLine[1].split("/to ");
+                    String start = inputLine[0];
+                    String end = inputLine[1];
+                    item = new Event(description, start, end);
+                    list[index] = item;
+                    index++;
+                    System.out.println("Got it. I've added this task: " + "[" + item.getTypeIcon() + "]"
+                            + "["  + item.getStatusIcon() + "] " + item.description);
+                }
+
+
+                System.out.println("Now you have " + index + " tasks in the list.");
                 System.out.println(lineBreak);
             }
         }

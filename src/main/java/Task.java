@@ -12,6 +12,10 @@ public class Task {
         return (isDone ? "X" : " "); // mark done task with X
     }
 
+    public String getTypeIcon() {
+        return "";
+    }
+
     public void markAsDone() {
         this.isDone = true;
         System.out.println("Nice! I've marked this task as done:");
