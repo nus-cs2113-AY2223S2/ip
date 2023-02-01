@@ -13,7 +13,7 @@ public class Duke {
       "Got it. I've added this task:\n\t" +
       task +
       String.format(
-        "\nNow you have %d tasks in the list.",
+        "\n\tNow you have %d tasks in the list.",
         taskManager.getNumberOfTasks()
       )
     );
@@ -21,10 +21,12 @@ public class Duke {
 
   public static void chat() {
     Scanner sc = new Scanner(System.in);
-    while (true) {
+    int flag = 1;
+    while (flag == 1) {
       String ret = sc.nextLine();
       switch (ret.split(" ")[0]) {
         case "bye":
+          flag = 0;
           break;
         case "list":
           taskManager.printList();
