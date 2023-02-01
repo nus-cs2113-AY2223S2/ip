@@ -1,5 +1,4 @@
 public class Event extends Tasks{
-
     protected String startTime;
     protected String endTime;
 
@@ -10,7 +9,6 @@ public class Event extends Tasks{
     }
 
     public String toString(){
-        return "[E]" + "[" + super.TaskStatus() + "] " + super.TaskName
-                + "(from: " + startTime + "to: " + endTime + ")";
+        return "[E]" + super.toString()+ " (from: " + startTime + " to: " + endTime + ")";
     }
 }

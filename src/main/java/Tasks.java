@@ -7,10 +7,6 @@ public class Tasks {
         this.TaskName = TaskName;
         this.isDone = false;
         NumberOfTasks++;
-
-        Rolex.printLines();
-        System.out.println(" I've added this task: " + TaskName);
-        Rolex.printLines();
     }
 
     public void MarkTask(){
@@ -35,12 +31,8 @@ public class Tasks {
         return (isDone ? "X" : " ");
     }
 
-    public static void ListTasks(Tasks[] TASK){
-        Rolex.printLines();
-        System.out.println("These are the tasks in your list:");
-        for(int i=0; i<NumberOfTasks; i++){
-            System.out.println(i+1 + ". " + "[" + TASK[i].TaskStatus() + "] " + TASK[i].TaskName);
-        }
-        Rolex.printLines();
+    public String toString(){
+        return "[" + this.TaskStatus() + "] " + this.TaskName;
     }
+
 }

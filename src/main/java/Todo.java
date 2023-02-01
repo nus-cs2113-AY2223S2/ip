@@ -4,6 +4,6 @@ public class Todo extends Tasks{
     }
 
     public String toString(){
-        return "[T]" + "[" + super.TaskStatus() + "]" + super.TaskName;
+        return "[T]" + super.toString();
     }
 }
