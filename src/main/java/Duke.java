@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class Duke {
     public static String DIVIDER_LINE = "______________________________\n";
+
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -16,14 +17,24 @@ public class Duke {
         System.out.println(greet);
         boolean shouldContinue = true;
         Scanner in = new Scanner(System.in);
-        String echo;
+        String[] tasks = new String[100];
+        int taskCount = 0;
+        String action;
         while (shouldContinue) {
-            echo = in.nextLine();
-            if (echo.equals("bye")) {
+            action = in.nextLine();
+            if (action.equals("bye")) {
                 System.out.println(DIVIDER_LINE + "Bye. Hope to see you again soon!\n" + DIVIDER_LINE);
                 shouldContinue = false;
+            } else if (action.equals("list")) {
+                System.out.print(DIVIDER_LINE);
+                for (int i = 0; i < taskCount; i += 1) {
+                    System.out.println(Integer.toString(i + 1) + ". " + tasks[i]);
+                }
+                System.out.println(DIVIDER_LINE);
             } else {
-                System.out.println(DIVIDER_LINE + echo + "\n" + DIVIDER_LINE);
+                tasks[taskCount] = action;
+                taskCount += 1;
+                System.out.println(DIVIDER_LINE + "added: " + action + "\n" + DIVIDER_LINE);
             }
         }
     }
