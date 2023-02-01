@@ -15,6 +15,11 @@ public class Rica {
         return Rica.pastTasks;
     }
 
+    /**
+     * Adds a new task to the task list with the given description
+     *
+     * @param description Description of new task being added
+     */
     private static void addTask(String description) {
         if (description.isBlank()) {
             printlnWithIndent(" Did you forget something? Don't think there's any task with no name");
@@ -29,6 +34,12 @@ public class Rica {
         Rica.getPastTexts().add(newTask);
     }
 
+    /**
+     * Mark a given task in the task list as done
+     *
+     * @param indexOfTask Index of given task in the task list
+     * @return Task object representing the desired task being marked as done
+     */
     private static Task markDone(int indexOfTask) {
         if (indexOfTask < 0 || indexOfTask >= Rica.getPastTexts().size()) {
             printlnWithIndent(" You alright? I can't mark a task that doesn't exist as done xD");
@@ -48,6 +59,12 @@ public class Rica {
         return selectedTask;
     }
 
+    /**
+     * Mark a given task in the task list as not done
+     *
+     * @param indexOfTask Index of desired task in the task list
+     * @return Task object representing the desired task being marked as not done
+     */
     private static Task unmarkDone(int indexOfTask) {
         if (indexOfTask < 0 || indexOfTask >= Rica.getPastTexts().size()) {
             printlnWithIndent(" You alright? I don't think that task exists xD");
@@ -87,6 +104,10 @@ public class Rica {
         System.out.println(line);
     }
 
+    /**
+     * Prints out the list of tasks added so far, or inform the user if no tasks have been added
+     * yet
+     */
     private static void printTexts() {
         if (!Rica.hasAnyTasks()) {
             printlnWithIndent(" Hope I'm not amnesiac, but I don't remember any tasks?");
@@ -99,6 +120,9 @@ public class Rica {
         }
     }
 
+    /**
+     * Parse the command entered into CLI and execute the corresponding actions
+     */
     private static void runCommands() {
         Scanner in = new Scanner(System.in);
         String command = "";
