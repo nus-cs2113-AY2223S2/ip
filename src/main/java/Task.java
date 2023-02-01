@@ -1,7 +1,7 @@
 public class Task {
     protected String description;
     protected boolean isDone;
-    protected String label;
+    protected String taskLabel;
 
     static final int TASK_NUMBER_OFFSET = 1;
 
@@ -27,15 +27,20 @@ public class Task {
     }
 
     public void setDone(boolean done) {
+
         isDone = done;
     }
 
-    public static void instructionLessAdd(String command, Task[] listOfTasks, int index) {
+    /**
+     * executeNonAdd method executes all instructions
+     * except the instructions to add tasks to the list
+     */
+    public static void executeNonAdd(String command, Task[] listOfTasks, int currentNumber) {
         System.out.print("    ____________________________________________________________\n");
         if (command.equals("bye")) {
             System.out.println("    Bye. Hope to see you again soon!");
         } else if (command.equals("list")) {
-            list(listOfTasks, index);
+            list(listOfTasks, currentNumber);
         } else if (command.matches("mark \\d")) {
             mark(command, listOfTasks);
 
@@ -44,8 +49,8 @@ public class Task {
         }
     }
 
-    protected static int add(String line, Task[] list, int index) {
-        return index;
+    protected static int add(String line, Task[] list, int currentNumber) {
+        return currentNumber;
     }
 
     protected static void unmark(String command, Task[] listOfTasks) {
@@ -53,7 +58,7 @@ public class Task {
         int number = Integer.parseInt(seperated[1]) - TASK_NUMBER_OFFSET;
         listOfTasks[number].setDone(false);
         System.out.println("     OK, I've marked this task as not done yet:");
-        System.out.println("     " + listOfTasks[number].label + listOfTasks[number].getStatusIcon() + " " + listOfTasks[number].description);
+        System.out.println("     " + listOfTasks[number].taskLabel + listOfTasks[number].getStatusIcon() + " " + listOfTasks[number].description);
     }
 
     protected static void mark(String command, Task[] listOfTasks) {
@@ -61,14 +66,14 @@ public class Task {
         int number = Integer.parseInt(seperated[1]) - TASK_NUMBER_OFFSET;
         listOfTasks[number].setDone(true);
         System.out.println("     Nice! I've marked this task as done:");
-        System.out.println("     " + listOfTasks[number].label + listOfTasks[number].getStatusIcon() + " " + listOfTasks[number].description);
+        System.out.println("     " + listOfTasks[number].taskLabel + listOfTasks[number].getStatusIcon() + " " + listOfTasks[number].description);
     }
 
-    private static void list(Task[] listOfTasks, int index) {
+    private static void list(Task[] listOfTasks, int currentNumber) {
         System.out.println("     Here are the tasks in your list:");
-        for (int i = 0; i < index; ++i) {
+        for (int i = 0; i < currentNumber; ++i) {
             int counter = i + TASK_NUMBER_OFFSET;
-            System.out.print("     " + counter + "." + listOfTasks[i].label + listOfTasks[i].getStatusIcon() + " ");
+            System.out.print("     " + counter + "." + listOfTasks[i].taskLabel + listOfTasks[i].getStatusIcon() + " ");
             System.out.println(listOfTasks[i].description);
         }
     }

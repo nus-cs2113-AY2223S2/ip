@@ -19,30 +19,30 @@ public class Duke {
         String line;
         final int TOTAL_TASKS = 100; // Total number of tasks
         Task[] list = new Task[TOTAL_TASKS]; // Array of Tasks
-        int index = 0;
+        int currentNumber = 0; // Current number of tasks
 
         while (true) {
             Scanner in = new Scanner(System.in);
-            line = in.nextLine();
-            String[] splitLine = line.split(" ", 2);
-            String type = splitLine[0];
+            line = in.nextLine(); // Take in input line
+            String[] lineComponents = line.split(" ", 2); // Split the input line
+            String type = lineComponents[0];
 
             switch (type) {
             case "todo":
-                index = Todo.add(line, list, index);
+                currentNumber = Todo.add(line, list, currentNumber);
                 System.out.println("    ____________________________________________________________\n");
                 break;
             case "deadline":
-                index = Deadline.add(line, list, index);
+                currentNumber = Deadline.add(line, list, currentNumber);
                 System.out.println("    ____________________________________________________________\n");
                 break;
             case "event":
-                index = Event.add(line, list, index);
+                currentNumber = Event.add(line, list, currentNumber);
                 System.out.println("    ____________________________________________________________\n");
                 break;
             default:
                 if (line.matches("list") || line.matches("bye") || line.matches("mark \\d") || line.matches("unmark \\d")) {
-                    Task.instructionLessAdd(line, list, index);
+                    Task.executeNonAdd(line, list, currentNumber);
                     System.out.println("    ____________________________________________________________\n");
                     if (line.equals("bye")) {
                         break;
