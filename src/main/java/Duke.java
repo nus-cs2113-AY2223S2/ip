@@ -17,9 +17,8 @@ public class Duke {
         String greeting_word="------------------------------------------------------------\n"
             + "Hello! I'm miniJohn\n"
             + "What can I do for you?\n"
-            + "------------------------------------------------------------\n"
-            + "Bye. Hope to see you again soon!\n"
             + "------------------------------------------------------------";
+
         System.out.println(greeting_word);
     }
 
@@ -47,7 +46,7 @@ public class Duke {
 
         String tasksListString = "";
         for(int i = 0; i < tasksList.size() ; i++){
-            tasksListString += (i + 1) + "." + tasksList.get(i).getStatusIcon() + " " + tasksList.get(i).getDescription() + "\n";
+            tasksListString += (i + 1) + "." + tasksList.get(i).toString() + "\n";
         }
         return tasksListString;
     }
@@ -58,7 +57,9 @@ public class Duke {
         Task newTaskObject = new Task(newTaskString);
         tasksList.add(newTaskObject);
 
-        String feedback = "added: " + newTaskString;
+        String feedback = "Got it. I've added this task:\n"
+                + newTaskObject.toString() + "\n"
+                + "Now you have " + tasksList.size() +" tasks in the list";
         return feedback;
     }
 
@@ -87,11 +88,54 @@ public class Duke {
 
         if(IsMarkAsDone == true){
             feedback = "Nice! I've marked this task as done:\n"
-                    + taskToMark.getStatusIcon()  + taskToMark.getDescription();
+                    + taskToMark.toString();
         }else{
             feedback = "OK, I've marked this task as not done yet:\n"
-                    + taskToMark.getStatusIcon()  + taskToMark.getDescription();
+                    + taskToMark.toString();
         }
+        return feedback;
+    }
+
+    public static String executeTodoCommand(String todoString){
+        if(todoString == null)return "";
+
+        Todo newTodoObject = new Todo(todoString);
+        tasksList.add(newTodoObject);
+
+        String feedback = "Got it. I've added this task:\n"
+                + newTodoObject.toString() + "\n"
+                + "Now you have " + tasksList.size() +" tasks in the list";
+        return feedback;
+    }
+
+    public static String executeDeadlineCommand(String commandParams){
+        String[] commandParamsList = commandParams.split("/");
+        String todoString = commandParamsList[0];
+        String deadlineString = commandParamsList[1];
+
+        Deadline newDeadlineObject = new Deadline(todoString, deadlineString);
+        tasksList.add(newDeadlineObject);
+
+        String feedback =  "Got it. I've added this task:\n"
+                + newDeadlineObject.toString() + "\n"
+                + "Now you have " + tasksList.size() +" tasks in the list";
+        return feedback;
+    }
+
+    public static String executeEventCommand(String commandParams){
+        //[haven't done]: check commandParms has /from, /to
+        //[haven't done]: process case like /to /from
+        String[] commandParamsList = commandParams.split("/");
+        String eventString = commandParamsList[0].trim();
+        String fromString = commandParamsList[1].substring(5).trim();   //magic number
+        String toString = commandParamsList[2].substring(3).trim();
+
+        Event newEventObject = new Event(eventString, fromString, toString);
+        tasksList.add(newEventObject);
+
+        String feedback = "Got it. I've added this task:\n"
+                + newEventObject.toString() + "\n"
+                + "Now you have " + tasksList.size() +" tasks in the list";
         return feedback;
     }
 
@@ -101,24 +145,36 @@ public class Duke {
         String commandParams = commandTypeAndParams[1];
 
         String feedback = null;
+
+        /*
+        /[have not done]: create methods to deal with input commandParams,
+        instead of dealing them in execute methods.
+        Then execute methods' length can be shorter
+         */
+
         switch (commandType){
             case("list"):{
                 feedback = executeListCommand(commandParams);
                 break;
-            }
-            case("add"):{
+            } case("add"):{
                 feedback = executeAddTaskCommand(commandParams);
                 break;
-            }
-            case("mark"):{
+            } case("mark"):{
                 feedback = executeMarkUnmarkTaskCommand(commandParams, true);
                 break;
-            }
-            case("unmark"):{
+            } case("unmark"):{
                 feedback = executeMarkUnmarkTaskCommand(commandParams, false);
                 break;
-            }
-            default:{
+            } case("todo"):{
+                feedback = executeTodoCommand(commandParams);
+                break;
+            } case("deadline"):{
+                feedback = executeDeadlineCommand(commandParams);
+                break;
+            } case("event"):{
+                feedback = executeEventCommand(commandParams);
+                break;
+            } default:{
                 feedback = "CommandError: I can't understand \"" + userCommand +"\"!";
                 break;
             }

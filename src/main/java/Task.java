@@ -18,16 +18,20 @@ public class Task {
     }
 
     public String getDescription(){
-        return this.description;
+        return description;
     }
 
     public boolean getStatus(){
-        return this.isDone;
+        return isDone;
     }
 
     public String getStatusIcon(){
         return (isDone? "[X]":"[ ]");
     }
 
+    @Override
+    public String toString(){
+        return getStatusIcon() + " " + getDescription();
+    }
 
 }
