@@ -12,7 +12,7 @@ public class Event extends Task{
     public String toString () {
         String deadlinePrefix = "[E]";
         String taskString = super.toString();
-        String eventPostfix = "(" + "from: " + this.eventStart + "to: " + this.eventEnd + ")";
+        String eventPostfix = " (" + "from: " + this.eventStart + " to: " + this.eventEnd + ")";
         return deadlinePrefix + taskString + eventPostfix;
     }
 }

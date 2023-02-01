@@ -9,7 +9,7 @@ public class Deadline extends Task{
     public String toString() {
         String deadlinePrefix = "[D]";
         String taskString = super.toString();
-        String deadlinePostfix = "(" + "by: " + this.deadlineBy + ")";
+        String deadlinePostfix = " (" + "by: " + this.deadlineBy + ")";
         return deadlinePrefix + taskString;
     }
 }
