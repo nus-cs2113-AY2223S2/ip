@@ -26,11 +26,7 @@ public class Duke {
         // Will output: ["deadline my_task", "by -xyz sunday-monday"]
         // For now, this does not account for accidental or adversarial '--' input at the start of words
         // but this is an unlikely edge case that can be dealt with later
-        String[] args = command.split(" --");
-        for (String arg : args) {
-            System.out.println(arg);
-        }
-        return args;
+        return command.split(" --");
     }
 
     public static HashMap<String, String> getSubcommandMap(String[] commandList) {
@@ -101,9 +97,11 @@ public class Duke {
             }
             if (!commandMap.containsKey("from")) {
                 System.out.println("Missing --from argument!");
+                return newTask;
             }
             if (!commandMap.containsKey("to")) {
                 System.out.println("Missing --to argument!");
+                return newTask;
             }
             // Event task
             String description = commandMap.get("event");
@@ -135,9 +133,13 @@ public class Duke {
             break;
         case "mark":
             String taskNumStr = extractTextFromSubcommand(commandList[0]);
+            if (taskNumStr.length() == 0) {
+                System.out.println("Missing number!");
+                return;
+            }
             // Unsafe parsing below
             int taskNum = Integer.parseInt(taskNumStr) - 1; // Convert to 0-idx
-            if (taskNum < 0 || taskNum >= commandList.length) {
+            if (taskNum < 0 || taskNum >= numTasks) {
                 System.out.println("Invalid task number!");
                 return;
             }
@@ -148,9 +150,13 @@ public class Duke {
             break;
         case "unmark":
             taskNumStr = extractTextFromSubcommand(commandList[0]);
+            if (taskNumStr.length() == 0) {
+                System.out.println("Missing number!");
+                return;
+            }
             // Unsafe parsing below
             taskNum = Integer.parseInt(taskNumStr) - 1; // Convert to 0-idx
-            if (taskNum < 0 || taskNum > commandList.length) {
+            if (taskNum < 0 || taskNum >= numTasks) {
                 System.out.println("Invalid task number!");
                 return;
             }
@@ -196,7 +202,7 @@ public class Duke {
                 "| $$\\  $ | $$| $$  | $$ /$$/\\  $$       / - \\\n" +
                 "| $$ \\/  | $$| $$  | $$| $$  \\ $$      /    |\n" +
                 "|__/     |__/|__/  |__/|__/  |__/     V__)  ||";
-        System.out.println("Hello from\n" + logo);
+        System.out.println(logo);
 
         Greet();
         setIsListening(true);

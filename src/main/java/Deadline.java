@@ -1,6 +1,7 @@
-public class Deadline extends Task{
+public class Deadline extends Task {
     private String dueDate;
-    public Deadline(String description, String dueDate){
+
+    public Deadline(String description, String dueDate) {
         super(description);
         this.dueDate = dueDate;
     }
@@ -8,7 +9,7 @@ public class Deadline extends Task{
     @Override
     public String getDescription() {
         String desc = "[D]" + super.getDescription();
-        desc = desc.concat(" (by: "+ this.dueDate + ")");
+        desc = desc.concat(" (by: " + this.dueDate + ")");
         return desc;
     }
 }
