@@ -2,9 +2,8 @@ public class Task {
     protected String description;
     protected boolean isDone;
 
-    public Task(String description){
-        this.description = description;
-        this.isDone = false;
+    public Task(String line){
+        this.description = line;
     }
 
     public void markAsDone(){
@@ -17,5 +16,14 @@ public class Task {
 
     public String isDone(){
         return (isDone ? "[X] " : "[ ] ");
+    }
+
+    public String getDesc(){
+        return description;
+    }
+
+    @Override
+    public String toString(){
+        return description;
     }
 }
