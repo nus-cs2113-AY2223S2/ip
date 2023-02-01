@@ -11,14 +11,24 @@ public class Duke {
         String line = "_________________________________\n";
         System.out.println("Hello from\n" + logo);
         System.out.print(line + "Hello! I'm Duke\n" + "What can I do for you?\n" + line);
+        String[] list = new String[100];
+        int listCount = 0;
         while(true) {
             Scanner userInput = new Scanner(System.in);
-            String name = userInput.nextLine();
-            if (name.equals("bye")) {
-                System.out.print("Bye. Hope to see you again soon!\n" + line);
+            String input = userInput.nextLine();
+            if (input.equals("bye")) {
+                System.out.print(line + "Bye. Hope to see you again soon!\n" + line);
                 break;
+            } else if(input.equals("list")) {
+                System.out.print(line);
+                for (int i = 0; i < listCount; i++) {
+                    System.out.println(i + 1 + ". " + list[i]);
+                }
+                System.out.print(line);
             } else {
-                System.out.print(line + name + "\n" + line);
+                list[listCount] = input;
+                listCount++;
+                System.out.print(line + "added: " + input + "\n" + line);
             }
         }
     }
