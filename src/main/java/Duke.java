@@ -1,12 +1,12 @@
 import java.util.Scanner;
 
 public class Duke {
-    private static String logo = " ____        _        \n"
+    private static final String logo = " ____        _        \n"
             + "|  _ \\ _   _| | _____ \n" + "| | | | | | | |/ / _ \\\n"
             + "| |_| | |_| |   <  __/\n" + "|____/ \\__,_|_|\\_\\___|\n";
-    private static String line = "____________________________________________________________\n";
-    private static int taskCount = 0;
+    private static final String line = "____________________________________________________________";
     private static final int MAX_TASKS = 100;
+    private static int taskCount = 0;
     private static Task[] tasks = new Task[MAX_TASKS];
 
     public static void main(String[] args) {
@@ -16,19 +16,19 @@ public class Duke {
 
     private static void greetUser() {
         System.out.println(logo);
-        System.out.println(line + "Hello! I'm Duke\nWhat can I do for you?\n" + line);
+        System.out.println(line + "\nHello! I'm Duke\nWhat can I do for you?\n" + line);
     }
 
     private static void exitDuke() {
-        System.out.println(line + "Bye. Hope to see you again soon!\n" + line);
+        System.out.println(line + "\nBye. Hope to see you again soon!\n" + line);
     }
 
     private static void echoString(String input) {
-        System.out.println(line + " " + input + "\n" + line);
+        System.out.println(line + "\n " + input + "\n" + line);
     }
 
     private static void addTask(String text) {
-        System.out.print(line);
+        System.out.println(line);
         if (taskCount >= MAX_TASKS) {
             System.out.println("failed as task list is full\n" + line);
             return;
@@ -36,33 +36,30 @@ public class Duke {
         tasks[taskCount] = new Task(text);
         taskCount += 1;
         System.out.println("added: " + text);
-        System.out.print(line);
+        System.out.println(line);
     }
 
     private static void listTasks() {
-        System.out.println(line + "Here are the tasks in your list:");
+        System.out.println(line + "\nHere are the tasks in your list:");
         for (int i = 0; i < taskCount; i++) {
             System.out.println(Integer.toString(i + 1) + ":[" + tasks[i].getStatusIcon() + "] "
                     + tasks[i].getDescription());
         }
-        System.out.print(line);
+        System.out.println(line);
     }
 
     private static boolean isValidTask(int taskNum) {
-        if (taskNum > taskCount || taskNum < 1) {
-            return false;
-        }
-        return true;
+        return taskNum <= taskCount && taskNum >= 1;
     }
 
     private static void markTask(String input) {
         int taskNum = Integer.parseInt(input.substring(5));
         if (isValidTask(taskNum)) {
             tasks[taskNum - 1].markDone();
-            System.out.print(line + "Nice! I've marked this task as done:\n[X] "
+            System.out.println(line + "\nNice! I've marked this task as done:\n[X] "
                     + tasks[taskNum - 1].getDescription() + "\n" + line);
         } else {
-            System.out.print(line + "Invalid task number\n" + line);
+            System.out.println(line + "\nInvalid task number\n" + line);
         }
     }
 
@@ -70,10 +67,10 @@ public class Duke {
         int taskNum = Integer.parseInt(input.substring(7));
         if (isValidTask(taskNum)) {
             tasks[taskNum - 1].unmarkDone();
-            System.out.print(line + "OK, I've marked this task as not done yet:\n[ ] "
+            System.out.println(line + "\nOK, I've marked this task as not done yet:\n[ ] "
                     + tasks[taskNum - 1].getDescription() + "\n" + line);
         } else {
-            System.out.print(line + "Invalid task number\n" + line);
+            System.out.println(line + "\nInvalid task number\n" + line);
         }
     }
 
