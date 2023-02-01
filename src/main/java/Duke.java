@@ -1,5 +1,3 @@
-import jdk.jfr.Event;
-
 import java.util.Scanner;
 
 public class Duke {
@@ -13,21 +11,23 @@ public class Duke {
         String line = "____________________________________________________________\n";
         String greet = line +
                 "Hello! I'm Duke.\n" +
-                "Add tasks to the todo list by simply typing in the task and press enter.\n" +
+                "To add general tasks to the todo list, simply type in the task and press enter.\n" +
+                "You can specify the type of tasks by using " +
+                "'todo' / 'deadline' / 'event' keyword before the task description. \n" +
+                "You can keep track of deadlines by typing 'deadline' " +
+                "followed by task description + '/by' to specify the time of the deadline. \n" +
+                "You can also add events to the list by typing 'event' " +
+                "followed by task description + '/from' + starting time of event + '/to' ending time of event.\n" +
                 "Type 'list' to view the current todo list.\n" +
-                "Type 'mark' and task event index to mark the task as done \nand type 'unmark'and index to undo the task.\n" +
+                "Type 'mark' and task event index to mark the task as done and type 'unmark'and index to undo the task.\n" +
                 line;
         System.out.println(greet);
 
-        //TODO: ignore leading white for user input
-        //TODO: Event class
-
-        // Level 3 Mark as Done
         Scanner in = new Scanner(System.in);
         int countTask = 0;
         Task[] tasks = new Task[100];
         while (true) {
-            String userInput = in.nextLine();
+            String userInput = in.nextLine().trim();
             if (userInput.equals("bye")) {
                 System.out.println("Thank you for using Duke. Hope to see you soon!");
                 break;
@@ -49,22 +49,22 @@ public class Duke {
                 System.out.println(line + "Task " + taskIndex + " marked as not done yet: \n" +
                         tasks[taskIndex - 1].printTask() + line);
             } else if (userInput.startsWith("todo")) {
-                ToDo ToDoTask = new ToDo(userInput.substring(5));
-                tasks[countTask] = ToDoTask;
+                ToDo todoTask = new ToDo(userInput.substring(5));
+                tasks[countTask] = todoTask;
                 countTask++;
-                System.out.println(line + "Great! I've added this task:\n" + "   " + ToDoTask.printTask());
+                System.out.println(line + "Great! I've added this task:\n" + "   " + todoTask.printTask());
                 System.out.println("Now you have " + countTask + " task(s) in the list.\n" + line);
             } else if (userInput.startsWith("deadline")) {
-                Deadline DeadlineTask = new Deadline(userInput.substring(9));
-                tasks[countTask] = DeadlineTask;
+                Deadline deadlineTask = new Deadline(userInput.substring(9));
+                tasks[countTask] = deadlineTask;
                 countTask++;
-                System.out.println(line + "Great! I've added this task:\n" + "   " + DeadlineTask.printTask());
+                System.out.println(line + "Great! I've added this task:\n" + "   " + deadlineTask.printTask());
                 System.out.println("Now you have " + countTask + " task(s) in the list.\n" + line);
             } else if (userInput.startsWith("event")) {
-                Event EventTask = new Event(userInput.substring(9));
-                tasks[countTask] = EventTask;
+                Event eventTask = new Event(userInput.substring(9));
+                tasks[countTask] = eventTask;
                 countTask++;
-                System.out.println(line + "Great! I've added this task:\n" + "   " + EventTask.printTask());
+                System.out.println(line + "Great! I've added this task:\n" + "   " + eventTask.printTask());
                 System.out.println("Now you have " + countTask + " task(s) in the list.\n" + line);
             } else {
                 Task t = new Task(userInput);
