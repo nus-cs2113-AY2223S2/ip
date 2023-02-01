@@ -48,7 +48,7 @@ public class Duke {
             } else if (inputText.startsWith("deadline")) {
                 String deadlineDescription = inputText.split("/")[0].split("deadline")[1].trim();
                 String deadlineBy = inputText.split("/")[1].trim();
-                Task newDeadline = new Deadline(deadlineDescription, deadlineBy);
+                Deadline newDeadline = new Deadline(deadlineDescription, deadlineBy);
                 tasks[Task.numberOfTasks - 1] = newDeadline;
                 outputMessage = TASK_ADDED_PREFIX + newDeadline.toString() + System.lineSeparator() + "\t"
                         + getTaskAddedPostfix();
