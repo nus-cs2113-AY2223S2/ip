@@ -1,0 +1,9 @@
+write
+run
+todo study
+mark 1
+event cook /from 2 /to 5
+deadline do homework /by 7
+list
+unmark 1
+bye
