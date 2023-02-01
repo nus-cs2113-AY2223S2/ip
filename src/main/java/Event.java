@@ -5,6 +5,7 @@ public class Event extends Task
     public Event (String taskName, String eventFrom, String eventTo)
     {
         super (taskName);
+        super.taskType = TaskType.EVENT;
         this.eventFrom = eventFrom;
         this.eventTo = eventTo;
     }

@@ -7,6 +7,8 @@ public class Duke
      *
      */
     public static final String GREETING = " Hello! I'm Duke! What can I do for you?";
+
+    public static final String INVALID = " Invalid command!";
     public static final String GOODBYE = " Bye. Hope to see you again soon!";
     public static final String LINE_DIVIDER = "____________________________________________________________";
     public static final int INT = 101;
@@ -58,11 +60,32 @@ public class Duke
                         + tasks[pointer].getTaskStatus ());
 
             }
-            else
+            else if (line.length () > 5 && line.startsWith ("todo"))
             {
                 System.out.println ("added: " + line);
-                tasks[indexBaseOne] = new ToDo (line); //temp usage
+                tasks[indexBaseOne] = new ToDo (line.substring (5));
                 indexBaseOne += 1;
+            }
+            else if (line.length () > 9 && line.startsWith ("deadline"))
+            {
+                System.out.println ("added: " + line);
+                final int indexOfBy = line.indexOf ("/by");
+                tasks[indexBaseOne] = new DeadLine (line.substring (9, indexOfBy), line.substring (indexOfBy+4));
+                indexBaseOne += 1;
+            }
+            else if (line.length () > 6 && line.startsWith ("event"))
+            {
+                System.out.println ("added: " + line);
+                final int indexOfFrom = line.indexOf ("/from");
+                final int indexOfTo = line.indexOf ("/to");
+                tasks[indexBaseOne] = new Event (line.substring (6, indexOfFrom),
+                        line.substring (indexOfFrom+6, indexOfTo),
+                        line.substring (indexOfTo+4));
+                indexBaseOne += 1;
+            }
+            else
+            {
+                System.out.println (INVALID);
             }
 
             lineBreak ();

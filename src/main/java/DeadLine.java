@@ -4,6 +4,7 @@ public class DeadLine extends Task
     public DeadLine (String taskName, String deadLineBy)
     {
         super (taskName);
+        super.taskType = TaskType.DEAD_LINE;
         this.deadLineBy = deadLineBy;
     }
 
