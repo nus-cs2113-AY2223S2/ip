@@ -1,39 +1,57 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Duke {
     private static String line = "__________________________________________________________";
+    private static Task[] inputList = new Task[101];
+    private static int length = 0;
 
-    public static void addList() {
+    public static void addTask(String userInput) {
+        Task t;
+        if (userInput.contains("todo")) {
+            t = new Todo(userInput.substring(userInput.indexOf(" "), userInput.length()));
+        } else if (userInput.contains("deadline")){
+            t = new Deadline(userInput.substring(userInput.indexOf(" "), userInput.length()));
+        } else {
+            t = new Event(userInput.substring(userInput.indexOf(" "), userInput.length()));
+        }
+        t.printAddTask();
+        inputList[length+1] = t; //1-index
+        length++;
+        System.out.println("Now you have " + length + " tasks in the list.");
+        System.out.println(line);
+    }
+
+    public static void printList(Task[] input) {
+        System.out.println(line + "\nHere are the tasks in your list: ");
+        for (int i = 1; i < input.length; i++) {
+            if (input[i] == null) {
+                break;
+            }
+            System.out.print((i) + ".");
+            input[i].printTask();
+        }
+        System.out.println(line);
+    }
+
+    public static void commands() {
         Scanner in = new Scanner(System.in);
-
-        Task[] inputList = new Task[101];
+        //Task[] inputList = new Task[101];
         String userInput = in.nextLine();
         boolean exit = false;
-        int length = 1;
+        //int length = 0; //0-index
         while (!exit) {
-            if (userInput.equals("bye")) {
+            if (userInput.contains("bye")) {
                 break;
-            } else if (userInput.equals("list")) {
-                for (int i = 1; i < length; i++) {
-                    System.out.print((i) + ".");
-                    inputList[i].printTask();
-                }
-                System.out.println(line);
-            } else if (userInput.contains("unmark")) {
-                String taskNum = userInput.substring(userInput.length()-1);
-                int x = Integer.parseInt(taskNum);
-                inputList[x].unmark();
+            } else if (userInput.contains("list")) {
+                //System.out.println(inputList.length);
+                printList(inputList);
             } else if (userInput.contains("mark")) {
                 String taskNum = userInput.substring(userInput.length()-1);
                 int x = Integer.parseInt(taskNum);
                 inputList[x].markAsDone();
             } else {
-                Task t = new Task(userInput);
-                System.out.println(line);
-                System.out.println("added: " + userInput);
-                System.out.println(line);
-                inputList[length] = t;
-                length++;
+                addTask(userInput);
             }
             userInput = in.nextLine();
         }
@@ -63,7 +81,7 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";*/
         //System.out.println("Hello from\n" + logo);
         greet();
-        addList();
+        commands();
         bye();
     }
 }
