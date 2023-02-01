@@ -8,10 +8,49 @@ public class Duke {
         goodbye();
     }
 
+    private static void listTasks(int counter, Task[] storedTask) {
+        System.out.println("____________________________________________________________");
+        System.out.println("Here are the tasks in your list:");
+        for (int i = 0; i < counter; i++) {
+            if (storedTask[i].getIsDone()) {
+                System.out.println(i + 1 + ". [x] " + storedTask[i].getText());
+            }
+            else {
+                System.out.println(i + 1 + ". [ ] " + storedTask[i].getText());
+            }
+        }
+        System.out.println("____________________________________________________________");
+    }
+
+    private static void markingAsDone(String echoInput, int counter, Task[] storedTask) {
+        try {
+            String stringListNumber = echoInput.substring(5, echoInput.length());
+            int listNumber = Integer.parseInt(stringListNumber);
+
+            storedTask[listNumber-1].setIsDone(true);
+            listTasks(counter, storedTask);
+        }
+        catch (NumberFormatException ex){
+            System.out.println("____________________________________________________________");
+            System.out.println("*DID NOT ENTER A VALID NUMBER*");
+            System.out.println("____________________________________________________________");
+        }
+        catch (ArrayIndexOutOfBoundsException x) {
+            System.out.println("____________________________________________________________");
+            System.out.println("*DID NOT ENTER A NUMBER ON LIST*");
+            System.out.println("____________________________________________________________");
+        }
+        catch (NullPointerException x) {
+            System.out.println("____________________________________________________________");
+            System.out.println("*DID NOT ENTER A NUMBER ON LIST*");
+            System.out.println("____________________________________________________________");
+        }
+    }
+
     private static void echoText() {
         Scanner scanner = new Scanner(System.in);
         String echoInput = "";
-        String[] storedText = new String[100];
+        Task[] storedTask = new Task[100];
         int counter = 0;
 
         while (!echoInput.equals("bye")) {
@@ -19,15 +58,15 @@ public class Duke {
             if (echoInput.equals("bye")) {
                 break;
             }
-            if (echoInput.equals("list")) {
-                System.out.println("____________________________________________________________");
-                for (int i = 0; i < counter; i++) {
-                    System.out.println(i+1 + ". " + storedText[i]);
-                }
-                System.out.println("____________________________________________________________");
+            else if (echoInput.equals("list")) {
+                listTasks(counter, storedTask);
+            }
+            else if (echoInput.startsWith("mark ")) {
+                markingAsDone(echoInput, counter, storedTask);
             }
             else {
-                storedText[counter] = echoInput;
+                Task tempTask = new Task(echoInput, false);
+                storedTask[counter] = tempTask;
                 System.out.println("____________________________________________________________");
                 System.out.println("added: " + echoInput);
                 System.out.println("____________________________________________________________");
