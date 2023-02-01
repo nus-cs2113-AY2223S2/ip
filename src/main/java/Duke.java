@@ -2,6 +2,8 @@ import java.util.Scanner;
 
 public class Duke {
 
+    public static final int MAX_TASKS = 101;
+
     public static void main(String[] args) {
         greetingMessage();
         readAndRespond();
@@ -11,28 +13,48 @@ public class Duke {
     private static void readAndRespond() {
         Scanner sc = new Scanner(System.in);
         String input = sc.nextLine();
-        Task[] listOfTasks = new Task[101]; // 1-base indexing
+        Task[] listOfTasks = new Task[MAX_TASKS]; // 1-base indexing
         while (!input.equals("bye")) {
             String[] words = input.split(" ");
             if (input.equals("list")) {
                 printList(listOfTasks);
             } else if (input.isBlank()) {
                 System.out.println("Please enter a non-empty string!");
-            } else if (input.contains("unmark") && words.length == 2 && isInt(words[1])) {
+            } else if (isValidUnmark(input, words)) {
                 unmarkTask(listOfTasks, words);
-            } else if (input.contains("mark") && words.length == 2 && isInt(words[1])) {
+            } else if (isValidMark(input, words)) {
                 markTask(listOfTasks, words);
-            } else if (words[0].equals("todo") && words.length != 1) {
+            } else if (isValidTodo(words)) {
                 printAddedTodoMessage(input, listOfTasks);
-            } else if (words[0].equals("deadline") && words.length != 1) {
+            } else if (isValidDeadline(words)) {
                 printAddedDeadlineMessage(input, listOfTasks);
-            } else if (words[0].equals("event") && words.length != 1) {
+            } else if (isValidEvent(words)) {
                 printAddedEventMessage(input, listOfTasks);
             } else {
                 printAddedTaskMessage(input, listOfTasks);
             }
             input = sc.nextLine();
         }
+    }
+
+    private static boolean isValidMark(String input, String[] words) {
+        return input.contains("mark") && words.length == 2 && isInt(words[1]);
+    }
+
+    private static boolean isValidUnmark(String input, String[] words) {
+        return input.contains("unmark") && words.length == 2 && isInt(words[1]);
+    }
+
+    private static boolean isValidEvent(String[] words) {
+        return words[0].equals("event") && words.length != 1;
+    }
+
+    private static boolean isValidDeadline(String[] words) {
+        return words[0].equals("deadline") && words.length != 1;
+    }
+
+    private static boolean isValidTodo(String[] words) {
+        return words[0].equals("todo") && words.length != 1;
     }
 
     private static void greetingMessage() {
@@ -90,7 +112,7 @@ public class Duke {
 
     private static void markTask(Task[] listOfTasks, String[] words) {
         int number = Integer.parseInt(words[1]);
-        if (number <= 0 || number > 100 || listOfTasks[number] == null) {
+        if (number <= 0 || number >= MAX_TASKS || listOfTasks[number] == null) {
             System.out.println("Please mark only valid tasks!");
         } else {
             listOfTasks[number].markAsDone();
@@ -100,7 +122,7 @@ public class Duke {
 
     private static void unmarkTask(Task[] listOfTasks, String[] words) {
         int number = Integer.parseInt(words[1]);
-        if (number <= 0 || number > 100 || listOfTasks[number] == null || words.length == 1 || !isInt(words[1])) {
+        if (number <= 0 || number >= MAX_TASKS || listOfTasks[number] == null || words.length == 1 || !isInt(words[1])) {
             System.out.println("Please unmark only valid tasks!");
         } else {
             listOfTasks[number].unmarkDone();
@@ -110,7 +132,7 @@ public class Duke {
 
     public static void printList(Task[] listOfTasks) {
         System.out.println(" Here are the tasks in your list");
-        for (int i = 1; i <= 100; ++i) {
+        for (int i = 1; i < MAX_TASKS; ++i) {
             if (listOfTasks[i] == null) {
                 break;
             }
