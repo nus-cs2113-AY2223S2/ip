@@ -24,13 +24,13 @@ public class Tasks {
     public void markTaskDone(int taskNumber) {
         tasks[taskNumber].markTask(true);
         System.out.println("Nice! I've marked this task as done:");
-        System.out.println("[X] " + tasks[taskNumber].getDescription());
+        System.out.println(taskNumber + "." + tasks[taskNumber].toString());
     }
     
-    public void markTaskUndone(int task) {
-        tasks[task].markTask(false);
+    public void markTaskUndone(int taskNumber) {
+        tasks[taskNumber].markTask(false);
         System.out.println("OK, I've marked this task as not done yet:");
-        System.out.println("[ ] " + tasks[task].getDescription());
+        System.out.println(taskNumber + "." + tasks[taskNumber].toString());
     }
     
     public void printList() {
