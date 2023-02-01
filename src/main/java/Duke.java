@@ -56,24 +56,22 @@ public class Duke {
                     System.out.println("Got it. I've added this task: \n" + inputs[count] + "\nNow you have " + (count + 1) + " tasks in your list." );
                 } else if (input.substring(0,8).equals("deadline")) {
                     String info = input.substring(9,input.indexOf("/"));
-                    String date = input.substring(input.indexOf("/")+1, input.length());
-                    inputs[count] = new Deadline(info, date);
+                    String timeBy = input.substring(input.indexOf("/")+1, input.length());
+                    inputs[count] = new Deadline(info, timeBy);
                     inputs[count].isDone = false;
                     System.out.println("Got it. I've added this task: \n" + inputs[count] + "\nNow you have " + (count + 1) + " tasks in your list." );
                 } else {
                     String info = input.substring(6,input.indexOf("/"));
-                    String date = input.substring(input.indexOf("/")+1, input.lastIndexOf("/") - 1);
-                    String date2 = input.substring(input.lastIndexOf("/")+1, input.length());
-                    inputs[count] = new Event(info, date, date2);
+                    String timeFrom = input.substring(input.indexOf("/")+1, input.lastIndexOf("/") - 1);
+                    String timeBy = input.substring(input.lastIndexOf("/")+1, input.length());
+                    inputs[count] = new Event(info, timeFrom, timeBy);
                     inputs[count].isDone = false;
                     System.out.println("Got it. I've added this task: \n" + inputs[count] + "\nNow you have " + (count + 1) + " tasks in your list." );
                 }
                 count++;
             }
-
             input = scan.nextLine();
         }
-
         System.out.println("Bye. Hope to see you again soon!");
     }
 }
