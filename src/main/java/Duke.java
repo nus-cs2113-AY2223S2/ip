@@ -33,72 +33,69 @@ public class Duke {
 
     public static void ChatPolling() {
         String userInput;
+        Scanner in = new Scanner(System.in);
+        userInput = in.nextLine();
+        String[] inputType = userInput.split(" ", 2);
 
-        while (true) {
-            Scanner in = new Scanner(System.in);
-            userInput = in.nextLine();
-            String[] inputType = userInput.split(" ", 2);
-            //System.out.println(userInput);
+        while (!inputType[0].equals("bye")) {
 
             switch (inputType[0]) {
-                case "bye": 
-                    Greeting.printSeperator();
-                    return;
+            case "list":
+                Greeting.printSeperator();
+                System.out.println("\tHere are the tasks in your list:");
+                for (int i = 0; i < tasksLength; i++) {
+                    System.out.println("\t" + (i+1) + "." + tasks[i].printTask());
+                }
+                Greeting.printSeperator();
+                break;
 
-                case "list":
-                    Greeting.printSeperator();
-                    System.out.println("\tHere are the tasks in your list:");
-                    for (int i = 0; i < tasksLength; i++) {
-                        System.out.println("\t" + (i+1) + "." + tasks[i].printTask());
-                    }
-                    Greeting.printSeperator();
+            case "unmark":
+                String taskNumberUnmark = userInput.substring(7);
+                unmark(taskNumberUnmark);
+                break;
+
+            case "mark":
+                String taskNumberMark = userInput.substring(5);
+                mark(taskNumberMark);
+                break;
+
+            case "todo":
+                String todoTask = userInput.substring(4);
+                tasks[tasksLength] = new Todo (todoTask);
+                printNewTask(tasksLength);
+                
+                break;
+
+            case "deadline":
+                if ((userInput.indexOf("/by") < 0 )){
+                    Greeting.printHelp();;
                     break;
+                }
+                String deadlineTask = userInput.substring(8, userInput.indexOf("/by"));
+                String deadlineDay = userInput.substring(userInput.indexOf("/by") + 4);
+                tasks[tasksLength] = new Deadline(deadlineTask, deadlineDay);
+                printNewTask(tasksLength);
 
-                case "unmark":
-                    String taskNumberUnmark = userInput.substring(7);
-                    unmark(taskNumberUnmark);
+                break;
+
+            case "event":
+                if ((userInput.indexOf("/from") < 0 ) || (userInput.indexOf("/to") < 0 )){
+                    Greeting.printHelp();;
                     break;
+                }
+                String eventTask = userInput.substring(5, userInput.indexOf("/"));
+                String eventFrom = userInput.substring(userInput.indexOf("/from") + 6, userInput.indexOf("/to"));
+                String eventTo = userInput.substring(userInput.indexOf("/to") + 4);
+                tasks[tasksLength] = new Event(eventTask, eventFrom, eventTo);
+                printNewTask(tasksLength);
+                
+                break;
 
-                case "mark":
-                    String taskNumberMark = userInput.substring(5);
-                    mark(taskNumberMark);
-                    break;
-
-                case "todo":
-                    String todoTask = userInput.substring(4);
-                    tasks[tasksLength] = new Todo (todoTask);
-                    printNewTask(tasksLength);
-                   
-                    break;
-
-                case "deadline":
-                    if ((userInput.indexOf("/by") < 0 )){
-                        Greeting.printHelp();;
-                        break;
-                    }
-                    String deadlineTask = userInput.substring(8, userInput.indexOf("/by"));
-                    String deadlineDay = userInput.substring(userInput.indexOf("/by") + 4);
-                    tasks[tasksLength] = new Deadline(deadlineTask, deadlineDay);
-                    printNewTask(tasksLength);
-
-                    break;
-
-                case "event":
-                    if ((userInput.indexOf("/from") < 0 ) || (userInput.indexOf("/to") < 0 )){
-                        Greeting.printHelp();;
-                        break;
-                    }
-                    String eventTask = userInput.substring(5, userInput.indexOf("/"));
-                    String eventFrom = userInput.substring(userInput.indexOf("/from") + 6, userInput.indexOf("/to"));
-                    String eventTo = userInput.substring(userInput.indexOf("/to") + 4);
-                    tasks[tasksLength] = new Event(eventTask, eventFrom, eventTo);
-                    printNewTask(tasksLength);
-                    
-                    break;
-
-                default:
-                    Greeting.printHelp();
+            default:
+                Greeting.printHelp();
             }
+            userInput = in.nextLine();
+            inputType = userInput.split(" ", 2);
         }
     }
     public static void main (String[]args){

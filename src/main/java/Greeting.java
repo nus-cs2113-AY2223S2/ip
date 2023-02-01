@@ -11,10 +11,10 @@ public class Greeting {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("\tHello from\n" + logo);
-        printSeperator();
     }
 
     public static void printWelcome() {
+        printSeperator();
         System.out.println(
                 "\tHello! I'm Duke\n" +
                         "\tWhat can I do for you?\n");
@@ -22,12 +22,14 @@ public class Greeting {
     }
 
     public static void printHelp() {
+        printSeperator();
         System.out.println(
                 "\tPlease Type a valid command!\n");
         printSeperator();
     }
 
     public static void printGoodbye() {
+        printSeperator();
         System.out.println(
                 "\tBye. Hope to see you again soon!\n"
         );
