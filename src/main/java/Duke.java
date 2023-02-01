@@ -10,6 +10,7 @@ public class Duke {
         System.out.println("Hello! I'm Duke\n" + "What can I do for you?");
         System.out.println(LINE);
     }
+
     public static void bye() {
         System.out.println(LINE);
         System.out.println("Bye. Hope to see you again soon!");
@@ -26,24 +27,53 @@ public class Duke {
         else {
             System.out.println("Here are the tasks in your list:");
             for (int i = 0; i < list.size(); i++) {
-                System.out.println((i+1) + ".[" + list.get(i).getStatusIcon() + "] " + list.get(i).description);
+                System.out.println((i+1) + "." + list.get(i).toString());
             }
             System.out.println(LINE);
         }
     }
 
-    public static void markTask(int idx) {
+    public static void markTask(int index) {
         System.out.println(LINE);
-        list.get(idx).markDone();
+        list.get(index).markDone();
         System.out.println("Awesome! I've mark this task as done:");
-        System.out.println("[" + list.get(idx).getStatusIcon() + "] " + list.get(idx).description);
+        System.out.println("[" + list.get(index).getStatusIcon() + "] " + list.get(index).description);
     }
-    public static void unmarkTask(int idx) {
+    public static void unmarkTask(int index) {
         System.out.println(LINE);
-        list.get(idx).markUndone();
+        list.get(index).markUndone();
         System.out.println("What!?!? OK, I've marked this task as not done yet:");
-        System.out.println("[" + list.get(idx).getStatusIcon() + "] " + list.get(idx).description);
+        System.out.println("[" + list.get(index).getStatusIcon() + "] " + list.get(index).description);
     }
+
+    public static void addTodo(String input) {
+        Todo task = new Todo(input);
+        list.add(task);
+        System.out.println(LINE);
+        System.out.println("Roger! The Todo task has been added: \n    " + task.toString());
+        System.out.println("Now you have " + list.size() + " in the list");
+        System.out.println(LINE);
+    }
+
+    public static void addDeadline(String input) {
+        Deadline task = new Deadline(input);
+        list.add(task);
+        System.out.println(LINE);
+        System.out.println("Roger! The Deadline task has been added: \n    " + task.toString());
+        System.out.println("Now you have " + list.size() + " in the list");
+        System.out.println(LINE);
+    }
+
+    public static void addEvent(String input) {
+        Event task = new Event(input);
+        list.add(task);
+        System.out.println(LINE);
+        System.out.println("Roger! The Deadline task has been added: \n    " + task.toString());
+        System.out.println("Now you have " + list.size() + " in the list");
+        System.out.println(LINE);
+    }
+
+
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -62,6 +92,15 @@ public class Duke {
                 bye();
                 break;
             }
+            else if (command.equalsIgnoreCase("todo")) {
+                addTodo(input);
+            }
+            else if (command.equalsIgnoreCase("deadline")) {
+                addDeadline(input);
+            }
+            else if (command.equalsIgnoreCase("event")) {
+                addEvent(input);
+            }
             else if (command.equalsIgnoreCase("list")) {
                 printList();
             }
@@ -72,14 +111,6 @@ public class Duke {
             else if (command.equalsIgnoreCase("unmark")) {
                 int taskIdx = Integer.parseInt(input.split(" ")[1]) - 1;
                 unmarkTask(taskIdx);
-            }
-            else {
-                Task t = new Task(input);
-                list.add(t);
-                System.out.println(LINE);
-                System.out.println("Task added: " + list.get(inputCounter).description);
-                System.out.println(LINE);
-                inputCounter++;
             }
         }
     }
