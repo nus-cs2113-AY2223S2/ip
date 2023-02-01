@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Duke {
-    private static int userInputCount = 0;
+    private static int userTaskCount = 0;
     private static final String LINE = "--------------------------------------------";
     private static final String LOGO = " ____        _        \n"
             + "|  _ \\ _   _| | _____ \n"
@@ -28,7 +28,9 @@ public class Duke {
         System.out.println("How can I help you?\n");
         System.out.println("Here are some possibly useful commands:");
         System.out.println(LINE);
-        System.out.println("/todo {description} - Add a specific task to ur task list.");
+        System.out.println("/todo {description} - Add a todo task to ur task list.");
+        System.out.println("/deadline {description} - Add a deadline task to ur task list.");
+        System.out.println("/event {description} - Add an event task to ur task list.");
         System.out.println("/list - List out all the tasks in ur task list.");
         System.out.println("/mark {numerical index} - Mark a specific task done.");
         System.out.println("/unmark {numerical index} - Mark a specific task undone.");
@@ -51,8 +53,8 @@ public class Duke {
             }
         }
         Task t = new Todo(taskDescription);
-        userTaskList[userInputCount] = t;
-        userInputCount++;
+        userTaskList[userTaskCount] = t;
+        userTaskCount++;
         System.out.println(LINE);
         System.out.println("Added the following task [TYPE: TODO]: " + taskDescription);
         System.out.println(LINE);
@@ -63,33 +65,12 @@ public class Duke {
             reportError("Please specify a deadline via the /by command!");
             return;
         }
-        String deadlineDescription = "";
-        String deadlineCutoff = "";
-        Integer userInputArrayIndex = 1;
-        // handle description
-        for (int i = 1; i < userInputArray.length; i++) {
-            if (userInputArray[i].equals("/by")) {
-                break;
-            } else {
-                userInputArrayIndex++;
-                deadlineDescription = deadlineDescription.concat(userInputArray[i]);
-                if (!userInputArray[i + 1].equals("/by")) {
-                    deadlineDescription = deadlineDescription.concat(" ");
-                }
-            }
-        }
-        userInputArrayIndex++;
-        // handle deadline cutoff
-        for (int j = userInputArrayIndex; j < userInputArray.length; j++) {
-            userInputArrayIndex++;
-            deadlineCutoff = deadlineCutoff.concat(userInputArray[j]);
-            if (j != userInputArray.length - 1) {
-                deadlineCutoff = deadlineCutoff.concat(" ");
-            }
-        }
+        userInputArray = userInput.split("/by", 2);
+        String deadlineDescription = userInputArray[0].split("/deadline", 2)[1].trim();
+        String deadlineCutoff = userInputArray[1].trim();
         Task d = new Deadline(deadlineDescription, deadlineCutoff);
-        userTaskList[userInputCount] = d;
-        userInputCount++;
+        userTaskList[userTaskCount] = d;
+        userTaskCount++;
         System.out.println(LINE);
         System.out.println(
                 "Added the following task [TYPE: DEADLINE]:\n" + deadlineDescription + " (To be completed by: "
@@ -103,49 +84,16 @@ public class Duke {
             reportError("Please specify both start and end dates/times via the /start and /end commands!");
             return;
         }
-        String eventDescription = "";
-        String eventStartTime = "";
-        String eventEndTime = "";
-        Integer userInputArrayIndex = 1;
-        // handle description
-        for (int i = 1; i < userInputArray.length; i++) {
-            if (userInputArray[i].equals("/start")) {
-                break;
-            } else {
-                userInputArrayIndex++;
-                eventDescription = eventDescription.concat(userInputArray[i]);
-                if (!userInputArray[i + 1].equals("/start")) {
-                    eventDescription = eventDescription.concat(" ");
-                }
-            }
-        }
-        userInputArrayIndex++;
-        // handle event start time
-        for (int j = userInputArrayIndex; j < userInputArray.length; j++) {
-            if (userInputArray[j].equals("/end")) {
-                break;
-            } else {
-                userInputArrayIndex++;
-                eventStartTime = eventStartTime.concat(userInputArray[j]);
-                if (!userInputArray[j + 1].equals("/end")) {
-                    eventStartTime = eventStartTime.concat(" ");
-                }
-            }
-        }
-        // handle event end time
-        for (int k = userInputArrayIndex; k < userInputArray.length; k++) {
-            userInputArrayIndex++;
-            eventEndTime = eventEndTime.concat(userInputArray[k]);
-            if (k != userInputArray.length - 1) {
-                eventEndTime = eventEndTime.concat(" ");
-            }
-        }
+        userInputArray = userInput.split("/start", 2);
+        String eventDescription = userInputArray[0].split("/event", 2)[1].trim();
+        String eventStartTime = userInputArray[1].split("/end", 2)[0].trim();
+        String eventEndTime = userInputArray[1].split("/end", 2)[1].trim();
         Task d = new Event(eventDescription, eventStartTime, eventEndTime);
-        userTaskList[userInputCount] = d;
-        userInputCount++;
+        userTaskList[userTaskCount] = d;
+        userTaskCount++;
         System.out.println(LINE);
-        System.out.println("Added the following task [TYPE: EVENT]:\n" + eventDescription + " (From: " + eventStartTime
-                + " To: " + eventEndTime
+        System.out.println("Added the following task [TYPE: EVENT]:\n" + eventDescription + " (Start: " + eventStartTime
+                + " | End: " + eventEndTime
                 + ")");
         System.out.println(LINE);
     }
@@ -170,12 +118,12 @@ public class Duke {
     }
 
     public static void listTasks() {
-        if (userInputCount == 0) {
+        if (userTaskCount == 0) {
             reportError("You have no tasks added!");
             return;
         }
         System.out.println("These are the following tasks you have:");
-        for (int i = 0; i < userInputCount; i++) {
+        for (int i = 0; i < userTaskCount; i++) {
             System.out.println(LINE);
             int index = i;
             index++;
