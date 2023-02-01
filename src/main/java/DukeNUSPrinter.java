@@ -13,12 +13,19 @@ public class DukeNUSPrinter {
         System.out.println("    ____________________________________________________________");
     }
 
+    /** Prints a DukeNUS message bound by horizontal lines above and below to the console. Only single lines should be used.
+     * @param message The single line message to be bound by horizontal lines
+     */
     public static void printMessage(String message) {
         printHorizontalLine();
         System.out.println(INDENT + message);
         printHorizontalLine();
     }
 
+    /** Prints a message to the console whenever a task is added to the tasks array.
+     * @param taskDisplayDescription The formatted description of the task with indications of its isDone and Task object type.
+     * @param taskCount The total number of tasks in the tasks array that is not null.
+     */
     public static void printAddedTask(String taskDisplayDescription, int taskCount) {
         printHorizontalLine();
         System.out.println(INDENT + "Got it. I've added this task:");
@@ -26,6 +33,31 @@ public class DukeNUSPrinter {
         System.out.println(INDENT + "You now have " + taskCount + " tasks in the list.");
         printHorizontalLine();
     }
+
+    /** Prints a message to the console whenever a task is marked.
+     * @param taskDisplayDescription The formatted description of the task with indications of its isDone and Task object type.
+     */
+    public static void printMarkedTask(String taskDisplayDescription) {
+        printHorizontalLine();
+        System.out.println(INDENT + "Congratulations! You have finished this task:");
+        System.out.println(INDENT + taskDisplayDescription);
+        printHorizontalLine();
+    }
+
+    /** Prints a message to the console whenever a task is unmarked.
+     * @param taskDisplayDescription The formatted description of the task with indications of its isDone and Task object type
+     */
+    public static void printUnmarkedTask(String taskDisplayDescription) {
+        printHorizontalLine();
+        System.out.println(INDENT + "The following task is now marked as undone:");
+        System.out.println(INDENT + taskDisplayDescription);
+        printHorizontalLine();
+    }
+
+    /** Prints all tasks in the tasks array that is not null.
+     * @param tasks The array of tasks. The array used in practice is of fixed size 100.
+     * @param taskCount The number of non-null tasks already pushed into the array.
+     */
     public static void printTasks(Task[] tasks, int taskCount) {
         printHorizontalLine();
         System.out.println(INDENT + "Here are the tasks in your list:");

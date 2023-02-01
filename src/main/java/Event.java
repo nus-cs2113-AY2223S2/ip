@@ -20,6 +20,11 @@ public class Event extends Task {
         setDescription(getDescription() + to + ')');
     }
 
+    /** Upon creating the event, the from and to dates will be concatenated to the displayed description.
+     * @param description The description of the event.
+     * @param from The date this event begins.
+     * @param to The date this event ends.
+     */
     public Event(String description, String from, String to) {
         super(description);
         setFrom(from);
