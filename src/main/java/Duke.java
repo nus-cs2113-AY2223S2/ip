@@ -5,13 +5,11 @@ public class Duke {
     public static final int MAX_NUMBER_OF_TASKS = 100;
     public static int tasksIndex = 0;
     public static boolean isInUse = true;
+    public static Task[] tasks;
+    public static Scanner in;
 
     public static void main(String[] args) {
-        // how do i abstract these 2 things into a function? can i initialize inside a function?
-        Task[] tasks = new Task[MAX_NUMBER_OF_TASKS];
-        Scanner in = new Scanner(System.in);
-        // how to deal with "Exception in thread "main" java.util.NoSuchElementException: No line found"?
-
+        initDuke();
         greetUser();
         while (isInUse) {
             String userInput = getUserInput(in);
@@ -20,9 +18,14 @@ public class Duke {
         }
     }
 
+    public static void initDuke() {
+        tasks = new Task[MAX_NUMBER_OF_TASKS];
+        in = new Scanner(System.in);
+    }
+
     public static void showResultToUser(Task[] tasks, String[] processedInputs) {
         if (processedInputs[0].equals("bye")) {
-            isInUse = false; // can i do this?***
+            isInUse = false;
             printExitMessage();
         } else if (processedInputs[0].equals("list")) {
             listTasks(tasks);
@@ -49,25 +52,22 @@ public class Duke {
             printNotification(tasks[tasksIndex], "event", tasksIndex + 1);
             tasksIndex++;
         }
-        return;
     }
 
     private static String[] furtherProcessInputForDeadline(String[] processedInputs) {
-        // not sure what names to use for the variables
         String[] taskNameAndIdentifierAndBy = processedInputs[1].split("/",2);
         String[] identifierAndBy = taskNameAndIdentifierAndBy[1].split(" ",2);
-        String [] taskNameAndBy = {taskNameAndIdentifierAndBy[0], identifierAndBy[1]};
+        String[] taskNameAndBy = {taskNameAndIdentifierAndBy[0], identifierAndBy[1]};
         return taskNameAndBy;
     }
+
     private static String[] furtherProcessInputForEvent(String[] processedInputs) {
-        // not sure what names to use for the variables
         String[] taskNameAndFromAndTo = processedInputs[1].split("/", 3);
         String[] identifierAndFrom = taskNameAndFromAndTo[1].split(" ",2);
         String[] identifierAndTo = taskNameAndFromAndTo[2].split(" ",2);
         String[] fromAndToAndTaskName = {identifierAndFrom[1], identifierAndTo[1], taskNameAndFromAndTo[0]};
         return fromAndToAndTaskName;
     }
-
 
     private static void printNotification(Task task, String modification, int numberOfTasks) {
         boolean isRequiredToShowNumberOfTasks = false;
@@ -84,6 +84,7 @@ public class Duke {
             System.out.println("Now you have " + numberOfTasks + " tasks in the list.");
         }
     }
+
     private static void printExitMessage() {
         System.out.println("Bye. Hope to see you again soon!");
     }
@@ -99,16 +100,13 @@ public class Duke {
 
     private static void greetUser() {
         System.out.println("Hello! I'm Duke");
-        System.out.println("What can I do for you?\n");
+        System.out.println("What can I do for you?");
     }
 
     private static String getUserInput(Scanner in) {
-        // Scanner in = new Scanner(System.in);
         String userInput = in.nextLine();
         return userInput;
     }
-
-
 
     private static String[] processUserInput(String userInput) {
         // first, split up the string ONCE with " " delimiter to separate the command & information
