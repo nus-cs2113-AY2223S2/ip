@@ -30,10 +30,6 @@ public class Rica {
         printlnWithIndent(Rica.ADD_PHRASE + description);
     }
 
-    private static void addTask(Task newTask) {
-        Rica.getPastTexts().add(newTask);
-    }
-
     /**
      * Mark a given task in the task list as done
      *
