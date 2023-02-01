@@ -18,28 +18,33 @@ public class Duke {
             switch (command) {
                 case "list":
                     outputMessage = Task.getTasksList(tasks);
+                    break;
                 case "mark":
                     taskIndex = getTaskIndexFromInput(input);
                     tasks[taskIndex].markAsDone();
                     outputMessage = "Nice! I've marked this task as done:" + System.lineSeparator() + "\t"
                             + tasks[taskIndex].toString();
+                    break;
                 case "unmark":
                     taskIndex = getTaskIndexFromInput(input);
                     tasks[taskIndex].unmarkAsDone();
                     outputMessage = "Ok, I've marked this task as not done:" + System.lineSeparator() + "\t"
                             + tasks[taskIndex].toString();
+                    break;
                 case "task":
                     String taskDescription = input.split("/")[0].split("task")[1].trim();
                     Task newTask = new Task(taskDescription);
                     tasks[Task.numberOfTasks - 1] = newTask;
                     outputMessage = TASK_ADDED_PREFIX + newTask.toString() + System.lineSeparator() + "\t"
                             + getTaskAddedPostfix();
+                    break;
                 case "todo":
-                    String toDoDescription = input.split("/")[0].split("todo")[1].trim();
+                    String toDoDescription = input.split("todo")[1].trim();
                     Task newTodo = new ToDo(toDoDescription);
                     tasks[Task.numberOfTasks - 1] = newTodo;
                     outputMessage = TASK_ADDED_PREFIX + newTodo.toString() + System.lineSeparator() + "\t"
                             + getTaskAddedPostfix();
+                    break;
                 case "deadline":
                     String deadlineDescription = input.split("/")[0].split("deadline")[1].trim();
                     String deadlineBy = input.split("/")[1].trim();
@@ -47,6 +52,7 @@ public class Duke {
                     tasks[Task.numberOfTasks - 1] = newDeadline;
                     outputMessage = TASK_ADDED_PREFIX + newDeadline.toString() + System.lineSeparator() + "\t"
                             + getTaskAddedPostfix();
+                    break;
                 case "event":
                     String eventDescription = input.split("/")[0].split("event")[1].trim();
                     String eventStart = input.split("/")[1].trim();
@@ -55,11 +61,13 @@ public class Duke {
                     tasks[Task.numberOfTasks - 1] = newEvent;
                     outputMessage = TASK_ADDED_PREFIX + newEvent.toString() + System.lineSeparator() + "\t"
                             + getTaskAddedPostfix();
+                    break;
                 case "bye":
                     outputMessage = "Bye. Hope to see you again soon!";
                     System.exit(0);
                 default:
                     outputMessage = "Sorry, I don't understand what you said. Can you say it again";
+                    break;
             }
 
             System.out.println("\t____________________________________________________________");
