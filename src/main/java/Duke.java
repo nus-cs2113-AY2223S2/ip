@@ -4,7 +4,6 @@ import java.util.Scanner;
 public class Duke {
     private static ArrayList<Task> taskList = new ArrayList<>();
 
-    @SuppressWarnings("checkstyle:Indentation")
     public static void main(String[] args) {
         String lineBreak = "-----------------";
         System.out.println(lineBreak + '\n' + "Hello! I'm Duke" + '\n'
@@ -17,8 +16,7 @@ public class Duke {
                 System.out.println(lineBreak + '\n'
                         + "Here are the tasks in your list:");
                 for (int i = 0; i < taskList.size(); i++) {
-                    System.out.println(i + 1 + ".[" + taskList.get(i).getStatusIcon() + "] "
-                            + taskList.get(i).description);
+                    System.out.println(i + 1 + "." + taskList.get(i).toString());
                 }
                 System.out.println(lineBreak);
             } else if (instruction.equalsIgnoreCase("bye")) {
@@ -35,12 +33,29 @@ public class Duke {
                     taskList.get(toMark - 1).markAsUnDone();
                     System.out.println("OK, I've marked this task as not done yet: ");
                 }
-                System.out.println("[" + taskList.get(toMark - 1).getStatusIcon() + "] "
-                        + taskList.get(toMark - 1).description + '\n' + lineBreak);
+                System.out.println(taskList.get(toMark - 1).toString() + '\n' + lineBreak);
             } else {
-                Task t = new Task(instruction);
+                Task t = null;
+                if (instruction.toLowerCase().contains("deadline")) {
+                    String description = instruction.substring(instruction.indexOf(' ') + 1, instruction.indexOf('/'));
+                    String ddl = instruction.substring(instruction.indexOf('/') + 1);
+                    String by = ddl.replace("by", "");
+                    t = new Deadline(description, by);
+                } else if (instruction.toLowerCase().contains("event")) {
+                    String substring = instruction.substring(instruction.indexOf(' ') + 1);
+                    String[] info = substring.split("/");
+                    String from = info[1].replace("from", "");
+                    String to = info[2].replace("to", "");
+                    t = new Event(info[0], from, to);
+                } else if (instruction.toLowerCase().contains("todo")) {
+                    String description = instruction.substring(instruction.indexOf(' ') + 1);
+                    t = new Todo(description);
+                } else {
+                    t = new Task(instruction);
+                }
                 taskList.add(t);
-                System.out.println(lineBreak + '\n' + "added: " + t.description + '\n' + lineBreak);
+                System.out.println(lineBreak + '\n' + "Got it. I've added this task:" + '\n' + '\t' + t.toString());
+                System.out.println("Now you have " + taskList.size() + " tasks in the list." + '\n' + lineBreak);
             }
         }
     }
