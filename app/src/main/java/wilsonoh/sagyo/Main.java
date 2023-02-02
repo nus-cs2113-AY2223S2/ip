@@ -18,7 +18,7 @@ public class Main {
 
     private static final String PROMPT = "> ";
 
-    private ArrayList<Task> tasks = new ArrayList<>();
+    private final ArrayList<Task> tasks = new ArrayList<>();
 
     /**
      * Runner function of the class, executes the main loop
@@ -44,7 +44,7 @@ public class Main {
                     Command cmd = cmdParser.parseCommand(line);
                     cmd.executeCommand();
                     ui.printLinesInfo(cmd.getCommandMessage());
-                    if (cmd.isExit) {
+                    if (cmd.isExit()) {
                         isRunning = false;
                     }
                 } catch (SagyoException e) {

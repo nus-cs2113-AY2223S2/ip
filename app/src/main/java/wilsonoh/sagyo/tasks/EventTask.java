@@ -4,8 +4,8 @@ import wilsonoh.sagyo.commands.CommandType;
 
 public class EventTask extends Task {
 
-    private String from;
-    private String to;
+    private final String from;
+    private final String to;
 
     public EventTask(String taskName, String from, String to) {
         super(taskName);
