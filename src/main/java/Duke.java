@@ -8,6 +8,7 @@ public class Duke {
         System.out.println(printContent);
     }
     public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -24,8 +25,20 @@ public class Duke {
         System.out.println(enterGreet);
         TodoList todoList = new TodoList();
         while(true){
-            Scanner in = new Scanner(System.in);
+            // if(args[0] != ""){
+            //     File inputFile = new File("../../../text-ui-test/input.txt");
+            //     // File inputFile = new File(args[0]);
+            //     // Path path = Paths.get(args[0]);
+            //     try {
+            //         in = new Scanner(inputFile);
+            //     } catch (FileNotFoundException e) {
+            //         e.printStackTrace();
+            //     }
+            // }else{
+            //     in = new Scanner(System.in);
+            // }
             String line = in.nextLine();
+            System.out.println(line);
             if(line.equals("bye")){
                 // quit
                 System.out.println(exitPrompt);
@@ -94,5 +107,6 @@ public class Duke {
                 }
             }
         }
+        in.close();
     }
 }
