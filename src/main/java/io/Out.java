@@ -31,7 +31,7 @@ public class Out {
     }
 
     private static void printBoxRightBorder(int unusedSpace) {
-        // = since we also have one space as padding
+        // '<=' not '<' since we also have one space as padding
         for (int i = 0; i <= unusedSpace; i++) {
             System.out.print(' ');
         }

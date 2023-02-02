@@ -4,9 +4,10 @@ public class Parser {
     public static Command parse(String input) {
         String[] options = input.split(" /");
 
-        String[] mainPart = options[0].split(" ", 2);
-        String type = mainPart[0];
-        String body = mainPart.length > 1 ? mainPart[1] : null;
+        // Separating the main command from the parameters aka the body
+        String[] components = options[0].split(" ", 2);
+        String type = components[0];
+        String body = components.length > 1 ? components[1] : null;
 
         String from = null;
         String to = null;
