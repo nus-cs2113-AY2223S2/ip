@@ -11,7 +11,7 @@ public class Task {
     public String getStatusIcon() {
         return (isDone ? "X" : " "); // mark done task with X
     }
-    public String getDescription(){
+    public String getDescription() {
         return description;
     }
     public void markAsDone() {
@@ -19,5 +19,9 @@ public class Task {
     }
     public void markAsUnDone() {
         isDone = false;
+    }
+    @Override
+    public String toString() {
+        return "[" + getStatusIcon() + "]";
     }
 }
