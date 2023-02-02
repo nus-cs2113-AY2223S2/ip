@@ -5,6 +5,7 @@ public class Duke {
         for (int i = 0; i < 30; i++) {
             System.out.print("_");
         }
+        System.out.println();
     }
 
     public static void main(String[] args) {
@@ -16,32 +17,42 @@ public class Duke {
         System.out.println("Hello from\n" + logo);
 
         drawLine();
-        System.out.println();
 
         System.out.println("Hello! I'm Duke");  // Greetings
         System.out.println("What can I do for you?");
 
         drawLine();
-        System.out.println();
 
         Scanner scan = new Scanner(System.in);  // Create a Scanner object
         String echo = "echo";
 
+        String[] list = new String[100];  //Create a list
+        int curPos = 0;  //Initialise current position
+        int index = 1;  //Set index
+
         while(true) {  //Endless loop until "bye" is detected
             echo = scan.nextLine();
             drawLine();
-            System.out.println();
             if(echo.equals("bye")) {  //Terminate echo and exit while loop
                 break;
             }
-            System.out.println(echo);
-            drawLine();
-            System.out.println();
+            else if(echo.equals("list")) {
+                for(int i = 0; i < curPos; i++) {
+                    System.out.println(index + ". " + list[index - 1]);
+                    index++;
+                }
+                drawLine();
+            }
+            else {
+                list[curPos] = echo;
+                curPos++;
+                System.out.println("added: " + echo);
+                drawLine();
+            }
         }
 
         System.out.println("Bye. Hope to see you again soon!");
         drawLine();
-        System.out.println();
 
     }
 
