@@ -1,12 +1,12 @@
-package com.ethanyidong.bunny;
+package com.ethanyidong.bunny.task;
 
 public abstract class Task {
     private String name;
-    private boolean done;
+    private boolean isDone;
 
     public Task(String name) {
         this.name = name;
-        this.done = false;
+        this.isDone = false;
     }
 
     public String getName() {
@@ -17,12 +17,8 @@ public abstract class Task {
         this.name = name;
     }
 
-    public void markAsDone() {
-        this.done = true;
-    }
-
-    public void markAsNotDone() {
-        this.done = false;
+    public void setIsDone(boolean isDone) {
+        this.isDone = isDone;
     }
 
     protected abstract String label();
@@ -30,7 +26,7 @@ public abstract class Task {
     @Override
     public String toString() {
         char marker = ' ';
-        if (this.done) {
+        if (this.isDone) {
             marker = 'X';
         }
         return "[" + this.label() + "][" + marker + "] " + this.getName();

@@ -1,18 +1,14 @@
-package com.ethanyidong.bunny;
-
-import com.ethanyidong.bunny.arg.CommandValidator;
-import com.ethanyidong.bunny.arg.InvalidArgumentException;
-import com.ethanyidong.bunny.arg.InvalidCommandException;
+package com.ethanyidong.bunny.cmd;
 
 import java.util.HashMap;
 
-public class ParsedCommand {
-    private CommandType command;
+public class TokenizedCommand {
+    private String command;
     private String positionalArgument;
     private HashMap<String, String> flagArguments;
-    public ParsedCommand(String command) {
+    public TokenizedCommand(String command) {
         String[] commandAndArguments = command.split(" ", 2);
-        this.command = extractCommandType(commandAndArguments[0]);
+        this.command = extractCommand(commandAndArguments[0]);
 
         String arguments;
         if(commandAndArguments.length == 2) {
@@ -27,8 +23,8 @@ public class ParsedCommand {
 
     }
 
-    private static CommandType extractCommandType(String command) {
-        return CommandType.fromString(command);
+    private static String extractCommand(String command) {
+        return command;
     }
 
     private static String extractPositionalArgument(String[] positionalAndFlagArgument) {
@@ -50,7 +46,7 @@ public class ParsedCommand {
         return ret;
     }
 
-    public CommandType getCommand() {
+    public String getCommand() {
         return command;
     }
 
@@ -60,14 +56,5 @@ public class ParsedCommand {
 
     public String getFlagArgument(String flag) {
         return this.flagArguments.get(flag);
-    }
-
-    public void validateCommand(BunnySession bunny) throws InvalidCommandException {
-        if (this.command == null) {
-            throw new InvalidCommandException("command", new InvalidArgumentException("is unrecognized"));
-        }
-        for(CommandValidator validator : this.command.validators()) {
-            validator.validateCommand(bunny, this);
-        }
     }
 }

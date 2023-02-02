@@ -1,4 +1,6 @@
-package com.ethanyidong.bunny;
+package com.ethanyidong.bunny.task;
+
+import com.ethanyidong.bunny.task.Task;
 
 public class Event extends Task {
     private String from;

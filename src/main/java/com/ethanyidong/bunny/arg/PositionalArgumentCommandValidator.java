@@ -1,7 +1,7 @@
 package com.ethanyidong.bunny.arg;
 
 import com.ethanyidong.bunny.BunnySession;
-import com.ethanyidong.bunny.ParsedCommand;
+import com.ethanyidong.bunny.cmd.TokenizedCommand;
 
 public class PositionalArgumentCommandValidator implements CommandValidator {
     private ArgumentValidator argumentValidator;
@@ -10,7 +10,7 @@ public class PositionalArgumentCommandValidator implements CommandValidator {
         this.argumentValidator = argumentValidator;
     }
 
-    public void validateCommand(BunnySession bunny, ParsedCommand command) throws InvalidCommandException {
+    public void validateCommand(BunnySession bunny, TokenizedCommand command) throws InvalidCommandException {
         try {
             this.argumentValidator.validateArgument(bunny, command.getPositionalArgument());
         } catch(InvalidArgumentException iae) {

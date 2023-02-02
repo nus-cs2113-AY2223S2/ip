@@ -1,5 +1,7 @@
 package com.ethanyidong.bunny;
 
+import com.ethanyidong.bunny.task.Task;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -9,9 +11,11 @@ public class BunnySession {
     private final static String MESSAGE_INDENTATION = " ";
 
     private ArrayList<Task> taskList;
+    private boolean isQuit;
 
     public BunnySession() {
         this.taskList = new ArrayList<>();
+        this.isQuit = false;
     }
 
     public void printMessage(String message) {
@@ -39,5 +43,13 @@ public class BunnySession {
 
     public int numTasks() {
         return this.taskList.size();
+    }
+
+    public boolean isQuit() {
+        return this.isQuit;
+    }
+
+    public void quit() {
+        this.isQuit = true;
     }
 }
