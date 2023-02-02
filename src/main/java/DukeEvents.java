@@ -31,7 +31,7 @@ public class DukeEvents extends DukeTasks{
     }
 
     @Override
-    public String getDescription() {
-        return super.getDescription() + "(from: " + this.fromDetail + ", to: " + this.toDetail + ")";
+    public String toString() {
+        return super.toString() + "(from: " + this.fromDetail + ", to: " + this.toDetail + ")";
     }
 }

@@ -19,18 +19,19 @@ public class DukeTasks {
     public String getTaskType() {
         return (" ");
     }
-
-    public String getDescription() {
-        return this.description;
-    }
-
+    
     /** Marks the task */
     public void markDone() {
         this.isDone = true;
     }
-
+    
     /** Unmarks the task */
     public void unmarkDone() {
         this.isDone = false;
+    }
+    
+    @Override
+    public String toString() {
+        return this.description;
     }
 }

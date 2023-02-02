@@ -26,7 +26,7 @@ public class DukeDeadlines extends DukeTasks{
     }
 
     @Override
-    public String getDescription() {
-        return super.getDescription() + "(by: " + this.by + ")";
+    public String toString() {
+        return super.toString() + "(by: " + this.by + ")";
     }
 }

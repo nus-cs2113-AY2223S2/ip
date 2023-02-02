@@ -24,7 +24,7 @@ public class DukeCommands {
             if (taskIndex > taskLength) {
                 break;
             }
-            System.out.println(taskIndex + ".[" + task.getTaskType() + "] " + "[" + task.getStatusIcon() + "] " + task.getDescription());
+            System.out.println(taskIndex + ".[" + task.getTaskType() + "] " + "[" + task.getStatusIcon() + "] " + task.toString());
             taskIndex += 1;
         }
         System.out.println(spacer);
@@ -37,7 +37,7 @@ public class DukeCommands {
      */
     public static void markTask(Integer taskIndex) {
         list[taskIndex - 1].markDone();
-        System.out.println("  [" + list[taskIndex - 1].getStatusIcon() + "] " + list[taskIndex - 1].getDescription());
+        System.out.println("  [" + list[taskIndex - 1].getStatusIcon() + "] " + list[taskIndex - 1].toString());
         System.out.println(spacer);
     }
     
@@ -48,7 +48,7 @@ public class DukeCommands {
      */
     public static void unmarkTask(Integer taskIndex) {
         list[taskIndex - 1].unmarkDone();
-        System.out.println("  [" + list[taskIndex - 1].getStatusIcon() + "] " + list[taskIndex - 1].getDescription());
+        System.out.println("  [" + list[taskIndex - 1].getStatusIcon() + "] " + list[taskIndex - 1].toString());
         System.out.println(spacer);
     }
 }
