@@ -37,7 +37,7 @@ public class TokenizedCommand {
         for(int i = 1; i < positionalAndFlagArguments.length; i++) {
             String[] flagAndFlagArgument = positionalAndFlagArguments[i].split(" ", 2);
             if (flagAndFlagArgument.length == 2) {
-                ret.put(flagAndFlagArgument[0], flagAndFlagArgument[1]);
+                ret.put(flagAndFlagArgument[0], flagAndFlagArgument[1].trim());
             } else {
                 ret.put(flagAndFlagArgument[0], "");
             }
