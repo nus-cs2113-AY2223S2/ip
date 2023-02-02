@@ -2,11 +2,6 @@ public class Tasks {
 
   protected String description;
   protected boolean isDone;
-  // protected int taskNumber;
-
-  // public String getDescription() {
-  // return description;
-  // }
 
   public Tasks(String description) {
     this.description = description;
