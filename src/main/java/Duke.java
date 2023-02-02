@@ -32,7 +32,7 @@ public class Duke {
         greet_user();
         int counter = 0;
 
-        Tasks[] list_of_tasks = new Tasks[101];
+        Tasks[] list_of_tasks = new Tasks[101]; // Following the assumption that there will be no more than 100 tasks
         for (int k = 0; k < 101; k++) {
             list_of_tasks[k] = new Tasks("");
         }
@@ -61,7 +61,6 @@ public class Duke {
                         .println(list_of_tasks[index - 1].getStatusIcon() + " " + list_of_tasks[index - 1].description);
             } else {
                 System.out.println("added: " + input);
-
                 list_of_tasks[counter].description = input;
                 list_of_tasks[counter].isDone = false;
                 counter++;
@@ -72,9 +71,7 @@ public class Duke {
         }
 
         System.out.println("Goodbye. Hope to see u again :) \n");
-
         scan.close();
-
     }
 
 }
