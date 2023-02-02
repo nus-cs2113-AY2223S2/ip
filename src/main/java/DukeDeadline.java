@@ -5,7 +5,13 @@ public class DukeDeadline extends DukeTask {
         this.deadline = deadline;
     }
     @Override
-    public void printTask(int i) { System.out.println((i+1) + ".[D] [" + this.getStatusIcon() + "] " + this.taskName + " (by: " + this.deadline + ")"); }
+    public void printTask(int id) {
+        System.out.println((id +1) + ".[D] [" +
+                this.getStatusIcon() + "] " + this.taskName + " (by: " + this.deadline + ")");
+    }
     @Override
-    public void printTask() { System.out.println("[D] [" + this.getStatusIcon() + "] " + this.taskName + " (by: " + this.deadline + ")"); }
+    public void printTask() {
+        System.out.println("[D] [" +
+                this.getStatusIcon() + "] " + this.taskName + " (by: " + this.deadline + ")");
+    }
 }

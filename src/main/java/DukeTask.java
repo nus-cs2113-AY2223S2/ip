@@ -6,7 +6,7 @@ public class DukeTask {
         this.isDone = false;
     }
     public String getStatusIcon() {
-        return (this.isDone ? "X" : " "); // mark done task with X
+        return (this.isDone ? "X" : " ");
     }
     public void markAsDone() {
         if(this.isDone) {
@@ -21,9 +21,11 @@ public class DukeTask {
         this.isDone = false;
     }
     public void printTask(){
-        System.out.println("[T] [" + this.getStatusIcon() + "] " + this.taskName);
+        System.out.println("[T] [" +
+                this.getStatusIcon() + "] " + this.taskName);
     }
-    public void printTask(int i) {
-        System.out.println((i+1) + ".[T] [" + this.getStatusIcon() + "] " + this.taskName);
+    public void printTask(int id) {
+        System.out.println((id+1) + ".[T] [" +
+                this.getStatusIcon() + "] " + this.taskName);
     }
 }

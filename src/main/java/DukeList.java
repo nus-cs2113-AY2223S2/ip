@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 public class DukeList {
-    private static ArrayList<DukeTask> taskList = new ArrayList<>();
-    private static final int maxTask = 100;
+    private static final ArrayList<DukeTask> taskList = new ArrayList<>();
+    private static final int MAX_TASK = 100;
     public static void addTask(DukeTask task) {
-        if(taskList.size() == maxTask) {
-            DukePrinter.printString("Sorry, the list is full!");
+        if(taskList.size() == MAX_TASK) {
+            DukePrinter.printStringln("Sorry, the list is full!");
             return;
         }
         taskList.add(task);
@@ -20,16 +20,17 @@ public class DukeList {
         }
         DukePrinter.printLine();
     }
-    public static boolean checkID(int id) {
+    public static boolean isValidID(int id) {
         boolean isIDInValid = id < 0 || id >= taskList.size();
         if(isIDInValid) {
-            System.err.println("Sorry, the id is invalid!");
-            DukePrinter.printLine();
+            DukePrinter.printErrorln("Sorry, the id is invalid!");
             return false;
-        } else { return true; }
+        }
+        return true;
     }
+
     public static void markDone(int id) {
-        if(checkID(id)) {
+        if(isValidID(id)) {
             taskList.get(id).markAsDone();
             System.out.println("Nice! I've marked this task as done:");
             taskList.get(id).printTask();
@@ -37,7 +38,7 @@ public class DukeList {
         }
     }
     public static void unmarkDone(int id) {
-        if(checkID(id)) {
+        if(isValidID(id)) {
             taskList.get(id).unmarkAsDone();
             System.out.println("OK, I've marked this task as not done yet:");
             taskList.get(id).printTask();

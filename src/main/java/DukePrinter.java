@@ -30,8 +30,15 @@ public class DukePrinter {
         System.out.println(GoodbyeLogo);
         printLine();
     }
+    public static void printStringln(String s){
+        System.out.println(s);
+        System.out.println(LINE);
+    }
     public static void printString(String s){
         System.out.println(s);
+    }
+    public static void printErrorln(String s){
+        System.err.println(s);
         System.out.println(LINE);
     }
     public static void printLine(){

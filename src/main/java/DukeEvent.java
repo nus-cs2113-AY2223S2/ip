@@ -7,7 +7,13 @@ public class DukeEvent extends DukeTask {
         this.eventTo = eventTo;
     }
     @Override
-    public void printTask(int i) { System.out.println((i+1) + ".[E] [" + this.getStatusIcon() + "] " + this.taskName + " (from: " + this.eventFrom + " to: " + this.eventTo + ")"); }
+    public void printTask(int id) {
+        System.out.println((id +1) + ".[E] [" + this.getStatusIcon() + "] "
+                + this.taskName + " (from: " + this.eventFrom + " to: " + this.eventTo + ")");
+    }
     @Override
-    public void printTask() { System.out.println("[E] [" + this.getStatusIcon() + "] " + this.taskName + " (from: " + this.eventFrom + " to: " + this.eventTo + ")"); }
+    public void printTask() {
+        System.out.println("[E] [" + this.getStatusIcon() + "] "
+                + this.taskName + " (from: " + this.eventFrom + " to: " + this.eventTo + ")");
+    }
 }
