@@ -17,7 +17,6 @@ public class ThomasShelby {
 
     private static void addToDo(String[] cmdSplit) {
         ToDo newToDo = new ToDo(cmdSplit[1]);
-        //newToDo.setDescription(cmdSplit[1]);
         taskManager[taskCount] = newToDo;
         taskCount++;
         System.out.println("Don't sleep on it.");
@@ -27,7 +26,6 @@ public class ThomasShelby {
     private static void addDeadline(String[] cmdSplit) {
         String[] taskAndDeadline = cmdSplit[1].split("/", 2);
         Deadline newDeadline = new Deadline(taskAndDeadline[0], taskAndDeadline[1]);
-        //newDeadline.setDescription(cmdSplit[1]);
         taskManager[taskCount] = newDeadline;
         taskCount++;
         System.out.println("Time is money, chop chop!");
@@ -37,7 +35,6 @@ public class ThomasShelby {
     private static void addEvent(String[] cmdSplit) {
         String[] taskAndDuration = cmdSplit[1].split("/");
         Event newEvent = new Event(taskAndDuration[0], taskAndDuration[1], taskAndDuration[2]);
-        //newEvent.setDescription(cmdSplit[1]);
         taskManager[taskCount] = newEvent;
         taskCount++;
         System.out.println("I'll see you there.");
@@ -66,7 +63,7 @@ public class ThomasShelby {
         Scanner in = new Scanner(System.in);
         while (true) {
             String cmd = in.nextLine();
-            String[] cmdSplit = cmd.split(" ", 2); // array of words
+            String[] cmdSplit = cmd.split(" ", 2); // user input split into individual words
             int whichTask = 0; // variable holding mark/unmark task num
             switch (cmdSplit[0]) {
             case "bye":
