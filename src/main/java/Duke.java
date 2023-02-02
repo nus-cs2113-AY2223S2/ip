@@ -16,10 +16,8 @@ public class Duke {
 
 		boolean shouldExit = false;
 
-
 		while (!shouldExit) {
 			userMessage = sc.nextLine();
-
 			if (userMessage.startsWith("todo")) {
 				userMessage.substring(6);
 				tasks[taskCount] = new Todo(userMessage);
@@ -29,7 +27,6 @@ public class Duke {
 				taskCount += 1;
 				System.out.println("Now you have " + taskCount + " tasks in the list.");
 				dukeGreeting.printDivider();
-
 			} else if (userMessage.startsWith("deadline")) {
 				userMessage.substring(10);
 				String[] message = userMessage.split(" /by ");
@@ -58,17 +55,17 @@ public class Duke {
 				dukeGreeting.printDivider();
 				String[] messages = userMessage.split(" ");
 				int taskNumber = Integer.parseInt(messages[1]);
-				tasks[taskNumber-1].markAsDone();
+				tasks[taskNumber - 1].markAsDone();
 				System.out.println("Niceee! I've marked this task as done: ");
-				tasks[taskCount-1].printTask();
+				tasks[taskCount - 1].printTask();
 				dukeGreeting.printDivider();
 			} else if (userMessage.startsWith("unmark")) {
 				dukeGreeting.printDivider();
 				String[] messages = userMessage.split(" ");
 				int taskNumber = Integer.parseInt(messages[1]);
-				tasks[taskNumber-1].markAsUndone();
+				tasks[taskNumber - 1].markAsUndone();
 				System.out.println("Fine...I've marked this task as undone: ");
-				tasks[taskCount-1].printTask();
+				tasks[taskCount - 1].printTask();
 				dukeGreeting.printDivider();
 			} else if (userMessage.equalsIgnoreCase("Hello")) {
 				dukeGreeting.printDivider();
@@ -77,7 +74,7 @@ public class Duke {
 			} else if (userMessage.equalsIgnoreCase("list")) {
 				dukeGreeting.printDivider();
 				if (taskCount > 0) {
-					for(int i = 0; i < taskCount; i += 1){
+					for (int i = 0; i < taskCount; i += 1) {
 						System.out.println("Here are the tasks in your list: ");
 						System.out.print(i + 1);
 						System.out.print(".");
@@ -87,7 +84,9 @@ public class Duke {
 					System.out.println("You have no task right now!!");
 				}
 				dukeGreeting.printDivider();
-			} else if (userMessage.equalsIgnoreCase("Exit")) {
+			} else if (userMessage.equalsIgnoreCase("help")) {
+				dukeGreeting.printHelp();
+			} else if (userMessage.equalsIgnoreCase("exit")) {
 				shouldExit = true;
 				dukeGreeting.printExitLine();
 			} else {
