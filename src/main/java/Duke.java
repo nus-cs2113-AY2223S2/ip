@@ -3,77 +3,107 @@ import java.util.Scanner;
 public class Duke {
 
     static final Task[] TASKS = new Task[101];
+    static int tasksI = 1;
 
     public static void main(String[] args) {
+        // print intro message
+        start();
+        // run bot (decode task)
+        run();
+    }
+
+    public static void start() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
-
-        runBot();
-    }
-
-    public static void runBot() {
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
+    }
 
+    public static void list() {
+        System.out.println("Here are the tasks in your list: ");
+        for (int i = 1; i < tasksI; i++) {
+            Task currTask = TASKS[i];
+            System.out.println(i + ". " + currTask.toString());
+        }
+    }
+
+    public static void markUnmark(String word, Task task) {
+        if (word.equals("mark")) {
+            task.mark();
+            System.out.println("Nice! I've marked this task as done: ");
+            System.out.println(task.toString());
+        } else {
+            task.unmark();
+            System.out.println("OK, I've marked this task as not done yet: ");
+            System.out.println(task.toString());
+        }
+    }
+
+    public static void deadline(String taskDescript) {
+        int bySize = 3;
+        // System.out.println("begin index: " + taskDescript.indexOf("by"));
+        // System.out.println("end index: " + taskDescript.indexOf("by") + bySize);
+        String by = taskDescript.substring(taskDescript.indexOf("by") + bySize);
+        Deadline deadline = new Deadline(taskDescript, by);
+        TASKS[tasksI] = deadline;
+        System.out.println("Got it. I've added this task: ");
+        System.out.println(deadline.toString());
+    }
+
+    public static void todo(String taskDescript) {
+        Todo todo = new Todo(taskDescript);
+        TASKS[tasksI] = todo;
+        System.out.println("Got it. I've added this task: ");
+        System.out.println(todo.toString());
+    }
+
+    public static void event(String taskDescript) {
+        Event event = new Event(taskDescript);
+        TASKS[tasksI] = event;
+        System.out.println("Got it. I've added this task:");
+        System.out.println(event.toString());
+    }
+
+    public static void task(String taskType, String[] taskDescript) {
+        if (taskType.equals("deadline") || taskType.equals("todo") || taskType.equals("event")) {
+            String descript = String.join(" ", taskDescript).substring(taskType.length());
+            if (taskType.equals("deadline")) {
+                deadline(descript);
+            } else if (taskType.equals("todo")) {
+                todo(descript);
+            } else if (taskType.equals("event")) {
+                event(descript);
+            }
+        } else {
+            Task task = new Task(String.join(" ", taskType));
+            TASKS[tasksI] = task;
+            System.out.println(task.toString());
+        }
+        System.out.println("Now you have " + tasksI + " tasks in the list.");
+    }
+
+    public static void run() {
         Scanner scan = new Scanner(System.in);
-        String[] command = scan.nextLine().split(" ");
-        int commandI = 0;
-        int tasksI = 1;
-        while (!command[0].equals("bye")) {
-            if (command[0].equals("list")) {    // not a task --> want to see the tasks
-                System.out.println("Here are the tasks in your list: ");
-                for (int i = 1; i < tasksI; i++) {
-                    Task currTask = TASKS[i];
-                    // System.out.println(i + ".[" + currTask.getStatusIcon() + "] " + currTask.getDescription());
-                    System.out.println(i + ". " + currTask.toString());
-                }
-            } else if (command[0].contains("mark")) {   // not a task --> want to mark/unmark a task
-                int taskNum = Integer.parseInt(command[1]);
-                Task currTask = TASKS[taskNum];
-                if (command[0].equals("mark")) {
-                    currTask.mark();
-                    System.out.println("Nice! I've marked this task as done: ");
-                    System.out.println(currTask.toString());
-                } else {
-                    currTask.unmark();
-                    System.out.println("OK, I've marked this task as not done yet: ");
-                    System.out.println(currTask.toString());
-                }
-            } else {    // task
-                if (command[0].equals("deadline")) {
-                    String description = String.join(" ", command).substring(8);
-                    String by = description.substring(description.indexOf("by") + 3);
-                    Deadline deadline = new Deadline(description, by);
-                    TASKS[tasksI] = deadline;
-                    System.out.println("Got it. I've added this task: ");
-                    System.out.println(deadline.toString());
-                } else if (command[0].equals("todo")) {
-                    String description = String.join(" ", command).substring(4);
-                    Todo todo = new Todo(description);
-                    TASKS[tasksI] = todo;
-                    System.out.println("Got it. I've added this task: ");
-                    System.out.println(todo.toString());
-                } else if (command[0].equals("event")) {
-                    String description = String.join(" ", command).substring(5);
-                    Event event = new Event(description);
-                    TASKS[tasksI] = event;
-                    System.out.println("Got it. I've added this task:");
-                    System.out.println(event.toString());
-                } else {
-                    Task task = new Task(String.join(" ", command));
-                    TASKS[tasksI] = task;
-                    System.out.println(task.toString());
-                }
-                System.out.println("Now you have " + tasksI + " tasks in the list.");
+        String[] input = scan.nextLine().split(" ");
+        while (!input[0].equals("bye")) {
+            // want to see all the tasks in a list
+            if (input[0].equals("list")) {
+                list();
+            // mark/unmark a task
+            } else if (input[0].contains("mark")) {
+                Task taskNum = TASKS[Integer.parseInt(input[1])];
+                markUnmark(input[0], taskNum);
+            // a task
+            } else {
+                task(input[0], input);
                 tasksI++;
             }
-            command = scan.nextLine().split(" ");
+            input = scan.nextLine().split(" ");
         }
-
         System.out.println("Bye. Hope to see you again soon!");
     }
 }

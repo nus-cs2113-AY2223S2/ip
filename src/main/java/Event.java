@@ -6,11 +6,13 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        String[] command =  description.split("/");
-        String from  = command[1].substring(0, 4);
-        String fromDate = command[1].substring(5);
-        String to = command[2].substring(0, 2);
-        String toDate = command[2].substring(3);
+        String[] dates =  description.split("/");
+        int fromLength = 4;
+        String from  = dates[1].substring(0, fromLength);
+        String fromDate = dates[1].substring(fromLength + 1);
+        int toSize = 2;
+        String to = dates[2].substring(0, toSize);
+        String toDate = dates[2].substring(toSize + 1);
         return "[E]" + super.toString() + "(" + from + ": " + fromDate + to + ": " + toDate + ")" ;
     }
 }
