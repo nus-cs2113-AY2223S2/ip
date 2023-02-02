@@ -8,6 +8,7 @@ public class Event extends Task {
         this.endTime = endTime;
     }
 
+    @Override
     public String toString() {
         return "[E]" + super.toString() + " (from: " + startTime + " to: " + endTime + ")";
     }
