@@ -18,17 +18,48 @@ public class Arsdorint {
     }
 
     public static void list() {
+        System.out.println("____________________________________________________________\n");
         for (int i = 0; i < Task.numOfTasks; i++) {
-            System.out.print(i + 1);
-            System.out.print(". " + toDoList[i].getStatus() + " ");
-            System.out.println(toDoList[i].description);
+            System.out.print(Integer.toString(i + 1) + ".");
+            toDoList[i].printTask();
         }
+        System.out.println("____________________________________________________________\n");
     }
 
     public static void add(String command) {
-        toDoList[Task.numOfTasks] = new Task(command);
+        /*toDoList[Task.numOfTasks] = new Task(command);
         System.out.print("Added: ");
-        echo(command);
+        echo(command);*/
+        String newTaskType = command.split(" ")[0];
+        if (!(newTaskType.equalsIgnoreCase("todo") ||
+                (newTaskType.equalsIgnoreCase("deadline")) ||
+                        (newTaskType.equalsIgnoreCase("event"))))
+        System.out.println("Please indicate task type: " +
+                "\"todo\" " + "or \"deadline\" or \"event\"");
+        else {
+            String[] taskDescription =
+                    command.replace(newTaskType, "").trim().split("/");
+            switch (newTaskType.toLowerCase()) {
+                case "todo":
+                    toDoList[Task.numOfTasks] = new Todo(taskDescription[0]);
+                    break;
+                case "deadline":
+                    toDoList[Task.numOfTasks] =
+                            new Deadline(taskDescription[0], taskDescription[1].trim());
+                    break;
+                case "event":
+                    toDoList[Task.numOfTasks] =
+                            new Event(taskDescription[0], taskDescription[1].trim());
+                    break;
+                default:
+                    break;
+            }
+            System.out.println("____________________________________________________________\n");
+            System.out.println("Got it. I've added this task:\n" + "\t");
+            toDoList[Task.numOfTasks - 1].printTask();
+            System.out.println("\t" + "Now you have " + Integer.toString(Task.numOfTasks) + " tasks in the list.");
+            System.out.println("____________________________________________________________\n");
+        }
     }
 
     public static void mark(String command) {
