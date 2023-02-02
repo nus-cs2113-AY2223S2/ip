@@ -2,7 +2,7 @@ public class Task {
     private String taskName;
     private boolean isComplete;
 
-    public Task (String taskName) {
+    public Task(String taskName) {
         this.taskName = taskName;
         this.isComplete = false;
     }
@@ -24,6 +24,10 @@ public class Task {
 
     public void setIncomplete() {
         this.isComplete = false;
+    }
+
+    public String printTask() {
+        return "[" + getStatus() + "]" + getTask();
     }
 }
 
