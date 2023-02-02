@@ -1,7 +1,6 @@
 import java.util.Scanner;
 
-public class Duke
-{
+public class Duke {
     /* immutable Strings below
      *
      *
@@ -11,7 +10,7 @@ public class Duke
     public static final String INVALID = " Invalid command!";
     public static final String GOODBYE = " Bye. Hope to see you again soon!";
     public static final String LINE_DIVIDER = "____________________________________________________________";
-    public static final int INT = 101;
+    public static final int MAX_TASKS = 101;
 
     /* Storage and variables below
      *
@@ -19,77 +18,62 @@ public class Duke
      */
     private static int indexBaseOne = 1;
     private static Task[] tasks;
-    private static final Scanner SCANNER = new Scanner (System.in);
+    private static final Scanner SCANNER = new Scanner(System.in);
 
 
-    public static void main (String[] args)
-    {
-        greet ();
+    public static void main(String[] args) {
+        greet();
         String line;
-        initTasks ();
-        line = SCANNER.nextLine ();
+        initTasks();
+        line = SCANNER.nextLine();
 
         while (true) {
 
-            if (line.equals ("bye"))
-            {
-                goodbye ();
-                System.exit (0);
+            if (line.equals("bye")) {
+                goodbye();
+                System.exit(0);
             }
 
-            if (line.equals ("list"))
-            {
+            if (line.equals("list")) {
                 for (int i = 1; i < indexBaseOne; i++) {
-                    System.out.println (i + ": " + tasks[i].getTaskStatus ());
+                    System.out.println(i + ": " + tasks[i].getTaskStatus());
                 }
 
-            }
-            else if (line.length () > 5 && line.startsWith ("mark"))
-            {
-                int pointer = Integer.parseInt (line.substring (5));
-                tasks[pointer].setDone ();
-                System.out.println ("Nice! I've marked this task as done:\n"
-                        + tasks[pointer].getTaskStatus ());
+            } else if (line.length() > 5 && line.startsWith("mark")) {
+                int pointer = Integer.parseInt(line.substring(5));
+                tasks[pointer].setDone();
+                System.out.println("Nice! I've marked this task as done:\n"
+                        + tasks[pointer].getTaskStatus());
 
-            }
-            else if (line.length () > 7 && line.startsWith ("unmark"))
-            {
-                int pointer = Integer.parseInt (line.substring (7));
-                tasks[pointer].setNotDone ();
-                System.out.println ("Yikes! I've marked this task as not done:\n"
-                        + tasks[pointer].getTaskStatus ());
+            } else if (line.length() > 7 && line.startsWith("unmark")) {
+                int pointer = Integer.parseInt(line.substring(7));
+                tasks[pointer].setNotDone();
+                System.out.println("Yikes! I've marked this task as not done:\n"
+                        + tasks[pointer].getTaskStatus());
 
-            }
-            else if (line.length () > 5 && line.startsWith ("todo"))
-            {
-                System.out.println ("added: " + line);
-                tasks[indexBaseOne] = new ToDo (line.substring (5));
+            } else if (line.length() > 5 && line.startsWith("todo")) {
+                System.out.println("added: " + line);
+                tasks[indexBaseOne] = new ToDo(line.substring(5));
                 indexBaseOne += 1;
-            }
-            else if (line.length () > 9 && line.startsWith ("deadline"))
-            {
-                System.out.println ("added: " + line);
-                final int indexOfBy = line.indexOf ("/by");
-                tasks[indexBaseOne] = new DeadLine (line.substring (9, indexOfBy), line.substring (indexOfBy+4));
+            } else if (line.length() > 9 && line.startsWith("deadline")) {
+                System.out.println("added: " + line);
+                final int indexOfBy = line.indexOf("/by");
+                tasks[indexBaseOne] = new DeadLine(line.substring(9, indexOfBy), line.substring(indexOfBy + 4));
                 indexBaseOne += 1;
-            }
-            else if (line.length () > 6 && line.startsWith ("event"))
-            {
-                System.out.println ("added: " + line);
-                final int indexOfFrom = line.indexOf ("/from");
-                final int indexOfTo = line.indexOf ("/to");
-                tasks[indexBaseOne] = new Event (line.substring (6, indexOfFrom),
-                        line.substring (indexOfFrom+6, indexOfTo),
-                        line.substring (indexOfTo+4));
+            } else if (line.length() > 6 && line.startsWith("event")) {
+                System.out.println("added: " + line);
+                final int indexOfFrom = line.indexOf("/from");
+                final int indexOfTo = line.indexOf("/to");
+                tasks[indexBaseOne] = new Event(line.substring(6, indexOfFrom),
+                        line.substring(indexOfFrom + 6, indexOfTo),
+                        line.substring(indexOfTo + 4));
                 indexBaseOne += 1;
-            }
-            else
-            {
-                System.out.println (INVALID);
+            } else {
+                System.out.println(INVALID);
             }
 
-            lineBreak ();
-            line = SCANNER.nextLine ();
+            lineBreak();
+            line = SCANNER.nextLine();
 
 
         }
@@ -100,27 +84,23 @@ public class Duke
      * since calling any method technically does Class.method()
      *
      */
-    public static void lineBreak ()
-    {
-        System.out.println (LINE_DIVIDER);
+    public static void lineBreak() {
+        System.out.println(LINE_DIVIDER);
     }
 
-    public static void greet ()
-    {
-        lineBreak ();
-        System.out.println (GREETING);
-        lineBreak ();
+    public static void greet() {
+        lineBreak();
+        System.out.println(GREETING);
+        lineBreak();
     }
 
-    public static void goodbye ()
-    {
-        System.out.println (GOODBYE);
-        lineBreak ();
+    public static void goodbye() {
+        System.out.println(GOODBYE);
+        lineBreak();
     }
 
-    public static void initTasks ()
-    {
-        tasks = new Task[INT];
+    public static void initTasks() {
+        tasks = new Task[MAX_TASKS];
     }
 
 

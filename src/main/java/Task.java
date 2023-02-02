@@ -1,5 +1,4 @@
-public class Task
-{
+public class Task {
 
     private String taskName;
 
@@ -7,30 +6,25 @@ public class Task
 
     private boolean isDone;
 
-    public Task (String taskName)
-    {
+    public Task(String taskName) {
         this.taskName = taskName;
         this.isDone = false;
     }
 
-    public String getTaskName ()
-    {
+    public String getTaskName() {
         return taskName;
     }
 
-    public String getStatusIcon ()
-    {
+    public String getStatusIcon() {
         return (isDone ? "X" : " ");
     }
 
-    public String getTaskType ()
-    {
+    public String getTaskType() {
         if (taskType == null) //need to figure this out later
         {
             return " ";
         }
-        switch (taskType)
-        {
+        switch (taskType) {
             case TO_DO:
                 return "T";
             case DEAD_LINE:
@@ -42,19 +36,16 @@ public class Task
         }
     }
 
-    public void setDone ()
-    {
+    public void setDone() {
         isDone = true;
     }
 
-    public void setNotDone ()
-    {
+    public void setNotDone() {
         isDone = false;
     }
 
-    public String getTaskStatus ()
-    {
-        return "[" + getTaskType () + "][" + getStatusIcon () + "]" + getTaskName ();
+    public String getTaskStatus() {
+        return "[" + getTaskType() + "][" + getStatusIcon() + "]" + getTaskName();
     }
 
 }

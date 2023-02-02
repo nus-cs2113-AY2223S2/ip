@@ -1,4 +1,3 @@
-public enum TaskType
-{
+public enum TaskType {
     TO_DO, DEAD_LINE, EVENT
 }
