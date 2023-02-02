@@ -7,15 +7,15 @@ public class Task {
         this.completed = false;
     }
 
-    public String GetTaskName() {
+    public String getTaskName() {
         return this.taskName;
     }
 
-    public void SetCompleted(boolean completed) {
+    public void setCompleted(boolean completed) {
         this.completed = completed;
     }
 
-    public boolean IsCompleted() {
+    public boolean isCompleted() {
         return completed;
     }
 

@@ -5,10 +5,10 @@ public class Todo extends Task {
     }
 
     public String toString() {
-        if (super.IsCompleted()) {
-            return ".[T][X] " + super.GetTaskName();
+        if (super.isCompleted()) {
+            return ".[T][X] " + super.getTaskName();
         } else {
-            return ".[T][ ] " + super.GetTaskName();
+            return ".[T][ ] " + super.getTaskName();
         }
     }
 

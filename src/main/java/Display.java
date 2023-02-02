@@ -1,17 +1,17 @@
 import java.util.ArrayList;
 
 public class Display {
-    private static String LINE =
+    private static final String LINE =
             "█████╗█████╗█████╗█████╗█████╗█████╗█████╗\n" +
                     "╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝";
+    private static final String LOGO = "░██████╗░█████╗░░██████╗░███████╗\n" +
+            "██╔════╝██╔══██╗██╔════╝░██╔════╝\n" +
+            "╚█████╗░███████║██║░░██╗░█████╗░░\n" +
+            "░╚═══██╗██╔══██║██║░░╚██╗██╔══╝░░\n" +
+            "██████╔╝██║░░██║╚██████╔╝███████╗\n" +
+            "╚═════╝░╚═╝░░╚═╝░╚═════╝░╚══════╝";
 
     public void welcomeUser() {
-        String LOGO = "░██████╗░█████╗░░██████╗░███████╗\n" +
-                "██╔════╝██╔══██╗██╔════╝░██╔════╝\n" +
-                "╚█████╗░███████║██║░░██╗░█████╗░░\n" +
-                "░╚═══██╗██╔══██║██║░░╚██╗██╔══╝░░\n" +
-                "██████╔╝██║░░██║╚██████╔╝███████╗\n" +
-                "╚═════╝░╚═╝░░╚═╝░╚═════╝░╚══════╝";
         String welcome = "Hello! I'm SAGE, the knowledgeable one\n"
                 + "What can I do for you today?\n";
         System.out.println(LOGO);
@@ -29,7 +29,7 @@ public class Display {
      */
     public void displayTask(TaskList taskList) {
         System.out.println(LINE);
-        taskList.ListTask();
+        taskList.listTask();
         System.out.println(LINE);
     }
 
@@ -47,19 +47,19 @@ public class Display {
         case TODO:
             System.out.println("Got it. I've added this task:");
             System.out.println("[T][ ] " + userInput[0].substring(5));
-            System.out.println("Now you have " + taskList.GetTaskCount() + " tasks in the list");
+            System.out.println("Now you have " + taskList.getTaskCount() + " tasks in the list");
             break;
         case EVENT:
             System.out.println("Got it. I've added this task:");
             System.out.println("[E][ ] " + userInput[0].substring(6) + "(from: "
                     + userInput[1].substring(5) + " to: " + userInput[2].substring(3) + ")");
-            System.out.println("Now you have " + taskList.GetTaskCount() + " tasks in the list");
+            System.out.println("Now you have " + taskList.getTaskCount() + " tasks in the list");
             break;
         case DEADLINE:
             System.out.println("Got it. I've added this task:");
             System.out.println("[D][ ] " + userInput[0].substring(9) + "(by: "
                     + userInput[1].substring(3) + ")");
-            System.out.println("Now you have " + taskList.GetTaskCount() + " tasks in the list");
+            System.out.println("Now you have " + taskList.getTaskCount() + " tasks in the list");
             break;
         }
         System.out.println(LINE);
@@ -89,7 +89,7 @@ public class Display {
      */
     public void validUnmark(ArrayList<Task> list, int taskNumber) {
         System.out.println("OK, I've marked this task as not done yet:");
-        System.out.println("[ ] " + list.get(taskNumber - 1).GetTaskName());
+        System.out.println("[ ] " + list.get(taskNumber - 1).getTaskName());
     }
 
     /**
@@ -100,7 +100,7 @@ public class Display {
      */
     public void validMark(ArrayList<Task> list, int taskNumber) {
         System.out.println("Nice! I've marked this task as done:");
-        System.out.println("[X] " + list.get(taskNumber - 1).GetTaskName());
+        System.out.println("[X] " + list.get(taskNumber - 1).getTaskName());
     }
 
 }

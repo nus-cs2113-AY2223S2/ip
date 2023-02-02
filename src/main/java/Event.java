@@ -18,10 +18,10 @@ public class Event extends Task {
     }
 
     public String toString() {
-        if (super.IsCompleted()) {
-            return ".[E][X] " + super.GetTaskName() + "(from: " + getStartWhen() + " to: " + getEndWhen() + ")";
+        if (super.isCompleted()) {
+            return ".[E][X] " + super.getTaskName() + "(from: " + getStartWhen() + " to: " + getEndWhen() + ")";
         } else {
-            return ".[E][ ] " + super.GetTaskName() + "(from: " + getStartWhen() + " to: " + getEndWhen() + ")";
+            return ".[E][ ] " + super.getTaskName() + "(from: " + getStartWhen() + " to: " + getEndWhen() + ")";
         }
     }
 }

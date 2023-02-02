@@ -11,10 +11,10 @@ public class Deadline extends Task {
     }
 
     public String toString() {
-        if (super.IsCompleted()) {
-            return ".[D][X] " + super.GetTaskName() + "(by: " + getByWhen() + ")";
+        if (super.isCompleted()) {
+            return ".[D][X] " + super.getTaskName() + "(by: " + getByWhen() + ")";
         } else {
-            return ".[D][ ] " + super.GetTaskName() + "(by: " + getByWhen() + ")";
+            return ".[D][ ] " + super.getTaskName() + "(by: " + getByWhen() + ")";
         }
     }
 }

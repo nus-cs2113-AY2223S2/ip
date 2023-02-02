@@ -39,16 +39,16 @@ public class TaskList {
      * Unmarks a completed task.
      *
      * @param taskNumber an integer that represents the index of the task to unmark (1-Indexed).
-     * @param UI         an object of the Display class that provides the user interface.
+     * @param ui         an object of the Display class that provides the user interface.
      */
-    public void unmarkTask(int taskNumber, Display UI) {
+    public void unmarkTask(int taskNumber, Display ui) {
         if (taskNumber <= 0 || taskNumber > list.size()) {
-            UI.taskNotFound();
-        } else if (!list.get(taskNumber - 1).IsCompleted()) {
-            UI.invalidUnmark();
+            ui.taskNotFound();
+        } else if (!list.get(taskNumber - 1).isCompleted()) {
+            ui.invalidUnmark();
         } else {
-            list.get(taskNumber - 1).SetCompleted(false);
-            UI.validUnmark(list, taskNumber);
+            list.get(taskNumber - 1).setCompleted(false);
+            ui.validUnmark(list, taskNumber);
         }
     }
 
@@ -56,20 +56,20 @@ public class TaskList {
      * Marks a completed task.
      *
      * @param taskNumber an integer that represents the index of the task to mark (1-Indexed).
-     * @param UI         an object of the Display class that provides the user interface.
+     * @param ui         an object of the Display class that provides the user interface.
      */
-    public void markTask(int taskNumber, Display UI) {
+    public void markTask(int taskNumber, Display ui) {
         if (taskNumber <= 0 || taskNumber > list.size()) {
-            UI.taskNotFound();
-        } else if (list.get(taskNumber - 1).IsCompleted()) {
-            UI.invalidMark();
+            ui.taskNotFound();
+        } else if (list.get(taskNumber - 1).isCompleted()) {
+            ui.invalidMark();
         } else {
-            list.get(taskNumber - 1).SetCompleted(true);
-            UI.validMark(list, taskNumber);
+            list.get(taskNumber - 1).setCompleted(true);
+            ui.validMark(list, taskNumber);
         }
     }
 
-    public void ListTask() {
+    public void listTask() {
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < list.size(); i++) {
             System.out.print(i + 1);
@@ -77,7 +77,7 @@ public class TaskList {
         }
     }
 
-    public int GetTaskCount() {
+    public int getTaskCount() {
         return list.size();
     }
 }
