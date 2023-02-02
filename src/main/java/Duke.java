@@ -24,19 +24,9 @@ public class Duke {
         boolean isExit = false;
         Task[] storedUserTasks = new Task[100];
         int taskIndex;
+        String description, by, from, to;
         int userTextCount = 0;
         while(!isExit){
-
-//            if(userCommand.split(" ")[0].equals("mark")||userCommand.split(" ")[0].equals("unmark")){
-//                try {
-//                    taskIndex = Integer.parseInt(userCommand.split(" ")[1]);
-//                    userCommand = userCommand.split(" ")[0];
-//                }
-//                catch (Exception e){
-//                    // User command is an actual task to be added
-//                }
-//            }
-
             switch (userCommand.split(" ")[0]){
             case "list":
                 System.out.println(divider);
@@ -69,7 +59,8 @@ public class Duke {
                 userCommand = scanner.nextLine();
                 break;
             case "todo":
-                storedUserTasks[userTextCount] = new Todo(userCommand.substring(5));
+                description = userCommand.substring(5);
+                storedUserTasks[userTextCount] = new Todo(description);
                 System.out.println(divider);
                 System.out.println(spacer+"Got it. I've added this task:");
                 System.out.println(spacer+spacer+storedUserTasks[userTextCount].toString());
@@ -80,7 +71,9 @@ public class Duke {
                 break;
             case "deadline":
                 int indexOfBy = userCommand.indexOf("/by");
-                storedUserTasks[userTextCount] = new Deadline(userCommand.substring(9,indexOfBy-1),userCommand.substring(indexOfBy+4));
+                description = userCommand.substring(9,indexOfBy-1);
+                by = userCommand.substring(indexOfBy+4);
+                storedUserTasks[userTextCount] = new Deadline(description,by);
                 System.out.println(divider);
                 System.out.println(spacer+"Got it. I've added this task:");
                 System.out.println(spacer+spacer+storedUserTasks[userTextCount].toString());
@@ -92,7 +85,10 @@ public class Duke {
             case "event":
                 int indexOfFrom = userCommand.indexOf("/from");
                 int indexOfTo = userCommand.indexOf("/to");
-                storedUserTasks[userTextCount] = new Event(userCommand.substring(6,indexOfFrom-1),userCommand.substring(indexOfFrom+6,indexOfTo-1),userCommand.substring(indexOfTo+4));
+                description = userCommand.substring(6,indexOfFrom-1);
+                from = userCommand.substring(indexOfFrom+6,indexOfTo-1);
+                to = userCommand.substring(indexOfTo+4);
+                storedUserTasks[userTextCount] = new Event(description,from,to);
                 System.out.println(divider);
                 System.out.println(spacer+"Got it. I've added this task:");
                 System.out.println(spacer+storedUserTasks[userTextCount].toString());
@@ -102,13 +98,6 @@ public class Duke {
                 userCommand = scanner.nextLine();
                 break;
             default:
-//                System.out.println(divider);
-//                System.out.println("added: " + userCommand);
-//                System.out.println(divider);
-//                storedUserTasks[userTextCount] = new Task(userCommand);
-//                userCommand = scanner.nextLine();
-//                userTextCount++;
-
                 System.out.println(divider);
                 System.out.println(spacer+"Please enter a valid input.");
                 System.out.println(divider);
