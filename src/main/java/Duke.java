@@ -71,6 +71,8 @@ public class Duke {
 
     public static void command() {
         Scanner in = new Scanner(System.in);
+        String next;
+        int num;
         do {
             System.out.print("What do you want: ");
             String cmd = in.next();
@@ -80,13 +82,11 @@ public class Duke {
             }
             System.out.println(DIV);
             switch (checkCmd) {
-            case "list": {
+            case "list":
                 listOut();
                 break;
-            }
-            case "mark": {
-                String next = in.nextLine();
-                int num;
+            case "mark":
+                next = in.nextLine();
                 try {
                     num = convertString(next.trim());
                     checkSameDone(num, true, checkCmd);
@@ -97,10 +97,8 @@ public class Duke {
                 tasks[num - 1].setDone(true);
                 System.out.println(tasks[num - 1]);
                 break;
-            }
-            case "unmark": {
-                String next = in.nextLine();
-                int num;
+            case "unmark":
+                next = in.nextLine();
                 try {
                     num = convertString(next.trim());
                     checkSameDone(num, false, checkCmd);
@@ -111,17 +109,15 @@ public class Duke {
                 tasks[num - 1].setDone(false);
                 System.out.println(tasks[num - 1]);
                 break;
-            }
-            case "todo": {
-                String next = in.nextLine();
+            case "todo":
+                next = in.nextLine();
                 System.out.println("Understood! *Salutes* Task added!");
                 tasks[taskCount] = new ToDo(next.stripLeading(), taskCount + 1, false);
                 System.out.println(tasks[taskCount]);
                 ++taskCount;
                 break;
-            }
-            case "deadline": {
-                String next = in.nextLine();
+            case "deadline":
+                next = in.nextLine();
                 try {
                     String[] deadline = next.split("/by", 2);
                     tasks[taskCount] = new Deadline(deadline[0].trim(), taskCount + 1, false,
@@ -135,9 +131,8 @@ public class Duke {
                 System.out.println(tasks[taskCount]);
                 ++taskCount;
                 break;
-            }
-            case "event": {
-                String next = in.nextLine();
+            case "event":
+                next = in.nextLine();
                 try {
                     String[] eventName = next.split("/from", 2);
                     String[] eventTime = eventName[1].split("/to", 2);
@@ -152,7 +147,6 @@ public class Duke {
                 System.out.println(tasks[taskCount]);
                 ++taskCount;
                 break;
-            }
             default:
                 printError();
                 in.nextLine();
