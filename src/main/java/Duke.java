@@ -3,9 +3,10 @@ import java.util.Scanner;
 
 public class Duke {
     private final static ArrayList<Task> taskList = new ArrayList<>();
+    static String lineBreak = "-----------------";
 
     public static void main(String[] args) {
-        String lineBreak = "-----------------";
+
         System.out.println(lineBreak + '\n' + "Hello! I'm Duke" + '\n'
                 + "What can I do for you?" + '\n' + lineBreak);
         String instruction;
@@ -24,40 +25,62 @@ public class Duke {
                         + "Bye. Hope to see you again soon!" + '\n' + lineBreak);
                 break;
             } else if (instruction.toLowerCase().contains("mark")) {
-                String[] split = instruction.split("\\s+");
-                int toMark = Integer.parseInt(split[1]);
-                if (split[0].equalsIgnoreCase("mark")) {
-                    taskList.get(toMark - 1).markAsDone();
-                    System.out.println("Nice! I've marked this task as done: ");
-                } else {
-                    taskList.get(toMark - 1).markAsUnDone();
-                    System.out.println("OK, I've marked this task as not done yet: ");
+                try {
+                    String[] split = instruction.split("\\s+");
+                    int toMark = Integer.parseInt(split[1]);
+                    if (split[0].equalsIgnoreCase("mark")) {
+                        taskList.get(toMark - 1).markAsDone();
+                        System.out.println("Nice! I've marked this task as done: ");
+                    } else {
+                        taskList.get(toMark - 1).markAsUnDone();
+                        System.out.println("OK, I've marked this task as not done yet: ");
+                    }
+                    System.out.println(taskList.get(toMark - 1).toString() + '\n' + lineBreak);
+                } catch (NullPointerException e) {
+                    System.out.println("Item is not in list!");
                 }
-                System.out.println(taskList.get(toMark - 1).toString() + '\n' + lineBreak);
             } else {
                 Task t;
                 if (instruction.toLowerCase().contains("deadline")) {
-                    String description = instruction.substring(instruction.indexOf(' ') + 1, instruction.indexOf('/'));
-                    String ddl = instruction.substring(instruction.indexOf('/') + 1);
-                    String by = ddl.replace("by", "");
-                    t = new Deadline(description, by);
+                    try {
+                        String description = instruction.substring(instruction.indexOf(' ') + 1, instruction.indexOf('/'));
+                        String ddl = instruction.substring(instruction.indexOf('/') + 1);
+                        String by = ddl.replace("by", "");
+                        t = new Deadline(description, by);
+                        taskListAdd(t);
+                    } catch (StringIndexOutOfBoundsException e) {
+                        System.out.println(lineBreak + '\n' + "☹ OOPS!!! The description of a deadline cannot be empty." + '\n' + lineBreak);
+                    }
                 } else if (instruction.toLowerCase().contains("event")) {
-                    String substring = instruction.substring(instruction.indexOf(' ') + 1);
-                    String[] info = substring.split("/");
-                    String from = info[1].replace("from", "");
-                    String to = info[2].replace("to", "");
-                    t = new Event(info[0], from, to);
+                    try {
+                        String substring = instruction.substring(instruction.indexOf(' ') + 1);
+                        String[] info = substring.split("/");
+                        String from = info[1].replace("from", "");
+                        String to = info[2].replace("to", "");
+                        t = new Event(info[0], from, to);
+                        taskListAdd(t);
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        System.out.println(lineBreak + '\n' + "☹ OOPS!!! The description of a event cannot be empty." + '\n' + lineBreak);
+                    }
                 } else if (instruction.toLowerCase().contains("todo")) {
-                    String description = instruction.substring(instruction.indexOf(' ') + 1);
-                    t = new Todo(description);
+                    if (instruction.indexOf(' ') == -1) {
+                        System.out.println(lineBreak + '\n' + "☹ OOPS!!! The description of a todo cannot be empty." + '\n' + lineBreak);
+                    } else {
+                        String description = instruction.substring(instruction.indexOf(' ') + 1);
+                        t = new Todo(description);
+                        taskListAdd(t);
+                    }
                 } else {
-                    t = new Task(instruction);
+                    System.out.println(lineBreak + '\n' + "☹ OOPS!!! I'm sorry, but I don't know what that means :-(" + '\n' + lineBreak);
                 }
-                taskList.add(t);
-                System.out.println(lineBreak + '\n' + "Got it. I've added this task:");
-                System.out.println('\t' + t.toString());
-                System.out.println("Now you have " + taskList.size() + " tasks in the list." + '\n' + lineBreak);
             }
         }
+    }
+
+    public static void taskListAdd(Task t) {
+        taskList.add(t);
+        System.out.println(lineBreak + '\n' + "Got it. I've added this task:");
+        System.out.println('\t' + t.toString());
+        System.out.println("Now you have " + taskList.size() + " tasks in the list." + '\n' + lineBreak);
     }
 }
