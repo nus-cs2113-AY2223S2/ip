@@ -1,9 +1,9 @@
-public class Tasks {
+public class Task {
     protected String TaskName;
     protected boolean isDone;
     protected static int NumberOfTasks;
 
-    public Tasks(String TaskName){
+    public Task(String TaskName){
         this.TaskName = TaskName;
         this.isDone = false;
         NumberOfTasks++;
@@ -35,4 +35,4 @@ public class Tasks {
         return "[" + this.TaskStatus() + "] " + this.TaskName;
     }
 
-}
+} // Task class ends here

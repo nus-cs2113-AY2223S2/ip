@@ -1,9 +1,10 @@
-public class Todo extends Tasks{
-    public Todo(String TaskName){
+public class Todo extends Task {
+    public Todo(String TaskName) {
         super(TaskName);
     }
 
-    public String toString(){
+    public String toString() {
         return "[T]" + super.toString();
     }
-}
+
+} //Todo class ends here

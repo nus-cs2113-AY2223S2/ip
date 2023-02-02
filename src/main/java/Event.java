@@ -1,4 +1,4 @@
-public class Event extends Tasks{
+public class Event extends Task {
     protected String startTime;
     protected String endTime;
 
@@ -11,4 +11,5 @@ public class Event extends Tasks{
     public String toString(){
         return "[E]" + super.toString()+ " (from: " + startTime + " to: " + endTime + ")";
     }
-}
+
+} // Event class ends here

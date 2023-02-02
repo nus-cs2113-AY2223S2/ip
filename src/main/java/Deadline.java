@@ -1,4 +1,4 @@
-public class Deadline extends Tasks{
+public class Deadline extends Task {
     protected String by;
     public Deadline(String TaskName, String by) {
         super(TaskName);
@@ -8,4 +8,5 @@ public class Deadline extends Tasks{
     public String toString(){
         return "[D]" + super.toString() + " (by:" + by + ")";
     }
-}
+
+} // Deadline class ends here
