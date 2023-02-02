@@ -52,8 +52,10 @@ public class Duke {
     private static void addTask(Task taskObj) {
         tasks[numTasks] = taskObj;
         ++numTasks;
-        printWithIndentation("added: " + taskObj.getName());
-        printWithIndentation("Now you have " + numTasks + " tasks in the list");
+        String output = "Got it. I've added this task:\n"
+                + INDENT + taskObj.describe() + "\n"
+                + "Now you have " + numTasks + " tasks in the list";
+        printWithIndentation(output);
         printLine();
     }
 
@@ -91,10 +93,12 @@ public class Duke {
     }
 
     private static State handleCommandList() {
+        String output = "Here are the tasks in your list:\n";
         for (int i = 0; i < numTasks; ++i) {
-            printWithIndentation((i + 1) + "." // number
-                                         + tasks[i].describe());
+            output += (i + 1) + "." // number
+                    + tasks[i].describe() + "\n";
         }
+        printWithIndentation(output);
         printLine();
         return State.SUCCESS;
     }
