@@ -65,9 +65,9 @@ public class Duke {
                         + task.toString() + System.lineSeparator() + "Now you have " + Task.numberOfTasks
                         + " in the list.";
             }
-            System.out.println("____________________________________________________");
+            System.out.println("___________________________________________________");
             System.out.println(output);
-            System.out.println("____________________________________________________");
+            System.out.println("___________________________________________________");
             desc = scan.nextLine();
         }
         System.out.println("Bye. Hope to see you again soon!");
