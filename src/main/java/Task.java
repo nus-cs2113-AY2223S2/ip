@@ -1,10 +1,27 @@
+import java.util.ArrayList;
+
 public class Task {
     protected String description;
     protected boolean isDone;
+    static int numberOfTasks = 0;
 
     public Task(String description) {
         this.description = description;
         this.isDone = false;
+        numberOfTasks++;
+    }
+
+    public static String printTasksList(ArrayList<Task> tasks) {
+        String tasksList = new String();
+        int count = 1;
+        for (Task i : tasks) {
+            tasksList += count + ". " + i.toString();
+            if (count < numberOfTasks) {
+                tasksList += System.lineSeparator();
+            }
+            count++;
+        }
+        return tasksList;
     }
 
     public String getDescription() {
@@ -16,11 +33,15 @@ public class Task {
     }
 
     public void markAsDone() {
-        isDone=true;
+        isDone = true;
     }
 
     public void markAsNotDone() {
         isDone = false;
+    }
+
+    public String toString() {
+        return "[" + this.getStatusIcon() + "]" + "\t" + this.getDescription();
     }
 
 }
