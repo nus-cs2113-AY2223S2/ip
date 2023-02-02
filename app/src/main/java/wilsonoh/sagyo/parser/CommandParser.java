@@ -17,7 +17,7 @@ import wilsonoh.sagyo.tasks.Task;
 
 public class CommandParser {
 
-    private ArrayList<Task> tasks;
+    private final ArrayList<Task> tasks;
 
     public CommandParser(ArrayList<Task> tasks) {
         this.tasks = tasks;

@@ -12,10 +12,10 @@ import wilsonoh.sagyo.tasks.Task;
 public class TextFormatter {
 
     public static final int DEFAULT_MAX_WIDTH = 50;
-    private int numIndent;
-    private int maxWidth;
-    private ColorCodes errorColor;
-    private ColorCodes normalColor;
+    private final int numIndent;
+    private final int maxWidth;
+    private final ColorCodes errorColor;
+    private final ColorCodes normalColor;
 
     public TextFormatter(int indentation, int maxWidth, ColorCodes errorColor, ColorCodes normalColor) {
         this.numIndent = indentation;
