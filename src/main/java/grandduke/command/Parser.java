@@ -19,19 +19,32 @@ public abstract class Parser {
         String command = inputArr[0];
         String commandDetails = inputArr[1];
 
-        if (input.equals(Io.LIST_COMMAND)) {
+        switch (command) {
+        case Io.LIST_COMMAND:
             TaskList.printTaskList();
-        } else if (command.equals(Io.MARK_COMMAND)) {
+            break;
+
+        case Io.MARK_COMMAND:
             TaskList.markTask(input);
-        } else if (command.equals(Io.UNMARK_COMMAND)) {
+            break;
+
+        case Io.UNMARK_COMMAND:
             TaskList.unmarkTask(input);
-        } else if (command.equals(Io.TODO_COMMAND)) {
+            break;
+
+        case Io.TODO_COMMAND:
             TaskList.addTask(commandDetails, Io.TODO_COMMAND);
-        } else if (command.equals(Io.DEADLINE_COMMAND)) {
+            break;
+
+        case Io.DEADLINE_COMMAND:
             TaskList.addTask(commandDetails, Io.DEADLINE_COMMAND);
-        } else if (command.equals(Io.EVENT_COMMAND)) {
+            break;
+
+        case Io.EVENT_COMMAND:
             TaskList.addTask(commandDetails, Io.EVENT_COMMAND);
-        } else {
+            break;
+
+        default:
             Io.printOutput("I'm sorry, but I don't know what that means :-(");
         }
     }
