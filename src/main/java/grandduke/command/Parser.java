@@ -15,21 +15,22 @@ public abstract class Parser {
      *            the command sent by the user
      */
     public static void parseCommand(String input) {
-        input = input.toLowerCase();
         String[] inputArr = input.split(" ", 2);
+        String command = inputArr[0];
+        String commandDetails = inputArr[1];
 
         if (input.equals(Io.LIST_COMMAND)) {
             TaskList.printTaskList();
-        } else if (input.startsWith(Io.MARK_COMMAND)) {
+        } else if (command.equals(Io.MARK_COMMAND)) {
             TaskList.markTask(input);
-        } else if (input.startsWith(Io.UNMARK_COMMAND)) {
+        } else if (command.equals(Io.UNMARK_COMMAND)) {
             TaskList.unmarkTask(input);
-        } else if (input.startsWith(Io.TODO_COMMAND)) {
-            TaskList.addTask(inputArr[1], Io.TODO_COMMAND);
-        } else if (input.startsWith(Io.DEADLINE_COMMAND)) {
-            TaskList.addTask(inputArr[1], Io.DEADLINE_COMMAND);
-        } else if (input.startsWith(Io.EVENT_COMMAND)) {
-            TaskList.addTask(inputArr[1], Io.EVENT_COMMAND);
+        } else if (command.equals(Io.TODO_COMMAND)) {
+            TaskList.addTask(commandDetails, Io.TODO_COMMAND);
+        } else if (command.equals(Io.DEADLINE_COMMAND)) {
+            TaskList.addTask(commandDetails, Io.DEADLINE_COMMAND);
+        } else if (command.equals(Io.EVENT_COMMAND)) {
+            TaskList.addTask(commandDetails, Io.EVENT_COMMAND);
         } else {
             Io.printOutput("I'm sorry, but I don't know what that means :-(");
         }
@@ -84,7 +85,7 @@ public abstract class Parser {
      * @return the new Deadline task
      */
     public static Task createDeadline(String input) {
-        String[] inputList = input.split(" /by ");
+        String[] inputList = input.split(" /by ", 2);
         String taskDesc = inputList[0];
         String deadline = inputList[1];
         return new Deadline(taskDesc, deadline);
@@ -98,7 +99,7 @@ public abstract class Parser {
      * @return the new Event task
      */
     public static Task createEvent(String input) {
-        String[] inputList = input.split(" /from ");
+        String[] inputList = input.split(" /from ", 2);
         String[] inputList2 = inputList[1].split(" /to ");
         String taskDesc = inputList[0];
         String eventFrom = inputList2[0];
