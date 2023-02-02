@@ -8,7 +8,7 @@ public class Task {
     }
 
     public String getStatusIcon() {
-        return (isDone ? "\u2713" : "\u2718"); // tick if done, cross if undone
+        return (isDone ? "[X] " : "[ ] "); // tick if done, cross if undone
     }
 
     public void setDescription(String description) {
@@ -24,5 +24,10 @@ public class Task {
     }
     public boolean getIsDone() {
         return isDone;
+    }
+
+    @Override
+    public String toString() {
+        return this.getStatusIcon() + this.description;
     }
 }

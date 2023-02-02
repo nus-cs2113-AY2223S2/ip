@@ -11,17 +11,37 @@ public class ThomasShelby {
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < taskCount; i++) {
             System.out.println((i + 1) + ". "
-                    + taskManager[i].getStatusIcon() + " "
-                    + taskManager[i].getDescription());
+                    + taskManager[i]);
         }
     }
 
-    private static void addTask(String[] cmdSplit) {
-        Task newTask = new Task(cmdSplit[1]);
-        newTask.setDescription(cmdSplit[1]);
-        taskManager[taskCount] = newTask;
+    private static void addToDo(String[] cmdSplit) {
+        ToDo newToDo = new ToDo(cmdSplit[1]);
+        //newToDo.setDescription(cmdSplit[1]);
+        taskManager[taskCount] = newToDo;
         taskCount++;
-        System.out.println("added: " + cmdSplit[1]);
+        System.out.println("Don't sleep on it.");
+        System.out.println("added: " + newToDo);
+    }
+
+    private static void addDeadline(String[] cmdSplit) {
+        String[] taskAndDeadline = cmdSplit[1].split("/", 2);
+        Deadline newDeadline = new Deadline(taskAndDeadline[0], taskAndDeadline[1]);
+        //newDeadline.setDescription(cmdSplit[1]);
+        taskManager[taskCount] = newDeadline;
+        taskCount++;
+        System.out.println("Time is money, chop chop!");
+        System.out.println("added: " + newDeadline);
+    }
+
+    private static void addEvent(String[] cmdSplit) {
+        String[] taskAndDuration = cmdSplit[1].split("/");
+        Event newEvent = new Event(taskAndDuration[0], taskAndDuration[1], taskAndDuration[2]);
+        //newEvent.setDescription(cmdSplit[1]);
+        taskManager[taskCount] = newEvent;
+        taskCount++;
+        System.out.println("I'll see you there.");
+        System.out.println("added: " + newEvent);
     }
 
     private static void markTask(String[] cmdSplit) {
@@ -29,8 +49,7 @@ public class ThomasShelby {
         whichTask = Integer.parseInt(cmdSplit[1]) - 1; // shift back index
         taskManager[whichTask].setIsDone(true);
         System.out.println("That was long due, well done.");
-        System.out.println(taskManager[whichTask].getStatusIcon()
-                + " " + taskManager[whichTask].getDescription());
+        System.out.println(taskManager[whichTask]);
     }
 
     private static void unmarkTask(String[] cmdSplit) {
@@ -56,8 +75,14 @@ public class ThomasShelby {
             case "list":
                 listTasks();
                 break;
-            case "add":
-                addTask(cmdSplit);
+            case "todo":
+                addToDo(cmdSplit);
+                break;
+            case "deadline":
+                addDeadline(cmdSplit);
+                break;
+            case "event":
+                addEvent(cmdSplit);
                 break;
             case "mark":
                 markTask(cmdSplit);
