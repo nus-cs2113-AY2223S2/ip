@@ -1,5 +1,9 @@
+package constants;
+
 public enum Message {
-    TASK_ADDED("Got it. I've added this task:\n%s\nNow you have %d tasks in the list.\n"),
+    TASK_ADDED(
+            "Got it. I've added this task:\n%s\nNow you have %d tasks in the list.\n"
+    ),
     GOODBYE("Bye. Hope to see you again soon!"),
     LIST_TASKS("Here are the tasks in your list:"),
     MARKED("Nice! I've marked this task as done:"),
@@ -9,7 +13,6 @@ public enum Message {
     public final String message;
 
     Message(String message) {
-
         this.message = message;
     }
 }

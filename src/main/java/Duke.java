@@ -1,5 +1,9 @@
+import constants.Message;
 import java.util.Scanner;
-import task.*;
+import task.Deadline;
+import task.Event;
+import task.Task;
+import task.Todo;
 
 public class Duke {
 
@@ -10,6 +14,14 @@ public class Duke {
   private static int counter = 0;
 
   private static boolean isRunning = true;
+
+  public static final String DEADLIINE = "deadline";
+
+  public static final String LIST = "list";
+
+  public static final String TODO = "todo";
+
+  public static final String EVENT = "event";
 
   /**
    * Prints out all the tasks in the tasks array
@@ -127,14 +139,14 @@ public class Duke {
       String taskDescription;
 
       switch (command) {
-        case "list":
+        case LIST:
           printTasks();
           break;
-        case "deadline":
+        case DEADLIINE:
           taskDescription = words[1];
           addDeadlineTask(taskDescription);
           break;
-        case "todo":
+        case TODO:
           taskDescription = words[1];
           addTodoTask(taskDescription);
           break;
