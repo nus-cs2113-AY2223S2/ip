@@ -28,6 +28,7 @@ public class Task {
         this.isDone = false;
     }
 
+    @Override
     public String toString() {
         return "[" + this.getStatusIcon() + "] " + this.details;
     }
@@ -71,8 +72,10 @@ public class Task {
 
     public static void addDeadlineTask(String description, ArrayList<Task> taskList) {
         int firstSlashIndex = description.indexOf("/");
-        String details = description.substring(0, firstSlashIndex - 1);
-        String by = description.substring(firstSlashIndex + 4);
+        int detailsEndIndex = firstSlashIndex - 1;
+        String details = description.substring(0, detailsEndIndex);
+        int byStartIndex = firstSlashIndex + 4;
+        String by = description.substring(byStartIndex);
         Deadline newDeadlineTask = new Deadline(details, by);
         taskList.add(newDeadlineTask);
         Task.printAddedTask(newDeadlineTask, taskList.size());
@@ -81,9 +84,13 @@ public class Task {
     public static void addEventTask(String description, ArrayList<Task> taskList) {
         int firstSlashIndex = description.indexOf("/");
         int secondSlashIndex = description.indexOf("/", firstSlashIndex + 1);
-        String details = description.substring(0, firstSlashIndex - 1);
-        String from = description.substring(firstSlashIndex + 6, secondSlashIndex - 1);
-        String to = description.substring(secondSlashIndex + 4);
+        int detailsEndIndex = firstSlashIndex - 1;
+        String details = description.substring(0, detailsEndIndex);
+        int fromStartIndex = firstSlashIndex + 6;
+        int fromEndIndex = secondSlashIndex - 1;
+        String from = description.substring(fromStartIndex, fromEndIndex);
+        int toStartIndex = secondSlashIndex + 4;
+        String to = description.substring(toStartIndex);
         Event newEventTask = new Event(details, from, to);
         taskList.add(newEventTask);
         Task.printAddedTask(newEventTask, taskList.size());

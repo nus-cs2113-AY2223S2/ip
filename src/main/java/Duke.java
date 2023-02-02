@@ -51,9 +51,11 @@ public class Duke {
             }
             if (nextInput[0].equals("todo")) {
                 Task.addTodoTask(nextInput[1], taskList);
+                continue;
             }
             if (nextInput[0].equals("deadline")) {
                 Task.addDeadlineTask(nextInput[1], taskList);
+                continue;
             }
             if (nextInput[0].equals("event")) {
                 Task.addEventTask(nextInput[1], taskList);
