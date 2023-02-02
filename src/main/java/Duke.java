@@ -1,34 +1,28 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+
 
 public class Duke {
-    public static void main(String[] args) {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);
+    private List<Task> taskList = new ArrayList();
+    public void addTask(String taskName){
+        Task t = new Task(taskName);
+        taskList.add(t);
+        System.out.printf(String.format("added: %s\n", taskName));
+    }
 
-        System.out.println("Hello! I'm Duke");
-        System.out.println("What can I do for you?");
-        Scanner userInput = new Scanner(System.in); //create Scanner object
-        String inputCommand = userInput.nextLine(); //read user input
-        List<String> allInputs = new ArrayList();
-        while (!inputCommand.equals("bye")){
-            if (inputCommand.equals("list")){
-                for (int i = 0; i < allInputs.size(); i ++){
-                    System.out.println(i + ". " + allInputs.get(i));
-                }
-            }
-            else {
-                System.out.println("added: " + inputCommand);
-                allInputs.add(inputCommand);
-            }
-            inputCommand = userInput.nextLine();
-
+    public void changeTaskState(boolean doneState, Integer index){
+        index --;
+        if (doneState){
+            taskList.get(index).markAsDone();
         }
-        System.out.println("Bye. Hope to see you again soon!");
+        else{
+            taskList.get(index).markAsUndone();
+        }
+    }
+
+    public void list(){
+        for (int i = 0; i < taskList.size(); i ++){
+            System.out.printf(String.format("%d.%s\n", i + 1, taskList.get(i).toString()));
+        }
     }
 }
