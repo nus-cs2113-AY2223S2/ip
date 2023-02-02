@@ -1,7 +1,9 @@
 import java.util.Scanner;
+
 public class Duke {
     public static void main(String[] args) {
-        String logo = "███████████████████████████████████████████████████████████████████████████████████████████████\n"
+        String logo = "███████████████████████████████████████████████████████████████████████████████████████████"
+                + "████\n"
                 + "█████████░░░░░░█░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░██████████░░░░░░█\n"
                 + "█████████░░▄▀░░█░░▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀░░██████████░░▄▀░░█\n"
                 + "█████████░░▄▀░░█░░░░▄▀░░░░█░░▄▀░░░░░░░░░░█░░▄▀░░░░░░░░░░█░░▄▀░░░░░░▄▀░░█░░▄▀░░██████████░░▄▀░░█\n"
@@ -66,38 +68,39 @@ public class Duke {
 
         System.out.println(logo);
         Scanner input = new Scanner(System.in);
-        System.out.println("Hello! I'm Duke\n");
+        System.out.println("Hello! I'm Jigsaw\n");
         System.out.println("What can I do for you?\n");
         Task[] tasks = new Task[100];
         int taskCount = 0;
-        boolean run = true;
-        while (run) {
+        boolean isActive = true;
+        while (isActive) {
             String command = input.nextLine();
-            String[] commandCheck = command.split(" ");
-            switch (commandCheck[0]) {
-                case "bye":
-                    System.out.println("Bye. Hope to see you again soon!\n");
-                    run = false;
-                    break;
-                case "list":
-                    for (int i = 0; i < taskCount; i++) {
-                        System.out.println((i + 1) + "." + "[" + tasks[i].getStatusIcon() + "]" + " " + tasks[i].getDescription());
-                    }
-                    break;
-                case "mark":
-                    tasks[Integer.parseInt(commandCheck[1]) - 1].markAsDone();
-                    System.out.println(tasks[Integer.parseInt(commandCheck[1]) - 1].printTask());
-                    break;
-                case "unmark":
-                    tasks[Integer.parseInt(commandCheck[1]) - 1].markAsUndone();
-                    System.out.println(tasks[Integer.parseInt(commandCheck[1]) - 1].printTask());
-                    break;
-                default:
-                    Task t = new Task(command);
-                    tasks[taskCount] = t;
-                    System.out.println("added: " + command);
-                    taskCount++;
-                    break;
+            String[] commands = command.split(" ");
+            switch (commands[0]) {
+            case "bye":
+                System.out.println("Bye. Hope to see you again soon!\n");
+                isActive = false;
+                break;
+            case "list":
+                for (int i = 0; i < taskCount; i++) {
+                    System.out.println((i + 1) + "." + "[" + tasks[i].getStatusIcon() + "]" + " "
+                            + tasks[i].getDescription());
+                }
+                break;
+            case "mark":
+                tasks[Integer.parseInt(commands[1]) - 1].markAsDone();
+                System.out.println(tasks[Integer.parseInt(commands[1]) - 1].printTask());
+                break;
+            case "unmark":
+                tasks[Integer.parseInt(commands[1]) - 1].markAsUndone();
+                System.out.println(tasks[Integer.parseInt(commands[1]) - 1].printTask());
+                break;
+            default:
+                Task t = new Task(command);
+                tasks[taskCount] = t;
+                System.out.println("added: " + command);
+                taskCount++;
+                break;
             }
         }
         System.out.println(symbol);
