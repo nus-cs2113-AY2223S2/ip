@@ -21,6 +21,69 @@ public class Duke {
     static Task[] tasks = new Task[100];
     static int numTasks = 0;
 
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        printLogo();
+        greet();
+
+        String input;
+        boolean programRunning = true;
+        do {
+            input = scan.nextLine();
+            printLine();
+            State result = processInput(input);
+            switch (result) {
+            case EXIT:
+                handleStateExit();
+                programRunning = false;
+                break;
+            case INVALID:
+                handleStateInvalid();
+                break;
+            }
+        } while (programRunning);
+
+        scan.close();
+    }
+
+    private static State processInput(String s) {
+        Scanner input = new Scanner(s);
+        String command = input.next().toLowerCase();
+        if (command.equals(COMMAND_EXIT)) {
+            return State.EXIT;
+        }
+
+        State finalState;
+        switch (command) {
+        case COMMAND_EXIT:
+            finalState = State.EXIT;
+            break;
+        case COMMAND_LIST:
+            finalState = handleCommandList();
+            break;
+        case COMMAND_MARK:
+            finalState = handleCommandMark(input);
+            break;
+        case COMMAND_UNMARK:
+            finalState = handleCommandUnmark(input);
+            break;
+        case COMMAND_TODO:
+            finalState = handleCommandTodo(input);
+            break;
+        case COMMAND_DEADLINE:
+            finalState = handleCommandDeadline(input);
+            break;
+        case COMMAND_EVENT:
+            finalState = handleCommandEvent(input);
+            break;
+        default:
+            printWithIndentation("Unrecognised command, try again.");
+            finalState = State.INVALID;
+        }
+
+        return finalState;
+    }
+
     private static void printWithIndentation(String s) {
         Scanner scan = new Scanner(s);
         while (scan.hasNextLine()) {
@@ -149,68 +212,5 @@ public class Duke {
         ArrayList<String> detailsArr = Event.convertInputIntoDetails(taskDetails);
         addTask(new Event(detailsArr));
         return State.SUCCESS;
-    }
-
-    private static State processInput(String s) {
-        Scanner input = new Scanner(s);
-        String command = input.next().toLowerCase();
-        if (command.equals(COMMAND_EXIT)) {
-            return State.EXIT;
-        }
-
-        State finalState;
-        switch (command) {
-        case COMMAND_EXIT:
-            finalState = State.EXIT;
-            break;
-        case COMMAND_LIST:
-            finalState = handleCommandList();
-            break;
-        case COMMAND_MARK:
-            finalState = handleCommandMark(input);
-            break;
-        case COMMAND_UNMARK:
-            finalState = handleCommandUnmark(input);
-            break;
-        case COMMAND_TODO:
-            finalState = handleCommandTodo(input);
-            break;
-        case COMMAND_DEADLINE:
-            finalState = handleCommandDeadline(input);
-            break;
-        case COMMAND_EVENT:
-            finalState = handleCommandEvent(input);
-            break;
-        default:
-            printWithIndentation("Unrecognised command, try again.");
-            finalState = State.INVALID;
-        }
-
-        return finalState;
-    }
-
-    public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
-        printLogo();
-        greet();
-
-        String input;
-        boolean programRunning = true;
-        do {
-            input = scan.nextLine();
-            printLine();
-            State result = processInput(input);
-            switch (result) {
-            case EXIT:
-                handleStateExit();
-                programRunning = false;
-                break;
-            case INVALID:
-                handleStateInvalid();
-                break;
-            }
-        } while (programRunning);
-
-        scan.close();
     }
 }
