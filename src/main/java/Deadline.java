@@ -7,7 +7,7 @@ public class Deadline extends Task {
     static final String KEYWORD_BY = "/by";
     private final String by;
     private static final Pattern pattern = Pattern.compile(
-            "^(\\S+[\\S\\s]+)(\\s+/by\\s+)(\\S+[\\S\\s]+)$",
+            "^(\\S+[\\S\\s]*)(\\s+/by\\s+)(\\S+[\\S\\s]*)$",
             Pattern.CASE_INSENSITIVE);
 
     public Deadline(String name, String by) {

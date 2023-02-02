@@ -8,7 +8,7 @@ public class Event extends Task {
     static final String KEYWORD_TO = "/to";
     private final String from, to;
     private static final Pattern pattern = Pattern.compile(
-            "^(\\S+[\\S\\s]+)(\\s+/from\\s+)(\\S+[\\S\\s]+)(\\s+/to\\s+)(\\S+[\\S\\s]+)$",
+            "^(\\S+[\\S\\s]*)(\\s+/from\\s+)(\\S+[\\S\\s]*)(\\s+/to\\s+)(\\S+[\\S\\s]*)$",
             Pattern.CASE_INSENSITIVE);
 
     public Event(String name, String from, String to) {

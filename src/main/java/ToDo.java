@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 public class ToDo extends Task {
     public static final String MARKER = "T";
     private static final Pattern pattern = Pattern.compile(
-            "^(\\S+[\\s*\\S]*)$",
+            "^(\\S+[\\S\\s]*)$",
             Pattern.CASE_INSENSITIVE);
 
     public ToDo(String name) {
