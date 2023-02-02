@@ -2,10 +2,10 @@ public class Event extends Task {
     protected String byDate;
     protected String fromDate;
 
-    public Event(String task, int number, boolean isDone, String byDate, String fromDate) {
+    public Event(String task, int number, boolean isDone, String fromDate, String toDate) {
         super(task, number, isDone);
         this.type = "E";
-        this.byDate = byDate;
+        this.byDate = toDate;
         this.fromDate = fromDate;
     }
 

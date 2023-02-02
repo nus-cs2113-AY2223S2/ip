@@ -89,7 +89,7 @@ public class Duke {
                 int num;
                 try {
                     num = convertString(next.trim());
-                    checkSameDone(num, false, checkCmd);
+                    checkSameDone(num, true, checkCmd);
                 } catch (DukeException e) {
                     break;
                 }
@@ -103,7 +103,7 @@ public class Duke {
                 int num;
                 try {
                     num = convertString(next.trim());
-                    checkSameDone(num, true, checkCmd);
+                    checkSameDone(num, false, checkCmd);
                 } catch (DukeException e) {
                     break;
                 }
