@@ -76,8 +76,6 @@ public class Duke {
                         printLine();
                         continue;
                     }
-//                    int indexOfBy = line.indexOf("/by");
-//                    task = new Deadline(line.substring(9, indexOfBy), line.substring(indexOfBy + 4));
                 } else if (lowerCaseLine.contains("event")) {
                     try {
                         checkEmpty(lowerCaseLine);
@@ -89,9 +87,6 @@ public class Duke {
                         printLine();
                         continue;
                     }
-//                    int indexOfFrom = line.indexOf("/from");
-//                    int indexOfTo = line.indexOf("/to");
-//                    task = new Event(line.substring(6, indexOfFrom), line.substring(indexOfFrom + 6, indexOfTo), line.substring(indexOfTo + 4));
                 }
                 try {
                     checkCommand(lowerCaseLine);
@@ -106,12 +101,6 @@ public class Duke {
                     printLine();
                     continue;
                 }
-//                textList[textListCount] = task; //add all input except for list, bye, mark and unmark to array of tasks
-//                textListCount++; //counter to help input tasks into correct index in tasks array
-//                System.out.println("Got it. I've added this task: ");
-//                System.out.println(" " + task.toString());
-//                System.out.println("Now you have " + textListCount + " tasks in the list.");
-//                printLine();
             }
         }
     }
