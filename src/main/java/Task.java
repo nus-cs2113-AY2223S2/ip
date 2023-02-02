@@ -16,5 +16,13 @@ public class Task {
     }
 
     public void markAsNotDone(){isDone = false;}
+
+    public String getIcon(){
+        return " ";
+    }
+
+    public String getStart(){return "";}
+    public String getEnd(){return "";}
+    public String getDeadline(){return "";}
 }
 
