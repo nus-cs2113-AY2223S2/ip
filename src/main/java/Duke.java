@@ -3,30 +3,41 @@ import java.util.Scanner;
 public class Duke {
     public static void main(String[] args) {
         Scanner inputScanner = new Scanner(System.in);
-        String userInput;
-        String[] userInputs;
+        String userCommand, userInputDetails;
 
         // Greeting the user
         Messages.hello();
         
         do {
-            userInput = inputScanner.nextLine();
-            userInputs = userInput.split(" ", 0);
-            switch(userInputs[0]) {
+            userCommand = inputScanner.next();
+            switch(userCommand) {
             case "list":
                 Lists.printList();
                 break;
             case "mark":
-                Lists.markDone(Integer.parseInt(userInputs[1]));
+                userInputDetails = inputScanner.next();
+                Lists.markDone(Integer.parseInt(userInputDetails));
                 break;
             case "unmark":
-                Lists.markUndone(Integer.parseInt(userInputs[1]));
+                userInputDetails = inputScanner.next();
+                Lists.markUndone(Integer.parseInt(userInputDetails));
+                break;
+            case "todo":
+                userInputDetails = inputScanner.nextLine();
+                Lists.addItem(userInputDetails, TaskType.TODO);
+                break;
+            case "deadline":
+                userInputDetails = inputScanner.nextLine();
+                Lists.addItem(userInputDetails, TaskType.DEADLINE);
+                break;
+            case "event":
+                userInputDetails = inputScanner.nextLine();
+                Lists.addItem(userInputDetails, TaskType.EVENT);
                 break;
             default:
-                Lists.addItem(userInput);
+                Messages.unknownCommandHandler();
             }
-        } while (!(userInput.equals("bye")));
-
+        } while (!(userCommand.equals("bye")));
         Messages.bye();
         Messages.line();
     }

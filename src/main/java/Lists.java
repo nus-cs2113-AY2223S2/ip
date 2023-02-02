@@ -3,11 +3,22 @@ import java.util.ArrayList;
 public class Lists {
     private static ArrayList<Task> list = new ArrayList<Task>();
 
-    public static void addItem(String item) {
+    public static void addItem(String item, TaskType taskType) {
         Task task = new Task(item);
+        switch (taskType) {
+        case DEADLINE:
+            task = new Deadline(item);
+            break;
+        case EVENT:
+            task = new Event(item);
+            break;
+        case TODO:
+            task = new Task(item);
+        }
         list.add(task);
         Messages.line();
-        System.out.println("Added: " + item);
+        System.out.println("Added: " + task);
+        System.out.println("You currently have " + list.size() + " tasks.");
         Messages.line();
     }
 
@@ -15,7 +26,8 @@ public class Lists {
         Messages.line();
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < list.size(); i++) {
-            System.out.println(Integer.toString(i + 1) + ".[" + list.get(i).getStatusIcon() + "] " + list.get(i).description);
+            System.out.println(Integer.toString(i + 1) + ".[" + list.get(i).getType() +
+                    "][" + list.get(i).getStatusIcon() + "] " + list.get(i));
         }
         Messages.line();
     }

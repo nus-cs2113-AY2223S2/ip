@@ -30,4 +30,10 @@ public class Messages {
         System.out.println(userInput);
         Messages.line();
     }
+
+    public static void unknownCommandHandler() {
+        Messages.line();
+        System.out.println("You have entered an unknown command! Please try again!");
+        Messages.line();
+    }
 }
