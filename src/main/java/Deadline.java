@@ -10,6 +10,7 @@ public class Deadline extends Task {
         return byWhen;
     }
 
+    @Override
     public String toString() {
         if (super.isCompleted()) {
             return ".[D][X] " + super.getTaskName() + "(by: " + getByWhen() + ")";

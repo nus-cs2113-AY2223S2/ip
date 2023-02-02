@@ -17,6 +17,7 @@ public class Event extends Task {
         return endWhen;
     }
 
+    @Override
     public String toString() {
         if (super.isCompleted()) {
             return ".[E][X] " + super.getTaskName() + "(from: " + getStartWhen() + " to: " + getEndWhen() + ")";
