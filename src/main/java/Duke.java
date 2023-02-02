@@ -18,13 +18,14 @@ public class Duke {
         Scanner in = new Scanner(System.in);
         int cnt = 0;
         String input_text;
+        String[] tgt;
 
         while(true){
             input_text = in.nextLine();
             if(input_text.length() == 0)
                 break;
 
-            String[] tgt = input_text.split(",");
+            tgt = input_text.split(",");
 
             switch(tgt[0]){
             case "todo":
