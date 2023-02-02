@@ -7,8 +7,8 @@ import wilsonoh.sagyo.tasks.Task;
 
 public class MarkTaskCommand extends Command {
 
-    private ArrayList<Task> tasks;
-    private int idx;
+    private final ArrayList<Task> tasks;
+    private final int idx;
 
     public MarkTaskCommand(ArrayList<Task> tasks, String idxGroup) throws InvalidTaskException {
         if (idxGroup == null) {

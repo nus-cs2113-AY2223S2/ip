@@ -6,8 +6,8 @@ import wilsonoh.sagyo.tasks.Task;
 
 public class AddTaskCommand extends Command {
 
-    private ArrayList<Task> taskList;
-    private Task toAdd;
+    private final ArrayList<Task> taskList;
+    private final Task toAdd;
 
     public AddTaskCommand(ArrayList<Task> taskList, Task toAdd) {
         this.taskList = taskList;

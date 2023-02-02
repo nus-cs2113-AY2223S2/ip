@@ -7,7 +7,7 @@ import wilsonoh.sagyo.ui.TextFormatter;
 
 public class ListCommand extends Command {
 
-    private ArrayList<Task> tasks;
+    private final ArrayList<Task> tasks;
 
     public ListCommand(ArrayList<Task> taskList) {
         this.tasks = taskList;

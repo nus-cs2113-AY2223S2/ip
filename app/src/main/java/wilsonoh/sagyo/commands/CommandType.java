@@ -10,7 +10,7 @@ public enum CommandType {
     DEADLINE("^\\s*(deadline|dl)\\s*((?<name>.+?)\\s*(/by\\s*(?<by>.+))?)?\\s*$"),
     TODO("^\\s*(todo|t)\\s*(?<name>.+)?$");
 
-    private String regexPattern;
+    private final String regexPattern;
 
     CommandType(String regexPattern) {
         this.regexPattern = regexPattern;
