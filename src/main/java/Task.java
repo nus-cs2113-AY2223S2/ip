@@ -1,10 +1,12 @@
 public class Task {
-    private String description;
-    private String isDone;
+    protected String description;
+    protected boolean isDone;
 
-    public Task(String description, String isDone) {
+    protected String doneStatus;
+
+    public Task(String description, boolean isDone) {
         this.description = description;
-        this.isDone = isDone;
+        this.isDone = false;
     }
 
     public String getDescription() {
@@ -15,11 +17,25 @@ public class Task {
         this.description = description;
     }
 
-    public String getIsDone() {
+    public boolean getIsDone() {
         return isDone;
     }
 
-    public void setIsDone(String isDone) {
+    public String getDoneStatus() {
+        if (isDone) {
+            doneStatus = "[X]";
+        }
+        else {
+            doneStatus = "[ ]";
+        }
+        return doneStatus;
+    }
+
+    public void setDoneStatus(String doneStatus) {
+        this.doneStatus = doneStatus;
+    }
+
+    public void setIsDone(boolean isDone) {
         this.isDone = isDone;
     }
 }
