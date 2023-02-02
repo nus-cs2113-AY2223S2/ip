@@ -2,7 +2,7 @@ public class Task {
     public static int numOfTasks = 0;
     public String description;
     public boolean isDone;
-    public String taskType;
+    public String taskType = "[ ]";
 
     public Task(String description) {
         this.description = description;

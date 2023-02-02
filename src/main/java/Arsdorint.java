@@ -32,8 +32,8 @@ public class Arsdorint {
         echo(command);*/
         String newTaskType = command.split(" ")[0];
         if (!(newTaskType.equalsIgnoreCase("todo") ||
-                (newTaskType.equalsIgnoreCase("deadline")) ||
-                        (newTaskType.equalsIgnoreCase("event"))))
+                newTaskType.equalsIgnoreCase("deadline") ||
+                        newTaskType.equalsIgnoreCase("event")))
         System.out.println("Please indicate task type: " +
                 "\"todo\" " + "or \"deadline\" or \"event\"");
         else {
