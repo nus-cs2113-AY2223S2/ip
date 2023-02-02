@@ -7,21 +7,19 @@ public class Alex {
         // Create a Scanner object
         Scanner myObj = new Scanner(System.in);
         greeting();
-        boolean isBye = false;
-        while(!isBye) {
+        while(true) {
             String userInput = myObj.nextLine();
             String[] words = userInput.split(" ");
             if(words[0].toLowerCase().equals("list")) {
                 for(int i = 1; i <= numberOfTasks; i++) {
                     System.out.print(i);
-                    System.out.println(". " + "[" + allTasks[i-1].getStatusIcon() + "]" + " " + allTasks[i-1].getDescription());
+                    System.out.println(". " + allTasks[i-1]);
                 }
                 printLine();
 
             }
             else if(words[0].toLowerCase().equals("bye")) {
                 exit();
-                isBye = true;
                 break;
             }
             else if(words[0].toLowerCase().equals("mark")) {
@@ -29,7 +27,7 @@ public class Alex {
                 System.out.println("Good job! I have marked this task as completed:");
                 int number = Integer.parseInt(words[1]);
                 allTasks[number - 1].markAsDone();
-                System.out.println("[" + allTasks[number - 1].getStatusIcon() + "]" + " " + allTasks[number - 1].getDescription());
+                System.out.println(allTasks[number - 1]);
                 printLine();
 
             }
@@ -44,11 +42,68 @@ public class Alex {
 
             }
             else {
-                Task t = new Task(userInput);
-                allTasks[numberOfTasks] = t;
-                numberOfTasks += 1;
-                printLine();
-                echoResponse(userInput);
+                String action = words[0].toLowerCase();
+                String activity = "";
+                for (int i = 1; i < words.length; i++) {
+                    if(words[i].charAt(0) == '/' ) {
+                        break;
+                    }
+                    else {
+                        activity += " " + words[i];
+                    }
+
+                }
+                if(action.equals("todo")) {
+                    Task t = new Todo(activity);
+                    allTasks[numberOfTasks] = t;
+                    numberOfTasks += 1;
+                    printLine();
+                    echoResponse(t, numberOfTasks);
+                }
+                else if(action.equals("deadline")) {
+                    String by = "";
+                    int byIndex = 0;
+                    for(int i = 0; i < words.length; i++) {
+                        if(words[i].charAt(0) == '/') {
+                            byIndex = i;
+                        }
+                    }
+                    for(int i = byIndex + 1; i < words.length; i++) {
+                        by += " " + words[i];
+                    }
+
+                    Task deadline = new Deadline(activity, by);
+                    allTasks[numberOfTasks] = deadline;
+                    numberOfTasks += 1;
+                    printLine();
+                    echoResponse(deadline, numberOfTasks);
+                }
+                else if(action.equals("event")) {
+                    String from = "";
+                    String to = "";
+                    int fromIndex = 0;
+                    int toIndex = 0;
+                    for(int i = 0; i < words.length; i++) {
+                        if(words[i].toLowerCase().equals("/from")) {
+                            fromIndex = i;
+                        }
+                        if(words[i].toLowerCase().equals("/to")) {
+                            toIndex = i;
+                        }
+                    }
+                    for(int i = fromIndex + 1; i < toIndex; i++) {
+                        from += " " + words[i];
+                    }
+                    for(int i = toIndex + 1; i < words.length; i++) {
+                        to += " " + words[i];
+                    }
+                    Task event = new Event(activity, from, to);
+                    allTasks[numberOfTasks] = event;
+                    numberOfTasks += 1;
+                    printLine();
+                    echoResponse(event, numberOfTasks);
+                }
+
             }
 
 
@@ -56,8 +111,9 @@ public class Alex {
 
 
     }
-    public static void echoResponse(String userInput) {
-        System.out.println("added: " + userInput);
+    public static void echoResponse(Task task, int number) {
+        System.out.println("Got it. I've added this task:" + "\n " + task + "\n" +
+                "Now you have " + number + " tasks in the list" );
         printLine();
     }
     public static void printLine() {
