@@ -105,7 +105,7 @@ public class Orca {
     }
 
     public static int parseTaskNo(String userInput, int startIdx) {
-        return Integer.parseInt(userInput, startIdx);
+        return Integer.parseInt(userInput.substring(startIdx));
     }
 
     public static void executeCommand() {
