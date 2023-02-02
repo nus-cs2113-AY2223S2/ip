@@ -6,9 +6,9 @@ public class Deadline extends Task{
     }
     @Override
     public String fullDescription() {
-        String full;
-        full = (isDone ? "[D][X] " : "[D][ ] ") + this.description +
-                " (by: " + this.by + ")";
-        return full;
+        String fullSentence;
+        fullSentence = (isDone ? "[D][X] " : "[D][ ] ") + this.description +
+                " (by:" + this.by + ")";
+        return fullSentence;
     }
 }

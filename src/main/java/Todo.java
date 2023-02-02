@@ -4,8 +4,8 @@ public class Todo extends Task {
     }
     @Override
     public String fullDescription() {
-        String full;
-        full = (isDone ? "[T][X] " : "[T][ ] ") + this.description;
-        return full;
+        String fullSentence;
+        fullSentence = (isDone ? "[T][X] " : "[T][ ] ") + this.description;
+        return fullSentence;
     }
 }

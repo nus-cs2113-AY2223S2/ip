@@ -1,6 +1,8 @@
 import java.util.Scanner;
+
 public class Conversation {
-    public static void greeting() {
+    static Scanner in = new Scanner(System.in);
+    public static void greet() {
         System.out.println("Hello there! I'm Duke");
     }
     public static void question() {
@@ -10,7 +12,6 @@ public class Conversation {
         System.out.println("Bye. Hope to see you again soon!");        
     }
     public static String readCommand() {
-        Scanner in = new Scanner(System.in);
         return in.nextLine();
     }
     public static void line() {

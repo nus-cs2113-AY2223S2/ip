@@ -1,0 +1,6 @@
+event meeting /from 3pm /to 6pm tonight
+deadline do homework /by february 1st
+list
+mark 1
+list
+bye
