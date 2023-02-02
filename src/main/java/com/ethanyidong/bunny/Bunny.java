@@ -1,6 +1,7 @@
 package com.ethanyidong.bunny;
 
 import com.ethanyidong.bunny.arg.InvalidCommandException;
+import com.ethanyidong.bunny.fmt.Pluralizer;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -55,13 +56,15 @@ public class Bunny {
             case ADD_TODO: {
                 Task newTask = new Todo(inputCommand.getPositionalArgument());
                 bunny.addTask(newTask);
-                bunny.printMessage("I've added this task: " + newTask + "\nNow you have " + bunny.numTasks() + " tasks in the list.");
+                bunny.printMessage("I've added this task: " + newTask + "\nNow you have " +
+                        bunny.numTasks() + " " + new Pluralizer("task", "tasks", bunny.numTasks()) + " in the list.");
                 break;
             }
             case ADD_DEADLINE: {
                 Task newTask = new Deadline(inputCommand.getPositionalArgument(), inputCommand.getFlagArgument("by"));
                 bunny.addTask(newTask);
-                bunny.printMessage("I've added this task: " + newTask + "\nNow you have " + bunny.numTasks() + " tasks in the list.");
+                bunny.printMessage("I've added this task: " + newTask + "\nNow you have " +
+                        bunny.numTasks() + " " + new Pluralizer("task", "tasks", bunny.numTasks()) + " in the list.");
                 break;
             }
             case ADD_EVENT: {
@@ -69,7 +72,8 @@ public class Bunny {
                         inputCommand.getFlagArgument("from"),
                         inputCommand.getFlagArgument("to"));
                 bunny.addTask(newTask);
-                bunny.printMessage("I've added this task: " + newTask + "\nNow you have " + bunny.numTasks() + " tasks in the list.");
+                bunny.printMessage("I've added this task: " + newTask + "\nNow you have " +
+                        bunny.numTasks() + " " + new Pluralizer("task", "tasks", bunny.numTasks()) + " in the list.");
                 break;
             }
             default: {
