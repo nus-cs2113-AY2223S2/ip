@@ -1,4 +1,5 @@
 import java.util.Scanner;
+
 public class Duke {
     public static void main(String[] args) {
         String logo = " ____        _        \n"
@@ -9,6 +10,12 @@ public class Duke {
         System.out.println("____________________________________________________________\nHola! I'm Duke\n" + logo);
         System.out.println("How can I help you today?\n____________________________________________________________");
 
+        // store in array
+        String[] list = new String[100];
+        // num of items in list
+        int num;
+        num = 0;
+
         // take in input
         String cmd;
         Scanner in = new Scanner(System.in);
@@ -16,10 +23,27 @@ public class Duke {
 
         // if input is bye
         while (!(cmd.equals("bye"))) {
-            System.out.println("____________________________________________________________");
-            System.out.println(cmd);
-            System.out.println("____________________________________________________________");
-            cmd = in.nextLine();
+            if (cmd.equals("list")) {
+                System.out.println("____________________________________________________________");
+
+                // store in list
+                for (int i = 1; num >= i; i += 1) {
+                    System.out.println(i + ". " + list[i - 1]);
+                }
+
+                System.out.println("____________________________________________________________");
+                // read next command
+                cmd = in.nextLine();
+            } else {
+                System.out.println("____________________________________________________________");
+                System.out.println("added: " + cmd);
+                System.out.println("____________________________________________________________");
+
+                list[num] = cmd;
+                num += 1;
+                // read next command
+                cmd = in.nextLine();
+            }
         }
 
         System.out.println("____________________________________________________________\nBye! Hope to see you again soon!");
