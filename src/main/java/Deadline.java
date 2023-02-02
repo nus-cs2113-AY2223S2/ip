@@ -16,7 +16,8 @@ public class Deadline extends Task {
 
     @Override
     public String describe() {
-        return getCheckbox(true, MARKER) + super.describe()
+        return getCheckbox(true, MARKER)
+                + super.describe()
                 + " (by: " + by + ")";
     }
 
@@ -31,8 +32,10 @@ public class Deadline extends Task {
         }
 
         int byStartIndex = input.indexOf(KEYWORD_BY);
-        result.add(input.substring(0, byStartIndex).trim());
-        result.add(input.substring(byStartIndex + KEYWORD_BY.length()).trim());
+        result.add(input.substring(0, byStartIndex)
+                        .trim());
+        result.add(input.substring(byStartIndex + KEYWORD_BY.length())
+                        .trim());
         return result;
     }
 }

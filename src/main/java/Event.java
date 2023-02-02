@@ -18,7 +18,8 @@ public class Event extends Task {
 
     @Override
     public String describe() {
-        return getCheckbox(true, MARKER) + super.describe()
+        return getCheckbox(true, MARKER)
+                + super.describe()
                 + " (from: " + from + " to: " + to + ")";
     }
 
@@ -34,9 +35,13 @@ public class Event extends Task {
 
         int fromStartIndex = input.indexOf(KEYWORD_FROM);
         int toStartIndex = input.indexOf(KEYWORD_TO);
-        result.add(input.substring(0, fromStartIndex).trim());
-        result.add(input.substring(fromStartIndex + KEYWORD_FROM.length(), toStartIndex).trim());
-        result.add(input.substring(toStartIndex + KEYWORD_TO.length()).trim());
+        result.add(input.substring(0, fromStartIndex)
+                        .trim());
+        result.add(input.substring(fromStartIndex + KEYWORD_FROM.length(),
+                                   toStartIndex)
+                        .trim());
+        result.add(input.substring(toStartIndex + KEYWORD_TO.length())
+                        .trim());
         return result;
     }
 }

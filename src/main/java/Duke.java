@@ -120,12 +120,11 @@ public class Duke {
 
     private static void setTaskStatus(int id, boolean isCompleted) {
         tasks[id].setIsCompleted(isCompleted);
-        if (isCompleted) { // mark task
-            printWithIndentation("Nice! I've marked this task as done:\n");
-        } else { // unmark task
-            printWithIndentation("OK, I've marked this task as not done yet:\n");
-        }
-        printWithIndentation(tasks[id].describe());
+        String output = isCompleted
+                        ? "Nice! I've marked this task as done:\n"
+                        : "OK, I've marked this task as not done yet:\n";
+        output += tasks[id].describe();
+        printWithIndentation(output);
         printLine();
     }
 
@@ -135,10 +134,9 @@ public class Duke {
             return "";
         }
         String taskDetails = input.nextLine().trim();
-        if (!ToDo.isValidInput(taskDetails)) {
-            return "";
-        }
-        return taskDetails;
+        return ToDo.isValidInput(taskDetails)
+               ? taskDetails
+               : "";
     }
 
     private static void handleStateExit() {
@@ -153,8 +151,10 @@ public class Duke {
 
     private static State handleCommandList() {
         String output = "Here are the tasks in your list:\n";
+        // combine details of tasks into a single string
         for (int i = 0; i < numTasks; ++i) {
-            output += (i + 1) + "." // number
+            output += (i + 1)
+                    + "." // number
                     + tasks[i].describe() + "\n";
         }
         printWithIndentation(output);
@@ -175,6 +175,7 @@ public class Duke {
     }
 
     private static State handleCommandTodo(Scanner input) {
+        // check if input matches required specifications
         String taskDetails = getTaskDetails(input);
         if (taskDetails.equals("")) {
             return State.INVALID;
@@ -187,6 +188,7 @@ public class Duke {
     }
 
     private static State handleCommandDeadline(Scanner input) {
+        // check if input matches required specifications
         String taskDetails = getTaskDetails(input);
         if (taskDetails.equals("")) {
             return State.INVALID;
@@ -199,6 +201,7 @@ public class Duke {
     }
 
     private static State handleCommandEvent(Scanner input) {
+        // check if input matches required specifications
         String taskDetails = getTaskDetails(input);
         if (taskDetails.equals("")) {
             return State.INVALID;
