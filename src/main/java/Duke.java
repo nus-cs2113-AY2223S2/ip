@@ -131,10 +131,6 @@ public class Duke {
         return userTasks;
     }
 
-
-
-
-
     private static Task[] addUserTask(Task[] userTasks, Task newTask) {
         userTasks = Arrays.copyOf(userTasks, userTasks.length+1);
         userTasks[userTasks.length-1] = newTask;
