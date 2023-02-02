@@ -5,3 +5,42 @@ Hello from
 | |_| | |_| |   <  __/
 |____/ \__,_|_|\_\___|
 
+______________________________
+______________________________
+Hello! I'm Duke
+What can I do for you? Type 'help' for the command list
+______________________________
+______________________________
+hello
+______________________________
+______________________________
+Got it. I've added this task:
+[T][ ]todo read book
+Now you have 1 tasks in the list.
+______________________________
+______________________________
+Here are the tasks in your list:
+1.[T][ ]todo read book
+______________________________
+______________________________
+Got it. I've added this task:
+[D][ ]deadline project (by: Feb 11th)
+Now you have 2 tasks in the list.
+______________________________
+______________________________
+Got it. I've added this task:
+[E][ ]event basketball
+(from: 2pm to:  4pm)
+Now you have 3 tasks in the list.
+______________________________
+______________________________
+    todo {description} --add todo
+    deadline {description} /by {deadline} --add deadline
+    event {description} /from {startTime} /to {endTime}  --add event
+    mark {task serial number} --mark the task as done
+    unmark {task serial number} --mark the task as undone
+    list --to show the current task list
+______________________________
+______________________________
+Bye. Hope to see you again soon!
+______________________________
