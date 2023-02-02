@@ -1,6 +1,5 @@
 import java.util.Scanner;
 public class Duke {
-
     private static final String LINE = "____________________________________________________________";
     private static final String BLANK = "    ";
 
@@ -15,16 +14,17 @@ public class Duke {
             inputString = in.nextLine();
             String[] command = inputString.split(" ", 2);
             //list command
-            if (command[0].equals("list")) {
+            switch (command[0]) {
+            case "list":
                 doList(tasks, numberOfTasks);
-            }
+                break;
             //bye command
-            else if (command[0].equals("bye")) {
+            case "bye":
                 doExit();
                 return;
-            }
             //mark/unmark command
-            else if (command[0].equals("mark") || command[0].equals("unmark")) {
+            case "mark":
+            case "unmark":
                 int indexToChange = Integer.parseInt(command[1]) - 1;
                 //Check for error
                 if (!(indexToChange < numberOfTasks)) {
@@ -33,17 +33,40 @@ public class Duke {
                 }
                 if (command[0].equals("mark")) {
                     tasks[indexToChange].setDone();
-                    printMarkedTask(tasks, indexToChange);
+                    tasks[indexToChange].printMarkedTask();
                 } else {
                     tasks[indexToChange].setNotDone();
-                    printUnmarkedTask(tasks, indexToChange);
+                    tasks[indexToChange].printUnmarkedTask();
                 }
-            }
+            break;
             //add task to list
-            else {
-                tasks[numberOfTasks] = new Task(inputString);
+            case "todo":
+                tasks[numberOfTasks] = new Task(command[1], numberOfTasks + 1);
+                tasks[numberOfTasks].printAddTask();
                 numberOfTasks += 1;
-                printAddTask(tasks, numberOfTasks - 1);
+                break;
+
+            case "deadline":
+                if (!command[1].contains("/by")) {
+                    System.out.println("Error: Use /by");
+                    break;
+                }
+                String[] deadLineInputs = command[1].split("/by", 2);
+                tasks[numberOfTasks] = new Deadline(deadLineInputs[0], numberOfTasks + 1, deadLineInputs[1]);
+                tasks[numberOfTasks].printAddTask();
+                numberOfTasks += 1;
+                break;
+
+            case "event":
+                if (!(command[1].contains("/from") || command[1].contains("/to")) ) {
+                    System.out.println("Error: Use /from and /to");
+                    break;
+                }
+                String eventInputs[] = command[1].split("/from|/to");
+                tasks[numberOfTasks] = new Event(eventInputs[0], numberOfTasks + 1, eventInputs[1], eventInputs[2]);
+                tasks[numberOfTasks].printAddTask();
+                numberOfTasks += 1;
+                break;
             }
         }
     }
@@ -60,7 +83,7 @@ public class Duke {
         System.out.println(BLANK + LINE);
         for (int i = 0; i < numberOfTasks; i += 1) {
             System.out.print(BLANK + (i + 1) + ".");
-            printTask(tasks, i);
+            tasks[i].printTask();
         }
         System.out.println(BLANK + LINE);
     }
@@ -68,37 +91,5 @@ public class Duke {
         System.out.println(BLANK + LINE);
         System.out.println(BLANK + "Bye. Hope to see you again soon!");
         System.out.println(BLANK + LINE);
-    }
-    private static void printAddTask(Task[] tasks, int indexToPrint) {
-        System.out.println(BLANK + LINE);
-        System.out.println(BLANK + "Added to list:");
-        System.out.print(BLANK);
-        printTask(tasks, indexToPrint);
-        System.out.println(BLANK + LINE);
-    }
-    private static void printMarkedTask(Task[] tasks, int indexToPrint) {
-        System.out.println(BLANK + LINE);
-        System.out.println(BLANK + "Nice! I've marked this task as done:");
-        System.out.print(BLANK);
-        printTask(tasks, indexToPrint);
-        System.out.println(BLANK + LINE);
-    }
-    private static void printUnmarkedTask(Task[] tasks, int indexToPrint) {
-        System.out.println(BLANK + LINE);
-        System.out.print(BLANK);
-        System.out.println(BLANK + "OK, I've marked this task as not done yet:");
-        System.out.print(BLANK);
-        printTask(tasks, indexToPrint);
-        System.out.println(BLANK + LINE);
-    }
-
-    private static void printTask(Task[] tasks, int indexToPrint) {
-        System.out.print("[");
-        if (tasks[indexToPrint].getIsDone()) {
-            System.out.print("X");
-        } else {
-            System.out.print(" ");
-        }
-        System.out.println("] " + tasks[indexToPrint].getTaskName());
     }
 }
