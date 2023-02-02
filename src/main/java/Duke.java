@@ -7,12 +7,13 @@ public class Duke {
 
     }
 
+    /*
+    Main function that takes user input and interpets how to store and what to do with it
+     */
     public static void main(String[] args) {
 
-        Duke duke = new Duke();
         ArrayList<String> userInputs = new ArrayList<>();
         ArrayList<Task> tasks = new ArrayList<>();
-        boolean isRun = true;
         Scanner scan = new Scanner(System.in);
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -68,13 +69,18 @@ public class Duke {
         }
         exit();
     }
-//deadline return book /by Sunday
+    /*
+    This Returns the input as a Deadline object
+     */
     public static Deadline parseDeadline(String input) {
         int idx = input.indexOf("/by");
         String desc = input.substring(8, idx);
         String by = input.substring(idx + 3);
         return new Deadline(desc, false, by);
     }
+    /*
+    This Returns the input as a Event object
+     */
     public static Event parseEvent(String input) {
         int idx = input.indexOf("/from");
         int idx1 = input.indexOf("/to");
@@ -83,13 +89,17 @@ public class Duke {
         String end = input.substring(idx1 + 3, input.length());
 
         return new Event(desc, false, start, end);
-    }//event project meeting /from Mon 2pm /to 4pm
-    
+    }
+    /*
+    This Adds the input to an input array for the ability to keep track of
+     */
     public static void addToList(String cmd, ArrayList<String> userInputs) {
         userInputs.add(cmd);
         userInputs.set(userInputs.size() - 1, userInputs.size() + ". [ ] " + userInputs.get(userInputs.size() - 1));
     }
-
+    /*
+    This method lists out the tasks in order
+    */
     public static void listOut(ArrayList<String> userInputs, ArrayList<Task> tasks) {
         System.out.println("\t____________________________________________________________");
         System.out.println("Here are the tasks in your list:");
@@ -97,23 +107,19 @@ public class Duke {
             System.out.println("\t" + (i + 1) + "." + tasks.get(i));
         }
         System.out.println("\t____________________________________________________________");
-
     }
-    public static void echoCmd(String cmd) {
-        System.out.println("\t____________________________________________________________");
-        System.out.println("\t " + cmd);
-        System.out.println("\t____________________________________________________________");
-
-    }
-
+    /*
+    Automated greet function
+    */
     public static void greetUser() {
         System.out.println("\t____________________________________________________________");
         System.out.println("\tHello! I'm Duke");
         System.out.println("\tWhat can I do for you?");
         System.out.println("\t____________________________________________________________");
-
     }
-
+    /*
+    Exit message
+    */
     public static void exit() {
         System.out.println("\t____________________________________________________________");
         System.out.println("\tBye. Hope to see you again soon!");
