@@ -52,8 +52,9 @@ public class Duke {
             case "list":
                 System.out.println("\t____________________________________________________________");
                 System.out.println("\t Here are the tasks in your list:");
-                for(int i=0; i<cnt; i++)
+                for(int i=0; i<cnt; i++){
                     System.out.println("\t " + (i+1) + ". " + tasks[i].toString());
+                }
                 System.out.println("\t____________________________________________________________\n");
                 break;
             }
