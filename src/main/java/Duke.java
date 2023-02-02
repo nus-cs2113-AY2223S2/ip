@@ -75,7 +75,7 @@ public class Duke {
         boolean isActive = true;
         while (isActive) {
             String command = input.nextLine();
-            String[] commands = command.split(" ");
+            String[] commands = command.split(" ",2);
             switch (commands[0]) {
             case "bye":
                 System.out.println("Bye. Hope to see you again soon!\n");
@@ -83,8 +83,7 @@ public class Duke {
                 break;
             case "list":
                 for (int i = 0; i < taskCount; i++) {
-                    System.out.println((i + 1) + "." + "[" + tasks[i].getStatusIcon() + "]" + " "
-                            + tasks[i].getDescription());
+                    System.out.println((i + 1) + "." + tasks[i].toString());
                 }
                 break;
             case "mark":
@@ -95,11 +94,34 @@ public class Duke {
                 tasks[Integer.parseInt(commands[1]) - 1].markAsUndone();
                 System.out.println(tasks[Integer.parseInt(commands[1]) - 1].printTask());
                 break;
+            case "todo":
+                Todo todo = new Todo(commands[1]);
+                tasks[taskCount] = todo;
+                taskCount ++;
+                System.out.println("Got it I have added this task:");
+                System.out.println("  " + todo.toString());
+                System.out.println("Now you have " + taskCount + " tasks in the list.");
+                break;
+            case "deadline":
+                String[] message = commands[1].split("/by", 2);
+                Deadline deadline = new Deadline(message[0], message[1]);
+                tasks[taskCount] = deadline;
+                taskCount ++;
+                System.out.println("Got it I have added this task:");
+                System.out.println("  " + deadline.toString());
+                System.out.println("Now you have " + taskCount + " tasks in the list.");
+                break;
+            case "event":
+                String[] task = commands[1].split("/from");
+                String[] period = task[1].split("/to");
+                Event event = new Event(task[0], period[0], period[1]);
+                tasks[taskCount] = event;
+                taskCount ++;
+                System.out.println("Got it I have added this task:");
+                System.out.println("  " + event.toString());
+                System.out.println("Now you have " + taskCount + " tasks in the list.");
+                break;
             default:
-                Task t = new Task(command);
-                tasks[taskCount] = t;
-                System.out.println("added: " + command);
-                taskCount++;
                 break;
             }
         }
