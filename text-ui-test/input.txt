@@ -2,8 +2,8 @@ invalid-command
 list
 todo read tenten kakumei
 list
-deadline watch tenten kakumei #3 /by 2 Feb 9pm
-event tenten kakumei #4 /from 2 Feb 9pm /to 2 Feb 9:30pm
+deadline watch tenten kakumei #4 /by 1 Feb 9pm
+event tenten kakumei #5 /from 1 Feb 9pm /to 1 Feb 9:30pm
 mark 1
 mark 2
 unmark 1

@@ -40,17 +40,17 @@ Current output (as of Level 4):
 │ You have 1 task(s) in the list.                                              │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 
-> deadline watch tenten kakumei #3 /by 2 Feb 9pm
+> deadline watch tenten kakumei #4 /by 1 Feb 9pm
 ╭──────────────────────────────────────────────────────────────────────────────╮
 │ Added task:                                                                  │
-│   D □ watch tenten kakumei #3 (by: 2 Feb 9pm)                                │
+│   D □ watch tenten kakumei #4 (by: 1 Feb 9pm)                                │
 │ You now have 2 task(s) in the list.                                          │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 
-> event tenten kakumei #4 /from 2 Feb 9pm /to 2 Feb 9:30pm
+> event tenten kakumei #5 /from 1 Feb 9pm /to 1 Feb 9:30pm
 ╭──────────────────────────────────────────────────────────────────────────────╮
 │ Added task:                                                                  │
-│   E □ tenten kakumei #4 (from: 2 Feb 9pm to: 2 Feb 9:30pm)                   │
+│   E □ tenten kakumei #5 (from: 1 Feb 9pm to: 1 Feb 9:30pm)                   │
 │ You now have 3 task(s) in the list.                                          │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 
@@ -63,7 +63,7 @@ Current output (as of Level 4):
 > mark 2
 ╭──────────────────────────────────────────────────────────────────────────────╮
 │ The following task has been marked as done                                   │
-│   D ■ watch tenten kakumei #3 (by: 2 Feb 9pm)                                │
+│   D ■ watch tenten kakumei #4 (by: 1 Feb 9pm)                                │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 
 > unmark 1
@@ -76,8 +76,8 @@ Current output (as of Level 4):
 ╭──────────────────────────────────────────────────────────────────────────────╮
 │ Here are your tasks:                                                         │
 │   T □ read tenten kakumei                                                    │
-│   D ■ watch tenten kakumei #3 (by: 2 Feb 9pm)                                │
-│   E □ tenten kakumei #4 (from: 2 Feb 9pm to: 2 Feb 9:30pm)                   │
+│   D ■ watch tenten kakumei #4 (by: 1 Feb 9pm)                                │
+│   E □ tenten kakumei #5 (from: 1 Feb 9pm to: 1 Feb 9:30pm)                   │
 │ You have 3 task(s) in the list.                                              │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 
