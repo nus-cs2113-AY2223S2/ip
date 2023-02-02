@@ -1,52 +1,90 @@
 
 import java.util.Scanner;
-
 public class Duke {
+    public static void printLines(){
+        System.out.println("--------------------------------------------------");
+    }
+
     public static void main(String[] args) {
-        Scanner myObj = new Scanner(System.in);
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);
-        System.out.println("what can i do for you");
 
-        String input = myObj.nextLine();
-        Todos[] todo = new Todos[100];
-        int c = 0;
-        while(!input.equalsIgnoreCase("bye")) {
-            if (input.equalsIgnoreCase("list")) {
-                System.out.println("-------TODO-LIST------");
-                System.out.println("----------------------");
-                for (int i = 0; i < todo.length && todo[i] != null; i++) {
-                    char x = ' ';
-                    if(todo[i].marked) {
-                        x = 'X';
-                    }
-                    System.out.println(i+1 + ". " + "[" + x + "] " + todo[i].item);
+        System.out.println("Hello! I'm ROLEX");
+        System.out.println("What can I do for you?\n");
+
+        Scanner ReadInput = new Scanner(System.in);
+
+        Tasks[] task = new Tasks[100];
+        int taskCount = 0;
+
+        while(true){
+            String UserInput = ReadInput.nextLine();
+
+            if(UserInput.equalsIgnoreCase("bye")){
+                printLines();
+                System.out.println("Bye. Hope to see you again soon!\n");
+                printLines();
+                System.exit(0);
+            }
+
+            else if(UserInput.equalsIgnoreCase("list")){
+                printLines();
+                int indexNum = 1;
+                System.out.println("Here are the tasks in your list:");
+                for(int i = 0; i<taskCount; i++){
+                    System.out.println(indexNum + ". " + task[i]);
+                    indexNum++;
                 }
-                System.out.println("----------------------");
-            } else if (input.startsWith("mark")){
-                int i = Integer.parseInt(input.substring(5));
-                todo[i-1].setMark();
-                System.out.println("Item has been marked");
-                System.out.println(i + ". " + "[X] " + todo[i-1].item);
-            } else if (input.startsWith("unmark")){
-                int i = Integer.parseInt(input.substring(7));
-                todo[i-1].unMark();
-                System.out.println("Item has been unmarked");
-                System.out.println(i + ". " + "[ ] " + todo[i-1].item);
+                printLines();
             }
 
-            else {
-                todo[c] = new Todos(input, false);
-                System.out.println("Added: " + input);
+            else if(UserInput.startsWith("mark")){
+                int index = Integer.parseInt(UserInput.substring(5));
+                task[index-1].MarkTask();
             }
-            input = myObj.nextLine();
-            c++;
 
+            else if(UserInput.startsWith("unmark")){
+                int index = Integer.parseInt(UserInput.substring(7));
+                task[index-1].unMarkTask();
+            }
+
+            else if(UserInput.startsWith("todo")){
+                printLines();
+                String todoName = UserInput.substring(5);
+                task[taskCount] = new Todo(todoName);
+                taskCount++;
+                System.out.println("Got it. I've added this task:");
+                System.out.println(task[taskCount-1]);
+                System.out.println("\nNow you have " + taskCount + " tasks in the list.");
+                printLines();
+            }
+
+            else if(UserInput.startsWith("deadline")){
+                printLines();
+                int indexOfBy =   UserInput.indexOf("/by");
+                String deadlineName = UserInput.substring(9,indexOfBy-1);
+                String by = UserInput.substring(indexOfBy+3);
+                task[taskCount] = new Deadline(deadlineName, by);
+                taskCount++;
+                System.out.println("Got it. I've added this task:");
+                System.out.println(task[taskCount-1]);
+                System.out.println("\nNow you have " + taskCount + " tasks in the list.");
+                printLines();
+
+            }
+
+            else if(UserInput.startsWith("event")){
+                printLines();
+                int indexOfFrom = UserInput.indexOf("/from");
+                int indexOfTo = UserInput.indexOf("/to");
+                String eventName = UserInput.substring(6,indexOfFrom-1);
+                String startTime = UserInput.substring(indexOfFrom+6,indexOfTo-1);
+                String endTime = UserInput.substring(indexOfTo+4);
+                task[taskCount] = new Event(eventName, startTime, endTime);
+                taskCount++;
+                System.out.println("Got it. I've added this task:");
+                System.out.println(task[taskCount-1]);
+                System.out.println("\nNow you have " + taskCount + " tasks in the list.");
+                printLines();
+            }
         }
-        System.out.println("Bye! see you soon!");
     }
 }
