@@ -7,7 +7,7 @@ public class Duke {
 
     public static void main(String[] args) {
 
-        System.out.println("Hello! I'm ROLEX");
+        System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?\n");
 
         Scanner ReadInput = new Scanner(System.in);
