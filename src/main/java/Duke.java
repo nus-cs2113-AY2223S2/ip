@@ -4,6 +4,86 @@ import java.util.Scanner;
  * Incorrect Tags have been resolved, all commits have been tagged appropriately
  */
 public class Duke {
+
+    public static void printLine() {
+        System.out.println("\t---------------------------------------------------------------------------------");
+    }
+    public static void listTasks(int currentIndex, Task[] taskList) {
+        for(int i = 0; i<currentIndex;i+=1) {
+            System.out.println('\t' + Integer.toString(i+1) + "." + taskList[i].getStatusAndDescription());
+            // can be further optimized.
+        }
+    }
+
+    public static boolean isTheSame(String userInput, String toCompare) {
+        return userInput.split(" ")[0].equals(toCompare);
+    }
+
+    /**
+     * Issue regarding index marking being off by one has been resolved.
+     * @param userInput
+     * @param currentIndex
+     * @return boolean
+     */
+
+    public static boolean isInRange(String userInput, int currentIndex) {
+        return (Integer.parseInt(userInput.split(" ")[1])>0 && Integer.parseInt(userInput.split(" ")[1])<currentIndex+1);
+    }
+
+    public static void printMarkedTask(String userInput, Task[] taskList) {
+        System.out.println("\tNice! I've marked this task as done:");
+        taskList[Integer.parseInt(userInput.split(" ")[1])-1].markTask();
+        System.out.println("\t\t" + taskList[Integer.parseInt(userInput.split(" ")[1])-1].getStatusAndDescription());
+    }
+
+    public static void printUnmarkedTask(String userInput, Task[] taskList) {
+        System.out.println("\tNice! I've marked this task as not done:");
+        taskList[Integer.parseInt(userInput.split(" ")[1])-1].unMarkTask();
+        System.out.println("\t\t" + taskList[Integer.parseInt(userInput.split(" ")[1])-1].getStatusAndDescription());
+    }
+    public static String[] getDeadline(String userInput) {
+        String intermediateStage = userInput.replace("deadline ", "");
+        String[] deadlineAndDescription = intermediateStage.split("/by ");
+        return deadlineAndDescription;
+
+    }
+    public static String[] getEvent(String userInput) {
+        String intermediateStage = userInput.replace("event ", "");
+        String[] eventDescription = intermediateStage.split("/from | /to");
+        return eventDescription;
+    }
+    public static void printNoTasks(int currentIndex) {
+        if(currentIndex==1) {
+            System.out.println("\tNow you have " + Integer.toString(currentIndex) + " task in the list");
+        } else {
+            System.out.println("\tNow you have " + Integer.toString(currentIndex) + " tasks in the list");
+        }
+    }
+
+    public static void printTodo(String userInput) {
+        String input = userInput.replace("todo ", "");
+        taskList[currentIndex] = new Todos(input);
+        currentIndex+=1;
+        printNoTasks(currentIndex);
+    }
+    public static void printDeadline(String userInput) {
+        String [] deadlineAndDescription = getDeadline(userInput);
+        taskList[currentIndex] = new Deadlines(deadlineAndDescription[0], deadlineAndDescription[1]);
+        currentIndex+=1;
+        printNoTasks(currentIndex);
+    }
+
+    public static void printEvent(String userInput) {
+        String [] eventDescription = getEvent(userInput);
+        taskList[currentIndex] = new Events(eventDescription[0], eventDescription[1], eventDescription[2]);
+        currentIndex+=1;
+        printNoTasks(currentIndex);
+    }
+
+
+    final static int MAXTASKS = 100;
+    public static Task[] taskList = new Task[MAXTASKS];
+    public static int currentIndex = 0;
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -16,58 +96,61 @@ public class Duke {
         System.out.println("What can I do for you?");
         System.out.println("---------------------------------------------------------------------------------");
         Scanner in = new Scanner(System.in);
-        String userInput= " ";
-        Task[] taskList = new Task[100];
-        int currentIndex = 0;
+        String userInput;
         while (true) { // ensure that the loop can stay on forever if needed.
             userInput = in.nextLine();
             if(userInput.equals("bye")) { // exit command
                 break;
             } else if(userInput.equals("list")) { //displays the list if needed
-                System.out.println("\t---------------------------------------------------------------------------------");
+                printLine();
                 System.out.println("\tHere are the tasks in your list:");
-                for(int i = 0; i<currentIndex;i+=1) {
-                    System.out.println('\t' + Integer.toString(i+1) + "." + taskList[i].getStatusIcon() + " " +
-                            taskList[i].getDescription());
-                }
-                System.out.println("\t---------------------------------------------------------------------------------");
-            } else if (userInput.split(" ")[0].equals("mark")) { //mark the task in
-                while(!(Integer.parseInt(userInput.split(" ")[1])>0 && Integer.parseInt(userInput.split(" ")[1])<=currentIndex+1)) {
-                    System.out.println("\t---------------------------------------------------------------------------------");
+                listTasks(currentIndex, taskList);
+                printLine();
+            } else if (isTheSame(userInput, "mark")) { //mark the task in
+                while(isInRange(userInput, currentIndex)==false) {
+                    printLine();
                     System.out.println("\tNice try, enter a valid index to mark:");
-                    System.out.println("\t---------------------------------------------------------------------------------");
+                    printLine();
                     userInput = in.nextLine();
                 }
-                System.out.println("\t---------------------------------------------------------------------------------");
-                System.out.println("\tNice! I've marked this task as done:");
-                taskList[Integer.parseInt(userInput.split(" ")[1])-1].markTask();
-                System.out.println("\t\t" + taskList[Integer.parseInt(userInput.split(" ")[1])-1].getStatusIcon() + " " +
-                        taskList[Integer.parseInt(userInput.split(" ")[1])-1].getDescription());
-                System.out.println("\t---------------------------------------------------------------------------------");
+                printLine();
+                printMarkedTask(userInput, taskList);
+                printLine();
             } else if (userInput.split(" ")[0].equals("unmark")) {//unmark the task
-                while(!(Integer.parseInt(userInput.split(" ")[1])>0 && Integer.parseInt(userInput.split(" ")[1])<=currentIndex+1)) {
-                    System.out.println("\t---------------------------------------------------------------------------------");
+                while(isInRange(userInput, currentIndex)==false) {
+                    printLine();
                     System.out.println("\tNice try, enter a valid index to unmark:");
-                    System.out.println("\t---------------------------------------------------------------------------------");
+                    printLine();
                     userInput = in.nextLine();
                 }
-                System.out.println("\t---------------------------------------------------------------------------------");
-                System.out.println("\tOK, I've marked this task as not done yet:");
-                taskList[Integer.parseInt(userInput.split(" ")[1])-1].unMarkTask();
-                System.out.println("\t\t" + taskList[Integer.parseInt(userInput.split(" ")[1])-1].getStatusIcon() + " " +
-                        taskList[Integer.parseInt(userInput.split(" ")[1])-1].getDescription());
-                System.out.println("\t---------------------------------------------------------------------------------");
-            } else { // tells the user that we have added the task in
+                printLine();
+                printUnmarkedTask(userInput, taskList);
+                printLine();
+            } else if(isTheSame(userInput, "todo")) {
+                printLine();
+                printTodo(userInput);
+                printLine();
+                //leave this for the final refactoring
+            } else if(isTheSame(userInput, "deadline")) {
+                printLine();
+               printDeadline(userInput);
+                printLine();
+            } else if(isTheSame(userInput, "event")) {
+                printLine();
+                printEvent(userInput);
+                printLine();
+            }
+            else { // tells the user that we have added the task in
                 taskList[currentIndex] = new Task(userInput); // set the description
                 currentIndex+=1;
-                System.out.println("\t---------------------------------------------------------------------------------");
+                printLine();
                 System.out.println("\tadded: " + userInput);
-                System.out.println("\t---------------------------------------------------------------------------------");
+                printLine();
             }
 
         }
-        System.out.println("\t---------------------------------------------------------------------------------");
+        printLine();
         System.out.println("\tBye. Hope to see you again soon!");
-        System.out.println("\t---------------------------------------------------------------------------------");
+        printLine();
     }
 }

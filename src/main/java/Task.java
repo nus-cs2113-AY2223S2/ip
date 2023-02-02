@@ -15,6 +15,12 @@ public class Task {
     public String getDescription() {
         return this.description;
     }
+    public String getStatusAndDescription() {
+        return this.getStatusIcon() + " " + this.getDescription();
+    }
+//    public String printAddedTask() {
+//
+//    }
     public void markTask() {
         this.isDone = true;
     }
