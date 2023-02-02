@@ -12,6 +12,7 @@ public class Event extends Task {
         String descriptionFrom = descriptionFromTo[0];
         String descriptionTo = descriptionFromTo[1];
 
-        return descriptionDetails + "(from:" + descriptionFrom + "To:" + descriptionTo + ")";
+        return "[" + this.getType() + "][" + this.getStatusIcon() + "]" +
+                descriptionDetails + "(from:" + descriptionFrom + "To:" + descriptionTo + ")";
     }
 }

@@ -10,7 +10,8 @@ public class Deadline extends Task {
         String descriptionDetails = descriptionParts[0];
         String descriptionDeadline = descriptionParts[1];
 
-        return descriptionDetails + "(by:" + descriptionDeadline + ")";
+        return "[" + this.getType() + "][" + this.getStatusIcon() + "]" +
+                descriptionDetails + "(by:" + descriptionDeadline + ")";
     }
 
 }

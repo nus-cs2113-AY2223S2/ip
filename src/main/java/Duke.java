@@ -5,40 +5,40 @@ public class Duke {
         Scanner inputScanner = new Scanner(System.in);
         String userCommand, userInputDetails;
 
-        // Greeting the user
-        Messages.hello();
+        Message.hello();
         
         do {
             userCommand = inputScanner.next();
             switch(userCommand) {
             case "list":
-                Lists.printList();
+                List.printList();
                 break;
             case "mark":
                 userInputDetails = inputScanner.next();
-                Lists.markDone(Integer.parseInt(userInputDetails));
+                List.markDone(Integer.parseInt(userInputDetails));
                 break;
             case "unmark":
                 userInputDetails = inputScanner.next();
-                Lists.markUndone(Integer.parseInt(userInputDetails));
+                List.markUndone(Integer.parseInt(userInputDetails));
                 break;
             case "todo":
                 userInputDetails = inputScanner.nextLine();
-                Lists.addItem(userInputDetails, TaskType.TODO);
+                List.addTask(userInputDetails, TaskType.TODO);
                 break;
             case "deadline":
                 userInputDetails = inputScanner.nextLine();
-                Lists.addItem(userInputDetails, TaskType.DEADLINE);
+                List.addTask(userInputDetails, TaskType.DEADLINE);
                 break;
             case "event":
                 userInputDetails = inputScanner.nextLine();
-                Lists.addItem(userInputDetails, TaskType.EVENT);
+                List.addTask(userInputDetails, TaskType.EVENT);
                 break;
             default:
-                Messages.unknownCommandHandler();
+                Message.unknownCommandHandler();
             }
         } while (!(userCommand.equals("bye")));
-        Messages.bye();
-        Messages.line();
+
+        Message.bye();
+        Message.line();
     }
 }

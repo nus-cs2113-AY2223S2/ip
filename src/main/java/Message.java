@@ -1,4 +1,5 @@
-public class Messages {
+public class Message {
+    public static final String HORIZONTAL_LINE = "____________________________________________________________";
 
     public static void logo() {
         String logo = " ____        _        \n"
@@ -11,14 +12,14 @@ public class Messages {
     }
 
     public static void line() {
-        System.out.println("____________________________________________________________");
+        System.out.println(HORIZONTAL_LINE);
     }
 
     public static void hello() {
-        Messages.line();
-        Messages.logo();
+        Message.line();
+        Message.logo();
         System.out.println("Hello! I'm Duke\nWhat can I do for you?");
-        Messages.line();
+        Message.line();
     }
 
     public static void bye() {
@@ -26,14 +27,14 @@ public class Messages {
     }
 
     public static void echo(String userInput) {
-        Messages.line();
+        Message.line();
         System.out.println(userInput);
-        Messages.line();
+        Message.line();
     }
 
     public static void unknownCommandHandler() {
-        Messages.line();
+        Message.line();
         System.out.println("You have entered an unknown command! Please try again!");
-        Messages.line();
+        Message.line();
     }
 }
