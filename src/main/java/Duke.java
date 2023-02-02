@@ -17,9 +17,9 @@ public class Duke {
                 "Hello! I'm Duke.\n" +
                 "To add general tasks to the todo list, simply type in the task and press enter.\n" +
                 "You can specify the type of tasks by using " +
-                "'todo' / 'deadline' / 'event' keyword before the task description. \n" +
+                "'todo' / 'deadline' / 'event' keyword before the task description.\n" +
                 "You can keep track of deadlines by typing 'deadline' " +
-                "followed by task description + '/by' to specify the time of the deadline. \n" +
+                "followed by task description + '/by' to specify the time of the deadline.\n" +
                 "You can also add events to the list by typing 'event' " +
                 "followed by task description + '/from' + starting time of event + '/to' ending time of event.\n" +
                 "Type 'list' to view the current todo list.\n" +
@@ -31,7 +31,12 @@ public class Duke {
         Scanner in = new Scanner(System.in);
 
         while (true) {
-            String userInput = in.nextLine().trim();
+            String userInput = "";
+            if (in.hasNextLine()){
+                 userInput = in.nextLine().trim();
+            } else {
+                break;
+            }
             if (userInput.equals("bye")) {
                 System.out.println("Thank you for using Duke. Hope to see you soon!");
                 break;
@@ -66,7 +71,7 @@ public class Duke {
         int taskIndex = Integer.parseInt(input.substring(4).trim());
         if (taskIndex >= 1 && taskIndex <= countTask) {
             tasks[taskIndex - 1].markAsDone();
-            System.out.println(line + "Task " + taskIndex + " marked as done: \n" +
+            System.out.println(line + "Task " + taskIndex + " marked as done:\n" +
                     tasks[taskIndex - 1].printTask() + line);
         } else {
             System.out.println("Task " + taskIndex + " not found. Please try again.");
@@ -77,7 +82,7 @@ public class Duke {
         int taskIndex = Integer.parseInt(input.substring(6).trim());
         if (taskIndex >= 1 && taskIndex <= countTask) {
             tasks[taskIndex - 1].markAsUndone();
-            System.out.println(line + "Task " + taskIndex + " marked as not done yet: \n" +
+            System.out.println(line + "Task " + taskIndex + " marked as not done yet:\n" +
                     tasks[taskIndex - 1].printTask() + line);
         } else {
             System.out.println("Task " + taskIndex + " not found. Please try again.");
@@ -108,7 +113,7 @@ public class Duke {
     }
 
     public static void createEvent(String input) {
-        Event eventTask = new Event(input.substring(9));
+        Event eventTask = new Event(input.substring(6));
         tasks[countTask] = eventTask;
         countTask++;
         System.out.println(line + "Great! I've added this task:\n" + "   " + eventTask.printTask());

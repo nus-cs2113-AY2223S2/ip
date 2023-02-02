@@ -9,7 +9,7 @@ public class Deadline extends Task{
 
     @Override
     public String printTask() {
-        return "[D]" + super.printTask().substring(0, super.printTask().indexOf('/')) + "(by: " + getDeadline() + ") \n";
+        return "[D]" + super.printTask().substring(0, super.printTask().indexOf('/')) + "(by: " + getDeadline() + ")\n";
     }
 
 }
