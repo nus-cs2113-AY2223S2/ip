@@ -4,8 +4,8 @@ import com.ethanyidong.bunny.BunnySession;
 import com.ethanyidong.bunny.cmd.TokenizedCommand;
 
 public class FlagArgumentCommandValidator implements CommandValidator {
-    private String flag;
-    private ArgumentValidator argumentValidator;
+    private final String flag;
+    private final ArgumentValidator argumentValidator;
 
     public FlagArgumentCommandValidator(String flag, ArgumentValidator argumentValidator) {
         this.flag = flag;
@@ -15,7 +15,7 @@ public class FlagArgumentCommandValidator implements CommandValidator {
     public void validateCommand(BunnySession bunny, TokenizedCommand command) throws InvalidCommandException {
         try {
             this.argumentValidator.validateArgument(bunny, command.getFlagArgument(this.flag));
-        } catch(InvalidArgumentException iae) {
+        } catch (InvalidArgumentException iae) {
             throw new InvalidCommandException("/" + flag + " argument", iae);
         }
     }

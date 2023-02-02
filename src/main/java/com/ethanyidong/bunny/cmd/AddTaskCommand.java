@@ -1,8 +1,8 @@
 package com.ethanyidong.bunny.cmd;
 
 import com.ethanyidong.bunny.BunnySession;
-import com.ethanyidong.bunny.task.Task;
 import com.ethanyidong.bunny.fmt.Formatter;
+import com.ethanyidong.bunny.task.Task;
 
 public abstract class AddTaskCommand extends ExecutableCommand {
     private String name;

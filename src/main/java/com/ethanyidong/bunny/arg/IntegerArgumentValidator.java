@@ -4,7 +4,7 @@ import com.ethanyidong.bunny.BunnySession;
 
 public class IntegerArgumentValidator implements ArgumentValidator {
     public void validateArgument(BunnySession bunny, String argument) throws InvalidArgumentException {
-        if(argument == null) {
+        if (argument == null) {
             throw new InvalidArgumentException("is missing");
         }
 

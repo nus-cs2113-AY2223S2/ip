@@ -6,7 +6,7 @@ import com.ethanyidong.bunny.arg.PositionalArgumentCommandValidator;
 import com.ethanyidong.bunny.arg.TaskIndexArgumentValidator;
 
 public class MarkCommand extends ExecutableCommand {
-    private boolean isDone;
+    private final boolean isDone;
     private int taskIndex;
 
     public MarkCommand(boolean isDone) {

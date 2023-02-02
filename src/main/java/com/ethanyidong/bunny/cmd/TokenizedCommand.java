@@ -3,15 +3,16 @@ package com.ethanyidong.bunny.cmd;
 import java.util.HashMap;
 
 public class TokenizedCommand {
-    private String command;
+    private final String command;
     private String positionalArgument;
     private HashMap<String, String> flagArguments;
+
     public TokenizedCommand(String command) {
         String[] commandAndArguments = command.split(" ", 2);
         this.command = extractCommand(commandAndArguments[0]);
 
         String arguments;
-        if(commandAndArguments.length == 2) {
+        if (commandAndArguments.length == 2) {
             arguments = commandAndArguments[1];
         } else {
             return;
@@ -34,7 +35,7 @@ public class TokenizedCommand {
     private static HashMap<String, String> extractFlagArguments(String[] positionalAndFlagArguments) {
         HashMap<String, String> ret = new HashMap<>();
 
-        for(int i = 1; i < positionalAndFlagArguments.length; i++) {
+        for (int i = 1; i < positionalAndFlagArguments.length; i++) {
             String[] flagAndFlagArgument = positionalAndFlagArguments[i].split(" ", 2);
             if (flagAndFlagArgument.length == 2) {
                 ret.put(flagAndFlagArgument[0], flagAndFlagArgument[1].trim());

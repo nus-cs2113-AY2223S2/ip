@@ -1,7 +1,5 @@
 package com.ethanyidong.bunny.task;
 
-import com.ethanyidong.bunny.task.Task;
-
 public class Deadline extends Task {
     private String by;
 

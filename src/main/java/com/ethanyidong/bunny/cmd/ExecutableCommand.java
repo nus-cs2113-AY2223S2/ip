@@ -6,22 +6,8 @@ import com.ethanyidong.bunny.arg.InvalidArgumentException;
 import com.ethanyidong.bunny.arg.InvalidCommandException;
 
 public abstract class ExecutableCommand {
-    protected CommandValidator[] validators() {
-        return new CommandValidator[]{};
-    }
-    protected void parseArguments(BunnySession bunny, TokenizedCommand command) {
-
-    }
-
-    private void validateCommand(BunnySession bunny, TokenizedCommand command)
-            throws InvalidCommandException {
-        for(CommandValidator validator : this.validators()) {
-            validator.validateCommand(bunny, command);
-        }
-    }
-
     private static ExecutableCommand fromCommandString(String commandString) {
-        switch(commandString) {
+        switch (commandString) {
         case "bye":
             return new ByeCommand();
         case "list":
@@ -51,6 +37,21 @@ public abstract class ExecutableCommand {
         newExecutableCommand.validateCommand(bunny, command);
         newExecutableCommand.parseArguments(bunny, command);
         return newExecutableCommand;
+    }
+
+    protected CommandValidator[] validators() {
+        return new CommandValidator[]{};
+    }
+
+    protected void parseArguments(BunnySession bunny, TokenizedCommand command) {
+
+    }
+
+    private void validateCommand(BunnySession bunny, TokenizedCommand command)
+            throws InvalidCommandException {
+        for (CommandValidator validator : this.validators()) {
+            validator.validateCommand(bunny, command);
+        }
     }
 
     public abstract void execute(BunnySession bunny);

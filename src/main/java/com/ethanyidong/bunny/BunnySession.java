@@ -10,7 +10,7 @@ public class BunnySession {
     private final static String GLOBAL_INDENTATION = "\t";
     private final static String MESSAGE_INDENTATION = " ";
 
-    private ArrayList<Task> taskList;
+    private final ArrayList<Task> taskList;
     private boolean isQuit;
 
     public BunnySession() {
