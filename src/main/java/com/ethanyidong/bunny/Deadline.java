@@ -1,3 +1,5 @@
+package com.ethanyidong.bunny;
+
 public class Deadline extends Task {
     private String by;
 

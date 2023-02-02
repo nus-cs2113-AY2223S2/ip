@@ -1,3 +1,5 @@
+package com.ethanyidong.bunny;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
