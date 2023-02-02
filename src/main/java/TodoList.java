@@ -1,4 +1,5 @@
 public class TodoList {
+    
     private static final int MAXLISTNUM = 100;
     private static final String SPLITTER = "    ____________________________________________________________";
     private Task[] tasks = new Task[MAXLISTNUM];
