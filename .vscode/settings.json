@@ -1,4 +1,4 @@
 {
   "java.format.settings.url": ".vscode/java-formatter.xml",
-  "editor.rulers": [120]
+  "editor.rulers": [100]
 }

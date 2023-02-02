@@ -7,7 +7,8 @@ public class Event extends Task {
     public Event(String description, String from, String to) {
         super(description);
         if (from == null || to == null) {
-            throw new IllegalArgumentException("Event \"from\" and \"to\" parameters cannot be null");
+            throw new IllegalArgumentException(
+                    "Event \"from\" and \"to\" parameters cannot be null");
         }
         this.from = from;
         this.to = to;

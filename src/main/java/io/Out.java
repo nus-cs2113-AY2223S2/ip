@@ -15,16 +15,19 @@ public class Out {
     }
 
     private static void printBoxTopBorder() {
-        printLineWithDelim(BoxDrawingCharacter.TOP_LEFT_CORNER, BoxDrawingCharacter.TOP_RIGHT_CORNER);
+        printLineWithDelim(BoxDrawingCharacter.TOP_LEFT_CORNER,
+                BoxDrawingCharacter.TOP_RIGHT_CORNER);
     }
 
     private static void printBoxBottomBorder() {
-        printLineWithDelim(BoxDrawingCharacter.BOTTOM_LEFT_CORNER, BoxDrawingCharacter.BOTTOM_RIGHT_CORNER);
+        printLineWithDelim(BoxDrawingCharacter.BOTTOM_LEFT_CORNER,
+                BoxDrawingCharacter.BOTTOM_RIGHT_CORNER);
         System.out.println("");
     }
 
     private static void printBoxBottomBorder(boolean withBottomMargin) {
-        printLineWithDelim(BoxDrawingCharacter.BOTTOM_LEFT_CORNER, BoxDrawingCharacter.BOTTOM_RIGHT_CORNER);
+        printLineWithDelim(BoxDrawingCharacter.BOTTOM_LEFT_CORNER,
+                BoxDrawingCharacter.BOTTOM_RIGHT_CORNER);
         if (withBottomMargin) {
             System.out.println("");
         }
@@ -47,8 +50,10 @@ public class Out {
         String left = BoxDrawingCharacter.VERTICAL_LINE + " ";
         String right = " " + BoxDrawingCharacter.VERTICAL_LINE + "\n";
         String[] lines = { "                   __        __      __      ",
-                "  ____ ___________/ /_  ____/ /_  __/ /_____ ", " / __ `/ ___/ ___/ __ \\/ __  / / / / //_/ _ \\",
-                "/ /_/ / /  / /__/ / / / /_/ / /_/ / ,< /  __/", "\\__,_/_/   \\___/_/ /_/\\__,_/\\__,_/_/|_|\\___/ ",
+                "  ____ ___________/ /_  ____/ /_  __/ /_____ ",
+                " / __ `/ ___/ ___/ __ \\/ __  / / / / //_/ _ \\",
+                "/ /_/ / /  / /__/ / / / /_/ / /_/ / ,< /  __/",
+                "\\__,_/_/   \\___/_/ /_/\\__,_/\\__,_/_/|_|\\___/ ",
                 "                                             " };
         int lineLength = lines[0].length();
         int availableSpace = BOX_WIDTH - lineLength - 4;

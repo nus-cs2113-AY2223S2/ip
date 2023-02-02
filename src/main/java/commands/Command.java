@@ -38,6 +38,7 @@ public class Command {
 
     @Override
     public String toString() {
-        return String.format("Command[type=%s, body=%s, from=%s, to=%s, by=%s]", type, body, from, to, by);
+        return String.format("Command[type=%s, body=%s, from=%s, to=%s, by=%s]", type, body, from,
+                to, by);
     }
 }
