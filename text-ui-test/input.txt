@@ -1,0 +1,10 @@
+todo buy mango
+deadline submit CS2113 assignment /by tomorrow 2359
+list
+mark 2
+event recess week /from 18 feb /to 26 feb
+mark 1
+unmark 2
+mark 3
+list
+bye
