@@ -1,3 +1,4 @@
+package task;
 /**
  * Represents an event with a start and end time
  * 
