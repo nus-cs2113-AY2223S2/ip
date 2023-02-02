@@ -2,24 +2,28 @@
 import java.util.Scanner;
 
 public class Duke {
-    public static void printFormAbove(){
+    public static void printUnderBar(){
         System.out.println("\t____________________________________________________________");
+    }
+    public static void printFormAbove(){
+        printUnderBar();
         System.out.println("\t Got it. I've added this task:");
     }
     public static void printCnt(int cnt){
         System.out.println("\t Now you have " + cnt + " tasks in the list.");
-        System.out.println("\t____________________________________________________________");
+        printUnderBar();
     }
     public static void printMark(){
-        System.out.println("\t____________________________________________________________");
+        printUnderBar();
         System.out.println("\t Nice! I've marked this task as done:");
     }
     public static void printUnMark(){
-        System.out.println("\t____________________________________________________________");
+        printUnderBar();
         System.out.println("\t OK, I've marked this task as not done yet:");
     }
-    public static void printUnderBar(){
-        System.out.println("\t____________________________________________________________");
+    public static void printList(){
+        printUnderBar();
+        System.out.println("\t Here are the tasks in your list:");
     }
 
     public static void main(String[] args) {
@@ -77,12 +81,11 @@ public class Duke {
                 printUnderBar();
                 break;
             case "list":
-                System.out.println("\t____________________________________________________________");
-                System.out.println("\t Here are the tasks in your list:");
+                printList();
                 for(int i=0; i<cnt; i++){
                     System.out.println("\t " + (i+1) + ". " + tasks[i].toString());
                 }
-                System.out.println("\t____________________________________________________________\n");
+                printUnderBar();
                 break;
             }
         }
