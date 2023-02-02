@@ -17,7 +17,14 @@ public abstract class Parser {
     public static void parseCommand(String input) {
         String[] inputArr = input.split(" ", 2);
         String command = inputArr[0];
-        String commandDetails = inputArr[1];
+
+        String commandDetails;
+
+        if (inputArr.length > 1) {
+            commandDetails = inputArr[1];
+        } else {
+            commandDetails = "";
+        }
 
         switch (command) {
         case Io.LIST_COMMAND:
