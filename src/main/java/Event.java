@@ -21,6 +21,7 @@ public class Event extends Task {
         return "E";
     }
 
+    @Override
     public String getSummary() {
         return super.getSummary() + " (from: " + getStart() + " " +
                 "to: " + getEnd() + ")";

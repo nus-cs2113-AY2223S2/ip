@@ -23,32 +23,31 @@ public class Duke {
         System.out.println(line + "\nBye. Hope to see you again soon!\n" + line);
     }
 
-    private static void echoString(String input) {
-        System.out.println(line + "\n " + input + "\n" + line);
-    }
-
     private static Task createTask(String input) {
+        String description;
         if (input.matches("todo .+")) {
-            String description = input.split("todo ")[1];
+            description = input.split("todo ")[1];
             return new Todo(description);
         } else if (input.matches("deadline .+")) {
             String removedKeyword = input.split("deadline ")[1];
             String[] splitString = removedKeyword.split(" /by ");
-            String description= splitString[0];
+            description = splitString[0];
             String due = splitString[1];
             return new Deadline(description, due);
         } else if (input.matches("event .+")) {
             String removedKeyword = input.split("event ")[1];
             String[] splitString = removedKeyword.split(" /from ");
-            String description= splitString[0];
+            description = splitString[0];
             splitString = splitString[1].split(" /to ");
             String start = splitString[0];
             String end = splitString[1];
-            return new Event(description,start, end);
+            return new Event(description, start, end);
         } else {
-            return new Task(input);
+            description = input;
+            return new Task(description);
         }
-}
+    }
+
     private static boolean isTasksFree() {
         return taskCount < MAX_TASKS;
     }
@@ -81,22 +80,22 @@ public class Duke {
     }
 
     private static void markTask(String input) {
-        int taskNum = Integer.parseInt(input.substring(5));
+        int taskNum = Integer.parseInt(input.split("mark ")[1]);
         if (isValidTask(taskNum)) {
             tasks[taskNum - 1].markDone();
-            System.out.println(line + "\nNice! I've marked this task as done:\n[X] "
-                    + tasks[taskNum - 1].getDescription() + "\n" + line);
+            System.out.println(line + "\nNice! I've marked this task as done:\n[" + tasks[taskNum - 1].getTaskType() +
+                    "][X] " + tasks[taskNum - 1].getDescription() + "\n" + line);
         } else {
             System.out.println(line + "\nInvalid task number\n" + line);
         }
     }
 
     private static void unmarkTask(String input) {
-        int taskNum = Integer.parseInt(input.substring(7));
+        int taskNum = Integer.parseInt(input.split("unmark ")[1]);
         if (isValidTask(taskNum)) {
             tasks[taskNum - 1].unmarkDone();
-            System.out.println(line + "\nOK, I've marked this task as not done yet:\n[ ] "
-                    + tasks[taskNum - 1].getDescription() + "\n" + line);
+            System.out.println(line + "\nOK, I've marked this task as not done yet:\n[" + tasks[taskNum - 1].getTaskType() +
+                    "][" + tasks[taskNum - 1].getStatusIcon() + "] " + tasks[taskNum - 1].getDescription() + "\n" + line);
         } else {
             System.out.println(line + "\nInvalid task number\n" + line);
         }

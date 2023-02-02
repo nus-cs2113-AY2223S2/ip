@@ -15,6 +15,7 @@ public class Deadline extends Task {
         return "D";
     }
 
+    @Override
     public String getSummary() {
         return super.getSummary() + " (by: " + getDue() + ")";
     }
