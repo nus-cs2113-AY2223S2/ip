@@ -14,4 +14,11 @@ mark 3
 list
 unmark 3
 list
+mark 4
+mark hello
+invalid
+deadline without by
+deadline with empty /by
+event without to /from today
+todo
 bye

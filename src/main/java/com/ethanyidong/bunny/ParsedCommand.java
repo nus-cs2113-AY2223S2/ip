@@ -1,6 +1,8 @@
 package com.ethanyidong.bunny;
 
 import com.ethanyidong.bunny.arg.CommandValidator;
+import com.ethanyidong.bunny.arg.InvalidArgumentException;
+import com.ethanyidong.bunny.arg.InvalidCommandException;
 
 import java.util.HashMap;
 
@@ -40,6 +42,8 @@ public class ParsedCommand {
             String[] flagAndFlagArgument = positionalAndFlagArguments[i].split(" ", 2);
             if (flagAndFlagArgument.length == 2) {
                 ret.put(flagAndFlagArgument[0], flagAndFlagArgument[1]);
+            } else {
+                ret.put(flagAndFlagArgument[0], "");
             }
         }
 
@@ -58,12 +62,12 @@ public class ParsedCommand {
         return this.flagArguments.get(flag);
     }
 
-    public boolean isValidCommand(BunnySession bunny) {
-        for(CommandValidator validator : this.command.validators()) {
-            if(!validator.isValidCommand(bunny, this)) {
-                return false;
-            }
+    public void validateCommand(BunnySession bunny) throws InvalidCommandException {
+        if (this.command == null) {
+            throw new InvalidCommandException("command", new InvalidArgumentException("is unrecognized"));
         }
-        return true;
+        for(CommandValidator validator : this.command.validators()) {
+            validator.validateCommand(bunny, this);
+        }
     }
 }

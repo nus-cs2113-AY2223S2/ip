@@ -1,5 +1,7 @@
 package com.ethanyidong.bunny;
 
+import com.ethanyidong.bunny.arg.InvalidCommandException;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -15,8 +17,10 @@ public class Bunny {
             String input = in.nextLine();
             ParsedCommand inputCommand = new ParsedCommand(input);
 
-            if (!inputCommand.isValidCommand(bunny)) {
-                bunny.printMessage("That is not a valid command!");
+            try {
+                inputCommand.validateCommand(bunny);
+            } catch (InvalidCommandException ice) {
+                bunny.printMessage(ice.toString());
                 continue;
             }
 

@@ -10,7 +10,11 @@ public class PositionalArgumentCommandValidator implements CommandValidator {
         this.argumentValidator = argumentValidator;
     }
 
-    public boolean isValidCommand(BunnySession bunny, ParsedCommand command) {
-        return this.argumentValidator.isValidArgument(bunny, command.getPositionalArgument());
+    public void validateCommand(BunnySession bunny, ParsedCommand command) throws InvalidCommandException {
+        try {
+            this.argumentValidator.validateArgument(bunny, command.getPositionalArgument());
+        } catch(InvalidArgumentException iae) {
+            throw new InvalidCommandException("positional argument", iae);
+        }
     }
 }

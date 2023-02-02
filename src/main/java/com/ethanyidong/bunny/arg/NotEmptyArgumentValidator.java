@@ -3,15 +3,13 @@ package com.ethanyidong.bunny.arg;
 import com.ethanyidong.bunny.BunnySession;
 
 public class NotEmptyArgumentValidator implements ArgumentValidator {
-    public boolean isValidArgument(BunnySession bunny, String argument) {
+    public void validateArgument(BunnySession bunny, String argument) throws InvalidArgumentException {
         if(argument == null) {
-            return false;
+            throw new InvalidArgumentException("is missing");
         }
 
         if(argument.isEmpty()) {
-            return false;
+            throw new InvalidArgumentException("is empty");
         }
-
-        return true;
     }
 }

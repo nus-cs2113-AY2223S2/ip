@@ -12,7 +12,11 @@ public class FlagArgumentCommandValidator implements CommandValidator {
         this.argumentValidator = argumentValidator;
     }
 
-    public boolean isValidCommand(BunnySession bunny, ParsedCommand command) {
-        return this.argumentValidator.isValidArgument(bunny, command.getFlagArgument(this.flag));
+    public void validateCommand(BunnySession bunny, ParsedCommand command) throws InvalidCommandException {
+        try {
+            this.argumentValidator.validateArgument(bunny, command.getFlagArgument(this.flag));
+        } catch(InvalidArgumentException iae) {
+            throw new InvalidCommandException("/" + flag + " argument", iae);
+        }
     }
 }

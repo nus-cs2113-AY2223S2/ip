@@ -3,15 +3,12 @@ package com.ethanyidong.bunny.arg;
 import com.ethanyidong.bunny.BunnySession;
 
 public class TaskIndexArgumentValidator extends IntegerArgumentValidator {
-    public boolean isValidArgument(BunnySession bunny, String argument) {
-        if (!super.isValidArgument(bunny, argument)) {
-            return false;
-        }
+    public void validateArgument(BunnySession bunny, String argument) throws InvalidArgumentException {
+        super.validateArgument(bunny, argument);
 
         int integerArgument = Integer.parseInt(argument);
         if (integerArgument <= 0 || integerArgument > bunny.numTasks()) {
-            return false;
+            throw new InvalidArgumentException("is not a valid task number");
         }
-        return true;
     }
 }
