@@ -8,7 +8,7 @@ import static duke.constants.Constants.LINEBREAK;
 
 public class Ui {
 
-    public static final String INTRO = LINEBREAK + "Hello I'm\n" +
+    public static final String INTRO = LINEBREAK + "\nHello I'm\n" +
             "    ____        _        \n" +
             "   |  _ \\ _   _| | _____ \n" +
             "   | | | | | | | |/ / _ \\\n" +

@@ -33,8 +33,6 @@ public class DeadlineCommand extends Command {
 
             ToDo newDeadline = new Deadline(description, deadline);
             taskList.addTask(indexCount, newDeadline);
-            newDeadline.printAdded();
-            System.out.println(LINEBREAK);
         } catch (InvalidTaskException e) {
             System.out.println(e.getMessage());
         }

@@ -38,8 +38,6 @@ public class EventCommand extends Command {
             ToDo newDeadline = new Events(description, from, to);
             taskList.addTask(indexCount, newDeadline);
 
-            newDeadline.printAdded();
-            System.out.println(LINEBREAK);
         } catch (InvalidTaskException e) {
             System.out.println(e.getMessage());
         }
