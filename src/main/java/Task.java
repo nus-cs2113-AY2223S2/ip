@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,14 +9,6 @@ public class Task {
     public Task(String name) {
         this.name = name;
         isCompleted = false;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public boolean getIsCompleted() {
-        return isCompleted;
     }
 
     public void setIsCompleted(boolean state) {
@@ -39,11 +30,5 @@ public class Task {
     public static boolean isValidInput(String input, Pattern pattern) {
         Matcher matcher = pattern.matcher(input.trim());
         return matcher.find();
-    }
-
-    public static ArrayList<String> convertInputIntoDetails(String input) {
-        ArrayList<String> result = new ArrayList<>();
-        result.add(input);
-        return result;
     }
 }

@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Event extends Task {
@@ -10,12 +9,6 @@ public class Event extends Task {
     private static final Pattern pattern = Pattern.compile(
             "^(\\S+[\\S\\s]*)(\\s+/from\\s+)(\\S+[\\S\\s]*)(\\s+/to\\s+)(\\S+[\\S\\s]*)$",
             Pattern.CASE_INSENSITIVE);
-
-    public Event(String name, String from, String to) {
-        super(name);
-        this.from = from;
-        this.to = to;
-    }
 
     public Event(ArrayList<String> details) {
         super(details.get(0));

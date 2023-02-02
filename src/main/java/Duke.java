@@ -49,9 +49,6 @@ public class Duke {
     private static State processInput(String s) {
         Scanner input = new Scanner(s);
         String command = input.next().toLowerCase();
-        if (command.equals(COMMAND_EXIT)) {
-            return State.EXIT;
-        }
 
         State finalState;
         switch (command) {

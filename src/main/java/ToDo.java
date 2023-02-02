@@ -7,10 +7,6 @@ public class ToDo extends Task {
             "^(\\S+[\\S\\s]*)$",
             Pattern.CASE_INSENSITIVE);
 
-    public ToDo(String name) {
-        super(name);
-    }
-
     public ToDo(ArrayList<String> details) {
         super(details.get(0));
     }
