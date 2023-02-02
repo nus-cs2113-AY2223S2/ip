@@ -1,3 +1,4 @@
+import java.util.Objects;
 import java.util.Scanner;
 public class Duke {
     public static void main(String[] args) {
@@ -13,16 +14,16 @@ public class Duke {
                     System.out.println(i + ".[" + items[i-1].getStatusIcon() + "] " + items[i-1].description);
                 }
             } else if (word.contains("mark")) {
-                int taskNo;
-                taskNo = Character.getNumericValue(word.charAt(word.length()-1));
-                if (word.contains("un")) {
+                String[] markArgs = word.split(" ");
+                int taskNo = Integer.parseInt(markArgs[1]);
+                if (markArgs[0].equals("unmark")) {
                     items[taskNo-1].unmarkAsDone();
                     System.out.println("This task is not done: " + "[" + items[taskNo-1].getStatusIcon() +
-                            "] " + items[taskNo-1].description);
+                        "] " + items[taskNo-1].description);
                 } else {
                     items[taskNo-1].markAsDone();
                     System.out.println("This task is done: " + "[" + items[taskNo-1].getStatusIcon() + "] " +
-                            items[taskNo-1].description);
+                        items[taskNo-1].description);
                 }
             } else {
                 System.out.println("added: " + word);
