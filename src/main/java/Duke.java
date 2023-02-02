@@ -3,8 +3,8 @@ import java.util.Arrays;
 
 public class Duke {
     private static void logoWithHello() {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
+        String logo = " ____        _\n"
+                + "|  _ \\ _   _| | _____\n"
                 + "| | | | | | | |/ / _ \\\n"
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
@@ -96,6 +96,7 @@ public class Duke {
 
     private static void markUnmarkCommand(Task[] tasks, String[] words) {
         Integer taskNumber = Integer.parseInt(words[1]) - 1;
+        horizontalLine();
         if (words[0].equals("mark")) {
             tasks[taskNumber].markDone();
             System.out.println("Nice! I've marked this task as done:");
@@ -103,7 +104,6 @@ public class Duke {
             tasks[taskNumber].markUndone();
             System.out.println("OK, I've marked this task as not done yet:");
         }
-        horizontalLine();
         System.out.println(tasks[taskNumber]);
         horizontalLine();
     }
@@ -113,8 +113,8 @@ public class Duke {
         Task[] tasks = new Task[100];
 
         greet();
+        Scanner in = new Scanner(System.in);
         while (true) {
-            Scanner in = new Scanner(System.in);
             String userInput = in.nextLine();
             if (userInput.equals("bye")) {
                 break;
