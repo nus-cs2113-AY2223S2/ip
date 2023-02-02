@@ -6,20 +6,24 @@ public class Duke {
         SUCCESS, EXIT, INVALID
     }
 
-    static final String INDENT = "    ";
-
+    private static final String INDENT = "    ";
+    private static final String LOGO = " ____        _        \n"
+            + "|  _ \\ _   _| | _____ \n"
+            + "| | | | | | | |/ / _ \\\n"
+            + "| |_| | |_| |   <  __/\n"
+            + "|____/ \\__,_|_|\\_\\___|\n";
     // commands
-    static final String COMMAND_EXIT = "bye";
-    static final String COMMAND_LIST = "list";
-    static final String COMMAND_MARK = "mark";
-    static final String COMMAND_UNMARK = "unmark";
-    static final String COMMAND_TODO = "todo";
-    static final String COMMAND_DEADLINE = "deadline";
-    static final String COMMAND_EVENT = "event";
+    private static final String COMMAND_EXIT = "bye";
+    private static final String COMMAND_LIST = "list";
+    private static final String COMMAND_MARK = "mark";
+    private static final String COMMAND_UNMARK = "unmark";
+    private static final String COMMAND_TODO = "todo";
+    private static final String COMMAND_DEADLINE = "deadline";
+    private static final String COMMAND_EVENT = "event";
 
     // data
-    static Task[] tasks = new Task[100];
-    static int numTasks = 0;
+    private static Task[] tasks = new Task[100];
+    private static int numTasks = 0;
 
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
@@ -31,7 +35,7 @@ public class Duke {
         do {
             input = scan.nextLine();
             printLine();
-            State result = processInput(input);
+            State result = executeInputCommand(input);
             switch (result) {
             case EXIT:
                 handleStateExit();
@@ -46,7 +50,7 @@ public class Duke {
         scan.close();
     }
 
-    private static State processInput(String s) {
+    private static State executeInputCommand(String s) {
         Scanner input = new Scanner(s);
         String command = input.next().toLowerCase();
 
@@ -94,12 +98,7 @@ public class Duke {
     }
 
     private static void printLogo() {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        printWithIndentation("Hello from\n" + logo);
+        printWithIndentation("Hello from\n" + LOGO);
         printLine();
     }
 
@@ -164,14 +163,14 @@ public class Duke {
     }
 
     private static State handleCommandMark(Scanner input) {
-        int number = input.nextInt();
-        setTaskStatus(number - 1, true);
+        int taskNumber = input.nextInt();
+        setTaskStatus(taskNumber - 1, true);
         return State.SUCCESS;
     }
 
     private static State handleCommandUnmark(Scanner input) {
-        int number = input.nextInt();
-        setTaskStatus(number - 1, false);
+        int taskNumber = input.nextInt();
+        setTaskStatus(taskNumber - 1, false);
         return State.SUCCESS;
     }
 

@@ -3,7 +3,7 @@ import java.util.regex.Pattern;
 
 public class Deadline extends Task {
     public static final String MARKER = "D";
-    static final String KEYWORD_BY = "/by";
+    private static final String KEYWORD_BY = "/by";
     private final String by;
     private static final Pattern pattern = Pattern.compile(
             "^(\\S+[\\S\\s]*)(\\s+/by\\s+)(\\S+[\\S\\s]*)$",
@@ -30,9 +30,9 @@ public class Deadline extends Task {
             return result;
         }
 
-        int byStart = input.indexOf(KEYWORD_BY);
-        result.add(input.substring(0, byStart).trim());
-        result.add(input.substring(byStart + KEYWORD_BY.length()).trim());
+        int byStartIndex = input.indexOf(KEYWORD_BY);
+        result.add(input.substring(0, byStartIndex).trim());
+        result.add(input.substring(byStartIndex + KEYWORD_BY.length()).trim());
         return result;
     }
 }

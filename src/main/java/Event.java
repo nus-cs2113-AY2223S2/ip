@@ -3,8 +3,8 @@ import java.util.regex.Pattern;
 
 public class Event extends Task {
     public static final String MARKER = "E";
-    static final String KEYWORD_FROM = "/from";
-    static final String KEYWORD_TO = "/to";
+    private static final String KEYWORD_FROM = "/from";
+    private static final String KEYWORD_TO = "/to";
     private final String from, to;
     private static final Pattern pattern = Pattern.compile(
             "^(\\S+[\\S\\s]*)(\\s+/from\\s+)(\\S+[\\S\\s]*)(\\s+/to\\s+)(\\S+[\\S\\s]*)$",
@@ -32,11 +32,11 @@ public class Event extends Task {
             return result;
         }
 
-        int fromIndex = input.indexOf(KEYWORD_FROM);
-        int toIndex = input.indexOf(KEYWORD_TO);
-        result.add(input.substring(0, fromIndex).trim());
-        result.add(input.substring(fromIndex + KEYWORD_FROM.length(), toIndex).trim());
-        result.add(input.substring(toIndex + KEYWORD_TO.length()).trim());
+        int fromStartIndex = input.indexOf(KEYWORD_FROM);
+        int toStartIndex = input.indexOf(KEYWORD_TO);
+        result.add(input.substring(0, fromStartIndex).trim());
+        result.add(input.substring(fromStartIndex + KEYWORD_FROM.length(), toStartIndex).trim());
+        result.add(input.substring(toStartIndex + KEYWORD_TO.length()).trim());
         return result;
     }
 }
