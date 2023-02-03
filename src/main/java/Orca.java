@@ -89,6 +89,8 @@ public class Orca {
             tasks[taskNo - 1].setDone(true);
         } catch (NullPointerException e) {
             throw new OrcaException("There is no task with this number.");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new OrcaException("There is no task with this number.");
         }
         System.out.println("    --------------------------------------------------");
         System.out.println("    Nice! I've marked this task as done:");
@@ -100,6 +102,8 @@ public class Orca {
         try {
             tasks[taskNo - 1].setDone(false);
         } catch (NullPointerException e) {
+            throw new OrcaException("There is no task with this number.");
+        } catch (ArrayIndexOutOfBoundsException e) {
             throw new OrcaException("There is no task with this number.");
         }
         System.out.println("    --------------------------------------------------");
@@ -118,8 +122,6 @@ public class Orca {
             return Integer.parseInt(userInput.substring(startIdx));
         } catch (NumberFormatException e) {
             throw new OrcaException("I cannot parse the integer.");
-        } catch (ArrayIndexOutOfBoundsException e) {
-            throw new OrcaException("Please specify the task number.");
         }
     }
 
