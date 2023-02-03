@@ -1,3 +1,5 @@
+import jdk.jfr.Event;
+
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -32,12 +34,12 @@ public class Duke {
 
     public static void addList()
     {
-        String[] list = new String[100];
+        Task[] list = new Task[100];
         String line;
         Scanner in = new Scanner(System.in);
         line = in.nextLine();
         int numOfItems = 0;
-        while(!line.equals("bye")) {
+        while(!line.equals("bye")) { // condition to shut down program
             if(line.equals("list")) { // users wants to know all text so far
                 printCurrentList(list, numOfItems);
             }
@@ -49,39 +51,47 @@ public class Duke {
                 unmark(line,list);
                 printCurrentList(list, numOfItems);
             }
-            else { // text from user
-                String item = (numOfItems + 1) + ".[ ] " + line; // convert to 1-based
-                list[numOfItems] = item;
+            else { // new tasks keyed in by user
+                Task newTask = new Task(line);
+                if(line.startsWith("todo")){
+                    newTask = new ToDos(line);
+                }
+                else if(line.startsWith("deadline")){
+                    newTask = new Deadlines(line);
+                }
+                else{
+                    newTask = new Events(line);
+                }
+                list[numOfItems] = newTask;
                 ++numOfItems;
             }
             line = in.nextLine(); // read in next line of text
         }
     }
 
-    public static void mark(String task, String[] list)
+    public static void mark(String task, Task[] list)
     {
-        String locationOfTask = task.substring(5); // get the number of task to be marked
-        String taskToBeMarked = list[Integer.parseInt(locationOfTask) - 1];
-        String taskMarked = taskToBeMarked.replace("[ ]", "[X]");
-        list[Integer.parseInt(locationOfTask) - 1] = taskMarked;
+        String indexOfTask = task.substring(5); // get the number of task to be marked
+        Task taskToBeMarked = list[Integer.parseInt(indexOfTask) - 1]; // convert from 1-based to 0-based
+        taskToBeMarked.markTask();
         System.out.println("Sir, your task has been marked as completed.");
     }
 
-    public static void unmark(String task, String[] list)
+    public static void unmark(String task, Task[] list)
     {
-        String locationOfTask = task.substring(7);
-        String taskToBeUnmarked = list[Integer.parseInt(locationOfTask) - 1];
-        String taskUnmarked = taskToBeUnmarked.replace("[X]", "[ ]");
-        list[Integer.parseInt(locationOfTask) - 1] = taskUnmarked;
+        String indexOfTask = task.substring(7);
+        Task taskToBeMarked = list[Integer.parseInt(indexOfTask) - 1]; // convert from 1-based to 0-based
+        taskToBeMarked.unmarkTask();
         System.out.println("Sir, your task has been unmarked as requested.");
     }
 
-    public static void printCurrentList(String[] list, int numOfItems)
+    public static void printCurrentList(Task[] list, int numOfItems)
     {
-        String[] subList = Arrays.copyOf(list, numOfItems);
+        Task[] subList = Arrays.copyOf(list, numOfItems);
+        System.out.println("Your current list of items as requested, sir.");
         for(int i = 0; i < subList.length; ++i)
         {
-            System.out.println(subList[i]);
+            System.out.println(Integer.toString(i+1) + "." + subList[i]);
         }
     }
 }
