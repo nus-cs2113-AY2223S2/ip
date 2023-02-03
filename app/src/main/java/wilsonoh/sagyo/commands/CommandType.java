@@ -2,7 +2,7 @@ package wilsonoh.sagyo.commands;
 
 public enum CommandType {
     LIST("^\\s*list\\s*$"),
-    DELETE("^\\s*delete\\s*(?<idx>-?\\d+)?\\s*$"),
+    DELETE("^\\s*(delete|d)\\s*(?<idx>-?\\d+)?\\s*$"),
     MARK("^\\s*mark\\s*(?<idx>-?\\d+)?\\s*$"),
     UNMARK("^\\s*unmark\\s*(?<idx>-?\\d+)?\\s*$"),
     BYE("^\\s*bye\\s*$"),
