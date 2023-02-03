@@ -65,7 +65,7 @@ public class TaskManager {
         TaskManager.rmTask(indexOfTask);
         selectedTodo = selectedTodo.setDone(true);
         TaskManager.insertTask(indexOfTask, selectedTodo);
-        printlnWithIndent(" Shall remember that this todo as done:");
+        printlnWithIndent(" Shall remember that this task is done:");
         printlnWithIndent("    " + selectedTodo);
         return selectedTodo;
     }
@@ -101,7 +101,7 @@ public class TaskManager {
         TaskManager.rmTask(indexOfTask);
         selectedTodo = selectedTodo.setDone(false);
         TaskManager.insertTask(indexOfTask, selectedTodo);
-        printlnWithIndent(" (Why??) Anyway, I've marked this todo as not done yet:");
+        printlnWithIndent(" (Why??) Anyway, I've marked this task as not done yet:");
         printlnWithIndent("    " + selectedTodo);
         return selectedTodo;
     }
