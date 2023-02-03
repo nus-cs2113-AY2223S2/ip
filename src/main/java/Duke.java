@@ -22,7 +22,7 @@ public class Duke {
                 READ_COMMAND.printError(UNKNOWN_COMMAND_MESSAGE);
             }
             catch(ContentEmptyException emptyContent){
-                System.out.println(EMPTY_CONTENT);
+                READ_COMMAND.printError(EMPTY_CONTENT);
             }finally{
                 continue;
             }

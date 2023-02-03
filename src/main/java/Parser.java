@@ -43,13 +43,15 @@ public class Parser {
      * @param inputWords
      * @return
      */
-    public String getCommandDescription(String inputWords){
+    public String getCommandDescription(String inputWords) throws ContentEmptyException{
         String command = getCommandType(inputWords);
         if(command.equals("bye")||command.equals("list")){
             return inputWords;
         }else{
+            if(command.length() == inputWords.length()){
+                throw new ContentEmptyException();
+            }
             String commandDescriptionString = inputWords.substring((command.length())+1);
-            System.out.println("hello"+commandDescriptionString);
             return commandDescriptionString;
         }
     }

@@ -18,11 +18,8 @@ public class CommandManager {
         if(!(commandType.equals("todo")||commandType.equals("event")||commandType.equals("deadline")||commandType.equals("list")||commandType.equals("bye")||commandType.equals("mark")||commandType.equals("unmark"))){
             throw new UnknownCommandException();
         }
-
         this.commandDescription = COMMAND_PARSER.getCommandDescription(command);
-        if((this.commandType.equals("todo")||this.commandType.equals("todo")||this.commandType.equals("todo"))&&(this.commandDescription.equals(""))){
-            throw new ContentEmptyException();
-        }
+        System.out.println("hi");
     }
 
     public void sayHello() {
