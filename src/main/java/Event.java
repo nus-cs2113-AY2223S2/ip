@@ -1,4 +1,3 @@
-import java.util.Arrays;
 public class Event extends Task {
     protected String from;
     protected String to;
@@ -12,15 +11,14 @@ public class Event extends Task {
                 from = super.description.substring(indexOfFrom + 5, indexOfTo).trim();
                 to = super.description.substring(indexOfTo + 3).trim();
                 this.description = super.description.substring(0, indexOfFrom);
-            }
-            else {
-                System.out.println("You typed wronoglyyyy!");
+            } else {
+                System.out.println("You typed wronglyyyy!");
             }
         }
         else {
             System.out.println("You didn't type correctly (ㆆ_ㆆ)");
         }
-        taskCount += 1;
+        Task.taskCount += 1;
     }
 
     @Override

@@ -10,13 +10,13 @@ public class Deadline extends Task {
                 this.description = super.description.substring(0, indexOfBy);
             }
             else {
-                System.out.println("You typed wronoglyyyy!");
+                System.out.println("Did you type wrongly? ");
             }
         }
         else {
-            System.out.println("You didn't type correctly (ㆆ_ㆆ)");
+            System.out.println("You didn't type correctly but Keqin still added it to the task...(ㆆ_ㆆ)");
         }
-        taskCount += 1;
+        Task.taskCount += 1;
     }
 
     @Override

@@ -5,11 +5,11 @@ public class Task {
     protected boolean isDone = false;
 
 
-    public void markDone() {
+    public void setDone() {
         isDone = true;
     }
 
-    public void unmarkDone() {
+    public void seUndone() {
         isDone = false;
     }
 
