@@ -15,6 +15,7 @@ public class Duke {
         printLine();
     }
 
+    //exit loop when command received is "bye"
     public static void sayBye() {
         printLine();
         System.out.println("Bye. Hope to see you again soon! :)");
@@ -26,123 +27,158 @@ public class Duke {
     }
 
     //list tasks
-    public static void listTasks(Task[] list, int count){
+    public static void listTasks(){
         printLine();
         System.out.println("Here are the tasks in your list:");
-        for (int i = 1; i <= count; i++) {
-            System.out.println(i + "." + list[i - 1]);
+        for (int i = 1; i <= Task.taskCount; i++) {
+            System.out.println(i + "." + Task.tasks[i - 1]);
         }
         printLine();
     }
 
     //add a new task
-    public static void addTask(Task[] list, int count, String command){
-        Task t = new Task(command);
-        list[count] = t;
-        //count++;
+    public static void unidentifiedCommand(){
         printLine();
-        System.out.println("added: " + t.description); //new item added
+        System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means ☹ ");
         printLine();
     }
 
     //mark task as done
-    public static void markTask(Task[] tasks, String[] input){
-        int index = Integer.parseInt(input[1]);
-        Task t = tasks[index-1];
-        t.markAsDone();
-        printLine();
-        System.out.println("Nice! I've marked this task as done:");
-        System.out.println(t);
-        printLine();
+    public static void markTask(String[] input){
+        try {
+            int index = Integer.parseInt(input[1]);
+            Task t = Task.tasks[index-1];
+            t.markAsDone();
+            printLine();
+            System.out.println("Nice! I've marked this task as done:");
+            System.out.println(t);
+            printLine();
+        } catch (NullPointerException e) {
+            System.out.println("☹ OOPS!!! There's not that many tasks in here. Please try again.");
+            printLine();
+        } catch (NumberFormatException e) {
+            System.out.println("☹ OOPS!!! You entered an invalid task number. Please try again.");
+            printLine();
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("☹ OOPS!!! Task number is missing. Please try again. ");
+        }
     }
 
     //mark task as not done
-    public static void unmarkTask(Task[] tasks, String[] input){
-        int index = Integer.parseInt(input[1]);
-        Task t = tasks[index-1];
-        t.markNotDone();
-        printLine();
-        System.out.println("OK, I've marked this task as not done yet:");
-        System.out.println(t);
-        printLine();
+    public static void unmarkTask(String[] input){
+        try {
+            int index = Integer.parseInt(input[1]);
+            Task t = Task.tasks[index-1];
+            t.markNotDone();
+            printLine();
+            System.out.println("OK, I've marked this task as not done yet:");
+            System.out.println(t);
+            printLine();
+        } catch (NullPointerException e) {
+            System.out.println("☹ OOPS!!! There's not that many tasks in here. Please try again.");
+            printLine();
+        } catch (NumberFormatException e) {
+            System.out.println("☹ OOPS!!! You entered an invalid task number. Please try again.");
+            printLine();
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("☹ OOPS!!! Task number is missing. Please try again. ");
+        }
     }
 
     //to-do
-    public static void addTodo(Task[] tasks, int count, String[] input){
-        Task t = new Todo(input[1]);
-        tasks[count] = t;
-        count++;
-        printLine();
-        System.out.println("Got it. I've added this task:");
-        System.out.println(t);
-        System.out.println("Now you have " + count + " tasks in the list.");
-        printLine();
+    public static void addTodo(String[] input){
+        try {
+            Task t = new Todo(input[1]);
+            Task.tasks[Task.taskCount] = t;
+            Task.taskCount++;
+            printLine();
+            System.out.println("Got it. I've added this task:");
+            System.out.println(t);
+            System.out.println("Now you have " + Task.taskCount + " tasks in the list.");
+            printLine();
+        } catch (IndexOutOfBoundsException e) {
+            printLine();
+            System.out.println("☹ OOPS!!! The description of a todo cannot be empty.");
+            printLine();
+        }
     }
 
     //deadline
-    public static void addDeadline(Task[] tasks, int count, String[] input){
-        String[] doBy = input[1].split("by ", 2);
-        Task t = new Deadline(doBy[0], doBy[1]);
-        tasks[count] = t;
-        count++;
-        printLine();
-        System.out.println("Got it. I've added this task:");
-        System.out.println(t);
-        System.out.println("Now you have " + count + " tasks in the list.");
-        printLine();
+    public static void addDeadline(String[] input){
+        try {
+            String[] doBy = input[1].split("/by ", 2);
+            Task t = new Deadline(doBy[0], doBy[1]);
+            Task.tasks[Task.taskCount] = t;
+            Task.taskCount++;
+            printLine();
+            System.out.println("Got it. I've added this task:");
+            System.out.println(t);
+            System.out.println("Now you have " + Task.taskCount + " tasks in the list.");
+            printLine();
+        } catch (IndexOutOfBoundsException e) {
+            printLine();
+            System.out.println("☹ OOPS!!! The description or due date of a deadline cannot be empty.");
+            System.out.println("Please follow this format: deadline [description] /by [due date]");
+            printLine();
+        }
     }
 
     //event
-    public static void addEvent(Task[] tasks, int count, String[] input){
-        String[] start = input[1].split("from ", 2);
-        String[] end = start[1].split("to ", 2);
-        Task t = new Event(start[0], end[0], end[1] );
-        tasks[count] = t;
-        count++;
-        printLine();
-        System.out.println("Got it. I've added this task:");
-        System.out.println(t);
-        System.out.println("Now you have " + count + " tasks in the list.");
-        printLine();
+    public static void addEvent(String[] input){
+        try {
+            String[] start = input[1].split("/from ", 2);
+            String[] end = start[1].split("/to ", 2);
+            Task t = new Event(start[0], end[0], end[1] );
+            Task.tasks[Task.taskCount] = t;
+            Task.taskCount++;
+            printLine();
+            System.out.println("Got it. I've added this task:");
+            System.out.println(t);
+            System.out.println("Now you have " + Task.taskCount + " tasks in the list.");
+            printLine();
+        } catch (IndexOutOfBoundsException e) {
+            printLine();
+            System.out.println("☹ OOPS!!! The description or duration of an event cannot be empty.");
+            System.out.println("Please follow this format: event [description] /from [start] /to [end]");
+            printLine();
+        }
     }
 
-    public static void handleCommands(Scanner in, String command, Task[] tasks) {
-        int count = 0; //keep track of number of tasks
-        
+    public static void handleCommands() {
+        Scanner in = new Scanner(System.in);
+        String command = in.nextLine();
+
         while (!(command.equals("bye"))) {
             //list tasks
             if (command.equals("list")) {
-                listTasks(tasks, count);
+                listTasks();
             } else {
-                String[] input = command.split(" ", 2); //only check the first word for "mark" or "unmark"
-                switch (input[0]) {
+                String[] input = command.split(" ", 2); //only check the first word
+                String firstWord = input[0];
+                switch (firstWord) {
                     //mark task
                     case "mark":
-                        markTask(tasks, input);
+                        markTask(input);
                         break;
                     //un-mark task
                     case "unmark":
-                        unmarkTask(tasks, input);
+                        unmarkTask(input);
                         break;
                     //to-do
                     case "todo":
-                        addTodo(tasks, count, input);
-                        count++;
+                        addTodo(input);
                         break;
                     //deadline
                     case "deadline":
-                        addDeadline(tasks, count, input);
-                        count++;
+                        addDeadline(input);
                         break;
                     //event
                     case "event":
-                        addEvent(tasks, count, input);
-                        count++;
+                        addEvent(input);
                         break;
-                    //unlabelled
+                    //unidentified action
                     default:
-                        addTask(tasks, count, command);
-                        count++;
+                        unidentifiedCommand();
                         break;
                 }
             }
@@ -152,14 +188,8 @@ public class Duke {
 
     public static void main(String[] args) {
         greetUser();
-
-        Scanner in = new Scanner(System.in);
-        String command = in.nextLine();
-        Task[] tasks = new Task[100]; //store tasks in an array
-
-        handleCommands(in, command, tasks);
-
-        sayBye(); //exit loop when command received is "bye"
+        handleCommands();
+        sayBye();
     }
 }
 
