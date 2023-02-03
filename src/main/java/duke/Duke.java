@@ -53,7 +53,7 @@ public class Duke {
                 return false;
             }
         } catch (DukeException e) {
-            uiController.printSystemMessage(e.getMessage());
+            uiController.printSystemErrorMessage(e.getMessage());
             return false;
         } 
     }

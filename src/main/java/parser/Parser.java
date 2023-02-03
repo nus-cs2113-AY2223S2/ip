@@ -124,6 +124,8 @@ public class Parser implements IParser {
     }
     @Override
 	public int getTaskIndex() throws InvalidCommandException{
+        // Assert that mark or unmark is the command
+        assert (currentCommand == Command.MARK) || (currentCommand == Command.UNMARK);
         try {
             return Integer.parseInt(message.split(" ")[1]);
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
