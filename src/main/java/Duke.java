@@ -1,3 +1,8 @@
+import duke.task.Task;
+import duke.task.ToDo;
+import duke.task.Deadline;
+import duke.task.Event;
+import duke.util.DukeException;
 import java.util.Scanner;
 
 public class Duke {
@@ -63,21 +68,24 @@ public class Duke {
     }
 
     public static void checkSameDone(int index, boolean changeTo, String type) throws DukeException{
-        if (tasks[index - 1].isDone == changeTo) {
+        if (tasks[index - 1].getIsDone() == changeTo) {
             System.out.println("It is already " + type + "ed! *Shakes head* ");
             throw new DukeException();
         }
     }
 
+    public static void echo() {
+        System.out.println(tasks[taskCount]);
+        ++taskCount;
+    }
+
     public static void command() {
         Scanner in = new Scanner(System.in);
-        String next;
-        int num;
         do {
             System.out.print("What do you want: ");
             String cmd = in.next();
             String checkCmd = cmd.toLowerCase();
-            if (cmd.equals("bye")) {
+            if (checkCmd.equals("bye")) {
                 return;
             }
             System.out.println(DIV);
@@ -86,7 +94,8 @@ public class Duke {
                 listOut();
                 break;
             case "mark":
-                next = in.nextLine();
+                String next = in.nextLine();
+                int num;
                 try {
                     num = convertString(next.trim());
                     checkSameDone(num, true, checkCmd);
@@ -113,8 +122,7 @@ public class Duke {
                 next = in.nextLine();
                 System.out.println("Understood! *Salutes* Task added!");
                 tasks[taskCount] = new ToDo(next.stripLeading(), taskCount + 1, false);
-                System.out.println(tasks[taskCount]);
-                ++taskCount;
+                echo();
                 break;
             case "deadline":
                 next = in.nextLine();
@@ -128,8 +136,7 @@ public class Duke {
                 }
                 System.out.println("Understood *Salutes* Task with deadline added!\n"
                         + "Remember to complete it by the deadline!");
-                System.out.println(tasks[taskCount]);
-                ++taskCount;
+                echo();
                 break;
             case "event":
                 next = in.nextLine();
@@ -144,8 +151,7 @@ public class Duke {
                 }
                 System.out.println("Understood *Salutes* Event added!\n"
                         + "Remember the starting time! Don't be late!");
-                System.out.println(tasks[taskCount]);
-                ++taskCount;
+                echo();
                 break;
             default:
                 printError();

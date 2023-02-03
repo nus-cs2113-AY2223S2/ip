@@ -1,3 +1,4 @@
+package duke.task;
 public class Task {
     protected String task;
     protected int number;
@@ -47,5 +48,9 @@ public class Task {
     @Override
     public String toString() {
         return "  " + this.checkType() + this.checkDone() + " " + this.getTask();
+    }
+
+    public boolean getIsDone() {
+        return this.isDone;
     }
 }
