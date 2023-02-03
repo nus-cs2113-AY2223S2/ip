@@ -1,7 +1,14 @@
+package duke.command;
+
+import duke.task.Deadline;
+import duke.task.Event;
+import duke.task.Task;
+import duke.task.ToDo;
+
 public class TaskManager {
     protected Task[] taskList;
     protected int taskCount;
-    TaskManager(int taskCount){
+    public TaskManager(int taskCount){
         this.taskCount = 0;
         taskList = new Task[100];
     }
@@ -58,9 +65,9 @@ public class TaskManager {
         String job = input.substring(5);
         //System.out.println(job);
         ToDo newTask = new ToDo(job);
-        //taskList[Task.getTaskNumber()] = newTask;
+        //taskList[TaskItems.Task.getTaskNumber()] = newTask;
         this.addTask(newTask);
-        System.out.println("Got it. I've added this to task:");
+        System.out.println("Got it. I've added this to Duke.task:");
         System.out.println("    " + newTask.toString());
     }
     private void generateDeadline(String input) {
@@ -70,7 +77,7 @@ public class TaskManager {
         String taskDue = job.substring(indexSeparator+4);
         Deadline newTask = new Deadline(taskDescription, taskDue);
         this.addTask(newTask);
-        System.out.println("Got it. I've added this to task:");
+        System.out.println("Got it. I've added this to Duke.task:");
         System.out.println("    " + newTask.toString());
     }
 
@@ -84,22 +91,22 @@ public class TaskManager {
         String taskEnd = taskDates.substring(indexSeparator+4);
         Event newTask = new Event(taskDescription, taskStart, taskEnd);
         this.addTask(newTask);
-        System.out.println("Got it. I've added this to task:");
+        System.out.println("Got it. I've added this to Duke.task:");
         System.out.println("    " + newTask.toString());
     }
 
     private void printHelp(){ //Duke prints this if none of the commands below are used
-        System.out.println("Looks like you did not enter a valid command.\n");
+        System.out.println("Looks like you did not enter a valid Duke.command.\n");
         System.out.println("Command list:");
-        System.out.println("    1. todo: Adds a task to be done");
+        System.out.println("    1. todo: Adds a Duke.task to be done");
         System.out.println("        Usage example: todo eat dinner");
-        System.out.println("    2. deadline: Adds a task to be done, use /by to specify when it is due");
+        System.out.println("    2. deadline: Adds a Duke.task to be done, use /by to specify when it is due");
         System.out.println("        Usage example: deadline submit homework /by 3pm tonight");
         System.out.println("    3. event: Adds an upcoming event. Use /from and /to to specify when it starts " +
                 "and ends respectively.");
         System.out.println("        Usage example: event lecture this evening /from 4pm /to 6pm");
         System.out.println("    4. list: lists all tasks recorded by duke. Only enter the keyword.");
-        System.out.println("    5. mark: Marks a specific task as done. Command requires a specific " +
+        System.out.println("    5. mark: Marks a specific Duke.task as done. Command requires a specific " +
                 "index starting from 1");
         System.out.println("        Usage example: mark 2 (assuming that there are more than two tasks in the list");
         System.out.println("    6. bye: Exits duke");

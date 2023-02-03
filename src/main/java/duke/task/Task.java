@@ -1,4 +1,6 @@
-public class Task {
+package duke.task;
+
+public abstract class Task {
     protected String description;
     protected boolean isDone;
     protected static int taskNumber = -1;
@@ -10,7 +12,7 @@ public class Task {
     }
 
     public String getStatusIcon() {
-        return (isDone ? "X" : " "); // mark done task with X
+        return (isDone ? "X" : " "); // mark done Duke.task with X
     }
 
     public static int getTaskNumber() {

@@ -2,47 +2,22 @@ _______________________________________________________________
 Hello! I'm Duke
 What can I do for you?
 _______________________________________________________________
-Looks like you did not enter a valid command.
-
-Command list:
-    1. todo: Adds a task to be done
-        Usage example: todo eat dinner
-    2. deadline: Adds a task to be done, use /by to specify when it is due
-        Usage example: deadline submit homework /by 3pm tonight
-    3. event: Adds an upcoming event. Use /from and /to to specify when it starts and ends respectively.
-        Usage example: event lecture this evening /from 4pm /to 6pm
-    4. list: lists all tasks recorded by duke. Only enter the keyword.
-    5. mark: Marks a specific task as done. Command requires a specific index starting from 1
-        Usage example: mark 2 (assuming that there are more than two tasks in the list
-    6. bye: Exits duke
+Got it. I've added this to Duke.task:
+    [T][ ] Matthew Liu Zhen Jie: Answer CS2113 tutorial questions
 _______________________________________________________________
-Got it. I've added this to task:
-    [T][ ] commit and push CS2113 individual project
+Got it. I've added this to Duke.task:
+    [D][ ]  weekly cs2113 quiz  (by: Monday 9pm)
 _______________________________________________________________
-Got it. I've added this to task:
-    [D][ ]  coursemology java practice  (by: end of this week)
+1.[T][ ] Matthew Liu Zhen Jie: Answer CS2113 tutorial questions
+2.[D][ ]  weekly cs2113 quiz  (by: Monday 9pm)
 _______________________________________________________________
-Got it. I've added this to task:
-    [E][ ] cs2113 lecture  (From: friday 4pm to: 6pm)
+Got it. I've added this to Duke.task:
+    [E][ ] cs2113 lecture  (From: Friday 4 to: 6pm)
 _______________________________________________________________
-1.[T][ ] commit and push CS2113 individual project
-2.[D][ ]  coursemology java practice  (by: end of this week)
-3.[E][ ] cs2113 lecture  (From: friday 4pm to: 6pm)
+Nice! I've marked this Duke.task as done:
+[T][X] Matthew Liu Zhen Jie: Answer CS2113 tutorial questions
 _______________________________________________________________
-Nice! I've marked this task as done: 
-[D][X]  coursemology java practice  (by: end of this week)
-_______________________________________________________________
-1.[T][ ] commit and push CS2113 individual project
-2.[D][X]  coursemology java practice  (by: end of this week)
-3.[E][ ] cs2113 lecture  (From: friday 4pm to: 6pm)
-_______________________________________________________________
-OK, I've marked this task as not done yet: 
-[D][ ]  coursemology java practice  (by: end of this week)
-_______________________________________________________________
-1.[T][ ] commit and push CS2113 individual project
-2.[D][ ]  coursemology java practice  (by: end of this week)
-3.[E][ ] cs2113 lecture  (From: friday 4pm to: 6pm)
-_______________________________________________________________
-_______________________________________________________________
-Bye. Hope to see you again soon!
+1.[T][X] Matthew Liu Zhen Jie: Answer CS2113 tutorial questions
+2.[D][ ]  weekly cs2113 quiz  (by: Monday 9pm)
+3.[E][ ] cs2113 lecture  (From: Friday 4 to: 6pm)
 _______________________________________________________________

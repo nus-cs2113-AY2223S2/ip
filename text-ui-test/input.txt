@@ -1,10 +1,6 @@
-
-todo commit and push CS2113 individual project
-deadline coursemology java practice /by end of this week
-event cs2113 lecture /from friday 4pm /to 6pm
+todo Matthew Liu Zhen Jie: Answer CS2113 tutorial questions
+deadline weekly cs2113 quiz /by Monday 9pm
 list
-mark 2
+event cs2113 lecture /from Friday 4 /to 6pm
+mark 1
 list
-unmark 2
-list
-bye

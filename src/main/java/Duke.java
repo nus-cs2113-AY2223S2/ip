@@ -1,3 +1,5 @@
+import duke.command.TaskManager;
+
 import java.util.Scanner;
 
 public class Duke {
@@ -35,7 +37,7 @@ public class Duke {
         boolean byeFlag = false;
         Scanner line = new Scanner(System.in);
         TaskManager dukeManager = new TaskManager(100);
-        //Task[] userList = new Task[100]; //no more than 100 tasks
+        //TaskItems.Task[] userList = new TaskItems.Task[100]; //no more than 100 tasks
         while (!byeFlag) {
             String userInput = line.nextLine();
             if (userInput.equals("bye")) {
