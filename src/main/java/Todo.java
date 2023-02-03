@@ -1,4 +1,5 @@
 public class Todo extends Task {
+    private static final String TYPE = "T";
     protected final boolean isDone;
 
     public Todo(String description) {
@@ -13,6 +14,10 @@ public class Todo extends Task {
         return this.isDone;
     }
 
+    protected String getType() {
+        return Todo.TYPE;
+    }
+
     public Todo setDone(boolean isDone) {
         return new Todo(this.getDescription(), isDone);
     }
@@ -20,6 +25,6 @@ public class Todo extends Task {
     @Override
     public String toString() {
         String boxContent = this.getIsDone() ? "X" : " ";
-        return "[" + boxContent + "] " + super.toString();
+        return String.format("[%s][%s] %s", this.getType(), boxContent, super.toString());
     }
 }
