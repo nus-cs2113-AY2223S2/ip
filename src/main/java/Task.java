@@ -1,19 +1,19 @@
 public class Task {
-    protected final String DESCRIPTION;
+    protected final String description;
     protected final boolean isDone;
 
     public Task(String description) {
-        this.DESCRIPTION = description;
+        this.description = description;
         this.isDone = false;
     }
 
     private Task(String description, boolean isDone) {
-        this.DESCRIPTION = description;
+        this.description = description;
         this.isDone = isDone;
     }
 
     protected String getDescription() {
-        return this.DESCRIPTION;
+        return this.description;
     }
 
     protected boolean getIsDone() {
