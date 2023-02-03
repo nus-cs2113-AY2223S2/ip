@@ -65,6 +65,12 @@ public class Task {
         System.out.println("    ____________________________________________________________");
     }
 
+    public static void printErrorMessage(String errorMessage) {
+        System.out.println("    ____________________________________________________________");
+        System.out.println(errorMessage);
+        System.out.println("    ____________________________________________________________");
+    }
+
     public static void addTodoTask(String description, ArrayList<Task> taskList) {
         try {
             if (description.isEmpty()) {
@@ -76,7 +82,7 @@ public class Task {
             Task.printAddedTask(newTodoTask, taskList.size());
 
         } catch (DukeException exception) {
-            Duke.printErrorMessage(exception.getMessage());
+            printErrorMessage(exception.getMessage());
         }
     }
 
@@ -95,7 +101,7 @@ public class Task {
             taskList.add(newDeadlineTask);
             Task.printAddedTask(newDeadlineTask, taskList.size());
         } catch (DukeException exception) {
-            Duke.printErrorMessage(exception.getMessage());
+            printErrorMessage(exception.getMessage());
         }
     }
 
@@ -118,7 +124,7 @@ public class Task {
             taskList.add(newEventTask);
             Task.printAddedTask(newEventTask, taskList.size());
         } catch (DukeException exception) {
-            Duke.printErrorMessage(exception.getMessage());
+            printErrorMessage(exception.getMessage());
         }
     }
 }
