@@ -12,6 +12,7 @@ dependencies {
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.6.0'
     testImplementation group: 'org.junit.platform', name: 'junit-platform-launcher', version: '1.5.2'
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.6.0'
+    implementation group: 'com.diogonunes', name: 'JColor', version: '5.2.0'
 }
 
 test {
