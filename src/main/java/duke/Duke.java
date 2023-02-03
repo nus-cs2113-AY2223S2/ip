@@ -1,4 +1,9 @@
-import java.util.Scanner;
+package duke;
+
+import duke.exceptions.ContentEmptyException;
+import duke.exceptions.MissingParameterException;
+import duke.exceptions.UnknownCommandException;
+import duke.tools.UI;
 
 public class Duke {
 

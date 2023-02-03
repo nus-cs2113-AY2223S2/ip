@@ -1,4 +1,12 @@
-import java.util.Arrays;
+package duke;
+
+import duke.exceptions.MissingParameterException;
+import duke.tasks.Deadline;
+import duke.tasks.Event;
+import duke.tasks.Task;
+import duke.tasks.Todo;
+import duke.tools.UI;
+
 /**
  * Task manager with private attribute task array to store tasks.
  * Public methods to read/write tasks
@@ -34,7 +42,7 @@ public class TaskManager {
      * @param taskDescription
      * @return
      */
-    public Deadline createNewDeadline(String taskDescription) throws MissingParameterException{
+    public Deadline createNewDeadline(String taskDescription) throws MissingParameterException {
         int index = taskDescription.indexOf("/by");
         if(index==-1){
             throw new MissingParameterException();

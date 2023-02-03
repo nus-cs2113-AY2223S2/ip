@@ -1,4 +1,7 @@
-import java.util.Arrays;
+package duke.tools;
+
+import duke.exceptions.ContentEmptyException;
+
 public class Parser {
 
     /**
@@ -43,7 +46,7 @@ public class Parser {
      * @param inputWords
      * @return
      */
-    public String getCommandDescription(String inputWords) throws ContentEmptyException{
+    public String getCommandDescription(String inputWords) throws ContentEmptyException {
         String command = getCommandType(inputWords);
         if(command.equals("bye")||command.equals("list")){
             return inputWords;
