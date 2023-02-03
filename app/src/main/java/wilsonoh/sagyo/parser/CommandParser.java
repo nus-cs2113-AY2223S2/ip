@@ -8,6 +8,7 @@ import wilsonoh.sagyo.commands.AddTaskCommand;
 import wilsonoh.sagyo.commands.ByeCommand;
 import wilsonoh.sagyo.commands.Command;
 import wilsonoh.sagyo.commands.CommandType;
+import wilsonoh.sagyo.commands.DeleteTaskCommand;
 import wilsonoh.sagyo.commands.ListCommand;
 import wilsonoh.sagyo.commands.MarkTaskCommand;
 import wilsonoh.sagyo.commands.UnMarkTaskCommand;
@@ -31,14 +32,19 @@ public class CommandParser {
             if (matcher.find()) {
                 switch (command) {
                 case MARK:
-                case UNMARK:
+                case UNMARK: {
                     boolean isMark = command.equals(CommandType.MARK);
                     String idxGroup = matcher.group("idx");
                     return isMark ? new MarkTaskCommand(tasks, idxGroup) : new UnMarkTaskCommand(tasks, idxGroup);
+                }
                 case BYE:
                     return new ByeCommand();
                 case LIST:
                     return new ListCommand(this.tasks);
+                case DELETE: {
+                    String idxGroup = matcher.group("idx");
+                    return new DeleteTaskCommand(tasks, idxGroup);
+                }
                 case DEADLINE:
                 case EVENT:
                 case TODO:
