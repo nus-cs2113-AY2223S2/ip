@@ -15,7 +15,7 @@ public class OutputDialogueManager {
             System.out.println("_(@_@)_ Hmmm. I shall mark this task as not done:");
             break;
         case ADD_TASK:
-            System.out.println("_(ovo)-| Added: ");
+            System.out.println("_(ovo)-| Added:");
             break;
         case HELP:
             System.out.println("(^A^)== Here's the list of commands you can tell me to do:");
