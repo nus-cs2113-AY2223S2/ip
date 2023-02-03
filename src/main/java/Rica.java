@@ -136,18 +136,17 @@ public class Rica {
                 }
             } else {
                 switch (command) {
-                    case Rica.LIST_TRIGGER:
-                        printTexts();
-                        break;
-                    case Rica.BYE_TRIGGER:
-                        printlnWithIndent(Rica.BYE_PHRASE);
-                        break;
-                    default:
-                        Rica.addTask(command);
-                        break;
+                case Rica.LIST_TRIGGER:
+                    printTexts();
+                    break;
+                case Rica.BYE_TRIGGER:
+                    printlnWithIndent(Rica.BYE_PHRASE);
+                    break;
+                default:
+                    Rica.addTask(command);
+                    break;
                 }
             }
-
             printlnWithIndent(Rica.LINE);
         } while (!command.equals(Rica.BYE_TRIGGER));
     }
