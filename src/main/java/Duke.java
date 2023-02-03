@@ -14,6 +14,32 @@ public class Duke {
         return input;
     }
 
+    public static Boolean isInputValid(String input) {
+        if (input.startsWith("event")) {
+            if (input.length() < 7) {
+                System.out.println("event cannot be empty, please try again!");
+                return false;
+            } else if (!input.contains("/from") || !input.contains("/to")) {
+                System.out.println("Please provide a BOTH a valid from and to \nex: event project meeting /from Mon 2pm /to 4pm");
+                return false;
+            }
+        } else if (input.startsWith("deadline")) {
+            if (input.length() < 10) {
+                System.out.println("Deadline cannot be empty, please try again!");
+                return false;
+            } else if (!input.contains("/by")) {
+                System.out.println("Please provide a valid deadline \nex: deadline return book /by Sunday");
+                return false;
+            }
+        } else if (input.startsWith("todo")) {
+            if (input.length() < 6) {
+                System.out.println("Todo cannot be empty, please try again!");
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
         Scanner myObj = new Scanner(System.in);
         String logo = " ____        _        \n"
@@ -28,6 +54,10 @@ public class Duke {
         Todos[] todo = new Todos[100];
         int new_tasks = 0;
         while (!input.equalsIgnoreCase("bye")) {
+            if (!isInputValid(input)) {
+                input = myObj.nextLine();
+                continue;
+            }
             if (input.equalsIgnoreCase("list")) {
                 System.out.println("-------TODO-LIST------");
                 System.out.println("----------------------");
@@ -67,13 +97,15 @@ public class Duke {
                 System.out.println("now you have: " + count + " tasks in this list.");
                 todo[new_tasks] = new Deadline(input, false, "D");
                 new_tasks++;
-            } else {
-                todo[new_tasks] = new Todos(input, false, "T");
+            } else if (input.startsWith("todo")) {
+                todo[new_tasks] = new Todos(input.substring(input.indexOf((" "))), false, "T");
                 System.out.println("Got it, Ive done the Following!");
-                System.out.println("Added: " + "[" + todo[new_tasks].type + "]" + "[ ]" + input);
+                System.out.println("Added: " + "[" + todo[new_tasks].type + "]" + "[ ]" + input.substring(input.indexOf((" "))));
                 int count = new_tasks + 1;
                 System.out.println("now you have: " + count + " tasks in this list.");
                 new_tasks++;
+            } else {
+                System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
             }
             input = myObj.nextLine();
 
