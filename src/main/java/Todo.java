@@ -1,27 +1,49 @@
-public class Todo extends Task {
+public class Todo {
+    String description;
+    String type;
     protected boolean isDone;
 
-    public Todo(String description) {
-        super(description);
-        isDone = false;
+    Todo(String contents) {
+
+        this.description = contents;
+        this.isDone = false;
+        this.type = "T";
     }
 
-    public void setDone(boolean done) {
-        isDone = done;
+    public String getIsDone() {
+        String status = " ";
+
+        if (this.isDone == true) {
+            status = "X";
+        }
+        return status;
     }
 
-    public boolean isDone() {
-        return isDone;
+    public String getType() {
+
+        return this.type;
+    }
+
+    public void mark() {
+        this.isDone = true;
+        System.out.println("目標達成！- [" + this.getIsDone() + "] " + this.description);
+
+    }
+
+    public void unMark() {
+        this.isDone = false;
+        System.out.println("ええ。。。噓つき。- [" + this.getIsDone() + "] " + this.description);
+
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     @Override
     public String toString() {
-        String status = null;
-        if (isDone) {
-            status = "Yes";
-        } else {
-            status = "No";
-        }
-        return super.toString() + System.lineSeparator() + "is done? " + status;
+        return "description: " + description;
     }
+
+
 }
