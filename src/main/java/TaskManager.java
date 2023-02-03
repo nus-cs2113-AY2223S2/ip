@@ -34,8 +34,11 @@ public class TaskManager {
      * @param taskDescription
      * @return
      */
-    public Deadline createNewDeadline(String taskDescription){
+    public Deadline createNewDeadline(String taskDescription) throws MissingParameterException{
         int index = taskDescription.indexOf("/by");
+        if(index==-1){
+            throw new MissingParameterException();
+        }
         String deadlineContent = taskDescription.substring(0,index-1);
         String deadlineDate = taskDescription.substring(index+4);
         Deadline newDeadline = new Deadline(deadlineContent, deadlineDate);
@@ -49,9 +52,12 @@ public class TaskManager {
      * @param taskDescription
      * @return
      */
-    public Event createNewEvent(String taskDescription){
+    public Event createNewEvent(String taskDescription) throws MissingParameterException{
         int indexStart = taskDescription.indexOf("/from");
         int indexEnd = taskDescription.indexOf("/to");
+        if(indexStart==-1||indexEnd==-1){
+            throw new MissingParameterException();
+        }
         String eventContent = taskDescription.substring(0,indexStart-1);
         String eventStartTime = taskDescription.substring(indexStart+6, indexEnd-1);
         String eventEndTime = taskDescription.substring(indexEnd+4);
@@ -66,7 +72,7 @@ public class TaskManager {
      * @param taskDescription
      * @return
      */
-    public Task generateNewTask(String taskType, String taskDescription){
+    public Task generateNewTask(String taskType, String taskDescription) throws MissingParameterException{
         Task newTask;
 
         if(taskType.equals("todo")){
@@ -86,7 +92,7 @@ public class TaskManager {
      * @param taskType .
      * @param taskDescription
      */
-    public void addTask(String taskType, String taskDescription){
+    public void addTask(String taskType, String taskDescription) throws MissingParameterException{
         Task newTask = generateNewTask(taskType, taskDescription);
         tasks[numTasks]=newTask;
         numTasks+=1;

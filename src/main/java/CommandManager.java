@@ -19,7 +19,6 @@ public class CommandManager {
             throw new UnknownCommandException();
         }
         this.commandDescription = COMMAND_PARSER.getCommandDescription(command);
-        System.out.println("hi");
     }
 
     public void sayHello() {
@@ -39,7 +38,7 @@ public class CommandManager {
      * If command is unmark, mark a particular task as undone.
      * Else add new task.
      */
-    public void executeCommand() {
+    public void executeCommand() throws MissingParameterException{
         if(commandType.equals("bye")){
             sayBye();
             System.exit(0);
