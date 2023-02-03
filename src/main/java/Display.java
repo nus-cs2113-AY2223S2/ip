@@ -41,27 +41,33 @@ public class Display {
      * @param taskType  The type of task being added (TODO, EVENT or DEADLINE)
      * @param taskList  The list of tasks to which the new task is being added
      **/
-    public void addedTask(String[] userInput, TaskType taskType, TaskList taskList) {
+    public void addedTask(Command command, TaskType taskType, TaskList taskList) {
         System.out.println(LINE);
         switch (taskType) {
         case TODO:
             System.out.println("Got it. I've added this task:");
-            System.out.println("[T][ ] " + userInput[0].substring(5));
+            System.out.println("[T][ ] " + command.getTaskDescription());
             System.out.println("Now you have " + taskList.getTaskCount() + " tasks in the list");
             break;
         case EVENT:
             System.out.println("Got it. I've added this task:");
-            System.out.println("[E][ ] " + userInput[0].substring(6) + "(from: "
-                    + userInput[1].substring(5) + " to: " + userInput[2].substring(3) + ")");
+            System.out.println("[E][ ] " + command.getTaskDescription() + "(from: "
+                    + command.getFrom() + " to: " + command.getTo() + ")");
             System.out.println("Now you have " + taskList.getTaskCount() + " tasks in the list");
             break;
         case DEADLINE:
             System.out.println("Got it. I've added this task:");
-            System.out.println("[D][ ] " + userInput[0].substring(9) + "(by: "
-                    + userInput[1].substring(3) + ")");
+            System.out.println("[D][ ] " + command.getTaskDescription() + "(by: "
+                    + command.getBy() + ")");
             System.out.println("Now you have " + taskList.getTaskCount() + " tasks in the list");
             break;
         }
+        System.out.println(LINE);
+    }
+
+    public void missingTodoField() {
+        System.out.println(LINE);
+        System.out.println("Description ");
         System.out.println(LINE);
     }
 

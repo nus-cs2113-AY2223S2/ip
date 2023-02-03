@@ -4,12 +4,11 @@ public class Sage {
     public static void main(String[] args) {
         Display ui = new Display();
         TaskList taskList = new TaskList();
-        Scanner command = new Scanner(System.in);
+        Scanner input = new Scanner(System.in);
         ui.welcomeUser();
-        while (command.hasNextLine()) {
-            String[] output;
-            String input = command.nextLine();
-            switch (input) {
+        while (input.hasNextLine()) {
+            Command command = new Command(input.nextLine());
+            switch (command.getTaskType()) {
             case "bye":
                 ui.goodByeUser();
                 return;
@@ -17,27 +16,22 @@ public class Sage {
                 ui.displayTask(taskList);
                 break;
             case "unmark":
-                output = input.split(" ");
-                taskList.unmarkTask(Integer.parseInt(output[1]), ui);
+                taskList.unmarkTask(command.getTaskDescription(), ui);
                 break;
             case "mark":
-                output = input.split(" ");
-                taskList.markTask(Integer.parseInt(output[1]), ui);
+                taskList.markTask(command.getTaskDescription(), ui);
                 break;
             case "todo":
-                output = input.split("/");
-                taskList.addTask(input);
-                ui.addedTask(output, TaskType.TODO, taskList);
+                taskList.addTask(command.getTaskDescription());
+                ui.addedTask(command, TaskType.TODO, taskList);
                 break;
             case "deadline":
-                output = input.split("/");
-                taskList.addTask(output[0].substring(9), output[1].substring(3));
-                ui.addedTask(output, TaskType.DEADLINE, taskList);
+                taskList.addTask(command.getTaskDescription(), command.getBy());
+                ui.addedTask(command, TaskType.DEADLINE, taskList);
                 break;
             case "event":
-                output = input.split("/");
-                taskList.addTask(output[0].substring(6), output[1].substring(5), output[2].substring(3));
-                ui.addedTask(output, TaskType.EVENT, taskList);
+                taskList.addTask(command.getTaskDescription(), command.getFrom(), command.getTo());
+                ui.addedTask(command, TaskType.EVENT, taskList);
                 break;
             default:
                 ui.unknownInput();
