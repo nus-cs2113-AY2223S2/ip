@@ -4,18 +4,22 @@ public class Duke {
 
     static final String HORIZONTAL_LINE = "____________________________________________________________";
 
-    public static void main(String[] args) {
+    public static void greet() {
+        System.out.println(HORIZONTAL_LINE);
+        System.out.println("Hello! I'm Duke");
+        System.out.println("What can I do for you?");
+        System.out.println(HORIZONTAL_LINE);
+    }
+
+    public static void runProgram(){
 
         // Variables needed
         Scanner scanner = new Scanner(System.in);
         String userInput;
         String command;
-
-        Task[] listOfInputs = new Task[100];
+        Task[] tasks = new Task[100];
         int inputCounter = 0;
 
-        // Start of the program
-        greet();
 
         // Get first task
         userInput = scanner.nextLine();
@@ -28,18 +32,19 @@ public class Duke {
 
             // Print list upon user request
             if (userInput.equals("list")) {
-                printList(listOfInputs, inputCounter);
+                printList(tasks, inputCounter);
             }
+
             // Mark as done
             else if (userInput.startsWith("mark")) {
                 int taskIndex = Integer.parseInt(userInput.substring(userInput.length() - 1));
-                listOfInputs[taskIndex - 1].markAsDone();
+                tasks[taskIndex - 1].markAsDone();
             }
 
             // Mark as undone
             else if (userInput.startsWith("unmark")) {
                 int taskIndex = Integer.parseInt(userInput.substring(userInput.length() - 1));
-                listOfInputs[taskIndex - 1].markAsNotDone();
+                tasks[taskIndex - 1].markAsNotDone();
             }
 
             // Add other tasks into list
@@ -47,25 +52,23 @@ public class Duke {
 
                 Task newTask;
 
-                // Handle to-do commands
-                if (command.equals("todo")) {
+                // Depending on the type of command, the input gets parsed into the different handlers
+                switch (command) {
+                case "deadline":
+                    String[] deadlineArgs = deadlineHandler(userInput);
+                    newTask = new Deadline(deadlineArgs[0], deadlineArgs[1]);
+                    break;
+                case "event":
+                    String[] eventArgs = eventHandler(userInput);
+                    newTask = new Event(eventArgs[0], eventArgs[1], eventArgs[2]);
+                    break;
+                default:
                     String todoCommand = todoHandler(userInput);
                     newTask = new Todo(todoCommand);
+                    break;
                 }
 
-                // Handle deadline commands
-                else if (command.equals("deadline")) {
-                    String[] deadlineCommand = deadlineHandler(userInput);
-                    newTask = new Deadline(deadlineCommand[0], deadlineCommand[1]);
-                }
-
-                // Handle event commands
-                else {
-                    String[] eventCommand = eventHandler(userInput);
-                    newTask = new Event(eventCommand[0], eventCommand[1], eventCommand[2]);
-                }
-
-                listOfInputs[inputCounter] = newTask;
+                tasks[inputCounter] = newTask;
                 inputCounter++;
                 System.out.println("Got it. I've added this task: \n" + newTask.toString());
 
@@ -74,6 +77,7 @@ public class Duke {
                 } else {
                     System.out.println("Now you have " + inputCounter + " tasks in the list.");
                 }
+
             }
 
             // Print trailing horizontal line and take in next input
@@ -83,16 +87,6 @@ public class Duke {
 
         }
 
-        // Program exits when user enters `bye`
-        exit();
-
-    }
-
-    public static void greet() {
-        System.out.println(HORIZONTAL_LINE);
-        System.out.println("Hello! I'm Duke");
-        System.out.println("What can I do for you?");
-        System.out.println(HORIZONTAL_LINE);
     }
 
     public static void exit() {
@@ -124,7 +118,7 @@ public class Duke {
         }
 
         // Remove trailing space at the end of taskName
-        taskName = taskName.substring(0, taskName.length() - 1);
+        taskName = taskName.trim();
 
         return taskName;
 
@@ -140,7 +134,7 @@ public class Duke {
         String deadline = "";
         String[] userInputArray = new String[numberOfWords];
         String[] cleanedUserInputArray = new String[numberOfWords - 1];
-        String[] finalArray = new String[2];
+        String[] outputArray = new String[2];
         boolean isByPassed = false;
 
         userInputArray = userInput.split(" ");
@@ -159,15 +153,14 @@ public class Duke {
             }
         }
 
-
         // Collate words for the taskName
         for (int i = 1; i < endOfTaskNameIndex; i++) {
             taskName += cleanedUserInputArray[i] + " ";
         }
 
         // Remove trailing space at the end of taskName
-        taskName = taskName.substring(0, taskName.length() - 1);
-        finalArray[0] = taskName;
+        taskName = taskName.trim();
+        outputArray[0] = taskName;
 
         // Collate words for the deadline
         for (int i = endOfTaskNameIndex + 1; i < numberOfWords; i++) {
@@ -175,10 +168,10 @@ public class Duke {
         }
 
         // Remove trailing space at the end of deadline
-        deadline = deadline.substring(0, deadline.length() - 1);
-        finalArray[1] = deadline;
+        deadline = deadline.trim();
+        outputArray[1] = deadline;
 
-        return finalArray;
+        return outputArray;
     }
 
     // Returns an array containing [taskName, from, to]
@@ -191,7 +184,7 @@ public class Duke {
         String to = "";
         String[] userInputArray = new String[numberOfWords];
         String[] cleanedUserInputArray = new String[numberOfWords - 2];
-        String[] finalArray = new String[3];
+        String[] outputArray = new String[3];
         boolean isFromPassed = false;
         boolean isToPassed = false;
         int endOfTaskNameIndex = 2;
@@ -228,8 +221,8 @@ public class Duke {
         }
 
         // Remove trailing space at the end of taskName
-        taskName = taskName.substring(0, taskName.length() - 1);
-        finalArray[0] = taskName;
+        taskName = taskName.trim();
+        outputArray[0] = taskName;
 
         // Collate words for the `from` field
         for (int i = endOfTaskNameIndex + 1; i < endOfFromIndex; i++) {
@@ -237,8 +230,8 @@ public class Duke {
         }
 
         // Remove trailing space at the end of the `from` field
-        from = from.substring(0, from.length() - 1);
-        finalArray[1] = from;
+        from = from.trim();
+        outputArray[1] = from;
 
         // Collate words for the `to` field
         for (int i = endOfFromIndex + 1; i < numberOfWords; i++) {
@@ -246,10 +239,24 @@ public class Duke {
         }
 
         // Remove trailing space at the end of the `to` field
-        to = to.substring(0, to.length() - 1);
-        finalArray[2] = to;
+        to = to.trim();
+        outputArray[2] = to;
 
-        return finalArray;
+        return outputArray;
 
     }
+
+    public static void main(String[] args) {
+
+        // Start the program with a lovely greeting
+        greet();
+
+        // Run the program
+        runProgram();
+
+        // Exit the program
+        exit();
+
+    }
+
 }
