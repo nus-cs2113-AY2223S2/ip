@@ -10,6 +10,22 @@ public class Todo extends Task {
         this.isDone = isDone;
     }
 
+    public static Todo create(String command) {
+        String[] parameters = command.split(" ");
+        StringBuilder descriptionBuilder = new StringBuilder();
+        for (int i = 1; i < parameters.length; i += 1) {
+            descriptionBuilder.append(parameters[i]);
+            if (i != (parameters.length - 1)) {
+                descriptionBuilder.append(" ");
+            }
+        }
+        String description = descriptionBuilder.toString();
+        if (description.isBlank()) {
+            return null;
+        }
+        return new Todo(description);
+    }
+
     protected boolean getIsDone() {
         return this.isDone;
     }

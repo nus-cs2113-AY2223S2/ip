@@ -22,22 +22,13 @@ public class Rica {
      * @param command Command describing the new todo being added
      */
     private static void addTodo(String command) {
-        String[] parameters = command.split(" ");
-        StringBuilder descriptionBuilder = new StringBuilder();
-        for (int i = 1; i < parameters.length; i += 1) {
-            descriptionBuilder.append(parameters[i]);
-            if (i != (parameters.length - 1)) {
-                descriptionBuilder.append(" ");
-            }
-        }
-        String description = descriptionBuilder.toString();
-        if (description.isBlank()) {
-            printlnWithIndent(" Did you forget something? Don't think there's any todo with no name");
+        Todo newTodo = Todo.create(command);
+        if (newTodo == null) {
+            printlnWithIndent(" Did you forget something? That's not a valid todo is it");
             return;
         }
-        Todo newTodo = new Todo(description);
         Rica.getPastTodos().add(newTodo);
-        printlnWithIndent(Rica.ADD_PHRASE + description);
+        printlnWithIndent(Rica.ADD_PHRASE + newTodo.getDescription());
     }
 
     /**
