@@ -5,6 +5,12 @@ public class Duke {
     private static Task[] taskList = new Task[100];
     private static int counter = 0;
     private static final String LINE = "___________________________________________";
+    private static final String EXIT_STRING = "bye";
+    private static final String LIST_STRING = "list";
+    private static final String MARK_STRING = "mark";
+    private static final String UNMARK_STRING = "unmark";
+
+    private static boolean isExecuting;
 
     public static void printGreeting() {
         System.out.println("\t" + LINE);
@@ -62,69 +68,64 @@ public class Duke {
         System.out.println("\t" + LINE);
     }
 
+    public static void handleAddTask(String taskType, String commandInfo) {
+        Task newTask = null;
+        if (taskType.equals("todo")) {
+            newTask = new Task(commandInfo);
+        }
+        else if (taskType.equals("deadline")) {
+            String[] infoArr= commandInfo.split("/by");
+            //infoArr contains descStr and deadlineStr respectively
+            newTask = new Deadline(infoArr[0],infoArr[1]);
+        }
+        else if (taskType.equals("event")) {
+            String[] infoArr = commandInfo.split("/from|/to");
+            //infoArr contains descStr, fromStr, and toStr respectively
+            newTask = new Event(infoArr[0],infoArr[1],infoArr[2]);
+        }
+
+        taskList[counter] = newTask;
+        counter++;
+        printTask(newTask);
+    }
+    public static void handleInput(String inputLine) {
+
+        //splits input based on one or more whitespaces into two words
+        String[] inputWords = inputLine.split("\\s+",2);
+        String command = inputWords[0];
+        //System.out.println("size: " + inputWords.length);
+
+        if (command.equals(EXIT_STRING)) {
+            printBye();
+            isExecuting = false;
+        }
+        if (command.equals(LIST_STRING)) {
+            printList();
+        }
+        else if (command.equals(MARK_STRING)) {
+            //inputWords[1] is string that no longer contains the command string
+            int indexToMark = Integer.parseInt(inputWords[1])-1; //turn it into 0-based
+            markTaskAndPrint(indexToMark);
+        }
+        else if (command.equals(UNMARK_STRING)) {
+            int indexToUnmark = Integer.parseInt(inputWords[1])-1;
+            unmarkTaskAndPrint(indexToUnmark);
+        }
+        //check if command string matches either of the string
+        else if (command.matches("todo|deadline|event")) {
+            handleAddTask(command,inputWords[1]);
+        }
+    }
+
+
     public static void main(String[] args) {
         printGreeting();
-        String input;
+        isExecuting = true;
         Scanner in = new Scanner(System.in);
 
-        while(true) {
-            input = in.nextLine();
-
-            if (input.equals("bye")) {
-                printBye();
-                break;
-            }
-            if (input.equals("list")) {
-                printList();
-                continue;
-            }
-
-            int spaceIndex=  input.indexOf(' ');
-            String firstWord = input.substring(0,spaceIndex);
-
-            if (firstWord.equals("mark")){
-                int indexToMark = Integer.parseInt(input.substring(5))-1; //convert to 0-based index
-                markTaskAndPrint(indexToMark);
-                continue;
-            }
-            if (firstWord.equals("unmark")){
-                int indexToUnmark = Integer.parseInt(input.substring(7))-1; //convert to 0-based index
-                unmarkTaskAndPrint(indexToUnmark);
-                continue;
-            }
-
-
-            String remainingWords = input.substring(spaceIndex);
-            String[] taskInfoArr = remainingWords.split(" /",3);
-            String taskDescription = taskInfoArr[0];
-
-
-            if (firstWord.equals("todo")) {
-                Task newTask = new Task(taskDescription);
-                taskList[counter] = newTask;
-                counter++;
-                printTask(newTask);
-                continue;
-            }
-
-            if (firstWord.equals("deadline" )) {
-                String dueBy = taskInfoArr[1].substring(3);
-                Deadline newDeadline = new Deadline(taskDescription, dueBy);
-                taskList[counter] = newDeadline;
-                counter++;
-                printTask(newDeadline);
-                continue;
-            }
-
-            if (firstWord.equals("event")) {
-                String fromStr = taskInfoArr[1].substring(5);
-                String toStr = taskInfoArr[2].substring(3);
-                Event newEvent = new Event(taskDescription, fromStr, toStr);
-                taskList[counter] = newEvent;
-                counter++;
-                printTask(newEvent);
-                continue;
-            }
+        while(isExecuting) {
+            String inputLine = in.nextLine();
+            handleInput(inputLine);
         }
     }
 }

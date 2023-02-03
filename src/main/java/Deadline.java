@@ -8,7 +8,7 @@ public class Deadline extends Task {
 
     //@Override
     public String toString() {
-      String newString = super.toString().replaceFirst("B","T");
+      String newString = super.toString().replaceFirst("T","D");
       return newString + " (by: " + dueBy + ")";
     }
 
