@@ -1,27 +1,22 @@
 package tasks;
 
 public class Todo extends Task {
-//    protected boolean isDone;
-//    protected String id;
 
+    /**
+     * Constructs a new instance of Todo object and
+     * stores description and status of the object.
+     *
+     * @param description description of task
+     */
     public Todo(String description) {
         super(description);
-//        isDone = false;
-//        id = "[T]";
     }
-//
-//    public String getId() {
-//        return id;
-//    }
-//
-//    public void setDone(boolean done) {
-//        isDone = done;
-//    }
-//
-//    public boolean isDone() {
-//        return isDone;
-//    }
 
+    /**
+     * Converts the Task object to a string
+     *
+     * @return the string that was converted
+     */
     @Override
     public String toString() {
         return "[T]" + super.toString();

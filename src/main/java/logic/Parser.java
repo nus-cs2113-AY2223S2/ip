@@ -5,6 +5,7 @@ public class Parser {
     /**
      * splits the string into an array
      * consisting of [command, description].
+     *
      * @param string input entered by user
      * @return string array consisting of the split inputs
      */

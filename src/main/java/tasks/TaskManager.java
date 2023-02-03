@@ -50,10 +50,6 @@ public class TaskManager {
             System.out.println(Constant.TAB_SPACE +
                     "OK, I've marked this task as not done yet:");
             break;
-//        case "list":
-//            System.out.println(Constant.TAB_SPACE +
-//                    "Here are the tasks in your list:");
-//            return; // we do not want to execute the last line for list
         }
 
         System.out.println(Constant.TAB_SPACE + Constant.TAB_SPACE + task);
