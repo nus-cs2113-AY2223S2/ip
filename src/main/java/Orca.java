@@ -9,6 +9,7 @@ public class Orca {
             + "    |       ||   |  | ||     |_ |   _   | \n"
             + "    |_______||___|  |_||_______||__| |__| \n";
     static final int MAX_TASKS = 100;
+    static final boolean FINISHED = true;
 
     static Task[] tasks = new Task[MAX_TASKS];
     static int taskCount = 0;
@@ -108,11 +109,11 @@ public class Orca {
         return Integer.parseInt(userInput.substring(startIdx));
     }
 
-    public static void executeCommand() {
+    public static boolean executeCommand() {
         switch (commandType) {
             case BYE:
                 printByeMessage();
-                return;
+                return FINISHED;
             case LIST:
                 printTasks();
                 break;
@@ -143,13 +144,18 @@ public class Orca {
                 printUnknownCommandMessage();
                 break;
         }
+        return !FINISHED;
     }
 
     public static void runOrca() {
+        boolean isFinished = false;
         while (isInputAvailable()) {
             readUserInput();
             findCommandType();
-            executeCommand();
+            isFinished = executeCommand();
+            if (isFinished) {
+                break;
+            }
         }
     }
 
@@ -160,7 +166,6 @@ public class Orca {
     public static void main(String[] args) {
         printGreetingMessage();
         runOrca();
-        printByeMessage();
         finishProcess();
     }
 }
