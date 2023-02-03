@@ -55,7 +55,7 @@ public class Parser {
     protected static String[] getTaskNumbers(String userInput){
         userInput = userInput.trim();
         int indexOfFirstSpace = userInput.indexOf(" ");
-        if(indexOfFirstSpace == -1 || indexOfFirstSpace == userInput.length()){
+        if(indexOfFirstSpace == -1 || indexOfFirstSpace == userInput.length() - 1){
             return null;
         }
         return userInput.substring(indexOfFirstSpace).trim().split(" ");
@@ -100,7 +100,7 @@ public class Parser {
         if(indexOfFrom < indexOfFirstSpace || indexOfTo < indexOfFirstSpace){
             return null;
         }
-        String[] additionalParamaters = new String[3];
+        String[] additionalParameters = new String[3];
         String name;
         String from;
         String to;
@@ -108,8 +108,7 @@ public class Parser {
             name = userInput.substring(indexOfFirstSpace,indexOfFrom).trim();
             from = userInput.substring(indexOfFrom + CommandInputs.ADD_EVENT_FROM_COMMAND_INPUT.length(), indexOfTo).trim();
             to = userInput.substring(indexOfTo + CommandInputs.ADD_EVENT_TO_COMMAND_INPUT.length()).trim();
-        }
-        else{
+        }else{
             name = userInput.substring(indexOfFirstSpace,indexOfTo).trim();
             from = userInput.substring(indexOfFrom + CommandInputs.ADD_EVENT_FROM_COMMAND_INPUT.length()).trim();
             to = userInput.substring(indexOfTo + CommandInputs.ADD_EVENT_TO_COMMAND_INPUT.length(), indexOfFrom).trim();
@@ -117,15 +116,16 @@ public class Parser {
         if(!isNameValid(name) || !isDateValid(from) || !isNameValid(to)){
             return null;
         }
-        additionalParamaters[0] = name;
-        additionalParamaters[1] = from;
-        additionalParamaters[2] = to;
-        return additionalParamaters;
+        additionalParameters[0] = name;
+        additionalParameters[1] = from;
+        additionalParameters[2] = to;
+        return additionalParameters;
     }
 
     protected static boolean isNameValid(String name){
         return !name.isEmpty();
     }
+
     protected static boolean isDateValid(String date){
         return !date.isEmpty();
     }

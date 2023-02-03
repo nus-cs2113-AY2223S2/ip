@@ -1,5 +1,11 @@
 public class Command {
     private CommandType commandType;
+    private String[] additionalParameters;
+
+    Command(CommandType commandType, String[] additionalParameters){
+        this.commandType = commandType;
+        this.additionalParameters = additionalParameters;
+    }
 
     public CommandType getCommandType() {
         return commandType;
@@ -9,9 +15,4 @@ public class Command {
         return additionalParameters;
     }
 
-    private String[] additionalParameters;
-    Command(CommandType commandType, String[] additionalParameters){
-        this.commandType = commandType;
-        this.additionalParameters = additionalParameters;
-    }
 }

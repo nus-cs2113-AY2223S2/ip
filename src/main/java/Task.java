@@ -23,8 +23,7 @@ public class Task {
         String isDoneCheck;
         if(isDone){
             isDoneCheck = "X";
-        }
-        else{
+        } else{
             isDoneCheck = " ";
         }
         String taskTypeChar = null;

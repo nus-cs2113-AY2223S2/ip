@@ -23,6 +23,12 @@ public class Duke {
             break;
         case EVENT:
             newTask = new Event(taskParameters[0], taskParameters[1], taskParameters[2]);
+            break;
+        default:
+            // No task type specified, there is some bug in the code if instruction reaches this point,
+            // simply do not add anything to the tasks
+            System.out.println("Error in addNewTask method, no task type specified");
+            return;
         }
         tasks[Task.totalTasks - 1] = newTask;
         System.out.println("Got it. I've added this task:");
@@ -50,8 +56,7 @@ public class Duke {
         int taskIndex;
         try {
             taskIndex = Integer.parseInt(taskNumbers[0]);
-        }
-        catch (Exception e){
+        } catch (Exception e){
             System.out.println("Please input a valid task number exception.");
             return;
         }
@@ -64,8 +69,7 @@ public class Duke {
             if(tasks[taskIndex].isDone()){
                 System.out.println("This task is already marked done:");
                 System.out.println(tasks[taskIndex].toString());
-            }
-            else{
+            } else{
                 tasks[taskIndex].setDone(true);
                 System.out.println("Nice! I've marked this task as done:");
                 System.out.println(tasks[taskIndex].toString());
@@ -74,8 +78,7 @@ public class Duke {
             if(!tasks[taskIndex].isDone()){
                 System.out.println("This task is already marked as not done:");
                 System.out.println(tasks[taskIndex].toString());
-            }
-            else{
+            } else{
                 tasks[taskIndex].setDone(false);
                 System.out.println("OK, I've marked this task as not done yet:");
                 System.out.println(tasks[taskIndex].toString());
@@ -117,6 +120,7 @@ public class Duke {
                 isProgramRunning = false;
                 break;
             case UNKNOWN_COMMAND:
+            default:
                 System.out.println("Unknown task or task parameters received. Please try again.");
                 break;
             }
