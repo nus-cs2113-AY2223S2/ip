@@ -221,7 +221,7 @@ public class Duke {
 
         int ind = Integer.parseInt(taskNumber) - 1;
 
-        if(ind >= index) {
+        if(ind >= index || ind < 0) {
             throw new DukeException("Task " + (ind + 1) + " does not exist.");
         }
 
@@ -236,7 +236,7 @@ public class Duke {
 
         int ind = Integer.parseInt(taskNumber) - 1;
 
-        if(ind >= index) {
+        if(ind >= index || ind < 0) {
             throw new DukeException("Task " + (ind + 1) + " does not exist.");
         }
 
