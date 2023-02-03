@@ -3,30 +3,47 @@ import java.util.Arrays;
 import java.util.ArrayList;
 public class Duke{
     public static void main(String[] args) {
-        String dash = "__________________________________";
-        String greet = dash + "\nHello I'm Duke\nWhat can I do for you?\n" + dash;
+        String DASH = "__________________________________";
+        String greet = DASH + "\nHello I'm Duke\nWhat can I do for you?\n" + DASH;
         System.out.println(greet);
 
-        ToDoList toDo = new ToDoList();
 
         while (true) {
             Scanner scan = new Scanner(System.in);
             String input = scan.nextLine();
-            String[] Temp = input.split(" ");
-            if(Temp[0].equals("mark")|Temp[0].equals("unmark")){
-                int numberToMark = Integer.parseInt(Temp[1]);
-                toDo.mark(toDo.at(numberToMark));
+            String[] inputSplitBySpace = input.split(" ");
+
+            if(inputSplitBySpace[0].equals("todo")){
+                ToDo todo = new ToDo(input.substring(5), Task.lastIndex+1);
+                Task.addToTaskArrayList(todo);
+                todo.acknowledgeTaskAdded();
+            }
+            else if(inputSplitBySpace[0].equals("deadline")){
+                Deadline deadline = new Deadline(Deadline.readName(input),Task.lastIndex+1,Deadline.readBy(input));
+                Task.addToTaskArrayList(deadline);
+                deadline.acknowledgeTaskAdded();
+            }
+            else if(inputSplitBySpace[0].equals("event")){
+                String fromString = Event.readFromTo(input)[0];
+                String toString = Event.readFromTo(input)[1];
+                Event event = new Event(Event.readName(input),Task.lastIndex+1,fromString,toString);
+                Task.addToTaskArrayList(event);
+                event.acknowledgeTaskAdded();
+            }
+            else if(inputSplitBySpace[0].equals("mark")|inputSplitBySpace[0].equals("unmark")){
+                int indexToMark = Integer.parseInt(inputSplitBySpace[1]);
+
+                Task.markOrUnmark(indexToMark);
             }
             else if (input.equals("bye")) {
-                System.out.println(dash + "\nBye. Hope to see you again soon!\n" + dash);
+                System.out.println(DASH + "\nBye. Hope to see you again soon!\n" + DASH);
                 break;
             }
             else if (input.equals("list")) {
-                toDo.printList();
+                Task.printList();
             }
             else {
-                Task task= new Task(input, toDo.size()+1);
-                toDo.addToList(task);
+                System.out.println("There is no such command!");
             }
         }
     }
