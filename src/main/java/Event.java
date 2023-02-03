@@ -20,6 +20,22 @@ public class Event extends Task {
         this.to = to;
     }
 
+    public String getFrom() {
+        return from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
+    public String getTo() {
+        return to;
+    }
+
+    public void setTo(String to) {
+        this.to = to;
+    }
+
     /**
      * Converts the task to a string with label, marked status, starting and ending time.
      * @return a string containing the task's label, marked status, starting and ending time.

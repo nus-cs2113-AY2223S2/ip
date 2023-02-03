@@ -16,6 +16,14 @@ public class Deadline extends Task {
         this.by = by;
     }
 
+    public String getBy() {
+        return by;
+    }
+
+    public void setBy(String by) {
+        this.by = by;
+    }
+
     /**
      * Converts the task to a string with label, mark status and deadline.
      * @return a string containing the task's label, mark status and deadline.
