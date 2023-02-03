@@ -1,6 +1,6 @@
 public class Todo extends Task {
-    public Todo(String TaskName) {
-        super(TaskName);
+    public Todo(String taskName) {
+        super(taskName);
     }
 
     public String toString() {

@@ -1,38 +1,36 @@
 public class Task {
-    protected String TaskName;
+    protected String taskName;
     protected boolean isDone;
-    protected static int NumberOfTasks;
+    protected static int numberOfTasks;
 
-    public Task(String TaskName){
-        this.TaskName = TaskName;
+    public Task(String taskName){
+        this.taskName = taskName;
         this.isDone = false;
-        NumberOfTasks++;
+        numberOfTasks++;
     }
 
     public void MarkTask(){
         this.isDone = true;
-
         Rolex.printLines();
         System.out.println("Well Done. This task is marked as done:");
-        System.out.println("[" + this.TaskStatus() + "] " + this.TaskName);
+        System.out.println("[" + this.taskStatus() + "] " + this.taskName);
         Rolex.printLines();
     }
 
     public void unMarkTask(){
         this.isDone = false;
-
         Rolex.printLines();
         System.out.println("Oh no, I've unmarked this task as it is not done:");
-        System.out.println("[" + this.TaskStatus() + "] " + this.TaskName);
+        System.out.println("[" + this.taskStatus() + "] " + this.taskName);
         Rolex.printLines();
     }
 
-    public String TaskStatus(){
+    public String taskStatus(){
         return (isDone ? "X" : " ");
     }
 
     public String toString(){
-        return "[" + this.TaskStatus() + "] " + this.TaskName;
+        return "[" + this.taskStatus() + "] " + this.taskName;
     }
 
 } // Task class ends here

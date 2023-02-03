@@ -1,4 +1,5 @@
 import java.util.Scanner;
+
 public class Rolex {
 
     static Task[] task =  new Task[100];
@@ -7,18 +8,18 @@ public class Rolex {
         System.out.println("--------------------------------------------------");
     }
 
-    public static void RolexGreetsUser(){
+    public static void rolexGreetsUser(){
         System.out.println("Hello! I'm ROLEX");
         System.out.println("What can I do for you?\n");
     }
 
-    public static void InputIsBye(){
+    public static void inputIsBye(){
         printLines();
         System.out.println("Bye. Hope to see you again soon!\n");
         printLines();
     }
 
-    public static void InputIsList(){
+    public static void inputIsList(){
         printLines();
         int indexNum = 1;
         System.out.println("Here are the tasks in your list:");
@@ -29,17 +30,17 @@ public class Rolex {
         printLines();
     }
 
-    public static void InputIsMark(String UserInput){
-        int index = Integer.parseInt(UserInput.substring(5));
+    public static void inputIsMark(String userInput){
+        int index = Integer.parseInt(userInput.substring(5));
         task[index-1].MarkTask();
     }
 
-    public static void InputIsUnmark(String UserInput){
-        int index = Integer.parseInt(UserInput.substring(7));
+    public static void inputIsUnmark(String userInput){
+        int index = Integer.parseInt(userInput.substring(7));
         task[index-1].unMarkTask();
     }
 
-    public static void Add_Print_Task(){
+    public static void addPrintTask(){
         printLines();
         System.out.println("Got it. I've added this task:");
         System.out.println(task[taskCount-1]);
@@ -47,64 +48,57 @@ public class Rolex {
         printLines();
     }
 
-    public static void InputIsTodo(String UserInput){
-        String todoName = UserInput.substring(5);
+    public static void inputIsTodo(String userInput){
+        String todoName = userInput.substring(5);
         task[taskCount] = new Todo(todoName);
         taskCount++;
-        Add_Print_Task();
+        addPrintTask();
     }
 
-    public static void InputIsDeadline(String UserInput){
-        int indexOfBy = UserInput.indexOf("/by");
-        String deadlineName = UserInput.substring(9,indexOfBy-1);
-        String by = UserInput.substring(indexOfBy+3);
+    public static void inputIsDeadline(String userInput){
+        int indexOfBy = userInput.indexOf("/by");
+        String deadlineName = userInput.substring(9,indexOfBy-1);
+        String by = userInput.substring(indexOfBy+3);
         task[taskCount] = new Deadline(deadlineName, by);
         taskCount++;
-        Add_Print_Task();
+        addPrintTask();
     }
 
-    public static void InputIsEvent(String UserInput){
-        int indexOfFrom = UserInput.indexOf("/from");
-        int indexOfTo = UserInput.indexOf("/to");
-        String eventName = UserInput.substring(6,indexOfFrom-1);
-        String startTime = UserInput.substring(indexOfFrom+6,indexOfTo-1);
-        String endTime = UserInput.substring(indexOfTo+4);
+    public static void inputIsEvent(String userInput){
+        int indexOfFrom = userInput.indexOf("/from");
+        int indexOfTo = userInput.indexOf("/to");
+        String eventName = userInput.substring(6,indexOfFrom-1);
+        String startTime = userInput.substring(indexOfFrom+6,indexOfTo-1);
+        String endTime = userInput.substring(indexOfTo+4);
         task[taskCount] = new Event(eventName, startTime, endTime);
         taskCount++;
-        Add_Print_Task();
+        addPrintTask();
     }
 
     public static void main(String[] args) {
 
-        RolexGreetsUser();
+        rolexGreetsUser();
         Scanner ReadInput = new Scanner(System.in);
 
         while(true){
-            String UserInput = ReadInput.nextLine();
+            String userInput = ReadInput.nextLine();
 
-            if(UserInput.equalsIgnoreCase("bye")){
-                InputIsBye();
+            if(userInput.equalsIgnoreCase("bye")){
+                inputIsBye();
                 System.exit(0);
-            }
-            else if(UserInput.equalsIgnoreCase("list")){
-                InputIsList();
-            }
-            else if(UserInput.startsWith("mark")){
-                InputIsMark(UserInput);
-            }
-            else if(UserInput.startsWith("unmark")){
-                InputIsUnmark(UserInput);
-            }
-            else if(UserInput.startsWith("todo")){
-                InputIsTodo(UserInput);
-            }
-            else if(UserInput.startsWith("deadline")){
-                InputIsDeadline(UserInput);
-            }
-            else if(UserInput.startsWith("event")){
-                InputIsEvent(UserInput);
-            }
-            else{
+            } else if(userInput.equalsIgnoreCase("list")){
+                inputIsList();
+            } else if(userInput.startsWith("mark")){
+                inputIsMark(userInput);
+            } else if(userInput.startsWith("unmark")){
+                inputIsUnmark(userInput);
+            } else if(userInput.startsWith("todo")){
+                inputIsTodo(userInput);
+            } else if(userInput.startsWith("deadline")){
+                inputIsDeadline(userInput);
+            } else if(userInput.startsWith("event")){
+                inputIsEvent(userInput);
+            } else{
                 System.out.println("Invalid Input! Please Try Again!");
             }
 
