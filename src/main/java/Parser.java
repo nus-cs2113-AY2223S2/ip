@@ -32,6 +32,7 @@ public class Parser {
      * @return
      */
     public String changeCommandLowerCase(String command){
+
         return command.toLowerCase();
     }
 
@@ -48,6 +49,7 @@ public class Parser {
             return inputWords;
         }else{
             String commandDescriptionString = inputWords.substring((command.length())+1);
+            System.out.println("hello"+commandDescriptionString);
             return commandDescriptionString;
         }
     }

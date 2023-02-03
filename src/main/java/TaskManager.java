@@ -5,11 +5,15 @@ import java.util.Arrays;
  */
 public class TaskManager {
     private static Task[] tasks = new Task[100];
-    private static int count;
+    private static int numTasks;
+    private final static UI ECHO_BACK = new UI();
+    private final static String MARKED_CAPTION = "      Nice! I've marked this task as done:";
+    private final static String UNMARKED_CAPTION = "      OK, I've marked this task as not done yet:";
+
 
     public TaskManager() {
 
-        this.count = 0;
+        this.numTasks = 0;
     }
 
     /**
@@ -64,14 +68,16 @@ public class TaskManager {
      */
     public Task generateNewTask(String taskType, String taskDescription){
         Task newTask;
+
         if(taskType.equals("todo")){
             newTask = createNewTodo(taskDescription);
         }else if(taskType.equals("deadline")){
             newTask = createNewDeadline(taskDescription);
-        }else{
+        }else {
             newTask = createNewEvent(taskDescription);
         }
         return newTask;
+
     }
 
     /**
@@ -82,10 +88,9 @@ public class TaskManager {
      */
     public void addTask(String taskType, String taskDescription){
         Task newTask = generateNewTask(taskType, taskDescription);
-        this.tasks[count]=newTask;
-        this.count+=1;
-        UI echoAddedTask = new UI();
-        echoAddedTask.echoNewTask(count,newTask);
+        tasks[numTasks]=newTask;
+        numTasks+=1;
+        ECHO_BACK.echoNewTask(numTasks,newTask);
 
     }
 
@@ -96,7 +101,6 @@ public class TaskManager {
      * @param status mark/unmark.
      */
     public void editTaskStatus(String taskIndex, String status){
-        UI printEditedTasks = new UI();
         int index = Integer.parseInt(taskIndex)-1;
         if(status.equals("mark")){
             tasks[index].markDone();
@@ -105,11 +109,11 @@ public class TaskManager {
         }
         String caption;
         if(status.equals("mark")){
-            caption = "      Nice! I've marked this task as done:";
+            caption = MARKED_CAPTION;
         }else{
-            caption = "      OK, I've marked this task as not done yet:";
+            caption = UNMARKED_CAPTION;
         }
-        printEditedTasks.updateTaskStatus(tasks[index], caption);
+        ECHO_BACK.updateTaskStatus(tasks[index], caption);
     }
 
     /**
@@ -117,8 +121,7 @@ public class TaskManager {
      */
     public void listTask(){
 
-        UI printTasks = new UI();
-        printTasks.listCurrentTasks(this.tasks, this.count);
+        ECHO_BACK.listCurrentTasks(tasks, numTasks);
 
     }
 }

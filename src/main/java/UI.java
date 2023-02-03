@@ -6,12 +6,12 @@ import java.util.Scanner;
  * Print output.
  */
 public class UI {
+    private static final Scanner SCANNER = new Scanner(System.in);
+    private static final Formatter FORMATTER = new Formatter();
+    private final static String NEW_TASK_CAPTION = "      Got it. I've added this task:";
+    private final static String LIST_CAPTION = "      Here are the tasks in your list:";
 
- //   private static final Scanner SCANNER = new Scanner(System.in);
 
-//    public void setClose(){
-//        SCANNER.close();
-//    }
     /**
      * Print the list of tasks.
      *
@@ -19,17 +19,15 @@ public class UI {
      * @param count
      */
     public void listCurrentTasks(Task[] tasks, int count){
-        Formatter formatter = new Formatter();
-        Tool tool = new Tool();
-        formatter.drawSeparationLine();
-        System.out.println("      Here are the tasks in your list:");
+        FORMATTER.drawSeparationLine();
+        System.out.println(LIST_CAPTION);
         for (int i=1; i<=count; i+=1){
-            formatter.printIndentation(8);
+            FORMATTER.printIndentation(8);
             System.out.print(i+".");
             System.out.print(tasks[i-1]);
             System.out.print('\n');
         }
-        formatter.drawSeparationLine();
+        FORMATTER.drawSeparationLine();
     }
 
     /**
@@ -39,13 +37,12 @@ public class UI {
      * @param task
      */
     public void echoNewTask(int numTasks, Task task){
-        Formatter formatter = new Formatter();;
-        formatter.drawSeparationLine();
-        System.out.println("      Got it. I've added this task:");
-        formatter.printIndentation(8);
+        FORMATTER.drawSeparationLine();
+        System.out.println(NEW_TASK_CAPTION);
+        FORMATTER.printIndentation(8);
         System.out.println(task);
         System.out.println("      Now you have "+numTasks+" tasks in the list.");
-        formatter.drawSeparationLine();
+        FORMATTER.drawSeparationLine();
     }
 
     /**
@@ -55,12 +52,11 @@ public class UI {
      * @param caption
      */
     public void updateTaskStatus(Task task, String caption){
-        Formatter formatter = new Formatter();;
-        formatter.drawSeparationLine();
+        FORMATTER.drawSeparationLine();
         System.out.println(caption);
-        formatter.printIndentation(8);
+        FORMATTER.printIndentation(8);
         System.out.println(task);
-        formatter.drawSeparationLine();
+        FORMATTER.drawSeparationLine();
 
     }
 
@@ -71,16 +67,15 @@ public class UI {
      * @param hello
      */
     public void greet(String[] logo, String[] hello){
-        Formatter formatter = new Formatter();
         Tool tool = new Tool();
 
-        formatter.drawSeparationLine();
-        formatter.printIndentation(6);
+        FORMATTER.drawSeparationLine();
+        FORMATTER.printIndentation(6);
         System.out.print("Hello from\n");
         tool.printStringArray(logo);
-        formatter.drawSeparationLine();
+        FORMATTER.drawSeparationLine();
         tool.printStringArray(hello);
-        formatter.drawSeparationLine();
+        FORMATTER.drawSeparationLine();
     }
 
     /**
@@ -89,11 +84,17 @@ public class UI {
      * @param bye
      */
     public void sayBye(String bye){
-        Formatter formatter = new Formatter();
-        formatter.drawSeparationLine();
-        formatter.printIndentation(6);
+        FORMATTER.drawSeparationLine();
+        FORMATTER.printIndentation(6);
         System.out.print(bye);
-        formatter.drawSeparationLine();
+        FORMATTER.drawSeparationLine();
+    }
+
+    public void printError(String errMessage){
+        FORMATTER.drawSeparationLine();
+        FORMATTER.printIndentation(4);
+        System.out.print(errMessage);
+        FORMATTER.drawSeparationLine();
     }
 
     /**
@@ -101,16 +102,9 @@ public class UI {
      *
      * @return
      */
-    public String readInput(Scanner in) {
+    public String readInput() {
         String inputLine;
-//        if(SCANNER.hasNextLine()){
-//            inputLine = SCANNER.nextLine();
-//        }else{
-//            inputLine = null;
-//            System.exit(0);
-//        }
-        inputLine = in.nextLine();
-
+        inputLine = SCANNER.nextLine();
         return inputLine;
     }
 
