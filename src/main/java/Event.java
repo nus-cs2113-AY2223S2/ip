@@ -2,8 +2,8 @@ public class Event extends Todos {
 
     protected String type = "E";
 
-    Event(String name, boolean marked, String type) {
-        super(name, marked, type);
+    Event(String name, boolean isMarked, String type) {
+        super(name, isMarked, type);
     }
 
     public String getType() {

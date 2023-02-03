@@ -1,13 +1,13 @@
 public class Todos {
 
     public String item;
-    public boolean marked;
+    public boolean isMarked;
 
     public String type;
 
-    Todos(String name, boolean marked, String type) {
+    Todos(String name, boolean isMarked, String type) {
         this.item = name;
-        this.marked = marked;
+        this.isMarked = isMarked;
         this.type = type;
     }
 
@@ -16,14 +16,14 @@ public class Todos {
     }
 
     public void setMark() {
-        this.marked = true;
+        this.isMarked = true;
     }
 
     public void unMark() {
-        this.marked = false;
+        this.isMarked = false;
     }
 
     public boolean is_marked() {
-        return marked;
+        return isMarked;
     }
 }
