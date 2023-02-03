@@ -2,96 +2,113 @@ import java.util.Scanner;
 
 public class Inu {
     public static TaskList taskList;
-    public static final int INDEX_MARK = 5;
-    public static final int INDEX_UNMARK = 7;
-    public static final int INDEX_TODO = 5;
-    public static final int INDEX_DEADLINE = 9;
-    public static final int INDEX_EVENT = 6;
-    public final int INDEX_OFFSET_IN_COMMAND = 1;
+    public static final String TODO = "todo";
+    public static final String DEADLINE = "deadline";
+    public static final String EVENT = "event";
+    public static final String MARK = "mark";
+    public static final String UNMARK = "unmark";
+    public static final String LIST = "list";
+    public static final int USER_STRING_SPLIT_LIMIT = 2;
 
 
     public Inu() {
 
         Ui.printGreeting();
-        while
-        //readCommand();
         parseCommand();
         Ui.printFarewell();
 
     }
 
-    public String readCommand() {
+    public String[] readCommand() {
+        String userString;
+        String[] userCommand;
+
         Scanner input = new Scanner(System.in);
-        return input.nextLine();
+        userString = input.nextLine();
+        userCommand = userString.split(" ", USER_STRING_SPLIT_LIMIT);
+
+        return userCommand;
     }
 
     public void parseCommand() {
 
-        String line;
-        String checkLine;
-
         taskList = new TaskList();
 
-        Scanner input = new Scanner(System.in);
+        String[] userString;
+        String command;
+        String entry;
+        String task;
+        String from;
+        String to;
 
-        line = input.nextLine();
-        checkLine = line.toLowerCase();
+        do {
 
-        while (!checkLine.equals("bye")) {
+            userString = readCommand();
+            command = userString[0];
 
-            if (checkLine.equals("list")) {
+            switch (command) {
 
-                Ui.printTaskList(taskList);
+            case TODO:
 
-            } else if (checkLine.startsWith("mark ")) {
-
-                int taskIndex = Util.fetchMarkIndex(line);
-                Util.markTask(taskList, taskIndex);
-                Ui.printMessage(Messages.MESSAGE_MARK_TASK + "\n" + taskList.getTask(taskIndex).toString());
-
-            } else if (checkLine.startsWith("unmark ")) {
-
-                int taskIndex = Util.fetchUnMarkIndex(line);
-                Util.unMarkTask(taskList, taskIndex);
-                Ui.printMessage(Messages.MESSAGE_UNMARK_TASK + "\n" + taskList.getTask(taskIndex).toString());
-
-            } else if (checkLine.startsWith("todo ")) {
-
-                String todo = Util.fetchToDo(line);
-                Todo todoTask = new Todo(todo);
+                entry = userString[1];
+                Todo todoTask = new Todo(entry);
                 taskList.addTask(todoTask);
+
                 Ui.printMessage("added: " + taskList.getLastTask().toString() + "\n"
                         + "Now you have " + taskList.getListIndex() + " tasks in your list.");
+                break;
 
-            } else if (checkLine.startsWith("deadline ")) {
+            case DEADLINE:
 
-                int byIndex = checkLine.indexOf("/");
-                String[] deadLine = Util.fetchDeadLine(line, byIndex);
-                DeadLine deadLineTask = new DeadLine(deadLine[0], deadLine[1]);
+                entry = userString[1];
+                task = Util.fetchTask(entry);
+                String deadLine = Util.fetchDeadLine(entry);
+                DeadLine deadLineTask = new DeadLine(task, deadLine);
                 taskList.addTask(deadLineTask);
 
                 Ui.printMessage("added: " + taskList.getLastTask().toString() + "\n"
                         + "Now you have " + taskList.getListIndex() + " tasks in your list.");
+                break;
 
-            } else if (checkLine.startsWith("event ")) {
+            case EVENT:
 
-                int fromIndex = checkLine.indexOf("/");
-                int toIndex = checkLine.lastIndexOf("/");
-                String[] event = Util.fetchEvent(line, fromIndex, toIndex);
-                Event eventTask = new Event(event[0], event[1], event[2]);
+                entry = userString[1];
+                task = Util.fetchTask(entry);
+                from = Util.fetchFrom(entry);
+                to = Util.fetchTo(entry);
+                Event eventTask = new Event(task, from, to);
                 taskList.addTask(eventTask);
 
                 Ui.printMessage("added: " + taskList.getLastTask().toString() + "\n"
                         + "Now you have " + taskList.getListIndex() + " tasks in your list.");
+                break;
 
-            } else {
+            case LIST:
+
+                Ui.printTaskList(taskList);
+                break;
+
+            case MARK:
+
+                entry = userString[1];
+                int markIndex = Util.fetchMarkIndex(entry);
+                Util.markTask(taskList, markIndex);
+                Ui.printMessage(Messages.MESSAGE_MARK_TASK + "\n" + taskList.getTask(markIndex).toString());
+                break;
+
+            case UNMARK:
+
+                entry = userString[1];
+                int unMarkIndex = Util.fetchUnMarkIndex(entry);
+                Util.unMarkTask(taskList, unMarkIndex);
+                Ui.printMessage(Messages.MESSAGE_UNMARK_TASK + "\n" + taskList.getTask(unMarkIndex).toString());
+                break;
+
+            default:
                 Ui.printMessage(Messages.MESSAGE_INVALID);
+                break;
             }
-
-            line = input.nextLine();
-            checkLine = line.toLowerCase();
-
-        }
+        } while (!command.equals("bye"));
 
     }
 
