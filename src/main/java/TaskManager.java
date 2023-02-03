@@ -5,11 +5,15 @@ import java.util.Arrays;
  */
 public class TaskManager {
     private static Task[] tasks = new Task[100];
-    private static int count;
+    private static int numTasks;
+    private final static UI ECHO_BACK = new UI();
+    private final static String MARKED_CAPTION = "      Nice! I've marked this task as done:";
+    private final static String UNMARKED_CAPTION = "      OK, I've marked this task as not done yet:";
+
 
     public TaskManager() {
 
-        this.count = 0;
+        this.numTasks = 0;
     }
 
     /**
@@ -30,8 +34,11 @@ public class TaskManager {
      * @param taskDescription
      * @return
      */
-    public Deadline createNewDeadline(String taskDescription){
+    public Deadline createNewDeadline(String taskDescription) throws MissingParameterException{
         int index = taskDescription.indexOf("/by");
+        if(index==-1){
+            throw new MissingParameterException();
+        }
         String deadlineContent = taskDescription.substring(0,index-1);
         String deadlineDate = taskDescription.substring(index+4);
         Deadline newDeadline = new Deadline(deadlineContent, deadlineDate);
@@ -45,9 +52,12 @@ public class TaskManager {
      * @param taskDescription
      * @return
      */
-    public Event createNewEvent(String taskDescription){
+    public Event createNewEvent(String taskDescription) throws MissingParameterException{
         int indexStart = taskDescription.indexOf("/from");
         int indexEnd = taskDescription.indexOf("/to");
+        if(indexStart==-1||indexEnd==-1){
+            throw new MissingParameterException();
+        }
         String eventContent = taskDescription.substring(0,indexStart-1);
         String eventStartTime = taskDescription.substring(indexStart+6, indexEnd-1);
         String eventEndTime = taskDescription.substring(indexEnd+4);
@@ -62,16 +72,18 @@ public class TaskManager {
      * @param taskDescription
      * @return
      */
-    public Task generateNewTask(String taskType, String taskDescription){
+    public Task generateNewTask(String taskType, String taskDescription) throws MissingParameterException{
         Task newTask;
+
         if(taskType.equals("todo")){
             newTask = createNewTodo(taskDescription);
         }else if(taskType.equals("deadline")){
             newTask = createNewDeadline(taskDescription);
-        }else{
+        }else {
             newTask = createNewEvent(taskDescription);
         }
         return newTask;
+
     }
 
     /**
@@ -80,12 +92,11 @@ public class TaskManager {
      * @param taskType .
      * @param taskDescription
      */
-    public void addTask(String taskType, String taskDescription){
+    public void addTask(String taskType, String taskDescription) throws MissingParameterException{
         Task newTask = generateNewTask(taskType, taskDescription);
-        this.tasks[count]=newTask;
-        this.count+=1;
-        UI echoAddedTask = new UI();
-        echoAddedTask.echoNewTask(count,newTask);
+        tasks[numTasks]=newTask;
+        numTasks+=1;
+        ECHO_BACK.echoNewTask(numTasks,newTask);
 
     }
 
@@ -96,7 +107,6 @@ public class TaskManager {
      * @param status mark/unmark.
      */
     public void editTaskStatus(String taskIndex, String status){
-        UI printEditedTasks = new UI();
         int index = Integer.parseInt(taskIndex)-1;
         if(status.equals("mark")){
             tasks[index].markDone();
@@ -105,11 +115,11 @@ public class TaskManager {
         }
         String caption;
         if(status.equals("mark")){
-            caption = "      Nice! I've marked this task as done:";
+            caption = MARKED_CAPTION;
         }else{
-            caption = "      OK, I've marked this task as not done yet:";
+            caption = UNMARKED_CAPTION;
         }
-        printEditedTasks.updateTaskStatus(tasks[index], caption);
+        ECHO_BACK.updateTaskStatus(tasks[index], caption);
     }
 
     /**
@@ -117,8 +127,7 @@ public class TaskManager {
      */
     public void listTask(){
 
-        UI printTasks = new UI();
-        printTasks.listCurrentTasks(this.tasks, this.count);
+        ECHO_BACK.listCurrentTasks(tasks, numTasks);
 
     }
 }

@@ -1,7 +1,7 @@
 import java.util.Arrays;
 public class Formatter {
-    private int indentationSize;
-    private int separationLineLength = 50;
+    private final static int LINE_LENGTH = 60;
+    private final static String STRING_INDENTATION = "      ";
 
     /**
      * Prints spaces for indentation purpose.
@@ -9,9 +9,8 @@ public class Formatter {
      *
      * @param size of indentation.
      */
-    public void printIndentation(int size){
-        this.indentationSize = size;
-        for (int i = 0; i<this.indentationSize; i+=1){
+    public void printIndentation(int size) {
+        for (int i = 0; i<size; i+=1){
             System.out.print(' ');
         }
     }
@@ -24,9 +23,9 @@ public class Formatter {
      * @param inputArray array.
      */
 
-    public void addStringIndentation(String[] inputArray){
+    public void addStringIndentation(String[] inputArray) {
         for(int i=0; i<inputArray.length; i+=1){
-            inputArray[i] = "      "+ inputArray[i];
+            inputArray[i] = STRING_INDENTATION + inputArray[i];
         }
     }
 
@@ -43,7 +42,7 @@ public class Formatter {
     public void drawSeparationLine(){
         printIndentation(4);
         String s = "_";
-        for (int i=0; i<this.separationLineLength; i+=1){
+        for (int i=0; i<LINE_LENGTH; i+=1){
             System.out.print(s);
         }
         System.out.print("\n");
