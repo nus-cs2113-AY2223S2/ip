@@ -1,3 +1,10 @@
+package duke;
+
+import duke.task.Deadline;
+import duke.task.Event;
+import duke.task.Task;
+import duke.task.Todo;
+
 import java.util.Scanner;
 
 public class Duke {
@@ -14,7 +21,7 @@ public class Duke {
 
     public static void doCommandGreet() {
         System.out.println(LINE);
-        System.out.println("\tHello! I'm Percy.");
+        System.out.println("\tHello! I'm Duke.");
         System.out.println("\tHow can I help you today?\n");
         System.out.println(LINE);
     }
