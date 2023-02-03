@@ -22,10 +22,10 @@ public class Deadline extends Todo {
                 keyword_index = i;
                 break;
             }
-            descBuilder.append(parameters[i]);
-            if (i != (parameters.length) - 1) {
+            if (i != 1) {
                 descBuilder.append(" ");
             }
+            descBuilder.append(parameters[i]);
         }
         String description = descBuilder.toString();
         // No deadline given, cannot create a valid deadline object
@@ -34,10 +34,10 @@ public class Deadline extends Todo {
         }
         StringBuilder deadlineBuilder = new StringBuilder();
         for (int i = keyword_index + 1; i < parameters.length; i += 1) {
-            deadlineBuilder.append(parameters[i]);
-            if (i != (parameters.length) - 1) {
+            if (i != (keyword_index + 1)) {
                 deadlineBuilder.append(" ");
             }
+            deadlineBuilder.append(parameters[i]);
         }
         String deadline = deadlineBuilder.toString();
         return new Deadline(description, deadline);

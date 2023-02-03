@@ -14,10 +14,10 @@ public class Todo extends Task {
         String[] parameters = command.split(" ");
         StringBuilder descriptionBuilder = new StringBuilder();
         for (int i = 1; i < parameters.length; i += 1) {
-            descriptionBuilder.append(parameters[i]);
-            if (i != (parameters.length - 1)) {
+            if (i != 1) {
                 descriptionBuilder.append(" ");
             }
+            descriptionBuilder.append(parameters[i]);
         }
         String description = descriptionBuilder.toString();
         if (description.isBlank()) {

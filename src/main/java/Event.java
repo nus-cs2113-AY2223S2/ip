@@ -24,10 +24,10 @@ public class Event extends Todo {
                 keyword_index = i;
                 break;
             }
-            descBuilder.append(parameters[i]);
-            if (i != (parameters.length) - 1) {
+            if (i != 1) {
                 descBuilder.append(" ");
             }
+            descBuilder.append(parameters[i]);
         }
         String description = descBuilder.toString();
         // No start date/time given, cannot create a valid event object
@@ -40,10 +40,10 @@ public class Event extends Todo {
                 keyword_index = i;
                 break;
             }
-            startTimeBuilder.append(parameters[i]);
-            if (i != (parameters.length) - 1) {
+            if (i != (keyword_index + 1)) {
                 startTimeBuilder.append(" ");
             }
+            startTimeBuilder.append(parameters[i]);
         }
         String startTime = startTimeBuilder.toString();
         // No end date/time given, cannot create a valid event object
@@ -52,10 +52,10 @@ public class Event extends Todo {
         }
         StringBuilder endTimeBuilder = new StringBuilder();
         for (int i = keyword_index + 1; i < parameters.length; i += 1) {
-            endTimeBuilder.append(parameters[i]);
-            if (i != (parameters.length) - 1) {
+            if (i != (keyword_index + 1)) {
                 endTimeBuilder.append(" ");
             }
+            endTimeBuilder.append(parameters[i]);
         }
         String endTime = endTimeBuilder.toString();
         return new Event(description, startTime, endTime);
