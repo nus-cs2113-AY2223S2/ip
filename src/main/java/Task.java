@@ -5,7 +5,7 @@ public class Task {
         this.description = description;
     }
 
-    protected String getDescription() {
+    public String getDescription() {
         return this.description;
     }
 
