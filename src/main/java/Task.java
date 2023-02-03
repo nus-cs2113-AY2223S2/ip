@@ -30,4 +30,7 @@ public class Task {
         this.taskDescription = taskDescription;
     }
 
+    public String toString() {
+        return "[" + getStatusIcon() + "] " + taskDescription;
+    }
 }

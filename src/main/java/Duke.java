@@ -29,7 +29,7 @@ public class Duke {
                 for (int i = 0; i < taskIndex; ++i) {
                     int taskNumber = i+1;
                     System.out.println(INDENTATIONS + taskNumber + "." +
-                            "[" + tasks[i].getStatusIcon() + "] " + tasks[i].getTaskDescription());
+                            tasks[i].toString());
                 }
 
                 System.out.println(INDENTATIONS + HORIZONTAL_LINES);
@@ -52,13 +52,50 @@ public class Duke {
                         INDENTATIONS + "  [ ] " + tasks[indexToMark].getTaskDescription() + '\n' +
                         INDENTATIONS + HORIZONTAL_LINES);
                 
-            }else {
+            }else if (readLine.startsWith("todo")) {
                 // add new tasks into todo
-                tasks[taskIndex] = new Task(readLine);
-                System.out.println(INDENTATIONS + HORIZONTAL_LINES +
-                        INDENTATIONS + "added: " + readLine + '\n' +
-                        INDENTATIONS + HORIZONTAL_LINES);
+                String toAdd = readLine.substring(5);
+                toAdd = toAdd.trim();
+                Todo addTodo = new Todo(toAdd);
+                tasks[taskIndex] = addTodo;
                 taskIndex++;
+                System.out.println(INDENTATIONS + HORIZONTAL_LINES +
+                        INDENTATIONS + "Got it. I've added this task: \n " +
+                        INDENTATIONS + "  " + addTodo.toString() + '\n' +
+                        INDENTATIONS + "Now you have " + taskIndex + " tasks in the list. \n" +
+                        INDENTATIONS + HORIZONTAL_LINES);
+            } else if (readLine.startsWith("deadline") & readLine.contains("/by")) {
+                int byIndex = readLine.indexOf("/by");
+                String toAddDeadline = readLine.substring(9, byIndex - 1);
+                String by = readLine.substring(byIndex + 3);
+                toAddDeadline = toAddDeadline.trim();
+                by = by.trim();
+                Deadline addDeadline = new Deadline(toAddDeadline, by); // taskDesc + by
+                tasks[taskIndex] = addDeadline;
+                taskIndex++;
+                System.out.println(INDENTATIONS + HORIZONTAL_LINES +
+                        INDENTATIONS + "Got it. I've added this task: \n" +
+                        INDENTATIONS + "  " + addDeadline.toString() + '\n' +
+                        INDENTATIONS + "Now you have " + taskIndex + " tasks in the list. \n" +
+                        INDENTATIONS + HORIZONTAL_LINES);
+            } else if (readLine.startsWith("event") &
+                    readLine.contains("/from") & readLine.contains("/to")) {
+                int fromIndex = readLine.indexOf("/from");
+                int toIndex = readLine.indexOf("/to");
+                String toAddEvent = readLine.substring(6, fromIndex - 1);
+                String fromTime = readLine.substring(fromIndex + 5, toIndex - 1);
+                String toTime = readLine.substring(toIndex + 3);
+                toAddEvent = toAddEvent.trim();
+                fromTime = fromTime.trim();
+                toTime = toTime.trim();
+                Event addEvent = new Event(toAddEvent, fromTime, toTime);
+                tasks[taskIndex] = addEvent;
+                taskIndex++;
+                System.out.println(INDENTATIONS + HORIZONTAL_LINES +
+                        INDENTATIONS + "Got it. I've added this task: \n" +
+                        INDENTATIONS + "  " + addEvent.toString() + '\n' +
+                        INDENTATIONS + "Now you have " + taskIndex + " tasks in the list. \n" +
+                        INDENTATIONS + HORIZONTAL_LINES);
             }
         }
 
