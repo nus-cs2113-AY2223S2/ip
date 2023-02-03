@@ -26,29 +26,47 @@ public class Duke {
     }
 
     public static void doCommandMark(int taskNum) {
-        tasks[--taskNum].setStatus(true);
-        System.out.println(LINE);
-        System.out.println("\tNoted. Task " + (taskNum + 1) + " has been marked as \"complete\":");
-        System.out.println("\t  " + tasks[taskNum].getTaskNameAndStatus());
-        System.out.println(LINE);
+        try {
+            tasks[--taskNum].setStatus(true);
+            System.out.println(LINE);
+            System.out.println("\tNoted. Task " + (taskNum + 1) + " has been marked as \"complete\":");
+            System.out.println("\t  " + tasks[taskNum].getTaskNameAndStatus());
+            System.out.println(LINE);
+        } catch (ArrayIndexOutOfBoundsException | NullPointerException out_mark_b) {
+            System.out.println(LINE);
+            System.out.println("\t☹ Error! Invalid task number given.");
+            System.out.println("\tPlease use \"list\" command to see your task numbers.");
+            System.out.println(LINE);
+        }
     }
 
     public static void doCommandUnmark(int taskNum) {
-        tasks[--taskNum].setStatus(false);
-        System.out.println(LINE);
-        System.out.println("\tOh, ok. Task " + (taskNum + 1) + " has been marked as \"incomplete\":");
-        System.out.println("\t  " + tasks[taskNum].getTaskNameAndStatus());
-        System.out.println(LINE);
+        try {
+            tasks[--taskNum].setStatus(false);
+            System.out.println(LINE);
+            System.out.println("\tOh, ok. Task " + (taskNum + 1) + " has been marked as \"incomplete\":");
+            System.out.println("\t  " + tasks[taskNum].getTaskNameAndStatus());
+            System.out.println(LINE);
+        } catch (ArrayIndexOutOfBoundsException | NullPointerException out_unmark_b) {
+            System.out.println(LINE);
+            System.out.println("\t☹ Error! Invalid task number given.");
+            System.out.println("\tPlease use \"list\" command to see your task numbers.");
+            System.out.println(LINE);
+        }
     }
 
     public static void doCommandList() {
         System.out.println(LINE);
-        System.out.println("\tHere are your tasks:");
         int count = 1;
-        for (int index = 0; index < textCount; index++) {
-            System.out.print("\t" + count + ".");
-            System.out.println(tasks[index]);
-            count++;
+        if (textCount == 0) {
+            System.out.println("\tYou have no pending tasks! ☺");
+        } else {
+            System.out.println("\tHere are your tasks:");
+            for (int index = 0; index < textCount; index++) {
+                System.out.print("\t" + count + ".");
+                System.out.println(tasks[index]);
+                count++;
+            }
         }
         System.out.println(LINE);
     }
@@ -86,33 +104,100 @@ public class Duke {
     public static void handleUserCommand(String userCommand) {
         String[] extractFirstWord = userCommand.split(" ", 2);
         String firstWord = extractFirstWord[0];
-        if (firstWord.equals(COMMAND_MARK)) {
-            int taskNum = Integer.parseInt(extractFirstWord[1]);
-            doCommandMark(taskNum);
-        } else if (firstWord.equals(COMMAND_UNMARK)) {
-            int taskNum = Integer.parseInt(extractFirstWord[1]);
-            doCommandUnmark(taskNum);
-        } else if (firstWord.equals(COMMAND_LIST)) {
+        switch (firstWord) {
+        case COMMAND_MARK: {
+            try {
+                int taskNum = Integer.parseInt(extractFirstWord[1]);
+                doCommandMark(taskNum);
+            } catch (ArrayIndexOutOfBoundsException out_mark_a) {
+                System.out.println(LINE);
+                System.out.println("\t☹ Error! \"mark\" command requires a task number.");
+                System.out.println(LINE);
+            } catch (NumberFormatException num_mark_a) {
+                System.out.println(LINE);
+                System.out.println("\t☹ Error! Invalid input.");
+                System.out.println("\tPlease provide a integer number for \"mark\" command.");
+                System.out.println(LINE);
+            }
+            break;
+        }
+        case COMMAND_UNMARK: {
+            try {
+                int taskNum = Integer.parseInt(extractFirstWord[1]);
+                doCommandUnmark(taskNum);
+            } catch (ArrayIndexOutOfBoundsException out_unmark_a) {
+                System.out.println(LINE);
+                System.out.println("\t☹ Error! \"unmark\" command requires a task number.");
+                System.out.println(LINE);
+            } catch (NumberFormatException num_unmark_a) {
+                System.out.println(LINE);
+                System.out.println("\t☹ Error! Invalid input.");
+                System.out.println("\tPlease provide a integer number for \"unmark\" command.");
+                System.out.println(LINE);
+            }
+            break;
+        }
+        case COMMAND_LIST:
             doCommandList();
-        } else if (firstWord.equals(COMMAND_BYE)) {
+            break;
+        case COMMAND_BYE:
             doCommandBye();
-        } else if (firstWord.equals(COMMAND_TODO)) {
-            String taskName = (extractFirstWord[1]);
-            doCommandTodo(taskName);
-        } else if (firstWord.equals(COMMAND_DEADLINE)) {
-            int index = extractFirstWord[1].indexOf("/by");
-            String taskName = extractFirstWord[1].substring(0, index);
-            String taskDeadline = extractFirstWord[1].substring(index + 4);
-            doCommandDeadline(taskName, taskDeadline);
-        } else if (firstWord.equals(COMMAND_EVENT)) {
-            int indexOfEventDetailsPartOne = extractFirstWord[1].indexOf("/from");
-            int indexOfEventDetailsPartTwo = extractFirstWord[1].indexOf("/to");
-            String eventName = extractFirstWord[1].substring(0, indexOfEventDetailsPartOne);
-            String eventDetailsPartOne = extractFirstWord[1].substring(indexOfEventDetailsPartOne + 6, indexOfEventDetailsPartTwo - 1);
-            String eventDetailsPartTwo = extractFirstWord[1].substring(indexOfEventDetailsPartTwo + 4);
-            doCommandEvent(eventName, eventDetailsPartOne, eventDetailsPartTwo);
-        } else {
-            System.out.println("Please input a valid command!");
+            break;
+        case COMMAND_TODO: {
+            try {
+                String taskName = (extractFirstWord[1]);
+                doCommandTodo(taskName);
+            } catch (ArrayIndexOutOfBoundsException out_todo_a) {
+                System.out.println(LINE);
+                System.out.println("\t☹ Error! \"todo\" command is empty.");
+                System.out.println("\tPlease provide a description of the task.");
+                System.out.println(LINE);
+            }
+            break;
+        }
+        case COMMAND_DEADLINE: {
+            try {
+                int index = extractFirstWord[1].indexOf("/by");
+                String taskName = extractFirstWord[1].substring(0, index);
+                String taskDeadline = extractFirstWord[1].substring(index + 4);
+                doCommandDeadline(taskName, taskDeadline);
+            } catch (ArrayIndexOutOfBoundsException out_deadline_a) {
+                System.out.println(LINE);
+                System.out.println("\t☹ Error! \"deadline\" command is empty.");
+                System.out.println("\tPlease provide details of task and due date/time.");
+                System.out.println(LINE);
+            } catch (StringIndexOutOfBoundsException out_deadline_a) {
+                System.out.println(LINE);
+                System.out.println("\t☹ Error! Invalid format for \"deadline\" command.");
+                System.out.println(LINE);
+            }
+            break;
+        }
+        case COMMAND_EVENT: {
+            try {
+                int indexOfEventDetailsPartOne = extractFirstWord[1].indexOf("/from");
+                int indexOfEventDetailsPartTwo = extractFirstWord[1].indexOf("/to");
+                String eventName = extractFirstWord[1].substring(0, indexOfEventDetailsPartOne);
+                String eventDetailsPartOne = extractFirstWord[1].substring(indexOfEventDetailsPartOne + 6, indexOfEventDetailsPartTwo - 1);
+                String eventDetailsPartTwo = extractFirstWord[1].substring(indexOfEventDetailsPartTwo + 4);
+                doCommandEvent(eventName, eventDetailsPartOne, eventDetailsPartTwo);
+            } catch (ArrayIndexOutOfBoundsException out_event_a) {
+                System.out.println(LINE);
+                System.out.println("\t☹ Error! \"event\" command is empty.");
+                System.out.println("\tPlease provide details of task and date/time.");
+                System.out.println(LINE);
+            } catch (StringIndexOutOfBoundsException out_deadline_a) {
+                System.out.println(LINE);
+                System.out.println("\t☹ Error! Invalid format for \"event\" command.");
+                System.out.println(LINE);
+            }
+            break;
+        }
+        default: {
+            System.out.println(LINE);
+            System.out.println("\t☹ Error! Please input a valid command!");
+            System.out.println(LINE);
+        }
         }
     }
 
