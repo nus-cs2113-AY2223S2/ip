@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
 public class UserCommands {
+    public static Scanner input = new Scanner(System.in);
     public static String[] userString;
     public static String command;
     public static String entry;
@@ -20,7 +21,6 @@ public class UserCommands {
         String userString;
         String[] userCommand;
 
-        Scanner input = new Scanner(System.in);
         userString = input.nextLine();
         userCommand = userString.split(" ", USER_STRING_SPLIT_LIMIT);
 
@@ -38,12 +38,12 @@ public class UserCommands {
             switch (command) {
 
             case TODO:
-                
-                    entry = userString[1];
-                    Todo todoTask = new Todo(entry);
-                    taskList.addTask(todoTask);
-                    Ui.printAcknowledgment(taskList);
-                    break;
+
+                entry = userString[1];
+                Todo todoTask = new Todo(entry);
+                taskList.addTask(todoTask);
+                Ui.printAcknowledgment(taskList);
+                break;
 
             case DEADLINE:
 

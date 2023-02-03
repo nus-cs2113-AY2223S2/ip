@@ -3,34 +3,40 @@ ____________________________________________________________
  What can I do for you today?
 ____________________________________________________________
 ____________________________________________________________
-added: [T][ ] tutorials
+added: [T][ ] Tutorials
 Now you have 1 tasks in your list.
 ____________________________________________________________
 ____________________________________________________________
-added: [D][ ] lab (by: 2 feb)
+added: [D][ ] Lab (by: Tuesday morning)
 Now you have 2 tasks in your list.
 ____________________________________________________________
 ____________________________________________________________
-added: [E][ ] career fair (from: 3 feb to: 10 feb)
+added: [E][ ] Career Fair (from: 18 Jan 11am to: 18 Jan 5pm)
 Now you have 3 tasks in your list.
 ____________________________________________________________
 ____________________________________________________________
  Woof! Here are your current tasks ^.^:
-1. [T][ ] tutorials
-2. [D][ ] lab (by: 2 feb)
-3. [E][ ] career fair (from: 3 feb to: 10 feb)
+1. [T][ ] Tutorials
+2. [D][ ] Lab (by: Tuesday morning)
+3. [E][ ] Career Fair (from: 18 Jan 11am to: 18 Jan 5pm)
 ____________________________________________________________
 ____________________________________________________________
  Woof! I've marked this task as completed for you:
-[T][X] tutorials
+[E][X] Career Fair (from: 18 Jan 11am to: 18 Jan 5pm)
 ____________________________________________________________
 ____________________________________________________________
  Woof! Here are your current tasks ^.^:
-1. [T][X] tutorials
-2. [D][ ] lab (by: 2 feb)
-3. [E][ ] career fair (from: 3 feb to: 10 feb)
+1. [T][ ] Tutorials
+2. [D][ ] Lab (by: Tuesday morning)
+3. [E][X] Career Fair (from: 18 Jan 11am to: 18 Jan 5pm)
 ____________________________________________________________
 ____________________________________________________________
  Woof! I've marked this task as incompleted for you:
-[T][ ] tutorials
+[E][ ] Career Fair (from: 18 Jan 11am to: 18 Jan 5pm)
+____________________________________________________________
+____________________________________________________________
+ Woof! Here are your current tasks ^.^:
+1. [T][ ] Tutorials
+2. [D][ ] Lab (by: Tuesday morning)
+3. [E][ ] Career Fair (from: 18 Jan 11am to: 18 Jan 5pm)
 ____________________________________________________________
