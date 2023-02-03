@@ -48,7 +48,7 @@ public class Rica {
             return selectedTask;
         }
         Rica.getPastTexts().remove(indexOfTask);
-        selectedTask = selectedTask.setDone();
+        selectedTask = selectedTask.setDone(true);
         Rica.getPastTexts().add(indexOfTask, selectedTask);
         printlnWithIndent(" Shall remember that this task as done:");
         printlnWithIndent("    " + selectedTask);
@@ -73,7 +73,7 @@ public class Rica {
             return selectedTask;
         }
         Rica.getPastTexts().remove(indexOfTask);
-        selectedTask = selectedTask.setNotDone();
+        selectedTask = selectedTask.setDone(false);
         Rica.getPastTexts().add(indexOfTask, selectedTask);
         printlnWithIndent(" (Why??) Anyway, I've marked this task as not done yet:");
         printlnWithIndent("    " + selectedTask);

@@ -20,12 +20,8 @@ public class Task {
         return this.isDone;
     }
 
-    public Task setDone() {
-        return new Task(this.getDescription(), true);
-    }
-
-    public Task setNotDone() {
-        return new Task(this.getDescription(), false);
+    public Task setDone(boolean isDone) {
+        return new Task(this.getDescription(), isDone);
     }
 
     @Override
