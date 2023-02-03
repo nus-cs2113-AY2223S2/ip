@@ -78,10 +78,10 @@ public class Rolex {
     public static void main(String[] args) {
 
         rolexGreetsUser();
-        Scanner ReadInput = new Scanner(System.in);
+        Scanner readInput = new Scanner(System.in);
 
-        while(true){
-            String userInput = ReadInput.nextLine();
+        while(readInput.hasNextLine()){
+            String userInput = readInput.nextLine();
 
             if(userInput.equalsIgnoreCase("bye")){
                 inputIsBye();
