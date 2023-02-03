@@ -6,40 +6,56 @@ public class Duke {
 
 		Scanner scan = new Scanner (System.in);
 		String input = scan.nextLine ();
-		String exit = "bye";
-		String list = "list";
 		Task tasks[] = new Task[100];
 		int count = 0;
-
-		while (!(input.equalsIgnoreCase (exit)) && !(input.isEmpty ())) {
-
-			if (input.equalsIgnoreCase (list)) {
-				listTasks (tasks, count);
-			} else if (input.startsWith ("mark") || input.startsWith ("unmark")) {
-				changeStatus (input, tasks);
-			} else if (input.startsWith ("todo") || input.startsWith ("deadline") || input.startsWith ("event")) {
-				count = addTask (input, tasks, count);
-			} else {
-				break;
+		while (!("bye".equalsIgnoreCase (input)) && !(input.isEmpty ())) {
+			try {
+				checkInput (input, tasks, count);
+			} catch (DukeException de) {
+				System.out.println (de.getMessage ());
+				System.out.println ("Please enter again: ");
+				printLine ();
+				continue;
+			}finally {
+				input = scan.nextLine ();
 			}
-
-			input = scan.nextLine ();
 		}
+
 		printEnd ();
 
 	}
 
+	public static void checkInput (String input, Task[] tasks, int count) throws DukeException {
+		if (input.length () > 4) {
+			if (input.startsWith ("mark") || input.startsWith ("unmark")) {
+				changeStatus (input, tasks);
+			} else if (input.startsWith ("todo") || input.startsWith ("deadline") || input.startsWith ("event")) {
+				count = addTask (input, tasks, count);
+			} else {
+				printLine ();
+				throw new DukeException ("☹ OOPS!!! The description of a " + input + " cannot be empty.");
+			}
+		} else {
+			if ("list".equalsIgnoreCase (input)) {
+				listTasks (tasks, count);
+			} else if ("mark".equalsIgnoreCase (input) || "unmark".equalsIgnoreCase (input) || "todo".equalsIgnoreCase (input) || "event".equalsIgnoreCase (input) || "deadline".equalsIgnoreCase (input)) {
+				printLine ();
+				throw new DukeException ("☹ OOPS!!! The description of a " + input + " cannot be empty.");
+			} else {
+				printLine ();
+				throw new DukeException ("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+			}
+		}
+	}
+
 	public static int addTask (String input, Task[] tasks, int count) {
-		String task = "Todo";
-		String deadline = "deadline";
-		String event = "event";
 		String[] arrInput = input.split (" ", 2);
 		printLine ();
 		System.out.println ("Got it. I've added this task:");
 
-		if (arrInput[0].equalsIgnoreCase (task)) {
+		if ("todo".equalsIgnoreCase (arrInput[0])) {
 			tasks[count] = new Task (arrInput[1]);
-		} else if (arrInput[0].equalsIgnoreCase (deadline)) {
+		} else if ("deadline".equalsIgnoreCase (arrInput[0])) {
 			String[] arrTask = arrInput[1].split ("/by");
 			tasks[count] = new Deadline (arrTask[0], arrTask[1]);
 		} else {
@@ -50,7 +66,7 @@ public class Duke {
 
 		System.out.println (tasks[count].getType () + tasks[count].toString ());
 		count++;
-		System.out.println ("Now you have " + count + " tasks in the list.");
+		System.out.println ("Now you have " + (count > 1 ? "tasks " : "task ") + " in the list.");
 		printLine ();
 		return count;
 	}
