@@ -20,6 +20,49 @@ public class Event extends Task {
         this.to = to;
     }
 
+    /**
+     * Constructs an Event class from input arguments.
+     * @param args arguments containing content, from, to time of the event.
+     */
+    public Event(String[] args) {
+        assert args[0].equals("event");
+        StringBuilder content = new StringBuilder();
+        StringBuilder from = new StringBuilder();
+        StringBuilder to = new StringBuilder();
+
+        int fromIndex = -1;
+        int toIndex = -1;
+        for (int i = 0; i < args.length; ++i) {
+            if (args[i].equals("/from")) {
+                fromIndex = i;
+            } else if (args[i].equals("/to")) {
+                toIndex = i;
+            }
+        }
+
+        if (fromIndex == -1 || toIndex == -1) {
+            throw new IllegalArgumentException("Cannot find from or to index in the arguments!");
+        }
+
+        for (int i = 1; i < args.length; ++i) {
+            if (i < fromIndex) {
+                content.append(args[i]).append(" ");
+            } else if (i > fromIndex && i < toIndex) {
+                from.append(args[i]).append(" ");
+            } else if (i > toIndex) {
+                to.append(args[i]).append(" ");
+            }
+        }
+
+        if (content.toString().isEmpty() || from.toString().isEmpty() || to.toString().isEmpty()) {
+            throw new IllegalArgumentException("Input content contains blank!");
+        }
+
+        this.content = content.toString().trim();
+        this.from = from.toString().trim();
+        this.to = to.toString().trim();
+    }
+
     public String getFrom() {
         return from;
     }
@@ -42,6 +85,6 @@ public class Event extends Task {
      */
     @Override
     public String toString() {
-        return "[E]" + super.toString() + "(from: " + from + " to: " + to + ")";
+        return "[E]" + super.toString() + " (from: " + from + " to: " + to + ")";
     }
 }

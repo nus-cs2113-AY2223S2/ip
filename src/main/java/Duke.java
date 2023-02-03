@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class Duke {
     private static final Scanner scanner = new Scanner(System.in);
     private static final ArrayList<Task> taskList = new ArrayList<>();
+    private static final String spacer = "\t ";
 
     /**
      * Helper method to print a horizontal line.
@@ -17,10 +18,10 @@ public class Duke {
      * Prints all tasks in the list.
      */
     private static void listTasks() {
-        System.out.println("\t Here are the tasks in your list:");
+        System.out.println(spacer + "Here are the tasks in your list:");
         int cnt = 0;
         for (Task task : taskList) {
-            System.out.printf("\t %d.%s\n", ++cnt, task);
+            System.out.printf(spacer + "%d.%s\n", ++cnt, task);
         }
     }
 
@@ -32,8 +33,8 @@ public class Duke {
         try {
             markTask(Integer.parseInt(listIdStr));
         } catch (NumberFormatException e) {
-            System.err.println("\t Invalid input!");
-            System.err.println("\t Valid input format: mark [list id of the task]");
+            System.err.println(spacer + "Invalid input!");
+            System.err.println(spacer + "Valid input format: mark [list id of the task]");
         }
     }
 
@@ -46,8 +47,8 @@ public class Duke {
         try {
             unmarkTask(Integer.parseInt(listIdStr));
         } catch (NumberFormatException e) {
-            System.err.println("\t Invalid input!");
-            System.err.println("\t Valid input format: unmark [list id of the task]");
+            System.err.println(spacer + "Invalid input!");
+            System.err.println(spacer + "Valid input format: unmark [list id of the task]");
         }
     }
 
@@ -58,7 +59,7 @@ public class Duke {
     private static void markTask(int listId) {
         int index = listId - 1;
         if (index < 0 || index >= taskList.size()) {
-            System.err.println("\t Index out of range!");
+            System.err.println(spacer + "Index out of range!");
         } else {
             taskList.get(index).mark();
         }
@@ -71,7 +72,7 @@ public class Duke {
     private static void unmarkTask(int listId) {
         int index = listId - 1;
         if (index < 0 || index >= taskList.size()) {
-            System.err.println("\t Index out of range!");
+            System.err.println(spacer + "Index out of range!");
         } else {
             taskList.get(index).unmark();
         }
@@ -85,12 +86,12 @@ public class Duke {
         try {
             Task task = createTask(cmd);
             taskList.add(task);
-            System.out.println("\t Got it. I've added this task:");
+            System.out.println(spacer + "Got it. I've added this task:");
             System.out.println("\t\t" + task);
-            System.out.println("\t Now you have " + taskList.size() + " tasks in the list.");
+            System.out.println(spacer + "Now you have " + taskList.size() + " tasks in the list.");
         } catch (IllegalArgumentException e) {
-            System.err.println("\t Invalid task type!");
-            System.err.println("\t Valid task types: todo, deadline, event.");
+            System.err.println(spacer + "Invalid task type!");
+            System.err.println(spacer + "Valid task types: todo, deadline, event.");
         }
     }
 
@@ -104,87 +105,14 @@ public class Duke {
         String[] cmdArgs = cmd.split(" ");
         switch (cmdArgs[0]) {
         case "todo":
-            return createTodo(cmdArgs);
+            return new Todo(cmdArgs);
         case "deadline":
-            return createDeadline(cmdArgs);
+            return new Deadline(cmdArgs);
         case "event":
-            return createEvent(cmdArgs);
+            return new Event(cmdArgs);
         default:
             throw new IllegalArgumentException("Invalid task type!");
         }
-    }
-
-    /**
-     * Creates a Todo instance from user input arguments.
-     * @param cmdArgs an array of command words, including contents.
-     * @return a Todo instance.
-     */
-    private static Todo createTodo(String[] cmdArgs) {
-        assert cmdArgs[0].equals("todo");
-        StringBuilder content = new StringBuilder();
-        for (int i = 1; i < cmdArgs.length; ++i) {
-            content.append(cmdArgs[i]).append(" ");
-        }
-        return new Todo(content.toString().trim());
-    }
-
-    /**
-     * Creates a Deadline instance from user input arguments.
-     * @param cmdArgs an array of command words, including contents, by date.
-     * @return a Deadline instance.
-     */
-    private static Deadline createDeadline(String[] cmdArgs) {
-        assert cmdArgs[0].equals("deadline");
-        StringBuilder content = new StringBuilder();
-        StringBuilder by = new StringBuilder();
-        boolean buildContent = true;
-        for (int i = 1; i < cmdArgs.length; ++i) {
-            if (cmdArgs[i].equals("/by")) {
-                buildContent = false;
-                continue;
-            }
-            if (buildContent) {
-                content.append(cmdArgs[i]).append(" ");
-            } else {
-                by.append(cmdArgs[i]).append(" ");
-            }
-        }
-        return new Deadline(content.toString().trim(), by.toString().trim());
-    }
-
-    /**
-     * Creates an Event instance from user input arguments.
-     * @param cmdArgs an array of command words, including content, from time, to time.
-     * @return an Event instance.
-     */
-    private static Event createEvent(String[] cmdArgs) {
-        assert cmdArgs[0].equals("event");
-        StringBuilder content = new StringBuilder();
-        StringBuilder from = new StringBuilder();
-        StringBuilder to = new StringBuilder();
-        int buildingSteps = 0; // 0: content, 1: from, 2: to
-        for (int i = 1; i < cmdArgs.length; ++i) {
-            if (cmdArgs[i].equals("/from")) {
-                buildingSteps = 1;
-                continue;
-            } else if (cmdArgs[i].equals("/to")) {
-                buildingSteps = 2;
-                continue;
-            }
-
-            switch (buildingSteps) {
-            case (0):
-                content.append(cmdArgs[i]).append(" ");
-                break;
-            case (1):
-                from.append(cmdArgs[i]).append(" ");
-                break;
-            case (2):
-                to.append(cmdArgs[i]).append(" ");
-                break;
-            }
-        }
-        return new Event(content.toString().trim(), from.toString().trim(), to.toString().trim());
     }
 
 
@@ -198,8 +126,8 @@ public class Duke {
 
         // greeting messages
         printDivider();
-        System.out.println("\t Hello! I'm Duke");
-        System.out.println("\t What can I do for you?");
+        System.out.println(spacer + "Hello! I'm Tohru.");
+        System.out.println(spacer + "What can I do for you?");
         printDivider();
 
         // user interactions
@@ -223,7 +151,7 @@ public class Duke {
         }
 
         // exit message
-        System.out.println("\t Bye. Hope to see you again soon!");
+        System.out.println(spacer + "Bye. Hope to see you again soon!");
         printDivider();
     }
 }
