@@ -6,87 +6,95 @@ public class Rica {
     private static final String LIST_TRIGGER = "list";
     private static final String MARK_TRIGGER = "mark";
     private static final String UNMARK_TRIGGER = "unmark";
+    private static final String TODO_TRIGGER = "todo";
     private static final String BYE_TRIGGER = "bye";
-    private static final String ADD_PHRASE = " New task I'll remember: ";
+    private static final String ADD_PHRASE = " New todo I'll remember: ";
     private static final String BYE_PHRASE = " Leaving so soon? Come back anytime, I'll be happy to help!";
-    private static ArrayList<Todo> pastTasks = new ArrayList<>();
+    private static ArrayList<Todo> pastTodos = new ArrayList<>();
 
-    private static ArrayList<Todo> getPastTexts() {
-        return Rica.pastTasks;
+    private static ArrayList<Todo> getPastTodos() {
+        return Rica.pastTodos;
     }
 
     /**
-     * Adds a new task to the task list with the given description
+     * Adds a new todo to the todo list with the given description
      *
-     * @param description Description of new task being added
+     * @param command Command describing the new todo being added
      */
-    private static void addTask(String description) {
+    private static void addTodo(String command) {
+        String[] parameters = command.split(" ");
+        StringBuilder descriptionBuilder = new StringBuilder();
+        for (int i = 1; i < parameters.length; i += 1) {
+            descriptionBuilder.append(parameters[i]);
+            if (i != (parameters.length - 1)) {
+                descriptionBuilder.append(" ");
+            }
+        }
+        String description = descriptionBuilder.toString();
         if (description.isBlank()) {
-            printlnWithIndent(" Did you forget something? Don't think there's any task with no name");
+            printlnWithIndent(" Did you forget something? Don't think there's any todo with no name");
             return;
         }
-        Todo newTask = new Todo(description);
-        Rica.getPastTexts().add(newTask);
+        Todo newTodo = new Todo(description);
+        Rica.getPastTodos().add(newTodo);
         printlnWithIndent(Rica.ADD_PHRASE + description);
     }
 
     /**
-     * Mark a given task in the task list as done
+     * Mark a given todo in the todo list as done
      *
-     * @param indexOfTask Index of given task in the task list
-     * @return Task object representing the desired task being marked as done
+     * @param indexOfTodo Index of given todo in the todo list
+     * @return Todo object representing the desired todo being marked as done
      */
-    private static Todo markDone(int indexOfTask) {
-        if (indexOfTask < 0 || indexOfTask >= Rica.getPastTexts().size()) {
-            printlnWithIndent(" You alright? I can't mark a task that doesn't exist as done xD");
+    private static Todo markDone(int indexOfTodo) {
+        if (indexOfTodo < 0 || indexOfTodo >= Rica.getPastTodos().size()) {
+            printlnWithIndent(" You alright? I can't mark a todo that doesn't exist as done xD");
             return null;
         }
-        Todo selectedTask = Rica.getPastTexts().get(indexOfTask);
-        if (selectedTask.getIsDone()) {
+        Todo selectedTodo = Rica.getPastTodos().get(indexOfTodo);
+        if (selectedTodo.getIsDone()) {
             printlnWithIndent(" Take a break maybe? Alright marked as done my friend:");
-            printlnWithIndent("    " + selectedTask);
-            return selectedTask;
+            printlnWithIndent("    " + selectedTodo);
+            return selectedTodo;
         }
-        Rica.getPastTexts().remove(indexOfTask);
-        selectedTask = selectedTask.setDone(true);
-        Rica.getPastTexts().add(indexOfTask, selectedTask);
-        printlnWithIndent(" Shall remember that this task as done:");
-        printlnWithIndent("    " + selectedTask);
-        return selectedTask;
+        Rica.getPastTodos().remove(indexOfTodo);
+        selectedTodo = selectedTodo.setDone(true);
+        Rica.getPastTodos().add(indexOfTodo, selectedTodo);
+        printlnWithIndent(" Shall remember that this todo as done:");
+        printlnWithIndent("    " + selectedTodo);
+        return selectedTodo;
     }
 
     /**
-     * Mark a given task in the task list as not done
+     * Mark a given todo in the todo list as not done
      *
-     * @param indexOfTask Index of desired task in the task list
-     * @return Task object representing the desired task being marked as not done
+     * @param indexOfTodo Index of desired todo in the todo list
+     * @return Todo object representing the desired todo being marked as not done
      */
-    private static Todo unmarkDone(int indexOfTask) {
-        if (indexOfTask < 0 || indexOfTask >= Rica.getPastTexts().size()) {
-            printlnWithIndent(" You alright? I don't think that task exists xD");
+    private static Todo unmarkDone(int indexOfTodo) {
+        if (indexOfTodo < 0 || indexOfTodo >= Rica.getPastTodos().size()) {
+            printlnWithIndent(" You alright? I don't think that todo exists xD");
             return null;
         }
-        Todo selectedTask = Rica.getPastTexts().get(indexOfTask);
-        if (!selectedTask.getIsDone()) {
+        Todo selectedTodo = Rica.getPastTodos().get(indexOfTodo);
+        if (!selectedTodo.getIsDone()) {
             printlnWithIndent(" Getting a little ahead of yourself are you xD It's not even done:");
-            printlnWithIndent("    " + selectedTask);
-            return selectedTask;
+            printlnWithIndent("    " + selectedTodo);
+            return selectedTodo;
         }
-        Rica.getPastTexts().remove(indexOfTask);
-        selectedTask = selectedTask.setDone(false);
-        Rica.getPastTexts().add(indexOfTask, selectedTask);
-        printlnWithIndent(" (Why??) Anyway, I've marked this task as not done yet:");
-        printlnWithIndent("    " + selectedTask);
-        return selectedTask;
+        Rica.getPastTodos().remove(indexOfTodo);
+        selectedTodo = selectedTodo.setDone(false);
+        Rica.getPastTodos().add(indexOfTodo, selectedTodo);
+        printlnWithIndent(" (Why??) Anyway, I've marked this todo as not done yet:");
+        printlnWithIndent("    " + selectedTodo);
+        return selectedTodo;
     }
 
-    private static boolean hasAnyTasks() {
-        return !Rica.getPastTexts().isEmpty();
+    private static boolean hasAnyTodos() {
+        return !Rica.getPastTodos().isEmpty();
     }
 
     public static void main(String[] args) {
-        // Define horizontal line in a variable since it's printed multiple times
-
         printlnWithIndent(Rica.LINE);
         printlnWithIndent(" Hello! I'm R.I.C.A.");
         printlnWithIndent((" That's Really-Intelligent-Chat-Assistant for you!"));
@@ -101,17 +109,17 @@ public class Rica {
     }
 
     /**
-     * Prints out the list of tasks added so far, or inform the user if no tasks have been added
+     * Prints out the list of todos added so far, or inform the user if no todos have been added
      * yet
      */
-    private static void printTexts() {
-        if (!Rica.hasAnyTasks()) {
-            printlnWithIndent(" Hope I'm not amnesiac, but I don't remember any tasks?");
+    private static void printTodos() {
+        if (!Rica.hasAnyTodos()) {
+            printlnWithIndent(" Hope I'm not amnesiac, but I don't remember any todos?");
         } else {
-            ArrayList<Todo> tasks = Rica.getPastTexts();
-            printlnWithIndent(" I think you have these tasks:");
-            for (int i = 1; i <= tasks.size(); i += 1) {
-                printlnWithIndent(" " + i + ". " + tasks.get(i - 1));
+            ArrayList<Todo> todos = Rica.getPastTodos();
+            printlnWithIndent(" I think you have these todos:");
+            for (int i = 1; i <= todos.size(); i += 1) {
+                printlnWithIndent(" " + i + ". " + todos.get(i - 1));
             }
         }
     }
@@ -125,27 +133,25 @@ public class Rica {
         do {
             command = in.nextLine();
             printlnWithIndent(Rica.LINE);
-            if (command.contains(Rica.MARK_TRIGGER)) {
-                String[] params = command.split(" ");
-                if (params[0].equals(Rica.MARK_TRIGGER)) {
-                    int indexOfTask = Integer.valueOf(params[1]) - 1;
-                    Rica.markDone(indexOfTask);
-                } else if (params[0].equals(Rica.UNMARK_TRIGGER)) {
-                    int indexOfTask = Integer.valueOf(params[1]) - 1;
-                    Rica.unmarkDone(indexOfTask);
-                }
-            } else {
-                switch (command) {
-                case Rica.LIST_TRIGGER:
-                    printTexts();
-                    break;
-                case Rica.BYE_TRIGGER:
-                    printlnWithIndent(Rica.BYE_PHRASE);
-                    break;
-                default:
-                    Rica.addTask(command);
-                    break;
-                }
+            String[] params = command.split(" ");
+            switch (params[0]) {
+            case Rica.MARK_TRIGGER:
+                int indexOfTodo = Integer.valueOf(params[1]) - 1;
+                Rica.markDone(indexOfTodo);
+                break;
+            case Rica.UNMARK_TRIGGER:
+                indexOfTodo = Integer.valueOf(params[1]) - 1;
+                Rica.unmarkDone(indexOfTodo);
+                break;
+            case Rica.LIST_TRIGGER:
+                printTodos();
+                break;
+            case Rica.TODO_TRIGGER:
+                Rica.addTodo(command);
+                break;
+            case Rica.BYE_TRIGGER:
+                printlnWithIndent(Rica.BYE_PHRASE);
+                break;
             }
             printlnWithIndent(Rica.LINE);
         } while (!command.equals(Rica.BYE_TRIGGER));
