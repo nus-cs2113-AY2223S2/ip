@@ -40,12 +40,6 @@ public class Duke {
                 break;
             }
 
-            if(userInput.split(" ", 2).length <= 1){
-                System.out.println("Invalid command structure. Use [command] [arguments[]]");
-                System.out.println(HORIZONTAL_RULE);
-                continue;
-            }
-
             String keyword = userInput.split(" ", 2)[0];
 
             System.out.println(HORIZONTAL_RULE);
@@ -58,6 +52,7 @@ public class Duke {
                 }
 
             } else if (keyword.equals("mark")) {
+
                 int index = Integer.parseInt(userInput.split(" ", 2)[1]) - 1;
                 Task task = tasks.get(index);
                 task.setIsDone(true);
