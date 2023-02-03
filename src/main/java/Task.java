@@ -65,34 +65,59 @@ public class Task {
     }
 
     public static void addTodoTask(String description, ArrayList<Task> taskList) {
-        Todo newTodoTask = new Todo(description);
-        taskList.add(newTodoTask);
-        Task.printAddedTask(newTodoTask, taskList.size());
+        try {
+            if (description.isEmpty()) {
+                //for the case where user keys in a space after the command
+                throw new DukeException("     ☹ OOPS!!! The description of a todo cannot be empty.");
+            }
+            Todo newTodoTask = new Todo(description);
+            taskList.add(newTodoTask);
+            Task.printAddedTask(newTodoTask, taskList.size());
+
+        } catch (DukeException exception) {
+            Duke.printErrorMessage(exception.getMessage());
+        }
     }
 
     public static void addDeadlineTask(String description, ArrayList<Task> taskList) {
-        int firstSlashIndex = description.indexOf("/");
-        int detailsEndIndex = firstSlashIndex - 1;
-        String details = description.substring(0, detailsEndIndex);
-        int byStartIndex = firstSlashIndex + 4;
-        String by = description.substring(byStartIndex);
-        Deadline newDeadlineTask = new Deadline(details, by);
-        taskList.add(newDeadlineTask);
-        Task.printAddedTask(newDeadlineTask, taskList.size());
+        try {
+            if (description.isEmpty()) {
+                //for the case where user keys in a space after the command
+                throw new DukeException("     ☹ OOPS!!! The description of a deadline cannot be empty.");
+            }
+            int firstSlashIndex = description.indexOf("/");
+            int detailsEndIndex = firstSlashIndex - 1;
+            String details = description.substring(0, detailsEndIndex);
+            int byStartIndex = firstSlashIndex + 4;
+            String by = description.substring(byStartIndex);
+            Deadline newDeadlineTask = new Deadline(details, by);
+            taskList.add(newDeadlineTask);
+            Task.printAddedTask(newDeadlineTask, taskList.size());
+        } catch (DukeException exception) {
+            Duke.printErrorMessage(exception.getMessage());
+        }
     }
 
     public static void addEventTask(String description, ArrayList<Task> taskList) {
-        int firstSlashIndex = description.indexOf("/");
-        int secondSlashIndex = description.indexOf("/", firstSlashIndex + 1);
-        int detailsEndIndex = firstSlashIndex - 1;
-        String details = description.substring(0, detailsEndIndex);
-        int fromStartIndex = firstSlashIndex + 6;
-        int fromEndIndex = secondSlashIndex - 1;
-        String from = description.substring(fromStartIndex, fromEndIndex);
-        int toStartIndex = secondSlashIndex + 4;
-        String to = description.substring(toStartIndex);
-        Event newEventTask = new Event(details, from, to);
-        taskList.add(newEventTask);
-        Task.printAddedTask(newEventTask, taskList.size());
+        try {
+            if (description.isEmpty()) {
+                //for the case where user keys in a space after the command
+                throw new DukeException("     ☹ OOPS!!! The description of a event cannot be empty.");
+            }
+            int firstSlashIndex = description.indexOf("/");
+            int secondSlashIndex = description.indexOf("/", firstSlashIndex + 1);
+            int detailsEndIndex = firstSlashIndex - 1;
+            String details = description.substring(0, detailsEndIndex);
+            int fromStartIndex = firstSlashIndex + 6;
+            int fromEndIndex = secondSlashIndex - 1;
+            String from = description.substring(fromStartIndex, fromEndIndex);
+            int toStartIndex = secondSlashIndex + 4;
+            String to = description.substring(toStartIndex);
+            Event newEventTask = new Event(details, from, to);
+            taskList.add(newEventTask);
+            Task.printAddedTask(newEventTask, taskList.size());
+        } catch (DukeException exception) {
+            Duke.printErrorMessage(exception.getMessage());
+        }
     }
 }
