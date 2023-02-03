@@ -2,15 +2,15 @@ import java.util.Scanner;
 import java.util.Arrays;
 import duke.Task;
 public class Duke {
-    public static void printLine() {
+    public static void printLine() { //print line
         System.out.println("______________________________________________________________");
     }
-    private static void checkEmpty(String lowerCaseLine) throws DukeException {
+    private static void checkEmpty(String lowerCaseLine) throws DukeException { //check if description is empty
         if (lowerCaseLine.equals("todo") || lowerCaseLine.equals("deadline") || lowerCaseLine.equals("event")) {
             throw new DukeException("☹ OOPS!!! The description of a " + lowerCaseLine + " cannot be empty.");
         }
     }
-    private static void checkCommand(String lowerCaseLine) throws DukeException {
+    private static void checkCommand(String lowerCaseLine) throws DukeException { //check if command is valid
         if (!lowerCaseLine.equals("list") && !lowerCaseLine.equals("bye") && !lowerCaseLine.contains("mark") && !lowerCaseLine.contains("unmark") && !lowerCaseLine.contains("todo") && !lowerCaseLine.contains("deadline") && !lowerCaseLine.contains("event")) {
             throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
         }
