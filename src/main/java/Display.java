@@ -43,31 +43,21 @@ public class Display {
      **/
     public void addedTask(Command command, TaskType taskType, TaskList taskList) {
         System.out.println(LINE);
+        System.out.println("Got it. I've added this task:");
         switch (taskType) {
         case TODO:
-            System.out.println("Got it. I've added this task:");
             System.out.println("[T][ ] " + command.getTaskDescription());
-            System.out.println("Now you have " + taskList.getTaskCount() + " tasks in the list");
             break;
         case EVENT:
-            System.out.println("Got it. I've added this task:");
             System.out.println("[E][ ] " + command.getTaskDescription() + "(from: "
                     + command.getFrom() + " to: " + command.getTo() + ")");
-            System.out.println("Now you have " + taskList.getTaskCount() + " tasks in the list");
             break;
         case DEADLINE:
-            System.out.println("Got it. I've added this task:");
             System.out.println("[D][ ] " + command.getTaskDescription() + "(by: "
                     + command.getBy() + ")");
-            System.out.println("Now you have " + taskList.getTaskCount() + " tasks in the list");
             break;
         }
-        System.out.println(LINE);
-    }
-
-    public void missingTodoField() {
-        System.out.println(LINE);
-        System.out.println("Description ");
+        System.out.println("Now you have " + taskList.getTaskCount() + " tasks in the list");
         System.out.println(LINE);
     }
 
@@ -94,8 +84,21 @@ public class Display {
      * @param taskNumber the taskNumber index that is to be unmarked
      */
     public void validUnmark(ArrayList<Task> list, int taskNumber) {
+
+        Task taskObj = list.get(taskNumber - 1);
         System.out.println("OK, I've marked this task as not done yet:");
-        System.out.println("[ ] " + list.get(taskNumber - 1).getTaskName());
+        if (taskObj instanceof Deadline) {
+            Deadline deadline = (Deadline) taskObj;
+            System.out.println("[E][ ] " + taskObj.getTaskName() + "(by: " +
+                    ((Deadline) taskObj).getByWhen() + ") ");
+        } else if (taskObj instanceof Event) {
+            Event event = (Event) taskObj;
+            System.out.println("[E][ ] " + event.getTaskName() + "(from: "
+                    + event.getStartWhen() + " to: " + event.getEndWhen() + ")");
+        } else {
+            Todo todo = (Todo) taskObj;
+            System.out.println("[T][ ] " + todo.getTaskName());
+        }
     }
 
     /**
@@ -105,8 +108,20 @@ public class Display {
      * @param taskNumber the taskNumber index that is to be marked
      */
     public void validMark(ArrayList<Task> list, int taskNumber) {
+        Task taskObj = list.get(taskNumber - 1);
         System.out.println("Nice! I've marked this task as done:");
-        System.out.println("[X] " + list.get(taskNumber - 1).getTaskName());
+        if (taskObj instanceof Deadline) {
+            Deadline deadline = (Deadline) taskObj;
+            System.out.println("[E][X] " + taskObj.getTaskName() + "(by: " +
+                    ((Deadline) taskObj).getByWhen() + ") ");
+        } else if (taskObj instanceof Event) {
+            Event event = (Event) taskObj;
+            System.out.println("[E][X] " + event.getTaskName() + "(from: "
+                    + event.getStartWhen() + " to: " + event.getEndWhen() + ")");
+        } else {
+            Todo todo = (Todo) taskObj;
+            System.out.println("[T][X] " + todo.getTaskName());
+        }
     }
 
 }
