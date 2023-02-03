@@ -1,4 +1,11 @@
-import java.util.Scanner;
+package duke;
+
+import duke.exceptions.ContentEmptyException;
+import duke.exceptions.MissingParameterException;
+import duke.exceptions.UnknownCommandException;
+import duke.tasks.Bye;
+import duke.tasks.Greet;
+import duke.tools.Parser;
 
 /**
  * Manage input commands.
@@ -11,7 +18,7 @@ public class CommandManager {
     private static final TaskManager TASK_MANAGER = new TaskManager();
     private static final Parser COMMAND_PARSER = new Parser();
 
-    public void setCommand(String command) throws UnknownCommandException, ContentEmptyException{
+    public void setCommand(String command) throws UnknownCommandException, ContentEmptyException {
         this.inputCommand = command;
 
         this.commandType = COMMAND_PARSER.getCommandType(command);
@@ -38,7 +45,7 @@ public class CommandManager {
      * If command is unmark, mark a particular task as undone.
      * Else add new task.
      */
-    public void executeCommand() throws MissingParameterException{
+    public void executeCommand() throws MissingParameterException {
         if(commandType.equals("bye")){
             sayBye();
             System.exit(0);

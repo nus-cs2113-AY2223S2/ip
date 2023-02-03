@@ -1,3 +1,7 @@
+package duke.tasks;
+
+import duke.tools.UI;
+
 /**
  * Print bye and exit code.CS
  */

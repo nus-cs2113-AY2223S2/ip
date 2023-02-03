@@ -1,3 +1,8 @@
+package duke.tasks;
+
+import duke.tools.Formatter;
+import duke.tools.UI;
+
 /**
  * Print logo and hello.
  * Private attributes are logo and hello,

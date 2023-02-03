@@ -1,3 +1,5 @@
+package duke.tools;
+
 import java.util.Arrays;
 public class Tool {
     public void printStringArray(String[] array){

@@ -1,3 +1,5 @@
+package duke.tasks;
+
 /**
  * Manage each task.
  * Private attributes: taskDescription, isDone.

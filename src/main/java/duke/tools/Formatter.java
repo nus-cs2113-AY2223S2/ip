@@ -1,3 +1,5 @@
+package duke.tools;
+
 import java.util.Arrays;
 public class Formatter {
     private final static int LINE_LENGTH = 60;
