@@ -122,6 +122,8 @@ public class Orca {
             return Integer.parseInt(userInput.substring(startIdx));
         } catch (NumberFormatException e) {
             throw new OrcaException("I cannot parse the integer.");
+        } catch (StringIndexOutOfBoundsException e) {
+            throw new OrcaException("I cannot parse the integer.");
         }
     }
 
