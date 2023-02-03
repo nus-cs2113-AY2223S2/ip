@@ -109,6 +109,8 @@ public class Duke {
     }
 
     public static String executeDeadlineCommand(String commandParams){
+        //[have not done]: String /by or /by String
+        //[have not done]: some error conditions
         String[] commandParamsList = commandParams.split("/");
         String todoString = commandParamsList[0];
         String deadlineString = commandParamsList[1];
@@ -123,7 +125,7 @@ public class Duke {
     }
 
     public static String executeEventCommand(String commandParams){
-        //[haven't done]: check commandParms has /from, /to
+        //[haven't done]: some error conditions, e.g. check commandParms has /from, /to
         //[haven't done]: process case like /to /from
         String[] commandParamsList = commandParams.split("/");
         String eventString = commandParamsList[0].trim();
