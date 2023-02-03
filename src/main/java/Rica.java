@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 public class Rica {
     private static final String LINE = "____________________________________________________________";
+    private static final String DEADLINE_TRIGGER = "deadline";
     private static final String LIST_TRIGGER = "list";
     private static final String MARK_TRIGGER = "mark";
     private static final String TODO_TRIGGER = "todo";
@@ -52,6 +53,7 @@ public class Rica {
             case Rica.LIST_TRIGGER:
                 Rica.getTaskManager().printTasks();
                 break;
+            case Rica.DEADLINE_TRIGGER:
             case Rica.TODO_TRIGGER:
                 Rica.getTaskManager().createTask(command);
                 break;

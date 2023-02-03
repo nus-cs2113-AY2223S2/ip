@@ -2,9 +2,10 @@ import java.util.ArrayList;
 
 public class TaskManager {
     private static ArrayList<Task> tasks = new ArrayList<>();
+    private static final String DEADLINE_CMD = "deadline";
     private static final String TODO_CMD = "todo";
-    private static final String ADD_PHRASE = " New todo I'll remember: ";
-    private static final String ADDED_PHRASE = " You have %d tasks for now, all the best!";
+    private static final String ADD_PHRASE = " New %s I'll remember: ";
+    private static final String TASK_ADDED_PHRASE = " You have %d tasks for now, all the best!";
 
     private static ArrayList<Task> getTasks() {
         return TaskManager.tasks;
@@ -130,11 +131,19 @@ public class TaskManager {
         case TaskManager.TODO_CMD:
             Todo newTodo = Todo.create(command);
             TaskManager.addTask(newTodo);
-            printlnWithIndent(TaskManager.ADD_PHRASE);
-            printlnWithIndent(newTodo.getDescription());
+            printlnWithIndent(String.format(TaskManager.ADD_PHRASE,
+                    TaskManager.TODO_CMD));
+            printlnWithIndent("   " + newTodo.toString());
+            break;
+        case TaskManager.DEADLINE_CMD:
+            Deadline newDeadline = Deadline.create(command);
+            TaskManager.addTask(newDeadline);
+            printlnWithIndent(String.format(TaskManager.ADD_PHRASE,
+                    TaskManager.DEADLINE_CMD));
+            printlnWithIndent("   " + newDeadline.toString());
             break;
         }
-        printlnWithIndent(String.format(TaskManager.ADDED_PHRASE,
+        printlnWithIndent(String.format(TaskManager.TASK_ADDED_PHRASE,
                 TaskManager.getTasks().size()));
     }
 }
