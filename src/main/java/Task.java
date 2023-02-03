@@ -17,7 +17,7 @@ public class Task {
 
     public String getTaskStatus() {
         if (isCompleted) {
-            return "✓";
+            return "X";
         }
         return " ";
     }

@@ -2,8 +2,8 @@ import java.util.Scanner;
 
 public class Duke {
     private static final int MAX_ITEMS = 100;
-    private static final String TOP_DIVIDER = "════════════════════════════════════════════════════════════\n";
-    private static final String BOTTOM_DIVIDER = "\n════════════════════════════════════════════════════════════\n\n";
+    private static final String TOP_DIVIDER = "============================================================\n";
+    private static final String BOTTOM_DIVIDER = "\n============================================================\n\n";
     private static final String ADD_TASK_ITEM_DESC = " Roger. I've added this task:\n  ";
     private static final String LIST_TASK_ITEM_DESC = " Here are the tasks in your list:\n";
     private static final String COMMAND_MARK_TASK = "mark";
@@ -13,7 +13,7 @@ public class Duke {
     private static final String WHITESPACE = " ";
     private static final String DOT = ".";
     private static final String LIST_TASK_ITEM_BOTTOM_DIVIDER
-            = "════════════════════════════════════════════════════════════\n\n";
+            = "============================================================\n\n";
     private static final String WELCOME_MESSAGE = " Hello! I'm Chatty\n How can I help you?";
     private static final String COMMAND_LIST_TASK_ITEM = "list";
     private static final String COMMAND_EXIT = "bye";
@@ -90,10 +90,8 @@ public class Duke {
         System.out.print(printExit);
     }
 
-    public static String getInput() {
-        String line;
-        Scanner in = new Scanner(System.in);
-        line = in.nextLine();
+    public static String getInput(Scanner in) {
+        String line = in.nextLine();
         return line;
     }
 
@@ -136,9 +134,10 @@ public class Duke {
 
     public static void main(String[] args) {
         printWelcomeMessage();
+        Scanner in = new Scanner(System.in);
 
         while (true) {
-            String input = getInput();
+            String input = getInput(in);
 
             if (input.equals(COMMAND_EXIT)) {
                 printExitMessage();
