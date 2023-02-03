@@ -84,16 +84,28 @@ public class Orca {
         userInput = in.nextLine();
     }
 
-    public static void markTask(int taskNo) {
-        tasks[taskNo - 1].setDone(true);
+    public static void markTask(int taskNo) throws OrcaException {
+        try {
+            tasks[taskNo - 1].setDone(true);
+        } catch (NullPointerException e) {
+            throw new OrcaException("There is no task with this number.");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new OrcaException("There is no task with this number.");
+        }
         System.out.println("    --------------------------------------------------");
         System.out.println("    Nice! I've marked this task as done:");
         System.out.println("      " + tasks[taskNo - 1]);
         System.out.println("    --------------------------------------------------\n");
     }
 
-    public static void unmarkTask(int taskNo) {
-        tasks[taskNo - 1].setDone(false);
+    public static void unmarkTask(int taskNo) throws OrcaException {
+        try {
+            tasks[taskNo - 1].setDone(false);
+        } catch (NullPointerException e) {
+            throw new OrcaException("There is no task with this number.");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new OrcaException("There is no task with this number.");
+        }
         System.out.println("    --------------------------------------------------");
         System.out.println("    I've marked this task as not done yet:");
         System.out.println("      " + tasks[taskNo - 1]);
@@ -105,11 +117,17 @@ public class Orca {
         taskCount++;
     }
 
-    public static int parseTaskNo(String userInput, int startIdx) {
-        return Integer.parseInt(userInput.substring(startIdx));
+    public static int parseTaskNo(String userInput, int startIdx) throws OrcaException {
+        try {
+            return Integer.parseInt(userInput.substring(startIdx));
+        } catch (NumberFormatException e) {
+            throw new OrcaException("I cannot parse the integer.");
+        } catch (StringIndexOutOfBoundsException e) {
+            throw new OrcaException("I cannot parse the integer.");
+        }
     }
 
-    public static boolean executeCommand() {
+    public static boolean executeCommand() throws OrcaException {
         switch (commandType) {
             case BYE:
                 printByeMessage();
@@ -141,8 +159,7 @@ public class Orca {
                 printLatestAddedTask();
                 break;
             default:
-                printUnknownCommandMessage();
-                break;
+                throw new OrcaException("Sorry. I can't understand what you mean. :(");
         }
         return !FINISHED;
     }
@@ -152,7 +169,11 @@ public class Orca {
         while (isInputAvailable()) {
             readUserInput();
             findCommandType();
-            isFinished = executeCommand();
+            try {
+                isFinished = executeCommand();
+            } catch (OrcaException e) {
+                System.out.println(e.getMessage());
+            }
             if (isFinished) {
                 break;
             }
