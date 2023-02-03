@@ -14,6 +14,7 @@ public class Todos {
     public String getType() {
         return "[T]";
     }
+
     public void setMark() {
         this.marked = true;
     }
