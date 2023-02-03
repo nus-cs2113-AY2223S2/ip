@@ -61,24 +61,43 @@ public class Duke {
     }
 
     public static void printTodo(String userInput) {
+        printLine();
         String input = userInput.replace("todo ", "");
         taskList[currentIndex] = new Todos(input);
         currentIndex+=1;
         printNoTasks(currentIndex);
+        printLine();
     }
     public static void printDeadline(String userInput) {
+        printLine();
         String [] deadlineAndDescription = getDeadline(userInput);
         taskList[currentIndex] = new Deadlines(deadlineAndDescription[0], deadlineAndDescription[1]);
         currentIndex+=1;
         printNoTasks(currentIndex);
+        printLine();
     }
 
     public static void printEvent(String userInput) {
+        printLine();
         String [] eventDescription = getEvent(userInput);
         taskList[currentIndex] = new Events(eventDescription[0], eventDescription[1], eventDescription[2]);
         currentIndex+=1;
         printNoTasks(currentIndex);
+        printLine();
     }
+    public static void printTask(String userInput) {
+        printLine();
+        taskList[currentIndex] = new Task(userInput); // set the description
+        currentIndex+=1;
+        System.out.println("\tadded: " + userInput);
+        printLine();
+    }
+    public static void sayBye() {
+        printLine();
+        System.out.println("\tBye. Hope to see you again soon!");
+        printLine();
+    }
+
 
 
     final static int MAXTASKS = 100;
@@ -116,7 +135,7 @@ public class Duke {
                 printLine();
                 printMarkedTask(userInput, taskList);
                 printLine();
-            } else if (userInput.split(" ")[0].equals("unmark")) {//unmark the task
+            } else if (isTheSame(userInput, "unmark")) {//unmark the task
                 while(isInRange(userInput, currentIndex)==false) {
                     printLine();
                     System.out.println("\tNice try, enter a valid index to unmark:");
@@ -127,31 +146,17 @@ public class Duke {
                 printUnmarkedTask(userInput, taskList);
                 printLine();
             } else if(isTheSame(userInput, "todo")) {
-                printLine();
                 printTodo(userInput);
-                printLine();
                 //leave this for the final refactoring
             } else if(isTheSame(userInput, "deadline")) {
-                printLine();
                printDeadline(userInput);
-                printLine();
             } else if(isTheSame(userInput, "event")) {
-                printLine();
                 printEvent(userInput);
-                printLine();
             }
             else { // tells the user that we have added the task in
-                taskList[currentIndex] = new Task(userInput); // set the description
-                currentIndex+=1;
-                printLine();
-                System.out.println("\tadded: " + userInput);
-                printLine();
-                //leave this for refactoring
+                printTask(userInput);
             }
-
         }
-        printLine();
-        System.out.println("\tBye. Hope to see you again soon!");
-        printLine();
+       sayBye();
     }
 }
