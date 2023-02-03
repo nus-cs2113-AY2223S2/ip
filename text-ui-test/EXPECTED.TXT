@@ -11,23 +11,23 @@
     What can I do for you?
     --------------------------------------------------
 
- --------------------------------------------------
-      Got it. I've added this task:
-          [T][ ] buy a movie ticket
-        Now you have 1 tasks in the list.
- --------------------------------------------------
+    --------------------------------------------------
+    Got it. I've added this task:
+      [T][ ] buy a movie ticket
+    Now you have 1 tasks in the list.
+    --------------------------------------------------
 
- --------------------------------------------------
-      Got it. I've added this task:
-          [D][ ] CS2311 ip Assignment (by: Monday)
-        Now you have 2 tasks in the list.
- --------------------------------------------------
+    --------------------------------------------------
+    Got it. I've added this task:
+      [D][ ] CS2311 ip Assignment (by: Monday)
+    Now you have 2 tasks in the list.
+    --------------------------------------------------
 
- --------------------------------------------------
-      Got it. I've added this task:
-          [E][ ] Movie (from: Sat 4pm to: 6pm)
-        Now you have 3 tasks in the list.
- --------------------------------------------------
+    --------------------------------------------------
+    Got it. I've added this task:
+      [E][ ] Movie (from: Sat 4pm to: 6pm)
+    Now you have 3 tasks in the list.
+    --------------------------------------------------
 
     --------------------------------------------------
     Here are the tasks in your list:
@@ -41,6 +41,7 @@
       [D][X] CS2311 ip Assignment (by: Monday)
     --------------------------------------------------
 
-    -----------------------------------
-    Bye! See you later!
-    -----------------------------------
+    --------------------------------------------------
+    Bye. Hope to see you again soon!
+    --------------------------------------------------
+
