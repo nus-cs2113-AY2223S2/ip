@@ -146,6 +146,7 @@ public class Duke {
                 printLine();
                 System.out.println("\tadded: " + userInput);
                 printLine();
+                //leave this for refactoring
             }
 
         }
