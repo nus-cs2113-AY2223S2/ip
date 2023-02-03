@@ -4,7 +4,9 @@ public class TaskManager {
     private static ArrayList<Task> tasks = new ArrayList<>();
     private static final String DEADLINE_CMD = "deadline";
     private static final String TODO_CMD = "todo";
+    private static final String EVENT_CMD = "event";
     private static final String ADD_PHRASE = " New %s I'll remember: ";
+    private static final String SINGLE_TASK_ADDED_PHRASE = " You have %d task for now, all the best!";
     private static final String TASK_ADDED_PHRASE = " You have %d tasks for now, all the best!";
 
     private static ArrayList<Task> getTasks() {
@@ -142,8 +144,21 @@ public class TaskManager {
                     TaskManager.DEADLINE_CMD));
             printlnWithIndent("   " + newDeadline.toString());
             break;
+        case TaskManager.EVENT_CMD:
+            Event newEvent = Event.create(command);
+            TaskManager.addTask(newEvent);
+            printlnWithIndent(String.format(TaskManager.ADD_PHRASE,
+                    TaskManager.EVENT_CMD));
+            printlnWithIndent("   " + newEvent.toString());
+            break;
         }
-        printlnWithIndent(String.format(TaskManager.TASK_ADDED_PHRASE,
-                TaskManager.getTasks().size()));
+        int howManyTasks = TaskManager.getTasks().size();
+        if (howManyTasks > 1) {
+            printlnWithIndent(String.format(TaskManager.TASK_ADDED_PHRASE,
+                    TaskManager.getTasks().size()));
+        } else if (howManyTasks == 1) {
+            printlnWithIndent(String.format(TaskManager.SINGLE_TASK_ADDED_PHRASE,
+                    TaskManager.getTasks().size()));
+        }
     }
 }
