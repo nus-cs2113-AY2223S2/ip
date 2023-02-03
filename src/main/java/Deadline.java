@@ -1,5 +1,5 @@
 public class Deadline extends Todo {
-    private final String typeRepresentation = "D";
+    private final String TYPE_REPRESENTATION = "D";
 
     protected String by;
 
@@ -23,6 +23,6 @@ public class Deadline extends Todo {
         } else {
             mark = ' ';
         }
-        return String.format("[%s][%c] %s (by: %s)", typeRepresentation, mark, description, by);
+        return String.format("[%s][%c] %s (by: %s)", TYPE_REPRESENTATION, mark, description, by);
     }
 }

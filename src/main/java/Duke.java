@@ -44,47 +44,9 @@ public class Duke {
             line = line.substring(command.length() + 1);
             addItem(new Todo(line));
         } else if (command.equals("deadline")) {
-            String itemDescription = "";
-            String itemDeadline = "";
-            int i = 1;
-            for (; i < lineParts.length; i++) {
-                if (lineParts[i].equals("/by")) {
-                    i++;
-                    break;
-                } else {
-                    itemDescription += lineParts[i];
-                }
-            }
-            for (; i < lineParts.length; i++) {
-                itemDeadline += lineParts[i];
-            }
-            addItem(new Deadline(itemDescription, itemDeadline));
+            createDeadline(lineParts);
         } else if (command.equals("event")) {
-            String itemDescription = "";
-            String itemFrom = "";
-            String itemTo = "";
-            int i = 1;
-            for (; i < lineParts.length; i++) {
-                if (lineParts[i].equals("/from")) {
-                    i++;
-                    break;
-                } else {
-                    itemDescription += lineParts[i];
-                }
-            }
-            for (; i < lineParts.length; i++) {
-                if (lineParts[i].equals("/to")) {
-                    i++;
-                    break;
-                } else {
-                    itemFrom += lineParts[i];
-                }
-            }
-            for (; i < lineParts.length; i++) {
-                itemTo += lineParts[i];
-            }
-            addItem(new Event(itemDescription, itemFrom, itemTo));
-            
+            createEvent(lineParts);
         } else if (command.equals("list")) {
             printItems();
         } else if (command.equals("mark")) {
@@ -96,6 +58,51 @@ public class Duke {
         } else { // add item
             printResponse(INVALID_MSG);
         }
+    }
+
+    private static void createDeadline(String[] lineParts) {
+        String itemDescription = "";
+        String itemDeadline = "";
+        int i = 1;
+        for (; i < lineParts.length; i++) {
+            if (lineParts[i].equals("/by")) {
+                i++;
+                break;
+            } else {
+                itemDescription += lineParts[i] + ' ';
+            }
+        }
+        for (; i < lineParts.length; i++) {
+            itemDeadline += lineParts[i] + ' ';
+        }
+        addItem(new Deadline(itemDescription, itemDeadline));
+    }
+
+    private static void createEvent(String[] lineParts) {
+        String itemDescription = "";
+        String itemFrom = "";
+        String itemTo = "";
+        int i = 1;
+        for (; i < lineParts.length; i++) {
+            if (lineParts[i].equals("/from")) {
+                i++;
+                break;
+            } else {
+                itemDescription += lineParts[i] + ' ';
+            }
+        }
+        for (; i < lineParts.length; i++) {
+            if (lineParts[i].equals("/to")) {
+                i++;
+                break;
+            } else {
+                itemFrom += lineParts[i] + ' ';
+            }
+        }
+        for (; i < lineParts.length; i++) {
+            itemTo += lineParts[i] + ' ';
+        }
+        addItem(new Event(itemDescription, itemFrom, itemTo));
     }
 
     private static void markItem(int itemNo) {

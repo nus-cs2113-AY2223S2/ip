@@ -1,3 +1,5 @@
-todo todo1
-event event1 /from start /to end
-deadline deadline /by deadline
+todo Hosea: Answer CS2113 tutorial questions
+deadline weekly CS2113 quiz /by Monday 9pm
+list
+event CS2113 lecture /from Friday 4pm /to 6pm
+list

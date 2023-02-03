@@ -1,9 +1,9 @@
 public class Todo extends Task {
     protected boolean isDone;
-    private final String typeRepresentation = "T";
+    private final String TYPE_REPRESENTATION = "T";
 
     public String getTypeRepresentation() {
-        return typeRepresentation;
+        return TYPE_REPRESENTATION;
     }
 
     public Todo(String description) {
@@ -26,6 +26,6 @@ public class Todo extends Task {
         } else {
             mark = ' ';
         }
-        return String.format("[%s][%c] %s", typeRepresentation, mark, description);
+        return String.format("[%s][%c] %s", TYPE_REPRESENTATION, mark, description);
     }
 }
