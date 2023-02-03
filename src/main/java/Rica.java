@@ -42,11 +42,11 @@ public class Rica {
             String[] params = command.split(" ");
             switch (params[0]) {
             case Rica.MARK_TRIGGER:
-                int indexOfTodo = Integer.valueOf(params[1]) - 1;
+                int indexOfTodo = Integer.parseInt(params[1]) - 1;
                 Rica.getTaskManager().markDone(indexOfTodo);
                 break;
             case Rica.UNMARK_TRIGGER:
-                indexOfTodo = Integer.valueOf(params[1]) - 1;
+                indexOfTodo = Integer.parseInt(params[1]) - 1;
                 Rica.getTaskManager().unmarkDone(indexOfTodo);
                 break;
             case Rica.LIST_TRIGGER:
