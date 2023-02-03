@@ -10,17 +10,17 @@ public class Duke {
             return;
         }
 
-        int count = 1;
+        int existingTaskCount = 1;
         for (Task item : list) {
             if (item != null) {
-                System.out.println(count + ". " + item.describeTask());
-                count++;
+                System.out.println(existingTaskCount + ". " + item.describeTask());
+                existingTaskCount++;
             } else {
                 continue;
             }
         }
 
-        System.out.println("\nYou have " + (count - 1) + " tasks in the list.\n");
+        System.out.println("\nYou have " + (existingTaskCount - 1) + " tasks in the list.\n");
     }
 
     public static String getFirstWord(String s) {
@@ -53,7 +53,7 @@ public class Duke {
 
             String line = in.nextLine();
             String firstWord = getFirstWord(line);
-            Task[] taskList = Task.getTaskList();
+            Task[] taskList = TaskManager.getTaskList();
 
             switch (firstWord) {
             case "mark":
@@ -69,7 +69,7 @@ public class Duke {
                 getTodoDetails(line);
                 break;
             case "deadline":
-                getDealineDetails(line);
+                getDeadlineDetails(line);
                 break;
             case "event":
                 getEventDetails(line);
@@ -90,22 +90,20 @@ public class Duke {
     private static void getTodoDetails(String line) {
         String todoLine = getSecondWord(line);
         Todo todoTask = new Todo(todoLine);
-        Task.addTask(todoTask);
-        Task.upTaskCount();
+        TaskManager.addTask(todoTask);
         System.out.println("Got it. I've added this task:\n" + todoTask.describeTask());
-        System.out.println("\nNow you have " + Task.getTaskCount() + " tasks in the list.\n");
+        System.out.println("\nNow you have " + TaskManager.getTaskCount() + " tasks in the list.\n");
     }
 
-    private static void getDealineDetails(String line) {
+    private static void getDeadlineDetails(String line) {
         String deadlineLine = getSecondWord(line);
         int index = deadlineLine.indexOf("/");
         String deadlineDescription = deadlineLine.substring(0, index - 1);
         String deadlineDate = deadlineLine.substring(index + 4);
         Deadline deadlineTask = new Deadline(deadlineDescription, deadlineDate);
-        Task.addTask(deadlineTask);
-        Task.upTaskCount();
+        TaskManager.addTask(deadlineTask);
         System.out.println("Got it. I've added this task:\n" + deadlineTask.describeTask());
-        System.out.println("\nNow you have " + Task.getTaskCount() + " tasks in the list.\n");
+        System.out.println("\nNow you have " + TaskManager.getTaskCount() + " tasks in the list.\n");
     }
 
     private static void getEventDetails(String line) {
@@ -117,9 +115,8 @@ public class Duke {
         String eventFrom = eventDate.substring(2, index3 - 1);
         String eventTo = eventDate.substring(index3 + 4);
         Event eventTask = new Event(eventDescription, eventFrom, eventTo);
-        Task.addTask(eventTask);
-        Task.upTaskCount();
+        TaskManager.addTask(eventTask);
         System.out.println("Got it. I've added this task:\n" + eventTask.describeTask());
-        System.out.println("\nNow you have " + Task.getTaskCount() + " tasks in the list.\n");
+        System.out.println("\nNow you have " + TaskManager.getTaskCount() + " tasks in the list.\n");
     }
 }
