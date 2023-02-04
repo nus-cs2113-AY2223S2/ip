@@ -37,36 +37,36 @@ public class Duke {
         System.out.println("____________________________________________________________");
     }
 
-    private static void executeDukeCommands(String line, ArrayList<Task> tasks) throws DukeException {
-        if (line.equalsIgnoreCase("list")) {
+    private static void executeDukeCommands(String command, ArrayList<Task> tasks) throws DukeException {
+        if (command.equalsIgnoreCase("list")) {
             printAllTasks(tasks);
-        } else if (line.toLowerCase().startsWith("mark")) {
+        } else if (command.toLowerCase().startsWith("mark")) {
             try {
-                markTaskAsComplete(line, tasks);
+                markTaskAsComplete(command, tasks);
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("☹ ERROR! You have no tasks to mark as complete.");
             }
-        } else if (line.toLowerCase().startsWith("unmark")) {
+        } else if (command.toLowerCase().startsWith("unmark")) {
             try {
-                markTaskAsNotComplete(line, tasks);
+                markTaskAsNotComplete(command, tasks);
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("☹ ERROR! You have no tasks to mark as not complete.");
             }
-        } else if (line.toLowerCase().startsWith("todo")) {
+        } else if (command.toLowerCase().startsWith("todo")) {
             try {
-                addTodo(line, tasks);
+                addTodo(command, tasks);
             } catch (StringIndexOutOfBoundsException e) {
                 System.out.println("☹ OOPS!! todo description cannot be empty!");
             }
-        } else if (line.toLowerCase().startsWith("deadline")) {
+        } else if (command.toLowerCase().startsWith("deadline")) {
             try {
-                addDeadline(line, tasks);
+                addDeadline(command, tasks);
             } catch (StringIndexOutOfBoundsException e) {
                 System.out.println("☹ Sorry! your deadline description is invalid!");
             }
-        } else if (line.toLowerCase().startsWith("event")) {
+        } else if (command.toLowerCase().startsWith("event")) {
             try {
-                addEvent(line, tasks);
+                addEvent(command, tasks);
             } catch (StringIndexOutOfBoundsException e) {
                 System.out.println("☹ Sorry! your event description is invalid!");
             }
