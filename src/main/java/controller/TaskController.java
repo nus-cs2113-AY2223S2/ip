@@ -74,6 +74,12 @@ public class TaskController {
         view.printTaskDescriptionText(model);
     }
 
+    /**
+     * Adds a deadline task into the database
+     *
+     * @param taskDescription The task description
+     * @throws Exception An exception if the task is invalid
+     */
     public void addDeadlineTask(String taskDescription) throws Exception {
         int index = taskDescription.indexOf("/by");
         String description = taskDescription.substring(0, index);
@@ -99,11 +105,9 @@ public class TaskController {
                 indexOfTo
         );
         String to = taskDescription.substring(indexOfTo + "/to ".length());
-        Event newEvent = new Event(description, from, to);
-        db.create(newEvent);
-        System.out.printf(
-                Message.TASK_ADDED.message,
-                newEvent.getDescriptionText()
-        );
+        Event model = new Event(description, from, to);
+        db.create(model);
+        System.out.printf(Message.TASK_ADDED.message);
+        view.printTaskDescriptionText(model);
     }
 }
