@@ -3,17 +3,17 @@ package constants;
 // Use of interface here as I am not creating any object
 public interface Command {
 
-  public static final String DEADLIINE = "deadline";
+  String DEADLINE = "deadline";
 
-  public static final String LIST = "list";
+  String LIST = "list";
 
-  public static final String TODO = "todo";
+  String TODO = "todo";
 
-  public static final String EVENT = "event";
+  String EVENT = "event";
 
-  public static final String MARK = "mark";
+  String MARK = "mark";
 
-  public static final String UNMARK = "unmark";
+  String UNMARK = "unmark";
 
-  public static final String BYE = "bye";
+  String BYE = "bye";
 }
