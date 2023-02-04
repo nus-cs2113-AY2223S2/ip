@@ -1,7 +1,11 @@
 package commands;
 
+import exceptions.ArchdukeException;
+import exceptions.ParserException;
+import exceptions.ParserException.ParserExceptionCode;
+
 public class Parser {
-    public static Command parse(String input) {
+    public static Command parse(String input) throws ArchdukeException {
         String[] options = input.split(" /");
 
         // Separating the main command from the parameters aka the body
@@ -28,6 +32,8 @@ public class Parser {
             case "by":
                 by = optionValue;
                 break;
+            default:
+                throw new ParserException(ParserExceptionCode.UNKNOWN_OPTION, optionName);
             }
         }
 

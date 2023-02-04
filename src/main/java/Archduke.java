@@ -1,5 +1,10 @@
 import commands.Command;
 import commands.Parser;
+import exceptions.ArchdukeException;
+import exceptions.ParserException;
+import exceptions.UserInputException;
+import exceptions.ParserException.ParserExceptionCode;
+import exceptions.UserInputException.UserInputExceptionCode;
 import io.In;
 import io.Out;
 import tasks.Store;
@@ -12,21 +17,27 @@ public class Archduke {
     private static In in;
     private static Store store;
 
-    private static void addTask(Task task) {
+    private static void handleCasesWhereSomethingHasGoneHorriblyWrong() {
+        System.out.println(
+                "Something has gone horribly wrong. Contact @joulev on GitHub immediately.");
+    }
+
+    private static void addTask(Task task) throws ArchdukeException {
         store.addTask(task);
         Out.printTaskAddition(task, store.getTaskCount());
     }
 
-    private static void toggleTaskCompleteness(String body) {
+    private static void toggleTaskCompleteness(String body) throws ArchdukeException {
         try {
             int index = Integer.parseInt(body) - 1;
             Task task = store.getTask(index);
             task.toggleCompleted();
             Out.printTaskCompleteness(store, index);
         } catch (NumberFormatException e) {
-            Out.printError("The provided index is not a valid integer.");
+            throw new UserInputException(UserInputExceptionCode.TOGGLE_INDEX_IS_NOT_A_NUMBER);
         } catch (IndexOutOfBoundsException e) {
-            Out.printError("The task can not be found.");
+            throw new UserInputException(UserInputExceptionCode.TOGGLE_INDEX_IS_OUT_OF_BOUNDS,
+                    Integer.toString(store.getTaskCount()));
         }
     }
 
@@ -34,34 +45,46 @@ public class Archduke {
         in = new In();
         store = new Store();
 
-        Out.greet();
+        try {
+            Out.greet();
+        } catch (ArchdukeException e) {
+            handleCasesWhereSomethingHasGoneHorriblyWrong();
+        }
 
         while (true) {
-            Command command = Parser.parse(in.readUserInput());
-            String type = command.getType();
+            try {
+                Command command = Parser.parse(in.readUserInput());
+                String type = command.getType();
 
-            switch (type) {
-            case "list":
-                Out.printTasks(store);
-                continue;
-            case "mark":
-            case "unmark":
-                toggleTaskCompleteness(command.getBody());
-                continue;
-            case "todo":
-                addTask(new ToDo(command.getBody()));
-                continue;
-            case "deadline":
-                addTask(new Deadline(command.getBody(), command.getBy()));
-                continue;
-            case "event":
-                addTask(new Event(command.getBody(), command.getFrom(), command.getTo()));
-                continue;
-            case "bye":
-                Out.bye();
-                return;
-            default:
-                Out.printError("\"%s\" is not a valid command. Try again.", type);
+                switch (type) {
+                case "list":
+                    Out.printTasks(store);
+                    continue;
+                case "mark":
+                case "unmark":
+                    toggleTaskCompleteness(command.getBody());
+                    continue;
+                case "todo":
+                    addTask(new ToDo(command.getBody()));
+                    continue;
+                case "deadline":
+                    addTask(new Deadline(command.getBody(), command.getBy()));
+                    continue;
+                case "event":
+                    addTask(new Event(command.getBody(), command.getFrom(), command.getTo()));
+                    continue;
+                case "bye":
+                    Out.bye();
+                    return;
+                default:
+                    throw new ParserException(ParserExceptionCode.UNKNOWN_COMMAND, type);
+                }
+            } catch (ArchdukeException exception) {
+                try {
+                    Out.printError(exception.getErrorString());
+                } catch (ArchdukeException somethingHasGoneHorriblyWrong) {
+                    handleCasesWhereSomethingHasGoneHorriblyWrong();
+                }
             }
         }
     }

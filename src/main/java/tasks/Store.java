@@ -2,6 +2,7 @@ package tasks;
 
 import java.util.Arrays;
 
+import exceptions.ArchdukeException;
 import io.Out;
 
 public class Store {
@@ -17,7 +18,7 @@ public class Store {
         this.tasks[length] = task;
     }
 
-    public void listTasks() {
+    public void listTasks() throws ArchdukeException {
         for (Task task : tasks) {
             Out.printf("  %s", task.toString());
         }
