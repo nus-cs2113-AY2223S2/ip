@@ -111,7 +111,8 @@ public class TaskController {
         counter += 1;
         Event model = new Event(description, from, to);
         db.create(model);
-        System.out.printf(Message.TASK_ADDED.message, counter);
+        System.out.println("Got it. I've added this task:");
         view.printTaskDescriptionText(model);
+        System.out.printf("Now you have %d tasks in the list.\n", counter);
     }
 }
