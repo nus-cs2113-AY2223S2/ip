@@ -2,10 +2,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
-    private enum State {
-        SUCCESS, EXIT, INVALID
-    }
-
     private static final String INDENT = "    ";
     private static final String LOGO = " ____        _        \n"
             + "|  _ \\ _   _| | _____ \n"
@@ -22,8 +18,7 @@ public class Duke {
     private static final String COMMAND_EVENT = "event";
 
     // data
-    private static Task[] tasks = new Task[100];
-    private static int numTasks = 0;
+    private static ArrayList<Task> tasks = new ArrayList<>();
 
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
@@ -31,58 +26,54 @@ public class Duke {
         greet();
 
         String input;
-        boolean programRunning = true;
         do {
             input = scan.nextLine();
-            printLine();
-            State result = executeInputCommand(input);
-            switch (result) {
-            case EXIT:
+            boolean isExit = input.split(" ")[0].equals(COMMAND_EXIT);
+            if (isExit) {
+                printLine();
                 handleStateExit();
-                programRunning = false;
-                break;
-            case INVALID:
-                handleStateInvalid();
                 break;
             }
-        } while (programRunning);
+            if (!input.isEmpty()) {
+                printLine();
+                executeInputCommand(input);
+            }
+        } while (true);
 
         scan.close();
     }
 
-    private static State executeInputCommand(String s) {
+    private static void executeInputCommand(String s) {
         Scanner input = new Scanner(s);
         String command = input.next().toLowerCase();
 
-        State finalState;
-        switch (command) {
-        case COMMAND_EXIT:
-            finalState = State.EXIT;
-            break;
-        case COMMAND_LIST:
-            finalState = handleCommandList();
-            break;
-        case COMMAND_MARK:
-            finalState = handleCommandMark(input);
-            break;
-        case COMMAND_UNMARK:
-            finalState = handleCommandUnmark(input);
-            break;
-        case COMMAND_TODO:
-            finalState = handleCommandTodo(input);
-            break;
-        case COMMAND_DEADLINE:
-            finalState = handleCommandDeadline(input);
-            break;
-        case COMMAND_EVENT:
-            finalState = handleCommandEvent(input);
-            break;
-        default:
-            printWithIndentation("Unrecognised command, try again.");
-            finalState = State.INVALID;
+        try {
+            switch (command) {
+            case COMMAND_LIST:
+                handleCommandList();
+                break;
+            case COMMAND_MARK:
+                handleCommandMark(input);
+                break;
+            case COMMAND_UNMARK:
+                handleCommandUnmark(input);
+                break;
+            case COMMAND_TODO:
+                handleCommandTodo(input);
+                break;
+            case COMMAND_DEADLINE:
+                handleCommandDeadline(input);
+                break;
+            case COMMAND_EVENT:
+                handleCommandEvent(input);
+                break;
+            default:
+                throw new InvalidInputException("Unrecognised command, try again.");
+            }
+        } catch (Exception e) {
+            printWithIndentation(e.getMessage());
+            printLine();
         }
-
-        return finalState;
     }
 
     private static void printWithIndentation(String s) {
@@ -109,24 +100,33 @@ public class Duke {
     }
 
     private static void addTask(Task taskObj) {
-        tasks[numTasks] = taskObj;
-        ++numTasks;
+        tasks.add(taskObj);
         String output = "Got it. I've added this task:\n"
                 + INDENT + taskObj.describe() + "\n"
-                + "Now you have " + numTasks + " tasks in the list";
+                + "Now you have " + tasks.size() + " tasks in the list";
         printWithIndentation(output);
         printLine();
     }
 
-    private static void setTaskStatus(int id, boolean isCompleted) {
-        tasks[id].setIsCompleted(isCompleted);
-        String output = isCompleted
-                        ? "Nice! I've marked this task as done:\n"
-                        : "OK, I've marked this task as not done yet:\n";
-        output += tasks[id].describe();
-        printWithIndentation(output);
-        printLine();
+    private static void setTaskStatus(int id, boolean isCompleted) throws InvalidInputException {
+        try {
+            if (id >= tasks.size() || id < 0) {
+                throw new IndexOutOfBoundsException();
+            }
+            tasks.get(id).setIsCompleted(isCompleted);
+            String output = isCompleted
+                            ? "Nice! I've marked this task as done:\n"
+                            : "OK, I've marked this task as not done yet:\n";
+            output += tasks.get(id).describe();
+            printWithIndentation(output);
+            printLine();
+        } catch (IndexOutOfBoundsException e) {
+            throw new InvalidInputException(tasks.size() == 0
+                                            ? "There are no tasks available."
+                                            : "Invalid task ID entered.");
+        }
     }
+
 
     private static String getTaskDetails(Scanner input) {
         // validate input
@@ -144,72 +144,70 @@ public class Duke {
         printLine();
     }
 
-    private static void handleStateInvalid() {
-        printWithIndentation("Invalid input, try again.");
-        printLine();
-    }
-
-    private static State handleCommandList() {
-        String output = "Here are the tasks in your list:\n";
+    private static void handleCommandList() {
+        String output = tasks.size() == 0
+                        ? "There are no tasks available."
+                        : "Here are the tasks in your list:\n";
+        // adds tasks to output, if any
         // combine details of tasks into a single string
-        for (int i = 0; i < numTasks; ++i) {
+        for (int i = 0; i < tasks.size(); ++i) {
             output += (i + 1)
                     + "." // number
-                    + tasks[i].describe() + "\n";
+                    + tasks.get(i).describe() + "\n";
         }
         printWithIndentation(output);
         printLine();
-        return State.SUCCESS;
     }
 
-    private static State handleCommandMark(Scanner input) {
+    private static void handleCommandMark(Scanner input) throws InvalidInputException {
+        if (!input.hasNextInt()) {
+            throw new InvalidInputException("Invalid task ID entered.");
+        }
         int taskNumber = input.nextInt();
         setTaskStatus(taskNumber - 1, true);
-        return State.SUCCESS;
     }
 
-    private static State handleCommandUnmark(Scanner input) {
+    private static void handleCommandUnmark(Scanner input) throws InvalidInputException {
+        if (!input.hasNextInt()) {
+            throw new InvalidInputException("Invalid task ID entered.");
+        }
         int taskNumber = input.nextInt();
         setTaskStatus(taskNumber - 1, false);
-        return State.SUCCESS;
     }
 
-    private static State handleCommandTodo(Scanner input) {
+    private static void handleCommandTodo(Scanner input) throws InvalidTaskFormatException {
         // check if input matches required specifications
         String taskDetails = getTaskDetails(input);
         if (taskDetails.equals("")) {
-            return State.INVALID;
+            throw new InvalidTaskFormatException(TaskEnum.TODO);
         }
 
         // create task
         ArrayList<String> detailsArr = ToDo.convertInputIntoDetails(taskDetails);
         addTask(new ToDo(detailsArr));
-        return State.SUCCESS;
     }
 
-    private static State handleCommandDeadline(Scanner input) {
+    private static void handleCommandDeadline(Scanner input) throws InvalidTaskFormatException {
         // check if input matches required specifications
         String taskDetails = getTaskDetails(input);
         if (taskDetails.equals("")) {
-            return State.INVALID;
+            throw new InvalidTaskFormatException(TaskEnum.DEADLINE);
         }
 
         // create task
         ArrayList<String> detailsArr = Deadline.convertInputIntoDetails(taskDetails);
         addTask(new Deadline(detailsArr));
-        return State.SUCCESS;
     }
 
-    private static State handleCommandEvent(Scanner input) {
+    private static void handleCommandEvent(Scanner input) throws InvalidTaskFormatException {
         // check if input matches required specifications
         String taskDetails = getTaskDetails(input);
         if (taskDetails.equals("")) {
-            return State.INVALID;
+            throw new InvalidTaskFormatException(TaskEnum.EVENT);
         }
 
         // create task
         ArrayList<String> detailsArr = Event.convertInputIntoDetails(taskDetails);
         addTask(new Event(detailsArr));
-        return State.SUCCESS;
     }
 }

@@ -27,10 +27,10 @@ public class Event extends Task {
         return Task.isValidInput(input, pattern);
     }
 
-    public static ArrayList<String> convertInputIntoDetails(String input) {
+    public static ArrayList<String> convertInputIntoDetails(String input) throws InvalidTaskFormatException {
         ArrayList<String> result = new ArrayList<>();
         if (!isValidInput(input)) {
-            return result;
+            throw new InvalidTaskFormatException(TaskEnum.EVENT);
         }
 
         int fromStartIndex = input.indexOf(KEYWORD_FROM);
