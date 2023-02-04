@@ -1,4 +1,5 @@
 import constants.Message;
+import constants.Command;
 import java.util.Scanner;
 import model.database.Database;
 import model.task.Deadline;
@@ -12,13 +13,7 @@ public class Duke {
 
   private static boolean isRunning = true;
 
-  public static final String DEADLIINE = "deadline";
 
-  public static final String LIST = "list";
-
-  public static final String TODO = "todo";
-
-  public static final String EVENT = "event";
 
   /**
    * Prints out all the tasks in the tasks array
@@ -130,28 +125,28 @@ public class Duke {
         String taskDescription;
 
         switch (command) {
-          case LIST:
+          case Command.LIST:
             printTasks();
             break;
-          case DEADLIINE:
+          case Command.DEADLIINE:
             taskDescription = words[1];
             addDeadlineTask(taskDescription);
             break;
-          case TODO:
+          case Command.TODO:
             taskDescription = words[1];
             addTodoTask(taskDescription);
             break;
-          case "event":
+          case Command.EVENT:
             taskDescription = words[1];
             addEventTask(taskDescription);
             break;
-          case "mark":
-          case "unmark":
+          case Command.MARK:
+          case Command.UNMARK:
             int index = Integer.parseInt(words[1]) - 1;
-            boolean isMark = words[0].equals("mark");
+            boolean isMark = words[0].equals(Command.MARK);
             toggleMark(isMark, index);
             break;
-          case "bye":
+          case Command.BYE:
             terminate();
             break;
           default:
