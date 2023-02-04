@@ -1,3 +1,4 @@
+package duke.exceptions;
 public class InvalidFormatException extends DukeException {
     private static final String exceptionMessage = "Wrong format! Please try again.";
 
