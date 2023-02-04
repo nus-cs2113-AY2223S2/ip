@@ -1,24 +1,23 @@
 public class Task {
     protected String description;
-    protected boolean isDone;
+    protected boolean isMarked;
 
     public Task(String description) {
         this.description = description;
-        this.isDone = false;
+        this.isMarked = false;
     }
 
     public String getStatusIcon() {
-
-        return (isDone ? "[/]" : "[ ]");
+        return (isMarked ? "[/]" : "[ ]");
     }
 
-    public void markAsDone() {
+    public void mark() {
 
-        this.isDone = true;
+        this.isMarked = true;
     }
 
-    public void unmarkAsNotDone() {
+    public void unmark() {
 
-        this.isDone = false;
+        this.isMarked = false;
     }
 }

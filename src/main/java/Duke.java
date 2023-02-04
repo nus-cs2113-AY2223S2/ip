@@ -1,9 +1,12 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
-    public static final int MAXTASKSIZE = 100;
+    private static int totalTasks = 0;
+    private static ArrayList<Task> tasks = new ArrayList<>();
+    private static Scanner in = new Scanner(System.in);
 
-    public static void printDuke() {
+    private static void printDuke() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -12,12 +15,12 @@ public class Duke {
         System.out.println("Hello from\n" + logo + "\n");
     }
 
-    public static String breakLine() {
-        return "------------------------------------------\n";
+    private static String breakLine() {
+        return "\t---------------------------------------------------\n";
     }
 
     // Greet
-    public static void greet() {
+    private static void greet() {
         System.out.println(breakLine()
                 + "Hello! I'm Momo :)\n"
                 + "What can I do for you?\n"
@@ -25,133 +28,129 @@ public class Duke {
     }
 
     // add a new task
-    public static void addTodo(Task[] tasks, int totalTasks, String taskInfo) {
-        tasks[totalTasks] = new Todo(taskInfo);
+    private static void addTodo(String taskInfo) {
+        Task newTask = new Todo(taskInfo);
+        tasks.add(newTask);
         System.out.print(breakLine()
-                + "added: \n\t" + tasks[totalTasks].toString() + '\n'
-                + "(total: " + (totalTasks + 1) + " tasks)\n"
+                + "\tadded: \n\t\t" + newTask + '\n'
+                + "\t(total: " + (totalTasks + 1) + " tasks)\n"
                 + breakLine());
     }
 
-    // add a new deadline
-    public static void addDeadline(Task[] tasks, int totalTasks, String taskInfo) {
+    // create deadline
+    private static Deadline createDeadline(String taskInfo) {
         String description, deadline;
         String[] info = taskInfo.split("#by", 2);
         description = info[0];
         deadline = info[1];
-        tasks[totalTasks] = new Deadline(description, deadline);
+        return new Deadline(description, deadline);
+    }
+
+    // add a new deadline
+    private static void addDeadline(String taskInfo) {
+        Task newTask = createDeadline(taskInfo);
+        tasks.add(newTask);
         System.out.print(breakLine()
-                + "added: \n\t" + tasks[totalTasks].toString() + '\n'
-                + "(total: " + (totalTasks + 1) + " tasks)\n"
+                + "\tadded: \n\t\t" + newTask + '\n'
+                + "\t(total: " + (totalTasks + 1) + " tasks)\n"
                 + breakLine());
     }
 
-    // add a new event
-    public static void addEvent(Task[] tasks, int totalTasks, String taskInfo) {
+    // create new event
+    private static Event createEvent(String taskInfo) {
         String description, from, to;
         String[] info = taskInfo.split("#from", 2);
         description = info[0];
         info = info[1].split("#to", 2);
         from = info[0];
         to = info[1];
-        tasks[totalTasks] = new Event(description, from, to);
+        return new Event(description, from, to);
+    }
+
+    // add a new event
+    private static void addEvent(String taskInfo) {
+        Task newTask = createEvent(taskInfo);
+        tasks.add(newTask);
         System.out.print(breakLine()
-                + "added: \n\t" + tasks[totalTasks].toString() + '\n'
-                + "(total: " + (totalTasks + 1) + " tasks)\n"
+                + "\tadded: \n\t\t" + newTask + '\n'
+                + "\t(total: " + (totalTasks + 1) + " tasks)\n"
                 + breakLine());
     }
 
     // list all tasks
-    public static void listTask(Task[] tasks, int totalTask) {
-        System.out.print(breakLine());
-        System.out.println("These are the tasks you have (" + totalTask + " tasks):");
-        for (int i = 0; i < totalTask; i++) {
-            Task currentTask = tasks[i];
-            System.out.print((i + 1) + ". " + currentTask.toString() + '\n');
+    private static void listTask() {
+        System.out.println(breakLine() + "\tThese are the tasks you have (" + tasks.size() + " tasks):");
+        int order = 1;
+        for (Task task: tasks) {
+            System.out.print("\t" + order + ". " + task.toString() + '\n');
+            order++;
         }
         System.out.print(breakLine());
     }
 
     // mark the task
-    public static void markTask(Task[] tasks, int taskNumber) {
-        Task currentTask = tasks[taskNumber];
-        currentTask.markAsDone();
+    private static void markTask(String taskNumber) {
+        int taskIdx = Integer.parseInt(taskNumber) - 1;
+        Task currentTask = tasks.get(taskIdx);
+        currentTask.mark();
         System.out.print(breakLine()
-                + "Nice! I've marked this task as done :D\n"
-                + currentTask.getStatusIcon() + " " + currentTask.description + '\n'
+                + "\tNice! I've marked this task as done :D\n\t\t"
+                + currentTask + '\n'
                 + breakLine());
     }
 
     // unmark the task
-    public static void unmarkTask(Task[] tasks, int taskNumber) {
-        Task currentTask = tasks[taskNumber];
-        currentTask.unmarkAsNotDone();
+    private static void unmarkTask(String taskNumber) {
+        int taskIdx = Integer.parseInt(taskNumber) - 1;
+        Task currentTask = tasks.get(taskIdx);
+        currentTask.mark();
         System.out.print(breakLine()
-                + "Oh. I've unmarked this task as not done yet :(\n"
-                + currentTask.getStatusIcon() + " " + currentTask.description + '\n'
+                + "\tOh. I've unmarked this task as not done yet :(\n\t"
+                + currentTask + '\n'
                 + breakLine());
     }
 
     // read input
-    public static String readInput() {
+    private static String readInput() {
         System.out.print(">> ");
-        Scanner in = new Scanner(System.in);
         return in.nextLine();
     }
 
     // exit
-    public static void exit() {
+    private static void exit() {
         System.out.print(breakLine()
-                + "Ba-bye. Hope to see you again soon :)\n"
+                + "\tBa-bye. Hope to see you again soon :)\n\t"
                 + breakLine());
     }
 
     public static void main(String[] args) {
-        Task[] tasks = new Task[MAXTASKSIZE];
-        int totalTasks = 0;
-        int taskNumber;
-        String command, input, taskInfo = null;
-        String[] splitedInput;
+        String command, input;
+        String[] inputArgs;
 
         printDuke();
         greet();
 
         while (true) {
             input = readInput();
-            splitedInput = input.split(" ", 2);
-            command = splitedInput[0];
-            if (splitedInput.length > 1) {
-                taskInfo = splitedInput[1];
-            }
+            inputArgs = input.split(" ", 2);
+            command = inputArgs[0];
 
-            switch (command) {
-            case "bye":
-                exit();
+            if (command.equals("bye")) {
                 break;
-            case "list":
-                listTask(tasks, totalTasks);
-                break;
-            case "mark":
-                taskNumber = Integer.parseInt(taskInfo) - 1;
-                markTask(tasks, taskNumber);
-                break;
-            case "unmark":
-                taskNumber = Integer.parseInt(taskInfo) - 1;
-                unmarkTask(tasks, taskNumber);
-                break;
-            case "todo":
-                addTodo(tasks, totalTasks, taskInfo);
-                totalTasks++;
-                break;
-            case "deadline":
-                addDeadline(tasks, totalTasks, taskInfo);
-                totalTasks++;
-                break;
-            case "event":
-                addEvent(tasks, totalTasks, taskInfo);
-                totalTasks++;
-                break;
+            } else if (command.equals("list")) {
+                listTask();
+            } else if (command.equals("mark")) {
+                markTask(inputArgs[1]);
+            } else if (command.equals("unmark")) {
+                unmarkTask(inputArgs[1]);
+            } else if (command.equals("todo")) {
+                addTodo(inputArgs[1]);
+            } else if (command.equals("deadline")) {
+                addDeadline(inputArgs[1]);
+            } else if (command.equals("event")) {
+                addEvent(inputArgs[1]);
             }
         }
+        exit();
     }
 }
