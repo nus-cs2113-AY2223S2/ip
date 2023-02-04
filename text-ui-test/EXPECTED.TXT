@@ -10,7 +10,9 @@ How can I help you?
 
 Here are some possibly useful commands:
 --------------------------------------------
-/todo {description} - Add a specific task to ur task list.
+/todo {description} - Add a todo task to ur task list.
+/deadline {description} - Add a deadline task to ur task list.
+/event {description} - Add an event task to ur task list.
 /list - List out all the tasks in ur task list.
 /mark {numerical index} - Mark a specific task done.
 /unmark {numerical index} - Mark a specific task undone.

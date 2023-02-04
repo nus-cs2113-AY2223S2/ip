@@ -1,9 +1,14 @@
 public class Deadline extends Task {
     protected String cutoffDate;
 
-    public Deadline(String description, String cutoffDate) {
-        super(description);
-        this.cutoffDate = cutoffDate;
+    public Deadline(String userInput) {
+        super();
+        String[] userInputArray;
+        userInputArray = userInput.split("/by", 2);
+        String deadlineDescription = userInputArray[0].split("/deadline", 2)[1].trim();
+        String deadlineCutoff = userInputArray[1].trim();
+        this.cutoffDate = deadlineCutoff;
+        super.description = deadlineDescription;
     }
 
     @Override

@@ -44,76 +44,35 @@ public class Duke {
         System.out.println(LINE);
     }
 
-    public static void addTodo(String[] userInputArray) {
-        String taskDescription = "";
-        for (int i = 1; i < userInputArray.length; i++) {
-            taskDescription = taskDescription.concat(userInputArray[i]);
-            if (i != userInputArray.length - 1) {
-                taskDescription = taskDescription.concat(" ");
-            }
-        }
-        Task t = new Todo(taskDescription);
-        userTaskList[userTaskCount] = t;
-        userTaskCount++;
-        System.out.println(LINE);
-        System.out.println("Added the following task [TYPE: TODO]: " + taskDescription);
-        System.out.println(LINE);
-    }
-
-    public static void addDeadline(String[] userInputArray) {
-        if (!userInput.contains("/by")) {
-            reportError("Please specify a deadline via the /by command!");
-            return;
-        }
-        userInputArray = userInput.split("/by", 2);
-        String deadlineDescription = userInputArray[0].split("/deadline", 2)[1].trim();
-        String deadlineCutoff = userInputArray[1].trim();
-        Task d = new Deadline(deadlineDescription, deadlineCutoff);
-        userTaskList[userTaskCount] = d;
-        userTaskCount++;
-        System.out.println(LINE);
-        System.out.println(
-                "Added the following task [TYPE: DEADLINE]:\n" + deadlineDescription + " (To be completed by: "
-                        + deadlineCutoff
-                        + ")");
-        System.out.println(LINE);
-    }
-
-    public static void addEvent(String[] userInputArray) {
-        if (!userInput.contains("/start") || !userInput.contains("/end")) {
-            reportError("Please specify both start and end dates/times via the /start and /end commands!");
-            return;
-        }
-        userInputArray = userInput.split("/start", 2);
-        String eventDescription = userInputArray[0].split("/event", 2)[1].trim();
-        String eventStartTime = userInputArray[1].split("/end", 2)[0].trim();
-        String eventEndTime = userInputArray[1].split("/end", 2)[1].trim();
-        Task d = new Event(eventDescription, eventStartTime, eventEndTime);
-        userTaskList[userTaskCount] = d;
-        userTaskCount++;
-        System.out.println(LINE);
-        System.out.println("Added the following task [TYPE: EVENT]:\n" + eventDescription + " (Start: " + eventStartTime
-                + " | End: " + eventEndTime
-                + ")");
-        System.out.println(LINE);
-    }
-
     public static void addTask(String[] userInputArray, taskType variation) {
-        // check if task description is left empty
+        /** Check if task description is left empty **/
         if (userInputArray.length == 1) {
             reportError("Please enter a description for your task!");
             return;
         }
-        // handle different task types
+        /** Handle different task types **/
         if (variation == taskType.TODO) {
-            // HANDLE TODO
-            addTodo(userInputArray);
+            /** Handle todo tasks **/
+            userTaskList[userTaskCount] = new Todo(userInput);
         } else if (variation == taskType.DEADLINE) {
-            // HANDLE DEADLINE
-            addDeadline(userInputArray);
+            /** Handle deadline tasks **/
+            if (!userInput.contains("/by")) {
+                reportError("Please specify a deadline via the /by command!");
+                return;
+            }
+            userTaskList[userTaskCount] = new Deadline(userInput);
         } else if (variation == taskType.EVENT) {
-            addEvent(userInputArray);
+            /** Handle event tasks **/
+            if (!userInput.contains("/start") || !userInput.contains("/end")) {
+                reportError("Please specify both start and end dates/times via the /start and /end commands!");
+                return;
+            }
+            userTaskList[userTaskCount] = new Event(userInput);
         }
+        System.out.println(LINE);
+        System.out.println("Added the following task:\n" + userTaskList[userTaskCount]);
+        System.out.println(LINE);
+        userTaskCount++;
 
     }
 
@@ -168,7 +127,7 @@ public class Duke {
 
     public static void processUserInput() {
         userInput = scan.nextLine();
-        // handle single-word input commands with no arguments
+        /** Handle single-word input commands with no arguments **/
         if (userInput.equals("/bye")) {
             goodbyeUser();
             scan.close();
@@ -177,7 +136,7 @@ public class Duke {
         if (userInput.equals("/list")) {
             listTasks();
         } else {
-            // handle multi-word input commands with required arguments
+            /** Handle multi-word input commands with required arguments **/
             String[] userInputArray = userInput.split(" ");
             if (userInputArray[0].equals("/todo")) {
                 addTask(userInputArray, taskType.TODO);
@@ -190,7 +149,7 @@ public class Duke {
             } else if (userInputArray[0].equals("/unmark")) {
                 unmarkTask(userInputArray);
             } else {
-                // handle non-command inputs
+                /** Handle non-command inputs **/
                 echo(userInput);
             }
         }
