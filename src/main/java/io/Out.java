@@ -102,9 +102,7 @@ public class Out {
         System.out.print(BoxDrawingCharacter.VERTICAL_LINE + " ");
         for (String word : words) {
             if (word.length() > maxStringWidth) {
-                // I should probably handle this too, to cater for ridiculously long words that
-                // chemists manage to come up with.
-                throw new IllegalArgumentException("Word too long to fit in box: " + word);
+                word = word.substring(0, maxStringWidth - 3) + "...";
             }
             if (currentLineLength + word.length() > maxStringWidth) {
                 printBoxRightBorder(maxStringWidth - currentLineLength);
