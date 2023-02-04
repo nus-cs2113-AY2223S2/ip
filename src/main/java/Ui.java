@@ -45,7 +45,7 @@ public class Ui {
 
     public static void printPromptValidTask() {
         System.out.println(Messages.MESSAGE_DIVIDER);
-        System.out.println(Messages.MESSAGE_PROMPT_VALID_TASK);
+        System.out.println(Messages.MESSAGE_PROMPT_VALID_INPUT);
         System.out.println(Messages.MESSAGE_DIVIDER);
     }
     public static void printPromptValidDeadLine() {
@@ -67,12 +67,12 @@ public class Ui {
 
     public static void printPromptValidDeadLineEntry() {
         System.out.println(Messages.MESSAGE_DIVIDER);
-        System.out.println(Messages.MESSAGE_PROMPT_VALID_DEAD_LINE_ENTRY);
+        System.out.println(Messages.MESSAGE_PROMPT_VALID_DEAD_LINE_ENTRY_AFTER_SLASH);
         System.out.println(Messages.MESSAGE_DIVIDER);
     }
     public static void printPromptValidEventEntry() {
         System.out.println(Messages.MESSAGE_DIVIDER);
-        System.out.println(Messages.MESSAGE_PROMPT_VALID_EVENT_ENTRY);
+        System.out.println(Messages.MESSAGE_PROMPT_VALID_EVENT_ENTRY_AFTER_SLASH);
         System.out.println(Messages.MESSAGE_DIVIDER);
     }
 

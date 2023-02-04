@@ -1,14 +1,7 @@
 public class Util {
     protected static final int INDEX_BEGIN = 0;
     protected static final int INDEX_OFFSET_IN_COMMAND = 1;
-    public static boolean isEmpty(String[] userString) {
-        for (String s : userString) {
-            if (s.isEmpty()) {
-                return true;
-            }
-        }
-        return false;
-    }
+
     public static int fetchMarkIndex(String userString) {
         return Integer.parseInt(userString) - INDEX_OFFSET_IN_COMMAND;
     }
@@ -35,10 +28,13 @@ public class Util {
         return userString.substring(firstSlashEntry + INDEX_OFFSET_IN_COMMAND);
     }
 
-    public static String fetchFrom(String userString) {
+    public static String fetchFrom(String userString) throws EmptyUserInputException {
         int firstSlashEntry = userString.indexOf("/");
         int secondSlashEntry = userString.lastIndexOf("/");
-        return userString.substring(firstSlashEntry + INDEX_OFFSET_IN_COMMAND, secondSlashEntry);
+        if (firstSlashEntry != secondSlashEntry) {
+            return userString.substring(firstSlashEntry + INDEX_OFFSET_IN_COMMAND, secondSlashEntry);
+        }
+        throw new EmptyUserInputException();
     }
 
     public static String fetchTo(String userString) {

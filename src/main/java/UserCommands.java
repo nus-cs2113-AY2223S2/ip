@@ -16,6 +16,8 @@ public class UserCommands {
     public static final String UNMARK = "unmark";
     public static final String LIST = "list";
     public static final String BYE = "bye";
+    public static final int INDEX_COMMAND = 0;
+    public static final int INDEX_ENTRY = 1;
     public static final int USER_STRING_SPLIT_LIMIT = 2;
 
     public static String[] readCommand() {
@@ -35,7 +37,7 @@ public class UserCommands {
         do {
 
             userString = readCommand();
-            command = userString[0];
+            command = userString[INDEX_COMMAND];
 
             switch (command) {
 
@@ -43,7 +45,7 @@ public class UserCommands {
 
                 try {
 
-                    entry = userString[1];
+                    entry = userString[INDEX_ENTRY];
 
                     ExceptionManager.checkEmptyUserInput(entry);
 
@@ -62,7 +64,7 @@ public class UserCommands {
 
                 try {
 
-                    entry = userString[1];
+                    entry = userString[INDEX_ENTRY];
                     task = Util.fetchTask(entry);
                     deadLine = Util.fetchDeadLine(entry);
 
@@ -74,10 +76,10 @@ public class UserCommands {
 
                 } catch (ArrayIndexOutOfBoundsException e) {
                     Ui.printPromptValidTask();
-                } catch (StringIndexOutOfBoundsException e) {
-                    Ui.printPromptValidDeadLine();
                 } catch (EmptyUserInputException e) {
                     Ui.printPromptValidDeadLineEntry();
+                } catch (StringIndexOutOfBoundsException e) {
+                    Ui.printPromptValidDeadLine();
                 }
                 break;
 
@@ -85,7 +87,7 @@ public class UserCommands {
 
                 try {
 
-                    entry = userString[1];
+                    entry = userString[INDEX_ENTRY];
                     task = Util.fetchTask(entry);
                     from = Util.fetchFrom(entry);
                     to = Util.fetchTo(entry);
@@ -98,10 +100,10 @@ public class UserCommands {
 
                 } catch (ArrayIndexOutOfBoundsException e) {
                     Ui.printPromptValidTask();
-                } catch (StringIndexOutOfBoundsException e) {
-                    Ui.printPromptValidEvent();
                 } catch (EmptyUserInputException e) {
                     Ui.printPromptValidEventEntry();
+                } catch (StringIndexOutOfBoundsException e) {
+                    Ui.printPromptValidEvent();
                 }
                 break;
 
@@ -119,7 +121,7 @@ public class UserCommands {
             case MARK:
 
                 try {
-                    entry = userString[1];
+                    entry = userString[INDEX_ENTRY];
 
                     ExceptionManager.checkEmptyUserInput(entry);
 
@@ -138,7 +140,7 @@ public class UserCommands {
             case UNMARK:
 
                 try {
-                    entry = userString[1];
+                    entry = userString[INDEX_ENTRY];
 
                     ExceptionManager.checkEmptyUserInput(entry);
 
@@ -152,6 +154,10 @@ public class UserCommands {
                 } catch (EmptyUserInputException e) {
                     Ui.printPromptValidUnMarkEntry();
                 }
+                break;
+
+            case BYE:
+
                 break;
 
             default:
