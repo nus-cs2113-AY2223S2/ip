@@ -118,9 +118,9 @@ public class Duke {
     private static void printAllTasks(ArrayList<Task> tasks) {
         System.out.println(" Here are the tasks in your list:");
         int index = 1;
-        for (Task task : tasks) {
+        for (Task userTask : tasks) {
             //print Task Description
-            System.out.println("  " + index + "." + task.toString());
+            System.out.println("  " + index + "." + userTask.toString());
             index++;
         }
     }
