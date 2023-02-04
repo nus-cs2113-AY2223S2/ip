@@ -3,11 +3,14 @@ import java.util.Scanner;
 
 public class Duke {
     private static final String INDENT = "    ";
+    private static final String LINE = "____________________________________________________________";
     private static final String LOGO = " ____        _        \n"
             + "|  _ \\ _   _| | _____ \n"
             + "| | | | | | | |/ / _ \\\n"
             + "| |_| | |_| |   <  __/\n"
             + "|____/ \\__,_|_|\\_\\___|\n";
+    private static final String CHAR_SPACE = " ";
+
     // commands
     private static final String COMMAND_EXIT = "bye";
     private static final String COMMAND_LIST = "list";
@@ -16,6 +19,17 @@ public class Duke {
     private static final String COMMAND_TODO = "todo";
     private static final String COMMAND_DEADLINE = "deadline";
     private static final String COMMAND_EVENT = "event";
+
+    // messages
+    private static final String MESSAGE_COMMAND_UNRECOGNISED = "Unrecognised command, try again.";
+    private static final String MESSAGE_EXIT = "Bye. Hope to see you again soon!";
+    private static final String MESSAGE_GREET = "Hello! I'm Duke\nWhat can I do for you?";
+    private static final String MESSAGE_LOGO = "Hello from";
+    private static final String MESSAGE_TASKS_AVAILABLE = "Here are the tasks in your list:";
+    private static final String MESSAGE_TASKS_INVALID_ID = "Invalid task ID entered.";
+    private static final String MESSAGE_TASKS_MARKED = "Nice! I've marked this task as done:";
+    private static final String MESSAGE_TASKS_NONE = "There are no tasks available.";
+    private static final String MESSAGE_TASKS_UNMARKED = "OK, I've marked this task as not done yet:";
 
     // data
     private static ArrayList<Task> tasks = new ArrayList<>();
@@ -28,7 +42,7 @@ public class Duke {
         String input;
         do {
             input = scan.nextLine();
-            boolean isExit = input.split(" ")[0].equals(COMMAND_EXIT);
+            boolean isExit = input.split(CHAR_SPACE)[0].equals(COMMAND_EXIT);
             if (isExit) {
                 printLine();
                 handleStateExit();
@@ -68,7 +82,7 @@ public class Duke {
                 handleCommandEvent(input);
                 break;
             default:
-                throw new InvalidInputException("Unrecognised command, try again.");
+                throw new InvalidInputException(MESSAGE_COMMAND_UNRECOGNISED);
             }
         } catch (Exception e) {
             printWithIndentation(e.getMessage());
@@ -85,17 +99,16 @@ public class Duke {
     }
 
     private static void printLine() {
-        printWithIndentation("____________________________________________________________\n");
+        printWithIndentation(LINE + "\n");
     }
 
     private static void printLogo() {
-        printWithIndentation("Hello from\n" + LOGO);
+        printWithIndentation(MESSAGE_LOGO + "\n" + LOGO);
         printLine();
     }
 
     private static void greet() {
-        printWithIndentation("Hello! I'm Duke\n"
-                                     + "What can I do for you?");
+        printWithIndentation(MESSAGE_GREET);
         printLine();
     }
 
@@ -115,15 +128,15 @@ public class Duke {
             }
             tasks.get(id).setIsCompleted(isCompleted);
             String output = isCompleted
-                            ? "Nice! I've marked this task as done:\n"
-                            : "OK, I've marked this task as not done yet:\n";
+                            ? MESSAGE_TASKS_MARKED + "\n"
+                            : MESSAGE_TASKS_UNMARKED + "\n";
             output += tasks.get(id).describe();
             printWithIndentation(output);
             printLine();
         } catch (IndexOutOfBoundsException e) {
             throw new InvalidInputException(tasks.size() == 0
-                                            ? "There are no tasks available."
-                                            : "Invalid task ID entered.");
+                                            ? MESSAGE_TASKS_NONE
+                                            : MESSAGE_TASKS_INVALID_ID);
         }
     }
 
@@ -140,19 +153,18 @@ public class Duke {
     }
 
     private static void handleStateExit() {
-        printWithIndentation("Bye. Hope to see you again soon!");
+        printWithIndentation(MESSAGE_EXIT);
         printLine();
     }
 
     private static void handleCommandList() {
         String output = tasks.size() == 0
-                        ? "There are no tasks available."
-                        : "Here are the tasks in your list:\n";
+                        ? MESSAGE_TASKS_NONE
+                        : MESSAGE_TASKS_AVAILABLE + "\n";
         // adds tasks to output, if any
         // combine details of tasks into a single string
         for (int i = 0; i < tasks.size(); ++i) {
-            output += (i + 1)
-                    + "." // number
+            output += (i + 1) + "." // number
                     + tasks.get(i).describe() + "\n";
         }
         printWithIndentation(output);
@@ -161,7 +173,7 @@ public class Duke {
 
     private static void handleCommandMark(Scanner input) throws InvalidInputException {
         if (!input.hasNextInt()) {
-            throw new InvalidInputException("Invalid task ID entered.");
+            throw new InvalidInputException(MESSAGE_TASKS_INVALID_ID);
         }
         int taskNumber = input.nextInt();
         setTaskStatus(taskNumber - 1, true);
@@ -169,7 +181,7 @@ public class Duke {
 
     private static void handleCommandUnmark(Scanner input) throws InvalidInputException {
         if (!input.hasNextInt()) {
-            throw new InvalidInputException("Invalid task ID entered.");
+            throw new InvalidInputException(MESSAGE_TASKS_INVALID_ID);
         }
         int taskNumber = input.nextInt();
         setTaskStatus(taskNumber - 1, false);
