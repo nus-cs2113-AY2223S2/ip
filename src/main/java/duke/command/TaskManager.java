@@ -8,7 +8,7 @@ import duke.exceptions.ListTooLarge;
 public class TaskManager {
     private Task[] taskList;
     private int listSize;
-    private static final int MAX_LIST_SIZE = 1;
+    private static final int MAX_LIST_SIZE = 3;
 
     public TaskManager() {
         this.listSize = 0;
