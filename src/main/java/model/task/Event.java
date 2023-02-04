@@ -1,4 +1,4 @@
-package task;
+package model.task;
 /**
  * Represents an event with a start and end time
  * 

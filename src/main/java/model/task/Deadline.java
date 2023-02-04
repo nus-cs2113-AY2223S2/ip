@@ -1,4 +1,4 @@
-package task;
+package model.task;
 /**
  * Represents a task with a deadline
  *

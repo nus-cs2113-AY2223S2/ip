@@ -1,4 +1,4 @@
-package task;
+package model.task;
 public class Task {
     private boolean isDone;
     private final String taskName;
