@@ -1,9 +1,14 @@
+package duke;
+
+import duke.exceptions.DukeException;
+import duke.ui.Ui;
+
 public class Duke {
     public static void main(String[] args) {
 
-        Io.printWelcome();
+        Ui.printWelcome();
         try {
-            Io.getInput();
+            Ui.getInput();
         } catch (DukeException e) {
             System.out.println(e.getMessage());
         }

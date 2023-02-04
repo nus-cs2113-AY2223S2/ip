@@ -1,6 +1,11 @@
+package duke.ui;
 import java.util.Scanner;
+import duke.commands.Command;
+import duke.exceptions.InvalidCommandException;
+import duke.exceptions.InvalidFormatException;
+import duke.exceptions.InvalidTaskException;
 
-public class Io {
+public class Ui {
     public static final String LOGO = "\t ____        _        \n"
             + "\t|  _ \\ _   _| | _____ \n"
             + "\t| | | | | | | |/ / _ \\\n"
@@ -39,7 +44,7 @@ public class Io {
             String inputString = input.nextLine();
             String[] inputArray = inputString.split(" ", 2);
 
-            Manager.handleCommand(inputArray);
+            Command.handleCommand(inputArray);
         }
         input.close();
     }

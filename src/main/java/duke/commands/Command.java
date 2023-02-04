@@ -1,4 +1,15 @@
-public class Manager {
+package duke.commands;
+
+import duke.exceptions.InvalidCommandException;
+import duke.exceptions.InvalidFormatException;
+import duke.exceptions.InvalidTaskException;
+import duke.tasks.Deadline;
+import duke.tasks.Event;
+import duke.tasks.Task;
+import duke.tasks.Todo;
+import duke.ui.Ui;
+
+public class Command {
     private static Task[] taskList = new Task[100];
     private static int listSize = 0;
 
@@ -14,7 +25,7 @@ public class Manager {
         String sizeMessage = "\tNow you have " + listSize + " tasks in the list.";
 
         String[] messagePacket = {addedMessage, sizeMessage};
-        Io.printMessage(messagePacket);
+        Ui.printMessage(messagePacket);
     }
 
     public static void markTask(int taskNum) {
@@ -29,7 +40,7 @@ public class Manager {
                 "\tNice! I've marked this task as done:\n" + "\t  " + currentTask.toString();
 
         String[] messagePacket = {markMessage};
-        Io.printMessage(messagePacket);
+        Ui.printMessage(messagePacket);
     }
 
     public static void unmarkTask(int taskNum) {
@@ -44,7 +55,7 @@ public class Manager {
                 "\tOK, I've marked this task as not done yet:\n" + "\t  " + currentTask.toString();
 
         String[] messagePacket = {unmarkMessage};
-        Io.printMessage(messagePacket);
+        Ui.printMessage(messagePacket);
     }
 
     public static void printTasks() {
@@ -56,7 +67,7 @@ public class Manager {
             String line = "\t" + (i + 1) + ". " + taskList[i];
             messagePacket[messageCount++] = line;
         }
-        Io.printMessage(messagePacket);
+        Ui.printMessage(messagePacket);
     }
 
     public static void handleCommand(String[] inputArray) throws InvalidCommandException, InvalidTaskException, InvalidFormatException {
@@ -122,7 +133,7 @@ public class Manager {
                 break;
 
             case "bye":
-                Io.printExit();
+                Ui.printExit();
                 System.exit(0);
                 break;
 
