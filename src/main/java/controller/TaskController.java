@@ -85,8 +85,11 @@ public class TaskController {
         String description = taskDescription.substring(0, index);
         String endDuration = taskDescription.substring(index + "/by ".length());
         Deadline model = new Deadline(description, endDuration);
+        counter += 1;
         db.create(model);
-        System.out.printf(Message.TASK_ADDED.message, model.getDescriptionText());
+        System.out.println("Got it. I've added this task:");
+        view.printTaskDescriptionText(model);
+        System.out.printf("Now you have %d tasks in the list.\n", counter);
     }
 
     /**
@@ -105,9 +108,10 @@ public class TaskController {
                 indexOfTo
         );
         String to = taskDescription.substring(indexOfTo + "/to ".length());
+        counter += 1;
         Event model = new Event(description, from, to);
         db.create(model);
-        System.out.printf(Message.TASK_ADDED.message);
+        System.out.printf(Message.TASK_ADDED.message, counter);
         view.printTaskDescriptionText(model);
     }
 }
