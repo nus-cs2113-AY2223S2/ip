@@ -1,6 +1,6 @@
-public class Task {
 package duke.tasks;
 
+public abstract class Task {
     private String name;
     private boolean completionStatus;
     private String taskType;
