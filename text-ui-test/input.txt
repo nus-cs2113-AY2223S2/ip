@@ -14,5 +14,7 @@ mark 2
 mark 100
 unmark 1
 list
+delete 2
+list
 bye
 ignored-command

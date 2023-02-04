@@ -36,9 +36,23 @@ public class Archduke {
             task.toggleCompleted();
             Out.printTaskCompleteness(store, index);
         } catch (NumberFormatException e) {
-            throw new UserInputException(UserInputExceptionCode.TOGGLE_INDEX_IS_NOT_A_NUMBER);
+            throw new UserInputException(UserInputExceptionCode.INDEX_IS_NOT_A_NUMBER);
         } catch (IndexOutOfBoundsException e) {
-            throw new UserInputException(UserInputExceptionCode.TOGGLE_INDEX_IS_OUT_OF_BOUNDS,
+            throw new UserInputException(UserInputExceptionCode.INDEX_IS_OUT_OF_BOUNDS,
+                    Integer.toString(store.getTaskCount()));
+        }
+    }
+
+    private static void deleteTask(String body) throws ArchdukeException {
+        try {
+            int index = Integer.parseInt(body) - 1;
+            Task task = store.getTask(index);
+            store.deleteTask(index);
+            Out.printTaskDeletion(task, store.getTaskCount());
+        } catch (NumberFormatException e) {
+            throw new UserInputException(UserInputExceptionCode.INDEX_IS_NOT_A_NUMBER);
+        } catch (IndexOutOfBoundsException e) {
+            throw new UserInputException(UserInputExceptionCode.INDEX_IS_OUT_OF_BOUNDS,
                     Integer.toString(store.getTaskCount()));
         }
     }
@@ -65,6 +79,9 @@ public class Archduke {
                 case "mark":
                 case "unmark":
                     toggleTaskCompleteness(command.getBody());
+                    continue;
+                case "delete":
+                    deleteTask(command.getBody());
                     continue;
                 case "todo":
                     addTask(new ToDo(command.getBody()));

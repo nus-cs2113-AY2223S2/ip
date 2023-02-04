@@ -12,8 +12,12 @@ public class Store {
         this.tasks = new ArrayList<>();
     }
 
-    public void addTask(Task task) {
-        this.tasks.add(task);
+    public Task getTask(int index) {
+        return tasks.get(index);
+    }
+
+    public int getTaskCount() {
+        return this.tasks.size();
     }
 
     public void listTasks() throws ArchdukeException {
@@ -23,11 +27,11 @@ public class Store {
         Out.printf("You have %d task(s) in the list.", getTaskCount());
     }
 
-    public Task getTask(int index) {
-        return tasks.get(index);
+    public void addTask(Task task) {
+        this.tasks.add(task);
     }
 
-    public int getTaskCount() {
-        return this.tasks.size();
+    public void deleteTask(int index) {
+        this.tasks.remove(index);
     }
 }

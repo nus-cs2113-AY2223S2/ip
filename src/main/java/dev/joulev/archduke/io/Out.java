@@ -160,4 +160,12 @@ public class Out {
         printf("  %s", task.toString());
         printBoxBottomBorder();
     }
+
+    public static void printTaskDeletion(Task task, int storeSize) throws ArchdukeException {
+        printBoxTopBorder();
+        printf("The following task has been deleted:");
+        printf("  %s", task.toString());
+        printf("You now have %d task(s) in the list.", storeSize);
+        printBoxBottomBorder();
+    }
 }
