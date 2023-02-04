@@ -1,21 +1,41 @@
 import java.util.Scanner;
 
 public class UserCommands {
+
     public static Scanner input = new Scanner(System.in);
+
     public static String[] userString;
+
     public static String command;
+
     public static String entry;
+
     public static String task;
+
     public static String deadLine;
+
     public static String from;
+
     public static String to;
+
     public static final String TODO = "todo";
+
     public static final String DEADLINE = "deadline";
+
     public static final String EVENT = "event";
+
     public static final String MARK = "mark";
+
     public static final String UNMARK = "unmark";
+
     public static final String LIST = "list";
+
     public static final String BYE = "bye";
+
+    public static final int INDEX_COMMAND = 0;
+
+    public static final int INDEX_ENTRY = 1;
+
     public static final int USER_STRING_SPLIT_LIMIT = 2;
 
     public static String[] readCommand() {
@@ -35,7 +55,7 @@ public class UserCommands {
         do {
 
             userString = readCommand();
-            command = userString[0];
+            command = userString[INDEX_COMMAND];
 
             switch (command) {
 
@@ -43,7 +63,7 @@ public class UserCommands {
 
                 try {
 
-                    entry = userString[1];
+                    entry = userString[INDEX_ENTRY];
 
                     ExceptionManager.checkEmptyUserInput(entry);
 
@@ -52,17 +72,22 @@ public class UserCommands {
                     Ui.printAcknowledgment(taskList);
 
                 } catch (ArrayIndexOutOfBoundsException e) {
+
                     Ui.printPromptValidTask();
+
                 } catch (EmptyUserInputException e) {
+
                     Ui.printPromptValidTaskEntry();
+
                 }
+
                 break;
 
             case DEADLINE:
 
                 try {
 
-                    entry = userString[1];
+                    entry = userString[INDEX_ENTRY];
                     task = Util.fetchTask(entry);
                     deadLine = Util.fetchDeadLine(entry);
 
@@ -73,11 +98,17 @@ public class UserCommands {
                     Ui.printAcknowledgment(taskList);
 
                 } catch (ArrayIndexOutOfBoundsException e) {
+
                     Ui.printPromptValidTask();
-                } catch (StringIndexOutOfBoundsException e) {
-                    Ui.printPromptValidDeadLine();
+
                 } catch (EmptyUserInputException e) {
+
                     Ui.printPromptValidDeadLineEntry();
+
+                } catch (StringIndexOutOfBoundsException e) {
+
+                    Ui.printPromptValidDeadLine();
+
                 }
                 break;
 
@@ -85,7 +116,7 @@ public class UserCommands {
 
                 try {
 
-                    entry = userString[1];
+                    entry = userString[INDEX_ENTRY];
                     task = Util.fetchTask(entry);
                     from = Util.fetchFrom(entry);
                     to = Util.fetchTo(entry);
@@ -97,61 +128,90 @@ public class UserCommands {
                     Ui.printAcknowledgment(taskList);
 
                 } catch (ArrayIndexOutOfBoundsException e) {
+
                     Ui.printPromptValidTask();
-                } catch (StringIndexOutOfBoundsException e) {
-                    Ui.printPromptValidEvent();
+
                 } catch (EmptyUserInputException e) {
+
                     Ui.printPromptValidEventEntry();
+
+                } catch (StringIndexOutOfBoundsException e) {
+
+                    Ui.printPromptValidEvent();
+
                 }
                 break;
 
             case LIST:
 
                 try {
+
                     ExceptionManager.checkEmptyTaskList(taskList);
                     Ui.printTaskList(taskList);
-                } catch (EmptyTaskListException e) {
-                    Ui.printPromptEmptyTaskList();
-                }
 
+                } catch (EmptyTaskListException e) {
+
+                    Ui.printPromptEmptyTaskList();
+
+                }
                 break;
 
             case MARK:
 
                 try {
-                    entry = userString[1];
+
+                    entry = userString[INDEX_ENTRY];
 
                     ExceptionManager.checkEmptyUserInput(entry);
 
                     int markIndex = Util.fetchMarkIndex(entry);
                     Util.markTask(taskList, markIndex);
                     Ui.printMark(taskList, markIndex);
+
                 } catch (ArrayIndexOutOfBoundsException e) {
+
                     Ui.printPromptValidMarkAndUnMark();
+
                 } catch (NullPointerException e) {
+
                     Ui.printPromptValidMarkAndUnMarkIndex();
+
                 } catch (EmptyUserInputException e) {
+
                     Ui.printPromptValidMarkEntry();
+
                 }
                 break;
 
             case UNMARK:
 
                 try {
-                    entry = userString[1];
+
+                    entry = userString[INDEX_ENTRY];
 
                     ExceptionManager.checkEmptyUserInput(entry);
 
                     int unMarkIndex = Util.fetchUnMarkIndex(entry);
                     Util.unMarkTask(taskList, unMarkIndex);
                     Ui.printUnMark(taskList, unMarkIndex);
+
                 } catch (ArrayIndexOutOfBoundsException e) {
+
                     Ui.printPromptValidMarkAndUnMark();
+
                 } catch (NullPointerException e) {
+
                     Ui.printPromptValidMarkAndUnMarkIndex();
+
                 } catch (EmptyUserInputException e) {
+
                     Ui.printPromptValidUnMarkEntry();
+
                 }
+                break;
+
+            case BYE:
+
                 break;
 
             default:
@@ -160,6 +220,7 @@ public class UserCommands {
                 break;
 
             }
+
         } while (!command.equals(BYE));
 
     }

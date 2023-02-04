@@ -7,6 +7,7 @@ public class Inu {
     public Inu() {
 
         TaskList taskList = new TaskList();
+
         Ui.printGreeting();
         UserCommands.parseCommand(taskList);
         Ui.printFarewell();
@@ -14,6 +15,8 @@ public class Inu {
     }
 
     public static void main(String[] args) {
+
         new Inu();
+
     }
 }
