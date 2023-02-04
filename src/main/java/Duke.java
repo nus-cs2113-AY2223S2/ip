@@ -2,6 +2,7 @@ import constants.Command;
 import constants.Message;
 import controller.TaskController;
 import database.Database;
+import validator.error.InvalidTaskError;
 
 import java.util.Scanner;
 
@@ -54,6 +55,10 @@ public class Duke {
         default:
           System.out.println("An invalid command has been provided.");
         }
+      } catch (InvalidTaskError e) {
+        System.out.println("You have provided an invalid task.");
+      } catch (NumberFormatException e) {
+        System.out.println("Please provide a number when marking or un-marking a task");
       } catch (Exception e) {
         System.out.printf("Oops, something went wrong! %s\n", e.getMessage());
       }
