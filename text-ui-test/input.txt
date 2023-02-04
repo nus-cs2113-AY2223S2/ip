@@ -1,0 +1,12 @@
+invalid-command
+list
+todo waku waku
+list
+deadline finish homework /by 1 Feb 9pm
+event lecture /from 1 Feb 4pm /to 1 Feb 6pm
+mark 1
+mark 2
+unmark 1
+list
+bye
+ignored-command
