@@ -2,7 +2,9 @@ import commands.Command;
 import commands.Parser;
 import exceptions.ArchdukeException;
 import exceptions.ParserException;
+import exceptions.UserInputException;
 import exceptions.ParserException.ParserExceptionCode;
+import exceptions.UserInputException.UserInputExceptionCode;
 import io.In;
 import io.Out;
 import tasks.Store;
@@ -32,9 +34,10 @@ public class Archduke {
             task.toggleCompleted();
             Out.printTaskCompleteness(store, index);
         } catch (NumberFormatException e) {
-            Out.printError("The provided index is not a valid integer.");
+            throw new UserInputException(UserInputExceptionCode.TOGGLE_INDEX_IS_NOT_A_NUMBER);
         } catch (IndexOutOfBoundsException e) {
-            Out.printError("The task can not be found.");
+            throw new UserInputException(UserInputExceptionCode.TOGGLE_INDEX_IS_OUT_OF_BOUNDS,
+                    Integer.toString(store.getTaskCount()));
         }
     }
 
