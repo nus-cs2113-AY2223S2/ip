@@ -1,5 +1,5 @@
 package model.task;
-public class Task {
+public abstract class Task {
     private boolean isDone;
     private final String taskName;
 
@@ -20,7 +20,5 @@ public class Task {
         return taskName;
     }
 
-    public String getDescriptionText() {
-        return "";
-    }
+    public abstract String getDescriptionText();
 }
