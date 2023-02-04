@@ -1,4 +1,4 @@
-package logic;
+package btb.logic;
 
 public class Parser {
 

@@ -1,6 +1,8 @@
-import constants.Constant;
-import logic.Logic;
-import tasks.TaskManager;
+package btb;
+
+import btb.constants.Constant;
+import btb.logic.Logic;
+import btb.tasks.TaskManager;
 
 import java.util.Scanner;
 

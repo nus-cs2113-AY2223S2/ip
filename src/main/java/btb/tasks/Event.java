@@ -1,4 +1,4 @@
-package tasks;
+package btb.tasks;
 
 public class Event extends Task {
     protected String startDate;

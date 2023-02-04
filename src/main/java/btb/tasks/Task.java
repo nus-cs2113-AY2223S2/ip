@@ -1,4 +1,4 @@
-package tasks;
+package btb.tasks;
 
 public abstract class Task {
 

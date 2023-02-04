@@ -1,6 +1,10 @@
-package logic;
+package btb.logic;
 
-import tasks.*;
+import btb.tasks.Task;
+import btb.tasks.TaskManager;
+import btb.tasks.Todo;
+import btb.tasks.Deadline;
+import btb.tasks.Event;
 
 public class Logic {
 
