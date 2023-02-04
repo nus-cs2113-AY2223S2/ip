@@ -17,7 +17,7 @@ public class Luke {
 
     /** Initializes all the objects used in LUKE, says "Hi" to the user */
     private static void initialize() {
-        //Initialization
+        // Initialization
         response = new Response();
         scanner = new Scanner(System.in);
         taskOrganizer = new TaskOrganizer();
@@ -25,12 +25,13 @@ public class Luke {
                 Arrays.asList("add", "list", "mark", "unmark")
         );
 
-        //Say "Hi" to the user
+        // Say "Hi" to the user
         response.sayHi();
     }
 
-    /** Says "Bye" to the user */
+    /** Closes the scanner and says "Bye" to the user */
     public static void endProgram() {
+        scanner.close();
         response.sayBye();
     }
 
@@ -95,7 +96,7 @@ public class Luke {
      * @param taskInfo Input string consisting of all relevant task information such as type, name, and relevant dates.
      */
     private static void executeAddTask(String taskInfo) {
-        //Check if taskInfo is empty
+        // Check if taskInfo is empty
         if (taskInfo == null) {
             handleInvalidCommand();
             return;
@@ -151,13 +152,14 @@ public class Luke {
         try {
             int serialNumber = Integer.parseInt(taskSerialNumber);
             if (taskOrganizer.isOutOfBounds(serialNumber)) {
-                handleOutOfBounds();
-                return;
+                throw new InvalidIndexException();
             }
             taskOrganizer.markTask(serialNumber);
             response.printMarkTask(taskOrganizer.getTaskByID(serialNumber));
         } catch (NumberFormatException e) {
             handleInvalidCommand();
+        } catch (InvalidIndexException e) {
+            handleOutOfBounds();
         }
     }
 
@@ -174,20 +176,21 @@ public class Luke {
         try {
             int serialNumber = Integer.parseInt(taskSerialNumber);
             if (taskOrganizer.isOutOfBounds(serialNumber)) {
-                handleOutOfBounds();
-                return;
+                throw new InvalidIndexException();
             }
             taskOrganizer.unmarkTask(serialNumber);
             response.printUnmarkTask(taskOrganizer.getTaskByID(serialNumber));
         } catch (NumberFormatException e) {
             handleInvalidCommand();
+        } catch (InvalidIndexException e) {
+            handleOutOfBounds();
         }
     }
 
     /**
      * This function takes in the command keyword and description and executes the specified command.
      *
-     * @param command They command keyword indicating the type of command to execute.
+     * @param command     The command keyword indicating the type of command to execute.
      * @param description The string specifying the details of the command.
      */
     private static void executeCommand(String command, String description) {
@@ -213,7 +216,6 @@ public class Luke {
             String userInput = scanner.nextLine();
             //If the user input is bye, exit the program
             if (userInput.equalsIgnoreCase("bye")) {
-                scanner.close();
                 return;
             }
 
@@ -222,8 +224,7 @@ public class Luke {
             if (isCommand(firstWord)) {
                 String description = removeFirstWord(userInput);
                 executeCommand(firstWord, description);
-            }
-            else {
+            } else {
                 echoString(userInput);
             }
         }
