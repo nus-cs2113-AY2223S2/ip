@@ -1,18 +1,20 @@
 import java.util.Scanner;
 
 public class Duke {
+    //String constants
     private static final String LOGO = " ____        _        \n" + "|  _ \\ _   _| | _____ \n" + "| | | | | | | |/ / _ \\\n" + "| |_| | |_| |   <  __/\n" + "|____/ \\__,_|_|\\_\\___|\n";
     private static final String HELLO_MESSAGE = " Hello! I'm Duke\n" + "     What can I do for you?\n";
     private static final String BYE_MESSAGE = " Bye. Hope to see you again soon!";
     private static final String SEPARATOR = "____________________________________________________________";
-    private static final Scanner SCANNER = new Scanner(System.in);
     private static final String COMMAND_LIST_WORD = "list";
     private static final String COMMAND_MARK_WORD = "mark";
     private static final String COMMAND_UNMARK_WORD = "unmark";
     private static final String COMMAND_EXIT_WORD = "bye";
     private static final String LINE_PREFIX = "    ";
-
-    private static final Task[] taskList = new Task[100];
+    //Scanner for user input
+    private static final Scanner SCANNER = new Scanner(System.in);
+    //Task list
+    private static final Task[] TASK_LIST = new Task[100];
     private static int taskCount = 0;
 
     public static void main(String[] args) {
@@ -65,28 +67,28 @@ public class Duke {
     }
 
     private static void addTask(String newTaskDescription) {
-        taskList[taskCount] = new Task(newTaskDescription);
+        TASK_LIST[taskCount] = new Task(newTaskDescription);
         taskCount += 1;
         showToUser("added: " + newTaskDescription);
     }
 
     private static void markAsDone(String taskNumber) {
-        Task task = taskList[Integer.parseInt(taskNumber) - 1];
-        task.isDone = true;
+        Task taskToBeMarked = TASK_LIST[Integer.parseInt(taskNumber) - 1];
+        taskToBeMarked.isDone = true;
         showToUser("Nice! I've marked this task as done:");
-        showToUser(task.getStatusIcon() + " " + task.description);
+        showToUser(taskToBeMarked.getStatusIcon() + " " + taskToBeMarked.description);
     }
 
     private static void markAsNotDone(String taskNumber) {
-        Task task = taskList[Integer.parseInt(taskNumber) - 1];
-        task.isDone = false;
+        Task taskToBeUnmarked = TASK_LIST[Integer.parseInt(taskNumber) - 1];
+        taskToBeUnmarked.isDone = false;
         showToUser("OK, I've marked this task as not done yet:");
-        showToUser(task.getStatusIcon() + " " + task.description);
+        showToUser(taskToBeUnmarked.getStatusIcon() + " " + taskToBeUnmarked.description);
     }
 
     private static void listTask() {
         for (int i = 0; i < taskCount; i++) {
-            showToUser((i + 1) + ". " + taskList[i].getStatusIcon() + " " + taskList[i].description);
+            showToUser((i + 1) + ". " + TASK_LIST[i].getStatusIcon() + " " + TASK_LIST[i].description);
         }
     }
 
