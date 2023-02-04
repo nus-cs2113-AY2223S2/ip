@@ -1,10 +1,4 @@
 package model.task;
-/**
- * Represents a task with a deadline
- *
- * @author Wen Jun
- * @version 1.0
- */
 public class Deadline extends Task {
 
     protected String endDate;
