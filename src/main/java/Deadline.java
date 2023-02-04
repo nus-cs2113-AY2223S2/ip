@@ -1,5 +1,3 @@
-package duke.task;
-
 public class Deadline extends Task{
     public String getEndDate() {
         return endDate;

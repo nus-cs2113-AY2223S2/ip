@@ -1,6 +1,3 @@
-package duke.task;
-import duke.exception.IllegalCommandException;
-
 public class Task {
     private String description;
     private boolean isDone;
@@ -33,10 +30,7 @@ public class Task {
         return isDone;
     }
 
-    public void setDone(boolean done) throws IllegalCommandException {
-        if(isDone==done){
-            throw new IllegalCommandException("No change in done state");
-        }
+    public void setDone(boolean done) {
         isDone = done;
     }
     @Override

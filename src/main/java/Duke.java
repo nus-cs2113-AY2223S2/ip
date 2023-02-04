@@ -1,9 +1,3 @@
-import duke.exception.IllegalCommandException;
-import duke.task.Deadline;
-import duke.task.Event;
-import duke.task.Task;
-import duke.task.Todo;
-
 import java.util.Scanner;
 import java.util.ArrayList;
 public class Duke {
@@ -11,11 +5,11 @@ public class Duke {
     private static final String INVALID_COMMAND_PRINTER = "One hour of lifespan has been deducted, in accordance with our Terms and Services.";
     private static final String VALID_COMMAND_PRINTER = "Command acknowledged. Reducing user lifespan by 30 minutes.";
     private static final String LOGO =
-              "    // | |     //   ) )  // | |  \\\\ / / \\\\    / / //   ) )\n"
-            + "   //__| |    //___/ /  //__| |   \\  /   \\\\  / / ((\n"
-            + "  / ___  |   / ___ (   / ___  |   / /     \\\\/ /    \\\\\n"
-            + " //    | |  //   | |  //    | |  / /\\\\     / /       ) )\n"
-            + "//     | | //    | | //     | | / /  \\\\   / / ((___ / /";
+              "    // | |     //   ) )  // | |  \\\\ / / \\\\    / / //   ) ) \n"
+            + "   //__| |    //___/ /  //__| |   \\  /   \\\\  / / ((        \n"
+            + "  / ___  |   / ___ (   / ___  |   / /     \\\\/ /    \\\\      \n"
+            + " //    | |  //   | |  //    | |  / /\\\\     / /       ) )   \n"
+            + "//     | | //    | | //     | | / /  \\\\   / / ((___ / /    ";
     private static String command;
     private static ArrayList<Task>tasks = new ArrayList<>();
     private static Scanner in = new Scanner(System.in);
@@ -48,22 +42,20 @@ public class Duke {
             return;
         }
         index--;
-        try{
-            tasks.get(index).setDone(true);
-        } catch (IndexOutOfBoundsException e){
+        if(index<0||index>=tasks.size()){
             System.out.println(LINE+'\n'+"Sorry, index is invalid."+'\n'+LINE);
             System.out.println(INVALID_COMMAND_PRINTER);
-            return;
-        } catch (IllegalCommandException e){
+        }else if(tasks.get(index).isDone()){
             System.out.println(LINE+'\n'+"The task specified is already marked."+'\n'+LINE);
             System.out.println(INVALID_COMMAND_PRINTER);
-            return;
+        }else{
+            tasks.get(index).setDone(true);
+            System.out.println(LINE);
+            System.out.println(VALID_COMMAND_PRINTER);
+            System.out.println("Task has been marked as: completed");
+            System.out.println(tasks.get(index).toString());
+            System.out.println(LINE);
         }
-        System.out.println(LINE);
-        System.out.println(VALID_COMMAND_PRINTER);
-        System.out.println("Task has been marked as: completed");
-        System.out.println(tasks.get(index).toString());
-        System.out.println(LINE);
     }
     private static void unmark(String[] commands){
         if (commands.length!=2){
@@ -82,57 +74,76 @@ public class Duke {
             return;
         }
         index--;
-        try{
-            tasks.get(index).setDone(false);
-        } catch (IndexOutOfBoundsException e){
+        if(index<0||index>=tasks.size()){
             System.out.println(LINE+'\n'+"Sorry, index is invalid."+'\n'+LINE);
             System.out.println(INVALID_COMMAND_PRINTER);
-            return;
-        } catch (IllegalCommandException e){
+        }else if(!tasks.get(index).isDone()){
             System.out.println(LINE+'\n'+"The task specified is already unmarked."+'\n'+LINE);
             System.out.println(INVALID_COMMAND_PRINTER);
-            return;
+        }else{
+            tasks.get(index).setDone(false);
+            System.out.println(LINE);
+            System.out.println(VALID_COMMAND_PRINTER);
+            System.out.println("Task has been marked as: not completed");
+            System.out.println(tasks.get(index).toString());
+            System.out.println(LINE);
         }
-        System.out.println(LINE);
-        System.out.println(VALID_COMMAND_PRINTER);
-        System.out.println("Task has been marked as: not completed");
-        System.out.println(tasks.get(index).toString());
-        System.out.println(LINE);
     }
     private static taskType getTaskType(String command){
         String[] commands = command.split(" ");
-        switch (commands[0]) {
-        case "deadline":
+        if(commands[0].equals("deadline")){
             return taskType.DEADLINE;
-        case "event":
+        }else if(commands[0].equals("event")){
             return taskType.EVENT;
-        case "todo":
+        }else if(commands[0].equals("todo")){
             return taskType.TODO;
-        default:
-            return taskType.INVALID;
         }
+        return taskType.INVALID;
     }
-    private static void addTask(String command) throws IllegalCommandException{
+    private static boolean checkCommandValidity(String command, taskType currentTaskType){
+        if(currentTaskType==taskType.DEADLINE){
+            if(command.contains("/by")){
+                return true;
+            }
+            return false;
+        }else if(currentTaskType==taskType.EVENT){
+            if(command.contains("/from")&&command.contains("/to")){
+                return true;
+            }
+            return false;
+        }else if(currentTaskType==taskType.TODO){
+            if(command.split(" ").length<=1){
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+    private static void addTask(String command){
         taskType currentTaskType = getTaskType(command);
         if(currentTaskType==taskType.INVALID){
             System.out.println(LINE+'\n'+"Invalid task type specified."+'\n'+LINE);
-            throw new IllegalCommandException("Illegal task type");
+            System.out.println(INVALID_COMMAND_PRINTER);
+            return;
         }else if(currentTaskType==taskType.TODO){
-            if(command.split(" ").length<=1){
+            if(!checkCommandValidity(command,currentTaskType)){
                 System.out.println(LINE+'\n'+"Syntax: todo {task}"+'\n'+LINE);
-                throw new IllegalCommandException("Illegal todo command");
+                System.out.println(INVALID_COMMAND_PRINTER);
+                return;
             }
             tasks.add(new Todo(command));
         }else if(currentTaskType==taskType.DEADLINE){
-            if(!command.contains("/by")){
+            if(!checkCommandValidity(command,currentTaskType)){
                 System.out.println(LINE+'\n'+"Syntax: deadline {task} /by {endDate}"+'\n'+LINE);
-                throw new IllegalCommandException("Illegal deadline command");
+                System.out.println(INVALID_COMMAND_PRINTER);
+                return;
             }
             tasks.add(new Deadline(command));
         }else if(currentTaskType==taskType.EVENT){
-            if(!(command.contains("/from")&&command.contains("/to"))){
+            if(!checkCommandValidity(command,currentTaskType)){
                 System.out.println(LINE+'\n'+"Syntax: event {task} /from {startDate} /to {endDate}"+'\n'+LINE);
-                throw new IllegalCommandException("Illegal event command");
+                System.out.println(INVALID_COMMAND_PRINTER);
+                return;
             }
             tasks.add(new Event(command));
         }
@@ -159,12 +170,7 @@ public class Duke {
             }else if(commands[0].equals("unmark")){
                 unmark(commands);
             }else{
-                try{
-                    addTask(command);
-                }catch (IllegalCommandException e){
-                    System.out.println(INVALID_COMMAND_PRINTER);
-                    return;
-                }
+                addTask(command);
             }
         }
     }
