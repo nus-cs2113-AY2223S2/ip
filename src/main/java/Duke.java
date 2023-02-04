@@ -53,6 +53,7 @@ public class Duke {
             Event item = new Event(line, tasks.size(), startDate, endDate);
             tasks.add(item);
         }
+        printTask(tasks.get(tasks.size() - 1));
         Greeting.printHorizontalLines(isSinglish);
     }
 
@@ -92,10 +93,12 @@ public class Duke {
             Greeting.sayUpdatedTask(isSinglish);
             tasks.get(index).printTask();
         }
+        Greeting.printHorizontalLines(isSinglish);
     }
 
     public static void main(String[] args) {
         Greeting.sayHello(isSinglish);
+
 
         while (true) {
             Scanner in = new Scanner(System.in);
@@ -171,8 +174,8 @@ public class Duke {
             // +4 for "/by " length
             String startOfDate = line.substring(indexOfDate + DEADLINE_BY.length() + COMMAND_BUFFER);
             // 10 for "deadline " length
-            String descOfTask = line.substring(DEADLINE_COMMAND.length() + COMMAND_BUFFER, indexOfDate);
-            addToList(descOfTask, TypeOfTask.DEADLINE, startOfDate, null);
+            String descriptionOfTask = line.substring(DEADLINE_COMMAND.length() + COMMAND_BUFFER, indexOfDate);
+            addToList(descriptionOfTask, TypeOfTask.DEADLINE, startOfDate, null);
         }
     }
 
