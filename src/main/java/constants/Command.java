@@ -4,16 +4,10 @@ package constants;
 public interface Command {
 
   String DEADLINE = "deadline";
-
   String LIST = "list";
-
   String TODO = "todo";
-
   String EVENT = "event";
-
   String MARK = "mark";
-
   String UNMARK = "unmark";
-
   String BYE = "bye";
 }
