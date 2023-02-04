@@ -16,7 +16,7 @@ public class Duke {
     }
 
     private static String breakLine() {
-        return "\t---------------------------------------------------\n";
+        return "\t--------------------------------------------------------------\n";
     }
 
     // Greet
@@ -81,7 +81,7 @@ public class Duke {
     private static void listTask() {
         System.out.println(breakLine() + "\tThese are the tasks you have (" + tasks.size() + " tasks):");
         int order = 1;
-        for (Task task: tasks) {
+        for (Task task : tasks) {
             System.out.print("\t" + order + ". " + task.toString() + '\n');
             order++;
         }
@@ -91,23 +91,35 @@ public class Duke {
     // mark the task
     private static void markTask(String taskNumber) {
         int taskIdx = Integer.parseInt(taskNumber) - 1;
-        Task currentTask = tasks.get(taskIdx);
-        currentTask.mark();
-        System.out.print(breakLine()
-                + "\tNice! I've marked this task as done :D\n\t\t"
-                + currentTask + '\n'
-                + breakLine());
+        try {
+            Task currentTask = tasks.get(taskIdx);
+            currentTask.mark();
+            System.out.print(breakLine()
+                    + "\tNice! I've marked this task as done :D\n\t\t"
+                    + currentTask + '\n'
+                    + breakLine());
+        } catch (IndexOutOfBoundsException e) {
+            System.out.print(breakLine()
+                    + "\t(!) Invalid task number. Please try again :(\n"
+                    + breakLine());
+        }
     }
 
     // unmark the task
     private static void unmarkTask(String taskNumber) {
         int taskIdx = Integer.parseInt(taskNumber) - 1;
-        Task currentTask = tasks.get(taskIdx);
-        currentTask.mark();
-        System.out.print(breakLine()
-                + "\tOh. I've unmarked this task as not done yet :(\n\t"
-                + currentTask + '\n'
-                + breakLine());
+        try {
+            Task currentTask = tasks.get(taskIdx);
+            currentTask.mark();
+            System.out.print(breakLine()
+                    + "\tOh. I've unmarked this task as not done yet :(\n\t"
+                    + currentTask + '\n'
+                    + breakLine());
+        } catch (IndexOutOfBoundsException e) {
+            System.out.print(breakLine()
+                    + "\t(!) Invalid task number. Please try again :(\n"
+                    + breakLine());
+        }
     }
 
     // read input
@@ -135,20 +147,30 @@ public class Duke {
             inputArgs = input.split(" ", 2);
             command = inputArgs[0];
 
-            if (command.equals("bye")) {
-                break;
-            } else if (command.equals("list")) {
-                listTask();
-            } else if (command.equals("mark")) {
-                markTask(inputArgs[1]);
-            } else if (command.equals("unmark")) {
-                unmarkTask(inputArgs[1]);
-            } else if (command.equals("todo")) {
-                addTodo(inputArgs[1]);
-            } else if (command.equals("deadline")) {
-                addDeadline(inputArgs[1]);
-            } else if (command.equals("event")) {
-                addEvent(inputArgs[1]);
+            try {
+                if (command.equals("bye")) {
+                    break;
+                } else if (command.equals("list")) {
+                    listTask();
+                } else if (command.equals("mark")) {
+                    markTask(inputArgs[1]);
+                } else if (command.equals("unmark")) {
+                    unmarkTask(inputArgs[1]);
+                } else if (command.equals("todo")) {
+                    addTodo(inputArgs[1]);
+                } else if (command.equals("deadline")) {
+                    addDeadline(inputArgs[1]);
+                } else if (command.equals("event")) {
+                    addEvent(inputArgs[1]);
+                } else {
+                    System.out.print(breakLine()
+                            + "\t(!) Invalid command :(\n"
+                            + breakLine());
+                }
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.print(breakLine()
+                        + "\t(!) Please provide the appropriate information for the task\n"
+                        + breakLine());
             }
         }
         exit();
