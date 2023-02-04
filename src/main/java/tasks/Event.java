@@ -1,7 +1,8 @@
-public class Todo extends Task {
+package tasks;
+public class Event extends Task {
     protected String desc;
 
-    public Todo(String description){
+    public Event(String description){
         super(description);
         String[] arr = description.split(" ", 2);
         this.desc = arr[1];
@@ -9,7 +10,7 @@ public class Todo extends Task {
 
     @Override
     public String toString(){
-        return String.format("[T]" + super.isDone() + this.desc);
+        return String.format("[E]" + super.isDone() + this.desc);
     }
 
     @Override
