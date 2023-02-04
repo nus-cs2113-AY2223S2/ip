@@ -24,6 +24,12 @@ public class TaskController {
         this.db = db;
     }
 
+    private void print(Task model) {
+        System.out.println(Message.TASK_ADDED.message);
+        view.printTaskDescriptionText(model);
+        System.out.printf(Message.LIST_NUMBER.message, counter);
+    }
+
     /**
      * List out all the tasks in the database.
      *
@@ -51,9 +57,7 @@ public class TaskController {
         Todo model = new Todo(taskDescription);
         counter += 1;
         db.create(model);
-        System.out.println("Got it. I've added this task:");
-        view.printTaskDescriptionText(model);
-        System.out.printf("Now you have %d tasks in the list.\n", counter);
+        print(model);
     }
 
     /**
@@ -87,9 +91,7 @@ public class TaskController {
         Deadline model = new Deadline(description, endDuration);
         counter += 1;
         db.create(model);
-        System.out.println("Got it. I've added this task:");
-        view.printTaskDescriptionText(model);
-        System.out.printf("Now you have %d tasks in the list.\n", counter);
+        print(model);
     }
 
     /**
@@ -111,8 +113,6 @@ public class TaskController {
         counter += 1;
         Event model = new Event(description, from, to);
         db.create(model);
-        System.out.println("Got it. I've added this task:");
-        view.printTaskDescriptionText(model);
-        System.out.printf("Now you have %d tasks in the list.\n", counter);
+        print(model);
     }
 }
