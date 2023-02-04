@@ -1,18 +1,12 @@
 import java.util.Scanner;
 import messages.ErrorMessages;
+import messages.OperationsMessages;
 import exceptions.EmptyInputException;
 import exceptions.InvalidCommand;
 
 public class Duke {
     // Messages
-    private static final String BOT_NAME = "Duke";
-    private static final String INITIAL_MSG = String.format("    Hello! I'm %s\n    What can I do for you?", BOT_NAME); 
-    private static final String BYE_MSG = "     Bye. Hope to see you again soon!";
-    private static final String MARK_MSG = "     Nice! I've marked this task as done";
-    private static final String UNMARK_MSG = "     OK, I've marked this task as not done yet:";
-    private static final String SHOW_ITEMS_MSG = "    Here are the tasks in your list:";
-    private static final String ADDED_MSG = "    Got it. I've added this task:\n      %s\n    Now you have %d tasks in your list.";
-    // Constants 
+    private static final String BOT_NAME = "Duke";    // Constants 
     private static final int MAX_ITEMS = 100;
     private static Todo[] itemList = new Todo[MAX_ITEMS];
     // private static Set<String> markedItems = new HashSet<String>(MAX_ITEMS);
@@ -26,7 +20,7 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
 
-        printResponse(INITIAL_MSG);
+        printResponse(String.format(OperationsMessages.INITIAL_MSG, BOT_NAME));
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
@@ -52,7 +46,7 @@ public class Duke {
             throw new EmptyInputException();
         }
         if (command.equals("bye")) {
-            printResponse(BYE_MSG);
+            printResponse(OperationsMessages.BYE_MSG);
         } else if (command.equals("todo")) {
             line = line.substring(command.length() + 1);
             addItem(new Todo(line));
@@ -97,22 +91,22 @@ public class Duke {
     private static void markItem(int itemNo) {
         Todo item = itemList[itemNo - 1];
         item.setDone(true);
-        printResponse("    " + MARK_MSG + "\n" + "    " + item.toString());
+        printResponse("    " + OperationsMessages.MARK_MSG + "\n" + "    " + item.toString());
     }
 
     private static void unmarkItem(int itemNo) {
         Todo item = itemList[itemNo - 1];
         item.setDone(false);
-        printResponse("    " + UNMARK_MSG + "\n" + "    " + item.toString());
+        printResponse("    " + OperationsMessages.UNMARK_MSG + "\n" + "    " + item.toString());
     }
 
     private static void addItem(Todo item) {
         itemList[numItems++] = item;
-        printResponse(String.format(ADDED_MSG, item.toString(), numItems));
+        printResponse(String.format(OperationsMessages.ADDED_MSG, item.toString(), numItems));
     }
 
     private static void printItems() {
-        String response = SHOW_ITEMS_MSG + "\n";
+        String response = OperationsMessages.SHOW_ITEMS_MSG + "\n";
         for (int i = 0; i < numItems; i++) {
             Todo item = itemList[i];
             response += String.format("    %d.%s\n", i+1, item.toString());
