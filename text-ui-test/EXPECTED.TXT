@@ -2,66 +2,82 @@ ____________________________________________________________
 Hello! I'm Duke
 What can I do for you?
 ____________________________________________________________
-added: mark i am
+ ☹ OOPS!!! I'm sorry, but I don't know what that means :-(
 ____________________________________________________________
 
 ____________________________________________________________
-added: mark 3
+ ☹ OOPS!!! I'm sorry, but I don't know what that means :-(
 ____________________________________________________________
 
 ____________________________________________________________
 Got it. I've added this task:
   [T][ ] borrow book
-Now you have 3 tasks in the list.
+Now you have 1 tasks in the list.
 ____________________________________________________________
 
 ____________________________________________________________
-1.[ ] mark i am
-2.[ ] mark 3
-3.[T][ ] borrow book
+1.[T][ ] borrow book
 ____________________________________________________________
 
 ____________________________________________________________
 Got it. I've added this task:
   [D][ ] return book (by: Sunday)
-Now you have 4 tasks in the list.
+Now you have 2 tasks in the list.
 ____________________________________________________________
 
 ____________________________________________________________
 Got it. I've added this task:
   [E][ ] project meeting (from: Mon 2pm to: 4pm)
-Now you have 5 tasks in the list.
+Now you have 3 tasks in the list.
 ____________________________________________________________
 
 ____________________________________________________________
 Nice! I've marked this task as done:
-  [X] mark i am
+  [T][X] borrow book
 ____________________________________________________________
 
 ____________________________________________________________
-1.[X] mark i am
-2.[ ] mark 3
-3.[T][ ] borrow book
-4.[D][ ] return book (by: Sunday)
-5.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+1.[T][X] borrow book
+2.[D][ ] return book (by: Sunday)
+3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
 ____________________________________________________________
 
 ____________________________________________________________
 Nice! I've marked this task as done:
-  [X] mark 3
+  [D][X] return book (by: Sunday)
 ____________________________________________________________
 
 ____________________________________________________________
 OK, I've marked this task as not done yet:
-  [ ] mark i am
+  [T][ ] borrow book
 ____________________________________________________________
 
 ____________________________________________________________
-1.[ ] mark i am
-2.[X] mark 3
-3.[T][ ] borrow book
-4.[D][ ] return book (by: Sunday)
-5.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+1.[T][ ] borrow book
+2.[D][X] return book (by: Sunday)
+3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+____________________________________________________________
+
+____________________________________________________________
+ ☹ OOPS!!! The description of a deadline cannot be empty.
+____________________________________________________________
+
+____________________________________________________________
+ ☹ OOPS!!! The description of a todo cannot be empty.
+____________________________________________________________
+
+____________________________________________________________
+ ☹ OOPS!!! The description of a event cannot be empty.
+____________________________________________________________
+
+____________________________________________________________
+1.[T][ ] borrow book
+2.[D][X] return book (by: Sunday)
+3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+____________________________________________________________
+
+____________________________________________________________
+ ☹ OOPS!!! I'm sorry, but I don't know what that means :-(
 ____________________________________________________________
 
 ____________________________________________________________

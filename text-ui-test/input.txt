@@ -9,4 +9,9 @@ list
 mark 2
 unmark 1
 list
+deadline
+todo
+event
+list
+blah
 bye
