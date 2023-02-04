@@ -16,7 +16,7 @@ public class Duke {
     }
 
     private static String breakLine() {
-        return "\t---------------------------------------------------\n";
+        return "\t--------------------------------------------------------------\n";
     }
 
     // Greet
