@@ -45,11 +45,10 @@ public class Duke {
         System.out.println(LINE);
     }
 
-    public static void addTask(String[] userInputArray, taskType variation) {
+    public static void addTask(String[] userInputArray, taskType variation) throws MissingCommandException {
         /** Check if task description is left empty **/
         if (userInputArray.length == 1) {
-            reportError("Please enter a description for your task!");
-            return;
+            throw new MissingCommandException("Please enter a description for your task!");
         }
         /** Handle different task types **/
         if (variation == taskType.TODO) {
@@ -58,15 +57,14 @@ public class Duke {
         } else if (variation == taskType.DEADLINE) {
             /** Handle deadline tasks **/
             if (!userInput.contains("/by")) {
-                reportError("Please specify a deadline via the /by command!");
-                return;
+                throw new MissingCommandException("Please specify a deadline via the /by command!");
             }
             userTaskList[userTaskCount] = new Deadline(userInput);
         } else if (variation == taskType.EVENT) {
             /** Handle event tasks **/
             if (!userInput.contains("/start") || !userInput.contains("/end")) {
-                reportError("Please specify both start and end dates/times via the /start and /end commands!");
-                return;
+                throw new MissingCommandException(
+                        "Please specify both start and end dates/times via the /start and /end commands!");
             }
             userTaskList[userTaskCount] = new Event(userInput);
         }
@@ -105,7 +103,6 @@ public class Duke {
             reportError("Please enter a valid numerical index of the task!");
             return;
         }
-
     }
 
     public static void unmarkTask(String[] userInputArray) {
@@ -140,11 +137,23 @@ public class Duke {
             /** Handle multi-word input commands with required arguments **/
             String[] userInputArray = userInput.split(" ");
             if (userInputArray[0].equals("/todo")) {
-                addTask(userInputArray, taskType.TODO);
+                try {
+                    addTask(userInputArray, taskType.TODO);
+                } catch (MissingCommandException e) {
+                    System.out.println(e.getMessage());
+                }
             } else if (userInputArray[0].equals("/deadline")) {
-                addTask(userInputArray, taskType.DEADLINE);
+                try {
+                    addTask(userInputArray, taskType.DEADLINE);
+                } catch (MissingCommandException e) {
+                    System.out.println(e.getMessage());
+                }
             } else if (userInputArray[0].equals("/event")) {
-                addTask(userInputArray, taskType.EVENT);
+                try {
+                    addTask(userInputArray, taskType.EVENT);
+                } catch (MissingCommandException e) {
+                    System.out.println(e.getMessage());
+                }
             } else if (userInputArray[0].equals("/mark")) {
                 markTask(userInputArray);
             } else if (userInputArray[0].equals("/unmark")) {
