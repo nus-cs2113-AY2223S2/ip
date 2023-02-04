@@ -14,7 +14,6 @@ public class DeadlineCommand extends Command {
     @Override
     public void handleCommand(String line, TaskList taskList){
         int markIndex;
-        int indexCount = Task.getIndexCount();
         String description;
         String deadline;
 
@@ -32,7 +31,7 @@ public class DeadlineCommand extends Command {
             }
 
             ToDo newDeadline = new Deadline(description, deadline);
-            taskList.addTask(indexCount, newDeadline);
+            taskList.addTask(newDeadline);
         } catch (InvalidTaskException e) {
             System.out.println(e.getMessage());
         }

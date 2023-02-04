@@ -1,30 +1,33 @@
 package duke.tasks;
 
+import java.util.ArrayList;
+
 import static duke.constants.Constants.LINEBREAK;
 
-public class TaskList {
-    private Task[] tasks = new Task[100];
+public class TaskList extends ArrayList<Task> {
 
     /**
      * Adds a task to the task list.
      *
-     * @param index Index of task to be added.
      * @param taskToAdd Task to be added.
      */
-    public void addTask(int index, Task taskToAdd){
-        tasks[index] = taskToAdd;
+    public void addTask(Task taskToAdd){
+        this.add(taskToAdd);
         taskToAdd.printAdded();
         System.out.println(LINEBREAK);
     }
 
     /**
-     * Gets the task from the task list at the specified index.
+     * Deletes a task from the task list.
      *
-     * @param index Index of task to be retrieved.
-     *
-     * @return Task at the specified index.
+     * @param indexToDelete The index of the Task to be deleted.
      */
-    public Task getTask(int index){
-        return tasks[index];
+    public void deleteTask(int indexToDelete){
+        Task taskToDelete = this.get(indexToDelete);
+        this.remove(indexToDelete);
+        Task.decrementIndexCount();
+        taskToDelete.printDeleted();
+        System.out.println(LINEBREAK);
     }
+
 }

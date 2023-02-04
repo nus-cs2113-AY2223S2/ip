@@ -1,9 +1,6 @@
 package duke.commands;
 
-import duke.commands.actionCommands.HelpCommand;
-import duke.commands.actionCommands.ListCommand;
-import duke.commands.actionCommands.MarkCommand;
-import duke.commands.actionCommands.UnmarkCommand;
+import duke.commands.actionCommands.*;
 import duke.commands.taskCommands.DeadlineCommand;
 import duke.commands.taskCommands.EventCommand;
 import duke.commands.taskCommands.ToDoCommand;
@@ -66,6 +63,10 @@ public class Parser {
             newCommand.handleCommand(line, taskList);
             break;
 
+        case "delete":
+            newCommand = new DeleteCommand();
+            newCommand.handleCommand(line, taskList);
+
         case "list":
             newCommand = new ListCommand();
             newCommand.handleCommand(line, taskList);
@@ -91,3 +92,4 @@ public class Parser {
         }
     }
 }
+

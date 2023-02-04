@@ -35,6 +35,12 @@ public class Task {
        return indexCount;
     }
 
+    /**
+     * Decrements indexCount by 1
+     */
+    public static void decrementIndexCount(){
+        indexCount--;
+    }
 
     @Override
     public String toString(){
@@ -69,5 +75,25 @@ public class Task {
         }
         System.out.println("Got it. I've added this task:\n " + this);
         System.out.println("Now there " + word1 + indexCount + word2 + " in your list");
+    }
+
+    /**
+     * Outputs a message when task is deleted
+     */
+    public void printDeleted(){
+        int taskCount = indexCount;
+        String word1;
+        String word2;
+        if (taskCount == 1){
+            word1 = "is ";
+            word2 = " task";
+        } else {
+            word1 = "are ";
+            word2 = " tasks";
+        }
+
+        System.out.println("Got it. I've deleted this task:\n " + this);
+
+
     }
 }
