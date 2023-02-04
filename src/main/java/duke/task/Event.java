@@ -1,9 +1,9 @@
-package task;
+package duke.task;
 
 public class Event extends Task {
     public static final String DELIMITER = "/from | /to ";
-    protected String from;
-    protected String to;
+    private String from;
+    private String to;
 
     public Event(String description, String from, String to) {
         super(description);

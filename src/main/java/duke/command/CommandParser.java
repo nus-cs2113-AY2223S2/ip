@@ -1,10 +1,14 @@
-import task.Deadline;
-import task.Event;
-import task.Task;
-import task.TaskList;
-import task.ToDo;
+package duke.command;
 
-public class CommandParser {
+import duke.task.Deadline;
+import duke.task.Event;
+import duke.task.Task;
+import duke.task.TaskList;
+import duke.task.ToDo;
+import duke.ui.Messages;
+import duke.ui.Ui;
+
+public abstract class CommandParser {
     private static void addTask(Task task, TaskList taskList) {
         String taskString = taskList.addTask(task);
         String taskCountString = String.format("Now you have %d task%s in the list.",

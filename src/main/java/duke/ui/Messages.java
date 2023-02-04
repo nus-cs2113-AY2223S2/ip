@@ -1,3 +1,5 @@
+package duke.ui;
+
 public enum Messages {
     LINE  ("_".repeat(60)),
     START ("Hello! I'm Duke" + System.lineSeparator() + "What can I do for you?"),
