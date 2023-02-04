@@ -1,4 +1,6 @@
-import task.TaskList;
+package duke.ui;
+
+import duke.task.TaskList;
 
 public class Ui {
     public static void print(String... strings) {
