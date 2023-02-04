@@ -16,24 +16,46 @@ Hello from
     ____________________________________________________________
     ____________________________________________________________
     Got it. I've added this task:
-      [D][ ] weekly CS2113 quiz  (by: Monday 9pm )
+      [D][ ] weekly CS2113 quiz (by: Monday 9pm)
     Now you have 2 tasks in your list.
     ____________________________________________________________
     ____________________________________________________________
     Here are the tasks in your list:
     1.[T][ ] Hosea: Answer CS2113 tutorial questions
-    2.[D][ ] weekly CS2113 quiz  (by: Monday 9pm )
+    2.[D][ ] weekly CS2113 quiz (by: Monday 9pm)
 
     ____________________________________________________________
     ____________________________________________________________
     Got it. I've added this task:
-      [E][ ] CS2113 lecture  (from: Friday 4pm  to: 6pm )
+      [E][ ] CS2113 lecture (from: Friday 4pm to: 6pm)
     Now you have 3 tasks in your list.
     ____________________________________________________________
     ____________________________________________________________
     Here are the tasks in your list:
     1.[T][ ] Hosea: Answer CS2113 tutorial questions
-    2.[D][ ] weekly CS2113 quiz  (by: Monday 9pm )
-    3.[E][ ] CS2113 lecture  (from: Friday 4pm  to: 6pm )
+    2.[D][ ] weekly CS2113 quiz (by: Monday 9pm)
+    3.[E][ ] CS2113 lecture (from: Friday 4pm to: 6pm)
 
+    ____________________________________________________________
+    ____________________________________________________________
+☹ OOPS!!! I'm sorry, but I don't know what that means :-(
+    ____________________________________________________________
+    ____________________________________________________________
+You need to include the correct fields for this command
+    ____________________________________________________________
+    ____________________________________________________________
+You need to include the correct fields for this command
+    ____________________________________________________________
+    ____________________________________________________________
+    Got it. I've added this task:
+      [E][ ] goodevent (from: start to: )
+    Now you have 4 tasks in your list.
+    ____________________________________________________________
+    ____________________________________________________________
+    Got it. I've added this task:
+      [E][ ] goodevent2 (from:   to: )
+    Now you have 5 tasks in your list.
+    ____________________________________________________________
+    ____________________________________________________________
+You need to include the correct fields for this command
     ____________________________________________________________

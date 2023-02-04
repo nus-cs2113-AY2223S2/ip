@@ -1,6 +1,7 @@
-import java.util.Set;
 import java.util.Scanner;
-import java.util.HashSet;
+import messages.ErrorMessages;
+import exceptions.EmptyInputException;
+import exceptions.InvalidCommand;
 
 public class Duke {
     // Messages
@@ -9,7 +10,6 @@ public class Duke {
     private static final String BYE_MSG = "     Bye. Hope to see you again soon!";
     private static final String MARK_MSG = "     Nice! I've marked this task as done";
     private static final String UNMARK_MSG = "     OK, I've marked this task as not done yet:";
-    private static final String INVALID_MSG = "    Invalid Message please try again";
     private static final String SHOW_ITEMS_MSG = "    Here are the tasks in your list:";
     private static final String ADDED_MSG = "    Got it. I've added this task:\n      %s\n    Now you have %d tasks in your list.";
     // Constants 
@@ -30,23 +30,38 @@ public class Duke {
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
-            handleInput(line);
+            try {
+                handleInput(line);
+            } catch (EmptyInputException e) {
+                // TODO Auto-generated catch block
+                // e.printStackTrace();
+                printResponse(ErrorMessages.EMPTY_INPUT);
+            } catch (InvalidCommand e) {
+                printResponse(ErrorMessages.INVALID_COMMAND);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                printResponse(ErrorMessages.INCORRECT_FIELDS);
+            }
         }
         scanner.close();
     }
 
-    private static void handleInput(String line) {
+    private static void handleInput(String line) throws EmptyInputException, InvalidCommand {
         String[] lineParts = line.split(" ");
         String command = lineParts[0];
+        if (!command.equals("list") && lineParts.length <= 1) {
+            throw new EmptyInputException();
+        }
         if (command.equals("bye")) {
             printResponse(BYE_MSG);
         } else if (command.equals("todo")) {
             line = line.substring(command.length() + 1);
             addItem(new Todo(line));
         } else if (command.equals("deadline")) {
-            createDeadline(lineParts);
+            line = line.substring(command.length() + 1);
+            createDeadline(line);
         } else if (command.equals("event")) {
-            createEvent(lineParts);
+            line = line.substring(command.length() + 1);
+            createEvent(line);
         } else if (command.equals("list")) {
             printItems();
         } else if (command.equals("mark")) {
@@ -56,52 +71,26 @@ public class Duke {
             // String item = line.substring(6); // if want to unmark by name
             unmarkItem(Integer.parseInt(lineParts[1]));
         } else { // add item
-            printResponse(INVALID_MSG);
+            throw new InvalidCommand();
         }
     }
 
-    private static void createDeadline(String[] lineParts) {
-        String itemDescription = "";
-        String itemDeadline = "";
-        int i = 1;
-        for (; i < lineParts.length; i++) {
-            if (lineParts[i].equals("/by")) {
-                i++;
-                break;
-            } else {
-                itemDescription += lineParts[i] + ' ';
-            }
-        }
-        for (; i < lineParts.length; i++) {
-            itemDeadline += lineParts[i] + ' ';
-        }
+    private static void createDeadline(String line) {
+        
+        String[] lineParts = line.split(" /by ", 2);
+        String itemDescription = lineParts[0];
+        String itemDeadline = lineParts[1];
+
         addItem(new Deadline(itemDescription, itemDeadline));
     }
 
-    private static void createEvent(String[] lineParts) {
-        String itemDescription = "";
-        String itemFrom = "";
-        String itemTo = "";
-        int i = 1;
-        for (; i < lineParts.length; i++) {
-            if (lineParts[i].equals("/from")) {
-                i++;
-                break;
-            } else {
-                itemDescription += lineParts[i] + ' ';
-            }
-        }
-        for (; i < lineParts.length; i++) {
-            if (lineParts[i].equals("/to")) {
-                i++;
-                break;
-            } else {
-                itemFrom += lineParts[i] + ' ';
-            }
-        }
-        for (; i < lineParts.length; i++) {
-            itemTo += lineParts[i] + ' ';
-        }
+    private static void createEvent(String line) {
+        
+        String[] lineParts = line.split(" /from | /to ", 3);
+        String itemDescription = lineParts[0];
+        String itemFrom = lineParts[1];
+        String itemTo = lineParts[2];
+        
         addItem(new Event(itemDescription, itemFrom, itemTo));
     }
 
