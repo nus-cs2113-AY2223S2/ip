@@ -40,10 +40,10 @@ public class Duke {
         s = s.substring("deadline ".length(), s.length());
         String[] cmd = s.split(" /by ");
         if (cmd.length == 1) {
-            System.out.println("Sorry, it seems like you forgot to input the deadline. Please read instructions again");
+            System.out.println("Missing deadline. Please read instructions again");
             printInstructions();
         } else if (cmd.length > 2) {
-            System.out.println("Sorry, it seems like you input more than one deadline. Please read instructions again");
+            System.out.println("Too many deadlines. Please read instructions again");
             printInstructions();
         } else {
             listofItems.addDeadline(cmd[0], cmd[1], taskId);
@@ -57,8 +57,7 @@ public class Duke {
         s = s.substring("event ".length(), s.length());
         String[] cmd = s.split(" /from ");
         if (cmd.length == 1) {
-            System.out
-                    .println("Sorry, it seems like you forgot to input the start time. Please read instructions again");
+            System.out.println("Start time missing. Please read instructions again");
             printInstructions();
         } else {
             String startTime = cmd[1].split(" /to ")[0];
@@ -70,7 +69,7 @@ public class Duke {
         }
     }
 
-    public static void main(String[] args) {
+    private static void printGreeting() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -82,6 +81,10 @@ public class Duke {
         printHorizontalLine();
         printInstructions();
         printHorizontalLine();
+    }
+
+    public static void main(String[] args) {
+        printGreeting();
         Scanner scanObj = new Scanner(System.in);
         TaskManager listofItems = new TaskManager();
         String userCmd = scanObj.nextLine();
