@@ -152,6 +152,8 @@ public class Duke {
         }
         if(command.equals("list")){
             printList();
+        }else if(command.equals("help")){
+            printHelp();
         }else{
             String[] commands = command.split(" ");
             if(commands[0].equals("mark")){
@@ -172,6 +174,23 @@ public class Duke {
         System.out.println(LINE+'\n'+LOGO+'\n'+LINE);
         System.out.println("Welcome to Araxys Systems, the only system powered by LifeForce™");
         System.out.println("How may I help you today?");
+        System.out.println(LINE);
+        printHelp();
+    }
+    private static void printHelp(){
+        System.out.println(LINE);
+        System.out.println("list: lists out all current items and their current status.");
+        System.out.println("Syntax: list");
+        System.out.println("todo: adds a todo task");
+        System.out.println("Syntax: todo {task}");
+        System.out.println("deadline: adds a deadline task.");
+        System.out.println("Syntax: deadline {task} /by {endDate}");
+        System.out.println("event: adds an event task.");
+        System.out.println("Syntax: event {task} /from {startDate} /to {endDate}");
+        System.out.println("help: brings you here.");
+        System.out.println("Syntax: help");
+        System.out.println("bye: exits the program.");
+        System.out.println("Syntax: bye");
         System.out.println(LINE);
     }
     public static void main(String[] args) {
