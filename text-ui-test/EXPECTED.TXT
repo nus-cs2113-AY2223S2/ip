@@ -17,9 +17,15 @@ Got it! Added
 to the list.
 Now you have 1 task(s) in the list.
 =============================
-Can't Add anymore items, the list has reached its max size
+Got it! Added 
+[T][ ] Buy eggs
+to the list.
+Now you have 2 task(s) in the list.
 =============================
-Can't Add anymore items, the list has reached its max size
+Got it! Added 
+[D][ ] bake a cake (by: 17/02/2023)
+to the list.
+Now you have 3 task(s) in the list.
 =============================
 Can't Add anymore items, the list has reached its max size
 =============================
@@ -29,7 +35,9 @@ Noted sir, I have marked
 [T][X]  Buy milk
 as done.
 =============================
-No such item exists!
+Noted sir, I have marked 
+[T][X]  Buy eggs
+as done.
 =============================
 Noted sir, I have marked 
 [T][ ] Buy milk
@@ -37,9 +45,13 @@ as not done.
 =============================
 Here are the tasks in your list:
 1. [T][ ] Buy milk
-Now you have 1 tasks in the list.
+2. [T][X] Buy eggs
+3. [D][ ] bake a cake (by: 17/02/2023)
+Now you have 3 tasks in the list.
 =============================
-No such item exists!
+Noted sir, I have marked 
+[D][X] bake a cake 
+as done.
 =============================
 No such item exists!
 =============================
@@ -55,7 +67,9 @@ Can't Add anymore items, the list has reached its max size
 =============================
 Here are the tasks in your list:
 1. [T][X] Buy milk
-Now you have 1 tasks in the list.
+2. [T][X] Buy eggs
+3. [D][X] bake a cake (by: 17/02/2023)
+Now you have 3 tasks in the list.
 =============================
 Please enter a number
 =============================
