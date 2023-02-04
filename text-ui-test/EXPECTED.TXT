@@ -48,4 +48,30 @@ Here are the tasks in your list:
 3.[E][ ] project meeting (from: Aug 6th to: 4pm)
 4.[T][X] join sports club
 5.[T][ ] read book
+OOPS!!! please give me a valid number from the list.
+Usage: mark/unmark <task number>
+OOPS!!! please give me a valid number from the list.
+Usage: mark/unmark <task number>
+Please give a valid number from the list!
+Usage: mark/unmark <task number>
+OOPS!!! please give me a valid number from the list.
+Usage: mark/unmark <task number>
+OOPS!!! please give me a valid number from the list.
+Usage: mark/unmark <task number>
+Please give a valid number from the list!
+Usage: mark/unmark <task number>
+OOPS!!! please give me a deadline.
+Usage: deadline /by <specify by when>
+OOPS!!! The description of todo cannot be empty
+Usage: todo <description>
+OOPS!!! please give me a deadline.
+Usage: deadline /by <specify by when>
+OOPS!!! please give me a event.
+Usage: event /from <specify from when> /to <specify to when>
+Here are the tasks in your list:
+1.[T][X] borrow book
+2.[D][ ] return book (by: June 6th)
+3.[E][ ] project meeting (from: Aug 6th to: 4pm)
+4.[T][X] join sports club
+5.[T][ ] read book
 Bye. Hope to see you again soon!
