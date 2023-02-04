@@ -1,5 +1,10 @@
 import java.util.Scanner;
 
+import duke.Task;
+import duke.Deadline;
+import duke.Event;
+import duke.Todo;
+
 public class Duke {
     private static int userTaskCount = 0;
     private static final String LINE = "--------------------------------------------";
