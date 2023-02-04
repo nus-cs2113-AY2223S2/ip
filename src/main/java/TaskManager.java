@@ -1,10 +1,20 @@
 public class TaskManager {
     private Task[] tasks = new Task[100];
-    private int tasksCount = 0;
+    private int taskCount = 0;
 
     public void addTask(String name, int id) {
-        tasks[tasksCount] = new Task(name, false, id);
-        tasksCount++;
+        tasks[taskCount] = new Task(name, false, id);
+        taskCount++;
+    }
+
+    public void addDeadline(String name, String deadline, int id) {
+        tasks[taskCount] = new Deadline(name, false, id, deadline);
+        taskCount++;
+    }
+
+    public void addEvent(String eventName, String startTime, String finishTime, int id) {
+        tasks[taskCount] = new Event(eventName, false, id, startTime, finishTime);
+        taskCount++;
     }
 
     public void markTask(int id) {
@@ -20,21 +30,8 @@ public class TaskManager {
     }
 
     public void listTask() {
-        int j = 1;
-        for (Task i : tasks) {
-            if (i.getIsDone() == true) {
-                System.out.print(j);
-                System.out.print(" [X] ");
-                System.out.println(i.getName());
-            } else {
-                System.out.print(j);
-                System.out.print(" [ ] ");
-                System.out.println(i.getName());
-            }
-            j++;
-            if (j > tasksCount) {
-                break;
-            }
+        for (int i = 0; i < taskCount; i++) {
+            tasks[i].print();
         }
     }
 }

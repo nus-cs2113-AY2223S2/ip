@@ -2,6 +2,19 @@ public class Task {
     private String name;
     private boolean isDone;
     private int taskId;
+    private char taskType;
+
+    public boolean isIsDone() {
+        return this.isDone;
+    }
+
+    public char getTaskType() {
+        return this.taskType;
+    }
+
+    public void setTaskType(char taskType) {
+        this.taskType = taskType;
+    }
 
     public Task(String name, boolean isDone, int taskId) {
         this.name = name;
@@ -17,7 +30,7 @@ public class Task {
         this.name = name;
     }
 
-    public boolean IsDone() {
+    public boolean isDone() {
         return this.isDone;
     }
 
@@ -37,4 +50,11 @@ public class Task {
         this.taskId = taskId;
     }
 
+    public void print() {
+        if (this.isDone == false) {
+            System.out.println((this.taskId + 1) + ".[T][ ] " + this.name);
+        } else {
+            System.out.println((this.taskId + 1) + ".[T][X] " + this.name);
+        }
+    }
 }
