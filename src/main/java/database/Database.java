@@ -1,4 +1,4 @@
-package model.database;
+package database;
 
 import model.task.Task;
 
@@ -8,16 +8,10 @@ public class Database {
 
     protected final Task[] tasks = new Task[MAX_TASK];
 
+    // Declaring the counter here as static and protected
+    // because I do not want this counter to be publicly
+    // available 
     protected static int counter = 0;
-
-    /**
-     * Used to keep track of the task count in the database.
-     *
-     * @return The amount of space used in the database.
-     */
-    public static int getTaskCount() {
-        return counter;
-    }
 
     /**
      * A simple function to mimic the database CREATE functionality.
