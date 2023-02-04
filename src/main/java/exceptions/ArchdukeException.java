@@ -5,5 +5,5 @@ public abstract class ArchdukeException extends Exception {
         super(message);
     }
 
-    public abstract void printError();
+    public abstract String getErrorString() throws UnknownException;
 }

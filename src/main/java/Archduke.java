@@ -68,7 +68,11 @@ public class Archduke {
                     throw new ParserException(ParserExceptionCode.UNKNOWN_COMMAND, type);
                 }
             } catch (ArchdukeException exception) {
-                exception.printError();
+                try {
+                    Out.printError(exception.getErrorString());
+                } catch (ArchdukeException somethingHasGoneHorriblyWrong) {
+                    Out.printError("This shouldn't happen. Contact @joulev on GitHub immediately.");
+                }
             }
         }
     }
