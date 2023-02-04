@@ -1,6 +1,7 @@
+import java.util.Hashtable;
 
 //initial skeleton adapted from https://nus-cs2113-ay2223s2.github.io/website/schedule/week3/project.html partial solution
-public class Task {
+public abstract class Task {
     protected String description;
     protected boolean isDone;
 
@@ -11,5 +12,9 @@ public class Task {
 
     public String getStatusIcon() {
         return (isDone ? "[X]" : "[ ]"); // mark done task with X
+    }
+    @Override
+    public String toString(){
+        return getStatusIcon() + " " + description;
     }
 }

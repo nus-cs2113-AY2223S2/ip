@@ -9,6 +9,9 @@ public class Duke {
     private static final String COMMAND_LIST_WORD = "list";
     private static final String COMMAND_MARK_WORD = "mark";
     private static final String COMMAND_UNMARK_WORD = "unmark";
+    private static final String COMMAND_ADD_TODO_WORD = "todo";
+    private static final String COMMAND_ADD_DEADLINE_WORD = "deadline";
+    private static final String COMMAND_ADD_EVENT_WORD = "event";
     private static final String COMMAND_EXIT_WORD = "bye";
     private static final String LINE_PREFIX = "    ";
     //Scanner for user input
@@ -54,10 +57,20 @@ public class Duke {
             break;
         case COMMAND_EXIT_WORD:
             exitProgram();
+            break;
+        case COMMAND_ADD_TODO_WORD:
+        case COMMAND_ADD_DEADLINE_WORD:
+        case COMMAND_ADD_EVENT_WORD:
+            addTask(commandType, commandArgs);
+            break;
         default:
-            addTask(userInputString);
+            invalidInputWarning();
         }
         showToUser(SEPARATOR);
+    }
+
+    private static void invalidInputWarning() {
+        showToUser("Invalid input!");
     }
 
     private static void showToUser(String... message) {
@@ -66,29 +79,47 @@ public class Duke {
         }
     }
 
-    private static void addTask(String newTaskDescription) {
-        TASK_LIST[taskCount] = new Task(newTaskDescription);
+    private static void addTask(String newTaskType, String newTaskInfo) {
+        switch (newTaskType) {
+        case COMMAND_ADD_TODO_WORD:
+            TASK_LIST[taskCount] = new Todo(newTaskInfo);
+            break;
+        case COMMAND_ADD_DEADLINE_WORD:
+            final String[] deadlineSplit = newTaskInfo.trim().split("/by", 2);
+            TASK_LIST[taskCount] = new Deadline(deadlineSplit[0], deadlineSplit[1]);
+            break;
+        case COMMAND_ADD_EVENT_WORD:
+            final String[] eventSplit = newTaskInfo.trim().split("/+", 3);
+            TASK_LIST[taskCount] = new Event(eventSplit[0], eventSplit[1], eventSplit[2]);
+            break;
+        default:
+            showToUser("Invalid task input!");
+            return;
+        }
+        showToUser("Got it. I've added this task:",
+                TASK_LIST[taskCount].toString(),
+                "Now you have " + (taskCount + 1) + (taskCount + 1 == 0 ? " task" : " tasks") + " in the list.");
         taskCount += 1;
-        showToUser("added: " + newTaskDescription);
     }
 
     private static void markAsDone(String taskNumber) {
         Task taskToBeMarked = TASK_LIST[Integer.parseInt(taskNumber) - 1];
         taskToBeMarked.isDone = true;
         showToUser("Nice! I've marked this task as done:");
-        showToUser(taskToBeMarked.getStatusIcon() + " " + taskToBeMarked.description);
+        showToUser(taskToBeMarked.toString());
     }
 
     private static void markAsNotDone(String taskNumber) {
         Task taskToBeUnmarked = TASK_LIST[Integer.parseInt(taskNumber) - 1];
         taskToBeUnmarked.isDone = false;
         showToUser("OK, I've marked this task as not done yet:");
-        showToUser(taskToBeUnmarked.getStatusIcon() + " " + taskToBeUnmarked.description);
+        showToUser(taskToBeUnmarked.toString());
     }
 
     private static void listTask() {
+        showToUser("Here are the tasks in your list:");
         for (int i = 0; i < taskCount; i++) {
-            showToUser((i + 1) + ". " + TASK_LIST[i].getStatusIcon() + " " + TASK_LIST[i].description);
+            showToUser((i + 1) + ". " + TASK_LIST[i].toString());
         }
     }
 
