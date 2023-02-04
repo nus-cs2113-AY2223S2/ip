@@ -78,7 +78,7 @@ public class Duke {
             }
 
             else if (line.contains("event")){
-                int index = line.indexOf("");
+                int index = line.indexOf(" ");
                 int startDate = line.indexOf("/");
                 String activity = line.substring(index, startDate);
                 String timeFrame = line.substring(startDate + 3, line.length());
