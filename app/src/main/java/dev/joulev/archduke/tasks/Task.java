@@ -13,6 +13,11 @@ public abstract class Task {
         this.isCompleted = false;
     }
 
+    public Task(String description, boolean isCompleted) throws ArchdukeException {
+        setDescription(description);
+        this.isCompleted = isCompleted;
+    }
+
     public String getDescription() {
         return description;
     }

@@ -12,6 +12,11 @@ public class Deadline extends Task {
         setBy(by);
     }
 
+    public Deadline(String description, boolean isCompleted, String by) throws ArchdukeException {
+        super(description, isCompleted);
+        setBy(by);
+    }
+
     public void setBy(String by) throws ArchdukeException {
         if (by == null || by.isBlank()) {
             throw new UserInputException(UserInputExceptionCode.DEADLINE_BY_IS_EMPTY);

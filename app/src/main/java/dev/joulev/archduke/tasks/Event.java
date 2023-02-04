@@ -14,6 +14,13 @@ public class Event extends Task {
         setTo(to);
     }
 
+    public Event(String description, boolean isCompleted, String from, String to)
+            throws ArchdukeException {
+        super(description, isCompleted);
+        setFrom(from);
+        setTo(to);
+    }
+
     public void setFrom(String from) throws ArchdukeException {
         if (from == null || from.isBlank()) {
             throw new UserInputException(UserInputExceptionCode.TODO_FROM_IS_EMPTY);

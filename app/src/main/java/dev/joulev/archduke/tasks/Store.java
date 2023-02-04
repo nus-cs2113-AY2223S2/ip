@@ -4,12 +4,13 @@ import java.util.ArrayList;
 
 import dev.joulev.archduke.exceptions.ArchdukeException;
 import dev.joulev.archduke.io.Out;
+import dev.joulev.archduke.storage.Storage;
 
 public class Store {
     private ArrayList<Task> tasks;
 
     public Store() {
-        this.tasks = new ArrayList<>();
+        this.tasks = Storage.readSavedTasks();
     }
 
     public void addTask(Task task) {
