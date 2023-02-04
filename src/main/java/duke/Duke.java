@@ -1,3 +1,10 @@
+package duke;
+
+import duke.task.Deadline;
+import duke.task.Event;
+import duke.task.Task;
+import duke.task.Todo;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -7,8 +14,8 @@ public class Duke {
     private static Scanner in = new Scanner(System.in);
 
     private static void printDuke() {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
+        String logo = " ____        _\n"
+                + "|  _ \\ _   _| | _____\n"
                 + "| | | | | | | |/ / _ \\\n"
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
@@ -32,7 +39,7 @@ public class Duke {
         Task newTask = new Todo(taskInfo);
         tasks.add(newTask);
         System.out.print(breakLine()
-                + "\tadded: \n\t\t" + newTask + '\n'
+                + "\tadded:\n\t\t" + newTask + '\n'
                 + "\t(total: " + (totalTasks + 1) + " tasks)\n"
                 + breakLine());
     }
@@ -51,7 +58,7 @@ public class Duke {
         Task newTask = createDeadline(taskInfo);
         tasks.add(newTask);
         System.out.print(breakLine()
-                + "\tadded: \n\t\t" + newTask + '\n'
+                + "\tadded:\n\t\t" + newTask + '\n'
                 + "\t(total: " + (totalTasks + 1) + " tasks)\n"
                 + breakLine());
     }
@@ -72,7 +79,7 @@ public class Duke {
         Task newTask = createEvent(taskInfo);
         tasks.add(newTask);
         System.out.print(breakLine()
-                + "\tadded: \n\t\t" + newTask + '\n'
+                + "\tadded:\n\t\t" + newTask + '\n'
                 + "\t(total: " + (totalTasks + 1) + " tasks)\n"
                 + breakLine());
     }
@@ -131,7 +138,7 @@ public class Duke {
     // exit
     private static void exit() {
         System.out.print(breakLine()
-                + "\tBa-bye. Hope to see you again soon :)\n\t"
+                + "\tBa-bye. Hope to see you again soon :)\n"
                 + breakLine());
     }
 
