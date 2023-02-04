@@ -1,8 +1,14 @@
 public class Util {
     protected static final int INDEX_BEGIN = 0;
     protected static final int INDEX_OFFSET_IN_COMMAND = 1;
-
-
+    public static boolean isEmpty(String[] userString) {
+        for (String s : userString) {
+            if (s.isEmpty()) {
+                return true;
+            }
+        }
+        return false;
+    }
     public static int fetchMarkIndex(String userString) {
         return Integer.parseInt(userString) - INDEX_OFFSET_IN_COMMAND;
     }
