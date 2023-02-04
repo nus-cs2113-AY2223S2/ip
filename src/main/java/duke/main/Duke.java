@@ -49,6 +49,7 @@ public class Duke {
                 exitProgram();
             }
             commandManager.handleCommands(userCommand, input.nextLine());
+            System.out.println("=============================");
         }
     }
 }

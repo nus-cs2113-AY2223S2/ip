@@ -15,7 +15,6 @@ public class Event extends Task {
      *
      * @return the formatted string of the event duration
      */
-
     public String getDuration() {
         return "(from:" + startTime + "to:" + endTime + ")";
     }
@@ -25,7 +24,6 @@ public class Event extends Task {
      *
      * @return letter representing type of task
      */
-
     @Override
     public String getTaskType() {
         return "[E]";
@@ -36,7 +34,6 @@ public class Event extends Task {
      *
      * @return event status and description
      */
-
     @Override
     public String getTaskStatus() {
         return "[E]" + "[" + getStatusIcon() + "] " + task + getDuration();

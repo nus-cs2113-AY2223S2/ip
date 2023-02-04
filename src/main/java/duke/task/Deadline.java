@@ -13,7 +13,6 @@ public class Deadline extends Task {
      *
      * @return formatted string of due date
      */
-
     public String getDueDate() {
         return "(by:" + dueBy + ")";
     }
@@ -23,7 +22,6 @@ public class Deadline extends Task {
      *
      * @return letter representing type of task
      */
-
     @Override
     public String getTaskType() {
         return "[D]";
@@ -34,7 +32,6 @@ public class Deadline extends Task {
      *
      * @return deadline status and description
      */
-
     @Override
     public String getTaskStatus() {
         return "[D]" + "[" + getStatusIcon() + "] " + task + getDueDate();

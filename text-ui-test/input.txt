@@ -1,14 +1,12 @@
 list
 todo Buy milk
 todo Buy eggs
-todo Buy flour
-list
-mark 1
-mark 2
-unmark 1
 deadline bake a cake /by 17/02/2023
 deadline sell the cake /by 18/02/2023
 event attend baking course /from 16/02/2023 /to 19/02/2023
+mark 1
+mark 2
+unmark 1
 list
 mark 3
 mark 5
@@ -17,4 +15,5 @@ event attend /to
 deadline /by
 todo todo
 list
+mark abc
 bye
