@@ -1,3 +1,5 @@
+package duke;
+
 public class Parameter {
     private final ParameterType type;
     private final String value;

@@ -1,3 +1,5 @@
+package duke;
+
 public class IllegalParameterException extends Exception {
     public IllegalParameterExceptionType type;
     public String value;

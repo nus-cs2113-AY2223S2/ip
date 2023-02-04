@@ -1,3 +1,5 @@
+package duke;
+
 public class IllegalCommandException extends Exception {
     public IllegalCommandExceptionType type;
     public String value;
