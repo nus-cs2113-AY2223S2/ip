@@ -1,4 +1,4 @@
-package edu.nus.mingyuannus.Duke;
+package duke;
 
 public class Todo extends Task {
 
