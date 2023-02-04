@@ -1,9 +1,9 @@
-package io;
+package dev.joulev.archduke.io;
 
-import exceptions.ArchdukeException;
-import exceptions.UnknownException;
-import tasks.Store;
-import tasks.Task;
+import dev.joulev.archduke.exceptions.ArchdukeException;
+import dev.joulev.archduke.exceptions.UnknownException;
+import dev.joulev.archduke.tasks.Store;
+import dev.joulev.archduke.tasks.Task;
 
 public class Out {
     private static final int BOX_WIDTH = 80;

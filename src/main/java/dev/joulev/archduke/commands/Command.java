@@ -1,4 +1,4 @@
-package commands;
+package dev.joulev.archduke.commands;
 
 public class Command {
     private String type;

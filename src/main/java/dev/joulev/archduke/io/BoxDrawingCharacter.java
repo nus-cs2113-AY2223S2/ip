@@ -1,4 +1,4 @@
-package io;
+package dev.joulev.archduke.io;
 
 /**
  * The box drawing characters used to make decent boxes in the terminal

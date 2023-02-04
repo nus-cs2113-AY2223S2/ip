@@ -1,17 +1,19 @@
-import commands.Command;
-import commands.Parser;
-import exceptions.ArchdukeException;
-import exceptions.ParserException;
-import exceptions.UserInputException;
-import exceptions.ParserException.ParserExceptionCode;
-import exceptions.UserInputException.UserInputExceptionCode;
-import io.In;
-import io.Out;
-import tasks.Store;
-import tasks.Task;
-import tasks.ToDo;
-import tasks.Deadline;
-import tasks.Event;
+package dev.joulev.archduke;
+
+import dev.joulev.archduke.commands.Command;
+import dev.joulev.archduke.commands.Parser;
+import dev.joulev.archduke.exceptions.ArchdukeException;
+import dev.joulev.archduke.exceptions.ParserException;
+import dev.joulev.archduke.exceptions.UserInputException;
+import dev.joulev.archduke.exceptions.ParserException.ParserExceptionCode;
+import dev.joulev.archduke.exceptions.UserInputException.UserInputExceptionCode;
+import dev.joulev.archduke.io.In;
+import dev.joulev.archduke.io.Out;
+import dev.joulev.archduke.tasks.Store;
+import dev.joulev.archduke.tasks.Task;
+import dev.joulev.archduke.tasks.ToDo;
+import dev.joulev.archduke.tasks.Deadline;
+import dev.joulev.archduke.tasks.Event;
 
 public class Archduke {
     private static In in;

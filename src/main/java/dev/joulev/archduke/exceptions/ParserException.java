@@ -1,4 +1,4 @@
-package exceptions;
+package dev.joulev.archduke.exceptions;
 
 public class ParserException extends ArchdukeException {
     public enum ParserExceptionCode {

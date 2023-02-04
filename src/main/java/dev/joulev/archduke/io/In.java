@@ -1,4 +1,4 @@
-package io;
+package dev.joulev.archduke.io;
 
 import java.util.Scanner;
 

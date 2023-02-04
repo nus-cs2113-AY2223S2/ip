@@ -1,6 +1,6 @@
-package tasks;
+package dev.joulev.archduke.tasks;
 
-import exceptions.ArchdukeException;
+import dev.joulev.archduke.exceptions.ArchdukeException;
 
 public class ToDo extends Task {
     public ToDo(String description) throws ArchdukeException {

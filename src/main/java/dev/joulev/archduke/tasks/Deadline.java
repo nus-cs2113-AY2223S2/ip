@@ -1,8 +1,8 @@
-package tasks;
+package dev.joulev.archduke.tasks;
 
-import exceptions.ArchdukeException;
-import exceptions.UserInputException;
-import exceptions.UserInputException.UserInputExceptionCode;
+import dev.joulev.archduke.exceptions.ArchdukeException;
+import dev.joulev.archduke.exceptions.UserInputException;
+import dev.joulev.archduke.exceptions.UserInputException.UserInputExceptionCode;
 
 public class Deadline extends Task {
     private String by;

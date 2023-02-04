@@ -1,4 +1,4 @@
-package exceptions;
+package dev.joulev.archduke.exceptions;
 
 public abstract class ArchdukeException extends Exception {
     public ArchdukeException(String message) {

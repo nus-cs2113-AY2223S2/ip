@@ -1,4 +1,4 @@
-package exceptions;
+package dev.joulev.archduke.exceptions;
 
 public class UnknownException extends ArchdukeException {
     public UnknownException(String message) {

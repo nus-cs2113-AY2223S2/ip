@@ -1,4 +1,4 @@
-package exceptions;
+package dev.joulev.archduke.exceptions;
 
 public class UserInputException extends ArchdukeException {
     public enum UserInputExceptionCode {

@@ -1,8 +1,8 @@
-package commands;
+package dev.joulev.archduke.commands;
 
-import exceptions.ArchdukeException;
-import exceptions.ParserException;
-import exceptions.ParserException.ParserExceptionCode;
+import dev.joulev.archduke.exceptions.ArchdukeException;
+import dev.joulev.archduke.exceptions.ParserException;
+import dev.joulev.archduke.exceptions.ParserException.ParserExceptionCode;
 
 public class Parser {
     public static Command parse(String input) throws ArchdukeException {

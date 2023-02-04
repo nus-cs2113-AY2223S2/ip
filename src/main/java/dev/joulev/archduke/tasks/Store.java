@@ -1,9 +1,9 @@
-package tasks;
+package dev.joulev.archduke.tasks;
 
 import java.util.Arrays;
 
-import exceptions.ArchdukeException;
-import io.Out;
+import dev.joulev.archduke.exceptions.ArchdukeException;
+import dev.joulev.archduke.io.Out;
 
 public class Store {
     private Task[] tasks;
