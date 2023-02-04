@@ -1,5 +1,7 @@
 package io;
 
+import exceptions.ArchdukeException;
+import exceptions.UnknownException;
 import tasks.Store;
 import tasks.Task;
 
@@ -84,11 +86,16 @@ public class Out {
      * @param format The string to print, with optional format specifiers.
      * @param args   The arguments to be formatted and substituted.
      */
-    public static void printf(String format, Object... args) {
+    public static void printf(String format, Object... args) throws ArchdukeException {
         // Two chars for the borders, two chars for the padding, hence four chars gone.
         int maxStringWidth = BOX_WIDTH - 4;
 
-        String input = String.format(format, args);
+        String input;
+        try {
+            input = String.format(format, args);
+        } catch (Exception e) {
+            throw new UnknownException("Out.printf; code = formatInput");
+        }
         String[] words = input.split(" ");
         int currentLineLength = 0;
 
@@ -110,37 +117,37 @@ public class Out {
         printBoxRightBorder(maxStringWidth - currentLineLength);
     }
 
-    public static void printBox(String format, Object... args) {
+    public static void printBox(String format, Object... args) throws ArchdukeException {
         printBoxTopBorder();
         printf(format, args);
         printBoxBottomBorder();
     }
 
-    public static void greet() {
+    public static void greet() throws ArchdukeException {
         printBoxTopBorder();
         printLogo();
         printf("Hello! I'm Archduke. What do you want to do?");
         printBoxBottomBorder();
     }
 
-    public static void bye() {
+    public static void bye() throws ArchdukeException {
         printBoxTopBorder();
         printf("Bye. Hope to see you again soon!");
         printBoxBottomBorder(false);
     }
 
-    public static void printError(String format, Object... args) {
+    public static void printError(String format, Object... args) throws ArchdukeException {
         printBox("ERROR: %s", String.format(format, args));
     }
 
-    public static void printTasks(Store store) {
+    public static void printTasks(Store store) throws ArchdukeException {
         printBoxTopBorder();
         printf("Here are your tasks:");
         store.listTasks();
         printBoxBottomBorder();
     }
 
-    public static void printTaskAddition(Task task, int storeSize) {
+    public static void printTaskAddition(Task task, int storeSize) throws ArchdukeException {
         printBoxTopBorder();
         printf("Added task:");
         printf("  %s", task.toString());
@@ -148,7 +155,7 @@ public class Out {
         printBoxBottomBorder();
     }
 
-    public static void printTaskCompleteness(Store store, int index) {
+    public static void printTaskCompleteness(Store store, int index) throws ArchdukeException {
         Task task = store.getTask(index);
         printBoxTopBorder();
         printf("The following task has been marked as %s", task.isCompleted() ? "done" : "undone");

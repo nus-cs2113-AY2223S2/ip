@@ -1,10 +1,11 @@
 package commands;
 
+import exceptions.ArchdukeException;
 import exceptions.ParserException;
 import exceptions.ParserException.ParserExceptionCode;
 
 public class Parser {
-    public static Command parse(String input) throws ParserException {
+    public static Command parse(String input) throws ArchdukeException {
         String[] options = input.split(" /");
 
         // Separating the main command from the parameters aka the body

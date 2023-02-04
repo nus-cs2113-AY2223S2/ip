@@ -15,12 +15,17 @@ public class Archduke {
     private static In in;
     private static Store store;
 
-    private static void addTask(Task task) {
+    private static void handleCasesWhereSomethingHasGoneHorriblyWrong() {
+        System.out.println(
+                "Something has gone horribly wrong. Contact @joulev on GitHub immediately.");
+    }
+
+    private static void addTask(Task task) throws ArchdukeException {
         store.addTask(task);
         Out.printTaskAddition(task, store.getTaskCount());
     }
 
-    private static void toggleTaskCompleteness(String body) {
+    private static void toggleTaskCompleteness(String body) throws ArchdukeException {
         try {
             int index = Integer.parseInt(body) - 1;
             Task task = store.getTask(index);
@@ -37,7 +42,11 @@ public class Archduke {
         in = new In();
         store = new Store();
 
-        Out.greet();
+        try {
+            Out.greet();
+        } catch (ArchdukeException e) {
+            handleCasesWhereSomethingHasGoneHorriblyWrong();
+        }
 
         while (true) {
             try {
@@ -71,7 +80,7 @@ public class Archduke {
                 try {
                     Out.printError(exception.getErrorString());
                 } catch (ArchdukeException somethingHasGoneHorriblyWrong) {
-                    Out.printError("This shouldn't happen. Contact @joulev on GitHub immediately.");
+                    handleCasesWhereSomethingHasGoneHorriblyWrong();
                 }
             }
         }
