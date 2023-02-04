@@ -1,6 +1,19 @@
 import java.util.Scanner;
 
+
 public class Duke {
+    public static void printHorizontalLine() {
+        System.out.print("    ____________________________________________________________\n");
+    }
+
+    public static void listing(Task[] listOfTasks, int currentNumberIndex) {
+        System.out.println("     Here are the tasks in your list:");
+        for (int i = 0; i < currentNumberIndex; ++i) {
+            int counter = i + 1;
+            System.out.print("     " + counter + "." + listOfTasks[i].taskLabel + listOfTasks[i].getStatusIcon() + " ");
+            System.out.println(listOfTasks[i].description);
+        }
+    }
 
     public static void main(String[] args) {
         String logo = "     ____        _        \n"
@@ -18,7 +31,7 @@ public class Duke {
 
         String line;
         final int TOTAL_TASKS = 100; // Total number of tasks
-        Task[] list = new Task[TOTAL_TASKS]; // Array of Tasks
+        Task[] tasksList = new Task[TOTAL_TASKS]; // Array of Tasks
         int currentNumber = 0; // Current number of tasks
 
         while (true) {
@@ -29,21 +42,31 @@ public class Duke {
 
             switch (type) {
             case "todo":
-                currentNumber = Todo.add(line, list, currentNumber);
-                System.out.println("    ____________________________________________________________\n");
+                currentNumber = Todo.add(line, tasksList, currentNumber);
+                printHorizontalLine();
                 break;
             case "deadline":
-                currentNumber = Deadline.add(line, list, currentNumber);
-                System.out.println("    ____________________________________________________________\n");
+                currentNumber = Deadline.add(line, tasksList, currentNumber);
+                printHorizontalLine();
                 break;
             case "event":
-                currentNumber = Event.add(line, list, currentNumber);
-                System.out.println("    ____________________________________________________________\n");
+                currentNumber = Event.add(line, tasksList, currentNumber);
+                printHorizontalLine();
+                break;
+            case "list":
+                printHorizontalLine();
+                listing(tasksList, currentNumber);
+                printHorizontalLine();
+                break;
+            case "bye":
+                printHorizontalLine();
+                System.out.println("     Bye. Hope to see you again soon!");
+                printHorizontalLine();
                 break;
             default:
-                if (line.matches("list") || line.matches("bye") || line.matches("mark \\d") || line.matches("unmark \\d")) {
-                    Task.executeNonAdd(line, list, currentNumber);
-                    System.out.println("    ____________________________________________________________\n");
+                if (line.matches("mark \\d") || line.matches("unmark \\d")) {
+                    Task.markOrUnmark(line, tasksList, currentNumber);
+                    printHorizontalLine();
                     break;
                 }
             }
@@ -53,5 +76,6 @@ public class Duke {
         }
     }
 }
+
 
 

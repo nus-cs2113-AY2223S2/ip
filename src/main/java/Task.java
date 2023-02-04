@@ -5,12 +5,18 @@ public class Task {
 
     static final int TASK_NUMBER_OFFSET = 1;
 
+    public static void printHorizontalLine() {
+        System.out.print("    ____________________________________________________________\n");
+    }
+
     public Task(String description) {
         this.description = description;
         this.isDone = false;
     }
 
-    /** Mark done task with X */
+    /**
+     * Mark done task with X
+     */
     public String getStatusIcon() {
         return (isDone ? "[X]" : "[ ]");
     }
@@ -36,15 +42,10 @@ public class Task {
      * executeNonAdd method executes all instructions
      * except the instructions to add tasks to the list
      */
-    public static void executeNonAdd(String command, Task[] listOfTasks, int currentNumber) {
-        System.out.print("    ____________________________________________________________\n");
-        if (command.equals("bye")) {
-            System.out.println("    Bye. Hope to see you again soon!");
-        } else if (command.equals("list")) {
-            list(listOfTasks, currentNumber);
-        } else if (command.matches("mark \\d")) {
+    public static void markOrUnmark(String command, Task[] listOfTasks, int currentNumber) {
+        printHorizontalLine();
+        if (command.matches("mark \\d")) {
             mark(command, listOfTasks);
-
         } else if (command.matches("unmark \\d")) {
             unmark(command, listOfTasks);
         }
@@ -68,15 +69,6 @@ public class Task {
         listOfTasks[number].setDone(true);
         System.out.println("     Nice! I've marked this task as done:");
         System.out.println("     " + listOfTasks[number].taskLabel + listOfTasks[number].getStatusIcon() + " " + listOfTasks[number].description);
-    }
-
-    private static void list(Task[] listOfTasks, int currentNumber) {
-        System.out.println("     Here are the tasks in your list:");
-        for (int i = 0; i < currentNumber; ++i) {
-            int counter = i + TASK_NUMBER_OFFSET;
-            System.out.print("     " + counter + "." + listOfTasks[i].taskLabel + listOfTasks[i].getStatusIcon() + " ");
-            System.out.println(listOfTasks[i].description);
-        }
     }
 
 

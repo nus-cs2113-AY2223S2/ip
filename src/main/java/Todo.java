@@ -7,7 +7,7 @@ public class Todo extends Task{
     }
 
     public static int add(String line, Task[] list, int currentNumber) {
-        System.out.print("    ____________________________________________________________\n");
+        printHorizontalLine();
         System.out.println("     Got it. I've added this task:");
         Todo newTask = new Todo(line);
         System.out.println("       " + newTask.taskLabel + newTask.getStatusIcon() + " " + newTask.description);
