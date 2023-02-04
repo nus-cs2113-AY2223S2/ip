@@ -1,10 +1,5 @@
-package task;
-/**
- * Represents an event with a start and end time
- * 
- * @author Wen Jun
- * @version 1.00
- */
+package model.task;
+
 public class Event extends Task {
     protected String from;
     protected String to;
