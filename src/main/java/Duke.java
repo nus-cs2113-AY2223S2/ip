@@ -41,7 +41,11 @@ public class Duke {
   private static void addTodoTask(String taskDescription) throws Exception {
     Todo newTodo = new Todo(taskDescription);
     db.create(newTodo);
-    System.out.printf(Message.TASK_ADDED.message, newTodo.getDescriptionText());
+    System.out.printf(
+      Message.TASK_ADDED.message,
+      newTodo.getDescriptionText(),
+      Database.getTaskCount()
+    );
   }
 
   /**
@@ -114,7 +118,7 @@ public class Duke {
     isRunning = false;
   }
 
-  public static void main(String[] args) {
+  public void run() {
     Scanner in = new Scanner(System.in);
     System.out.println(Message.WELCOME.message);
 
