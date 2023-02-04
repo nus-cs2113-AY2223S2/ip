@@ -2,54 +2,18 @@ public class Manager {
     private static Task[] taskList = new Task[100];
     private static int listSize = 0;
 
-    public static void addDeadline(String inputMessage, String by) {
-        Task deadline = new Deadline(inputMessage, by);
+    public static void addTask(Task task) {
         if (listSize >= 100) {
             System.out.println("List size exceeded!");
             return;
         }
-        taskList[listSize] = deadline;
+        taskList[listSize] = task;
         listSize++;
 
-        String addedMessage = "\tGot it. I've added this task:\n"
-                + "\t  " + deadline.toString();
+        String addedMessage = "\tgot it. I've added this task:\n" + "\t  " + task;
         String sizeMessage = "\tNow you have " + listSize + " tasks in the list.";
 
-        String[] messagePacket = { addedMessage, sizeMessage };
-        Io.printMessage(messagePacket);
-    }
-
-    public static void addTodo(String inputMessage) {
-        Task todo = new Todo(inputMessage);
-        if (listSize >= 100) {
-            System.out.println("List size exceeded!");
-            return;
-        }
-        taskList[listSize] = todo;
-        listSize++;
-
-        String addedMessage = "\tGot it. I've added this task:\n"
-                + "\t  " + todo.toString();
-        String sizeMessage = "\tNow you have " + listSize + " tasks in the list.";
-
-        String[] messagePacket = { addedMessage, sizeMessage };
-        Io.printMessage(messagePacket);
-    }
-
-    public static void addEvent(String inputMessage, String from, String to) {
-        Task event = new Event(inputMessage, from, to);
-        if (listSize >= 100) {
-            System.out.println("List size exceeded!");
-            return;
-        }
-        taskList[listSize] = event;
-        listSize++;
-
-        String addedMessage = "\tGot it. I've added this task:\n"
-                + "\t  " + event.toString();
-        String sizeMessage = "\tNow you have " + listSize + " tasks in the list.";
-
-        String[] messagePacket = { addedMessage, sizeMessage };
+        String[] messagePacket = {addedMessage, sizeMessage};
         Io.printMessage(messagePacket);
     }
 
@@ -61,10 +25,10 @@ public class Manager {
         }
         currentTask.markDone();
 
-        String markMessage = "\tNice! I've marked this task as done:\n"
-                + "\t  " + currentTask.toString();
+        String markMessage =
+                "\tNice! I've marked this task as done:\n" + "\t  " + currentTask.toString();
 
-        String[] messagePacket = { markMessage };
+        String[] messagePacket = {markMessage};
         Io.printMessage(messagePacket);
     }
 
@@ -76,10 +40,10 @@ public class Manager {
         }
         currentTask.markUndone();
 
-        String unmarkMessage = "\tOK, I've marked this task as not done yet:\n"
-                + "\t  " + currentTask.toString();
+        String unmarkMessage =
+                "\tOK, I've marked this task as not done yet:\n" + "\t  " + currentTask.toString();
 
-        String[] messagePacket = { unmarkMessage };
+        String[] messagePacket = {unmarkMessage};
         Io.printMessage(messagePacket);
     }
 
@@ -95,61 +59,82 @@ public class Manager {
         Io.printMessage(messagePacket);
     }
 
-    public static void handleCommand(String[] inputArray) {
+    public static void handleCommand(String[] inputArray) throws InvalidCommandException, InvalidTaskException, InvalidFormatException {
         String command = inputArray[0];
 
-        switch (command) {
-        case "todo":
-            String todoDetails = inputArray[1];
-            addTodo(todoDetails);
-            break;
-
-        case "deadline":
-            if (!inputArray[1].contains("/by")) {
-                System.out.println("\tWrong format! Please include /by.");
+        try { 
+            switch (command) {
+            case "todo":
+                if (inputArray.length == 1) {
+                    throw new InvalidTaskException(command);
+                }
+                String todoDetails = inputArray[1];
+                Task todo = new Todo(todoDetails);
+                addTask(todo);
                 break;
-            }
 
-            String[] deadlineDetails = inputArray[1].split(" /by ", 2);
-            String deadlineDescription = deadlineDetails[0];
-            String by = deadlineDetails[1];
-            addDeadline(deadlineDescription, by);
-            break;
+            case "deadline":
+                if (inputArray.length == 1) {
+                    throw new InvalidTaskException(command);
+                }
+                if (!inputArray[1].contains("/by")) {
+                    throw new InvalidFormatException("/by");
+                }
+                //splits input according to deadlineDescription, /by
+                String[] deadlineDetails = inputArray[1].split(" /by ", 2);
 
-        case "event":
-            if (!inputArray[1].contains("/from") && !inputArray[1].contains("/to")) {
-                System.out.println("\tWrong format! Please include /from and /to.");
+                Task deadline = new Deadline(deadlineDetails[0],deadlineDetails[1]);
+                addTask(deadline);
                 break;
+
+            case "event":
+                if (inputArray.length == 1) {
+                    throw new InvalidTaskException(command);
+                }
+                if (!inputArray[1].contains("/from") && !inputArray[1].contains("/to")) {
+                    throw new InvalidFormatException("/from", "/to");
+                }
+                //splits input according to eventDescription, /from, /to
+                String[] eventDetails = inputArray[1].split(" /from | /to ", 3);
+
+                Task event = new Event(eventDetails[0],eventDetails[1],eventDetails[2]);
+                addTask(event);
+                break;
+
+            case "list":
+                printTasks();
+                break;
+
+            case "mark":
+                if (inputArray.length == 1) {
+                    throw new InvalidTaskException(command);
+                }
+                int taskNum = Integer.parseInt(inputArray[1]);
+                markTask(taskNum);
+                break;
+
+            case "unmark":
+                if (inputArray.length == 1) {
+                    throw new InvalidTaskException(command);
+                }
+                int unmarkTaskNum = Integer.parseInt(inputArray[1]);
+                unmarkTask(unmarkTaskNum);
+                break;
+
+            case "bye":
+                Io.printExit();
+                System.exit(0);
+                break;
+
+            default:
+                throw new InvalidCommandException();
             }
-
-            String[] eventDetails = inputArray[1].split(" /from | /to ", 3);
-            String eventDescription = eventDetails[0];
-            String from = eventDetails[1];
-            String to = eventDetails[2];
-            addEvent(eventDescription, from, to);
-            break;
-
-        case "list":
-            printTasks();
-            break;
-
-        case "mark":
-            int taskNum = Integer.parseInt(inputArray[1]);
-            markTask(taskNum);
-            break;
-
-        case "unmark":
-            int unmarkTaskNum = Integer.parseInt(inputArray[1]);
-            unmarkTask(unmarkTaskNum);
-            break;
-
-        case "bye":
-            Io.printExit();
-            System.exit(0);
-            break;
-
-        default:
-            break;
+        } catch (InvalidTaskException e) {
+            System.out.println(e.getMessage());
+        } catch (InvalidCommandException e) {
+            System.out.println(e.getMessage());
+        } catch (InvalidFormatException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

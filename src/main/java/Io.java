@@ -32,7 +32,7 @@ public class Io {
         printDivider();
     }
 
-    public static void getInput() {
+    public static void getInput() throws InvalidCommandException, InvalidTaskException, InvalidFormatException {
         Scanner input = new Scanner(System.in);
 
         while (input.hasNextLine()) {
