@@ -79,7 +79,7 @@ public class Duke {
     }
 
     /**
-     * Add user task to and ArrayList and print out the task added.
+     * Add user task to an ArrayList and print out the task added.
      *
      * @param listOfTasks An arraylist storing the list of tasks the user created.
      * @param task        Store the type of task the user ask to create.
