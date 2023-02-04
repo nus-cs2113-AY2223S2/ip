@@ -1,3 +1,7 @@
+package duke.exceptions;
+
+import duke.tasks.TaskEnum;
+
 public class InvalidTaskFormatException extends Exception {
 
     private static final String MESSAGE_HEADER = "Invalid input format!\n"
