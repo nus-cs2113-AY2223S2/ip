@@ -10,7 +10,7 @@ public class InvalidTaskException extends Exception {
      * @return Error message for invalid task.
      */
     public String getMessage() {
-        return "Please enter a valid command!\n" + LINEBREAK;
+        return "This command is invalid!\n" + LINEBREAK;
     }
 
 }
