@@ -1,4 +1,6 @@
 public class Task {
+package duke.tasks;
+
     private String name;
     private boolean completionStatus;
     private String taskType;
