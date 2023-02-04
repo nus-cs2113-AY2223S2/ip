@@ -1,12 +1,20 @@
 package tasks;
 
+import exceptions.ArchdukeException;
+import exceptions.UserInputException;
+import exceptions.UserInputException.UserInputExceptionCode;
+
 public class Deadline extends Task {
     private String by;
 
-    public Deadline(String description, String by) {
+    public Deadline(String description, String by) throws ArchdukeException {
         super(description);
-        if (by == null) {
-            throw new IllegalArgumentException("Deadline \"by\" parameter cannot be null");
+        setBy(by);
+    }
+
+    public void setBy(String by) throws ArchdukeException {
+        if (by == null || by.isBlank()) {
+            throw new UserInputException(UserInputExceptionCode.DEADLINE_BY_IS_EMPTY);
         }
         this.by = by;
     }

@@ -1,14 +1,15 @@
 package tasks;
 
-public class Task {
+import exceptions.ArchdukeException;
+import exceptions.UserInputException;
+import exceptions.UserInputException.UserInputExceptionCode;
+
+public abstract class Task {
     private String description;
     private boolean isCompleted;
 
-    public Task(String description) {
-        if (description == null) {
-            throw new IllegalArgumentException("Description cannot be null");
-        }
-        this.description = description;
+    public Task(String description) throws ArchdukeException {
+        setDescription(description);
         this.isCompleted = false;
     }
 
@@ -26,6 +27,13 @@ public class Task {
 
     public boolean isCompleted() {
         return isCompleted;
+    }
+
+    public void setDescription(String description) throws ArchdukeException {
+        if (description == null || description.isBlank()) {
+            throw new UserInputException(UserInputExceptionCode.TASK_DESCRIPTION_IS_EMPTY);
+        }
+        this.description = description;
     }
 
     public void toggleCompleted() {
