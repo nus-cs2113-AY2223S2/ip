@@ -1,23 +1,28 @@
 import java.util.Scanner;
 
 public class Nano {
-
-    private final static int HORIZONTAL_LINE_LENGTH = 100;
-    private final static int MAX_TASK_COUNT = 100;
-    private final static String NANO_LOGO = "| \\  ||   / \\   | \\  |||  __  |\n"
+    private static final int HORIZONTAL_LINE_LENGTH = 100;
+    private static final int MAX_TASK_COUNT = 100;
+    private static final int COMMAND_INDEX = 0;
+    private static final int TASK_NAME_INDEX = 1;
+    private static final int TASK_TYPE_INDEX = 2;
+    private static final int TASK_START_DATE_INDEX = 3;
+    private static final int TASK_DUE_DATE_INDEX = 3;
+    private static final int TASK_END_DATE_INDEX = 4;
+    public static final int TASK_INDEX_ERROR = -1;
+    public static final int USER_INPUT_MAX_ARG_COUNT = 4;
+    private static final String NANO_LOGO = "| \\  ||   / \\   | \\  |||  __  |\n"
             + "||\\\\ ||  / _ \\  ||\\\\ ||| |  | |\n"
             + "|| \\\\|| //   \\\\ || \\\\||| |__| |\n"
             + "||  \\_|//     \\\\||  \\_||______|\n";
-    private final static int COMMAND_INDEX = 0;
-    private final static int TASK_NAME_INDEX = 1;
-    public static final String TASK_COMPLETED_MARK = "[x] ";
-    public static final String TASK_UNCOMPLETED_MARK = "[] ";
     public static final String MESSAGE_TASK_NOT_FOUND = "Task not found.";
     public static final String MESSAGE_TASK_MARKED = "Great job completing ";
     public static final String MESSAGE_TASK_ALREADY_DONE = " is already done";
-    public static final String MESSAGE_TASK_UNMARKED = " is marked as undone";
-    public static final int TASK_INDEX_ERROR = -1;
+    public static final String MESSAGE_TASK_ALREADY_UNDONE = " is already not done";
+    public static final String MESSAGE_TASK_UNMARKED = " set to undone";
+
     private static Task[] tasks;
+
     public static void main(String[] args) {
         //chatbot startup
         displayWelcomeMessage();
@@ -38,7 +43,7 @@ public class Nano {
             displayTaskList();
             break;
         case "add":
-            addTask(userInputs[TASK_NAME_INDEX]);
+            addTask(userInputs);
             break;
         case "mark":
             markTask(userInputs[TASK_NAME_INDEX]);
@@ -53,6 +58,7 @@ public class Nano {
             displayHelpMessage();
             break;
         }
+        printHorizontalLine();
     }
 
     private static void unmarkTask(String taskName) {
@@ -63,25 +69,28 @@ public class Nano {
         }
 
         if (tasks[taskIndex].isCompleted()) {
-            tasks[taskIndex].setIncomplete();
+            tasks[taskIndex].setUndone();
             System.out.println(taskName + MESSAGE_TASK_UNMARKED);
         } else {
-            System.out.println(taskName + MESSAGE_TASK_ALREADY_DONE);
+            System.out.println(taskName + MESSAGE_TASK_ALREADY_UNDONE);
         }
     }
+
     private static void markTask(String taskName) {
         int taskIndex = getTaskIndex(taskName);
         if (taskIndex == TASK_INDEX_ERROR) {
             System.out.println(MESSAGE_TASK_NOT_FOUND);
+            return;
         }
 
         if (!tasks[taskIndex].isCompleted()) {
-            tasks[taskIndex].setCompleted();
-            System.out.println(MESSAGE_TASK_MARKED + taskName);
+            tasks[taskIndex].setDone();
+            System.out.println(taskName + MESSAGE_TASK_MARKED);
         } else {
             System.out.println(taskName + MESSAGE_TASK_ALREADY_DONE);
         }
     }
+
     private static int getTaskIndex(String taskName) {
         for (int i = 1; i <= Task.getTaskCount(); i += 1) {
             if (tasks[i].getTaskName().equals(taskName)) {
@@ -90,14 +99,27 @@ public class Nano {
         }
         return TASK_INDEX_ERROR;
     }
-    private static void addTask(String taskName) {
-        if (isInList(taskName)) {
-            System.out.println(taskName + " is already in the list!");
-        } else {
-            Task newTask = new Task(taskName);
-            tasks[Task.getTaskCount()] = newTask;
-            System.out.println("Added " + taskName);
+
+    private static void addTask(String[] taskDetails) {
+        if (isInList(taskDetails[TASK_NAME_INDEX])) {
+            System.out.println(taskDetails[TASK_NAME_INDEX] + " is already in the list!");
+            return;
         }
+
+        Task newTask;
+        switch (taskDetails[TASK_TYPE_INDEX]) {
+        case "deadline":
+            newTask = new Deadline(taskDetails[TASK_NAME_INDEX], taskDetails[TASK_DUE_DATE_INDEX]);
+            break;
+        case "event":
+            newTask = new Event(taskDetails[TASK_NAME_INDEX], taskDetails[TASK_START_DATE_INDEX], taskDetails[TASK_END_DATE_INDEX]);
+            break;
+        default:
+            newTask = new Todo(taskDetails[TASK_NAME_INDEX]);
+            break;
+        }
+        tasks[Task.getTaskCount()] = newTask;
+        System.out.println("Added " + taskDetails[TASK_NAME_INDEX]);
     }
 
     private static boolean isInList(String taskName) {
@@ -116,30 +138,44 @@ public class Nano {
 
     private static String[] processInput(String userInput) {
         userInput = userInput.replace("/", "").trim();
-        String[] userInputs = new String[2];
-        userInputs = userInput.split("\\s+", 2);
+        String[] userInputs = new String[USER_INPUT_MAX_ARG_COUNT + 1];
+        String[] commandAndName = userInput.split("\\s+", 2);
+        System.arraycopy(commandAndName, 0, userInputs, 0, commandAndName.length);
+
+        if (commandAndName.length == 2) {
+            processTaskDetails(userInput, userInputs);
+        }
         return userInputs;
+    }
+
+    private static void processTaskDetails(String userInput, String[] userInputs) {
+        if (isDeadline(userInput)) {
+            userInputs[TASK_TYPE_INDEX] = "deadline";
+            userInputs[TASK_NAME_INDEX] = userInput.substring(userInput.indexOf(" "), userInput.indexOf("by:")).trim();
+            userInputs[TASK_DUE_DATE_INDEX] = userInput.substring(userInput.indexOf("by:")).trim();
+        } else if (isEvent(userInput)) {
+            userInputs[TASK_TYPE_INDEX] = "event";
+            userInputs[TASK_NAME_INDEX] = userInput.substring(userInput.indexOf(" "), userInput.indexOf("from:")).trim();
+            userInputs[TASK_START_DATE_INDEX] = userInput.substring(userInput.indexOf("from:"), userInput.indexOf("to:")).trim();
+            userInputs[TASK_END_DATE_INDEX] = userInput.substring(userInput.indexOf("to")).trim();
+        } else {
+            userInputs[TASK_TYPE_INDEX] = "todo";
+        }
+    }
+
+    private static boolean isDeadline(String task) {
+        return task.contains("by:");
+    }
+
+    private static boolean isEvent(String task) {
+        return task.contains("from:");
     }
 
     private static void displayTaskList() {
         System.out.println("You have completed " + Task.getCompletedTaskCount() + " tasks. " + Task.getUncompletedTaskCount() + " more to go!");
         for (int i = 1; i <= Task.getTaskCount(); i += 1) {
-            System.out.print(i + ".");
-            printTodoMark(i);
-            System.out.println(tasks[i].getTaskName());
+            System.out.println(tasks[i].toString());
         }
-    }
-
-    private static void printTodoMark(int i) {
-        if (tasks[i].isCompleted()) {
-            System.out.print(TASK_COMPLETED_MARK);
-        } else {
-            System.out.print(TASK_UNCOMPLETED_MARK);
-        }
-    }
-
-    private static boolean isValidCommand(String command) {
-        return command.startsWith("/");
     }
 
     private static void displayExitMessage() {

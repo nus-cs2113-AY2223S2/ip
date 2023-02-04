@@ -1,4 +1,6 @@
 public class Task {
+    public static final String TASK_COMPLETED_MARK = "[x] ";
+    public static final String TASK_UNCOMPLETED_MARK = "[] ";
     private String name;
     private boolean isCompleted;
     private static int taskCount = 0;
@@ -10,12 +12,12 @@ public class Task {
         taskCount += 1;
     }
 
-    public void setCompleted() {
+    public void setDone() {
         this.isCompleted = true;
         completedTaskCount += 1;
     }
 
-    public void setIncomplete() {
+    public void setUndone() {
         this.isCompleted = false;
         completedTaskCount -= 1;
     }
@@ -39,5 +41,17 @@ public class Task {
 
     public static int getUncompletedTaskCount() {
         return taskCount - completedTaskCount;
+    }
+
+    private String todoMark() {
+        if (isCompleted()) {
+            return TASK_COMPLETED_MARK;
+        } else {
+            return TASK_UNCOMPLETED_MARK;
+        }
+    }
+
+    public String toString() {
+        return todoMark() + getTaskName();
     }
 }
