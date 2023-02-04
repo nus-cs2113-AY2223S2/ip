@@ -3,8 +3,8 @@ package duke.task;
 public class Task {
     private boolean isDone;
     private String taskName;
-    static String done = "[X] ";
-    static String notDone = "[ ] ";
+    static final String DONE = "[X] ";
+    static final String NOT_DONE = "[ ] ";
 
     public void setStatus(boolean status) {
         isDone = status;
@@ -17,9 +17,9 @@ public class Task {
 
     public String Completed() {
         if (isDone) {
-            return done;
+            return DONE;
         } else {
-            return notDone;
+            return NOT_DONE;
         }
     }
 
