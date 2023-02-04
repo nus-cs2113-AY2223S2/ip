@@ -1,3 +1,8 @@
+package luke.task;
+
+import luke.icon.CheckBox;
+import luke.icon.Label;
+
 public class Task {
     /** The name of a task */
     private String taskName;

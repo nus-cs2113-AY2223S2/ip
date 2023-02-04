@@ -1,3 +1,7 @@
+package luke.task;
+
+import luke.task.Task;
+
 public class ToDo extends Task {
     public ToDo(String name, int ID) {
         super(name, ID);

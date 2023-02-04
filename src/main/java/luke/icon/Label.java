@@ -1,3 +1,5 @@
+package luke.icon;
+
 public class Label {
     /** Visual representation of the task label */
     private String label;
