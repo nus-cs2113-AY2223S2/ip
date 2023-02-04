@@ -8,6 +8,34 @@ ____________________________________________________________
 Welcome to Araxys Systems, the only system powered by LifeForce™
 How may I help you today?
 ____________________________________________________________
+____________________________________________________________
+list: lists out all current items and their current status.
+Syntax: list
+todo: adds a todo task
+Syntax: todo {task}
+deadline: adds a deadline task.
+Syntax: deadline {task} /by {endDate}
+event: adds an event task.
+Syntax: event {task} /from {startDate} /to {endDate}
+help: brings you here.
+Syntax: help
+bye: exits the program.
+Syntax: bye
+____________________________________________________________
+____________________________________________________________
+list: lists out all current items and their current status.
+Syntax: list
+todo: adds a todo task
+Syntax: todo {task}
+deadline: adds a deadline task.
+Syntax: deadline {task} /by {endDate}
+event: adds an event task.
+Syntax: event {task} /from {startDate} /to {endDate}
+help: brings you here.
+Syntax: help
+bye: exits the program.
+Syntax: bye
+____________________________________________________________
 Command acknowledged. Reducing user lifespan by 30 minutes.
 ____________________________________________________________
 New task has been added: todo try out new thing
