@@ -10,12 +10,12 @@ public class Task {
         taskCount += 1;
     }
 
-    public void completeTask() {
+    public void setCompleted() {
         this.isCompleted = true;
         completedTaskCount += 1;
     }
 
-    public void incompleteTask() {
+    public void setIncomplete() {
         this.isCompleted = false;
         completedTaskCount -= 1;
     }
@@ -24,7 +24,7 @@ public class Task {
         return this.name;
     }
 
-    public boolean getTaskCompletionStatus() {
+    public boolean isCompleted() {
         return this.isCompleted;
     }
 
@@ -33,6 +33,7 @@ public class Task {
     }
 
     public static int getCompletedTaskCount() {
+
         return completedTaskCount;
     }
 

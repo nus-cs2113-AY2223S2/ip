@@ -16,6 +16,7 @@ public class Nano {
     public static final String MESSAGE_TASK_MARKED = "Great job completing ";
     public static final String MESSAGE_TASK_ALREADY_DONE = " is already done";
     public static final String MESSAGE_TASK_UNMARKED = " is marked as undone";
+    public static final int TASK_INDEX_ERROR = -1;
     private static Task[] tasks;
     public static void main(String[] args) {
         //chatbot startup
@@ -56,28 +57,29 @@ public class Nano {
 
     private static void unmarkTask(String taskName) {
         int taskIndex = getTaskIndex(taskName);
-        if (taskIndex == -1) {
+        if (taskIndex == TASK_INDEX_ERROR) {
             System.out.println(MESSAGE_TASK_NOT_FOUND);
+            return;
+        }
+
+        if (tasks[taskIndex].isCompleted()) {
+            tasks[taskIndex].setIncomplete();
+            System.out.println(taskName + MESSAGE_TASK_UNMARKED);
         } else {
-            if (tasks[taskIndex].getTaskCompletionStatus()) {
-                tasks[taskIndex].incompleteTask();
-                System.out.println(taskName + MESSAGE_TASK_UNMARKED);
-            } else {
-                System.out.println(taskName + MESSAGE_TASK_ALREADY_DONE);
-            }
+            System.out.println(taskName + MESSAGE_TASK_ALREADY_DONE);
         }
     }
     private static void markTask(String taskName) {
         int taskIndex = getTaskIndex(taskName);
-        if (taskIndex == -1) {
+        if (taskIndex == TASK_INDEX_ERROR) {
             System.out.println(MESSAGE_TASK_NOT_FOUND);
+        }
+
+        if (!tasks[taskIndex].isCompleted()) {
+            tasks[taskIndex].setCompleted();
+            System.out.println(MESSAGE_TASK_MARKED + taskName);
         } else {
-            if (!tasks[taskIndex].getTaskCompletionStatus()) {
-                tasks[taskIndex].completeTask();
-                System.out.println(MESSAGE_TASK_MARKED + taskName);
-            } else {
-                System.out.println(taskName + MESSAGE_TASK_ALREADY_DONE);
-            }
+            System.out.println(taskName + MESSAGE_TASK_ALREADY_DONE);
         }
     }
     private static int getTaskIndex(String taskName) {
@@ -86,7 +88,7 @@ public class Nano {
                 return i;
             }
         }
-        return -1;
+        return TASK_INDEX_ERROR;
     }
     private static void addTask(String taskName) {
         if (isInList(taskName)) {
@@ -129,7 +131,7 @@ public class Nano {
     }
 
     private static void printTodoMark(int i) {
-        if (tasks[i].getTaskCompletionStatus()) {
+        if (tasks[i].isCompleted()) {
             System.out.print(TASK_COMPLETED_MARK);
         } else {
             System.out.print(TASK_UNCOMPLETED_MARK);
