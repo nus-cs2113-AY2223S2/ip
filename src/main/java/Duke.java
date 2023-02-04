@@ -6,7 +6,7 @@ public class Duke {
 
         printWelcomeMessage();
         Scanner in = new Scanner(System.in);
-        ArrayList<Task> tasks = new ArrayList<Task>();
+        ArrayList<Task> tasks = new ArrayList<>();
 
         while (true) {
             String line = in.nextLine();
@@ -118,9 +118,9 @@ public class Duke {
     private static void printAllTasks(ArrayList<Task> tasks) {
         System.out.println(" Here are the tasks in your list:");
         int index = 1;
-        for (int i = 0; i < tasks.size(); i++) {
+        for (Task task : tasks) {
             //print Task Description
-            System.out.println("  " + index + "." + tasks.get(i).toString());
+            System.out.println("  " + index + "." + task.toString());
             index++;
         }
     }
