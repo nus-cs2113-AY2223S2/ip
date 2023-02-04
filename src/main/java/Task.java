@@ -1,4 +1,4 @@
-public class Task {
+public abstract class Task {
     protected String description;
     protected boolean isDone;
     protected String taskLabel;
@@ -43,7 +43,6 @@ public class Task {
      * except the instructions to add tasks to the list
      */
     public static void markOrUnmark(String command, Task[] listOfTasks, int currentNumber) {
-        printHorizontalLine();
         if (command.matches("mark \\d")) {
             mark(command, listOfTasks);
         } else if (command.matches("unmark \\d")) {
