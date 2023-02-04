@@ -1,5 +1,7 @@
 package dev.joulev.archduke;
 
+import com.google.gson.Gson;
+
 import dev.joulev.archduke.commands.Command;
 import dev.joulev.archduke.commands.Parser;
 import dev.joulev.archduke.exceptions.ArchdukeException;
@@ -52,6 +54,10 @@ public class Archduke {
         } catch (ArchdukeException e) {
             handleCasesWhereSomethingHasGoneHorriblyWrong();
         }
+
+        String json = "{ \"type\": \"todo\", \"whatever\": \"read book\" }";
+        Gson gson = new Gson();
+        System.out.println(gson.fromJson(json, Command.class));
 
         while (true) {
             try {
