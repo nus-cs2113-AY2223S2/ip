@@ -1,3 +1,5 @@
+package luke.icon;
+
 public class CheckBox {
     /** Visual representation of the checkbox */
     private String checkBox;

@@ -1,3 +1,5 @@
+package luke.task;
+
 public class Event extends Deadline {
     protected String startDate;
     public Event(String name, int ID, String startDate, String endDate) {

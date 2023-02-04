@@ -1,3 +1,9 @@
+package luke;
+
+import luke.command.Response;
+import luke.command.TaskOrganizer;
+import luke.exception.InvalidIndexException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;

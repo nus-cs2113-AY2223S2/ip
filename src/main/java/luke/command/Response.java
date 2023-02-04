@@ -1,3 +1,8 @@
+package luke.command;
+
+import luke.icon.LukeLogo;
+import luke.task.Task;
+
 import java.util.ArrayList;
 
 public class Response {
