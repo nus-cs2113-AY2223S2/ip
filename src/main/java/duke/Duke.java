@@ -1,5 +1,16 @@
+package duke;
+
 import java.util.Scanner;
 import java.util.ArrayList;
+
+import exceptions.DeadlineCommandException;
+import exceptions.EventCommandException;
+import exceptions.MarkUnmarkCommandException;
+import exceptions.TodoCommandException;
+import task.Task;
+import task.Todo;
+import task.Deadline;
+import task.Event;
 
 public class Duke {
     public static void main(String[] args) {

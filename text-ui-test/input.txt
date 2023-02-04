@@ -10,4 +10,15 @@ mark 4
 list
 unmark 2
 list
+mark 20
+mark -1
+mark w
+unmark 20
+unmark -1
+unmark w
+deadline
+todo
+deadline return book by June 6th
+event project meeting from Aug 6th /to 4pm
+list
 bye
