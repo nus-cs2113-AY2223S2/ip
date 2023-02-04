@@ -1,5 +1,8 @@
 import commands.Command;
 import commands.Parser;
+import exceptions.ArchdukeException;
+import exceptions.ParserException;
+import exceptions.ParserException.ParserExceptionCode;
 import io.In;
 import io.Out;
 import tasks.Store;
@@ -37,31 +40,35 @@ public class Archduke {
         Out.greet();
 
         while (true) {
-            Command command = Parser.parse(in.readUserInput());
-            String type = command.getType();
+            try {
+                Command command = Parser.parse(in.readUserInput());
+                String type = command.getType();
 
-            switch (type) {
-            case "list":
-                Out.printTasks(store);
-                continue;
-            case "mark":
-            case "unmark":
-                toggleTaskCompleteness(command.getBody());
-                continue;
-            case "todo":
-                addTask(new ToDo(command.getBody()));
-                continue;
-            case "deadline":
-                addTask(new Deadline(command.getBody(), command.getBy()));
-                continue;
-            case "event":
-                addTask(new Event(command.getBody(), command.getFrom(), command.getTo()));
-                continue;
-            case "bye":
-                Out.bye();
-                return;
-            default:
-                Out.printError("\"%s\" is not a valid command. Try again.", type);
+                switch (type) {
+                case "list":
+                    Out.printTasks(store);
+                    continue;
+                case "mark":
+                case "unmark":
+                    toggleTaskCompleteness(command.getBody());
+                    continue;
+                case "todo":
+                    addTask(new ToDo(command.getBody()));
+                    continue;
+                case "deadline":
+                    addTask(new Deadline(command.getBody(), command.getBy()));
+                    continue;
+                case "event":
+                    addTask(new Event(command.getBody(), command.getFrom(), command.getTo()));
+                    continue;
+                case "bye":
+                    Out.bye();
+                    return;
+                default:
+                    throw new ParserException(ParserExceptionCode.UNKNOWN_COMMAND, type);
+                }
+            } catch (ArchdukeException exception) {
+                exception.printError();
             }
         }
     }
