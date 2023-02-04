@@ -21,59 +21,111 @@ public class Duke {
 
         while (isProgramRunning) {
             String command = in.nextLine();
+            String firstWord = command.split(" ")[0];
             if (command.equals("bye")) {
                 exit();
             } else if (command.equals("list")) {
                 printList();
-            } else if (command.startsWith("mark ") || command.startsWith("unmark ")) {
-                markAndUnmarkHandler(command);
-            } else if (command.startsWith("todo ")) {
-                initTodoTask(command);
-            } else if (command.startsWith("deadline ")) {
-                initDeadlineTask(command);
-            } else if (command.startsWith("event ")) {
-                initEventTask(command);
+            } else if (firstWord.equals("mark") || firstWord.equals("unmark")) {
+                MarkOrUnmarkHandler(command);
+            } else if (firstWord.equals("todo")) {
+                todoTaskHandler(command);
+            } else if (firstWord.equals("deadline")) {
+                deadlineTaskHandler(command);
+            } else if (firstWord.equals("event")) {
+                eventTaskHandler(command);
             } else {
-                initNewGeneralTask(command);
+                illegalCommandMessage();
             }
         }
     }
 
-    private static void initEventTask(String command) {
-        command = command.replace("event ", "");
+    private static void MarkOrUnmarkHandler(String command) {
+        try {
+            markAndUnmarkTask(command);
+        } catch (IllegalCommandException e) {
+            illegalCommandMessage();
+        }
+    }
+
+    private static void todoTaskHandler(String command) {
+        try {
+            initTodoTask(command);
+        } catch (EmptyCommandException e) {
+            emptyCommandMessage("todo");
+        }
+    }
+
+    private static void eventTaskHandler(String command) {
+        try {
+            initEventTask(command);
+        } catch (IllegalCommandException e) {
+            illegalCommandMessage();
+        } catch (EmptyCommandException e) {
+            emptyCommandMessage("event");
+        }
+    }
+
+    private static void deadlineTaskHandler(String command) {
+        try {
+            initDeadlineTask(command);
+        } catch (EmptyCommandException e) {
+            emptyCommandMessage("deadline");
+        } catch (IllegalCommandException e) {
+            illegalCommandMessage();
+        }
+    }
+
+    private static void emptyCommandMessage(String task) {
+        System.out.println(LINE + " ☹ OOPS!!! The description of a " + task + " cannot be empty.\n" + LINE);
+    }
+
+    private static void illegalCommandMessage() {
+        System.out.println(LINE + " ☹ OOPS!!! I'm sorry, but I don't know what that means :-(\n" + LINE);
+    }
+
+    private static void initEventTask(String command) throws IllegalCommandException, EmptyCommandException {
+        command = command.replace("event", "").trim();
+        if (command.isEmpty()) {
+            throw new EmptyCommandException();
+        }
         String[] stringSplit = command.split(" /from ");
         if (isInvalidString(stringSplit)) {
-            initNewGeneralTask("event " + command);
-            return;
+            throw new IllegalCommandException();
         }
-        String[] fromAndTo = stringSplit[1].split(" /to ");
-        if (isInvalidString(fromAndTo)) {
-            initNewGeneralTask("event " + command);
-            return;
+        String[] startToEndTime = stringSplit[1].split(" /to ");
+        if (isInvalidString(startToEndTime)) {
+            throw new IllegalCommandException();
         }
-        tasks[commandCount] = new Event(stringSplit[0], fromAndTo[0], fromAndTo[1]);
+        tasks[commandCount] = new Event(stringSplit[0], startToEndTime[0], startToEndTime[1]);
         addSpecialTaskMessage();
         commandCount++;
     }
+
 
     private static boolean isInvalidString(String[] stringSplit) {
         return stringSplit.length != 2;
     }
 
-    private static void initDeadlineTask(String command) {
-        command = command.replace("deadline ", "");
+    private static void initDeadlineTask(String command) throws EmptyCommandException, IllegalCommandException {
+        command = command.replace("deadline", "").trim();
+        if (command.isEmpty()) {
+            throw new EmptyCommandException();
+        }
         String[] stringSplit = command.split(" /by ");
         if (isInvalidString(stringSplit)) {
-            initNewGeneralTask("deadline " + command);
-            return;
+            throw new IllegalCommandException();
         }
         tasks[commandCount] = new Deadline(stringSplit[0], stringSplit[1]);
         addSpecialTaskMessage();
         commandCount++;
     }
 
-    private static void initTodoTask(String command) {
-        String todo = command.replace("todo ", "");
+    private static void initTodoTask(String command) throws EmptyCommandException {
+        String todo = command.replace("todo", "").trim();
+        if (todo.isEmpty()) {
+            throw new EmptyCommandException();
+        }
         tasks[commandCount] = new Todo(todo);
         addSpecialTaskMessage();
         commandCount++;
@@ -84,28 +136,17 @@ public class Duke {
                 + " tasks in the list." + System.lineSeparator() + LINE);
     }
 
-    private static void initNewGeneralTask(String command) {
-        echoCommand(command);
-        tasks[commandCount] = new Task(command);
-        commandCount++;
-    }
 
-    private static void echoCommand(String command) {
-        System.out.println(LINE + "added: " + command + System.lineSeparator() + LINE);
-    }
-
-    private static void markAndUnmarkHandler(String command) {
+    private static void markAndUnmarkTask(String command) throws IllegalCommandException {
         String[] words = command.split(" ");
-        if (words.length == 2) {
-            int indexOfMarking = isNumeric(words[1]);
-            if (!isValidMarking(command, indexOfMarking)) {
-                initNewGeneralTask(command);
-                return;
-            }
-            createMarkOrUnmark(command, words, indexOfMarking);
-        } else {
-            initNewGeneralTask(command);
+        if (words.length != 2) {
+            throw new IllegalCommandException();
         }
+        int indexOfMarking = getIndex(words[1]);
+        if (!isValidMarking(indexOfMarking)) {
+            throw new IllegalCommandException();
+        }
+        createMarkOrUnmark(command, words, indexOfMarking);
     }
 
     private static void createMarkOrUnmark(String command, String[] words, int indexOfMarking) {
@@ -120,7 +161,7 @@ public class Duke {
         System.out.println("  " + tasks[indexOfMarking].toString() + System.lineSeparator() + LINE);
     }
 
-    private static boolean isValidMarking(String command, int indexOfMarking) {
+    private static boolean isValidMarking(int indexOfMarking) {
         if (indexOfMarking == -1) {
             return false;
         }
@@ -144,7 +185,7 @@ public class Duke {
         System.out.println(LINE + GREET_MESSAGE);
     }
 
-    private static int isNumeric(String strNum) {
+    private static int getIndex(String strNum) {
         // Referenced from https://www.baeldung.com/java-check-string-number
         int index = 0;
         if (strNum == null) {
