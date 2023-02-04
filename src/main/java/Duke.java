@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class Duke {
 
     public static final String DIVIDER  = "______________________________";
+
     public static void greetUser() {
          String greeting = DIVIDER + System.lineSeparator() + "Hello! I'm Jarvis!"
                  + System.lineSeparator() + "What can I do for you?"
@@ -22,6 +23,15 @@ public class Duke {
         System.out.println(bye);
     }
 
+    public static void okMessage(Task[] tasks, int taskSum) {
+        String acknowledgement = DIVIDER + System.lineSeparator()
+                + "Got it. I've added this task: " + System.lineSeparator()
+                + " " + tasks[taskSum].toString();
+        System.out.println(acknowledgement);
+        taskSum++;
+        System.out.println("Now you have " + taskSum + " task(s) in the list." + System.lineSeparator() + DIVIDER);
+    }
+
     public static void main(String[] args) {
         String input;
         //String[] tasks = new String[100];
@@ -36,6 +46,11 @@ public class Duke {
         while(!hasEnded) {
             input = in.nextLine();
             String[] inputText = input.split(" ");
+            //get the remaining task description after the command word.
+            String taskDesc = "";
+            for (int i = 1; i < inputText.length; i++) {
+                taskDesc = taskDesc + " " + inputText[i];
+            }
 
             switch(inputText[0]) {
             case "bye":
@@ -45,7 +60,8 @@ public class Duke {
                 System.out.println(DIVIDER + System.lineSeparator()
                         + "Here are the tasks in your list:");
                 for (int i = 0; i < taskSum; i++) {
-                    System.out.println((i+1) + ". " + "[" + list[i].getStatusIcon() + "] " + list[i].getName());
+                    //System.out.println((i+1) + ". " + list[i].toString() + "[" + list[i].getStatusIcon() + "] " + list[i].getName());
+                    System.out.println((i+1) + "." + list[i].toString());
                 }
                 System.out.println(DIVIDER);
                 break;
@@ -60,10 +76,11 @@ public class Duke {
                 else {
                     list[taskNum-1].markAsDone();
                     System.out.println("Nice! I've marked this task as done:");
-                    System.out.println("[X] " + list[taskNum - 1].getName()
+                    //System.out.println("[X] " + list[taskNum - 1].getName()
+                    //        + System.lineSeparator() + DIVIDER);
+                    System.out.println(DIVIDER + System.lineSeparator() + list[taskNum-1].toString()
                             + System.lineSeparator() + DIVIDER);
                 }
-                //markAsDone(list, taskNum, taskSum);
                 break;
             case "unmark":
                 taskNum = Integer.parseInt(inputText[1]);
@@ -76,15 +93,43 @@ public class Duke {
                 else {
                     list[taskNum-1].markAsNotDone();
                     System.out.println("OK, I've marked this task as not done yet:");
-                    System.out.println("[ ] " + list[taskNum - 1].getName()
+                    //System.out.println("[ ] " + list[taskNum - 1].getName()
+                    //        + System.lineSeparator() + DIVIDER);
+                    System.out.println(DIVIDER + System.lineSeparator() + list[taskNum-1].toString()
                             + System.lineSeparator() + DIVIDER);
                 }
-                //markAsNotDone(list,taskNum, taskSum);
+                break;
+            case "todo":
+                list[taskSum] = new Todo(taskDesc);
+                okMessage(list,taskSum);
+                taskSum++;
+                break;
+            case "event":
+                //use string.split to split the string into their different descriptions
+                String[] eventInput = taskDesc.split("/from");
+                String eventDesc = eventInput[0];
+                String eventDuration = eventInput[1];
+                String[] startAndEnd = eventDuration.split("/to");
+                String eventStart = startAndEnd[0];
+                String eventEnd = startAndEnd[1];
+                list[taskSum] = new Event(eventDesc, eventStart, eventEnd);
+                okMessage(list,taskSum);
+                taskSum++;
+                break;
+            case "deadline":
+                //use string.split to split the string into their different descriptions
+                String[] deadlineInput = taskDesc.split("/by");
+                String deadlineTaskDesc = deadlineInput[0];
+                String deadlineDuration = deadlineInput[1];
+                list[taskSum] = new Deadline(deadlineTaskDesc, deadlineDuration);
+                okMessage(list,taskSum);
+                taskSum++;
                 break;
             default:
                 echoUserInput(input);
                 list[taskSum] = new Task(input);
                 taskSum++;
+                break;
             }
         }
         sayByeToUser();
