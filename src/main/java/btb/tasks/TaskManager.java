@@ -21,7 +21,7 @@ public class TaskManager {
      *
      * @param task the task that we want to add to the list
      */
-    public void addTask (Task task, String command) {
+    public void addTask(Task task, String command) {
         tasks.add(task);
         printAcknowledgeCommand(task, command);
         printNumberOfTasks();
@@ -31,7 +31,7 @@ public class TaskManager {
      * Acknowledges when the commands "add", "mark", "unmark",
      * "list" are entered.
      *
-     * @param task task that has been added to the tasks list
+     * @param task    task that has been added to the tasks list
      * @param command the command entered by user
      */
     public void printAcknowledgeCommand(Task task, String command) {
@@ -58,7 +58,7 @@ public class TaskManager {
     /**
      * Lists the tasks in the tasks list.
      */
-    public void listTasks () {
+    public void listTasks() {
         System.out.println(Constant.TAB_SPACE +
                 "Here are the tasks in your list:");
         int index = 1;

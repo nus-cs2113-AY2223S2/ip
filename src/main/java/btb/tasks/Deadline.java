@@ -9,7 +9,7 @@ public class Deadline extends Task {
      * The status is set to false at initialisation.
      *
      * @param description deadline description
-     * @param dueDate the date and time the deadline is up
+     * @param dueDate     the date and time the deadline is up
      */
     public Deadline(String description, String dueDate) {
         super(description);

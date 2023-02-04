@@ -12,7 +12,7 @@ public class Logic {
      * executes the different commands entered
      * by the user.
      *
-     * @param tasks the ArrayList of tasks that user entered
+     * @param tasks     the ArrayList of tasks that user entered
      * @param userInput string entered by user in command line
      */
     public static void runCommand(TaskManager tasks, String userInput) {

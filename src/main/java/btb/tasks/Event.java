@@ -11,8 +11,8 @@ public class Event extends Task {
      * Status is set to false at initialisation.
      *
      * @param Description event description
-     * @param startDate start date and time of event
-     * @param endDate end date and time of event
+     * @param startDate   start date and time of event
+     * @param endDate     end date and time of event
      */
     public Event(String Description, String startDate, String endDate) {
         super(Description);
