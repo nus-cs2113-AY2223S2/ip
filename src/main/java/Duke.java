@@ -18,7 +18,7 @@ public class Duke {
 
     public static void reportError(String description) {
         System.out.println(LINE);
-        System.out.println(description);
+        System.out.println("[ERROR] " + description);
         System.out.println(LINE);
     }
 
@@ -28,12 +28,13 @@ public class Duke {
         System.out.println("How can I help you?\n");
         System.out.println("Here are some possibly useful commands:");
         System.out.println(LINE);
-        System.out.println("/todo {description} - Add a todo task to ur task list.");
-        System.out.println("/deadline {description} - Add a deadline task to ur task list.");
-        System.out.println("/event {description} - Add an event task to ur task list.");
+        System.out.println("/todo { description } - Add a todo task to ur task list.");
+        System.out.println("/deadline { description } /by { cutoff } - Add a deadline task to ur task list.");
+        System.out.println(
+                "/event { description } /start { start time } /end { end time } - Add an event task to ur task list.");
         System.out.println("/list - List out all the tasks in ur task list.");
-        System.out.println("/mark {numerical index} - Mark a specific task done.");
-        System.out.println("/unmark {numerical index} - Mark a specific task undone.");
+        System.out.println("/mark { numerical index } - Mark a specific task done.");
+        System.out.println("/unmark { numerical index } - Mark a specific task undone.");
         System.out.println("/bye - Terminate the program.");
         System.out.println(LINE);
     }
@@ -150,7 +151,7 @@ public class Duke {
                 unmarkTask(userInputArray);
             } else {
                 /** Handle non-command inputs **/
-                echo(userInput);
+                reportError("Please enter a valid command!");
             }
         }
     }
