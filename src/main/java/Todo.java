@@ -1,9 +1,14 @@
 public class Todo extends Task {
+    protected int length;
 
+    public Todo(String description, int length) throws DukeException {
 
-    public Todo(String description) {
         super(description);
+        this.length=length;
 
+        if(length<2) {
+            throw new DukeException();
+        }
     }
     @Override
     public String toString() {
