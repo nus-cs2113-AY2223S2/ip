@@ -1,3 +1,4 @@
+package tasks;
 public class Event extends Todo {
     private final String TYPE_REPRESENTATION = "E";
 

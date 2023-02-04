@@ -1,3 +1,4 @@
+package tasks;
 public class Todo extends Task {
     protected boolean isDone;
     private final String TYPE_REPRESENTATION = "T";

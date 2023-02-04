@@ -1,3 +1,4 @@
+package tasks;
 public class Deadline extends Todo {
     private final String TYPE_REPRESENTATION = "D";
 

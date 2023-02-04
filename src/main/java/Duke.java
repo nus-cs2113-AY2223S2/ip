@@ -1,6 +1,9 @@
 import java.util.Scanner;
 import messages.ErrorMessages;
 import messages.OperationsMessages;
+import tasks.Deadline;
+import tasks.Event;
+import tasks.Todo;
 import exceptions.EmptyInputException;
 import exceptions.InvalidCommand;
 
