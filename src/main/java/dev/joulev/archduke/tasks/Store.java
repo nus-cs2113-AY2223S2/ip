@@ -1,35 +1,33 @@
 package dev.joulev.archduke.tasks;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 
 import dev.joulev.archduke.exceptions.ArchdukeException;
 import dev.joulev.archduke.io.Out;
 
 public class Store {
-    private Task[] tasks;
+    private ArrayList<Task> tasks;
 
     public Store() {
-        this.tasks = new Task[0];
+        this.tasks = new ArrayList<>();
     }
 
     public void addTask(Task task) {
-        int length = this.tasks.length;
-        this.tasks = Arrays.copyOf(this.tasks, length + 1);
-        this.tasks[length] = task;
+        this.tasks.add(task);
     }
 
     public void listTasks() throws ArchdukeException {
         for (Task task : tasks) {
             Out.printf("  %s", task.toString());
         }
-        Out.printf("You have %d task(s) in the list.", tasks.length);
+        Out.printf("You have %d task(s) in the list.", getTaskCount());
     }
 
     public Task getTask(int index) {
-        return this.tasks[index];
+        return tasks.get(index);
     }
 
     public int getTaskCount() {
-        return this.tasks.length;
+        return this.tasks.size();
     }
 }
