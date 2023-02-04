@@ -1,6 +1,7 @@
 public class Task {
     protected String description;
     protected boolean isDone;
+    protected String type;
 
     public Task(String description) {
         this.description = description;
@@ -17,5 +18,13 @@ public class Task {
 
     public void unmarkAsDone(){
         isDone = false;
+    }
+
+    public String getType() {
+        return null;
+    }
+
+    public String getTimings() {
+        return null;
     }
 }
