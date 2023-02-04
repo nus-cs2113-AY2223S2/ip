@@ -20,7 +20,7 @@ public class Duke {
         }
     }
 
-    public static void checkValidity(String[] lineComponents) throws InvalidCommand {
+    public static void checkIfValid(String[] lineComponents) throws InvalidCommand {
         boolean isNotValidCommand = !commands.contains(lineComponents[0]);
         if (isNotValidCommand) {
             throw new InvalidCommand();
@@ -28,8 +28,8 @@ public class Duke {
     }
 
     public static void checkIfEmpty(String[] lineComponents) throws InvalidCommand {
-        boolean isNotValidCommand = (taskTypes.contains(lineComponents[0]) && lineComponents.length == 1);
-        if (isNotValidCommand) {
+        boolean isEmptyCommand = (taskTypes.contains(lineComponents[0]) && lineComponents.length == 1);
+        if (isEmptyCommand) {
             throw new InvalidCommand();
         }
     }
@@ -60,7 +60,7 @@ public class Duke {
             String[] lineComponents = line.split(" ", 2); // Split the input line
             String type = lineComponents[0];
             try {
-                checkValidity(lineComponents);
+                checkIfValid(lineComponents);
                 try {
                     printHorizontalLine();
                     checkIfEmpty(lineComponents);
