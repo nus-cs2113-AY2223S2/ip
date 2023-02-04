@@ -31,7 +31,6 @@ public class Duke {
     public static void changeLanguage() {
         isSinglish = !isSinglish;
         Greeting.sayChangeLanguage(isSinglish);
-        Greeting.sayHello(isSinglish);
     }
 
     /**
@@ -53,6 +52,7 @@ public class Duke {
             Event item = new Event(line, tasks.size(), startDate, endDate);
             tasks.add(item);
         }
+        Greeting.sayAddToList(isSinglish);
         printTask(tasks.get(tasks.size() - 1));
         Greeting.printHorizontalLines(isSinglish);
     }

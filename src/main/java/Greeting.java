@@ -106,6 +106,14 @@ public class Greeting {
         }
     }
 
+    public static void sayAddToList(boolean isSinglish) {
+        if (isSinglish) {
+            System.out.println("Ok, I add in already");
+        } else {
+            System.out.println("Task has been added to list.");
+        }
+    }
+
 
 
 }
