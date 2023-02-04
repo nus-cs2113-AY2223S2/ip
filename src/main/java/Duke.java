@@ -18,8 +18,7 @@ public class Duke {
     private static final String COMMAND_EVENT = "event";
 
     // data
-    private static Task[] tasks = new Task[100];
-    private static int numTasks = 0;
+    private static ArrayList<Task> tasks = new ArrayList<>();
 
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
@@ -101,29 +100,28 @@ public class Duke {
     }
 
     private static void addTask(Task taskObj) {
-        tasks[numTasks] = taskObj;
-        ++numTasks;
+        tasks.add(taskObj);
         String output = "Got it. I've added this task:\n"
                 + INDENT + taskObj.describe() + "\n"
-                + "Now you have " + numTasks + " tasks in the list";
+                + "Now you have " + tasks.size() + " tasks in the list";
         printWithIndentation(output);
         printLine();
     }
 
     private static void setTaskStatus(int id, boolean isCompleted) throws InvalidInputException {
         try {
-            if (id >= numTasks || id < 0) {
+            if (id >= tasks.size() || id < 0) {
                 throw new IndexOutOfBoundsException();
             }
-            tasks[id].setIsCompleted(isCompleted);
+            tasks.get(id).setIsCompleted(isCompleted);
             String output = isCompleted
                             ? "Nice! I've marked this task as done:\n"
                             : "OK, I've marked this task as not done yet:\n";
-            output += tasks[id].describe();
+            output += tasks.get(id).describe();
             printWithIndentation(output);
             printLine();
         } catch (IndexOutOfBoundsException e) {
-            throw new InvalidInputException(numTasks == 0
+            throw new InvalidInputException(tasks.size() == 0
                                             ? "There are no tasks available."
                                             : "Invalid task ID entered.");
         }
@@ -147,15 +145,15 @@ public class Duke {
     }
 
     private static void handleCommandList() {
-        String output = numTasks == 0
+        String output = tasks.size() == 0
                         ? "There are no tasks available."
                         : "Here are the tasks in your list:\n";
         // adds tasks to output, if any
         // combine details of tasks into a single string
-        for (int i = 0; i < numTasks; ++i) {
+        for (int i = 0; i < tasks.size(); ++i) {
             output += (i + 1)
                     + "." // number
-                    + tasks[i].describe() + "\n";
+                    + tasks.get(i).describe() + "\n";
         }
         printWithIndentation(output);
         printLine();
