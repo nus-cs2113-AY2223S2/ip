@@ -1,31 +1,13 @@
-#!/usr/bin/env bash
+#!/bin/zsh
+wd="$(cd "$(dirname "$0")" && pwd)"
+rm -f $wd/actual.txt
+rm -rf $wd/../bin
+mkdir -p $wd/../bin
+javac -d $wd/../bin $wd/../src/main/java/**/*.java
+TESTING=true java -cp $wd/../bin dev.joulev.archduke.Archduke < $wd/input.txt > $wd/actual.txt
+diff $wd/actual.txt $wd/expected.txt
 
-# create bin directory if it doesn't exist
-if [ ! -d "../bin" ]
-then
-    mkdir ../bin
-fi
-
-# delete output from previous run
-if [ -e "./actual.txt" ]
-then
-    rm actual.txt
-fi
-
-# compile the code into the bin folder, terminates if error occurred
-if ! javac -cp ../src/main/java -Xlint:none -d ../bin ../src/main/java/*.java
-then
-    echo "********** BUILD FAILURE **********"
-    exit 1
-fi
-
-# run the program, feed commands from input.txt file and redirect the output to the actual.txt
-TESTING=true java -classpath ../bin Archduke < input.txt > actual.txt
-
-# compare the output to the expected output
-diff actual.txt expected.txt
-if [ $? -eq 0 ]
-then
+if [ $? -eq 0 ]; then
     echo "Test result: PASSED"
     exit 0
 else

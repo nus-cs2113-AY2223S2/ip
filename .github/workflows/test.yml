@@ -11,5 +11,5 @@ jobs:
         with:
           distribution: "temurin"
           java-version: "11"
-      - run: ./runtest.sh
-        working-directory: ./text-ui-test
+      - run: text-ui-test/runtest.sh
+        shell: zsh {0}
