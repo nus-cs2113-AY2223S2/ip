@@ -1,3 +1,5 @@
+mark i am
+mark 3
 todo borrow book
 list
 deadline return book /by Sunday
@@ -7,4 +9,9 @@ list
 mark 2
 unmark 1
 list
+deadline
+todo
+event
+list
+blah
 bye
