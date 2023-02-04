@@ -1,103 +1,206 @@
 import java.util.Scanner;
 import java.util.Arrays;
 public class Duke {
+    /***
+     * MAX_TASK_NUM shows the maximum number of tasks it can store
+     */
     public static final int MAX_TASK_NUM = 100;
+    /***
+     * Ensures that a fixed line formatting is made.
+     */
+    public static final String LINE_FORMATTING =
+            "____________________________________________________________\n";
+    /***
+     * The fixed number of spaces when processing commands involving "by" in
+     * the input.
+     */
+    public static final int REMOVE_BY_NUM = 4;
+    /***
+     * The fixed number of spaces when processing commands involving "todo" in
+     * the input.
+     */
+    public static final int REMOVE_TODO_NUM = 5;
+    /***
+     * The fixed number of spaces when processing commands involving "event" in
+     * the input.
+     */
+    public static final int REMOVE_EVENT_NUM = 6;
+    /***
+     * The fixed number of spaces when processing commands involving "from" in
+     * the input.
+     */
+    public static final int REMOVE_FROM_NUM = 6;
+    /***
+     * The fixed number of spaces when processing commands involving "to" in
+     * the input.
+     */
+    public static final int REMOVE_TO_NUM = 4;
+    /***
+     * The fixed number of spaces when processing commands involving "unmark" in
+     * the input.
+     */
+    public static final int REMOVE_UNMARK_NUM = 7;
+    /***
+     * The fixed number of spaces when processing commands involving "mark" in
+     * the input.
+     */
+    public static final int REMOVE_MARK_NUM = 5;
+
+    /***
+     * Main function greets the user and runs processInputs().
+     */
     public static void main(String[] args) {
         showGreetings();
         processInputs();
         showGoodbye();
     }
 
+    /***
+     * Processes the inputs by the user and run commands accordingly.
+     * If the command is not recognised, user is prompted to try again.
+     */
     private static void processInputs() {
         Scanner in = new Scanner (System.in);
-        Task[] storeValues = new Task[MAX_TASK_NUM];
-        int counter = 0;
-
+        Task[] storedValues = new Task[MAX_TASK_NUM];
+        int taskNum = 0;
         String line = in.nextLine();
+
         while (!line.equals("bye")) {
             if (line.equals("list")) {
-                printList(storeValues, counter);
+                printList(storedValues, taskNum);
             } else if (line.startsWith("mark ")) {
-                markItem(storeValues, line);
+                markItem(storedValues, line);
             } else if (line.startsWith("unmark ")) {
-                unmarkItem(storeValues, line);
+                unmarkItem(storedValues, line);
             } else if (line.startsWith("deadline")) {
-                int forwardSlash = line.indexOf('/');
-                int endOfTask = forwardSlash - 1;
-                int dates = forwardSlash + 4;
-
-                Deadline deadlineInput = new Deadline(line.substring(9,endOfTask), line.substring(dates));
-                /* System.out.println(deadlineInput.toString());
-                deadlineInput.markAsDone();*/
-                //System.out.println(deadlineInput);
-                counter = addTask(storeValues, counter, deadlineInput);
+                taskNum = processDeadline(storedValues, taskNum, line);
             } else if (line.startsWith("todo")) {
-                String removeCommand = line.substring(5);
-                Todo todoInput= new Todo(removeCommand);
-                //System.out.println(todoInput.toString());
-                //todoInput.markAsDone();
-                //System.out.println(todoInput.getStatusIcon());
-                //System.out.println(todoInput.toString());
-                counter = addTask(storeValues, counter, todoInput/*.toString()*/);
+                taskNum = processToDo(storedValues, taskNum, line);
             } else if (line.startsWith("event")) {
-                int firstForwardSlash = line.indexOf('/');
-                String taskName = line.substring(6,firstForwardSlash-1);
-                String duration = line.substring(firstForwardSlash+6);
-                int secondForwardSlash = duration.indexOf('/');
-                String startingTime = duration.substring(0,secondForwardSlash-1);
-                String endingTime = duration.substring(secondForwardSlash+4);
-                Event eventInput = new Event(taskName, startingTime, endingTime);
-
-                counter = addTask(storeValues, counter, eventInput);
+                taskNum = processEvent(storedValues, taskNum, line);
             } else {
-                //commands that are not listed above
+                // Commands that are not listed above
                 System.out.println("Invalid command, try again! \n");
-                //counter = addTask(storeValues, counter, line);
             }
             line = in.nextLine();
         }
     }
 
-    private static int addTask(Task[] storeValues, int counter, Task line) {
+    /***
+     * Prior to adding events to the list, processEvent separates the important details
+     * within the input for further data storage.
+     * @param storedValues List of tasks from user inputs.
+     * @param taskNum The existing position in the list.
+     * @param line User input to be processed.
+     * @return Updated position in the list.
+     */
+    private static int processEvent(Task[] storedValues, int taskNum, String line) {
+        int firstForwardSlash = line.indexOf('/');
+        String taskName = line.substring(REMOVE_EVENT_NUM,firstForwardSlash-1);
+        String duration = line.substring(firstForwardSlash+REMOVE_FROM_NUM);
+
+        int secondForwardSlash = duration.indexOf('/');
+        String startingTime = duration.substring(0,secondForwardSlash-1);
+        String endingTime = duration.substring(secondForwardSlash+REMOVE_TO_NUM);
+        Event eventInput = new Event(taskName, startingTime, endingTime);
+
+        taskNum = addTask(storedValues, taskNum, eventInput);
+        return taskNum;
+    }
+
+    /***
+     * Prior to adding events with command toDo to the list, processtoDo separates the
+     * important details within the input for data storage.
+     * @param storedValues List of tasks from user inputs.
+     * @param taskNum The existing position in the list.
+     * @param line User input to be processed.
+     * @return Updated position in the list.
+     */
+    private static int processToDo(Task[] storedValues, int taskNum, String line) {
+        String removeCommand = line.substring(REMOVE_TODO_NUM);
+        Todo todoInput= new Todo(removeCommand);
+        taskNum = addTask(storedValues, taskNum, todoInput);
+        return taskNum;
+    }
+
+    /***
+     * Prior to adding events with command deadline to the list, processDeadline separates the
+     * important details within the input for data storage.
+     * @param storedValues List of tasks from user inputs.
+     * @param taskNum The existing position in the list.
+     * @param line User input to be processed.
+     * @return Updated position in the list.
+     */
+    private static int processDeadline(Task[] storedValues, int taskNum, String line) {
+        int forwardSlash = line.indexOf('/');
+        int endOfTask = forwardSlash - 1;
+        int dates = forwardSlash + REMOVE_BY_NUM;
+        Deadline deadlineInput = new Deadline(line.substring(9,endOfTask), line.substring(dates));
+        taskNum = addTask(storedValues, taskNum, deadlineInput);
+        return taskNum;
+    }
+
+    /***
+     * Adds processed user inputs into the list of stored values.
+     * @param storedValues List of tasks from user inputs.
+     * @param taskNum The existing position in the list.
+     * @param line User input to be processed.
+     * @return Updated position in the list.
+     */
+    private static int addTask(Task[] storedValues, int taskNum, Task line) {
         formattingLine();
         System.out.println("Got it. I've added this task: \n" + line.toString() + "\n"+
-                "Now you have " + (counter + 1) + " tasks in the list.\n");
+                "Now you have " + (taskNum + 1) + " tasks in the list.\n");
         formattingLine();
-        //store value in line into list
+        // Store value in line into list
         Task newInput = line;
-        storeValues[counter] = newInput;
-        counter += 1;
-        return counter;
+        storedValues[taskNum] = newInput;
+        taskNum += 1;
+        return taskNum;
     }
 
-    private static void unmarkItem(Task[] storeValues, String line) {
+    /***
+     * Unmarks the task in the list when called.
+     * @param storedValues List of tasks from user inputs
+     * @param line User input to be processed.
+     */
+    private static void unmarkItem(Task[] storedValues, String line) {
         int length = line.length();
-        String itemToMark = line.substring(7, length);
+        String itemToMark = line.substring(REMOVE_UNMARK_NUM, length);
         int numToMark = Integer.parseInt(itemToMark);
-        //unmark the item
-        storeValues[numToMark-1].unmarkAsDone();
+        // Unmark the item
+        storedValues[numToMark-1].unmarkAsDone();
         formattingLine();
         System.out.println("OK, I've marked this task as not done yet: \n" +
-                storeValues[numToMark-1].toString() + "\n");
+                storedValues[numToMark-1].toString() + "\n");
         formattingLine();
     }
 
-    private static void markItem(Task[] storeValues, String line) {
+    /***
+     * Marks the task in the list when called.
+     * @param storedValues List of tasks from user inputs.
+     * @param line User input to be processed.
+     */
+    private static void markItem(Task[] storedValues, String line) {
         int length = line.length();
-        String itemToMark = line.substring(5, length);
+        String itemToMark = line.substring(REMOVE_MARK_NUM, length);
         int numToMark = Integer.parseInt(itemToMark);
-        //mark the item as complete
-        storeValues[numToMark-1].markAsDone();
-        //System.out.println(storeValues[numToMark-1].getStatusIcon());
+        // Mark the item as complete
+        storedValues[numToMark-1].markAsDone();
         formattingLine();
         System.out.println("Nice! I've marked this task as done: \n"
-                /*"[" + storeValues[numToMark-1].getStatusIcon() + "] " */+ storeValues[numToMark-1].toString() + "\n");
+                + storedValues[numToMark-1].toString() + "\n");
         formattingLine();
     }
 
-    private static void printList(Task[] storeValues, int counter) {
+    /***
+     * Print all items within the list of stored tasks.
+     * @param storedValues List of tasks from user inputs.
+     * @param taskNum The existing position in the list.
+     */
+    private static void printList(Task[] storedValues, int taskNum) {
         int currValue = 0;
-        Task[] existingValues = Arrays.copyOf(storeValues, counter);
+        Task[] existingValues = Arrays.copyOf(storedValues, taskNum);
         formattingLine();
         System.out.println("Here are the tasks in your list:");
         for (Task value : existingValues) {
@@ -107,13 +210,20 @@ public class Duke {
         formattingLine();
     }
 
+    /***
+     * Outputs the goodbye formatting and message to the user when bye
+     * command is called.
+     */
     private static void showGoodbye() {
-        String bye = "____________________________________________________________\n" +
-                "Bye. Hope to see you again soon!\n" +
-                "____________________________________________________________\n";
+        String bye = "Bye. Hope to see you again soon!\n";
+        formattingLine();
         System.out.println(bye);
+        formattingLine();
     }
 
+    /**
+     * Shows the formatted greetings to the user when called.
+     */
     private static void showGreetings() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -121,17 +231,19 @@ public class Duke {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
 
-        String hello = "____________________________________________________________\n" +
-                " Hello! I'm Duke\n" +
-                " What can I do for you?\n" +
-                "____________________________________________________________\n";
+        String hello = " Hello! I'm Duke\n" +
+                " What can I do for you?\n";
 
         System.out.println("Hello from\n" + logo);
+        formattingLine();
         System.out.println(hello);
+        formattingLine();
     }
 
+    /***
+     * Prints the fixed formatting line when called.
+     */
     private static void formattingLine() {
-        String lineFormatting = "____________________________________________________________\n";
-        System.out.println(lineFormatting);
+        System.out.println(LINE_FORMATTING);
     }
 }
