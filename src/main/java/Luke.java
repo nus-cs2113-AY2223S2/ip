@@ -103,6 +103,7 @@ public class Luke {
         }
 
         String taskType = getFirstWord(taskInfo);
+
         //Check if the task type entered by the user is valid
         if (!taskOrganizer.isTaskType(taskType)) {
             handleInvalidCommand();
@@ -110,6 +111,7 @@ public class Luke {
         }
 
         String taskDetail = removeFirstWord(taskInfo);
+
         //Checks if the name of the task is empty
         if (taskDetail == null) {
             handleInvalidCommand();
@@ -190,7 +192,7 @@ public class Luke {
     /**
      * This function takes in the command keyword and description and executes the specified command.
      *
-     * @param command     The command keyword indicating the type of command to execute.
+     * @param command The command keyword indicating the type of command to execute.
      * @param description The string specifying the details of the command.
      */
     private static void executeCommand(String command, String description) {
