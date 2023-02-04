@@ -82,9 +82,11 @@ public class Duke {
     }
 
     private static void addEvent(String line, ArrayList<Task> tasks) {
-        int fromIndex = line.indexOf("/from"); //index of event start date/time
+        //index of event start date/time
+        int fromIndex = line.indexOf("/from");
         String event = line.substring(6, fromIndex);
-        int toIndex = line.indexOf("/to"); //index of event end date/time
+        //index of event end date/time
+        int toIndex = line.indexOf("/to");
         String eventStart = line.substring(fromIndex + 6, toIndex);
         String eventEnd = line.substring(toIndex + 4);
         tasks.add(new Event(event, eventStart, eventEnd));
@@ -93,7 +95,8 @@ public class Duke {
     }
 
     private static void addDeadline(String line, ArrayList<Task> tasks) {
-        int byIndex = line.indexOf("/by"); //index of deadline due date/time
+        //index of deadline due date/time
+        int byIndex = line.indexOf("/by");
         String taskDescription = line.substring(9, byIndex);
         String deadline = line.substring(byIndex + 4);
         tasks.add(new Deadline(taskDescription, deadline));
@@ -116,7 +119,8 @@ public class Duke {
         System.out.println(" Here are the tasks in your list:");
         int index = 1;
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.println("  " + index + "." + tasks.get(i).toString()); //print Task Description
+            //print Task Description
+            System.out.println("  " + index + "." + tasks.get(i).toString());
             index++;
         }
     }
@@ -125,19 +129,22 @@ public class Duke {
         int index = Integer.parseInt(line.substring(7));
         tasks.get(index-1).setTaskStatus(false);
         System.out.println(" Okay, I've marked this task as not done yet:");
-        System.out.println(tasks.get(index-1).toString()); //print Task Description
+        //print Task Description
+        System.out.println(tasks.get(index-1).toString());
     }
 
     private static void markTaskAsComplete(String line, ArrayList<Task> tasks) {
         int index = Integer.parseInt(line.substring(5));
         tasks.get(index-1).setTaskStatus(true);
         System.out.println(" Nice! I've marked this task as done:");
-        System.out.println(tasks.get(index-1).toString()); //print Task Description
+        //print Task Description
+        System.out.println(tasks.get(index-1).toString());
     }
 
     private static void printTaskAddedDescription(ArrayList<Task> tasks, int taskIndex) {
         System.out.println(" Got it. I've added this task:");
-        System.out.println(tasks.get(taskIndex).toString()); //print Task Description
+        //print Task Description
+        System.out.println(tasks.get(taskIndex).toString());
         System.out.println(" Now you have " + tasks.size() + " tasks in your list.");
     }
 
