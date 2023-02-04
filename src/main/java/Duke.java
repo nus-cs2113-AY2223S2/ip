@@ -1,12 +1,16 @@
-import java.util.Objects;
 import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Duke {
 
-    public static void getType(String s){
-
-    }
+    //static messages
+    public static String TASKS = "Here are the tasks in your list:";
+    public static String DONE = "Nice! I've marked this task as done:";
+    public static String UNDONE = "OK, I've marked this task as not done yet:";
+    public static String ROGER = "Got it. I've added this task:\n";
+    public static String SPACE = "____________________________";
+    public static String BYE = SPACE +"\nBye. Hope to see you again soon!\n"+ SPACE;
+    public static String GREET = SPACE + "\nHello! I'm Duke\n" + "What can I do for you?\n" + SPACE;
 
     public static void main(String[] args) {
         //String logo = " ____        _        \n"
@@ -17,69 +21,67 @@ public class Duke {
         //System.out.println("Hello from\n" + logo);
         String line;
         ArrayList<Task> storage = new ArrayList<>();
-        int words; int x; int taskcounter = 0;
+        int words; int x; int taskCounter = 0;
         Scanner input = new Scanner(System.in);
-        String space = "____________________________";
 
         //greet
-        System.out.println(space + "\nHello! I'm Duke");
-        System.out.println("What can I do for you?\n" + space);
+        System.out.println(GREET);
 
         //echo
         boolean hi = true;
         while (hi) {
             line = input.nextLine();
             words = line.split("//s").length;
-            String arr[] = line.split(" ", 2);
+            String[] arr = line.split(" ", 2);
             switch(arr[0]){
                 case "bye" :
                     hi = false;
                     break;
                 case "list" :
                     //list out storage
-                    System.out.println("Here are the tasks in your list:");
+                    System.out.println(TASKS);
                     for (int i = 0; i < storage.size(); i++) {
                         int index = i + 1;
                         System.out.println(index + ". " + storage.get(i));
                     }
-                    System.out.println(space);
+                    System.out.println(SPACE);
                     break;
                 case "mark" :
                     x = Integer.parseInt(line.substring(5));
                     storage.get(x-1).markAsDone();
-                    System.out.println("Nice! I've marked this task as done:");
-                    System.out.println(storage.get(x-1).toString() + '\n' + space);
+                    System.out.println(DONE);
+                    System.out.println(storage.get(x-1).toString() + '\n' + SPACE);
                     break;
                 case "unmark" :
                     x = Integer.parseInt(line.substring(7));
                     storage.get(x-1).undo();
-                    System.out.println("OK, I've marked this task as not done yet:");
-                    System.out.println(storage.get(x-1).toString() + '\n' + space);
+                    System.out.println(UNDONE);
+                    System.out.println(storage.get(x-1).toString() + '\n' + SPACE);
                     break;
                 case "deadline" :
-                    taskcounter++;
+                    taskCounter++;
                     Deadline dl = new Deadline(line);
                     storage.add(dl);
-                    System.out.println("Got it. I've added this task:\n" + dl);
-                    System.out.println("Now you have " + taskcounter + " tasks in the list.\n" + space);
+                    System.out.println(ROGER + dl);
+                    System.out.println("Now you have " + taskCounter + " tasks in the list.\n" + SPACE);
                     break;
                 case "todo" :
-                    taskcounter++;
+                    taskCounter++;
                     Todo todo = new Todo(line);
                     storage.add(todo);
-                    System.out.println("Got it. I've added this task:\n" + todo);
-                    System.out.println("Now you have " + taskcounter + " tasks in the list.\n" + space);
+                    System.out.println(ROGER + todo);
+                    System.out.println("Now you have " + taskCounter + " tasks in the list.\n" + SPACE);
                     break;
                 default :
-                    taskcounter++;
+                    taskCounter++;
                     Event event = new Event(line);
                     storage.add(event);
-                    System.out.println("Got it. I've added this task:\n" + event);
-                    System.out.println("Now you have " + taskcounter + " tasks in the list.\n" + space);
+                    System.out.println(ROGER + event);
+                    System.out.println("Now you have " + taskCounter + " tasks in the list.\n" + SPACE);
                     break;
             }
         }
         //exit
-        System.out.println(space +"\nBye. Hope to see you again soon!\n"+space);
+        System.out.println(BYE);
     }
 }

@@ -3,7 +3,7 @@ public class Event extends Task {
 
     public Event(String description){
         super(description);
-        String arr[] = description.split(" ", 2);
+        String[] arr = description.split(" ", 2);
         this.desc = arr[1];
     }
 
