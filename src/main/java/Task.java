@@ -16,7 +16,11 @@ public class Task {
         return description;
     }
 
-    public void setTaskStatus(boolean status) {
-        this.isDone = status;
+    public void markAsDone() {
+        this.isDone = true;
+    }
+
+    public void markAsNotDone() {
+        this.isDone = false;
     }
 }
