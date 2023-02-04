@@ -1,4 +1,4 @@
-package duke.main;
+package duke.commands;
 
 import duke.commands.Parser;
 import duke.exceptions.InvalidTaskException;
