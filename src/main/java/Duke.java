@@ -1,18 +1,14 @@
 import constants.Message;
+import java.util.Scanner;
+import model.database.Database;
 import model.task.Deadline;
 import model.task.Event;
 import model.task.Task;
 import model.task.Todo;
 
-import java.util.Scanner;
-
 public class Duke {
 
-  private static final int MAX_TASKS = 100;
-
-  private static final Task[] tasks = new Task[MAX_TASKS];
-
-  private static int counter = 0;
+  private static final Database db = new Database();
 
   private static boolean isRunning = true;
 
@@ -27,10 +23,11 @@ public class Duke {
   /**
    * Prints out all the tasks in the tasks array
    */
-  private static void printTasks() {
+  private static void printTasks() throws Exception {
     System.out.println(Message.LIST_TASKS.message);
-    for (int i = 0; i < counter; ++i) {
-      System.out.printf("%d. %s\n", (i + 1), tasks[i].getDescriptionText());
+    for (int i = 0; i < Database.getTaskCount(); ++i) {
+      Task task = db.read(i);
+      System.out.printf("%d. %s\n", (i + 1), task.getDescriptionText());
     }
   }
 
@@ -41,15 +38,10 @@ public class Duke {
    * @param taskDescription A string after removing the
    *                        command
    */
-  private static void addTodoTask(String taskDescription) {
+  private static void addTodoTask(String taskDescription) throws Exception {
     Todo newTodo = new Todo(taskDescription);
-    tasks[counter] = newTodo;
-    counter += 1;
-    System.out.printf(
-      Message.TASK_ADDED.message,
-      newTodo.getDescriptionText(),
-      counter
-    );
+    db.create(newTodo);
+    System.out.printf(Message.TASK_ADDED.message, newTodo.getDescriptionText());
   }
 
   /**
@@ -59,17 +51,15 @@ public class Duke {
    * @param taskDescription A string after removing the
    *                        command
    */
-  private static void addDeadlineTask(String taskDescription) {
+  private static void addDeadlineTask(String taskDescription) throws Exception {
     int index = taskDescription.indexOf("/by");
     String description = taskDescription.substring(0, index);
     String endDuration = taskDescription.substring(index + "/by ".length());
     Deadline newDeadline = new Deadline(description, endDuration);
-    tasks[counter] = newDeadline;
-    counter += 1;
+    db.create(newDeadline);
     System.out.printf(
       Message.TASK_ADDED.message,
-      newDeadline.getDescriptionText(),
-      counter
+      newDeadline.getDescriptionText()
     );
   }
 
@@ -80,7 +70,7 @@ public class Duke {
    * @param taskDescription A string after removing the
    *                        command
    */
-  private static void addEventTask(String taskDescription) {
+  private static void addEventTask(String taskDescription) throws Exception {
     int indexOfFrom = taskDescription.indexOf("/from");
     int indexOfTo = taskDescription.indexOf("/to");
     String description = taskDescription.substring(0, indexOfFrom);
@@ -90,12 +80,10 @@ public class Duke {
     );
     String to = taskDescription.substring(indexOfTo + "/to ".length());
     Event newEvent = new Event(description, from, to);
-    tasks[counter] = newEvent;
-    counter += 1;
+    db.create(newEvent);
     System.out.printf(
       Message.TASK_ADDED.message,
-      newEvent.getDescriptionText(),
-      counter
+      newEvent.getDescriptionText()
     );
   }
 
@@ -108,12 +96,13 @@ public class Duke {
    * @param isMark Whether the user wants to mark the task
    * @param index  The index of the task to be marked
    */
-  private static void toggleMark(boolean isMark, int index) {
-    tasks[index].setDone(isMark);
+  private static void toggleMark(boolean isMark, int index) throws Exception {
+    db.update(index, isMark);
+    Task task = db.read(index);
     System.out.printf(
       "%s\n%s\n",
       isMark ? Message.MARKED.message : Message.UNMARKED.message,
-      tasks[index].getDescriptionText()
+      task.getDescriptionText()
     );
   }
 
@@ -130,42 +119,42 @@ public class Duke {
     System.out.println(Message.WELCOME.message);
 
     while (isRunning) {
-      if (!in.hasNextLine()) {
-        break;
-      }
+      try {
+        String line = in.nextLine().trim();
+        String[] words = line.split(" ", 2);
+        String command = words[0];
+        String taskDescription;
 
-      String line = in.nextLine().trim();
-      String[] words = line.split(" ", 2);
-      String command = words[0];
-      String taskDescription;
-
-      switch (command) {
-        case LIST:
-          printTasks();
-          break;
-        case DEADLIINE:
-          taskDescription = words[1];
-          addDeadlineTask(taskDescription);
-          break;
-        case TODO:
-          taskDescription = words[1];
-          addTodoTask(taskDescription);
-          break;
-        case "event":
-          taskDescription = words[1];
-          addEventTask(taskDescription);
-          break;
-        case "mark":
-        case "unmark":
-          int index = Integer.parseInt(words[1]) - 1;
-          boolean isMark = words[0].equals("mark");
-          toggleMark(isMark, index);
-          break;
-        case "bye":
-          terminate();
-          break;
-        default:
-          System.out.println("An invalid command has been provided.");
+        switch (command) {
+          case LIST:
+            printTasks();
+            break;
+          case DEADLIINE:
+            taskDescription = words[1];
+            addDeadlineTask(taskDescription);
+            break;
+          case TODO:
+            taskDescription = words[1];
+            addTodoTask(taskDescription);
+            break;
+          case "event":
+            taskDescription = words[1];
+            addEventTask(taskDescription);
+            break;
+          case "mark":
+          case "unmark":
+            int index = Integer.parseInt(words[1]) - 1;
+            boolean isMark = words[0].equals("mark");
+            toggleMark(isMark, index);
+            break;
+          case "bye":
+            terminate();
+            break;
+          default:
+            System.out.println("An invalid command has been provided.");
+        }
+      } catch (Exception e) {
+        System.out.printf("Oops, something went wrong! %s\n", e.getMessage());
       }
     }
     System.out.println(Message.GOODBYE.message);
