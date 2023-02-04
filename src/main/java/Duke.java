@@ -162,11 +162,17 @@ public class Duke {
     }
 
     private static void handleCommandMark(Scanner input) throws InvalidInputException {
+        if (!input.hasNextInt()) {
+            throw new InvalidInputException("Invalid task ID entered.");
+        }
         int taskNumber = input.nextInt();
         setTaskStatus(taskNumber - 1, true);
     }
 
     private static void handleCommandUnmark(Scanner input) throws InvalidInputException {
+        if (!input.hasNextInt()) {
+            throw new InvalidInputException("Invalid task ID entered.");
+        }
         int taskNumber = input.nextInt();
         setTaskStatus(taskNumber - 1, false);
     }
