@@ -25,10 +25,10 @@ public class Deadline extends Task {
         return Task.isValidInput(input, pattern);
     }
 
-    public static ArrayList<String> convertInputIntoDetails(String input) {
+    public static ArrayList<String> convertInputIntoDetails(String input) throws InvalidTaskFormatException {
         ArrayList<String> result = new ArrayList<>();
         if (!isValidInput(input)) {
-            return result;
+            throw new InvalidTaskFormatException(TaskEnum.DEADLINE);
         }
 
         int byStartIndex = input.indexOf(KEYWORD_BY);
