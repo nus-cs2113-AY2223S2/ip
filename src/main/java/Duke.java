@@ -1,22 +1,46 @@
 import java.util.Scanner;
 
 public class Duke {
-
+    public static final String HORIZONTAL_LINE = "\t____________________________________________________________"
+            + System.lineSeparator();
     public static final int MARK_TASK_NUMBER_INDEX = 5;
     public static final int UNMARK_TASK_NUMBER_INDEX = 7;
 
+    public static String printCurrTask() {
+        String output = "\t" + Task.tasks[Task.numOfTasks] + System.lineSeparator();
+        Task.numOfTasks++;
+        output += "\tNow you have " + Task.numOfTasks + " tasks in the list.";
+        return output;
+    }
+
     public static String markTask(String input) {
         int itemIndex = Integer.parseInt(input.substring(MARK_TASK_NUMBER_INDEX)) - 1;
-        Task.tasks[itemIndex].setTaskStatus(true);
-        return "\tNice! I've marked this task as done:" + System.lineSeparator() + "\t\t"
-                + Task.tasks[itemIndex];
+        String output;
+        try {
+            Task.tasks[itemIndex].setTaskStatus(true);
+            output = "\tNice! I've marked this task as done:" + System.lineSeparator() + "\t\t"
+                    + Task.tasks[itemIndex];
+        } catch (NullPointerException e) {
+            output = "\tSorry, the task does not exist.";
+        } catch (ArrayIndexOutOfBoundsException e) {
+            output = "\tSorry, the task does not exist.";
+        }
+        return output;
     }
 
     public static String unmarkTask(String input) {
         int itemIndex = Integer.parseInt(input.substring(UNMARK_TASK_NUMBER_INDEX)) - 1;
-        Task.tasks[itemIndex].setTaskStatus(false);
-        return "\tOK, I've marked this task as not done yet:" + System.lineSeparator() + "\t\t"
-                + Task.tasks[itemIndex];
+        String output;
+        try {
+            Task.tasks[itemIndex].setTaskStatus(false);
+            output = "\tOK, I've marked this task as not done yet:" + System.lineSeparator() + "\t\t"
+                    + Task.tasks[itemIndex];
+        } catch (NullPointerException e) {
+            output = "\tSorry, the task does not exist.";
+        } catch (ArrayIndexOutOfBoundsException e) {
+            output = "\tSorry, the task does not exist.";
+        }
+        return output;
     }
 
     public static String getList() {
@@ -30,54 +54,127 @@ public class Duke {
         return output;
     }
 
-    public static void createTodoTask(String input) {
+    public static void createTodoTask(String input) throws DukeException {
+        if ((input.trim()).length() == 0) {
+            // task has no description
+            throw new DukeException();
+        }
         Task.tasks[Task.numOfTasks] = new Todo(input);
     }
 
-    public static void createDeadlineTask(String input) {
+    public static void createDeadlineTask(String input) throws DukeException {
         int byIndex = input.indexOf("/by");
+        if (byIndex == -1 || byIndex == 0) {
+            // /by does not exist or task does not have description
+            throw new DukeException();
+        }
         String description = (input.substring(0, byIndex)).trim();
         String restOfInput = input.substring(byIndex);
 
         int startingIndex = (restOfInput).indexOf(" ");
-        String by = restOfInput.substring(startingIndex + 1);
+        if (startingIndex == -1) {
+            // /by has no description
+            throw new DukeException();
+        }
+        String by = (restOfInput.substring(startingIndex)).trim();
+        if (by.length() == 0) {
+            // /by's description only has spaces
+            throw new DukeException();
+        }
         Task.tasks[Task.numOfTasks] = new Deadline(description, by);
     }
 
-    public static void createEventTask(String input) {
+    public static void createEventTask(String input) throws DukeException {
         int descriptionIndex = input.indexOf("/from");
+        if (descriptionIndex == -1 || descriptionIndex == 0) {
+            // /from does not exist or task has no description
+            throw new DukeException();
+        }
         String description = (input.substring(0, descriptionIndex)).trim();
         String restOfInput = input.substring(descriptionIndex);
         
         int fromIndex = restOfInput.indexOf(" ");
         int toIndex = restOfInput.indexOf("/to");
-        String from = (restOfInput.substring(fromIndex, toIndex)).trim();
-        String to = (restOfInput.substring(toIndex + 4)).trim();
+        if (toIndex == -1) {
+            // /to does not exist
+            throw new DukeException();
+        }
+        String from;
+        try {
+            from = (restOfInput.substring(fromIndex, toIndex)).trim();
+        } catch (StringIndexOutOfBoundsException e) {
+            // no space between /from and /to in command
+            throw new DukeException();
+        }
+        if (from.length() == 0) {
+            // /from's description only has spaces
+            throw new DukeException();
+        }
+
+        String toPartOfInput = restOfInput.substring(toIndex);
+        int toDescriptionIndex = toPartOfInput.indexOf(" ");
+        if (toDescriptionIndex == -1) {
+            // /to has no description
+            throw new DukeException();
+        }
+        String to = (toPartOfInput.substring(toDescriptionIndex)).trim();
+        if (to.length() == 0) {
+            // /to's description only has spaces
+            throw new DukeException();
+        }
+
         Task.tasks[Task.numOfTasks] = new Event(description, from, to);
     }
 
-    public static String addTask(String itemType, String restOfInput) {
+    public static String addTask(String taskType, String restOfInput) {
         String output = "\tGot it. I've added this task:" + System.lineSeparator() + "\t";
-        switch (itemType) {
+        switch (taskType) {
         case "todo":
-            createTodoTask(restOfInput);
+            try {
+                createTodoTask(restOfInput);
+            } catch (DukeException e) {
+                return "\tDescription of todo cannot be empty.";
+            }
             break;
         case "deadline":
-            createDeadlineTask(restOfInput);
+            try {
+                createDeadlineTask(restOfInput);
+            } catch (DukeException e) {
+                return "\tInvalid Command. There may be some missing deadline fields.";
+            }
             break;
         case "event":
-            createEventTask(restOfInput);
+            try {
+                createEventTask(restOfInput);
+            } catch (DukeException e) {
+                return "\tInvalid Command. There may be some missing event fields.";
+            }
             break;
         }
-        output += "\t" + Task.tasks[Task.numOfTasks] + System.lineSeparator();
-        Task.numOfTasks++;
-        output += "\tNow you have " + Task.numOfTasks + " tasks in the list.";
+        output += printCurrTask();
         return output;
     }
 
-    public static String getResponse(String input) {
-        String output;
+    public static String getCommand(String input, String firstWord, String restOfInput) throws DukeException {
+        switch (firstWord) {
+        case "list":
+            return getList();
+        case "todo":
+            // fallthrough
+        case "deadline":
+            // fallthrough
+        case "event":
+            return addTask(firstWord, restOfInput);
+        case "mark":
+            return markTask(input);
+        case "unmark":
+            return unmarkTask(input);
+        default:
+            throw new DukeException();
+        }
+    }
 
+    public static String getResponse(String input) {
         // get first word from input
         String firstWord;
         String restOfInput = "";
@@ -91,37 +188,24 @@ public class Duke {
             firstWord = input;
         }
 
+
         // determine the type of command
-        switch (firstWord) {
-        case "list":
-            output = getList();
-            break;
-        case "todo":
-        case "deadline":
-        case "event":
-            output = addTask(firstWord, restOfInput);
-            break;
-        case "mark":
-            output = markTask(input);
-            break;
-        case "unmark":
-            output = unmarkTask(input);
-            break;
-        default:
+        String output;
+        try {
+            output = getCommand(input, firstWord, restOfInput);
+        } catch (DukeException e) {
             output = "\tInvalid command.";
         }
         return output;
     }
 
     public static void main(String[] args) {
-        String greetMsg = "\t____________________________________________________________"
-                + System.lineSeparator()
+        String greetMsg = HORIZONTAL_LINE
                 + "\tHello! I'm Duke"
                 + System.lineSeparator()
                 + "\tWhat can I do for you?"
                 + System.lineSeparator()
-                + "\t____________________________________________________________"
-                + System.lineSeparator();
+                + HORIZONTAL_LINE;
         System.out.println(greetMsg);
 
         String input;
@@ -136,9 +220,7 @@ public class Duke {
             } else {
                 chatOutput = getResponse(input);
             }
-            String horizontalLine = "\t____________________________________________________________"
-                    + System.lineSeparator();
-            System.out.println(horizontalLine + chatOutput + System.lineSeparator() + horizontalLine);
+            System.out.println(HORIZONTAL_LINE + chatOutput + System.lineSeparator() + HORIZONTAL_LINE);
         } while (shouldContinueChat);
     }
 }
