@@ -11,11 +11,11 @@ public class Duke {
         Duke.isListening = keepListening;
     }
 
-    public static void PrintBorder() {
+    public static void printBorder() {
         System.out.println("────────────────────────────────────────────────────────────");
     }
 
-    public static void Exit() {
+    public static void exit() {
         System.out.print("Goodbye! Thank you for using MAX.\n");
     }
 
@@ -121,7 +121,7 @@ public class Duke {
         case "bye":
         case "exit":
             setIsListening(false);
-            Exit();
+            exit();
             break;
         case "list":
             System.out.println("Here's what's in your list:");
@@ -186,11 +186,11 @@ public class Duke {
         }
     }
 
-    public static void Greet() {
-        PrintBorder();
+    public static void greet() {
+        printBorder();
         System.out.println("Hello! I'm Max, your PAWsonal productivity assistant");
         System.out.println("What can I do for you to MAXimize your day?");
-        PrintBorder();
+        printBorder();
     }
 
     public static void main(String[] args) {
@@ -204,7 +204,7 @@ public class Duke {
                 "|__/     |__/|__/  |__/|__/  |__/     V__)  ||";
         System.out.println(logo);
 
-        Greet();
+        greet();
         setIsListening(true);
 
         // Init tasks subsystem
@@ -217,9 +217,9 @@ public class Duke {
         while (isListening) {
             System.out.print("~$ ");
             String command = input.nextLine();
-            PrintBorder();
+            printBorder();
             handleCommand(command);
-            PrintBorder();
+            printBorder();
         }
     }
 }
