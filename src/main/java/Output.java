@@ -14,7 +14,7 @@ public class Output {
     public static void printWelcome(){
         System.out.println("Hello from\n");
         printLogo();
-        System.out.println("Hello! I'm Chronos, your personal assistant.\n");
+        System.out.println("Tick, tick, boom! I'm Chronos, your personal time manager.\n");
     }
     public static void printHelp() {
         System.out.println("=============================================================================================================== \n");
