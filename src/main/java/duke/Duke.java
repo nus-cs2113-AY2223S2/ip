@@ -1,5 +1,9 @@
-import java.lang.reflect.Array;
-import java.time.format.TextStyle;
+package duke;
+
+import duke.exceptions.InsufficientInputException;
+import duke.exceptions.InvalidTaskNumberException;
+import duke.exceptions.UnkownCommandException;
+
 import java.util.Scanner;
 
 public class Duke {
@@ -43,7 +47,7 @@ public class Duke {
                 System.out.println(e.getMessage());
             } catch (NumberFormatException e) {
                 System.out.println("Please input a valid task number");
-            } catch (InvalidTaskNumber e) {
+            } catch (InvalidTaskNumberException e) {
                 System.out.println(e.getMessage());
             }
             input = in.nextLine();
@@ -86,13 +90,13 @@ public class Duke {
         System.out.println(HorizontalLine + "To do added: " + inputWords[1] + "\n" + HorizontalLine);
     }
 
-    private static void unmarkTask(String[] inputWords) throws InvalidTaskNumber, InsufficientInputException {
+    private static void unmarkTask(String[] inputWords) throws InvalidTaskNumberException, InsufficientInputException {
         if (inputWords.length < 2) {
             throw new InsufficientInputException("Task number not specified, please try again");
         }
         int unmarkTaskNumber = Integer.valueOf(inputWords[1]);
         if (unmarkTaskNumber >= Task.maxTaskNumber) {
-            throw new InvalidTaskNumber("Task number not found, please try again.");
+            throw new InvalidTaskNumberException("Task number not found, please try again.");
             // System.out.println("No such task found\n" + HorizontalLine);
         } else {
             taskList[unmarkTaskNumber].unsetDone();
@@ -101,10 +105,10 @@ public class Duke {
         }
     }
 
-    private static void markTask(String[] inputWords) throws InvalidTaskNumber {
+    private static void markTask(String[] inputWords) throws InvalidTaskNumberException {
         int markTaskNumber = Integer.valueOf(inputWords[1]);
         if (markTaskNumber >= Task.maxTaskNumber) {
-            throw new InvalidTaskNumber("Task number not found, please try again.");
+            throw new InvalidTaskNumberException("Task number not found, please try again.");
             //System.out.println("No such task found\n" + HorizontalLine);
         } else {
             taskList[markTaskNumber].setDone();
