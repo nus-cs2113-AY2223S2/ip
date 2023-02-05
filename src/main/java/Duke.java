@@ -1,4 +1,5 @@
 import java.util.Scanner;
+
 public class Duke {
 
     public static final String EXIT_PROGRAM = "bye";
@@ -32,8 +33,12 @@ public class Duke {
         Task[] tasks = new Task[TASK_ARRAY_SIZE];
         line = input.nextLine();
         while (!line.equals(EXIT_PROGRAM)) {
-           Duke.processInput(line, tasks);
-           line = input.nextLine();
+            try {
+                Duke.processInput(line, tasks);
+            } catch (UnknownCommandException e) {
+               System.out.println("OOPS!!! I'm sorry, but I don't know what that means :-(");
+            }
+            line = input.nextLine();
         }
 
         Duke.ending();
@@ -41,26 +46,28 @@ public class Duke {
 
     }
 
-    public static void logo(){
+    public static void logo() {
         System.out.println(WELCOME_MESSAGE + LOGO);
     }
 
-    public static void greeting(){
+    public static void greeting() {
         System.out.println(DIVIDER + GREETINGS + DIVIDER);
     }
 
-    public static void ending(){
+    public static void ending() {
         System.out.println(ENDING + DIVIDER);
     }
-    public static void printAddTaskMessage(Task t){
-        System.out.println(ADDED_TASK + t + "\nNow you have " + t.getNumberOfTasks() +" tasks in the list.");
-    }
-    public static void processInput(String line, Task[] tasks){
 
-        String[] words = line.split(" ",2);
+    public static void printAddTaskMessage(Task t) {
+        System.out.println(ADDED_TASK + t + "\nNow you have " + t.getNumberOfTasks() + " tasks in the list.");
+    }
+
+    public static void processInput(String line, Task[] tasks) throws UnknownCommandException{
+
+        String[] words = line.split(" ", 2);
         String command = words[0];
         int tasksCount = 0;
-        if(tasks[0]!=null){
+        if (tasks[0] != null) {
             tasksCount = tasks[0].getNumberOfTasks();
         }
         // words[0] is the command, words[n] is the next few words
@@ -74,7 +81,7 @@ public class Duke {
         case "deadline":
             line = words[1]; // to remove the command
             String[] deadlineDetails = line.split(BY_DELIMITER);
-            Task d = new Deadline(deadlineDetails[0],deadlineDetails[1]);
+            Task d = new Deadline(deadlineDetails[0], deadlineDetails[1]);
             tasks[tasksCount] = d;
             printAddTaskMessage(d);
             break;
@@ -85,7 +92,7 @@ public class Duke {
             String from = line.substring(line.indexOf(FROM_DELIMITER) + FROM_DELIMITER.length(), line.indexOf(TO_DELIMITER));
             eventDetails = line.split(TO_DELIMITER);
             String to = eventDetails[1];
-            Task e = new Event(eventName,from,to);
+            Task e = new Event(eventName, from, to);
             tasks[tasksCount] = e;
             printAddTaskMessage(e);
             break;
@@ -104,17 +111,15 @@ public class Duke {
             break;
         case "list":
             int listIndex = 0;
-            for (Task t : tasks){
-                if(t != null){
-                    System.out.println(++listIndex +". " + t);
+            for (Task t : tasks) {
+                if (t != null) {
+                    System.out.println(++listIndex + ". " + t);
                 }
             }
             break;
 
         default:
-            System.out.println(ECHO_MESSAGE +line+"\n");
-            Task t = new Task(line);
-            tasks[tasksCount] = t;
+            throw new UnknownCommandException();
         }
 
 
