@@ -83,31 +83,41 @@ public class Duke {
 
         String splitInputs[] = line.split(" ", 2);
         String command = splitInputs[0];
-
-        switch (command) {
-        case "bye":
-            return true;
-        case "list":
-            printList(storedValues, taskNum);
-            break;
-        case "mark":
-            markItem(storedValues, line);
-            break;
-        case "unmark":
-            unmarkItem(storedValues, line);
-            break;
-        case "deadline":
-            taskNum = processDeadline(storedValues, taskNum, line);
-            break;
-        case "todo":
-            taskNum = processToDo(storedValues, taskNum, line);
-            break;
-        case "event":
-            taskNum = processEvent(storedValues, taskNum, line);
-            break;
-        default:
-            // Commands that are not listed above
-            System.out.println("Invalid command, try again! \n");
+        try {
+            switch (command) {
+            case "bye":
+                return true;
+            case "list":
+                printList(storedValues, taskNum);
+                break;
+            case "mark":
+                markItem(storedValues, line);
+                break;
+            case "unmark":
+                unmarkItem(storedValues, line);
+                break;
+            case "deadline":
+                taskNum = processDeadline(storedValues, taskNum, line);
+                break;
+            case "todo":
+                taskNum = processToDo(storedValues, taskNum, line);
+                break;
+            case "event":
+                taskNum = processEvent(storedValues, taskNum, line);
+                break;
+            default:
+                // Commands that are not listed above
+                System.out.println("Invalid command, try again! \n");
+            }
+        } catch (NullPointerException e) {
+            System.out.println("Item to mark/unmark is not in list!");
+        } catch (StringIndexOutOfBoundsException e) {
+            if (command.equals("todo")) {
+                System.out.println("The description of the todo cannot be empty!");
+            } else {
+                System.out.println("Task is not added in correct format. " +
+                        "Please include '/' in front of by/from/to");
+            }
         }
         return false;
     }
