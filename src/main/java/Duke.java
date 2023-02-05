@@ -18,11 +18,12 @@ public class Duke {
         System.out.println("\t Is there anything I can do for you");
         System.out.println("\t" + LINE);
     }
+
     public static void printList() {
         System.out.println("\t" + LINE);
         System.out.println("\t Here are the tasks for your list: ");
-        for(int i=0; i< counter; i++) {
-            System.out.println("\t " + (i+1) + "." + taskList[i]  +  taskList[i].description);
+        for (int i = 0; i < counter; i++) {
+            System.out.println("\t " + (i + 1) + "." + taskList[i]);
         }
         System.out.println("\t" + LINE);
     }
@@ -40,31 +41,28 @@ public class Duke {
         System.out.println("\t Bye! Do let me know if you need any further assistance");
         System.out.println("\t" + LINE);
     }
-    public static void markTaskAndPrint(int taskIndex) {
-        if(taskIndex < 0  || taskList[taskIndex] == null) {
-            System.out.println("\t" + LINE);
-            System.out.println("\t Please ensure that you enter the correct task number");
-            System.out.println("\t" + LINE);
-            return;
+
+    public static void markTaskAndPrint(int taskIndex) throws DukeException {
+        if (taskIndex < 0 || taskList[taskIndex] == null) {
+            throw new DukeException("Please ensure that you enter the correct task number");
         }
+        //only gets executed if no exception is thrown
         taskList[taskIndex].isDone = true;
         System.out.println("\t" + LINE);
         System.out.println("\t Nice, I have marked this task as done: ");
-        System.out.println("\t [" + taskList[taskIndex].getStatusIcon() + "] " +  taskList[taskIndex].description);
+        System.out.println("\t [" + taskList[taskIndex].getStatusIcon() + "] " + taskList[taskIndex].description);
         System.out.println("\t" + LINE);
     }
 
-    public static void unmarkTaskAndPrint(int taskIndex) {
-        if(taskIndex < 0 || taskList[taskIndex] == null) {
-            System.out.println("\t" + LINE);
-            System.out.println("\t Please ensure that you enter the correct task number");
-            System.out.println("\t" + LINE);
-            return;
+    public static void unmarkTaskAndPrint(int taskIndex) throws DukeException {
+        if (taskIndex < 0 || taskList[taskIndex] == null) {
+            throw new DukeException("Please ensure that you enter the correct task number");
         }
+
         taskList[taskIndex].isDone = false;
         System.out.println("\t" + LINE);
         System.out.println("\t Ouch, I have unmarked this task: ");
-        System.out.println("\t [" + taskList[taskIndex].getStatusIcon() + "] " +  taskList[taskIndex].description);
+        System.out.println("\t [" + taskList[taskIndex].getStatusIcon() + "] " + taskList[taskIndex].description);
         System.out.println("\t" + LINE);
     }
 
@@ -72,26 +70,25 @@ public class Duke {
         Task newTask = null;
         if (taskType.equals("todo")) {
             newTask = new Task(commandInfo);
-        }
-        else if (taskType.equals("deadline")) {
-            String[] infoArr= commandInfo.split("/by");
+        } else if (taskType.equals("deadline")) {
+            String[] infoArr = commandInfo.split("/by");
             //infoArr contains descStr and deadlineStr respectively
-            newTask = new Deadline(infoArr[0],infoArr[1]);
-        }
-        else if (taskType.equals("event")) {
+            newTask = new Deadline(infoArr[0].trim(), infoArr[1].trim());
+        } else if (taskType.equals("event")) {
             String[] infoArr = commandInfo.split("/from|/to");
             //infoArr contains descStr, fromStr, and toStr respectively
-            newTask = new Event(infoArr[0],infoArr[1],infoArr[2]);
+            newTask = new Event(infoArr[0].trim(), infoArr[1].trim(), infoArr[2].trim());
         }
 
         taskList[counter] = newTask;
         counter++;
         printTask(newTask);
     }
-    public static void handleInput(String inputLine) {
+
+    public static void handleInput(String inputLine) throws DukeException {
 
         //splits input based on one or more whitespaces into two words
-        String[] inputWords = inputLine.split("\\s+",2);
+        String[] inputWords = inputLine.split("\\s+", 2);
         String command = inputWords[0];
 
 
@@ -99,21 +96,34 @@ public class Duke {
             printBye();
             isExecuting = false;
         }
-        if (command.equals(LIST_STRING)) {
+        else if (command.equals(LIST_STRING)) {
             printList();
         }
         else if (command.equals(MARK_STRING)) {
             //inputWords[1] is string that no longer contains the command string
-            int indexToMark = Integer.parseInt(inputWords[1])-1; //turn it into 0-based
-            markTaskAndPrint(indexToMark);
+            if (inputWords.length < 2) {
+                throw new DukeException("Please specify which task you wish to mark");
+            } else {
+                int indexToMark = Integer.parseInt(inputWords[1]) - 1; //turn it into 0-based
+                markTaskAndPrint(indexToMark);
+            }
         }
         else if (command.equals(UNMARK_STRING)) {
-            int indexToUnmark = Integer.parseInt(inputWords[1])-1;
-            unmarkTaskAndPrint(indexToUnmark);
+            if (inputWords.length < 2) {
+                throw new DukeException("Please specify which task you wish to unmark");
+            } else {
+                int indexToUnmark = Integer.parseInt(inputWords[1]) - 1;
+                unmarkTaskAndPrint(indexToUnmark);
+            }
         }
         //check if command string matches either of the string
         else if (command.matches("todo|deadline|event")) {
-            handleAddTask(command,inputWords[1]);
+            if (inputWords.length < 2) {
+                throw new DukeException("Please specify the description to the task that you wish to add");
+            }
+            handleAddTask(command, inputWords[1]);
+        } else {
+            throw new DukeException("fsgfsuygu I don't know what that means :(");
         }
     }
 
@@ -123,9 +133,14 @@ public class Duke {
         isExecuting = true;
         Scanner in = new Scanner(System.in);
 
-        while(isExecuting) {
+        while (isExecuting) {
             String inputLine = in.nextLine();
-            handleInput(inputLine);
+            try {
+                handleInput(inputLine);
+            } catch (DukeException ex) {
+                System.out.println("Exception occured: " + ex);
+            }
+
         }
     }
 }
