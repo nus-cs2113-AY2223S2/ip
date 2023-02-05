@@ -3,7 +3,8 @@ import java.util.Scanner;
 
 public class Duke {
     private static boolean isListening;
-    private static Task[] tasks = new Task[100];
+    private static int TASK_NUMBER_LIMIT = 100;
+    private static Task[] tasks = new Task[TASK_NUMBER_LIMIT];
     private static int numTasks;
 
 
@@ -16,132 +17,144 @@ public class Duke {
     }
 
     public static void exit() {
+        setIsListening(false);
         System.out.print("Goodbye! Thank you for using MAX.\n");
     }
 
-    public static Task createTask(HashMap<String, String> commandMap, Command command) {
-        // Start from 1 as cop
+    public static Task createTask(HashMap<String, String> commandMap, Command command) throws InvalidCommandException {
+        // Assertion: commandMap has the correct subcommands & length
         Task newTask = null;
         if (command.equals(Command.TASK_TODO)) {
             // To-do task
             String description = commandMap.get("todo");
             newTask = new Todo(description);
-
         } else if (command.equals(Command.TASK_DEADLINE)) {
-            // Guard clauses to check for validity
-            if (commandMap.size() < 2) {
-                System.out.println("Not enough arguments!");
-                return newTask;
-            }
-            if (!commandMap.containsKey("by")) {
-                System.out.println("Missing --by argument!");
-                return newTask;
-            }
             // Deadline task
             String description = commandMap.get("deadline");
             String deadline = commandMap.get("by");
             newTask = new Deadline(description, deadline);
         } else if (command.equals(Command.TASK_EVENT)) {
-
-            if (commandMap.size() < 3) {
-                System.out.println("Not enough arguments!");
-                return newTask;
-            }
-            if (!commandMap.containsKey("from")) {
-                System.out.println("Missing --from argument!");
-                return newTask;
-            }
-            if (!commandMap.containsKey("to")) {
-                System.out.println("Missing --to argument!");
-                return newTask;
-            }
             // Event task
             String description = commandMap.get("event");
             String from = commandMap.get("from");
             String to = commandMap.get("to");
             newTask = new Event(description, from, to);
         }
+        if(newTask == null){
+            // Safety check in case the assertion fails
+            throw new InvalidCommandException("Throw me a bone here, I couldn't create a task!");
+        }
         return newTask;
     }
 
+    public static void addTaskToList(Task newTask) throws IndexOutOfBoundsException{
+        if(numTasks == TASK_NUMBER_LIMIT){
+            throw new IndexOutOfBoundsException("MAX is a dog, and has limited memory. Too many tasks for MAX to remember!");
+        }
+        tasks[numTasks] = newTask;
+        numTasks++;
+    }
+
+    public static void printTasklist(){
+        if(numTasks <= 0){
+            System.out.println("There's nothing in your list. I'm gonna bite you.");
+            return;
+        }
+        System.out.println("Here's what's in your list:");
+        for (int i = 0; i < numTasks; ++i) {
+            // Print number, box, description in that order
+            Task curr = tasks[i];
+            System.out.print(i + 1 + ". " + curr.getDescription() + '\n');
+        }
+    }
+
+    public static void markTask(String taskNumString, boolean isDone) throws IndexOutOfBoundsException{
+        // Unsafe parsing below
+        int taskNum = Integer.parseInt(taskNumString) - 1; // Convert to 0-idx
+        if (taskNum < 0 || taskNum >= numTasks) {
+            throw new IndexOutOfBoundsException("Invalid task number!");
+        }
+        // Update its value
+        if(isDone){
+            tasks[taskNum].markAsDone();
+            System.out.println("Okay, marking this task as done: ");
+        }else{
+            tasks[taskNum].markAsUndone();
+            System.out.println("Okay, setting this task as undone: ");
+        }
+        System.out.println(tasks[taskNum].getDescription());
+    }
+
+
     public static void handleCommand(String command) {
         CommandParser commandParser = new CommandParser();
+        CommandValidator commandValidator = new CommandValidator();
 
         // Update the keepAlive flag
-        String[] commandList = commandParser.splitIntoSubcommands(command);
+        String[] commandList = commandParser.splitIntoCommands(command);
 
         // Process subcommands into <subcommand, payload>
-        HashMap<String,String> subcommandMap = commandParser.getSubcommandMap(commandList);
+        HashMap<String,String> commandPayload = commandParser.getCommandPayloadMap(commandList);
 
         Command mainCommand = commandParser.getCommandType(commandList[0]);
+
+        // Validate command to ensure it has:
+        // 1. Correct argument size
+        // 2. Correct argument names
+        // WARNING: This validation does not check for payload correctness
+        try{
+            commandValidator.validateCommandPayloadMap(mainCommand, commandPayload);
+        }catch(InvalidCommandException exception){
+            System.out.println(exception.getMessage());
+            return;
+        }
+
         switch (mainCommand) {
         case EXIT:
-            setIsListening(false);
             exit();
             break;
         case LIST:
-            System.out.println("Here's what's in your list:");
-            for (int i = 0; i < numTasks; ++i) {
-                // Print number, box, description in that order
-                Task curr = tasks[i];
-                System.out.print(i + 1 + ". " + curr.getDescription() + '\n');
-            }
+            printTasklist();
             break;
         case MARK:
-            String taskNumStr = commandParser.extractTextFromSubcommand(commandList[0]);
-            if (taskNumStr.length() == 0) {
-                System.out.println("Missing number!");
-                return;
+            String taskNumString = commandPayload.get("mark");
+            try{
+                markTask(taskNumString, true);
+            }catch(IndexOutOfBoundsException exception){
+                System.out.println(exception.getMessage());
             }
-            // Unsafe parsing below
-            int taskNum = Integer.parseInt(taskNumStr) - 1; // Convert to 0-idx
-            if (taskNum < 0 || taskNum >= numTasks) {
-                System.out.println("Invalid task number!");
-                return;
-            }
-            // Update its value
-            tasks[taskNum].markAsDone();
-            System.out.println("Okay, marking this task as done: ");
-            System.out.println(tasks[taskNum].getDescription());
             break;
         case UNMARK:
-            taskNumStr = commandParser.extractTextFromSubcommand(commandList[0]);
-            if (taskNumStr.length() == 0) {
-                System.out.println("Missing number!");
-                return;
+            taskNumString = commandPayload.get("unmark");
+            try{
+                markTask(taskNumString, false);
+            }catch(IndexOutOfBoundsException exception){
+                System.out.println(exception.getMessage());
             }
-            // Unsafe parsing below
-            taskNum = Integer.parseInt(taskNumStr) - 1; // Convert to 0-idx
-            if (taskNum < 0 || taskNum >= numTasks) {
-                System.out.println("Invalid task number!");
-                return;
-            }
-            // Update its value
-            tasks[taskNum].markAsUndone();
-            System.out.println("Okay, setting this task as undone: ");
-            System.out.println(tasks[taskNum].getDescription());
             break;
         case TASK_EVENT:
         case TASK_DEADLINE:
         case TASK_TODO:
-            Task newTask = createTask(subcommandMap, mainCommand);
-            if (newTask == null) {
-                System.out.println("Task could not be created.");
-                return;
+            // TODO: Consider refactoring Task logic to a TaskHandler class
+            try{
+                Task newTask = createTask(commandPayload, mainCommand);
+                addTaskToList(newTask);
+                System.out.println("Got it. Task added:");
+                System.out.println(newTask.getDescription());
+                System.out.println("You now have " + numTasks + " tasks in your list.");
+
+            }catch(InvalidCommandException exception){
+                System.out.println(exception.getMessage());
+            }catch(IndexOutOfBoundsException exception){
+                System.out.println(exception.getMessage());
             }
-            tasks[numTasks] = newTask;
-            numTasks++;
-            System.out.println("Got it. Task added:");
-            System.out.println(newTask.getDescription());
-            System.out.println("You now have " + numTasks + " tasks in your list.");
             break;
         default:
             // { Command.UNKNOWN_COMMAND }
-            System.out.println("I don't quite understand...");
+            System.out.println("Awoo? I don't understand that command.");
             break;
         }
     }
-
     public static void greet() {
         printBorder();
         System.out.println("Hello! I'm Max, your PAWsonal productivity assistant");

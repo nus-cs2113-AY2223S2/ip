@@ -11,7 +11,7 @@ Hello! I'm Max, your PAWsonal productivity assistant
 What can I do for you to MAXimize your day?
 ────────────────────────────────────────────────────────────
 ~$ ────────────────────────────────────────────────────────────
-Here's what's in your list:
+There's nothing in your list. I'm gonna bite you.
 ────────────────────────────────────────────────────────────
 ~$ ────────────────────────────────────────────────────────────
 Got it. Task added:
@@ -19,12 +19,10 @@ Got it. Task added:
 You now have 1 tasks in your list.
 ────────────────────────────────────────────────────────────
 ~$ ────────────────────────────────────────────────────────────
-Not enough arguments!
-Task could not be created.
+Invalid number of arguments. Expected: 2, Got: 1
 ────────────────────────────────────────────────────────────
 ~$ ────────────────────────────────────────────────────────────
-Not enough arguments!
-Task could not be created.
+Invalid number of arguments. Expected: 2, Got: 1
 ────────────────────────────────────────────────────────────
 ~$ ────────────────────────────────────────────────────────────
 Got it. Task added:
@@ -37,16 +35,13 @@ Got it. Task added:
 You now have 3 tasks in your list.
 ────────────────────────────────────────────────────────────
 ~$ ────────────────────────────────────────────────────────────
-Not enough arguments!
-Task could not be created.
+Invalid number of arguments. Expected: 3, Got: 1
 ────────────────────────────────────────────────────────────
 ~$ ────────────────────────────────────────────────────────────
-Not enough arguments!
-Task could not be created.
+Invalid number of arguments. Expected: 3, Got: 2
 ────────────────────────────────────────────────────────────
 ~$ ────────────────────────────────────────────────────────────
-Not enough arguments!
-Task could not be created.
+Invalid number of arguments. Expected: 3, Got: 2
 ────────────────────────────────────────────────────────────
 ~$ ────────────────────────────────────────────────────────────
 Got it. Task added:
