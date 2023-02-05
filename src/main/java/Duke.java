@@ -23,6 +23,8 @@ public class Duke {
     public static final String ECHO_MESSAGE = "added: ";
     public static final String UNKNOWN_COMAMND_MESSAGE = "OOPS!!! I'm sorry, but I don't know what that means :-(";
     public static final String EMPTY_TODO_MESSAGE = "OOPS!!! The description of a todo cannot be empty.";
+    public static final String EMPTY_UNMARK_MESSAGE = "OOPS!!! The index of unmark cannot be empty.";
+    public static final String EMPTY_MARK_MESSAGE = "OOPS!!! The index of mark cannot be empty.";
 
     public static void main(String[] args) {
 
@@ -41,6 +43,10 @@ public class Duke {
                System.out.println(UNKNOWN_COMAMND_MESSAGE);
             } catch (EmptyTodoException e){
                 System.out.println(EMPTY_TODO_MESSAGE);
+            } catch (EmptyMarkException e){
+                System.out.println(EMPTY_MARK_MESSAGE);
+            } catch (EmptyUnmarkException e) {
+                System.out.println(EMPTY_UNMARK_MESSAGE);
             }
             line = input.nextLine();
         }
@@ -66,7 +72,7 @@ public class Duke {
         System.out.println(ADDED_TASK + t + "\nNow you have " + t.getNumberOfTasks() + " tasks in the list.");
     }
 
-    public static void processInput(String line, Task[] tasks) throws UnknownCommandException, EmptyTodoException{
+    public static void processInput(String line, Task[] tasks) throws UnknownCommandException, EmptyTodoException, EmptyMarkException, EmptyUnmarkException{
 
         String[] words = line.split(" ", 2);
         String command = words[0];
@@ -78,9 +84,7 @@ public class Duke {
 
         switch (command) {
         case "todo":
-            if(words.length < 2 || words[1].equals("")){
-                throw new EmptyTodoException();
-            }
+            checkIfTodoEmpty(words);
             Task td = new Todo(words[1]);
             tasks[tasksCount] = td;
             printAddTaskMessage(td);
@@ -105,12 +109,14 @@ public class Duke {
             break;
 
         case "mark":
+            CheckIfMarkEmpty(words);
             int markIndex = Integer.parseInt(words[1]) - 1; // 0 indexing
             System.out.println(MARKED_THIS_TASK_AS_DONE);
             tasks[markIndex].markAsDone();
             System.out.println(tasks[markIndex]);
             break;
         case "unmark":
+            CheckIfUnmarkEmpty(words);
             int unmarkIndex = Integer.parseInt(words[1]) - 1; // 0 indexing
             System.out.println(UNMARKED_THIS_TASK_AS_DONE);
             tasks[unmarkIndex].markAsNotDone();
@@ -130,5 +136,23 @@ public class Duke {
         }
 
 
+    }
+
+    private static void CheckIfMarkEmpty(String[] words) throws EmptyMarkException {
+        if(words.length < 2 || words[1].equals("")){
+            throw new EmptyMarkException();
+        }
+    }
+
+    private static void CheckIfUnmarkEmpty(String[] words) throws EmptyUnmarkException {
+        if(words.length < 2 || words[1].equals("")){
+            throw new EmptyUnmarkException();
+        }
+    }
+
+    private static void checkIfTodoEmpty(String[] words) throws EmptyTodoException {
+        if(words.length < 2 || words[1].equals("")){
+            throw new EmptyTodoException();
+        }
     }
 }
