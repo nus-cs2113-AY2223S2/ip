@@ -15,7 +15,7 @@ public class Task {
         return "[" + this.getStatusIcon() + "] " + this.description;
     }
 
-    public boolean checkIsDone() {
+    public boolean isDone() {
         return this.isDone;
     }
 
