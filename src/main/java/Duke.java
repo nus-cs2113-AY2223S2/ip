@@ -1,9 +1,11 @@
 import java.util.Scanner;
-
+import java.util.Arrays;
 public class Duke {
     public static final int MAX_TASKS = 100;
     private static int taskCount = 0;
     static Task[] tasks = new Task[MAX_TASKS];
+
+    static String[] commands = {"todo", "mark", "unmark", "deadline", "list", "help", "event"};
 
     public static void addTask(Task t) {
         tasks[taskCount] = t;
@@ -39,21 +41,12 @@ public class Duke {
         printLine();
     }
 
-    public static void startProgram() {
-        Scanner scan = new Scanner(System.in);
-        String s;
-        s = scan.nextLine();
-        while (s.trim().isEmpty() || s.trim().charAt(0) == '#') {
-            s = scan.nextLine();
-        }
+    public static void process(String s) throws InvalidCommandException{
         final String[] split = s.trim().split("\\s+", 2);
         final String[] commandTypeAndParams = split.length == 2 ? split : new String[]{split[0], ""};
         final String commandType = commandTypeAndParams[0];
         final String commandArgs = commandTypeAndParams[1];
         switch (commandType) {
-        case "bye":
-            goodBye();
-            return;
         case "list":
             printListOfTasks();
             break;
@@ -98,11 +91,23 @@ public class Duke {
         case "unmark":
             unmarkTask(commandArgs);
             break;
-        default:
+        case "help":
             info();
+            break;
+        default:
+            throw new InvalidCommandException();
         }
 
-        startProgram();
+    }
+
+    private static String inputCommand() {
+        Scanner scan = new Scanner(System.in);
+        String s;
+        s = scan.nextLine();
+        while (s.trim().isEmpty() || s.trim().charAt(0) == '#') {
+            s = scan.nextLine();
+        }
+        return s;
     }
 
     private static void unmarkTask(String commandArgs) {
@@ -196,6 +201,16 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
         greet();
-        startProgram();
+        String s = inputCommand();
+        while (!s.equals("bye")) {
+            try {
+                process(s);
+            } catch (InvalidCommandException e) {
+                System.out.println("WOOF!! The command is not found, please type 'help' for more info");
+                printLine();
+            }
+            s = inputCommand();
+        }
+        goodBye();
     }
 }
