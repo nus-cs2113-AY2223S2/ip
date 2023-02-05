@@ -57,7 +57,7 @@ public class Duke {
             listSize = printNewlyAddedTask(list, listSize);
             break;
         case "bye":
-            goodbyeMessage();
+            goodbyeMessage(command);
             break;
         default:
             printInvalidCommandError();
@@ -213,11 +213,18 @@ public class Duke {
 
     /**
      * Prints a string to inform the user that the program is terminating.
+     *
+     * @param command The string array containing all individual strings separated by a space (" ") character in
+     *                the user inputted string.
      */
-    private static void goodbyeMessage() {
-        lineSeparator();
-        System.out.println("Bye. Hope to see you again soon!");
-        lineSeparator();
+    private static void goodbyeMessage(String[] command) {
+        if (command.length == 1) {
+            lineSeparator();
+            System.out.println("Bye. Hope to see you again soon!");
+            lineSeparator();
+        } else {
+            printInvalidCommandError();
+        }
     }
 
     /**
