@@ -2,25 +2,20 @@ public class Task {
     private String name;
     private boolean completed;
     private String type;
-
     public Task(String name) {
         this.name = name;
         this.type = null;
         this.completed = false;
     }
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public boolean isCompleted() {
         return completed;
     }
-
     public void setCompleted() {
         this.completed = true;
     }
@@ -33,7 +28,6 @@ public class Task {
     public void setType(String type) {
         this.type = type;
     }
-
     public String mark() {      // Method to return completion mark "✔"
         if (this.completed) {
             return "✔";
@@ -42,7 +36,6 @@ public class Task {
             return " ";
         }
     }
-
     @Override
     public String toString() {
         return name;
