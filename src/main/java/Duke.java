@@ -21,6 +21,8 @@ public class Duke {
     public static final String MARKED_THIS_TASK_AS_DONE = "Nice! I've marked this task as done: ";
     public static final String UNMARKED_THIS_TASK_AS_DONE = "Okay, I've marked this task as not done yet: ";
     public static final String ECHO_MESSAGE = "added: ";
+    public static final String UNKNOWN_COMAMND_MESSAGE = "OOPS!!! I'm sorry, but I don't know what that means :-(";
+    public static final String EMPTY_TODO_MESSAGE = "OOPS!!! The description of a todo cannot be empty.";
 
     public static void main(String[] args) {
 
@@ -36,7 +38,9 @@ public class Duke {
             try {
                 Duke.processInput(line, tasks);
             } catch (UnknownCommandException e) {
-               System.out.println("OOPS!!! I'm sorry, but I don't know what that means :-(");
+               System.out.println(UNKNOWN_COMAMND_MESSAGE);
+            } catch (EmptyTodoException e){
+                System.out.println(EMPTY_TODO_MESSAGE);
             }
             line = input.nextLine();
         }
@@ -62,7 +66,7 @@ public class Duke {
         System.out.println(ADDED_TASK + t + "\nNow you have " + t.getNumberOfTasks() + " tasks in the list.");
     }
 
-    public static void processInput(String line, Task[] tasks) throws UnknownCommandException{
+    public static void processInput(String line, Task[] tasks) throws UnknownCommandException, EmptyTodoException{
 
         String[] words = line.split(" ", 2);
         String command = words[0];
@@ -74,6 +78,9 @@ public class Duke {
 
         switch (command) {
         case "todo":
+            if(words.length < 2 || words[1].equals("")){
+                throw new EmptyTodoException();
+            }
             Task td = new Todo(words[1]);
             tasks[tasksCount] = td;
             printAddTaskMessage(td);
