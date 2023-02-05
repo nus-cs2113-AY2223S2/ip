@@ -5,7 +5,6 @@ public class Deadline extends Task{
         this.setType("D");
         this.deadline = deadline;
     }
-
     @Override
     public String toString() {
         return super.toString() + " (by: " + deadline + ")";
