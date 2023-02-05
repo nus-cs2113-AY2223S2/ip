@@ -17,7 +17,11 @@ public class Chronos {
         stash = new Stash();
         Output.printWelcome();
         getUserName(inOut);
+        inputCommands();
 
+    }
+
+    private static void inputCommands() {
         while(true){
             Command userCommand = InputParser.parseInput(inOut.readInput());
             String category = userCommand.getAction();
@@ -47,10 +51,8 @@ public class Chronos {
                 continue;
             default:
                 System.out.println("Sorry, I do not understand the input at this point in time.");
-
             }
         }
-
     }
 
 
