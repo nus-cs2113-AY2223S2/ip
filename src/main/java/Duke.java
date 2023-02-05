@@ -67,7 +67,17 @@ public class Duke {
             }
             break;
         case "deadline":
-            addDeadline(commandArgs);
+            try {
+                addDeadline(commandArgs);
+            } catch (NoDescriptionException e) {
+                System.out.println("WOOFS!!! The description of a deadline cannot be empty.");
+                System.out.println("Please try to add deadline again υ´• ﻌ •`υ");
+                printLine();
+            } catch (FormatException e) {
+                System.out.println("WOOFS!!! The format of entering deadline is incorrect.");
+                System.out.println("Please try to add deadline again υ´• ﻌ •`υ");
+                printLine();
+            }
             break;
         case "event":
             addEvent(commandArgs);
@@ -122,10 +132,19 @@ public class Duke {
         printLine();
     }
 
-    private static void addDeadline(String commandArgs) {
+    private static void addDeadline(String commandArgs) throws NoDescriptionException, FormatException{
         final int indexOfDeadline = commandArgs.indexOf("/by");
+        if (indexOfDeadline == -1) {
+            throw new FormatException();
+        }
         String deadlineDescription = commandArgs.substring(0, indexOfDeadline).trim();
+        if (deadlineDescription.trim().length() == 0) {
+            throw new NoDescriptionException();
+        }
         String deadline = commandArgs.substring(indexOfDeadline, commandArgs.length()).trim().replace("/by", "");
+        if (deadline.trim().length() == 0) {
+            throw new NoDescriptionException();
+        }
         addTask(new Deadline(deadlineDescription, deadline));
         printLine();
         System.out.println("Got it. I've added this task: \n" + tasks[taskCount - 1]);
