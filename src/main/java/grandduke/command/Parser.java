@@ -5,6 +5,20 @@ import grandduke.task.Deadline;
 import grandduke.task.Event;
 import grandduke.task.Task;
 import grandduke.task.Todo;
+import grandduke.exception.GrandException;
+import grandduke.exception.UnrecognisedCommandException;
+import grandduke.exception.EmptyTodoException;
+import grandduke.exception.EmptyDeadlineException;
+import grandduke.exception.EmptyDeadlineDescriptionException;
+import grandduke.exception.EmptyDeadlineDateException;
+import grandduke.exception.MissingByException;
+
+import grandduke.exception.EmptyEventException;
+import grandduke.exception.EmptyEventDescriptionException;
+import grandduke.exception.EmptyEventFromException;
+import grandduke.exception.EmptyEventToException;
+import grandduke.exception.MissingFromException;
+import grandduke.exception.MissingToException;
 
 public abstract class Parser {
     /**
@@ -14,45 +28,49 @@ public abstract class Parser {
      * @param input
      *            the command sent by the user
      */
-    public static void parseCommand(String input) {
+    public static void parseCommand(String input) throws UnrecognisedCommandException {
         String[] inputArr = input.split(" ", 2);
         String command = inputArr[0];
 
         String commandDetails;
 
         if (inputArr.length > 1) {
-            commandDetails = inputArr[1];
+            commandDetails = inputArr[1].strip();
         } else {
             commandDetails = "";
         }
 
-        switch (command) {
-        case Io.LIST_COMMAND:
-            TaskList.printTaskList();
-            break;
+        try {
+            switch (command) {
+            case Io.LIST_COMMAND:
+                TaskList.printTaskList();
+                break;
 
-        case Io.MARK_COMMAND:
-            TaskList.markTask(input);
-            break;
+            case Io.MARK_COMMAND:
+                TaskList.markTask(commandDetails, true);
+                break;
 
-        case Io.UNMARK_COMMAND:
-            TaskList.unmarkTask(input);
-            break;
+            case Io.UNMARK_COMMAND:
+                TaskList.markTask(commandDetails, false);
+                break;
 
-        case Io.TODO_COMMAND:
-            TaskList.addTask(commandDetails, Io.TODO_COMMAND);
-            break;
+            case Io.TODO_COMMAND:
+                TaskList.addTask(commandDetails, Io.TODO_COMMAND);
+                break;
 
-        case Io.DEADLINE_COMMAND:
-            TaskList.addTask(commandDetails, Io.DEADLINE_COMMAND);
-            break;
+            case Io.DEADLINE_COMMAND:
+                TaskList.addTask(commandDetails, Io.DEADLINE_COMMAND);
+                break;
 
-        case Io.EVENT_COMMAND:
-            TaskList.addTask(commandDetails, Io.EVENT_COMMAND);
-            break;
+            case Io.EVENT_COMMAND:
+                TaskList.addTask(commandDetails, Io.EVENT_COMMAND);
+                break;
 
-        default:
-            Io.printOutput("I'm sorry, but I don't know what that means :-(");
+            default:
+                throw new UnrecognisedCommandException();
+            }
+        } catch (GrandException e) {
+            Io.printOutput(e.getMessage());
         }
     }
 
@@ -65,22 +83,26 @@ public abstract class Parser {
      *            the type of task
      * @return the new task
      */
-    public static Task parseNewTask(String input, String type) {
+    public static Task parseNewTask(String input, String type) throws GrandException {
         Task newTask;
 
-        switch (type) {
-        case Io.TODO_COMMAND:
-            newTask = createTodo(input);
-            break;
-        case Io.DEADLINE_COMMAND:
-            newTask = createDeadline(input);
-            break;
-        case Io.EVENT_COMMAND:
-            newTask = createEvent(input);
-            break;
-        default:
-            newTask = null;
-            break;
+        try {
+            switch (type) {
+            case Io.TODO_COMMAND:
+                newTask = createTodo(input);
+                break;
+            case Io.DEADLINE_COMMAND:
+                newTask = createDeadline(input);
+                break;
+            case Io.EVENT_COMMAND:
+                newTask = createEvent(input);
+                break;
+            default:
+                newTask = null;
+                break;
+            }
+        } catch (GrandException e) {
+            throw e;
         }
 
         return newTask;
@@ -93,7 +115,10 @@ public abstract class Parser {
      *            the input from the user
      * @return the new Todo task
      */
-    public static Task createTodo(String input) {
+    public static Task createTodo(String input) throws EmptyTodoException {
+        if (input.equals("")) {
+            throw new EmptyTodoException();
+        }
         return new Todo(input);
     }
 
@@ -104,10 +129,28 @@ public abstract class Parser {
      *            the input from the user
      * @return the new Deadline task
      */
-    public static Task createDeadline(String input) {
-        String[] inputList = input.split(" /by ", 2);
-        String taskDesc = inputList[0];
-        String deadline = inputList[1];
+    public static Task createDeadline(String input) throws EmptyDeadlineException, MissingByException,
+            EmptyDeadlineDescriptionException, EmptyDeadlineDateException {
+
+        if (input.equals("")) {
+            throw new EmptyDeadlineException();
+        }
+
+        if (!input.contains("/by")) {
+            throw new MissingByException();
+        }
+
+        String[] inputList = input.split("/by", 2);
+        String taskDesc = inputList[0].strip();
+        if (taskDesc.equals("")) {
+            throw new EmptyDeadlineDescriptionException();
+        }
+
+        String deadline = inputList[1].strip();
+        if (deadline.equals("")) {
+            throw new EmptyDeadlineDateException();
+        }
+
         return new Deadline(taskDesc, deadline);
     }
 
@@ -118,12 +161,40 @@ public abstract class Parser {
      *            the input from the user
      * @return the new Event task
      */
-    public static Task createEvent(String input) {
-        String[] inputList = input.split(" /from ", 2);
-        String[] inputList2 = inputList[1].split(" /to ");
-        String taskDesc = inputList[0];
-        String eventFrom = inputList2[0];
-        String eventTo = inputList2[1];
+    public static Task createEvent(String input) throws EmptyEventException, MissingFromException,
+            MissingToException, EmptyEventDescriptionException, EmptyEventFromException,
+            EmptyEventToException {
+
+        if (input.equals("")) {
+            throw new EmptyEventException();
+        }
+
+        if (!input.contains("/from")) {
+            throw new MissingFromException();
+        }
+
+        if (!input.contains("/to")) {
+            throw new MissingToException();
+        }
+
+        String[] inputList = input.split("/from", 2);
+        String[] inputList2 = inputList[1].split("/to", 2);
+        String taskDesc = inputList[0].strip();
+
+        if (taskDesc.equals("")) {
+            throw new EmptyEventDescriptionException();
+        }
+
+        String eventFrom = inputList2[0].strip();
+        if (eventFrom.equals("")) {
+            throw new EmptyEventFromException();
+        }
+
+        String eventTo = inputList2[1].strip();
+        if (eventTo.equals("")) {
+            throw new EmptyEventToException();
+        }
+
         return new Event(taskDesc, eventFrom, eventTo);
     }
 }
