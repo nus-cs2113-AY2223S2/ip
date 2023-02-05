@@ -1,26 +1,31 @@
 import java.util.Scanner;
+
 public class Duke {
     public static final int MAX_TASKS = 100;
     private static int taskCount = 0;
     static Task[] tasks = new Task[MAX_TASKS];
 
-    public static void addTask(Task t){
+    public static void addTask(Task t) {
         tasks[taskCount] = t;
         taskCount++;
     }
+
     public static void printLine() {
         System.out.println("____________________________________________________________");
     }
+
     public static void greet() {
         printLine();
         System.out.println("Hello! I'm Duke  U ´ᴥ` U\n" + "What can I do for you?");
         printLine();
     }
+
     public static void goodBye() {
         printLine();
         System.out.println("Bye. Hope to see you again soon!ﾉ~");
         printLine();
     }
+
     public static void info() {
         printLine();
         System.out.println("This command is not valid, please read through the info and try again :)");
@@ -33,6 +38,7 @@ public class Duke {
         System.out.println("Hope it helps!! woof a nice day ੯•໒꒱❤︎");
         printLine();
     }
+
     public static void startProgram() {
         Scanner scan = new Scanner(System.in);
         String s;
@@ -52,7 +58,13 @@ public class Duke {
             printListOfTasks();
             break;
         case "todo":
-            addTodo(commandArgs);
+            try {
+                addTodo(commandArgs);
+            } catch (NoDescriptionException e) {
+                System.out.println("WOOFS!!! The description of a todo cannot be empty.");
+                System.out.println("Please try to add todo again υ´• ﻌ •`υ");
+                printLine();
+            }
             break;
         case "deadline":
             addDeadline(commandArgs);
@@ -74,7 +86,7 @@ public class Duke {
     }
 
     private static void unmarkTask(String commandArgs) {
-        final int unmarkId = Integer.parseInt(commandArgs)-1;
+        final int unmarkId = Integer.parseInt(commandArgs) - 1;
         if (!tasks[unmarkId].isDone) {
             System.out.println("This task hasn't been marked as done yet ∪･ω･∪");
         } else {
@@ -86,7 +98,7 @@ public class Duke {
     }
 
     private static void markTask(String commandArgs) {
-        final int markId = Integer.parseInt(commandArgs)-1;
+        final int markId = Integer.parseInt(commandArgs) - 1;
         if (tasks[markId].isDone) {
             System.out.println("This task has already been marked as done ੯•໒꒱❤︎");
         } else {
@@ -100,38 +112,41 @@ public class Duke {
     private static void addEvent(String commandArgs) {
         final int indexOfFrom = commandArgs.indexOf("/from");
         final int indexOfTo = commandArgs.indexOf("/to");
-        String eventDescription = commandArgs.substring(0,indexOfFrom).trim();
+        String eventDescription = commandArgs.substring(0, indexOfFrom).trim();
         String from = commandArgs.substring(indexOfFrom, indexOfTo).trim().replace("/from", "");
         String to = commandArgs.substring(indexOfTo, commandArgs.length()).trim().replace("/to", "");
         addTask(new Event(eventDescription, from, to));
         printLine();
-        System.out.println("Got it. I've added this task: \n" + tasks[taskCount -1]);
+        System.out.println("Got it. I've added this task: \n" + tasks[taskCount - 1]);
         System.out.println("Now you have " + taskCount + " tasks in your list.");
         printLine();
     }
 
     private static void addDeadline(String commandArgs) {
         final int indexOfDeadline = commandArgs.indexOf("/by");
-        String deadlineDescription = commandArgs.substring(0,indexOfDeadline).trim();
+        String deadlineDescription = commandArgs.substring(0, indexOfDeadline).trim();
         String deadline = commandArgs.substring(indexOfDeadline, commandArgs.length()).trim().replace("/by", "");
         addTask(new Deadline(deadlineDescription, deadline));
         printLine();
-        System.out.println("Got it. I've added this task: \n" + tasks[taskCount -1]);
+        System.out.println("Got it. I've added this task: \n" + tasks[taskCount - 1]);
         System.out.println("Now you have " + taskCount + " tasks in your list.");
         printLine();
     }
 
-    private static void addTodo(String commandArgs) {
+    private static void addTodo(String commandArgs) throws NoDescriptionException {
+        if ((commandArgs.trim()).length() == 0) {
+            throw new NoDescriptionException();
+        }
         addTask(new Todo(commandArgs));
         printLine();
-        System.out.println("Got it. I've added this task: \n" + tasks[taskCount -1]);
+        System.out.println("Got it. I've added this task: \n" + tasks[taskCount - 1]);
         System.out.println("Now you have " + taskCount + " tasks in your list.");
         printLine();
     }
 
     private static void printListOfTasks() {
         for (int i = 0; i < taskCount; i += 1) {
-            System.out.print(i+1);
+            System.out.print(i + 1);
             System.out.print(". ");
             System.out.println(tasks[i]);
         }
