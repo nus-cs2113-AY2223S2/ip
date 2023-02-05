@@ -1,4 +1,11 @@
+package inu.parser;
+
 import java.util.Scanner;
+
+import inu.task.*;
+import inu.tasklist.*;
+import inu.exceptionhandling.*;
+import inu.tasklist.TaskList;
 
 public class UserCommands {
 

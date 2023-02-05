@@ -1,4 +1,7 @@
-import java.util.Scanner;
+package inu.parser;
+
+import inu.tasklist.*;
+import inu.tasklist.TaskList;
 
 public class Inu {
 
@@ -6,7 +9,7 @@ public class Inu {
 
     public Inu() {
 
-        TaskList taskList = new TaskList();
+        taskList = new TaskList();
 
         Ui.printGreeting();
         UserCommands.parseCommand(taskList);

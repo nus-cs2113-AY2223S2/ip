@@ -1,3 +1,5 @@
+package inu.parser;
+
 public class Messages {
 
     public static final String MESSAGE_GREETING = " Woof Woof! I'm Inu! Your personal Shib-Assistant ^.^";

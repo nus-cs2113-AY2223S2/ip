@@ -1,3 +1,7 @@
+package inu.exceptionhandling;
+
+import inu.tasklist.*;
+
 public class ExceptionManager {
 
     public static void checkEmptyUserInput(String... strings) throws EmptyUserInputException {

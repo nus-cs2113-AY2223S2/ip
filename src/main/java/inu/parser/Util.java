@@ -1,3 +1,9 @@
+package inu.parser;
+
+import inu.tasklist.*;
+import inu.exceptionhandling.EmptyUserInputException;
+import inu.tasklist.TaskList;
+
 public class Util {
 
     protected static final int INDEX_BEGIN = 0;

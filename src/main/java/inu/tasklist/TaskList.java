@@ -1,3 +1,7 @@
+package inu.tasklist;
+
+import inu.task.*;
+
 public class TaskList {
 
     private Task[] taskList;
