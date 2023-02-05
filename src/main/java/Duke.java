@@ -35,7 +35,7 @@ public class Duke {
                     createEvent(inputWords);
                     break;
                 default:
-                    throw new UnkownCommandException("Unknown Command please try again.");
+                    throw new UnkownCommandException("Unknown command please try again.");
                 }
             } catch (InsufficientInputException e) {
                 System.out.println(e.getMessage());
