@@ -63,6 +63,8 @@ public class Chronos{
             case "done":
                 System.out.println("Bye bye, hope to see you some time soon!");
                 return;
+            case "timer":
+                System.out.println("I lost the code thanks sourcetree");
             default:
                 System.out.println("Sorry, I do not understand the input at this point in time.");
             }
