@@ -1,6 +1,12 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 
+import duke.exception.DukeException;
+import duke.tasks.Deadline;
+import duke.tasks.Event;
+import duke.tasks.Task;
+import duke.tasks.Todo;
+
 public class Duke {
     public static void main(String[] args) {
 
@@ -37,6 +43,14 @@ public class Duke {
         System.out.println("____________________________________________________________");
     }
 
+    /**
+     * Executes duke commands: list, mark, unmark, todo, deadline, and event with exception handling.
+     *
+     * @param command The user inputted command.
+     * @param tasks   An ArrayList holding the task objects.
+     * @throws DukeException if input is not any of the supported duke commands.
+     */
+
     private static void executeDukeCommands(String command, ArrayList<Task> tasks) throws DukeException {
         if (command.equalsIgnoreCase("list")) {
             printAllTasks(tasks);
@@ -44,13 +58,13 @@ public class Duke {
             try {
                 markTaskAsComplete(command, tasks);
             } catch (IndexOutOfBoundsException e) {
-                System.out.println("☹ ERROR! You have no tasks to mark as complete.");
+                System.out.println("☹ ERROR! this task to mark is not recognized.");
             }
         } else if (command.toLowerCase().startsWith("unmark")) {
             try {
                 markTaskAsNotComplete(command, tasks);
             } catch (IndexOutOfBoundsException e) {
-                System.out.println("☹ ERROR! You have no tasks to mark as not complete.");
+                System.out.println("☹ ERROR! this task to unmark is not recognized.");
             }
         } else if (command.toLowerCase().startsWith("todo")) {
             try {
@@ -75,11 +89,25 @@ public class Duke {
         }
     }
 
+    /**
+     * Adds a new todo to the ArrayList of task objects.
+     *
+     * @param line  The todo description.
+     * @param tasks An ArrayList holding the task objects.
+     */
+
     private static void addTodo(String line, ArrayList<Task> tasks) {
         tasks.add(new Todo(line.substring(5)));
         int taskCount = getTaskIndex(tasks, line.substring(5));
         printTaskAddedDescription(tasks, taskCount);
     }
+
+    /**
+     * Adds a new event to the ArrayList of task objects.
+     *
+     * @param line  The event description.
+     * @param tasks An ArrayList holding the task objects.
+     */
 
     private static void addEvent(String line, ArrayList<Task> tasks) {
         //index of event start date/time
@@ -94,6 +122,13 @@ public class Duke {
         printTaskAddedDescription(tasks, taskCount);
     }
 
+    /**
+     * Adds a new deadline to the ArrayList of task objects.
+     *
+     * @param line  The deadline description.
+     * @param tasks An ArrayList holding the task objects.
+     */
+
     private static void addDeadline(String line, ArrayList<Task> tasks) {
         //index of deadline due date/time
         int byIndex = line.indexOf("/by");
@@ -104,16 +139,30 @@ public class Duke {
         printTaskAddedDescription(tasks, taskCount);
     }
 
+    /**
+     * Returns the index of a particular task from the ArrayList.
+     *
+     * @param tasks       An ArrayList holding the task objects.
+     * @param description The description of the task.
+     * @return index of task.
+     */
+
     public static int getTaskIndex(ArrayList<Task> tasks, String description) {
         int index = 0;
         for (Task myObj : tasks) {
-            if(description.equalsIgnoreCase(myObj.description)) {
+            if (description.equalsIgnoreCase(myObj.getDescription())) {
                 return index;
             }
             index++;
         }
         return -1;
     }
+
+    /**
+     * Prints all tasks in the ArrayList.
+     *
+     * @param tasks An ArrayList holding the task objects.
+     */
 
     private static void printAllTasks(ArrayList<Task> tasks) {
         System.out.println(" Here are the tasks in your list:");
@@ -125,22 +174,42 @@ public class Duke {
         }
     }
 
+    /**
+     * Marks the task as not complete.
+     *
+     * @param line  The description of the task.
+     * @param tasks An ArrayList holding the task objects.
+     */
+
     private static void markTaskAsNotComplete(String line, ArrayList<Task> tasks) {
         int index = Integer.parseInt(line.substring(7));
-        tasks.get(index-1).setTaskStatus(false);
+        tasks.get(index - 1).setTaskStatus(false);
         System.out.println(" Okay, I've marked this task as not done yet:");
         //print Task Description
-        System.out.println(tasks.get(index-1).toString());
+        System.out.println(tasks.get(index - 1).toString());
     }
+
+    /**
+     * Marks the task as complete.
+     *
+     * @param line  The description of the task.
+     * @param tasks An ArrayList holding the task objects.
+     */
 
     private static void markTaskAsComplete(String line, ArrayList<Task> tasks) {
         int index = Integer.parseInt(line.substring(5));
-        tasks.get(index-1).setTaskStatus(true);
+        tasks.get(index - 1).setTaskStatus(true);
         System.out.println(" Nice! I've marked this task as done:");
         //print Task Description
-        System.out.println(tasks.get(index-1).toString());
+        System.out.println(tasks.get(index - 1).toString());
     }
 
+    /**
+     * Prints the description of the added task.
+     *
+     * @param tasks An ArrayList holding the task objects.
+     * @param taskIndex The index of the task.
+     */
     private static void printTaskAddedDescription(ArrayList<Task> tasks, int taskIndex) {
         System.out.println(" Got it. I've added this task:");
         //print Task Description
