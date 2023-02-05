@@ -14,7 +14,7 @@ import dev.joulev.archduke.exceptions.OtherException;
 import dev.joulev.archduke.tasks.Task;
 
 public class Storage {
-    private static final String FILE = "../.archduke/tasks.json";
+    private static final String FILE = ".archduke/tasks.json";
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     private static String readFromFile(String path) throws IOException {
