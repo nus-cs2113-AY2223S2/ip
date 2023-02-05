@@ -1,10 +1,10 @@
 import java.util.Arrays;
 
-public class TaskList {
+public class TasksList {
     private Task[] tasks;
     private static int tasksCount = 0;
 
-    public TaskList (int expectedTasksCount) {
+    public TasksList (int expectedTasksCount) {
         this.tasks = new Task[expectedTasksCount];
     }
 
@@ -21,10 +21,11 @@ public class TaskList {
         int index = 1;
         StringBuilder output = new StringBuilder();
         for (Task task: tasks) {
-            if(task != null) {
+            if (task != null) {
                 output.append(index).append(". ").append(task);
 
-                if(index != tasksCount){
+                // Don't add a break after the last line
+                if (index != tasksCount){
                     output.append(System.lineSeparator());
                 }
                 index++;

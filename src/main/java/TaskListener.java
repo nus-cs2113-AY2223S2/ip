@@ -3,25 +3,10 @@ import java.util.Scanner;
 
 public class TaskListener {
     static final String DIVIDER = "--------------------------------------------------------------------";
-    private TaskList taskList;
+    private TasksList tasksList;
 
     public TaskListener(int expectedTasksCount) {
-        this.taskList = new TaskList(expectedTasksCount);
-    }
-
-    private static void printLines(String... lines) {
-        System.out.println(DIVIDER);
-        for (String line : lines) {
-            System.out.println(line);
-        }
-        System.out.println(DIVIDER + System.lineSeparator());
-    }
-
-    private void printAddedTask(Task task) {
-        String firstSentence = "Got it. I've added this task:";
-        String tasksWord = taskList.getTasksCount() == 1 ? " task" : " tasks";
-        String secondSentence = "Now you have " + taskList.getTasksCount() + tasksWord + " in the list.";
-        printLines(firstSentence + System.lineSeparator() + task + System.lineSeparator() + secondSentence);
+        this.tasksList = new TasksList(expectedTasksCount);
     }
 
     public static void greet() {
@@ -38,28 +23,49 @@ public class TaskListener {
         printLines("Hello! I'm SHERLOCK", "What can I do for you?");
     }
 
-    private void addCommandHandler(String name) {
-        this.taskList.addTask(new Task(name, false));
+    private static void printLines(String... lines) {
+        System.out.println(DIVIDER);
+        for (String line : lines) {
+            System.out.println(line);
+        }
+        System.out.println(DIVIDER + System.lineSeparator());
+    }
+
+    private void printAddedTask(Task task) {
+        String tasksWord = tasksList.getTasksCount() == 1 ? " task" : " tasks";
+        final String FIRST_SENTENCE = "Got it. I've added this task:";
+        final String SECOND_SENTENCE = "Now you have " + tasksList.getTasksCount() + tasksWord + " in the list.";
+        printLines(FIRST_SENTENCE + System.lineSeparator() + task + System.lineSeparator() + SECOND_SENTENCE);
+    }
+
+    private void addGenericTask(String name) {
+        if (name.isEmpty()) {
+            printLines("Please provide task description");
+            return;
+        }
+        this.tasksList.addTask(new Task(name, false));
         printLines("added: " + name);
     }
 
-    private void todoCommandHandler(String arguments) {
+    private void createTodo(String arguments) {
         String name = arguments;
+        if (name.isEmpty()) {
+            printLines("Please provide todo description");
+            return;
+        }
         Todo todo = new Todo(name, false);
-        this.taskList.addTask(todo);
+        this.tasksList.addTask(todo);
         printAddedTask(todo);
     }
 
-    private void deadlineCommandHandler(String arguments) {
-        {
+    private void createDeadline(String arguments) {
             int byCommandIndex = arguments.indexOf("/by");
             if (byCommandIndex < 0) {
                 printLines("Please specify the /by command");
                 return;
             }
             String name = arguments.substring(0, byCommandIndex).trim();
-            String byArgumentValue = arguments.substring(byCommandIndex)
-                    .substring("/by".length()).trim();
+            String byArgumentValue = arguments.substring(byCommandIndex).substring("/by".length()).trim();
 
             if (name.isEmpty()) {
                 printLines("Please provide name argument");
@@ -71,12 +77,11 @@ public class TaskListener {
                 return;
             }
             Deadline deadline = new Deadline(name, false, byArgumentValue);
-            this.taskList.addTask(deadline);
+            this.tasksList.addTask(deadline);
             printAddedTask(deadline);
-        }
     }
 
-    private void eventCommandHandler(String arguments) {
+    private void createEvent(String arguments) {
         {
             int fromCommandIndex = arguments.indexOf("/from");
             int toCommandIndex = arguments.indexOf("/to");
@@ -114,24 +119,22 @@ public class TaskListener {
             }
 
             Event event = new Event(name, false, fromArgumentValue, toArgumentValue);
-            this.taskList.addTask(event);
+            this.tasksList.addTask(event);
             printAddedTask(event);
         }
     }
 
-    private void modifyDoneValueHandler(boolean isDone, int taskIndex) {
+    private void modifyDoneValue(boolean isDone, int taskIndex) {
         String successMessage = isDone ? "Nice! I've marked this task as done:"
                 : "OK, I've marked this task as not done yet:";
 
-        // Invalid index value
-        if (taskIndex < 0 || taskIndex >= this.taskList.getTasks().length) {
+        try {
+            Task task = this.tasksList.getTasks()[taskIndex];
+            task.setIsDone(isDone);
+            printLines(successMessage, task.toString());
+        } catch (ArrayIndexOutOfBoundsException e) {
             printLines("No task at such index!");
-            return;
         }
-
-        Task task = this.taskList.getTasks()[taskIndex];
-        task.setIsDone(isDone);
-        printLines(successMessage, task.toString());
     }
 
     public void listen() {
@@ -145,45 +148,50 @@ public class TaskListener {
 
         switch (command) {
 
-            case "add":
-                addCommandHandler(arguments);
-                break;
+        case "add":
+            addGenericTask(arguments);
+            break;
 
-            case "todo":
-                todoCommandHandler(arguments);
-                break;
+        case "todo":
+            createTodo(arguments);
+            break;
 
-            case "deadline":
-                deadlineCommandHandler(arguments);
-                break;
+        case "deadline":
+            createDeadline(arguments);
+            break;
 
-            case "event":
-                eventCommandHandler(arguments);
-                break;
+        case "event":
+            createEvent(arguments);
+            break;
 
-            case "list": {
-                printLines(this.taskList.toString());
-                break;
-            }
+        case "list": {
+            printLines(this.tasksList.toString());
+            break;
+        }
 
-            case "mark":
-            case "unmark": {
-                // isDone value that user wants to achieve
-                boolean intendedDoneValue = command.equals("mark");
+        case "mark":
+        case "unmark": {
+            // isDone value that user wants to achieve
+            boolean intendedDoneValue = command.equals("mark");
 
+            try {
                 String indexArgument = arguments.substring(0);
                 int taskIndex = Integer.parseInt(indexArgument) - 1;
 
-                modifyDoneValueHandler(intendedDoneValue, taskIndex);
-                break;
+                modifyDoneValue(intendedDoneValue, taskIndex);
+            } catch (NumberFormatException e) {
+                printLines("Please provide a valid index");
             }
 
-            case "bye":
-                printLines("Bye. Hope to see you again soon!");
-                return;
+            break;
+        }
 
-            default:
-                printLines("No such command exists!");
+        case "bye":
+            printLines("Bye. Hope to see you again soon!");
+            return;
+
+        default:
+            printLines("No such command exists!");
         }
 
         listen();
