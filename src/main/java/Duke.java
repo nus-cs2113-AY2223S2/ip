@@ -5,16 +5,21 @@ public class Duke {
     public static final String LONG_LINE = "____________________________________________________________";
     public static final int MAX_ARRAY_SIZE = 100;
 
+    public static String userInput = "start";
+    private static Task[] taskList = new Task[MAX_ARRAY_SIZE];
+    private static int listCount = 0;
+
     public static void main(String[] args) {
         printGreetings();
-        Task[] taskList = new Task[100];
-        String line = "Start";
         Scanner in = new Scanner(System.in);
-        int listCount = 0;
-        while (!line.equals("bye")) {
-            line = in.nextLine();
-            if (!line.equals("bye")) {
-                listCount = handleUserInputs(line, taskList, listCount);
+        while (!userInput.equals("bye")) {
+            userInput = in.nextLine();
+            if (!userInput.equals("bye")) {
+                try {
+                    handleUserInputs(userInput, taskList);
+                } catch (DukeException e) {
+                    System.out.println("error");
+                }
             }
             System.out.println(LONG_LINE);
         }
@@ -22,8 +27,36 @@ public class Duke {
         return;
     }
 
+    public static void handleUserInputs(String userInput, Task[] taskList) throws InvalidCommandException {
+        String[] cases = userInput.split(" ", 2);
+        String command = cases[0];
+        System.out.println(LONG_LINE);
+        try {
+            if (command.equals("todo")) {
+                createTodo(taskList, cases);
+            } else if (command.equals("deadline")) {
+                createDeadline(taskList, cases);
+            } else if (command.equals("event")) {
+                createEvent(taskList, cases);
+            } else if (command.equals("list")) {
+                printList(taskList);
+            } else if (command.equals("mark")) {
+                markTask(taskList, cases[1]);
+            } else if (command.equals("unmark")) {
+                unmarkTask(taskList, cases[1]);
+            } else {
+                throw new InvalidCommandException();
+            }
+        } catch (InvalidCommandException e) {
+            printInvalidMessage();
+        } catch (EmptyCommandException e) {
+            printEmptyCommandMessage(command);
+        } catch (InvalidIndexException e) {
+            printIndexMessage();
+        }
+    }
 
-    private static void printList(Task[] s, int listCount) {
+    private static void printList(Task[] s) {
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < listCount; ++i) {
             String index = Integer.toString(i + 1);
@@ -50,82 +83,75 @@ public class Duke {
     }
 
 
-    private static void createTodo(Task[] taskList, int listCount, String input) {
+    private static void createTodo(Task[] taskList, String[] cases) throws EmptyCommandException{
+        if (cases.length == 1) {
+            throw new EmptyCommandException();
+        }
+        String input = cases[1];
         taskList[listCount] = new Todo(input);
         printAddedTaskCommand(taskList, listCount);
+        listCount++;
     }
 
-    private static void createDeadline(Task[] taskList, int listCount, String input){
+    private static void createDeadline(Task[] taskList, String[] cases) throws EmptyCommandException {
+        if (cases.length == 1) {
+            throw new EmptyCommandException();
+        }
+        String input = cases[1];
         String[] splitInput = input.split("/", 2);
         String task = splitInput[0].trim();
         String by = splitInput[1].substring(3);
         taskList[listCount] = new Deadline(task, by);
         printAddedTaskCommand(taskList, listCount);
+        listCount++;
     }
 
-    private static void createEvent(Task[] taskList, int listCount, String input){
+    private static void createEvent(Task[] taskList, String[] cases) throws EmptyCommandException {
+        if (cases.length == 1) {
+            throw new EmptyCommandException();
+        }
+        String input = cases[1];
         String[] splitInput = input.split("/", 3);
         String task = splitInput[0].trim();
         String from = splitInput[1].substring(5).trim();
         String to = splitInput[2].substring(3);
         taskList[listCount] = new Event(task, from, to);
         printAddedTaskCommand(taskList, listCount);
+        listCount++;
     }
 
-    private static void markTask(Task[] taskList, String input){
+    private static void markTask(Task[] taskList, String input) throws InvalidIndexException {
         int index = Integer.parseInt(input) - 1;
         if (taskList[index] == null) {
-            System.out.println("No such task! Try again.");
+            throw new InvalidIndexException();
         }
-        else {
-            taskList[index].setDone(true);
-            System.out.println("Nice! I've marked this task as done:");
-            System.out.println(taskList[index].toString());
-        }
+        taskList[index].setDone(true);
+        System.out.println("Nice! I've marked this task as done:");
+        System.out.println(taskList[index].toString());
     }
 
-    private static void unmarkTask(Task[] taskList, String input){
+    private static void unmarkTask(Task[] taskList, String input) throws InvalidIndexException {
         int index = Integer.parseInt(input) - 1;
         if (taskList[index] == null) {
-            System.out.println("No such task! Try again.");
+            throw new InvalidIndexException();
         }
-        else {
-            taskList[index].setDone(false);
-            System.out.println("OK, I've marked this task as not done yet:");
-            System.out.println(taskList[index].toString());
-        }
+        taskList[index].setDone(false);
+        System.out.println("OK, I've marked this task as not done yet:");
+        System.out.println(taskList[index].toString());
     }
 
-    public static int handleUserInputs(String line, Task[] taskList, int listCount) {
-        String[] cases = line.split(" ", 2);
-        System.out.println(LONG_LINE);
-        switch (cases[0]) {
-        case "todo":
-            createTodo(taskList,listCount, cases[1]);
-            listCount++;
-            break;
-        case "deadline":
-            createDeadline(taskList, listCount, cases[1]);
-            listCount++;
-            break;
-        case "event":
-            createEvent(taskList, listCount, cases[1]);
-            listCount++;
-            break;
-        case "list":
-            printList(taskList, listCount);
-            break;
-        case "mark":
-            markTask(taskList, cases[1]);
-            break;
-        case "unmark":
-            unmarkTask(taskList, cases[1]);
-            break;
-        default:
-            taskList[listCount] = new Task(line);
-            listCount++;
-            System.out.println("added: " + line);
-        }
-        return listCount;
+    public static void printInvalidMessage() {
+        System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
     }
+
+    public static void printEmptyCommandMessage(String command) {
+        System.out.println("☹ OOPS!!! The description of a " + command + " cannot be empty.");
+    }
+
+    public static void printIndexMessage(){
+        System.out.println("No such task exist! Try again.");
+    }
+
+
 }
+
