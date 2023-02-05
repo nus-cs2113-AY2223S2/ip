@@ -8,8 +8,8 @@ public class Deadline extends Task {
 
     @Override
     public String getDescription() {
-        String desc = "[D]" + super.getDescription();
-        desc = desc.concat(" (by: " + this.dueDate + ")");
-        return desc;
+        String description = "[D]" + super.getDescription();
+        description = description.concat(" (by: " + this.dueDate + ")");
+        return description;
     }
 }
