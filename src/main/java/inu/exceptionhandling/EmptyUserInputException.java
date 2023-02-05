@@ -1,4 +1,4 @@
-package inu.exception.handling;
+package inu.exceptionhandling;
 
 public class EmptyUserInputException extends Exception {
 }

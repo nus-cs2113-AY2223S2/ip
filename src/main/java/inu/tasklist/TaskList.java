@@ -1,4 +1,5 @@
-package inu.task.list;
+package inu.tasklist;
+
 import inu.task.*;
 
 public class TaskList {

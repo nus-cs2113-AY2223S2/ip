@@ -1,4 +1,4 @@
-package inu.input.and.output;
+package inu.parser;
 
 public class Messages {
 

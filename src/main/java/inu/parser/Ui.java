@@ -1,6 +1,7 @@
-package inu.input.and.output;
+package inu.parser;
 
-import inu.task.list.*;
+import inu.tasklist.*;
+import inu.tasklist.TaskList;
 
 public class Ui {
 

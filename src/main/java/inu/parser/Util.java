@@ -1,7 +1,8 @@
-package inu.input.and.output;
+package inu.parser;
 
-import inu.task.list.*;
-import inu.exception.handling.EmptyUserInputException;
+import inu.tasklist.*;
+import inu.exceptionhandling.EmptyUserInputException;
+import inu.tasklist.TaskList;
 
 public class Util {
 
