@@ -1,5 +1,12 @@
+package duke;
+
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import duke.task.Task;
+import duke.task.Todo;
+import duke.task.Deadline;
+import duke.task.Event;
 
 public class Duke {
     private static final Scanner scanner = new Scanner(System.in);
