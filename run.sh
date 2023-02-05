@@ -1,2 +1,3 @@
-javac -d ./bin src/main/java/*.java
+find -name "*.java" > sources.txt
+javac -d ./bin @sources.txt
 java -cp ./bin Duke

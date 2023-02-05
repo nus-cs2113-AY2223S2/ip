@@ -1,3 +1,5 @@
+package tasks;
+
 import java.util.ArrayList;
 
 public class TaskManager {
@@ -28,11 +30,12 @@ public class TaskManager {
     return tasks.size();
   }
 
-  public void printList() {
+  @Override
+  public String toString() {
     String toPrint = "";
     for (int i = 0; i < tasks.size(); i++) {
       toPrint += String.format("%d. %s\t", i + 1, tasks.get(i));
     }
-    Util.printText(toPrint);
+    return toPrint;
   }
 }
