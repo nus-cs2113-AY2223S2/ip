@@ -1,6 +1,6 @@
 # Chronos project template
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+This is a project template for a greenfield Java project. It's named Chronos, the god of time. Given below are instructions on how to use it.
 
 ## Setting up in Intellij
 
@@ -26,7 +26,11 @@ Hello from
 ╚█████╔╝██║░░██║██║░░██║╚█████╔╝██║░╚███║╚█████╔╝██████╔╝
 ░╚════╝░╚═╝░░╚═╝╚═╝░░╚═╝░╚════╝░╚═╝░░╚══╝░╚════╝░╚═════╝░
 
-Tick, tick, boom! I'm Chronos, your personal time manager. How can I be of help today?
+Tick, tick, boom! I'm Chronos, your personal time manager.
+
+What is your name? (Please enter name)
+
+>> 
 
 ```
 
