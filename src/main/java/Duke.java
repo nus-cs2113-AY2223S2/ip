@@ -90,8 +90,7 @@ public class Duke {
             System.out.println("\t\t" + task);
             System.out.println(spacer + "Now you have " + taskList.size() + " tasks in the list.");
         } catch (IllegalArgumentException e) {
-            System.err.println(spacer + "Invalid task type!");
-            System.err.println(spacer + "Valid task types: todo, deadline, event.");
+            System.err.println(spacer + e.getMessage());
         }
     }
 
@@ -101,8 +100,11 @@ public class Duke {
      * @return a task instance (can be event, deadline, etc).
      * @throws IllegalArgumentException when user input an invalid command
      */
-    private static Task createTask(String cmd) {
+    private static Task createTask(String cmd) throws IllegalArgumentException {
         String[] cmdArgs = cmd.split(" ");
+        if (cmdArgs.length <= 1) {
+            throw new IllegalArgumentException("☹ OOPS!!! The description cannot be empty!");
+        }
         switch (cmdArgs[0]) {
         case "todo":
             return new Todo(cmdArgs);
@@ -111,7 +113,7 @@ public class Duke {
         case "event":
             return new Event(cmdArgs);
         default:
-            throw new IllegalArgumentException("Invalid task type!");
+            throw new IllegalArgumentException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
         }
     }
 
