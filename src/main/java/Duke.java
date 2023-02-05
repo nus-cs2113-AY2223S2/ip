@@ -1,5 +1,6 @@
 import java.util.Scanner;
 
+
 public class Duke {
     private static void logoWithHello() {
         String logo = " ____        _\n"
@@ -26,11 +27,11 @@ public class Duke {
         horizontalLine();
     }
 
-    public static void echo(String userInput) {
-        horizontalLine();
-        System.out.println("added: " + userInput);
-        horizontalLine();
-    }
+//    public static void echo(String userInput) {
+//        horizontalLine();
+//        System.out.println("added: " + userInput);
+//        horizontalLine();
+//    }
 
     private static void listCommand(Task[] tasks) {
         horizontalLine();
@@ -41,8 +42,7 @@ public class Duke {
     }
 
     public static String[] processLine(String userInput) {
-        String[] words = userInput.split(" ");
-        return words;
+       return userInput.split(" ");
     }
 
     public static void taskAdded(Task t) {
@@ -53,25 +53,36 @@ public class Duke {
         horizontalLine();
     }
 
-    public static void processCommands(Task[] tasks, String userInput) {
+    public static void processCommands(Task[] tasks, String userInput) throws DukeException {
         String[] words = processLine(userInput);
-        if (words[0].equals("list")) {
-            listCommand(tasks);
-        } else if (words[0].equals("todo")) {
-            todoCommand(tasks, userInput);
-        } else if (words[0].equals("event")) {
-            eventCommand(tasks, userInput);
-        } else if (words[0].equals("deadline")) {
-            deadlineCommand(tasks, userInput);
-        } else if (words[0].contains("mark")) {
-            markUnmarkCommand(tasks, words);
+        try {
+            if (words[0].equals("list")) {
+                listCommand(tasks);
+            } else if (words[0].equals("todo")) {
+                todoCommand(tasks, userInput);
+            } else if (words[0].equals("event")) {
+                eventCommand(tasks, userInput);
+            } else if (words[0].equals("deadline")) {
+                deadlineCommand(tasks, userInput);
+            } else if (words[0].contains("mark")) {
+                markUnmarkCommand(tasks, words);
+            } else {
+                throw new DukeException(ErrorMessage.INVALID_COMMAND.toString());
+            }
+        } finally {
+
         }
+
     }
 
-    private static void todoCommand(Task[] tasks, String userInput) {
-        userInput = userInput.substring(5);
-        tasks[Task.getNumberOfTasks()] = new Todo(userInput);
-        taskAdded(tasks[Task.getNumberOfTasks() - 1]);
+    private static void todoCommand(Task[] tasks, String userInput) throws DukeException{
+        try {
+            userInput = userInput.substring(5);
+            tasks[Task.getNumberOfTasks()] = new Todo(userInput);
+            taskAdded(tasks[Task.getNumberOfTasks() - 1]);
+        } catch (IndexOutOfBoundsException error) {
+            throw new DukeException(ErrorMessage.MISSING_TODO_PARAMETER.toString());
+        }
     }
 
     private static void eventCommand(Task[] tasks, String userInput) {
@@ -118,7 +129,14 @@ public class Duke {
             if (userInput.equals("bye")) {
                 break;
             }
-            processCommands(tasks, userInput);
+
+            try {
+                processCommands(tasks, userInput);
+            } catch (Exception error) {
+                horizontalLine();
+                System.out.println(error.getMessage());
+                horizontalLine();
+            }
         }
         exit();
     }
