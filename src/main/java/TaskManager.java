@@ -29,10 +29,10 @@ public class TaskManager {
   }
 
   public void printList() {
-    String s = "";
+    String toPrint = "";
     for (int i = 0; i < tasks.size(); i++) {
-      s += String.format("%d. %s\t", i + 1, tasks.get(i));
+      toPrint += String.format("%d. %s\t", i + 1, tasks.get(i));
     }
-    Util.printText(s);
+    Util.printText(toPrint);
   }
 }

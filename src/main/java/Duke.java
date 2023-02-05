@@ -23,8 +23,8 @@ public class Duke {
     Scanner sc = new Scanner(System.in);
     int flag = 1;
     while (flag == 1) {
-      String ret = sc.nextLine();
-      switch (ret.split(" ")[0]) {
+      String userInput = sc.nextLine();
+      switch (userInput.split(" ")[0]) {
         case "bye":
           flag = 0;
           break;
@@ -32,7 +32,7 @@ public class Duke {
           taskManager.printList();
           break;
         case "mark":
-          int index = Integer.parseInt(ret.split(" ")[1]) - 1;
+          int index = Integer.parseInt(userInput.split(" ")[1]) - 1;
           taskManager.markDone(index);
           Util.printText(
             "Nice! I've marked this task as done:\n\t" +
@@ -40,7 +40,7 @@ public class Duke {
           );
           break;
         case "unmark":
-          index = Integer.parseInt(ret.split(" ")[1]) - 1;
+          index = Integer.parseInt(userInput.split(" ")[1]) - 1;
           taskManager.markUndone(index);
           Util.printText(
             "OK, I've marked this task as not done yet:\n\t" +
@@ -48,13 +48,13 @@ public class Duke {
           );
           break;
         case "todo":
-          String description = ret.substring(4);
+          String description = userInput.substring(4);
           Todo todo = new Todo(description);
           taskManager.addTask(todo);
           confirmAddTask(todo);
           break;
         case "deadline":
-          String fullString = ret.substring(8);
+          String fullString = userInput.substring(8);
           description = fullString.split(" /by ")[0];
           String by = fullString.split(" /by ")[1];
           Deadline deadline = new Deadline(description, by);
@@ -62,7 +62,7 @@ public class Duke {
           confirmAddTask(deadline);
           break;
         case "event":
-          fullString = ret.substring(5);
+          fullString = userInput.substring(5);
           description = fullString.split(" /")[0];
           String from = fullString.split(" /")[1].substring(5);
           String to = fullString.split(" /")[2].substring(3);
