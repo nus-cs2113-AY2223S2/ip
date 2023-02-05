@@ -26,5 +26,7 @@ Hello from
 ╚█████╔╝██║░░██║██║░░██║╚█████╔╝██║░╚███║╚█████╔╝██████╔╝
 ░╚════╝░╚═╝░░╚═╝╚═╝░░╚═╝░╚════╝░╚═╝░░╚══╝░╚════╝░╚═════╝░
 
+Tick, tick, boom! I'm Chronos, your personal time manager. How can I be of help today?
+
 ```
 
