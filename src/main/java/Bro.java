@@ -33,32 +33,30 @@ public class Bro {
                 break;
             case "mark": // Fallthrough
             case "unmark":
-                boolean markAsComplete = arrayOfInputs[0].equals("mark");   // this boolean decides if the following markComplete() method marks the task as Completed or Uncompleted
-                int taskIndex = Integer.parseInt(arrayOfInputs[1]) - 1;
+                boolean markAsComplete = arrayOfInputs[0].equals("mark");   // this boolean decides if the following `markComplete()` marks the task as Completed or Uncompleted
                 try {
-                    reply = markComplete(markAsComplete, tasks, taskIndex, reply);
+                    reply = markComplete(markAsComplete, tasks, arrayOfInputs);
+                } catch (invalidInputFormat e) {
+                    reply = new StringBuilder(e.toString());
                 } catch (invalidTaskIndexException e) {
                     reply = new StringBuilder(TASK_DOES_NOT_EXIST);
                 }
                 break;
             case "todo":
-                Task todo = new ToDo(line);
+                StringBuilder todoName = new StringBuilder();
+                for (int i = 1; i < arrayOfInputs.length; ++i) {
+                    todoName.append(" ").append(arrayOfInputs[i]);
+                }
+                Task todo = new ToDo(todoName.toString().trim());
                 tasks.add(todo);
                 reply = new StringBuilder(" added: " + todo);
                 break;
             case "deadline":
-                StringBuilder deadlineName = new StringBuilder();
-                StringBuilder by = new StringBuilder();
-                int indexOfDeadline = Arrays.asList(arrayOfInputs).indexOf("/by");
-                for (int i = 1; i < indexOfDeadline; ++i) {
-                    deadlineName.append(" ").append(arrayOfInputs[i]);
+                try {
+                    reply = createDeadline(tasks, arrayOfInputs);
+                } catch (invalidInputFormat e) {
+                    reply = new StringBuilder(e.toString());
                 }
-                for (int i = indexOfDeadline + 1; i < arrayOfInputs.length; ++i) {
-                    by.append(" ").append(arrayOfInputs[i]);
-                }
-                Task deadline = new Deadline(deadlineName.toString().trim(), by.toString().trim());
-                tasks.add(deadline);
-                reply = new StringBuilder(" added: " + deadline);
                 break;
             case "event":
                 StringBuilder eventName = new StringBuilder();
@@ -86,27 +84,54 @@ public class Bro {
         }
     }
 
+    private static StringBuilder createDeadline(ArrayList<Task> tasks, String[] arrayOfInputs) throws invalidInputFormat {
+        int indexOfDeadline = Arrays.asList(arrayOfInputs).indexOf("/by");
+        if (indexOfDeadline == -1 || indexOfDeadline == arrayOfInputs.length - 1) { // user did not input "/by" or did not input a deadline time
+            throw new invalidInputFormat("d");
+        }
+        // Separate arrayOfInputs into `deadlineName` and `by` to construct deadline object
+        StringBuilder deadlineName = new StringBuilder();
+        StringBuilder by = new StringBuilder();
+        for (int i = 1; i < indexOfDeadline; ++i) {
+            deadlineName.append(" ").append(arrayOfInputs[i]);
+        }
+        for (int i = indexOfDeadline + 1; i < arrayOfInputs.length; ++i) {
+            by.append(" ").append(arrayOfInputs[i]);
+        }
+        Task deadline = new Deadline(deadlineName.toString().trim(), by.toString().trim());
+        tasks.add(deadline);
+        StringBuilder reply = new StringBuilder(" added: " + deadline);
+        return reply;
+    }
+
     /**
-     * Validate the input task index, sets the task completion status and returns Bro's reply according to said completion status.
+     * Validate the input format and task index, sets the task completion status and returns Bro's reply according to said completion status.
      *
      * @param markAsComplete boolean that decides if this method marks the input task as Completed or Uncompleted
      * @param tasks List of all tasks
-     * @param taskIndex Index of current task in the tasks list
-     * @param reply Bro's reply
-     * @return reply
+     * @param arrayOfInputs Array of input words
+     * @return Bro's reply
      * @throws invalidTaskIndexException
      */
-    private static StringBuilder markComplete(boolean markAsComplete, ArrayList<Task> tasks, int taskIndex, StringBuilder reply) throws invalidTaskIndexException {
-        if (taskIndex + 1 > tasks.size() || taskIndex < 0) { // Validate if input Task index is valid
+    private static StringBuilder markComplete(boolean markAsComplete, ArrayList<Task> tasks, String[] arrayOfInputs) throws invalidInputFormat, invalidTaskIndexException {
+        // Validate if input format is valid
+        int taskIndex;
+        try {
+            taskIndex = Integer.parseInt(arrayOfInputs[1]) - 1;
+        } catch (NumberFormatException | IndexOutOfBoundsException e) {
+            throw new invalidInputFormat("m");
+        }
+        // Validate if input Task index is valid
+        if (taskIndex + 1 > tasks.size() || taskIndex < 0) {
             throw new invalidTaskIndexException();
         }
         else if (markAsComplete){   // mark as Completed
-            reply = new StringBuilder(" Marked " + tasks.get(taskIndex) + " as done.");
+            StringBuilder reply = new StringBuilder(" Marked " + tasks.get(taskIndex) + " as done.");
             tasks.get(taskIndex).setCompleted();
             return reply;
         }
         else {                      // mark as Uncompleted
-            reply = new StringBuilder(" Marked " + tasks.get(taskIndex) + " as not done.");
+            StringBuilder reply = new StringBuilder(" Marked " + tasks.get(taskIndex) + " as not done.");
             tasks.get(taskIndex).setUncompleted();
             return reply;
         }
