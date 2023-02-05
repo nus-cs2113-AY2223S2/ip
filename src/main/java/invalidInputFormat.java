@@ -9,6 +9,10 @@ public class invalidInputFormat extends Exception {
             return " Bro please follow this format:\n" +
                     " \"mark/unmark {index of task according to list}\"\n" +
                     " e.g. Finish homework /by Monday 2pm";
+        } else if (type.equals("t")) {
+            return " Bro please follow this format:\n" +
+                    " \"todo {Name of Todo}\"\n" +
+                    " e.g. todo Maths homework";
         } else if (type.equals("d")) {
             return " Bro please follow this format:\n" +
                     " \"deadline {Name of Deadline} /by {Deadline}\"\n" +

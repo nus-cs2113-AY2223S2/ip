@@ -43,13 +43,11 @@ public class Bro {
                 }
                 break;
             case "todo":
-                StringBuilder todoName = new StringBuilder();
-                for (int i = 1; i < arrayOfInputs.length; ++i) {
-                    todoName.append(" ").append(arrayOfInputs[i]);
+                try {
+                    reply = createToDo(tasks, arrayOfInputs);
+                } catch (invalidInputFormat e) {
+                    reply = new StringBuilder(e.toString());
                 }
-                Task todo = new ToDo(todoName.toString().trim());
-                tasks.add(todo);
-                reply = new StringBuilder(" added: " + todo);
                 break;
             case "deadline":
                 try {
@@ -84,6 +82,19 @@ public class Bro {
         }
     }
 
+    private static StringBuilder createToDo(ArrayList<Task> tasks, String[] arrayOfInputs) throws invalidInputFormat {
+        StringBuilder todoName = new StringBuilder();
+        if (arrayOfInputs.length < 2) {
+            throw new invalidInputFormat("t");
+        }
+        for (int i = 1; i < arrayOfInputs.length; ++i) {
+            todoName.append(" ").append(arrayOfInputs[i]);
+        }
+        Task todo = new ToDo(todoName.toString().trim());
+        tasks.add(todo);
+        return new StringBuilder(" added: " + todo);
+    }
+
     private static StringBuilder createDeadline(ArrayList<Task> tasks, String[] arrayOfInputs) throws invalidInputFormat {
         int indexOfDeadline = Arrays.asList(arrayOfInputs).indexOf("/by");
         if (indexOfDeadline == -1 || indexOfDeadline == arrayOfInputs.length - 1) { // user did not input "/by" or did not input a deadline time
@@ -100,8 +111,7 @@ public class Bro {
         }
         Task deadline = new Deadline(deadlineName.toString().trim(), by.toString().trim());
         tasks.add(deadline);
-        StringBuilder reply = new StringBuilder(" added: " + deadline);
-        return reply;
+        return new StringBuilder(" added: " + deadline);
     }
 
     /**
@@ -126,14 +136,12 @@ public class Bro {
             throw new invalidTaskIndexException();
         }
         else if (markAsComplete){   // mark as Completed
-            StringBuilder reply = new StringBuilder(" Marked " + tasks.get(taskIndex) + " as done.");
             tasks.get(taskIndex).setCompleted();
-            return reply;
+            return new StringBuilder(" Marked " + tasks.get(taskIndex) + " as done.");
         }
         else {                      // mark as Uncompleted
-            StringBuilder reply = new StringBuilder(" Marked " + tasks.get(taskIndex) + " as not done.");
             tasks.get(taskIndex).setUncompleted();
-            return reply;
+            return new StringBuilder(" Marked " + tasks.get(taskIndex) + " as not done.");
         }
     }
 }
