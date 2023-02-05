@@ -30,9 +30,10 @@ public class Duke {
         String line = "";
 
         Task[] tasks = new Task[TASK_ARRAY_SIZE];
-
-        while (!(line = input.nextLine()).equals(EXIT_PROGRAM)) {
+        line = input.nextLine();
+        while (!line.equals(EXIT_PROGRAM)) {
            Duke.processInput(line, tasks);
+           line = input.nextLine();
         }
 
         Duke.ending();
@@ -102,10 +103,10 @@ public class Duke {
             System.out.println(tasks[unmarkIndex]);
             break;
         case "list":
-            int count = 0;
+            int listIndex = 0;
             for (Task t : tasks){
                 if(t != null){
-                    System.out.println(++count +". " + t);
+                    System.out.println(++listIndex +". " + t);
                 }
             }
             break;
