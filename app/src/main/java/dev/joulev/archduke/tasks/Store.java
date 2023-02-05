@@ -40,6 +40,14 @@ public class Store {
         Out.printf("You have %d task(s) in the list.", getTaskCount());
     }
 
+    public void queryTasks(String query) throws ArchdukeException {
+        for (Task task : tasks) {
+            if (task.getDescription().contains(query)) {
+                Out.printf("  %s", task.toString());
+            }
+        }
+    }
+
     public Task getTask(int index) {
         return tasks.get(index);
     }
