@@ -1,3 +1,13 @@
+package duke;
+
+import task.Task;
+import task.Deadline;
+import task.Event;
+import task.Todo;
+import error.DukeAlreadyMarkedException;
+import error.DukeIllegalCommandException;
+import error.DukeIllegalSyntaxException;
+
 import java.util.Scanner;
 
 public class Duke {
@@ -237,7 +247,6 @@ public class Duke {
 
         // Add the `from` field into index 1 of outputArray
         for (int i = fromIndex + 1; i < toIndex; i++) {
-            System.out.println("test: " + userInputArray[i]);
             outputArray[1] += userInputArray[i] + " ";
         }
         outputArray[1] = outputArray[1].trim();

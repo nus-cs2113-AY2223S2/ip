@@ -1,3 +1,7 @@
+package task;
+
+import error.DukeAlreadyMarkedException;
+
 public class Task {
     protected String description;
     protected boolean isDone;
