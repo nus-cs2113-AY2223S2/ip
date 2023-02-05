@@ -6,19 +6,19 @@ public class CommandParser {
 
     }
 
-    public String[] splitIntoSubcommands(String command) {
+    public String[] splitIntoCommands(String rawCommand) {
         // " -" splits the string into substrings
         // if the substring starts with two dashes '--' and is preceded by whitespace
         // For example: deadline my_task --by -xyz sunday-monday
         // Will output: ["deadline my_task", "by -xyz sunday-monday"]
         // For now, this does not account for accidental or adversarial '--' input at the start of words
         // but this is an unlikely edge case that can be dealt with later
-        return command.split(" --");
+        return rawCommand.split(" --");
     }
 
-    public static HashMap<String, String> getSubcommandMap(String[] commandList) {
+    public static HashMap<String, String> getCommandPayloadMap(String[] commandList) {
         // Each command can be processed into a subcommand and its corresponding text value
-        // For example: deadline work on CS2113 --by Sunday
+        // For example: "deadline work on CS2113 --by Sunday"
         // Should map to: <"deadline", "work on CS2113">, <by, Sunday>
         HashMap<String, String> commandMap = new HashMap<>();
         for (String cmdStr : commandList) {
