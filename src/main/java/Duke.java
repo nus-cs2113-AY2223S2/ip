@@ -3,7 +3,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Duke {
-    public static final String LINE_PRINT = "____________________________________________________________\n";
+    public static final String LINE = "____________________________________________________________\n";
     public static final String BYE_MESSAGE = "Bye. Hope to see you again soon!\n";
     public static boolean canExit = false;
 
@@ -13,20 +13,20 @@ public class Duke {
      * @param myList
      */
     public static void printTaskMessage(ArrayList<Task> myList) {
-        System.out.println(LINE_PRINT
+        System.out.println(LINE
                 + "Got it. I've added this task:\n"
                 + myList.get(myList.size() - 1) + "\n"
                 + "Now you have " + myList.size() + " in the list.\n"
-                + LINE_PRINT);
+                + LINE);
     }
 
     /**
      * Prints a greeting user message
      */
     public static void printGreetMessage() {
-        System.out.println(LINE_PRINT + "Hello! I'm Duke\n"
+        System.out.println(LINE + "Hello! I'm Duke\n"
                 + "What can I do for you?\n"
-                + LINE_PRINT);
+                + LINE);
     }
 
     /**
@@ -42,11 +42,20 @@ public class Duke {
      * @param myList
      */
     public static void printAddedTaskMessage(ArrayList<Task> myList) {
-        System.out.println(LINE_PRINT + "added: "
+        System.out.println(LINE + "added: "
                 + myList.get(myList.size() - 1).description
-                + "\n" + LINE_PRINT);
+                + "\n" + LINE);
     }
-
+    public static void printIllegalInputMessage() {
+        System.out.println(LINE
+                +  "☹ OOPS!!! I'm sorry, but I don't know what that means :-(\n"
+                + LINE);
+    }
+    public static void printEmptyInputMessage(String task) {
+        System.out.println(LINE
+                + "☹ OOPS!!! The description of " + task + " cannot be empty.\n"
+                + LINE);
+    }
     /**
      * Adds the input text into the list
      *
@@ -64,11 +73,11 @@ public class Duke {
      * @param myList
      */
     public static void printList(ArrayList<Task> myList) {
-        System.out.println(LINE_PRINT + "Here are the tasks in your list: \n");
+        System.out.println(LINE + "Here are the tasks in your list: \n");
         for (int i = 0; i < myList.size(); ++i) {
             System.out.println(i + 1 + ". " + myList.get(i));
         }
-        System.out.println(LINE_PRINT);
+        System.out.println(LINE);
     }
 
     /**
@@ -81,10 +90,10 @@ public class Duke {
         String taskToMarkString = s.substring(s.length() - 1);
         int taskToMark = Integer.parseInt(taskToMarkString) - 1;
         myList.get(taskToMark).setDone();
-        System.out.println(LINE_PRINT
+        System.out.println(LINE
                 + "Nice! I've marked this task as done:\n"
                 + myList.get(taskToMark) + "\n"
-                + LINE_PRINT);
+                + LINE);
     }
 
     /**
@@ -97,10 +106,30 @@ public class Duke {
         String taskToUnmarkString = s.substring(s.length() - 1);
         int taskToUnmark = Integer.parseInt(taskToUnmarkString) - 1;
         myList.get(taskToUnmark).setUndone();
-        System.out.println(LINE_PRINT
+        System.out.println(LINE
                 + "OK, I've marked this task as not done yet:\n"
                 + myList.get(taskToUnmark) + "\n"
-                + LINE_PRINT);
+                + LINE);
+    }
+
+    public static void markDoneOrUndone(String s, ArrayList<Task> myList) {
+        String[] words = s.split(" ");
+        String firstWord = words[0];
+        String taskToMarkOrUnmarkString = s.substring(s.length() - 1);
+        int taskToMarkOrUnmark = Integer.parseInt(taskToMarkOrUnmarkString) - 1;
+        if (firstWord.equals("mark")) {
+            myList.get(taskToMarkOrUnmark).setDone();
+            System.out.println(LINE
+                    + "Nice! I've marked this task as done:\n"
+                    + myList.get(taskToMarkOrUnmark) + "\n"
+                    + LINE);
+        } else {
+            myList.get(taskToMarkOrUnmark).setUndone();
+            System.out.println(LINE
+                    + "OK, I've marked this task as not done yet:\n"
+                    + myList.get(taskToMarkOrUnmark) + "\n"
+                    + LINE);
+        }
     }
 
     /**
@@ -109,8 +138,11 @@ public class Duke {
      * @param s
      * @param myList
      */
-    public static void toDoFunction(String s, ArrayList<Task> myList) {
-        String newTask[] = s.split(" ", 2);
+    public static void makeToDoFunction(String s, ArrayList<Task> myList) throws EmptyInputException {
+        String[] newTask = s.split(" ", 2);
+        if (newTask[1].isBlank()) {
+            throw new EmptyInputException();
+        }
         ToDo toDoTask = new ToDo(newTask[1]);
         myList.add(toDoTask);
         printTaskMessage(myList);
@@ -122,12 +154,23 @@ public class Duke {
      * @param s
      * @param myList
      */
-    public static void deadlinesFunction(String s, ArrayList<Task> myList) {
-        String newTask[] = s.split(" ", 2);
-        String split[] = newTask[1].split(" /by ");
-        Deadline deadlineTask = new Deadline(split[0], split[1]);
-        myList.add(deadlineTask);
-        printTaskMessage(myList);
+    public static void makeDeadlinesFunction(String s, ArrayList<Task> myList)
+            throws EmptyInputException, IllegalInputException {
+        if (s.contains("/by")) {
+            String[] newTask = s.split(" ", 2);
+            if (newTask[1].isBlank()) {
+                throw new EmptyInputException();
+            }
+            String[] split = newTask[1].split(" /by ");
+            if (split[1].isBlank()) {
+                throw new EmptyInputException();
+            }
+            Deadline deadlineTask = new Deadline(split[0], split[1]);
+            myList.add(deadlineTask);
+            printTaskMessage(myList);
+        } else {
+            throw new IllegalInputException();
+        }
     }
 
     /**
@@ -136,14 +179,70 @@ public class Duke {
      * @param s
      * @param myList
      */
-    public static void eventFunction(String s, ArrayList<Task> myList) {
-        String newTask[] = s.split(" ", 2);
-        String split[] = newTask[1].split(" /");
-        String timeFrom = split[1].substring(5);
-        String timeTo = split[2].substring(3);
-        Event eventTask = new Event(split[0], timeFrom, timeTo);
-        myList.add(eventTask);
-        printTaskMessage(myList);
+    public static void makeEventFunction(String s, ArrayList<Task> myList)
+            throws EmptyInputException, IllegalInputException {
+        if (s.contains("/from") && s.contains("/to")) {
+            String[] newTask = s.split(" ", 2);
+            if (newTask[1].isBlank()) {
+                throw new EmptyInputException();
+            }
+            String[] split = newTask[1].split(" /");
+            String timeFrom = split[1].substring(5);
+            String timeTo = split[2].substring(3);
+            Event eventTask = new Event(split[0], timeFrom, timeTo);
+            myList.add(eventTask);
+            printTaskMessage(myList);
+        } else {
+            throw new IllegalInputException();
+        }
+    }
+
+    public static void handleMarkUnmark(String s, ArrayList<Task> myList) {
+        try {
+            checkMarkUnmark(s);
+            markDoneOrUndone(s, myList);
+        } catch (EmptyInputException e) {
+            printEmptyInputMessage(s);
+        } catch (NumberFormatException e) {
+            printIllegalInputMessage();
+        }
+    }
+
+    public static void handleToDo(String s, ArrayList<Task> myList) {
+        try {
+            makeToDoFunction(s, myList);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            printEmptyInputMessage(s);
+        } catch (EmptyInputException e) {
+            printEmptyInputMessage(s.trim());
+        }
+    }
+
+    public static void handleDeadline(String s, ArrayList<Task> myList) {
+        try {
+            makeDeadlinesFunction(s, myList);
+        } catch (EmptyInputException e) {
+            printEmptyInputMessage(s.trim());
+        } catch (IllegalInputException e) {
+            printIllegalInputMessage();
+        }
+    }
+    public static void handleEvent(String s, ArrayList<Task> myList) {
+        try {
+            makeEventFunction(s, myList);
+        } catch (EmptyInputException e) {
+            printEmptyInputMessage(s.trim());
+        } catch (IllegalInputException e) {
+            printIllegalInputMessage();
+        }
+    }
+    public static void checkMarkUnmark(String s) throws EmptyInputException {
+        String[] list = s.split(" ");
+        if (list.length < 2) {
+            if (list[0].equals("mark") || list[0].equals("unmark")) {
+                throw new EmptyInputException();
+            }
+        }
     }
 
     public static void main(String[] args) {
@@ -158,19 +257,18 @@ public class Duke {
                 canExit = true;
             } else if (s.toLowerCase().equals("list")) {
                 printList(myList);
-            } else if (s.toLowerCase().startsWith("mark")) {
-                markDone(s, myList);
-            } else if (s.toLowerCase().startsWith("unmark")) {
-                markUndone(s, myList);
+            } else if (s.toLowerCase().startsWith("mark") || s.toLowerCase().startsWith("unmark")) {
+                handleMarkUnmark(s, myList);
             } else if (s.toLowerCase().startsWith("todo")) {
-                toDoFunction(s, myList);
+                handleToDo(s, myList);
             } else if (s.toLowerCase().startsWith("deadline")) {
-                deadlinesFunction(s, myList);
+                handleDeadline(s, myList);
             } else if (s.toLowerCase().startsWith("event")) {
-                eventFunction(s, myList);
+                handleEvent(s, myList);
             } else {
-                addList(s, myList);
-                printAddedTaskMessage(myList);
+                //addList(s, myList);
+                //printAddedTaskMessage(myList);
+                printIllegalInputMessage();
             }
         }
     }
