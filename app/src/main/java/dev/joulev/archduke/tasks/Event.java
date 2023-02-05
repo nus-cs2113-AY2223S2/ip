@@ -1,5 +1,8 @@
 package dev.joulev.archduke.tasks;
 
+import java.time.LocalDateTime;
+
+import dev.joulev.archduke.datetime.DateTime;
 import dev.joulev.archduke.exceptions.ArchdukeException;
 import dev.joulev.archduke.exceptions.UserInputException;
 import dev.joulev.archduke.exceptions.UserInputException.UserInputExceptionCode;
@@ -10,9 +13,9 @@ import dev.joulev.archduke.storage.SavedTask;
  */
 public class Event extends Task {
     /** The start time of the event */
-    private String from;
+    private LocalDateTime from;
     /** The end time of the event */
-    private String to;
+    private LocalDateTime to;
 
     /**
      * Constructs a new {@link Event} object.
@@ -50,31 +53,32 @@ public class Event extends Task {
         if (from == null || from.isBlank()) {
             throw new UserInputException(UserInputExceptionCode.TODO_FROM_IS_EMPTY);
         }
-        this.from = from;
+        this.from = DateTime.parse(from);
     }
 
     public void setTo(String to) throws ArchdukeException {
         if (to == null || to.isBlank()) {
             throw new UserInputException(UserInputExceptionCode.TODO_TO_IS_EMPTY);
         }
-        this.to = to;
+        this.to = DateTime.parse(to);
     }
 
-    public String getFrom() {
+    public LocalDateTime getFrom() {
         return from;
     }
 
-    public String getTo() {
+    public LocalDateTime getTo() {
         return to;
     }
 
     @Override
     public String toString() {
-        return String.format("E %s (from: %s to: %s)", super.toString(), getFrom(), getTo());
+        return String.format("E %s (from: %s; to: %s)", super.toString(),
+                DateTime.display(getFrom()), DateTime.display(getTo()));
     }
 
     public SavedTask toSavedTask() {
-        return new SavedTask(SavedTask.EVENT_IDENTIFIER, getDescription(), isCompleted(), getFrom(),
-                getTo(), null);
+        return new SavedTask(SavedTask.EVENT_IDENTIFIER, getDescription(), isCompleted(),
+                DateTime.formatForSave(getFrom()), DateTime.formatForSave(getTo()), null);
     }
 }

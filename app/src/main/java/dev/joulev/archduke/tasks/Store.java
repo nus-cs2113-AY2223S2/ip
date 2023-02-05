@@ -68,6 +68,21 @@ public class Store {
     }
 
     /**
+     * Lists all tasks in the store that match a query string, in a prettified
+     * format.
+     * 
+     * @param query The query string.
+     * @throws ArchdukeException If the operation fails.
+     */
+    public void queryTasks(String query) throws ArchdukeException {
+        for (Task task : tasks) {
+            if (task.getDescription().contains(query)) {
+                Out.printf("  %s", task.toString());
+            }
+        }
+    }
+
+    /**
      * Gets a task from the store.
      * 
      * @param index The index of the task to get.

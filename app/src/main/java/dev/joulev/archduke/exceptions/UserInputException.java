@@ -1,5 +1,7 @@
 package dev.joulev.archduke.exceptions;
 
+import dev.joulev.archduke.datetime.DateTime;
+
 /**
  * This class represents any exceptions that caused by syntactically correct
  * user input that has invalid values. See {@link UserInputExceptionCode} for
@@ -8,7 +10,7 @@ package dev.joulev.archduke.exceptions;
 public class UserInputException extends ArchdukeException {
     public enum UserInputExceptionCode {
         TASK_DESCRIPTION_IS_EMPTY, TODO_FROM_IS_EMPTY, TODO_TO_IS_EMPTY, DEADLINE_BY_IS_EMPTY,
-        INDEX_IS_NOT_A_NUMBER, INDEX_IS_OUT_OF_BOUNDS
+        INDEX_IS_NOT_A_NUMBER, INDEX_IS_OUT_OF_BOUNDS, MALFORMED_DATETIME
     }
 
     UserInputExceptionCode code;
@@ -80,6 +82,10 @@ public class UserInputException extends ArchdukeException {
             } catch (NumberFormatException e) {
                 throw new UnknownException("UserInputException; code = NumberFormatException");
             }
+        case MALFORMED_DATETIME:
+            return String.format(
+                    "The date and time you entered is not in the correct format. The only allowed format is %s. (Example: %s)",
+                    DateTime.INPUT_PATTERN, DateTime.EXAMPLE);
         default:
             throw new UnknownException("UserInputException; code = " + code);
         }

@@ -187,6 +187,21 @@ public class Out {
     }
 
     /**
+     * Prints the tasks that match a query string.
+     * 
+     * @param store The {@link Store} to get the tasks from.
+     * @param query The query string.
+     * @throws ArchdukeException If string format fails. This should not happen, if
+     *                           it happens it's a bug.
+     */
+    public static void printQueriedTasks(Store store, String query) throws ArchdukeException {
+        printBoxTopBorder();
+        printf("Here are the tasks I found:");
+        store.queryTasks(query);
+        printBoxBottomBorder();
+    }
+
+    /**
      * Prints the acknowledgement message on task addition.
      * 
      * @param task      The {@link Task} that was added.

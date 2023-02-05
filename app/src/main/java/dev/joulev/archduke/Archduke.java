@@ -75,6 +75,9 @@ public class Archduke {
                 case "list":
                     Out.printTasks(store);
                     continue;
+                case "find":
+                    Out.printQueriedTasks(store, command.getBody());
+                    continue;
                 case "mark":
                 case "unmark":
                     toggleTaskCompleteness(command.getBody());
