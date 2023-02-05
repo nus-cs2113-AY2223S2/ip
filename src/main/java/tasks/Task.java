@@ -34,8 +34,13 @@ public class Task {
         this.description = description;
     }
 
+    @Override
     public String toString(){
         return description;
+    }
+
+    public String getDetailedString(){
+        return String.format("[%s][%s] %s", getTaskSymbol(), getStatusIcon(), this);
     }
 
 }

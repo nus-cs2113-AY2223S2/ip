@@ -1,4 +1,5 @@
 package io;
+import java.security.Key;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,7 +10,7 @@ public class Parser {
 
     public Parser(){}
 
-    public void parse(String input){
+    public void parse(String input) {
         this.valueMap = new HashMap<>();
         String[] inputs = input.split(" ",2);
         command = inputs[0];
@@ -24,7 +25,10 @@ public class Parser {
 
     }
 
-    public String get(String key){
+    public String get(String key) throws KeyNotFoundException {
+        if(!valueMap.containsKey (key)){
+            throw new KeyNotFoundException(key);
+        }
         return valueMap.get(key);
     }
 
