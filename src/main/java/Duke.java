@@ -1,6 +1,12 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 
+import duke.exception.DukeException;
+import duke.tasks.Deadline;
+import duke.tasks.Event;
+import duke.tasks.Task;
+import duke.tasks.Todo;
+
 public class Duke {
     public static void main(String[] args) {
 
@@ -107,7 +113,7 @@ public class Duke {
     public static int getTaskIndex(ArrayList<Task> tasks, String description) {
         int index = 0;
         for (Task myObj : tasks) {
-            if(description.equalsIgnoreCase(myObj.description)) {
+            if(description.equalsIgnoreCase(myObj.getDescription())) {
                 return index;
             }
             index++;
