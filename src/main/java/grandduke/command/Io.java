@@ -2,6 +2,8 @@ package grandduke.command;
 
 import java.util.Scanner;
 
+import grandduke.exception.GrandException;
+
 public abstract class Io {
     public static final String LOGO = "  _____                     _______       _        \n"
             + "|  __ \\                   | |  _  \\     | |       \n"
@@ -77,7 +79,11 @@ public abstract class Io {
             try {
                 Parser.parseCommand(input);
             } catch (Exception e) {
-                printOutput("not a valid input");
+                if (e instanceof GrandException) {
+                    printOutput(e.getMessage());
+                } else {
+                    printOutput("Unknown error occurred. Please try again.");
+                }
             }
 
             printLine();
