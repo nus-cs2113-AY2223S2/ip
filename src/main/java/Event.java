@@ -23,8 +23,9 @@ public class Event extends Task {
     /**
      * Constructs an Event class from input arguments.
      * @param args arguments containing content, from, to time of the event.
+     * @throws IllegalArgumentException exceptions with message when (part of) input is missing.
      */
-    public Event(String[] args) {
+    public Event(String[] args) throws IllegalArgumentException {
         assert args[0].equals("event");
         StringBuilder content = new StringBuilder();
         StringBuilder from = new StringBuilder();
@@ -41,7 +42,7 @@ public class Event extends Task {
         }
 
         if (fromIndex == -1 || toIndex == -1) {
-            throw new IllegalArgumentException("Cannot find from or to index in the arguments!");
+            throw new IllegalArgumentException("☹ OOPS!!! Cannot find from or to time of the event!");
         }
 
         for (int i = 1; i < args.length; ++i) {
@@ -55,7 +56,7 @@ public class Event extends Task {
         }
 
         if (content.toString().isEmpty() || from.toString().isEmpty() || to.toString().isEmpty()) {
-            throw new IllegalArgumentException("Input content contains blank!");
+            throw new IllegalArgumentException("☹ OOPS!!! The content/from/to of an event cannot be empty!");
         }
 
         this.content = content.toString().trim();

@@ -15,12 +15,16 @@ public class Todo extends Task {
     /**
      * Constructs a Todo class from arguments
      * @param args arguments containing the content of the todo task.
+     * @throws IllegalArgumentException exceptions with message when (part of) input is missing.
      */
-    public Todo(String[] args) {
+    public Todo(String[] args) throws IllegalArgumentException {
         assert args[0].equals("todo");
         StringBuilder content = new StringBuilder();
         for (int i = 1; i < args.length; ++i) {
             content.append(args[i]).append(" ");
+        }
+        if (content.toString().isEmpty()) {
+            throw new IllegalArgumentException("☹ OOPS!!! The description of a todo cannot be empty.");
         }
         this.content = content.toString().trim();
     }

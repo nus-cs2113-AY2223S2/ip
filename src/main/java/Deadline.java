@@ -19,8 +19,9 @@ public class Deadline extends Task {
     /**
      * Constructs a Deadline class from input arguments.
      * @param args input arguments containing content and by time of the deadline.
+     * @throws IllegalArgumentException exceptions with message when (part of) input is missing.
      */
-    public Deadline(String[] args) {
+    public Deadline(String[] args) throws IllegalArgumentException {
         assert args[0].equals("deadline");
         StringBuilder content = new StringBuilder();
         StringBuilder by = new StringBuilder();
@@ -33,7 +34,7 @@ public class Deadline extends Task {
         }
 
         if (byIndex == -1) {
-            throw new IllegalArgumentException("Cannot find by time!");
+            throw new IllegalArgumentException("☹ OOPS!!! Cannot find the by time of the event.");
         }
 
         for (int i = 1; i < args.length; ++i) {
@@ -45,6 +46,12 @@ public class Deadline extends Task {
             } else {
                 by.append(args[i]).append(" ");
             }
+        }
+
+        if (content.toString().isEmpty()) {
+            throw new IllegalArgumentException("☹ OOPS!!! The description of a deadline cannot be empty.");
+        } else if (by.toString().isEmpty()) {
+            throw new IllegalArgumentException("☹ OOPS!!! The by time of a deadline cannot be empty.");
         }
 
         this.content = content.toString().trim();
