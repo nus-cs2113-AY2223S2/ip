@@ -3,6 +3,7 @@ package dev.joulev.archduke.tasks;
 import dev.joulev.archduke.exceptions.ArchdukeException;
 import dev.joulev.archduke.exceptions.UserInputException;
 import dev.joulev.archduke.exceptions.UserInputException.UserInputExceptionCode;
+import dev.joulev.archduke.storage.SavedTask;
 
 public abstract class Task {
     private String description;
@@ -49,4 +50,6 @@ public abstract class Task {
     public String toString() {
         return String.format("%c %s", getStatusIcon(), getDescription());
     }
+
+    public abstract SavedTask toSavedTask();
 }

@@ -13,8 +13,19 @@ public class Store {
         this.tasks = Storage.readSavedTasks();
     }
 
-    public void addTask(Task task) {
+    public void onMutation() throws ArchdukeException {
+        Storage.saveTasks(tasks);
+    }
+
+    public void addTask(Task task) throws ArchdukeException {
         this.tasks.add(task);
+        onMutation();
+    }
+
+    public void toggleTaskCompleteness(int index) throws ArchdukeException {
+        Task task = getTask(index);
+        task.toggleCompleted();
+        onMutation();
     }
 
     public void listTasks() throws ArchdukeException {

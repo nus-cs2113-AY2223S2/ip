@@ -3,6 +3,7 @@ package dev.joulev.archduke.tasks;
 import dev.joulev.archduke.exceptions.ArchdukeException;
 import dev.joulev.archduke.exceptions.UserInputException;
 import dev.joulev.archduke.exceptions.UserInputException.UserInputExceptionCode;
+import dev.joulev.archduke.storage.SavedTask;
 
 public class Event extends Task {
     private String from;
@@ -46,5 +47,10 @@ public class Event extends Task {
     @Override
     public String toString() {
         return String.format("E %s (from: %s to: %s)", super.toString(), getFrom(), getTo());
+    }
+
+    public SavedTask toSavedTask() {
+        return new SavedTask(SavedTask.EVENT_IDENTIFIER, getDescription(), isCompleted(), getFrom(),
+                getTo(), null);
     }
 }

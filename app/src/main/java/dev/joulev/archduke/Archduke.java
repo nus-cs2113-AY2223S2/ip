@@ -32,8 +32,7 @@ public class Archduke {
     private static void toggleTaskCompleteness(String body) throws ArchdukeException {
         try {
             int index = Integer.parseInt(body) - 1;
-            Task task = store.getTask(index);
-            task.toggleCompleted();
+            store.toggleTaskCompleteness(index);
             Out.printTaskCompleteness(store, index);
         } catch (NumberFormatException e) {
             throw new UserInputException(UserInputExceptionCode.TOGGLE_INDEX_IS_NOT_A_NUMBER);
