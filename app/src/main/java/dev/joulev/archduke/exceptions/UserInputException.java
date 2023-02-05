@@ -1,5 +1,10 @@
 package dev.joulev.archduke.exceptions;
 
+/**
+ * This class represents any exceptions that caused by syntactically correct
+ * user input that has invalid values. See {@link UserInputExceptionCode} for
+ * the list of possible error codes.
+ */
 public class UserInputException extends ArchdukeException {
     public enum UserInputExceptionCode {
         TASK_DESCRIPTION_IS_EMPTY, TODO_FROM_IS_EMPTY, TODO_TO_IS_EMPTY, DEADLINE_BY_IS_EMPTY,
@@ -9,17 +14,41 @@ public class UserInputException extends ArchdukeException {
     UserInputExceptionCode code;
     String payload;
 
+    /**
+     * Constructs a new {@link UserInputException} exception.
+     * 
+     * @param code The code of the exception (see {@link UserInputExceptionCode}).
+     */
     public UserInputException(UserInputExceptionCode code) {
         super("User input is invalid with code " + code + ".");
         this.code = code;
     }
 
+    /**
+     * Constructs a new {@link UserInputException} exception.
+     * 
+     * @param code    The code of the exception (see
+     *                {@link UserInputExceptionCode}).
+     * @param payload The payload of the exception which might be used for the error
+     *                message string. For {@link #INDEX_IS_OUT_OF_BOUNDS}, the
+     *                payload is the number of tasks in the task list.
+     */
     public UserInputException(UserInputExceptionCode code, String payload) {
         super("User input is invalid with code " + code + ".");
         this.code = code;
         this.payload = payload;
     }
 
+    /**
+     * Constructs a new {@link UserInputException} exception.
+     * 
+     * @param code    The code of the exception (see
+     *                {@link UserInputExceptionCode}).
+     * @param payload The payload of the exception which might be used for the error
+     *                message string. For {@link #INDEX_IS_OUT_OF_BOUNDS}, the
+     *                payload is the number of tasks in the task list.
+     * @param message The error message (if any).
+     */
     public UserInputException(UserInputExceptionCode code, String payload, String message) {
         super("User input is invalid with code " + code + ": " + message);
         this.code = code;

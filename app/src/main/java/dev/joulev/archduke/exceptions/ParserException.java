@@ -1,5 +1,10 @@
 package dev.joulev.archduke.exceptions;
 
+/**
+ * This class represents any exceptions that are thrown in the parser caused by
+ * malformed or invalid user input. See {@link ParserExceptionCode} for the list
+ * of possible error codes.
+ */
 public class ParserException extends ArchdukeException {
     public enum ParserExceptionCode {
         UNKNOWN_COMMAND, UNKNOWN_OPTION,
@@ -8,12 +13,31 @@ public class ParserException extends ArchdukeException {
     ParserExceptionCode code;
     String payload;
 
+    /**
+     * Constructs a new {@link ParserException} exception.
+     * 
+     * @param code    The code of the exception (see {@link ParserExceptionCode}).
+     * @param payload The payload of the exception which might be used for the error
+     *                message string. For {@link #UNKNOWN_COMMAND}, the payload is
+     *                the unknown command in question. For {@link #UNKNOWN_OPTION},
+     *                the payload is the unknown option.
+     */
     public ParserException(ParserExceptionCode code, String payload) {
         super("Parser failed with code " + code + ".");
         this.code = code;
         this.payload = payload;
     }
 
+    /**
+     * Constructs a new {@link ParserException} exception.
+     * 
+     * @param code    The code of the exception (see {@link ParserExceptionCode}).
+     * @param payload The payload of the exception which might be used for the error
+     *                message string. For {@link #UNKNOWN_COMMAND}, the payload is
+     *                the unknown command in question. For {@link #UNKNOWN_OPTION},
+     *                the payload is the unknown option.
+     * @param message The error message (if any).
+     */
     public ParserException(ParserExceptionCode code, String payload, String message) {
         super("Parser failed with code " + code + ": " + message);
         this.code = code;

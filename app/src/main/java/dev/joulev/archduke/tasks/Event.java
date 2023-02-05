@@ -5,16 +5,40 @@ import dev.joulev.archduke.exceptions.UserInputException;
 import dev.joulev.archduke.exceptions.UserInputException.UserInputExceptionCode;
 import dev.joulev.archduke.storage.SavedTask;
 
+/**
+ * This class represents an event task.
+ */
 public class Event extends Task {
+    /** The start time of the event */
     private String from;
+    /** The end time of the event */
     private String to;
 
+    /**
+     * Constructs a new {@link Event} object.
+     * 
+     * @param description The description of the task.
+     * @param from        The start time of the event.
+     * @param to          The end time of the event.
+     * @throws ArchdukeException If any of the parameters are invalid (e.g. empty or
+     *                           {@code null}).
+     */
     public Event(String description, String from, String to) throws ArchdukeException {
         super(description);
         setFrom(from);
         setTo(to);
     }
 
+    /**
+     * Constructs a new {@link Event} object.
+     * 
+     * @param description The description of the task.
+     * @param isCompleted Whether the task is completed.
+     * @param from        The start time of the event.
+     * @param to          The end time of the event.
+     * @throws ArchdukeException If any of the parameters are invalid (e.g. empty or
+     *                           {@code null}).
+     */
     public Event(String description, boolean isCompleted, String from, String to)
             throws ArchdukeException {
         super(description, isCompleted);
