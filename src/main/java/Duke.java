@@ -66,21 +66,32 @@ public class Duke {
         String line = in.nextLine();
 
         while (!line.equals("bye")) {
-            if (line.equals("list")) {
-                printList(storedValues, taskNum);
-            } else if (line.startsWith("mark ")) {
-                markItem(storedValues, line);
-            } else if (line.startsWith("unmark ")) {
-                unmarkItem(storedValues, line);
-            } else if (line.startsWith("deadline")) {
-                taskNum = processDeadline(storedValues, taskNum, line);
-            } else if (line.startsWith("todo")) {
-                taskNum = processToDo(storedValues, taskNum, line);
-            } else if (line.startsWith("event")) {
-                taskNum = processEvent(storedValues, taskNum, line);
-            } else {
-                // Commands that are not listed above
-                System.out.println("Invalid command, try again! \n");
+            try {
+                if (line.equals("list")) {
+                    printList(storedValues, taskNum);
+                } else if (line.startsWith("mark ")) {
+                    markItem(storedValues, line);
+                } else if (line.startsWith("unmark ")) {
+                    unmarkItem(storedValues, line);
+                } else if (line.startsWith("deadline")) {
+                    taskNum = processDeadline(storedValues, taskNum, line);
+                } else if (line.startsWith("todo")) {
+                    taskNum = processToDo(storedValues, taskNum, line);
+                } else if (line.startsWith("event")) {
+                    taskNum = processEvent(storedValues, taskNum, line);
+                } else {
+                    // Commands that are not listed above
+                    System.out.println("Invalid command, try again! \n");
+                }
+            } catch (NullPointerException e) {
+                System.out.println("Item to mark/unmark is not in list!");
+            } catch (StringIndexOutOfBoundsException e) {
+                if (line.startsWith("todo")) {
+                    System.out.println("The description of a todo cannot be empty.");
+                } else {
+                    System.out.println("Task is not added in correct format. " +
+                            "Please include '/' in front of by/from/to");
+                }
             }
             line = in.nextLine();
         }
