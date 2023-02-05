@@ -35,7 +35,7 @@ public class Duke {
                     createEvent(inputWords);
                     break;
                 default:
-                    throw new UnkownCommandException("Unknown command please try again.");
+                    throw new UnkownCommandException("Unknown command, please try again.");
                 }
             } catch (InsufficientInputException e) {
                 System.out.println(e.getMessage());
@@ -87,7 +87,7 @@ public class Duke {
     }
 
     private static void unmarkTask(String[] inputWords) throws InvalidTaskNumber, InsufficientInputException {
-        if(inputWords.length < 2) {
+        if (inputWords.length < 2) {
             throw new InsufficientInputException("Task number not specified, please try again");
         }
         int unmarkTaskNumber = Integer.valueOf(inputWords[1]);
@@ -101,7 +101,7 @@ public class Duke {
         }
     }
 
-    private static void markTask(String[] inputWords) throws InvalidTaskNumber{
+    private static void markTask(String[] inputWords) throws InvalidTaskNumber {
         int markTaskNumber = Integer.valueOf(inputWords[1]);
         if (markTaskNumber >= Task.maxTaskNumber) {
             throw new InvalidTaskNumber("Task number not found, please try again.");
