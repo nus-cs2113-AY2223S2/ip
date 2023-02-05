@@ -1,16 +1,17 @@
 package tasktype;
 
-public class Deadline extends Task{
+public class Deadline extends Task {
     private String due;
-    public Deadline(String description, String due){
+
+    public Deadline(String description, String due) {
         super(description);
-        if (due == null){
+        if (due == null) {
             throw new IllegalArgumentException("Please provide a due date.");
         }
         this.due = due;
     }
-    public String getDue()
-    {
+
+    public String getDue() {
         return due;
     }
 

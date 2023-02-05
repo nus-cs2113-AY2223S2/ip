@@ -26,6 +26,7 @@ public class Chronos {
         inOut = new Input();
         stash = new Stash();
         Output.printWelcome();
+        Output.printHelp();
         getUserName(inOut);
         inputCommands();
     }

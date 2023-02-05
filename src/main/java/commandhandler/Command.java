@@ -34,6 +34,7 @@ public class Command {
     public String getDue() {
         return due;
     }
+
     @Override
     public String toString() {
         return String.format("Command[type=%s, body=%s, start=%s, end=%s, due=%s]", action, details, start, end, due);
