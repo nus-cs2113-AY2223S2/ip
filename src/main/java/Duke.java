@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.Arrays;
 
 public class Duke {
     private static void logoWithHello() {
@@ -95,7 +94,7 @@ public class Duke {
     }
 
     private static void markUnmarkCommand(Task[] tasks, String[] words) {
-        Integer taskNumber = Integer.parseInt(words[1]) - 1;
+        int taskNumber = Integer.parseInt(words[1]) - 1;
         horizontalLine();
         if (words[0].equals("mark")) {
             tasks[taskNumber].markDone();
