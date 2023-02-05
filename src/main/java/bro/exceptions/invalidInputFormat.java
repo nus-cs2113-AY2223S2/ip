@@ -1,3 +1,5 @@
+package bro.exceptions;
+
 public class invalidInputFormat extends Exception {
     private String type;
     public invalidInputFormat(String type) {
