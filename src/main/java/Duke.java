@@ -93,7 +93,7 @@ public class Duke {
         //splits input based on one or more whitespaces into two words
         String[] inputWords = inputLine.split("\\s+",2);
         String command = inputWords[0];
-        //System.out.println("size: " + inputWords.length);
+
 
         if (command.equals(EXIT_STRING)) {
             printBye();
