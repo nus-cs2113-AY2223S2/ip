@@ -73,33 +73,37 @@ public class Duke {
         }
     }
 
-    private static void exitMessage() {
-        System.out.println("\t____________________________________________________________");
-        System.out.println("\t Bye. Hope to see you again soon!");
+    private static void borderLine() {
         System.out.println("\t____________________________________________________________");
     }
 
+    private static void exitMessage() {
+        borderLine();
+        System.out.println("\t Bye. Hope to see you again soon!");
+        borderLine();
+    }
+
     private static void addedTaskMessage(Task currentTask, int taskCount) {
-        System.out.println("\t____________________________________________________________");
+        borderLine();
         System.out.println("\t Alright, I have added this task: \n\t\t" + currentTask);
         System.out.println("\t You now have " + (taskCount + 1) + " tasks in your list.");
-        System.out.println("\t____________________________________________________________");
+        borderLine();
     }
 
     private static void markTask(Task[] tasks, int taskCount, String[] words) {
         int taskNumber = Integer.parseInt(words[1]);
         if (taskNumber > taskCount) {
             // Input task number exceeds the number of tasks in the list
-            System.out.println("\t____________________________________________________________");
+            borderLine();
             System.out.println("\t Task " + taskNumber + " does not exist.");
-            System.out.println("\t____________________________________________________________");
+            borderLine();
         } else {
             tasks[taskNumber - 1].markAsDone();
             // Printing out marked as done message
-            System.out.println("\t____________________________________________________________");
+            borderLine();
             System.out.println("\t Understood. I've marked this task as done:");
             System.out.println("\t " + tasks[taskNumber - 1]);
-            System.out.println("\t____________________________________________________________");
+            borderLine();
         }
     }
 
@@ -107,30 +111,30 @@ public class Duke {
         int taskNumber = Integer.parseInt(words[1]);
         if (taskNumber > taskCount) {
             // Input task number exceeds the number of tasks in the list
-            System.out.println("\t____________________________________________________________");
+            borderLine();
             System.out.println("\t Task " + taskNumber + " does not exist.");
-            System.out.println("\t____________________________________________________________");
+            borderLine();
         } else {
             tasks[taskNumber - 1].markAsNotDone();
             // Printing out marked as not done message
-            System.out.println("\t____________________________________________________________");
+            borderLine();
             System.out.println("\t Understood. I've marked this task as not done yet:");
             System.out.println("\t " + tasks[taskNumber - 1]);
-            System.out.println("\t____________________________________________________________");
+            borderLine();
         }
     }
 
     private static void list(Task[] tasks, int taskCount) {
-        System.out.println("\t____________________________________________________________");
+        borderLine();
         System.out.println("\t Here are the tasks in your list:");
         for (int i = 0; i < taskCount; i++) {
             System.out.println("\t " + (i + 1) + "." + tasks[i]);
         }
-        System.out.println("\t____________________________________________________________");
+        borderLine();
     }
 
     private static void greetingMessage() {
-        System.out.println("\t____________________________________________________________");
+        borderLine();
         System.out.println("\t Hello! I'm Vivy.");
         System.out.println("\t Here are some commands you can give me:");
         System.out.println("\t - list: I'll list out all the tasks you have recorded.");
@@ -147,6 +151,6 @@ public class Duke {
         System.out.println("\t              (eg. Water the plants)");
         System.out.println("\t Wrong formats for Deadlines and Events will default to a Todo task. \n");
         System.out.println("\t What can I do for you?");
-        System.out.println("\t____________________________________________________________");
+        borderLine();
     }
 }
