@@ -4,6 +4,15 @@ public class Duke {
 
     public static final String DIVIDER  = "______________________________";
 
+    //Commands
+    static final String COMMAND_EXIT = "bye";
+    static final String COMMAND_LIST = "list";
+    static final String COMMAND_MARK = "mark";
+    static final String COMMAND_UNMARK = "unmark";
+    static final String COMMAND_TODO = "todo";
+    static final String COMMAND_DEADLINE = "deadline";
+    static final String COMMAND_EVENT = "event";
+
     public static void greetUser() {
          String greeting = DIVIDER + System.lineSeparator() + "Hello! I'm Jarvis!"
                  + System.lineSeparator() + "What can I do for you?"
@@ -26,10 +35,11 @@ public class Duke {
     public static void okMessage(Task[] tasks, int taskSum) {
         String acknowledgement = DIVIDER + System.lineSeparator()
                 + "Got it. I've added this task: " + System.lineSeparator()
-                + " " + tasks[taskSum].toString();
+                + tasks[taskSum].toString();
         System.out.println(acknowledgement);
         taskSum++;
-        System.out.println("Now you have " + taskSum + " task(s) in the list." + System.lineSeparator() + DIVIDER);
+        System.out.println("Now you have " + taskSum + " task(s) in the list."
+                + System.lineSeparator() + DIVIDER);
     }
 
     public static void main(String[] args) {
@@ -53,10 +63,10 @@ public class Duke {
             }
 
             switch(inputText[0]) {
-            case "bye":
+            case COMMAND_EXIT:
                 hasEnded = true;
                 break;
-            case "list":
+            case COMMAND_LIST:
                 System.out.println(DIVIDER + System.lineSeparator()
                         + "Here are the tasks in your list:");
                 for (int i = 0; i < taskSum; i++) {
@@ -65,7 +75,7 @@ public class Duke {
                 }
                 System.out.println(DIVIDER);
                 break;
-            case "mark":
+            case COMMAND_MARK:
                 taskNum = Integer.parseInt(inputText[1]);
                 //error handling
                 if (taskNum > taskSum || taskNum == 0) {
@@ -76,13 +86,11 @@ public class Duke {
                 else {
                     list[taskNum-1].markAsDone();
                     System.out.println("Nice! I've marked this task as done:");
-                    //System.out.println("[X] " + list[taskNum - 1].getName()
-                    //        + System.lineSeparator() + DIVIDER);
                     System.out.println(DIVIDER + System.lineSeparator() + list[taskNum-1].toString()
                             + System.lineSeparator() + DIVIDER);
                 }
                 break;
-            case "unmark":
+            case COMMAND_UNMARK:
                 taskNum = Integer.parseInt(inputText[1]);
                 //error handling
                 if (taskNum > taskSum || taskNum == 0) {
@@ -93,18 +101,16 @@ public class Duke {
                 else {
                     list[taskNum-1].markAsNotDone();
                     System.out.println("OK, I've marked this task as not done yet:");
-                    //System.out.println("[ ] " + list[taskNum - 1].getName()
-                    //        + System.lineSeparator() + DIVIDER);
                     System.out.println(DIVIDER + System.lineSeparator() + list[taskNum-1].toString()
                             + System.lineSeparator() + DIVIDER);
                 }
                 break;
-            case "todo":
+            case COMMAND_TODO:
                 list[taskSum] = new Todo(taskDesc);
                 okMessage(list,taskSum);
                 taskSum++;
                 break;
-            case "event":
+            case COMMAND_EVENT:
                 //use string.split to split the string into their different descriptions
                 String[] eventInput = taskDesc.split("/from");
                 String eventDesc = eventInput[0];
@@ -116,7 +122,7 @@ public class Duke {
                 okMessage(list,taskSum);
                 taskSum++;
                 break;
-            case "deadline":
+            case COMMAND_DEADLINE:
                 //use string.split to split the string into their different descriptions
                 String[] deadlineInput = taskDesc.split("/by");
                 String deadlineTaskDesc = deadlineInput[0];
