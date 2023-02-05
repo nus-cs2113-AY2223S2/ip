@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.lang.Character;
 
 public class Duke {
     public static void greetUser() {
@@ -26,6 +27,16 @@ public class Duke {
         System.out.println("____________________________________________________________");
     }
 
+    //check if task description is blank (for to-do)
+    public static boolean isDescriptionBlank(String description) {
+        boolean isBlank = true;
+        for (int i = 0; i < description.length(); i++) {
+            char c = description.charAt(i);
+            isBlank = Character.isWhitespace(c); //true if character is whitespace
+        }
+        return isBlank;
+    }
+
     //list tasks
     public static void listTasks(){
         printLine();
@@ -33,13 +44,6 @@ public class Duke {
         for (int i = 1; i <= Task.taskCount; i++) {
             System.out.println(i + "." + Task.tasks[i - 1]);
         }
-        printLine();
-    }
-
-    //add a new task
-    public static void unidentifiedCommand(){
-        printLine();
-        System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means ☹ ");
         printLine();
     }
 
@@ -88,6 +92,9 @@ public class Duke {
     //to-do
     public static void addTodo(String[] input){
         try {
+            if (isDescriptionBlank(input[1])) {
+                throw new DukeException();
+            }
             Task t = new Todo(input[1]);
             Task.tasks[Task.taskCount] = t;
             Task.taskCount++;
@@ -99,6 +106,12 @@ public class Duke {
         } catch (IndexOutOfBoundsException e) {
             printLine();
             System.out.println("☹ OOPS!!! The description of a todo cannot be empty.");
+            System.out.println("Please follow this format: todo [description].");
+            printLine();
+        } catch (DukeException e) {
+            printLine();
+            System.out.println("☹ OOPS!!! The description of a todo cannot be blank.");
+            System.out.println("Please follow this format: todo [description].");
             printLine();
         }
     }
@@ -106,6 +119,9 @@ public class Duke {
     //deadline
     public static void addDeadline(String[] input){
         try {
+            if (isDescriptionBlank(input[1])) {
+                throw new DukeException();
+            }
             String[] doBy = input[1].split("/by ", 2);
             Task t = new Deadline(doBy[0], doBy[1]);
             Task.tasks[Task.taskCount] = t;
@@ -117,8 +133,13 @@ public class Duke {
             printLine();
         } catch (IndexOutOfBoundsException e) {
             printLine();
-            System.out.println("☹ OOPS!!! The description or due date of a deadline cannot be empty.");
-            System.out.println("Please follow this format: deadline [description] /by [due date]");
+            System.out.println("☹ OOPS!!! The description of a deadline cannot be empty or incomplete.");
+            System.out.println("Please follow this format: deadline [description] /by [due date/time]");
+            printLine();
+        } catch (DukeException e) {
+            printLine();
+            System.out.println("☹ OOPS!!! The description of a deadline cannot be empty.");
+            System.out.println("Please follow this format: deadline [description] /by [due date/time]");
             printLine();
         }
     }
@@ -126,6 +147,9 @@ public class Duke {
     //event
     public static void addEvent(String[] input){
         try {
+            if (isDescriptionBlank(input[1])) {
+                throw new DukeException();
+            }
             String[] start = input[1].split("/from ", 2);
             String[] end = start[1].split("/to ", 2);
             Task t = new Event(start[0], end[0], end[1] );
@@ -138,7 +162,12 @@ public class Duke {
             printLine();
         } catch (IndexOutOfBoundsException e) {
             printLine();
-            System.out.println("☹ OOPS!!! The description or duration of an event cannot be empty.");
+            System.out.println("☹ OOPS!!! The description of an event cannot be empty or incomplete.");
+            System.out.println("Please follow this format: event [description] /from [start] /to [end]");
+            printLine();
+        } catch (DukeException e) {
+            printLine();
+            System.out.println("☹ OOPS!!! The description of an event cannot be empty.");
             System.out.println("Please follow this format: event [description] /from [start] /to [end]");
             printLine();
         }
@@ -149,13 +178,14 @@ public class Duke {
         String command = in.nextLine();
 
         while (!(command.equals("bye"))) {
-            //list tasks
-            if (command.equals("list")) {
-                listTasks();
-            } else {
+            try {
                 String[] input = command.split(" ", 2); //only check the first word
                 String firstWord = input[0];
                 switch (firstWord) {
+                    //list tasks
+                    case "list" :
+                        listTasks();
+                        break;
                     //mark task
                     case "mark":
                         markTask(input);
@@ -176,11 +206,14 @@ public class Duke {
                     case "event":
                         addEvent(input);
                         break;
-                    //unidentified action
+                    //unidentified command
                     default:
-                        unidentifiedCommand();
-                        break;
+                        throw new DukeException();
                 }
+            } catch (DukeException e) {
+                printLine();
+                System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means.");
+                printLine();
             }
             command = in.nextLine(); //read next command
         }
