@@ -145,6 +145,13 @@ public class Out {
         printBoxBottomBorder();
     }
 
+    public static void printQueriedTasks(Store store, String query) throws ArchdukeException {
+        printBoxTopBorder();
+        printf("Here are the tasks I found:");
+        store.queryTasks(query);
+        printBoxBottomBorder();
+    }
+
     public static void printTaskAddition(Task task, int storeSize) throws ArchdukeException {
         printBoxTopBorder();
         printf("Added task:");
