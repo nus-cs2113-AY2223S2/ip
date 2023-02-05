@@ -2,67 +2,110 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Duke {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DukeException {
         printWelcome();
 
-        String command;
+        String input;
         Scanner in = new Scanner(System.in);
         ArrayList<Task> tasks = new ArrayList<>();
 
         boolean isRunning = true;
 
         while (isRunning) {
-            command = in.nextLine();
+            input = in.nextLine();
+            String[] command = input.split(" ", 2);
 
-            if (command.equals("bye")) {
+            switch(command[0]) {
+            case "bye":
                 printBye();
                 isRunning = false;
-
-            } else if (command.equals("list")) {
+                break;
+            case "list":
                 printAllTasks(tasks);
+                break;
+            case "mark":
+                try {
+                    markTaskDone(tasks, command[1]);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println("Please indicate the task number to be marked.");
+                }
+                break;
+            case "unmark":
+                try {
+                    markTaskNotDone(tasks, command[1]);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println("Please indicate the task number to be unmarked.");
+                }
+                break;
+            case "todo":
+                try {
+                    addTodo(tasks, command[1]);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println("OOPS!!! The description of a todo cannot be empty.");
+                    //throw new DukeException("OOPS!!! The description of a todo cannot be empty.");
+                }
+                break;
+            case "deadline":
+                try {
+                    addDeadline(tasks, command[1]);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println("OOPS!!! The description of a deadline cannot be empty.");
+                    //throw new DukeException("OOPS!!! The description of a todo cannot be empty.");
+                }
+                break;
+            case "event":
+                try {
+                    addEvent(tasks, command[1]);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println("OOPS!!! The description of an event cannot be empty.");
+                }
+                break;
+            default:
+                System.out.println("I don't know what that means :(");
 
-            } else if (command.matches("mark \\d+")) {
-                markTaskDone(tasks, command);
-
-            } else if (command.matches("unmark \\d+")) {
-                markTaskNotDone(tasks, command);
-
-            } else if (command.matches("todo" + "(.*)")) {
-               addTodo(tasks, command);
-
-            } else if (command.matches("deadline" + "(.*)" + "/by" + "(.*)")) {
-                addDeadline(tasks, command);
-
-            } else if (command.matches("event" + "(.*)" + "/from" + "(.*)" + "/to" + "(.*)")) {
-               addEvent(tasks, command);
-
-            } else {
-                printInvalidMessage();
             }
         }
     }
-    public static void markTaskDone(ArrayList<Task> tasks, String command) {
-        command = command.replace("mark ", "");
-        int taskNumber = Integer.parseInt(command);
-        Task task = tasks.get(taskNumber-1);
-        task.markAsDone();
-        printMarkDone();
-        printTask(task);
+    public static void markTaskDone(ArrayList<Task> tasks, String command) /*throws DukeException*/ {
+
+        try {
+            int taskNumber = Integer.parseInt(command);
+            Task task = tasks.get(taskNumber - 1);
+            task.markAsDone();
+            printMarkDone();
+            printTask(task);
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("The given task number does not exist. ):");
+            //throw in here
+        } catch (NumberFormatException e) {
+            System.out.println("The task index must be numeric.");
+        } catch (DukeException e) {
+            System.out.println("The task is already marked as done.");
+        }
+
     }
 
-    public static void markTaskNotDone(ArrayList<Task> tasks, String command) {
-        command = command.replace("unmark ", "");
-        int taskNumber = Integer.parseInt(command);
-        Task task = tasks.get(taskNumber-1);
-        task.unmarkAsDone();
+    public static void markTaskNotDone(ArrayList<Task> tasks, String command)  {
 
-        printMarkNotDone();
-        printTask(task);
+        try {
+            int taskNumber = Integer.parseInt(command);
+            Task task = tasks.get(taskNumber - 1);
+            task.unmarkAsDone();
+
+            printMarkNotDone();
+            printTask(task);
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("The given task number does not exist. ):");
+            //throw in here
+        } catch (NumberFormatException e) {
+            System.out.println("The task index must be numeric.");
+        } catch (DukeException e) {
+            System.out.println("The task is already marked as not done.");
+        }
     }
-    public static void addTodo(ArrayList<Task> tasks, String command) {
+    public static void addTodo(ArrayList<Task> tasks, String description) {
         printAddTask();
 
-        String description = command.replace("todo ", "");
         Task task = new Todo(description);
         tasks.add(task);
 
@@ -70,30 +113,54 @@ public class Duke {
         printNoOfTasks(tasks.size());
     }
 
-    public static void addDeadline(ArrayList<Task> tasks, String command) {
-        printAddTask();
+    public static void addDeadline(ArrayList<Task> tasks, String command) /*throws DukeException*/ {
 
-        command = command.replace("deadline ", "");
-        String[] components = command.split("/by");
-        Task task = new Deadline(components[0], components[1]);
-        tasks.add(task);
+        if (command.contains("/by")) {
+            String[] components = command.split(" /by");
 
-        printTask(task);
-        printNoOfTasks(tasks.size());
+            try {
+                Task task = new Deadline(components[0], components[1]);
+                tasks.add(task);
+                printAddTask();
+                printTask(task);
+                printNoOfTasks(tasks.size());
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("Please specify a time for the deadline.");
+            }
+
+        } else {
+            System.out.println("Invalid format. Remember to use '/by' to indicate the time.");
+            //throw new DukeException();
+        }
     }
 
     public static void addEvent(ArrayList<Task> tasks, String command) {
-        printAddTask();
 
-        command = command.replace("event ", ""); //remove "event" from string
-        String[] components = command.split(" /from | /to "); //split string using "/from" and "/to"
-        Task task = new Event(components[0], components[1], components[2]);
-        tasks.add(task);
+        if (command.matches("(.*)" + "/from" + "(.*)" + "/to" + "(.*)")) {
 
-        printTask(task);
-        printNoOfTasks(tasks.size());
+            try {
+                String[] components = command.split(" /from | /to "); //split string using "/from" and "/to"
+                Task task = new Event(components[0], components[1], components[2]);
+                tasks.add(task);
+
+                printAddTask();
+                printTask(task);
+                printNoOfTasks(tasks.size());
+            } catch (ArrayIndexOutOfBoundsException e){
+                System.out.println("Please specify both the starting and ending time of the event");
+            }
+        } else {
+            System.out.println("Incorrect format. Specify events in the format 'event A /from B to /C'");
+        }
+
+
     }
     public static void printAllTasks(ArrayList<Task> tasks) {
+        if (tasks.isEmpty()) {
+            System.out.println("No tasks in the list.");
+            return;
+        }
+
         int count = 1;
         System.out.println("Here are the tasks in your list:");
         for (Task task: tasks) {
