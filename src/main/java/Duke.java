@@ -1,4 +1,5 @@
 
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -50,6 +51,27 @@ public class Duke {
         }
     }
 
+    static void validateInput(String input[]) throws DukeException.InvalidInputException,
+            DukeException.IncompleteInputException {
+
+        if ((!Objects.equals(input[0], "bye"))
+                && (!Objects.equals(input[0], "list"))
+                && (!Objects.equals(input[0], "todo"))
+                && (!Objects.equals(input[0], "event"))
+                && (!Objects.equals(input[0], "deadline"))
+                && (!Objects.equals(input[0], "mark"))
+                && (!Objects.equals(input[0], "unmark"))) {
+            throw new DukeException.InvalidInputException("I'm sorry, but I don't know what that means :-(");
+        } else if ((input.length == 1)
+                && ((!Objects.equals(input[0], "list")
+                && (!Objects.equals(input[0], "bye"))))) {
+            throw new DukeException.IncompleteInputException("The description of a " + input[0] + " cannot be empty!");
+
+        }
+
+
+    }
+
     public static void main(String[] args) {
         printIntro();
         String line;
@@ -57,8 +79,20 @@ public class Duke {
 
         while (true) {
             line = in.nextLine();
-            String arr[] = line.split(" ", 2);
 
+            String arr[] = line.split(" ", 2);
+            try {
+                validateInput(arr);
+            } catch (DukeException.InvalidInputException e1) {
+                System.out.println(e1.getMessage());
+                System.out.println("Please input a proper command again");
+                continue;
+
+            } catch (DukeException.IncompleteInputException e2) {
+                System.out.println(e2.getMessage());
+                System.out.println("Please input a proper command again");
+                continue;
+            }
             if (line.equals("bye")) {
                 System.out.println("Bye see you again!");
                 break;
