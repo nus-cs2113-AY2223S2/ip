@@ -1,0 +1,23 @@
+todo TodoTask
+deadline DeadlineTask /by 2024
+event EventTask /from 2023 /to 2025
+list
+mark 2
+list
+todo TodoTask 2
+mark 4
+unmark 2
+mark 1
+list
+mark -1
+mark 6
+todo 
+todo
+deadline
+deadline    /by    
+deadline  wrong  /by again /by something
+event
+event /from xxx /to ccc /to ie
+event    /from now /to forever
+wronginst
+bye
