@@ -15,6 +15,11 @@ public class Duke {
     public static final String COMPLETED_TASK_MESSAGE = "Nice! I've marked this task as done!";
     public static final String INCOMPLETE_TASK_MESSAGE = "Why are you being lazy? >:(";
     public static final String ADDED_TASK_MESSAGE = "Done! Added: ";
+    //Too many errors. I need a separator
+    public static final String ERROR_UNKNOWN_INSTRUCTION = "What are you talking about Ningen?";
+    public static final String ERROR_NONINTEGER_INDEX = "Invalid Input. Give Just an Integer!";
+    public static final String ERROR_NONEXISTANT_TASK = "That task doesn't exist...";
+    public static final String ERROR_NO_INDEX_PROVIDED = "Do you want me to mark the whole list?";
     public static final String CUSTOM_ERROR_MESSAGE =
             "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢿⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n" +
                     "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠰⣶⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠺⣟⣶⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n" +
@@ -66,7 +71,8 @@ public class Duke {
                     "⠀⠀⠀⠀⣼⠃⢌⣼⣿⣿⣿⣿⠿⣛⣭⣶⣿⡿⠟⢋⣭⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀⠀⠀⠈⡄⠈⠉⠙⠁⠀⠀⠀⠀⣠⣾⣿⣿⣿⣿⣎⢸⢔⠝⠉⠀⠀⠀⠀⠀⠰⣙⣷⣶⣿⣿⣿⣿⣿⣿⣷⣀\n" +
                     "⠀⠀⠀⣼⣃⣴⣿⡿⠟⣋⣥⣶⣿⡿⠟⣋⣥⣶⣿⣷⣝⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠁⠀⠀⠀⠀⠃⡜⠀⠀⠀⠀⠀⣠⣶⣿⣿⣿⣿⣿⣿⣿⡦⠂⠀⠀⠀⠀⠀⠀⣠⣿⣿⣿⣿⣿⣿⣿⣿⣼⣿⣿⡟\n" +
                     "⠀⠀⣼⣿⡿⣛⣭⣶⣿⡿⢟⣫⣵⣶⣿⣿⣿⣿⣿⣿⣿⣷⣌⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⡰⠁⠀⠀⢀⣤⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⡰⠙⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀\n" +
-                    "⠀⣼⡿⣻⣾⣿⡿⢛⣥⣾⣿⣿⣿⣿⣿⠿⣋⣴⡙⣿⣿⣿⣿⣷⣍⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⠀⠀⠀⠀⠘⠁⠀⣤⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀⠀⠀⠀⠀⠰⠁⠀⠹⣿⣿⣿⣿⣿⣧⣽⣿⢸⠀";
+                    "⠀⣼⡿⣻⣾⣿⡿⢛⣥⣾⣿⣿⣿⣿⣿⠿⣋⣴⡙⣿⣿⣿⣿⣷⣍⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⠀⠀⠀⠀⠘⠁⠀⣤⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀⠀⠀⠀⠀⠰⠁⠀⠹⣿⣿⣿⣿⣿⣧⣽⣿⢸⠀\n";
+
 
 
     public static String[] processInputMessage(Scanner in) {
@@ -101,14 +107,24 @@ public class Duke {
         return deadlineArray;
     }
 
-    public static int checkInputValidity(String input, int indexLimit) {
+    public static int ActionInputValidity(String[] input, int indexLimit){
         try {
-            int taskIndex = Integer.parseInt(input);
-            if (taskIndex > indexLimit) {
-                return -1;
+            if(input.length == 1) {
+                throw new NullPointerException();
+            }
+            int taskIndex = Integer.parseInt(input[1]);
+            if (taskIndex > indexLimit || taskIndex < 1) {
+                throw new IndexOutOfBoundsException();
             }
             return taskIndex - 1;
-        } catch (Exception notInteger) {
+        } catch (NumberFormatException nonIntegerIndex) {
+            System.out.println(CUSTOM_ERROR_MESSAGE + ERROR_NONINTEGER_INDEX);
+            return -1;
+        } catch (IndexOutOfBoundsException outOfBoundsIndex) {
+            System.out.println(CUSTOM_ERROR_MESSAGE + ERROR_NONEXISTANT_TASK);
+            return -1;
+        } catch (NullPointerException noIndex) {
+            System.out.println(CUSTOM_ERROR_MESSAGE + ERROR_NO_INDEX_PROVIDED);
             return -1;
         }
     }
@@ -116,9 +132,9 @@ public class Duke {
     public static void main(String[] args) {
         System.out.println(GREETING_MESSAGE);
 
-        ArrayList<Todo> todoList = new ArrayList<Todo>();
+        ArrayList<Task> todoList = new ArrayList<Task>();
         int sizeOfTodoList = 0;
-        Todo currentTodo;
+        Task currentTodo;
 
         Scanner in = new Scanner(System.in);
         String[] inputMessage = processInputMessage(in);
@@ -133,10 +149,8 @@ public class Duke {
                 inputMessage = processInputMessage(in);
                 break;
             case ACTION_MARK_COMPLETE:
-                int taskIndex = checkInputValidity(inputMessage[1], sizeOfTodoList);
-                if (taskIndex == -1) {
-                    System.out.println(CUSTOM_ERROR_MESSAGE);
-                } else {
+                int taskIndex = ActionInputValidity(inputMessage, sizeOfTodoList);
+                if (taskIndex >= 0) {
                     currentTodo = todoList.get(taskIndex);
                     currentTodo.setComplete();
                     System.out.println(COMPLETED_TASK_MESSAGE);
@@ -145,10 +159,8 @@ public class Duke {
                 inputMessage = processInputMessage(in);
                 break;
             case ACTION_MARK_INCOMPLETE:
-                taskIndex = checkInputValidity(inputMessage[1], sizeOfTodoList);
-                if (taskIndex == -1) {
-                    System.out.println(CUSTOM_ERROR_MESSAGE);
-                } else {
+                taskIndex = ActionInputValidity(inputMessage, sizeOfTodoList);
+                if (taskIndex >= 0) {
                     currentTodo = todoList.get(taskIndex);
                     currentTodo.setIncomplete();
                     System.out.println(INCOMPLETE_TASK_MESSAGE);
@@ -188,7 +200,7 @@ public class Duke {
                 inputMessage = processInputMessage(in);
                 break;
             default:
-                System.out.println(CUSTOM_ERROR_MESSAGE);
+                System.out.println(CUSTOM_ERROR_MESSAGE + ERROR_UNKNOWN_INSTRUCTION);
                 inputMessage = processInputMessage(in);
             }
         }
