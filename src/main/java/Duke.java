@@ -22,7 +22,7 @@ public class Duke {
         System.out.println("\t" + LINE);
         System.out.println("\t Here are the tasks for your list: ");
         for(int i=0; i< counter; i++) {
-            System.out.println("\t " + (i+1) + "." + taskList[i]  +  taskList[i].description);
+            System.out.println("\t " + (i+1) + "." + taskList[i]);
         }
         System.out.println("\t" + LINE);
     }
@@ -76,19 +76,19 @@ public class Duke {
         else if (taskType.equals("deadline")) {
             String[] infoArr= commandInfo.split("/by");
             //infoArr contains descStr and deadlineStr respectively
-            newTask = new Deadline(infoArr[0],infoArr[1]);
+            newTask = new Deadline(infoArr[0].trim(),infoArr[1].trim());
         }
         else if (taskType.equals("event")) {
             String[] infoArr = commandInfo.split("/from|/to");
             //infoArr contains descStr, fromStr, and toStr respectively
-            newTask = new Event(infoArr[0],infoArr[1],infoArr[2]);
+            newTask = new Event(infoArr[0].trim(),infoArr[1].trim(),infoArr[2].trim());
         }
 
         taskList[counter] = newTask;
         counter++;
         printTask(newTask);
     }
-    public static void handleInput(String inputLine) {
+    public static void handleInput(String inputLine) throws DukeException {
 
         //splits input based on one or more whitespaces into two words
         String[] inputWords = inputLine.split("\\s+",2);
@@ -104,16 +104,33 @@ public class Duke {
         }
         else if (command.equals(MARK_STRING)) {
             //inputWords[1] is string that no longer contains the command string
-            int indexToMark = Integer.parseInt(inputWords[1])-1; //turn it into 0-based
-            markTaskAndPrint(indexToMark);
+            if (inputWords.length < 2) {
+                throw new DukeException("Please specify which task you wish to mark");
+            }
+            else {
+                int indexToMark = Integer.parseInt(inputWords[1])-1; //turn it into 0-based
+                markTaskAndPrint(indexToMark);
+            }
+
         }
         else if (command.equals(UNMARK_STRING)) {
-            int indexToUnmark = Integer.parseInt(inputWords[1])-1;
-            unmarkTaskAndPrint(indexToUnmark);
+            if (inputWords.length < 2) {
+                throw new DukeException("Please specify which task you wish to unmark");
+            }
+            else {
+                int indexToUnmark = Integer.parseInt(inputWords[1])-1;
+                unmarkTaskAndPrint(indexToUnmark);
+            }
         }
         //check if command string matches either of the string
         else if (command.matches("todo|deadline|event")) {
+            if (inputWords.length < 2) {
+                throw new DukeException("Please specify the description to the task that you wish to add");
+            }
             handleAddTask(command,inputWords[1]);
+        }
+        else {
+            throw new DukeException("fsgfsuygu I don't know what that means :(");
         }
     }
 
@@ -125,7 +142,13 @@ public class Duke {
 
         while(isExecuting) {
             String inputLine = in.nextLine();
-            handleInput(inputLine);
+            try {
+                handleInput(inputLine);
+            }
+            catch (DukeException ex){
+                System.out.println("Exception occured: " + ex);
+            }
+
         }
     }
 }
