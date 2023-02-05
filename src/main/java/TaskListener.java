@@ -11,7 +11,7 @@ public class TaskListener {
 
     public static void greet() {
         String logo =
-                "   _____ __  ____________  __    ____  ________ __\n" +
+                        "   _____ __  ____________  __    ____  ________ __\n" +
                         "  / ___// / / / ____/ __ \\/ /   / __ \\/ ____/ //_/\n" +
                         "  \\__ \\/ /_/ / __/ / /_/ / /   / / / / /   / ,<   \n" +
                         " ___/ / __  / /___/ _, _/ /___/ /_/ / /___/ /| |  \n" +
@@ -39,12 +39,20 @@ public class TaskListener {
     }
 
     private void addGenericTask(String name) {
+        if (name.isEmpty()) {
+            printLines("Please provide task description");
+            return;
+        }
         this.tasksList.addTask(new Task(name, false));
         printLines("added: " + name);
     }
 
     private void createTodo(String arguments) {
         String name = arguments;
+        if (name.isEmpty()) {
+            printLines("Please provide todo description");
+            return;
+        }
         Todo todo = new Todo(name, false);
         this.tasksList.addTask(todo);
         printAddedTask(todo);
@@ -120,15 +128,13 @@ public class TaskListener {
         String successMessage = isDone ? "Nice! I've marked this task as done:"
                 : "OK, I've marked this task as not done yet:";
 
-        // Invalid index value
-        if (taskIndex < 0 || taskIndex >= this.tasksList.getTasks().length) {
+        try {
+            Task task = this.tasksList.getTasks()[taskIndex];
+            task.setIsDone(isDone);
+            printLines(successMessage, task.toString());
+        } catch (ArrayIndexOutOfBoundsException e) {
             printLines("No task at such index!");
-            return;
         }
-
-        Task task = this.tasksList.getTasks()[taskIndex];
-        task.setIsDone(isDone);
-        printLines(successMessage, task.toString());
     }
 
     public void listen() {
@@ -168,10 +174,15 @@ public class TaskListener {
             // isDone value that user wants to achieve
             boolean intendedDoneValue = command.equals("mark");
 
-            String indexArgument = arguments.substring(0);
-            int taskIndex = Integer.parseInt(indexArgument) - 1;
+            try {
+                String indexArgument = arguments.substring(0);
+                int taskIndex = Integer.parseInt(indexArgument) - 1;
 
-            modifyDoneValue(intendedDoneValue, taskIndex);
+                modifyDoneValue(intendedDoneValue, taskIndex);
+            } catch (NumberFormatException e) {
+                printLines("Please provide a valid index");
+            }
+
             break;
         }
 
