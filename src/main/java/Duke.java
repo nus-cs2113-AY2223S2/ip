@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.MissingFormatArgumentException;
 import java.util.Scanner;
 
 public class Duke {
@@ -82,10 +83,10 @@ public class Duke {
      * @param index The index of the task selected to be marked or unmarked.
      * @param isMark Whether to mark or unmark the task.
      */
-    public static void markTask(int index, boolean isMark) {
+    public static void markTask(int index, boolean isMark) throws IndexOutOfBoundsException {
         index--;
         if (index < 0 || index >= tasks.size()) {
-            Greeting.warnOutOfRange(isSinglish);
+            throw new IndexOutOfBoundsException();
         } else {
             if (tasks.get(index).getIsDone() != isMark) {
                 tasks.get(index).switchIsDone();
@@ -113,23 +114,33 @@ public class Duke {
             boolean isDeadline = commands[0].equals(DEADLINE_COMMAND);
             boolean isEvent = commands[0].equals(EVENT_COMMAND);
 
-            if (isBye) {
-                Greeting.sayGoodbye(isSinglish);
-                break;
-            } else if (isValidChangeLangCommand) {
-                changeLanguage();
-            } else if (isValidPrintListCommand) {
-                printList();
-            } else if (isValidMarkOrUnmarkCommand) {
-                checkAndMarkTask(commands);
-            } else if (isTodo) {
-                addTodo(line);
-            } else if (isDeadline) {
-                addDeadline(line);
-            } else if (isEvent) {
-                addEvent(line);
-            } else {
+            try {
+                if (isBye) {
+                    Greeting.sayGoodbye(isSinglish);
+                    break;
+                } else if (isValidChangeLangCommand) {
+                    changeLanguage();
+                } else if (isValidPrintListCommand) {
+                    printList();
+                } else if (isValidMarkOrUnmarkCommand) {
+                    checkAndMarkTask(commands);
+                } else if (isTodo) {
+                    addTodo(line);
+                } else if (isDeadline) {
+                    addDeadline(line);
+                } else if (isEvent) {
+                    addEvent(line);
+                } else {
+                    throw new IllegalAccessException();
+                }
+            } catch (IndexOutOfBoundsException e) {
+                Greeting.warnOutOfRange(isSinglish);
+            } catch (NumberFormatException e) {
                 Greeting.warnWrongSyntax(isSinglish);
+            } catch (IllegalAccessException e) {
+                Greeting.warnWrongSyntax(isSinglish);
+            } catch (MissingFormatArgumentException e) {
+                Greeting.warnEmptyDesc(isSinglish);
             }
         }
     }
@@ -140,14 +151,13 @@ public class Duke {
      * otherwise, it informs the user that it has a wrong syntax.
      * @param line String entered by the user.
      */
-    private static void addEvent(String line) {
+    private static void addEvent(String line) throws MissingFormatArgumentException{
         int indexOfStartDate = line.indexOf(EVENT_START_FROM);
         int indexOfEndDate = line.indexOf(EVENT_END_TO);
-        if (indexOfStartDate == OUT_OF_BOUNDS || indexOfEndDate == OUT_OF_BOUNDS) {
-            Greeting.warnWrongSyntax(isSinglish);
-        } else if (indexOfStartDate <= EVENT_COMMAND.length() + COMMAND_BUFFER) {
-            Greeting.warnEmptyDesc(isSinglish);
-        } else {
+        boolean isOutOfBounds = indexOfStartDate == OUT_OF_BOUNDS || indexOfEndDate == OUT_OF_BOUNDS;
+        boolean isMissingDescription = indexOfStartDate <= EVENT_COMMAND.length() + COMMAND_BUFFER;
+
+        if (!isOutOfBounds && !isMissingDescription) {
             // +6 for "/from " length
             String startOfDate = line.substring(indexOfStartDate + EVENT_START_FROM.length() + COMMAND_BUFFER, indexOfEndDate);
             // +5 for "/to " length
@@ -155,6 +165,10 @@ public class Duke {
             // 7 for "event " length
             String descOfTask = line.substring(EVENT_COMMAND.length() + COMMAND_BUFFER, indexOfStartDate);
             addToList(descOfTask, TypeOfTask.EVENT, startOfDate, endOfDate);
+        } else if (isOutOfBounds) {
+            throw new IndexOutOfBoundsException();
+        } else if (isMissingDescription) {
+            throw new MissingFormatArgumentException("Missing description");
         }
     }
 
@@ -164,19 +178,23 @@ public class Duke {
      * otherwise, it informs the user that it has a wrong syntax.
      * @param line String entered by the user.
      */
-    private static void addDeadline(String line) {
+    private static void addDeadline(String line) throws IndexOutOfBoundsException, MissingFormatArgumentException {
         int indexOfDate = line.indexOf(DEADLINE_BY);
-        if (indexOfDate == OUT_OF_BOUNDS) {
-            Greeting.warnWrongSyntax(isSinglish);
-        } else if (indexOfDate <= DEADLINE_COMMAND.length() + COMMAND_BUFFER) {
-            Greeting.warnEmptyDesc(isSinglish);
-        } else {
+        boolean isOutOfBounds = indexOfDate == OUT_OF_BOUNDS;
+        boolean isMissingDescription = indexOfDate <= DEADLINE_COMMAND.length() + COMMAND_BUFFER;
+
+        if (!isOutOfBounds && !isMissingDescription) {
             // +4 for "/by " length
             String startOfDate = line.substring(indexOfDate + DEADLINE_BY.length() + COMMAND_BUFFER);
             // 10 for "deadline " length
             String descriptionOfTask = line.substring(DEADLINE_COMMAND.length() + COMMAND_BUFFER, indexOfDate);
             addToList(descriptionOfTask, TypeOfTask.DEADLINE, startOfDate, null);
+        } else if (isOutOfBounds) {
+            throw new IndexOutOfBoundsException();
+        } else if (isMissingDescription) {
+            throw new MissingFormatArgumentException("Missing description");
         }
+
     }
 
     /**
@@ -197,12 +215,12 @@ public class Duke {
      * otherwise, informs the user that the command entered has wrong syntax or task of that index does not exist.
      * @param commands commands entered by the user.
      */
-    private static void checkAndMarkTask(String[] commands) {
+    private static void checkAndMarkTask(String[] commands) throws NumberFormatException {
         if (commands[1].matches("\\d+?")) {
             boolean isMark = commands[0].equals(MARK_COMMAND);
             markTask(Integer.parseInt(commands[1]), isMark);
         } else {
-            Greeting.warnWrongSyntax(isSinglish);
+            throw new NumberFormatException();
         }
     }
 }
