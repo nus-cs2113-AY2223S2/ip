@@ -19,63 +19,15 @@ public class Duke {
         System.out.print("Goodbye! Thank you for using MAX.\n");
     }
 
-    public static String[] splitIntoSubcommands(String command) {
-        // " -" splits the string into substrings
-        // if the substring starts with two dashes '--' and is preceded by whitespace
-        // For example: deadline my_task --by -xyz sunday-monday
-        // Will output: ["deadline my_task", "by -xyz sunday-monday"]
-        // For now, this does not account for accidental or adversarial '--' input at the start of words
-        // but this is an unlikely edge case that can be dealt with later
-        return command.split(" --");
-    }
-
-    public static HashMap<String, String> getSubcommandMap(String[] commandList) {
-        // Each command can be processed into a subcommand and its corresponding text value
-        // For example: deadline work on CS2113 --by Sunday
-        // Should map to: <"deadline", "work on CS2113">, <by, Sunday>
-        HashMap<String, String> commandMap = new HashMap<>();
-        for (String cmdStr : commandList) {
-            String cmd = extractCommandFromSubcommand(cmdStr);
-            String text = extractTextFromSubcommand(cmdStr);
-            commandMap.put(cmd, text);
-        }
-        return commandMap;
-    }
-
-    public static String extractCommandFromSubcommand(String subcommand) {
-        // Subcommands have format <subcommand> <text_to_extract>
-        // Return the <subcommand>
-        // For example, the deadline subcommand: "by Friday, 13th"
-        // Should return "by"
-        String[] words = subcommand.split(" ");
-        return words[0];
-    }
-
-    public static String extractTextFromSubcommand(String subcommand) {
-        // Subcommands have format <subcommand> <text_to_extract>
-        // Return the <subcommand> and <text_to_extract> in a string array
-        // For example, the deadline subcommand: "by Friday, 13th"
-        // Should return ["by" , "Friday, 13th"]
-        String[] words = subcommand.split(" ");
-        String subcommandText = "";
-        for (int i = 1; i < words.length; ++i) {
-            subcommandText = subcommandText.concat(words[i]);
-            if (i != words.length - 1) {
-                subcommandText = subcommandText.concat(" ");
-            }
-        }
-        return subcommandText;
-    }
-
-    public static Task createTask(HashMap<String, String> commandMap, String taskType) {
+    public static Task createTask(HashMap<String, String> commandMap, Command command) {
         // Start from 1 as cop
         Task newTask = null;
-        if (taskType.equals("todo")) {
+        if (command.equals(Command.TASK_TODO)) {
             // To-do task
             String description = commandMap.get("todo");
             newTask = new Todo(description);
 
-        } else if (taskType.equals("deadline")) {
+        } else if (command.equals(Command.TASK_DEADLINE)) {
             // Guard clauses to check for validity
             if (commandMap.size() < 2) {
                 System.out.println("Not enough arguments!");
@@ -89,7 +41,7 @@ public class Duke {
             String description = commandMap.get("deadline");
             String deadline = commandMap.get("by");
             newTask = new Deadline(description, deadline);
-        } else if (taskType.equals("event")) {
+        } else if (command.equals(Command.TASK_EVENT)) {
 
             if (commandMap.size() < 3) {
                 System.out.println("Not enough arguments!");
@@ -113,17 +65,21 @@ public class Duke {
     }
 
     public static void handleCommand(String command) {
+        CommandParser commandParser = new CommandParser();
+
         // Update the keepAlive flag
-        String[] commandList = splitIntoSubcommands(command);
-        String mainCommand = extractCommandFromSubcommand(commandList[0]);
+        String[] commandList = commandParser.splitIntoSubcommands(command);
+
+        // Process subcommands into <subcommand, payload>
+        HashMap<String,String> subcommandMap = commandParser.getSubcommandMap(commandList);
+
+        Command mainCommand = commandParser.getCommandType(commandList[0]);
         switch (mainCommand) {
-        case "Bye":
-        case "bye":
-        case "exit":
+        case EXIT:
             setIsListening(false);
             exit();
             break;
-        case "list":
+        case LIST:
             System.out.println("Here's what's in your list:");
             for (int i = 0; i < numTasks; ++i) {
                 // Print number, box, description in that order
@@ -131,8 +87,8 @@ public class Duke {
                 System.out.print(i + 1 + ". " + curr.getDescription() + '\n');
             }
             break;
-        case "mark":
-            String taskNumStr = extractTextFromSubcommand(commandList[0]);
+        case MARK:
+            String taskNumStr = commandParser.extractTextFromSubcommand(commandList[0]);
             if (taskNumStr.length() == 0) {
                 System.out.println("Missing number!");
                 return;
@@ -148,8 +104,8 @@ public class Duke {
             System.out.println("Okay, marking this task as done: ");
             System.out.println(tasks[taskNum].getDescription());
             break;
-        case "unmark":
-            taskNumStr = extractTextFromSubcommand(commandList[0]);
+        case UNMARK:
+            taskNumStr = commandParser.extractTextFromSubcommand(commandList[0]);
             if (taskNumStr.length() == 0) {
                 System.out.println("Missing number!");
                 return;
@@ -165,11 +121,10 @@ public class Duke {
             System.out.println("Okay, setting this task as undone: ");
             System.out.println(tasks[taskNum].getDescription());
             break;
-        case "event":
-        case "deadline":
-        case "todo":
-            HashMap<String, String> commandMap = getSubcommandMap(commandList);
-            Task newTask = createTask(commandMap, mainCommand);
+        case TASK_EVENT:
+        case TASK_DEADLINE:
+        case TASK_TODO:
+            Task newTask = createTask(subcommandMap, mainCommand);
             if (newTask == null) {
                 System.out.println("Task could not be created.");
                 return;
@@ -181,6 +136,7 @@ public class Duke {
             System.out.println("You now have " + numTasks + " tasks in your list.");
             break;
         default:
+            // { Command.UNKNOWN_COMMAND }
             System.out.println("I don't quite understand...");
             break;
         }
