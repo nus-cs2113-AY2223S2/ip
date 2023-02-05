@@ -2,7 +2,7 @@ public class Event extends Task {
     private String eventDate;
     private String startTIme;
     private String endTime;
-    public Events(String description, String eventDate, String startTime, String endTime) {
+    public Event(String description, String eventDate, String startTime, String endTime) {
         super(description, "E");
         setEventDate(eventDate);
         setStartTIme(startTime);
