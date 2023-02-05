@@ -1,3 +1,5 @@
+package ChatTPG;
+
 public class TaskManager {
 
     public static final int MAX_SIZE = 100;
