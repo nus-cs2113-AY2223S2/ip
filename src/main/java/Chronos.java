@@ -18,7 +18,6 @@ public class Chronos {
         Output.printWelcome();
         getUserName(inOut);
         inputCommands();
-
     }
 
     private static void inputCommands() {
