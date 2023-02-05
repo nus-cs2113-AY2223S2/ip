@@ -68,13 +68,23 @@ public class Duke {
         }
     }
 
-    public static void markTask(String taskNumString, boolean isDone) throws IndexOutOfBoundsException{
-        // Unsafe parsing below
-        int taskNum = Integer.parseInt(taskNumString) - 1; // Convert to 0-idx
-        if (taskNum < 0 || taskNum >= numTasks) {
-            throw new IndexOutOfBoundsException("Invalid task number!");
+    public static void markTask(String taskNumString, boolean isDone){
+        int taskNum;
+
+        try {
+            taskNum = Integer.parseInt(taskNumString) - 1; // Convert to 0-idx
+        }catch (NumberFormatException exception){
+            System.out.println("I'm a dog, but even I know that you didn't enter a number.");
+            return;
         }
-        // Update its value
+
+        // Guard clause to check for taskNum validity
+        if (taskNum < 0 || taskNum >= numTasks) {
+            System.out.println("Invalid task number!");
+            return;
+        }
+
+        // Update the task's done status
         if(isDone){
             tasks[taskNum].markAsDone();
             System.out.println("Okay, marking this task as done: ");
@@ -109,6 +119,7 @@ public class Duke {
             return;
         }
 
+        // Assertion: commandPayload is correct for its given mainCommand
         switch (mainCommand) {
         case EXIT:
             exit();
@@ -118,19 +129,11 @@ public class Duke {
             break;
         case MARK:
             String taskNumString = commandPayload.get("mark");
-            try{
-                markTask(taskNumString, true);
-            }catch(IndexOutOfBoundsException exception){
-                System.out.println(exception.getMessage());
-            }
+            markTask(taskNumString, true);
             break;
         case UNMARK:
             taskNumString = commandPayload.get("unmark");
-            try{
-                markTask(taskNumString, false);
-            }catch(IndexOutOfBoundsException exception){
-                System.out.println(exception.getMessage());
-            }
+            markTask(taskNumString, false);
             break;
         case TASK_EVENT:
         case TASK_DEADLINE:
@@ -143,9 +146,7 @@ public class Duke {
                 System.out.println(newTask.getDescription());
                 System.out.println("You now have " + numTasks + " tasks in your list.");
 
-            }catch(InvalidCommandException exception){
-                System.out.println(exception.getMessage());
-            }catch(IndexOutOfBoundsException exception){
+            }catch(InvalidCommandException | IndexOutOfBoundsException exception){
                 System.out.println(exception.getMessage());
             }
             break;
