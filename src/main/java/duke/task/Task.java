@@ -1,3 +1,5 @@
+package duke.task;
+
 /**
  * The Task class represents real-world tasks with content and marking status.
  */
