@@ -1,3 +1,5 @@
+package inoutput;
+
 import java.util.Scanner;
 
 /**

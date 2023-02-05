@@ -1,3 +1,5 @@
+package commandhandler;
+
 public class InputParser {
     public static Command parseInput(String input) {
         String[] parts = input.split(" /");

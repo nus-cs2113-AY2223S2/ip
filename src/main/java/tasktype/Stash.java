@@ -1,3 +1,7 @@
+package tasktype;
+
+import tasktype.Task;
+
 import java.util.Arrays;
 
 public class Stash {

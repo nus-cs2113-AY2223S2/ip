@@ -1,3 +1,5 @@
+package commandhandler;
+
 public class Command {
     private String action;
     private String details;

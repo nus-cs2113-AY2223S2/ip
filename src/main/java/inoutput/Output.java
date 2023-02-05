@@ -1,3 +1,8 @@
+package inoutput;
+
+import tasktype.Task;
+import tasktype.Stash;
+
 public class Output {
     private static void printLogo() {
         String logo =
