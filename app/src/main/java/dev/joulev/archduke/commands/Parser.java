@@ -4,7 +4,24 @@ import dev.joulev.archduke.exceptions.ArchdukeException;
 import dev.joulev.archduke.exceptions.ParserException;
 import dev.joulev.archduke.exceptions.ParserException.ParserExceptionCode;
 
+/**
+ * This class implements a static parser {@link #parse} that can parse the user
+ * input in a safe way into a format that the program can programmatically
+ * understand.
+ */
 public class Parser {
+    /**
+     * Safely parses the user input into a {@link Command} object. The format is
+     * similar to a Windows command prompt format, for historical reasons. Format:
+     * {@code cmd-type cmd body /opt1 option 1 value /opt2 option 2 value}...
+     * 
+     * @param input The input provided by the user
+     * @return A {@link Command} object that contains the parsed information, with
+     *         the main command, the body (if any) and the supported options
+     *         ({@code /from}, {@code /to} and {@code /by}) (if any).
+     * @throws ArchdukeException If the input is invalid, contains unknown option(s)
+     *                           or otherwise cannot be parsed.
+     */
     public static Command parse(String input) throws ArchdukeException {
         String[] options = input.split(" /");
 

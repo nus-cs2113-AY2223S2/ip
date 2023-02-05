@@ -5,15 +5,34 @@ import dev.joulev.archduke.exceptions.UserInputException;
 import dev.joulev.archduke.exceptions.UserInputException.UserInputExceptionCode;
 import dev.joulev.archduke.storage.SavedTask;
 
+/**
+ * An abstract that serves as the base class for all tasks.
+ */
 public abstract class Task {
+    /** The description of the task */
     private String description;
+    /** Whether the task is completed or not */
     private boolean isCompleted;
 
+    /**
+     * Constructs a new {@link Task} object, with {@code isCompleted} set to
+     * {@code false}
+     * 
+     * @param description The description of the task.
+     * @throws ArchdukeException If the description is empty or {@code null}.
+     */
     public Task(String description) throws ArchdukeException {
         setDescription(description);
         this.isCompleted = false;
     }
 
+    /**
+     * Constructs a new {@link Task} object.
+     * 
+     * @param description The description of the task.
+     * @param isCompleted Whether the task is completed.
+     * @throws ArchdukeException If the description is empty or {@code null}.
+     */
     public Task(String description, boolean isCompleted) throws ArchdukeException {
         setDescription(description);
         this.isCompleted = isCompleted;
@@ -24,7 +43,7 @@ public abstract class Task {
     }
 
     /**
-     * Icon taken from
+     * Returns the status icon of the task for display. Icon taken from
      * {@link https://github.com/sindresorhus/figures/blob/main/index.js}
      */
     public char getStatusIcon() {
@@ -51,5 +70,8 @@ public abstract class Task {
         return String.format("%c %s", getStatusIcon(), getDescription());
     }
 
+    /**
+     * Converts the current task to a {@link SavedTask} object for storage.
+     */
     public abstract SavedTask toSavedTask();
 }

@@ -13,20 +13,38 @@ import dev.joulev.archduke.exceptions.ArchdukeException;
 import dev.joulev.archduke.exceptions.OtherException;
 import dev.joulev.archduke.tasks.Task;
 
+/**
+ * This class provides static methods to handle the storage of tasks in the hard
+ * disk.
+ */
 public class Storage {
+    /** The path to the JSON file storing the task list. */
     private static final String FILE = ".archduke/tasks.json";
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
+    /**
+     * Helper method to read the content of a file as string.
+     */
     private static String readFromFile(String path) throws IOException {
         return Files.readString(Paths.get(path));
     }
 
+    /**
+     * Helper method to write a string to a file. If the file does not exist, it
+     * will be created. If the file exists, it will be overwritten.
+     */
     private static void writeToFile(String path, String content) throws IOException {
         Files.createDirectories(Paths.get(path).getParent());
         Files.writeString(Paths.get(path), content, StandardOpenOption.CREATE,
                 StandardOpenOption.TRUNCATE_EXISTING);
     }
 
+    /**
+     * Reads the saved tasks from the storage file. If reading fails for any reason,
+     * an empty list will be returned.
+     * 
+     * @return The list of saved tasks, already converted to {@link Task} objects.
+     */
     public static ArrayList<Task> readSavedTasks() {
         try {
             ArrayList<Task> tasks = new ArrayList<>();
@@ -44,6 +62,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Saves the task list to the storage file.
+     * 
+     * @param tasks The {@link Task} list to be saved.
+     * @throws ArchdukeException If saving fails for any reason.
+     */
     public static void saveTasks(ArrayList<Task> tasks) throws ArchdukeException {
         SavedTask[] savedTasks = new SavedTask[tasks.size()];
         for (int i = 0; i < tasks.size(); i++) {
@@ -53,7 +77,6 @@ public class Storage {
         try {
             writeToFile(FILE, savedTaskJson);
         } catch (Exception e) {
-            System.out.println(e);
             throw new OtherException(
                     "Failed to save task list to file. Your changes won't be saved.");
         }

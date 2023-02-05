@@ -5,7 +5,14 @@ import dev.joulev.archduke.exceptions.UnknownException;
 import dev.joulev.archduke.tasks.Store;
 import dev.joulev.archduke.tasks.Task;
 
+/**
+ * This class handles (prettified) output to the terminal.
+ */
 public class Out {
+    /**
+     * The width of the box to be printed to the terminal, inclusive of border and
+     * margin.
+     */
     private static final int BOX_WIDTH = 80;
 
     private static void printLineWithDelim(char leftDelim, char rightDelim) {
@@ -44,7 +51,7 @@ public class Out {
     }
 
     /**
-     * Print the logo with padding and all.
+     * Prints the logo with padding and all.
      * 
      * @see {@link https://patorjk.com/software/taag/#p=display&f=Slant&t=archduke}
      */
@@ -79,12 +86,13 @@ public class Out {
      * Prints a string inside a box, with box left and right borders at the start
      * and end of the line. The line automatically wraps around if necessary. This
      * assumes the box top and bottom borders are already drawn using
-     * {@code printBoxTopBorder} and {@code printBoxBottomBorder}.
+     * {@link #printBoxTopBorder} and {@link #printBoxBottomBorder}.
      * 
      * The parameters of this method is similar to {@code System.out.printf}.
      * 
      * @param format The string to print, with optional format specifiers.
      * @param args   The arguments to be formatted and substituted.
+     * @throws ArchdukeException If there is an error in formatting the string.
      */
     public static void printf(String format, Object... args) throws ArchdukeException {
         // Two chars for the borders, two chars for the padding, hence four chars gone.
@@ -115,12 +123,25 @@ public class Out {
         printBoxRightBorder(maxStringWidth - currentLineLength);
     }
 
+    /**
+     * Prints a string inside a box.
+     * 
+     * @param format The string to print, with optional format specifiers.
+     * @param args   The arguments to be formatted and substituted.
+     * @throws ArchdukeException If there is an error in formatting the string.
+     */
     public static void printBox(String format, Object... args) throws ArchdukeException {
         printBoxTopBorder();
         printf(format, args);
         printBoxBottomBorder();
     }
 
+    /**
+     * Prints the greeting message.
+     * 
+     * @throws ArchdukeException If string format fails. This should not happen, if
+     *                           it happens it's a bug.
+     */
     public static void greet() throws ArchdukeException {
         printBoxTopBorder();
         printLogo();
@@ -128,16 +149,36 @@ public class Out {
         printBoxBottomBorder();
     }
 
+    /**
+     * Says goodbye.
+     * 
+     * @throws ArchdukeException If string format fails. This should not happen, if
+     *                           it happens it's a bug.
+     */
     public static void bye() throws ArchdukeException {
         printBoxTopBorder();
         printf("Bye. Hope to see you again soon!");
         printBoxBottomBorder(false);
     }
 
+    /**
+     * Prints an error message. Of course, inside a box.
+     * 
+     * @param format The string to print, with optional format specifiers.
+     * @param args   The arguments to be formatted and substituted.
+     * @throws ArchdukeException If there is an error in formatting the string.
+     */
     public static void printError(String format, Object... args) throws ArchdukeException {
         printBox("ERROR: %s", String.format(format, args));
     }
 
+    /**
+     * Prints the tasks currently present.
+     * 
+     * @param store The {@link Store} to get the tasks from.
+     * @throws ArchdukeException If string format fails. This should not happen, if
+     *                           it happens it's a bug.
+     */
     public static void printTasks(Store store) throws ArchdukeException {
         printBoxTopBorder();
         printf("Here are your tasks:");
@@ -145,6 +186,14 @@ public class Out {
         printBoxBottomBorder();
     }
 
+    /**
+     * Prints the tasks that match a query string.
+     * 
+     * @param store The {@link Store} to get the tasks from.
+     * @param query The query string.
+     * @throws ArchdukeException If string format fails. This should not happen, if
+     *                           it happens it's a bug.
+     */
     public static void printQueriedTasks(Store store, String query) throws ArchdukeException {
         printBoxTopBorder();
         printf("Here are the tasks I found:");
@@ -152,6 +201,14 @@ public class Out {
         printBoxBottomBorder();
     }
 
+    /**
+     * Prints the acknowledgement message on task addition.
+     * 
+     * @param task      The {@link Task} that was added.
+     * @param storeSize The size of the {@link Store} after the addition.
+     * @throws ArchdukeException If string format fails. This should not happen, if
+     *                           it happens it's a bug.
+     */
     public static void printTaskAddition(Task task, int storeSize) throws ArchdukeException {
         printBoxTopBorder();
         printf("Added task:");
@@ -160,6 +217,14 @@ public class Out {
         printBoxBottomBorder();
     }
 
+    /**
+     * Prints the acknowledgement message on toggle of a task's completion status.
+     * 
+     * @param store The {@link Store} to get the tasks from.
+     * @param index The index of the task to be toggled.
+     * @throws ArchdukeException If string format fails. This should not happen, if
+     *                           it happens it's a bug.
+     */
     public static void printTaskCompleteness(Store store, int index) throws ArchdukeException {
         Task task = store.getTask(index);
         printBoxTopBorder();
@@ -168,6 +233,14 @@ public class Out {
         printBoxBottomBorder();
     }
 
+    /**
+     * Prints the acknowledgement message on task deletion.
+     * 
+     * @param task      The {@link Task} that was deleted.
+     * @param storeSize The size of the {@link Store} after the deletion.
+     * @throws ArchdukeException If string format fails. This should not happen, if
+     *                           it happens it's a bug.
+     */
     public static void printTaskDeletion(Task task, int storeSize) throws ArchdukeException {
         printBoxTopBorder();
         printf("The following task has been deleted:");
