@@ -12,6 +12,9 @@ public class Duke {
     static final String COMMAND_TODO = "todo";
     static final String COMMAND_DEADLINE = "deadline";
     static final String COMMAND_EVENT = "event";
+    static final String COMMAND_BY = "/by";
+    static final String COMMAND_FROM = "/from";
+    static final String COMMAND_TO = "/to";
 
     public static void greetUser() {
          String greeting = DIVIDER + System.lineSeparator() + "Hello! I'm Jarvis!"
@@ -32,7 +35,7 @@ public class Duke {
         System.out.println(bye);
     }
 
-    public static void okMessage(Task[] tasks, int taskSum) {
+    public static void acknowledgementMessage(Task[] tasks, int taskSum) {
         String acknowledgement = DIVIDER + System.lineSeparator()
                 + "Got it. I've added this task: " + System.lineSeparator()
                 + tasks[taskSum].toString();
@@ -51,9 +54,9 @@ public class Duke {
         greetUser();
         int taskSum = 0;
         int taskNum;
-        boolean hasEnded = false;
+        boolean isFinished = false;
 
-        while(!hasEnded) {
+        while(!isFinished) {
             input = in.nextLine();
             String[] inputText = input.split(" ");
             //get the remaining task description after the command word.
@@ -64,13 +67,12 @@ public class Duke {
 
             switch(inputText[0]) {
             case COMMAND_EXIT:
-                hasEnded = true;
+                isFinished = true;
                 break;
             case COMMAND_LIST:
                 System.out.println(DIVIDER + System.lineSeparator()
                         + "Here are the tasks in your list:");
                 for (int i = 0; i < taskSum; i++) {
-                    //System.out.println((i+1) + ". " + list[i].toString() + "[" + list[i].getStatusIcon() + "] " + list[i].getName());
                     System.out.println((i+1) + "." + list[i].toString());
                 }
                 System.out.println(DIVIDER);
@@ -107,28 +109,30 @@ public class Duke {
                 break;
             case COMMAND_TODO:
                 list[taskSum] = new Todo(taskDesc);
-                okMessage(list,taskSum);
+                acknowledgementMessage(list,taskSum);
                 taskSum++;
                 break;
             case COMMAND_EVENT:
                 //use string.split to split the string into their different descriptions
-                String[] eventInput = taskDesc.split("/from");
-                String eventDesc = eventInput[0];
+                String[] eventInput = taskDesc.split(COMMAND_FROM);
+                //split into task description and duration
+                String eventTaskDesc = eventInput[0];
                 String eventDuration = eventInput[1];
-                String[] startAndEnd = eventDuration.split("/to");
-                String eventStart = startAndEnd[0];
-                String eventEnd = startAndEnd[1];
-                list[taskSum] = new Event(eventDesc, eventStart, eventEnd);
-                okMessage(list,taskSum);
+                String[] eventStartAndEnd = eventDuration.split(COMMAND_TO);
+                String eventStart = eventStartAndEnd[0];
+                String eventEnd = eventStartAndEnd[1];
+                list[taskSum] = new Event(eventTaskDesc, eventStart, eventEnd);
+                acknowledgementMessage(list,taskSum);
                 taskSum++;
                 break;
             case COMMAND_DEADLINE:
                 //use string.split to split the string into their different descriptions
-                String[] deadlineInput = taskDesc.split("/by");
+                String[] deadlineInput = taskDesc.split(COMMAND_BY);
+                //split into task description and duration
                 String deadlineTaskDesc = deadlineInput[0];
                 String deadlineDuration = deadlineInput[1];
                 list[taskSum] = new Deadline(deadlineTaskDesc, deadlineDuration);
-                okMessage(list,taskSum);
+                acknowledgementMessage(list,taskSum);
                 taskSum++;
                 break;
             default:
