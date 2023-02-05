@@ -47,54 +47,69 @@ public class Duke {
     public static final int REMOVE_MARK_NUM = 5;
 
     /***
+     * Keeps track of the current position of task in the list.
+     */
+    private static int taskNum = 0;
+
+    /***
      * Main function greets the user and runs processInputs().
      */
+
     public static void main(String[] args) {
         showGreetings();
-        processInputs();
+        acceptUserInputs();
         showGoodbye();
     }
 
     /***
-     * Processes the inputs by the user and run commands accordingly.
-     * If the command is not recognised, user is prompted to try again.
+     * Reads in the user inputs and processes the commands.
      */
-    private static void processInputs() {
+    private static void acceptUserInputs() {
         Scanner in = new Scanner (System.in);
-        Task[] storedValues = new Task[MAX_TASK_NUM];
-        int taskNum = 0;
         String line = in.nextLine();
-
-        while (!line.equals("bye")) {
-            try {
-                if (line.equals("list")) {
-                    printList(storedValues, taskNum);
-                } else if (line.startsWith("mark ")) {
-                    markItem(storedValues, line);
-                } else if (line.startsWith("unmark ")) {
-                    unmarkItem(storedValues, line);
-                } else if (line.startsWith("deadline")) {
-                    taskNum = processDeadline(storedValues, taskNum, line);
-                } else if (line.startsWith("todo")) {
-                    taskNum = processToDo(storedValues, taskNum, line);
-                } else if (line.startsWith("event")) {
-                    taskNum = processEvent(storedValues, taskNum, line);
-                } else {
-                    // Commands that are not listed above
-                    System.out.println("Invalid command, try again! \n");
-                }
-            } catch (NullPointerException e) {
-                System.out.println("Item to mark/unmark is not in list!");
-            } catch (StringIndexOutOfBoundsException e) {
-                if (line.startsWith("todo")) {
-                    System.out.println("The description of a todo cannot be empty.");
-                } else {
-                    System.out.println("Task is not added in correct format. " +
-                            "Please include '/' in front of by/from/to");
-                }
-            }
+        Task[] storedValues = new Task[MAX_TASK_NUM];
+        while (!hasProcessedAllInputs(line, storedValues)) {
             line = in.nextLine();
         }
+    }
+
+    /***
+     * Detects the user input and matches the command with the desired output.
+     * @param line User input to be processed.
+     * @param storedValues List of inputs stored by the user.
+     * @return False if bye command is not called.
+     */
+    private static boolean hasProcessedAllInputs(String line, Task[] storedValues) {
+
+        String splitInputs[] = line.split(" ", 2);
+        String command = splitInputs[0];
+
+        switch (command) {
+        case "bye":
+            return true;
+        case "list":
+            printList(storedValues, taskNum);
+            break;
+        case "mark":
+            markItem(storedValues, line);
+            break;
+        case "unmark":
+            unmarkItem(storedValues, line);
+            break;
+        case "deadline":
+            taskNum = processDeadline(storedValues, taskNum, line);
+            break;
+        case "todo":
+            taskNum = processToDo(storedValues, taskNum, line);
+            break;
+        case "event":
+            taskNum = processEvent(storedValues, taskNum, line);
+            break;
+        default:
+            // Commands that are not listed above
+            System.out.println("Invalid command, try again! \n");
+        }
+        return false;
     }
 
     /***
