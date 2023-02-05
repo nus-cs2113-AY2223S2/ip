@@ -116,9 +116,9 @@ public class Duke {
     public static void main(String[] args) {
         System.out.println(GREETING_MESSAGE);
 
-        ArrayList<Task> todoList = new ArrayList<Task>();
+        ArrayList<Todo> todoList = new ArrayList<Todo>();
         int sizeOfTodoList = 0;
-        Task currentTask;
+        Todo currentTodo;
 
         Scanner in = new Scanner(System.in);
         String[] inputMessage = processInputMessage(in);
@@ -126,8 +126,8 @@ public class Duke {
             switch (inputMessage[0]) {
             case ACTION_LIST:
                 for (int i = 0; i < sizeOfTodoList; i += 1) {
-                    currentTask = todoList.get(i);
-                    String printedMessage = String.format("%d.%s", i + 1, currentTask);
+                    currentTodo = todoList.get(i);
+                    String printedMessage = String.format("%d.%s", i + 1, currentTodo);
                     System.out.println(printedMessage);
                 }
                 inputMessage = processInputMessage(in);
@@ -137,10 +137,10 @@ public class Duke {
                 if (taskIndex == -1) {
                     System.out.println(CUSTOM_ERROR_MESSAGE);
                 } else {
-                    currentTask = todoList.get(taskIndex);
-                    currentTask.setComplete();
+                    currentTodo = todoList.get(taskIndex);
+                    currentTodo.setComplete();
                     System.out.println(COMPLETED_TASK_MESSAGE);
-                    System.out.println(currentTask);
+                    System.out.println(currentTodo);
                 }
                 inputMessage = processInputMessage(in);
                 break;
@@ -149,18 +149,18 @@ public class Duke {
                 if (taskIndex == -1) {
                     System.out.println(CUSTOM_ERROR_MESSAGE);
                 } else {
-                    currentTask = todoList.get(taskIndex);
-                    currentTask.setIncomplete();
+                    currentTodo = todoList.get(taskIndex);
+                    currentTodo.setIncomplete();
                     System.out.println(INCOMPLETE_TASK_MESSAGE);
-                    System.out.println(currentTask);
+                    System.out.println(currentTodo);
                 }
                 inputMessage = processInputMessage(in);
                 break;
             case ACTION_NEW_TODO:
-                Task newTask = new Task(inputMessage[1]);
-                todoList.add(newTask);
+                Todo newTodo = new Todo(inputMessage[1]);
+                todoList.add(newTodo);
                 sizeOfTodoList += 1;
-                System.out.println(ADDED_TASK_MESSAGE + newTask);
+                System.out.println(ADDED_TASK_MESSAGE + newTodo);
                 inputMessage = processInputMessage(in);
                 break;
             case ACTION_NEW_DEADLINE:
