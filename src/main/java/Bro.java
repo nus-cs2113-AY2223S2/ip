@@ -1,6 +1,13 @@
 import java.util.Scanner;
 import java.util.Arrays;
 import java.util.ArrayList;
+
+import bro.exceptions.invalidInputFormat;
+import bro.exceptions.invalidTaskIndexException;
+import bro.tasks.Task;
+import bro.tasks.ToDo;
+import bro.tasks.Deadline;
+import bro.tasks.Event;
 public class Bro {
     public static final String HORIZONTAL_LINE = "\n───────────────────────────────────────────────────────────────\n";
     public static final String GREETING = " Sup bro. I'm Bro.\n" + " What do you want?";
@@ -82,6 +89,14 @@ public class Bro {
         }
     }
 
+    /**
+     * Validate the input format, creates a Todo object and returns Bro's reply.
+     *
+     * @param tasks List of all tasks
+     * @param arrayOfInputs Array of input words
+     * @return Bro's reply
+     * @throws invalidInputFormat
+     */
     private static StringBuilder createToDo(ArrayList<Task> tasks, String[] arrayOfInputs) throws invalidInputFormat {
         StringBuilder todoName = new StringBuilder();
         if (arrayOfInputs.length < 2) {
@@ -95,6 +110,14 @@ public class Bro {
         return new StringBuilder(" added: " + todo);
     }
 
+    /**
+     * Validate the input format, creates a Deadline object and returns Bro's reply.
+     *
+     * @param tasks List of all tasks
+     * @param arrayOfInputs Array of input words
+     * @return Bro's reply
+     * @throws invalidInputFormat
+     */
     private static StringBuilder createDeadline(ArrayList<Task> tasks, String[] arrayOfInputs) throws invalidInputFormat {
         int indexOfDeadline = Arrays.asList(arrayOfInputs).indexOf("/by");
         if (indexOfDeadline == -1 || indexOfDeadline == arrayOfInputs.length - 1) { // user did not input "/by" or did not input a deadline time

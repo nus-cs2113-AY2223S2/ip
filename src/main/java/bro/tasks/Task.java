@@ -1,3 +1,5 @@
+package bro.tasks;
+
 public class Task {
     private String name;
     private boolean completed;
