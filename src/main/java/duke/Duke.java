@@ -1,3 +1,7 @@
+package duke;
+
+import duke.Deadline;
+
 import java.util.Scanner;
 
 public class Duke {
