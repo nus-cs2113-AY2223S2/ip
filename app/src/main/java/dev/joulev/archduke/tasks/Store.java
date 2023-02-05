@@ -28,6 +28,11 @@ public class Store {
         onMutation();
     }
 
+    public void deleteTask(int index) throws ArchdukeException {
+        tasks.remove(index);
+        onMutation();
+    }
+
     public void listTasks() throws ArchdukeException {
         for (Task task : tasks) {
             Out.printf("  %s", task.toString());
