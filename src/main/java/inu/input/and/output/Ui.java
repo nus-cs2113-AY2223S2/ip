@@ -1,3 +1,7 @@
+package inu.input.and.output;
+
+import inu.task.list.*;
+
 public class Ui {
 
     public static void printGreeting() {

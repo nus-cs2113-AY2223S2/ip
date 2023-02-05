@@ -1,3 +1,5 @@
+package inu.task;
+
 public class DeadLine extends Task {
 
     private String by;

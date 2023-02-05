@@ -1,4 +1,6 @@
-import java.util.Scanner;
+package inu.input.and.output;
+
+import inu.task.list.*;
 
 public class Inu {
 

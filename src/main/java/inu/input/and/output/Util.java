@@ -1,3 +1,8 @@
+package inu.input.and.output;
+
+import inu.task.list.*;
+import inu.exception.handling.EmptyUserInputException;
+
 public class Util {
 
     protected static final int INDEX_BEGIN = 0;
