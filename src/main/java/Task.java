@@ -1,10 +1,10 @@
 public class Task {
     private String task;
-    private boolean complete;
+    private boolean isComplete;
 
     public Task(String name) {
         this.task = name;
-        this.complete = false;
+        this.isComplete = false;
     }
 
     public String getTask() {
@@ -12,23 +12,17 @@ public class Task {
     }
 
     public char getComplete() {
-        if(this.complete) {
+        if (this.isComplete) {
             return 'X';
         }
         return ' ';
     }
 
     public void setComplete() {
-        this.complete = true;
+        this.isComplete = true;
     }
 
     public void setIncomplete() {
-        this.complete = false;
-    }
-
-    @Override
-    public String toString() {
-        return "[T][" + getComplete() + "] " + getTask();
+        this.isComplete = false;
     }
 }
-
