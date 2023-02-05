@@ -7,6 +7,15 @@ public class Command {
     private String end;
     private String due;
 
+    /**
+     * Constructs a Command object with the given action, details, start time, end time, and due time.
+     *
+     * @param action The action of the command
+     * @param details The details of the command
+     * @param start The start time of the command
+     * @param end The end time of the command
+     * @param time The due time of the command
+     */
     public Command(String action, String details, String start, String end, String time) {
         this.action = action;
         this.details = details;

@@ -1,11 +1,28 @@
 package commandhandler;
-
+/**
+ * The InputParser class contains a single public static method named parseInput.
+ * This method is used to parse the input string into a Command object.
+ *
+ */
 public class InputParser {
+    //takes from command and splits it into its components mainly
+    //action: what type of task the user wants to add
+    //detail: the description
+    //for deadline: due
+    //for event: start/end
+
+    /**
+     * Parses the input string into a Command object.
+     *
+     * @param input The input string to be parsed
+     * @return The Command object created from the input string
+     */
     public static Command parseInput(String input) {
         String[] parts = input.split(" /");
 
         String[] mainPart = parts[0].split(" ", 2);
         String action = mainPart[0];
+        //checks if there is anything after the action command 'todo' if there is nothing it is null
         String details = mainPart.length > 1 ? mainPart[1] : null;
 
         String start = null;
