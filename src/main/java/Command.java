@@ -9,16 +9,17 @@
 */
 
 public enum Command {
-    TASK_TODO(0, "todo", new String[]{}),
-    TASK_DEADLINE(1, "deadline", new String[]{"by"}),
-    TASK_EVENT(2, "event", new String[]{"from", "to"}),
-    MARK(0, "mark", new String[]{}),
-    UNMARK(0, "unmark", new String[]{}),
-    EXIT(0, "exit", new String[]{}),
-    LIST(0, "list", new String[]{}),
-    UNKNOWN_COMMAND(0, "", new String[]{});
+    TASK_TODO(1, "todo", new String[]{}),
+    TASK_DEADLINE(2, "deadline", new String[]{"by"}),
+    TASK_EVENT(3, "event", new String[]{"from", "to"}),
+    MARK(1, "mark", new String[]{}),
+    UNMARK(1, "unmark", new String[]{}),
+    EXIT(1, "exit", new String[]{}),
+    LIST(1, "list", new String[]{}),
+    UNKNOWN_COMMAND(1, "", new String[]{});
 
-    // Defines how many arguments (subcommands) a Command has
+    // Defines how many arguments (subcommands + main command) a Command has
+    // The argument length for a command must be minimally 1 (itself) e.g. list, mark
     private int argumentLength;
     private String mainCommand;
     private String[] subcommandNames;
