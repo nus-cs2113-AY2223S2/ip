@@ -3,7 +3,7 @@ package tasktype;
 import tasktype.Task;
 
 import java.util.Arrays;
-
+//this class stores all the tasks
 public class Stash {
     private Task[] tasks;
 

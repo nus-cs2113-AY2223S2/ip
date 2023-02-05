@@ -1,5 +1,5 @@
 package tasktype;
-
+//simple inheritance, that's all
 public class Deadline extends Task {
     private String due;
 
