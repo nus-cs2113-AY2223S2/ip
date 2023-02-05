@@ -7,8 +7,8 @@ import tasktype.Task;
 import tasktype.Stash;
 import tasktype.Deadline;
 import tasktype.Todo;
-
-public class Chronos {
+//test commit for level 5 branch
+public class Chronos{
     private static Input inOut;
     private static Stash stash;
     private static void addNew(Task task) {
@@ -16,10 +16,14 @@ public class Chronos {
         Output.printNewTask(task, stash.ObtainTaskCount());
     }
     private static void toggleTaskStatus(String details){
-        int index = Integer.parseInt(details) - 1;
-        Task task = stash.getTask(index);
-        task.toggleDone();
-        Output.printIsDone(stash, index);
+        try {
+            int index = Integer.parseInt(details) - 1;
+            Task task = stash.getTask(index);
+            task.toggleDone();
+            Output.printIsDone(stash, index);
+        } catch(ArrayIndexOutOfBoundsException e){
+            System.out.println("The index you have entered is invalid");
+        }
     }
 
     public static void main(String[] args) {
@@ -47,9 +51,6 @@ public class Chronos {
             case "help":
                 Output.printHelp();
                 continue;
-            case "bye":
-                System.out.println("Bye bye, hope to see you some time soon!");
-                return;
             case "todo":
                 addNew(new Todo(userCommand.getDetails()));
                 continue;
@@ -59,6 +60,9 @@ public class Chronos {
             case "deadline":
                 addNew(new Deadline((userCommand.getDetails()), userCommand.getDue()));
                 continue;
+            case "done":
+                System.out.println("Bye bye, hope to see you some time soon!");
+                return;
             default:
                 System.out.println("Sorry, I do not understand the input at this point in time.");
             }
