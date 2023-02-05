@@ -9,14 +9,14 @@ import java.util.Scanner;
  * <p>
  * ">>" is used as a prompt for the user to enter their next command.
  */
-public class IO {
+public class Input {
     private Scanner toRead;
 
     /**
      * The constructor IO creates a new instance of the class and initializes
      * a Scanner object to read input from the user.
      */
-    public IO() {
+    public Input() {
         this.toRead = new Scanner(System.in);
     }
 
