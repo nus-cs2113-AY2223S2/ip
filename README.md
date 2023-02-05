@@ -2,7 +2,7 @@
 
 This is a school project for [CS2113 AY2022–23 Semester 2](https://nus-cs2113-ay2223s2.github.io/website/admin/ip-overview.html).
 
-Current output (as of Level 4):
+Current output (as of Level 8):
 
 ```
 ╭──────────────────────────────────────────────────────────────────────────────╮
@@ -17,7 +17,7 @@ Current output (as of Level 4):
 
 > invalid-command
 ╭──────────────────────────────────────────────────────────────────────────────╮
-│ ERROR: "invalid-command" is not a valid command. Try again.                  │
+│ ERROR: Unknown command: "invalid-command". Please try again.                 │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 
 > list
@@ -40,17 +40,18 @@ Current output (as of Level 4):
 │ You have 1 task(s) in the list.                                              │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 
-> deadline watch tenten kakumei #4 /by 1 Feb 9pm
+> deadline watch tenten kakumei #5 /by 08/02/2023 21:00:00
 ╭──────────────────────────────────────────────────────────────────────────────╮
 │ Added task:                                                                  │
-│   D □ watch tenten kakumei #4 (by: 1 Feb 9pm)                                │
+│   D □ watch tenten kakumei #5 (by: Feb 8 2023, 9:00:00 pm)                   │
 │ You now have 2 task(s) in the list.                                          │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 
-> event tenten kakumei #5 /from 1 Feb 9pm /to 1 Feb 9:30pm
+> event tenten kakumei #6 /from 08/02/2023 21:00:00 /to 08/02/2023 21:30:00
 ╭──────────────────────────────────────────────────────────────────────────────╮
 │ Added task:                                                                  │
-│   E □ tenten kakumei #5 (from: 1 Feb 9pm to: 1 Feb 9:30pm)                   │
+│   E □ tenten kakumei #6 (from: Feb 8 2023, 9:00:00 pm; to: Feb 8 2023,       │
+│ 9:30:00 pm)                                                                  │
 │ You now have 3 task(s) in the list.                                          │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 
@@ -63,7 +64,7 @@ Current output (as of Level 4):
 > mark 2
 ╭──────────────────────────────────────────────────────────────────────────────╮
 │ The following task has been marked as done                                   │
-│   D ■ watch tenten kakumei #4 (by: 1 Feb 9pm)                                │
+│   D ■ watch tenten kakumei #5 (by: Feb 8 2023, 9:00:00 pm)                   │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 
 > unmark 1
@@ -76,9 +77,26 @@ Current output (as of Level 4):
 ╭──────────────────────────────────────────────────────────────────────────────╮
 │ Here are your tasks:                                                         │
 │   T □ read tenten kakumei                                                    │
-│   D ■ watch tenten kakumei #4 (by: 1 Feb 9pm)                                │
-│   E □ tenten kakumei #5 (from: 1 Feb 9pm to: 1 Feb 9:30pm)                   │
+│   D ■ watch tenten kakumei #5 (by: Feb 8 2023, 9:00:00 pm)                   │
+│   E □ tenten kakumei #6 (from: Feb 8 2023, 9:00:00 pm; to: Feb 8 2023,       │
+│ 9:30:00 pm)                                                                  │
 │ You have 3 task(s) in the list.                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+> delete 1
+╭──────────────────────────────────────────────────────────────────────────────╮
+│ The following task has been deleted:                                         │
+│   T □ read tenten kakumei                                                    │
+│ You now have 2 task(s) in the list.                                          │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+> list
+╭──────────────────────────────────────────────────────────────────────────────╮
+│ Here are your tasks:                                                         │
+│   D ■ watch tenten kakumei #5 (by: Feb 8 2023, 9:00:00 pm)                   │
+│   E □ tenten kakumei #6 (from: Feb 8 2023, 9:00:00 pm; to: Feb 8 2023,       │
+│ 9:30:00 pm)                                                                  │
+│ You have 2 task(s) in the list.                                              │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 
 > bye
