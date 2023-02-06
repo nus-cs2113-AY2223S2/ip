@@ -3,6 +3,8 @@ import java.util.Objects;
 import java.util.Scanner;
 
 
+
+
 public class Duke {
 
     private static final Task[] tasks = new Task[Constants.MAX_NUMBER_OF_ENTRIES];
@@ -24,14 +26,15 @@ public class Duke {
                 System.out.println("What can I do for your today?");
                 command = readTask();
             }
-            boolean hasDuplicateKeywords = checkForDuplicateKeyword(command);
+            boolean isValidInput = checkForValidInput(command);
 
-            while (hasDuplicateKeywords == true) {
-                printDuplicateKeywordErrorMessage();
+            while (!isValidInput) {
                 command = readTask();
-                hasDuplicateKeywords = checkForDuplicateKeyword(command);
+                isValidInput = checkForValidInput(command);
             }
             printHorizontalBar();
+
+
 
             if (command.contains("list")) {
                 printTaskList();
@@ -96,8 +99,10 @@ public class Duke {
     private static boolean checkDeadlineInput(String command) {
         command = command.toLowerCase();
         String keyword = command.substring(0, 8);
+        String deadlineName = command.substring(0, command.indexOf("/"));
+        String[] deadlineNameWords = deadlineName.split(" ");
+        int nameLength = deadlineNameWords.length;
 
-        int numberOfErrors = 0;
         if (!keyword.equals("deadline")) {
             System.out.println("The keyword 'deadline' should be the first word");
             return false;
@@ -113,7 +118,7 @@ public class Duke {
             return false;
         }
 
-        if (words.length<3){
+        if (words.length < 3) {
             System.out.println("ERROR! Deadline name is empty");
             return false;
         }
@@ -238,11 +243,17 @@ public class Duke {
 
     }
 
-    private static boolean checkForDuplicateKeyword(String input) {
+    private static boolean checkForValidInput(String input) {
         input = input.toLowerCase();
         String[] contents = input.split(" ");
         int i = 0;
         int len = contents.length;
+        boolean isValidFirstWord = checkFirstKeyword(contents[0]);
+
+        if(!isValidFirstWord){
+            System.out.println("ERROR! The first word is not a valid keyword!");
+        }
+
         int numberOfKeywords = 0;
         while (i < len) {
             if (contents[i].equals("list") || contents[i].equals("mark") || contents[i].equals("unmark") || contents[i].equals("deadline") || contents[i].equals("event") || contents[i].equals("todo")) {
@@ -252,11 +263,27 @@ public class Duke {
         }
 
         if (numberOfKeywords > 1) {
-            return true;
+            printDuplicateKeywordErrorMessage();
         }
 
+        if (!isValidFirstWord|| numberOfKeywords>1){
+            return false;
+        }
+        return true;
+    }
 
+    private static boolean checkFirstKeyword(String content) {
+        String[] keywords = Constants.listOfKeywords;
+        int len = keywords.length;
+        int i = 0;
+        while (i<len){
+            if (Objects.equals(content, keywords[i])){
+                return true;
+            }
+            i++;
+        }
         return false;
+
     }
 
     private static void greetUser() {
@@ -277,6 +304,7 @@ public class Duke {
 
 
     private static void createTask(String command, int numberOfTasks) {
+        command = command.substring(5);
         Task task = new Task(command);
         task.isCompleted = false;
         task.taskName = command;

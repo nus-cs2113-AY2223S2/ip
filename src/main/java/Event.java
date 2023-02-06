@@ -25,9 +25,9 @@ public class Event extends Deadline {
     @Override
     public void printTask() {
         if (this.isCompleted) {
-            System.out.println(".[E][X]" + this.taskName + "(from: " + this.getStartTime() + " by: " + this.getEndTime() + ")");
+            System.out.println(".[E][X]" + this.taskName + "(from: " + this.getStartTime() + " to: " + this.getEndTime() + ")");
         } else {
-            System.out.println(".[E][ ]" + this.taskName + "(from: " + this.getStartTime() + " by: " + this.getEndTime() + ")");
+            System.out.println(".[E][ ]" + this.taskName + "(from: " + this.getStartTime() + " to: " + this.getEndTime() + ")");
         }
     }
 }
