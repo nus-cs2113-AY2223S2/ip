@@ -1,13 +1,11 @@
 import java.util.Scanner;
 
-
 public class Duke {
-    public static int currentIndex = 0;
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         int tasksSize = 100;
         Task[] tasks = new Task[tasksSize];
-
+        int currentIndex = 0;
 
         printHelloStatement();
         while (true) {
@@ -50,6 +48,7 @@ public class Duke {
                     String by = temp[2];
                     Deadline deadline = new Deadline(currentIndex + 1, description, by);
                     tasks[currentIndex] = deadline;
+                    currentIndex++;
                     printTaskAddedStatement(currentIndex, deadline);
                 } catch (IndexOutOfBoundsException exception) {
                     System.out.println("☹ OOPS!!! The description of a deadline cannot be empty");
