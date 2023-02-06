@@ -20,11 +20,12 @@ public class Duke {
     public static final String TO_DELIMITER = "/to ";
     public static final String MARKED_THIS_TASK_AS_DONE = "Nice! I've marked this task as done: ";
     public static final String UNMARKED_THIS_TASK_AS_DONE = "Okay, I've marked this task as not done yet: ";
-    public static final String ECHO_MESSAGE = "added: ";
     public static final String UNKNOWN_COMAMND_MESSAGE = "OOPS!!! I'm sorry, but I don't know what that means :-(";
     public static final String EMPTY_TODO_MESSAGE = "OOPS!!! The description of a todo cannot be empty.";
     public static final String EMPTY_UNMARK_MESSAGE = "OOPS!!! The index of unmark cannot be empty.";
     public static final String EMPTY_MARK_MESSAGE = "OOPS!!! The index of mark cannot be empty.";
+    public static final String MARK_UNMARK_INDEX_IS_NOT_A_NUMBER_MESSAGE = "Mark/Unmark Index is not a number";
+    public static final String MARK_UNMARK_INDEX_DOES_NOT_EXIST_MESSAGE = "mark/unmark index does not exist";
 
     public static void main(String[] args) {
 
@@ -47,6 +48,10 @@ public class Duke {
                 System.out.println(EMPTY_MARK_MESSAGE);
             } catch (EmptyUnmarkException e) {
                 System.out.println(EMPTY_UNMARK_MESSAGE);
+            } catch (NumberFormatException e) {
+                System.out.println(MARK_UNMARK_INDEX_IS_NOT_A_NUMBER_MESSAGE);
+            } catch (NullPointerException e) {
+                System.out.println(MARK_UNMARK_INDEX_DOES_NOT_EXIST_MESSAGE);
             }
             line = input.nextLine();
         }
@@ -111,15 +116,15 @@ public class Duke {
         case "mark":
             CheckIfMarkEmpty(words);
             int markIndex = Integer.parseInt(words[1]) - 1; // 0 indexing
-            System.out.println(MARKED_THIS_TASK_AS_DONE);
             tasks[markIndex].markAsDone();
+            System.out.println(MARKED_THIS_TASK_AS_DONE);
             System.out.println(tasks[markIndex]);
             break;
         case "unmark":
             CheckIfUnmarkEmpty(words);
             int unmarkIndex = Integer.parseInt(words[1]) - 1; // 0 indexing
-            System.out.println(UNMARKED_THIS_TASK_AS_DONE);
             tasks[unmarkIndex].markAsNotDone();
+            System.out.println(UNMARKED_THIS_TASK_AS_DONE);
             System.out.println(tasks[unmarkIndex]);
             break;
         case "list":
@@ -134,8 +139,6 @@ public class Duke {
         default:
             throw new UnknownCommandException();
         }
-
-
     }
 
     private static void CheckIfMarkEmpty(String[] words) throws EmptyMarkException {
