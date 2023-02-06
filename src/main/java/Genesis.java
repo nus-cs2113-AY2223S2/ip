@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Genesis {
     private static ArrayList<Task> tasks = new ArrayList<Task>();
 
-    public static void handleListTasks() throws GenesisException {
+    private static void handleListTasks() throws GenesisException {
         if (tasks.size() < 1) {
             throw new GenesisException("List is empty, nothing to show");
         }
@@ -11,7 +11,7 @@ public class Genesis {
         ConsolePrinter.listTasks(tasks);
     }
 
-    public static void handleMarkTask(String content) {
+    private static void handleMarkTask(String content) {
         int index = Integer.parseInt(content) - 1;
         Task task = tasks.get(index);
         task.setIsDone(true);
@@ -19,7 +19,7 @@ public class Genesis {
         ConsolePrinter.onTaskMarked(task.getListDescription());
     }
 
-    public static void handleUnmarkTask(String content) {
+    private static void handleUnmarkTask(String content) {
         int index = Integer.parseInt(content) - 1;
         Task task = tasks.get(index);
         task.setIsDone(false);
@@ -27,14 +27,14 @@ public class Genesis {
         ConsolePrinter.onTaskUnmarked(task.getListDescription());
     }
 
-    public static void handleTodo(String description) throws GenesisException {
+    private static void handleTodo(String description) throws GenesisException {
         Todo todo = new Todo(description);
         tasks.add(todo);
 
         ConsolePrinter.onTaskAdded(todo.getListDescription(), tasks.size());
     }
 
-    public static void handleDeadline(String content) throws GenesisException {
+    private static void handleDeadline(String content) throws GenesisException {
         String[] parts = content.split(" /by ", 2);
         if (parts.length < 2) {
             throw new GenesisException("Description for deadline is invalid");
@@ -49,7 +49,7 @@ public class Genesis {
         ConsolePrinter.onTaskAdded(deadline.getListDescription(), tasks.size());
     }
 
-    public static void handleEvent(String content) throws GenesisException {
+    private static void handleEvent(String content) throws GenesisException {
         String[] parts = content.split(" /from | /to ", 3);
         if (parts.length < 3) {
             throw new GenesisException("Description for event is invalid");
