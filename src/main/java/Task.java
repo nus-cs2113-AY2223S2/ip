@@ -4,9 +4,8 @@ public class Task {
 
     public Task(String description) {
         this.description = description;
-        this.isDone = false;
+        isDone = false;
     }
-
     public String getStatusIcon() {
         return (isDone ? "X" : " "); // mark done
     }
@@ -25,5 +24,10 @@ public class Task {
 
     public boolean isDone() {
         return isDone;
+    }
+
+    @Override
+    public String toString() {
+        return (isDone ? "[X]" : "[ ]") + " " + description;
     }
 }

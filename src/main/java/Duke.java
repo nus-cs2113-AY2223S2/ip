@@ -16,9 +16,7 @@ public class Duke {
     public static void printList(int taskCounter) {
         System.out.println("Your current tasks are as follows: ");
         for (int index = 0; index < taskCounter; index += 1) {
-            System.out.println((index + 1) + "." + "[" +
-                    tasks[index].getStatusIcon() + "]" + " " +
-                    tasks[index].getDescription());
+            System.out.println((index + 1) + "." + tasks[index]);
         }
     }
     private static void readInput() {
@@ -51,10 +49,22 @@ public class Duke {
                 System.out.println("I have unmarked this task");
                 printList(taskCounter);
                 break;
+            case "todo":
+                String todoInput = "";
+                for (int i = 1; i < inputs.length; i ++) {
+                    todoInput += inputs[i];
+                    todoInput += " ";
+                }
+//                System.out.printf(todoInput);
+                Todo todo = new Todo(todoInput);
+                tasks[taskCounter] = todo; taskCounter += 1;
+                printList(taskCounter);
+                break;
             default:
                 Task t = new Task(input);
                 tasks[taskCounter] = t; taskCounter += 1;
                 System.out.println("added: " + input);
+                break;
             }
 
             printLine();
