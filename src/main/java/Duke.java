@@ -169,14 +169,19 @@ public class Duke {
                   For to do tasks
                   Removes the command word, then adds a new to do with the description to the array
                  */
-                    withoutCommand = removeCommandWord(userInput);
-                    Todo newTodo = new Todo(withoutCommand);
-                    tasks[taskCounter] = newTodo;
-                    taskCounter += 1;
+                    try {
+                        withoutCommand = removeCommandWord(userInput);
+                        Todo newTodo = new Todo(withoutCommand);
+                        tasks[taskCounter] = newTodo;
+                        taskCounter += 1;
 
-                    // Prints acknowledgement
-                    printAcknowledgement("Todo", withoutCommand, taskCounter);
-
+                        // Prints acknowledgement
+                        printAcknowledgement("Todo", withoutCommand, taskCounter);
+                    } catch (IndexOutOfBoundsException e) {
+                        printHorizontalRule();
+                        System.out.println("Invalid command for todo. Cannot have a blank description!");
+                        printHorizontalRule();
+                    }
                     break;
 
                 case ("deadline"):
@@ -186,17 +191,23 @@ public class Duke {
                   Also extracts the deadline to the by variable
                   Adds a new deadline to the array
                  */
+                    try {
+                        withoutCommand = removeCommandWord(userInput);
+                        description = getDescriptionForDeadline(withoutCommand);
+                        String by = getDeadline(withoutCommand);
 
-                    withoutCommand = removeCommandWord(userInput);
-                    description = getDescriptionForDeadline(withoutCommand);
-                    String by = getDeadline(withoutCommand);
+                        Deadline deadline = new Deadline(description, by);
+                        tasks[taskCounter] = deadline;
+                        taskCounter += 1;
 
-                    Deadline deadline = new Deadline(description, by);
-                    tasks[taskCounter] = deadline;
-                    taskCounter += 1;
-
-                    // Prints acknowledgement
-                    printAcknowledgement("Deadline", description, taskCounter);
+                        // Prints acknowledgement
+                        printAcknowledgement("Deadline", description, taskCounter);
+                    } catch (IndexOutOfBoundsException e) {
+                        printHorizontalRule();
+                        System.out.println("Wrong usage of deadline. Format is: deadline {description} /by {date}");
+                        System.out.println("You entered: " + userInput);
+                        printHorizontalRule();
+                    }
 
                     break;
 
@@ -207,18 +218,25 @@ public class Duke {
                   Also extracts the start and end to the from and to variable
                   Adds a new event to the array
                  */
-                    withoutCommand = removeCommandWord(userInput);
-                    description = getDescriptionForEvent(withoutCommand);
+                    try {
+                        withoutCommand = removeCommandWord(userInput);
+                        description = getDescriptionForEvent(withoutCommand);
 
-                    // Returns in the format [from, to]
-                    String[] timings = getTimings(withoutCommand);
+                        // Returns in the format [from, to]
+                        String[] timings = getTimings(withoutCommand);
 
-                    Event event = new Event(description, timings[0], timings[1]);
-                    tasks[taskCounter] = event;
-                    taskCounter += 1;
+                        Event event = new Event(description, timings[0], timings[1]);
+                        tasks[taskCounter] = event;
+                        taskCounter += 1;
 
-                    // Prints acknowledgement
-                    printAcknowledgement("Deadline", description, taskCounter);
+                        // Prints acknowledgement
+                        printAcknowledgement("Deadline", description, taskCounter);
+                    } catch (IndexOutOfBoundsException e) {
+                        printHorizontalRule();
+                        System.out.println("Wrong usage of event. Format is: event {description} /from {date} /to {date}");
+                        System.out.println("You entered: " + userInput);
+                        printHorizontalRule();
+                    }
 
                     break;
 
