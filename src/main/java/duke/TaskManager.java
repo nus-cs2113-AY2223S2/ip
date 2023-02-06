@@ -1,5 +1,4 @@
-
-
+package duke;
 public class TaskManager {
     private Task[] tasks = new Task[100];
     private int taskCount = 0;
