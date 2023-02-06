@@ -4,3 +4,9 @@ list
 event cs2113 lecture /from Friday 4 /to 6pm
 mark 1
 list
+deadline
+todo
+event movie night
+event movie night /from tonight 7pm
+event movie night /from tonight 7pm /to 8pm
+list
