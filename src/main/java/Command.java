@@ -1,12 +1,12 @@
 /*
-* Defines the structure of commands from user input
-* Generally, a user command consists of three components.
-* 1. Main Command
-* 2. Sub Command
-* 3. Payload
-* User input can be abstracted into:
-* <MainCommand> (<Payload>) (--<Subcommand> (<Subcommand payload>) --(<Subcommand2> (...)) ... )
-*/
+ * Defines the structure of commands from user input
+ * Generally, a user command consists of three components.
+ * 1. Main Command
+ * 2. Sub Command
+ * 3. Payload
+ * User input can be abstracted into:
+ * <MainCommand> (<Payload>) (--<Subcommand> (<Subcommand payload>) --(<Subcommand2> (...)) ... )
+ */
 
 public enum Command {
     TASK_TODO(1, "todo", new String[]{}),
@@ -24,7 +24,7 @@ public enum Command {
     private String mainCommand;
     private String[] subcommandNames;
 
-    Command(int argumentLength, String commandName, String[] subcommandNames){
+    Command(int argumentLength, String commandName, String[] subcommandNames) {
         this.argumentLength = argumentLength;
         this.mainCommand = commandName;
         this.subcommandNames = subcommandNames;

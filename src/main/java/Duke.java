@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class Duke {
     private static boolean isListening;
-    private static int TASK_NUMBER_LIMIT = 100;
+    private static final int TASK_NUMBER_LIMIT = 100;
     private static Task[] tasks = new Task[TASK_NUMBER_LIMIT];
     private static int numTasks;
 
@@ -40,23 +40,23 @@ public class Duke {
             String to = commandMap.get("to");
             newTask = new Event(description, from, to);
         }
-        if(newTask == null){
+        if (newTask == null) {
             // Safety check in case the assertion fails
             throw new InvalidCommandException("Throw me a bone here, I couldn't create a task!");
         }
         return newTask;
     }
 
-    public static void addTaskToList(Task newTask) throws IndexOutOfBoundsException{
-        if(numTasks == TASK_NUMBER_LIMIT){
+    public static void addTaskToList(Task newTask) throws IndexOutOfBoundsException {
+        if (numTasks == TASK_NUMBER_LIMIT) {
             throw new IndexOutOfBoundsException("MAX is a dog, and has limited memory. Too many tasks for MAX to remember!");
         }
         tasks[numTasks] = newTask;
         numTasks++;
     }
 
-    public static void printTasklist(){
-        if(numTasks <= 0){
+    public static void printTasklist() {
+        if (numTasks <= 0) {
             System.out.println("There's nothing in your list. I'm gonna bite you.");
             return;
         }
@@ -68,12 +68,12 @@ public class Duke {
         }
     }
 
-    public static void markTask(String taskNumString, boolean isDone){
+    public static void markTask(String taskNumString, boolean isDone) {
         int taskNum;
 
         try {
             taskNum = Integer.parseInt(taskNumString) - 1; // Convert to 0-idx
-        }catch (NumberFormatException exception){
+        } catch (NumberFormatException exception) {
             System.out.println("I'm a dog, but even I know that you didn't enter a number.");
             return;
         }
@@ -85,10 +85,10 @@ public class Duke {
         }
 
         // Update the task's done status
-        if(isDone){
+        if (isDone) {
             tasks[taskNum].markAsDone();
             System.out.println("Okay, marking this task as done: ");
-        }else{
+        } else {
             tasks[taskNum].markAsUndone();
             System.out.println("Okay, setting this task as undone: ");
         }
@@ -104,7 +104,7 @@ public class Duke {
         String[] commandList = commandParser.splitIntoCommands(command);
 
         // Process subcommands into <subcommand, payload>
-        HashMap<String,String> commandPayload = commandParser.getCommandPayloadMap(commandList);
+        HashMap<String, String> commandPayload = commandParser.getCommandPayloadMap(commandList);
 
         Command mainCommand = commandParser.getCommandType(commandList[0]);
 
@@ -112,9 +112,9 @@ public class Duke {
         // 1. Correct argument size
         // 2. Correct argument names
         // WARNING: This validation does not check for payload correctness
-        try{
+        try {
             commandValidator.validateCommandPayloadMap(mainCommand, commandPayload);
-        }catch(InvalidCommandException exception){
+        } catch (InvalidCommandException exception) {
             System.out.println(exception.getMessage());
             return;
         }
@@ -139,14 +139,14 @@ public class Duke {
         case TASK_DEADLINE:
         case TASK_TODO:
             // TODO: Consider refactoring Task logic to a TaskHandler class
-            try{
+            try {
                 Task newTask = createTask(commandPayload, mainCommand);
                 addTaskToList(newTask);
                 System.out.println("Got it. Task added:");
                 System.out.println(newTask.getDescription());
                 System.out.println("You now have " + numTasks + " tasks in your list.");
 
-            }catch(InvalidCommandException | IndexOutOfBoundsException exception){
+            } catch (InvalidCommandException | IndexOutOfBoundsException exception) {
                 System.out.println(exception.getMessage());
             }
             break;
@@ -156,6 +156,7 @@ public class Duke {
             break;
         }
     }
+
     public static void greet() {
         printBorder();
         System.out.println("Hello! I'm Max, your PAWsonal productivity assistant");
