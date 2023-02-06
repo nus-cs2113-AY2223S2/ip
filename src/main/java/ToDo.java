@@ -1,17 +1,7 @@
 public class ToDo extends Task {
 
-    private char taskType;
-    
     public ToDo(String description) {
-        super(description);
-        setTaskType();
+        super(description, "T");
     }
 
-    public void setTaskType() {
-        taskType = 'T';
-    }
-
-    public char getTaskType() {
-        return taskType;
-    }
 }
