@@ -1,11 +1,13 @@
 import java.util.Scanner;
 
+
 public class Duke {
+    public static int currentIndex = 0;
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         int tasksSize = 100;
         Task[] tasks = new Task[tasksSize];
-        int currentIndex = 0;
+
 
         printHelloStatement();
         while (true) {
@@ -29,38 +31,48 @@ public class Duke {
                 curTask.unmarkAsDone();
                 printTaskStatusStatement(curTask,"unmark");
             } else if (input.startsWith("todo")) {
-                String[] temp = input.split("todo "); //separates todo description
-                String description = temp[1];
-                ToDo todo = new ToDo(currentIndex + 1, description);
-                tasks[currentIndex] = todo;
-                currentIndex++;
-                printTaskAddedStatement(currentIndex, todo);
-            }
-            else if (input.startsWith("deadline")) {
-                String[] temp = input.split("deadline | /by "); //separates deadline description and by time
-                String description = temp[1];
-                String by = temp[2];
-                Deadline deadline = new Deadline(currentIndex + 1, description, by);
-                tasks[currentIndex] = deadline;
-                currentIndex++;
-                printTaskAddedStatement(currentIndex, deadline);
-            }
-            else if (input.startsWith("event")) {
-                String[] temp = input.split(("event | /from | /to ")); //separates event description, from and to times
-                String description = temp[1];
-                String from = temp[2];
-                String to = temp[3];
-                Event event = new Event(currentIndex + 1, description, from, to);
-                tasks[currentIndex] = event;
-                currentIndex++;
-                printTaskAddedStatement(currentIndex, event);
-            }
-            else {
+                try {
+                    String[] temp = input.split("todo "); //separates todo description
+                    String description = temp[1];
+                    ToDo todo = new ToDo(currentIndex + 1, description);
+                    tasks[currentIndex] = todo;
+                    currentIndex++;
+                    printTaskAddedStatement(currentIndex, todo);
+                } catch (IndexOutOfBoundsException exception) {
+                    printDottedLine();
+                    System.out.println("☹ OOPS!!! The description of a todo cannot be empty");
+                    printDottedLine();
+                }
+            } else if (input.startsWith("deadline")) {
+                try {
+                    String[] temp = input.split("deadline | /by "); //separates deadline description and time
+                    String description = temp[1];
+                    String by = temp[2];
+                    Deadline deadline = new Deadline(currentIndex + 1, description, by);
+                    tasks[currentIndex] = deadline;
+                    printTaskAddedStatement(currentIndex, deadline);
+                } catch (IndexOutOfBoundsException exception) {
+                    System.out.println("☹ OOPS!!! The description of a deadline cannot be empty");
+                }
+            } else if (input.startsWith("event")) {
+                try {
+                    String[] temp = input.split(("event | /from | /to ")); //separates event description and times
+                    String description = temp[1];
+                    String from = temp[2];
+                    String to = temp[3];
+                    Event event = new Event(currentIndex + 1, description, from, to);
+                    tasks[currentIndex] = event;
+                    currentIndex++;
+                    printTaskAddedStatement(currentIndex, event);
+                } catch (IndexOutOfBoundsException exception) {
+                    System.out.println("☹ OOPS!!! The description of a event cannot be empty");
+                }
+            } else {
                 printUnknownCommandError();
             }
         }
     }
-    
+
     private static void printDottedLine() {
         System.out.println("____________________________________________________________");
     }
