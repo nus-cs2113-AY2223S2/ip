@@ -8,6 +8,29 @@ public class DukeException extends Exception {
     {
        super(message);
     }
+    // Constructor that accepts a message and a cause
+    public DukeException(String message, Throwable cause)
+    {
+       super(message, cause);
+    }
+    // Constructor that accepts a cause
+    public DukeException(Throwable cause)
+    {
+       super(cause);
+    }
+
+    //methods
+    public void printError(){
+        System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+    }
+
+    public void printError(String message){
+        System.out.println("☹ OOPS!!! " + message);
+    }
+
+    public void printError(String message, String command){
+        System.out.println("☹ OOPS!!! " + message + " " + command);
+    }
 
 
 }
