@@ -5,6 +5,7 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.Todo;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
@@ -15,8 +16,9 @@ public class Duke {
     static final String COMMAND_UNMARK = "unmark";
     static final String COMMAND_EVENT = "event";
     static final String COMMAND_TODO = "todo";
+    static final String COMMAND_DELETE = "delete";
     static final String COMMAND_DEADLINE = "deadline";
-    static Task[] tasks = new Task[100];
+    static ArrayList<Task> tasks = new ArrayList<>();
     static int textCount = 0;
 
     public static void doCommandGreet() {
@@ -34,10 +36,10 @@ public class Duke {
 
     public static void doCommandMark(int taskNum) {
         try {
-            tasks[--taskNum].setStatus(true);
+            tasks.get(--taskNum).setStatus(true);
             System.out.println(LINE);
             System.out.println("\tNoted. Task " + (taskNum + 1) + " has been marked as \"complete\":");
-            System.out.println("\t  " + tasks[taskNum].getTaskNameAndStatus());
+            System.out.println("\t  " + tasks.get(taskNum).getTaskNameAndStatus());
             System.out.println(LINE);
         } catch (ArrayIndexOutOfBoundsException | NullPointerException out_mark_b) {
             System.out.println(LINE);
@@ -49,10 +51,10 @@ public class Duke {
 
     public static void doCommandUnmark(int taskNum) {
         try {
-            tasks[--taskNum].setStatus(false);
+            tasks.get(--taskNum).setStatus(false);
             System.out.println(LINE);
             System.out.println("\tOh, ok. Task " + (taskNum + 1) + " has been marked as \"incomplete\":");
-            System.out.println("\t  " + tasks[taskNum].getTaskNameAndStatus());
+            System.out.println("\t  " + tasks.get(taskNum).getTaskNameAndStatus());
             System.out.println(LINE);
         } catch (ArrayIndexOutOfBoundsException | NullPointerException out_unmark_b) {
             System.out.println(LINE);
@@ -71,7 +73,7 @@ public class Duke {
             System.out.println("\tHere are your tasks:");
             for (int index = 0; index < textCount; index++) {
                 System.out.print("\t" + count + ".");
-                System.out.println(tasks[index]);
+                System.out.println(tasks.get(index));
                 count++;
             }
         }
@@ -79,33 +81,43 @@ public class Duke {
     }
 
     public static void doCommandTodo(String taskName) {
-        tasks[textCount] = new Todo(taskName);
+        tasks.add(new Todo(taskName));
         textCount++;
         System.out.println(LINE);
         System.out.println("\t" + "Task added!");
-        System.out.println("\t  " + tasks[textCount - 1]);
+        System.out.println("\t  " + tasks.get(textCount - 1));
         System.out.println("\t" + "Now you have " + textCount + " pending tasks.");
         System.out.println(LINE);
     }
 
     public static void doCommandDeadline(String taskName, String taskDeadline) {
-        tasks[textCount] = new Deadline(taskName, taskDeadline);
+        tasks.add(new Deadline(taskName, taskDeadline));
         textCount++;
         System.out.println(LINE);
         System.out.println("\t" + "Task added!");
-        System.out.println("\t  " + tasks[textCount - 1]);
+        System.out.println("\t  " + tasks.get(textCount - 1));
         System.out.println("\t" + "Now you have " + textCount + " pending tasks.");
         System.out.println(LINE);
     }
 
     public static void doCommandEvent(String eventName, String eventDetailsPartOne, String eventDetailsPartTwo) {
-        tasks[textCount] = new Event(eventName, eventDetailsPartOne, eventDetailsPartTwo);
+        tasks.add(new Event(eventName, eventDetailsPartOne, eventDetailsPartTwo));
         textCount++;
         System.out.println(LINE);
         System.out.println("\t" + "Task added!");
-        System.out.println("\t  " + tasks[textCount - 1]);
+        System.out.println("\t  " + tasks.get(textCount - 1));
         System.out.println("\t" + "Now you have " + textCount + " pending tasks.");
         System.out.println(LINE);
+    }
+
+    public static void doCommandDelete(int taskNum) {
+        System.out.println(LINE);
+        System.out.println("\t" + "Task removed!");
+        System.out.println("\t  " + tasks.get(taskNum - 1));
+        System.out.println("\t" + "Now you have " + (textCount - 1) + " pending tasks.");
+        tasks.remove(taskNum - 1);
+        System.out.println(LINE);
+        textCount--;
     }
 
     public static void handleUserCommand(String userCommand) {
@@ -149,6 +161,21 @@ public class Duke {
             break;
         case COMMAND_BYE:
             doCommandBye();
+            break;
+        case COMMAND_DELETE:
+            try {
+                int taskNum = Integer.parseInt(extractFirstWord[1]);
+                doCommandDelete(taskNum);
+            } catch (ArrayIndexOutOfBoundsException out_unmark_a) {
+                System.out.println(LINE);
+                System.out.println("\t☹ Error! \"delete\" command requires a task number.");
+                System.out.println(LINE);
+            } catch (NumberFormatException num_unmark_a) {
+                System.out.println(LINE);
+                System.out.println("\t☹ Error! Invalid input.");
+                System.out.println("\tPlease provide a integer number for \"delete\" command.");
+                System.out.println(LINE);
+            }
             break;
         case COMMAND_TODO: {
             try {
