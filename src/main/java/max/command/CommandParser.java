@@ -1,3 +1,5 @@
+package max.command;
+
 import java.util.HashMap;
 
 public class CommandParser {

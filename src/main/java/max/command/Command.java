@@ -1,4 +1,4 @@
-/*
+package max.command;/*
  * Defines the structure of commands from user input
  * Generally, a user command consists of three components.
  * 1. Main Command

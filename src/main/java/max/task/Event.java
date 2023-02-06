@@ -1,3 +1,5 @@
+package max.task;
+
 public class Event extends Task {
     private String eventFrom;
     private String eventTo;

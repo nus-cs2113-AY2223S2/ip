@@ -1,7 +1,18 @@
+package max;
+
+import max.command.Command;
+import max.command.CommandParser;
+import max.command.CommandValidator;
+import max.command.InvalidCommandException;
+import max.task.Deadline;
+import max.task.Event;
+import max.task.Task;
+import max.task.Todo;
+
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class Duke {
+public class Max {
     private static boolean isListening;
     private static final int TASK_NUMBER_LIMIT = 100;
     private static Task[] tasks = new Task[TASK_NUMBER_LIMIT];
@@ -9,7 +20,7 @@ public class Duke {
 
 
     public static void setIsListening(boolean keepListening) {
-        Duke.isListening = keepListening;
+        Max.isListening = keepListening;
     }
 
     public static void printBorder() {
