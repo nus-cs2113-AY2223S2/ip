@@ -1,3 +1,4 @@
+import java.text.NumberFormat;
 import java.util.Scanner;
 
 public class Duke {
@@ -44,39 +45,39 @@ public class Duke {
 
     public static void markTask(String marker, String taskNumberString) {
         int taskNumber = Integer.parseInt(taskNumberString);
-        if (taskNumber > indexOfTask) {
-            //error handling
-            System.out.println("): There is no Task number " + taskNumber + " yet! :(");
+        if (marker.equals("mark")) {
+            //mark task as done
+            tasks[taskNumber - 1].isDone = true;
+            System.out.println("Nice! I've marked this task as done: ");
+            System.out.println(tasks[taskNumber-1].toString());
         } else {
-            if (marker.equals("mark")) {
-                //mark task as done
-                tasks[taskNumber - 1].isDone = true;
-                System.out.println("Nice! I've marked this task as done: ");
-                System.out.println(tasks[taskNumber-1].toString());
-            } else {
-                //mark task as undone
-                tasks[taskNumber - 1].isDone = false;
-                System.out.println("Ok! I've marked this task as not done yet: ");
-                System.out.println(tasks[taskNumber-1].toString());
-            }
+            //mark task as undone
+            tasks[taskNumber - 1].isDone = false;
+            System.out.println("Ok! I've marked this task as not done yet: ");
+            System.out.println(tasks[taskNumber-1].toString());
         }
+
+        //Null Pointer Exception (taskNumber > indexOfTask)
     }
 
     //Task Description = taskD
-    public static void addTask(String taskCommand, String taskD){
+    public static void addTask(String taskCommand, String taskD) {
         switch (taskCommand){
         case "todo":
             tasks[indexOfTask] = new ToDo(taskD.trim());
             break;
         case "deadline":
             String[] deadlineTaskD = taskD.split("/by ", 2);
-            tasks[indexOfTask] = new Deadline(deadlineTaskD[0],deadlineTaskD[1]);
+            tasks[indexOfTask] = new Deadline(deadlineTaskD[0].trim(),deadlineTaskD[1].trim());
             break;
         case "event":
             String[] eventName = taskD.split("/from ", 2);
             String[] eventDate = eventName[1].split("/to ", 2);
-            tasks[indexOfTask] = new Event(eventName[0], eventDate[0], eventDate[1] );
+
+            System.out.println(eventName[0].trim());
+            tasks[indexOfTask] = new Event(eventName[0].trim(), eventDate[0].trim(), eventDate[1].trim() );
         }
+
     }
 
     public static void printThisTask(){
@@ -85,29 +86,33 @@ public class Duke {
         System.out.println("Now you have " + (indexOfTask+1) + " tasks in the list." );
     }
 
-    public static void readUserInput(String input){
+    public static void readUserInput(String input) throws UnknownCommandException, MarkerArrayIndexOutOfBoundsException, AddTaskIndexOutOfBounds {
 
         String[] command = input.split(" ", 2);
 
-        switch (command[0]){
+        switch (command[0]) {
         case "list":
             printTaskList();
             break;
         case "mark":
         case "unmark":
+            if(command.length == 1) {
+                throw new MarkerArrayIndexOutOfBoundsException();
+            }
             markTask(command[0], command[1]);
             break;
         case "todo":
         case "deadline":
         case "event":
+            if(command.length == 1){
+                throw new AddTaskIndexOutOfBounds(command[0]);
+            }
             addTask(command[0], command[1]);
             printThisTask();
             indexOfTask++;
             break;
         default:
-            //error handling
-            System.out.println("Wrong command!");
-            break;
+            throw new UnknownCommandException();
         }
     }
 
@@ -135,7 +140,29 @@ public class Duke {
         while (!input.equals("bye")) {
             drawLine();
             createSiriChatBox();
-            readUserInput(input);
+
+            try {
+                readUserInput(input);
+            } catch (UnknownCommandException e) {
+                System.out.println("T^T OPPS!!! I'm sorry, but I don't know what that means");
+            } catch(AddTaskIndexOutOfBounds e) {
+                e.printError();
+            } catch (NullPointerException e) {
+                System.out.println("T^T OPPS!!! You have only " + indexOfTask + " tasks.");
+                System.out.println("Please only mark / unmark the tasks available.");
+            } catch (MarkerArrayIndexOutOfBoundsException e) {
+                System.out.println("Please enter the task number that you would like to mark / unmark, in the following format:");
+                System.out.println("For example if you want to mark / unmark task 2 as done / undone: mark 2 / unmark 2");
+            } catch (NumberFormatException e) {
+                System.out.println("Please mark / unmark each task one by one, in the following format: ");
+                System.out.println("For example if you want to mark / unmark task 2 as done / undone: mark 2 / unmark 2");
+            } catch (ArrayIndexOutOfBoundsException e ) {
+                System.out.println("Please add the tasks in the following format: \n");
+                System.out.println("Todo task format: todo task_name");
+                System.out.println("Deadline task format: deadline deadline_name /by deadline_date");
+                System.out.println("Event task format: event event_name /from event_from_timing /to event_to_timing");
+            }
+
             drawLine();
             createUserChatBox();
 
