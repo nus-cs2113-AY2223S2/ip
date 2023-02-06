@@ -1,25 +1,26 @@
 public class Event extends Task {
-    private String eventDateAndStartTime;
-    private String endTime;
-    public Event(String description, String eventDateAndStartTime, String endTime) {
+    private String eventStartInfo;
+    private String eventEndInfo;
+
+    public Event(String description, String eventStartInfo, String eventEndInfo) {
         super(description, "E");
-        setEventDateAndStartTime(eventDateAndStartTime);
-        setEndTime(endTime);
+        setEventStartInfo(eventStartInfo);
+        setEventEndInfo(eventEndInfo);
     }
 
-    public String getEventDateAndStartTime() {
-        return eventDateAndStartTime;
+    public String getEventStartInfo() {
+        return eventStartInfo;
     }
 
-    public void setEventDateAndStartTime(String eventDateAndStartTime) {
-        this.eventDateAndStartTime = eventDateAndStartTime;
+    public void setEventStartInfo(String eventStartInfo) {
+        this.eventStartInfo = eventStartInfo;
     }
 
-    public String getEndTime() {
-        return endTime;
+    public String getEventEndInfo() {
+        return eventEndInfo;
     }
 
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
+    public void setEventEndInfo(String eventEndInfo) {
+        this.eventEndInfo = eventEndInfo;
     }
 }

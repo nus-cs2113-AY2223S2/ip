@@ -1,28 +1,28 @@
 import java.util.Scanner;
-import java.util.Arrays;
 
 public class Duke {
+    public static final int ARRAY_LENGTH = 100;
+
     public static void main(String[] args) {
         greeting();
-        Task[] taskStorage = new Task[100];
-
+        Task[] tasks = new Task[ARRAY_LENGTH];
         Scanner in = new Scanner(System.in);
-        boolean is_exit = false;
-        while (!is_exit) {
 
+        boolean isExit = false;
+        while (!isExit) {
             String messageFromUser;
             messageFromUser = in.nextLine();
 
-            if (messageFromUser.startsWith("mark") || messageFromUser.startsWith("unmark")) {
-                changeTaskStatus(messageFromUser, taskStorage);
+            if (hasTaskKeyword(messageFromUser)) {
+                Task newTask = handleTaskCreation(messageFromUser);
+                addToList(newTask, tasks);
+            } else if (messageFromUser.startsWith("mark") || messageFromUser.startsWith("unmark")) {
+                changeTaskStatus(messageFromUser, tasks);
+            } else if (messageFromUser.equals("list")) {
+                displayList(tasks);
             } else if (messageFromUser.equals("bye")) {
                 exitGreeting();
-                is_exit = true;
-            } else if (messageFromUser.equals("list")) {
-                displayList(taskStorage);
-            } else if (hasTaskCreationKeyword(messageFromUser)) {
-                Task newTask = handleTaskCreation(messageFromUser);
-                addToList(newTask, taskStorage);
+                isExit = true;
             } else {
                 System.out.println("Invalid instruction. Please try again.");
                 horizontalLine();
@@ -30,27 +30,44 @@ public class Duke {
         }
     }
 
-    public static void changeTaskStatus(String sentence, Task[] taskStorage) {
+    public static boolean hasTaskKeyword(String messageFromUser) {
+        boolean isToDo = messageFromUser.startsWith("todo");
+        boolean isDeadline = messageFromUser.startsWith("deadline");
+        boolean isEvent = messageFromUser.startsWith("event");
+        return (isToDo || isDeadline || isEvent);
+    }
+
+    public static Task handleTaskCreation(String messageFromUser) {
+        Task newTask;
+        if (messageFromUser.startsWith("todo")) {
+            newTask = createToDo(messageFromUser);
+        } else if (messageFromUser.startsWith("deadline")) {
+            newTask = createDeadline(messageFromUser);
+        } else {
+            newTask = createEvent(messageFromUser);
+        }
+        return newTask;
+    }
+
+    public static void addToList(Task newTask, Task[] tasks) {
+        horizontalLine();
+        System.out.println("Sure, I've added this task: ");
+        displayTask(newTask);
+        int currentIndexInTaskStorage = Task.getNumberOfTasks();
+        tasks[currentIndexInTaskStorage] = newTask;
+        printNumberOfTasks(currentIndexInTaskStorage);
+        horizontalLine();
+    }
+
+    public static void changeTaskStatus(String sentence, Task[] tasks) {
         String[] words = sentence.split(" ");
         int taskNumber = Integer.parseInt(words[1]);
-        Task t = taskStorage[taskNumber];
+        Task currentTask = tasks[taskNumber];
         if (words[0].trim().equals("mark")) {
-            t.markAsDone();
+            currentTask.markAsDone();
         } else {
-            t.markAsUndone();
+            currentTask.markAsUndone();
         }
-        horizontalLine();
-    }
-
-    public static void greeting() {
-        horizontalLine();
-        System.out.println("Hello! I'm Duke");
-        System.out.println("What can I do for you?");
-        horizontalLine();
-    }
-
-    public static void exitGreeting() {
-        System.out.println("Bye. Hope to see you again soon!");
         horizontalLine();
     }
 
@@ -69,14 +86,33 @@ public class Duke {
         horizontalLine();
     }
 
-    public static void addToList(Task newTask, Task[] taskStorage) {
-        horizontalLine();
-        System.out.println("Sure, I've added this task: ");
-        displayTask(newTask);
-        int currentIndexInTaskStorage = Task.getNumberOfTasks();
-        taskStorage[currentIndexInTaskStorage] = newTask;
-        printNumberOfTasks(currentIndexInTaskStorage);
-        horizontalLine();
+    public static void displayTask(Task currentTask) {
+        // Check task type
+        String taskType = currentTask.getTaskType();
+        System.out.print(taskType + " ");
+        System.out.print(currentTask.getStatus());
+        System.out.print(currentTask.getTaskInfo());
+
+        switch (taskType) {
+        case "[T]":
+            System.out.println();
+            break;
+        case "[D]":
+            Deadline currentDeadline = (Deadline) currentTask;
+            String due = currentDeadline.getDueInfo();
+            System.out.print("(by:" + due + ")");
+            System.out.println();
+            break;
+        case "[E]":
+            Event currentEvent = (Event) currentTask;
+            String eventStart = currentEvent.getEventStartInfo();
+            String eventEnd = currentEvent.getEventEndInfo();
+            System.out.print("(from:" + eventStart + "to:" + eventEnd + ")");
+            System.out.println();
+            break;
+        default:
+            System.out.println("Unknown event type error");
+        }
     }
 
     public static void printNumberOfTasks(int currentIndex) {
@@ -112,54 +148,17 @@ public class Duke {
         return newEvent;
     }
 
-    public static boolean hasTaskCreationKeyword(String messageFromUser) {
-        boolean isToDo = messageFromUser.startsWith("todo");
-        boolean isDeadline = messageFromUser.startsWith("deadline");
-        boolean isEvent = messageFromUser.startsWith("event");
-        return (isToDo || isDeadline || isEvent);
+    public static void greeting() {
+        horizontalLine();
+        System.out.println("Hello! I'm Duke");
+        System.out.println("What can I do for you?");
+        horizontalLine();
     }
 
-    public static Task handleTaskCreation(String messageFromUser) {
-        Task newTask;
-        if (messageFromUser.startsWith("todo")) {
-            newTask = createToDo(messageFromUser);
-        } else if (messageFromUser.startsWith("deadline")) {
-            newTask = createDeadline(messageFromUser);
-        } else {
-            newTask = createEvent(messageFromUser);
-        }
-        return newTask;
+    public static void exitGreeting() {
+        System.out.println("Bye. Hope to see you again soon!");
+        horizontalLine();
     }
-
-    public static void displayTask(Task currentTask) {
-        // Check task type
-        String taskType = currentTask.getTaskType();
-        System.out.print(taskType + " ");
-        System.out.print(currentTask.getStatus());
-        System.out.print(currentTask.getTaskInfo());
-
-        switch (taskType) {
-        case "[T]":
-            System.out.println();
-            break;
-        case "[D]":
-            Deadline currentDeadline = (Deadline)currentTask;
-            String due = currentDeadline.getDueInfo();
-            System.out.print("(by:" + due + ")");
-            System.out.println();
-            break;
-        case "[E]":
-            Event currentEvent = (Event)currentTask;
-            String eventStart = currentEvent.getEventDateAndStartTime();
-            String eventEnd = currentEvent.getEndTime();
-            System.out.print("(from:" + eventStart + "to:" + eventEnd + ")");
-            System.out.println();
-            break;
-        default:
-            System.out.println("Unknown event type error");
-        }
-    }
-
 
     public static void horizontalLine() {
         System.out.println("________________________________________");
