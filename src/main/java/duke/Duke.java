@@ -24,8 +24,21 @@ public class Duke {
     public static void printInvalidNumber(String taskType) {
         System.out.println(LINE);
         System.out.println("\t☹ Error! Invalid input.");
-        System.out.println("\tPlease provide a integer number for " + "\"" + taskType + "\" command.");
+        System.out.println("\tPlease provide a integer number for \"" + taskType + "\" command.");
         System.out.println("\tPlease use \"list\" command to see your task numbers.");
+        System.out.println(LINE);
+    }
+
+    public static void printEmptyCommand(String taskType) {
+        System.out.println(LINE);
+        System.out.println("\t☹ Error! \"" + taskType + "\" command cannot be empty.");
+        System.out.println("\tPlease provide more details");
+        System.out.println(LINE);
+    }
+
+    public static void printInvalidFormat(String taskType) {
+        System.out.println(LINE);
+        System.out.println("\t☹ Error! Invalid format for \"" + taskType + "\" command.");
         System.out.println(LINE);
     }
 
@@ -126,20 +139,15 @@ public class Duke {
         String[] extractFirstWord = userCommand.split(" ", 2);
         String firstWord = extractFirstWord[0];
         switch (firstWord) {
-        case COMMAND_MARK: {
+        case COMMAND_MARK:
             try {
                 int taskNum = Integer.parseInt(extractFirstWord[1]);
                 doCommandMark(taskNum);
-            } catch (IndexOutOfBoundsException out_mark_a) {
-                System.out.println(LINE);
-                System.out.println("\t☹ Error! \"mark\" command requires a task number.");
-                System.out.println(LINE);
-            } catch (NumberFormatException num_mark_a) {
+            } catch (IndexOutOfBoundsException | NumberFormatException out_mark_a) {
                 printInvalidNumber("mark");
             }
             break;
-        }
-        case COMMAND_UNMARK: {
+        case COMMAND_UNMARK:
             try {
                 int taskNum = Integer.parseInt(extractFirstWord[1]);
                 doCommandUnmark(taskNum);
@@ -147,7 +155,6 @@ public class Duke {
                 printInvalidNumber("unmark");
             }
             break;
-        }
         case COMMAND_LIST:
             doCommandList();
             break;
@@ -162,38 +169,27 @@ public class Duke {
                 printInvalidNumber("delete");
             }
             break;
-        case COMMAND_TODO: {
+        case COMMAND_TODO:
             try {
                 String taskName = (extractFirstWord[1]);
                 doCommandTodo(taskName);
             } catch (IndexOutOfBoundsException out_todo_a) {
-                System.out.println(LINE);
-                System.out.println("\t☹ Error! \"todo\" command is empty.");
-                System.out.println("\tPlease provide a description of the task.");
-                System.out.println(LINE);
+                printEmptyCommand("todo");
             }
             break;
-        }
-        case COMMAND_DEADLINE: {
+        case COMMAND_DEADLINE:
             try {
                 int index = extractFirstWord[1].indexOf("/by");
                 String taskName = extractFirstWord[1].substring(0, index);
                 String taskDeadline = extractFirstWord[1].substring(index + 4);
                 doCommandDeadline(taskName, taskDeadline);
-
             } catch (StringIndexOutOfBoundsException out_deadline_a) {
-                System.out.println(LINE);
-                System.out.println("\t☹ Error! Invalid format for \"deadline\" command.");
-                System.out.println(LINE);
+                printInvalidFormat("deadline");
             } catch (IndexOutOfBoundsException out_deadline_a) {
-                System.out.println(LINE);
-                System.out.println("\t☹ Error! \"deadline\" command is empty.");
-                System.out.println("\tPlease provide details of task and due date/time.");
-                System.out.println(LINE);
-                break;
+                printEmptyCommand("deadline");
             }
-        }
-        case COMMAND_EVENT: {
+            break;
+        case COMMAND_EVENT:
             try {
                 int indexOfEventDetailsPartOne = extractFirstWord[1].indexOf("/from");
                 int indexOfEventDetailsPartTwo = extractFirstWord[1].indexOf("/to");
@@ -201,24 +197,16 @@ public class Duke {
                 String eventDetailsPartOne = extractFirstWord[1].substring(indexOfEventDetailsPartOne + 6, indexOfEventDetailsPartTwo - 1);
                 String eventDetailsPartTwo = extractFirstWord[1].substring(indexOfEventDetailsPartTwo + 4);
                 doCommandEvent(eventName, eventDetailsPartOne, eventDetailsPartTwo);
-
-            } catch (StringIndexOutOfBoundsException out_deadline_a) {
-                System.out.println(LINE);
-                System.out.println("\t☹ Error! Invalid format for \"event\" command.");
-                System.out.println(LINE);
+            } catch (StringIndexOutOfBoundsException out_event_a) {
+                printInvalidFormat("event");
             } catch (IndexOutOfBoundsException out_event_a) {
-                System.out.println(LINE);
-                System.out.println("\t☹ Error! \"event\" command is empty.");
-                System.out.println("\tPlease provide details of task and date/time.");
-                System.out.println(LINE);
-                break;
+                printEmptyCommand("event");
             }
-        }
-        default: {
+            break;
+        default:
             System.out.println(LINE);
             System.out.println("\t☹ Error! Please input a valid command!");
             System.out.println(LINE);
-        }
         }
     }
 
