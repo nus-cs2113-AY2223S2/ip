@@ -59,7 +59,7 @@ public class Duke {
             if (input[i] == null) {
                 break;
             }
-            System.out.print(i + ". " + input[i]);
+            System.out.println(i + ". " + input[i]);
         }
         System.out.println(line);
     }
