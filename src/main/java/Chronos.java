@@ -7,21 +7,30 @@ import tasktype.Task;
 import tasktype.Stash;
 import tasktype.Deadline;
 import tasktype.Todo;
+
+import java.util.Scanner;
+
+import timer.Clock;
+import timer.Break;
+import timer.WorkTask;
+
 //test commit for level 5 branch
-public class Chronos{
+public class Chronos {
     private static Input inOut;
     private static Stash stash;
+
     private static void addNew(Task task) {
         stash.addNewTask(task);
         Output.printNewTask(task, stash.ObtainTaskCount());
     }
-    private static void toggleTaskStatus(String details){
+
+    private static void toggleTaskStatus(String details) {
         try {
             int index = Integer.parseInt(details) - 1;
             Task task = stash.getTask(index);
             task.toggleDone();
             Output.printIsDone(stash, index);
-        } catch(ArrayIndexOutOfBoundsException e){
+        } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("The index you have entered is invalid");
         }
     }
@@ -36,11 +45,11 @@ public class Chronos{
     }
 
     private static void inputCommands() {
-        while(true){
+        while (true) {
             Command userCommand = InputParser.parseInput(inOut.readInput());
             String category = userCommand.getAction();
 
-            switch (category){
+            switch (category) {
             case "list":
                 Output.printList(stash);
                 continue;
@@ -65,10 +74,31 @@ public class Chronos{
                 return;
             //test commit to master
             case "timer":
-                System.out.println("I lost the code thanks sourcetree");
+                timerModule();
+
+                continue;
+
             default:
                 System.out.println("Sorry, I do not understand the input at this point in time.");
+        }
+    }
+
+}
+
+    private static void timerModule() {
+        Scanner timerCommand = new Scanner(System.in);
+        Clock clock = new Clock();
+        clock.startWork();
+        System.out.println("Press Enter to start a break, or type 'cancel' to stop the timer: ");
+        while (timerCommand.hasNextLine()) {
+            String line = timerCommand.nextLine();
+            if (line.equals("cancel")) {
+                clock.cancelClock();
+                break;
+            } else {
+                clock.startBreak();
             }
+            timerCommand.close();
         }
     }
 
