@@ -10,15 +10,19 @@ public class Duke {
     // Horizontal Rule to act as a divider
     private static final String HORIZONTAL_RULE = "__________________________________________________";
 
+    public static void printHorizontalRule() {
+        System.out.println(HORIZONTAL_RULE);
+    }
+
     /**
      * Start up function.
      * Prints ASCII art and prompts users for input
      */
     public static void startUp() {
         System.out.println(LOGO);
-        System.out.println(HORIZONTAL_RULE);
+        printHorizontalRule();
         System.out.println("Hello! I'm Duke. \nWhat can I do for you?");
-        System.out.println(HORIZONTAL_RULE);
+        printHorizontalRule();
     }
 
     /**
@@ -26,9 +30,9 @@ public class Duke {
      * Informs users that Duke is no longer accepting commands
      */
     public static void shutDown() {
-        System.out.println(HORIZONTAL_RULE);
+        printHorizontalRule();
         System.out.println("Shutting Down! Hope to see you again soon!");
-        System.out.println(HORIZONTAL_RULE);
+        printHorizontalRule();
     }
 
     /**
@@ -36,14 +40,14 @@ public class Duke {
      * Also prints the description of the task and the current number of tasks
      */
     public static void printAcknowledgement(String taskType, String description, int taskCounter) {
-        System.out.println(HORIZONTAL_RULE);
+        printHorizontalRule();
         System.out.println("Added " + taskType + ": " + description);
         System.out.println("Total Number of Tasks: " + taskCounter);
-        System.out.println(HORIZONTAL_RULE);
+        printHorizontalRule();
     }
 
     /**
-     * Removes the command word for creating tasks, ie. todo, deadline or event
+     * Removes the command word for creating tasks, ie. to do, deadline or event
      */
     public static String removeCommandWord(String userInput) {
         return userInput.split(" ", 2)[1];
@@ -104,54 +108,78 @@ public class Duke {
             // Used to check if tasks are to be marked/unmarked
             String firstWord = userInput.split(" ", 2)[0].toLowerCase();
 
-            if ((userInput).equalsIgnoreCase("bye")) {
-                shutDown();
-                return;
+            // initializing variables
+            int taskIndex;
+            String withoutCommand = "", description = "";
 
-            } else if ((userInput).equalsIgnoreCase("list")) {
-                // Prints all contents of task Array
-                System.out.println(HORIZONTAL_RULE);
-                for (int i = 0; i < taskCounter; i++) {
-                    System.out.println((i + 1) + ". " + tasks[i]);
-                }
-                // Prints total number
-                System.out.println("Total number of tasks: " + taskCounter);
-                System.out.println(HORIZONTAL_RULE);
+            switch (firstWord) {
+                case ("bye"):
+                    shutDown();
+                    return;
 
-            } else if (firstWord.equalsIgnoreCase("mark")) {
-                // Sets specified task to complete
-                int taskIndex = Integer.parseInt(userInput.split(" ", 2)[1]);
-                tasks[taskIndex - 1].setComplete();
+                case ("list"):
+                    // Prints all contents of task Array
+                    printHorizontalRule();
+                    for (int i = 0; i < taskCounter; i++) {
+                        System.out.println((i + 1) + ". " + tasks[i]);
+                    }
+                    // Prints total number
+                    System.out.println("Total number of tasks: " + taskCounter);
+                    printHorizontalRule();
+                    break;
 
-                // Prints acknowledgement
-                System.out.println(HORIZONTAL_RULE);
-                System.out.println("Marking task \"" + tasks[taskIndex - 1].getTask() + "\" as complete!");
-                System.out.println(HORIZONTAL_RULE);
+                case ("mark"):
+                    try {
+                        // Sets specified task to complete
+                        taskIndex = Integer.parseInt(userInput.split(" ", 2)[1]);
+                        tasks[taskIndex - 1].setComplete();
 
-            } else if (firstWord.equalsIgnoreCase("unmark")) {
-                // Sets specified task to incomplete
-                int taskIndex = Integer.parseInt(userInput.split(" ", 2)[1]);
-                tasks[taskIndex - 1].setIncomplete();
+                        // Prints acknowledgement
+                        printHorizontalRule();
+                        System.out.println("Marking task \"" + tasks[taskIndex - 1].getTask() + "\" as complete!");
+                        printHorizontalRule();
+                    } catch (IndexOutOfBoundsException e) {
+                        printHorizontalRule();
+                        System.out.println("Please provide a valid index!");
+                        printHorizontalRule();
+                    }
 
-                // Prints acknowledgement
-                System.out.println(HORIZONTAL_RULE);
-                System.out.println("Marking task \"" + tasks[taskIndex - 1].getTask() + "\" as incomplete!");
-                System.out.println(HORIZONTAL_RULE);
+                    break;
 
-            } else if (firstWord.equalsIgnoreCase("todo")) {
+                case ("unmark"):
+                    try {
+                        // Sets specified task to incomplete
+                        taskIndex = Integer.parseInt(userInput.split(" ", 2)[1]);
+                        tasks[taskIndex - 1].setIncomplete();
+
+                        // Prints acknowledgement
+                        printHorizontalRule();
+                        System.out.println("Marking task \"" + tasks[taskIndex - 1].getTask() + "\" as incomplete!");
+                        printHorizontalRule();
+                    } catch (IndexOutOfBoundsException e) {
+                        printHorizontalRule();
+                        System.out.println("Please provide a valid index!");
+                        printHorizontalRule();
+                    }
+
+                    break;
+
+                case ("todo"):
                 /*
                   For to do tasks
                   Removes the command word, then adds a new to do with the description to the array
                  */
-                String withoutCommand = removeCommandWord(userInput);
-                Todo newTodo = new Todo(withoutCommand);
-                tasks[taskCounter] = newTodo;
-                taskCounter += 1;
+                    withoutCommand = removeCommandWord(userInput);
+                    Todo newTodo = new Todo(withoutCommand);
+                    tasks[taskCounter] = newTodo;
+                    taskCounter += 1;
 
-                // Prints acknowledgement
-                printAcknowledgement("Todo", withoutCommand, taskCounter);
+                    // Prints acknowledgement
+                    printAcknowledgement("Todo", withoutCommand, taskCounter);
 
-            } else if (firstWord.equalsIgnoreCase("deadline")) {
+                    break;
+
+                case ("deadline"):
                 /*
                   For deadline tasks
                   Removes the command word and extracts the description
@@ -159,42 +187,46 @@ public class Duke {
                   Adds a new deadline to the array
                  */
 
-                String withoutCommand = removeCommandWord(userInput);
-                String description = getDescriptionForDeadline(withoutCommand);
-                String by = getDeadline(withoutCommand);
+                    withoutCommand = removeCommandWord(userInput);
+                    description = getDescriptionForDeadline(withoutCommand);
+                    String by = getDeadline(withoutCommand);
 
-                Deadline deadline = new Deadline(description, by);
-                tasks[taskCounter] = deadline;
-                taskCounter += 1;
+                    Deadline deadline = new Deadline(description, by);
+                    tasks[taskCounter] = deadline;
+                    taskCounter += 1;
 
-                // Prints acknowledgement
-                printAcknowledgement("Deadline", description, taskCounter);
+                    // Prints acknowledgement
+                    printAcknowledgement("Deadline", description, taskCounter);
 
-            } else if (firstWord.equalsIgnoreCase("event")) {
+                    break;
+
+                case ("event"):
                 /*
                   For event tasks
                   Removes the command word and extracts the description
                   Also extracts the start and end to the from and to variable
                   Adds a new event to the array
                  */
-                String withoutCommand = removeCommandWord(userInput);
-                String description = getDescriptionForEvent(withoutCommand);
+                    withoutCommand = removeCommandWord(userInput);
+                    description = getDescriptionForEvent(withoutCommand);
 
-                // Returns in the format [from, to]
-                String[] timings = getTimings(withoutCommand);
+                    // Returns in the format [from, to]
+                    String[] timings = getTimings(withoutCommand);
 
-                Event event = new Event(description, timings[0], timings[1]);
-                tasks[taskCounter] = event;
-                taskCounter += 1;
+                    Event event = new Event(description, timings[0], timings[1]);
+                    tasks[taskCounter] = event;
+                    taskCounter += 1;
 
-                // Prints acknowledgement
-                printAcknowledgement("Deadline", description, taskCounter);
+                    // Prints acknowledgement
+                    printAcknowledgement("Deadline", description, taskCounter);
 
-            } else {
-                // If none of the above, invalid command - prints error informing user
-                System.out.println(HORIZONTAL_RULE);
-                System.out.println(userInput + " is an invalid command. Please try again!");
-                System.out.println(HORIZONTAL_RULE);
+                    break;
+
+                default:
+                    // If none of the above, invalid command - prints error informing user
+                    printHorizontalRule();
+                    System.out.println(userInput + " is an invalid command. Please try again!");
+                    printHorizontalRule();
             }
         }
     }
