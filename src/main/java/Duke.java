@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class Duke {
     private static String line = "__________________________________________________________";
     private static Task[] inputList = new Task[101];
-    private static int length = 0;
+    private static int numTasks = 0;
 
     public static void addTask(String userInput) {
         Task t;
@@ -16,9 +16,9 @@ public class Duke {
             t = new Event(userInput.substring(userInput.indexOf(" "), userInput.length()));
         }
         t.printAddTask();
-        inputList[length+1] = t; //1-index
-        length++;
-        System.out.println("Now you have " + length + " tasks in the list.");
+        inputList[numTasks+1] = t; //1-index
+        numTasks++;
+        System.out.println("Now you have " + numTasks + " tasks in the list.");
         System.out.println(line);
     }
 
@@ -34,17 +34,14 @@ public class Duke {
         System.out.println(line);
     }
 
-    public static void commands() {
+    public static void getCommands() {
         Scanner in = new Scanner(System.in);
-        //Task[] inputList = new Task[101];
         String userInput = in.nextLine();
-        boolean exit = false;
-        //int length = 0; //0-index
-        while (!exit) {
-            if (userInput.contains("bye")) {
+
+        while (true) {
+            if (userInput.equals("bye")) {
                 break;
-            } else if (userInput.contains("list")) {
-                //System.out.println(inputList.length);
+            } else if (userInput.equals("list")) {
                 printList(inputList);
             } else if (userInput.contains("mark")) {
                 String taskNum = userInput.substring(userInput.length()-1);
@@ -81,7 +78,7 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";*/
         //System.out.println("Hello from\n" + logo);
         greet();
-        commands();
+        getCommands();
         bye();
     }
 }
