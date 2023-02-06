@@ -1,5 +1,5 @@
 public class Task {
-    private static int itemCount;
+    private static int itemCount = 0;
     private String itemName;
     private int itemId;
     private boolean isDone;
@@ -29,11 +29,8 @@ public class Task {
         return isDone;
     }
 
-    public void markAsDone() {
-        this.isDone = true;
-    }
-    public void markAsUndone() {
-        this.isDone = false;
+    public void markAsState(boolean state) {
+        this.isDone = state;
     }
     public void printTask() {
         String status = new String();

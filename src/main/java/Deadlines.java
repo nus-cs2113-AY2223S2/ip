@@ -1,12 +1,20 @@
+import errors.InvalidDeadlineException;
+
 public class Deadlines extends Task{
+    public static final int DEADLINE_DIVIDER_LENGTH = 4;
     private String itemName;
     private String deadline;
 
-    public Deadlines(String itemName) {
+    public Deadlines(String itemName)
+            throws InvalidDeadlineException {
         super(itemName);
         int indexOfDivider = itemName.indexOf("/by");
+        if (indexOfDivider == -1 ||
+                itemName.substring(indexOfDivider + DEADLINE_DIVIDER_LENGTH).isEmpty()) {
+            throw new InvalidDeadlineException();
+        }
         this.itemName = super.getItemName().substring(0,indexOfDivider);
-        this.deadline = itemName.substring(indexOfDivider + 4);
+        this.deadline = itemName.substring(indexOfDivider + DEADLINE_DIVIDER_LENGTH);
     }
 
     @Override
