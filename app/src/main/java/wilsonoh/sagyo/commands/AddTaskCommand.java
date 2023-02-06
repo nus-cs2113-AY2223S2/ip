@@ -1,15 +1,14 @@
 package wilsonoh.sagyo.commands;
 
-import java.util.ArrayList;
-
+import wilsonoh.sagyo.tasklist.TaskList;
 import wilsonoh.sagyo.tasks.Task;
 
 public class AddTaskCommand extends Command {
 
-    private final ArrayList<Task> taskList;
+    private final TaskList taskList;
     private final Task toAdd;
 
-    public AddTaskCommand(ArrayList<Task> taskList, Task toAdd) {
+    public AddTaskCommand(TaskList taskList, Task toAdd) {
         this.taskList = taskList;
         this.toAdd = toAdd;
     }
@@ -21,6 +20,6 @@ public class AddTaskCommand extends Command {
 
     @Override
     public void executeCommand() {
-        taskList.add(toAdd);
+        taskList.addTask(toAdd);
     }
 }

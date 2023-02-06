@@ -1,5 +1,7 @@
 package wilsonoh.sagyo.commands;
 
+import wilsonoh.sagyo.exceptions.InvalidCommandException;
+
 public abstract class Command {
 
     protected boolean isExit = false;
@@ -10,5 +12,5 @@ public abstract class Command {
 
     public abstract String[] getCommandMessage();
 
-    public abstract void executeCommand();
+    public abstract void executeCommand() throws InvalidCommandException;
 }

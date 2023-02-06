@@ -1,6 +1,5 @@
 package wilsonoh.sagyo.parser;
 
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,13 +13,14 @@ import wilsonoh.sagyo.commands.MarkTaskCommand;
 import wilsonoh.sagyo.commands.UnMarkTaskCommand;
 import wilsonoh.sagyo.exceptions.InvalidCommandException;
 import wilsonoh.sagyo.exceptions.InvalidTaskException;
+import wilsonoh.sagyo.tasklist.TaskList;
 import wilsonoh.sagyo.tasks.Task;
 
 public class CommandParser {
 
-    private final ArrayList<Task> tasks;
+    private final TaskList tasks;
 
-    public CommandParser(ArrayList<Task> tasks) {
+    public CommandParser(TaskList tasks) {
         this.tasks = tasks;
     }
 
@@ -40,7 +40,7 @@ public class CommandParser {
                 case BYE:
                     return new ByeCommand();
                 case LIST:
-                    return new ListCommand(this.tasks);
+                    return new ListCommand(tasks);
                 case DELETE: {
                     String idxGroup = matcher.group("idx");
                     return new DeleteTaskCommand(tasks, idxGroup);

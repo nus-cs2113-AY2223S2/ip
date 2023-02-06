@@ -1,33 +1,24 @@
 package wilsonoh.sagyo.commands;
 
-import java.util.ArrayList;
-
-import wilsonoh.sagyo.exceptions.InvalidTaskException;
+import wilsonoh.sagyo.exceptions.InvalidCommandException;
+import wilsonoh.sagyo.tasklist.TaskList;
 import wilsonoh.sagyo.tasks.Task;
 
-public class DeleteTaskCommand extends Command {
+public class DeleteTaskCommand extends Command implements IndexedCommand {
 
-    private ArrayList<Task> tasks;
+    private TaskList tasks;
     private int idx;
     private Task toDelete;
 
-    public DeleteTaskCommand(ArrayList<Task> tasks, String idxGroup) throws InvalidTaskException {
-        if (idxGroup == null) {
-            throw new InvalidTaskException("The delete command must be followed by the index of a task");
-        }
-        int idx = Integer.parseInt(idxGroup) - 1;
-        if (idx < 0 || idx > tasks.size() - 1) {
-            throw new InvalidTaskException(
-                String.format("Task index %d is invalid for task list of size %d", idx, tasks.size()));
-        }
+    public DeleteTaskCommand(TaskList tasks, String idxGroup) throws InvalidCommandException {
         this.tasks = tasks;
-        this.idx = idx;
-        this.toDelete = tasks.get(idx);
+        this.idx = getValidatedIndex(tasks, idxGroup);
+        this.toDelete = tasks.getTask(idx);
     }
 
     @Override
-    public void executeCommand() {
-        tasks.remove(idx);
+    public void executeCommand() throws InvalidCommandException {
+        tasks.deleteTask(idx);
     }
 
     @Override

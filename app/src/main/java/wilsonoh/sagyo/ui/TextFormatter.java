@@ -1,10 +1,6 @@
 package wilsonoh.sagyo.ui;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.stream.IntStream;
-
-import wilsonoh.sagyo.tasks.Task;
 
 /**
  * Helper class for printing out formatted text
@@ -37,12 +33,6 @@ public class TextFormatter {
      */
     private void clearScreen() {
         System.out.print("\033\143");
-    }
-
-    public static String[] getFormattedTaskStrings(ArrayList<Task> tasks) {
-        return IntStream.rangeClosed(1, tasks.size())
-            .mapToObj(idx -> String.format("%d: %s", idx, tasks.get(idx - 1)))
-            .toArray(String[] ::new);
     }
 
     /**

@@ -1,6 +1,5 @@
 package wilsonoh.sagyo;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import wilsonoh.sagyo.commands.Command;
@@ -8,7 +7,7 @@ import wilsonoh.sagyo.exceptions.InvalidTaskException;
 import wilsonoh.sagyo.exceptions.SagyoException;
 import wilsonoh.sagyo.parser.CommandParser;
 import wilsonoh.sagyo.storage.Storage;
-import wilsonoh.sagyo.tasks.Task;
+import wilsonoh.sagyo.tasklist.TaskList;
 import wilsonoh.sagyo.ui.TextFormatter;
 
 public class Main {
@@ -18,7 +17,7 @@ public class Main {
 
     private static final String PROMPT = "> ";
 
-    private final ArrayList<Task> tasks = new ArrayList<>();
+    private final TaskList tasks = new TaskList();
 
     /**
      * Runner function of the class, executes the main loop
@@ -27,7 +26,7 @@ public class Main {
         TextFormatter ui = new TextFormatter(2, 120);
         Storage storage = new Storage();
         try {
-            this.tasks.addAll(storage.getTaskListFromJSON());
+            this.tasks.extendFromStorage(storage);
         } catch (InvalidTaskException e) {
             System.out.println(e.getMessage());
         }

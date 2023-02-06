@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 import wilsonoh.sagyo.exceptions.InvalidTaskException;
+import wilsonoh.sagyo.tasklist.TaskList;
 import wilsonoh.sagyo.tasks.DeadlineTask;
 import wilsonoh.sagyo.tasks.EventTask;
 import wilsonoh.sagyo.tasks.Task;
@@ -40,7 +41,7 @@ public class Storage {
         taskListPath = sagyoHome.resolve("tasks.json");
     }
 
-    public void writeTasksToJSON(ArrayList<Task> tasks) {
+    public void writeTasksToJSON(TaskList tasks) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         JsonArray jsonArray = new JsonArray();
         for (Task task : tasks) {

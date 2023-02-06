@@ -1,35 +1,28 @@
 package wilsonoh.sagyo.commands;
 
-import java.util.ArrayList;
-
-import wilsonoh.sagyo.exceptions.InvalidTaskException;
+import wilsonoh.sagyo.exceptions.InvalidCommandException;
+import wilsonoh.sagyo.tasklist.TaskList;
 import wilsonoh.sagyo.tasks.Task;
 
-public class UnMarkTaskCommand extends Command {
+public class UnMarkTaskCommand extends Command implements IndexedCommand {
 
-    private final ArrayList<Task> tasks;
+    private final TaskList tasks;
     private final int idx;
+    private final Task toUnMark;
 
-    public UnMarkTaskCommand(ArrayList<Task> tasks, String idxGroup) throws InvalidTaskException {
-        if (idxGroup == null) {
-            throw new InvalidTaskException("The unmark command must be followed by the index of a task");
-        }
-        int idx = Integer.parseInt(idxGroup) - 1;
-        if (idx < 0 || idx > tasks.size() - 1) {
-            throw new InvalidTaskException(
-                String.format("Task index %d is invalid for task list of size %d", idx, tasks.size()));
-        }
+    public UnMarkTaskCommand(TaskList tasks, String idxGroup) throws InvalidCommandException {
         this.tasks = tasks;
-        this.idx = idx;
+        this.idx = getValidatedIndex(tasks, idxGroup);
+        this.toUnMark = tasks.getTask(idx);
     }
 
     @Override
     public String[] getCommandMessage() {
-        return new String[] {"OK, I've marked this task as not done yet:", "  " + tasks.get(idx)};
+        return new String[] {"OK, I've marked this task as not done yet:", toUnMark.toString()};
     }
 
     @Override
-    public void executeCommand() {
-        tasks.get(idx).unMarkDone();
+    public void executeCommand() throws InvalidCommandException {
+        tasks.unMarkTask(idx);
     }
 }

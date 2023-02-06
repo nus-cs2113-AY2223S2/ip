@@ -1,22 +1,19 @@
 package wilsonoh.sagyo.commands;
 
-import java.util.ArrayList;
-
-import wilsonoh.sagyo.tasks.Task;
-import wilsonoh.sagyo.ui.TextFormatter;
+import wilsonoh.sagyo.tasklist.TaskList;
 
 public class ListCommand extends Command {
 
-    private final ArrayList<Task> tasks;
+    private final TaskList tasks;
 
-    public ListCommand(ArrayList<Task> taskList) {
+    public ListCommand(TaskList taskList) {
         this.tasks = taskList;
     }
 
     @Override
     public String[] getCommandMessage() {
         return tasks.isEmpty() ? new String[] {"Task list is currently empty.", "Try adding some tasks!"}
-                               : TextFormatter.getFormattedTaskStrings(tasks);
+                               : tasks.getTasksString();
     }
 
     @Override
