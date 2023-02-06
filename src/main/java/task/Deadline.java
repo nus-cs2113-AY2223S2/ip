@@ -26,12 +26,16 @@ public class Deadline extends ToDo {
     }
     @Override
     public void parseArgument(String arguments) throws InvalidCommandException, EmptyDescriptionException {
-        int by = arguments.indexOf("/by");
-        // Check if expression exist and if it is surrounded by a space
-        if (by <= 0 || arguments.charAt(by-1)!=' ' || arguments.charAt(by+3)!=' ') {
-            throw new InvalidCommandException("Command could not be understood", new IllegalArgumentException());
+        try {
+            int by = arguments.indexOf("/by");
+            // Check if expression exist and if it is surrounded by a space
+            if (by <= 0 || arguments.charAt(by-1)!=' ' || arguments.charAt(by+3)!=' ') {
+                throw new InvalidCommandException("Command could not be understood", new IllegalArgumentException());
+            }
+            setDescription(arguments.substring(0,by - 1));
+            setEndDate(arguments.substring(by + 4));
+        } catch (IndexOutOfBoundsException e) {
+            throw new InvalidCommandException("Command at /by is invalid", new IllegalArgumentException());
         }
-        setDescription(arguments.substring(0,by - 1));
-        setEndDate(arguments.substring(by + 4));
     }
 }

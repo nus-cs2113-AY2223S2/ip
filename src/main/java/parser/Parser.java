@@ -34,6 +34,11 @@ public class Parser implements IParser {
     private boolean isUnmark(){
         return (message.split(" ")[0].toLowerCase().equals("unmark"));
     }
+    /**
+     * Method checks the type of task given by the user
+     * @return TaskTypeEnum
+     * @exception InvalidCommandException
+     */
     private TaskTypeEnum typeOfTask() throws InvalidCommandException {
         String task = message.split(" ")[0].toUpperCase();
         Optional<TaskTypeEnum> answer = Arrays.stream(TaskTypeEnum.values())
@@ -54,6 +59,8 @@ public class Parser implements IParser {
     private void getNextMessage() throws EmptyCommandException {
         try {
             message = sc.nextLine().trim();
+            // If the message is blank it means that the user did not input anything
+            // so throw an exception
             if (message.isBlank()){
                 throw new NoSuchElementException();
             }
@@ -64,6 +71,7 @@ public class Parser implements IParser {
     @Override
     public Command getCommand() throws EmptyCommandException {
         try {
+            // Get the message from the user before checking what is the command
             getNextMessage();
         } catch (EmptyCommandException e) {
             throw e;
@@ -124,7 +132,12 @@ public class Parser implements IParser {
     }
     @Override
 	public int getTaskIndex() throws InvalidCommandException{
+        // Assert that mark or unmark is the command
+        assert (currentCommand == Command.MARK) || (currentCommand == Command.UNMARK);
+
         try {
+            // Try to get the index from the command
+            // if there is an error then throw error message
             return Integer.parseInt(message.split(" ")[1]);
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
             throw new InvalidCommandException("Invalid task index", e);
