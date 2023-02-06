@@ -1,30 +1,37 @@
 import java.util.Scanner;
 
 public class Duke {
-    
     public static final String DIVIDER = "____________________________________________________________\n";
     
     public static void main(String[] args) {
         greet();
         
         Tasks list = new Tasks();
-        Scanner in = new Scanner(System.in);
-        String line = in.nextLine();
+        readCommandLine(list);
         
-        while (!line.equalsIgnoreCase("bye")) {
-            System.out.print(DIVIDER);
-            runCommand(list, line);
-            System.out.println(DIVIDER);
-            line = in.nextLine();
-        }
         exit();
     }
+    
     public static void greet() {
         String greet = DIVIDER +
                 "Hello! I'm Bob\n" +
                 "What can I do for you?\n" +
                 DIVIDER;
         System.out.println(greet);
+    }
+    
+    private static void readCommandLine(Tasks list) {
+        Scanner in = new Scanner(System.in);
+        String line = in.nextLine();
+        
+        // continuously reads input from command line until command 'bye' is inputted
+        while (!line.equalsIgnoreCase("bye")) {
+            System.out.print(DIVIDER);
+            runCommand(list, line);
+            System.out.println(DIVIDER);
+            
+            line = in.nextLine();
+        }
     }
     
     private static void runCommand(Tasks list, String line) {
@@ -58,17 +65,9 @@ public class Duke {
             printUnknownCommandMessage();
             printHelp();
             break;
-            
         }
     }
     
-    /**
-     * Splits line from user input into an array of 2 Strings: Command and Argument separately
-     * If no argument, second element to be ""
-     *
-     * @param line Input from user
-     * @return String array of size 2 containing Command and Argument
-     */
     private static String[] splitCommandAndArgs(String line) {
         final String[] splitStrings = line.split(" ", 2);
         return splitStrings.length == 2 ? splitStrings : new String[]{splitStrings[0], ""};

@@ -12,7 +12,7 @@ public class Task {
     }
     
     public String getStatusIcon() {
-        return isDone ? "X" : " "; // mark done task with X, undone as empty
+        return isDone ? "[X] " : "[ ] ";
     }
     
     public void markTask(boolean isDone) {
@@ -20,6 +20,6 @@ public class Task {
     }
     
     public String toString() {
-        return "[" + getStatusIcon() + "] " + description;
+        return getStatusIcon() + description;
     }
 }
