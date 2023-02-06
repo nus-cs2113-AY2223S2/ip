@@ -1,3 +1,5 @@
+package duke;
+
 public class Deadline extends Task {
 
     public static final String DEADLINE_ICON = "[D]";
