@@ -1,3 +1,10 @@
+import io.DukeException;
+import io.IO;
+import task.Deadline;
+import task.Event;
+import task.TaskList;
+import task.Todo;
+
 import java.util.Scanner;
 
 public class Duke {
