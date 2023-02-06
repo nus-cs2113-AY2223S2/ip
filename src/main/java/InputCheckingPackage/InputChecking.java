@@ -45,6 +45,28 @@ public class InputChecking {
 
     }
 
+    public static boolean checkTodoInput(String command) {
+        command = command.toLowerCase();
+        String[] words = command.split(" ");
+        String keyword = command.substring(0, 4);
+
+
+        if (!keyword.equals("todo")) {
+            System.out.println("The keyword 'todo' should be the first word");
+            return false;
+        }
+
+
+        if (words.length < 2) {
+            System.out.println("ERROR! Todo name is empty");
+            return false;
+        }
+
+        return true;
+
+
+    }
+
     public static boolean checkEventInput(String command) {
         command = command.toLowerCase();
         String keyword = command.substring(0, 5);

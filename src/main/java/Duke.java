@@ -7,7 +7,6 @@ import java.util.Scanner;
 import static InputCheckingPackage.InputChecking.*;
 
 
-
 public class Duke {
 
     private static final Task[] tasks = new Task[Constants.MAX_NUMBER_OF_ENTRIES];
@@ -36,7 +35,6 @@ public class Duke {
                 isValidInput = checkForValidInput(command);
             }
             printHorizontalBar();
-
 
 
             if (command.contains("list")) {
@@ -74,15 +72,26 @@ public class Duke {
                 }
 
 
+            } else if (command.contains("todo")) {
+                boolean isValidTodoInput = checkTodoInput(command);
+                if (isValidTodoInput) {
+                    createTask(command, numberOfTasks);
+                    numberOfTasks++;
+                }
+
 
             } else {
-                createTask(command, numberOfTasks);
-                numberOfTasks++;
+                System.out.println("Sorry I didn't get that!");
+
 
             }
 
 
-            System.out.println("There are currently "+numberOfTasks + " task(s) in the list");
+            System.out.println("There are currently " + numberOfTasks + " task(s) in the list");
+
+            if (numberOfTasks == 100) {
+                System.out.println("There are now 100 tasks and more tasks cannot be added!");
+            }
             printHorizontalBar();
             latestResponse = checkForAdditionalTask();
             hasAdditionalTask = true;
@@ -98,9 +107,6 @@ public class Duke {
         printHorizontalBar();
 
     }
-
-
-
 
 
     private static void greetUser() {
