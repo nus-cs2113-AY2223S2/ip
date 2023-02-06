@@ -1,7 +1,14 @@
-public class Event extends Deadline{
-    protected String by;
-    public Event(String description, String by) {
-        super(description, by);
+public class Event extends Task{
+    protected String start;
+    protected String end;
+    public Event(String description, String start, String end) {
+        super(description);
+        setStartEnd(start, end);
+    }
+
+    public void setStartEnd (String start, String end) {
+        this.start = start;
+        this.end = end;
     }
 
     @Override
@@ -9,4 +16,8 @@ public class Event extends Deadline{
         return "event";
     }
 
+    @Override
+    public String getTimings() {
+        return this.start + "/" + this.end;
+    }
 }

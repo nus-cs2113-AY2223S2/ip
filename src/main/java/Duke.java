@@ -21,24 +21,22 @@ public class Duke {
                 } else {
                     getList(tasks, counter);
                 }
+                word = reader.nextLine();
 
             //mark, unmark, or add
             } else {
-
-                String[] taskDetails = word.split(" ");
-                String taskType = taskDetails[0];
-                String taskDescription = taskDetails[1];
+                int taskDescriptionIndex = word.indexOf(" ");
+                String taskType = word.substring(0, taskDescriptionIndex);
+                String taskDescription = word.substring(taskDescriptionIndex+1);
 
                 switch (taskType) {
                 case "mark":
                     markTask(taskDescription, tasks);
-                    counter++;
                     word = reader.nextLine();
                     break;
 
                 case "unmark":
                     unmarkTask(taskDescription, tasks);
-                    counter++;
                     word = reader.nextLine();
                     break;
 
@@ -71,17 +69,27 @@ public class Duke {
     }
 
     private static void createEvent(Task[] tasks, int counter, String taskDescription) {
-        //eventDetails[0] = description, eventDetails[1] = to/from
-        String[] eventDetails = taskDescription.split("/");
-        tasks[counter] = new Event(eventDetails[0], eventDetails[1]);
-        System.out.println("Created event: " + eventDetails[0]);
+        int eventStartIndex = taskDescription.indexOf("/");
+        int eventEndIndex = taskDescription.lastIndexOf("/");
+
+        String eventDescription = taskDescription.substring(0, eventStartIndex);
+        //+6 to eventStartIndex to skip past "/from "
+        String eventStart = taskDescription.substring(eventStartIndex+6, eventEndIndex);
+        //+4 to eventEndIndex tp skip past "/by "
+        String eventEnd = taskDescription.substring(eventEndIndex+4);
+
+        tasks[counter] = new Event(eventDescription, eventStart, eventEnd);
+        System.out.println("Created event: " + eventDescription);
     }
 
     private static void createDeadline(Task[] tasks, int counter, String taskDescription) {
-        //deadlineDetails[0] = description, deadlineDetails[1] = deadline
-        String[] deadlineDetails = taskDescription.split("/");
-        tasks[counter] = new Deadline(deadlineDetails[0], deadlineDetails[1]);
-        System.out.println("Created deadline: " + deadlineDetails[0]);
+        int deadlineByIndex = taskDescription.indexOf("/");
+
+        String deadlineDescription = taskDescription.substring(0, deadlineByIndex);
+        String deadlineBy = taskDescription.substring(deadlineByIndex+4);
+
+        tasks[counter] = new Deadline(deadlineDescription, deadlineBy);
+        System.out.println("Created deadline: " + deadlineDescription);
     }
 
     private static void createTodo(Task[] tasks, int counter, String taskDescription) {
@@ -100,7 +108,7 @@ public class Duke {
                 break;
 
             case "deadline":
-                System.out.print(".[T][" + tasks[i].getStatusIcon() + "] " + tasks[i].description);
+                System.out.print(".[D][" + tasks[i].getStatusIcon() + "] " + tasks[i].description);
                 System.out.print(" (by: " + tasks[i].getTimings() + ")\n");
                 break;
 
