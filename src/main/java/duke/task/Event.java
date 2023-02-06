@@ -1,3 +1,5 @@
+package duke.task;
+
 public class Event extends Task {
     private String start; // Start date/time
     private String end;   // End date/time
