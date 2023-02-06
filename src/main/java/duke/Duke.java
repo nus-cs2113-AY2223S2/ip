@@ -1,5 +1,7 @@
+package duke;
+
 import java.util.Scanner;
-import java.util.Arrays;
+
 public class Duke {
     public static final int MAX_TASKS = 100;
     private static int taskCount = 0;
