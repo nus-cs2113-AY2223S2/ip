@@ -1,6 +1,8 @@
 package tasks;
+import enums.DialogueTypes;
+import managers.OutputDialogueManager;
 
-public class Task {
+public abstract class Task {
     private static int itemCount = 0;
     private String itemName;
     private int itemId;
@@ -10,8 +12,6 @@ public class Task {
     public Task(String itemName) {
         itemName = itemName.substring(0,1).toUpperCase() + itemName.substring(1);
         this.itemName = itemName;
-        itemCount++;
-        this.itemId = itemCount;
         this.isDone = false;
     }
 
@@ -27,34 +27,22 @@ public class Task {
         return itemId;
     }
 
+    public static void incrementItemCount() {
+        Task.itemCount++;
+    }
+
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
+    }
+
     public boolean isDone() {
         return isDone;
     }
 
-<<<<<<< HEAD:src/main/java/tasks/Task.java
-    public void setAsDone() {
-        this.isDone = true;
-    }
-    public void setAsUndone() {
-        this.isDone = false;
-=======
     public void markAsState(boolean state) {
         this.isDone = state;
->>>>>>> branch-Level-5:src/main/java/Task.java
     }
-    public void printTask() {
-        String status;
-        if (isDone) {
-            status = "[X]";
-        } else {
-            status = "[ ]";
-        }
-        System.out.println(this.itemId + "." + status + " " + this.itemName);
-    }
+    public abstract void printTask();
 
-    public void printTaskWithoutId() {
-        System.out.println(this.itemName);
-        OutputDialogueManager.printInteraction(DialogueTypes.COUNT_OF_TASKS);
-        System.out.println(itemCount);
-    }
+    public abstract void printTaskWithoutId();
 }

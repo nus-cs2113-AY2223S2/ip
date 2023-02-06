@@ -1,13 +1,13 @@
-<<<<<<< HEAD:src/main/java/tasks/Events.java
 package tasks;
-=======
+import enums.DialogueTypes;
 import errors.InvalidEventException;
->>>>>>> branch-Level-5:src/main/java/Events.java
+import managers.OutputDialogueManager;
 
 public class Events extends Task{
     private String itemName;
     private String startTime;
     private String endTime;
+    private int itemId;
     public Events(String itemName) throws InvalidEventException {
         super(itemName);
         int indexOfStartTime = itemName.indexOf("/from");
@@ -18,17 +18,19 @@ public class Events extends Task{
         this.itemName = super.getItemName().substring(0, indexOfStartTime);
         this.startTime = itemName.substring(indexOfStartTime + 6, indexOfEndTime);
         this.endTime = itemName.substring(indexOfEndTime + 4);
+        incrementItemCount();
+        this.itemId = getItemCount();
     }
 
     @Override
     public void printTask() {
-        String status = new String();
+        String status;
         if (super.isDone()) {
             status = "[E] [X]";
         } else {
             status = "[E] [ ]";
         }
-        System.out.println(this.getItemId() + "." + status + " " + this.itemName +
+        System.out.println(this.itemId + "." + status + " " + this.itemName +
                 " (from: " + startTime + "To: " + endTime + ")");
     }
 

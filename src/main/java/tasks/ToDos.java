@@ -1,19 +1,24 @@
 package tasks;
 
+import enums.DialogueTypes;
+import managers.OutputDialogueManager;
 public class ToDos extends Task{
+    private int itemId;
     public ToDos(String itemName) {
         super(itemName);
+        incrementItemCount();
+        this.itemId = getItemCount();
     }
 
     @Override
     public void printTask() {
-        String status = new String();
+        String status;
         if (super.isDone()) {
             status = "[T] [X]";
         } else {
             status = "[T] [ ]";
         }
-        System.out.println(this.getItemId() + "." + status + " " + this.getItemName());
+        System.out.println(this.itemId + "." + status + " " + this.getItemName());
     }
 
     @Override

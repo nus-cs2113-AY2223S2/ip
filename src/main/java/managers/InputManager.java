@@ -1,4 +1,3 @@
-<<<<<<< HEAD:src/main/java/managers/InputManager.java
 package managers;
 
 import enums.DialogueTypes;
@@ -6,11 +5,9 @@ import tasks.Deadlines;
 import tasks.Events;
 import tasks.Task;
 import tasks.ToDos;
-=======
 import errors.InvalidDeadlineException;
 import errors.InvalidEventException;
 import errors.TaskNumberOutOfRangeException;
->>>>>>> branch-Level-5:src/main/java/InputManager.java
 
 import java.util.ArrayList;
 
@@ -28,48 +25,6 @@ public class InputManager {
             listAllItems();
         } else {
             String[] words = line.split(" ");
-<<<<<<< HEAD:src/main/java/managers/InputManager.java
-            switch (words[0]) {
-            case "mark": {
-                int indexToMark = Integer.parseInt(words[1]) - 1;
-                todoList.get(indexToMark).setAsDone();
-                OutputDialogueManager.printInteraction(DialogueTypes.MARK_TASK);
-                todoList.get(indexToMark).printTask();
-                break;
-            }
-            case "unmark": {
-                int indexToMark = Integer.parseInt(words[1]) - 1;
-                todoList.get(indexToMark).setAsUndone();
-                OutputDialogueManager.printInteraction(DialogueTypes.UNMARK_TASK);
-                todoList.get(indexToMark).printTask();
-                break;
-            }
-            case "todo": {
-                Task newTask = new ToDos(line.substring(5));
-                todoList.add(newTask);
-                OutputDialogueManager.printInteraction(DialogueTypes.ADD_TASK);
-                newTask.printTaskWithoutId();
-                break;
-            }
-            case "deadline": {
-                Task newTask = new Deadlines(line.substring(9));
-                todoList.add(newTask);
-                OutputDialogueManager.printInteraction(DialogueTypes.ADD_TASK);
-                newTask.printTaskWithoutId();
-                break;
-            }
-            case "event": {
-                Task newTask = new Events(line.substring(6));
-                todoList.add(newTask);
-                OutputDialogueManager.printInteraction(DialogueTypes.ADD_TASK);
-                newTask.printTaskWithoutId();
-                break;
-            }
-            default:
-                OutputDialogueManager.printInteraction(DialogueTypes.UNKNOWN_TYPE);
-                OutputDialogueManager.printInteraction(DialogueTypes.HELP);
-                break;
-=======
             try {
                 processComplicatedCommands(line, words);
             } catch (NumberFormatException e) {
@@ -84,7 +39,6 @@ public class InputManager {
             } catch (TaskNumberOutOfRangeException e) {
                 OutputDialogueManager.printErrorDialogue(DialogueTypes.TASK_NUMBER_OUT_OF_RANGE);
                 listAllItems();
->>>>>>> branch-Level-5:src/main/java/InputManager.java
             }
         }
         return false;
@@ -118,7 +72,6 @@ public class InputManager {
             break;
         }
         default:
-            System.out.println("default error");
             processErrorInput();
             break;
         }
@@ -157,7 +110,7 @@ public class InputManager {
     private static void markTaskAsState(String[] words, boolean state)
             throws TaskNumberOutOfRangeException {
         int indexToMark = Integer.parseInt(words[1]) - 1;
-        if (indexToMark > Task.getItemCount() || indexToMark <= 0) {
+        if (indexToMark >= Task.getItemCount() || indexToMark <= 0) {
             throw new TaskNumberOutOfRangeException();
         }
         todoList.get(indexToMark).markAsState(state);
