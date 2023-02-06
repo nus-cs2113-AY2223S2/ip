@@ -9,12 +9,15 @@ public class Duke {
     public static void addTask(String userInput) {
         Task t;
         String descriptor = userInput.substring(userInput.indexOf(" "), userInput.length());
-        if (userInput.contains("todo")) {
+        if (userInput.startsWith("todo")) {
             t = new Todo(descriptor);
-        } else if (userInput.contains("deadline")){
+        } else if (userInput.startsWith("deadline")) {
             t = new Deadline(descriptor);
-        } else {
+        } else if (userInput.startsWith("event")) {
             t = new Event(descriptor);
+        } else {
+            System.out.println("OOPS! I'm sorry, but I don't know what that means :^(");
+            return;
         }
         t.printAddTask();
         inputList[numTasks+1] = t; //1-index
