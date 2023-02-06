@@ -65,8 +65,11 @@ public class Duke {
             System.out.println("Here are the tasks in your list: ");
             for (int i = 1; i <= totalNumberOfTasks; i += 1) {
                 Task currentTask = taskStorage[i];
+                displayTask(currentTask);
                 System.out.println(i + "." + currentTask.getStatus() + currentTask.getTaskInfo());
             }
+        } else {
+            System.out.println("There are no tasks to display.");
         }
         horizontalLine();
     }
@@ -74,7 +77,7 @@ public class Duke {
     public static void addToList(Task newTask, Task[] taskStorage) {
         horizontalLine();
         System.out.println("Sure, I've added this task: ");
-        //System.out.println();
+        displayTask(newTask);
         int currentIndexInTaskStorage = Task.getNumberOfTasks();
         taskStorage[currentIndexInTaskStorage] = newTask;
         horizontalLine();
@@ -122,6 +125,35 @@ public class Duke {
             newTask = createEvent(messageFromUser);
         }
         return newTask;
+    }
+
+    public static void displayTask(Task currentTask) {
+        // Check task type
+        String taskType = currentTask.getTaskType();
+        System.out.print(taskType + " ");
+        System.out.print(currentTask.getStatus());
+        System.out.print(currentTask.getTaskInfo());
+
+        switch (taskType) {
+        case "[T]":
+            System.out.println();
+            break;
+        case "[D]":
+            Deadline currentDeadline = (Deadline)currentTask;
+            String due = currentDeadline.getDueInfo();
+            System.out.print("(by: " + due + " )");
+            System.out.println();
+            break;
+        case "[E]":
+            Event currentEvent = (Event)currentTask;
+            String eventStart = currentEvent.getEventDateAndStartTime();
+            String eventEnd = currentEvent.getEndTime();
+            System.out.print("from: " + eventStart + " to: " + eventEnd + " )");
+            System.out.println();
+            break;
+        default:
+            System.out.println("Unknown event type error");
+        }
     }
 
 
