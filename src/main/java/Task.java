@@ -50,11 +50,19 @@ public class Task {
         this.taskId = taskId;
     }
 
+    public String toString() {
+        if(this.isDone == true) {
+            return " [T][X]" + this.name;
+        } else {
+            return " [T][ ]" + this.name;
+        }
+    }
+
     public void print() {
         if (this.isDone == false) {
-            System.out.println((this.taskId + 1) + ".[T][ ] " + this.name);
+            System.out.println((this.taskId + 1) + "." + this.toString());
         } else {
-            System.out.println((this.taskId + 1) + ".[T][X] " + this.name);
+            System.out.println((this.taskId + 1) + "." + this.toString());
         }
     }
 }
