@@ -2,6 +2,7 @@ import com.sun.source.util.TaskListener;
 
 public class List {
     private static final int TASKLIST_SIZE = 100;
+    private static final char SPACE = ' ';
     private int numItems = 0;
     private Task[] taskList;
 
@@ -58,7 +59,7 @@ public class List {
 
 
     public void listAdd(String sentence) {
-        int spaceIndex = sentence.indexOf(' ');
+        int spaceIndex = sentence.indexOf(SPACE);
         if (spaceIndex == -1) {
             System.out.println("Invalid command! Please specify task type.");
             return;
@@ -85,22 +86,22 @@ public class List {
 
     // check if index represented by string is valid, if valid, return index in integer form.
     // else return -1.
-    private int parseIndex(String index) {
-        int i;
+    private int parseIndex(String indexString) {
+        int indexInt;
         // ensure its a number
         // https://stackoverflow.com/questions/1486077/good-way-to-encapsulate-integer-parseint
         try {
-            i = Integer.parseInt(index);
-            i -= 1; // convert to 0-index
-            if (i >= numItems) {
+            indexInt = Integer.parseInt(indexString);
+            indexInt -= 1; // convert to 0-index
+            if (indexInt >= numItems) {
                 System.out.println(" Invalid task number!");
                 return -1;
             }
         } catch (NumberFormatException e) {
             System.out.println("NOT A NUMBER!");
-            i = -1;
+            indexInt = -1;
         }
-        return i;
+        return indexInt;
     }
 
 
@@ -121,8 +122,7 @@ public class List {
         if (index != -1) {
             taskList[index].setIsComplete(false);
             System.out.println(" OK, I've marked this task as not done yet:");
-            System.out.print("   [ ] ");
-            System.out.println(taskList[index].getTaskName());
+            System.out.println("   [ ] " + taskList[index].getTaskName());
         }
     }
 }
