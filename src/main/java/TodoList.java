@@ -1,8 +1,6 @@
 public class TodoList {
     static final String LINE_BREAK = "____________________\n";
     static final String YOUR_TODO_LIST = "This is your todo list.\n";
-    static final String HAVE_ADDED = "I have added ";
-    static final String TO_LIST = " to your todo list.\n";
     static final String MARKED_TASK = "I have marked Task ";
     static final String UNMARKED_TASK = "I have unmarked Task ";
     static final String IN_LIST = " in your todo list.\n";
@@ -31,7 +29,7 @@ public class TodoList {
         String[] tempArray1 = tempArray0[1].split(TO_COMMAND, 2);
         vars[1] = tempArray1[0];
         vars[2] = tempArray1[1];
-        if (vars.length != 3) {
+        if (tempArray0.length != 2 | tempArray1.length != 2) {
             throw new InvalidCommandFormatException();
         }
         return vars;
@@ -40,7 +38,7 @@ public class TodoList {
     public static void todo(String args) {
         todos[numberOfTasks] = new Todo(args);
         numberOfTasks += 1;
-        System.out.println(LINE_BREAK + HAVE_ADDED + args + TO_LIST + LINE_BREAK);
+        Printer.addToList(args);
     }
 
     public static void deadline(String args) {
@@ -53,7 +51,7 @@ public class TodoList {
         }
         todos[numberOfTasks] = new Deadline(vars);
         numberOfTasks += 1;
-        System.out.println(LINE_BREAK + HAVE_ADDED + vars[0] + TO_LIST + LINE_BREAK);
+        Printer.addToList(vars[0]);
     }
 
     public static void event(String args) {
@@ -66,7 +64,7 @@ public class TodoList {
         }
         todos[numberOfTasks] = new Event(vars);
         numberOfTasks += 1;
-        System.out.println(LINE_BREAK + HAVE_ADDED + vars[0] + TO_LIST + LINE_BREAK);
+        Printer.addToList(vars[0]);
     }
 
     public static void list() {
