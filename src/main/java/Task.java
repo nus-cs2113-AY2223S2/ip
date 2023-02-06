@@ -31,8 +31,7 @@ public class Task {
     public String toString() {
         if (this.isDone) {
             return "[X] " + this.description;
-        } else {
-            return "[ ] " + this.description;
         }
+        return "[ ] " + this.description;
     }
 }
