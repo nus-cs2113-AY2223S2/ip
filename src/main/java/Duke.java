@@ -6,7 +6,7 @@ public class Duke {
      * Returns boolean value of true if input String is an integer,
      * else returns boolean value of false
      *
-     * @param word
+     * @param word String input to check if it is an integer
      * @return true if input String is an integer, otherwise false
      */
     public static boolean isNumeric(String word) {
@@ -42,11 +42,12 @@ public class Duke {
                 markTask(tasks, taskCount, words);
             } else {
                 // Adding a task to the list
-                addTask(line, tasks, taskCount);
-
-                // Printing out added task message
-                addedTaskMessage(tasks[taskCount], taskCount);
-                taskCount++;
+                try {
+                    addTask(line, tasks, taskCount);
+                    taskCount++;
+                } catch (IllegalTaskException e) {
+                    // Ignoring empty command inputs
+                }
             }
             line = in.nextLine();
         }
@@ -55,21 +56,87 @@ public class Duke {
         exitMessage();
     }
 
-    private static void addTask(String line, Task[] tasks, int taskCount) {
-        if (line.contains(" /by")) {
+    private static void addTask(String line, Task[] tasks, int taskCount) throws IllegalTaskException {
+        if (line.contains("/by")) {
             // Adding a Deadline
-            String description = line.substring(0, line.indexOf("/by")).trim();
-            String deadline = line.substring(line.indexOf("/by") + 3).trim();
-            tasks[taskCount] = new Deadline(description, deadline);
-        } else if (line.contains(" /from") && line.contains(" /to")) {
+            try {
+                addDeadline(line, tasks, taskCount);
+            } catch (IllegalDeadlineException e) {
+                deadlineErrorMessage();
+                throw new IllegalTaskException();
+            }
+        } else if (line.contains("/from") || line.contains("/to")) {
             // Adding an Event
-            String description = line.substring(0, line.indexOf("/from")).trim();
-            String start = line.substring(line.indexOf("/from") + 5, line.indexOf("/to")).trim();
-            String end = line.substring(line.indexOf("/to") + 3).trim();
-            tasks[taskCount] = new Event(description, start, end);
-        } else {
+            try {
+                addEvent(line, tasks, taskCount);
+            } catch (IllegalEventException e) {
+                eventErrorMessage();
+                throw new IllegalTaskException();
+            } catch (IndexOutOfBoundsException e) {
+                eventErrorMessage();
+                throw new IllegalTaskException();
+            }
+        } else if (!line.isBlank()){
             // Adding a _Todo_
+            try {
+                addTodo(line, tasks, taskCount);
+            } catch (IllegalTodoException e) {
+                todoErrorMessage();
+                throw new IllegalTaskException();
+            }
+        } else {
+            throw new IllegalTaskException();
+        }
+    }
+
+    private static void todoErrorMessage() {
+        borderLine();
+        System.out.println("\t Error. Please enter a valid description.");
+        borderLine();
+    }
+
+    private static void eventErrorMessage() {
+        borderLine();
+        System.out.println("\t Error. Please enter a valid description, start time and end time");
+        borderLine();
+    }
+
+    private static void deadlineErrorMessage() {
+        borderLine();
+        System.out.println("\t Error. Please enter a valid description and deadline.");
+        borderLine();
+    }
+
+    private static void addTodo(String line, Task[] tasks, int taskCount) throws IllegalTodoException {
+        if (line.isBlank()) {
+            throw new IllegalTodoException();
+        } else {
             tasks[taskCount] = new Todo(line);
+            addedTaskMessage(tasks[taskCount], taskCount);
+        }
+    }
+
+    private static void addEvent(String line, Task[] tasks, int taskCount) throws IllegalEventException {
+        String description = line.substring(0, line.indexOf("/from")).trim();
+        String start = line.substring(line.indexOf("/from") + 5, line.indexOf("/to")).trim();
+        String end = line.substring(line.indexOf("/to") + 3).trim();
+        if (description.isBlank() || start.isBlank() || end.isBlank()) {
+            throw new IllegalEventException();
+        } else {
+            tasks[taskCount] = new Event(description, start, end);
+            addedTaskMessage(tasks[taskCount], taskCount);
+        }
+    }
+
+    private static void addDeadline(String line, Task[] tasks, int taskCount) throws IllegalDeadlineException {
+        String description = line.substring(0, line.indexOf("/by")).trim();
+        String deadline = line.substring(line.indexOf("/by") + 3).trim();
+        //System.out.println(description.isBlank());
+        if (description.isBlank() || deadline.isBlank()) {
+            throw new IllegalDeadlineException();
+        } else {
+            tasks[taskCount] = new Deadline(description, deadline);
+            addedTaskMessage(tasks[taskCount], taskCount);
         }
     }
 
@@ -149,7 +216,6 @@ public class Duke {
         System.out.println("\t              (eg. Meeting /from March 3 8pm /to 9pm)");
         System.out.println("\t        Todo: <description>");
         System.out.println("\t              (eg. Water the plants)");
-        System.out.println("\t Wrong formats for Deadlines and Events will default to a Todo task. \n");
         System.out.println("\t What can I do for you?");
         borderLine();
     }
