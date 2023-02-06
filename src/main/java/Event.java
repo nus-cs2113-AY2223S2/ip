@@ -1,5 +1,4 @@
 public class Event extends Task{
-    //protected String[] dateTime;
     protected String from;
     protected String to;
 
@@ -11,8 +10,6 @@ public class Event extends Task{
     }
 
     public String toString() {
-//        dateTime[0].replace("from", "");
-//        dateTime[1].replace("to", "");
         return super.toString() + "(from: " + from.replace("from ", "") + " to: " + to + ")";
     }
 }
