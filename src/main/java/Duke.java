@@ -1,5 +1,7 @@
 import java.util.Scanner;
 
+import javax.print.PrintException;
+
 public class Duke {
 
     public static void printInstructions() {
@@ -9,6 +11,8 @@ public class Duke {
         System.out.println(
                 "event + \"event name\" + /from \"event start time\" + /to \"event finish time\" to add an event with a stant and finish time");
         System.out.println("list to list all events and tasks available");
+        System.out.println("mark + \"task number\" to mark a task");
+        System.out.println("mark + \"task number\" to unmark a task");
     }
 
     public static void printHorizontalLine() {
@@ -29,43 +33,57 @@ public class Duke {
     }
 
     public static void executeAddTodo(String s, int taskId, TaskManager listofItems) {
-        s = s.substring("todo ".length(), s.length());
-        listofItems.addTask(s, taskId);
-        System.out.println("Roger. The following todo has been added:");
-        System.out.println("[T][ ] " + s);
-        System.out.println("You now have " + (taskId + 1) + " item in the list");
+        try {
+            s = s.substring("todo ".length(), s.length());
+            listofItems.addTask(s, taskId);
+            System.out.println("Roger. The following todo has been added:");
+            System.out.println("[T][ ] " + s);
+            System.out.println("You now have " + (taskId + 1) + " item in the list");
+        } catch (StringIndexOutOfBoundsException e) {
+            System.out.println("Missing todo item. Please read instructions again");
+            printInstructions();
+        }
     }
 
     public static void executeAddDeadline(String s, int taskId, TaskManager listofItems) {
-        s = s.substring("deadline ".length(), s.length());
-        String[] cmd = s.split(" /by ");
-        if (cmd.length == 1) {
-            System.out.println("Missing deadline. Please read instructions again");
-            printInstructions();
-        } else if (cmd.length > 2) {
-            System.out.println("Too many deadlines. Please read instructions again");
-            printInstructions();
-        } else {
+        try {
+            s = s.substring("deadline ".length(), s.length());
+            String[] cmd = s.split(" /by ");
+            if (cmd.length > 2) {
+                System.out.println("Extra deadline found! Please try again!");
+                printInstructions();
+                return;
+            }
             listofItems.addDeadline(cmd[0], cmd[1], taskId);
             System.out.println("Roger. The following deadline has been added:");
             System.out.println("[D][ ] " + cmd[0] + " (by: " + cmd[1] + ")");
             System.out.println("You now have " + (taskId + 1) + " item in the list");
+        } catch (StringIndexOutOfBoundsException e) {
+            System.out.println("Your task name is missing please try again!");
+            printInstructions();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Your deadline is missing please try again!");
+            printInstructions();
         }
+
     }
 
     public static void executeAddEvent(String s, int taskId, TaskManager listofItems) {
-        s = s.substring("event ".length(), s.length());
-        String[] cmd = s.split(" /from ");
-        if (cmd.length == 1) {
-            System.out.println("Start time missing. Please read instructions again");
-            printInstructions();
-        } else {
+        try {
+            s = s.substring("event ".length(), s.length());
+            String[] cmd = s.split(" /from ");
             String startTime = cmd[1].split(" /to ")[0];
             String endTime = cmd[1].split(" /to ")[1];
             listofItems.addEvent(cmd[0], startTime, endTime, taskId);
             System.out.println("Roger. The following event has been added:");
             System.out.println("[E][ ] " + cmd[0] + " (from: " + startTime + " to: " + endTime + ")");
             System.out.println("You now have " + (taskId + 1) + " item in the list");
+        } catch (StringIndexOutOfBoundsException e) {
+            System.out.println("Your task name is missing please try again!");
+            printInstructions();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Something is wrong with your event's start time or finish time please try again!");
+            printInstructions();
         }
     }
 
