@@ -5,5 +5,7 @@ mark 1
 todo
 deadline
 event
+unmark -5
+mark five
 list
 bye

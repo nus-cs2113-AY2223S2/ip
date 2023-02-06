@@ -49,10 +49,26 @@ public class Duke {
             printTaskList();
             break;
         case Command.COMMAND_MARK:
-            markTaskDone(Integer.parseInt(input.split(" ")[1]) - 1);
+            try {
+                markTaskDone(Integer.parseInt(input.split(" ")[1]) - 1);
+            } catch (NumberFormatException e) {
+                System.out.println("☹ OOPS!!! Task number should be an integer.");
+                printDivider();
+            } catch (InvalidTaskNumberException e) {
+                System.out.println("☹ OOPS!!! The task specified does not exist in the task list.");
+                printDivider();
+            }
             break;
         case Command.COMMAND_UNMARK:
-            markTaskUndone(Integer.parseInt(input.split(" ")[1]) - 1);
+            try {
+                markTaskUndone(Integer.parseInt(input.split(" ")[1]) - 1);
+            } catch (NumberFormatException e) {
+                System.out.println("☹ OOPS!!! Task number should be an integer.");
+                printDivider();
+            } catch (InvalidTaskNumberException e) {
+                System.out.println("☹ OOPS!!! The task specified does not exist in the task list.");
+                printDivider();
+            }
             break;
         case Command.COMMAND_TODO:
             try {
@@ -100,18 +116,18 @@ public class Duke {
         printDivider();
     }
 
-    private static void markTaskDone(int taskIndex) {
+    private static void markTaskDone(int taskIndex) throws InvalidTaskNumberException {
                 if (taskIndex < 0 || taskIndex >= taskCounter) {
-                    System.out.println("Task number does not exist in list");
+                    throw new InvalidTaskNumberException();
                 } else {
                     tasks[taskIndex].markDone();
                 }
                 printDivider();
     }
 
-    private static void markTaskUndone(int taskIndex) {
+    private static void markTaskUndone(int taskIndex) throws InvalidTaskNumberException {
         if (taskIndex < 0 || taskIndex >= taskCounter) {
-            System.out.println("Task number does not exist in list");
+            throw new InvalidTaskNumberException();
         } else {
             tasks[taskIndex].markUndone();
         }

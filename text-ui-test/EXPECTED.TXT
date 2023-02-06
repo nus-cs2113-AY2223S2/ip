@@ -27,6 +27,10 @@ ____________________________________________________________
 ____________________________________________________________
 ☹ OOPS!!! The description of 'event' should include a task and time period.
 ____________________________________________________________
+☹ OOPS!!! The task specified does not exist in the task list.
+____________________________________________________________
+☹ OOPS!!! Task number should be an integer.
+____________________________________________________________
 1.[T][X] Zhong Xiang: Answer CS2113 tutorial questions
 2.[D][ ] weekly CS2113 quiz (by: Monday 9pm)
 3.[E][ ] CS2113 lecture (from: Friday 4 to: 6pm)
