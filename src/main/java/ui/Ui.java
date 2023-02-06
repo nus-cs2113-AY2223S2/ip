@@ -13,7 +13,7 @@ public class Ui implements IUi {
     final static String LINEBREAK = "________________________________________\n";
     final static String COMMAND_TAB_STRING = "     ";
     final static String LINE_TAB_STRING = "    ";
-    final static String SYSTEM_LINE_SEPARATOR = colorize(LINE_TAB_STRING + LINEBREAK, YELLOW_TEXT());
+    final static String SYSTEM_LINE_SEPARATOR = LINE_TAB_STRING + LINEBREAK;
     final static String ERR_LINE_SEPARATOR = colorize(LINE_TAB_STRING + LINEBREAK, RED_TEXT());
     final static String WELCOME_STRING = colorize("Hello! I'm Duke\nWhat can I do for you?", YELLOW_TEXT());
     final static String GOODBYE_STRING = colorize("Bye. Hope to see you again soon!", YELLOW_TEXT());
@@ -33,7 +33,7 @@ public class Ui implements IUi {
     public void printSystemMessage(String message) {
         System.out.print(SYSTEM_LINE_SEPARATOR);
         Arrays.stream(message.split("\n"))
-                .map(item -> COMMAND_TAB_STRING + item + '\n')
+                .map(item -> colorize(COMMAND_TAB_STRING + item + '\n', GREEN_TEXT()))
                 .forEach(System.out::print);
                 
         System.out.println(SYSTEM_LINE_SEPARATOR);
@@ -64,12 +64,12 @@ public class Ui implements IUi {
     }
     @Override
     public void printSystemErrorMessage(String message) {
-        System.out.print(ERR_LINE_SEPARATOR);
+        System.out.print(SYSTEM_LINE_SEPARATOR);
         message = colorize(message, RED_TEXT());
         Arrays.stream(message.split("\n"))
                 .map(item -> COMMAND_TAB_STRING + item + '\n')
                 .forEach(System.out::print);
                 
-        System.out.println(ERR_LINE_SEPARATOR);
+        System.out.println(SYSTEM_LINE_SEPARATOR);
     }
 }
