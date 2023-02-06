@@ -1,3 +1,5 @@
+package sage.tasktypes;
+
 public class Task {
     private String taskName = "";
     private boolean completed = false;

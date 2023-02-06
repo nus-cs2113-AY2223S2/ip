@@ -1,3 +1,5 @@
+package sage.tasktypes;
+
 public class Event extends Task {
 
     private String startWhen = "";

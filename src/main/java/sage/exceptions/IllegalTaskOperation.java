@@ -1,3 +1,5 @@
+package sage.exceptions;
+
 public class IllegalTaskOperation extends Exception {
     /**
      * Exception which returns an error message when operations is conducted on an empty list.

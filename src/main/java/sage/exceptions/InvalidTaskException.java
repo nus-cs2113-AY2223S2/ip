@@ -1,3 +1,5 @@
+package sage.exceptions;
+
 public class InvalidTaskException extends Exception {
     /**
      * Exception which returns an error message when an out-of-bound task index is provided by the user

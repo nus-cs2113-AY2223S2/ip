@@ -1,3 +1,9 @@
+package sage.main;
+
+import sage.utility.Command;
+import sage.utility.Display;
+import sage.utility.TaskList;
+
 import java.util.Scanner;
 
 public class Sage {

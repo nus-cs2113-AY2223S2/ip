@@ -1,3 +1,5 @@
+package sage.exceptions;
+
 public class MissingParameterException extends Exception {
     /**
      * Exception which returns an error message when there are missing parameter(s) in task operations.

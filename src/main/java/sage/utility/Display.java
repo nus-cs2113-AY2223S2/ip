@@ -1,4 +1,11 @@
+package sage.utility;
+
 import java.util.ArrayList;
+
+import sage.tasktypes.Deadline;
+import sage.tasktypes.Event;
+import sage.tasktypes.Todo;
+import sage.tasktypes.Task;
 
 public class Display {
     private static final String LINE =
@@ -31,19 +38,6 @@ public class Display {
      *
      * @param taskList The TaskList object that contains the tasks to be displayed.
      */
-//    public void displayTask(TaskList taskList) {
-//        System.out.println(LINE);
-//        try {
-//            if (taskList.getTaskCount() > 0) {
-//                taskList.listTask();
-//            } else {
-//                throw new EmptyListException();
-//            }
-//        } catch (EmptyListException e) {
-//            System.out.println(e.errorMsg());
-//        }
-//        System.out.println(LINE);
-//    }
 
     /**
      * This method prints a message to the console indicating the addition of a task to the task list and its details.

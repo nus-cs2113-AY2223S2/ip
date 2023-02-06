@@ -1,3 +1,5 @@
+package sage.utility;
+
 public class Command {
     private String[] rawOutput;
     private String taskType;
