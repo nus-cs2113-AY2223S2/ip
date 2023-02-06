@@ -2,18 +2,6 @@ import java.util.Scanner;
 public class Duke {
 
     public static final int TASK_LIST_SIZE = 100;
-
-    public static final String COMMAND_BYE = "bye";
-    public static final String COMMAND_LIST = "list";
-    public static final String COMMAND_MARK = "mark";
-    public static final String COMMAND_UNMARK = "unmark";
-    public static final String COMMAND_TODO = "todo";
-    public static final String COMMAND_DEADLINE = "deadline";
-    public static final String COMMAND_DEADLINE_BY = " /by ";
-    public static final String COMMAND_EVENT = "event";
-    public static final String COMMAND_EVENT_FROM = " /from ";
-    public static final String COMMAND_EVENT_TO = " /to ";
-
     public static Task[] tasks = new Task[TASK_LIST_SIZE];
     public static int taskCounter = 0;
 
@@ -26,7 +14,7 @@ public class Duke {
         do {
             input = in.nextLine();
             processCommand(input);
-        } while (!input.equals(COMMAND_BYE));
+        } while (!input.equals(Command.COMMAND_BYE));
     }
 
     public static void printDivider () {
@@ -47,27 +35,27 @@ public class Duke {
     }
 
     public static void processCommand (String input){
-        String command = input.split(" ")[0];
-        switch (command) {
-        case COMMAND_BYE:
+        String action = input.split(" ")[0];
+        switch (action) {
+        case Command.COMMAND_BYE:
             printBye();
             break;
-        case COMMAND_LIST:
+        case Command.COMMAND_LIST:
             printTaskList();
             break;
-        case COMMAND_MARK:
+        case Command.COMMAND_MARK:
             markTaskDone(Integer.parseInt(input.split(" ")[1]) - 1);
             break;
-        case COMMAND_UNMARK:
+        case Command.COMMAND_UNMARK:
             markTaskUndone(Integer.parseInt(input.split(" ")[1]) - 1);
             break;
-        case COMMAND_TODO:
+        case Command.COMMAND_TODO:
             addTodoTask(input);
             break;
-        case COMMAND_DEADLINE:
+        case Command.COMMAND_DEADLINE:
             addDeadlineTask(input);
             break;
-        case COMMAND_EVENT:
+        case Command.COMMAND_EVENT:
             addEventTask(input);
             break;
         default:
@@ -112,25 +100,25 @@ public class Duke {
     }
 
     private static void addTodoTask(String input) {
-        tasks[taskCounter] = new ToDo(input.substring(COMMAND_TODO.length() + 1));
+        tasks[taskCounter] = new ToDo(input.substring(Command.COMMAND_TODO.length() + 1));
         taskCounter++;
         printTaskAdded();
     }
 
     private static void addDeadlineTask(String input) {
-        int indexOfBy = input.indexOf(COMMAND_DEADLINE_BY);
-        tasks[taskCounter] = new Deadline(input.substring(COMMAND_DEADLINE.length() + 1, indexOfBy)
-                , input.substring(indexOfBy + COMMAND_DEADLINE_BY.length()));
+        int indexOfBy = input.indexOf(Command.COMMAND_DEADLINE_BY);
+        tasks[taskCounter] = new Deadline(input.substring(Command.COMMAND_DEADLINE.length() + 1, indexOfBy)
+                , input.substring(indexOfBy + Command.COMMAND_DEADLINE_BY.length()));
         taskCounter++;
         printTaskAdded();
     }
 
     private static void addEventTask(String input) {
-        int indexOfFrom = input.indexOf(COMMAND_EVENT_FROM);
-        int indexOfTo = input.indexOf(COMMAND_EVENT_TO);
-        tasks[taskCounter] = new Event(input.substring(COMMAND_EVENT.length() + 1, indexOfFrom)
-                , input.substring(indexOfFrom + COMMAND_EVENT_FROM.length(), indexOfTo)
-                , input.substring(indexOfTo + COMMAND_EVENT_TO.length()));
+        int indexOfFrom = input.indexOf(Command.COMMAND_EVENT_FROM);
+        int indexOfTo = input.indexOf(Command.COMMAND_EVENT_TO);
+        tasks[taskCounter] = new Event(input.substring(Command.COMMAND_EVENT.length() + 1, indexOfFrom)
+                , input.substring(indexOfFrom + Command.COMMAND_EVENT_FROM.length(), indexOfTo)
+                , input.substring(indexOfTo + Command.COMMAND_EVENT_TO.length()));
         taskCounter++;
         printTaskAdded();
     }
