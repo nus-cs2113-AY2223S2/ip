@@ -1,0 +1,8 @@
+deadline maths homework /by tuesday
+event birthday party /from Friday 10am /to 2pm
+mark 1
+list
+unmark 1
+list
+something
+bye

@@ -6,11 +6,11 @@ public class Duke {
         greeting();
         Task[] taskStorage = new Task[100];
 
+        Scanner in = new Scanner(System.in);
         boolean is_exit = false;
         while (!is_exit) {
 
             String messageFromUser;
-            Scanner in = new Scanner(System.in);
             messageFromUser = in.nextLine();
 
             if (messageFromUser.startsWith("mark") || messageFromUser.startsWith("unmark")) {
