@@ -11,6 +11,10 @@ public class Display {
             "██████╔╝██║░░██║╚██████╔╝███████╗\n" +
             "╚═════╝░╚═╝░░╚═╝░╚═════╝░╚══════╝";
 
+    public String printLine() {
+        return LINE;
+    }
+
     public void welcomeUser() {
         String welcome = "Hello! I'm SAGE, the knowledgeable one\n"
                 + "What can I do for you today?\n";
@@ -27,11 +31,19 @@ public class Display {
      *
      * @param taskList The TaskList object that contains the tasks to be displayed.
      */
-    public void displayTask(TaskList taskList) {
-        System.out.println(LINE);
-        taskList.listTask();
-        System.out.println(LINE);
-    }
+//    public void displayTask(TaskList taskList) {
+//        System.out.println(LINE);
+//        try {
+//            if (taskList.getTaskCount() > 0) {
+//                taskList.listTask();
+//            } else {
+//                throw new EmptyListException();
+//            }
+//        } catch (EmptyListException e) {
+//            System.out.println(e.errorMsg());
+//        }
+//        System.out.println(LINE);
+//    }
 
     /**
      * This method prints a message to the console indicating the addition of a task to the task list and its details.
@@ -41,23 +53,29 @@ public class Display {
      * @param taskType  The type of task being added (TODO, EVENT or DEADLINE)
      * @param taskList  The list of tasks to which the new task is being added
      **/
-    public void addedTask(Command command, TaskType taskType, TaskList taskList) {
+    public void addedTask(String taskDescription, int taskCount) {
         System.out.println(LINE);
         System.out.println("Got it. I've added this task:");
-        switch (taskType) {
-        case TODO:
-            System.out.println("[T][ ] " + command.getTaskDescription());
-            break;
-        case EVENT:
-            System.out.println("[E][ ] " + command.getTaskDescription() + "(from: "
-                    + command.getFrom() + " to: " + command.getTo() + ")");
-            break;
-        case DEADLINE:
-            System.out.println("[D][ ] " + command.getTaskDescription() + "(by: "
-                    + command.getBy() + ")");
-            break;
-        }
-        System.out.println("Now you have " + taskList.getTaskCount() + " tasks in the list");
+        System.out.println("[T][ ] " + taskDescription);
+        System.out.println("Now you have " + taskCount + " tasks in the list");
+        System.out.println(LINE);
+    }
+
+    public void addedTask(String taskDescription, String by, int taskCount) {
+        System.out.println(LINE);
+        System.out.println("Got it. I've added this task:");
+        System.out.println("[D][ ] " + taskDescription + "(by: "
+                + by + ")");
+        System.out.println("Now you have " + taskCount + " tasks in the list");
+        System.out.println(LINE);
+    }
+
+    public void addedTask(String taskDescription, String from, String to, int taskCount) {
+        System.out.println(LINE);
+        System.out.println("Got it. I've added this task:");
+        System.out.println("[E][ ] " + taskDescription + "(from: "
+                + from + " to: " + to + ")");
+        System.out.println("Now you have " + taskCount + " tasks in the list");
         System.out.println(LINE);
     }
 
@@ -69,13 +87,6 @@ public class Display {
         System.out.println("I don't understand what you mean, please try again!");
     }
 
-    public void invalidUnmark() {
-        System.out.println("Task already marked as not completed!");
-    }
-
-    public void invalidMark() {
-        System.out.println("Task already marked as completed!");
-    }
 
     /**
      * This method is used to display a marked task as not done in the task list.
@@ -88,7 +99,6 @@ public class Display {
         Task taskObj = list.get(taskNumber - 1);
         System.out.println("OK, I've marked this task as not done yet:");
         if (taskObj instanceof Deadline) {
-            Deadline deadline = (Deadline) taskObj;
             System.out.println("[E][ ] " + taskObj.getTaskName() + "(by: " +
                     ((Deadline) taskObj).getByWhen() + ") ");
         } else if (taskObj instanceof Event) {
@@ -111,7 +121,6 @@ public class Display {
         Task taskObj = list.get(taskNumber - 1);
         System.out.println("Nice! I've marked this task as done:");
         if (taskObj instanceof Deadline) {
-            Deadline deadline = (Deadline) taskObj;
             System.out.println("[E][X] " + taskObj.getTaskName() + "(by: " +
                     ((Deadline) taskObj).getByWhen() + ") ");
         } else if (taskObj instanceof Event) {
