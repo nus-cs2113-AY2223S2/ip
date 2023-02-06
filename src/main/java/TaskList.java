@@ -3,17 +3,24 @@ import java.util.ArrayList;
 public class TaskList {
     private static ArrayList<Task> list = new ArrayList<>();
 
+    private static final Display UI = new Display();
+
     /**
      * This method instantiate a Todo object and add the Todo object to the TaskList
      *
      * @param taskName The name of the TODO task to be added
      **/
     public void addTask(String taskName) {
-        if (taskName == null) {
-            throw new IllegalArgumentException("Todo description parameter is missing");
-        } else {
-            Todo t = new Todo(taskName);
-            list.add(t);
+        try {
+            if (taskName == null) {
+                throw new MissingParameterException();
+            } else {
+                Todo t = new Todo(taskName);
+                list.add(t);
+            }
+            UI.addedTask(taskName, list.size());
+        } catch (MissingParameterException e) {
+            System.out.println(e.missingParamDesc());
         }
     }
 
@@ -24,13 +31,20 @@ public class TaskList {
      * @param byWhen   a string that represents the deadline of the Deadline task.
      **/
     public void addTask(String taskName, String byWhen) {
-        if (taskName == null) {
-            throw new IllegalArgumentException("Deadline description parameter is missing");
-        } else if (byWhen == null) {
-            throw new IllegalArgumentException("Deadline by parameter is missing");
-        } else {
-            Deadline d = new Deadline(taskName, byWhen);
-            list.add(d);
+        try {
+            if (taskName == null || byWhen == null) {
+                throw new MissingParameterException();
+            } else {
+                Deadline d = new Deadline(taskName, byWhen);
+                list.add(d);
+            }
+            UI.addedTask(taskName, byWhen, list.size());
+        } catch (MissingParameterException e) {
+            if (taskName == null) {
+                System.out.println(e.missingParamDesc());
+            } else {
+                System.out.println(e.missingParamBy());
+            }
         }
     }
 
@@ -42,15 +56,22 @@ public class TaskList {
      * @param endWhen   a string that represents the end date and time of the Event task.
      */
     public void addTask(String taskName, String startWhen, String endWhen) {
-        if (taskName == null) {
-            throw new IllegalArgumentException("Event description parameter is missing");
-        } else if (startWhen == null) {
-            throw new IllegalArgumentException("Event starting parameter is missing");
-        } else if (endWhen == null) {
-            throw new IllegalArgumentException("Event ending parameter is missing");
-        } else {
-            Event e = new Event(taskName, startWhen, endWhen);
-            list.add(e);
+        try {
+            if (taskName == null || startWhen == null || endWhen == null) {
+                throw new MissingParameterException();
+            } else {
+                Event e = new Event(taskName, startWhen, endWhen);
+                list.add(e);
+            }
+            UI.addedTask(taskName, startWhen, endWhen, list.size());
+        } catch (MissingParameterException e) {
+            if (taskName == null) {
+                System.out.println(e.missingParamDesc());
+            } else if (startWhen == null) {
+                System.out.println(e.missingParamStart());
+            } else {
+                System.out.println(e.missingParamEnd());
+            }
         }
     }
 
@@ -58,21 +79,24 @@ public class TaskList {
      * Unmarks a completed task.
      *
      * @param taskDescription string that represents the index of the task to unmark (1-Indexed).
-     * @param ui              an object of the Display class that provides the user interface.
      */
-    public void unmarkTask(String taskDescription, Display ui) {
+    public void unmarkTask(String taskDescription) {
         try {
             int taskNumber = Integer.parseInt(taskDescription);
             if (taskNumber <= 0 || taskNumber > list.size()) {
-                ui.taskNotFound();
+                throw new InvalidTaskException();
             } else if (!list.get(taskNumber - 1).isCompleted()) {
-                ui.invalidUnmark();
+                throw new IllegalTaskOperation();
             } else {
                 list.get(taskNumber - 1).setCompleted(false);
-                ui.validUnmark(list, taskNumber);
+                UI.validUnmark(list, taskNumber);
             }
+        } catch (InvalidTaskException e) {
+            System.out.println(e.errorUnmark());
+        } catch (IllegalTaskOperation e) {
+            System.out.println(e.errorAlreadyUnmarked());
         } catch (NumberFormatException e) {
-            System.out.println("Index of task to be unmarked is missing");
+            System.out.println("No index is provided!");
         }
 
     }
@@ -81,30 +105,43 @@ public class TaskList {
      * Marks a completed task.
      *
      * @param taskDescription a string that represents the index of the task to mark (1-Indexed).
-     * @param ui              an object of the Display class that provides the user interface.
      */
-    public void markTask(String taskDescription, Display ui) {
+    public void markTask(String taskDescription) {
         try {
             int taskNumber = Integer.parseInt(taskDescription);
             if (taskNumber <= 0 || taskNumber > list.size()) {
-                ui.taskNotFound();
+                throw new InvalidTaskException();
             } else if (list.get(taskNumber - 1).isCompleted()) {
-                ui.invalidMark();
+                throw new IllegalTaskOperation();
             } else {
                 list.get(taskNumber - 1).setCompleted(true);
-                ui.validMark(list, taskNumber);
+                UI.validMark(list, taskNumber);
             }
+        } catch (InvalidTaskException e) {
+            System.out.println(e.errorMark());
+        } catch (IllegalTaskOperation e) {
+            System.out.println(e.errorAlreadyMarked());
         } catch (NumberFormatException e) {
-            System.out.println("Index of task to be marked is missing");
+            System.out.println("No index is provided!");
         }
     }
 
     public void listTask() {
-        System.out.println("Here are the tasks in your list:");
-        for (int i = 0; i < list.size(); i++) {
-            System.out.print(i + 1);
-            System.out.println(list.get(i).toString());
+        System.out.println(UI.printLine());
+        try {
+            if (list.size() > 0) {
+                System.out.println("Here are the tasks in your list:");
+                for (int i = 0; i < list.size(); i++) {
+                    System.out.print(i + 1);
+                    System.out.println(list.get(i).toString());
+                }
+            } else {
+                throw new EmptyListException();
+            }
+        } catch (EmptyListException e) {
+            System.out.println(e.errorMsg());
         }
+        System.out.println(UI.printLine());
     }
 
     public int getTaskCount() {
