@@ -30,11 +30,13 @@ public class Task {
     }
 
     // use "mark" to mark done
-    public void markAsDone() {
+    public String markAsDone() {
         this.isDone = true;
+        return "Marked as done: " + this;
     }
     // use "unmark" to mark a task not done
-    public void markAsUndone() {
+    public String markAsUndone() {
         this.isDone = false;
+        return "Marked as undone: " + this;
     }
 }
