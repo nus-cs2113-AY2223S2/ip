@@ -22,17 +22,17 @@ public class Duke {
     public static void printAddTodo(Todo print, int taskCounter) {
         System.out.println("Got it. I've added this task:");
         System.out.print("   "); System.out.println(print);
-        System.out.println("Now you have " + Integer.toString(taskCounter) + "task in the list");
+        System.out.println("Now you have " + Integer.toString(taskCounter) + " task in the list");
     }
     public static void printAddDeadline(Deadline print, int taskCounter) {
         System.out.println("Got it. I've added this task:");
         System.out.print("   "); System.out.println(print);
-        System.out.println("Now you have " + Integer.toString(taskCounter) + "task in the list");
+        System.out.println("Now you have " + Integer.toString(taskCounter) + " task in the list");
     }
     public static void printAddEvent(Event print, int taskCounter) {
         System.out.println("Got it. I've added this task:");
         System.out.print("   "); System.out.println(print);
-        System.out.println("Now you have " + Integer.toString(taskCounter) + "task in the list");
+        System.out.println("Now you have " + Integer.toString(taskCounter) + " task in the list");
     }
     private static void readInput() {
         Scanner sc = new Scanner(System.in);
