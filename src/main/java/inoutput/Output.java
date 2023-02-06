@@ -33,6 +33,7 @@ public class Output {
         System.out.println("* Type 'todo' and I will add it into the list.\n");
         System.out.println("** Type 'deadline' and the due date '/due' for me to register the deadline. \n");
         System.out.println("*** Type 'event' and the start time '/start' AND end time '/end' for me to register the event. \n");
+        System.out.println("Type 'timer' to start a pomodoro timer and get to work!");
         System.out.println("=============================================================================================================== \n");
     }
 
