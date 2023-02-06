@@ -1,7 +1,5 @@
 import java.util.Scanner;
 
-import javax.print.PrintException;
-
 public class Duke {
 
     public static void printInstructions() {
@@ -145,6 +143,10 @@ public class Duke {
             userCmd = scanObj.nextLine();
         }
         scanObj.close();
+        printGoodbye();
+    }
+
+    private static void printGoodbye() {
         System.out.println("Thanks for using Duke! See ya!");
         System.out.println(" /\\_/\\  ");
         System.out.println("( o.o ) ");
