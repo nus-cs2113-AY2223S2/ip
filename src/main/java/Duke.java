@@ -3,13 +3,13 @@ import java.util.Scanner;
 public class Duke {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        Task[] tasks = new Task[100];
+        int tasksSize = 100;
+        Task[] tasks = new Task[tasksSize];
         int currentIndex = 0;
 
         printHelloStatement();
         while (true) {
             String input;
-            input = in.next();
             input = in.nextLine();
             if (input.equals("bye")) {
                 printByeStatement();
@@ -29,7 +29,7 @@ public class Duke {
                 curTask.unmarkAsDone();
                 printTaskStatusStatement(curTask,"unmark");
             } else if (input.startsWith("todo")){
-                String[] temp = input.split(" ", 2);
+                String[] temp = input.split("todo "); //separates todo description
                 String description = temp[1];
                 ToDo todo = new ToDo(currentIndex + 1, description);
                 tasks[currentIndex] = todo;
@@ -37,22 +37,19 @@ public class Duke {
                 printTaskAddedStatement(currentIndex, todo);
             }
             else if (input.startsWith("deadline")){
-                String[] temp1 = input.split(" /by ", 2);
-                String by = temp1[1];
-                String[] temp2 = temp1[0].split(" ", 2);
-                String description = temp2[1];
+                String[] temp = input.split("deadline | /by "); //separates deadline description and by time
+                String description = temp[1];
+                String by = temp[2];
                 Deadline deadline = new Deadline(currentIndex + 1, description, by);
                 tasks[currentIndex] = deadline;
                 currentIndex++;
                 printTaskAddedStatement(currentIndex, deadline);
             }
             else if (input.startsWith("event")){
-                String[] temp1 = input.split(" /to ", 2);
-                String to = temp1[1];
-                String[] temp2 = temp1[0].split(" /from ", 2);
-                String from = temp2[1];
-                String[] temp3 = temp2[0].split(" ", 2);
-                String description = temp3[1];
+                String[] temp = input.split(("event | /from | /to ")); //separates event description, from and to times
+                String description = temp[1];
+                String from = temp[2];
+                String to = temp[3];
                 Event event = new Event(currentIndex + 1, description, from, to);
                 tasks[currentIndex] = event;
                 currentIndex++;
