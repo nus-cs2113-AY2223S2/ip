@@ -1,3 +1,5 @@
+package duke;
+
 public class Task {
     public static final String DONE_ICON = "X";
     public static final String NOT_DONE_ICON = " ";

@@ -1,3 +1,10 @@
+package duke;
+
+import duke.exceptions.EmptyMarkException;
+import duke.exceptions.EmptyTodoException;
+import duke.exceptions.EmptyUnmarkException;
+import duke.exceptions.UnknownCommandException;
+
 import java.util.Scanner;
 
 public class Duke {
