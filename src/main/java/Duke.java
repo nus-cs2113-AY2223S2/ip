@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 public class Duke {
 
+    static int BOX_WIDTH = 100;
+
     public static boolean isCompleted = false;
     private static final List<Task> userList = new ArrayList<>();
 
@@ -22,92 +24,121 @@ public class Duke {
     }
 
     public static void separator() {
-        String separatorLine = "-".repeat(60);
+        String separatorLine = "-".repeat(BOX_WIDTH);
         System.out.println(separatorLine);
     }
 
     public static void printMessage(String message) {
-        String outputMessage = String.format("| %-57s|", message);
+        String outputMessage = String.format("| %-97s|", message);
         System.out.println(outputMessage);
     }
 
     public static void checkInput(String inputMessage) {
-        String[] message = inputMessage.split(" ");
-        if (message.length == 1 && message[0].equalsIgnoreCase("bye")) {
+        String cleanInput = inputMessage.trim();
+        String[] message = cleanInput.split(" ");
+        if (message[0].equalsIgnoreCase("bye")) {
             isCompleted = true;
-            return;
-        }
-
-        if (message.length == 1 && message[0].equalsIgnoreCase("list")) {
+        } else if (message[0].equalsIgnoreCase("list")) {
             displayList();
-            return;
-        }
-
-        if (message.length == 2 && message[0].equalsIgnoreCase("mark")) {
-            markItem(Integer.parseInt(message[1]));
-            return;
-        }
-        if (message.length == 2 && message[0].equalsIgnoreCase("unmark")) {
-            unmarkItem(Integer.parseInt(message[1]));
-            return;
-        }
-
-        if (message.length > 1 && message[0].equalsIgnoreCase("todo")) {
-            String todoDescription = inputMessage.substring(5);
-            addTodo(todoDescription);
-            return;
-        }
-
-        if (message.length > 1 && message[0].equalsIgnoreCase("deadline")) {
-            String[] deadlineInfo = parseDeadline(message);
-            addDeadline(deadlineInfo[0], deadlineInfo[1]);
-            return;
-        }
-
-        if (message.length > 1 && message[0].equalsIgnoreCase("event")) {
-            String[] eventInfo = parseEvent(message);
-            addEvent(eventInfo[0], eventInfo[1], eventInfo[2]);
-            return;
-        }
-
-        addTask(inputMessage);
-    }
-
-    public static boolean isValidTaskNumber(int taskNumber) {
-        return taskNumber <= userList.size();
-    }
-
-    public static void markItem(int taskNumber) {
-        separator();
-        boolean isValidTask = isValidTaskNumber(taskNumber);
-        if (!isValidTask) {
-            String errorMessage = String.format("List only has %d items!", userList.size());
-            printMessage(errorMessage);
+        } else if (message[0].equalsIgnoreCase("mark")) {
+            markItem(message);
+        } else if (message[0].equalsIgnoreCase("unmark")) {
+            unmarkItem(message);
+        } else if (message[0].equalsIgnoreCase("todo")) {
+            addTodo(cleanInput);
+        } else if (message[0].equalsIgnoreCase("deadline")) {
+            addDeadline(message);
+        } else if (message[0].equalsIgnoreCase("event")) {
+            addEvent(message);
         } else {
-            userList.get(taskNumber - 1).setAsDone();
+            addTask(cleanInput);
+        }
+    }
+
+    public static void markItem(String[] message) {
+        int taskNumber = 0;
+
+        separator();
+        try {
+            taskNumber = getTaskNumber(message);
+            userList.get(taskNumber - 1).setAsNotDone();
             String outputMessage = String.format("Nice! I've marked task %d as done:", taskNumber);
             printMessage(outputMessage);
             printMessage(userList.get(taskNumber - 1).toString());
+        } catch (DukeWrongArgsException error) {
+            String errorMessage = String.format("Wrong number of arguments. Expected 2, received %d",
+                    message.length);
+            printMessage(errorMessage);
+        } catch (NumberFormatException error) {
+            String errorMessage = "Expected a valid number for second argument.";
+            String errorMessageEcho = String.format("You entered %s, which is invalid!", message[1]);
+            printMessage(errorMessage);
+            printMessage(errorMessageEcho);
+        } catch (IndexOutOfBoundsException error) {
+            String errorMessage = "Out of bounds value provided.";
+            String errorMessageEcho = String.format("List only has %d items, you entered %d!",
+                    userList.size(), taskNumber);
+            printMessage(errorMessage);
+            printMessage(errorMessageEcho);
+        } finally {
+            separator();
         }
-        separator();
     }
 
-    public static void unmarkItem(int taskNumber) {
+    public static void unmarkItem(String[] message) {
+        int taskNumber = 0;
+
         separator();
-        boolean isValidTask = isValidTaskNumber(taskNumber);
-        if (!isValidTask) {
-            String errorMessage = String.format("List only has %d items!", userList.size());
-            printMessage(errorMessage);
-        } else {
+        try {
+            taskNumber = getTaskNumber(message);
             userList.get(taskNumber - 1).setAsNotDone();
             String outputMessage = String.format("OK, I've marked task %d as not done yet:", taskNumber);
             printMessage(outputMessage);
             printMessage(userList.get(taskNumber - 1).toString());
+        } catch (DukeWrongArgsException error) {
+            String errorMessage = String.format("Wrong number of arguments. Expected 2, received %d",
+                    message.length);
+            printMessage(errorMessage);
+        } catch (NumberFormatException error) {
+            String errorMessage = "Expected a valid number for second argument.";
+            String errorMessageEcho = String.format("You entered %s, which is invalid!", message[1]);
+            printMessage(errorMessage);
+            printMessage(errorMessageEcho);
+        } catch (IndexOutOfBoundsException error) {
+            String errorMessage = "Out of bounds value provided.";
+            String errorMessageEcho = String.format("List only has %d items, you entered %d!",
+                    userList.size(), taskNumber);
+            printMessage(errorMessage);
+            printMessage(errorMessageEcho);
+        } finally {
+            separator();
         }
-        separator();
     }
 
-    public static String[] parseDeadline(String[] message) {
+    public static int getTaskNumber(String[] message) throws DukeWrongArgsException, NumberFormatException {
+        // Check for correct number of arguments
+        if (message.length != 2) {
+            throw new DukeWrongArgsException();
+        }
+
+        // Check that second argument provided is a valid number
+        try {
+            return Integer.parseInt(message[1]);
+        } catch (NumberFormatException error) {
+            throw new NumberFormatException();
+        }
+    }
+
+    public static String parseTodo(String message) throws StringIndexOutOfBoundsException {
+        int secondArgStartIndex = 5;
+        if (message.length() < secondArgStartIndex) {
+            throw new StringIndexOutOfBoundsException();
+        } else {
+            return message.substring(secondArgStartIndex);
+        }
+    }
+
+    public static Deadline parseDeadline(String[] message) throws DukeWrongArgsException {
         int descriptionStartIndex = 1;
         int descriptionEndIndex = 0;
         int endDateStartIndex = 0;
@@ -121,16 +152,22 @@ public class Duke {
             }
         }
 
+        // Checks if correct argument is provided
+        if (endDateStartIndex == 0) {
+            throw new DukeWrongArgsException();
+        }
+
         String[] descriptionArray = Arrays.copyOfRange(message, descriptionStartIndex, descriptionEndIndex);
         String[] endDateArray = Arrays.copyOfRange(message, endDateStartIndex, endDateEndIndex);
 
         String[] deadlineArray = new String[2];
         deadlineArray[0] = String.join(" ", descriptionArray);
         deadlineArray[1] = String.join(" ", endDateArray);
-        return deadlineArray;
+
+        return new Deadline(deadlineArray[0], deadlineArray[1]);
     }
 
-    public static String[] parseEvent(String[] message) {
+    public static Event parseEvent(String[] message) throws DukeWrongArgsException {
         int descriptionStartIndex = 1;
         int descriptionEndIndex = 0;
         int startDateStartIndex = 0;
@@ -138,7 +175,7 @@ public class Duke {
         int endDateStartIndex = 0;
         int endDateEndIndex = message.length;
 
-        for (int i = 2; i < message.length; i++) {
+        for (int i = 1; i < message.length; i++) {
             if (message[i].equalsIgnoreCase("/from")) {
                 descriptionEndIndex = i;
                 startDateStartIndex = i + 1;
@@ -151,6 +188,10 @@ public class Duke {
             }
         }
 
+        if (startDateStartIndex == 0 || startDateEndIndex == 0) {
+            throw new DukeWrongArgsException();
+        }
+
         String[] descriptionArray = Arrays.copyOfRange(message, descriptionStartIndex, descriptionEndIndex);
         String[] startDateArray = Arrays.copyOfRange(message, startDateStartIndex, startDateEndIndex);
         String[] endDateArray = Arrays.copyOfRange(message, endDateStartIndex, endDateEndIndex);
@@ -159,7 +200,8 @@ public class Duke {
         eventArray[0] = String.join(" ", descriptionArray);
         eventArray[1] = String.join(" ", startDateArray);
         eventArray[2] = String.join(" ", endDateArray);
-        return eventArray;
+
+        return new Event(eventArray[0], eventArray[1], eventArray[2]);
     }
 
     public static void addTask(String description) {
@@ -171,34 +213,65 @@ public class Duke {
         separator();
     }
 
-    public static void addTodo(String description) {
+    public static void addTodo(String cleanInput) {
         separator();
-        Todo todo = new Todo(description);
-        userList.add(todo);
-        printMessage("Got it. I've added this todo:");
-        printMessage(String.format(" %s", todo));
-        printMessage(String.format("Now you have %d tasks in the list.", userList.size()));
-        separator();
+
+        // Check if second argument was provided
+        try {
+            String todoDescription = parseTodo(cleanInput);
+            Todo todo = new Todo(todoDescription);
+            userList.add(todo);
+            printMessage("Got it. I've added this todo:");
+            printMessage(String.format(" %s", todo));
+            printMessage(String.format("Now you have %d tasks in the list.", userList.size()));
+        } catch (StringIndexOutOfBoundsException error) {
+            String errorMessage = "Expected 2 arguments, only 1 provided.";
+            printMessage(errorMessage);
+        } finally {
+            separator();
+        }
     }
 
-    public static void addDeadline(String description, String endDate) {
+    public static void addDeadline(String[] message) {
         separator();
-        Deadline deadline = new Deadline(description, endDate);
-        userList.add(deadline);
-        printMessage("Got it. I've added this deadline:");
-        printMessage(String.format(" %s", deadline));
-        printMessage(String.format("Now you have %d tasks in the list.", userList.size()));
-        separator();
+
+        // Check if task and deadline given
+        try {
+            Deadline deadline = parseDeadline(message);
+            userList.add(deadline);
+            printMessage("Got it. I've added this deadline:");
+            printMessage(String.format(" %s", deadline));
+            printMessage(String.format("Now you have %d tasks in the list.", userList.size()));
+        } catch (DukeWrongArgsException error) {
+            String errorMessage = "Command to enter new deadline entered wrongly.";
+            String errorMessageExample = "Example command: \"deadline <task> /by <endDate>\"";
+            printMessage(errorMessage);
+            printMessage(errorMessageExample);
+        } finally {
+            separator();
+        }
+
     }
 
-    public static void addEvent(String description, String startDate, String endDate) {
+    public static void addEvent(String[] message) {
         separator();
-        Event event = new Event(description, startDate, endDate);
-        userList.add(event);
-        printMessage("Got it. I've added this event:");
-        printMessage(String.format(" %s", event));
-        printMessage(String.format("Now you have %d tasks in the list.", userList.size()));
-        separator();
+
+        // Check if task, start and end date given
+        try {
+            Event event = parseEvent(message);
+            userList.add(event);
+            printMessage("Got it. I've added this event:");
+            printMessage(String.format(" %s", event));
+            printMessage(String.format("Now you have %d tasks in the list.", userList.size()));
+        } catch (DukeWrongArgsException error) {
+            String errorMessage = "Command to enter new event entered wrongly.";
+            String errorMessageExample =
+                    "Example command: \"event <task> /from <startDate> /to " + "<endDate>\"";
+            printMessage(errorMessage);
+            printMessage(errorMessageExample);
+        } finally {
+            separator();
+        }
     }
 
     public static void displayList() {
@@ -206,6 +279,7 @@ public class Duke {
         int numItems = userList.size();
         if (numItems == 0) {
             printMessage("List is empty!");
+            separator();
             return;
         }
 
