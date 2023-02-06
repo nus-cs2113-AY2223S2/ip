@@ -54,6 +54,10 @@ public class Duke {
                     if(tasks[taskNumber-1]==null){
                         throw new IllegalArgumentException("There is no task at the task number.");
                     }
+                    //if the task is already not done throw an exception
+                    if(tasks[taskNumber-1].isDone==false){
+                        throw new IllegalArgumentException("The task is already not done.");
+                    }
                     //mark the task as done
                     tasks[taskNumber-1].markAsNotDone();
                     //print out the task that was marked as done
@@ -78,6 +82,10 @@ public class Duke {
                     //if there is no task at the task number throw an exception
                     if(tasks[taskNumber-1]==null){
                         throw new IllegalArgumentException("There is no task at the task number.");
+                    }
+                    //if the task is already done throw an exception
+                    if(tasks[taskNumber-1].isDone==true){
+                        throw new IllegalArgumentException("The task is already done.");
                     }
                     //mark the task as done
                     tasks[taskNumber-1].markAsDone();
