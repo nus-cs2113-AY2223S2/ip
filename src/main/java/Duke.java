@@ -86,10 +86,30 @@ public class Duke {
             }
             break;
         case "mark":
-            markTask(commandArgs);
+            try {
+                markTask(commandArgs);
+            } catch (NoDescriptionException e) {
+                System.out.println("WOOFS!!! The index of entering task must be stated.");
+                System.out.println("Please try to mark task again υ´• ﻌ •`υ");
+                printLine();
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("WOOFS!!! The index of entering task is not valid.");
+                System.out.println("Please try to mark task again υ´• ﻌ •`υ");
+                printLine();
+            }
             break;
         case "unmark":
-            unmarkTask(commandArgs);
+            try {
+                unmarkTask(commandArgs);
+            } catch (NoDescriptionException e) {
+                System.out.println("WOOFS!!! The index of entering task must be stated.");
+                System.out.println("Please try to mark task again υ´• ﻌ •`υ");
+                printLine();
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("WOOFS!!! The index of entering task is not valid.");
+                System.out.println("Please try to mark task again υ´• ﻌ •`υ");
+                printLine();
+            }
             break;
         case "help":
             info();
@@ -110,8 +130,14 @@ public class Duke {
         return s;
     }
 
-    private static void unmarkTask(String commandArgs) {
+    private static void unmarkTask(String commandArgs) throws NoDescriptionException, IndexOutOfBoundsException{
+        if (commandArgs.trim().length() == 0) {
+            throw new NoDescriptionException();
+        }
         final int unmarkId = Integer.parseInt(commandArgs) - 1;
+        if (unmarkId < 0 || unmarkId >= taskCount) {
+            throw new IndexOutOfBoundsException();
+        }
         if (!tasks[unmarkId].isDone) {
             System.out.println("This task hasn't been marked as done yet ∪･ω･∪");
         } else {
@@ -122,8 +148,14 @@ public class Duke {
         printLine();
     }
 
-    private static void markTask(String commandArgs) {
+    private static void markTask(String commandArgs) throws NoDescriptionException, IndexOutOfBoundsException{
+        if (commandArgs.trim().length() == 0) {
+            throw new NoDescriptionException();
+        }
         final int markId = Integer.parseInt(commandArgs) - 1;
+        if (markId < 0 || markId >= taskCount) {
+            throw new IndexOutOfBoundsException();
+        }
         if (tasks[markId].isDone) {
             System.out.println("This task has already been marked as done ੯•໒꒱❤︎");
         } else {
