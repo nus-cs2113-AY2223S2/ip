@@ -3,11 +3,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-<<<<<<< HEAD
-=======
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
->>>>>>> 559ea2ebccf6c19e8425c687df08266420e5784e
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
