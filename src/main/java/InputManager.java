@@ -16,14 +16,14 @@ public class InputManager {
             switch (words[0]) {
             case "mark": {
                 int indexToMark = Integer.parseInt(words[1]) - 1;
-                todoList.get(indexToMark).markAsDone();
+                todoList.get(indexToMark).setAsDone();
                 OutputDialogueManager.printInteraction(DialogueTypes.MARK_TASK);
                 todoList.get(indexToMark).printTask();
                 break;
             }
             case "unmark": {
                 int indexToMark = Integer.parseInt(words[1]) - 1;
-                todoList.get(indexToMark).markAsUndone();
+                todoList.get(indexToMark).setAsUndone();
                 OutputDialogueManager.printInteraction(DialogueTypes.UNMARK_TASK);
                 todoList.get(indexToMark).printTask();
                 break;

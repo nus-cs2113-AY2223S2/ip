@@ -29,14 +29,14 @@ public class Task {
         return isDone;
     }
 
-    public void markAsDone() {
+    public void setAsDone() {
         this.isDone = true;
     }
-    public void markAsUndone() {
+    public void setAsUndone() {
         this.isDone = false;
     }
     public void printTask() {
-        String status = new String();
+        String status;
         if (isDone) {
             status = "[X]";
         } else {
