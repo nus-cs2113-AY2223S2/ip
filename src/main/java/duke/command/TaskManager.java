@@ -1,9 +1,13 @@
 package duke.command;
 
+import duke.exception.EmptyTaskException;
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
+import duke.exception.IllegalCommandException;
+
+import java.util.Objects;
 
 public class TaskManager {
     protected Task[] taskList;
@@ -17,12 +21,42 @@ public class TaskManager {
         taskCount += 1;
     }
 
-    public void markTaskAsDone(int taskIndex){
-        taskList[taskIndex-1].markAsDone();
+    public void markTaskAsDone(String taskIndex){
+        int arrayIndex=101; //larger than array size. Will definitely raise IndexOutOfBoundsException if unchanged.
+        try{
+            arrayIndex = Integer.parseInt(taskIndex) - 1;
+        } catch (NumberFormatException e){
+            System.out.println("Enter a valid number");
+        }
+        try {
+            taskList[arrayIndex].markAsDone();
+            System.out.println("Nice! I've marked this task as done: ");
+            System.out.println(taskList[arrayIndex].toString());
+        } catch (IndexOutOfBoundsException e){
+            System.out.println("No task at specified index");
+        } catch (NullPointerException e){
+            System.out.println("Not a valid ID");
+        }
+
     }
-    public void markTaskAsUndone(int taskIndex){
-        taskList[taskIndex-1].markAsUndone();
+    public void markTaskAsUndone(String taskIndex){
+        int arrayIndex = 101; //as per markTaskAsDone
+        try{
+            arrayIndex = Integer.parseInt(taskIndex) - 1;
+        } catch (NumberFormatException e){
+            System.out.println("Enter a valid number");
+        }
+        try {
+            taskList[arrayIndex].markAsUndone(); //catch exception here too.
+            System.out.println("OK, I've marked this task as not done yet: ");
+            System.out.println(taskList[arrayIndex].toString());
+        } catch (IndexOutOfBoundsException e){
+            System.out.println("Not a valid ID");
+        } catch (NullPointerException e){
+            System.out.println("Not a valid ID");
+        }
     }
+    /* deprecated
     public void markTask(String input) {
         int whitespaceIndex = input.indexOf(" ");
         int startingIndex = Integer.parseInt(input.substring(whitespaceIndex + 1));
@@ -38,6 +72,7 @@ public class TaskManager {
         System.out.println(taskList[startingIndex - 1].toString());
         //printSeparator();
     }
+     */
     public void listTasks(){
         for (int i = 0; i < taskCount; i++){
             System.out.print((i+1)+ ".");
@@ -45,7 +80,51 @@ public class TaskManager {
         }
     }
 
-    public void handleCommand(String input){
+    public void handleCommand(String input) throws IllegalCommandException {
+        input = input.trim(); //removes excess whitespace in front and back of command
+        String[] commandLine = input.split(" "); //split substrings by whitespaces
+        String commandBody = input.substring(input.indexOf(" ")+1);
+        commandBody = commandBody.trim();
+        switch (commandLine[0]){
+        case "list":
+            this.listTasks();
+            break;
+        case "mark":
+            this.markTaskAsDone(commandLine[1]);
+            break;
+        case "unmark":
+            this.markTaskAsUndone(commandLine[1]);
+            break;
+        case "todo":
+            try {
+                generateToDo(commandBody);
+            }catch (EmptyTaskException a){
+                System.out.println("The description of a todo cannot be empty.");
+            }
+            break;
+        case "deadline":
+            try {
+                generateDeadline(commandBody);// as per todo
+            }catch(EmptyTaskException a){
+                System.out.println("The description of a event cannot be empty.");
+            }
+            break;
+
+        case "event":
+            try {
+                generateEvent(commandBody); //as per todo
+            }
+            catch(EmptyTaskException a){
+                System.out.println("The description of event cannot be empty.");
+            }
+            break;
+        case "help":
+            printHelp();
+            break;
+        default:
+            throw new IllegalCommandException();
+        }
+        /* Old method. To be replaced with new array-based method for better exception handling
         if (input.equals("list")) {
             this.listTasks();
         } else if (input.contains("mark")) {
@@ -59,36 +138,66 @@ public class TaskManager {
         } else{
             printHelp();
         }
+         */
     }
 
-    private void generateToDo(String input) {
-        String job = input.substring(5);
-        //System.out.println(job);
-        ToDo newTask = new ToDo(job);
+    private void generateToDo(String input) throws EmptyTaskException{
+        if (input.equals("todo")){
+            throw new EmptyTaskException();
+        }
+        ToDo newTask = new ToDo(input);
         //taskList[TaskItems.Task.getTaskNumber()] = newTask;
         this.addTask(newTask);
         System.out.println("Got it. I've added this to Duke.task:");
         System.out.println("    " + newTask.toString());
     }
-    private void generateDeadline(String input) {
-        String job = input.substring(8);
-        int indexSeparator = job.indexOf("/");
-        String taskDescription = job.substring(0,indexSeparator);
-        String taskDue = job.substring(indexSeparator+4);
+    private void generateDeadline(String input) throws EmptyTaskException{
+        if (input.equals("deadline")){
+            throw new EmptyTaskException();
+        }
+        int indexSeparator = input.indexOf("/");
+        String taskDescription = "";
+        String taskDue = "";
+        try {
+            taskDescription = input.substring(0, indexSeparator);
+            taskDue = input.substring(indexSeparator + 4);
+        }catch(StringIndexOutOfBoundsException a){
+            System.out.println("Input error. Use '/by' in command line to specify deadline. Type 'help' for " +
+                    "more information");
+            return;
+        }
         Deadline newTask = new Deadline(taskDescription, taskDue);
         this.addTask(newTask);
         System.out.println("Got it. I've added this to Duke.task:");
         System.out.println("    " + newTask.toString());
     }
 
-    private void generateEvent(String input){
-        String job = input.substring(6);
-        int indexSeparator = job.indexOf("/");
-        String taskDescription = job.substring(0, indexSeparator);
-        String taskDates = job.substring(indexSeparator+6);
-        indexSeparator = taskDates.indexOf("/");
-        String taskStart = taskDates.substring(0, indexSeparator-1);
-        String taskEnd = taskDates.substring(indexSeparator+4);
+    private void generateEvent(String input) throws EmptyTaskException{
+        if (input.equals("event")){
+            throw new EmptyTaskException();
+        }
+        int indexSeparator = input.indexOf("/");
+        String taskDescription = "";
+        String taskDates = "";
+        try {
+            taskDescription = input.substring(0, indexSeparator); //locates location of first / for "from"
+            taskDates = input.substring(indexSeparator + 6); //creates "from" substring
+        }catch (StringIndexOutOfBoundsException a){
+            System.out.println("Input error. Use '/from' in command line to specify starting time. Type 'help' for " +
+                    "more information");
+            return;
+        }
+        indexSeparator = taskDates.indexOf("/"); //locates location of second / for "by"
+        String taskStart = "";
+        String taskEnd = "";
+        try {
+            taskStart = taskDates.substring(0, indexSeparator - 1); //creates "by" substring
+            taskEnd = taskDates.substring(indexSeparator + 4);
+        }catch(StringIndexOutOfBoundsException a){
+            System.out.println("Input error. Use /to in command line to specify ending time. Type 'help' for " +
+                    "more information");
+            return;
+        }
         Event newTask = new Event(taskDescription, taskStart, taskEnd);
         this.addTask(newTask);
         System.out.println("Got it. I've added this to Duke.task:");

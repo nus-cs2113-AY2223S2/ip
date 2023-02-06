@@ -1,3 +1,4 @@
+import duke.exception.IllegalCommandException;
 import duke.command.TaskManager;
 
 import java.util.Scanner;
@@ -20,11 +21,6 @@ public class Duke {
         printSeparator();
     }
 
-    public static void printEcho(String input) {
-        printSeparator();
-        System.out.println("added: " + input);
-        printSeparator();
-    }
 
     public static void main(String[] args) {
         String logo = " ____        _        \n"
@@ -44,8 +40,12 @@ public class Duke {
                 byeFlag = true;
                 printGoodbye();
             } else {
-                dukeManager.handleCommand(userInput);
-                printSeparator();
+                try {
+                    dukeManager.handleCommand(userInput);
+                    printSeparator();
+                } catch (IllegalCommandException e) {
+                    System.out.println("ಠ_ಠ idk what you're saying bro ಠ_ಠ");
+                }
             }
         }
     }
