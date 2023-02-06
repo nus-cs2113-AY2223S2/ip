@@ -3,4 +3,8 @@ public class Todo extends Task{
         super(description);
         this.type = "T";
     }
+
+//    public String toString() {
+//        return super.toString();
+//    }
 }

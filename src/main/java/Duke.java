@@ -1,29 +1,56 @@
 import java.util.Scanner;
-import java.util.ArrayList;
 
 public class Duke {
     private static String line = "__________________________________________________________";
     private static Task[] inputList = new Task[101];
     private static int numTasks = 0;
 
-    public static void addTask(String userInput) {
-        Task t;
-        String descriptor = userInput.substring(userInput.indexOf(" "), userInput.length());
-        if (userInput.startsWith("todo")) {
-            t = new Todo(descriptor);
-        } else if (userInput.startsWith("deadline")) {
-            t = new Deadline(descriptor);
-        } else if (userInput.startsWith("event")) {
-            t = new Event(descriptor);
-        } else {
-            System.out.println("OOPS! I'm sorry, but I don't know what that means :^(");
-            return;
-        }
-        t.printAddTask();
-        inputList[numTasks+1] = t; //1-index
-        numTasks++;
+    public static void printAddTask(Task t) {
+        //print to show added to list
+        System.out.println(line);
+        System.out.println("Got it. I've added this task: \n" + t);
         System.out.println("Now you have " + numTasks + " tasks in the list.");
         System.out.println(line);
+    }
+
+    public static void validTask(String[] userInput) throws DukeException{
+        if (userInput.length < 2 && (userInput[0].equals("todo") ||
+                userInput[0].equals("event") || userInput[0].equals("deadline"))) {
+            throw new DukeException();
+        }
+    }
+
+    public static void validTask(String userInput) throws DukeException {
+        String taskNum = userInput.substring(userInput.length()-1);
+        int x = Integer.parseInt(taskNum);
+        if (inputList[x] == null) {
+            throw new DukeException();
+        }
+        inputList[x].markAsDone(userInput);
+    }
+
+    public static void addTask(String userInput) throws DukeException {
+        Task t;
+        String[] words = userInput.split(" ");
+        validTask(words);
+        String descriptor = userInput.substring(userInput.indexOf(words[1]), userInput.length());
+        if (words[0].equals("todo")) {
+            t = new Todo(descriptor);
+        } else if (words[0].equals("deadline")) {
+            String by = descriptor.split("/by ")[1];
+            descriptor = descriptor.split("/by ")[0];
+            t = new Deadline(descriptor, by);
+        } else if (words[0].equals("event")) {
+            String to = descriptor.split("/to ")[1];
+            String from = descriptor.split(" /")[1];
+            descriptor = descriptor.split("/")[0];
+            t = new Event(descriptor, from, to);
+        } else {
+            throw new IndexOutOfBoundsException();
+        }
+        inputList[numTasks+1] = t; //1-index
+        numTasks++;
+        printAddTask(t);
     }
 
     public static void printList(Task[] input) {
@@ -32,8 +59,7 @@ public class Duke {
             if (input[i] == null) {
                 break;
             }
-            System.out.print((i) + ".");
-            input[i].printTask();
+            System.out.print(i + ". " + input[i]);
         }
         System.out.println(line);
     }
@@ -48,11 +74,19 @@ public class Duke {
             } else if (userInput.equals("list")) {
                 printList(inputList);
             } else if (userInput.contains("mark")) {
-                String taskNum = userInput.substring(userInput.length()-1);
-                int x = Integer.parseInt(taskNum);
-                inputList[x].markAsDone();
+                try {
+                    validTask(userInput);
+                } catch (DukeException e) {
+                    System.out.println("OOPS... task does not exist");
+                }
             } else {
-                addTask(userInput);
+                try {
+                    addTask(userInput);
+                } catch (DukeException e) {
+                    System.out.println("OOPS... The description of a " + userInput + " cannot be empty.");
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("OOPS... I'm sorry, but I don't know what that means :^(");
+                }
             }
             userInput = in.nextLine();
         }

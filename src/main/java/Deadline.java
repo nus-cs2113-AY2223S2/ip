@@ -1,22 +1,24 @@
 public class Deadline extends Task {
-    protected String dateTime;
+    protected String by;
 
-    public Deadline (String description) {
+    public Deadline (String description, String by) {
         super(description);
+        this.by = by;
         this.type = "D";
     }
 
-    public String getDateTime(String description) {
-        dateTime = description.substring(description.indexOf("/by "), description.length());
-        return dateTime;
-    }
+//    public String getDescription() {
+//        String event = description.substring(description.indexOf(" ")+1,description.indexOf("/")-1);
+//        return event;
+//    }
+//
+//    public String getDateTime() {
+//        dateTime = description.substring(description.indexOf("/by "), description.length());
+//        return dateTime;
+//    }
 
 
-    public void printTask() {
-        String status = getStatusIcon();
-        String type = getType();
-        dateTime = getDateTime(description);
-        System.out.print("[" + type + "][" + status + "]" + description.substring(description.indexOf(" "), description.indexOf(" /")));
-        System.out.println(" (" + dateTime.replace("/by ", "by: ") + ")");
+    public String toString() {
+        return super.toString() + "(by: " + by +")";
     }
 }
