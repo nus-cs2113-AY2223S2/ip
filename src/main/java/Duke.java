@@ -6,7 +6,6 @@ public class Duke {
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        String divider = "\t____________________________________________________________";
         CommandManager.sayHi();
         CommandManager command = new CommandManager();
         command.setUserInput(in.nextLine());
@@ -19,27 +18,24 @@ public class Duke {
                 markTask.setMarked(true);
                 command.setUserOutput("mark");
                 command.printOutput(markTask);
-//                System.out.println(divider + "\n\t Nice! I've marked this task as done:\n\t  " +
-//                        "[X] " +  markTask.getItem());
-//                System.out.println(divider);
                 break;
             case "unmark":
                 Tasks unMarkTask = Tasks.getTaskList().get(Integer.parseInt(userInput[1]) - 1);
                 unMarkTask.setMarked(false);
                 command.setUserOutput("unmark");
                 command.printOutput(unMarkTask);
-//                System.out.println(divider + "\n\t Nice! I've marked this task as not done yet:\n\t  " +
-//                        "[ ] " +  unMarkTask.getItem());
-//                System.out.println(divider);
                 break;
             case "list":
                 command.printOutput();
                 break;
             default:
-                Tasks.addToList(new Tasks(command.getUserInput(), false));
+                Tasks newTask = new Tasks(command.getUserInput(), false);
+                Tasks.addToList(newTask);
+                command.setUserOutput("echo");
+                command.printOutput(newTask);
             }
             command.setUserInput(in.nextLine());
         }
-        System.out.println(divider + "\n\t Bye. Hope to see you again soon!\n" + divider);
+        command.sayBye();
     }
 }

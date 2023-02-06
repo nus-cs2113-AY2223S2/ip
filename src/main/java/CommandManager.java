@@ -3,10 +3,8 @@ import java.util.ArrayList;
 public class CommandManager {
     //print Duke
     //get user input
-    //
     private String userInput;
     private String userOutput;
-    //  private static ArrayList<String> printList = new ArrayList<>();
 
     public static final String DIVIDER = "\t____________________________________________________________";
 
@@ -19,6 +17,9 @@ public class CommandManager {
         System.out.println("Hello from\n" + logo);
         System.out.print(DIVIDER + '\n'
                 + " \t Hello! I'm Duke\n\t What can I do for you?\n" + DIVIDER + "\n\n");
+    }
+    public static void sayBye() {
+        System.out.println(DIVIDER + "\n\t Bye. Hope to see you again soon!\n" + DIVIDER);
     }
 
     public CommandManager() {
@@ -45,10 +46,6 @@ public class CommandManager {
         this.userOutput = userOutput;
     }
 
-//    public static void addToPrintList(String toPrint) {
-//
-//        printList.add(toPrint);
-//    }
 
     public void printOutput(Tasks task) {
         //    String taskLine = printList.get(task.getID());
@@ -63,19 +60,11 @@ public class CommandManager {
                     "[ ] " + task.getItem());
             System.out.println(DIVIDER);
             break;
-//        case "list": {
-//            int totalNumberOfTasks = Tasks.getNumberOfTasks();
-//            System.out.println(DIVIDER + "\n\t Here are the tasks in your list:");
-//            for(int num = 1; num <= totalNumberOfTasks; ++num) {
-//                Tasks thisTask = Tasks.getTaskList().get(totalNumberOfTasks - 1);
-//                if (thisTask.isMarked()) {
-//                    System.out.println("\t " + Integer.toString(num) + ".[X] " + thisTask.getItem());
-//                } else {
-//                    System.out.println("\t " + Integer.toString(num) + ".[ ] " + thisTask.getItem());
-//                }
-//            }
-//            System.out.println(DIVIDER);
-//        }
+        case "echo":
+            System.out.println(DIVIDER + "\n\t added: " + task.getItem());
+            System.out.println(DIVIDER);
+
+
         }
     }
 
