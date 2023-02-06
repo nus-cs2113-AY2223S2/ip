@@ -48,13 +48,17 @@ public class TaskManager {
     }
 
     public static void markTask(Task[] list, int index) {
-        list[index - 1].markAsDone();
-        System.out.println("Nice! I've marked this task as done:\n" + list[index - 1].describeTask() + "\n");
+        if (index > 0 && index <= taskCount) {
+            list[index - 1].markAsDone();
+            System.out.println("Nice! I've marked this task as done:\n" + list[index - 1].describeTask() + "\n");
+        }
     }
 
     public static void unmarkTask(Task[] list, int index) {
-        list[index - 1].unmarkAsDone();
-        System.out.println("OK, Ive marked this task as not done yet:\n" + list[index - 1].describeTask() + "\n");
+        if (index > 0 && index <= taskCount) {
+            list[index - 1].unmarkAsDone();
+            System.out.println("OK, Ive marked this task as not done yet:\n" + list[index - 1].describeTask() + "\n");
+        }
     }
 
 }
