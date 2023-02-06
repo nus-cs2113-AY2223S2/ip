@@ -89,38 +89,38 @@ public class Genesis {
             String command = contentArr[0];
 
             switch (command) {
-                case "list": {
-                    handleListTasks();
-                    break;
-                }
-                case "mark": {
-                    validateIndex(contentArr);
-                    handleMarkTask(contentArr[1]);
-                    break;
-                }
-                case "unmark": {
-                    validateIndex(contentArr);
-                    handleUnmarkTask(contentArr[1]);
-                    break;
-                }
-                case "todo": {
-                    validateDescription(contentArr);
-                    handleTodo(contentArr[1]);
-                    break;
-                }
-                case "deadline": {
-                    validateDescription(contentArr);
-                    handleDeadline(contentArr[1]);
-                    break;
-                }
-                case "event": {
-                    validateDescription(contentArr);
-                    handleEvent(contentArr[1]);
-                    break;
-                }
-                default: {
-                    throw new UnknownCommandException("I'm sorry, but I don't know what that means :-(");
-                }
+            case "list": {
+                handleListTasks();
+                break;
+            }
+            case "mark": {
+                validateIndex(contentArr);
+                handleMarkTask(contentArr[1]);
+                break;
+            }
+            case "unmark": {
+                validateIndex(contentArr);
+                handleUnmarkTask(contentArr[1]);
+                break;
+            }
+            case "todo": {
+                validateDescription(contentArr);
+                handleTodo(contentArr[1]);
+                break;
+            }
+            case "deadline": {
+                validateDescription(contentArr);
+                handleDeadline(contentArr[1]);
+                break;
+            }
+            case "event": {
+                validateDescription(contentArr);
+                handleEvent(contentArr[1]);
+                break;
+            }
+            default: {
+                throw new UnknownCommandException("I'm sorry, but I don't know what that means :-(");
+            }
             }
 
         } catch (GenesisException e) {
