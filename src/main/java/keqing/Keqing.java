@@ -1,3 +1,11 @@
+package keqing;
+
+import keqing.exceptions.IllegalInputException;
+import keqing.tasks.Deadline;
+import keqing.tasks.Event;
+import keqing.tasks.Task;
+import keqing.tasks.ToDo;
+
 import java.util.Scanner;
 public class Keqing {
 
