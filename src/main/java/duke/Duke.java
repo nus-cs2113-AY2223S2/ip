@@ -21,10 +21,11 @@ public class Duke {
     static ArrayList<Task> tasks = new ArrayList<>();
     static int textCount = 0;
 
-    public static void printInvalidInput(String taskType) {
+    public static void printInvalidNumber(String taskType) {
         System.out.println(LINE);
         System.out.println("\t☹ Error! Invalid input.");
         System.out.println("\tPlease provide a integer number for " + "\"" + taskType + "\" command.");
+        System.out.println("\tPlease use \"list\" command to see your task numbers.");
         System.out.println(LINE);
     }
 
@@ -49,10 +50,7 @@ public class Duke {
             System.out.println("\t  " + tasks.get(taskNum).getTaskNameAndStatus());
             System.out.println(LINE);
         } catch (IndexOutOfBoundsException | NullPointerException out_mark_b) {
-            System.out.println(LINE);
-            System.out.println("\t☹ Error! Invalid task number given.");
-            System.out.println("\tPlease use \"list\" command to see your task numbers.");
-            System.out.println(LINE);
+            printInvalidNumber("mark");
         }
     }
 
@@ -64,10 +62,7 @@ public class Duke {
             System.out.println("\t  " + tasks.get(taskNum).getTaskNameAndStatus());
             System.out.println(LINE);
         } catch (IndexOutOfBoundsException | NullPointerException out_unmark_b) {
-            System.out.println(LINE);
-            System.out.println("\t☹ Error! Invalid task number given.");
-            System.out.println("\tPlease use \"list\" command to see your task numbers.");
-            System.out.println(LINE);
+            printInvalidNumber("unmark");
         }
     }
 
@@ -140,7 +135,7 @@ public class Duke {
                 System.out.println("\t☹ Error! \"mark\" command requires a task number.");
                 System.out.println(LINE);
             } catch (NumberFormatException num_mark_a) {
-                printInvalidInput("mark");
+                printInvalidNumber("mark");
             }
             break;
         }
@@ -148,15 +143,8 @@ public class Duke {
             try {
                 int taskNum = Integer.parseInt(extractFirstWord[1]);
                 doCommandUnmark(taskNum);
-            } catch (IndexOutOfBoundsException out_unmark_a) {
-                System.out.println(LINE);
-                System.out.println("\t☹ Error! \"unmark\" command requires a task number.");
-                System.out.println(LINE);
-            } catch (NumberFormatException num_unmark_a) {
-                System.out.println(LINE);
-                System.out.println("\t☹ Error! Invalid input.");
-                System.out.println("\tPlease provide a integer number for \"unmark\" command.");
-                System.out.println(LINE);
+            } catch (IndexOutOfBoundsException | NumberFormatException out_unmark_a) {
+                printInvalidNumber("unmark");
             }
             break;
         }
@@ -170,15 +158,8 @@ public class Duke {
             try {
                 int taskNum = Integer.parseInt(extractFirstWord[1]);
                 doCommandDelete(taskNum);
-            } catch (IndexOutOfBoundsException out_unmark_a) {
-                System.out.println(LINE);
-                System.out.println("\t☹ Error! \"delete\" command requires a task number.");
-                System.out.println(LINE);
-            } catch (NumberFormatException num_unmark_a) {
-                System.out.println(LINE);
-                System.out.println("\t☹ Error! Invalid input.");
-                System.out.println("\tPlease provide a integer number for \"delete\" command.");
-                System.out.println(LINE);
+            } catch (IndexOutOfBoundsException | NumberFormatException out_delete_a) {
+                printInvalidNumber("delete");
             }
             break;
         case COMMAND_TODO: {
