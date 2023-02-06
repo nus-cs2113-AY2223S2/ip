@@ -7,7 +7,7 @@ public class Event extends Task {
         this.startTime = startTime;
         this.endTime = endTime;
     }
-
+    @Override
     public String listTask() {
         if (getIsComplete()) {
             return "[E][X] " + getTaskName() + " (from: " + startTime + " to: " + endTime + ')';

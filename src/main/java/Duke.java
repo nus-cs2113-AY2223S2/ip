@@ -21,6 +21,8 @@ public class Duke {
     }
 
     private static void parseResponse(String response, List list) {
+
+
         if (response.equals("list")) {
             printSeperator();
             list.listDisplay();
