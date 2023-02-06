@@ -10,7 +10,7 @@ public class Deadline extends Task {
                 this.description = super.description.substring(0, indexOfBy);
             }
             else {
-                System.out.println("Did you type wrongly? ");
+                System.out.println("Did you forget about the time? ");
             }
         }
         else {

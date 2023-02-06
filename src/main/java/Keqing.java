@@ -52,7 +52,7 @@ public class Keqing {
         System.out.println(LINE);
     }
 
-    public static void doCommand(Task[] tasks, String text) {
+    public static void doCommand(Task[] tasks, String text) throws IllegalInputException{
         String splittedText[] = text.split(" ", 2);
         String command = splittedText[0];
         String content = splittedText[splittedText.length - 1];
@@ -91,11 +91,8 @@ public class Keqing {
             echo(tasks);
             break;
         default:
-            System.out.println(LINE);
-            System.out.println("You have done nothing...?" + System.lineSeparator()
+            throw new IllegalInputException("You have done nothing...?" + System.lineSeparator()
                     + "if you need more instruction, please type 'menu'.");
-            System.out.println(LINE);
-            break;
         }
     }
 
@@ -103,7 +100,11 @@ public class Keqing {
         Scanner in = new Scanner(System.in);
         String text = in.nextLine();
         while(!text.equals("bye")){
-            doCommand(tasks, text);
+            try {
+                doCommand(tasks, text);
+            } catch (IllegalInputException e) {
+                System.out.println("Exception caught: " + e);
+            }
             text = in.nextLine();
         }
     }

@@ -2,7 +2,7 @@ public class Event extends Task {
     protected String from;
     protected String to;
 
-    public Event(String description, int taskID) {
+    public Event (String description, int taskID) {
         super(description, taskID);
         if (super.description.contains("/from") && super.description.contains("/to")) {
             int indexOfFrom = super.description.indexOf("/from");
@@ -12,11 +12,11 @@ public class Event extends Task {
                 to = super.description.substring(indexOfTo + 3).trim();
                 this.description = super.description.substring(0, indexOfFrom);
             } else {
-                System.out.println("You typed wronglyyyy!");
+                System.out.println("Hey go check the order of typing(ㆆ_ㆆ)");
             }
         }
         else {
-            System.out.println("You didn't type correctly (ㆆ_ㆆ)");
+            System.out.println("You didn't type correctly but Keqin still added it to the task...(ㆆ_ㆆ)");
         }
         Task.taskCount += 1;
     }
