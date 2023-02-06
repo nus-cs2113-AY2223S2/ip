@@ -74,44 +74,50 @@ public class Duke {
                 not_finished = false;
             } else if (line.equals("list")) {
                 displayCommandsList(commands);
-            } else if (line.length() > 5 && line.substring(0, 4).equals("mark")) {
-                int index = Integer.parseInt(line.substring(5, 6));
+            } else if (line.split(" ")[0].equals("mark")) {
+                int index = Integer.parseInt(line.split(" ")[1]);
                 commands[index].setDone(true);
                 printDashLine();
                 printSpecificTask(index, commands, "Nice! I've marked this task as done:");
                 printDashLine();
-            } else if (line.length() > 7 && line.substring(0, 6).equals("unmark")) {
-                int index = Integer.parseInt(line.substring(7, 8));
+            } else if (line.split(" ")[0].equals("unmark")) {
+                int index = Integer.parseInt(line.split(" ")[1]);
                 commands[index].setDone(false);
                 printDashLine();
                 printSpecificTask(index, commands, "OK, I've marked this task as not done yet:");
                 printDashLine();
-            } else if (line.length() > 4 && line.substring(0, 4).equals("todo")) {
-                commands[nextIndexInList] = new Todo(line);
-                nextIndexInList++;
-                printDashLine();
-                printSpecificTask(nextIndexInList - 1, commands, "Got it. I've added this task:");
-                printDashLine();
-            } else if (line.length() > 5 && line.substring(0, 5).equals("event")) {
+            } else if (line.split(" ")[0].equals("todo")) {
+                if (line.split(" ").length == 1) {
+                    printDashLine();
+                    System.out.println("\t OOPS!!! The description of a todo cannot be empty.");
+                    printDashLine();
+                } else {
+                    commands[nextIndexInList] = new Todo(line.substring(5));
+                    nextIndexInList++;
+                    printDashLine();
+                    printSpecificTask(nextIndexInList - 1, commands, "Got it. I've added this task:");
+                    printDashLine();
+                }
+
+            } else if (line.split(" ")[0].equals("event")) {
                 int indexFrom = line.indexOf("/");
                 int indexTo = line.indexOf("/", indexFrom + 1);
-                commands[nextIndexInList] = new Event(line.substring(0, indexFrom - 1),
+                commands[nextIndexInList] = new Event(line.substring(6, indexFrom - 1),
                         line.substring(indexFrom + 6, indexTo - 1), line.substring(indexTo + 4));
                 nextIndexInList++;
                 printDashLine();
                 printSpecificTask(nextIndexInList - 1, commands, "Got it. I've added this task:");
                 printDashLine();
-            } else if (line.length() > 8 && line.substring(0, 8).equals("deadline")) {
+            } else if (line.split(" ")[0].equals("deadline")) {
                 int index_by = line.indexOf("/");
-                commands[nextIndexInList] = new Deadline(line.substring(0, index_by - 1), line.substring(index_by + 4));
+                commands[nextIndexInList] = new Deadline(line.substring(9, index_by - 1), line.substring(index_by + 4));
                 nextIndexInList++;
                 printDashLine();
                 printSpecificTask(nextIndexInList - 1, commands, "Got it. I've added this task:");
                 printDashLine();
             } else {
-                addTaskToList(line, commands);
                 printDashLine();
-                printSpecificTask(nextIndexInList - 1, commands, "Got it. I've added this task:");
+                System.out.println("\t OOPS!!! I'm sorry, but I don't know what that means :-(");
                 printDashLine();
             }
         }
