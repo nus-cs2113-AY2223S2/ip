@@ -19,7 +19,7 @@ public class Duke {
     static final String COMMAND_DELETE = "delete";
     static final String COMMAND_DEADLINE = "deadline";
     static ArrayList<Task> tasks = new ArrayList<>();
-    static int textCount = 0;
+    static int taskCount = 0;
 
     public static void printInvalidNumber(String taskType) {
         System.out.println(LINE);
@@ -82,11 +82,11 @@ public class Duke {
     public static void doCommandList() {
         System.out.println(LINE);
         int count = 1;
-        if (textCount == 0) {
+        if (taskCount == 0) {
             System.out.println("\tYou have no pending tasks! ☺");
         } else {
             System.out.println("\tHere are your tasks:");
-            for (int index = 0; index < textCount; index++) {
+            for (int index = 0; index < taskCount; index++) {
                 System.out.print("\t" + count + ".");
                 System.out.println(tasks.get(index));
                 count++;
@@ -97,31 +97,31 @@ public class Duke {
 
     public static void doCommandTodo(String taskName) {
         tasks.add(new Todo(taskName));
-        textCount++;
+        taskCount++;
         System.out.println(LINE);
         System.out.println("\t" + "Task added!");
-        System.out.println("\t  " + tasks.get(textCount - 1));
-        System.out.println("\t" + "Now you have " + textCount + " pending tasks.");
+        System.out.println("\t  " + tasks.get(taskCount - 1));
+        System.out.println("\t" + "Now you have " + taskCount + " pending tasks.");
         System.out.println(LINE);
     }
 
     public static void doCommandDeadline(String taskName, String taskDeadline) {
         tasks.add(new Deadline(taskName, taskDeadline));
-        textCount++;
+        taskCount++;
         System.out.println(LINE);
         System.out.println("\t" + "Task added!");
-        System.out.println("\t  " + tasks.get(textCount - 1));
-        System.out.println("\t" + "Now you have " + textCount + " pending tasks.");
+        System.out.println("\t  " + tasks.get(taskCount - 1));
+        System.out.println("\t" + "Now you have " + taskCount + " pending tasks.");
         System.out.println(LINE);
     }
 
     public static void doCommandEvent(String eventName, String eventDetailsPartOne, String eventDetailsPartTwo) {
         tasks.add(new Event(eventName, eventDetailsPartOne, eventDetailsPartTwo));
-        textCount++;
+        taskCount++;
         System.out.println(LINE);
         System.out.println("\t" + "Task added!");
-        System.out.println("\t  " + tasks.get(textCount - 1));
-        System.out.println("\t" + "Now you have " + textCount + " pending tasks.");
+        System.out.println("\t  " + tasks.get(taskCount - 1));
+        System.out.println("\t" + "Now you have " + taskCount + " pending tasks.");
         System.out.println(LINE);
     }
 
@@ -129,10 +129,10 @@ public class Duke {
         System.out.println(LINE);
         System.out.println("\t" + "Task removed!");
         System.out.println("\t  " + tasks.get(taskNum - 1));
-        System.out.println("\t" + "Now you have " + (textCount - 1) + " pending tasks.");
+        System.out.println("\t" + "Now you have " + (taskCount - 1) + " pending tasks.");
         tasks.remove(taskNum - 1);
         System.out.println(LINE);
-        textCount--;
+        taskCount--;
     }
 
     public static void handleUserCommand(String userCommand) {
