@@ -6,6 +6,7 @@ public class Deadline extends Task {
         this.dueDate = dueDate;
     }
 
+    @Override
     public String listTask() {
         if (getIsComplete()) {
             return "[D][X] " + getTaskName() + " (by: " + dueDate + ')';

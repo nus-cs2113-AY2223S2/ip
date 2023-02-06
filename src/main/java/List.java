@@ -3,6 +3,7 @@ import com.sun.source.util.TaskListener;
 public class List {
     private static final int TASKLIST_SIZE = 100;
     private static final char SPACE = ' ';
+
     private int numItems = 0;
     private Task[] taskList;
 
@@ -28,101 +29,120 @@ public class List {
 
     }
 
-    private void listAddToDo(String sentence, int spaceIndex) {
-        String taskName = sentence.substring(spaceIndex + 1); // taskname rest of string
+    private void listAddToDo(String taskName) {
         taskList[numItems] = new ToDo(taskName);
     }
 
-    private void listAddDeadline(String sentence, int spaceIndex) {
-        int byIndex = sentence.indexOf(" /by ");
+    private void listAddDeadline(String taskDetails) throws InvalidCommandException {
+        int byIndex = taskDetails.indexOf(" /by ");
         if (byIndex == -1) {
-            System.out.println("Invalid deadline command! Please specify due date.");
-            return;
+            throw new InvalidCommandException();
         }
-        String taskName = sentence.substring(spaceIndex + 1, byIndex);
-        String dueDate = sentence.substring(byIndex + 5); // rest of string after " /by "
+        String taskName = taskDetails.substring(0, byIndex);
+        String dueDate = taskDetails.substring(byIndex + 5); // rest of string after " /by "
         taskList[numItems] = new Deadline(taskName, dueDate);
     }
 
-    private void listAddEvent(String sentence, int spaceIndex) {
-        int fromIndex = sentence.indexOf(" /from ");
-        int toIndex = sentence.indexOf(" /to ");
+    private void listAddEvent(String taskDetails) throws InvalidCommandException {
+        int fromIndex = taskDetails.indexOf(" /from ");
+        int toIndex = taskDetails.indexOf(" /to ");
         if (fromIndex == -1 || toIndex == -1) {
-            System.out.println("Invalid event command! Please specify start and end time.");
-            return;
+            throw new InvalidCommandException();
         }
-        String taskName = sentence.substring(spaceIndex + 1, fromIndex);
-        String startTime = sentence.substring(fromIndex + 7, toIndex);
-        String endTime = sentence.substring(toIndex + 5);
+        String taskName = taskDetails.substring(0, fromIndex);
+        String startTime = taskDetails.substring(fromIndex + 7, toIndex);
+        String endTime = taskDetails.substring(toIndex + 5);
         taskList[numItems] = new Event(taskName, startTime, endTime);
     }
 
 
     public void listAdd(String sentence) {
-        int spaceIndex = sentence.indexOf(SPACE);
-        if (spaceIndex == -1) {
-            System.out.println("Invalid command! Please specify task type.");
-            return;
-        }
+        String[] words = sentence.split(" ", 2); // split sentence only on first occurance of space
+        String taskType = words[0];
 
-        String taskType = sentence.substring(0, spaceIndex); // task type up till first space
-
-
-        if (taskType.equals("todo")) {
-            listAddToDo(sentence, spaceIndex);
-        } else if (taskType.equals("deadline")) {
-            listAddDeadline(sentence, spaceIndex);
-        } else if (taskType.equals("event")) {
-            listAddEvent(sentence, spaceIndex);
-        } else {
+        switch (taskType) {
+        case "todo":
+            try {
+                listAddToDo(words[1]);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("Invalid todo command! Task description cannot be empty");
+                return;
+            }
+            break;
+        case "deadline":
+            try {
+                listAddDeadline(words[1]);
+            } catch (InvalidCommandException e) {
+                System.out.println("Invalid deadline command!");
+                return;
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("Invalid deadline command! Task description cannot be empty");
+                return;
+            }
+            break;
+        case "event":
+            try {
+                listAddEvent(words[1]);
+            } catch (InvalidCommandException e) {
+                System.out.println("Invalid event command!");
+                return;
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("Invalid event command! Task description cannot be empty");
+                return;
+            }
+            break;
+        default:
             System.out.println("Invalid task type!");
             return;
         }
-        numItems += 1;
 
+        numItems += 1;
         printSuccessfulAddMessage(numItems, taskList[numItems - 1]);
     }
 
 
     // check if index represented by string is valid, if valid, return index in integer form.
     // else return -1.
-    private int parseIndex(String indexString) {
+    private int parseIndex(String indexString) throws InvalidIndexException {
         int indexInt;
-        // ensure its a number
-        // https://stackoverflow.com/questions/1486077/good-way-to-encapsulate-integer-parseint
-        try {
-            indexInt = Integer.parseInt(indexString);
-            indexInt -= 1; // convert to 0-index
-            if (indexInt >= numItems) {
-                System.out.println(" Invalid task number!");
-                return -1;
-            }
-        } catch (NumberFormatException e) {
-            System.out.println("NOT A NUMBER!");
-            indexInt = -1;
+
+        indexInt = Integer.parseInt(indexString);
+        indexInt -= 1; // convert to 0-index
+        if (indexInt >= numItems || indexInt < 0) {
+            throw new InvalidIndexException();
         }
         return indexInt;
     }
 
 
-    public void markTask(String stringIndex) {
-        int index = parseIndex(stringIndex);
-        if (index != -1) {
-            taskList[index].setIsComplete(true);
+    public void markTask(String indexString) {
+        int indexInt;
+        try {
+            indexInt = parseIndex(indexString);
+            taskList[indexInt].setIsComplete(true);
             System.out.println(" Nice! I've marked this task as done:");
             System.out.print("   [X] ");
-            System.out.println(taskList[index].getTaskName());
+            System.out.println(taskList[indexInt].getTaskName());
+        } catch (NumberFormatException e) {
+            System.out.println("Given index is not a number!");
+        } catch (InvalidIndexException e) {
+            System.out.println("Given index is invalid!");
         }
     }
 
 
-    public void unmarkTask(String stringIndex) {
-        int index = parseIndex(stringIndex);
+    public void unmarkTask(String indexString) {
+        int indexInt;
 
-        if (index != -1) {
-            taskList[index].setIsComplete(false);
+        try {
+            indexInt = parseIndex(indexString);
+            taskList[indexInt].setIsComplete(false);
             System.out.println(" OK, I've marked this task as not done yet:");
-            System.out.println("   [ ] " + taskList[index].getTaskName());
+            System.out.println("   [ ] " + taskList[indexInt].getTaskName());
+        } catch (NumberFormatException e) {
+            System.out.println("Given index is not a number!");
+        } catch (InvalidIndexException e) {
+            System.out.println("Given index is invalid!");
         }
     }
 }
