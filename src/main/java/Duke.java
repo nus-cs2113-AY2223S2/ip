@@ -13,7 +13,12 @@ public class Duke {
 
         do {
             input = in.nextLine();
-            processCommand(input);
+            try {
+                processCommand(input);
+            } catch (CommandNotRecognisedException e) {
+                System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+                printDivider();
+            }
         } while (!input.equals(Command.COMMAND_BYE));
     }
 
@@ -34,7 +39,7 @@ public class Duke {
         printDivider();
     }
 
-    public static void processCommand (String input){
+    public static void processCommand (String input) throws CommandNotRecognisedException {
         String action = input.split(" ")[0];
         switch (action) {
         case Command.COMMAND_BYE:
@@ -44,23 +49,53 @@ public class Duke {
             printTaskList();
             break;
         case Command.COMMAND_MARK:
-            markTaskDone(Integer.parseInt(input.split(" ")[1]) - 1);
+            try {
+                markTaskDone(Integer.parseInt(input.split(" ")[1]) - 1);
+            } catch (NumberFormatException e) {
+                System.out.println("☹ OOPS!!! Task number should be an integer.");
+                printDivider();
+            } catch (InvalidTaskNumberException e) {
+                System.out.println("☹ OOPS!!! The task specified does not exist in the task list.");
+                printDivider();
+            }
             break;
         case Command.COMMAND_UNMARK:
-            markTaskUndone(Integer.parseInt(input.split(" ")[1]) - 1);
+            try {
+                markTaskUndone(Integer.parseInt(input.split(" ")[1]) - 1);
+            } catch (NumberFormatException e) {
+                System.out.println("☹ OOPS!!! Task number should be an integer.");
+                printDivider();
+            } catch (InvalidTaskNumberException e) {
+                System.out.println("☹ OOPS!!! The task specified does not exist in the task list.");
+                printDivider();
+            }
             break;
         case Command.COMMAND_TODO:
-            addTodoTask(input);
+            try {
+                addTodoTask(input);
+            } catch (StringIndexOutOfBoundsException e) {
+                System.out.println("☹ OOPS!!! The description of 'todo' cannot be empty.");
+                printDivider();
+            }
             break;
         case Command.COMMAND_DEADLINE:
-            addDeadlineTask(input);
+            try {
+                addDeadlineTask(input);
+            } catch (StringIndexOutOfBoundsException e) {
+                System.out.println("☹ OOPS!!! The description of 'deadline' should include a task and deadline.");
+                printDivider();
+            }
             break;
         case Command.COMMAND_EVENT:
-            addEventTask(input);
+            try {
+                addEventTask(input);
+            } catch (StringIndexOutOfBoundsException e) {
+                System.out.println("☹ OOPS!!! The description of 'event' should include a task and time period.");
+                printDivider();
+            }
             break;
         default:
-            System.out.println("Not a valid command, please try again");
-            printDivider();
+            throw new CommandNotRecognisedException();
         }
     }
 
@@ -81,18 +116,18 @@ public class Duke {
         printDivider();
     }
 
-    private static void markTaskDone(int taskIndex) {
+    private static void markTaskDone(int taskIndex) throws InvalidTaskNumberException {
                 if (taskIndex < 0 || taskIndex >= taskCounter) {
-                    System.out.println("Task number does not exist in list");
+                    throw new InvalidTaskNumberException();
                 } else {
                     tasks[taskIndex].markDone();
                 }
                 printDivider();
     }
 
-    private static void markTaskUndone(int taskIndex) {
+    private static void markTaskUndone(int taskIndex) throws InvalidTaskNumberException {
         if (taskIndex < 0 || taskIndex >= taskCounter) {
-            System.out.println("Task number does not exist in list");
+            throw new InvalidTaskNumberException();
         } else {
             tasks[taskIndex].markUndone();
         }
@@ -100,17 +135,17 @@ public class Duke {
     }
 
     private static void addTodoTask(String input) {
-        tasks[taskCounter] = new ToDo(input.substring(Command.COMMAND_TODO.length() + 1));
-        taskCounter++;
-        printTaskAdded();
+            tasks[taskCounter] = new ToDo(input.substring(Command.COMMAND_TODO.length() + 1));
+            taskCounter++;
+            printTaskAdded();
     }
 
     private static void addDeadlineTask(String input) {
-        int indexOfBy = input.indexOf(Command.COMMAND_DEADLINE_BY);
-        tasks[taskCounter] = new Deadline(input.substring(Command.COMMAND_DEADLINE.length() + 1, indexOfBy)
-                , input.substring(indexOfBy + Command.COMMAND_DEADLINE_BY.length()));
-        taskCounter++;
-        printTaskAdded();
+            int indexOfBy = input.indexOf(Command.COMMAND_DEADLINE_BY);
+            tasks[taskCounter] = new Deadline(input.substring(Command.COMMAND_DEADLINE.length() + 1, indexOfBy)
+                    , input.substring(indexOfBy + Command.COMMAND_DEADLINE_BY.length()));
+            taskCounter++;
+            printTaskAdded();
     }
 
     private static void addEventTask(String input) {
