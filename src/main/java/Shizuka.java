@@ -19,18 +19,10 @@ public class Shizuka {
     }
 
     public static void main(String[] args) {
-        final String LOGO = "   _____  __     _               __        \n"
-                + "  / ___/ / /_   (_)____  __  __ / /__ ____ _\n"
-                + "  \\__ \\ / __ \\ / //_  / / / / // //_// __ `/\n"
-                + " ___/ // / / // /  / /_/ /_/ // ,<  / /_/ /\n"
-                + "/____//_/ /_//_/  /___/\\__,_//_/|_| \\__,_/ \n";
-        final String LINE_BREAK = "____________________\n";
-        final String GREETING = "Hello, I am Shizuka.\nHow can I be of assistance?\n";
-        final String EXIT = "Goodbye.\n";
-        final String PARSE_ERROR = "I'm sorry, but I don't recognise that command.\n";
-        System.out.println(LINE_BREAK + LOGO + LINE_BREAK + GREETING + LINE_BREAK);
+        Printer.intro();
         Scanner in = new Scanner(System.in);
         String line, lineTrimmed, command, commandArgs;
+
         do {
             line = in.nextLine();
             lineTrimmed = line.trim();
@@ -62,10 +54,10 @@ public class Shizuka {
                 TodoList.add(commandArray);
                 break;
             default:
-                System.out.println(LINE_BREAK + PARSE_ERROR + LINE_BREAK);
+                Printer.parseError();
             }
         }
         while (!lineTrimmed.equals("bye"));
-        System.out.println(LINE_BREAK + EXIT + LINE_BREAK);
+        Printer.exit();
     }
 }
