@@ -1,3 +1,5 @@
+package shizuka;
+
 public class Printer {
     final static String LOGO = "   _____  __     _               __        \n"
             + "  / ___/ / /_   (_)____  __  __ / /__ ____ _\n"

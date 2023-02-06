@@ -1,3 +1,5 @@
+package shizuka;
+
 import java.util.Scanner;
 
 public class Shizuka {

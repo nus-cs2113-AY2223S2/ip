@@ -1,3 +1,5 @@
+package shizuka;
+
 public class Deadline extends Todo {
     private String deadline;
 
@@ -7,11 +9,7 @@ public class Deadline extends Todo {
         this.deadline = args[1];
     }
 
-    public String getDeadline() {
-        return deadline;
-    }
-
-    public String printTask(){
+    public String printTask() {
         return this.getTaskIcon() + this.getStatusIcon() + ' ' + this.description + " (by: " + deadline + ")";
     }
 }

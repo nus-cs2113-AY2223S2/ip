@@ -1,3 +1,5 @@
+package shizuka;
+
 public class Event extends Todo {
     private String startDate, endDate;
 

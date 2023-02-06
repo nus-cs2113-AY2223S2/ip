@@ -1,3 +1,5 @@
+package shizuka;
+
 public class TodoList {
     static final String LINE_BREAK = "____________________\n";
     static final String YOUR_TODO_LIST = "This is your todo list.\n";
