@@ -17,7 +17,7 @@ public class TaskList {
 
     /**
      * Adds a String task to the list of strings.
-     * @param taskName: Name of task, String to be added
+     * @param task: Name of task, String to be added
      */
     public void addTask(Task task) {
         tasks[numberOfTasks] = task;
@@ -37,7 +37,7 @@ public class TaskList {
             taskNumber = Integer.parseInt(commandArgs);
         } catch (NumberFormatException e) {
             // Not an int. Send back an error message.
-            return Command.MESSAGE_INVALID_TASKNUMBER;
+            return IO.ERROR_MESSAGE_TASK_INDEX;
         }
         // Check Integer is in range
         try {
@@ -47,7 +47,7 @@ public class TaskList {
                 return tasks[taskNumber - 1].markAsUndone();
             }
         } catch (IndexOutOfBoundsException e) {
-            return Command.MESSAGE_INVALID_TASKNUMBER;
+            return IO.ERROR_MESSAGE_TASK_INDEX;
         }
         // If nothing else works...
         return "Huh?";
@@ -60,6 +60,6 @@ public class TaskList {
 
     // A bit unoptimised, but this is to get the next number for numbering purposes.
     public static int getNextTaskNumber() {
-        return numberOfTasks +1;
+        return numberOfTasks + 1;
     }
 }

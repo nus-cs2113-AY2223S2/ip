@@ -4,7 +4,7 @@ public class Duke {
     private static final TaskList tasks = new TaskList();
 
     public static void main(String[] args) {
-        Command.printGreeting();
+        IO.printGreeting();
 
         // Input variables initialised.
         Scanner myScanner = new Scanner(System.in);
@@ -16,85 +16,88 @@ public class Duke {
             userInput = myScanner.nextLine();
 
             // Execute command and print out the feedback string.
-            String feedback = Command.executeCommand(userInput.toLowerCase());
-            if (feedback.equals("WIP")) {
+            String feedback = executeCommand(userInput.toLowerCase());
+            System.out.println(feedback);
 
-                // this entire block is temporary
-                String[] commandAndArgs = Command.splitCommandAndArgs(userInput.toLowerCase());
-                addNewTask(commandAndArgs[0], commandAndArgs[1]);
-            }
-            System.out.print(feedback);
-
-            Command.printHLine();
+            IO.printHLine();
         }
     }
 
     /**
-     * addTask based on command
-     * @param command ["todo", "deadline", or "event"]
-     * @param commandArgs full string of commands, not yet split
+     * Performs each input's methods as long as it exists, if not return error
+     * @param inputLine Input directly from command-line
+     * @return Feedback string or error string
      */
-    private static void addNewTask(String command, String commandArgs) {
-        Task newTask;
+    public static String executeCommand(String inputLine) {
+        final String[] commandTypeAndArgs = IO.splitCommandAndArgs(inputLine);
+        final String command = commandTypeAndArgs[0];
+        final String commandArgs = commandTypeAndArgs[1];
+
+        // Check command against the set list of commands.
+        // If it doesn't exist, default is invalid
         switch(command) {
-        case "todo":
-            newTask = new Todo(commandArgs, TaskList.getNextTaskNumber());
-            //args should just be the Description
-            tasks.addTask(newTask);
-            Command.printTaskAdded(newTask);
-            break;
-        case "deadline":
-            String[] deadlineArgs = commandArgs.split("/by");
-            newTask = new Deadline(deadlineArgs[0], TaskList.getNextTaskNumber(), deadlineArgs[1]);
-
-            tasks.addTask(newTask);
-            Command.printTaskAdded(newTask);
-            break;
-        case "event":
-            // Split based on regex: /from or /to (With any number of trailing/leading whitespace)
-            String[] eventArgs = commandArgs.split("\\s+\\/from\\s+|\\s+\\/to\\s+");
-            newTask = new Event(eventArgs[0], TaskList.getNextTaskNumber(), eventArgs[1], eventArgs[2]);
-
-            tasks.addTask(newTask);
-            Command.printTaskAdded(newTask);
-            break;
+        case IO.COMMAND_HELP:
+            return IO.MESSAGE_HELP;
+        case IO.COMMAND_LIST:
+            if (tasks.getNumberOfTasks() < 1) {
+                return IO.ERROR_TASKS_EMPTY;
+            }
+            return TaskList.getTaskListString();
+        case IO.COMMAND_MARK: // Fallthrough
+        case IO.COMMAND_UNMARK:
+            return TaskList.executeMarkUnmark(command, commandArgs);
+        case IO.COMMAND_TASK_TODO:
+            return handleAddTaskTodo(commandArgs);
+        case IO.COMMAND_TASK_DEADLINE:
+            return handleAddTaskDeadline(commandArgs);
+        case IO.COMMAND_TASK_EVENT:
+            return handleAddTaskEvent(commandArgs);
+        case IO.COMMAND_BYE:
+            IO.printExitMessage();
+            System.exit(0);
+            // Fallthrough (If somehow cannot exit? LOL)
+        default:
+            return IO.ERROR_MESSAGE_INVALID_COMMAND;
         }
-
     }
-    // handle commands by the user.
-//    private static void handleInput(String input) {
-//        // If string contains mark, could be mark or unmark
-//        // if not, it will fallthrough to the next conditional block
-//        if (input.contains("mark")) {
-//            String[] command = input.split(" ");
-//            int number = Integer.parseInt(command[1]);
-//            // Check if user inputs task number not out of range
-//            if (number > TaskList.getNumberOfTasks()) {
-//                System.out.println("This task doesn't exist.");
-//                return;
-//            }
-//
-//            // Check if the command is "mark" or "unmark"
-//            if (command[0].equals("mark")) {
-//                tasks.executeMarkDone(number);
-//                return;
-//            }
-//            else if (command[0].equals("unmark")) {
-//                tasks.executeMarkUndone(number);
-//                return;
-//            }
-//        }
-//
-//        // Check user input against commands.
-//        if (input.equals("bye")) {
-//            return;
-//        } else if (input.equals("list")) {
-//            System.out.print(tasks.getTaskListString());
-//        } else if (input.equals("help")) {
-//            System.out.print(Command.MESSAGE_HELP);
-//        } else {
-//            String[] commands = Command.splitCommandAndArgs(input);
-//            addNewTask(commands[0], commands[1]);
-//        }
-//    }
+
+    /**
+     * ==============================================================
+     * Below handling Tasks (Validation and addTask)
+     * ==============================================================
+     */
+    private static String handleAddTaskTodo(String commandArgs) {
+        try {
+            Todo newTask = new Todo(IO.processTaskTodo(commandArgs), TaskList.getNextTaskNumber());
+            tasks.addTask(newTask);
+            return IO.feedbackTaskAdded(newTask);
+        } catch (DukeException e) {
+            return IO.ERROR_MESSAGE_ARGUMENT_MISSING;
+        }
+    }
+
+    private static String handleAddTaskDeadline(String commandArgs) {
+        try {
+            String[] deadlineArgs = IO.processTaskDeadline(commandArgs);
+            Deadline newTask =
+                    new Deadline(deadlineArgs[0], TaskList.getNextTaskNumber(), deadlineArgs[1]);
+            tasks.addTask(newTask);
+            return IO.feedbackTaskAdded(newTask);
+        } catch (DukeException e) {
+            return IO.ERROR_MESSAGE_ARGUMENT_NUMBER;
+        }
+    }
+
+    private static String handleAddTaskEvent(String commandArgs) {
+        try {
+            String[] eventArgs = IO.processTaskEvent(commandArgs);
+            Event newTask =
+                    new Event(eventArgs[0], TaskList.getNextTaskNumber(),
+                            eventArgs[1], eventArgs[2]);
+            tasks.addTask(newTask);
+            return IO.feedbackTaskAdded(newTask);
+        } catch (DukeException e) {
+            return IO.ERROR_MESSAGE_ARGUMENT_NUMBER;
+        }
+    }
 }
