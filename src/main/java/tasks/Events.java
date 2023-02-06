@@ -1,13 +1,20 @@
+<<<<<<< HEAD:src/main/java/tasks/Events.java
 package tasks;
+=======
+import errors.InvalidEventException;
+>>>>>>> branch-Level-5:src/main/java/Events.java
 
 public class Events extends Task{
     private String itemName;
     private String startTime;
     private String endTime;
-    public Events(String itemName) {
+    public Events(String itemName) throws InvalidEventException {
         super(itemName);
         int indexOfStartTime = itemName.indexOf("/from");
         int indexOfEndTime = itemName.indexOf("/to");
+        if (indexOfEndTime == -1 || indexOfStartTime == -1) {
+            throw new InvalidEventException();
+        }
         this.itemName = super.getItemName().substring(0, indexOfStartTime);
         this.startTime = itemName.substring(indexOfStartTime + 6, indexOfEndTime);
         this.endTime = itemName.substring(indexOfEndTime + 4);

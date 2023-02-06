@@ -21,7 +21,7 @@ public class OutputDialogueManager {
         case ADD_TASK:
             System.out.println("_(ovo)-| Added:");
             break;
-        case HELP:
+        case HELP_MENU:
             System.out.println("(^A^)== Here's the list of commands you can tell me to do:");
             System.out.println("     - To add a to-do task: todo taskName" + System.lineSeparator() +
                     "       (eg: todo borrow book)");
@@ -46,4 +46,35 @@ public class OutputDialogueManager {
         }
     }
 
+    public static void printErrorDialogue(DialogueTypes errorMessage) {
+        switch (errorMessage) {
+        case EMPTY_TASK_NAME:
+            System.out.println("|(@A@)| The description seems to be empty or incomplete, please remember to fill it");
+            break;
+        case DEADLINE_WRONG_FORMAT:
+            System.out.println("|(@A@)| I think your format for adding a new deadline task is wrong.");
+            System.out.println("(0v0)-- Here's an example of adding a deadline task: deadline return book /by Sunday");
+            break;
+        case EVENT_WRONG_FORMAT:
+            System.out.println("|(@A@)| I think your format for adding an new event is wrong.");
+            System.out.println("(0v0)-- Here's an example of adding an event: " +
+                    "event project meeting /from Mon 2pm /to 4pm");
+            break;
+        case TASK_NUMBER_OUT_OF_RANGE:
+            System.out.println("|(@A@)| I don't remember any task of this number, please try a new one");
+            break;
+        case INVALID_TASK_NUMBER:
+            System.out.println("|(@A@)| I don't think you have entered a number for the task number.");
+            break;
+        case NO_TASK_IN_LIST:
+            System.out.println("|(#A#)| I don't remember any task, please add some following the format below: ");
+            System.out.println("     - To add a to-do task: todo taskName" + System.lineSeparator() +
+                    "       (eg: todo borrow book)");
+            System.out.println("     - To add a task with deadline: deadline taskName /by deadline" +
+                    System.lineSeparator() + "       (eg: deadline return book /by Sunday)");
+            System.out.println("     - To add an event: event eventName /from startTime /to endTime" +
+                    System.lineSeparator() + "       (eg: event project meeting /from Mon 2pm /to 4pm)");
+            break;
+        }
+    }
 }
