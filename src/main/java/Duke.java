@@ -26,47 +26,52 @@ public class Duke {
 
         //setup of exit flag
         boolean exit = false;
+
         while (!exit) {
             in = new Scanner(System.in);
             inputString = in.nextLine();
 
             //switch cases for all specified input types
-            switch(inputString) {
-
-            case "bye" :
+            switch (inputString) {
+            case "bye":
                 exit = true;
                 break;
 
-            case "list" :
+            case "list":
                 System.out.println("    _________________________________________");
                 printListContents(tasks, counter);
                 break;
 
-            case "mark" :
+            case "mark":
                 System.out.println("    Please specify task number: ");
                 int taskNumber = getTaskNumber();
                 tasks[taskNumber - 1].setDone(true);
                 printMarkedAcknowledgement(tasks, taskNumber);
                 break;
 
-            case "unmark" :
+            case "unmark":
                 System.out.println("    Please specify task number: ");
                 taskNumber = getTaskNumber();
                 tasks[taskNumber - 1].setDone(false);
                 printUnmarkedAcknowledgement(tasks, taskNumber);
                 break;
 
-            case "todo" :
+            case "todo":
                 System.out.println("    _________________________________________");
                 System.out.println("    Please specify task: ");
                 inputString = getInputString();
-                tasks[counter] = new Todo(inputString);
-                tasks[counter].print();
-                counter++;
-                System.out.println("    Now you have " + counter + " tasks in your list!");
-                break;
+                if (inputString.equals("")) {
+                    System.out.println("☹ OOPS!!! The description of a todo cannot be empty.");
+                    break;
+                } else {
+                    tasks[counter] = new Todo(inputString);
+                    tasks[counter].print();
+                    counter++;
+                    System.out.println("    Now you have " + counter + " tasks in your list!");
+                    break;
+                }
 
-            case "deadline" :
+            case "deadline":
                 System.out.println("    _________________________________________");
                 System.out.println("    Please specify task: ");
                 inputString = getInputString();
@@ -80,7 +85,7 @@ public class Duke {
                 counter++;
                 break;
 
-            case "event" :
+            case "event":
                 System.out.println("    _________________________________________");
                 System.out.println("    Please specify task: ");
                 inputString = getInputString();
@@ -97,11 +102,11 @@ public class Duke {
                 break;
 
             default:
-                in = new Scanner(System.in);
-                inputString = in.nextLine();
-                break;
-            }
+                
+            break;
         }
+    }
+
 
         //When user types "bye"
         System.out.println("    Bye. Hope to see you again soon!");
