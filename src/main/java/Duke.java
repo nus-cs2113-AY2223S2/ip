@@ -28,7 +28,7 @@ public class Duke {
                 Task curTask = tasks[taskIndex - 1];
                 curTask.unmarkAsDone();
                 printTaskStatusStatement(curTask,"unmark");
-            } else if (input.startsWith("todo")){
+            } else if (input.startsWith("todo")) {
                 String[] temp = input.split("todo "); //separates todo description
                 String description = temp[1];
                 ToDo todo = new ToDo(currentIndex + 1, description);
@@ -36,7 +36,7 @@ public class Duke {
                 currentIndex++;
                 printTaskAddedStatement(currentIndex, todo);
             }
-            else if (input.startsWith("deadline")){
+            else if (input.startsWith("deadline")) {
                 String[] temp = input.split("deadline | /by "); //separates deadline description and by time
                 String description = temp[1];
                 String by = temp[2];
@@ -45,7 +45,7 @@ public class Duke {
                 currentIndex++;
                 printTaskAddedStatement(currentIndex, deadline);
             }
-            else if (input.startsWith("event")){
+            else if (input.startsWith("event")) {
                 String[] temp = input.split(("event | /from | /to ")); //separates event description, from and to times
                 String description = temp[1];
                 String from = temp[2];
@@ -56,12 +56,11 @@ public class Duke {
                 printTaskAddedStatement(currentIndex, event);
             }
             else {
-                break;
+                printUnknownCommandError();
             }
         }
     }
-
-
+    
     private static void printDottedLine() {
         System.out.println("____________________________________________________________");
     }
@@ -111,6 +110,12 @@ public class Duke {
         else {
             System.out.println("Now you have " + currentIndex + " tasks in the list.");
         }
+        printDottedLine();
+    }
+
+    private static void printUnknownCommandError() {
+        printDottedLine();
+        System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
         printDottedLine();
     }
 }
