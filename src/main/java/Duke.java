@@ -9,6 +9,7 @@ public class Duke {
         printHelloStatement();
         while (true) {
             String input;
+            input = in.next();
             input = in.nextLine();
             if (input.equals("bye")) {
                 printByeStatement();
@@ -63,32 +64,36 @@ public class Duke {
         }
     }
 
-    private static void printAllTasks(Task[] tasks) {
+
+    private static void printDottedLine() {
         System.out.println("____________________________________________________________");
+    }
+    private static void printAllTasks(Task[] tasks) {
+        printDottedLine();
         System.out.println("Here are the tasks in your list:");
         for (Task task : tasks) {
             if (task != null) {
                 System.out.println(task);
             }
         }
-        System.out.println("____________________________________________________________");
+        printDottedLine();
     }
 
     private static void printHelloStatement() {
-        System.out.println("____________________________________________________________");
+        printDottedLine();
         System.out.println(" Hello! I'm Duke");
         System.out.println(" What can I do for you?");
-        System.out.println("____________________________________________________________");
+        printDottedLine();
     }
 
     private static void printByeStatement() {
-        System.out.println("____________________________________________________________");
+        printDottedLine();
         System.out.println(" Bye. Hope to see you again soon!");
-        System.out.println("____________________________________________________________");
+        printDottedLine();
     }
 
     private static void printTaskStatusStatement(Task curTask, String status) {
-        System.out.println("____________________________________________________________");
+        printDottedLine();
         if (status.equals("mark")){
             System.out.println("Nice! I've marked this task as done:");
         }
@@ -96,11 +101,11 @@ public class Duke {
             System.out.println("OK, I've marked this task as not done yet:");
         }
         System.out.println(curTask);
-        System.out.println("____________________________________________________________");
+        printDottedLine();
     }
 
     private static void printTaskAddedStatement(int currentIndex, Task task) {
-        System.out.println("____________________________________________________________");
+        printDottedLine();
         System.out.println("Got it. I've added this task:");
         System.out.println(task);
         if (currentIndex == 1) {
@@ -109,7 +114,7 @@ public class Duke {
         else {
             System.out.println("Now you have " + currentIndex + " tasks in the list.");
         }
-        System.out.println("____________________________________________________________");
+        printDottedLine();
     }
 }
 
