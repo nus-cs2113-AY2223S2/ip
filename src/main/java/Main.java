@@ -1,3 +1,7 @@
+import enums.DialogueTypes;
+import managers.InputManager;
+import managers.OutputDialogueManager;
+
 import java.util.Scanner;
 public class Main {
 

@@ -1,3 +1,11 @@
+package managers;
+
+import enums.DialogueTypes;
+import tasks.Deadlines;
+import tasks.Events;
+import tasks.Task;
+import tasks.ToDos;
+
 import java.util.ArrayList;
 
 public class InputManager {

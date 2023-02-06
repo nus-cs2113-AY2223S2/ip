@@ -1,3 +1,7 @@
+package managers;
+
+import enums.DialogueTypes;
+
 public class OutputDialogueManager {
     public static void printInteraction(DialogueTypes interactionType) {
         switch (interactionType) {
