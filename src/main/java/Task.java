@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Task {
+public class Task{
     //class level attributes
     private static Task[] taskArray = new Task[100];
     public static int lastIndex = 0;
@@ -50,18 +50,5 @@ public class Task {
 
     //to be overridden by subclasses
     public void updateTaskDescription(){
-
     }
 }
-//test cases
-//todo SHawn: Answer CS2113 Tutorial Questions
-
-//deadline weekly CS2113 quiz /by Monday 9pm
-
-//list
-
-//event CS2113 lecture /from Friday 4pm /to 6pm
-
-//mark 1
-
-//list
