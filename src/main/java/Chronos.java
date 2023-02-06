@@ -63,6 +63,7 @@ public class Chronos{
             case "done":
                 System.out.println("Bye bye, hope to see you some time soon!");
                 return;
+            //test commit to master
             case "timer":
                 System.out.println("I lost the code thanks sourcetree");
             default:
