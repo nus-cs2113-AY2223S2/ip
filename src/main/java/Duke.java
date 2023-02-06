@@ -1,26 +1,25 @@
-import Constants.Constants;
-
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 import static InputCheckingPackage.InputChecking.*;
 
 
 public class Duke {
 
-    private static final Task[] tasks = new Task[Constants.MAX_NUMBER_OF_ENTRIES];
+    private static final ArrayList<Task> tasks = new ArrayList<>();
+
 
     public static void main(String[] args) {
 
         String command;
-        int numberOfTasks = 0;
+        int numberOfTasks = tasks.size();
         String latestResponse = "";
         boolean hasAdditionalTask = false;
 
         greetUser();
 
-        while (numberOfTasks < 100) {
+        while (true) {
             command = latestResponse;
 
 
@@ -44,39 +43,43 @@ public class Duke {
                 break;
 
             } else if (command.contains("unmark")) {
-                boolean isValidUnmarkInput = checkUnmarkInput(command, numberOfTasks);
+                boolean isValidUnmarkInput = checkUnmarkInput(command, tasks.size());
                 if (isValidUnmarkInput) {
-                    unmarkTask(command, numberOfTasks);
+                    unmarkTask(command, tasks.size());
                 }
 
 
             } else if (command.contains("mark")) {
-                boolean isValidMarkInput = checkMarkInput(command, numberOfTasks);
+                boolean isValidMarkInput = checkMarkInput(command, tasks.size());
                 if (isValidMarkInput) {
-                    markTask(command, numberOfTasks);
+                    markTask(command, tasks.size());
+                }
+
+            } else if (command.contains("delete")) {
+                boolean isValidDeleteInput = checkDeleteInput(command,tasks.size());
+
+                if (isValidDeleteInput) {
+                    DeleteTask(command);
                 }
 
             } else if (command.contains("deadline")) {
                 boolean isValidDeadlineInput = checkDeadlineInput(command);
                 if (isValidDeadlineInput) {
-                    createDeadline(command, numberOfTasks);
-                    numberOfTasks++;
+                    createDeadline(command);
                 }
 
 
             } else if (command.contains("event")) {
                 boolean isValidEventInput = checkEventInput(command);
                 if (isValidEventInput) {
-                    createEvent(command, numberOfTasks);
-                    numberOfTasks++;
+                    createEvent(command);
                 }
 
 
             } else if (command.contains("todo")) {
                 boolean isValidTodoInput = checkTodoInput(command);
                 if (isValidTodoInput) {
-                    createTask(command, numberOfTasks);
-                    numberOfTasks++;
+                    createTask(command);
                 }
 
 
@@ -87,11 +90,9 @@ public class Duke {
             }
 
 
-            System.out.println("There are currently " + numberOfTasks + " task(s) in the list");
+            System.out.println("There are currently " + tasks.size() + " task(s) in the list");
 
-            if (numberOfTasks == 100) {
-                System.out.println("There are now 100 tasks and more tasks cannot be added!");
-            }
+
             printHorizontalBar();
             latestResponse = checkForAdditionalTask();
             hasAdditionalTask = true;
@@ -106,6 +107,16 @@ public class Duke {
         System.out.println("Bye! Hope to see you again soon!\n");
         printHorizontalBar();
 
+    }
+
+    private static void DeleteTask(String command) {
+        int val = Integer.parseInt(command.substring(7));
+        System.out.println("Noted. I've removed this task:");
+        Task task = tasks.get(val-1);
+        System.out.print(val);
+        task.printTask();
+        System.out.println(" Now you have "+ tasks.size()+ " tasks in the list.");
+        tasks.remove(val-1);
     }
 
 
@@ -126,16 +137,16 @@ public class Duke {
     }
 
 
-    private static void createTask(String command, int numberOfTasks) {
+    private static void createTask(String command) {
         command = command.substring(5);
         Task task = new Task(command);
         task.isCompleted = false;
         task.taskName = command;
         System.out.println("added:  " + task.taskName);
-        tasks[numberOfTasks] = task;
+        tasks.add(task);
     }
 
-    private static void createEvent(String command, int numberOfTasks) {
+    private static void createEvent(String command) {
         String content = command.substring(5);
         String[] contents = content.split("/");
         String title = contents[0];
@@ -144,18 +155,18 @@ public class Duke {
         Event newEvent = new Event(title);
         newEvent.setStartTime(startTime);
         newEvent.setEndTime(endTime);
-        tasks[numberOfTasks] = newEvent;
+        tasks.add(newEvent);
         newEvent.newEventResponse();
     }
 
-    private static void createDeadline(String command, int numberOfTasks) {
+    private static void createDeadline(String command) {
         String content = command.substring(8);
         String[] contents = content.split("/");
         String title = contents[0];
         String dueDate = contents[1];
         Deadline newDeadline = new Deadline(title);
         newDeadline.setEndTime(dueDate);
-        tasks[numberOfTasks] = newDeadline;
+        tasks.add(newDeadline);
         newDeadline.newDeadlineResponse();
     }
 
@@ -165,7 +176,7 @@ public class Duke {
         if (taskNum > numberOfTasks || taskNum <= 0) {
             System.out.println("Error! No such task exists!");
         } else {
-            Task target = tasks[taskNum - 1];
+            Task target = tasks.get(taskNum - 1);
             target.markAsDone();
             System.out.println("Nice! I've marked this task as done:");
             System.out.println(target.getStatusIcon() + "   " + target.taskName);
@@ -178,7 +189,7 @@ public class Duke {
         if (taskNum > numberOfTasks || taskNum <= 0) {
             System.out.println("Error! No such task exists!");
         } else {
-            Task target = tasks[taskNum - 1];
+            Task target = tasks.get(taskNum - 1);
             target.markAsNotDone();
             System.out.println("OK, I've marked this task as not done yet:");
             System.out.println(target.getStatusIcon() + "   " + target.taskName);

@@ -2,6 +2,7 @@ package InputCheckingPackage;
 import Constants.Constants;
 
 import java.util.Objects;
+import java.util.StringJoiner;
 
 public class InputChecking {
     public static boolean checkDeadlineInput(String command) {
@@ -100,6 +101,34 @@ public class InputChecking {
 
     }
 
+    public static boolean checkDeleteInput(String command, int numberOfTasks){
+        command = command.toLowerCase();
+        String[] words = command.split(" ");
+        int numberOfErrors = 0;
+        if (words.length > 2) {
+            System.out.println("The delete function is used in the following format:");
+            System.out.println("Delete 'task number'");
+            numberOfErrors++;
+        }
+
+        if (!Objects.equals(words[0], "delete")) {
+            System.out.println("The keyword 'delete' should be the first word");
+            numberOfErrors++;
+        }
+        int taskNumber = Integer.parseInt(words[1]);
+
+        if (taskNumber > numberOfTasks || taskNumber < 1) {
+            System.out.println("The task number is invalid!");
+            numberOfErrors++;
+        }
+
+        if (numberOfErrors > 0) {
+            System.out.println("Please input again in the correct format!");
+            return false;
+        }
+        return true;
+
+    }
     public static boolean checkUnmarkInput(String command, int numberOfTasks) {
         command = command.toLowerCase();
         String[] words = command.split(" ");
@@ -170,6 +199,8 @@ public class InputChecking {
         System.out.println("Make sure your input only contains 1 keyword!");
 
     }
+
+
 
     public static boolean checkForValidInput(String input) {
         input = input.toLowerCase();
