@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 
 public class Genesis {
-
     private static ArrayList<Task> tasks = new ArrayList<Task>();
 
     public static void handleListTasks() throws GenesisException {
@@ -33,12 +32,10 @@ public class Genesis {
         tasks.add(todo);
 
         ConsolePrinter.onTaskAdded(todo.getListDescription(), tasks.size());
-
     }
 
     public static void handleDeadline(String content) throws GenesisException {
         String[] parts = content.split(" /by ", 2);
-
         if (parts.length < 2) {
             throw new GenesisException("Description for deadline is invalid");
         }
@@ -66,7 +63,6 @@ public class Genesis {
         tasks.add(event);
 
         ConsolePrinter.onTaskAdded(event.getListDescription(), tasks.size());
-
     }
 
     private static void validateIndex(String[] contentArr) throws GenesisException {
@@ -125,12 +121,10 @@ public class Genesis {
 
         } catch (GenesisException e) {
             System.out.println(e.getMessage());
-
         } catch (UnknownCommandException e) {
             System.out.println(e.getMessage());
             System.out.println("Please use one of the predefined command");
             ConsolePrinter.helpAll();
-
         } catch (NumberFormatException e) {
             System.out.println("☹ OOPS!!! Index is not a number");
         } catch (IndexOutOfBoundsException e) {
@@ -138,7 +132,5 @@ public class Genesis {
         } finally {
             ConsolePrinter.breakLine();
         }
-
     }
-
 }

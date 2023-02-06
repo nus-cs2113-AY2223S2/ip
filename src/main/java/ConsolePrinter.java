@@ -24,7 +24,6 @@ public class ConsolePrinter {
         System.out.println(HORIZONTAL_RULE);
         System.out.println("What can I do for you?\n");
         System.out.println(HORIZONTAL_RULE);
-
     }
 
     public static void goodbye() {
@@ -70,7 +69,6 @@ public class ConsolePrinter {
         System.out.print("  ");
         helpUnark();
         System.out.println("  bye");
-
     }
 
     public static void helpTodo() {
