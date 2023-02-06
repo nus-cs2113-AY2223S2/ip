@@ -1,7 +1,7 @@
 package duke.task;
 
 public class Deadline extends Task {
-    public static final String DELIMITER = "/by ";
+    public static final String DELIMITER_BY = "/by";
     private String by;
 
     public Deadline(String description, String by) {
@@ -11,6 +11,6 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return " [D]" + super.toString() + "(by: " + by + ")";
+        return " [D]" + super.toString() + " (by: " + by + ")";
     }
 }

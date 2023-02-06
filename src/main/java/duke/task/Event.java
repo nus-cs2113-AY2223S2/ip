@@ -1,7 +1,8 @@
 package duke.task;
 
 public class Event extends Task {
-    public static final String DELIMITER = "/from | /to ";
+    public static final String DELIMITER_FROM = "/from";
+    public static final String DELIMITER_TO = "/to";
     private String from;
     private String to;
 
@@ -13,6 +14,6 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return " [E]" + super.toString() + "(from: " + from + " to: " + to + ")";
+        return " [E]" + super.toString() + " (from: " + from + " to: " + to + ")";
     }
 }
