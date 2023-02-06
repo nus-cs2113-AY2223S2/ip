@@ -1,5 +1,5 @@
-public class Todo extends Task {
-    public Todo(String description, int taskID) {
+public class ToDo extends Task {
+    public ToDo(String description, int taskID) {
         super(description, taskID);
         taskCount += 1;
     }

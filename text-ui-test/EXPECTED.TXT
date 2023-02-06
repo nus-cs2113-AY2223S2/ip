@@ -8,6 +8,7 @@ Hello from
 ________________________________________
 Hello! I'm Duke
 What can I do for you?
+Type 'menu' to know the commands.
 ________________________________________
 ________________________________________
 Got it. I've added this task:
