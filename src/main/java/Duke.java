@@ -31,6 +31,7 @@ public class Duke {
                 addToList(newTask, taskStorage);
             } else {
                 System.out.println("Invalid instruction. Please try again.");
+                horizontalLine();
             }
         }
     }
@@ -63,10 +64,10 @@ public class Duke {
         int totalNumberOfTasks = Task.getNumberOfTasks();
         if (totalNumberOfTasks > 0) {
             System.out.println("Here are the tasks in your list: ");
-            for (int i = 1; i <= totalNumberOfTasks; i += 1) {
-                Task currentTask = taskStorage[i];
+            for (int index = 1; index <= totalNumberOfTasks; index += 1) {
+                Task currentTask = taskStorage[index];
+                System.out.print(index + ". ");
                 displayTask(currentTask);
-                System.out.println(i + "." + currentTask.getStatus() + currentTask.getTaskInfo());
             }
         } else {
             System.out.println("There are no tasks to display.");
@@ -80,7 +81,16 @@ public class Duke {
         displayTask(newTask);
         int currentIndexInTaskStorage = Task.getNumberOfTasks();
         taskStorage[currentIndexInTaskStorage] = newTask;
+        printNumberOfTasks(currentIndexInTaskStorage);
         horizontalLine();
+    }
+
+    public static void printNumberOfTasks(int currentIndex) {
+        if (currentIndex == 1) {
+            System.out.println("Your first task!");
+        } else {
+            System.out.println("You currently have " + currentIndex + " tasks in the list.");
+        }
     }
 
     public static ToDo createToDo(String messageFromUser) {
@@ -141,14 +151,14 @@ public class Duke {
         case "[D]":
             Deadline currentDeadline = (Deadline)currentTask;
             String due = currentDeadline.getDueInfo();
-            System.out.print("(by: " + due + " )");
+            System.out.print("(by:" + due + ")");
             System.out.println();
             break;
         case "[E]":
             Event currentEvent = (Event)currentTask;
             String eventStart = currentEvent.getEventDateAndStartTime();
             String eventEnd = currentEvent.getEndTime();
-            System.out.print("from: " + eventStart + " to: " + eventEnd + " )");
+            System.out.print("(from:" + eventStart + "to:" + eventEnd + ")");
             System.out.println();
             break;
         default:
