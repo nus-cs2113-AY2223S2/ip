@@ -8,12 +8,13 @@ public class Duke {
 
     public static void addTask(String userInput) {
         Task t;
+        String descriptor = userInput.substring(userInput.indexOf(" "), userInput.length());
         if (userInput.contains("todo")) {
-            t = new Todo(userInput.substring(userInput.indexOf(" "), userInput.length()));
+            t = new Todo(descriptor);
         } else if (userInput.contains("deadline")){
-            t = new Deadline(userInput.substring(userInput.indexOf(" "), userInput.length()));
+            t = new Deadline(descriptor);
         } else {
-            t = new Event(userInput.substring(userInput.indexOf(" "), userInput.length()));
+            t = new Event(descriptor);
         }
         t.printAddTask();
         inputList[numTasks+1] = t; //1-index
@@ -34,7 +35,7 @@ public class Duke {
         System.out.println(line);
     }
 
-    public static void getCommands() {
+    public static void getCommand() {
         Scanner in = new Scanner(System.in);
         String userInput = in.nextLine();
 
@@ -78,7 +79,7 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";*/
         //System.out.println("Hello from\n" + logo);
         greet();
-        getCommands();
+        getCommand();
         bye();
     }
 }
