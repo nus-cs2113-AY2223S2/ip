@@ -13,39 +13,24 @@ public class Duke {
         System.out.println("Siri:\n");
     }
 
-    public static void createUserChatBox(String username) {
-        System.out.println(username + ":\n");
+    public static void createUserChatBox() {
+        System.out.println( "user: \n");
     }
 
 
-    public static String greetAndAskName() {
+    public static void greet() {
         //greet and ask name
         drawLine();
         createSiriChatBox();
-        System.out.println("Hey, I'm Siri\n" + "What is your name?");
+        System.out.println("Hey, I'm Siri\n" + "What can I do for you?");
         drawLine();
-
-        //for user to enter name
-        System.out.print("Please enter your name here: ");
-        String username;
-        Scanner in = new Scanner(System.in);
-        username = in.nextLine().trim();
-        drawLine();
-
-        //Greet with name (personalisation)
-        createSiriChatBox();
-        System.out.println(">o< Nice to meet you! " + username + "! >o<");
-        System.out.println("What can I do for you?");
-        drawLine();
-
-        return username;
     }
 
-    public static void sayGoodbye(String username) {
+    public static void sayGoodbye() {
         //say goodbye with name
         drawLine();
         createSiriChatBox();
-        System.out.println(">o< Goodbye, " + username + "! Hope to see you again soon! >o<");
+        System.out.println(">o< Goodbye! Hope to see you again soon! >o<");
         drawLine();
     }
 
@@ -60,6 +45,7 @@ public class Duke {
     public static void markTask(String marker, String taskNumberString) {
         int taskNumber = Integer.parseInt(taskNumberString);
         if (taskNumber > indexOfTask) {
+            //error handling
             System.out.println("): There is no Task number " + taskNumber + " yet! :(");
         } else {
             if (marker.equals("mark")) {
@@ -119,6 +105,7 @@ public class Duke {
             indexOfTask++;
             break;
         default:
+            //error handling
             System.out.println("Wrong command!");
             break;
         }
@@ -136,10 +123,10 @@ public class Duke {
         System.out.println("Hello from \n" + logo);
 
         //greet and ask name and greet again
-        String username = greetAndAskName();
+        greet();
 
         //user input what he or she wants the chatbot to do
-        createUserChatBox(username);
+        createUserChatBox();
         Scanner in = new Scanner(System.in);
         String input = in.nextLine().trim();
 
@@ -148,15 +135,13 @@ public class Duke {
         while (!input.equals("bye")) {
             drawLine();
             createSiriChatBox();
-
             readUserInput(input);
-
             drawLine();
-            createUserChatBox(username);
+            createUserChatBox();
 
             input = in.nextLine().trim();
         }
 
-        sayGoodbye(username);
+        sayGoodbye();
     }
 }
