@@ -9,6 +9,10 @@ import task.TaskController;
 import ui.IUi;
 import ui.Ui;
 
+/**
+ * Duke class acts as the overall controller for the other classes. It will use UI class
+ * for user interfacing, and parser to make sense of the user command given.
+ */
 public class Duke {
     // Composition of other classes to support main method
     private static Scanner sc = new Scanner(System.in);

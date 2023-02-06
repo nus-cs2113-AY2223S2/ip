@@ -3,6 +3,9 @@ package task;
 import java.lang.NullPointerException;
 import parser.InvalidCommandException;
 
+/**
+ * Task class that all other tasks will inherit from
+ */
 public abstract class Task{
     protected String description;
     protected boolean mark;
@@ -11,7 +14,7 @@ public abstract class Task{
         setDescription(description);
         mark = false;
     }
-        /**
+    /**
      * Used for creating an empty class to be filled in Parser
      */
     public Task() {
@@ -38,6 +41,11 @@ public abstract class Task{
     public boolean isMark() {
         return mark;
     }
+    /**
+     * Marks a task as done or not done
+     * @param newMark status to update task with
+     * @throws TaskMarkException
+     */
     public void setMark(boolean newMark) throws TaskMarkException {
         if (newMark == mark) {
             // We are trying to mark the task with the same boolean flag
