@@ -1,3 +1,8 @@
+import tasks.Deadline;
+import tasks.Event;
+import tasks.Task;
+import tasks.Todo;
+
 import java.util.Scanner;
 
 public class Duke {
@@ -15,6 +20,10 @@ public class Duke {
         Task[] list = new Task[100];
         int counter = 1; //start from 1
         String userCommand = "";
+        handleUserCommand(in, list, counter, userCommand);
+    }
+
+    private static void handleUserCommand(Scanner in, Task[] list, int counter, String userCommand) {
         while (!userCommand.contains("bye")) {
             userCommand = in.nextLine();
             if (userCommand.contains("list")) {
@@ -30,7 +39,7 @@ public class Duke {
             } else if (userCommand.contains("unmark")) {
                 unmarkTask(list, userCommand, counter);
             } else if (userCommand.contains("mark")) {
-                markTask(list, userCommand,counter);
+                markTask(list, userCommand, counter);
             } else if (userCommand.contains("todo")) {
                 addTodoTask(list, counter, userCommand);
                 counter++;
@@ -73,7 +82,7 @@ public class Duke {
                 boolean isNumWithinCounter = (taskNum < counter) && (taskNum > 0);
                 if (isNumWithinCounter) {
                     System.out.println("Nice! You have done Task " + taskNum);
-                    list[taskNum - 1].isDone = true;
+                    list[taskNum - 1].setIsDone(true);
                 }else {
                     System.out.println("Please enter a valid task No. :) ");
                 }
@@ -104,7 +113,7 @@ public class Duke {
                 boolean isNumWithinCounter = (taskNum < counter) && (taskNum > 0);
                 if (isNumWithinCounter) {
                     System.out.println("Okay, I have unmarked Task " + taskNum);
-                    list[taskNum - 1].isDone = false;
+                    list[taskNum - 1].setIsDone(false);
                 }else {
                     System.out.println("Please enter a valid task No. :) ");
                 }
