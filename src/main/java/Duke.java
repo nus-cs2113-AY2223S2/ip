@@ -5,6 +5,7 @@ import tasks.Deadline;
 import tasks.Todo;
 import tasks.Event;
 
+//level 5 was finished in master already :(
 public class Duke {
 
     //static messages
@@ -14,9 +15,9 @@ public class Duke {
     public static String ROGER = "Got it. I've added this task:\n";
     public static String SPACE = "_______________________________";
     public static String BYE = SPACE +"\nBye. Hope to see you again soon!\n"+ SPACE;
-    public static String GREET = SPACE + "\nHello! I'm Duke\n" + "What can I do for you?\n" + SPACE;
+    public static String GREET = SPACE + "\nHello! I'm Duke :D\n" + "What can I do for you?\n" + SPACE;
     public static String MARK = "For mark and unmark, please type the index\n" + "of the task that you wish to mark or unmark!\n";
-
+    public static String ERROR = "Task must begin with 'todo', 'deadline' or 'event'!\n" + SPACE;
     public static void main(String[] args) {
         //String logo = " ____        _        \n"
         //        + "|  _ \\ _   _| | _____ \n"
@@ -98,7 +99,7 @@ public class Duke {
                         }
                         break;
                     default:
-                        System.out.println("Task must begin with 'todo', 'deadline' or 'event'!\n" + SPACE);
+                        System.out.println(ERROR);
                         break;
                 }
             } catch (IndexOutOfBoundsException e){
