@@ -1,27 +1,7 @@
-
 // import java.util.Arrays;
 import java.util.Scanner;
 
 public class Duke {
-
-    public static void listTask(Task[] list) {
-        if (list[0] == null) {
-            System.out.println("You have no tasks in your list yet!");
-            return;
-        }
-
-        int existingTaskCount = 1;
-        for (Task item : list) {
-            if (item != null) {
-                System.out.println(existingTaskCount + ". " + item.describeTask());
-                existingTaskCount++;
-            } else {
-                continue;
-            }
-        }
-
-        System.out.println("\nYou have " + (existingTaskCount - 1) + " tasks in the list.\n");
-    }
 
     public static String getFirstWord(String s) {
         String[] words = s.split(" ");
@@ -33,17 +13,6 @@ public class Duke {
         String sub = s.substring(index + 1);
         return sub;
     }
-
-    public static void markTask(Task[] list, int index) {
-        list[index - 1].markAsDone();
-        System.out.println("Nice! I've marked this task as done:\n" + list[index - 1].describeTask() + "\n");
-    }
-
-    public static void unmarkTask(Task[] list, int index) {
-        list[index - 1].unmarkAsDone();
-        System.out.println("OK, Ive marked this task as not done yet:\n" + list[index - 1].describeTask() + "\n");
-    }
-
     public static void main(String[] args) {
         System.out.println("Hello! I'm Duke\nWhat can I do for you?");
         Scanner in = new Scanner(System.in);
@@ -57,13 +26,13 @@ public class Duke {
 
             switch (firstWord) {
             case "mark":
-                markTask(taskList, Integer.parseInt(getSecondWord(line)));
+                TaskManager.markTask(taskList, Integer.parseInt(getSecondWord(line)));
                 break;
             case "unmark":
-                unmarkTask(taskList, Integer.parseInt(getSecondWord(line)));
+                TaskManager.unmarkTask(taskList, Integer.parseInt(getSecondWord(line)));
                 break;
             case "list":
-                listTask(taskList);
+                TaskManager.listTask();
                 break;
             case "todo":
                 getTodoDetails(line);
