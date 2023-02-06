@@ -6,69 +6,72 @@ public class TodoList {
     static final String MARKED_TASK = "I have marked Task ";
     static final String UNMARKED_TASK = "I have unmarked Task ";
     static final String IN_LIST = " in your todo list.\n";
-    static final int MAX_COMMAND_ARGS = 3;
+    static final int MAX_DEADLINE_ARGS = -1;
+    static final int MAX_EVENT_ARGS = 3;
     static final int MAX_TASKS = 100;
-    static final String BY_COMMAND = " /by";
-    static final int BY_COMMAND_LENGTH = 5;
-    static final String FROM_COMMAND = " /from";
-    static final int FROM_COMMAND_LENGTH = 7;
-    static final String TO_COMMAND = " /to";
-    static final int TO_COMMAND_LENGTH = 5;
-    private static int tasksNumber = 0;
+    static final String BY_COMMAND = " /by ";
+    static final String FROM_COMMAND = " /from ";
+    static final String TO_COMMAND = " /to ";
+    private static int numberOfTasks = 0;
+
     private static Todo[] todos = new Todo[MAX_TASKS];
 
-    private static String[] parseDates(String args) {
-        String[] commandArray = new String[MAX_COMMAND_ARGS];
-        int byIndex = args.indexOf(BY_COMMAND);
-        if (byIndex != -1) {
-            commandArray[0] = args.substring(0, byIndex);
-            commandArray[1] = args.substring(byIndex + BY_COMMAND_LENGTH);
-        } else {
-            int fromIndex = args.indexOf(FROM_COMMAND);
-            int toIndex = args.indexOf(TO_COMMAND);
-            commandArray[0] = args.substring(0, fromIndex);
-            commandArray[1] = args.substring(fromIndex + FROM_COMMAND_LENGTH, toIndex);
-            commandArray[2] = args.substring(toIndex + TO_COMMAND_LENGTH);
+    private static String[] parseDeadline(String args) throws InvalidCommandFormatException {
+        String[] vars = args.split(BY_COMMAND, MAX_DEADLINE_ARGS);
+        if (vars.length != 2) {
+            throw new InvalidCommandFormatException();
         }
-        return commandArray;
+        return vars;
     }
 
-    public static void add(String[] args) {
-        switch (args[0]) {
-        case "todo":
-            addTodo(args[1]);
-            break;
-        case "deadline":
-            String[] deadlineArray = parseDates(args[1]);
-            addDeadline(deadlineArray);
-            break;
-        case "event":
-            String[] eventArray = parseDates(args[1]);
-            addEvent(eventArray);
+    private static String[] parseEvent(String args) throws InvalidCommandFormatException {
+        String[] vars = new String[MAX_EVENT_ARGS];
+        String[] tempArray0 = args.split(FROM_COMMAND, 2);
+        vars[0] = tempArray0[0];
+        String[] tempArray1 = tempArray0[1].split(TO_COMMAND, 2);
+        vars[1] = tempArray1[0];
+        vars[2] = tempArray1[1];
+        if (vars.length != 3) {
+            throw new InvalidCommandFormatException();
         }
+        return vars;
     }
 
-    public static void addTodo(String args) {
-        todos[tasksNumber] = new Todo(args);
-        tasksNumber += 1;
+    public static void todo(String args) {
+        todos[numberOfTasks] = new Todo(args);
+        numberOfTasks += 1;
         System.out.println(LINE_BREAK + HAVE_ADDED + args + TO_LIST + LINE_BREAK);
     }
 
-    public static void addDeadline(String[] args) {
-        todos[tasksNumber] = new Deadline(args);
-        tasksNumber += 1;
-        System.out.println(LINE_BREAK + HAVE_ADDED + args[0] + TO_LIST + LINE_BREAK);
+    public static void deadline(String args) {
+        String[] vars;
+        try {
+            vars = parseDeadline(args);
+        } catch (ArrayIndexOutOfBoundsException | InvalidCommandFormatException e) {
+            Printer.formatError();
+            return;
+        }
+        todos[numberOfTasks] = new Deadline(vars);
+        numberOfTasks += 1;
+        System.out.println(LINE_BREAK + HAVE_ADDED + vars[0] + TO_LIST + LINE_BREAK);
     }
 
-    public static void addEvent(String[] args) {
-        todos[tasksNumber] = new Event(args);
-        tasksNumber += 1;
-        System.out.println(LINE_BREAK + HAVE_ADDED + args[0] + TO_LIST + LINE_BREAK);
+    public static void event(String args) {
+        String[] vars;
+        try {
+            vars = parseEvent(args);
+        } catch (ArrayIndexOutOfBoundsException | InvalidCommandFormatException e) {
+            Printer.formatError();
+            return;
+        }
+        todos[numberOfTasks] = new Event(vars);
+        numberOfTasks += 1;
+        System.out.println(LINE_BREAK + HAVE_ADDED + vars[0] + TO_LIST + LINE_BREAK);
     }
 
     public static void list() {
         System.out.print(LINE_BREAK + YOUR_TODO_LIST + LINE_BREAK);
-        for (int i = 0; i < tasksNumber; i += 1) {
+        for (int i = 0; i < numberOfTasks; i += 1) {
             System.out.println(i + 1 + "." + todos[i].printTask());
         }
         System.out.print(LINE_BREAK);

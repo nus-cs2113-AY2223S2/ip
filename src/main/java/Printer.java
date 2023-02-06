@@ -8,14 +8,21 @@ public class Printer {
     final static String GREETING = "Hello, I am Shizuka.\nHow can I be of assistance?\n";
     final static String EXIT = "Goodbye.\n";
     final static String PARSE_ERROR = "I'm sorry, but I don't recognise that command.\n";
+    final static String FORMAT_ERROR = "Please reformat your command input.\n";
 
     public static void intro() {
         System.out.println(LINE_BREAK + LOGO + LINE_BREAK + GREETING + LINE_BREAK);
     }
-    public static void parseError(){
+
+    public static void parseError() {
         System.out.println(LINE_BREAK + PARSE_ERROR + LINE_BREAK);
     }
-    public static void exit(){
+
+    public static void exit() {
         System.out.println(LINE_BREAK + EXIT + LINE_BREAK);
+    }
+
+    public static void formatError() {
+        System.out.println(LINE_BREAK + FORMAT_ERROR + LINE_BREAK);
     }
 }

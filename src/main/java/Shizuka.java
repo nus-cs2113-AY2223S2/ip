@@ -2,15 +2,7 @@ import java.util.Scanner;
 
 public class Shizuka {
     public static String[] parseCommand(String args) {
-        String[] command = new String[2];
-        int endIndex = args.indexOf(' ') + 1;
-        if (endIndex != 0) {
-            command[0] = args.substring(0, endIndex - 1);
-            command[1] = args.substring(endIndex);
-        } else {
-            command[0] = args;
-        }
-        return command;
+        return args.split(" ", 2);
     }
 
     public static int parseNumber(String args) {
@@ -21,37 +13,60 @@ public class Shizuka {
     public static void main(String[] args) {
         Printer.intro();
         Scanner in = new Scanner(System.in);
-        String line, lineTrimmed, command, commandArgs;
+        String line, lineTrimmed;
 
         do {
             line = in.nextLine();
             lineTrimmed = line.trim();
-            String[] commandArray = parseCommand(lineTrimmed);
-            command = commandArray[0];
-            commandArgs = commandArray[1];
+            String[] command = parseCommand(lineTrimmed);
             int taskNum;
-            switch (command) {
+            switch (command[0]) {
             case "bye":
                 break;
             case "list":
                 TodoList.list();
                 break;
             case "mark":
-                taskNum = parseNumber(commandArgs);
+                try {
+                    taskNum = parseNumber(command[1]);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    Printer.formatError();
+                    break;
+                }
                 TodoList.mark(taskNum);
                 break;
             case "unmark":
-                taskNum = parseNumber(commandArgs);
+                try {
+                    taskNum = parseNumber(command[1]);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    Printer.formatError();
+                    break;
+                }
                 TodoList.unmark(taskNum);
                 break;
             case "todo":
-                TodoList.add(commandArray);
+                try {
+                    TodoList.todo(command[1]);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    Printer.formatError();
+                    break;
+                }
                 break;
             case "deadline":
-                TodoList.add(commandArray);
+                try {
+                    TodoList.deadline(command[1]);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    Printer.formatError();
+                    break;
+                }
                 break;
             case "event":
-                TodoList.add(commandArray);
+                try {
+                    TodoList.event(command[1]);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    Printer.formatError();
+                    break;
+                }
                 break;
             default:
                 Printer.parseError();
