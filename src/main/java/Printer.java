@@ -9,6 +9,7 @@ public class Printer {
     final static String EXIT = "Goodbye.\n";
     final static String PARSE_ERROR = "I'm sorry, but I don't recognise that command.\n";
     final static String FORMAT_ERROR = "Please reformat your command input.\n";
+    final static String NO_ARGS_ERROR = "Please provide arguments for this command.";
 
     public static void intro() {
         System.out.println(LINE_BREAK + LOGO + LINE_BREAK + GREETING + LINE_BREAK);
@@ -24,5 +25,9 @@ public class Printer {
 
     public static void formatError() {
         System.out.println(LINE_BREAK + FORMAT_ERROR + LINE_BREAK);
+    }
+
+    public static void noArgsError() {
+        System.out.println(LINE_BREAK + NO_ARGS_ERROR + LINE_BREAK);
     }
 }

@@ -30,7 +30,7 @@ public class Shizuka {
                 try {
                     taskNum = parseNumber(command[1]);
                 } catch (ArrayIndexOutOfBoundsException e) {
-                    Printer.formatError();
+                    Printer.noArgsError();
                     break;
                 }
                 TodoList.mark(taskNum);
@@ -39,7 +39,7 @@ public class Shizuka {
                 try {
                     taskNum = parseNumber(command[1]);
                 } catch (ArrayIndexOutOfBoundsException e) {
-                    Printer.formatError();
+                    Printer.noArgsError();
                     break;
                 }
                 TodoList.unmark(taskNum);
@@ -48,7 +48,7 @@ public class Shizuka {
                 try {
                     TodoList.todo(command[1]);
                 } catch (ArrayIndexOutOfBoundsException e) {
-                    Printer.formatError();
+                    Printer.noArgsError();
                     break;
                 }
                 break;
@@ -56,7 +56,7 @@ public class Shizuka {
                 try {
                     TodoList.deadline(command[1]);
                 } catch (ArrayIndexOutOfBoundsException e) {
-                    Printer.formatError();
+                    Printer.noArgsError();
                     break;
                 }
                 break;
@@ -64,7 +64,7 @@ public class Shizuka {
                 try {
                     TodoList.event(command[1]);
                 } catch (ArrayIndexOutOfBoundsException e) {
-                    Printer.formatError();
+                    Printer.noArgsError();
                     break;
                 }
                 break;
