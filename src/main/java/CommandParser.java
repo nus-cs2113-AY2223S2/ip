@@ -16,7 +16,7 @@ public class CommandParser {
         return rawCommand.split(" --");
     }
 
-    public static HashMap<String, String> getCommandPayloadMap(String[] commandList) {
+    public HashMap<String, String> getCommandPayloadMap(String[] commandList) {
         // Each command can be processed into a subcommand and its corresponding text value
         // For example: "deadline work on CS2113 --by Sunday"
         // Should map to: <"deadline", "work on CS2113">, <by, Sunday>
