@@ -102,7 +102,7 @@ public class Duke {
                 break;
 
             default:
-                
+                System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
             break;
         }
     }
