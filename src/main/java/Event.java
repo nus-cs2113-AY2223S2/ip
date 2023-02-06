@@ -9,7 +9,6 @@ public class Event extends Task {
     }
 
     public String toString() {
-        // return "[D]" + super.toString() + " (by: " + by + ")";
         return "[E]" + super.toString() + description + " (from: " + from + " to: " + to + ")";
     }
 }
