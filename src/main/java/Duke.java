@@ -33,19 +33,7 @@ public class Duke {
 //                System.out.println(divider);
                 break;
             case "list":
-                int timer = Tasks.getNumberOfTasks();
-                System.out.println(divider + "\n\t Here are the tasks in your list:");
-                for (int num = 1; num <= timer; ++num) {
-                    Tasks thisTask = Tasks.getTaskList().get(num - 1);
-                    command.printOutput(thisTask);
-                    if (thisTask.isMarked()) {
-                        command.setUserOutput();
-                        System.out.println("\t " + Integer.toString(num) + ".[X] " + thisTask.getItem());
-                    } else {
-                        System.out.println("\t " + Integer.toString(num) + ".[ ] " + thisTask.getItem());
-                    }
-                }
-                System.out.println(divider);
+                command.printOutput();
                 break;
             default:
                 Tasks.addToList(new Tasks(command.getUserInput(), false));

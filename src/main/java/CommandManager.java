@@ -6,7 +6,7 @@ public class CommandManager {
     //
     private String userInput;
     private String userOutput;
-    private static ArrayList<String> printList = new ArrayList<>();
+    //  private static ArrayList<String> printList = new ArrayList<>();
 
     public static final String DIVIDER = "\t____________________________________________________________";
 
@@ -27,50 +27,70 @@ public class CommandManager {
     }
 
     public String getUserInput() {
+
         return userInput;
     }
 
     public void setUserInput(String input) {
+
         this.userInput = input;
     }
 
     public String getUserOutput() {
+
         return userOutput;
     }
 
     public void setUserOutput(String userOutput) {
         this.userOutput = userOutput;
     }
-    public static void addToPrintList(String toPrint){
 
-        printList.add(toPrint);
-    }
+//    public static void addToPrintList(String toPrint) {
+//
+//        printList.add(toPrint);
+//    }
 
     public void printOutput(Tasks task) {
-        String taskLine = printList.get(task.getID());
+        //    String taskLine = printList.get(task.getID());
         switch (userOutput) {
-        case "mark": {
-            if (taskLine.contains("[ ]")) {
-                printList.set(task.getID(), printList.get(task.getID()).replace("[ ]", "[X]"));
-            };
+        case "mark":
             System.out.println(DIVIDER + "\n\t Nice! I've marked this task as done:\n\t  " +
                     "[X] " + task.getItem());
             System.out.println(DIVIDER);
-        }
-        case "unmark": {
+            break;
+        case "unmark":
             System.out.println(DIVIDER + "\n\t Nice! I've marked this task as not done yet:\n\t  " +
-                    "[ ] " +  task.getItem());
+                    "[ ] " + task.getItem());
             System.out.println(DIVIDER);
+            break;
+//        case "list": {
+//            int totalNumberOfTasks = Tasks.getNumberOfTasks();
+//            System.out.println(DIVIDER + "\n\t Here are the tasks in your list:");
+//            for(int num = 1; num <= totalNumberOfTasks; ++num) {
+//                Tasks thisTask = Tasks.getTaskList().get(totalNumberOfTasks - 1);
+//                if (thisTask.isMarked()) {
+//                    System.out.println("\t " + Integer.toString(num) + ".[X] " + thisTask.getItem());
+//                } else {
+//                    System.out.println("\t " + Integer.toString(num) + ".[ ] " + thisTask.getItem());
+//                }
+//            }
+//            System.out.println(DIVIDER);
+//        }
         }
-        case task: {
-            int timer = Tasks.getNumberOfTasks();
-            System.out.println(DIVIDER + "\n\t Here are the tasks in your list:");
-            for(int i = 1; i <= timer; ++i) {
+    }
 
+    public void printOutput() {
+        int totalNumberOfTasks = Tasks.getNumberOfTasks();
+        System.out.println(DIVIDER + "\n\t Here are the tasks in your list:");
+        for (int num = 1; num <= totalNumberOfTasks; ++num) {
+            Tasks thisTask = Tasks.getTaskList().get(num - 1);
+            if (thisTask.isMarked()) {
+                System.out.println("\t " + Integer.toString(num) + ".[X] " + thisTask.getItem());
+            } else {
+                System.out.println("\t " + Integer.toString(num) + ".[ ] " + thisTask.getItem());
             }
         }
-
-        }
+        System.out.println(DIVIDER);
     }
 }
 
