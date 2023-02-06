@@ -79,7 +79,7 @@ public class Duke {
             }
 
 
-            System.out.println(numberOfTasks + " task(s) in the list");
+            System.out.println("There are currently "+numberOfTasks + " task(s) in the list");
             printHorizontalBar();
             latestResponse = checkForAdditionalTask();
             hasAdditionalTask = true;
