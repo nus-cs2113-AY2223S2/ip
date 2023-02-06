@@ -28,6 +28,29 @@ Hello from
 
 Tick, tick, boom! I'm Chronos, your personal time manager.
 
+=============================================================================================================== 
+
+Here are some useful commands to get you started!
+
+=============================================================================================================== 
+
+'list': Take a look at your To-Do list to get your day started!
+'mark <task number>': Marks task as done. Try entering 'mark 1' to mark your first task as done!
+'unmark <task_number>': Unmarks task as not done. Try entering 'unmark 1' to mark your first task as not done.
+'help': If you forgot how to use me, don't be afraid to ask!
+There are 3 types of tasks you can add to your list. Please follow the format given: 
+
+* Type 'todo' and I will add it into the list.
+
+** Type 'deadline' and the due date '/due' for me to register the deadline. 
+
+*** Type 'event' and the start time '/start' AND end time '/end' for me to register the event. 
+
+Type 'timer' to start a pomodoro timer and get to work!
+
+=============================================================================================================== 
+
+
 What is your name? (Please enter name)
 
 >> 
