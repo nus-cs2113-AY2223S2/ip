@@ -3,14 +3,16 @@ public class Task {
     private int id;
     private String taskInfo;
     private boolean isDone;
+    private String taskType = " ";
 
     private static int numberOfTasks = 0;
 
-    public Task(String taskInfo) {
+    public Task(String taskInfo, String taskType) {
         setTaskInfo(taskInfo);
         numberOfTasks++;
         setId(numberOfTasks);
         this.isDone = false;
+        setTaskType(taskType);
     }
 
     public void markAsDone() {
@@ -35,9 +37,9 @@ public class Task {
 
     public String getStatus() {
         if (isDone) {
-            return "[X] ";
+            return "[X]";
         }
-        return "[ ] ";
+        return "[ ]";
     }
 
 
@@ -51,6 +53,14 @@ public class Task {
 
     public void setTaskInfo(String taskInfo) {
         this.taskInfo = taskInfo;
+    }
+
+    public void setTaskType(String taskType) {
+        this.taskType = taskType;
+    }
+
+    public String getTaskType() {
+        return String.format("[%s]", taskType);
     }
 
     public static int getNumberOfTasks() {
