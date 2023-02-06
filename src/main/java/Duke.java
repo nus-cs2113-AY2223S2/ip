@@ -26,8 +26,11 @@ public class Duke {
                 is_exit = true;
             } else if (messageFromUser.equals("list")) {
                 displayList(taskStorage);
+            } else if (hasTaskCreationKeyword(messageFromUser)) {
+                Task newTask = handleTaskCreation(messageFromUser);
+                addToList(newTask, taskStorage);
             } else {
-                addToList(messageFromUser, taskStorage);
+                System.out.println("Invalid instruction. Please try again.");
             }
         }
     }
@@ -68,11 +71,10 @@ public class Duke {
         horizontalLine();
     }
 
-    public static void addToList(String messageFromUser, Task[] taskStorage) {
+    public static void addToList(Task newTask, Task[] taskStorage) {
         horizontalLine();
-        //Task newTask = new Task(messageFromUser);
-        Task newTask = createDeadline(messageFromUser); // to test
-        System.out.println("added: " + messageFromUser);
+        System.out.println("Sure, I've added this task: ");
+        //System.out.println();
         int currentIndexInTaskStorage = Task.getNumberOfTasks();
         taskStorage[currentIndexInTaskStorage] = newTask;
         horizontalLine();
@@ -101,6 +103,25 @@ public class Duke {
         String[] timeComponents = messageComponents[1].split("/to", 2);
         Event newEvent = new Event(messageComponents[0], timeComponents[0], timeComponents[1]);
         return newEvent;
+    }
+
+    public static boolean hasTaskCreationKeyword(String messageFromUser) {
+        boolean isToDo = messageFromUser.startsWith("todo");
+        boolean isDeadline = messageFromUser.startsWith("deadline");
+        boolean isEvent = messageFromUser.startsWith("event");
+        return (isToDo || isDeadline || isEvent);
+    }
+
+    public static Task handleTaskCreation(String messageFromUser) {
+        Task newTask;
+        if (messageFromUser.startsWith("todo")) {
+            newTask = createToDo(messageFromUser);
+        } else if (messageFromUser.startsWith("deadline")) {
+            newTask = createDeadline(messageFromUser);
+        } else {
+            newTask = createEvent(messageFromUser);
+        }
+        return newTask;
     }
 
 
