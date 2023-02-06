@@ -1,21 +1,9 @@
 public class Deadline extends Task {
     protected String by;
 
-    public Deadline(String description, int taskID) {
+    public Deadline(String description, int taskID, String by) {
         super(description, taskID);
-        if (super.description.contains("/by")) {
-            int indexOfBy = super.description.indexOf("/by");
-            if (indexOfBy + 3 < super.description.length()) {
-                by = super.description.substring(indexOfBy + 3).trim();
-                this.description = super.description.substring(0, indexOfBy);
-            }
-            else {
-                System.out.println("Did you forget about the time? ");
-            }
-        }
-        else {
-            System.out.println("You didn't type correctly but Keqin still added it to the task...(ㆆ_ㆆ)");
-        }
+        this.by = by;
         Task.taskCount += 1;
     }
 

@@ -52,7 +52,53 @@ public class Keqing {
         System.out.println(LINE);
     }
 
-    public static void doCommand(Task[] tasks, String text) throws IllegalInputException{
+    public static void readToDo(Task[] tasks, String content) throws IllegalInputException {
+        if (content.equals("todo")) {
+            throw new IllegalInputException("Keqing doesn't understand what you actually want to do...");
+        }
+        else {
+            ToDo toDoTask = new ToDo(content, Task.getTaskCount());
+            tasks[Task.getTaskCount() - 1] = toDoTask;
+        }
+    }
+
+    public static void readDeadline(Task[] tasks, String content) throws IllegalInputException {
+        if (content.contains("/by")) {
+            int indexOfBy = content.indexOf("/by");
+            if (indexOfBy + 3 < content.length()) {
+                String by = content.substring(indexOfBy + 3).trim();
+                Deadline deadlineTask = new Deadline(content, Task.getTaskCount(), by);
+                tasks[Task.getTaskCount() - 1] = deadlineTask;
+            }
+            else {
+                throw new IllegalInputException("Keqing doesn't think your input makes sense...");
+            }
+        }
+        else {
+            throw new IllegalInputException("Please check if you have typed in a valid deadline.");
+        }
+    }
+
+    public static void readEvent(Task[] tasks, String content) throws IllegalInputException {
+        if (content.contains("./from") && content.contains("./to")) {
+            int indexOfFrom = content.indexOf("/from");
+            int indexOfTo = content.indexOf("/to");
+            if (indexOfFrom < indexOfTo) {
+                String from = content.substring(indexOfFrom + 5, indexOfTo).trim();
+                String to = content.substring(indexOfTo + 3).trim();
+                Event eventTask = new Event(content, Task.getTaskCount(), from, to);
+                tasks[Task.getTaskCount() - 1] = eventTask;
+            }
+            else {
+                throw new IllegalInputException("Keqing doens't think your input makes sense...");
+            }
+        }
+        else {
+            throw new IllegalInputException("Please check if you have typed in the event duration in a valid form...");
+        }
+    }
+
+    public static void doCommand(Task[] tasks, String text) throws IllegalInputException {
         String splittedText[] = text.split(" ", 2);
         String command = splittedText[0];
         String content = splittedText[splittedText.length - 1];
@@ -76,23 +122,19 @@ public class Keqing {
             }
             break;
         case "todo":
-            Todo todoTask = new Todo(content, Task.getTaskCount());
-            tasks[Task.getTaskCount() - 1] = todoTask;
+            readToDo(tasks, content);
             echo(tasks);
             break;
         case "deadline":
-            Deadline deadlineTask = new Deadline(content, Task.getTaskCount());
-            tasks[Task.getTaskCount() - 1] = deadlineTask;
+            readDeadline(tasks, content);
             echo(tasks);
             break;
         case "event":
-            Event eventTask = new Event(content, Task.getTaskCount());
-            tasks[Task.getTaskCount() - 1] = eventTask;
+            readEvent(tasks, content);
             echo(tasks);
             break;
         default:
-            throw new IllegalInputException("You have done nothing...?" + System.lineSeparator()
-                    + "if you need more instruction, please type 'menu'.");
+            throw new IllegalInputException("Keqing doesn't understand your input...?");
         }
     }
 
@@ -103,7 +145,8 @@ public class Keqing {
             try {
                 doCommand(tasks, text);
             } catch (IllegalInputException e) {
-                System.out.println("Exception caught: " + e);
+                System.out.println(LINE + System.lineSeparator() + e + System.lineSeparator()
+                        + "if you need more instruction, please type 'menu'."+ System.lineSeparator() + LINE);
             }
             text = in.nextLine();
         }
