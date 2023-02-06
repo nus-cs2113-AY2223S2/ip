@@ -58,7 +58,6 @@ public class Duke {
             try {
                 addTodoTask(input);
             } catch (StringIndexOutOfBoundsException e) {
-                printDivider();
                 System.out.println("☹ OOPS!!! The description of 'todo' cannot be empty.");
                 printDivider();
             }
@@ -67,7 +66,6 @@ public class Duke {
             try {
                 addDeadlineTask(input);
             } catch (StringIndexOutOfBoundsException e) {
-                printDivider();
                 System.out.println("☹ OOPS!!! The description of 'deadline' should include a task and deadline.");
                 printDivider();
             }
@@ -76,7 +74,6 @@ public class Duke {
             try {
                 addEventTask(input);
             } catch (StringIndexOutOfBoundsException e) {
-                printDivider();
                 System.out.println("☹ OOPS!!! The description of 'event' should include a task and time period.");
                 printDivider();
             }
