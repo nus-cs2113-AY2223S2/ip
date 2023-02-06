@@ -127,6 +127,9 @@ public class Duke {
             userCmd = scanObj.nextLine();
         }
         scanObj.close();
-        System.out.println("Bye. Duke hopes to see you again soon !");
+        System.out.println("Thanks for using Duke! See ya!");
+        System.out.println(" /\\_/\\  ");
+        System.out.println("( o.o ) ");
+        System.out.println(" > ^ <  ");
     }
 }
