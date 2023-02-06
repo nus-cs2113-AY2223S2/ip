@@ -1,11 +1,11 @@
 package controller;
 
 import constants.Message;
-import database.Database;
 import model.task.Deadline;
 import model.task.Event;
 import model.task.Task;
 import model.task.Todo;
+import storage.Database;
 import validator.Validator;
 import view.TaskView;
 
@@ -69,8 +69,8 @@ public class TaskController {
     db.update(index, isMark);
     Task model = db.read(index);
     System.out.printf(
-            "%s\n",
-            isMark ? Message.MARKED.message : Message.UNMARKED.message
+      "%s\n",
+      isMark ? Message.MARKED.message : Message.UNMARKED.message
     );
     view.printTaskDescriptionText(model);
   }
@@ -105,8 +105,8 @@ public class TaskController {
     validator.validateEventTask(indexOfFrom, indexOfTo);
     String description = taskDescription.substring(0, indexOfFrom);
     String from = taskDescription.substring(
-            indexOfFrom + "/from ".length(),
-            indexOfTo
+      indexOfFrom + "/from ".length(),
+      indexOfTo
     );
     String to = taskDescription.substring(indexOfTo + "/to ".length());
     counter += 1;
