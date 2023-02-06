@@ -24,18 +24,33 @@ public class TaskList {
         numberOfTasks++;
     }
 
-    // TODO: think about if you should combine both methods into one or not.
-    // -1 to account for zero-indexing.
-    public void markAsDone(int taskNumber) {
-        tasks[taskNumber - 1].markAsDone();
-        System.out.print(Command.MESSAGE_TASK_DONE);
-        System.out.println(tasks[taskNumber-1].toString());
-    }
-
-    public void markAsUndone(int taskNumber) {
-        tasks[taskNumber - 1].markAsUndone();
-        System.out.print(Command.MESSAGE_TASK_UNDONE);
-        System.out.println(tasks[taskNumber-1].toString());
+    /**
+     * Two-in-one method to mark or unmark task since it is so similar
+     * @param command Either "mark" or "unmark"
+     * @param commandArgs Should be an int corresponding to the task number (1-index)
+     * @return Feedback string: "Task marked: ____"
+     */
+    public static String executeMarkUnmark(String command, String commandArgs) {
+        int taskNumber;
+        // Check is Integer
+        try {
+            taskNumber = Integer.parseInt(commandArgs);
+        } catch (NumberFormatException e) {
+            // Not an int. Send back an error message.
+            return Command.MESSAGE_INVALID_TASKNUMBER;
+        }
+        // Check Integer is in range
+        try {
+            if (command.equals("mark")) {
+                return tasks[taskNumber - 1].markAsDone();
+            } else if (command.equals("unmark")) {
+                return tasks[taskNumber - 1].markAsUndone();
+            }
+        } catch (IndexOutOfBoundsException e) {
+            return Command.MESSAGE_INVALID_TASKNUMBER;
+        }
+        // If nothing else works...
+        return "Huh?";
     }
 
     // Getter for number of task
