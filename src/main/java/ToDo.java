@@ -1,6 +1,9 @@
 public class ToDo extends Task{
-    public ToDo(String description){
+    public ToDo(String description) throws ToDoException{
         super(description);
+        if(description.length() == 0){
+            throw new ToDoException();
+        }
     }
 
     public String getType(){

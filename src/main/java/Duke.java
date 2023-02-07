@@ -71,7 +71,7 @@ public class Duke {
         return output;
     }
 
-     public static boolean shouldExit(String args){
+     public static boolean shouldExit(String args) throws DukeException {
          String command = filterCommand(args);
          int dividerPosition = args.indexOf(" ");
          String taskNumber = args.substring(dividerPosition + 1, args.length());  //Used for mark and unmark command
@@ -85,7 +85,6 @@ public class Duke {
              case "mark":
                  int indexMark = Integer.parseInt(taskNumber);
                  tasks[indexMark-1].markAsDone();
-                 System.out.println("Nice! I've marked this task as done:");
                  System.out.println("  [" + tasks[indexMark-1].getStatusIcon() + "] " + tasks[indexMark-1].getDescription());
                  return false;
              case "unmark":
@@ -95,10 +94,15 @@ public class Duke {
                  System.out.println("  [" + tasks[indexUnmark-1].getStatusIcon() + "] " + tasks[indexUnmark-1].getDescription());
                  return false;
              case "todo":
-                 numOfTask += 1;
-                 tasks[numOfTask-1] = new ToDo(filterDescription(args));
-                 System.out.println(tasks[numOfTask-1]);
-                 System.out.println("Now you have " + numOfTask + " task in the list.");
+                 try {
+                     ToDo toDoTask = new ToDo(filterDescription(args));
+                     numOfTask += 1;
+                     tasks[numOfTask-1] = toDoTask;
+                     System.out.println(tasks[numOfTask-1]);
+                     System.out.println("Now you have " + numOfTask + " task in the list.");
+                 } catch (ToDoException e) {
+                     System.out.println("The description of a todo cannot be empty!");
+                 }
                  return false;
              case "deadline":
                  numOfTask += 1;
@@ -115,22 +119,22 @@ public class Duke {
                  System.out.println("Now you have " + numOfTask + " task in the list.");
                  return false;
              default:
-                 Task t = new Task(args);
-                 numOfTask += 1;
-                 tasks[numOfTask-1] = t;
-                 System.out.println(t);
-                 return false;
+                 throw new DukeException();
          }
      }
     public static void main(String[] args) {
         Greetings welcome = new Greetings();
         System.out.println(welcome);
-
-        Scanner sc= new Scanner(System.in);
-        String in = sc.nextLine();
-
-        while(shouldExit(in)==false) {
-            in = sc.nextLine();
+        try {
+            Scanner sc = new Scanner(System.in);
+            String in = sc.nextLine();
+            while (shouldExit(in) == false) {
+                in = sc.nextLine();
+            }
+        } catch (ArrayIndexOutOfBoundsException e){
+            System.out.println("This task number does not exist!");
+        } catch (DukeException e){
+            System.out.println("Sorry I don't understand what this means!");
         }
     }
 }
