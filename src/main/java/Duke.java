@@ -172,6 +172,34 @@ public class Duke {
                     userInput = userScan.nextLine();  
                 }
 
+                //Add delete keyword and function
+                else if(Check.isDelete(userInput)){
+                    //get the task number
+                    int taskNumber = Integer.parseInt(userInput.substring(7));
+                    //if the task number is greater than the task count throw an exception
+                    if(taskNumber>taskCount){
+                        throw new IllegalArgumentException("The task number is greater than the number of tasks.");
+                    }
+                    //if the task number is less than 1 throw an exception
+                    if(taskNumber<1){
+                        throw new IllegalArgumentException("The task number is less than 1.");
+                    }
+                    //if there is no task at the task number throw an exception
+                    if(tasks.get(taskNumber-1)==null){
+                        throw new IllegalArgumentException("There is no task at the task number.");
+                    }
+                    //delete the task
+                    tasks.remove(taskNumber-1);
+                    //decrement the task count
+                    taskCount--;
+                    //print out the task that was deleted
+                    System.out.println("Noted. I've removed this task:");
+                    System.out.println(tasks.get(taskNumber-1));
+                    System.out.println("Now you have " + taskCount + " tasks in the list.");
+                    //Get user input again
+                    userInput = userScan.nextLine();  
+                }
+
                 //If userInput is not any of the commands throw an illegal argument exception
                 else{
                     //throw an exception
