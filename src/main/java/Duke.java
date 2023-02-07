@@ -11,15 +11,6 @@ public class Duke {
         goodbye();
     }
 
-    private static void listTasks(int counter, Task[] storedTask) {
-        System.out.println("____________________________________________________________");
-        System.out.println("Here are the tasks in your list:");
-        for (int i = 0; i < counter; i++) {
-            System.out.println((i + 1) + ". " + storedTask[i].toString());
-        }
-        System.out.println("____________________________________________________________\n");
-    }
-
     private static void markingAsDone(String echoInput, int counter, Task[] storedTask) {
         try {
             String stringListNumber = echoInput.substring(5, echoInput.length());
@@ -36,27 +27,6 @@ public class Duke {
         }
     }
 
-    private static void printMarkError() {
-        System.out.println("____________________________________________________________");
-        System.out.println("*DID NOT ENTER A VALID NUMBER*");
-        System.out.println("____________________________________________________________\n");
-    }
-
-    private static void printInvalidInput() {
-        System.out.println("____________________________________________________________");
-        System.out.println("Invalid input");
-        System.out.println("____________________________________________________________\n");
-    }
-
-
-    private static void printTaskInput(Task task, int counter) {
-        System.out.println("____________________________________________________________");
-        System.out.println("Got it. I've added this task:");
-        System.out.println(task.toString());
-        System.out.println("Now you have " + counter + " tasks in the list.");
-        System.out.println("____________________________________________________________\n");
-    }
-
     private static void manageInput() {
         Scanner scanner = new Scanner(System.in);
         String input = "";
@@ -64,36 +34,74 @@ public class Duke {
         int counter = 0;
 
         while (!input.equals("bye")) {
-            input = scanner.nextLine();
-            if (input.equals("bye")) {
-                break;
-            } else if (input.equals("list")) {
-                listTasks(counter, storedTask);
-            } else if (input.startsWith("mark")) {
-                markingAsDone(input, counter, storedTask);
-            } else if (input.startsWith("todo ")) {
-                Task tempTask = new Todo(input);
-                storedTask[counter] = tempTask;
-                counter = counter + 1;
-                printTaskInput(tempTask, counter);
-            } else if (input.startsWith("deadline") && input.contains("/")) {
-                Task tempTask = new Deadline(input, input.substring(input.lastIndexOf("/") + 1));
-                storedTask[counter] = tempTask;
-                counter = counter + 1;
-                printTaskInput(tempTask, counter);
-            } else if (input.startsWith("event") && input.matches(".*/.*/.*")) {
-                String tempInput = input.substring(input.indexOf("/") + 1);
-                String fromString = tempInput.substring(0, tempInput.indexOf("/"));
-                String toString = tempInput.substring(tempInput.lastIndexOf("/") + 1);
+            try {
+                input = scanner.nextLine();
+                if (input.equals("bye")) {
+                    break;
+                } else if (input.equals("list")) {
+                    listTasks(counter, storedTask);
+                } else if (input.startsWith("mark")) {
+                    markingAsDone(input, counter, storedTask);
+                } else if (input.startsWith("todo")) {
+                    blankTodo(input);
+                    Task tempTask = new Todo(input);
+                    storedTask[counter] = tempTask;
+                    counter = counter + 1;
+                    printTaskInput(tempTask, counter);
+                } else if (input.startsWith("deadline") && input.contains("/")) {
+                    Task tempTask = new Deadline(input, input.substring(input.lastIndexOf("/") + 1));
+                    storedTask[counter] = tempTask;
+                    counter = counter + 1;
+                    printTaskInput(tempTask, counter);
+                } else if (input.startsWith("event") && input.matches(".*/.*/.*")) {
+                    String tempInput = input.substring(input.indexOf("/") + 1);
+                    String fromString = tempInput.substring(0, tempInput.indexOf("/"));
+                    String toString = tempInput.substring(tempInput.lastIndexOf("/") + 1);
 
-                Task tempTask = new Event(input, fromString, toString);
-                storedTask[counter] = tempTask;
-                counter = counter + 1;
-                printTaskInput(tempTask, counter);
-            } else {
-                printInvalidInput();
+                    Task tempTask = new Event(input, fromString, toString);
+                    storedTask[counter] = tempTask;
+                    counter = counter + 1;
+                    printTaskInput(tempTask, counter);
+                } else {
+                    invalidInput();
+                }
+            } catch (DukeException ex) {
+                continue;
             }
         }
+    }
+
+    private static void blankTodo(String input) throws DukeException {
+        if (input.length() == 4 || input.substring(4).isBlank()) {
+            throw new DukeException("☹ OOPS!!! The description of a todo cannot be empty.");
+        }
+    }
+
+    private static void invalidInput() throws DukeException {
+        throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+    }
+
+    private static void listTasks(int counter, Task[] storedTask) {
+        System.out.println("____________________________________________________________");
+        System.out.println("Here are the tasks in your list:");
+        for (int i = 0; i < counter; i++) {
+            System.out.println((i + 1) + ". " + storedTask[i].toString());
+        }
+        System.out.println("____________________________________________________________\n");
+    }
+
+    private static void printMarkError() {
+        System.out.println("____________________________________________________________");
+        System.out.println("*DID NOT ENTER A VALID NUMBER*");
+        System.out.println("____________________________________________________________\n");
+    }
+
+    private static void printTaskInput(Task task, int counter) {
+        System.out.println("____________________________________________________________");
+        System.out.println("Got it. I've added this task:");
+        System.out.println(task.toString());
+        System.out.println("Now you have " + counter + " tasks in the list.");
+        System.out.println("____________________________________________________________\n");
     }
 
     private static void greetings() {
