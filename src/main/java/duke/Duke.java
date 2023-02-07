@@ -1,4 +1,11 @@
-import java.util.Arrays;
+package duke;
+
+import duke.exceptions.ExcessInputsException;
+import duke.exceptions.MissingDescriptionException;
+import duke.task.Deadline;
+import duke.task.Event;
+import duke.task.Task;
+
 import java.util.Scanner;
 
 public class Duke {
