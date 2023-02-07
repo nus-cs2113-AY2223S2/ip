@@ -66,12 +66,6 @@ public class Task {
         System.out.println("    ____________________________________________________________");
     }
 
-    public static void printErrorMessage(String errorMessage) {
-        System.out.println("    ____________________________________________________________");
-        System.out.println(errorMessage);
-        System.out.println("    ____________________________________________________________");
-    }
-
     public static void addTodoTask(String description, ArrayList<Task> taskList) throws DukeException {
         if (description.isBlank()) {
             //for the case where user keys in a space after the command
