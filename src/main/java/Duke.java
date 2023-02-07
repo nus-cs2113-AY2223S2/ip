@@ -21,7 +21,7 @@ public class Duke {
     private static final String COMMAND_UNMARK = "unmark";
     private static final Set<String> COMMANDS_TASK = new HashSet<>(Arrays.asList("todo", "deadline", "event"));
 
-    private static List<Task> userTasks = new ArrayList<>();
+    private static final List<Task> userTasks = new ArrayList<>();
 
     private static boolean isRunning;
     private static Scanner scanner;
@@ -44,17 +44,18 @@ public class Duke {
     private static void setUserTaskState(int userIndex, boolean isDone) {
         // Tasks are 0-indexed, user index is 1-indexed
         int index = userIndex - 1;
-        if (index < 0 || index >= userTasks.size()) {
-            return;
-        }
 
-        userTasks.get(index).setIsDone(isDone);
-        if (isDone) {
-            System.out.println("Nice! I've marked this task as done");
-            System.out.println(userTasks.get(index));
-        } else {
-            System.out.println("Ok, I've marked this task as not done yet:");
-            System.out.println(userTasks.get(index));
+        try {
+            userTasks.get(index).setIsDone(isDone);
+            if (isDone) {
+                System.out.println("Nice! I've marked this task as done");
+                System.out.println(userTasks.get(index));
+            } else {
+                System.out.println("Ok, I've marked this task as not done yet:");
+                System.out.println(userTasks.get(index));
+            }
+        } catch (IndexOutOfBoundsException ex) {
+            System.out.println("Oops, not quite sure what task you're referring to...");
         }
     }
 
