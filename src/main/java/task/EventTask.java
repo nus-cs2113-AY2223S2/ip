@@ -1,7 +1,7 @@
 package task;
 
 import exceptions.InvalidSyntaxException;
-import ui.Command.Syntax;
+import ui.Command;
 
 public class EventTask extends Task {
 
@@ -21,7 +21,7 @@ public class EventTask extends Task {
             String[] params = splitInput[1].split("(/from|/to)");
             return new EventTask(params[0].trim(), params[1].trim(), params[2].trim());
         } catch (IndexOutOfBoundsException ex) {
-            throw new InvalidSyntaxException(Syntax.EVENT);
+            throw new InvalidSyntaxException(Command.EVENT.expectedSyntax);
         }
     }
 

@@ -7,7 +7,6 @@ import task.DeadlineTask;
 import task.EventTask;
 import task.Task;
 import ui.Command;
-import ui.Command.Syntax;
 
 public class Duke {
 
@@ -31,21 +30,19 @@ public class Duke {
         }
     }
 
-    private static void setUserTaskState(int userIndex, boolean isDone) {
-        // Tasks are 0-indexed, user index is 1-indexed
-        int index = userIndex - 1;
+    private static void printUserTasksCount() {
+        System.out.println("Now you have " + userTasks.size() + " task(s) in the list.");
+    }
 
-        try {
-            userTasks.get(index).setIsDone(isDone);
-            if (isDone) {
-                System.out.println("Nice! I've marked this task as done");
-                System.out.println(userTasks.get(index));
-            } else {
-                System.out.println("Ok, I've marked this task as not done yet:");
-                System.out.println(userTasks.get(index));
-            }
-        } catch (IndexOutOfBoundsException ex) {
-            System.out.println("Oops, not quite sure what task you're referring to...");
+    private static void setUserTaskState(int index, boolean isDone) {
+        userTasks.get(index).setIsDone(isDone);
+
+        if (isDone) {
+            System.out.println("Nice! I've marked this task as done");
+            System.out.println(userTasks.get(index));
+        } else {
+            System.out.println("Ok, I've marked this task as not done yet:");
+            System.out.println(userTasks.get(index));
         }
     }
 
@@ -53,19 +50,40 @@ public class Duke {
         Task task = null;
         if (cmd.equals(Command.TODO.label)) {
             task = Task.createFromInput(splitInput);
-
         } else if (cmd.equals(Command.DEADLINE.label)) {
             task = DeadlineTask.createFromInput(splitInput);
-
         } else if (cmd.equals(Command.EVENT.label)) {
             task = EventTask.createFromInput(splitInput);
-
         }
+
         userTasks.add(task);
 
         System.out.println("Got it. I've added this task:");
         System.out.println(userTasks.get(userTasks.size() - 1));
-        System.out.println("Now you have " + userTasks.size() + " task(s) in the list.");
+        printUserTasksCount();
+    }
+
+    private static void handleModifyUserTask(String cmd, String[] splitInput) throws InvalidSyntaxException {
+        try {
+            // Tasks are 0-indexed, user index is 1-indexed
+            int userIndex = Integer.parseInt(splitInput[1]);
+            int index = userIndex - 1;
+
+            if (cmd.equals(Command.MARK.label)) {
+                setUserTaskState(index, true);
+            } else if (cmd.equals(Command.UNMARK.label)) {
+                setUserTaskState(index, false);
+            }
+
+        } catch (NumberFormatException ex) {
+            if (cmd.equals(Command.MARK.label)) {
+                throw new InvalidSyntaxException(Command.MARK.expectedSyntax);
+            } else if (cmd.equals(Command.UNMARK.label)) {
+                throw new InvalidSyntaxException(Command.UNMARK.expectedSyntax);
+            }
+        } catch (IndexOutOfBoundsException ex) {
+            System.out.println("Oops, not quite sure what task you're referring to...");
+        }
     }
 
     private static String getUserCommand() {
@@ -80,32 +98,14 @@ public class Duke {
 
         if (cmd.equals(Command.EXIT.label)) {
             isRunning = false;
-
         } else if (cmd.equals(Command.LIST.label)) {
             printUserTasks();
-
-        } else if (cmd.equals(Command.MARK.label)) {
-            try {
-                int index = Integer.parseInt(splitInput[1]);
-                setUserTaskState(index, true);
-            } catch (NumberFormatException | IndexOutOfBoundsException ex) {
-                throw new InvalidSyntaxException(Syntax.MARK);
-            }
-
-        } else if (cmd.equals(Command.UNMARK.label)) {
-            try {
-                int index = Integer.parseInt(splitInput[1]);
-                setUserTaskState(index, false);
-            } catch (NumberFormatException | IndexOutOfBoundsException ex) {
-                throw new InvalidSyntaxException(Syntax.UNMARK);
-            }
-
-        } else if (Command.TASKS.contains(cmd)) {
+        } else if (Command.MODIFY_TASK_COMMANDS.contains(cmd)) {
+            handleModifyUserTask(cmd, splitInput);
+        } else if (Command.ADD_TASK_COMMANDS.contains(cmd)) {
             handleAddUserTask(cmd, splitInput);
-
         } else {
             throw new UnrecognizedInputException();
-
         }
 
     }

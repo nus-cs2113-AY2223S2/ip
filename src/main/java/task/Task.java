@@ -1,7 +1,7 @@
 package task;
 
 import exceptions.InvalidSyntaxException;
-import ui.Command.Syntax;
+import ui.Command;
 
 public class Task {
 
@@ -18,7 +18,7 @@ public class Task {
         try {
             return new Task(splitInput[1]);
         } catch (IndexOutOfBoundsException ex) {
-            throw new InvalidSyntaxException(Syntax.TODO);
+            throw new InvalidSyntaxException(Command.TODO.expectedSyntax);
         }
     }
 
