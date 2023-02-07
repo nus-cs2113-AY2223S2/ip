@@ -1,3 +1,8 @@
+import duke.Task;
+import duke.Todo;
+import duke.Deadline;
+import duke.Event;
+import duke.DukeException;
 import java.util.Scanner;
 import java.lang.Character;
 
@@ -51,7 +56,7 @@ public class Duke {
     public static void markTask(String[] input){
         try {
             int index = Integer.parseInt(input[1]);
-            Task t = Task.tasks[index-1];
+            Task t = duke.Task.tasks[index-1];
             t.markAsDone();
             printLine();
             System.out.println("Nice! I've marked this task as done:");
