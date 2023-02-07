@@ -1,5 +1,8 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import Exceptions.TaskListOutofBoundsException;
+import Exceptions.InvalidAddTaskException;
+import Exceptions.InvalidCommandException;
 
 public class Duke {
 
@@ -29,13 +32,57 @@ public class Duke {
         printLine(); 
     }
 
-    public static void printInvalidCommand(){
-        printLine();
-        System.out.println("Please enter a valid command!");
-        printLine();
+    public static void throwInvalidCommand() throws InvalidCommandException{
+        throw new InvalidCommandException();
     }
 
-    public static void addEvent(String[] userInputArray){
+    public static boolean isEventValid(String[] userInputArray){
+        if (userInputArray.length == 1){
+            return false;
+        }
+        boolean fromExists = false;
+        boolean toExists = false;
+        boolean descriptionAndDatesExists = false;
+        String[] allDetails = userInputArray[1].split(" ");
+        for (String i : allDetails){
+            if (i.equals("/from")){
+                fromExists = true;
+            }
+            if (i.equals("/to")){
+                toExists = true;
+            }
+        }
+        String[] eventDetails = userInputArray[1].split("/from | /to");
+        if (eventDetails.length == 3){
+            descriptionAndDatesExists = true;
+        }
+        return fromExists && toExists && descriptionAndDatesExists;
+    }
+
+    public static boolean isDatelineValid(String[] userInputArray){
+        if (userInputArray.length ==1){
+            return false;
+        }
+        boolean byExists = false;
+        boolean descriptionAndDatesExists = false;
+        String[] allDetails = userInputArray[1].split(" ");
+        for (String i : allDetails){
+            if (i.equals("/by")){
+                byExists = true;
+            }
+        }
+        String[] datelineDetails = userInputArray[1].split("/by");
+        if (datelineDetails.length == 2 ){
+            descriptionAndDatesExists = true;
+        }
+        return byExists && descriptionAndDatesExists;
+    }
+    
+
+    public static void addEvent(String[] userInputArray) throws InvalidAddTaskException{
+        if (!isEventValid(userInputArray)){
+            throw new InvalidAddTaskException();
+        }
         String[] eventDetails = userInputArray[1].split("/from | /to");
         String eventDescription = eventDetails[0];
         String startTime = eventDetails[1];
@@ -44,7 +91,10 @@ public class Duke {
         printTaskDescription(eventDescription);
     } 
 
-    public static void addDeadline(String[] userInputArray){
+    public static void addDeadline(String[] userInputArray) throws InvalidAddTaskException{
+        if (!isDatelineValid(userInputArray)){
+            throw new InvalidAddTaskException();
+        }
         String[] deadlineDetails = userInputArray[1].split(" /by",2);
         String deadlineDescription = deadlineDetails[0];
         String deadlineDate = deadlineDetails[1];
@@ -52,7 +102,11 @@ public class Duke {
         printTaskDescription(deadlineDescription);
     }
 
-    public static void addTodo(String[] userInputArray){
+
+    public static void addTodo(String[] userInputArray) throws InvalidAddTaskException{
+        if (userInputArray.length == 1){
+            throw new InvalidAddTaskException();
+        }
         String todoDescription = userInputArray[1];
         tasks.add(new Todo(todoDescription));
         printTaskDescription(todoDescription); 
@@ -89,8 +143,11 @@ public class Duke {
         return command;
     }
 
-    public static int retrieveMarkIndex(String[] userInputArray){
+    public static int retrieveMarkIndex(String[] userInputArray) throws TaskListOutofBoundsException{
         int markIndex = Integer.parseInt(userInputArray[1]);
+        if (markIndex == 0 || markIndex > tasks.size()){
+            throw new TaskListOutofBoundsException();
+        }
         return markIndex;
     }
 
@@ -102,6 +159,7 @@ public class Duke {
             userInput = in.nextLine();
             String [] userInputArray = userInput.split(" ",2);
             String command = retrieveCommand(userInputArray);
+            try{
             switch (command){
             case "bye": 
                 printGoodbye();
@@ -125,10 +183,18 @@ public class Duke {
                 addEvent(userInputArray);
                 break;
             default:
-                printInvalidCommand();
+                throwInvalidCommand();
                 break;
-                
             }
+        } catch (NumberFormatException e){
+            System.out.println("Please type an integer behind mark/unmark!");
+        } catch (TaskListOutofBoundsException e){
+            System.out.println("The task you want to mark/unmark is not found!");
+        } catch (InvalidCommandException e){
+            System.out.println("Please input a valid command!");
+        } catch (InvalidAddTaskException e){
+            System.out.println("Please the input correct task parameters!");
+        }
         }
     }
 }
