@@ -1,12 +1,20 @@
 import java.util.ArrayList;
+
 public class Task {
     private String name;
-
     private boolean isCompleted;
 
     public Task(String name, boolean isCompleted) {
         this.name = name;
         this.isCompleted = isCompleted;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public boolean getStatus() {
@@ -53,33 +61,33 @@ public class Task {
     }
 
     public static void addDeadlineToTasksList(String input, ArrayList<Task> listOfTasks) {
+        //check min length
         int nameStartIndex = input.indexOf(" ");
         int nameEndIndex = input.indexOf("/by");
         String name = input.substring(nameStartIndex + 1, nameEndIndex -1);
+        //check name length
         String dueDate = input.substring(nameEndIndex + 4);
+        //check due date legnth
         Task deadline = new Deadline(name, false, dueDate);
         listOfTasks.add(deadline);
         printAddTaskMessage(deadline, listOfTasks);
     }
 
     public static void addEventToTasksList(String input, ArrayList<Task> listOfTasks) {
+        //check min length
         int nameStartIndex = input.indexOf(" ");
         int nameEndIndex = input.indexOf("/from");
         String name = input.substring(nameStartIndex + 1, nameEndIndex - 1);
+        //check name
         String remainingInfo = input.substring(nameEndIndex + 6);
         int toIndex = remainingInfo.indexOf("/to");
         String eventStart = remainingInfo.substring(0, toIndex - 1);
+        //check eventStart
         String eventEnd = remainingInfo.substring(toIndex + 4);
+        //check eventEnd
         Task event = new Event(name, false, eventStart, eventEnd);
         listOfTasks.add(event);
         printAddTaskMessage(event, listOfTasks);
-    }
-
-    public static void deleteTask(int taskNumber, ArrayList<Task> listOfTasks) {
-        System.out.println("Noted. I've removed this task:");
-        System.out.println("  " + listOfTasks.get(taskNumber));
-        listOfTasks.remove(taskNumber);
-        System.out.println("Now you have " + listOfTasks.size() + " task in the list.");
     }
 
     public String toString() {

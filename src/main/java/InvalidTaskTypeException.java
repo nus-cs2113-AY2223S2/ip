@@ -1,11 +1,11 @@
 public class InvalidTaskTypeException extends DukeException {
 
-    public InvalidTaskTypeException (String errorMessage) {
-        super(errorMessage);
+    public InvalidTaskTypeException (String errorMsg) {
+        super(errorMsg);
     }
 
     @Override
     public String toString() {
-        return errorMessage;
+        return errorMsg;
     }
 }

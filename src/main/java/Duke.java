@@ -5,12 +5,7 @@ public class Duke {
         System.out.println("____________________________________________________________");
     }
 
-    public static void printHelloMessage() {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
+    public static void printHelloMessage(String logo) {
         System.out.println("Hello from\n" + logo);
         printHorizontalLine();
         System.out.println("Hello! I'm Duke");
@@ -28,18 +23,14 @@ public class Duke {
             Task.listTasks(listOfTasks);
             break;
         case "mark":
-            Task taskToBeMarked = listOfTasks.get(Integer.parseInt(inputs[1])-1);
-            taskToBeMarked.setStatus(true);
-            Task.printUpdateStatusMessage(taskToBeMarked.getStatus(), taskToBeMarked);
+            Task markTask = listOfTasks.get(Integer.parseInt(inputs[1])-1);
+            markTask.setStatus(true);
+            Task.printUpdateStatusMessage(markTask.getStatus(), markTask);
             break;
         case "unmark":
-            Task taskToBeUnmarked = listOfTasks.get(Integer.parseInt(inputs[1])-1);
-            taskToBeUnmarked.setStatus(false);
-            Task.printUpdateStatusMessage(taskToBeUnmarked.getStatus(), taskToBeUnmarked);
-            break;
-        case "delete":
-            int taskNumber = Integer.parseInt(inputs[1]) - 1;
-            Task.deleteTask(taskNumber, listOfTasks);
+            Task unmarkTask = listOfTasks.get(Integer.parseInt(inputs[1])-1);
+            unmarkTask.setStatus(false);
+            Task.printUpdateStatusMessage(unmarkTask.getStatus(), unmarkTask);
             break;
         default:
             try {
@@ -52,7 +43,12 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-        printHelloMessage();
+        String logo = " ____        _        \n"
+                + "|  _ \\ _   _| | _____ \n"
+                + "| | | | | | | |/ / _ \\\n"
+                + "| |_| | |_| |   <  __/\n"
+                + "|____/ \\__,_|_|\\_\\___|\n";
+        printHelloMessage(logo);
         String input;
         ArrayList<Task> listOfTasks = new ArrayList<>();
         do {
