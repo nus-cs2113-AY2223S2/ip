@@ -1,3 +1,5 @@
+package duke;
+import duke.exceptions.*;
 import java.util.Scanner;
 public class Duke {
     private static Task[] tasks = new Task[100];
