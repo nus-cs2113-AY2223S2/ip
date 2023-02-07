@@ -1,36 +1,50 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 public class Duke {
+    public static final String WRONG_INPUTS_GIVEN = "Wrong inputs given";
     private static final String LINE = "____________________________________________________________";
+    private static final String UNRECOGNISED_INPUT = "☹ OOPS!!! I'm sorry, but I don't know what that means :-(";
+    public static final String UNRECOGNISED_ITEM_INDEX = "☹ OOPS!!! unrecognised item index!";
+    public static final String EMPTY_DESCRIPTION = "☹ OOPS!!! The description cannot be empty.";
     private static ArrayList<Task> list = new ArrayList<Task>();
     public static void main(String[] args) {
         greet();
-        while (true) {
+        boolean isProgramRunning = true;
+        while (isProgramRunning) {
             Scanner in = new Scanner(System.in);
             String input = in.nextLine();
             if(input.equalsIgnoreCase("bye")) {
                 bye();
                 break;
             }
-            processInput(input);
+            try {
+                processInput(input);
+            } catch (Exception e) {
+                System.out.println(LINE);
+                System.out.println(e.getMessage());
+                System.out.println(LINE);
+            }
+
         }
     }
+
     public static void greet() {
         System.out.println(LINE);
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
         System.out.println(LINE);
     }
+
     public static void bye() {
         System.out.println(LINE);
         System.out.println("Bye. Hope to see you again soon!");
         System.out.println(LINE);
     }
-    public static void processInput(String input) {
+
+    public static void processInput(String input) throws Exception {
         String inst = input.split("\\s+")[0];
         if (input.equalsIgnoreCase("list")) {
             printList();
-            return;
         } else if (inst.equalsIgnoreCase("mark")) {
             markTask(input);
         } else if (inst.equalsIgnoreCase("unmark")) {
@@ -42,9 +56,10 @@ public class Duke {
         } else if(inst.equalsIgnoreCase("event")) {
             eventTask(input);
         } else {
-            unrecognisedInput();
+            throw new DukeException(UNRECOGNISED_INPUT);
         }
     }
+
     private static void printList() {
         if(list.size() == 0) {
             System.out.println(LINE);
@@ -59,12 +74,17 @@ public class Duke {
             System.out.println(LINE);
         }
     }
-    private static void markTask(String input) {
-        int index = Integer.parseInt(input.split("\\s+")[1]) - 1;
-        if (indexNotInList(index)) { return; }
-        list.get(index).markDone();
-        markResponse(index);
+
+    private static void markTask(String input) throws Exception {
+        try {
+            int index = Integer.parseInt(input.split("\\s+")[1]) - 1;
+            list.get(index).markDone();
+            markResponse(index);
+        } catch (Exception e) {
+            throw new Exception(UNRECOGNISED_ITEM_INDEX);
+        }
     }
+
     private static void markResponse(int index) {
         System.out.println(LINE);
         System.out.println("Nice! I've marked this task as done:");
@@ -72,11 +92,14 @@ public class Duke {
         System.out.println(LINE);
     }
 
-    private static void unmarkTask(String input) {
-        int index = Integer.parseInt(input.split("\\s+")[1]) - 1;
-        if (indexNotInList(index)) { return; }
-        list.get(index).unmarkDone();
-        unmarkResponse(index);
+    private static void unmarkTask(String input) throws Exception {
+        try {
+            int index = Integer.parseInt(input.split("\\s+")[1]) - 1;
+            list.get(index).unmarkDone();
+            unmarkResponse(index);
+        } catch (Exception e) {
+            throw new Exception(UNRECOGNISED_ITEM_INDEX);
+        }
     }
     private static void unmarkResponse(int index) {
         System.out.println(LINE);
@@ -84,55 +107,56 @@ public class Duke {
         System.out.println(list.get(index));
         System.out.println(LINE);
     }
-    private static void todoTask(String input) {
+
+    private static void todoTask(String input) throws DukeException {
         String[] tokens = input.split("\\s+", 2);
-        String task = tokens[1];
-        ToDo t = new ToDo(task);
-        list.add(t);
-        System.out.println(LINE);
-        System.out.println("Got it. I've added this task:");
-        System.out.println(t);
-        System.out.println("Now you have " + list.size() + " tasks in the list");
-        System.out.println(LINE);
-    }
-    private static void deadlineTask(String input) {
-        String[] tokens = input.split("\\s+", 2);
-        String task = tokens[1].split("/")[0];
-        String deadline = tokens[1].split("/")[1];
-        Deadline d = new Deadline(task, deadline);
-        list.add(d);
-        System.out.println(LINE);
-        System.out.println("Got it. I've added this task:");
-        System.out.println(d);
-        System.out.println("Now you have " + list.size() + " tasks in the list");
-        System.out.println(LINE);
-    }
-    private static void eventTask(String input) {
-        String[] tokens = input.split("\\s+", 2);
-        String task = tokens[1].split("/")[0];
-        String from = tokens[1].split("/")[1];
-        String to = tokens[1].split("/")[2];
-        Event e = new Event(task, from, to);
-        list.add(e);
-        System.out.println(LINE);
-        System.out.println("Got it. I've added this task:");
-        System.out.println(e);
-        System.out.println("Now you have " + list.size() + " tasks in the list");
-        System.out.println(LINE);
-    }
-    private static void unrecognisedInput() {
-        System.out.println(LINE);
-        System.out.println("Key again! I don't recognise your input!");
-        System.out.println(LINE);
-    }
-    private static boolean indexNotInList(int itemNum) {
-        if(itemNum > list.size()-1) {
-            System.out.println(LINE);
-            System.out.println("Item does not exist!");
-            System.out.println(LINE);
-            return true;
+        if(tokens.length < 2) {
+            throw new DukeException(EMPTY_DESCRIPTION);
         }
-        return false;
+        String task = tokens[1];
+        ToDo newTodoTask = new ToDo(task);
+        list.add(newTodoTask);
+        printConfirmation(newTodoTask);
     }
 
+    private static void deadlineTask(String input) throws DukeException {
+        String[] tokens = input.split("\\s+", 2);
+        String[] instruction = tokens[1].split("/");
+        if(tokens.length < 2) {
+            throw new DukeException(EMPTY_DESCRIPTION);
+        }
+        if(instruction.length < 2) {
+            throw new DukeException(WRONG_INPUTS_GIVEN);
+        }
+        String task = instruction[0];
+        String deadline = instruction[1];
+        Deadline newDeadline = new Deadline(task, deadline);
+        list.add(newDeadline);
+        printConfirmation(newDeadline);
+    }
+
+    private static void eventTask(String input) throws DukeException {
+        String[] tokens = input.split("\\s+", 2);
+        String[] instruction = tokens[1].split("/");
+        if(tokens.length < 2) {
+            throw new DukeException(EMPTY_DESCRIPTION);
+        }
+        if(instruction.length < 3) {
+            throw new DukeException(WRONG_INPUTS_GIVEN);
+        }
+        String task = instruction[0];
+        String dateFrom = instruction[1];
+        String dateTo = instruction[2];
+        Event newEvent = new Event(task, dateFrom, dateTo);
+        list.add(newEvent);
+        printConfirmation(newEvent);
+    }
+
+    private static void printConfirmation(Task newTask) {
+        System.out.println(LINE);
+        System.out.println("Got it. I've added this task:");
+        System.out.println(newTask);
+        System.out.println("Now you have " + list.size() + " tasks in the list");
+        System.out.println(LINE);
+    }
 }
