@@ -73,6 +73,12 @@ public class Duke {
                 setUserTaskState(index, true);
             } else if (cmd.equals(Command.UNMARK.label)) {
                 setUserTaskState(index, false);
+            } else if (cmd.equals(Command.DELETE.label)) {
+                Task removedTask = userTasks.remove(index);
+
+                System.out.println("Alrighty, I've removed this task:");
+                System.out.println(removedTask);
+                printUserTasksCount();
             }
 
         } catch (NumberFormatException ex) {
@@ -80,6 +86,8 @@ public class Duke {
                 throw new InvalidSyntaxException(Command.MARK.expectedSyntax);
             } else if (cmd.equals(Command.UNMARK.label)) {
                 throw new InvalidSyntaxException(Command.UNMARK.expectedSyntax);
+            } else if (cmd.equals(Command.DELETE.label)) {
+                throw new InvalidSyntaxException(Command.DELETE.expectedSyntax);
             }
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("Oops, not quite sure what task you're referring to...");
@@ -107,7 +115,6 @@ public class Duke {
         } else {
             throw new UnrecognizedInputException();
         }
-
     }
 
     public static void main(String[] args) {

@@ -10,6 +10,7 @@ public enum Command {
     LIST("list"),
     MARK("mark", "mark <task #>"),
     UNMARK("unmark", "unmark <task #>"),
+    DELETE("delete", "delete <task #>"),
     TODO("todo", "todo <description>"),
     DEADLINE("deadline", "deadline <description> /by <deadline>"),
     EVENT("event", "event <description> /from <start> /to <end>");
@@ -20,7 +21,7 @@ public enum Command {
 
     // All commands that modify an existing task
     public static final Set<String> MODIFY_TASK_COMMANDS = new HashSet<>(
-        Arrays.asList(MARK.label, UNMARK.label));
+        Arrays.asList(MARK.label, UNMARK.label, DELETE.label));
 
     public final String label;
     public final String expectedSyntax;
