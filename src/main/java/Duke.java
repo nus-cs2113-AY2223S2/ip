@@ -105,18 +105,30 @@ public class Duke {
                  }
                  return false;
              case "deadline":
-                 numOfTask += 1;
-                 String[] deadline = filterDescriptionAndDeadline(args);
-                 tasks[numOfTask-1] = new Deadline(deadline[0],deadline[1]);
-                 System.out.println(tasks[numOfTask-1]);
-                 System.out.println("Now you have " + numOfTask + " task in the list.");
+                 try {
+                     String[] deadline = filterDescriptionAndDeadline(args);
+                     Deadline deadlineTask = new Deadline(deadline[0], deadline[1]);
+                     numOfTask += 1;
+                     tasks[numOfTask - 1] = deadlineTask;
+                     System.out.println(tasks[numOfTask - 1]);
+                     System.out.println("Now you have " + numOfTask + " task in the list.");
+                 }catch (StringIndexOutOfBoundsException e){
+                     System.out.println("The description of deadline and/or date of deadline cannot be empty!");
+                 }
                  return false;
              case "event":
-                 numOfTask += 1;
-                 String[] event = filterDescriptionAndTimePeriod(args);
-                 tasks[numOfTask-1] = new Event(event[0],event[1],event[2]);
-                 System.out.println(tasks[numOfTask-1]);
-                 System.out.println("Now you have " + numOfTask + " task in the list.");
+                 try {
+                     String[] event = filterDescriptionAndTimePeriod(args);
+                     Event eventTask = new Event(event[0], event[1], event[2]);
+                     numOfTask += 1;
+                     tasks[numOfTask - 1] = eventTask;
+                     System.out.println(tasks[numOfTask - 1]);
+                     System.out.println("Now you have " + numOfTask + " task in the list.");
+                 }catch(StringIndexOutOfBoundsException e){
+                     System.out.println("The description of the event and/or period of it cannot be empty!");
+                 }catch(EventException e){
+                     System.out.println("To field is empty!");
+                 }
                  return false;
              default:
                  throw new DukeException();
