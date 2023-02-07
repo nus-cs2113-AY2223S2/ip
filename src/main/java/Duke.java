@@ -1,3 +1,10 @@
+import exceptions.EmptyTaskException;
+import exceptions.InvalidCommandException;
+import tasks.Deadline;
+import tasks.Event;
+import tasks.Task;
+import tasks.Todo;
+
 import java.util.Scanner;
 public class Duke {
 
@@ -25,7 +32,7 @@ public class Duke {
 
 
     //add a new to do
-    public static void addTodo(Task[] tasks, int listCount, String name) throws EmptyTaskException{
+    public static void addTodo(Task[] tasks, int listCount, String name) throws EmptyTaskException {
         if(name.equals(" ")){
             throw new EmptyTaskException();
         }
