@@ -73,7 +73,7 @@ public class Task {
     }
 
     public static void addTodoTask(String description, ArrayList<Task> taskList) throws DukeException {
-        if (description.isEmpty()) {
+        if (description.isBlank()) {
             //for the case where user keys in a space after the command
             throw new DukeException("     ☹ OOPS!!! The description of a todo cannot be empty.");
         }
@@ -83,7 +83,7 @@ public class Task {
     }
 
     public static void addDeadlineTask(String description, ArrayList<Task> taskList) throws DukeException {
-        if (description.isEmpty()) {
+        if (description.isBlank()) {
             //for the case where user keys in a space after the command
             throw new DukeException("     ☹ OOPS!!! The description of a deadline cannot be empty.");
         }
@@ -98,7 +98,7 @@ public class Task {
     }
 
     public static void addEventTask(String description, ArrayList<Task> taskList) throws DukeException {
-        if (description.isEmpty()) {
+        if (description.isBlank()) {
             //for the case where user keys in a space after the command
             throw new DukeException("     ☹ OOPS!!! The description of a event cannot be empty.");
         }
