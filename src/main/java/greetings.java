@@ -1,4 +1,4 @@
-public class greetings {
+public class Greetings {
     @Override
     public String toString(){
         return " ___       __   _______   ___       ________  ________  _____ ______   _______ \n" +

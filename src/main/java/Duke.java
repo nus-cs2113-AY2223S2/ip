@@ -1,10 +1,9 @@
 import java.util.Scanner;
 public class Duke {
     private static Task[] tasks = new Task[100];
-    private static String[] taskStatus = new String[100];
-    private static String[] taskType = new String[100];
     private static int numOfTask = 0;
-    public static void listTask(){
+    // Method to list out the tasks stored in the task list
+    public static void listTasks(){
         System.out.println("Here are the tasks in your list:");
         for(int i = 1; i <= numOfTask; i+= 1){
             System.out.println(i + "." +"[" + tasks[i-1].getType() + "]" + "[" + tasks[i-1].getStatusIcon() + "] "+ tasks[i-1].getDescription()
@@ -37,41 +36,38 @@ public class Duke {
         return sentence;
     }
 
-    // Method to remove the command word from the input
+    // Method to remove the command word from the input and return the description
     public static String filterDescription(String sentence) {
         String command = filterCommand(sentence);
         String description = sentence.replaceAll(command,"");
-        String desc = description.trim();
-        return desc;
+        return description.trim();
     }
-
+    // Method to remove the command word, deadline and return the description
     public static String[] filterDescriptionAndDeadline(String sentence){
         String[] output = new String[2];
         String str = filterDescription(sentence);
         int dividerPosition = str.indexOf("/");
         String description = str.substring(0,dividerPosition-1);
-        String desc = description.trim();
-        output[0] = desc;
+        output[0] = description.trim();
         String deadline = str.substring(dividerPosition + 1,str.length());
         String byDate = deadline.replaceAll("by", "");
         output[1] = byDate.trim();
         return output;
     }
-
+    // Method to remove the command word, time period and return the description
     public static String[] filterDescriptionAndTimePeriod(String sentence){
         String[] output = new String[3];
         String str = filterDescription(sentence);
         int dividerPosition = str.indexOf("/");
         String description = str.substring(0,dividerPosition-1);
-        String desc = description.trim();
-        output[0] = desc;
+        output[0] = description.trim();
         String deadline = str.substring(dividerPosition + 1,str.length());
         String fromPeriod = deadline.replaceAll("from", "");
-        String from = fromPeriod.substring(0,fromPeriod.indexOf("/"));
-        output[1] = from.trim();
+        String fromDate = fromPeriod.substring(0,fromPeriod.indexOf("/"));
+        output[1] = fromDate.trim();
         String toPeriod = fromPeriod.substring(fromPeriod.indexOf("/")+1, fromPeriod.length());
-        String to = toPeriod.replaceAll("to", "");
-        output[2] = to.trim();
+        String toDate = toPeriod.replaceAll("to", "");
+        output[2] = toDate.trim();
         return output;
     }
 
@@ -84,7 +80,7 @@ public class Duke {
                  System.out.println("Bye. Hope to see you again soon!");
                  return true;
              case "list":
-                 listTask();
+                 listTasks();
                  return false;
              case "mark":
                  int indexMark = Integer.parseInt(taskNumber);
@@ -127,8 +123,8 @@ public class Duke {
          }
      }
     public static void main(String[] args) {
-         greetings Welcome = new greetings();
-        System.out.println(Welcome);
+        Greetings welcome = new Greetings();
+        System.out.println(welcome);
 
         Scanner sc= new Scanner(System.in);
         String in = sc.nextLine();
