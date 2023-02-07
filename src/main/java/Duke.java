@@ -1,5 +1,9 @@
 import java.util.Scanner;
 
+//TODO: specify error eg. event/ddl timing not found
+//TODO: event /from /by wrong order
+//TODO: insufficient input -> task still added -> printTask returns stringIndexOutOfBoundsException
+
 public class Duke {
     public static String line = "____________________________________________________________\n";
     public static int countTask = 0;
@@ -25,6 +29,7 @@ public class Duke {
                 "Type 'list' to view the current todo list.\n" +
                 "Type 'mark' and task event index to mark the task as done " +
                 "and type 'unmark' and index to undo the task.\n" +
+                "Type 'bye' to exit Duke.\n" +
                 line;
         System.out.println(greet);
 
@@ -37,27 +42,45 @@ public class Duke {
             } else {
                 break;
             }
-            if (userInput.equals("bye")) {
-                System.out.println("Thank you for using Duke. Hope to see you soon!");
-                break;
-            } else if (userInput.equals("list")) {
-                printTaskList();
-            } else if (userInput.startsWith("mark")) {
-                markTask(userInput);
-            } else if (userInput.startsWith("unmark")) {
-                unmarkTask(userInput);
-            } else if (userInput.startsWith("todo")) {
-                createTodo(userInput);
-            } else if (userInput.startsWith("deadline")) {
-                createDeadline(userInput);
-            } else if (userInput.startsWith("event")) {
-                createEvent(userInput);
-            } else {
-                createTask(userInput);
+            try {
+                if (userInput.equals("bye")) {
+                    System.out.println("Thank you for using Duke. Hope to see you soon!");
+                    break;
+                } else if (userInput.equals("list")) {
+                    printTaskList();
+                } else if (userInput.startsWith("mark")) {
+                    markTask(userInput);
+                } else if (userInput.startsWith("unmark")) {
+                    unmarkTask(userInput);
+                } else if (userInput.startsWith("todo")) {
+                    try {
+                        createTodo(userInput);
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("Description of a todo cannot be empty. Adding todo failed.\n" + line);
+                    }
+                } else if (userInput.startsWith("deadline")) {
+                    try {
+                        createDeadline(userInput);
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("Insufficient input for deadline. Adding deadline failed.\n" + line);
+                    }
+                } else if (userInput.startsWith("event")) {
+                    try {
+                        createEvent(userInput);
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("Insufficient input for event. Adding event failed.\n" + line);
+                    }
+                } else {
+                    throw new TaskTypeException();
+                }
+            } catch (TaskTypeException e) {
+                System.out.println("Sorry, Duke does not recognise the task. " +
+                        "Type 'todo'/'deadline'/'event' to add task of respective type.\n" + line);
             }
         }
     }
 
+    //TODO: stringoutofboundexception
     public static void printTaskList() {
         System.out.println(line + "Here are the tasks in your list:");
         for (int i = 0; i < countTask; i++) {
@@ -89,14 +112,14 @@ public class Duke {
         }
     }
 
-    public static void createTask(String input) {
-        Task t = new Task(input);
-        tasks[countTask] = t;
-        countTask++;
-        System.out.println(line + "added: " + t.getDescription() + '\n' + line);
-    }
+//    public static void createTask(String input) {
+//        Task t = new Task(input);
+//        tasks[countTask] = t;
+//        countTask++;
+//        System.out.println(line + "added: " + t.getDescription() + '\n' + line);
+//    }
 
-    public static void createTodo(String input) {
+    public static void createTodo(String input) throws IndexOutOfBoundsException {
         ToDo todoTask = new ToDo(input.substring(5));
         tasks[countTask] = todoTask;
         countTask++;
@@ -104,7 +127,10 @@ public class Duke {
         System.out.println("Now you have " + countTask + " task(s) in the list.\n" + line);
     }
 
-    public static void createDeadline(String input) {
+    public static void createDeadline(String input) throws IndexOutOfBoundsException {
+//        if (input == null) {
+//            throw new IndexOutOfBoundsException();
+//        }
         Deadline deadlineTask = new Deadline(input.substring(9));
         tasks[countTask] = deadlineTask;
         countTask++;
@@ -112,7 +138,7 @@ public class Duke {
         System.out.println("Now you have " + countTask + " task(s) in the list.\n" + line);
     }
 
-    public static void createEvent(String input) {
+    public static void createEvent(String input) throws IndexOutOfBoundsException {
         Event eventTask = new Event(input.substring(6));
         tasks[countTask] = eventTask;
         countTask++;
