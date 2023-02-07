@@ -7,7 +7,7 @@ public class Event extends Task {
         super(description);
         this.from = from;
         this.to = to;
-        if(description.length() == 0 || from.length() == 0 || to.length() == 0){
+        if(to.length() == 0){
             throw new EventException();
         }
     }
