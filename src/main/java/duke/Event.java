@@ -1,3 +1,5 @@
+package duke;
+import duke.exceptions.EventException;
 public class Event extends Task {
 
     protected String from;
