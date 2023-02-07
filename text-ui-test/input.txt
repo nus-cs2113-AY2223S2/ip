@@ -1,13 +1,18 @@
-todo Ng Kai Wen CS2113 text-ui-test
-event testing event feature /from 2pm /to 4pm
+todo
+list 5
+event
+event /from
+deadline sample
+bye duke!
+wrong input
+todo task
+event task2 /from 2 /to 4
+deadline task3 /by 2pm
 list
 mark 1
+mark 5
+unmark 2
 list
 unmark 1
-list
-deadline testing deadline /by 2pm lol sample text
-list
-mark 13
-mark 3
 list
 bye
