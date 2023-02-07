@@ -1,5 +1,6 @@
 public class Deadline extends Todo {
     private static final String COMMAND = "deadline";
+    private static final String DEADLINE_KEYWORD = "/by";
     private static final String TYPE = "D";
     protected final String deadline;
 
@@ -8,18 +9,11 @@ public class Deadline extends Todo {
         this.deadline = deadline;
     }
 
-    public static Deadline create(String command) {
-        final String DEADLINE_KEYWORD = "/by";
+    private static String getDescriptionOf(String command) {
         String[] parameters = command.split(" ");
-        // Wrong command for adding a deadline
-        if (!parameters[0].equals(Deadline.COMMAND)) {
-            return null;
-        }
         StringBuilder descBuilder = new StringBuilder();
-        int keyword_index = parameters.length;
         for (int i = 1; i < parameters.length; i += 1) {
-            if (parameters[i].equals(DEADLINE_KEYWORD)) {
-                keyword_index = i;
+            if (parameters[i].equals(Deadline.DEADLINE_KEYWORD)) {
                 break;
             }
             if (i != 1) {
@@ -27,19 +21,24 @@ public class Deadline extends Todo {
             }
             descBuilder.append(parameters[i]);
         }
-        String description = descBuilder.toString();
-        // No deadline given, cannot create a valid deadline object
-        if (keyword_index >= (parameters.length + 1)) {
+        return descBuilder.toString();
+    }
+
+    private static String getDeadlineOf(String command) {
+        int deadlineKeywordLastIndex = command.indexOf(Deadline.DEADLINE_KEYWORD)
+                + Deadline.DEADLINE_KEYWORD.length();
+        String deadline = command.substring(deadlineKeywordLastIndex).trim();
+        return deadline;
+    }
+
+    public static Deadline create(String command) {
+        String[] parameters = command.split(" ");
+        // Wrong command for adding a deadline
+        if (!parameters[0].equals(Deadline.COMMAND)) {
             return null;
         }
-        StringBuilder deadlineBuilder = new StringBuilder();
-        for (int i = keyword_index + 1; i < parameters.length; i += 1) {
-            if (i != (keyword_index + 1)) {
-                deadlineBuilder.append(" ");
-            }
-            deadlineBuilder.append(parameters[i]);
-        }
-        String deadline = deadlineBuilder.toString();
+        String description = Deadline.getDescriptionOf(command);
+        String deadline = Deadline.getDeadlineOf(command);
         return new Deadline(description, deadline);
     }
 

@@ -15,6 +15,32 @@ public class TaskManager {
         }
     }
 
+    private static void createTask(String typeOfTask, String command) {
+        switch (typeOfTask) {
+        case TaskManager.TODO_CMD:
+            Todo newTodo = Todo.create(command);
+            TaskManager.addTask(newTodo);
+            printlnWithIndent(String.format(TaskManager.ADD_PHRASE,
+                    TaskManager.TODO_CMD));
+            printlnWithIndent("   " + newTodo.toString());
+            break;
+        case TaskManager.DEADLINE_CMD:
+            Deadline newDeadline = Deadline.create(command);
+            TaskManager.addTask(newDeadline);
+            printlnWithIndent(String.format(TaskManager.ADD_PHRASE,
+                    TaskManager.DEADLINE_CMD));
+            printlnWithIndent("   " + newDeadline.toString());
+            break;
+        case TaskManager.EVENT_CMD:
+            Event newEvent = Event.create(command);
+            TaskManager.addTask(newEvent);
+            printlnWithIndent(String.format(TaskManager.ADD_PHRASE,
+                    TaskManager.EVENT_CMD));
+            printlnWithIndent("   " + newEvent.toString());
+            break;
+        }
+    }
+
     private static Task getTask(int indexOfTask) {
         boolean isNegativeIndex = indexOfTask < 0;
         boolean isIndexTooLarge = indexOfTask >= TaskManager.getTasks().size();
@@ -52,32 +78,10 @@ public class TaskManager {
         TaskManager.getTasks().remove(indexOfTask);
     }
 
-    public void createTask(String command) {
+    public void createTaskFrom(String command) {
         String[] parameters = command.split(" ");
         String typeOfTask = parameters[0];
-        switch (typeOfTask) {
-        case TaskManager.TODO_CMD:
-            Todo newTodo = Todo.create(command);
-            TaskManager.addTask(newTodo);
-            printlnWithIndent(String.format(TaskManager.ADD_PHRASE,
-                    TaskManager.TODO_CMD));
-            printlnWithIndent("   " + newTodo.toString());
-            break;
-        case TaskManager.DEADLINE_CMD:
-            Deadline newDeadline = Deadline.create(command);
-            TaskManager.addTask(newDeadline);
-            printlnWithIndent(String.format(TaskManager.ADD_PHRASE,
-                    TaskManager.DEADLINE_CMD));
-            printlnWithIndent("   " + newDeadline.toString());
-            break;
-        case TaskManager.EVENT_CMD:
-            Event newEvent = Event.create(command);
-            TaskManager.addTask(newEvent);
-            printlnWithIndent(String.format(TaskManager.ADD_PHRASE,
-                    TaskManager.EVENT_CMD));
-            printlnWithIndent("   " + newEvent.toString());
-            break;
-        }
+        TaskManager.createTask(typeOfTask, command);
         int howManyTasks = TaskManager.getTasks().size();
         if (howManyTasks > 1) {
             printlnWithIndent(String.format(TaskManager.TASK_ADDED_PHRASE,

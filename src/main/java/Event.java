@@ -1,5 +1,7 @@
 public class Event extends Todo {
     private static final String COMMAND = "event";
+    private static final String END_KEYWORD = "/to";
+    private static final String START_KEYWORD = "/from";
     private static final String TYPE = "E";
     private final String endTime;
     private final String startTime;
@@ -10,32 +12,11 @@ public class Event extends Todo {
         this.endTime = endTime;
     }
 
-    private String getEndTime() {
-        return this.endTime;
-    }
-
-    private String getStartTime() {
-        return this.startTime;
-    }
-
-    @Override
-    protected String getType() {
-        return Event.TYPE;
-    }
-
-    public static Event create(String command) {
-        final String START_KEYWORD = "/from";
-        final String END_KEYWORD = "/to";
+    private static String getDescriptionOf(String command) {
         String[] parameters = command.split(" ");
-        // Wrong command for adding an event
-        if (!parameters[0].equals(Event.COMMAND)) {
-            return null;
-        }
         StringBuilder descBuilder = new StringBuilder();
-        int keyword_index = parameters.length;
         for (int i = 1; i < parameters.length; i += 1) {
-            if (parameters[i].equals(START_KEYWORD)) {
-                keyword_index = i;
+            if (parameters[i].equals(Event.START_KEYWORD)) {
                 break;
             }
             if (i != 1) {
@@ -44,34 +25,44 @@ public class Event extends Todo {
             descBuilder.append(parameters[i]);
         }
         String description = descBuilder.toString();
-        // No start date/time given, cannot create a valid event object
-        if (keyword_index >= (parameters.length + 1)) {
+        return description;
+    }
+
+    private String getEndTime() {
+        return this.endTime;
+    }
+
+    private static String getEndTimeOf(String command) {
+        int endDateFirstIndex = command.indexOf(Event.END_KEYWORD)
+                + Event.END_KEYWORD.length();
+        return command.substring(endDateFirstIndex).trim();
+    }
+
+    private String getStartTime() {
+        return this.startTime;
+    }
+
+    private static String getStartTimeOf(String command) {
+        int startDateFirstIndex = command.indexOf(Event.START_KEYWORD)
+                + Event.START_KEYWORD.length();
+        int startDateLastIndex = command.indexOf(Event.END_KEYWORD) - 1;
+        return command.substring(startDateFirstIndex, startDateLastIndex).trim();
+    }
+
+    @Override
+    protected String getType() {
+        return Event.TYPE;
+    }
+
+    public static Event create(String command) {
+        String[] parameters = command.trim().split(" ");
+        // Wrong command for adding an event
+        if (!parameters[0].equals(Event.COMMAND)) {
             return null;
         }
-        StringBuilder startTimeBuilder = new StringBuilder();
-        for (int i = keyword_index + 1; i < parameters.length; i += 1) {
-            if (parameters[i].equals(END_KEYWORD)) {
-                keyword_index = i;
-                break;
-            }
-            if (i != (keyword_index + 1)) {
-                startTimeBuilder.append(" ");
-            }
-            startTimeBuilder.append(parameters[i]);
-        }
-        String startTime = startTimeBuilder.toString();
-        // No end date/time given, cannot create a valid event object
-        if (keyword_index >= (parameters.length + 1)) {
-            return null;
-        }
-        StringBuilder endTimeBuilder = new StringBuilder();
-        for (int i = keyword_index + 1; i < parameters.length; i += 1) {
-            if (i != (keyword_index + 1)) {
-                endTimeBuilder.append(" ");
-            }
-            endTimeBuilder.append(parameters[i]);
-        }
-        String endTime = endTimeBuilder.toString();
+        String description = Event.getDescriptionOf(command);
+        String startTime = Event.getStartTimeOf(command);
+        String endTime = Event.getEndTimeOf(command);
         return new Event(description, startTime, endTime);
     }
 

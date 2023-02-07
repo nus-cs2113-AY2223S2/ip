@@ -46,7 +46,7 @@ public class Rica {
             case Rica.DEADLINE_TRIGGER:
             case Rica.EVENT_TRIGGER:
             case Rica.TODO_TRIGGER:
-                Rica.getTaskManager().createTask(command);
+                Rica.getTaskManager().createTaskFrom(command);
                 break;
             case Rica.BYE_TRIGGER:
                 printlnWithIndent(Rica.BYE_PHRASE);

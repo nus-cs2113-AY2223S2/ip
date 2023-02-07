@@ -11,6 +11,18 @@ public class Todo extends Task {
         this(description, false);
     }
 
+    private static String getDescriptionOf(String command) {
+        String[] parameters = command.split(" ");
+        StringBuilder descriptionBuilder = new StringBuilder();
+        for (int i = 1; i < parameters.length; i += 1) {
+            if (i != 1) {
+                descriptionBuilder.append(" ");
+            }
+            descriptionBuilder.append(parameters[i]);
+        }
+        return descriptionBuilder.toString();
+    }
+
     protected boolean getIsDone() {
         return this.isDone;
     }
@@ -20,15 +32,7 @@ public class Todo extends Task {
     }
 
     public static Todo create(String command) {
-        String[] parameters = command.split(" ");
-        StringBuilder descriptionBuilder = new StringBuilder();
-        for (int i = 1; i < parameters.length; i += 1) {
-            if (i != 1) {
-                descriptionBuilder.append(" ");
-            }
-            descriptionBuilder.append(parameters[i]);
-        }
-        String description = descriptionBuilder.toString();
+        String description = Todo.getDescriptionOf(command);
         if (description.isBlank()) {
             return null;
         }
