@@ -103,6 +103,13 @@ public class Task {
         }
     }
 
+    public static void deleteTask(int taskNumber, ArrayList<Task> listOfTasks) {
+        System.out.println("Noted. I've removed this task:");
+        System.out.println("  " + listOfTasks.get(taskNumber));
+        listOfTasks.remove(taskNumber);
+        System.out.println("Now you have " + listOfTasks.size() + " task in the list.");
+    }
+
     public static void printUpdateStatusMessage(boolean isDone, Task currentTask) {
         if (isDone) {
             System.out.println("Nice! I've marked this task as done:");
