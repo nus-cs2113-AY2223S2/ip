@@ -217,6 +217,12 @@ public class Duke {
                 //Get user input again
                 userInput = userScan.nextLine();
             }
+            catch (IndexOutOfBoundsException e){
+                System.out.println("There are currently no tasks in the list. ");
+                //Get user input again
+                userInput = userScan.nextLine();
+            }
+            
             
         }
 
