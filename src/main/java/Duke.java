@@ -115,14 +115,24 @@ public class Duke {
 
                     case "mark":
                         Integer index = Integer.parseInt(userInput[1]);
-                        markTask(tasks, index - 1);
+                        try{
+                            markTask(tasks, index - 1);
+                        } catch(NullPointerException e){
+                            System.out.println("Error! Specify a valid task index!");
+                            printBorder();
+                        }
                         entry = input.nextLine();
                         break;
 
 
                     case "unmark":
                         Integer index_um = Integer.parseInt(userInput[1]);
-                        unmarkTask(tasks, index_um - 1);
+                        try{
+                            unmarkTask(tasks, index_um - 1);
+                        } catch(NullPointerException e){
+                            System.out.println("Error! Specify a valid task index!");
+                            printBorder();
+                        }
                         entry = input.nextLine();
                         break;
 
