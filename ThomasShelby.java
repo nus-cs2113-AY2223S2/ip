@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import tasks.*;
 
 public class ThomasShelby {
     static final int MAX_TASKS = 100;
@@ -54,42 +55,47 @@ public class ThomasShelby {
         whichTask = Integer.parseInt(cmdSplit[1]) - 1; // shift back index
         taskManager[whichTask].setIsDone(false);
         System.out.println("You've gotten lazy.");
-        System.out.println(taskManager[whichTask].getStatusIcon()
-                + " " + taskManager[whichTask].getDescription());
+        System.out.println(taskManager[whichTask]);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IncompleteTaskException {
         System.out.print("Good day, I'm Thomas Shelby.\nTo what do I owe the pleasure?\n");
         Scanner in = new Scanner(System.in);
         while (true) {
-            String cmd = in.nextLine();
-            String[] cmdSplit = cmd.split(" ", 2); // user input split into individual words
-            int whichTask = 0; // variable holding mark/unmark task num
-            switch (cmdSplit[0]) {
-            case "bye":
-                System.out.println("Cheers.");
-                return;
-            case "list":
-                listTasks();
-                break;
-            case "todo":
-                addToDo(cmdSplit);
-                break;
-            case "deadline":
-                addDeadline(cmdSplit);
-                break;
-            case "event":
-                addEvent(cmdSplit);
-                break;
-            case "mark":
-                markTask(cmdSplit);
-                break;
-            case "unmark":
-                unmarkTask(cmdSplit);
-                break;
-            default:
-                System.out.println(cmd); // echo cmd
-                break;
+            try {
+                String cmd = in.nextLine();
+                String[] cmdSplit = cmd.split(" ", 2); // user input split into individual words
+                int whichTask = 0; // variable holding mark/unmark task num
+                switch (cmdSplit[0]) {
+                case "bye":
+                    System.out.println("Cheers.");
+                    return;
+                case "list":
+                    listTasks();
+                    break;
+                case "todo":
+                    addToDo(cmdSplit);
+                    break;
+                case "deadline":
+                    addDeadline(cmdSplit);
+                    break;
+                case "event":
+                    addEvent(cmdSplit);
+                    break;
+                case "mark":
+                    markTask(cmdSplit);
+                    break;
+                case "unmark":
+                    unmarkTask(cmdSplit);
+                    break;
+                default:
+                    throw new Exception();
+                }
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("Something's wrong: " + e);
+                System.out.println("You probably didn't include the task or the timeframe.");
+            } catch (Exception e) {
+                System.out.println("Don't know what that means comrade.");
             }
         }
     }
