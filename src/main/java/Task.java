@@ -3,25 +3,35 @@
  */
 public class Task {
 
-    private String text;
-    private boolean isDone;
+    protected String description;
+    protected boolean isDone;
 
     public Task() {
-        this.text = "";
+        this.description = "";
         this.isDone = false;
     }
 
-    public Task(String text, boolean isDone) {
-        this.text = text;
+    public Task(String description) {
+        this.description = description;
+        this.isDone = false;
+    }
+
+    public Task(String description, boolean isDone) {
+        this.description = description;
         this.isDone = isDone;
     }
 
-    public String getText() {
-        return this.text;
+    @Override
+    public String toString() {
+        return "[" + ((this.isDone) ? "X] " : " ] ") + ((description.indexOf("/") == -1) ? description : (description.substring(0, description.indexOf("/"))));
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public boolean getIsDone() {

@@ -7,7 +7,7 @@ public class Duke {
 
     public static void main(String[] args) {
         greetings();
-        echoText();
+        manageInput();
         goodbye();
     }
 
@@ -15,14 +15,9 @@ public class Duke {
         System.out.println("____________________________________________________________");
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < counter; i++) {
-            if (storedTask[i].getIsDone()) {
-                System.out.println(i + 1 + ". [x] " + storedTask[i].getText());
-            }
-            else {
-                System.out.println(i + 1 + ". [ ] " + storedTask[i].getText());
-            }
+            System.out.println((i + 1) + ". " + storedTask[i].toString());
         }
-        System.out.println("____________________________________________________________");
+        System.out.println("____________________________________________________________\n");
     }
 
     private static void markingAsDone(String echoInput, int counter, Task[] storedTask) {
@@ -33,47 +28,74 @@ public class Duke {
             storedTask[listNumber-1].setIsDone(true);
             listTasks(counter, storedTask);
         }
-        catch (NumberFormatException ex){
-            System.out.println("____________________________________________________________");
-            System.out.println("*DID NOT ENTER A VALID NUMBER*");
-            System.out.println("____________________________________________________________");
+        catch (NumberFormatException ex) {
+            printMarkError();
         }
-        catch (ArrayIndexOutOfBoundsException x) {
-            System.out.println("____________________________________________________________");
-            System.out.println("*DID NOT ENTER A NUMBER ON LIST*");
-            System.out.println("____________________________________________________________");
+        catch (ArrayIndexOutOfBoundsException ex) {
+            printMarkError();
         }
-        catch (NullPointerException x) {
-            System.out.println("____________________________________________________________");
-            System.out.println("*DID NOT ENTER A NUMBER ON LIST*");
-            System.out.println("____________________________________________________________");
+        catch (NullPointerException ex) {
+            printMarkError();
         }
     }
 
-    private static void echoText() {
+    private static void printMarkError() {
+        System.out.println("____________________________________________________________");
+        System.out.println("*DID NOT ENTER A VALID NUMBER*");
+        System.out.println("____________________________________________________________\n");
+    }
+    
+    private static void printTaskInput(Task task, int counter) {
+        System.out.println("____________________________________________________________");
+        System.out.println("Got it. I've added this task:");
+        System.out.println(task.toString());
+        System.out.println("Now you have " + counter + " tasks in the list.");
+        System.out.println("____________________________________________________________\n");
+    }
+
+    private static void manageInput() {
         Scanner scanner = new Scanner(System.in);
-        String echoInput = "";
+        String input = "";
         Task[] storedTask = new Task[100];
         int counter = 0;
 
-        while (!echoInput.equals("bye")) {
-            echoInput = scanner.nextLine();
-            if (echoInput.equals("bye")) {
+        while (!input.equals("bye")) {
+            input = scanner.nextLine();
+            if (input.equals("bye")) {
                 break;
             }
-            else if (echoInput.equals("list")) {
+            else if (input.equals("list")) {
                 listTasks(counter, storedTask);
             }
-            else if (echoInput.startsWith("mark ")) {
-                markingAsDone(echoInput, counter, storedTask);
+            else if (input.startsWith("mark")) {
+                markingAsDone(input, counter, storedTask);
+            }
+            else if (input.startsWith("todo ")) {
+                Task tempTask = new Todo(input);
+                storedTask[counter] = tempTask;
+                counter = counter + 1;
+                printTaskInput(tempTask, counter);
+            }
+            else if (input.startsWith("deadline") && input.contains("/")) {
+                Task tempTask = new Deadline(input, input.substring(input.lastIndexOf("/") + 1));
+                storedTask[counter] = tempTask;
+                counter = counter + 1;
+                printTaskInput(tempTask, counter);
+            }
+            else if (input.startsWith("event") && input.matches(".*/.*/.*")) {
+                String tempInput = input.substring(input.indexOf("/") + 1);
+                String fromString = tempInput.substring(0, tempInput.indexOf("/"));
+                String toString = tempInput.substring(tempInput.lastIndexOf("/") + 1);
+
+                Task tempTask = new Event(input, fromString, toString);
+                storedTask[counter] = tempTask;
+                counter = counter + 1;
+                printTaskInput(tempTask, counter);
             }
             else {
-                Task tempTask = new Task(echoInput, false);
-                storedTask[counter] = tempTask;
                 System.out.println("____________________________________________________________");
-                System.out.println("added: " + echoInput);
-                System.out.println("____________________________________________________________");
-                counter = counter + 1;
+                System.out.println("Invalid input");
+                System.out.println("____________________________________________________________\n");
             }
         }
     }
@@ -88,12 +110,12 @@ public class Duke {
         System.out.println("____________________________________________________________");
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
-        System.out.println("____________________________________________________________");
+        System.out.println("____________________________________________________________\n");
     }
 
     private static void goodbye() {
         System.out.println("____________________________________________________________");
         System.out.println("Bye. Hope to see you again soon!");
-        System.out.println("____________________________________________________________");
+        System.out.println("____________________________________________________________\n");
     }
 }
