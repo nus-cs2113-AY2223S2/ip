@@ -16,6 +16,10 @@ public class Duke {
             line = in.nextLine();
             decisions = line.split(" ");
             dates = line.split("/");
+            commandChecker currentLoop = new commandChecker(decisions, dates, actionCounter);
+            if (currentLoop.hasErrors()) {
+                decisions[0] = "Invalidate";
+            }
             switch (decisions[0]) {
                 case "echo":
                     System.out.println(Methods.findTaskDetails(line));
@@ -55,14 +59,12 @@ public class Duke {
                     break;
 
                 case "list":
-                    if (actionCounter == 0) {
-                        Methods.printEmptyList();
-                        continue;
-                    }
                     for (int iterator = 0; iterator < actionCounter; iterator++) {
                         Methods.printListElement(iterator, actions[iterator]);
                     }
                     break;
+                default:
+                    Methods.printCurrentSupportedActions();
             }
         } while (!decisions[0].equals("bye"));
         System.out.println("That's all from me! Goodbye!");
