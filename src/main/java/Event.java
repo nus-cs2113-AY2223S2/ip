@@ -10,7 +10,7 @@ public class Event extends Task {
     }
     
    @Override
-   public String printTask() {
+   public String printTask(){
        return "[E] " + super.printTask() + " (from: " + startTime + " to: " + endTime + ")";
    }
 }

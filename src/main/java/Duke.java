@@ -5,7 +5,6 @@ public class Duke {
 
     public static ArrayList<Task> tasks = new ArrayList<Task>();
     
-
     public static void printLine(){
         String horizontalLine = "\t――――――――――――――――――――――――――――――――――――――――――";
         System.out.println(horizontalLine);
@@ -20,45 +19,43 @@ public class Duke {
 
     public static void printGoodbye(){
         printLine();
-        System.out.println( "\tThank you! See you again soon :)");
+        System.out.println("\tThank you! See you again soon :)");
         printLine();
     }
 
-    public static void addEvent(String userInput){
-        int fromIndexStart = userInput.indexOf(" /from");
-        int fromIndexEnd = fromIndexStart + 7;
-        int toIndexStart = userInput.indexOf(" /to");
-        int toIndexEnd = toIndexStart + 5;
-        int startIndex = 5;
-        String eventDescription = userInput.substring(startIndex, fromIndexStart);
-        String startTime = userInput.substring(fromIndexEnd, toIndexStart);
-        String endTime = userInput.substring(toIndexEnd);
-        tasks.add(new Event(eventDescription, startTime, endTime));
+    public static void printTaskDescription(String description){
         printLine();
-        System.out.println("\tadded: " + eventDescription);
+        System.out.println("\tadded: " + description);
         printLine(); 
+    }
+
+    public static void printInvalidCommand(){
+        printLine();
+        System.out.println("Please enter a valid command!");
+        printLine();
+    }
+
+    public static void addEvent(String[] userInputArray){
+        String[] eventDetails = userInputArray[1].split("/from | /to");
+        String eventDescription = eventDetails[0];
+        String startTime = eventDetails[1];
+        String endTime = eventDetails[2];
+        tasks.add(new Event(eventDescription, startTime, endTime));
+        printTaskDescription(eventDescription);
     } 
 
-    public static void addDeadline(String userInput){
-        int byIndexStart = userInput.indexOf(" /by");
-        int byIndexEnd = byIndexStart + 4;
-        int startIndex = 9;
-        String deadlineDescription = userInput.substring(startIndex, byIndexStart);
-        String deadlineDate = userInput.substring(byIndexEnd);
+    public static void addDeadline(String[] userInputArray){
+        String[] deadlineDetails = userInputArray[1].split(" /by",2);
+        String deadlineDescription = deadlineDetails[0];
+        String deadlineDate = deadlineDetails[1];
         tasks.add(new Deadline(deadlineDescription, deadlineDate));
-        printLine();
-        System.out.println("\tadded: " + deadlineDescription);
-        printLine(); 
+        printTaskDescription(deadlineDescription);
     }
 
-
-    public static void addTodo(String userInput){
-        int startIndex = 4;
-        String todoDescription = userInput.substring(startIndex);
+    public static void addTodo(String[] userInputArray){
+        String todoDescription = userInputArray[1];
         tasks.add(new Todo(todoDescription));
-        printLine();
-        System.out.println("\tadded: " + todoDescription);
-        printLine(); 
+        printTaskDescription(todoDescription); 
     }
 
     public static void displayTaskList(){
@@ -66,8 +63,7 @@ public class Duke {
         for (int i = 0; i < tasks.size(); i++){
             String taskNumber = Integer.toString(i+1);
             Task currentTask = tasks.get(i);      
-            System.out.println("\t" + taskNumber + "." +currentTask.getStatusIcon() + currentTask.printTask());
-        
+            System.out.println("\t" + taskNumber + "." + currentTask.getStatusIcon() + currentTask.printTask());
         }
         printLine();
     }
@@ -76,7 +72,7 @@ public class Duke {
         Task currentTask = tasks.get(index-1); 
         currentTask.markAsDone();
         printLine();
-        System.out.println("\t"+'"'+currentTask.description+'"'+" is marked as done! Good Job :)" );
+        System.out.println("\t" + '"' + currentTask.description + '"' + " is marked as done! Good Job :)");
         printLine();
     }
 
@@ -84,18 +80,28 @@ public class Duke {
         Task currentTask = tasks.get(index-1); 
         currentTask.markAsUndone();
         printLine();
-        System.out.println("\t"+'"'+currentTask.description+'"'+" is marked as undone. Jiayou!" );
+        System.out.println("\t" + '"' + currentTask.description + '"' + " is marked as undone. Jiayou!");
         printLine();
     }
 
-    public static void main(String[] args) {
+    public static String retrieveCommand(String[] userInputArray){
+        String command = userInputArray[0];
+        return command;
+    }
+
+    public static int retrieveMarkIndex(String[] userInputArray){
+        int markIndex = Integer.parseInt(userInputArray[1]);
+        return markIndex;
+    }
+
+    public static void main(String[] args){
         printWelcome();
         Scanner in = new Scanner(System.in);
         while (true){
             String userInput;
             userInput = in.nextLine();
-            String [] userInputArray = userInput.split(" ");
-            String command = userInputArray[0];
+            String [] userInputArray = userInput.split(" ",2);
+            String command = retrieveCommand(userInputArray);
             switch (command){
             case "bye": 
                 printGoodbye();
@@ -104,20 +110,24 @@ public class Duke {
                 displayTaskList();
                 break;
             case "mark":
-                markTask(Integer.parseInt(userInputArray[1]));
+                markTask(retrieveMarkIndex(userInputArray));
                 break;
             case "unmark":
-                unmarkTask(Integer.parseInt(userInputArray[1]));
+                unmarkTask(retrieveMarkIndex(userInputArray));
                 break;
             case "todo":
-                addTodo(userInput);
+                addTodo(userInputArray);
                 break;
             case "deadline":
-                addDeadline(userInput);
+                addDeadline(userInputArray);
                 break;
             case "event":
-                addEvent(userInput);
+                addEvent(userInputArray);
                 break;
+            default:
+                printInvalidCommand();
+                break;
+                
             }
         }
     }
