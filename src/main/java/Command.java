@@ -22,6 +22,7 @@ public class Command {
         Psyduck.addToDo(description);
         linePrint();
         System.out.println("Psyduck has added the task: " + Psyduck.getNewestTask());
+        System.out.println("You now have: " + Psyduck.getTaskCount() + "tasks");
         linePrint();
     }
 
@@ -36,7 +37,6 @@ public class Command {
         if (fromPos == NOT_FOUND || toPos == NOT_FOUND) {
             linePrint();
             System.out.println("Psyduck needs a start or end date.");
-            System.out.println("Remember to use the <deadline> <description> </from> <date> </to> <date> format for your input");
             linePrint();
             return;
         }
@@ -46,23 +46,32 @@ public class Command {
         Psyduck.addEvent(description, from, to);
         linePrint();
         System.out.println("Psyduck has added the task: " + Psyduck.getNewestTask());
+        System.out.println("You now have: " + Psyduck.getTaskCount() + "tasks");
         linePrint();
     }
 
     public static void markTask(String input, int space) {
-        int taskNum = Integer.parseInt(input.substring(space + 1));
-        Psyduck.getTask(taskNum).markDone();
-        linePrint();
-        System.out.println("You have marked the task: " + Psyduck.getTask(taskNum).getDescription());
-        linePrint();
+        try {
+            int taskNum = Integer.parseInt(input.substring(space + 1));
+            Psyduck.getTask(taskNum).markDone();
+            linePrint();
+            System.out.println("You have marked the task: " + Psyduck.getTask(taskNum).getDescription());
+            linePrint();
+        } catch (NullPointerException e) {
+            System.out.println("Please mark a valid task.");
+        }
     }
 
     public static void unmarkTask(String input, int space) {
-        int taskNum = Integer.parseInt(input.substring(space + 1));
-        Psyduck.getTask(taskNum).unmarkDone();
-        linePrint();
-        System.out.println("You have unmarked the task: " + Psyduck.getTask(taskNum).getDescription());
-        linePrint();
+        try {
+            int taskNum = Integer.parseInt(input.substring(space + 1));
+            Psyduck.getTask(taskNum).unmarkDone();
+            linePrint();
+            System.out.println("You have unmarked the task: " + Psyduck.getTask(taskNum).getDescription());
+            linePrint();
+        } catch (NullPointerException e) {
+            System.out.println("Please unmark a valid task.");
+        }
     }
 
     public static void createDeadline(String input, int space) {
@@ -75,7 +84,6 @@ public class Command {
         if (byPos == NOT_FOUND) {
             linePrint();
             System.out.println("Psyduck needs a deadline.");
-            System.out.println("Remember to use the <deadline> <description> </by> <date> format for your input");
             linePrint();
             return;
         }
@@ -84,6 +92,7 @@ public class Command {
         Psyduck.addDeadline(description, by);
         linePrint();
         System.out.println("Psyduck has added the task: " + Psyduck.getNewestTask());
+        System.out.println("You now have: " + Psyduck.getTaskCount() + "tasks");
         linePrint();
     }
 
