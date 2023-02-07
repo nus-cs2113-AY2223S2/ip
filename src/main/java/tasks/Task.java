@@ -2,16 +2,20 @@ package tasks;
 
 public class Task {
     protected String description;
-    protected int num;
+    protected static int num = 0;
     protected boolean isDone;
 
-    public Task(String description, int num) {
+    public Task(String description) {
         this.description = description;
         this.isDone = false;
-        this.num = num;
+        num++;
     }
 
-    public void setIsDone(boolean isDone){
+    public static int getNum(){
+        return num;
+    }
+
+    public void setIsDone(boolean isDone) {
         this.isDone = isDone;
     }
 
@@ -19,8 +23,8 @@ public class Task {
         return (isDone ? "X" : " "); // mark done task with X
     }
 
-    public String toString(){
-        return "[" + getStatusIcon() + "]"+ description;
+    public String toString() {
+        return "[" + getStatusIcon() + "]" + description;
     }
 
 }
