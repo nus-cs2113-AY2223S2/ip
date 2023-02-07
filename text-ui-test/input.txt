@@ -1,0 +1,10 @@
+todo create new project
+deadline project description and value proposition /by Monday 6pm
+event project meeting /from Sunday 3pm /to 5pm
+list
+mark 1
+mark 3
+list
+unmark 1
+list
+bye
