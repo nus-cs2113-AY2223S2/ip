@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Duke {
     public static void main(String[] args) {
-        String logo = "███████████████████████████████████████████████████████████████████████████████████████████"
+        String LOGO = "███████████████████████████████████████████████████████████████████████████████████████████"
                 + "████\n"
                 + "█████████░░░░░░█░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░██████████░░░░░░█\n"
                 + "█████████░░▄▀░░█░░▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀░░██████████░░▄▀░░█\n"
@@ -16,7 +16,7 @@ public class Duke {
                 + "█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀░░██░░▄▀░░█░░▄▀░░░░░░▄▀░░░░░░▄▀░░█\n"
                 + "█░░░░░░░░░░░░░░█░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░██░░░░░░█░░░░░░██░░░░░░██░░░░░░█\n"
                 + "███████████████████████████████████████████████████████████████████████████████████████████████\n";
-        String symbol = "─────▄██▀▀▀▀▀▀▀▀▀▀▀▀▀██▄─────\n"
+        String SYMBOL = "─────▄██▀▀▀▀▀▀▀▀▀▀▀▀▀██▄─────\n"
                 + "────███───────────────███────\n"
                 + "───███─────────────────███───\n"
                 + "──███───▄▀▀▄─────▄▀▀▄───███──\n"
@@ -44,14 +44,14 @@ public class Duke {
                 + "───▄█████████████████████▄───\n"
                 + "─▄███▀───███████████───▀███▄─\n"
                 + "███▀─────███████████─────▀███\n"
-                + "▌▌▌▌▒▒───███████████───▒▒▐▐▐▐\n"
-                + "─────▒▒──███████████──▒▒─────\n"
-                + "──────▒▒─███████████─▒▒──────\n"
-                + "───────▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒───────\n"
-                + "─────────████░░█████─────────\n"
-                + "────────█████░░██████────────\n"
-                + "──────███████░░███████───────\n"
-                + "─────█████──█░░█──█████──────\n"
+                + "IIII||───███████████───||IIII\n"
+                + "─────||──███████████──||─────\n"
+                + "──────||─███████████─||──────\n"
+                + "───────|||||||||||||||───────\n"
+                + "─────────████||█████─────────\n"
+                + "────────█████||██████────────\n"
+                + "──────███████||███████───────\n"
+                + "─────█████──█||█──█████──────\n"
                 + "─────█████──████──█████──────\n"
                 + "──────████──████──████───────\n"
                 + "──────████──████──████───────\n"
@@ -66,7 +66,9 @@ public class Duke {
                 + "────────────████─────────────\n"
                 + "─────────────██──────────────\n";
 
-        System.out.println(logo);
+
+
+        System.out.println(LOGO);
         Scanner input = new Scanner(System.in);
         System.out.println("Hello! I'm Jigsaw\n");
         System.out.println("What can I do for you?\n");
@@ -88,10 +90,12 @@ public class Duke {
                 break;
             case "mark":
                 tasks[Integer.parseInt(commands[1]) - 1].markAsDone();
+                System.out.println("Nice! I've marked this task as done:");
                 System.out.println(tasks[Integer.parseInt(commands[1]) - 1].printTask());
                 break;
             case "unmark":
                 tasks[Integer.parseInt(commands[1]) - 1].markAsUndone();
+                System.out.println("OK, I've marked this task as not done yet:");
                 System.out.println(tasks[Integer.parseInt(commands[1]) - 1].printTask());
                 break;
             case "todo":
@@ -103,7 +107,7 @@ public class Duke {
                 System.out.println("Now you have " + taskCount + " tasks in the list.");
                 break;
             case "deadline":
-                String[] message = commands[1].split("/by", 2);
+                String[] message = commands[1].split(" /by", 2);
                 Deadline deadline = new Deadline(message[0], message[1]);
                 tasks[taskCount] = deadline;
                 taskCount ++;
@@ -112,8 +116,8 @@ public class Duke {
                 System.out.println("Now you have " + taskCount + " tasks in the list.");
                 break;
             case "event":
-                String[] task = commands[1].split("/from");
-                String[] period = task[1].split("/to");
+                String[] task = commands[1].split(" /from");
+                String[] period = task[1].split(" /to");
                 Event event = new Event(task[0], period[0], period[1]);
                 tasks[taskCount] = event;
                 taskCount ++;
@@ -125,7 +129,7 @@ public class Duke {
                 break;
             }
         }
-        System.out.println(symbol);
+        System.out.println(SYMBOL);
         input.close();
     }
 }

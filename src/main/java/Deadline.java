@@ -9,6 +9,6 @@
 
     @Override
     public String toString() {
-        return "[D]" + "[" + getStatusIcon() + "] "+ this.description + "(by:" + by + ")";
+        return "[D]" + "[" + getStatusIcon() + "] "+ this.description + " (by:" + by + ")";
     }
 }
