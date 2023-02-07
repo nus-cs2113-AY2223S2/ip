@@ -1,4 +1,5 @@
 import java.security.InvalidParameterException;
+import java.util.MissingFormatArgumentException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -104,28 +105,44 @@ public class Duke {
     }
 
     private static void executeTodoCommand(ArrayList<Task> tasks, String description) {
-        addTodoToList(tasks, description);
-        printAcknowledgement(tasks);
+        try {
+            addTodoToList(tasks, description);
+            printAcknowledgement(tasks);
+        }catch (Exception e){
+            System.out.println("Unable to add todo: No tasks given.");
+            System.out.println(LINE);
+        }
     }
 
-    private static void addTodoToList(ArrayList<Task> tasks, String description) {
+    private static void addTodoToList(ArrayList<Task> tasks, String description) throws DukeException {
+        if(description==""){
+            throw new DukeException(new IllegalArgumentException());
+        }
         tasks.add(new Todo(description));
     }
 
     private static void executeDeadlineCommand(ArrayList<Task> tasks, String description) {
-        String[] indexArr = splitDescriptionDeadline(description);
-        String name = indexArr[0].trim();
-        String byDate = indexArr[1].substring(REMOVE_BY).trim();
-        addDeadlineToList(tasks, name, byDate);
-        printAcknowledgement(tasks);
+        try {
+            String[] indexArr = splitDescriptionDeadline(description);
+            String name = indexArr[0].trim();
+            String byDate = indexArr[1].substring(REMOVE_BY).trim();
+            addDeadlineToList(tasks, name, byDate);
+            printAcknowledgement(tasks);
+        }catch(DukeException e){
+            System.out.println("Not enough commands to execute \"deadline\"");
+            System.out.println(LINE);
+        }
     }
 
     private static void addDeadlineToList(ArrayList<Task> tasks, String description, String byDate) {
         tasks.add(new Deadline(description, byDate));
     }
 
-    private static String[] splitDescriptionDeadline(String description) {
+    private static String[] splitDescriptionDeadline(String description) throws DukeException {
         String[] indexArr = description.split("/", 2);
+        if(indexArr.length < 2){
+            throw new DukeException(new IllegalArgumentException());
+        }
         return indexArr;
     }
 
@@ -150,7 +167,7 @@ public class Duke {
             String toDate = indexArr[2].substring(REMOVE_TO).trim();
             addEventToList(tasks, name, fromDate, toDate);
             printAcknowledgement(tasks);
-        }catch (Exception e){
+        }catch (DukeException e){
             System.out.println("Not enough commands to execute \"event\"");
             System.out.println(LINE);
         }
