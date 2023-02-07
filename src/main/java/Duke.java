@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Duke {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         // Text declarations and initial greeting
         final String BARRIER = "____________________________________________________________";
@@ -33,14 +33,18 @@ public class Duke {
 
                 // Lists all tasks using the Task class printAllTask() method
                 case "list": {
-                    System.out.println(BARRIER + "\n");
-                    if(numTasks == 0) {
-                        System.out.println("Ye have no tasks yet, ye lazy buccaneer!");
-                    } else {
+                    try {
+                        if(numTasks == 0) { 
+                            throw new DukeExceptions.noTasksException("Ye have no tasks yet, ye lazy buccaneer!");
+                        }
+                        System.out.println(BARRIER + "\n");
                         Task.printAllTasks();
+                        System.out.println(BARRIER + "\n");
+                    } catch (DukeExceptions.noTasksException e) {
+                        System.out.println(BARRIER + "\n");
+                    } finally {
+                        break;
                     }
-                    System.out.println(BARRIER + "\n");
-                    break;
                 }
 
                 // Marks a task as complete
