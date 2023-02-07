@@ -25,7 +25,10 @@ public class Duke {
 
 
     //add a new to do
-    public static void addTodo(Task[] tasks, int listCount, String name){
+    public static void addTodo(Task[] tasks, int listCount, String name) throws EmptyTaskException{
+        if(name.equals(" ")){
+            throw new EmptyTaskException();
+        }
         tasks[listCount] = new Todo(name);
         printBorder();
         System.out.println("added: " + name + "\n");
@@ -100,50 +103,77 @@ public class Duke {
 
             String[] userInput = entry.split(" ", 2);
 
-            switch (userInput[0]) {
-                case "list":
-                    printList(tasks);
-                    entry = input.nextLine();
-                    break;
+            try {
 
 
-                case "mark":
-                    Integer index = Integer.parseInt(userInput[1]);
-                    markTask(tasks, index - 1);
-                    entry = input.nextLine();
-                    break;
+                switch (userInput[0]) {
+                    case "list":
+                        printList(tasks);
+                        entry = input.nextLine();
+                        break;
 
 
-                case "unmark":
-                    Integer index_um = Integer.parseInt(userInput[1]);
-                    unmarkTask(tasks, index_um - 1);
-                    entry = input.nextLine();
-                    break;
-
-                case "deadline":
-                    String[] info = userInput[1].split("/by", 2);
-                    addDeadline(tasks, listCount, info[0], info[1]);
-                    listCount++;
-                    entry = input.nextLine();
-                    break;
+                    case "mark":
+                        Integer index = Integer.parseInt(userInput[1]);
+                        markTask(tasks, index - 1);
+                        entry = input.nextLine();
+                        break;
 
 
-                case "todo":
-                    addTodo(tasks, listCount, userInput[1]);
-                    listCount++;
-                    entry = input.nextLine();
-                    break;
+                    case "unmark":
+                        Integer index_um = Integer.parseInt(userInput[1]);
+                        unmarkTask(tasks, index_um - 1);
+                        entry = input.nextLine();
+                        break;
 
-                case "event":
-                    String[] info_e = userInput[1].split("/", 3);
+                    case "deadline":
+                        try {
+                            String[] info = userInput[1].split("/by", 2);
+                            addDeadline(tasks, listCount, info[0], info[1]);
+                        } catch (ArrayIndexOutOfBoundsException e) {
+                            System.out.println("OOPS! The description of task cannot be empty");
+                            printBorder();
+                        }
+                        listCount++;
+                        entry = input.nextLine();
+                        break;
 
-                    addEvent(tasks, listCount, info_e[0], info_e[1], info_e[2]);
-                    listCount++;
-                    entry = input.nextLine();
-                    break;
 
+                    case "todo":
+                        try {
+                            addTodo(tasks, listCount, userInput[1]);
+                        } catch (ArrayIndexOutOfBoundsException e) {
+                            System.out.println("OOPS! The description of task cannot be empty");
+                            printBorder();
+                        } catch (EmptyTaskException e) {
+                            e.printErrorMessage();
+                            printBorder();
+                        }
+                        listCount++;
+                        entry = input.nextLine();
+                        break;
+
+                    case "event":
+                        try {
+                            String[] info_e = userInput[1].split("/", 3);
+                            addEvent(tasks, listCount, info_e[0], info_e[1], info_e[2]);
+                        } catch (ArrayIndexOutOfBoundsException e) {
+                            System.out.println("OOPS! The description of task cannot be empty");
+                            printBorder();
+                        }
+                        listCount++;
+                        entry = input.nextLine();
+                        break;
+
+                    default:
+                        throw new InvalidCommandException();
+
+                }
+            } catch(InvalidCommandException e){
+                e.printErrorMessage();
+                printBorder();
+                entry = input.nextLine();
             }
-
         }while(!entry.equals("bye"));
 
 
