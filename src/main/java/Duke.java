@@ -1,3 +1,5 @@
+import exceptions.InvalidSyntaxException;
+import exceptions.UnrecognizedInputException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -43,11 +45,10 @@ public class Duke {
         // Tasks are 0-indexed, user index is 1-indexed
         int index = userIndex - 1;
         if (index < 0 || index >= userTasks.size()) {
-            System.out.println("Oops, not quite sure what task you're referring to...");
             return;
         }
 
-        userTasks.get(index).setTaskState(isDone);
+        userTasks.get(index).setIsDone(isDone);
         if (isDone) {
             System.out.println("Nice! I've marked this task as done");
             System.out.println(userTasks.get(index));
@@ -57,26 +58,20 @@ public class Duke {
         }
     }
 
-    private static void handleAddUserTask(String cmd, String[] splitInput) {
+    private static void handleAddUserTask(String cmd, String[] splitInput) throws InvalidSyntaxException {
         Task task = null;
-
         if (cmd.equals("todo")) {
-            // Syntax: todo <desc>
-            task = new Task(splitInput[1]);
+            task = Task.createFromInput(splitInput);
 
         } else if (cmd.equals("deadline")) {
-            // Syntax: deadline <desc> /by <deadline>
-            String[] params = splitInput[1].split("/by");
-            task = new DeadlineTask(params[0].trim(), params[1].trim());
+            task = DeadlineTask.createFromInput(splitInput);
 
         } else if (cmd.equals("event")) {
-            // Syntax: event <desc> /from <start> /to <end>
-            String[] params = splitInput[1].split("(/from|/to)");
-            task = new EventTask(params[0].trim(), params[1].trim(), params[2].trim());
+            task = EventTask.createFromInput(splitInput);
 
         }
-
         userTasks.add(task);
+
         System.out.println("Got it. I've added this task:");
         System.out.println(userTasks.get(userTasks.size() - 1));
         System.out.println("Now you have " + userTasks.size() + " task(s) in the list.");
@@ -87,7 +82,7 @@ public class Duke {
         return scanner.nextLine();
     }
 
-    private static void handleUserInput(String userInput) {
+    private static void handleUserInput(String userInput) throws UnrecognizedInputException, InvalidSyntaxException {
         String[] splitInput = userInput.split("\\s+", 2);
         // Case-insensitive to user input
         String cmd = splitInput[0].trim().toLowerCase();
@@ -110,7 +105,7 @@ public class Duke {
             handleAddUserTask(cmd, splitInput);
 
         } else {
-            System.out.println("Sorry, I don't recognize that command...");
+            throw new UnrecognizedInputException();
 
         }
     }
@@ -127,7 +122,14 @@ public class Duke {
         while (isRunning) {
             printDivider();
             String userInput = getUserCommand();
-            handleUserInput(userInput);
+
+            try {
+                handleUserInput(userInput);
+            } catch (UnrecognizedInputException ex) {
+                System.out.println("Sorry, I don't recognize that command...");
+            } catch (InvalidSyntaxException ex) {
+                System.out.println("That doesn't look quite right, try: " + ex.getExpectedSyntax());
+            }
         }
 
         printDivider();
