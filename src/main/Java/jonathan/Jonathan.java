@@ -1,3 +1,4 @@
+package jonathan;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
