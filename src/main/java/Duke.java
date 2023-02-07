@@ -18,9 +18,8 @@ public class Duke {
         System.out.println("What can I do for you?");
         Scanner in = new Scanner(System.in);
         String input;
-        ArrayList<String> items = new ArrayList<String>();
-        ArrayList<Boolean> marked = new ArrayList<Boolean>();
-        ArrayList<TaskType> tasks = new ArrayList<TaskType>();
+
+        Task task = new Task();
         
         while((input = in.nextLine()) != "") {
             if (input.equalsIgnoreCase("bye")) {
@@ -29,48 +28,28 @@ public class Duke {
                 return;
             }
             else if (input.equals("list")) {
-                
-                for(int i = 0; i < items.size(); i++) {
-                    System.out.println(i+1 +". " + "[" + tasks.get(i).toString().charAt(0) + "]" + (marked.get(i) ? "[X] " : "[ ] ")   + items.get(i));
-                    
-                }
+                task.getItems();
             }
             else if (input.startsWith("mark")) {
-                String[] strArray = input.split(" ");
-                int num = Integer.parseInt(strArray[1]);
-                marked.set(num-1, true);
-                System.out.println("Nice! I've marked this task as done:\n" + "[X] " + items.get(num-1));
+                task.setDone(input);
             }
             else if (input.startsWith("unmark")) {
-                String[] strArray = input.split(" ");
-                int num = Integer.parseInt(strArray[1]);
-                marked.set(num-1, false);
-                System.out.println("Ok, I've marked this task as not done yet:\n" + "[ ] " + items.get(num-1));
+                task.setNotDone(input);
             }
             else if (input.startsWith("todo")) {
-                items.add(input.replace("todo ", ""));
-                marked.add(false);
-                tasks.add(TaskType.TODO);
-                System.out.println("Got it. I've added this task: \n" + "   [T][ ] " + input + "\n" + "Now you have " + items.size() + " tasks in the list.");
+                
+                new Todo(input);
             }
             else if (input.startsWith("deadline")) {
-                String[] strArray = input.split("/");
-                String temp = strArray[0].replace("deadline ", "") + ("(" +  strArray[1].replace("by", "by:") + ")");
-                items.add(temp);
-                marked.add(false);
-                tasks.add(TaskType.DEADLINE);
-                System.out.println("Got it. I've added this task: \n" + "   [D][ ] " + temp + "\n" + "Now you have " + items.size() + " tasks in the list.");
+               
+                new Deadline(input);
             }
             else if (input.startsWith("event")) {
-                String[] strArray = input.split("/");
-                String temp = strArray[0].replace("event ", "") + ("(" +  strArray[1].replace("from", "from:") + strArray[2].replace("to", "to:") + ")");
-                items.add(temp);
-                marked.add(false);
-                tasks.add(TaskType.EVENT);
-                System.out.println("Got it. I've added this task: \n" + "   [E][ ] " + temp + "\n" + "Now you have " + items.size() + " tasks in the list.");
+                
+                new Event(input);
             }
             else {
-                System.out.println(input);
+                System.out.println("invalid input");
             }
         }
         
