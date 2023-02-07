@@ -28,6 +28,25 @@ public class Greeting {
         printSeperator();
     }
 
+    public static void printEmptyTask() {
+        printSeperator();
+        System.out.println("\tTask cannot be empty!");
+        printSeperator();
+    }
+
+    public static void printEmptyDate() {
+        printSeperator();
+        System.out.println("\tDate cannot be empty!");
+        printSeperator();
+    }
+
+    public static void printEmptyCommand() {
+        printSeperator();
+        System.out.println("\tPlease use the relevant commands for this task type!");
+        printSeperator();
+    }
+
+
     public static void printGoodbye() {
         printSeperator();
         System.out.println(

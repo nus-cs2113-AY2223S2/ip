@@ -12,7 +12,7 @@ public class Task {
     }
 
     public String printTask() {
-        return ("[" + this.getTaskIcon() + "] " + "[" + this.getStatusIcon() + "] " + this.getTask());
+        return ("[" + this.getTaskIcon() + "] " + "[" + this.getStatusIcon() + "] " + this.getTask() + " ");
     }
 
     public String getStatusIcon() {
