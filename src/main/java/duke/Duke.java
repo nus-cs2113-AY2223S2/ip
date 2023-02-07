@@ -1,3 +1,5 @@
+package duke;
+
 import java.util.Scanner;
 
 public class Duke {
@@ -14,7 +16,7 @@ public class Duke {
 
     public static void printGreeting() {
         System.out.println("\t" + LINE);
-        System.out.println("\t Hello I'm Duke, your personal chatbot.");
+        System.out.println("\t Hello I'm duke.Duke, your personal chatbot.");
         System.out.println("\t Is there anything I can do for you");
         System.out.println("\t" + LINE);
     }
