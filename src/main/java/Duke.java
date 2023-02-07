@@ -56,7 +56,9 @@ public class Duke {
                     }
                     System.out.println(line);
                 } else if (splitIntoArgs[0].equals("mark")) {
-                    
+                    if (splitIntoArgs.length < 2) {
+                        throw new InsufficientParametersException();
+                    }
                     int toMark = Integer.parseInt(splitIntoArgs[1]) - 1;
                     tasks[toMark].markDone();
                     System.out.println(line);
@@ -64,6 +66,9 @@ public class Duke {
                     System.out.println(tasks[toMark]);
                     System.out.println(line);
                 } else if (splitIntoArgs[0].equals("unmark")) {
+                    if (splitIntoArgs.length < 2) {
+                        throw new InsufficientParametersException();
+                    }
                     int toUnmark = Integer.parseInt(splitIntoArgs[1]) - 1;
                     tasks[toUnmark].unMarkDone();
                     System.out.println(line);
@@ -71,6 +76,9 @@ public class Duke {
                     System.out.println(tasks[toUnmark]);
                     System.out.println(line);
                 } else if (splitIntoArgs[0].equals("todo")) {
+                    if (splitIntoArgs.length < 2) {
+                        throw new InsufficientParametersException();
+                    }
                     String description = splitIntoArgs[1];
                     Todo todo = new Todo(description);
                     tasks[numTasks] = todo;
@@ -78,14 +86,26 @@ public class Duke {
                     printAddTaskConfirmation(todo, numTasks);
                 } else if (splitIntoArgs[0].equals("deadline")) {
                     //Uses regex to split into arguments for description and by field
+                    if (splitIntoArgs.length < 2) {
+                        throw new InsufficientParametersException();
+                    }
                     String[] argsList = splitIntoArgs[1].split(" /by ");
+                    if (argsList.length < 2) {
+                        throw new InsufficientParametersException();
+                    }
                     Deadline deadline = new Deadline(argsList[0], argsList[1]);
                     tasks[numTasks] = deadline;
                     numTasks++;
                     printAddTaskConfirmation(deadline, numTasks);
                 } else if (splitIntoArgs[0].equals("event")) {
                     //Uses regex to split into arguments for description, from field, and to field.
+                    if (splitIntoArgs.length < 2) {
+                        throw new InsufficientParametersException();
+                    }
                     String[] argsList = splitIntoArgs[1].split(" \\/(from|to) ");
+                    if (argsList.length < 3) {
+                        throw new InsufficientParametersException();
+                    }
                     Event event = new Event(argsList[0], argsList[1], argsList[2]);
                     tasks[numTasks] = event;
                     numTasks++;
@@ -95,12 +115,19 @@ public class Duke {
                     throw new UnknownCommandException();
                 }
              
-                in.close();    
+                
             } catch (UnknownCommandException e) {
                 System.out.println(line);
                 System.out.println("Command not found. Please enter a valid command!");
                 System.out.println(line);
-            }
+            } catch (InsufficientParametersException e) {
+                System.out.println(line);
+                System.out.println("You have not provided enough parameters for this command. Please recheck your syntax!");
+                System.out.println(line);
+            } 
         }
+
+        in.close();    
+
     }
 }
