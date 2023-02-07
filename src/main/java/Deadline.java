@@ -1,5 +1,3 @@
-package duke.task;
-
 public class Deadline extends Task {
 
     /** The end date of the task inputted by the user. */

@@ -1,5 +1,3 @@
-package duke.task;
-
 public class Event extends Task {
     /** The starting date of the "event" task. */
     protected String from;
@@ -8,7 +6,7 @@ public class Event extends Task {
     protected String to;
 
     /**
-     * Creates an duke.task.Event and stores information about the "event" task.
+     * Creates an Event and stores information about the "event" task.
      *
      * @param description The name/description of the "event" task.
      * @param from The start date of the "event" task.
