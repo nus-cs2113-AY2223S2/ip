@@ -5,7 +5,12 @@ public class Duke {
         System.out.println("____________________________________________________________");
     }
 
-    public static void printHelloMessage(String logo) {
+    public static void printHelloMessage() {
+        String logo = " ____        _        \n"
+                + "|  _ \\ _   _| | _____ \n"
+                + "| | | | | | | |/ / _ \\\n"
+                + "| |_| | |_| |   <  __/\n"
+                + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
         printHorizontalLine();
         System.out.println("Hello! I'm Duke");
@@ -23,14 +28,14 @@ public class Duke {
             Task.listTasks(listOfTasks);
             break;
         case "mark":
-            Task markTask = listOfTasks.get(Integer.parseInt(inputs[1])-1);
-            markTask.setStatus(true);
-            Task.printUpdateStatusMessage(markTask.getStatus(), markTask);
+            Task taskToBeMarked = listOfTasks.get(Integer.parseInt(inputs[1])-1);
+            taskToBeMarked.setStatus(true);
+            Task.printUpdateStatusMessage(taskToBeMarked.getStatus(), taskToBeMarked);
             break;
         case "unmark":
-            Task unmarkTask = listOfTasks.get(Integer.parseInt(inputs[1])-1);
-            unmarkTask.setStatus(false);
-            Task.printUpdateStatusMessage(unmarkTask.getStatus(), unmarkTask);
+            Task taskToBeUnmarked = listOfTasks.get(Integer.parseInt(inputs[1])-1);
+            taskToBeUnmarked.setStatus(false);
+            Task.printUpdateStatusMessage(taskToBeUnmarked.getStatus(), taskToBeUnmarked);
             break;
         default:
             try {
@@ -43,12 +48,7 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        printHelloMessage(logo);
+        printHelloMessage();
         String input;
         ArrayList<Task> listOfTasks = new ArrayList<>();
         do {

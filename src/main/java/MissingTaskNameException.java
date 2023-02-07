@@ -1,11 +1,11 @@
 public class MissingTaskNameException extends DukeException{
 
-    public MissingTaskNameException (String errorMsg) {
-        super(errorMsg);
+    public MissingTaskNameException (String errorMessage) {
+        super(errorMessage);
     }
 
     @Override
     public String toString() {
-        return errorMsg;
+        return errorMessage;
     }
 }

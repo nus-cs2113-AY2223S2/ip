@@ -1,6 +1,8 @@
-public class Event extends Task{
+public class Event extends Task {
     protected String start;
+
     protected String end;
+
     public Event (String name, boolean isCompleted, String start, String end) {
         super(name, isCompleted);
         this.start = start;

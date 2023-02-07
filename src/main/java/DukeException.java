@@ -1,7 +1,7 @@
 public class DukeException extends Exception {
-    protected String errorMsg;
+    protected String errorMessage;
 
-    public DukeException (String errorMsg) {
-        this.errorMsg = errorMsg;
+    public DukeException (String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 }
