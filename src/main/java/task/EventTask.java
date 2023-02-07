@@ -1,10 +1,10 @@
 package task;
 
 import exceptions.InvalidSyntaxException;
+import ui.Command.Syntax;
 
 public class EventTask extends Task {
 
-    private static final String SYNTAX = "event <description> /from <start> /to <end>";
 
     protected String start;
     protected String end;
@@ -21,7 +21,7 @@ public class EventTask extends Task {
             String[] params = splitInput[1].split("(/from|/to)");
             return new EventTask(params[0].trim(), params[1].trim(), params[2].trim());
         } catch (IndexOutOfBoundsException ex) {
-            throw new InvalidSyntaxException(SYNTAX);
+            throw new InvalidSyntaxException(Syntax.EVENT);
         }
     }
 

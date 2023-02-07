@@ -1,10 +1,10 @@
 package task;
 
 import exceptions.InvalidSyntaxException;
+import ui.Command.Syntax;
 
 public class Task {
 
-    private static final String SYNTAX = "todo <description>";
 
     protected String description;
     protected boolean isDone;
@@ -18,7 +18,7 @@ public class Task {
         try {
             return new Task(splitInput[1]);
         } catch (IndexOutOfBoundsException ex) {
-            throw new InvalidSyntaxException(SYNTAX);
+            throw new InvalidSyntaxException(Syntax.TODO);
         }
     }
 

@@ -1,25 +1,15 @@
 import exceptions.InvalidSyntaxException;
 import exceptions.UnrecognizedInputException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
 import task.DeadlineTask;
 import task.EventTask;
 import task.Task;
+import ui.Command;
+import ui.Command.Syntax;
 
 public class Duke {
-
-    /**
-     * User commands
-     */
-    private static final String COMMAND_EXIT = "bye";
-    private static final String COMMAND_LIST = "list";
-    private static final String COMMAND_MARK = "mark";
-    private static final String COMMAND_UNMARK = "unmark";
-    private static final Set<String> COMMANDS_TASK = new HashSet<>(Arrays.asList("todo", "deadline", "event"));
 
     private static final List<Task> userTasks = new ArrayList<>();
 
@@ -61,13 +51,13 @@ public class Duke {
 
     private static void handleAddUserTask(String cmd, String[] splitInput) throws InvalidSyntaxException {
         Task task = null;
-        if (cmd.equals("todo")) {
+        if (cmd.equals(Command.TODO.label)) {
             task = Task.createFromInput(splitInput);
 
-        } else if (cmd.equals("deadline")) {
+        } else if (cmd.equals(Command.DEADLINE.label)) {
             task = DeadlineTask.createFromInput(splitInput);
 
-        } else if (cmd.equals("event")) {
+        } else if (cmd.equals(Command.EVENT.label)) {
             task = EventTask.createFromInput(splitInput);
 
         }
@@ -88,27 +78,36 @@ public class Duke {
         // Case-insensitive to user input
         String cmd = splitInput[0].trim().toLowerCase();
 
-        if (cmd.equals(COMMAND_EXIT)) {
+        if (cmd.equals(Command.EXIT.label)) {
             isRunning = false;
 
-        } else if (cmd.equals(COMMAND_LIST)) {
+        } else if (cmd.equals(Command.LIST.label)) {
             printUserTasks();
 
-        } else if (cmd.equals(COMMAND_MARK)) {
-            int index = Integer.parseInt(splitInput[1]);
-            setUserTaskState(index, true);
+        } else if (cmd.equals(Command.MARK.label)) {
+            try {
+                int index = Integer.parseInt(splitInput[1]);
+                setUserTaskState(index, true);
+            } catch (NumberFormatException | IndexOutOfBoundsException ex) {
+                throw new InvalidSyntaxException(Syntax.MARK);
+            }
 
-        } else if (cmd.equals(COMMAND_UNMARK)) {
-            int index = Integer.parseInt(splitInput[1]);
-            setUserTaskState(index, false);
+        } else if (cmd.equals(Command.UNMARK.label)) {
+            try {
+                int index = Integer.parseInt(splitInput[1]);
+                setUserTaskState(index, false);
+            } catch (NumberFormatException | IndexOutOfBoundsException ex) {
+                throw new InvalidSyntaxException(Syntax.UNMARK);
+            }
 
-        } else if (COMMANDS_TASK.contains(cmd)) {
+        } else if (Command.TASKS.contains(cmd)) {
             handleAddUserTask(cmd, splitInput);
 
         } else {
             throw new UnrecognizedInputException();
 
         }
+
     }
 
     public static void main(String[] args) {
