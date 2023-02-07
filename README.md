@@ -1,6 +1,6 @@
 # Bunny
 
-It does something!
+It does something! It can also do nothing!
 
 ## Setting up in Intellij
 
