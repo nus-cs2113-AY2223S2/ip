@@ -23,7 +23,8 @@ public class Task {
 
     @Override
     public String toString() {
-        return "[" + ((this.isDone) ? "X] " : " ] ") + ((description.indexOf("/") == -1) ? description : (description.substring(0, description.indexOf("/"))));
+        String descriptionNoSlash = (description.indexOf("/") == -1) ? description : (description.substring(0, description.indexOf("/")));
+        return "[" + ((this.isDone) ? "X] " : " ] ") + descriptionNoSlash;
     }
 
     public String getDescription() {
