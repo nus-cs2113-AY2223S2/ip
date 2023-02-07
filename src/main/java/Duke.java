@@ -48,6 +48,9 @@ public class Duke {
                 case EXIT:
                     in.close();
                     exitProgram();
+                    break;
+                default:
+                    throw new DukeException(Message.ERROR_INVALID_COMMAND.toString());
                 }
             } catch (Exception err) {
                 System.out.println(err.getMessage());
