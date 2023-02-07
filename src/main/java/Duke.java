@@ -32,8 +32,8 @@ public class Duke {
 
         while (true) {
             String userInput = "";
-            if (in.hasNextLine()){
-                 userInput = in.nextLine().trim();
+            if (in.hasNextLine()) {
+                userInput = in.nextLine().trim();
             } else {
                 break;
             }
