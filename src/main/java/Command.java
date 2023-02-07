@@ -11,6 +11,7 @@ public class Command {
         }
         System.out.println();
     }
+
     public static void createToDo(String input, int space) {
         if (space == NOT_FOUND) {
             linePrint();
@@ -93,6 +94,7 @@ public class Command {
         System.out.println("Please enter a valid command.");
         linePrint();
     }
+
     public static void processCommands() {
         String input = in.nextLine();
         input = input.trim();

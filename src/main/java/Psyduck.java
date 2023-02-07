@@ -53,7 +53,6 @@ public class Psyduck {
     }
 
 
-
     public static void sayBye() {
         System.out.println("Bye see you soon! (⌒ー⌒)ﾉ");
         Command.linePrint();
