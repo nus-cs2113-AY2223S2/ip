@@ -1,30 +1,19 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Rica {
-    private static final String LINE = "____________________________________________________________";
+    private static final String BYE_PHRASE = " Leaving so soon? Come back anytime, I'll be happy to help!";
+    private static final String BYE_TRIGGER = "bye";
     private static final String DEADLINE_TRIGGER = "deadline";
     private static final String EVENT_TRIGGER = "event";
+    private static final String LINE = "____________________________________________________________";
     private static final String LIST_TRIGGER = "list";
     private static final String MARK_TRIGGER = "mark";
     private static final String TODO_TRIGGER = "todo";
     private static final String UNMARK_TRIGGER = "unmark";
-    private static final String BYE_TRIGGER = "bye";
-    private static final String BYE_PHRASE = " Leaving so soon? Come back anytime, I'll be happy to help!";
     private static TaskManager taskManager;
 
     private static TaskManager getTaskManager() {
         return Rica.taskManager;
-    }
-
-    public static void main(String[] args) {
-        printlnWithIndent(Rica.LINE);
-        printlnWithIndent(" Hello! I'm R.I.C.A.");
-        printlnWithIndent((" That's Really-Intelligent-Chat-Assistant for you!"));
-        printlnWithIndent(" How may I be of assistance?");
-        printlnWithIndent(Rica.LINE);
-        taskManager = new TaskManager();
-        Rica.runCommands();
     }
 
     private static void printlnWithIndent(String line) {
@@ -66,4 +55,15 @@ public class Rica {
             printlnWithIndent(Rica.LINE);
         } while (!command.equals(Rica.BYE_TRIGGER));
     }
+
+    public static void main(String[] args) {
+        printlnWithIndent(Rica.LINE);
+        printlnWithIndent(" Hello! I'm R.I.C.A.");
+        printlnWithIndent((" That's Really-Intelligent-Chat-Assistant for you!"));
+        printlnWithIndent(" How may I be of assistance?");
+        printlnWithIndent(Rica.LINE);
+        taskManager = new TaskManager();
+        Rica.runCommands();
+    }
+
 }

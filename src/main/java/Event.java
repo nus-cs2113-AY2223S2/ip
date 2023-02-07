@@ -1,12 +1,26 @@
 public class Event extends Todo {
-    private final String startTime;
-    private final String endTime;
     private static final String COMMAND = "event";
     private static final String TYPE = "E";
+    private final String endTime;
+    private final String startTime;
+
     public Event(String description, String startTime, String endTime) {
         super(description);
         this.startTime = startTime;
         this.endTime = endTime;
+    }
+
+    private String getEndTime() {
+        return this.endTime;
+    }
+
+    private String getStartTime() {
+        return this.startTime;
+    }
+
+    @Override
+    protected String getType() {
+        return Event.TYPE;
     }
 
     public static Event create(String command) {
@@ -59,19 +73,6 @@ public class Event extends Todo {
         }
         String endTime = endTimeBuilder.toString();
         return new Event(description, startTime, endTime);
-    }
-
-    private String getStartTime() {
-        return this.startTime;
-    }
-
-    private String getEndTime() {
-        return this.endTime;
-    }
-
-    @Override
-    protected String getType() {
-        return Event.TYPE;
     }
 
     @Override

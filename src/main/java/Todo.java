@@ -2,12 +2,21 @@ public class Todo extends Task {
     private static final String TYPE = "T";
     protected final boolean isDone;
 
-    public Todo(String description) {
-        this(description, false);
-    }
     private Todo(String description, boolean isDone) {
         super(description);
         this.isDone = isDone;
+    }
+
+    public Todo(String description) {
+        this(description, false);
+    }
+
+    protected boolean getIsDone() {
+        return this.isDone;
+    }
+
+    protected String getType() {
+        return Todo.TYPE;
     }
 
     public static Todo create(String command) {
@@ -26,14 +35,6 @@ public class Todo extends Task {
         return new Todo(description);
     }
 
-    protected boolean getIsDone() {
-        return this.isDone;
-    }
-
-    protected String getType() {
-        return Todo.TYPE;
-    }
-
     public Todo setDone(boolean isDone) {
         return new Todo(this.getDescription(), isDone);
     }
@@ -43,4 +44,5 @@ public class Todo extends Task {
         String boxContent = this.getIsDone() ? "X" : " ";
         return String.format("[%s][%s] %s", this.getType(), boxContent, super.toString());
     }
+
 }

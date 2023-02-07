@@ -1,6 +1,6 @@
 public class Deadline extends Todo {
-    private static final String TYPE = "D";
     private static final String COMMAND = "deadline";
+    private static final String TYPE = "D";
     protected final String deadline;
 
     public Deadline(String description, String deadline) {
@@ -43,17 +43,18 @@ public class Deadline extends Todo {
         return new Deadline(description, deadline);
     }
 
+    public String getDeadline() {
+        return this.deadline;
+    }
+
     @Override
     protected String getType() {
         return Deadline.TYPE;
-    }
-
-    public String getDeadline() {
-        return this.deadline;
     }
 
     @Override
     public String toString() {
         return String.format("%s (by: %s)", super.toString(), this.getDeadline());
     }
+
 }
