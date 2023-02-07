@@ -80,10 +80,10 @@ public class Chronos {
 
             default:
                 System.out.println("Sorry, I do not understand the input at this point in time.");
+            }
         }
-    }
 
-}
+    }
 
     private static void timerModule() {
         Scanner timerCommand = new Scanner(System.in);
