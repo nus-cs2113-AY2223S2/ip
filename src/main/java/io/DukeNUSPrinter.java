@@ -1,19 +1,26 @@
+package io;
+
+import tasks.Task;
+
 /**
  * A tool to print messages to the terminal. Used by Duke chatbot.
  */
 public class DukeNUSPrinter {
     public static final String LOGO = ""
-        + "     ____        _          __    _ _   _ ______\n"
-        + "    |  _ \\ _   _| | _____  |   \\ | | | | | _____|\n"
-        + "    | | | | | | | |/ / _ \\ | |\\ \\| | | | |_____ |\n"
-        + "    | |_| | |_| |   <  __/ | | \\ \\ | |_| |____| | \n"
-        + "    |____/ \\__,_|_|\\_\\___| |_|  \\__|_____|______|\n";
+            + "     ____        _          __    _ _   _ ______\n"
+            + "    |  _ \\ _   _| | _____  |   \\ | | | | | _____|\n"
+            + "    | | | | | | | |/ / _ \\ | |\\ \\| | | | |_____ |\n"
+            + "    | |_| | |_| |   <  __/ | | \\ \\ | |_| |____| | \n"
+            + "    |____/ \\__,_|_|\\_\\___| |_|  \\__|_____|______|\n";
     public static final String INDENT = "    ";
+
     public static void printHorizontalLine() {
-        System.out.println("    ____________________________________________________________");
+        System.out.println(INDENT + "____________________________________________________________");
     }
 
-    /** Prints a DukeNUS message bound by horizontal lines above and below to the console. Only single lines should be used.
+    /**
+     * Prints a DukeNUS message bound by horizontal lines above and below to the console. Only single lines should be used.
+     *
      * @param message The single line message to be bound by horizontal lines
      */
     public static void printMessage(String message) {
@@ -22,9 +29,11 @@ public class DukeNUSPrinter {
         printHorizontalLine();
     }
 
-    /** Prints a message to the console whenever a task is added to the tasks array.
+    /**
+     * Prints a message to the console whenever a task is added to the tasks array.
+     *
      * @param taskDisplayDescription The formatted description of the task with indications of its isDone and Task object type.
-     * @param taskCount The total number of tasks in the tasks array that is not null.
+     * @param taskCount              The total number of tasks in the tasks array that is not null.
      */
     public static void printAddedTask(String taskDisplayDescription, int taskCount) {
         printHorizontalLine();
@@ -34,7 +43,9 @@ public class DukeNUSPrinter {
         printHorizontalLine();
     }
 
-    /** Prints a message to the console whenever a task is marked.
+    /**
+     * Prints a message to the console whenever a task is marked.
+     *
      * @param taskDisplayDescription The formatted description of the task with indications of its isDone and Task object type.
      */
     public static void printMarkedTask(String taskDisplayDescription) {
@@ -44,7 +55,9 @@ public class DukeNUSPrinter {
         printHorizontalLine();
     }
 
-    /** Prints a message to the console whenever a task is unmarked.
+    /**
+     * Prints a message to the console whenever a task is unmarked.
+     *
      * @param taskDisplayDescription The formatted description of the task with indications of its isDone and Task object type
      */
     public static void printUnmarkedTask(String taskDisplayDescription) {
@@ -54,8 +67,10 @@ public class DukeNUSPrinter {
         printHorizontalLine();
     }
 
-    /** Prints all tasks in the tasks array that is not null.
-     * @param tasks The array of tasks. The array used in practice is of fixed size 100.
+    /**
+     * Prints all tasks in the tasks array that is not null.
+     *
+     * @param tasks     The array of tasks. The array used in practice is of fixed size 100.
      * @param taskCount The number of non-null tasks already pushed into the array.
      */
     public static void printTasks(Task[] tasks, int taskCount) {
