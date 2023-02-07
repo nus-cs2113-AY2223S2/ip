@@ -22,7 +22,12 @@ public class Command {
         Psyduck.addToDo(description);
         linePrint();
         System.out.println("Psyduck has added the task: " + Psyduck.getNewestTask());
-        System.out.println("You now have: " + Psyduck.getTaskCount() + " tasks");
+        System.out.print("You now have: " + Psyduck.getTaskCount());
+        if (Psyduck.getTaskCount() == 1) {
+            System.out.println(" task");
+        } else {
+            System.out.println(" tasks");
+        }
         linePrint();
     }
 
@@ -46,7 +51,12 @@ public class Command {
         Psyduck.addEvent(description, from, to);
         linePrint();
         System.out.println("Psyduck has added the task: " + Psyduck.getNewestTask());
-        System.out.println("You now have: " + Psyduck.getTaskCount() + " tasks");
+        System.out.print("You now have: " + Psyduck.getTaskCount());
+        if (Psyduck.getTaskCount() == 1) {
+            System.out.println(" task");
+        } else {
+            System.out.println(" tasks");
+        }
         linePrint();
     }
 
@@ -104,7 +114,12 @@ public class Command {
         Psyduck.addDeadline(description, by);
         linePrint();
         System.out.println("Psyduck has added the task: " + Psyduck.getNewestTask());
-        System.out.println("You now have: " + Psyduck.getTaskCount() + " tasks");
+        System.out.print("You now have: " + Psyduck.getTaskCount());
+        if (Psyduck.getTaskCount() == 1) {
+            System.out.println(" task");
+        } else {
+            System.out.println(" tasks");
+        }
         linePrint();
     }
 
