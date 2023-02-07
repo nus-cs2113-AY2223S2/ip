@@ -1,3 +1,11 @@
+package duke.main;
+
+import duke.exceptions.DukeException;
+import duke.task.Deadline;
+import duke.task.Event;
+import duke.task.Task;
+import duke.task.Todo;
+
 import java.util.Scanner;
 
 /**
@@ -112,7 +120,7 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
         System.out.println("____________________________________________________________");
-        System.out.println("Hello! I'm Duke");
+        System.out.println("Hello! I'm duke.main.Duke");
         System.out.println("What can I do for you?");
         System.out.println("____________________________________________________________\n");
     }
