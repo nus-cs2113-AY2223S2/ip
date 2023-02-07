@@ -10,11 +10,11 @@ public class Task {
         this.isDone = false;
     }
 
-    public void setDone() {
+    public void markDone() {
         isDone = true;
     }
 
-    public void setNotDone() {
+    public void markNotDone() {
         isDone = false;
     }
 
