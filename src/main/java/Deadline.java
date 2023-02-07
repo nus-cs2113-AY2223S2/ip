@@ -4,10 +4,12 @@ public class Deadline extends Task {
         super(task);
         this.deadline = deadline;
     }
+
     public String getDeadline() {
-        String[] d = deadline.split("\\s+");
-        return "(" + d[0] + ": " + d[1] + ")";
+        String[] dates = deadline.split("\\s+", 2);
+        return "(" + dates[0] + ": " + dates[1] + ")";
     }
+
     @Override
     public String toString() {
         return "[D]" + super.toString() + this.getDeadline();

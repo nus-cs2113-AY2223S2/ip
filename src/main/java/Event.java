@@ -6,11 +6,13 @@ public class Event extends Task {
         this.from = from;
         this.to = to;
     }
+
     public String formatDate(String from, String to) {
-        String f = from.split("\\s+", 2)[1];
-        String t = to.substring(to.lastIndexOf("to") + 2);
-        return "(" + "from: " + f + "to " + t + ")";
+        String dateFrom = from.split("\\s+", 2)[1];
+        String dateTo = to.substring(to.lastIndexOf("to") + 2);
+        return "(" + "from: " + dateFrom + "to " + dateTo + ")";
     }
+
     @Override
     public String toString() {
         return "[E]" + super.toString() + formatDate(this.from, this.to);
