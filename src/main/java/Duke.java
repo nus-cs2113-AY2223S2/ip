@@ -25,30 +25,20 @@ public class Duke {
                 isExit = true;
                 break;
             case "mark":
-                taskIndex = Integer.parseInt(userCommand.split(" ")[1])-1;
-                MainFunctions.markTask(taskIndex, storedUserTasks);
+                MainFunctions.markTask(userCommand, storedUserTasks);
                 break;
             case "unmark":
-                taskIndex = Integer.parseInt(userCommand.split(" ")[1])-1;
-                MainFunctions.unmarkTask(taskIndex, storedUserTasks);
+                MainFunctions.unmarkTask(userCommand, storedUserTasks);
                 break;
             case "todo":
-                description = userCommand.substring(5);
-                MainFunctions.createTodo(description, storedUserTasks);
+                MainFunctions.createTodo(userCommand, storedUserTasks);
                 break;
             case "deadline":
-                int indexOfBy = userCommand.indexOf("/by");
-                description = userCommand.substring(9,indexOfBy-1);
-                by = userCommand.substring(indexOfBy+4);
-                MainFunctions.createDeadline(description, by, storedUserTasks);
+                MainFunctions.createDeadline(userCommand, storedUserTasks);
                 break;
             case "event":
-                int indexOfFrom = userCommand.indexOf("/from");
-                int indexOfTo = userCommand.indexOf("/to");
-                description = userCommand.substring(6,indexOfFrom-1);
-                from = userCommand.substring(indexOfFrom+6,indexOfTo-1);
-                to = userCommand.substring(indexOfTo+4);
-                MainFunctions.createEvent(description, from, to, storedUserTasks);
+
+                MainFunctions.createEvent(userCommand, storedUserTasks);
                 break;
             default:
                 MainFunctions.invalidInput();

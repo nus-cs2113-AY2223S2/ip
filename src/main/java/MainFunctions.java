@@ -37,7 +37,8 @@ public class MainFunctions {
         System.out.println(DIVIDER);
     }
 
-    public static void markTask(int taskIndex, Task[] storedUserTasks) {
+    public static void markTask(String userCommand, Task[] storedUserTasks) {
+        int taskIndex = Integer.parseInt(userCommand.split(" ")[1])-1;
         System.out.println(DIVIDER);
         System.out.println(SPACER+"Nice! I've marked this task as done:");
         storedUserTasks[taskIndex].isDone = true;
@@ -45,7 +46,8 @@ public class MainFunctions {
         System.out.println(DIVIDER);
     }
 
-    public static void unmarkTask(int taskIndex, Task[] storedUserTasks) {
+    public static void unmarkTask(String userCommand, Task[] storedUserTasks) {
+        int taskIndex = Integer.parseInt(userCommand.split(" ")[1])-1;
         System.out.println(DIVIDER);
         System.out.println(SPACER+"OK, I've marked this task as not done yet:");
         storedUserTasks[taskIndex].isDone = false;
@@ -53,7 +55,8 @@ public class MainFunctions {
         System.out.println(DIVIDER);
     }
 
-    public static void createTodo(String description, Task[] storedUserTasks) {
+    public static void createTodo(String userCommand, Task[] storedUserTasks) {
+        String description = userCommand.substring(5);
         storedUserTasks[Duke.userTextCount] = new Todo(description);
         System.out.println(DIVIDER);
         System.out.println(SPACER+"Got it. I've added this task:");
@@ -63,7 +66,10 @@ public class MainFunctions {
         System.out.println(DIVIDER);
     }
 
-    public static void createDeadline(String description, String by, Task[] storedUserTasks) {
+    public static void createDeadline(String userCommand, Task[] storedUserTasks) {
+        int indexOfBy = userCommand.indexOf("/by");
+        String description = userCommand.substring( 9, indexOfBy-1);
+        String by = userCommand.substring(indexOfBy+4);
         storedUserTasks[Duke.userTextCount] = new Deadline(description,by);
         System.out.println(DIVIDER);
         System.out.println(SPACER+"Got it. I've added this task:");
@@ -73,7 +79,12 @@ public class MainFunctions {
         System.out.println(DIVIDER);
     }
 
-    public static void createEvent(String description, String from, String to, Task[] storedUserTasks) {
+    public static void createEvent(String userCommand, Task[] storedUserTasks) {
+        int indexOfFrom = userCommand.indexOf("/from");
+        int indexOfTo = userCommand.indexOf("/to");
+        String description = userCommand.substring(6,indexOfFrom-1);
+        String from = userCommand.substring(indexOfFrom+6,indexOfTo-1);
+        String to = userCommand.substring(indexOfTo+4);
         storedUserTasks[Duke.userTextCount] = new Event(description,from,to);
         System.out.println(DIVIDER);
         System.out.println(SPACER+"Got it. I've added this task:");
