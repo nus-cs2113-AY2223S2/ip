@@ -22,7 +22,7 @@ public class Command {
         Psyduck.addToDo(description);
         linePrint();
         System.out.println("Psyduck has added the task: " + Psyduck.getNewestTask());
-        System.out.println("You now have: " + Psyduck.getTaskCount() + "tasks");
+        System.out.println("You now have: " + Psyduck.getTaskCount() + " tasks");
         linePrint();
     }
 
@@ -46,7 +46,7 @@ public class Command {
         Psyduck.addEvent(description, from, to);
         linePrint();
         System.out.println("Psyduck has added the task: " + Psyduck.getNewestTask());
-        System.out.println("You now have: " + Psyduck.getTaskCount() + "tasks");
+        System.out.println("You now have: " + Psyduck.getTaskCount() + " tasks");
         linePrint();
     }
 
@@ -58,7 +58,13 @@ public class Command {
             System.out.println("You have marked the task: " + Psyduck.getTask(taskNum).getDescription());
             linePrint();
         } catch (NullPointerException e) {
+            linePrint();
             System.out.println("Please mark a valid task.");
+            linePrint();
+        } catch (NumberFormatException e) {
+            linePrint();
+            System.out.println("Please mark a valid task with an integer from 1-100.");
+            linePrint();
         }
     }
 
@@ -70,7 +76,13 @@ public class Command {
             System.out.println("You have unmarked the task: " + Psyduck.getTask(taskNum).getDescription());
             linePrint();
         } catch (NullPointerException e) {
+            linePrint();
             System.out.println("Please unmark a valid task.");
+            linePrint();
+        } catch (NumberFormatException e) {
+            linePrint();
+            System.out.println("Please unmark a valid task with an integer from 1-100.");
+            linePrint();
         }
     }
 
@@ -92,7 +104,7 @@ public class Command {
         Psyduck.addDeadline(description, by);
         linePrint();
         System.out.println("Psyduck has added the task: " + Psyduck.getNewestTask());
-        System.out.println("You now have: " + Psyduck.getTaskCount() + "tasks");
+        System.out.println("You now have: " + Psyduck.getTaskCount() + " tasks");
         linePrint();
     }
 
