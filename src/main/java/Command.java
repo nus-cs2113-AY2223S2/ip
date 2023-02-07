@@ -23,6 +23,12 @@ public class Command {
         Psyduck.addToDo(description);
         linePrint();
         System.out.println("Psyduck has added the task: " + Psyduck.getNewestTask());
+        System.out.print("You now have: " + Psyduck.getTaskCount());
+        if (Psyduck.getTaskCount() == 1) {
+            System.out.println(" task");
+        } else {
+            System.out.println(" tasks");
+        }
         linePrint();
     }
 
@@ -37,7 +43,6 @@ public class Command {
         if (fromPos == NOT_FOUND || toPos == NOT_FOUND) {
             linePrint();
             System.out.println("Psyduck needs a start or end date.");
-            System.out.println("Remember to use the <deadline> <description> </from> <date> </to> <date> format for your input");
             linePrint();
             return;
         }
@@ -47,23 +52,49 @@ public class Command {
         Psyduck.addEvent(description, from, to);
         linePrint();
         System.out.println("Psyduck has added the task: " + Psyduck.getNewestTask());
+        System.out.print("You now have: " + Psyduck.getTaskCount());
+        if (Psyduck.getTaskCount() == 1) {
+            System.out.println(" task");
+        } else {
+            System.out.println(" tasks");
+        }
         linePrint();
     }
 
     public static void markTask(String input, int space) {
-        int taskNum = Integer.parseInt(input.substring(space + 1));
-        Psyduck.getTask(taskNum).markDone();
-        linePrint();
-        System.out.println("You have marked the task: " + Psyduck.getTask(taskNum).getDescription());
-        linePrint();
+        try {
+            int taskNum = Integer.parseInt(input.substring(space + 1));
+            Psyduck.getTask(taskNum).markDone();
+            linePrint();
+            System.out.println("You have marked the task: " + Psyduck.getTask(taskNum).getDescription());
+            linePrint();
+        } catch (NullPointerException e) {
+            linePrint();
+            System.out.println("Please mark a valid task.");
+            linePrint();
+        } catch (NumberFormatException e) {
+            linePrint();
+            System.out.println("Please mark a valid task with an integer from 1-100.");
+            linePrint();
+        }
     }
 
     public static void unmarkTask(String input, int space) {
-        int taskNum = Integer.parseInt(input.substring(space + 1));
-        Psyduck.getTask(taskNum).unmarkDone();
-        linePrint();
-        System.out.println("You have unmarked the task: " + Psyduck.getTask(taskNum).getDescription());
-        linePrint();
+        try {
+            int taskNum = Integer.parseInt(input.substring(space + 1));
+            Psyduck.getTask(taskNum).unmarkDone();
+            linePrint();
+            System.out.println("You have unmarked the task: " + Psyduck.getTask(taskNum).getDescription());
+            linePrint();
+        } catch (NullPointerException e) {
+            linePrint();
+            System.out.println("Please unmark a valid task.");
+            linePrint();
+        } catch (NumberFormatException e) {
+            linePrint();
+            System.out.println("Please unmark a valid task with an integer from 1-100.");
+            linePrint();
+        }
     }
 
     public static void createDeadline(String input, int space) {
@@ -76,7 +107,6 @@ public class Command {
         if (byPos == NOT_FOUND) {
             linePrint();
             System.out.println("Psyduck needs a deadline.");
-            System.out.println("Remember to use the <deadline> <description> </by> <date> format for your input");
             linePrint();
             return;
         }
@@ -85,6 +115,12 @@ public class Command {
         Psyduck.addDeadline(description, by);
         linePrint();
         System.out.println("Psyduck has added the task: " + Psyduck.getNewestTask());
+        System.out.print("You now have: " + Psyduck.getTaskCount());
+        if (Psyduck.getTaskCount() == 1) {
+            System.out.println(" task");
+        } else {
+            System.out.println(" tasks");
+        }
         linePrint();
     }
 

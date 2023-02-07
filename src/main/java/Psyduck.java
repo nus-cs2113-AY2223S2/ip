@@ -6,6 +6,10 @@ public class Psyduck {
 
     private static int taskCount = 0;
 
+    public static int getTaskCount() {
+        return taskCount;
+    }
+
     public static Task getTask(int taskNum) {
         return tasks[taskNum - 1]; //array is 0-indexed, taskNum is 1-indexed
     }
