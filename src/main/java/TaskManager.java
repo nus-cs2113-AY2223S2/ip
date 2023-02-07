@@ -26,14 +26,18 @@ public class TaskManager {
     }
 
     private static Task getTask(int indexOfTask) {
-        if (indexOfTask < 0 || indexOfTask >= TaskManager.getTasks().size()) {
+        boolean isNegativeIndex = indexOfTask < 0;
+        boolean isIndexTooLarge = indexOfTask >= TaskManager.getTasks().size();
+        if (isNegativeIndex || isIndexTooLarge) {
             return null;
         }
         return TaskManager.getTasks().get(indexOfTask);
     }
 
     private static void rmTask(int indexOfTask) {
-        if (indexOfTask < 0 || indexOfTask >= TaskManager.getTasks().size()) {
+        boolean isNegativeIndex = indexOfTask < 0;
+        boolean isIndexTooLarge = indexOfTask >= TaskManager.getTasks().size();
+        if (isNegativeIndex || isIndexTooLarge) {
             return;
         }
         TaskManager.getTasks().remove(indexOfTask);
@@ -47,15 +51,19 @@ public class TaskManager {
      * null if not an instance of Todo
      */
     public static Todo markDone(int indexOfTask) {
-        if (indexOfTask < 0 || indexOfTask >= TaskManager.getTasks().size()) {
+        boolean isNegativeIndex = indexOfTask < 0;
+        boolean isIndexTooLarge = indexOfTask >= TaskManager.getTasks().size();
+        if (isNegativeIndex || isIndexTooLarge) {
             printlnWithIndent(" You alright? I can't mark a task that doesn't exist as done xD");
             return null;
         }
         Task selectedTask = TaskManager.getTask(indexOfTask);
-        if (!(selectedTask instanceof Todo)) {
+        boolean isTaskATodo = selectedTask instanceof Todo;
+        if (!isTaskATodo) {
             printlnWithIndent(" Erm I don't think this task can be marked done xD");
             return null;
         }
+        // At this point, Task is definitely an instance of Todo. Can cast it to Todo safely
         Todo selectedTodo = (Todo) selectedTask;
         if (selectedTodo.getIsDone()) {
             printlnWithIndent(" Take a break maybe? Alright marked as done my friend:");
@@ -83,12 +91,15 @@ public class TaskManager {
      * null if not an instance of Todo
      */
     public static Todo unmarkDone(int indexOfTask) {
-        if (indexOfTask < 0 || indexOfTask >= TaskManager.getTasks().size()) {
+        boolean isIndexNegative = indexOfTask < 0;
+        boolean isIndexTooLarge = indexOfTask >= TaskManager.getTasks().size();
+        if (isIndexNegative || isIndexTooLarge) {
             printlnWithIndent(" You alright? I don't think that task exists xD");
             return null;
         }
         Task selectedTask = TaskManager.getTask(indexOfTask);
-        if (!(selectedTask instanceof Todo)) {
+        boolean isTaskATodo = selectedTask instanceof Todo;
+        if (!isTaskATodo) {
             printlnWithIndent(" Erm I don't think this task can be marked as not done? xD");
             return null;
         }
