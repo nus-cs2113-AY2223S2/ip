@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DukeException {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -16,15 +16,16 @@ public class Duke {
             String input = scan.nextLine();
             String output = new String();
             while (!input.equals("bye")) {
-                if (input.equals("list")) {
+                try{
+                    if (input.equals("list")) {
                     output = "Here are the tasks in the list:" + System.lineSeparator() + Task.printTasksList(tasks);
 
-                } else if (input.matches("mark [0-9]{1,2}")) {
+                } else if (input.startsWith("mark")) {
                     String[] marks = input.split(" ");
                     tasks.get(Integer.parseInt(marks[1]) - 1).markAsDone();
                     output = "Nice! I've marked this task as done:" + System.lineSeparator()
                             + tasks.get(Integer.parseInt(marks[1]) - 1).toString();
-                } else if (input.matches("unmark [0-9]{1,2}")) {
+                } else if (input.startsWith("unmark")) {
                     String[] marks = input.split(" ");
                     tasks.get(Integer.parseInt(marks[1]) - 1).markAsNotDone();
                     output = "OK, I've marked this task as not done yet:" + System.lineSeparator()
@@ -54,12 +55,12 @@ public class Duke {
                             + event.toString() + System.lineSeparator() + "Now you have " + Task.numberOfTasks
                             + " in the list.";
                 } else {
-                    Task task = new Task(input);
-                    tasks.add(task);
-                    output = "Got it. I've added this task:" + System.lineSeparator()
-                            + task.toString() + System.lineSeparator() + "Now you have " + Task.numberOfTasks
-                            + " in the list.";
+                    output = "OOPS!!! I'm sorry, but I don't know what that means :-(";
+                }} catch (ArrayIndexOutOfBoundsException e)
+                {
+                    output="Please provide the necessary information for the task.";
                 }
+
                 System.out.println("___________________________________________________");
                 System.out.println(output);
                 System.out.println("___________________________________________________");
