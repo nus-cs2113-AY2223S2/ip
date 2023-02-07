@@ -1,8 +1,9 @@
+package duke;
 public class Task {
     protected String description;
     protected boolean isDone = false;
-    protected static Task[] tasks = new Task[100]; //keep a collection of tasks
-    protected static int taskCount = 0; //keep track of number of tasks
+    public static Task[] tasks = new Task[100]; //keep a collection of tasks
+    public static int taskCount = 0; //keep track of number of tasks
 
     public Task(String description) {
         this.description = description;
