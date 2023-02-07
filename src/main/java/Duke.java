@@ -50,33 +50,35 @@ public class Duke {
                 // Marks a task as complete
                 case "mark": {
                     char dynamicInput = splitInput[1].charAt(0);
-                    if (!Character.isDigit(dynamicInput) || dynamicInput == '0' || splitInput[1].length() > 1) {
-                        System.out.println("\nBlast! That isn't a valid number lad!\n" + BARRIER + "\n");
-                    } else {
-                            int index = Integer.parseInt(splitInput[1]) - 1;
-                        if (index > numTasks - 1){
-                            System.out.println("\nBlast! That task does not exist, please add tasks first, ye landlubbers!\n" + BARRIER + "\n");
-                        } else {
-                            Task.getTasksArray().get(index).markAsComplete();
+                    try {
+                        if (!Character.isDigit(dynamicInput) || dynamicInput == '0' || splitInput[1].length() > 1) {
+                            throw new DukeExceptions.invalidNumberException(BARRIER + "\n\nBlast! That isn't a valid number lad!\n" + BARRIER + "\n");
                         }
+                        int index = Integer.parseInt(splitInput[1]) - 1;
+                        if (index > numTasks - 1){
+                            throw new DukeExceptions.noTasksException("Blast! That task does not exist, please add tasks first, ye landlubbers!\n" + BARRIER + "\n");
+                        }
+                        Task.getTasksArray().get(index).markAsComplete();
+                    } finally {
+                        break;
                     }
-                    break;
                 }
 
                 // Unmarks a previous completed task
                 case "unmark": {
                     char dynamicInput = splitInput[1].charAt(0);
-                    if (!Character.isDigit(dynamicInput) || dynamicInput == '0' || splitInput[1].length() > 1) {
-                        System.out.println("\nBlast! That isn't a valid number lad!\n" + BARRIER + "\n");
-                    } else {
-                            int index = Integer.parseInt(splitInput[1]) - 1;
-                        if (index > numTasks - 1){
-                            System.out.println("\nBlast! That task does not exist, please add tasks first, ye landlubbers!\n" + BARRIER + "\n");
-                        } else {
-                            Task.getTasksArray().get(index).unmarkAsComplete();
+                    try {
+                        if (!Character.isDigit(dynamicInput) || dynamicInput == '0' || splitInput[1].length() > 1) {
+                            throw new DukeExceptions.invalidNumberException(BARRIER + "\n\nBlast! That isn't a valid number lad!\n" + BARRIER + "\n");
                         }
+                        int index = Integer.parseInt(splitInput[1]) - 1;
+                        if (index > numTasks - 1){
+                            throw new DukeExceptions.noTasksException("Blast! That task does not exist, please add tasks first, ye landlubbers!\n" + BARRIER + "\n");
+                        }
+                        Task.getTasksArray().get(index).unmarkAsComplete();
+                    } finally {
+                        break;
                     }
-                    break;
                 }
 
                 // Prints a list of commands and description

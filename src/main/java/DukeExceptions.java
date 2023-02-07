@@ -13,11 +13,16 @@ public abstract class DukeExceptions extends Exception {
     }
 
     public static class noTasksException extends DukeExceptions {
-        
         public noTasksException(String errorMsg) {
             super(errorMsg);
             System.out.println(BARRIER + "\n\n" + errorMsg);
         }
+    }
 
+    public static class invalidNumberException extends DukeExceptions {
+        public invalidNumberException(String errorMsg) {
+            super(errorMsg);
+            System.out.println(errorMsg);
+        }
     }
 }
