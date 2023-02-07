@@ -7,5 +7,6 @@ public enum Command {
     REMIND,
     DEADLINE,
     EVENT,
+    DELETE,
     EXIT;
 }
