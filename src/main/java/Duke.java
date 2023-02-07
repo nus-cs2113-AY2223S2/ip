@@ -1,5 +1,12 @@
+import task.Deadline;
+import task.ToDo;
+import task.DukeException;
+import task.Event;
+import task.Task;
+
 import java.util.Scanner;
 import java.util.ArrayList;
+
 public class Duke {
     public static final String WRONG_INPUTS_GIVEN = "Wrong inputs given";
     private static final String LINE = "____________________________________________________________";
