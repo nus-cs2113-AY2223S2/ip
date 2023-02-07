@@ -30,25 +30,27 @@ public class Task {
     }
 
     // Changes task isComplete attribute to true
-    public void markAsComplete() {
-        if (this.isComplete) {
-            System.out.println("\nBlast! This task be already complete, ye swab!\n" + BARRIER + "\n");
-            return;
-        }
-        this.isComplete = true;
-        System.out.println("\nNice! I've marked this task as done, me hearties!\n");
-        System.out.println("     " + this.printTask() + "\n" + BARRIER + "\n");
+    public void markAsComplete() throws DukeExceptions.taskStatusException {
+        try {
+            if (this.isComplete) {
+                throw new DukeExceptions.taskStatusException("\nBlast! This task be already complete, ye swab!\n" + BARRIER + "\n");
+            }
+            this.isComplete = true;
+            System.out.println("\nNice! I've marked this task as done, me hearties!\n");
+            System.out.println("     " + this.printTask() + "\n" + BARRIER + "\n");
+        } finally {}
     }
 
     // Changes task isComplete attribute to true
-    public void unmarkAsComplete() {
+    public void unmarkAsComplete() throws DukeExceptions.taskStatusException {
+        try {
         if (!this.isComplete) {
-            System.out.println("\nBlast! This task be already incomplete, ye bilge rat!\n" + BARRIER + "\n");
-            return;
+            throw new DukeExceptions.taskStatusException("\nBlast! This task be already incomplete, ye bilge rat!\n" + BARRIER + "\n");
         }
         this.isComplete = false;
         System.out.println("\nAye, I've marked this task as not done yet, ye scallywag: \n");
         System.out.println("     " + this.printTask() + "\n"  + BARRIER + "\n");
+        } finally {}
     }
 
     // Prints the task completion status and description
