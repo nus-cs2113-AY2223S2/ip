@@ -1,4 +1,16 @@
+package genesis;
+
 import java.util.ArrayList;
+
+import task.Deadline;
+import task.Event;
+import task.Task;
+import task.Todo;
+
+import utility.ConsolePrinter;
+
+import exception.GenesisException;
+import exception.UnknownCommandException;
 
 public class Genesis {
     private static ArrayList<Task> tasks = new ArrayList<Task>();
@@ -128,7 +140,7 @@ public class Genesis {
         } catch (NumberFormatException e) {
             System.out.println("☹ OOPS!!! Index is not a number");
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("☹ OOPS!!! Task index does not exist");
+            System.out.println("☹ OOPS!!! task.Task index does not exist");
         } finally {
             ConsolePrinter.breakLine();
         }

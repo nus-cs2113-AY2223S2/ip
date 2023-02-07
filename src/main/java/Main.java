@@ -1,5 +1,8 @@
-import java.io.Console;
+import genesis.Genesis;
+
 import java.util.Scanner;
+
+import utility.ConsolePrinter;
 
 public class Main {
     public static void main(String[] args) {

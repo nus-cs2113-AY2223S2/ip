@@ -1,4 +1,8 @@
+package utility;
+
 import java.util.ArrayList;
+
+import task.Task;
 
 public class ConsolePrinter {
     final static String HORIZONTAL_RULE = "____________________________________________________________\n";
