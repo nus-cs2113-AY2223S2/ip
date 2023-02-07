@@ -1,6 +1,12 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import Exception.DukeException;
+import Task.Deadline;
+import Task.Event;
+import Task.Task;
+import Task.Todo;
+
 public class Duke {
     public static void main(String[] args) throws DukeException {
         String logo = " ____        _        \n"

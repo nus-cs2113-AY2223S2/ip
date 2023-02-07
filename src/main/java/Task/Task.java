@@ -1,9 +1,11 @@
+package Task;
+
 import java.util.ArrayList;
 
 public class Task {
     protected String description;
     protected boolean isDone;
-    static int numberOfTasks = 0;
+    public static int numberOfTasks = 0;
 
     public Task(String description) {
         this.description = description;
