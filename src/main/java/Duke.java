@@ -107,7 +107,6 @@ public class Duke {
         }
     }
 
-
     public static void dukeCommandEvent(String nextLine, List<Task> list) {
         String lineWithoutCommand;
         try {
