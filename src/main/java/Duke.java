@@ -13,7 +13,7 @@ public class Duke {
         if (Task.totalTasks >= tasks.length) {
             System.out.println("Storage is full, cannot store new task");
         }
-        Task newTask = null;
+        Task newTask;
         switch (taskType) {
         case TODO:
             newTask = new ToDo(taskParameters[0]);
@@ -32,8 +32,8 @@ public class Duke {
         }
         tasks[Task.totalTasks - 1] = newTask;
         System.out.println("Got it. I've added this task:");
-        System.out.println("  " + newTask.toString());
-        System.out.println("Now you have " + Integer.toString(Task.totalTasks) + " tasks in the list.");
+        System.out.println("  " + newTask);
+        System.out.println("Now you have " + Task.totalTasks + " tasks in the list.");
     }
 
     public static void printTasks(Task[] tasks){
@@ -95,7 +95,14 @@ public class Duke {
         while(isProgramRunning)
         {
             String userInput = in.nextLine();
-            Command command = Parser.parseCommand(userInput);
+            Command command;
+            try{
+                command = Parser.parseCommand(userInput);
+            }catch (TaskNameException | TaskParameterException | InvalidCommandException e){
+                System.out.println(e.getMessage());
+                continue;
+            }
+
             switch(command.getCommandType()){
             case ADD_TODO_COMMAND:
                 addNewTask(tasks, command.getAdditionalParameters(), TaskType.TODO);
