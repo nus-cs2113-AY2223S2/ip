@@ -3,18 +3,6 @@ import java.util.ArrayList;
 
 public class
 Duke {
-    public static boolean containsNumbers(String string) {
-        if (string == null || string.isEmpty()) {
-            return false;
-        }
-        for (int i = 0; i < string.length(); ++i) {
-            if (Character.isDigit(string.charAt(i))) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -33,7 +21,6 @@ Duke {
         Scanner myObj = new Scanner(System.in);
         String userInput;
         String userInputParts[];
-        String dummy;
         userInput = myObj.nextLine();
         ArrayList<Task> taskList = new ArrayList<Task>(100);
 
@@ -57,8 +44,7 @@ Duke {
                     System.out.println(line);
                 } else {
                     taskList.get(itemNumber).markAsDone();
-                    System.out.println("Nice! I've marked this task as done:\n" + "    "
-                            + taskList.get(itemNumber).getStatusIcon() + taskList.get(itemNumber).getDescription());
+                    System.out.println("Nice! I've marked this task as done:\n" + taskList.get(itemNumber).getStatusIcon() + taskList.get(itemNumber).getDescription());
                     System.out.println(line);
                 }
             } else if (userInput.contains("event")){
@@ -80,6 +66,12 @@ Duke {
                 System.out.println(line);
             } else if (userInput.contains("todo")){
                 userInput = userInput.replace("todo","");
+                userInput = userInput.replace(" ", "");
+                if (userInput.isEmpty()){
+                    System.out.println("Please do not leave the description empty!");
+                    System.out.println(line);
+                    continue;
+                }
                 Task task = new Task(userInput);
                 taskList.add(task);
                 System.out.println("Got it. I've added this task: ");
