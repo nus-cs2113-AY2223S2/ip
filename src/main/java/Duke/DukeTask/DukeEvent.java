@@ -1,4 +1,4 @@
-package DukeFunction;
+package Duke.DukeTask;
 
 public class DukeEvent extends DukeTask {
     protected String eventFrom;

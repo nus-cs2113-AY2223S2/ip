@@ -1,4 +1,4 @@
-package DukeFunction;
+package Duke.DukeTask;
 
 public class DukeDeadline extends DukeTask {
     protected String deadline;

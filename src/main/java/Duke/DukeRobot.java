@@ -1,11 +1,15 @@
-import DukeCommandLine.DukeCommandLineInput;
-import DukeCommandLine.DukeTaskInputException;
-import DukeFunction.DukeDeadline;
-import DukeFunction.DukeEvent;
-import DukeFunction.DukeTask;
+package Duke;
+
+import Duke.DukeCommandLine.DukeCommandLineInput;
+import Duke.DukeCommandLine.DukeTaskInputException;
+import Duke.DukeFunction.DukeList;
+import Duke.DukeFunction.DukePrinter;
+import Duke.DukeTask.DukeDeadline;
+import Duke.DukeTask.DukeEvent;
+import Duke.DukeTask.DukeTask;
 
 import java.util.Scanner;
-public class Duke {
+public class DukeRobot {
     private static DukeCommandLineInput processCommandLine(String commandLine) {
         commandLine = commandLine.trim();
         if(!commandLine.contains(" ")) {

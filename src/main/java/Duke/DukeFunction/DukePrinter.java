@@ -1,3 +1,5 @@
+package Duke.DukeFunction;
+
 public class DukePrinter {
     private static String LINE = "____________________________________________________________";
     private static String DukeLogo = " ____        _        \n"
@@ -22,7 +24,7 @@ public class DukePrinter {
     public static void printGreeting(){
         printDukeLogo();
         printEditorLogo();
-        System.out.println("Hello! I'm Duke, edited by liuziyang");
+        System.out.println("Hello! I'm DukeRobot, edited by liuziyang");
         System.out.println("What can I do for you?");
         printLine();
     }

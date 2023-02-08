@@ -1,4 +1,4 @@
-package DukeFunction;
+package Duke.DukeTask;
 
 public class DukeTask {
     protected String taskName;

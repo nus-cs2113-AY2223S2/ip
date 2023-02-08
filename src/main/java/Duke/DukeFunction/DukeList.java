@@ -1,4 +1,7 @@
-import DukeFunction.DukeTask;
+package Duke.DukeFunction;
+
+import Duke.DukeFunction.DukePrinter;
+import Duke.DukeTask.DukeTask;
 
 import java.util.ArrayList;
 public class DukeList {
