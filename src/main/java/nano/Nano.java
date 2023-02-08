@@ -1,5 +1,7 @@
 package nano;
 
+import nano.exception.NanoCommandException;
+import nano.exception.NanoInputFormatException;
 import nano.task.Deadline;
 import nano.task.Event;
 import nano.task.Task;
@@ -50,18 +52,18 @@ public class Nano {
             String userInput = getUserInput();
             try {
                 executeCommand(userInput);
-            } catch (DukeCommandException commandException) {
+            } catch (NanoCommandException commandException) {
                 System.out.println("unknown command");
                 displayHelpMessage();
             }
         }
     }
 
-    private static void executeCommand(String userInput) throws DukeCommandException {
+    private static void executeCommand(String userInput) throws NanoCommandException {
         String[] userInputs;
         try {
             userInputs = processInput(userInput);
-        } catch (DukeInputFormatException inputException) {
+        } catch (NanoInputFormatException inputException) {
             System.out.println("input error");
             displayHelpMessage();
             return;
@@ -87,7 +89,7 @@ public class Nano {
             displayExitMessage();
             System.exit(0);
         default:
-            throw new DukeCommandException();
+            throw new NanoCommandException();
         }
         printHorizontalLine();
     }
@@ -179,10 +181,10 @@ public class Nano {
         System.out.println(MESSAGE_HELP_COMMAND);
     }
 
-    private static String[] processInput(String userInput) throws DukeInputFormatException{
+    private static String[] processInput(String userInput) throws NanoInputFormatException {
         userInput = userInput.trim();
         if (!userInput.startsWith("/")) {
-            throw new DukeInputFormatException();
+            throw new NanoInputFormatException();
         }
         userInput = userInput.replaceFirst("/", "");
         String[] userInputs = new String[USER_INPUT_MAX_ARG_COUNT + 1];
@@ -195,13 +197,13 @@ public class Nano {
         return userInputs;
     }
 
-    private static void processTaskDetails(String userInput, String[] userInputs) throws DukeInputFormatException {
+    private static void processTaskDetails(String userInput, String[] userInputs) throws NanoInputFormatException {
         if (isDeadline(userInput)) {
             getDeadline(userInput, userInputs);
         } else if (isEvent(userInput)) {
             getEvent(userInput, userInputs);
         } else if (userInput.contains("/")) {
-            throw new DukeInputFormatException();
+            throw new NanoInputFormatException();
         } else {
             getTodo(userInputs);
         }
