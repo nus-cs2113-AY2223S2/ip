@@ -25,44 +25,54 @@ public class Duke {
 
             //mark, unmark, or add
             } else {
-                int taskDescriptionIndex = word.indexOf(" ");
-                String taskType = word.substring(0, taskDescriptionIndex);
-                String taskDescription = word.substring(taskDescriptionIndex+1);
+                try {
+                    int taskDescriptionIndex = word.indexOf(" ");
+                    String taskType = word.substring(0, taskDescriptionIndex);
+                    String taskDescription = word.substring(taskDescriptionIndex+1);
 
-                switch (taskType) {
-                case "mark":
-                    markTask(taskDescription, tasks);
-                    word = reader.nextLine();
-                    break;
+                    if (taskType.isBlank() || taskDescription.isBlank()) {
+                        System.out.println("Task description cannot be blank :(");
+                        word = reader.nextLine();
 
-                case "unmark":
-                    unmarkTask(taskDescription, tasks);
-                    word = reader.nextLine();
-                    break;
+                    } else {
+                        switch (taskType) {
+                        case "mark":
+                            markTask(taskDescription, tasks);
+                            word = reader.nextLine();
+                            break;
 
-                case "todo":
-                    createTodo(tasks, counter, taskDescription);
-                    counter++;
-                    word = reader.nextLine();
-                    break;
+                        case "unmark":
+                            unmarkTask(taskDescription, tasks);
+                            word = reader.nextLine();
+                            break;
 
-                case "deadline":
-                    createDeadline(tasks, counter, taskDescription);
-                    counter++;
-                    word = reader.nextLine();
-                    break;
+                        case "todo":
+                            createTodo(tasks, counter, taskDescription);
+                            counter++;
+                            word = reader.nextLine();
+                            break;
 
-                case "event":
-                    createEvent(tasks, counter, taskDescription);
-                    counter++;
-                    word = reader.nextLine();
-                    break;
+                        case "deadline":
+                            createDeadline(tasks, counter, taskDescription);
+                            counter++;
+                            word = reader.nextLine();
+                            break;
 
-                default:
+                        case "event":
+                            createEvent(tasks, counter, taskDescription);
+                            counter++;
+                            word = reader.nextLine();
+                            break;
+
+                        default:
+                            System.out.println("That's an invalid task :(");
+                            word = reader.nextLine();
+                        }
+                    }
+                } catch (IndexOutOfBoundsException e) {
                     System.out.println("That's an invalid task :(");
                     word = reader.nextLine();
                 }
-
             }
         }
         System.out.println("Bye");
