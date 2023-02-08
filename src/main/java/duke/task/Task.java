@@ -1,3 +1,5 @@
+package duke.task;
+
 public class Task {
     private String taskName;
     private boolean isDone;
@@ -19,7 +21,7 @@ public class Task {
         }
     }
 
-    void printTask() {
+    public void printTask() {
         System.out.println(this.toString());
     }
 }
