@@ -1,4 +1,10 @@
-import javax.swing.event.DocumentEvent;
+import DukeErrors.BlankListException;
+import Tasks.Deadline;
+import Tasks.Event;
+import Tasks.Task;
+import Tasks.Todo;
+
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -13,7 +19,6 @@ public class Duke {
 	;
 	private static int listLength = 0;
 
-
 	private static final String LINE_PARTITION = "    ____________________________________________________________\n";
 	private static final String FAREWELL = LINE_PARTITION +
 			"\t  Bye. Hope to see you again soon!\n" +
@@ -22,19 +27,33 @@ public class Duke {
 			"\t  Hello! I'm kimo\n" +
 			"\t  What can I do for you?\n" +
 			LINE_PARTITION;
+	private static final String TASK_ADD_SUCCESS_MSG = LINE_PARTITION +
+			String.format("\t  added:%s\n" +
+					"\t  You now have %d task(s) in your list.\n", taskList[listLength - 1], listLength) +
+			LINE_PARTITION;
 
-	private static final String NO_ARGS_TASK_ERROR = LINE_PARTITION +
-			"\t  Please enter your task details with your command.\n" +
+
+	//ERROR MESSAGE FINAL STRINGS
+	private static final String ERROR_FACE = "(ಠ_ಠ)";
+	private static final String OUT_OF_BOUNDS_MSG = String.format(LINE_PARTITION +
+			"\t  There are %d items in your list.\n", listLength) +
+			"\t  Please enter a number in the appropriate range." + ERROR_FACE + "\n" +
+			LINE_PARTITION;
+	private static final String INVALID_ARGS_MSG = LINE_PARTITION +
+			"\t  You did not enter a number.\n" +
+			"\t  Try again." + ERROR_FACE + "\n" +
 			LINE_PARTITION;
 	private static final String CMD_FORMAT_ERROR = LINE_PARTITION +
 			"\t  You have entered the wrong format for this command.\n" +
-			"\t  Please type \"help\" to see the available list of commands and the relevant formats\n" +
+			"\t  Please type \"help\" to see the list of commands and the relevant formats " + ERROR_FACE + "\n" +
 			LINE_PARTITION;
 	private static final String INVALID_CMD = LINE_PARTITION +
 			"\t  You have entered an invalid command.\n" +
 			"\t  Please type \"help\" to see the available list of commands and the relevant formats\n" +
 			LINE_PARTITION;
 
+
+	//HELP MESSAGE
 	private static final String HELPLIST = LINE_PARTITION +
 			"\t  These are the valid commands and the relevant formats for each:\n" +
 			"\t  list : displays the current tasklist of tasks you have entered, with each tasks' statuses shown." +
@@ -48,6 +67,7 @@ public class Duke {
 			"\t  help : shows list of available commands\n" +
 			LINE_PARTITION;
 
+	//MAIN CODE
 	public static void main(String[] args) {
 		System.out.print(GREET);
 		while (true) {
@@ -96,7 +116,9 @@ public class Duke {
 
 	private static String[] splitUserInput(String rawUserInput) {
 		final String[] split = rawUserInput.trim().split("\\s+", 2);
-		return split.length == 2 ? split : new String[]{split[0], ""}; // else case: no parameters
+
+		// else case: no parameters for cmd
+		return split.length == 2 ? split : new String[]{split[0], ""};
 	}
 
 	private static void executeList() {
@@ -111,56 +133,46 @@ public class Duke {
 	}
 
 	private static void executeMark(String args, boolean hasCompleted) {
-		switch (markCommandVerify(args)) {
-		case "isValid":
-			Task task = taskList[Integer.parseInt(args) - 1];
-			task.setDone(hasCompleted);
-			if (hasCompleted) {
-				printMark(task);
-			} else {
-				printUnmark(task);
-			}
-			break;
-		case "isOutOfBounds":
-			invalidMarkArgs(args, true);
-			break;
-		case "isNotNum":
-			invalidMarkArgs(args, false);
-			break;
-		case "noInput":
-			noMarkArgs();
-			break;
-		default:
-			System.out.print(LINE_PARTITION +
-					"Invalid input for \"mark\" command. Please try again." +
-					LINE_PARTITION);
+		try {
+			taskInitiate(args, hasCompleted);
+
+		} catch (NumberFormatException e) {
+			// non-convertable / no input
+			invalidMarkArgs();
+
+		} catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
+			// prompt > listLength | non-positive
+			OutOfBoundArgs();
+
+		} catch (BlankListException e) {
+			emptyListError();
 		}
 	}
-
-	private static String markCommandVerify(String details) {
-		if (details.matches("\\d+")) {
-			int listNum = Integer.parseInt(details);
-			return (listLength >= listNum && listNum > 0) ? "isValid" : "isOutOfBounds";
+	private static void taskInitiate(String args, boolean hasCompleted) throws BlankListException {
+		if (listLength == 0) {
+			throw new BlankListException();
 		}
-		return "isNotNum";
-	}
-
-	private static void invalidMarkArgs(String args, boolean isNum) {
-		if (isNum) {
-			System.out.print(LINE_PARTITION +
-					String.format("\t  Task number %s does not exist.\n", args));
+		Task task = taskList[Integer.parseInt(args) - 1];
+		task.setDone(hasCompleted);
+		if (hasCompleted) {
+			printMark(task);
 		} else {
-			System.out.print(LINE_PARTITION +
-					String.format("\t  %s is not a number.\n", args));
+			printUnmark(task);
 		}
-		System.out.print(String.format("\t  Please use a number between 1 and %d for \"mark\" and \"unmark\" " +
-				"commands\n", listLength) +
-				LINE_PARTITION);
+
 	}
 
-	private static void noMarkArgs() {
-		System.out.print("You did not enter any number.\n" +
-				String.format("Please use a number between 1 and %d for \"mark\" commands\n", listLength) +
+	private static void OutOfBoundArgs() {
+		System.out.print(OUT_OF_BOUNDS_MSG);
+	}
+
+	private static void invalidMarkArgs() {
+		System.out.print(INVALID_ARGS_MSG);
+	}
+
+	private static void emptyListError() {
+		System.out.print(LINE_PARTITION +
+				"\t  Your list is empty. Please add items before marking them." + ERROR_FACE + "\n" +
 				LINE_PARTITION);
 	}
 
@@ -177,15 +189,20 @@ public class Duke {
 	}
 
 	private static void executeTaskAdd(String args, String taskType) {
-		if (args == null) {
-			System.out.print(NO_ARGS_TASK_ERROR);
-		} else if (args.matches("(.*) /by (.*)") && taskType.equals("deadline")) {
-			deadlineAdd(args);
-		} else if (args.matches("(.*) /from (.*) /to (.*)") && taskType.equals("event")) {
-			eventAdd(args);
-		} else if (taskType.equals("todo") && !args.isEmpty()) {
-			todoAdd(args);
-		} else {
+		try {
+			switch (taskType) {
+			case ("deadline"):
+				deadlineAdd(args);
+				break;
+			case ("event"):
+				eventAdd(args);
+				break;
+			case ("todo"):
+				todoAdd(args);
+				break;
+			default:
+			}
+		} catch (ArrayIndexOutOfBoundsException e) {
 			cmdFormatError();
 		}
 	}
@@ -219,10 +236,7 @@ public class Duke {
 	}
 
 	private static void printTaskAdd() {
-		System.out.print(LINE_PARTITION +
-				String.format("\t  added:%s\n" +
-						"\t  You now have %d task(s) in your list.\n", taskList[listLength - 1], listLength) +
-				LINE_PARTITION);
+		System.out.print(TASK_ADD_SUCCESS_MSG);
 	}
 
 	private static void invalidCmd() {
