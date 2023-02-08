@@ -1,4 +1,4 @@
-//import java.util.Scanner;
+package duke;//import java.util.Scanner;
 //
 //public class Echo {
 //    public static void Echo() {
