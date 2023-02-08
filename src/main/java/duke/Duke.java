@@ -9,6 +9,7 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.Todo;
 
+import javax.sound.sampled.Line;
 import java.util.Scanner;
 
 public class Duke {
@@ -30,9 +31,10 @@ public class Duke {
         try {
             File fileName = new java.io.File(path.toUri());
             if (fileName.createNewFile()) {
-                System.out.println("File created: " + fileName.getName());
+                System.out.println("File \"duke.txt\" created!");
             } else {
                 if (flag) {
+                    System.out.println(LINE);
                     System.out.println("\tHere are your pending tasks!");
                     Scanner s = new Scanner(fileName);
                     while (s.hasNext()) {
@@ -41,7 +43,6 @@ public class Duke {
                 } else {
                     if (isFileEdited) {
                         FileWriter savedFile = new FileWriter(fileName, false);
-                        savedFile.write(LINE);
                         savedFile.write(System.getProperty("line.separator"));
                         for (int index = 0; index < textCount; index++) {
                             savedFile.write("\t" + String.valueOf(tasks[index]));
