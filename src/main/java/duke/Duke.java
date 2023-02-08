@@ -1,9 +1,11 @@
-import exceptions.EmptyTaskException;
-import exceptions.InvalidCommandException;
-import tasks.Deadline;
-import tasks.Event;
-import tasks.Task;
-import tasks.Todo;
+package duke;
+
+import duke.exceptions.EmptyTaskException;
+import duke.exceptions.InvalidCommandException;
+import duke.tasks.Deadline;
+import duke.tasks.Event;
+import duke.tasks.Task;
+import duke.tasks.Todo;
 
 import java.util.Scanner;
 public class Duke {
@@ -20,7 +22,7 @@ public class Duke {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         String border = "____________________________________________________________ \n";
-        String greeting = "Hello! I'm Duke\n" + "What can I do for you?\n";
+        String greeting = "Hello! I'm duke.Duke\n" + "What can I do for you?\n";
         System.out.println(logo + border+ greeting);
     }
 
@@ -58,7 +60,7 @@ public class Duke {
         printBorder();
     }
 
-    //print list of tasks
+    //print list of duke.tasks
     public static void printList(Task[] tasks){
         printBorder();
 
