@@ -1,2 +1,2 @@
-package PACKAGE_NAME;public class IllegalCommandException {
+public class IllegalCommandException extends Throwable {
 }

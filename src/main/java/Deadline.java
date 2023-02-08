@@ -1,10 +1,16 @@
 public class Deadline extends Task {
 
+    public static final String DEADLINE_LABEL = "D";
     protected String by;
 
     public Deadline(String description, String by) {
         super(description);
         this.by = by;
+        increaseCounter();
+    }
+
+    public String getType() {
+        return "deadline";
     }
 
     public String getBy() {
@@ -17,6 +23,6 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return "[D][" + getStatus() + "] " + description + " (by: " + by + ")";
+        return "[" + DEADLINE_LABEL + "][" + getStatus() + "] " + description + " (by: " + by + ")";
     }
 }

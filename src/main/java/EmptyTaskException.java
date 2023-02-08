@@ -1,2 +1,2 @@
-package PACKAGE_NAME;public class EmptyTaskException {
+public class EmptyTaskException extends Throwable {
 }

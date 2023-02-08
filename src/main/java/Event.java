@@ -1,4 +1,5 @@
 public class Event extends Task {
+    public static final String EVENT_LABEL = "E";
     protected String from;
     protected String to;
 
@@ -6,6 +7,11 @@ public class Event extends Task {
         super(description);
         this.from = from;
         this.to = to;
+        increaseCounter();
+    }
+
+    public String getType() {
+        return "event";
     }
 
     public String getFrom() {
@@ -26,6 +32,6 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return "[E][" + getStatus() + "] " + description + " (from: " + from + " to: " + to + ")";
+        return "[" + EVENT_LABEL + "][" + getStatus() + "] " + description + " (from: " + from + " to: " + to + ")";
     }
 }
