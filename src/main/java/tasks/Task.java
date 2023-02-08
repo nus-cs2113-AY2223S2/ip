@@ -1,10 +1,15 @@
 package tasks;
 
 public class Task {
+
+    protected TaskType taskType = TaskType.TASK;
     protected boolean isDone;
     protected String description;
 
-    public Task(String description){
+    public Task(String description) throws EmptyDescriptionException{
+        if(description.isBlank()){
+            throw new EmptyDescriptionException("description of task is empty");
+        }
         this.isDone = false;
         this.description = description;
     }
@@ -34,13 +39,18 @@ public class Task {
         this.description = description;
     }
 
-    @Override
-    public String toString(){
-        return description;
+    public TaskType getTaskType(){
+        return taskType;
     }
 
     public String getDetailedString(){
         return String.format("[%s][%s] %s", getTaskSymbol(), getStatusIcon(), this);
+    }
+
+
+    @Override
+    public String toString(){
+        return description;
     }
 
 }

@@ -1,5 +1,4 @@
 package io;
-import java.security.Key;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,13 +12,13 @@ public class Parser {
     public void parse(String input) {
         this.valueMap = new HashMap<>();
         String[] inputs = input.split(" ",2);
-        command = inputs[0];
+        command = inputs[0].trim();
         if(inputs.length > 1){
-            String[] args = inputs[1].split(" /");
-            body = args[0];
+            String[] args = inputs[1].split("/");
+            body = args[0].trim();
             for(int i =1; i< args.length; i++){
                 String[] words = args[i].split(" ", 2);
-                valueMap.put(words[0], words[1]);
+                valueMap.put(words[0].trim(), words[1].trim());
             }
         }
 

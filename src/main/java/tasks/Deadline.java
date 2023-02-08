@@ -1,9 +1,10 @@
 package tasks;
 
 public class Deadline extends Task {
+    protected TaskType taskType = TaskType.DEADLINE;
 
     protected String by;
-    public Deadline(String description, String by){
+    public Deadline(String description, String by) throws EmptyDescriptionException{
         super(description);
         this.by = by;
     }

@@ -1,10 +1,11 @@
 package tasks;
 
 public class Event extends Task {
+    protected TaskType taskType = TaskType.EVENT;
 
     protected String from; // datetime as a string
     protected String to; // datetime as a string
-    public Event(String description, String from, String to){
+    public Event(String description, String from, String to) throws EmptyDescriptionException {
         super(description);
         this.from = from;
         this.to = to;

@@ -1,6 +1,7 @@
 package tasks;
 
 public enum TaskType {
+    TASK("task"),
     EVENT("event"),
     TODO("todo"),
     DEADLINE("deadline");

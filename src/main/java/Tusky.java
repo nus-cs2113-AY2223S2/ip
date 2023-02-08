@@ -1,15 +1,12 @@
 
 import io.KeyNotFoundException;
-import tasks.Task;
-import tasks.Event;
-import tasks.Deadline;
-import tasks.ToDo;
+import tasks.*;
 import io.Message;
 import io.Parser;
 
 import java.util.Scanner;
 
-public class Duke {
+public class Tusky {
 
     static final int MAX_TASKS = 100;
 
@@ -89,13 +86,31 @@ public class Duke {
                     unmarkTask(index);
                     break;
                 case "todo":
-                    addTask(new ToDo(parser.getBody()));
+                    try{
+                        addTask(new ToDo(parser.getBody()));
+                    } catch (EmptyDescriptionException e){
+                        println(Message.LINE.toString());
+                        printf(Message.ERR_EMPTY_TASK_DESCRIPTION.toString(), TaskType.TODO);
+                        println(Message.LINE.toString());
+                    }
                     break;
                 case "event":
-                    addTask(new Event(parser.getBody(), parser.get("from"), parser.get("to")));
+                    try{
+                        addTask(new Event(parser.getBody(), parser.get("from"), parser.get("to")));
+                    } catch (EmptyDescriptionException e){
+                        println(Message.LINE.toString());
+                        printf(Message.ERR_EMPTY_TASK_DESCRIPTION.toString(), TaskType.EVENT);
+                        println(Message.LINE.toString());
+                    }
                     break;
                 case "deadline":
-                    addTask(new Deadline(parser.getBody(), parser.get("by")));
+                    try{
+                        addTask(new Deadline(parser.getBody(), parser.get("by")));
+                    } catch (EmptyDescriptionException e){
+                        println(Message.LINE.toString());
+                        printf(Message.ERR_EMPTY_TASK_DESCRIPTION.toString(), TaskType.DEADLINE);
+                        println(Message.LINE.toString());
+                    }
                     break;
                 default:
                     println(Message.LINE.toString());
@@ -103,7 +118,7 @@ public class Duke {
                     println(Message.LINE.toString());
                     break;
                 }
-            } catch (KeyNotFoundException e) {
+            } catch (KeyNotFoundException e){
                 println(Message.LINE.toString());
                 println(e.getMessage());
                 println(Message.LINE.toString());

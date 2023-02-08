@@ -1,9 +1,8 @@
 package io;
 
 public enum Message {
-
     LINE("____________________________________________________________"),
-    WELCOME(" Hello! I'm Duke\n     What can I do for you?"),
+    WELCOME(" Hello! I'm Tusky the Walrus\n     What can I do for you?"),
     GOODBYE(" Bye. Hope to see you again soon!"),
     TASK_ADDED(" Got it. I've added this task:\n"),
     TASK_COUNT(" Now you have %d tasks in the list.\n"),
@@ -16,7 +15,8 @@ public enum Message {
     ERR_INVALID_INDEX(" Invalid index!"),
     ERR_KEY_NOT_FOUND(" You missed out your \"%s\" argument!"),
     ERR_UNKNOWN_COMMAND(" Sorry I don't recognise that command."),
-    ERR_UNKNOWN_EXCEPTION(" Something went wrong: ");
+    ERR_UNKNOWN_EXCEPTION(" Something went wrong: "),
+    ERR_EMPTY_TASK_DESCRIPTION(" The body of a %s cannot be empty!\n");
 
 
 
