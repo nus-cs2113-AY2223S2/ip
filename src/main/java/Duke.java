@@ -12,23 +12,34 @@ public class Duke {
         while (!isExit) {
             String messageFromUser;
             messageFromUser = in.nextLine();
-
-            if (hasTaskKeyword(messageFromUser)) {
-                Task newTask = handleTaskCreation(messageFromUser);
-                addToList(newTask, tasks);
-            } else if (messageFromUser.startsWith("mark") || messageFromUser.startsWith("unmark")) {
-                changeTaskStatus(messageFromUser, tasks);
-            } else if (messageFromUser.equals("list")) {
-                displayList(tasks);
-            } else if (messageFromUser.equals("bye")) {
-                exitGreeting();
-                isExit = true;
-            } else {
-                System.out.println("Invalid instruction. Please try again.");
+            try {
+                if (hasTaskKeyword(messageFromUser)) {
+                    Task newTask = handleTaskCreation(messageFromUser);
+                    addToList(newTask, tasks);
+                } else if (messageFromUser.startsWith("mark") || messageFromUser.startsWith("unmark")) {
+                    changeTaskStatus(messageFromUser, tasks);
+                } else if (messageFromUser.equals("list")) {
+                    displayList(tasks);
+                } else if (messageFromUser.equals("bye")) {
+                    exitGreeting();
+                    isExit = true;
+                } else {
+                    throw new DukeException();
+                }
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Hmm... some details appear to be missisng. Please try again.");
+                horizontalLine();
+            } catch (DukeException e) {
+                System.out.println("I'm sorry, but I don't know what that means");
                 horizontalLine();
             }
         }
     }
+
+//    else {
+//        System.out.println("Invalid instruction. Please try again.");
+//        horizontalLine();
+//    }
 
     public static boolean hasTaskKeyword(String messageFromUser) {
         boolean isToDo = messageFromUser.startsWith("todo");
@@ -125,8 +136,8 @@ public class Duke {
 
     public static ToDo createToDo(String messageFromUser) {
         // Remove the word "todo" from message
-        messageFromUser = messageFromUser.substring(4);
-        ToDo newToDo = new ToDo(messageFromUser);
+        String[] messageComponents = messageFromUser.split(" ", 2);
+        ToDo newToDo = new ToDo(messageComponents[1]);
         return newToDo;
     }
 
