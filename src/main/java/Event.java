@@ -2,10 +2,18 @@ public class Event extends Task {
     protected String eventStart;
     protected String eventEnd;
 
-    public Event(String description, String eventStart, String eventEnd) {
-        super(description);
-        this.eventStart = eventStart;
-        this.eventEnd = eventEnd;
+    public static String[] parseCommand (String command){
+        String[] descriptionArray = new String[3];
+        String[] descriptionAndEventInfo = command.split("event")[1].split("/");
+        for (int i = 0; i < 3; i++){
+            descriptionArray[i] = descriptionAndEventInfo[i].trim();
+        }
+        return descriptionArray;
+    }
+    public Event(String[] descriptionArray) {
+        super(descriptionArray);
+        this.eventStart = descriptionArray[1];
+        this.eventEnd = descriptionArray[2];
     }
 
     @Override

@@ -1,15 +1,23 @@
+import java.util.Arrays;
+
 public class Task {
     protected String description;
     protected boolean isDone;
     static int numberOfTasks = 0;
-    public Task (String description) {
-        this.description = description;
+
+    public static String[] parseCommand (String command) {
+        String[] commandArray = command.split(" ");
+        return Arrays.copyOfRange(commandArray, 1, commandArray.length);
+    }
+
+    public Task (String[] descriptionArray) {
+        this.description = descriptionArray[0];
         this.isDone = false;
         numberOfTasks++;
     }
 
-    public Task (String description, boolean isDone) {
-        this(description);
+    public Task (String[] descriptionArray, boolean isDone) {
+        this(descriptionArray);
         this.isDone = isDone;
     }
 
