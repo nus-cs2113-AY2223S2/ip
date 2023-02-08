@@ -11,7 +11,7 @@ Hello from
 | |___| |_| | |  | || |_| |  _ < _  | |___ | || |_| |/ /_ | |  | |/ ___ \| |\  | |_| |
 |_____|____/___| |_| \___/|_| \_(_) |_____|___|\___//____|___| |_/_/   \_\_| \_|\____|
 
-Hello! I'm Duke, edited by liuziyang
+Hello! I'm DukeRobot, edited by liuziyang
 What can I do for you?
 ____________________________________________________________
 Got it. I've added this task:

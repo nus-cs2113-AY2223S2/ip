@@ -1,4 +1,4 @@
-package DukeCommandLine;
+package Duke.DukeCommandLine;
 public class DukeCommandLineInput {
     String commandType;
     String commandMessage;
