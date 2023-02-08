@@ -38,7 +38,7 @@ public class Echo {
         String readInputAsArray[] = readInput.split(" ", 2);
         String command = readInputAsArray[0];
         String task = " ";
-        if(readInputAsArray.length > 1) {
+        if (readInputAsArray.length > 1) {
             task = readInputAsArray[1];
         }
 
@@ -46,29 +46,55 @@ public class Echo {
             if (command.equals("list")) {
                 list_Input(tasks, count);
             } else if (command.equals("unmark")) {
-                unmark_Input(tasks, task);
+                try {
+                    unmark_Input(tasks, task);
+                } catch (DukeException e) {
+                    System.out.println("☹ OOPS!!! Which task do you want to unmark?");
+                }
             } else if (command.equals("mark")) {
-                mark_Input(tasks, task);
-            } else if (command.equals("todo")){
-                count = todo_Input(tasks, count, task);
+                try {
+                    mark_Input(tasks, task);
+                } catch (DukeException e) {
+                    System.out.println("☹ OOPS!!! Which task do you want to mark?");
+                }
+            } else if (command.equals("todo")) {
+                try {
+                    count = todo_Input(tasks, count, task);
+                } catch (DukeException e) {
+                    System.out.println("☹ OOPS!!! The description of a todo cannot be empty.");
+                }
             } else if (command.equals("deadline")) {
-                count = deadline_Input(tasks, count, task);
+                try {
+                    count = deadline_Input(tasks, count, task);
+                } catch (DukeException e) {
+                    System.out.println("☹ OOPS!!! The description of a deadline cannot be empty.");
+                }
             } else if (command.equals("event")) {
-                count = event_Input(tasks, count, task);
+                try {
+                    count = event_Input(tasks, count, task);
+                } catch (DukeException e) {
+                    System.out.println("☹ OOPS!!! The description of an event cannot be empty.");
+                }
+            } else {
+                System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
             }
 
             readInput = in.nextLine();
             readInputAsArray = readInput.split(" ", 2);
             command = readInputAsArray[0];
-            if(readInputAsArray.length > 1) {
+            task = " ";
+            if (readInputAsArray.length > 1) {
                 task = readInputAsArray[1];
             }
         }
 
-        System.out.println("Bye. Hope to see you again!\n");
+        System.out.println("Bye. Hope to see you again!");
     }
 
-    private static int event_Input(Task[] tasks, int count, String task) {
+    private static int event_Input(Task[] tasks, int count, String task) throws DukeException {
+        if (task == " ") {
+            throw new DukeException();
+        }
         System.out.println("Got it. I've added this task:");
         String taskAsArray[] = task.split("/");
         tasks[count] = new Event(taskAsArray[0], taskAsArray[1], taskAsArray[2]);
@@ -78,7 +104,10 @@ public class Echo {
         return count;
     }
 
-    private static int deadline_Input(Task[] tasks, int count, String task) {
+    private static int deadline_Input(Task[] tasks, int count, String task) throws DukeException {
+        if (task == " ") {
+            throw new DukeException();
+        }
         System.out.println("Got it. I've added this task:");
         String taskAsArray[] = task.split("/");
         tasks[count] = new Deadline(taskAsArray[0], taskAsArray[1]);
@@ -88,7 +117,10 @@ public class Echo {
         return count;
     }
 
-    private static int todo_Input(Task[] tasks, int count, String task) {
+    private static int todo_Input(Task[] tasks, int count, String task) throws DukeException {
+        if (task == " ") {
+            throw new DukeException();
+        }
         System.out.println("Got it. I've added this task:");
         tasks[count] = new Todo(task);
         System.out.println(tasks[count].toString());
@@ -97,14 +129,20 @@ public class Echo {
         return count;
     }
 
-    private static void mark_Input(Task[] tasks, String task) {
+    private static void mark_Input(Task[] tasks, String task) throws DukeException {
+        if (task == " ") {
+            throw new DukeException();
+        }
         int taskNoInt = Integer.parseInt(task);
         tasks[taskNoInt - 1].markAsDone();
         System.out.println("Nice! I've marked this task as done:");
         System.out.println(tasks[taskNoInt - 1].toString());
     }
 
-    private static void unmark_Input(Task[] tasks, String task) {
+    private static void unmark_Input(Task[] tasks, String task) throws DukeException {
+        if (task == " ") {
+            throw new DukeException();
+        }
         int taskNoInt = Integer.parseInt(task);
         tasks[taskNoInt - 1].markAsUndone();
         System.out.println("OK, I've marked this task as not done yet:");
