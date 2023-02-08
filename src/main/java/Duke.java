@@ -5,13 +5,13 @@ public class Duke {
     public static int tasksIndex = 0;
     public static boolean isInUse = true;
     public static Task[] tasks;
-    public static Scanner in;
+    public static Scanner inputReader;
 
     public static void main(String[] args) {
         initDuke();
         greetUser();
         while (isInUse) {
-            String userInput = getUserInput(in);
+            String userInput = getUserInput(inputReader);
             String[] informationNeededForPerformingUserRequest = processUserInput(userInput);
             performUserRequest(tasks, informationNeededForPerformingUserRequest);
         }
@@ -19,7 +19,7 @@ public class Duke {
 
     public static void initDuke() {
         tasks = new Task[MAX_NUMBER_OF_TASKS];
-        in = new Scanner(System.in);
+        inputReader = new Scanner(System.in);
     }
 
     private static void greetUser() {
@@ -31,7 +31,7 @@ public class Duke {
         return in.nextLine();
     }
 
-    private static String[] processUserInput(String userInput) {
+    private static String[] processUserInput(String userInput) throws IndexOutOfBoundsException {
         String[] informationNeededForPerformingUserRequest = {"", "", "", ""};
         String taskInformation = "";
 
@@ -40,14 +40,23 @@ public class Duke {
 
         switch (command) {
         case "mark":
-            // Fallthrough
-        case "unmark":
-            // Fallthrough
-        case "todo":
             taskInformation = userInput.split(" ", 2)[1];
             informationNeededForPerformingUserRequest[0] = command;
-            // For "mark", "unmark": info...[1] is the task number (1-indexed). For "todo": info...[1] is the task name.
+            // For "mark", "unmark": info...[1] is the task number (1-indexed).
             informationNeededForPerformingUserRequest[1] = taskInformation;
+        case "unmark":
+            taskInformation = userInput.split(" ", 2)[1];
+            informationNeededForPerformingUserRequest[0] = command;
+            // For "mark", "unmark": info...[1] is the task number (1-indexed).
+            informationNeededForPerformingUserRequest[1] = taskInformation;
+        case "todo":
+            try {
+                taskInformation = userInput.split(" ", 2)[1];
+                informationNeededForPerformingUserRequest[0] = command;
+                informationNeededForPerformingUserRequest[1] = taskInformation;
+            } catch(IndexOutOfBoundsException e) {
+                informationNeededForPerformingUserRequest[0] = "☹ OOPS!!! The description of a todo cannot be empty.";
+            }
             break;
         case "deadline":
             taskInformation = userInput.split(" ", 2)[1];
@@ -82,14 +91,14 @@ public class Duke {
         switch (informationNeededForPerformingUserRequest[0]) {
         case "bye":
             isInUse = false;
+            inputReader.close();
             printExitMessage();
             break;
         case "list":
             listTasks(tasks);
             break;
         case "mark":
-            int indexToBeMarked = Integer.parseInt(informationNeededForPerformingUserRequest[1]) - 1; // 0-indexed
-            tasks[indexToBeMarked].setDone(true);
+            int indexToBeMarked = -1;
             printNotification(tasks[indexToBeMarked], "mark", tasksIndex + 1);
             break;
         case "unmark":
@@ -112,13 +121,11 @@ public class Duke {
             printNotification(tasks[tasksIndex], "event", tasksIndex + 1);
             tasksIndex++;
             break;
-        default: // something went wrong, it is none of the cases -> must have been detected by processsInput() earlier
-            // print error message & user guide
-            System.out.println("Invalid input");
-            System.out.println("The input can be as follows:");
-            System.out.println("todo taskname (for example: todo eat)");
-            System.out.println("deadline taskname /by deadline (for example: deadline homework /by Wednesday)");
-            System.out.println("event taskname /from starttime /to endtime (for example: event party /from 7pm /to 11pm");
+        case "Invalid command": // earlier on we detected that such a command doesnt exist
+            System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+            break;
+        default: // earlier on we detected correct command but invalid taskInformation
+            System.out.println(informationNeededForPerformingUserRequest[0]);
             break;
         }
     }
