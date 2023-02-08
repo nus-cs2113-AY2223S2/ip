@@ -15,57 +15,62 @@ public class Duke {
             input = scanner.nextLine();
             command = input.split(" ")[0];
             int taskIndex;
-            switch (command) {
-                case "list":
-                    outputMessage = Task.getTasksList(tasks);
-                    break;
-                case "mark":
-                    taskIndex = getTaskIndexFromInput(input);
-                    tasks[taskIndex].markAsDone();
-                    outputMessage = "Nice! I've marked this task as done:" + System.lineSeparator() + "\t"
-                            + tasks[taskIndex].toString();
-                    break;
-                case "unmark":
-                    taskIndex = getTaskIndexFromInput(input);
-                    tasks[taskIndex].unmarkAsDone();
-                    outputMessage = "Ok, I've marked this task as not done:" + System.lineSeparator() + "\t"
-                            + tasks[taskIndex].toString();
-                    break;
-                case "task":
-                    String[] taskDescription = Task.parseCommand(input);
-                    Task newTask = new Task(taskDescription);
-                    tasks[Task.numberOfTasks - 1] = newTask;
-                    outputMessage = TASK_ADDED_PREFIX + newTask.toString() + System.lineSeparator() + "\t"
-                            + getTaskAddedPostfix();
-                    break;
-                case "todo":
-                    String[] toDoDescription = ToDo.parseCommand(input);
-                    Task newTodo = new ToDo(toDoDescription);
-                    tasks[Task.numberOfTasks - 1] = newTodo;
-                    outputMessage = TASK_ADDED_PREFIX + newTodo.toString() + System.lineSeparator() + "\t"
-                            + getTaskAddedPostfix();
-                    break;
-                case "deadline":
-                    String[] deadlineDescription = Deadline.parseCommand(input);
-                    Deadline newDeadline = new Deadline(deadlineDescription);
-                    tasks[Task.numberOfTasks - 1] = newDeadline;
-                    outputMessage = TASK_ADDED_PREFIX + newDeadline.toString() + System.lineSeparator() + "\t"
-                            + getTaskAddedPostfix();
-                    break;
-                case "event":
-                    String[] eventDescription = Event.parseCommand(input);
-                    Task newEvent = new Event(eventDescription);
-                    tasks[Task.numberOfTasks - 1] = newEvent;
-                    outputMessage = TASK_ADDED_PREFIX + newEvent.toString() + System.lineSeparator() + "\t"
-                            + getTaskAddedPostfix();
-                    break;
-                case "bye":
-                    outputMessage = "Bye. Hope to see you again soon!";
-                    System.exit(0);
-                default:
-                    outputMessage = "Sorry, I don't understand what you said. Can you say it again";
-                    break;
+            try {
+                switch (command) {
+                    case "list":
+                        outputMessage = Task.getTasksList(tasks);
+                        break;
+                    case "mark":
+                        taskIndex = getTaskIndexFromInput(input);
+                        tasks[taskIndex].markAsDone();
+                        outputMessage = "Nice! I've marked this task as done:" + System.lineSeparator() + "\t"
+                                + tasks[taskIndex].toString();
+                        break;
+                    case "unmark":
+                        taskIndex = getTaskIndexFromInput(input);
+                        tasks[taskIndex].unmarkAsDone();
+                        outputMessage = "Ok, I've marked this task as not done:" + System.lineSeparator() + "\t"
+                                + tasks[taskIndex].toString();
+                        break;
+                    case "task":
+                        String[] taskDescription = Task.parseCommand(input);
+                        Task newTask = new Task(taskDescription);
+                        tasks[Task.numberOfTasks - 1] = newTask;
+                        outputMessage = TASK_ADDED_PREFIX + newTask.toString() + System.lineSeparator() + "\t"
+                                + getTaskAddedPostfix();
+                        break;
+                    case "todo":
+                        String[] toDoDescription = ToDo.parseCommand(input);
+                        Task newTodo = new ToDo(toDoDescription);
+                        tasks[Task.numberOfTasks - 1] = newTodo;
+                        outputMessage = TASK_ADDED_PREFIX + newTodo.toString() + System.lineSeparator() + "\t"
+                                + getTaskAddedPostfix();
+                        break;
+                    case "deadline":
+                        String[] deadlineDescription = Deadline.parseCommand(input);
+                        Deadline newDeadline = new Deadline(deadlineDescription);
+                        tasks[Task.numberOfTasks - 1] = newDeadline;
+                        outputMessage = TASK_ADDED_PREFIX + newDeadline.toString() + System.lineSeparator() + "\t"
+                                + getTaskAddedPostfix();
+                        break;
+                    case "event":
+                        String[] eventDescription = Event.parseCommand(input);
+                        Task newEvent = new Event(eventDescription);
+                        tasks[Task.numberOfTasks - 1] = newEvent;
+                        outputMessage = TASK_ADDED_PREFIX + newEvent.toString() + System.lineSeparator() + "\t"
+                                + getTaskAddedPostfix();
+                        break;
+                    case "bye":
+                        outputMessage = "Bye. Hope to see you again soon!";
+                        System.exit(0);
+                    default:
+                        throw new InvalidCommandException();
+                }
+            } catch (InvalidCommandException e) {
+                outputMessage = e.getMessage();
             }
+
+
 
             System.out.println("\t____________________________________________________________");
             System.out.println("\t" + outputMessage);

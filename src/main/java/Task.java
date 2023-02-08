@@ -5,8 +5,11 @@ public class Task {
     protected boolean isDone;
     static int numberOfTasks = 0;
 
-    public static String[] parseCommand (String command) {
+    public static String[] parseCommand (String command) throws InvalidCommandException{
         String[] commandArray = command.split(" ");
+        if (commandArray.length < 2){
+            throw new InvalidCommandException("Description of task cannot be empty!");
+        }
         return Arrays.copyOfRange(commandArray, 1, commandArray.length);
     }
 

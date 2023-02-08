@@ -1,13 +1,15 @@
 public class Deadline extends Task {
     protected String deadlineBy;
 
-    public static String[] parseCommand (String command){
+    public static String[] parseCommand (String command) throws InvalidCommandException {
         String[] descriptionArray = new String[2];
         String[] descriptionAndDeadline = command.split("deadline")[1].split("/");
+        if (descriptionAndDeadline.length < 2){
+            throw new InvalidCommandException("Incomplete deadline description!");
+        }
         for (int i = 0; i < 2; i++) {
             descriptionArray[i] = descriptionAndDeadline[i].trim();
         }
-
         return descriptionArray;
     }
     public Deadline(String[] descriptionArray) {
