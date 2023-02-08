@@ -44,8 +44,9 @@ public class Duke {
         while (true) {
             userInput = getInput(in);
             try {
-                String[] seperatedKeywordAndContent = userInput.split(" ", 2);
-                CommandKeywords keyword = CommandKeywords.valueOf(seperatedKeywordAndContent[0]);
+                String[] separatedKeyWordAndContent = userInput.split(" ", 2);
+                CommandKeywords catchErrorKeyword = CommandKeywords.valueOf(separatedKeyWordAndContent[0]);
+                String keyword = separatedKeyWordAndContent[0];
                 if (userInput.equals("bye")) {
                     System.out.println(BYE_MESSAGE);
                     createHorizontalLine();
@@ -54,27 +55,27 @@ public class Duke {
                     showHelpMessage();
                 } else if (userInput.equals("list")) {
                     printItems(tasks);
-                } else if (seperatedKeywordAndContent[0].equals("todo")) {
-                    if (handleException(seperatedKeywordAndContent,1, EMPTY_TODO_DESCRIPTION)) {
+                } else if (keyword.equals("todo")) {
+                    if (doesExceptionOccur(separatedKeyWordAndContent,1, EMPTY_TODO_DESCRIPTION)) {
                         continue;
                     }
-                    addTodoTask(seperatedKeywordAndContent[1], tasks);
-                } else if (seperatedKeywordAndContent[0].equals("deadline")) {
-                    if (handleException(seperatedKeywordAndContent,1, EMPTY_DEADLINE_DESCRIPTION)) {
+                    addTodoTask(separatedKeyWordAndContent[1], tasks);
+                } else if (keyword.equals("deadline")) {
+                    if (doesExceptionOccur(separatedKeyWordAndContent,1, EMPTY_DEADLINE_DESCRIPTION)) {
                         continue;
                     }
-                    addDeadlineTask(seperatedKeywordAndContent[1], tasks);
-                } else if (seperatedKeywordAndContent[0].equals("event")) {
-                    if (handleException(seperatedKeywordAndContent,1, EMPTY_EVENT_DESCRIPTION)) {
+                    addDeadlineTask(separatedKeyWordAndContent[1], tasks);
+                } else if (keyword.equals("event")) {
+                    if (doesExceptionOccur(separatedKeyWordAndContent,1, EMPTY_EVENT_DESCRIPTION)) {
                         continue;
                     }
-                    addEventTask(seperatedKeywordAndContent[1], tasks);
-                } else if (seperatedKeywordAndContent[0].equals("mark") || seperatedKeywordAndContent[0].equals("unmark")) {
+                    addEventTask(separatedKeyWordAndContent[1], tasks);
+                } else if (keyword.equals("mark") || keyword.equals("unmark")) {
                     if (userInput.split(" ").length != 2) {
                         System.out.println(MARK_INSTRUCTION + "\n"
-                                + seperatedKeywordAndContent[0] + ": Number");
+                                + keyword + ": Number");
                     } else {
-                        changeTaskStatus(tasks, seperatedKeywordAndContent);
+                        changeTaskStatus(tasks, separatedKeyWordAndContent);
                     }
                 }
             } catch (IllegalArgumentException error) {
@@ -120,7 +121,7 @@ public class Duke {
         System.out.println(EVENT_FORMAT);
     }
 
-    private static boolean handleException(String[] stringArray, int index, String outputMessage) {
+    private static boolean doesExceptionOccur(String[] stringArray, int index, String outputMessage) {
         try {
             String test = stringArray[index];
             return false;
@@ -140,7 +141,7 @@ public class Duke {
 
     private static void addDeadlineTask(String content, ArrayList<Task> tasks) {
         String[] seperatedWordsInContent = content.split(" /");
-        if (handleException(seperatedWordsInContent, 1, DEADLINE_INVALID_INPUT)) {
+        if (doesExceptionOccur(seperatedWordsInContent, 1, DEADLINE_INVALID_INPUT)) {
             return;
         }
         if (seperatedWordsInContent[1].startsWith("by ")) {
@@ -158,11 +159,11 @@ public class Duke {
 
     private static void addEventTask(String content, ArrayList<Task> tasks) {
         String[] seperatedWordsInContent = content.split(" /");
-        if (handleException(seperatedWordsInContent,2,EVENT_INVALID_INPUT)) {
+        if (doesExceptionOccur(seperatedWordsInContent,2,EVENT_INVALID_INPUT)) {
             return;
         }
         String beginDate = seperatedWordsInContent[1].split(" ", 2)[1];
-        if (handleException(seperatedWordsInContent[2].split(" ", 2),1,"☹ OOPS!!! The description of a todo cannot be empty.")) {
+        if (doesExceptionOccur(seperatedWordsInContent[2].split(" ", 2),1,EVENT_INVALID_INPUT)) {
             return;
         }
         String endDate = seperatedWordsInContent[2].split(" ", 2)[1];
@@ -193,8 +194,8 @@ public class Duke {
                     tasks.get(lastWordInInteger - 1).mark();
                     System.out.println(FINISH_MARKING_MESSAGE);
                 }
-                System.out.println(lastWordInInteger + ". " + "[" + tasks.get(lastWordInInteger - 1).getMarkingStatus()
-                        + "]" + tasks.get(lastWordInInteger - 1).getContent());
+                System.out.println(lastWordInInteger + ". " + tasks.get(lastWordInInteger - 1).getMarkingStatus()
+                        + " " + tasks.get(lastWordInInteger - 1).getContent());
             }
         } catch (Exception error) {
             System.out.println(MARK_INSTRUCTION + "\n" + seperatedWords[0] + ": Number");
@@ -206,18 +207,19 @@ public class Duke {
             Task item = container.get(i);
             if (item == null) {
                 break;
-            } else if (item.getClassSymbol().equals("T")) {
-                System.out.println((i + 1) + ". " + "[" + item.getClassSymbol() + "]" + "["
-                        + item.getMarkingStatus() + "] " + item.getContent());
-            } else if (item.getClassSymbol().equals("D")) {
-                System.out.println((i + 1) + ". " + "[" + item.getClassSymbol() + "]" + "["
-                        + item.getMarkingStatus() + "] " + item.getContent() + "(by: " + item.getDate() + ")");
-            } else if (item.getClassSymbol().equals("E")) {
-                System.out.println((i + 1) + ". " + "[" + item.getClassSymbol() + "]" + "["
-                        + item.getMarkingStatus() + "] " + item.getContent() + "(from: " + item.getBeginDate()
+            } else if (item.getClassSymbol().equals("[T]")) {
+                System.out.println((i + 1) + "." + item.getClassSymbol()
+                        + item.getMarkingStatus() + " " + item.getContent());
+            } else if (item.getClassSymbol().equals("[D]")) {
+                System.out.println((i + 1) + "." + item.getClassSymbol()
+                        + item.getMarkingStatus() + " " + item.getContent() + "(by: " + item.getDate() + ")");
+            } else if (item.getClassSymbol().equals("[E]")) {
+                System.out.println((i + 1) + "." + item.getClassSymbol()
+                        + item.getMarkingStatus() + " " + item.getContent() + "(from: " + item.getBeginDate()
                         + " to: " + item.getEndDate() + ")");
             }
         }
     }
 
 }
+

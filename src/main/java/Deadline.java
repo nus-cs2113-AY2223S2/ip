@@ -9,7 +9,7 @@ public class Deadline extends Task{
 
     @Override
     public String getClassSymbol() {
-        return "D";
+        return "[D]";
     }
 
     @Override

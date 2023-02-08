@@ -7,7 +7,7 @@ public class ToDo extends Task{
 
     @Override
     public String getClassSymbol() {
-        return "T";
+        return "[T]";
     }
 
 }
