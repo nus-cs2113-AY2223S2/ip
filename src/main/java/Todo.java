@@ -1,4 +1,5 @@
 public class Todo extends Task {
+    private static final String MISSING_DESCRIPTION_ERROR = " Remember to provide a description of the todo task you're adding y'know!";
     private static final String TYPE = "T";
     protected final boolean isDone;
 
@@ -31,10 +32,10 @@ public class Todo extends Task {
         return Todo.TYPE;
     }
 
-    public static Todo create(String command) {
+    public static Todo create(String command) throws RicaTaskException {
         String description = Todo.getDescriptionOf(command);
         if (description.isBlank()) {
-            return null;
+            throw new RicaTaskException(Todo.MISSING_DESCRIPTION_ERROR);
         }
         return new Todo(description);
     }

@@ -9,6 +9,7 @@ public class Rica {
     private static final String LIST_TRIGGER = "list";
     private static final String MARK_TRIGGER = "mark";
     private static final String TODO_TRIGGER = "todo";
+    private static final String UNKNOWN_CMD_ERROR = " ??? Sorry, I don't understand this command. Sent to the wrong bot? xD";
     private static final String UNMARK_TRIGGER = "unmark";
     private static TaskManager taskManager;
 
@@ -24,7 +25,7 @@ public class Rica {
     /**
      * Parse the command entered into CLI and execute the corresponding actions
      */
-    private static void runCommands() {
+    private static void runCommands() throws RicaTaskException {
         Scanner in = new Scanner(System.in);
         String command = "";
         do {
@@ -46,11 +47,17 @@ public class Rica {
             case Rica.DEADLINE_TRIGGER:
             case Rica.EVENT_TRIGGER:
             case Rica.TODO_TRIGGER:
-                Rica.getTaskManager().createTaskFrom(command);
+                try {
+                    Rica.getTaskManager().createTaskFrom(command);
+                } catch (RicaTaskException exception) {
+                    printlnWithIndent(exception.getMessage());
+                }
                 break;
             case Rica.BYE_TRIGGER:
                 printlnWithIndent(Rica.BYE_PHRASE);
                 break;
+            default:
+                printlnWithIndent(UNKNOWN_CMD_ERROR);
             }
             printlnWithIndent(Rica.LINE);
         } while (!command.equals(Rica.BYE_TRIGGER));
@@ -63,7 +70,11 @@ public class Rica {
         printlnWithIndent(" How may I be of assistance?");
         printlnWithIndent(Rica.LINE);
         taskManager = new TaskManager();
-        Rica.runCommands();
+        try {
+            Rica.runCommands();
+        } catch (RicaException exception) {
+            printlnWithIndent(exception.getMessage());
+        }
     }
 
 }
