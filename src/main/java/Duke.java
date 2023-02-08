@@ -33,7 +33,7 @@ public class Duke {
                 case "todo":
                     prompt = sc.nextLine();
                     newTask = new Todo(prompt.trim());
-                    newTask.addTaskMessage();
+                    newTask.addMessage();
                     taskList.add(newTask);
                     break;
 
@@ -43,7 +43,7 @@ public class Duke {
                     description = prompt.substring(0, dividerPosition).trim();
                     String by = prompt.substring(dividerPosition + 3).trim();
                     newTask = new Deadline(description, by);
-                    newTask.addTaskMessage();
+                    newTask.addMessage();
                     taskList.add(newTask);
                     break;
 
@@ -55,20 +55,20 @@ public class Duke {
                     String from = prompt.substring(divider1Position + 5, divider2Position).trim();
                     String to = prompt.substring(divider2Position + 3).trim();
                     newTask = new Event(description, from, to);
-                    newTask.addTaskMessage();
+                    newTask.addMessage();
                     taskList.add(newTask);
                     break;
 
                 case "mark":
                     indexTask = sc.nextInt() - 1;
                     taskList.get(indexTask).setStatus(true);
-                    taskList.get(indexTask).printMessage();
+                    taskList.get(indexTask).markMessage();
                     break;
 
                 case "unmark":
                     indexTask = sc.nextInt() - 1;
                     taskList.get(indexTask).setStatus(false);
-                    taskList.get(indexTask).printMessage();
+                    taskList.get(indexTask).markMessage();
                     break;
 
                 }
