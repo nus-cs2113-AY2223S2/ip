@@ -1,6 +1,10 @@
+package duke.addable;
+import duke.exception.ArgumentBlankException;
+
 public class Task {
     private String description;
     private boolean isDone;
+    protected final String commandString = "task";
 
     public boolean isDone() {
         return isDone;
@@ -12,10 +16,14 @@ public class Task {
 
     public Task(String description) throws ArgumentBlankException {
         if (description.isBlank()) {
-            throw new ArgumentBlankException("description");
+            throw new ArgumentBlankException(this.getCommandString(), "description");
         }
         this.setDescription(description);
         this.isDone = false;
+    }
+
+    public String getCommandString() {
+        return commandString;
     }
 
     public String getDescription() {
