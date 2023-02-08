@@ -6,6 +6,8 @@ public class Duke {
     private static final int VALID_MARK_LENGTH = 2;
     private static final int VALID_UNMARK_LENGTH = 2;
     private static final int MINIMUM_TODO_LENGTH = 2;
+    private static final int MINIMUM_DEADLINE_LENGTH = 4;
+    private static final int MINIMUM_EVENT_LENGTH = 6;
 
     public static void printGreeting() {
         System.out.println(SEGMENT_LINE);
@@ -137,10 +139,14 @@ public class Duke {
         boolean isInputDeadline = arrayOfInput[0].equals("deadline");
         boolean isInputEvent = arrayOfInput[0].equals("event");
         if (isInputTodo) {
-            addTodoTask(tasks, input);
+            String[] todoTaskNameArray = input.split(" ", 2);
+            checkValidTodo(todoTaskNameArray);
+            addTodoTask(tasks, todoTaskNameArray);
         } else if (isInputDeadline) {
+            checkValidDeadline(input, arrayOfInput);
             addDeadlineTask(tasks, input);
         } else if (isInputEvent) {
+            checkValidEvent(input, arrayOfInput);
             addEventTask(tasks, input);
         } else {
             // if input doesn't contain any keywords
@@ -152,23 +158,58 @@ public class Duke {
         Task.incrementTotalTasks();
     }
 
-    public static void addTodoTask(Task[] tasks, String input) throws DukeException {
-        String[] commandTaskNameArray = input.split(" ", 2);
-        if (commandTaskNameArray.length < MINIMUM_TODO_LENGTH) {
+    public static void checkValidTodo(String[] input) throws DukeException {
+        if (input.length < MINIMUM_TODO_LENGTH) {
             System.out.println(SEGMENT_LINE);
             System.out.println(" Invalid input! Valid input format: \"todo <task name>\"");
             throw new DukeException();
         }
-        tasks[Task.totalTasks] = new Todo(commandTaskNameArray[1]);
     }
 
-    public static void addDeadlineTask(Task[] tasks, String input) { // todo exceptions
+    public static void addTodoTask(Task[] tasks, String[] input) {
+        tasks[Task.totalTasks] = new Todo(input[1]);
+    }
+
+    public static void checkValidDeadline(String input, String[] arrayOfInput) throws DukeException {
+        if (!input.contains("/by")) {
+            System.out.println(SEGMENT_LINE);
+            System.out.println(" Invalid input! Valid input format: \"deadline <task name> /by <date>\"");
+            throw new DukeException();
+        }
+        if ( arrayOfInput.length < MINIMUM_DEADLINE_LENGTH) {
+            System.out.println(SEGMENT_LINE);
+            System.out.println(" Invalid input! Please provide enough arguments! "
+                    + System.lineSeparator() + " Valid input format: \"deadline <task name> /by <date>\"");
+            throw new DukeException();
+        }
+    }
+
+    public static void addDeadlineTask(Task[] tasks, String input) {
         String[] commandInformation = input.split(" ", 2);
         String[] taskNameAndDate = commandInformation[1].split("/by", 2);
         tasks[Task.totalTasks] = new Deadline(taskNameAndDate[0].trim(), taskNameAndDate[1].trim());
     }
 
-    public static void addEventTask(Task[] tasks, String input) { // todo exceptions
+    public static void checkValidEvent(String input, String[] arrayOfInput) throws DukeException {
+        if (!input.contains("/from") || !input.contains("/to")) {
+            System.out.println(SEGMENT_LINE);
+            System.out.println(" Invalid input! Valid input format: \"event <task name> /from <date> /to <date>\"");
+            throw new DukeException();
+        }
+        if (input.indexOf("/from") > input.indexOf("/to")) {
+            System.out.println(SEGMENT_LINE);
+            System.out.println(" Invalid input! Valid input format: \"event <task name> /from <date> /to <date>\"");
+            throw new DukeException();
+        }
+        if ( arrayOfInput.length < MINIMUM_EVENT_LENGTH) {
+            System.out.println(SEGMENT_LINE);
+            System.out.println(" Invalid input! Please provide enough arguments! "
+                    + System.lineSeparator() + " Valid input format: \"event <task name> /from <date> /to <date>\"");
+            throw new DukeException();
+        }
+    }
+
+    public static void addEventTask(Task[] tasks, String input) {
         String taskNameInformation = input.split(" ", 2)[1];
         String[] taskNameAndDate = taskNameInformation.split("/from", 2); // name fromTo
         String[] fromAndTo = taskNameAndDate[1].split("/to", 2); // from to
