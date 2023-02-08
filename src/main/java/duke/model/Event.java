@@ -8,12 +8,12 @@ public class Event extends Task {
 
     public static String[] parseCommand (String command) throws InvalidCommandException {
         String[] descriptionArray = new String[3];
-        String[] descriptionAndEventInfo = command.split("event")[1].split("/");
-        if (descriptionAndEventInfo.length < 3) {
+        String[] commandDescriptionArray = command.split("event");
+        if (commandDescriptionArray.length < 2 || commandDescriptionArray[1].split("/").length < 3){
             throw new InvalidCommandException("Incomplete event description!");
         }
         for (int i = 0; i < 3; i++){
-            descriptionArray[i] = descriptionAndEventInfo[i].trim();
+            descriptionArray[i] = commandDescriptionArray[1].split("/")[i].trim();
         }
         return descriptionArray;
     }

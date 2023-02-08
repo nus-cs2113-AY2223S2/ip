@@ -5,7 +5,7 @@ import duke.exception.InvalidCommandException;
 import java.util.Arrays;
 
 public class Task {
-    public String description;
+    public String taskName;
     protected boolean isDone;
     public static int numberOfTasks = 0;
 
@@ -18,7 +18,7 @@ public class Task {
     }
 
     public Task (String[] descriptionArray) {
-        this.description = descriptionArray[0];
+        this.taskName = descriptionArray[0];
         this.isDone = false;
         numberOfTasks++;
     }
@@ -51,7 +51,7 @@ public class Task {
     }
 
     public String toString () {
-        return "[" + this.getStatusIcon() + "]" + "\t" + this.description;
+        return "[" + this.getStatusIcon() + "]" + "\t" + this.taskName;
     }
 
 

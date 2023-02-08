@@ -3,7 +3,7 @@ package duke.exception;
 import java.util.Arrays;
 
 public class DukeException extends Exception {
-    private static final String DUKE_PREFIX = "duke.Duke Error: ";
+    private static final String DUKE_PREFIX = "Duke Error: ";
 
 
     public static String[] parseCommand (String command) throws InvalidCommandException{
