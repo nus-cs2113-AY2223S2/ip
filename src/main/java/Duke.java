@@ -1,6 +1,5 @@
 import java.util.Scanner;
 
-
 public class Duke {
     public static final int MAX_NUMBER_OF_TASKS = 100;
     public static int tasksIndex = 0;
@@ -13,8 +12,8 @@ public class Duke {
         greetUser();
         while (isInUse) {
             String userInput = getUserInput(in);
-            String[] processedInputs = processUserInput(userInput);
-            showResultToUser(tasks, processedInputs);
+            String[] informationNeededForPerformingUserRequest = processUserInput(userInput);
+            performUserRequest(tasks, informationNeededForPerformingUserRequest);
         }
     }
 
@@ -23,65 +22,126 @@ public class Duke {
         in = new Scanner(System.in);
     }
 
-    public static void showResultToUser(Task[] tasks, String[] processedInputs) {
-        if (processedInputs[0].equals("bye")) {
+    private static void greetUser() {
+        System.out.println("Hello! I'm Duke");
+        System.out.println("What can I do for you?");
+    }
+
+    private static String getUserInput(Scanner in) {
+        return in.nextLine();
+    }
+
+    private static String[] processUserInput(String userInput) {
+        String[] informationNeededForPerformingUserRequest = {"", "", "", ""};
+        String taskInformation = "";
+
+        // for all tasks: info...[0] is the command
+        String command = userInput.split(" ", 2)[0];
+
+        switch (command) {
+        case "mark":
+            // Fallthrough
+        case "unmark":
+            // Fallthrough
+        case "todo":
+            taskInformation = userInput.split(" ", 2)[1];
+            informationNeededForPerformingUserRequest[0] = command;
+            // For "mark", "unmark": info...[1] is the task number (1-indexed). For "todo": info...[1] is the task name.
+            informationNeededForPerformingUserRequest[1] = taskInformation;
+            break;
+        case "deadline":
+            taskInformation = userInput.split(" ", 2)[1];
+            informationNeededForPerformingUserRequest[0] = command;
+            // For "deadline": info...[1] is the name, info...[2] is the deadline.
+            informationNeededForPerformingUserRequest[1] = taskInformation.split(" /by ")[0];
+            informationNeededForPerformingUserRequest[2] = taskInformation.split(" /by ")[1];
+            break;
+        case "event":
+            taskInformation = userInput.split(" ", 2)[1];
+            informationNeededForPerformingUserRequest[0] = command;
+            // For "event": info...[1] is the name, info...[2] is when the task starts, info...[3] is when the task ends
+            informationNeededForPerformingUserRequest[1] = taskInformation.substring(0, taskInformation.indexOf(" /from "));
+            informationNeededForPerformingUserRequest[2] = taskInformation.substring(taskInformation.indexOf(" /from ") + 7, taskInformation.indexOf(" /to "));
+            informationNeededForPerformingUserRequest[3] = taskInformation.substring(taskInformation.indexOf(" /to ") + 5);
+            break;
+        case "bye":
+            // Fallthrough
+        case "list":
+            informationNeededForPerformingUserRequest[0] = command;
+            break;
+        default: // not a valid command
+            // ensure that the next function can tell that something went wrong with the command - flag it somehow
+            informationNeededForPerformingUserRequest[0] = "Invalid command";
+            break;
+        }
+        return informationNeededForPerformingUserRequest;
+    }
+
+
+    public static void performUserRequest(Task[] tasks, String[] informationNeededForPerformingUserRequest) {
+        switch (informationNeededForPerformingUserRequest[0]) {
+        case "bye":
             isInUse = false;
             printExitMessage();
-        } else if (processedInputs[0].equals("list")) {
+            break;
+        case "list":
             listTasks(tasks);
-        } else if (processedInputs[0].equals("mark")) {
-            int indexToBeMarked = Integer.parseInt(processedInputs[1]) - 1; // 0-indexed
+            break;
+        case "mark":
+            int indexToBeMarked = Integer.parseInt(informationNeededForPerformingUserRequest[1]) - 1; // 0-indexed
             tasks[indexToBeMarked].setDone(true);
             printNotification(tasks[indexToBeMarked], "mark", tasksIndex + 1);
-        } else if (processedInputs[0].equals("unmark")) {
-            int indexToBeUnmarked = Integer.parseInt(processedInputs[1]) - 1; // 0-indexed
+            break;
+        case "unmark":
+            int indexToBeUnmarked = Integer.parseInt(informationNeededForPerformingUserRequest[1]) - 1; // 0-indexed
             tasks[indexToBeUnmarked].setDone(false);
             printNotification(tasks[indexToBeUnmarked], "unmark", tasksIndex + 1);
-        } else if (processedInputs[0].equals("todo")) {
-            tasks[tasksIndex] = new ToDo(processedInputs[1]);
+            break;
+        case "todo":
+            tasks[tasksIndex] = new ToDo(informationNeededForPerformingUserRequest[1]);
             printNotification(tasks[tasksIndex], "todo", tasksIndex + 1);
             tasksIndex++;
-        } else if (processedInputs[0].equals("deadline")) { // now, if the array has 2 elements, then it is "deadline" case
-            String[] taskNameAndBy = furtherProcessInputForDeadline(processedInputs);
-            tasks[tasksIndex] = new Deadline(taskNameAndBy[0], taskNameAndBy[1]);
+            break;
+        case "deadline":
+            tasks[tasksIndex] = new Deadline(informationNeededForPerformingUserRequest[1],informationNeededForPerformingUserRequest[2]);
             printNotification(tasks[tasksIndex], "deadline", tasksIndex + 1);
             tasksIndex++;
-        } else { // must be "event" case
-            String[] fromAndToAndTaskName = furtherProcessInputForEvent(processedInputs);
-            tasks[tasksIndex] = new Event(fromAndToAndTaskName[2], fromAndToAndTaskName[0], fromAndToAndTaskName[1]);
+            break;
+        case "event":
+            tasks[tasksIndex] = new Event(informationNeededForPerformingUserRequest[1],informationNeededForPerformingUserRequest[2],informationNeededForPerformingUserRequest[3]);
             printNotification(tasks[tasksIndex], "event", tasksIndex + 1);
             tasksIndex++;
+            break;
+        default: // something went wrong, it is none of the cases -> must have been detected by processsInput() earlier
+            // print error message & user guide
+            System.out.println("Invalid input");
+            System.out.println("The input can be as follows:");
+            System.out.println("todo taskname (for example: todo eat)");
+            System.out.println("deadline taskname /by deadline (for example: deadline homework /by Wednesday)");
+            System.out.println("event taskname /from starttime /to endtime (for example: event party /from 7pm /to 11pm");
+            break;
         }
     }
 
-    private static String[] furtherProcessInputForDeadline(String[] processedInputs) {
-        String[] taskNameAndIdentifierAndBy = processedInputs[1].split("/", 2);
-        String[] identifierAndBy = taskNameAndIdentifierAndBy[1].split(" ", 2);
-        String[] taskNameAndBy = {taskNameAndIdentifierAndBy[0], identifierAndBy[1]};
-        return taskNameAndBy;
-    }
-
-    private static String[] furtherProcessInputForEvent(String[] processedInputs) {
-        String[] taskNameAndFromAndTo = processedInputs[1].split("/", 3);
-        String[] identifierAndFrom = taskNameAndFromAndTo[1].split(" ", 2);
-        String[] identifierAndTo = taskNameAndFromAndTo[2].split(" ", 2);
-        String[] fromAndToAndTaskName = {identifierAndFrom[1], identifierAndTo[1], taskNameAndFromAndTo[0]};
-        return fromAndToAndTaskName;
-    }
-
-    private static void printNotification(Task task, String modification, int numberOfTasks) {
-        boolean isRequiredToShowNumberOfTasks = false;
-        if (modification.equals("unmark")) {
+    private static void printNotification(Task task, String action, int numberOfTasks) {
+        switch (action) {
+        case "unmark":
             System.out.println("OK, I've marked this task as not done yet:");
-        } else if (modification.equals("mark")) {
+            task.printTask();
+            break;
+        case "mark":
             System.out.println("Nice! I've marked this task as done:");
-        } else { // adding either deadline, event or todo
+            task.printTask();
+            break;
+        case "deadline":
+            // Fallthrough
+        case "todo":
+            // Fallthrough
+        case "event":
             System.out.print("Got it. I've added this task:\n" + "  ");
-            isRequiredToShowNumberOfTasks = true;
-        }
-        task.printTask();
-        if (isRequiredToShowNumberOfTasks) {
+            task.printTask();
             System.out.println("Now you have " + numberOfTasks + " tasks in the list.");
+            break;
         }
     }
 
@@ -97,21 +157,6 @@ public class Duke {
             tasks[i].printTask();
         }
     }
-
-    private static void greetUser() {
-        System.out.println("Hello! I'm Duke");
-        System.out.println("What can I do for you?");
-    }
-
-    private static String getUserInput(Scanner in) {
-        String userInput = in.nextLine();
-        return userInput;
-    }
-
-    private static String[] processUserInput(String userInput) {
-        // first, split up the string ONCE with " " delimiter to separate the command & information
-        // processedInputs[0] is command, processedInputs[1] is the information
-        String[] processedInputs = userInput.split(" ", 2);
-        return processedInputs;
-    }
 }
+
+

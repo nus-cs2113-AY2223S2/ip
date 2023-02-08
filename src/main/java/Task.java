@@ -11,10 +11,6 @@ public class Task {
         this.isDone = done;
     }
 
-    public String getTaskName() {
-        return taskName;
-    }
-
     public String toString() {
         if (isDone) {
             return "[X] " + taskName;
