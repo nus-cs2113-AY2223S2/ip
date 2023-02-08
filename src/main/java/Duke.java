@@ -61,7 +61,7 @@ public class Duke {
                 } else if (userInput.startsWith("deadline")) {
                     try {
                         createDeadline(userInput);
-                    } catch (IndexOutOfBoundsException e) {
+                    } catch (StringIndexOutOfBoundsException e) {
                         System.out.println("Insufficient input for deadline. Adding deadline failed.\n" + line);
                     }
                 } else if (userInput.startsWith("event")) {
@@ -80,7 +80,6 @@ public class Duke {
         }
     }
 
-    //TODO: stringoutofboundexception
     public static void printTaskList() {
         System.out.println(line + "Here are the tasks in your list:");
         for (int i = 0; i < countTask; i++) {
@@ -112,13 +111,6 @@ public class Duke {
         }
     }
 
-//    public static void createTask(String input) {
-//        Task t = new Task(input);
-//        tasks[countTask] = t;
-//        countTask++;
-//        System.out.println(line + "added: " + t.getDescription() + '\n' + line);
-//    }
-
     public static void createTodo(String input) throws IndexOutOfBoundsException {
         ToDo todoTask = new ToDo(input.substring(5));
         tasks[countTask] = todoTask;
@@ -128,9 +120,9 @@ public class Duke {
     }
 
     public static void createDeadline(String input) throws IndexOutOfBoundsException {
-//        if (input == null) {
-//            throw new IndexOutOfBoundsException();
-//        }
+        if (!input.contains("/by") || input.indexOf("/by") + 4 > input.length()) {
+            throw new StringIndexOutOfBoundsException();
+        }
         Deadline deadlineTask = new Deadline(input.substring(9));
         tasks[countTask] = deadlineTask;
         countTask++;
@@ -139,6 +131,10 @@ public class Duke {
     }
 
     public static void createEvent(String input) throws IndexOutOfBoundsException {
+        if (!input.contains("/from") || ! input.contains("/to") || input.indexOf("/from") + 6 > input.length()
+            || input.indexOf("/to") + 4 > input.length()) {
+            throw new StringIndexOutOfBoundsException();
+        }
         Event eventTask = new Event(input.substring(6));
         tasks[countTask] = eventTask;
         countTask++;

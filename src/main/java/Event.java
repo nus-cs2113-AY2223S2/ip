@@ -4,7 +4,7 @@ public class Event extends Task {
     }
 
     public String getStartTime() {
-        return description.substring(description.indexOf('/') + 6, description.indexOf("/to")).trim();
+        return description.substring(description.indexOf("/from") + 6, description.indexOf("/to")).trim();
     }
 
     public String getEndTime() {
@@ -13,7 +13,7 @@ public class Event extends Task {
 
     @Override
     public String printTask() {
-        return "[E]" + super.printTask().substring(0, super.printTask().indexOf('/')) +
+        return "[E]" + super.printTask().substring(0, super.printTask().indexOf("/from")) +
                 "(from: " + getStartTime() + " to: " + getEndTime() + ")\n";
     }
 }
