@@ -14,11 +14,17 @@ public class Task {
 		return isCompleted;
 	}
 
-	public void markAsDone(){
+	public void markAsDone() throws TaskException {
+		if (isCompleted == true) {
+			throw new TaskException();
+		}
 		isCompleted = true;
 	}
 
-	public void markAsUndone(){
+	public void markAsUndone() throws TaskException {
+		if (isCompleted == false) {
+			throw new TaskException();
+		}
 		isCompleted = false;
 	}
 	public void printTask(){

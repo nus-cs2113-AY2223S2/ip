@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.Scanner;
 
 public class Duke {
@@ -18,7 +19,10 @@ public class Duke {
 
 		while (!shouldExit) {
 			userMessage = sc.nextLine();
-			if (userMessage.startsWith("todo")) {
+			if (userMessage.split(" ").length == 1) {
+				System.out.println("Please key in proper task descriptions!!");
+				dukeGreeting.printDivider();
+			} else if (userMessage.startsWith("todo")) {
 				userMessage.substring(6);
 				tasks[taskCount] = new Todo(userMessage);
 				dukeGreeting.printDivider();
@@ -32,7 +36,7 @@ public class Duke {
 				String[] message = userMessage.split(" /by ");
 				tasks[taskCount] = new Deadline(message[0], message[1]);
 				dukeGreeting.printDivider();
-				System.out.println("Got it. I've added this task: ");
+				System.out.println("Got it. I've added this deadline: ");
 				tasks[taskCount].printTask();
 				taskCount += 1;
 				System.out.println("Now you have " + taskCount + " tasks in the list.");
@@ -46,7 +50,7 @@ public class Duke {
 				String to = dates[1];
 				tasks[taskCount] = new Event(description, from, to);
 				dukeGreeting.printDivider();
-				System.out.println("Got it. I've added this task: ");
+				System.out.println("Got it. I've added this deadline: ");
 				tasks[taskCount].printTask();
 				taskCount += 1;
 				System.out.println("Now you have " + taskCount + " tasks in the list.");
@@ -55,18 +59,31 @@ public class Duke {
 				dukeGreeting.printDivider();
 				String[] messages = userMessage.split(" ");
 				int taskNumber = Integer.parseInt(messages[1]);
-				tasks[taskNumber - 1].markAsDone();
-				System.out.println("Niceee! I've marked this task as done: ");
-				tasks[taskCount - 1].printTask();
-				dukeGreeting.printDivider();
+
+				try {
+					tasks[taskNumber - 1].markAsDone();
+					System.out.println("Niceeee!!I've marked this task as done: ");
+					tasks[taskCount - 1].printTask();
+
+				} catch (TaskException e) {
+					System.out.println("You have already completed the task leh!");
+				} finally {
+					dukeGreeting.printDivider();
+				}
 			} else if (userMessage.startsWith("unmark")) {
 				dukeGreeting.printDivider();
 				String[] messages = userMessage.split(" ");
 				int taskNumber = Integer.parseInt(messages[1]);
-				tasks[taskNumber - 1].markAsUndone();
-				System.out.println("Fine...I've marked this task as undone: ");
-				tasks[taskCount - 1].printTask();
-				dukeGreeting.printDivider();
+				try {
+					tasks[taskNumber - 1].markAsUndone();
+					System.out.println("Okiee...You better complete it fast");
+					tasks[taskCount - 1].printTask();
+
+				} catch (TaskException e) {
+					System.out.println("You have not completed the task:(");
+				} finally {
+					dukeGreeting.printDivider();
+				}
 			} else if (userMessage.equalsIgnoreCase("Hello")) {
 				dukeGreeting.printDivider();
 				System.out.println(userMessage);
@@ -93,6 +110,7 @@ public class Duke {
 				dukeGreeting.printErrorMessage();
 			}
 		}
+
 	}
 
 	public static void main(String[] args) {
