@@ -14,7 +14,7 @@ public class Duke {
             String key = userInput[0];
             switch (key) {
             case "mark":
-                Tasks markTask =  Tasks.getTaskList().get(Integer.parseInt(userInput[1]) - 1);
+                Tasks markTask = Tasks.getTaskList().get(Integer.parseInt(userInput[1]) - 1);
                 markTask.setMarked(true);
                 command.setUserOutput("mark");
                 command.printOutput(markTask);
@@ -25,9 +25,26 @@ public class Duke {
                 command.setUserOutput("unmark");
                 command.printOutput(unMarkTask);
                 break;
+
+            case "todo":
+                Tasks newToDo = new Todo(userInput[1], false);
+                Tasks.addToList(newToDo);
+                command.setUserOutput("todo");
+                command.printOutput(newToDo);
+                break;
+
+            case "deadline":
+                String[] TaskSlashDate = userInput[1].split("/", 2);
+                Tasks newDeadline = new Dateline(TaskSlashDate[0], false, TaskSlashDate[1]);
+                Tasks.addToList(newDeadline);
+                command.setUserOutput("deadline");
+                command.printOutput(newDeadline);
+
             case "list":
                 command.printOutput();
                 break;
+
+
             default:
                 Tasks newTask = new Tasks(command.getUserInput(), false);
                 Tasks.addToList(newTask);
@@ -36,6 +53,6 @@ public class Duke {
             }
             command.setUserInput(in.nextLine());
         }
-        command.sayBye();
+        CommandManager.sayBye();
     }
 }

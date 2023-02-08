@@ -1,8 +1,15 @@
 import java.util.ArrayList;
+
 public class Tasks {
     private String item;
+    private String itemType;
     private int id;
     private boolean isMarked;
+
+   // private TaskType typeC;
+
+
+
     private static int numberOfTasks = 0;
     private static ArrayList<Tasks> taskList = new ArrayList<>();
 
@@ -10,13 +17,17 @@ public class Tasks {
     public Tasks(String item, boolean isMarked) {
         this.item = item;
         this.isMarked = isMarked;
+       // this.itemType = itemType;
         numberOfTasks++;
         this.id = numberOfTasks - 1;
     }
-
-    public static void addToList(Tasks task){
+    public static void addToList(Tasks task) {
 
         taskList.add(task);
+    }
+
+    public String getItemType() {
+        return itemType;
     }
 
     public static ArrayList<Tasks> getTaskList() {
@@ -58,4 +69,15 @@ public class Tasks {
 
         this.isMarked = isMarked;
     }
+    public String toString() {
+        String status;
+        if (isMarked) {
+            status = "[X] ";
+        } else {
+            status = "[ ] ";
+        }
+        return status + item;
+    }
+
+
 }

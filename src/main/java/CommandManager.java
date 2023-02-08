@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 
 public class CommandManager {
     //print Duke
@@ -18,6 +17,7 @@ public class CommandManager {
         System.out.print(DIVIDER + '\n'
                 + " \t Hello! I'm Duke\n\t What can I do for you?\n" + DIVIDER + "\n\n");
     }
+
     public static void sayBye() {
         System.out.println(DIVIDER + "\n\t Bye. Hope to see you again soon!\n" + DIVIDER);
     }
@@ -63,6 +63,19 @@ public class CommandManager {
         case "echo":
             System.out.println(DIVIDER + "\n\t added: " + task.getItem());
             System.out.println(DIVIDER);
+            break;
+        case "todo":
+            System.out.println(DIVIDER + "\n\t Got it. I've added this task:"
+                    + "\n\t   [T][ ] " + task.getItem());
+            System.out.println("\t Now you have " + Tasks.getNumberOfTasks() + " in your list.\n"
+                    + DIVIDER);
+            break;
+        case "deadline":
+            System.out.println(DIVIDER + "\n\t Got it. I've added this task:"
+                    + "\n\t   [D][ ] " + task.getItem() + "(");
+            System.out.println("\t Now you have " + Tasks.getNumberOfTasks() + " in your list.\n"
+                    + DIVIDER);
+            break;
 
 
         }
@@ -73,11 +86,13 @@ public class CommandManager {
         System.out.println(DIVIDER + "\n\t Here are the tasks in your list:");
         for (int num = 1; num <= totalNumberOfTasks; ++num) {
             Tasks thisTask = Tasks.getTaskList().get(num - 1);
-            if (thisTask.isMarked()) {
-                System.out.println("\t " + Integer.toString(num) + ".[X] " + thisTask.getItem());
-            } else {
-                System.out.println("\t " + Integer.toString(num) + ".[ ] " + thisTask.getItem());
-            }
+            System.out.println(thisTask);
+
+//            if (thisTask.isMarked()) {
+//                System.out.println("\t " + num + ".[X] " + thisTask.getItem());
+//            } else {
+//                System.out.println("\t " + num + ".[ ] " + thisTask.getItem());
+//            }
         }
         System.out.println(DIVIDER);
     }
