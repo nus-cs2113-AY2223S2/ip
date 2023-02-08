@@ -2,13 +2,28 @@ import java.util.Scanner;
 
 public class Duke {
 	public static final String DIVIDER = "____________________________________________________________\n";
-	public static final String UNKNOWN_COMMAND_MESSAGE = "Unknown command detected, please key help for the list of commands available";
+	public static final String UNKNOWN_COMMAND_MESSAGE = "Error: Unknown command detected, please type help for the list of commands available";
 	public static final String EXIT_MESSAGE = "Bye. Hope to see you again soon!\n";
 	public static final String GREET_MESSAGE = "Hello! I'm Bob\n" + "What can I do for you?\n";
 	public static final String ERROR_EMPTY_TODO_DESCRIPTION_MESSAGE = "Error: The description of Todo cannot be empty";
-	public static final String HELP_TODO_FORMAT = "Todo [description]";
 	public static final String ERROR_EMPTY_EVENT_DESCRIPTION_MESSAGE = "Error: The description, from or to cannot be empty";
 	public static final String ERROR_EMPTY_DEADLINE_DESCRIPTION = "Error: The description or by cannot be empty";
+	public static final String ERROR_TASK_NUMBER_OUT_OF_RANGE_MESSAGE = "Error: task number given out of range";
+	public static final String PRINT_HELP_INSTRUCTIONS_MESSAGE = "The following are the commands available and their arguments: ";
+	public static final String HELP_TODO_FORMAT = "Todo [description]";
+	public static final String HELP_TODO_DESCRIPTION = "Creates Todo task. Requires a description text.";
+	public static final String HELP_EVENT_FORMAT = "event [description] /from [from] /to [to]";
+	public static final String HELP_EVENT_DESCRIPTION = "Creates Event task. Requires a description, from and to texts.";
+	public static final String HELP_DEADLINE_FORMAT = "deadline [description] /by [by]";
+	public static final String HELP_DEADLINE_DESCRIPTION = "Creates a Deadline task. Requires a Description, by text";
+	public static final String HELP_MARK_FORMAT = "mark [task number]";
+	public static final String HELP_MARK_DESCRIPTION = "Marks selected task indicating it is done. Requires a task number.";
+	public static final String HELP_UNMARK_FORMAT = "unmark [task number]";
+	public static final String HELP_UNMARK_DESCRIPTION = "Unmarks selected task indicating it is undone. Requires a task number.";
+	public static final String HELP_LIST_FORMAT = "list";
+	public static final String HELP_LIST_DESCRIPTION = "Lists the available commands.";
+	public static final String HELP_BYE_FORMAT = "bye";
+	public static final String HELP_BYE_DESCRIPTION = "Exits and closes the program";
 	
 	public static void main(String[] args) {
 		greet();
@@ -69,7 +84,6 @@ public class Duke {
 			break;
 		default:
 			printUnknownCommandMessage();
-			printHelp();
 			break;
 		}
 	}
@@ -80,28 +94,64 @@ public class Duke {
 	}
 	
 	private static void printHelp() {
-		// TODO
-		System.out.println("list, todo, event, deadline, mark, unmark");
+		//  TODO
+		System.out.println(PRINT_HELP_INSTRUCTIONS_MESSAGE);
+		printHelpTodo();
+		System.out.println();
+		printHelpEvent();
+		System.out.println();
+		printHelpDeadline();
+		System.out.println();
+		printHelpMark();
+		System.out.println();
+		printHelpUnmark();
+		System.out.println();
+		printHelpList();
+		System.out.println();
+		printHelpBye();
+		System.out.println();
 	}
 	
 	private static void printHelpTodo() {
 		System.out.println(HELP_TODO_FORMAT);
+		System.out.println(HELP_TODO_DESCRIPTION);
 	}
 	
 	private static void printHelpEvent() {
-		System.out.println("event [description] /from [from] /to [to]");
+		System.out.println(HELP_EVENT_FORMAT);
+		System.out.println(HELP_EVENT_DESCRIPTION);
 	}
 	
 	private static void printHelpDeadline() {
-		System.out.println("deadline [description] /by [by]");
+		System.out.println(HELP_DEADLINE_FORMAT);
+		System.out.println(HELP_DEADLINE_DESCRIPTION);
 	}
 	
+	private static void printHelpMark() {
+		System.out.println(HELP_MARK_FORMAT);
+		System.out.println(HELP_MARK_DESCRIPTION);
+	}
+	
+	private static void printHelpUnmark() {
+		System.out.println(HELP_UNMARK_FORMAT);
+		System.out.println(HELP_UNMARK_DESCRIPTION);
+	}
+	
+	private static void printHelpList() {
+		System.out.println(HELP_LIST_FORMAT);
+		System.out.println(HELP_LIST_DESCRIPTION);
+	}
+	
+	private static void printHelpBye() {
+		System.out.println(HELP_BYE_FORMAT);
+		System.out.println(HELP_BYE_DESCRIPTION);
+	}
 	private static void runMark(Tasks list, String arg) {
 		int taskNumber = Integer.parseInt(arg);
 		if (taskNumber <= list.getTasksCount()) {
 			list.markTaskDone(taskNumber);
 		} else {
-			System.out.println("Error: task number given out of range");
+			System.out.println(ERROR_TASK_NUMBER_OUT_OF_RANGE_MESSAGE);
 		}
 	}
 	
@@ -110,7 +160,7 @@ public class Duke {
 		if (taskNumber <= list.getTasksCount()) {
 			list.markTaskUndone(taskNumber);
 		} else {
-			System.out.println("Error: task number given out of range");
+			System.out.println(ERROR_TASK_NUMBER_OUT_OF_RANGE_MESSAGE);
 		}
 	}
 	

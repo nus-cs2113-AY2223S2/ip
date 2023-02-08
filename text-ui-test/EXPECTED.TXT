@@ -61,6 +61,16 @@ Now you have 3 tasks in the list.
 ____________________________________________________________
 
 ____________________________________________________________
+Error: The description of Todo cannot be empty
+Todo [description]
+Creates Todo task. Requires a description text.
+____________________________________________________________
+
+____________________________________________________________
+Error: Unknown command detected, please type help for the list of commands available
+____________________________________________________________
+
+____________________________________________________________
 Bye. Hope to see you again soon!
 ____________________________________________________________
 
