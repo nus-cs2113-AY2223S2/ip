@@ -64,19 +64,6 @@ public class CommandManager {
             System.out.println("\t Now you have " + Tasks.getNumberOfTasks() + " in your list.\n"
                     + DIVIDER);
             break;
-//        case "deadline":
-//            System.out.println(DIVIDER + "\n\t Got it. I've added this task:\n\t  "
-//                    + task);
-//            System.out.println("\t Now you have " + Tasks.getNumberOfTasks() + " in your list.\n"
-//                    + DIVIDER);
-//            break;
-//        case "event":
-//            System.out.println(DIVIDER + "\n\t Got it. I've added this task:\n\t  "
-//                    + task);
-//            System.out.println("\t Now you have " + Tasks.getNumberOfTasks() + " in your list.\n"
-//                    + DIVIDER);
-//            break;
-
         }
     }
 
@@ -86,12 +73,6 @@ public class CommandManager {
         for (int num = 1; num <= totalNumberOfTasks; ++num) {
             Tasks thisTask = Tasks.getTaskList().get(num - 1);
             System.out.println("\t  " + thisTask);
-
-//            if (thisTask.isMarked()) {
-//                System.out.println("\t " + num + ".[X] " + thisTask.getItem());
-//            } else {
-//                System.out.println("\t " + num + ".[ ] " + thisTask.getItem());
-//            }
         }
         System.out.println(DIVIDER);
     }

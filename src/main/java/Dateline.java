@@ -7,15 +7,10 @@ public class Dateline extends Tasks {
         this.dueDate = dueDate.replace("by", "by:");
     }
 
-    public String getDueDate() {
 
-        return dueDate;
-    }
 
-    public void setDueDate(String dueDate) {
 
-        this.dueDate = dueDate;
-    }
+    @Override
     public String toString() {
         return "[D]" + super.toString() + "(" + dueDate + ")";
     }

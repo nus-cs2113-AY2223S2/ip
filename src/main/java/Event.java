@@ -8,24 +8,11 @@ public class Event extends Tasks {
         this.endDate = endDate.replace("to", "to:");
     }
 
-    public String getStartDate() {
 
-        return startDate;
-    }
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate.replace("from", "from:");
 
-    }
 
-    public String getEndDate() {
 
-        return endDate;
-    }
-
-    public void setEndDate(String endDate) {
-        this.endDate = endDate.replace("to", "to:");
-    }
 
     @Override
     public String toString() {
