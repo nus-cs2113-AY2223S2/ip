@@ -16,39 +16,45 @@ public class Duke {
             case "mark":
                 Tasks markTask = Tasks.getTaskList().get(Integer.parseInt(userInput[1]) - 1);
                 markTask.setMarked(true);
-                command.setUserOutput("mark");
+                command.setKey("mark");
                 command.printOutput(markTask);
                 break;
             case "unmark":
                 Tasks unMarkTask = Tasks.getTaskList().get(Integer.parseInt(userInput[1]) - 1);
                 unMarkTask.setMarked(false);
-                command.setUserOutput("unmark");
+                command.setKey("unmark");
                 command.printOutput(unMarkTask);
                 break;
 
             case "todo":
                 Tasks newToDo = new Todo(userInput[1], false);
                 Tasks.addToList(newToDo);
-                command.setUserOutput("todo");
+                command.setKey("add");
                 command.printOutput(newToDo);
                 break;
 
             case "deadline":
-                String[] TaskSlashDate = userInput[1].split("/", 2);
-                Tasks newDeadline = new Dateline(TaskSlashDate[0], false, TaskSlashDate[1]);
+                String[] taskSlashDate = userInput[1].split("/", 2);
+                Tasks newDeadline = new Dateline(taskSlashDate[0], false, taskSlashDate[1]);
                 Tasks.addToList(newDeadline);
-                command.setUserOutput("deadline");
+                command.setKey("add");
                 command.printOutput(newDeadline);
-
+                break;
+            case "event":
+                String[] eventSlashDate = userInput[1].split("/", 3);
+                Tasks newEvent = new Event(eventSlashDate[0], false, eventSlashDate[1], eventSlashDate[2]);
+                Tasks.addToList(newEvent);
+                command.setKey("add");
+                command.printOutput(newEvent);
+                break;
             case "list":
                 command.printOutput();
                 break;
 
-
             default:
                 Tasks newTask = new Tasks(command.getUserInput(), false);
                 Tasks.addToList(newTask);
-                command.setUserOutput("echo");
+                command.setKey("echo");
                 command.printOutput(newTask);
             }
             command.setUserInput(in.nextLine());

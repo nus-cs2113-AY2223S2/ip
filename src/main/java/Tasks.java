@@ -26,10 +26,6 @@ public class Tasks {
         taskList.add(task);
     }
 
-    public String getItemType() {
-        return itemType;
-    }
-
     public static ArrayList<Tasks> getTaskList() {
 
         return taskList;

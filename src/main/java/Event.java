@@ -4,8 +4,8 @@ public class Event extends Tasks {
 
     public Event(String item, boolean isMarked, String startDate, String endDate) {
         super(item, isMarked);
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.startDate = startDate.replace("from", "from:");
+        this.endDate = endDate.replace("to", "to:");
     }
 
     public String getStartDate() {
@@ -14,8 +14,8 @@ public class Event extends Tasks {
     }
 
     public void setStartDate(String startDate) {
+        this.startDate = startDate.replace("from", "from:");
 
-        this.startDate = startDate;
     }
 
     public String getEndDate() {
@@ -24,11 +24,11 @@ public class Event extends Tasks {
     }
 
     public void setEndDate(String endDate) {
-        this.endDate = endDate;
+        this.endDate = endDate.replace("to", "to:");
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + startDate+ " to: " + endDate + ")";
+        return "[E]" + super.toString() + "(" + startDate + endDate + ")";
     }
 }
