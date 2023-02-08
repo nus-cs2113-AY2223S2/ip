@@ -1,6 +1,13 @@
-import java.util.Locale;
-import java.util.Scanner;
+import duke.task.Task;
+import duke.task.ToDo;
+import duke.task.Event;
+import duke.task.Deadline;
+import duke.exceptions.DukeException;
+import duke.exceptions.EmptyInputException;
+import duke.exceptions.IllegalInputException;
+
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Duke {
     public static final String LINE = "____________________________________________________________\n";
@@ -8,13 +15,13 @@ public class Duke {
     public static boolean canExit = false;
 
     /**
-     * Prints message after adding To-Do/Deadline/Event task
+     * Prints message after adding To-Do/Deadline/Event duke.task
      *
      * @param myList
      */
     public static void printTaskMessage(ArrayList<Task> myList) {
         System.out.println(LINE
-                + "Got it. I've added this task:\n"
+                + "Got it. I've added this duke.task:\n"
                 + myList.get(myList.size() - 1) + "\n"
                 + "Now you have " + myList.size() + " in the list.\n"
                 + LINE);
@@ -43,7 +50,7 @@ public class Duke {
      */
     public static void printAddedTaskMessage(ArrayList<Task> myList) {
         System.out.println(LINE + "added: "
-                + myList.get(myList.size() - 1).description
+                + myList.get(myList.size() - 1).getDescription()
                 + "\n" + LINE);
     }
     public static void printIllegalInputMessage() {
@@ -91,7 +98,7 @@ public class Duke {
         int taskToMark = Integer.parseInt(taskToMarkString) - 1;
         myList.get(taskToMark).setDone();
         System.out.println(LINE
-                + "Nice! I've marked this task as done:\n"
+                + "Nice! I've marked this duke.task as done:\n"
                 + myList.get(taskToMark) + "\n"
                 + LINE);
     }
@@ -107,7 +114,7 @@ public class Duke {
         int taskToUnmark = Integer.parseInt(taskToUnmarkString) - 1;
         myList.get(taskToUnmark).setUndone();
         System.out.println(LINE
-                + "OK, I've marked this task as not done yet:\n"
+                + "OK, I've marked this duke.task as not done yet:\n"
                 + myList.get(taskToUnmark) + "\n"
                 + LINE);
     }
@@ -120,20 +127,20 @@ public class Duke {
         if (firstWord.equals("mark")) {
             myList.get(taskToMarkOrUnmark).setDone();
             System.out.println(LINE
-                    + "Nice! I've marked this task as done:\n"
+                    + "Nice! I've marked this duke.task as done:\n"
                     + myList.get(taskToMarkOrUnmark) + "\n"
                     + LINE);
         } else {
             myList.get(taskToMarkOrUnmark).setUndone();
             System.out.println(LINE
-                    + "OK, I've marked this task as not done yet:\n"
+                    + "OK, I've marked this duke.task as not done yet:\n"
                     + myList.get(taskToMarkOrUnmark) + "\n"
                     + LINE);
         }
     }
 
     /**
-     * Adds the input text and marks the task as a To-Do
+     * Adds the input text and marks the duke.task as a To-Do
      *
      * @param s
      * @param myList
@@ -143,13 +150,13 @@ public class Duke {
         if (newTask[1].isBlank()) {
             throw new EmptyInputException();
         }
-        ToDo toDoTask = new ToDo(newTask[1]);
+        Task toDoTask = new ToDo(newTask[1]);
         myList.add(toDoTask);
         printTaskMessage(myList);
     }
 
     /**
-     * Adds the input text and marks the task as a Deadline
+     * Adds the input text and marks the duke.task as a Deadline
      *
      * @param s
      * @param myList
@@ -165,7 +172,7 @@ public class Duke {
             if (split[1].isBlank()) {
                 throw new EmptyInputException();
             }
-            Deadline deadlineTask = new Deadline(split[0], split[1]);
+            Task deadlineTask = new Deadline(split[0], split[1]);
             myList.add(deadlineTask);
             printTaskMessage(myList);
         } else {
@@ -174,7 +181,7 @@ public class Duke {
     }
 
     /**
-     * Adds the input text and marks the task as an Event
+     * Adds the input text and marks the duke.task as an Event
      *
      * @param s
      * @param myList
@@ -189,7 +196,7 @@ public class Duke {
             String[] split = newTask[1].split(" /");
             String timeFrom = split[1].substring(5);
             String timeTo = split[2].substring(3);
-            Event eventTask = new Event(split[0], timeFrom, timeTo);
+            Task eventTask = new Event(split[0], timeFrom, timeTo);
             myList.add(eventTask);
             printTaskMessage(myList);
         } else {
