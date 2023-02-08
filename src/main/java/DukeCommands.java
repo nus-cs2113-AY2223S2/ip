@@ -11,15 +11,22 @@ public class DukeCommands {
      * @param taskName Name of task added
      */
     public static void addToList(String taskName) {
-        DukeSortInputTask.dukeSortInputTask(list, taskLength, taskName);
-        taskLength += 1;
-        System.out.println("added: " + taskName);
+        try {
+            DukeSortInputTask.dukeSortInputTask(list, taskLength, taskName);
+            taskLength += 1;
+            System.out.println("added: " + taskName);
+        } catch (DukeExceptions e) {
+            System.out.println(e.getMessage());
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Did you forget to specify a command?");
+        }
         System.out.println(spacer);
     }
 
     /** Prints a list of all tasks and its marked status to user. */
     public static void listTasks() {
         Integer taskIndex = 1;
+        System.out.println("Here is your list of tasks: \n");
         for (DukeTasks task : list) {
             if (taskIndex > taskLength) {
                 break;
@@ -37,6 +44,7 @@ public class DukeCommands {
      */
     public static void markTask(Integer taskIndex) {
         list[taskIndex - 1].markDone();
+        System.out.println("Some tasks have been marked off your list: \n");
         System.out.println("  [" + list[taskIndex - 1].getStatusIcon() + "] " + list[taskIndex - 1].toString());
         System.out.println(spacer);
     }
@@ -48,6 +56,7 @@ public class DukeCommands {
      */
     public static void unmarkTask(Integer taskIndex) {
         list[taskIndex - 1].unmarkDone();
+        System.out.println("Some tasks have been unmarked. Procrastinating much?\n");
         System.out.println("  [" + list[taskIndex - 1].getStatusIcon() + "] " + list[taskIndex - 1].toString());
         System.out.println(spacer);
     }

@@ -22,7 +22,11 @@ public class Duke extends DukeCommands{
             if (word.equals("list")) {
                 DukeCommands.listTasks();
             } else if (word.startsWith("mark ") && word.substring(5).matches("[0-9]{1,3}")) {
-                markTask(Integer.parseInt(word.substring(5)));
+                try {
+                    markTask(Integer.parseInt(word.substring(5)));
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println("Did you try to access something not on the list?");
+                }
             } else if (word.startsWith("unmark ") && word.substring(7).matches("[0-9]{1,3}")) {
                 unmarkTask(Integer.parseInt(word.substring(7)));
             } else {
