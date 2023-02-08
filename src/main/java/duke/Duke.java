@@ -4,12 +4,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
 import duke.task.Todo;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -23,6 +21,8 @@ public class Duke {
     static final String COMMAND_TODO = "todo";
     static final String COMMAND_DELETE = "delete";
     static final String COMMAND_DEADLINE = "deadline";
+    static boolean isFileEdited = false;
+    static boolean toPrint = true;
     static ArrayList<Task> tasks = new ArrayList<>();
     static int taskCount = 0;
 
@@ -46,9 +46,6 @@ public class Duke {
         System.out.println("\t☹ Error! Invalid format for \"" + taskType + "\" command.");
         System.out.println(LINE);
     }
-
-    static boolean isFileEdited = false;
-    static boolean toPrint = true;
 
     public static void extractData(File fileName) throws FileNotFoundException {
         Scanner s = new Scanner(fileName);
@@ -94,7 +91,6 @@ public class Duke {
             System.out.println("☹ Error! Failed to create file.");
         }
     }
-
 
     public static void doCommandGreet() {
         System.out.println(LINE);

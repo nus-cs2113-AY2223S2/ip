@@ -2,7 +2,7 @@ package duke.task;
 
 public class Task {
     private boolean isDone;
-    private String taskName;
+    private final String taskName;
     static final String DONE = "[X] ";
     static final String NOT_DONE = "[ ] ";
 
