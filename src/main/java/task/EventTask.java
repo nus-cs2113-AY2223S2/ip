@@ -5,6 +5,8 @@ import ui.Command;
 
 public class EventTask extends Task {
 
+    // For serialization
+    private static final long serialVersionUID = (1 << 5) + 2;
 
     protected String start;
     protected String end;

@@ -1,10 +1,13 @@
 package task;
 
 import exceptions.InvalidSyntaxException;
+import java.io.Serializable;
 import ui.Command;
 
-public class Task {
+public class Task implements Serializable {
 
+    // For serialization
+    private static final long serialVersionUID = (1 << 5);
 
     protected String description;
     protected boolean isDone;

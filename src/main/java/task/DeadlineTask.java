@@ -5,6 +5,9 @@ import ui.Command;
 
 public class DeadlineTask extends Task {
 
+    // For serialization
+    private static final long serialVersionUID = (1 << 5) + 1;
+
     protected String deadline;
 
     public DeadlineTask(String description, String deadline) {
