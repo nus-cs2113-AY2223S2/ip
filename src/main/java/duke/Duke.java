@@ -1,5 +1,9 @@
 package duke;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
@@ -17,7 +21,43 @@ public class Duke {
     static final String COMMAND_TODO = "todo";
     static final String COMMAND_DEADLINE = "deadline";
     static Task[] tasks = new Task[100];
+    static boolean isFileEdited = false;
     static int textCount = 0;
+
+    public static void doCreateOrEditFile(boolean flag) {
+        String home = System.getProperty("user.home");
+        java.nio.file.Path path = java.nio.file.Paths.get(home, "duke.txt");
+        try {
+            File fileName = new java.io.File(path.toUri());
+            if (fileName.createNewFile()) {
+                System.out.println("File created: " + fileName.getName());
+            } else {
+                if (flag) {
+                    System.out.println("\tHere are your pending tasks!");
+                    Scanner s = new Scanner(fileName);
+                    while (s.hasNext()) {
+                        System.out.println(s.nextLine());
+                    }
+                } else {
+                    if (isFileEdited) {
+                        FileWriter savedFile = new FileWriter(fileName, false);
+                        savedFile.write(LINE);
+                        savedFile.write(System.getProperty("line.separator"));
+                        for (int index = 0; index < textCount; index++) {
+                            savedFile.write("\t" + String.valueOf(tasks[index]));
+                            savedFile.write(System.getProperty("line.separator"));
+                        }
+                        savedFile.write(LINE);
+                        savedFile.write(System.getProperty("line.separator"));
+                        savedFile.close();
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("☹ Error! Failed to create file.");
+        }
+    }
+
 
     public static void doCommandGreet() {
         System.out.println(LINE);
@@ -30,9 +70,11 @@ public class Duke {
         System.out.println(LINE);
         System.out.println("\tBye! Remember to finish your tasks.\n");
         System.out.println(LINE);
+        doCreateOrEditFile(false);
     }
 
     public static void doCommandMark(int taskNum) {
+        isFileEdited = true;
         try {
             tasks[--taskNum].setStatus(true);
             System.out.println(LINE);
@@ -48,6 +90,7 @@ public class Duke {
     }
 
     public static void doCommandUnmark(int taskNum) {
+        isFileEdited = true;
         try {
             tasks[--taskNum].setStatus(false);
             System.out.println(LINE);
@@ -79,6 +122,7 @@ public class Duke {
     }
 
     public static void doCommandTodo(String taskName) {
+        isFileEdited = true;
         tasks[textCount] = new Todo(taskName);
         textCount++;
         System.out.println(LINE);
@@ -89,6 +133,7 @@ public class Duke {
     }
 
     public static void doCommandDeadline(String taskName, String taskDeadline) {
+        isFileEdited = true;
         tasks[textCount] = new Deadline(taskName, taskDeadline);
         textCount++;
         System.out.println(LINE);
@@ -99,6 +144,7 @@ public class Duke {
     }
 
     public static void doCommandEvent(String eventName, String eventDetailsPartOne, String eventDetailsPartTwo) {
+        isFileEdited = true;
         tasks[textCount] = new Event(eventName, eventDetailsPartOne, eventDetailsPartTwo);
         textCount++;
         System.out.println(LINE);
@@ -209,6 +255,7 @@ public class Duke {
     }
 
     public static void main(String[] args) {
+        doCreateOrEditFile(true);
         doCommandGreet();
         Scanner in = new Scanner(System.in);
         String userCommand;
