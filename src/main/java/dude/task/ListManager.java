@@ -34,13 +34,13 @@ public class ListManager {
         System.out.println(Interface.LINE);
     }
 
-    public static Task getString(int index){
+    public static Task getString(int index) {
         return list.get(index);
     }
 
     public static void markDone(String index) throws InvalidMarkException {
         int intIndex = Integer.parseInt(index) - 1;
-        if(index.equals("") | intIndex >= list.size() | intIndex < 0){
+        if (index.equals("") | intIndex >= list.size() | intIndex < 0) {
             throw new InvalidMarkException();
         }
         list.get(intIndex).setDone();
@@ -51,7 +51,7 @@ public class ListManager {
 
     public static void markUndone(String index) throws InvalidMarkException {
         int intIndex = Integer.parseInt(index) - 1;
-        if(index.equals("") | intIndex >= list.size() | intIndex < 0){
+        if (index.equals("") | intIndex >= list.size() | intIndex < 0) {
             throw new InvalidMarkException();
         }
         list.get(intIndex).setUndone();
@@ -61,7 +61,7 @@ public class ListManager {
     }
 
 
-    public static void addNewTask(String input,String taskType) throws DudeException {
+    public static void addNewTask(String input, String taskType) throws DudeException {
         Task newTask;
         switch (taskType) {
         case "todo":

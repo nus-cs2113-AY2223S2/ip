@@ -48,7 +48,7 @@ public abstract class Interface {
     public static void addedMessage(int index) {
         System.out.println(Interface.LINE);
         System.out.println("added: " + ListManager.getString(index));
-        System.out.println("Now you have " + (index + 1)+ " tasks in the list");
+        System.out.println("Now you have " + (index + 1) + " tasks in the list");
         System.out.println(Interface.LINE);
     }
 
@@ -68,13 +68,13 @@ public abstract class Interface {
         Boolean isRunningprogram = true;
         while (isRunningprogram) {
             userInput = in.nextLine();
-            if(userInput.equals("bye")){
+            if (userInput.equals("bye")) {
                 isRunningprogram = false;
                 break;
             }
-            try{
+            try {
                 Parser.parseInput(userInput);
-            } catch (Exception e){
+            } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
         }

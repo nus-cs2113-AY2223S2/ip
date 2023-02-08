@@ -12,19 +12,19 @@ import java.util.List;
 public class Parser {
     public static void parseInput(String input) throws EmptyInputException {
         String[] commands = input.split(" ", 2);
-        String nextCommand =formatNextInput(commands);
+        String nextCommand = formatNextInput(commands);
         int index;
         try {
             switch (commands[0]) {
 
             case "todo":
-                ListManager.addNewTask(nextCommand,"todo");
+                ListManager.addNewTask(nextCommand, "todo");
                 break;
             case "deadline":
-                ListManager.addNewTask(nextCommand,"deadline");
+                ListManager.addNewTask(nextCommand, "deadline");
                 break;
             case "event":
-                ListManager.addNewTask(nextCommand,"event");
+                ListManager.addNewTask(nextCommand, "event");
                 break;
             case "list":
                 ListManager.printList();
@@ -38,7 +38,7 @@ public class Parser {
             default:
                 throw new EmptyInputException();
             }
-        } catch (DudeException e){
+        } catch (DudeException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -50,7 +50,7 @@ public class Parser {
         return new Todo(input);
     }
 
-    public static Task createDeadline1(String input) throws InvalidDeadlineException {
+    public static Task createDeadline(String input) throws InvalidDeadlineException {
         if (input.equals("") | !input.contains("/by")) {
             throw new InvalidDeadlineException();
         }
@@ -73,15 +73,15 @@ public class Parser {
         String eventStart = range[0].trim();
         String eventEnd = range[1].trim();
 
-        if (eventDesc.equals("") | eventStart.equals("") | eventEnd.equals("")){
+        if (eventDesc.equals("") | eventStart.equals("") | eventEnd.equals("")) {
             throw new InvalidEventException();
         }
-        return new Event(eventDesc, eventStart,eventEnd);
+        return new Event(eventDesc, eventStart, eventEnd);
     }
 
-    public static String formatNextInput(String[] input){
+    public static String formatNextInput(String[] input) {
         String output;
-        if(input.length > 1){
+        if (input.length > 1) {
             output = input[1].trim();
         } else {
             output = "";
