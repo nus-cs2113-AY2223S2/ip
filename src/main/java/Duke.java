@@ -19,7 +19,8 @@ public class Duke {
             if (input.equals("list")) {
                 printList(listOfTasks);
             } else if (input.isBlank()) {
-                System.out.println("Please enter a non-empty string!");
+                System.out.println("Please enter a non-empty string! Start with words: todo/deadline/event " +
+                        "to add a specific task accordingly!!");
             } else if (isValidUnmark(input, words)) {
                 unmarkTask(listOfTasks, words);
             } else if (isValidMark(input, words)) {
@@ -113,7 +114,7 @@ public class Duke {
     private static void markTask(Task[] listOfTasks, String[] words) {
         int number = Integer.parseInt(words[1]);
         if (number <= 0 || number >= MAX_TASKS || listOfTasks[number] == null) {
-            System.out.println("Please mark only valid tasks!");
+            System.out.println("Please mark only valid tasks! List out your tasks if you are unsure!!");
         } else {
             listOfTasks[number].markAsDone();
             System.out.println("  " + listOfTasks[number].getStatusIcon() + " " + listOfTasks[number].description);
@@ -123,7 +124,7 @@ public class Duke {
     private static void unmarkTask(Task[] listOfTasks, String[] words) {
         int number = Integer.parseInt(words[1]);
         if (number <= 0 || number >= MAX_TASKS || listOfTasks[number] == null || words.length == 1 || !isInt(words[1])) {
-            System.out.println("Please unmark only valid tasks!");
+            System.out.println("Please unmark only valid tasks! List out your tasks if you are unsure!!");
         } else {
             listOfTasks[number].unmarkDone();
             System.out.println(" " + listOfTasks[number].getStatusIcon() + " " + listOfTasks[number].description);
@@ -132,6 +133,10 @@ public class Duke {
 
     public static void printList(Task[] listOfTasks) {
         System.out.println(" Here are the tasks in your list");
+        if (Task.taskCount == 0) {
+            System.out.println(" Oops! It looks like your list is empty!!");
+            return;
+        }
         for (int i = 1; i < MAX_TASKS; ++i) {
             if (listOfTasks[i] == null) {
                 break;
