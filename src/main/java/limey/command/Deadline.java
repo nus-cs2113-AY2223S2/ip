@@ -1,3 +1,5 @@
+package limey.command;
+
 public class Deadline extends Task{
     private String dueDate;
     public Deadline(String inLine){
