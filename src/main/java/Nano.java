@@ -31,12 +31,24 @@ public class Nano {
         //receive commands
         while (true) {
             String userInput = getUserInput();
-            executeCommand(userInput);
+            try {
+                executeCommand(userInput);
+            } catch (DukeCommandException commandException) {
+                System.out.println("unknown command");
+                displayHelpMessage();
+            }
         }
     }
 
-    private static void executeCommand(String userInput) {
-        String[] userInputs = processInput(userInput);
+    private static void executeCommand(String userInput) throws DukeCommandException {
+        String[] userInputs;
+        try {
+            userInputs = processInput(userInput);
+        } catch (DukeInputFormatException inputException) {
+            System.out.println("input error");
+            displayHelpMessage();
+            return;
+        }
 
         switch (userInputs[COMMAND_INDEX]) {
         case "list":
@@ -55,8 +67,7 @@ public class Nano {
             displayExitMessage();
             System.exit(0);
         default:
-            displayHelpMessage();
-            break;
+            throw new DukeCommandException();
         }
         printHorizontalLine();
     }
@@ -85,7 +96,7 @@ public class Nano {
 
         if (!tasks[taskIndex].isCompleted()) {
             tasks[taskIndex].setDone();
-            System.out.println(taskName + MESSAGE_TASK_MARKED);
+            System.out.println(MESSAGE_TASK_MARKED + taskName);
         } else {
             System.out.println(taskName + MESSAGE_TASK_ALREADY_DONE);
         }
@@ -112,7 +123,8 @@ public class Nano {
             newTask = new Deadline(taskDetails[TASK_NAME_INDEX], taskDetails[TASK_DUE_DATE_INDEX]);
             break;
         case "event":
-            newTask = new Event(taskDetails[TASK_NAME_INDEX], taskDetails[TASK_START_DATE_INDEX], taskDetails[TASK_END_DATE_INDEX]);
+            newTask = new Event(taskDetails[TASK_NAME_INDEX], taskDetails[TASK_START_DATE_INDEX],
+                    taskDetails[TASK_END_DATE_INDEX]);
             break;
         default:
             newTask = new Todo(taskDetails[TASK_NAME_INDEX]);
@@ -136,8 +148,12 @@ public class Nano {
         System.out.println("Invalid input!");
     }
 
-    private static String[] processInput(String userInput) {
-        userInput = userInput.replace("/", "").trim();
+    private static String[] processInput(String userInput) throws DukeInputFormatException{
+        userInput = userInput.trim();
+        if (!userInput.startsWith("/")) {
+            throw new DukeInputFormatException();
+        }
+        userInput = userInput.replaceFirst("/", "");
         String[] userInputs = new String[USER_INPUT_MAX_ARG_COUNT + 1];
         String[] commandAndName = userInput.split("\\s+", 2);
         System.arraycopy(commandAndName, 0, userInputs, 0, commandAndName.length);
@@ -148,31 +164,47 @@ public class Nano {
         return userInputs;
     }
 
-    private static void processTaskDetails(String userInput, String[] userInputs) {
+    private static void processTaskDetails(String userInput, String[] userInputs) throws DukeInputFormatException {
         if (isDeadline(userInput)) {
-            userInputs[TASK_TYPE_INDEX] = "deadline";
-            userInputs[TASK_NAME_INDEX] = userInput.substring(userInput.indexOf(" "), userInput.indexOf("by:")).trim();
-            userInputs[TASK_DUE_DATE_INDEX] = userInput.substring(userInput.indexOf("by:")).trim();
+            getDeadline(userInput, userInputs);
         } else if (isEvent(userInput)) {
-            userInputs[TASK_TYPE_INDEX] = "event";
-            userInputs[TASK_NAME_INDEX] = userInput.substring(userInput.indexOf(" "), userInput.indexOf("from:")).trim();
-            userInputs[TASK_START_DATE_INDEX] = userInput.substring(userInput.indexOf("from:"), userInput.indexOf("to:")).trim();
-            userInputs[TASK_END_DATE_INDEX] = userInput.substring(userInput.indexOf("to")).trim();
+            getEvent(userInput, userInputs);
+        } else if (userInput.contains("/")) {
+            throw new DukeInputFormatException();
         } else {
-            userInputs[TASK_TYPE_INDEX] = "todo";
+            getTodo(userInputs);
         }
     }
 
+    private static void getTodo(String[] userInputs) {
+        userInputs[TASK_TYPE_INDEX] = "todo";
+    }
+
+    private static void getEvent(String userInput, String[] userInputs) {
+        userInputs[TASK_TYPE_INDEX] = "event";
+        userInputs[TASK_NAME_INDEX] = userInput.substring(userInput.indexOf(" "), userInput.indexOf("from/")).trim();
+        userInputs[TASK_START_DATE_INDEX] = userInput.substring(userInput.indexOf("from/"),
+                userInput.indexOf("to/")).replaceFirst("/", "").trim();
+        userInputs[TASK_END_DATE_INDEX] = userInput.substring(userInput.indexOf("to/")).replaceFirst("/", "");
+    }
+
+    private static void getDeadline(String userInput, String[] userInputs) {
+        userInputs[TASK_TYPE_INDEX] = "deadline";
+        userInputs[TASK_NAME_INDEX] = userInput.substring(userInput.indexOf(" "), userInput.indexOf("by/")).trim();
+        userInputs[TASK_DUE_DATE_INDEX] = userInput.substring(userInput.indexOf("by/"));
+    }
+
     private static boolean isDeadline(String task) {
-        return task.contains("by:");
+        return task.contains("by/");
     }
 
     private static boolean isEvent(String task) {
-        return task.contains("from:");
+        return task.contains("from/") && task.contains("to/");
     }
 
     private static void displayTaskList() {
-        System.out.println("You have completed " + Task.getCompletedTaskCount() + " tasks. " + Task.getUncompletedTaskCount() + " more to go!");
+        System.out.println("You have completed " + Task.getCompletedTaskCount() + " tasks. " +
+                Task.getUncompletedTaskCount() + " more to go!");
         for (int i = 1; i <= Task.getTaskCount(); i += 1) {
             System.out.println(tasks[i].toString());
         }
@@ -212,5 +244,3 @@ public class Nano {
         System.out.println();
     }
 }
-
-
