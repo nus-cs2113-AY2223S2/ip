@@ -1,3 +1,5 @@
+package nano.task;
+
 public class Event extends Task {
     private static final String TASK_TYPE_TAG = "[E]";
     private String startDate;

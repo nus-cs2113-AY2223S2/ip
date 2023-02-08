@@ -1,3 +1,5 @@
+package nano.task;
+
 public class Task {
     public static final String TASK_COMPLETED_MARK = "[x] ";
     public static final String TASK_UNCOMPLETED_MARK = "[] ";
