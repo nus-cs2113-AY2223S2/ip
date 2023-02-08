@@ -20,7 +20,7 @@ public class Task {
             System.out.println("Task was already marked as done!");
         } else {
             isDone = true;
-            System.out.println("Good job! I've marked it as done!");
+            System.out.println("Great! I've marked it as done!");
             System.out.println(this.getStatus() + this.taskInfo);
         }
     }
