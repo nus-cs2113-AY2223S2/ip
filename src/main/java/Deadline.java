@@ -10,7 +10,6 @@ public class Deadline extends Task {
         this.due = due;
     }
 
-    @Override
     public String getTaskType() {
         return "D";
     }

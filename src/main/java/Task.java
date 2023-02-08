@@ -23,12 +23,9 @@ public abstract class Task {
         return this.description;
     }
 
-    public String getTaskType() {
-        return " ";
-    }
+    public abstract String getTaskType();
 
     public String getSummary() {
         return "[" + getTaskType() + "][" + getStatusIcon() + "] " + getDescription();
-
     }
 }
