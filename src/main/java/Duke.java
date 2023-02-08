@@ -1,32 +1,38 @@
 import java.util.Scanner;
 import java.util.ArrayList;
-
+// still accept "todo "
 public class Duke {
 
-    public static final String BYE_MESSAGE = "Bye. Hope to see you again soon!";
-    public static final String MARK_INSTRUCTION = "Please give your command in the following format";
-    public static final String INVALID_INPUT = "This is an invalid input";
-    public static final String HorizontalLine = "____________________________________________________________";
-    public static final String HELLO_IM_DUKE = "Hello! I'm Duke";
-    public static final String KEYWORD_TO_SEE_THE_INSTRUCTIONS = "Please type 'help' if you want to see the instructions";
-    public static final String HELP_USAGE = "help: to view the instructions for all commands\n";
-    public static final String BYE_USAGE = "bye: to end the program\n";
-    public static final String LIST_USAGE = "list: to view the list of tasks\n";
-    public static final String MARK_USAGE = "mark: to mark a task as done";
-    public static final String MARK_FORMAT = "Format: mark {Number}\n";
-    public static final String UNMARK_USAGE = "unmark: to unmark a task as not done yet";
-    public static final String UNMARK_FORMAT = "Format: unmark {Number}\n";
-    public static final String TODO_USAGE = "todo: to add a todo task in your list";
-    public static final String TODO_FORMAT = "Format: todo {your task}\n";
-    public static final String DEADLINE_USAGE = "deadline: to add a deadline task in your list";
-    public static final String DEADLINE_FORMAT = "Format: deadline {your task} /by {deadline date}\n";
-    public static final String EVENT_USAGE = "event: to add an event task in your list";
-    public static final String EVENT_FORMAT = "Format: event {your task} /from {begin date} /to {end date}\n";
-    public static final String ADDING_TASK = "Got it. I've added this task:";
-    public static final String BIG_MARK_NUMBER = "The task number is bigger than the number of tasks";
-    public static final String FINISH_UNMARKING_MESSAGE = "Ok! I've marked this task as not done yet:";
-    public static final String FINISH_MARKING_MESSAGE = "Nice! I've marked this task as done:";
-    public static final String ASKING_MESSAGE = "What can I do for you?";
+    private static final String BYE_MESSAGE = "Bye. Hope to see you again soon!";
+    private static final String MARK_INSTRUCTION = "Please give your command in the following format";
+    private static final String HorizontalLine = "____________________________________________________________";
+    private static final String HELLO_IM_DUKE = "Hello! I'm Duke";
+    private static final String KEYWORD_TO_SEE_THE_INSTRUCTIONS = "Please type 'help' if you want to see the instructions";
+    private static final String HELP_USAGE = "help: to view the instructions for all commands\n";
+    private static final String BYE_USAGE = "bye: to end the program\n";
+    private static final String LIST_USAGE = "list: to view the list of tasks\n";
+    private static final String MARK_USAGE = "mark: to mark a task as done";
+    private static final String MARK_FORMAT = "Format: mark {Number}\n";
+    private static final String UNMARK_USAGE = "unmark: to unmark a task as not done yet";
+    private static final String UNMARK_FORMAT = "Format: unmark {Number}\n";
+    private static final String TODO_USAGE = "todo: to add a todo task in your list";
+    private static final String TODO_FORMAT = "Format: todo {your task}\n";
+    private static final String DEADLINE_USAGE = "deadline: to add a deadline task in your list";
+    private static final String DEADLINE_FORMAT = "Format: deadline {your task} /by {deadline date}\n";
+    private static final String EVENT_USAGE = "event: to add an event task in your list";
+    private static final String EVENT_FORMAT = "Format: event {your task} /from {begin date} /to {end date}\n";
+    private static final String ADDING_TASK = "Got it. I've added this task:";
+    private static final String BIG_MARK_NUMBER = "The task number is bigger than the number of tasks";
+    private static final String FINISH_UNMARKING_MESSAGE = "Ok! I've marked this task as not done yet:";
+    private static final String FINISH_MARKING_MESSAGE = "Nice! I've marked this task as done:";
+    private static final String ASKING_MESSAGE = "What can I do for you?";
+    public static final String INCORRECT_KEYWORD = "OOPS!!! I'm sorry, but I don't know what that means :-(";
+    public static final String EMPTY_TODO_DESCRIPTION = "OOPS!!! The description of a todo cannot be empty.";
+    public static final String EMPTY_DEADLINE_DESCRIPTION = "OOPS!!! The description of a deadline cannot be empty.";
+    public static final String EMPTY_EVENT_DESCRIPTION = "OOPS!!! The description of a event cannot be empty.";
+    public static final String INVALID_INPUT = "This is an invalid input, please follow this input format\n";
+    public static final String DEADLINE_INVALID_INPUT = INVALID_INPUT + DEADLINE_FORMAT;
+    public static final String EVENT_INVALID_INPUT = INVALID_INPUT + EVENT_FORMAT;
 
     public static void main(String[] args) {
         showWelcomeMessage();
@@ -49,17 +55,17 @@ public class Duke {
                 } else if (userInput.equals("list")) {
                     printItems(tasks);
                 } else if (seperatedKeywordAndContent[0].equals("todo")) {
-                    if (handleException(seperatedKeywordAndContent,1)) {
+                    if (handleException(seperatedKeywordAndContent,1, EMPTY_TODO_DESCRIPTION)) {
                         continue;
                     }
                     addTodoTask(seperatedKeywordAndContent[1], tasks);
                 } else if (seperatedKeywordAndContent[0].equals("deadline")) {
-                    if (handleException(seperatedKeywordAndContent,1)) {
+                    if (handleException(seperatedKeywordAndContent,1, EMPTY_DEADLINE_DESCRIPTION)) {
                         continue;
                     }
                     addDeadlineTask(seperatedKeywordAndContent[1], tasks);
                 } else if (seperatedKeywordAndContent[0].equals("event")) {
-                    if (handleException(seperatedKeywordAndContent,1)) {
+                    if (handleException(seperatedKeywordAndContent,1, EMPTY_EVENT_DESCRIPTION)) {
                         continue;
                     }
                     addEventTask(seperatedKeywordAndContent[1], tasks);
@@ -72,7 +78,7 @@ public class Duke {
                     }
                 }
             } catch (IllegalArgumentException error) {
-                System.out.println(INVALID_INPUT);
+                System.out.println(INCORRECT_KEYWORD);
             }
         }
     }
@@ -114,12 +120,12 @@ public class Duke {
         System.out.println(EVENT_FORMAT);
     }
 
-    private static boolean handleException(String[] stringArray, int index) {
+    private static boolean handleException(String[] stringArray, int index, String outputMessage) {
         try {
             String test = stringArray[index];
             return false;
         } catch (ArrayIndexOutOfBoundsException error) {
-            System.out.println(INVALID_INPUT);
+            System.out.println(outputMessage);
             return true;
         }
     }
@@ -134,7 +140,7 @@ public class Duke {
 
     private static void addDeadlineTask(String content, ArrayList<Task> tasks) {
         String[] seperatedWordsInContent = content.split(" /");
-        if (handleException(seperatedWordsInContent, 1)) {
+        if (handleException(seperatedWordsInContent, 1, DEADLINE_INVALID_INPUT)) {
             return;
         }
         if (seperatedWordsInContent[1].startsWith("by ")) {
@@ -146,17 +152,17 @@ public class Duke {
             System.out.println("[D][] " + taskName + " (by: " + date + ")");
             System.out.println("Now you have " + tasks.size() + " tasks in the list.");
         } else {
-            System.out.println(INVALID_INPUT);
+            System.out.println(DEADLINE_INVALID_INPUT);
         }
     }
 
     private static void addEventTask(String content, ArrayList<Task> tasks) {
         String[] seperatedWordsInContent = content.split(" /");
-        if (handleException(seperatedWordsInContent,2)) {
+        if (handleException(seperatedWordsInContent,2,EVENT_INVALID_INPUT)) {
             return;
         }
         String beginDate = seperatedWordsInContent[1].split(" ", 2)[1];
-        if (handleException(seperatedWordsInContent[2].split(" ", 2),1)) {
+        if (handleException(seperatedWordsInContent[2].split(" ", 2),1,"☹ OOPS!!! The description of a todo cannot be empty.")) {
             return;
         }
         String endDate = seperatedWordsInContent[2].split(" ", 2)[1];
@@ -169,7 +175,7 @@ public class Duke {
             System.out.println("[E][] " + taskName + " (from: " + beginDate + " to: " + endDate + ")");
             System.out.println("Now you have " + tasks.size() + " tasks in the list.");
         } else {
-            System.out.println(INVALID_INPUT);
+            System.out.println(EVENT_INVALID_INPUT);
         }
     }
 
@@ -215,4 +221,3 @@ public class Duke {
     }
 
 }
-
