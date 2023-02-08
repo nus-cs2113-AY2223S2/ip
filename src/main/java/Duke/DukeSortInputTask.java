@@ -1,3 +1,4 @@
+package Duke;
 public class DukeSortInputTask {
     public static void dukeSortInputTask(DukeTasks[] list, Integer taskLength, String taskName) throws DukeExceptions {
         String[] taskType = taskName.split(" ", 2);

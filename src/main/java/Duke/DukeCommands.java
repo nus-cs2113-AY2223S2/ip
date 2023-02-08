@@ -1,3 +1,4 @@
+package Duke;
 public class DukeCommands {
     public static String spacer = "__________________________________________\n";
     public static DukeTasks[] list = new DukeTasks[100];
