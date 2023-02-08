@@ -6,6 +6,7 @@ public class Duke {
         int tasksSize = 100;
         Task[] tasks = new Task[tasksSize];
         int currentIndex = 0;
+        int maxIndex = tasksSize - 1;
 
         printHelloStatement();
         while (true) {
@@ -17,54 +18,94 @@ public class Duke {
             } else if (input.equals("list")) {
                 printAllTasks(tasks);
             } else if (input.startsWith("mark")) {
-                String[] temp = input.split(" ", 2);
-                int taskIndex = Integer.parseInt(temp[1]);
-                Task curTask = tasks[taskIndex - 1];
-                curTask.markAsDone();
-                printTaskStatusStatement(curTask,"mark");
+                try {
+                    String[] temp = input.split(" ", 2);
+                    int taskIndex = Integer.parseInt(temp[1]);
+                    Task curTask = tasks[taskIndex - 1];
+                    curTask.markAsDone();
+                    printTaskStatusStatement(curTask, "mark");
+                } catch (IndexOutOfBoundsException exception) {
+                    printDottedLine();
+                    System.out.println("☹ OOPS!!! The description of a mark cannot be empty");
+                    printDottedLine();
+                } catch (NullPointerException exception) {
+                    printDottedLine();
+                    System.out.println("☹ OOPS!!! The description of a mark is invalid");
+                    printDottedLine();
+                }
             } else if (input.startsWith("unmark")) {
-                String[] temp = input.split(" ", 2);
-                int taskIndex = Integer.parseInt(temp[1]);
-                Task curTask = tasks[taskIndex - 1];
-                curTask.unmarkAsDone();
-                printTaskStatusStatement(curTask,"unmark");
-            } else if (input.startsWith("todo")){
-                String[] temp = input.split("todo "); //separates todo description
-                String description = temp[1];
-                ToDo todo = new ToDo(currentIndex + 1, description);
-                tasks[currentIndex] = todo;
-                currentIndex++;
-                printTaskAddedStatement(currentIndex, todo);
-            }
-            else if (input.startsWith("deadline")){
-                String[] temp = input.split("deadline | /by "); //separates deadline description and by time
-                String description = temp[1];
-                String by = temp[2];
-                Deadline deadline = new Deadline(currentIndex + 1, description, by);
-                tasks[currentIndex] = deadline;
-                currentIndex++;
-                printTaskAddedStatement(currentIndex, deadline);
-            }
-            else if (input.startsWith("event")){
-                String[] temp = input.split(("event | /from | /to ")); //separates event description, from and to times
-                String description = temp[1];
-                String from = temp[2];
-                String to = temp[3];
-                Event event = new Event(currentIndex + 1, description, from, to);
-                tasks[currentIndex] = event;
-                currentIndex++;
-                printTaskAddedStatement(currentIndex, event);
-            }
-            else {
-                break;
+                try {
+                    String[] temp = input.split(" ", 2);
+                    int taskIndex = Integer.parseInt(temp[1]);
+                    Task curTask = tasks[taskIndex - 1];
+                    curTask.unmarkAsDone();
+                    printTaskStatusStatement(curTask, "unmark");
+                } catch (IndexOutOfBoundsException exception) {
+                    printDottedLine();
+                    System.out.println("☹ OOPS!!! The description of a unmark cannot be empty");
+                    printDottedLine();
+                } catch (NullPointerException exception) {
+                    printDottedLine();
+                    System.out.println("☹ OOPS!!! The description of a unmark is invalid");
+                    printDottedLine();
+                }
+            } else if (input.startsWith("todo") & (currentIndex <= maxIndex)) {
+                try {
+                    String[] temp = input.split("todo "); //separates todo description
+                    String description = temp[1];
+                    ToDo todo = new ToDo(currentIndex + 1, description);
+                    tasks[currentIndex] = todo;
+                    currentIndex++;
+                    printTaskAddedStatement(currentIndex, todo);
+                } catch (IndexOutOfBoundsException exception) {
+                    printDottedLine();
+                    System.out.println("☹ OOPS!!! The description of a todo cannot be empty");
+                    printDottedLine();
+                }
+            } else if (input.startsWith("deadline") & (currentIndex <= maxIndex)) {
+                try {
+                    String[] temp = input.split("deadline | /by "); //separates deadline description and time
+                    String description = temp[1];
+                    String by = temp[2];
+                    Deadline deadline = new Deadline(currentIndex + 1, description, by);
+                    tasks[currentIndex] = deadline;
+                    currentIndex++;
+                    printTaskAddedStatement(currentIndex, deadline);
+                } catch (IndexOutOfBoundsException exception) {
+                    printDottedLine();
+                    System.out.println("☹ OOPS!!! The description of a deadline cannot be empty");
+                    printDottedLine();
+                }
+            } else if (input.startsWith("event") & (currentIndex <= maxIndex)) {
+                try {
+                    String[] temp = input.split(("event | /from | /to ")); //separates event description and times
+                    String description = temp[1];
+                    String from = temp[2];
+                    String to = temp[3];
+                    Event event = new Event(currentIndex + 1, description, from, to);
+                    tasks[currentIndex] = event;
+                    currentIndex++;
+                    printTaskAddedStatement(currentIndex, event);
+                } catch (IndexOutOfBoundsException exception) {
+                    printDottedLine();
+                    System.out.println("☹ OOPS!!! The description of a event cannot be empty");
+                    printDottedLine();
+                }
+            } else if ((input.startsWith("todo") | input.startsWith("deadline") | input.startsWith("event"))
+                    & (currentIndex > maxIndex)) {
+                printDottedLine();
+                System.out.println("☹ OOPS!!! The tasks list is currently full");
+                printDottedLine();
+            } else {
+                printUnknownCommandError();
             }
         }
     }
 
-
     private static void printDottedLine() {
         System.out.println("____________________________________________________________");
     }
+
     private static void printAllTasks(Task[] tasks) {
         printDottedLine();
         System.out.println("Here are the tasks in your list:");
@@ -91,10 +132,9 @@ public class Duke {
 
     private static void printTaskStatusStatement(Task curTask, String status) {
         printDottedLine();
-        if (status.equals("mark")){
+        if (status.equals("mark")) {
             System.out.println("Nice! I've marked this task as done:");
-        }
-        else {
+        } else {
             System.out.println("OK, I've marked this task as not done yet:");
         }
         System.out.println(curTask);
@@ -107,11 +147,15 @@ public class Duke {
         System.out.println(task);
         if (currentIndex == 1) {
             System.out.println("Now you have " + currentIndex + " task in the list.");
-        }
-        else {
+        } else {
             System.out.println("Now you have " + currentIndex + " tasks in the list.");
         }
         printDottedLine();
     }
-}
 
+    private static void printUnknownCommandError() {
+        printDottedLine();
+        System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+        printDottedLine();
+    }
+}
