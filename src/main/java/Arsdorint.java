@@ -91,8 +91,9 @@ public class Arsdorint {
                 " Please Type The Command As Follow:\n" +
                 "> Type anything to add to the to-do list. \n" +
                 "> Type \"list\" to list all the tasks. \n" +
-                "> Type \"mark\" follow by a number x to mark x tasks in the list" +
-                "> Type \"unmark\" follow by a number y to unmark y tasks in the list" +
+                "> Type \"mark\" follow by a number x to mark x tasks in the list. \n" +
+                "> Type \"unmark\" follow by a number y to unmark y tasks in the list. \n" +
+                "> Type \"todo\"/\"deadline\"/\"event\" to include the task type. \n" +
                 "> Type \"bye\" to exit. \n" +
                         " What can I do for you? \n" +
                         "____________________________________________________________\n");
