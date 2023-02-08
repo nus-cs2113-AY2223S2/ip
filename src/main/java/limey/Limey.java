@@ -1,3 +1,13 @@
+package limey;
+
+import limey.command.Deadline;
+import limey.command.Event;
+import limey.command.Task;
+import limey.command.Todo;
+import limey.exception.commandNotFoundException;
+import limey.iohandler.Parser;
+import limey.iohandler.Speech;
+
 import java.util.Scanner;
 
 public class Limey {

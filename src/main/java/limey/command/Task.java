@@ -1,3 +1,5 @@
+package limey.command;
+
 public class Task {
     private String taskName;
     private boolean isDone = false;

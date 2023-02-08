@@ -1,3 +1,5 @@
+package limey.command;
+
 public class Event extends Task{
     private final String fromDate;
     private final String toDate;
