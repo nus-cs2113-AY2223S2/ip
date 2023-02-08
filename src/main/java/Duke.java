@@ -139,7 +139,6 @@ public class Duke {
         String exit = DIVIDER +
                 "Bye. Hope to see you again soon!\n" +
                 DIVIDER;
-        
         System.out.println(exit);
     }
 }
