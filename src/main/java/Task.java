@@ -11,6 +11,10 @@ public class Task {
         return (isDone ? "[X]" : "[ ]"); // mark done task with X
     }
 
+    public String getTypeIcon() {
+        return "[T]";
+    }
+
     public void markAsDone() {
         this.isDone = true;
     }
@@ -19,5 +23,8 @@ public class Task {
         this.isDone = false;
     }
 
-    //...
+    public String toString() {
+        return getTypeIcon() + getStatusIcon() + description;
+    }
+
 }
