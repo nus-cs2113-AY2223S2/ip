@@ -22,7 +22,7 @@ public class CommandHandler {
         try {
             myList.markAsDone(Integer.parseInt(index) - 1);
         } catch (NullPointerException | ArrayIndexOutOfBoundsException arraySizeException) {
-            System.out.println("No such item exists!");
+            System.out.println("No such item exists! Please select a number within the list size");
         } catch (NumberFormatException notANumber) {
             System.out.println("Please enter a number");
         }
@@ -35,7 +35,7 @@ public class CommandHandler {
         try {
             myList.markAsUndone(Integer.parseInt(index) - 1);
         } catch (NullPointerException | ArrayIndexOutOfBoundsException arraySizeException) {
-            System.out.println("No such item exists!");
+            System.out.println("No such item exists! Please select a number within the list size");
         } catch (NumberFormatException notANumber) {
             System.out.println("Please enter a number");
         }
