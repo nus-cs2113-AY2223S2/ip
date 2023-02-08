@@ -2,7 +2,8 @@ import java.util.Scanner;
 import java.util.Arrays;
 public class Duke {
     private static final String[] INVALID_INPUT_MESSAGE = {
-            "Invalid input. Available commands are:",
+            "Invalid input format",
+            "Please see below for a list of valid commands",
             "- list",
             "- mark [TASK NUMBER]",
             "- unmark [TASK NUMBER]",
@@ -26,24 +27,31 @@ public class Duke {
         String currentInput = in.nextLine();
         while (!currentInput.equals("bye")) {
             String[] words = currentInput.split(" ");
-            switch (words[0]) {
-            case "deadline":
-            case "todo":
-            case "event":
-                handleAddTask(currentInput);
-                break;
-            case "list":
-                list();
-                break;
-            case "mark":
-                mark(words);
-                break;
-            case "unmark":
-                unmark(words);
-                break;
-            default:
-                printInvalidInputMessage();
-                break;
+            try {
+                switch (words[0]) {
+                case "deadline":
+                case "todo":
+                case "event":
+                    handleAddTask(currentInput);
+                    break;
+                case "list":
+                    list();
+                    break;
+                case "mark":
+                    mark(words);
+                    break;
+                case "unmark":
+                    unmark(words);
+                    break;
+                default:
+                    throw new UnknownCommandException(words[0]);
+                }
+            } catch (MarkNonexistentTaskException e) {
+                printInvalidInputMessage("Task " + e.taskIndex + " does not currently exist.");
+            } catch (ArrayIndexOutOfBoundsException e) {
+                printInvalidInputMessage("Unknown command");
+            } catch (UnknownCommandException e) {
+                printInvalidInputMessage("Unknown command \'" + e.unknownCommand + "\'");
             }
             currentInput = in.nextLine();
         }
@@ -54,8 +62,11 @@ public class Duke {
         printMessage(getFormattedList());
     }
 
-    public static void mark(String[] words) {
+    public static void mark(String[] words) throws MarkNonexistentTaskException {
         int taskIndex = Integer.parseInt(words[1]) - 1;
+        if (currentStoredTaskIndex <= taskIndex) {
+            throw new MarkNonexistentTaskException(taskIndex + 1);
+        }
         tasks[taskIndex].setDone(true);
         String[] message = {
                 "Cool! I've marked this task as done:",
@@ -64,8 +75,11 @@ public class Duke {
         printMessage(message);
     }
 
-    public static void unmark(String[] words) {
+    public static void unmark(String[] words) throws MarkNonexistentTaskException {
         int taskIndex = Integer.parseInt(words[1]) - 1;
+        if (currentStoredTaskIndex < taskIndex) {
+            throw new MarkNonexistentTaskException(taskIndex);
+        }
         tasks[taskIndex].setDone(false);
         String[] message = {
                 "Ok, I've marked this task as not done yet:",
@@ -74,7 +88,16 @@ public class Duke {
         printMessage(message);
     }
     public static void handleAddTask(String input) {
-        Task addedTask = addTask(input);
+        Task addedTask = null;
+        try {
+            addedTask = addTask(input);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            printInvalidInputMessage();
+        } catch (ArgumentBlankException e) {
+            printInvalidInputMessage("Argument \'" + e.argumentType + "\' cannot be blank");
+        } catch (UnknownCommandException e) {
+            printInvalidInputMessage("Unknown command \'" + e.unknownCommand + "\'");
+        }
         if (addedTask == null) {
             return;
         }
@@ -89,12 +112,17 @@ public class Duke {
         };
         return message;
     }
-    public static Task addTask(String input) {
+    public static Task addTask(String input) throws ArgumentBlankException, UnknownCommandException {
         String[] inputSections = input.split("/");
-        String taskType = inputSections[0].split(" ", 2)[0];
-        String taskDescription = inputSections[0].split(" ", 2)[1];
+        String[] firstSectionArguments = inputSections[0].split(" ", 2);
+        if (firstSectionArguments.length < 2) {
+            throw new ArgumentBlankException("description");
+        }
+        String taskType = firstSectionArguments[0];
+        String taskDescription = firstSectionArguments[1];
 
         Task taskToAdd;
+
         switch (taskType) {
         case "deadline":
             taskToAdd = getNewDeadline(taskDescription, inputSections);
@@ -106,28 +134,27 @@ public class Duke {
             taskToAdd = getNewTodo(taskDescription);
             break;
         default:
-            printInvalidInputMessage();
-            return null;
+            throw new UnknownCommandException(taskType);
         }
-
         tasks[currentStoredTaskIndex] = taskToAdd;
         currentStoredTaskIndex ++;
         return taskToAdd;
     }
-    public static Deadline getNewDeadline(String taskDescription, String[] inputSections) {
+    public static Deadline getNewDeadline(String taskDescription, String[] inputSections) throws ArgumentBlankException {
+        String date = inputSections[1].replaceFirst("by", "");
         return new Deadline(
                 taskDescription,
-                inputSections[1].replaceFirst("by", "")
+                date
         );
     }
-    public static Event getNewEvent(String taskDescription, String[] inputSections) {
+    public static Event getNewEvent(String taskDescription, String[] inputSections) throws ArgumentBlankException {
         return new Event(
                 taskDescription,
                 inputSections[1].replaceFirst("from", ""),
                 inputSections[2].replaceFirst("to", "")
         );
     }
-    public static ToDo getNewTodo(String taskDescription) {
+    public static ToDo getNewTodo(String taskDescription) throws ArgumentBlankException {
         return new ToDo(taskDescription);
     }
 
@@ -136,7 +163,11 @@ public class Duke {
     public static void printInvalidInputMessage() {
         printMessage(INVALID_INPUT_MESSAGE);
     }
-
+    public static void printInvalidInputMessage(String extraClarification) {
+        String[] message = Arrays.copyOf(INVALID_INPUT_MESSAGE, INVALID_INPUT_MESSAGE.length);
+        message[0] = extraClarification;
+        printMessage(message);
+    }
     public static String getFormattedTask(Task task, int number) {
         return number + ". " + task.toString();
     }
@@ -169,8 +200,10 @@ public class Duke {
     public static void printMessage(String[] message) {
         printSeparator();
         for (String line : message) {
-            printIndent();
-            System.out.print(line + "\n");
+            if (!line.equals("")) {
+                printIndent();
+                System.out.print(line + "\n");
+            }
         }
         printSeparator();
     }

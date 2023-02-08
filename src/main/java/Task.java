@@ -10,7 +10,10 @@ public class Task {
         isDone = done;
     }
 
-    public Task(String description) {
+    public Task(String description) throws ArgumentBlankException {
+        if (description.isBlank()) {
+            throw new ArgumentBlankException("description");
+        }
         this.setDescription(description);
         this.isDone = false;
     }
