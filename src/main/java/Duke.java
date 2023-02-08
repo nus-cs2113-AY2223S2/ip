@@ -1,8 +1,8 @@
 import exceptions.InvalidSyntaxException;
 import exceptions.UnrecognizedInputException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import storage.TaskStorageManager;
 import task.DeadlineTask;
 import task.EventTask;
 import task.Task;
@@ -10,7 +10,8 @@ import ui.Command;
 
 public class Duke {
 
-    private static final List<Task> userTasks = new ArrayList<>();
+    private static final TaskStorageManager taskStorageManager = new TaskStorageManager();
+    private static final List<Task> userTasks = taskStorageManager.loadTasks();
 
     private static boolean isRunning;
     private static Scanner scanner;
@@ -61,6 +62,8 @@ public class Duke {
         System.out.println("Got it. I've added this task:");
         System.out.println(userTasks.get(userTasks.size() - 1));
         printUserTasksCount();
+
+        taskStorageManager.saveTasks(userTasks);
     }
 
     private static void handleModifyUserTask(String cmd, String[] splitInput) throws InvalidSyntaxException {
@@ -80,6 +83,8 @@ public class Duke {
                 System.out.println(removedTask);
                 printUserTasksCount();
             }
+
+            taskStorageManager.saveTasks(userTasks);
 
         } catch (NumberFormatException ex) {
             if (cmd.equals(Command.MARK.label)) {
