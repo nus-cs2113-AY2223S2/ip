@@ -1,6 +1,8 @@
+import java.util.List;
 import java.util.Scanner;
 import java.util.ArrayList;
 // still accept "todo "
+// already handle all the invalid input, A-exceptions may be used later
 public class Duke {
 
     private static final String BYE_MESSAGE = "Bye. Hope to see you again soon!";
@@ -33,6 +35,10 @@ public class Duke {
     public static final String INVALID_INPUT = "This is an invalid input, please follow this input format\n";
     public static final String DEADLINE_INVALID_INPUT = INVALID_INPUT + DEADLINE_FORMAT;
     public static final String EVENT_INVALID_INPUT = INVALID_INPUT + EVENT_FORMAT;
+    public static final ArrayList<String> KEYWORDS = new ArrayList<String>(
+            List.of("todo","deadline","event","list","bye","mark","unmark","help")
+    );
+    public static final String MEANINGLESS_SENTENCE_AFTER_KEYWORD = "Opps! The sentence after keyword has no meaning";
 
     public static void main(String[] args) {
         showWelcomeMessage();
@@ -43,44 +49,46 @@ public class Duke {
 
         while (true) {
             userInput = getInput(in);
-            try {
-                String[] separatedKeyWordAndContent = userInput.split(" ", 2);
-                CommandKeywords catchErrorKeyword = CommandKeywords.valueOf(separatedKeyWordAndContent[0]);
-                String keyword = separatedKeyWordAndContent[0];
-                if (userInput.equals("bye")) {
-                    System.out.println(BYE_MESSAGE);
-                    createHorizontalLine();
-                    break;
-                } else if (userInput.equals("help")) {
-                    showHelpMessage();
-                } else if (userInput.equals("list")) {
-                    printItems(tasks);
-                } else if (keyword.equals("todo")) {
-                    if (doesExceptionOccur(separatedKeyWordAndContent,1, EMPTY_TODO_DESCRIPTION)) {
-                        continue;
-                    }
-                    addTodoTask(separatedKeyWordAndContent[1], tasks);
-                } else if (keyword.equals("deadline")) {
-                    if (doesExceptionOccur(separatedKeyWordAndContent,1, EMPTY_DEADLINE_DESCRIPTION)) {
-                        continue;
-                    }
-                    addDeadlineTask(separatedKeyWordAndContent[1], tasks);
-                } else if (keyword.equals("event")) {
-                    if (doesExceptionOccur(separatedKeyWordAndContent,1, EMPTY_EVENT_DESCRIPTION)) {
-                        continue;
-                    }
-                    addEventTask(separatedKeyWordAndContent[1], tasks);
-                } else if (keyword.equals("mark") || keyword.equals("unmark")) {
-                    if (userInput.split(" ").length != 2) {
-                        System.out.println(MARK_INSTRUCTION + "\n"
-                                + keyword + ": Number");
-                    } else {
-                        changeTaskStatus(tasks, separatedKeyWordAndContent);
-                    }
-                }
-            } catch (IllegalArgumentException error) {
+            String[] separatedKeyWordAndContent = userInput.split(" ", 2);
+            String keyword = separatedKeyWordAndContent[0];
+            if (!KEYWORDS.contains(keyword)) {
                 System.out.println(INCORRECT_KEYWORD);
+                continue;
             }
+            if (userInput.equals("bye")) {
+                System.out.println(BYE_MESSAGE);
+                createHorizontalLine();
+                break;
+            } else if (userInput.equals("help")) {
+                showHelpMessage();
+            } else if (userInput.equals("list")) {
+                printItems(tasks);
+            } else if (keyword.equals("todo")) {
+                if (doesExceptionOccur(separatedKeyWordAndContent,1, EMPTY_TODO_DESCRIPTION)) {
+                    continue;
+                }
+                addTodoTask(separatedKeyWordAndContent[1], tasks);
+            } else if (keyword.equals("deadline")) {
+                if (doesExceptionOccur(separatedKeyWordAndContent,1, EMPTY_DEADLINE_DESCRIPTION)) {
+                    continue;
+                }
+                addDeadlineTask(separatedKeyWordAndContent[1], tasks);
+            } else if (keyword.equals("event")) {
+                if (doesExceptionOccur(separatedKeyWordAndContent,1, EMPTY_EVENT_DESCRIPTION)) {
+                    continue;
+                }
+                addEventTask(separatedKeyWordAndContent[1], tasks);
+            } else if (keyword.equals("mark") || keyword.equals("unmark")) {
+                if (userInput.split(" ").length != 2) {
+                    System.out.println(MARK_INSTRUCTION + "\n"
+                            + keyword + ": Number");
+                } else {
+                    changeTaskStatus(tasks, separatedKeyWordAndContent);
+                }
+            } else {
+                System.out.println(MEANINGLESS_SENTENCE_AFTER_KEYWORD);
+            }
+
         }
     }
 
