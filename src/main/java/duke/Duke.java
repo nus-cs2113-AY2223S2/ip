@@ -1,3 +1,7 @@
+package duke;
+
+import duke.task.*;
+
 import java.util.Scanner;
 public class Duke {
     public static void printGreeting(){

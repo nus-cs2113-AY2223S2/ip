@@ -1,7 +1,9 @@
+package duke.task;
+
 public class Event extends Task{
     private String from;
     private String to;
-    Event(String name, String from, String to){
+    public Event(String name, String from, String to){
         super(name, TaskType.EVENT);
         this.from = from;
         this.to = to;

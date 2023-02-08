@@ -1,3 +1,5 @@
+package duke;
+
 public enum CommandType {
     ADD_TODO_COMMAND,
     ADD_DEADLINE_COMMAND,

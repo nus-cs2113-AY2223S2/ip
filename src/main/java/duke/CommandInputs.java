@@ -1,3 +1,5 @@
+package duke;
+
 public class CommandInputs {
     public static final String ADD_TODO_COMMAND_INPUT = "todo";
     public static final String ADD_DEADLINE_COMMAND_INPUT = "deadline";
