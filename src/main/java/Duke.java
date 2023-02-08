@@ -1,5 +1,5 @@
 import java.util.Scanner;
-import java.util.*;
+import java.util.ArrayList;
 
 public class
 Duke {
@@ -23,49 +23,74 @@ Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
 
-        String greeting = ("____________________________________________________________\n"
-                + "Hello! I'm Duke\n" + "What can I do for you?\n"
-                + "____________________________________________________________\n"
-        );
+        String line = "____________________________________________________________\n";
 
-        String goodBye = ("____________________________________________________________\n"
-                + "Bye. Hope to see you again soon!\n"
-                + "____________________________________________________________\n");
+        String greeting = (line + "Hello! I'm Duke\n" + "What can I do for you?\n" + line);
+
+        String goodBye = (line + "Bye. Hope to see you again soon!\n" + line);
 
         System.out.println(greeting);
         Scanner myObj = new Scanner(System.in);
         String userInput;
+        String userInputParts[];
+        String dummy;
         userInput = myObj.nextLine();
-        ArrayList<Task> toDoList = new ArrayList<Task>(100);
+        ArrayList<Task> taskList = new ArrayList<Task>(100);
 
         while (!userInput.equals("bye")) {
-            if (!containsNumbers(userInput)) {
-                if (userInput.equals("list")) {
-                    System.out.println("Here are the tasks in your list:\n");
-                    for (Task item : toDoList) {
-                        System.out.print((toDoList.indexOf(item) + 1) + ".");
-                        System.out.print(item.getStatusIcon());
-                        System.out.println(item.getDescription());
-                    }
-                    System.out.println("____________________________________________________________\n");
-                } else {
-                    System.out.println("____________________________________________________________\n"
-                            + "added:" + userInput + "\n"
-                            + "____________________________________________________________");
-                    toDoList.add(new Task(userInput));
+            if (userInput.equals("list")) {
+                System.out.println("Here are the tasks in your list:\n");
+                for (Task item : taskList) {
+                    System.out.print((taskList.indexOf(item) + 1) + ".");
+                    System.out.println(item.toString());
                 }
-            } else {
+                System.out.println(line);
+            }
+
+            //For marking and unmarking items in the list
+            else if(userInput.contains("mark")) {
                 int itemNumber = Integer.parseInt(userInput.replaceAll("[^0-9]", "")) - 1;
                 if (userInput.contains("unmark")) {
-                    toDoList.get(itemNumber).markAsUnDone();
+                    taskList.get(itemNumber).markAsUnDone();
                     System.out.println("OK, I've marked this task as not done yet:\n" + "    "
-                            + toDoList.get(itemNumber).getStatusIcon() + toDoList.get(itemNumber).getDescription());
+                            + taskList.get(itemNumber).getStatusIcon() + taskList.get(itemNumber).getDescription());
+                    System.out.println(line);
                 } else {
-                    toDoList.get(itemNumber).markAsDone();
+                    taskList.get(itemNumber).markAsDone();
                     System.out.println("Nice! I've marked this task as done:\n" + "    "
-                            + toDoList.get(itemNumber).getStatusIcon() + toDoList.get(itemNumber).getDescription());
+                            + taskList.get(itemNumber).getStatusIcon() + taskList.get(itemNumber).getDescription());
+                    System.out.println(line);
                 }
+            } else if (userInput.contains("event")){
+                userInput = userInput.replace("event","");
+                userInputParts = userInput.split("/");
+                Event event = new Event(userInputParts[0], userInputParts[1], userInputParts[2]);
+                taskList.add(event);
+                System.out.println("Got it. I've added this task: ");
+                System.out.println("[E][ ] " + event.description + "(" + event.from + event.to + ")");
+                System.out.println("Now you have " + taskList.size() + " tasks in the list. ");
+                System.out.println(line);
+            } else if (userInput.contains("deadline")) {
+                userInput = userInput.replace("deadline","");
+                userInputParts = userInput.split("/");
+                Deadline deadline = new Deadline(userInputParts[0], userInputParts[1]);
+                taskList.add(deadline);
+                System.out.println("[D][ ] " + deadline.description + "(" + userInputParts[1] + ")");
+                System.out.println("Now you have " + taskList.size() + " tasks in the list. ");
+                System.out.println(line);
+            } else if (userInput.contains("todo")){
+                userInput = userInput.replace("todo","");
+                Task task = new Task(userInput);
+                taskList.add(task);
+                System.out.println("Got it. I've added this task: ");
+                System.out.println("[T][ ] " + task.description);
+                System.out.println("Now you have " + taskList.size() + " tasks in the list. ");
+                System.out.println(line);
+            } else {
+                System.out.println("Please enter a valid command!");
+                System.out.println(line);
             }
+
             userInput = myObj.nextLine();
         }
         System.out.println(goodBye);

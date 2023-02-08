@@ -1,7 +1,6 @@
 public class Task {
     protected String description;
     protected boolean isDone;
-    protected int taskNumber;
 
     public String getDescription() {
         return description;
@@ -13,10 +12,12 @@ public class Task {
     }
 
     public void markAsDone() {
+
         this.isDone = true;
     }
 
-    public void markAsUnDone() {
+    public void markAsUnDone()
+    {
         this.isDone = false;
     }
 
@@ -24,6 +25,10 @@ public class Task {
         return (isDone ? "[X]" : "[ ]"); // mark done task with X
     }
 
+    @Override
+    public String toString(){
+        return "[T]" + this.getStatusIcon() + description;
+    }
 }
 
 
