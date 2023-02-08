@@ -1,40 +1,49 @@
+import java.util.NoSuchElementException;
 import java.util.Scanner;
-import java.util.Arrays;
 
 public class Duke {
     public static final int MAX_NUM_OF_TASKS = 100;
     public static final String LINE_BREAK = "---------------------------------------------";
 
-    public static void registerTodo (Task[] lists, String line, int index) {
-        Task item;
-        String[] inputLine = line.split(" ", 2);
-        item = new Todo(inputLine[1]);
-        lists[index] = item;
-        printTask(item, index);
+    public static void registerTodo (Task[] lists, String line, int index) throws IndexOutOfBoundsException {
+        try {
+            String[] inputLine = line.split(" ", 2);
+            Task item = new Todo(inputLine[1]);
+            lists[index] = item;
+            printTask(item, index);
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Your task must be of the following format: task (task name)");
+        }
     }
 
-    public static void registerDeadline (Task[] lists, String line, int index) {
-        Task item;
-        String[] inputLines = line.split(" ", 2);
-        inputLines = inputLines[1].split("/by ");
-        String description = inputLines[0];
-        String deadline = inputLines[1];
-        item = new Deadline(description, deadline);
-        lists[index] = item;
-        printTask(item, index);
+    public static void registerDeadline (Task[] lists, String line, int index) throws IndexOutOfBoundsException {
+        try {
+            String[] inputLines = line.split(" ", 2);
+            inputLines = inputLines[1].split("/by ");
+            String description = inputLines[0];
+            String deadline = inputLines[1];
+            Task item = new Deadline(description, deadline);
+            lists[index] = item;
+            printTask(item, index);
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Your deadline must be of the following format: deadline (deadline name) /by (date)");
+        }
     }
 
-    public static void registerEvent (Task[] lists, String line, int index) {
-        Task item;
-        String[] inputLines = line.split(" ", 2);
-        inputLines = inputLines[1].split("/from ");
-        String description = inputLines[0];
-        inputLines = inputLines[1].split("/to ");
-        String start = inputLines[0];
-        String end = inputLines[1];
-        item = new Event(description, start, end);
-        lists[index] = item;
-        printTask(item, index);
+    public static void registerEvent (Task[] lists, String line, int index) throws IndexOutOfBoundsException {
+        try {
+            String[] inputLines = line.split(" ", 2);
+            inputLines = inputLines[1].split("/from ");
+            String description = inputLines[0];
+            inputLines = inputLines[1].split("/to ");
+            String start = inputLines[0];
+            String end = inputLines[1];
+            Task item = new Event(description, start, end);
+            lists[index] = item;
+            printTask(item, index);
+        } catch (IndexOutOfBoundsException e) {
+        System.out.println("Your event must be of the following format: event (event name) /from (date) /to (date)");
+        }
     }
 
     public static void printTask (Task item, int index) {
@@ -56,14 +65,41 @@ public class Duke {
         System.out.println(LINE_BREAK);
     }
 
-    public static void main(String[] args) {
+    public static String getInput() throws NoSuchElementException {
+        Scanner in = new Scanner(System.in);
         String line = "";
+        try {
+            line = in.nextLine();
+        } catch (NoSuchElementException e){
+            printExiting();
+        }
+        return line;
+    }
+
+    public static int identifyInput(String line, Task[] lists, int index) throws DukeException {
+        try {
+            if (line.startsWith("todo")) {
+                registerTodo(lists, line, index);
+            } else if (line.startsWith("deadline")) {
+                registerDeadline(lists, line, index);
+            } else if (line.startsWith("event")) {
+                registerEvent(lists, line, index);
+            } else {
+                throw new DukeException();
+            }
+        } catch (DukeException e){
+            System.out.println("I am not a chatbot, please do not chat to me.");
+        }
+
+        return (index + 1);
+    }
+
+    public static void main(String[] args) throws DukeException {
         Task[] lists = new Task[MAX_NUM_OF_TASKS];
         int index = 0;
-        Scanner in = new Scanner(System.in);
         printIntro();
         while (true) {
-            line = in.nextLine();
+            String line = getInput();
             String[] words = line.split(" ");
             System.out.println(LINE_BREAK);
             if (line.contains("list")) {
@@ -89,22 +125,9 @@ public class Duke {
                 break;
             }
             else {
-                Task item;
-                if (line.startsWith("todo")) {
-                    registerTodo(lists, line, index);
-                    index++;
-                }
-                else if (line.startsWith("deadline")) {
-                    registerDeadline(lists, line, index);
-                    index++;
-                }
-                else if (line.startsWith("event")) {
-                    registerEvent(lists, line, index);
-                    index++;
-                }
+                index = identifyInput(line, lists, index);
             }
         }
         printExiting();
-        return;
     }
 }
