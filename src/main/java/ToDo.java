@@ -1,7 +1,7 @@
-public class Todo extends Task {
+public class ToDo extends Task {
 
 
-    public Todo(String taskDescription) {
+    public ToDo(String taskDescription) {
         super(taskDescription);
         this.taskChar = "[T]";
         System.out.print("Added: ");
