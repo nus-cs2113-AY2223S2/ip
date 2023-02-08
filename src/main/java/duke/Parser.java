@@ -1,3 +1,5 @@
+package duke;
+
 public class Parser {
     public static Command parseCommand(String userInput) throws DukeException{
         String firstWordOfInput = userInput.split(" ")[0];
