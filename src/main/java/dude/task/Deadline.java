@@ -1,6 +1,6 @@
 package dude.task;
 
-public class Deadline extends Task{
+public class Deadline extends Task {
 
     private final String deadline;
 
@@ -11,6 +11,6 @@ public class Deadline extends Task{
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + "(by: " + deadline + ")";
+        return "[D]" + super.toString() + " (by: " + deadline + ")";
     }
 }
