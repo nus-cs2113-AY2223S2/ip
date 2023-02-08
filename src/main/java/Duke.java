@@ -51,7 +51,9 @@ public class Duke {
                     currentIndex++;
                     printTaskAddedStatement(currentIndex, deadline);
                 } catch (IndexOutOfBoundsException exception) {
+                    printDottedLine();
                     System.out.println("☹ OOPS!!! The description of a deadline cannot be empty");
+                    printDottedLine();
                 }
             } else if (input.startsWith("event")) {
                 try {
@@ -64,7 +66,9 @@ public class Duke {
                     currentIndex++;
                     printTaskAddedStatement(currentIndex, event);
                 } catch (IndexOutOfBoundsException exception) {
+                    printDottedLine();
                     System.out.println("☹ OOPS!!! The description of a event cannot be empty");
+                    printDottedLine();
                 }
             } else {
                 printUnknownCommandError();
