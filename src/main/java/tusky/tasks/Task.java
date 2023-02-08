@@ -1,5 +1,7 @@
-package tasks;
+package tusky.tasks;
 
+import tusky.tasks.TaskType;
+import tusky.tasks.EmptyDescriptionException;
 public class Task {
 
     protected TaskType taskType = TaskType.TASK;
@@ -39,7 +41,7 @@ public class Task {
         this.description = description;
     }
 
-    public TaskType getTaskType(){
+    public tusky.tasks.TaskType getTaskType(){
         return taskType;
     }
 

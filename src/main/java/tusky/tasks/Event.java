@@ -1,4 +1,7 @@
-package tasks;
+package tusky.tasks;
+
+import tusky.tasks.Task;
+import tusky.tasks.TaskType;
 
 public class Event extends Task {
     protected TaskType taskType = TaskType.EVENT;
@@ -29,7 +32,7 @@ public class Event extends Task {
 
     @Override
     public String getTaskSymbol() {
-        // E for tasks.Event
+        // E for tusky.tasks.Event
         return "E";
     }
 

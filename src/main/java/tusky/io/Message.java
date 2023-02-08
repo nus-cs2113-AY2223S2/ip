@@ -1,4 +1,4 @@
-package io;
+package tusky.io;
 
 public enum Message {
     LINE("____________________________________________________________"),
@@ -16,7 +16,8 @@ public enum Message {
     ERR_KEY_NOT_FOUND(" You missed out your \"%s\" argument!"),
     ERR_UNKNOWN_COMMAND(" Sorry I don't recognise that command."),
     ERR_UNKNOWN_EXCEPTION(" Something went wrong: "),
-    ERR_EMPTY_TASK_DESCRIPTION(" The body of a %s cannot be empty!\n");
+    ERR_EMPTY_TASK_DESCRIPTION(" The body of a %s cannot be empty!\n"),
+    ERR_INVALID_PARAMETERS(" Sorry something is wrong with your input, please try again\n");
 
 
 

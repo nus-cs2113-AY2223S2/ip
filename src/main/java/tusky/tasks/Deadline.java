@@ -1,4 +1,7 @@
-package tasks;
+package tusky.tasks;
+
+import tusky.tasks.Task;
+import tusky.tasks.TaskType;
 
 public class Deadline extends Task {
     protected TaskType taskType = TaskType.DEADLINE;
@@ -20,7 +23,7 @@ public class Deadline extends Task {
 
     @Override
     public String getTaskSymbol() {
-        // D for tasks.Deadline
+        // D for tusky.tasks.Deadline
         return "D";
     }
 

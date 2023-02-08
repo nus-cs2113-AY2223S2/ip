@@ -1,4 +1,4 @@
-package io;
+package tusky.io;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,7 +7,10 @@ public class Parser {
     private String body;
     private String command;
 
-    public Parser(){}
+    public Parser(){
+        body = "";
+        command = "";
+    }
 
     public void parse(String input) {
         this.valueMap = new HashMap<>();
@@ -24,9 +27,9 @@ public class Parser {
 
     }
 
-    public String get(String key) throws KeyNotFoundException {
+    public String get(String key) throws tusky.io.KeyNotFoundException {
         if(!valueMap.containsKey (key)){
-            throw new KeyNotFoundException(key);
+            throw new tusky.io.KeyNotFoundException(key);
         }
         return valueMap.get(key);
     }

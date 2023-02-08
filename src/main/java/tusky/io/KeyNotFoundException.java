@@ -1,4 +1,4 @@
-package io;
+package tusky.io;
 
 public class KeyNotFoundException extends Exception{
     public KeyNotFoundException(String key){

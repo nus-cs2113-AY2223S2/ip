@@ -1,4 +1,4 @@
-package tasks;
+package tusky.tasks;
 
 public enum TaskType {
     TASK("task"),

@@ -1,8 +1,15 @@
+package tusky;
 
-import io.KeyNotFoundException;
-import tasks.*;
-import io.Message;
-import io.Parser;
+import tusky.io.KeyNotFoundException;
+import tusky.io.Message;
+import tusky.io.Parser;
+
+import tusky.tasks.ToDo;
+import tusky.tasks.Task;
+import tusky.tasks.TaskType;
+import tusky.tasks.Event;
+import tusky.tasks.Deadline;
+import tusky.tasks.EmptyDescriptionException;
 
 import java.util.Scanner;
 
@@ -68,7 +75,15 @@ public class Tusky {
         while (true) {
             try {
                 String input = in.nextLine();
-                parser.parse(input);
+                try{
+                    parser.parse(input);
+                } catch (ArrayIndexOutOfBoundsException e){
+                    println(Message.LINE.toString());
+                    printf(Message.ERR_INVALID_PARAMETERS.toString());
+                    println(Message.LINE.toString());
+                    continue;
+                }
+
                 int index;
                 switch (parser.getCommand()) {
                 case "bye":
@@ -126,6 +141,7 @@ public class Tusky {
                 println(Message.LINE.toString());
                 println(Message.ERR_UNKNOWN_EXCEPTION.toString() + e);
                 println(Message.LINE.toString());
+                throw e;
             }
 
         }
