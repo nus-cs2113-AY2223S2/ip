@@ -10,18 +10,26 @@ public class Task {
     }
 
     public void MarkTask(){
-        this.isDone = true;
         Rolex.printLines();
-        System.out.println("Well Done. This task is marked as done:");
-        System.out.println("[" + this.taskStatus() + "] " + this.taskName);
+        if(this.isDone){
+            System.out.println("Task is already marked.");
+        } else{
+            this.isDone = true;
+            System.out.println("Well Done. This task is marked as done:");
+            System.out.println("[" + this.taskStatus() + "] " + this.taskName);
+        }
         Rolex.printLines();
     }
 
     public void unMarkTask(){
-        this.isDone = false;
         Rolex.printLines();
-        System.out.println("Oh no, I've unmarked this task as it is not done:");
-        System.out.println("[" + this.taskStatus() + "] " + this.taskName);
+        if(this.isDone){
+            this.isDone = false;
+            System.out.println("Oh no, I've unmarked this task as it is not done:");
+            System.out.println("[" + this.taskStatus() + "] " + this.taskName);
+        } else{
+            System.out.println("Task is already unmarked.");
+        }
         Rolex.printLines();
     }
 
