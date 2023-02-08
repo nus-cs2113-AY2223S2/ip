@@ -11,7 +11,8 @@ public class Duke {
 
     public static void main(String[] args) {
         greetUser();
-        doCommand();
+        startDuke();
+        exitDuke();
     }
 
     private static void greetUser() {
@@ -23,7 +24,7 @@ public class Duke {
         System.out.println(line + "\nBye. Hope to see you again soon!\n" + line);
     }
 
-    private static Task createTask(String input) {
+    private static Task createTask(String input) throws DukeException, ArrayIndexOutOfBoundsException {
         String description;
         if (input.matches("todo .+")) {
             description = input.split("todo ")[1];
@@ -43,8 +44,7 @@ public class Duke {
             String end = splitString[1];
             return new Event(description, start, end);
         } else {
-            description = input;
-            return new Task(description);
+            throw new DukeException("OOPS!!! The description of a task cannot be empty.");
         }
     }
 
@@ -52,10 +52,9 @@ public class Duke {
         return taskCount < MAX_TASKS;
     }
 
-    private static void addTask(Task task) {
+    private static void addTask(Task task) throws DukeException {
         if (!isTasksFree()) {
-            System.out.println(line + "\nfailed as tasks is full\n" + line);
-            return;
+            throw new DukeException("Too much tasks!");
         }
         tasks[taskCount] = task;
         taskCount += 1;
@@ -79,45 +78,84 @@ public class Duke {
         return taskNum <= taskCount && taskNum >= 1;
     }
 
-    private static void markTask(String input) {
+    private static void markTask(String input) throws NumberFormatException {
         int taskNum = Integer.parseInt(input.split("mark ")[1]);
-        if (isValidTask(taskNum)) {
-            tasks[taskNum - 1].markDone();
-            System.out.println(line + "\nNice! I've marked this task as done:\n[" + tasks[taskNum - 1].getTaskType() +
-                    "][X] " + tasks[taskNum - 1].getDescription() + "\n" + line);
-        } else {
-            System.out.println(line + "\nInvalid task number\n" + line);
+        if (!isValidTask(taskNum)) {
+            throw new NumberFormatException();
         }
+        tasks[taskNum - 1].markDone();
+        System.out.println(line + "\nNice! I've marked this task as done:\n[" + tasks[taskNum - 1].getTaskType() +
+                "][X] " + tasks[taskNum - 1].getDescription() + "\n" + line);
     }
 
-    private static void unmarkTask(String input) {
+    private static void unmarkTask(String input) throws NumberFormatException {
         int taskNum = Integer.parseInt(input.split("unmark ")[1]);
-        if (isValidTask(taskNum)) {
-            tasks[taskNum - 1].unmarkDone();
-            System.out.println(line + "\nOK, I've marked this task as not done yet:\n[" + tasks[taskNum - 1].getTaskType() +
+        if (!isValidTask(taskNum)) {
+            throw new NumberFormatException();
+        }
+        tasks[taskNum - 1].unmarkDone();
+        System.out.println(line + "\nOK, I've marked this task as not done yet:\n[" + tasks[taskNum - 1].getTaskType() +
                     "][" + tasks[taskNum - 1].getStatusIcon() + "] " + tasks[taskNum - 1].getDescription() + "\n" + line);
-        } else {
-            System.out.println(line + "\nInvalid task number\n" + line);
+    }
+
+    private static void doCommand(String input) throws DukeException {
+        input = input.trim();
+        String[] inputs = input.split(" ");
+        String command = inputs[0];
+
+        switch(command) {
+        case "list":
+            listTasks();
+            break;
+        case "mark":
+            try {
+                markTask(input);
+            } catch (NumberFormatException e) {
+                throw new DukeException("Invalid task number!");
+            }
+            break;
+        case "unmark":
+            try {
+                unmarkTask(input);
+            } catch (NumberFormatException e) {
+                throw new DukeException("Invalid task number!");
+            }
+            break;
+        case "todo":
+        case "deadline":
+        case "event":
+            try {
+                Task newTask = createTask(input);
+                addTask(newTask);
+            } catch (DukeException e) {
+                throw e;
+            } catch (ArrayIndexOutOfBoundsException e) {
+                throw new DukeException("Missing details for task!");
+            }
+            break;
+        default:
+            throw new DukeException("OOPS!!! I'm sorry, but I don't know what that means :-(");
         }
     }
 
-    private static void doCommand() {
+    private static void startDuke() {
         String input;
         Scanner in = new Scanner(System.in);
         while (true) {
             input = in.nextLine();
+
             if (input.equals("bye")) {
-                exitDuke();
                 return;
-            } else if (input.equals("list")) {
-                listTasks();
-            } else if (input.matches("mark \\d+")) {
-                markTask(input);
-            } else if (input.matches("unmark \\d+")) {
-                unmarkTask(input);
-            } else {
-                Task newTask = createTask(input);
-                addTask(newTask);
+            }
+
+            try {
+                doCommand(input);
+            } catch (DukeException e) {
+                String errorMessage = e.getMessage();
+                System.out.println(line + '\n' + errorMessage + '\n' + line);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                String errorMessage = "Wrong input format for task!";
+                System.out.println(line + '\n' + errorMessage + '\n' + line);
             }
         }
     }
