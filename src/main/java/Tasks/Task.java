@@ -1,5 +1,4 @@
 package Tasks;
-
 public class Task {
     protected String description;
     protected boolean isDone;
@@ -17,8 +16,7 @@ public class Task {
         this.isDone = false;
     }
     public String fullDescription() {
-        String full;
-        full = (isDone ? "[X] " : "[ ] ") + this.description;
-        return full;
+        String fullSentence = (isDone ? "[X] " : "[ ] ") + this.description;
+        return fullSentence;
     }
 }

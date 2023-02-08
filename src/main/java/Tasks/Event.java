@@ -1,7 +1,4 @@
 package Tasks;
-
-import Tasks.Task;
-
 public class Event extends Task {
     protected String startTime;
     protected String endTime;
@@ -12,8 +9,7 @@ public class Event extends Task {
     }
     @Override
     public String fullDescription() {
-        String fullSentence;
-        fullSentence = (isDone ? "[E][X] " : "[E][ ] ") + this.description +
+        String fullSentence = (isDone ? "[E][X] " : "[E][ ] ") + this.description +
                 "(from:" + this.startTime + " to:" + this.endTime + ")";
         return fullSentence;
     }

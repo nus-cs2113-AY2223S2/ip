@@ -25,7 +25,9 @@ public class TaskList {
                 throw new DukeException("OOPS! Use case: deadline X /by Y");
             }
             String[] arrayOfDeadline = arrayOfWords[1].split("/by");
-            tasks.add(new Deadline(arrayOfDeadline[0].trim(), arrayOfDeadline[1].trim()));
+            String deadlineDescription = arrayOfDeadline[0].trim();
+            String deadlineDue = arrayOfDeadline[1].trim();
+            tasks.add(new Deadline(deadlineDescription, deadlineDue));
             break;
         case "event":
             if(!command.contains("/from") || !command.contains("/to")) {
@@ -45,29 +47,61 @@ public class TaskList {
         System.out.println("Now you have " + tasks.size() + " task(s) in the list.");
     }
     public static void mark(String command) throws DukeException {
-        String[] arrOfCommand = command.split(" ");
         try {
-            Integer.parseInt(arrOfCommand[1]);
+            String[] arrOfCommand = command.split(" ");
+            int taskNumber = Integer.parseInt(arrOfCommand[1]) - 1;
+            tasks.get(taskNumber).markAsDone();
+            System.out.println("Nice! I've marked this task as done:");
+            System.out.println(tasks.get(taskNumber).fullDescription());
         } catch(Exception error) {
-            TaskList.addToList(command);
-            return;
+            throw new DukeException("Use case: mark ITEM_NUMBER");
         }
-        int taskNumber = Integer.parseInt(arrOfCommand[1]) - 1;
-        tasks.get(taskNumber).markAsDone();
-        System.out.println("Nice! I've marked this task as done:");
-        System.out.println(tasks.get(taskNumber).fullDescription());
     }
     public static void unmark(String command) throws DukeException {
-        String[] arrOfCommand = command.split(" ");
         try {
-            Integer.parseInt(arrOfCommand[1]);
+            String[] arrOfCommand = command.split(" ");
+            int taskNumber = Integer.parseInt(arrOfCommand[1]) - 1;
+            tasks.get(taskNumber).markAsNotDone();
+            System.out.println("Ok, I've marked this task as not done yet:");
+            System.out.println(tasks.get(taskNumber).fullDescription());
         } catch(Exception error) {
-            TaskList.addToList(command);
-            return;
+            throw new DukeException("Use case: unmark ITEM_NUMBER");
         }
-        int taskNumber = Integer.parseInt(arrOfCommand[1]) - 1;
-        tasks.get(taskNumber).markAsNotDone();
-        System.out.println("Ok, I've marked this task as not done yet:");
-        System.out.println(tasks.get(taskNumber).fullDescription());
+    }
+    public static void runDuke(boolean isContinue) {
+        while(isContinue) {
+            String command = Conversation.readCommand();
+            String firstKeyword = command.split(" ")[0];
+            switch (firstKeyword) {
+            case "list":
+                TaskList.listTasks();
+                break;
+            case "mark":
+                try {
+                    TaskList.mark(command);
+                } catch (DukeException e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
+            case "unmark":
+                try {
+                    TaskList.unmark(command);
+                } catch (DukeException e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
+            case "bye":
+                Conversation.farewell();
+                isContinue = false;
+                break;
+            default:
+                try {
+                    TaskList.addToList(command);
+                } catch (DukeException error) {
+                    System.out.println(error.getMessage());
+                }
+                break;
+            }
+        }
     }
 }
