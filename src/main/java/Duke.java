@@ -111,7 +111,7 @@ public class Duke {
             System.out.println();
             break;
         default:
-            System.out.println("Unknown event type error");
+            System.out.println("Unknown task type error!");
         }
     }
 
