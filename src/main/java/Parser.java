@@ -35,13 +35,4 @@ public class Parser {
             return false;
         }
     }
-
-    /*public static int findIndexOf(String[] wordList, String searchItem){
-        for (int index = 0; index < wordList.length; index++){
-            if (wordList[index].equals(searchItem)){
-                return index;
-            }
-        }
-        return -1;
-    }*/
 }
