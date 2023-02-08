@@ -1,3 +1,4 @@
+package Duke;
 public class DukeExceptions extends Exception{
 
     public DukeExceptions(String message) {

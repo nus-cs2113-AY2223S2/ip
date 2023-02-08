@@ -1,3 +1,4 @@
+package Duke;
 public class DukeEvents extends DukeTasks{
     protected String fromDetail;
     protected String toDetail;
