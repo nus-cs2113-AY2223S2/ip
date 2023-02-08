@@ -31,16 +31,16 @@ public class Duke {
         }
     }
 
-    public static void markUnmark(String word, Task task) {
-        if (word.equals("mark")) {
-            task.mark();
-            System.out.println("Nice! I've marked this task as done: ");
-            System.out.println(task.toString());
-        } else {
-            task.unmark();
-            System.out.println("OK, I've marked this task as not done yet: ");
-            System.out.println(task.toString());
-        }
+    public static void mark(String word, Task task) {
+        task.mark();
+        System.out.println("Nice! I've marked this task as done: ");
+        System.out.println(task.toString());
+    }
+
+    public static void unmark(String word, Task task) {
+        task.unmark();
+        System.out.println("OK, I've marked this task as not done yet: ");
+        System.out.println(task.toString());
     }
 
     public static void deadline(String taskDescript) {
@@ -101,11 +101,15 @@ public class Duke {
                 // want to see all the tasks in a list
                 if (input[0].equals("list")) {
                     list();
-                    // mark/unmark a task
-                } else if (input[0].contains("mark")) {
+                // mark a task
+                } else if (input[0].equals("mark")) {
                     Task taskNum = TASKS[Integer.parseInt(input[1])];
-                    markUnmark(input[0], taskNum);
-                    // a task
+                    mark(input[0], taskNum);
+                // unmark a task
+                } else if (input[0].equals("unmark")) {
+                    Task taskNum = TASKS[Integer.parseInt(input[1])];
+                    unmark(input[0], taskNum);
+                // a task
                 } else if (input[0].equals("deadline") || input[0].equals("todo") || input[0].equals("event")) {
                     task(input[0], input);
                 } else {
