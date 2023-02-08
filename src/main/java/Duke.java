@@ -15,13 +15,15 @@ public class Duke {
 
     public static void addTask(Task task) {
         tasks[taskCount] = task;
-        System.out.println(dividingLine + "Got it. I've added this task:");
+        System.out.println(dividingLine);
+        System.out.println("Got it. I've added this task:");
         System.out.println(tasks[taskCount]);
-        System.out.println("Now you have " + (taskCount + 1) + " tasks in the list." + dividingLine);
+        System.out.println("Now you have " + (taskCount + 1) + " tasks in the list.");
+        System.out.println(dividingLine);
         taskCount++;
     }
 
-    public static void processTask(String line) throws DukeException{
+    public static void processTask(String line) throws DukeException {
         if (line.equals("list")) {
             printList();
         } else if (line.contains("mark") && !line.contains("unmark")) {
@@ -54,19 +56,18 @@ public class Duke {
         }
     }
 
-    public static void printTask(String line){
+    public static void printTask(String line) {
         try {
             processTask(line);
-        }
-        catch (NullPointerException e){
+        } catch (StringIndexOutOfBoundsException e) {
             System.out.println(dividingLine + "☹ OOPS!!! The description of a " + line + " cannot be empty."
                     + dividingLine);
-        }
-        catch (DukeException e){
+        } catch (DukeException e) {
             System.out.println(dividingLine + "☹ OOPS!!! I'm sorry, but I don't know what that means :-("
                     + dividingLine);
         }
     }
+
     public static void main(String[] args) {
 
         String logo = " ____        _        \n"
