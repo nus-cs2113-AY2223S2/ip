@@ -14,24 +14,64 @@ public class Duke {
         String input = ui.getUserInput();
         while(input.compareTo("bye") != 0) {
             String[] parsedInput;
-            parsedInput = parser.parseInput(input);
+            try{
+                parsedInput = parser.parseInput(input);
+            } catch (DukeException e) {
+                System.out.println("Oops, I'm sorry, I don't know what that means :(");
+                ui.showLine();
+                input = ui.getUserInput();
+                continue;
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("Oops, " + input + " cannot have an empty description");
+                ui.showLine();
+                input = ui.getUserInput();
+                continue;
+            } catch (StringIndexOutOfBoundsException e) {
+                String[] getCommand = input.split(" ", 2);
+                System.out.println("Oops, " + getCommand[0] + " is in the wrong format");
+                ui.showLine();
+                input = ui.getUserInput();
+                continue;
+            }
             switch(parsedInput[0]) {
                 case ("todo"):
-                    taskList[listCount] = new Todo(parsedInput[1]);
+                    taskList[listCount] = new ToDo(parsedInput[1]);
                     break;
                 case ("deadline"):
-                    taskList[listCount] = new Deadline(parsedInput[1], parsedInput[2]);
+                    try {
+                        taskList[listCount] = new Deadline(parsedInput[1], parsedInput[2]);
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        System.out.println("Oops, deadline input has the wrong format");
+                        ui.showLine();
+                        input = ui.getUserInput();
+                        continue;
+                    }
                     break;
                 case ("event"):
                     taskList[listCount] = new Event(parsedInput[1], parsedInput[2], parsedInput[3]);
                     break;
                 case("mark"):
-                    taskList[Integer.parseInt(parsedInput[1]) - 1].setDone();
+                    try {
+                        taskList[Integer.parseInt(parsedInput[1]) - 1].setDone();
+                    } catch (NumberFormatException e) {
+                        System.out.println("Oops, mark task description should be an integer");
+                        ui.showLine();
+                        input = ui.getUserInput();
+                        continue;
+                    }
                     listCount -= 1;
                     break;
                 case("unmark"):
-                    taskList[Integer.parseInt(parsedInput[1]) - 1].setUndone();
+                    try {
+                        taskList[Integer.parseInt(parsedInput[1]) - 1].setUndone();
+                    } catch (NumberFormatException e) {
+                        System.out.println("Oops, unmark task description should be an integer");
+                        ui.showLine();
+                        input = ui.getUserInput();
+                        continue;
+                    }
                     listCount -= 1;
+                    break;
                 case("list"):
                     ui.printList(taskList, listCount);
             }
