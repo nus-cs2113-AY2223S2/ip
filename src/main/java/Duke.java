@@ -45,8 +45,6 @@ public class Duke {
 
     public static void deadline(String taskDescript) {
         int bySize = 3;
-        // System.out.println("begin index: " + taskDescript.indexOf("by"));
-        // System.out.println("end index: " + taskDescript.indexOf("by") + bySize);
         String by = taskDescript.substring(taskDescript.indexOf("by") + bySize);
         Deadline deadline = new Deadline(taskDescript, by);
         TASKS[tasksI] = deadline;
@@ -54,11 +52,22 @@ public class Duke {
         System.out.println(deadline.toString());
     }
 
-    public static void todo(String taskDescript) {
-        Todo todo = new Todo(taskDescript);
-        TASKS[tasksI] = todo;
-        System.out.println("Got it. I've added this task: ");
-        System.out.println(todo.toString());
+    public static boolean todo(String taskDescript) {
+        boolean exceptionPresent = true;
+        try {
+            if (taskDescript.length() == 0) {
+                throw new DukeException();
+            } else {
+                Todo todo = new Todo(taskDescript);
+                TASKS[tasksI] = todo;
+                System.out.println("Got it. I've added this task: ");
+                System.out.println(todo.toString());
+                return !exceptionPresent;
+            }
+        } catch (DukeException exception) {
+            System.out.println("☹ OOPS!!! The description of a todo cannot be empty.");
+            return exceptionPresent;
+        }
     }
 
     public static void event(String taskDescript) {
@@ -69,38 +78,41 @@ public class Duke {
     }
 
     public static void task(String taskType, String[] taskDescript) {
-        if (taskType.equals("deadline") || taskType.equals("todo") || taskType.equals("event")) {
-            String descript = String.join(" ", taskDescript).substring(taskType.length());
-            if (taskType.equals("deadline")) {
-                deadline(descript);
-            } else if (taskType.equals("todo")) {
-                todo(descript);
-            } else if (taskType.equals("event")) {
-                event(descript);
-            }
-        } else {
-            Task task = new Task(String.join(" ", taskType));
-            TASKS[tasksI] = task;
-            System.out.println(task.toString());
+        String descript = String.join(" ", taskDescript).substring(taskType.length());
+        boolean exceptionPresent = false;
+        if (taskType.equals("deadline")) {
+            deadline(descript);
+        } else if (taskType.equals("todo")) {
+            exceptionPresent = todo(descript);
+        } else if (taskType.equals("event")) {
+            event(descript);
         }
-        System.out.println("Now you have " + tasksI + " tasks in the list.");
+        if (!exceptionPresent) {
+            System.out.println("Now you have " + tasksI + " tasks in the list.");
+            tasksI++;
+        }
     }
 
     public static void run() {
         Scanner scan = new Scanner(System.in);
         String[] input = scan.nextLine().split(" ");
         while (!input[0].equals("bye")) {
-            // want to see all the tasks in a list
-            if (input[0].equals("list")) {
-                list();
-            // mark/unmark a task
-            } else if (input[0].contains("mark")) {
-                Task taskNum = TASKS[Integer.parseInt(input[1])];
-                markUnmark(input[0], taskNum);
-            // a task
-            } else {
-                task(input[0], input);
-                tasksI++;
+            try{
+                // want to see all the tasks in a list
+                if (input[0].equals("list")) {
+                    list();
+                    // mark/unmark a task
+                } else if (input[0].contains("mark")) {
+                    Task taskNum = TASKS[Integer.parseInt(input[1])];
+                    markUnmark(input[0], taskNum);
+                    // a task
+                } else if (input[0].equals("deadline") || input[0].equals("todo") || input[0].equals("event")) {
+                    task(input[0], input);
+                } else {
+                    throw new DukeException();
+                }
+            } catch (DukeException exception) {
+                System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
             }
             input = scan.nextLine().split(" ");
         }
