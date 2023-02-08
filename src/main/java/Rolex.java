@@ -20,24 +20,36 @@ public class Rolex {
     }
 
     public static void inputIsList(){
-        printLines();
-        int indexNum = 1;
-        System.out.println("Here are the tasks in your list:");
-        for(int i = 0; i<taskCount; i++){
-            System.out.println(indexNum + ". " + task[i]);
-            indexNum++;
+        if(taskCount>=1){
+            printLines();
+            int indexNum = 1;
+            System.out.println("Here are the tasks in your list:");
+            for(int i = 0; i<taskCount; i++){
+                System.out.println(indexNum + ". " + task[i]);
+                indexNum++;
+            }
+            printLines();
+        } else{
+            RolexException.detectError("list");
         }
-        printLines();
     }
 
     public static void inputIsMark(String userInput){
         int index = Integer.parseInt(userInput.substring(5));
-        task[index-1].MarkTask();
+        if(index>0 && index<=taskCount) {
+            task[index-1].MarkTask();
+        } else{
+            RolexException.detectError(userInput);
+        }
     }
 
     public static void inputIsUnmark(String userInput){
         int index = Integer.parseInt(userInput.substring(7));
-        task[index-1].unMarkTask();
+        if(index>0 && index<=taskCount) {
+            task[index-1].unMarkTask();
+        } else{
+            RolexException.detectError(userInput);
+        }
     }
 
     public static void addPrintTask(){
@@ -49,30 +61,43 @@ public class Rolex {
     }
 
     public static void inputIsTodo(String userInput){
-        String todoName = userInput.substring(5);
-        task[taskCount] = new Todo(todoName);
-        taskCount++;
-        addPrintTask();
+        if(userInput.equalsIgnoreCase("todo")){
+            RolexException.detectError(userInput);
+        } else{
+            String todoName = userInput.substring(5);
+            task[taskCount] = new Todo(todoName);
+            taskCount++;
+            addPrintTask();
+        }
     }
 
     public static void inputIsDeadline(String userInput){
         int indexOfBy = userInput.indexOf("/by");
-        String deadlineName = userInput.substring(9,indexOfBy-1);
-        String by = userInput.substring(indexOfBy+3);
-        task[taskCount] = new Deadline(deadlineName, by);
-        taskCount++;
-        addPrintTask();
+        if(indexOfBy==-1){
+            RolexException.detectError(userInput);
+        } else{
+            String deadlineName = userInput.substring(9,indexOfBy-1);
+            String by = userInput.substring(indexOfBy+3);
+            task[taskCount] = new Deadline(deadlineName, by);
+            taskCount++;
+            addPrintTask();
+        }
     }
 
     public static void inputIsEvent(String userInput){
         int indexOfFrom = userInput.indexOf("/from");
         int indexOfTo = userInput.indexOf("/to");
-        String eventName = userInput.substring(6,indexOfFrom-1);
-        String startTime = userInput.substring(indexOfFrom+6,indexOfTo-1);
-        String endTime = userInput.substring(indexOfTo+4);
-        task[taskCount] = new Event(eventName, startTime, endTime);
-        taskCount++;
-        addPrintTask();
+        if(indexOfFrom == -1 || indexOfTo == -1){
+            RolexException.detectError(userInput);
+
+        } else{
+            String eventName = userInput.substring(6,indexOfFrom-1);
+            String startTime = userInput.substring(indexOfFrom+6,indexOfTo-1);
+            String endTime = userInput.substring(indexOfTo+4);
+            task[taskCount] = new Event(eventName, startTime, endTime);
+            taskCount++;
+            addPrintTask();
+        }
     }
 
     public static void main(String[] args) {
@@ -99,7 +124,7 @@ public class Rolex {
             } else if(userInput.startsWith("event")){
                 inputIsEvent(userInput);
             } else{
-                System.out.println("Invalid Input! Please Try Again!");
+                RolexException.detectError(userInput);
             }
 
         } //while() ends here
