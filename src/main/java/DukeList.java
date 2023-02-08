@@ -1,3 +1,5 @@
+import DukeFunction.DukeTask;
+
 import java.util.ArrayList;
 public class DukeList {
     private static final ArrayList<DukeTask> taskList = new ArrayList<>();
