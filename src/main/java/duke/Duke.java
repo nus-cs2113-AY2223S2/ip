@@ -1,4 +1,15 @@
+package duke;
+
+import duke.exceptions.*;
+import duke.tasks.Deadline;
+import duke.tasks.Event;
+import duke.tasks.Task;
+import duke.tasks.Todo;
+
 import java.util.Scanner;
+
+import static duke.exceptions.UserInputException.inputExceptionType;
+import static duke.exceptions.UserInputException.inputExceptionType.INVALID_TASK_TYPE;
 
 public class Duke {
     //String constants
@@ -20,12 +31,17 @@ public class Duke {
     private static final Task[] TASK_LIST = new Task[100];
     private static int taskCount = 0;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DukeException {
         // reused from contacts Contacts1.java with modification
         showWelcomeMessage();
         while (true) {
-            String userCommand = getUserInput();
-            executeCommand(userCommand);
+            try{
+                String userCommand = getUserInput();
+                executeCommand(userCommand);
+            }catch(DukeException err){
+                showToUser(err.ProduceErrorMessage());
+                showToUser(SEPARATOR);
+            }
         }
     }
 
@@ -40,7 +56,7 @@ public class Duke {
         return SCANNER.nextLine();
     }
 
-    private static void executeCommand(String userInputString) {
+    private static void executeCommand(String userInputString) throws DukeException {
         showToUser(SEPARATOR);
         final String[] commandTypeAndParams = splitCommandWordAndArgs(userInputString);
         final String commandType = commandTypeAndParams[0];
@@ -64,37 +80,32 @@ public class Duke {
             addTask(commandType, commandArgs);
             break;
         default:
-            invalidInputWarning();
+            throw new UserInputException(INVALID_TASK_TYPE);
         }
         showToUser(SEPARATOR);
     }
 
-    private static void invalidInputWarning() {
-        showToUser("Invalid input!");
-    }
-
-    private static void showToUser(String... message) {
+    public static void showToUser(String... message) {
         for (String m : message) {
             System.out.println(LINE_PREFIX + m);
         }
     }
 
-    private static void addTask(String newTaskType, String newTaskInfo) {
+    private static void addTask(String newTaskType, String newTaskInfo) throws DukeException {
         switch (newTaskType) {
         case COMMAND_ADD_TODO_WORD:
             TASK_LIST[taskCount] = new Todo(newTaskInfo);
             break;
         case COMMAND_ADD_DEADLINE_WORD:
-            final String[] deadlineSplit = newTaskInfo.trim().split("/by", 2);
-            TASK_LIST[taskCount] = new Deadline(deadlineSplit[0], deadlineSplit[1]);
+
+            TASK_LIST[taskCount] = new Deadline(newTaskInfo);
             break;
         case COMMAND_ADD_EVENT_WORD:
-            final String[] eventSplit = newTaskInfo.trim().split("/+", 3);
-            TASK_LIST[taskCount] = new Event(eventSplit[0], eventSplit[1], eventSplit[2]);
+
+            TASK_LIST[taskCount] = new Event(newTaskInfo);
             break;
         default:
-            showToUser("Invalid task input!");
-            return;
+            throw new UserInputException(INVALID_TASK_TYPE);
         }
         showToUser("Got it. I've added this task:",
                 TASK_LIST[taskCount].toString(),
@@ -104,14 +115,14 @@ public class Duke {
 
     private static void markAsDone(String taskNumber) {
         Task taskToBeMarked = TASK_LIST[Integer.parseInt(taskNumber) - 1];
-        taskToBeMarked.isDone = true;
+        taskToBeMarked.toggleDone();
         showToUser("Nice! I've marked this task as done:");
         showToUser(taskToBeMarked.toString());
     }
 
     private static void markAsNotDone(String taskNumber) {
         Task taskToBeUnmarked = TASK_LIST[Integer.parseInt(taskNumber) - 1];
-        taskToBeUnmarked.isDone = false;
+        taskToBeUnmarked.toggleDone();
         showToUser("OK, I've marked this task as not done yet:");
         showToUser(taskToBeUnmarked.toString());
     }
