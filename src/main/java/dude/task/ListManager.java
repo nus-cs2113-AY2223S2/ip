@@ -1,6 +1,9 @@
 package dude.task;
 
+import dude.Dude;
 import dude.commands.Interface;
+import dude.commands.Parser;
+import exception.*;
 
 import java.util.ArrayList;
 
@@ -35,53 +38,48 @@ public class ListManager {
         return list.get(index);
     }
 
-    public static void markDone(int index) {
-        list.get(index).setDone();
+    public static void markDone(String index) throws InvalidMarkException {
+        int intIndex = Integer.parseInt(index) - 1;
+        if(index.equals("") | intIndex >= list.size() | intIndex < 0){
+            throw new InvalidMarkException();
+        }
+        list.get(intIndex).setDone();
         Interface.markDoneMessage();
-        System.out.println(list.get(index));
+        System.out.println(list.get(intIndex));
         System.out.println(Interface.LINE);
     }
 
-    public static void markUndone(int index) {
-        list.get(index).setUndone();
-        Interface.markUndoneMessage();
-        System.out.println(list.get(index));
+    public static void markUndone(String index) throws InvalidMarkException {
+        int intIndex = Integer.parseInt(index) - 1;
+        if(index.equals("") | intIndex >= list.size() | intIndex < 0){
+            throw new InvalidMarkException();
+        }
+        list.get(intIndex).setUndone();
+        Interface.markDoneMessage();
+        System.out.println(list.get(intIndex));
         System.out.println(Interface.LINE);
     }
 
-    public static void addTodo(String input) {
-        if (index == 100) {
-            Interface.listFullMessage();
-            return;
+
+    public static void addNewTask(String input,String taskType) throws DudeException {
+        Task newTask;
+        switch (taskType) {
+        case "todo":
+            newTask = Parser.createTodo(input);
+            break;
+        case "deadline":
+            newTask = Parser.createDeadline(input);
+            break;
+        case "event":
+            newTask = Parser.createEvent(input);
+            break;
+        default:
+            newTask = null;
+            break;
         }
-        Todo inputTask = new Todo(input);
-        list.add(inputTask);
+        list.add(newTask);
         Interface.addedMessage(index);
         index++;
     }
-
-    public static void addDeadline(String input, String deadline) {
-        if (index == 100) {
-            Interface.listFullMessage();
-            return;
-        }
-        Deadline inputTask = new Deadline(input, deadline);
-        list.add(inputTask);
-        Interface.addedMessage(index);
-        index++;
-    }
-
-    public static void addEvent(String input, String start, String end) {
-        if (index == 100) {
-            Interface.listFullMessage();
-            return;
-        }
-        Event inputTask = new Event(input, start, end);
-        list.add(inputTask);
-        Interface.addedMessage(index);
-        index++;
-
-    }
-
 
 }
