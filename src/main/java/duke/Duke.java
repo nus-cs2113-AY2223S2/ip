@@ -105,7 +105,8 @@ public class Duke {
             listTasks(tasks);
             break;
         case "mark":
-            int indexToBeMarked = -1;
+            int indexToBeMarked = Integer.parseInt(informationNeededForPerformingUserRequest[1]) - 1; // 0-indexed
+            tasks[indexToBeMarked].setDone(true);
             printNotification(tasks[indexToBeMarked], "mark", tasksIndex + 1);
             break;
         case "unmark":
