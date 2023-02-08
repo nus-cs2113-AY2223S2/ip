@@ -18,7 +18,7 @@ public class Task {
     }
 
     public String getMarkingStatus() {
-        return isMarked ? "X" : " ";
+        return isMarked ? "[X]" : "[ ]";
     }
 
     public String getContent() {
