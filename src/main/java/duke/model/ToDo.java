@@ -1,3 +1,7 @@
+package duke.model;
+
+import duke.exception.InvalidCommandException;
+
 import java.util.Arrays;
 
 public class ToDo extends Task {
@@ -5,7 +9,7 @@ public class ToDo extends Task {
         super(descriptionArray);
     }
 
-    public static String[] parseCommand (String command) throws InvalidCommandException{
+    public static String[] parseCommand (String command) throws InvalidCommandException {
         String[] commandArray = command.split(" ");
         if (commandArray.length < 2){
             throw new InvalidCommandException("Description of todo cannot be empty!");

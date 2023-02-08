@@ -1,3 +1,7 @@
+package duke.model;
+
+import duke.exception.InvalidCommandException;
+
 public class Deadline extends Task {
     protected String deadlineBy;
 

@@ -1,11 +1,15 @@
+package duke.model;
+
+import duke.exception.InvalidCommandException;
+
 import java.util.Arrays;
 
 public class Task {
-    protected String description;
+    public String description;
     protected boolean isDone;
-    static int numberOfTasks = 0;
+    public static int numberOfTasks = 0;
 
-    public static String[] parseCommand (String command) throws InvalidCommandException{
+    public static String[] parseCommand (String command) throws InvalidCommandException {
         String[] commandArray = command.split(" ");
         if (commandArray.length < 2){
             throw new InvalidCommandException("Description of task cannot be empty!");

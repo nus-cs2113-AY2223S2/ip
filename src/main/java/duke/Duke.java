@@ -1,4 +1,8 @@
-import java.util.Arrays;
+package duke;
+
+import duke.exception.InvalidCommandException;
+import duke.model.*;
+
 import java.util.Scanner;
 
 public class Duke {
@@ -87,7 +91,7 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|" + System.lineSeparator();
         System.out.println("____________________________________________________________" + System.lineSeparator()
                 + logo
-                + "Hello! I'm Duke!" + System.lineSeparator()
+                + "Hello! I'm duke.Duke!" + System.lineSeparator()
                 + "What I can do for you?" + System.lineSeparator()
                 + "____________________________________________________________" + System.lineSeparator()
         );

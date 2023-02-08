@@ -1,8 +1,12 @@
+package duke.model;
+
+import duke.exception.InvalidCommandException;
+
 public class Event extends Task {
     protected String eventStart;
     protected String eventEnd;
 
-    public static String[] parseCommand (String command) throws InvalidCommandException{
+    public static String[] parseCommand (String command) throws InvalidCommandException {
         String[] descriptionArray = new String[3];
         String[] descriptionAndEventInfo = command.split("event")[1].split("/");
         if (descriptionAndEventInfo.length < 3) {
