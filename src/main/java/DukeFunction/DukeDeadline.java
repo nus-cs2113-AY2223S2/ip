@@ -1,3 +1,5 @@
+package DukeFunction;
+
 public class DukeDeadline extends DukeTask {
     protected String deadline;
     public DukeDeadline(String taskName, String deadline) {
