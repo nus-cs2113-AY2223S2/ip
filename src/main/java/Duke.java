@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class Duke {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        int tasksSize = 1;
+        int tasksSize = 100;
         Task[] tasks = new Task[tasksSize];
         int currentIndex = 0;
         int maxIndex = tasksSize - 1;
@@ -93,17 +93,13 @@ public class Duke {
                 }
             } else if ((input.startsWith("todo") | input.startsWith("deadline") | input.startsWith("event"))
                     & (currentIndex > maxIndex)) {
-                printTasksFullError();
+                printDottedLine();
+                System.out.println("☹ OOPS!!! The tasks list is currently full");
+                printDottedLine();
             } else {
                 printUnknownCommandError();
             }
         }
-    }
-
-    private static void printTasksFullError() {
-        printDottedLine();
-        System.out.println("☹ OOPS!!! The tasks list is currently full");
-        printDottedLine();
     }
 
     private static void printDottedLine() {
