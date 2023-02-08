@@ -93,13 +93,17 @@ public class Duke {
                 }
             } else if ((input.startsWith("todo") | input.startsWith("deadline") | input.startsWith("event"))
                     & (currentIndex > maxIndex)) {
-                printDottedLine();
-                System.out.println("☹ OOPS!!! The tasks list is currently full");
-                printDottedLine();
+                printTasksFullError();
             } else {
                 printUnknownCommandError();
             }
         }
+    }
+
+    private static void printTasksFullError() {
+        printDottedLine();
+        System.out.println("☹ OOPS!!! The tasks list is currently full");
+        printDottedLine();
     }
 
     private static void printDottedLine() {
@@ -159,4 +163,3 @@ public class Duke {
         printDottedLine();
     }
 }
-
