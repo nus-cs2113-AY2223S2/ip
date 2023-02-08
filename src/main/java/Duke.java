@@ -27,47 +27,61 @@ public class Duke {
         while (true) {
             Task tsk = null;
             String input = scan.nextLine();
+            String[] splitInput = input.split(" ");
 
-            if (input.equals("bye")) {
-                break;
-            }
-            if (input.contains("todo")) {
+            switch (splitInput[0]) {
+            case "bye":
+                exit();
+                return;
+            case "todo":
                 tsk = new Todo(input, false);
-            } else if (input.contains("event")) {
-                tsk = parseEvent(input);
-            } else if (input.contains("deadline")) {
-                tsk = parseDeadline(input);
-            }
-            if (input.equals("list")) {
-                listOut(userInputs, tasks);
-            } else if (input.length() >= 4 && input.substring(0, 4).equals("mark")) {
-                String[] tmpArr = input.split(" ");
-                tasks.get(Integer.parseInt(tmpArr[1]) - 1).mark();
-                System.out.println("\t____________________________________________________________");
-                System.out.println("\tNice! I've marked this task as done:");
-                System.out.println("\t  " + tasks.get(Integer.parseInt(tmpArr[1]) - 1));
-                System.out.println("\t____________________________________________________________");
-
-            } else if (input.length() >= 6 && input.substring(0, 6).equals("unmark")) {
-                String[] tmpArr = input.split(" ");
-                tasks.get(Integer.parseInt(tmpArr[1]) - 1).unMark();
-                System.out.println("\t____________________________________________________________");
-                System.out.println("\tNice! I've marked this task as done:");
-                System.out.println("\t  " + tasks.get(Integer.parseInt(tmpArr[1]) - 1));
-                System.out.println("\t____________________________________________________________");
-
-            } else {
                 addToList(input, userInputs);
                 tasks.add(tsk);
-                System.out.println("\t____________________________________________________________");
-                System.out.println("\tGot it. I've added this task:");
-                System.out.println("\t  " + tsk.toString());
-                System.out.println("\tNow you have " + tasks.size() + " tasks in the list.");
-                System.out.println("\t____________________________________________________________");
+                addTaskPrint(tasks, tsk);
 
-            }
+                break;               
+            case "event":
+                tsk = parseEvent(input);
+                addToList(input, userInputs);
+                tasks.add(tsk);
+                addTaskPrint(tasks, tsk);
+
+                break;
+            case "deadline": 
+                tsk = parseDeadline(input);
+                addToList(input, userInputs);
+                tasks.add(tsk);
+                addTaskPrint(tasks, tsk);
+                break;
+            case "list": 
+                listOut(userInputs, tasks);
+                break;
+            case "mark":
+                tasks.get(Integer.parseInt(splitInput[1]) - 1).mark();
+                System.out.println("\t____________________________________________________________");
+                System.out.println("\tNice! I've marked this task as done:");
+                System.out.println("\t  " + tasks.get(Integer.parseInt(splitInput[1]) - 1));
+                System.out.println("\t____________________________________________________________"); 
+                break;
+            case "unmark":                
+                tasks.get(Integer.parseInt(splitInput[1]) - 1).unMark();
+                System.out.println("\t____________________________________________________________");
+                System.out.println("\tOK, I've marked this task as not done yet:");
+                System.out.println("\t  " + tasks.get(Integer.parseInt(splitInput[1]) - 1));
+                System.out.println("\t____________________________________________________________");
+                break;
+            default:
+                break;
+            }                            
         }
-        exit();
+    }
+
+    public static void addTaskPrint(ArrayList<Task> tasks, Task tsk) {
+        System.out.println("\t____________________________________________________________");
+        System.out.println("\tGot it. I've added this task:");
+        System.out.println("\t  " + tsk.toString());
+        System.out.println("\tNow you have " + tasks.size() + " tasks in the list.");
+        System.out.println("\t____________________________________________________________");
     }
     /*
     This Returns the input as a Deadline object
