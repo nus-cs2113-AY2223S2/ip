@@ -1,2 +1,5 @@
-package PACKAGE_NAME;public class TaskNumberException {
+public class TaskNumberException extends DukeException{
+    TaskNumberException(){
+        super("OOPS!!! Please input a single valid task number.");
+    }
 }

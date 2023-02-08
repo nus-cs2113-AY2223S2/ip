@@ -1,5 +1,5 @@
 public class Parser {
-    public static Command parseCommand(String userInput) throws TaskNameException, TaskParameterException, InvalidCommandException{
+    public static Command parseCommand(String userInput) throws DukeException{
         String firstWordOfInput = userInput.split(" ")[0];
         CommandType commandType;
         String[] additionalParameters = null;
@@ -42,15 +42,19 @@ public class Parser {
         return new Command(commandType,additionalParameters);
     }
 
-    protected static String[] getTaskNumbers(String userInput){
+    protected static String[] getTaskNumbers(String userInput) throws DukeException{
         userInput = userInput.trim();
         int indexOfFirstSpace = userInput.indexOf(" ");
         if(indexOfFirstSpace == -1 || indexOfFirstSpace == userInput.length() - 1){
-            return null;
+            throw new TaskNumberException();
         }
-        return userInput.substring(indexOfFirstSpace).trim().split(" ");
+        String[] taskNumbers = userInput.substring(indexOfFirstSpace).trim().split(" ");
+        if(taskNumbers.length != 1){
+            throw new TaskNumberException();
+        }
+        return taskNumbers;
     }
-    protected static String[] getToDoAdditionalParameters(String userInput) throws TaskNameException{
+    protected static String[] getToDoAdditionalParameters(String userInput) throws DukeException{
         String[] additionalParameters = new String[1];
         int indexOfFirstSpace = userInput.indexOf(" ");
         if(indexOfFirstSpace == -1){
@@ -63,7 +67,7 @@ public class Parser {
         additionalParameters[0] = name;
         return additionalParameters;
     }
-    protected static String[] getDeadlineAdditionalParameters(String userInput) throws TaskNameException, TaskParameterException{
+    protected static String[] getDeadlineAdditionalParameters(String userInput) throws DukeException{
         int indexOfFirstSpace = userInput.indexOf(" ");
         int indexOfBy =  userInput.indexOf(CommandInputs.ADD_DEADLINE_BY_COMMAND_INPUT);
         if(indexOfFirstSpace == -1){
@@ -86,7 +90,7 @@ public class Parser {
         return additionalParameters;
     }
 
-    protected static String[] getEventAdditionalParameters(String userInput) throws TaskNameException, TaskParameterException{
+    protected static String[] getEventAdditionalParameters(String userInput) throws DukeException{
         int indexOfFirstSpace = userInput.indexOf(" ");
         int indexOfFrom = userInput.indexOf(CommandInputs.ADD_EVENT_FROM_COMMAND_INPUT);
         int indexOfTo = userInput.indexOf(CommandInputs.ADD_EVENT_TO_COMMAND_INPUT);

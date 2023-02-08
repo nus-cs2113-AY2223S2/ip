@@ -43,27 +43,19 @@ public class Duke {
             System.out.println(tasks[i].toString());
         }
     }
-    public static void changeTaskStatus(Task[] tasks, String[] taskNumbers, boolean isDone){
-        if(taskNumbers.length == 0){
-            System.out.println("Please include the task number to be marked.");
-            return;
-        }
-        if(taskNumbers.length > 1){
-            // For now only allow marking of one task at a time
-            System.out.println("Please only mark one task at a time. No tasks have been marked.");
-            return;
-        }
+    public static void changeTaskStatus(Task[] tasks, String[] taskNumbers, boolean isDone) throws DukeException{
+        // From parser, taskNumbers.length is always equal to 1
         int taskIndex;
         try {
             taskIndex = Integer.parseInt(taskNumbers[0]);
         } catch (Exception e){
-            System.out.println("Please input a valid task number exception.");
-            return;
+            throw new TaskNumberException();
         }
         if(taskIndex <= 0 || taskIndex > Task.totalTasks){
-            System.out.println("Please input a valid task number.");
-            return;
+            throw new TaskNumberException();
         }
+
+        // Minus one to taskIndex since user input is using 1-based indexing
         taskIndex -= 1;
         if(isDone){
             if(tasks[taskIndex].isDone()){
@@ -98,38 +90,36 @@ public class Duke {
             Command command;
             try{
                 command = Parser.parseCommand(userInput);
-            }catch (TaskNameException | TaskParameterException | InvalidCommandException e){
+                switch(command.getCommandType()){
+                case ADD_TODO_COMMAND:
+                    addNewTask(tasks, command.getAdditionalParameters(), TaskType.TODO);
+                    break;
+                case ADD_DEADLINE_COMMAND:
+                    addNewTask(tasks, command.getAdditionalParameters(), TaskType.DEADLINE);
+                    break;
+                case ADD_EVENT_COMMAND:
+                    addNewTask(tasks, command.getAdditionalParameters(), TaskType.EVENT);
+                    break;
+                case LIST_TASKS_COMMAND:
+                    printTasks(tasks);
+                    break;
+                case MARK_TASK_COMMAND:
+                    changeTaskStatus(tasks, command.getAdditionalParameters(), true);
+                    break;
+                case UNMARK_TASK_COMMAND:
+                    changeTaskStatus(tasks, command.getAdditionalParameters(), false);
+                    break;
+                case END_PROGRAM_COMMAND:
+                    printFarewell();
+                    isProgramRunning = false;
+                    break;
+                case UNKNOWN_COMMAND:
+                default:
+                    System.out.println("Unknown task or task parameters received. Please try again.");
+                    break;
+                }
+            }catch (DukeException e){
                 System.out.println(e.getMessage());
-                continue;
-            }
-
-            switch(command.getCommandType()){
-            case ADD_TODO_COMMAND:
-                addNewTask(tasks, command.getAdditionalParameters(), TaskType.TODO);
-                break;
-            case ADD_DEADLINE_COMMAND:
-                addNewTask(tasks, command.getAdditionalParameters(), TaskType.DEADLINE);
-                break;
-            case ADD_EVENT_COMMAND:
-                addNewTask(tasks, command.getAdditionalParameters(), TaskType.EVENT);
-                break;
-            case LIST_TASKS_COMMAND:
-                printTasks(tasks);
-                break;
-            case MARK_TASK_COMMAND:
-                changeTaskStatus(tasks, command.getAdditionalParameters(), true);
-                break;
-            case UNMARK_TASK_COMMAND:
-                changeTaskStatus(tasks, command.getAdditionalParameters(), false);
-                break;
-            case END_PROGRAM_COMMAND:
-                printFarewell();
-                isProgramRunning = false;
-                break;
-            case UNKNOWN_COMMAND:
-            default:
-                System.out.println("Unknown task or task parameters received. Please try again.");
-                break;
             }
         }
     }
