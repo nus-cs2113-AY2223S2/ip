@@ -9,6 +9,57 @@ public class Duke {
         System.out.println(printContent);
     }
 
+    public static void doCommand(String line, String command, String cmdContent, int cmdIdx){
+        TodoList todoList = new TodoList();
+        if(line.equals("list")){
+            // show to-do list
+            todoList.showList();
+        }else if(command.equals("mark")){
+            // mark work as done
+            int index;
+            try {                        
+                index = Integer.parseInt(line.substring(cmdIdx+1, line.length())) - 1;
+            } catch (Exception e) {
+                index = -1;
+            }
+            todoList.markItem(index, true);
+        }else if(command.equals("unmark")){
+            // mark work as unfinished
+            int index;
+            try {                        
+                index = Integer.parseInt(line.substring(cmdIdx+1, line.length())) - 1;
+            } catch (Exception e) {
+                index = -1;
+            }
+            todoList.markItem(index, false);
+        }else if(command.equals("todo")){
+            Todo todo = Todo.toTodo(cmdContent);
+            if(todo == null){
+                printError("Wrong todo format");
+                return;
+            }
+            todoList.addItem(todo);
+        }else if(command.equals("deadline")){
+            Deadline deadline = Deadline.toDeadline(cmdContent);
+            if(deadline == null){
+                printError("Wrong deadline format");
+                return;
+            }
+            todoList.addItem(deadline);
+        }else if(command.equals("event")){
+            Event event = Event.toEvent(cmdContent);
+            if(event == null){
+                printError("Wrong event format");
+                return;
+            }
+            todoList.addItem(Event.toEvent(cmdContent));
+        }else{
+            // add item to to-do list
+            Task todo = new Todo(line);
+            todoList.addItem(todo);
+        }
+    }
+
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         String logo = " ____        _        \n"
@@ -25,76 +76,28 @@ public class Duke {
                            + "     Bye. Hope to see you again soon!\n"
                            + "    ____________________________________________________________\n";
         System.out.println(enterGreet);
-        TodoList todoList = new TodoList();
         while(true){
             String line = in.nextLine();
-            System.out.println(line);
             if(line.equals("bye")){
                 // quit
                 System.out.println(exitPrompt);
                 break;
             }else{
                 // parse input
-                int funcIdx = line.indexOf(" ");
-                if(funcIdx == -1){
-                    funcIdx = line.length();
+                int cmdIdx = line.indexOf(" ");
+                if(cmdIdx == -1){
+                    cmdIdx = line.length();
                 }
-                String func = line.substring(0, funcIdx);
-                String instruction;
-                if(funcIdx == line.length()){
-                    instruction = "";
+                String command = line.substring(0, cmdIdx);
+                String cmdContent;
+                if(cmdIdx == line.length()){
+                    cmdContent = "";
                 }else{
-                    instruction = line.substring(funcIdx+1);
+                    cmdContent = line.substring(cmdIdx+1);
                 }
 
-                // do instructions
-                if(line.equals("list")){
-                    // show to-do list
-                    todoList.showList();
-                }else if(func.equals("mark")){
-                    // mark work as done
-                    int index;
-                    try {                        
-                        index = Integer.parseInt(line.substring(funcIdx+1, line.length())) - 1;
-                    } catch (Exception e) {
-                        index = -1;
-                    }
-                    todoList.markItem(index, true);
-                }else if(func.equals("unmark")){
-                    // mark work as unfinished
-                    int index;
-                    try {                        
-                        index = Integer.parseInt(line.substring(funcIdx+1, line.length())) - 1;
-                    } catch (Exception e) {
-                        index = -1;
-                    }
-                    todoList.markItem(index, false);
-                }else if(func.equals("todo")){
-                    Todo todo = Todo.toTodo(instruction);
-                    if(todo == null){
-                        printError("Wrong todo format");
-                        continue;
-                    }
-                    todoList.addItem(todo);
-                }else if(func.equals("deadline")){
-                    Deadline deadline = Deadline.toDeadline(instruction);
-                    if(deadline == null){
-                        printError("Wrong deadline format");
-                        continue;
-                    }
-                    todoList.addItem(deadline);
-                }else if(func.equals("event")){
-                    Event event = Event.toEvent(instruction);
-                    if(event == null){
-                        printError("Wrong event format");
-                        continue;
-                    }
-                    todoList.addItem(Event.toEvent(instruction));
-                }else{
-                    // add item to to-do list
-                    Task todo = new Todo(line);
-                    todoList.addItem(todo);
-                }
+                // do commands
+                doCommand(line, command, cmdContent, cmdIdx);
             }
         }
         in.close();
