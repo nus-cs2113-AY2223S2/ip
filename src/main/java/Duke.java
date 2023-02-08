@@ -1,7 +1,11 @@
 import java.util.Scanner;
+
 public class Duke {
     private static final String SEGMENT_LINE = "____________________________________________________________";
     private static final int MAX_TASKS = 100;
+    private static final int VALID_MARK_LENGTH = 2;
+    private static final int VALID_UNMARK_LENGTH = 2;
+    private static final int MINIMUM_TODO_LENGTH = 2;
 
     public static void printGreeting() {
         System.out.println(SEGMENT_LINE);
@@ -17,24 +21,29 @@ public class Duke {
     }
 
     public static void runCommand(String input, Task[] tasks) {
-        String[] arrayOfInput = input.split(" ");
-        boolean isInputList = input.equals("list");
-        if (isInputList) {
-            listTasks(tasks);
-        } else if (isMark(arrayOfInput)) {
-            // if command is "mark <digit>"
-            markTask(tasks, arrayOfInput);
-        } else if (isUnmark(arrayOfInput)) {
-            // if command is "unmark <digit>"
-            unmarkTask(tasks, arrayOfInput);
-        } else {
-            addTask(input, tasks, arrayOfInput);
+        try {
+            String[] arrayOfInput = input.split(" ");
+            boolean isInputList = input.equals("list");
+            if (isInputList) {
+                listTasks(tasks);
+            } else if (isMark(arrayOfInput)) {
+                // if command is "mark <int>"
+                markTask(tasks, arrayOfInput);
+            } else if (isUnmark(arrayOfInput)) {
+                // if command is "unmark <int>"
+                unmarkTask(tasks, arrayOfInput);
+            } else {
+                // command is to add task
+                decideTaskGroup(input, tasks, arrayOfInput);
+            }
+        } catch (DukeException e) {
+            System.out.println(SEGMENT_LINE + System.lineSeparator());
         }
     }
 
     public static void listTasks(Task[] tasks) {
         System.out.println(SEGMENT_LINE);
-        boolean isTaskCountZero = Task.totalTasks == 0;
+        boolean isTaskCountZero = (Task.totalTasks == 0);
         if (isTaskCountZero) {
             System.out.println(" The list is empty!");
         } else {
@@ -46,23 +55,53 @@ public class Duke {
         System.out.println(SEGMENT_LINE + System.lineSeparator());
     }
 
-    public static boolean isMark(String[] arrayOfInput) {
-        boolean isTwoWordInput = arrayOfInput.length == 2;
-        boolean isFirstWordMark = arrayOfInput[0].equals("mark");
-        boolean isSecondWordNumber = isStringInteger(arrayOfInput[1]);
-        return (isTwoWordInput && isFirstWordMark && isSecondWordNumber);
+    public static boolean isMark(String[] input) throws DukeException {
+        boolean isTwoWordInput = (input.length == VALID_MARK_LENGTH);
+        boolean isFirstWordMark = input[0].equals("mark");
+        if (!isFirstWordMark) {
+            return false;
+        }
+        if (!isTwoWordInput) {
+            // user only provided "mark"
+            System.out.println(SEGMENT_LINE);
+            System.out.println(" Invalid input! Valid input format: \"mark <number>\"!");
+            throw new DukeException();
+        }
+        boolean isSecondWordNumber = isStringOfInteger(input[1]);
+        if (!isSecondWordNumber) {
+            // user provided "mark <non digit chara>"
+            System.out.println(SEGMENT_LINE);
+            System.out.println(" Invalid input! Valid input format: \"mark <number>\"!");
+            throw new DukeException();
+        }
+        return true;
     }
 
-    public static boolean isUnmark(String[] arrayOfInput) {
-        // if input length (separated by " " is 2) && first word == "unmark" && second word only contains numbers
-        boolean isTwoWordInput = arrayOfInput.length == 2;
-        boolean isFirstWordUnmark = arrayOfInput[0].equals("unmark");
-        boolean isSecondWordNumber = isStringInteger(arrayOfInput[1]);
-        return (isTwoWordInput &&isFirstWordUnmark && isSecondWordNumber);
+    public static boolean isUnmark(String[] input) throws DukeException {
+        // if input length (separated by " ") == 2 && first word == "unmark" && second word only contains numbers
+        boolean isTwoWordInput = (input.length == VALID_UNMARK_LENGTH);
+        boolean isFirstWordUnmark = input[0].equals("unmark");
+        if (!isFirstWordUnmark) {
+            return false;
+        }
+        if (!isTwoWordInput) {
+            // user only provided "unmark"
+            System.out.println(SEGMENT_LINE);
+            System.out.println(" Invalid input! Valid input format: \"unmark <number>\"!");
+            throw new DukeException();
+        }
+        boolean isSecondWordNumber = isStringOfInteger(input[1]);
+        if (!isSecondWordNumber) {
+            // user provided "unmark <non digit chara>"
+            System.out.println(SEGMENT_LINE);
+            System.out.println(" Invalid input! Valid input format: \"unmark <number>\"!");
+            throw new DukeException();
+        }
+        return true;
     }
 
-    public static boolean isStringInteger(String input) {
-        // takes in a string and checks whether the string only contains digits
+    public static boolean isStringOfInteger(String input) {
+        // takes in a string and checks whether the string only contains digits characters
         char[] inputInArray = input.toCharArray();
         for (char c : inputInArray) {
             if (!Character.isDigit(c)) {
@@ -74,15 +113,15 @@ public class Duke {
 
     public static void markTask(Task[] tasks, String[] arrayOfInput) {
         tasks[Integer.parseInt(arrayOfInput[1]) - 1].markAsDone();
-        printMarkOrUnmarkStatement(tasks, Integer.parseInt(arrayOfInput[1]) - 1);
+        printMarkOrUnmark(tasks, Integer.parseInt(arrayOfInput[1]) - 1);
     }
 
     public static void unmarkTask(Task[] tasks, String[] arrayOfInput) {
         tasks[Integer.parseInt(arrayOfInput[1]) - 1].markAsNotDone();
-        printMarkOrUnmarkStatement(tasks, Integer.parseInt(arrayOfInput[1]) - 1);
+        printMarkOrUnmark(tasks, Integer.parseInt(arrayOfInput[1]) - 1);
     }
 
-    public static void printMarkOrUnmarkStatement(Task[] tasks, int taskIndex) {
+    public static void printMarkOrUnmark(Task[] tasks, int taskIndex) {
         System.out.println(SEGMENT_LINE);
         if (tasks[taskIndex].isDone) {
             System.out.println(" Awesome! I've marked this task as done:");
@@ -93,95 +132,53 @@ public class Duke {
         System.out.println(SEGMENT_LINE + System.lineSeparator());
     }
 
-    public static void addTask(String input, Task[] tasks, String[] arrayOfInput) {
+    public static void decideTaskGroup(String input, Task[] tasks, String[] arrayOfInput) throws DukeException {
         boolean isInputTodo = arrayOfInput[0].equals("todo");
         boolean isInputDeadline = arrayOfInput[0].equals("deadline");
         boolean isInputEvent = arrayOfInput[0].equals("event");
         if (isInputTodo) {
             addTodoTask(tasks, input);
         } else if (isInputDeadline) {
-            addDeadlineTask(tasks, arrayOfInput);
+            addDeadlineTask(tasks, input);
         } else if (isInputEvent) {
-            addEventTask(tasks, arrayOfInput);
+            addEventTask(tasks, input);
         } else {
-            // if input is just the task itself without keyword
-            tasks[Task.totalTasks] = new Task(input);
+            // if input doesn't contain any keywords
+            System.out.println(SEGMENT_LINE);
+            System.out.println(" Invalid input! Please provide a valid input!");
+            throw new DukeException();
         }
         echoAddTasks(tasks);
         Task.incrementTotalTasks();
     }
 
-    public static void addTodoTask(Task[] tasks, String input) {
+    public static void addTodoTask(Task[] tasks, String input) throws DukeException {
         String[] commandTaskNameArray = input.split(" ", 2);
+        if (commandTaskNameArray.length < MINIMUM_TODO_LENGTH) {
+            System.out.println(SEGMENT_LINE);
+            System.out.println(" Invalid input! Valid input format: \"todo <task name>\"");
+            throw new DukeException();
+        }
         tasks[Task.totalTasks] = new Todo(commandTaskNameArray[1]);
     }
 
-    public static void addDeadlineTask(Task[] tasks, String[] arrayOfInput) {
-        String taskName = "";
-        String deadlineDate = "";
-        int arrayOfInputIndex = 1;
-        while (isDeadlineTaskName(arrayOfInput, arrayOfInputIndex)) {
-            taskName = String.join(" ", taskName, arrayOfInput[arrayOfInputIndex]);
-            arrayOfInputIndex += 1;
-        }
-        arrayOfInputIndex += 1;
-        while (isWithinArrayLength(arrayOfInput, arrayOfInputIndex)) {
-            // words after /by are for the dateline
-            deadlineDate = String.join(" ", deadlineDate, arrayOfInput[arrayOfInputIndex]);
-            arrayOfInputIndex += 1;
-        }
-        tasks[Task.totalTasks] = new Deadline(taskName.trim(), deadlineDate.trim());
+    public static void addDeadlineTask(Task[] tasks, String input) { // todo exceptions
+        String[] commandInformation = input.split(" ", 2);
+        String[] taskNameAndDate = commandInformation[1].split("/by", 2);
+        tasks[Task.totalTasks] = new Deadline(taskNameAndDate[0].trim(), taskNameAndDate[1].trim());
     }
 
-    public static boolean isDeadlineTaskName(String[] arrayOfInput, int arrayOfInputIndex) {
-        boolean isNotByWord = !arrayOfInput[arrayOfInputIndex].equals("/by");
-        return isWithinArrayLength(arrayOfInput, arrayOfInputIndex) && isNotByWord;
-        // used as a condition for a while loop to iterate through words before "/by"
-    }
-
-    public static boolean isWithinArrayLength(String[] arrayOfInput, int arrayOfInputIndex) {
-        return arrayOfInputIndex < arrayOfInput.length;
-    }
-
-    public static void addEventTask(Task[] tasks, String[] arrayOfInput) {
-        String taskName = "";
-        String startDateTime = "";
-        String endDateTime = "";
-        int arrayOfInputIndex = 1;
-        while (isEventTaskName(arrayOfInput, arrayOfInputIndex)) {
-            taskName = String.join(" ", taskName, arrayOfInput[arrayOfInputIndex]);
-            arrayOfInputIndex += 1;
-        }
-        arrayOfInputIndex += 1;
-        while (isEventStartDate(arrayOfInput, arrayOfInputIndex)) {
-            startDateTime = String.join(" ", startDateTime, arrayOfInput[arrayOfInputIndex]);
-            arrayOfInputIndex += 1;
-        }
-        arrayOfInputIndex += 1;
-        while (isWithinArrayLength(arrayOfInput, arrayOfInputIndex)) {
-            // words after /to are for the endDateTime
-            endDateTime = String.join(" ", endDateTime, arrayOfInput[arrayOfInputIndex]);
-            arrayOfInputIndex += 1;
-        }
-        tasks[Task.totalTasks] = new Event(taskName.trim(), startDateTime.trim(), endDateTime.trim());
-    }
-
-    public static boolean isEventTaskName(String[] arrayOfInput, int arrayOfInputIndex) {
-        boolean isNotFromWord = !arrayOfInput[arrayOfInputIndex].equals("/from");
-        return isWithinArrayLength(arrayOfInput, arrayOfInputIndex) && isNotFromWord;
-        // used as a condition for a while loop to iterate through words before "/from"
-    }
-
-    public static boolean isEventStartDate(String[] arrayOfInput, int arrayOfInputIndex) {
-        boolean isNotToWord = !arrayOfInput[arrayOfInputIndex].equals("/to");
-        return isWithinArrayLength(arrayOfInput, arrayOfInputIndex) && isNotToWord;
-        // used as a condition for a while loop to iterate through words between "/from" and "/to"
+    public static void addEventTask(Task[] tasks, String input) { // todo exceptions
+        String taskNameInformation = input.split(" ", 2)[1];
+        String[] taskNameAndDate = taskNameInformation.split("/from", 2); // name fromTo
+        String[] fromAndTo = taskNameAndDate[1].split("/to", 2); // from to
+        tasks[Task.totalTasks] = new Event(taskNameAndDate[0].trim(), fromAndTo[0].trim(), fromAndTo[1].trim());
     }
 
     public static void echoAddTasks(Task[] tasks) {
         System.out.println(SEGMENT_LINE);
         int numberOfTasks = Task.totalTasks + 1;
-        String output = " The following task has been added:" +  System.lineSeparator()
+        String output = " The following task has been added:" + System.lineSeparator()
                 + "   " + tasks[Task.totalTasks].getFullTaskDetail() + System.lineSeparator()
                 + " There is now " + numberOfTasks + " task[s] in total.";
         System.out.println(output);
