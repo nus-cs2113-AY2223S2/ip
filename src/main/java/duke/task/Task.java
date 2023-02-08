@@ -27,6 +27,10 @@ public class Task {
         return Completed() + taskName;
     }
 
+    public String returnCommand() {
+        return "hello";
+    }
+
     public String toString() {
         return Completed() + taskName;
     }
