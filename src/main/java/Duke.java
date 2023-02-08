@@ -17,17 +17,37 @@ public class Duke {
             } else if (input.equals("list")) {
                 printAllTasks(tasks);
             } else if (input.startsWith("mark")) {
-                String[] temp = input.split(" ", 2);
-                int taskIndex = Integer.parseInt(temp[1]);
-                Task curTask = tasks[taskIndex - 1];
-                curTask.markAsDone();
-                printTaskStatusStatement(curTask,"mark");
+                try {
+                    String[] temp = input.split(" ", 2);
+                    int taskIndex = Integer.parseInt(temp[1]);
+                    Task curTask = tasks[taskIndex - 1];
+                    curTask.markAsDone();
+                    printTaskStatusStatement(curTask, "mark");
+                } catch (IndexOutOfBoundsException exception){
+                    printDottedLine();
+                    System.out.println("☹ OOPS!!! The description of a mark cannot be empty");
+                    printDottedLine();
+                } catch (NullPointerException exception) {
+                    printDottedLine();
+                    System.out.println("☹ OOPS!!! The description of a mark is invalid");
+                    printDottedLine();
+                }
             } else if (input.startsWith("unmark")) {
-                String[] temp = input.split(" ", 2);
-                int taskIndex = Integer.parseInt(temp[1]);
-                Task curTask = tasks[taskIndex - 1];
-                curTask.unmarkAsDone();
-                printTaskStatusStatement(curTask,"unmark");
+                try {
+                    String[] temp = input.split(" ", 2);
+                    int taskIndex = Integer.parseInt(temp[1]);
+                    Task curTask = tasks[taskIndex - 1];
+                    curTask.unmarkAsDone();
+                    printTaskStatusStatement(curTask, "unmark");
+                } catch (IndexOutOfBoundsException exception) {
+                    printDottedLine();
+                    System.out.println("☹ OOPS!!! The description of a unmark cannot be empty");
+                    printDottedLine();
+                } catch (NullPointerException exception) {
+                    printDottedLine();
+                    System.out.println("☹ OOPS!!! The description of a unmark is invalid");
+                    printDottedLine();
+                }
             } else if (input.startsWith("todo")) {
                 try {
                     String[] temp = input.split("todo "); //separates todo description
