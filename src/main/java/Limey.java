@@ -9,9 +9,7 @@ public class Limey {
         String inLine;
         String firstWord;
         String[] wordList;
-        int taskIndex;
-        boolean isValidInt;
-        boolean isValidIndex;
+        int taskIndex = 0;
 
         //start user interface
         Speech.sayHi();
@@ -20,60 +18,14 @@ public class Limey {
         wordList = Parser.splitInput(inLine);
         firstWord = Parser.getFirstWord(inLine);
 
+        initialiseLimey(firstWord, tasks, wordList, inLine, taskIndex, in);
+
         //loop until input 'bye'
-        while (!firstWord.equals("bye")) {
-            //switch case to decide what to do
-            switch (firstWord) {
-            case "list":
-                Speech.printTaskList(tasks, Task.numTasks);
-                break;
-            case "mark":
-                if (wordList.length > 1) { //input has at least 2 space separated strings
-                    inLine = wordList[1];
-                    isValidInt = Parser.isParsable(inLine);
-                    if (!isValidInt) {
-                        Speech.invalidMessage();
-                        break;
-                    }
-                    taskIndex = Integer.parseInt(inLine) - 1;
-                    isValidIndex = (taskIndex >= 0 && taskIndex < Task.numTasks);
-                    if (!isValidIndex) {
-                        Speech.invalidMessage();
-                        break;
-                    }
-                    tasks[taskIndex].setDone(true);
-                    Speech.printMarked(tasks[taskIndex]);
-                }
-                break;
-            case "unmark":
-                inLine = wordList[1];
-                isValidInt = Parser.isParsable(inLine);
-                if (!isValidInt) {
-                    Speech.invalidMessage();
-                    break;
-                }
-                taskIndex = Integer.parseInt(inLine) - 1;
-                isValidIndex = (taskIndex >= 0 && taskIndex < Task.numTasks);
-                if (!isValidIndex) {
-                    Speech.invalidMessage();
-                    break;
-                }
-                tasks[taskIndex].setDone(false);
-                Speech.printUnmarked(tasks[taskIndex]);
-                break;
-            default:
-                makeNewTask(tasks, inLine, firstWord);
-                break;
-            }
-            //update new line for next iteration
-            inLine = in.nextLine().trim();
-            wordList = Parser.splitInput(inLine);
-            firstWord = wordList[0];
-        }
         Speech.sayBye();
     }
 
-    private static void makeNewTask(Task[] tasks, String inLine, String firstWord) {
+
+    private static void makeNewTask (Task[] tasks, String inLine, String firstWord) throws commandNotFoundException {
         Task taskIn;
         switch (firstWord) {
         case "deadline":
@@ -86,12 +38,77 @@ public class Limey {
             taskIn = new Todo(inLine);
             break;
         default:
-            Speech.invalidMessage();
-            return;
+            throw new commandNotFoundException();
         }
         tasks[Task.numTasks] = taskIn;
         Task.numTasks++;
         Speech.printAdded(taskIn, Task.numTasks);
+    }
+
+    private static void initialiseLimey(String firstWord, Task[] tasks, String[] wordList, String inLine, int taskIndex, Scanner in) {
+        while (!firstWord.equals("bye")) {
+            //switch case to decide what to do
+            switch (firstWord) {
+            case "list":
+                Speech.printTaskList(tasks, Task.numTasks);
+                break;
+            case "mark":
+                printMarkTask(tasks, wordList);
+                break;
+            case "unmark":
+                printUnmarkTask(tasks, wordList);
+                break;
+            default:
+                try{
+                    makeNewTask(tasks, inLine, firstWord);
+                } catch (commandNotFoundException e){
+                    Speech.invalidMessage("Invalid Command");
+                }
+
+                break;
+            }
+            inLine = in.nextLine().trim();
+            wordList = Parser.splitInput(inLine);
+            firstWord = wordList[0];
+        }
+    }
+
+    private static void printUnmarkTask(Task[] tasks, String[] wordList) {
+        try {
+            unmarkTask(tasks, wordList);
+        } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
+            Speech.invalidMessage("Index out of bounds.");
+        } catch (NumberFormatException e) {
+            Speech.invalidMessage("Index given is not a number.");
+        }
+    }
+
+    private static void unmarkTask(Task[] tasks, String[] wordList) {
+        String inLine;
+        int taskIndex;
+        inLine = wordList[1];
+        taskIndex = Integer.parseInt(inLine) - 1;
+        tasks[taskIndex].setDone(false);
+        Speech.printUnmarked(tasks[taskIndex]);
+    }
+
+    private static void printMarkTask(Task[] tasks, String[] wordList) {
+        try {
+            markTask(tasks, wordList);
+        } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
+            Speech.invalidMessage("Index out of bounds.");
+        } catch (NumberFormatException e) {
+            Speech.invalidMessage("Index given is not a number.");
+        }
+    }
+
+    private static void markTask(Task[] tasks, String[] wordList) {
+        int taskIndex;
+        String inLine;
+        inLine = wordList[1];
+        taskIndex = Integer.parseInt(inLine) - 1;
+        tasks[taskIndex].setDone(true);
+        Speech.printMarked(tasks[taskIndex]);
     }
 }
 

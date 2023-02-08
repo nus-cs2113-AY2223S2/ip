@@ -20,8 +20,8 @@ public class Speech {
         System.out.println("\t"+task.getTaskIdentity());
         printLine();
     }
-    public static void invalidMessage(){
-        System.out.println("\tSorry that was an invalid command.");
+    public static void invalidMessage(String errorMessage){
+        System.out.println("\tSorry that was an invalid command. Error: " + errorMessage);
     }
 
     public static void printUnmarked(Task task){
