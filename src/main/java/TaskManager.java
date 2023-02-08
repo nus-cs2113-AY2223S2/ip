@@ -5,9 +5,11 @@ public class TaskManager {
     private static final String ADD_PHRASE = " New %s I'll remember: ";
     private static final String DEADLINE_CMD = "deadline";
     private static final String EVENT_CMD = "event";
+    private static final String INVALID_TASK_INDEX_ERROR = " You alright? I can't mark a task that doesn't exist as done xD";
     private static final String SINGLE_TASK_ADDED_PHRASE = " You have %d task for now, all the best!";
     private static final String TASK_ADDED_PHRASE = " You have %d tasks for now, all the best!";
     private static final String TODO_CMD = "todo";
+    private static final String WRONG_TASK_TYPE = " Erm I don't think this task can be marked done xD";
 
     private static void addTask(Task newTask) {
         if (newTask != null) {
@@ -99,18 +101,16 @@ public class TaskManager {
      * @return Task object representing the desired task being marked as done,
      * null if not an instance of Todo
      */
-    public static Todo markDone(int indexOfTask) {
+    public static Todo markDone(int indexOfTask) throws RicaTaskException {
         boolean isNegativeIndex = indexOfTask < 0;
         boolean isIndexTooLarge = indexOfTask >= TaskManager.getTasks().size();
         if (isNegativeIndex || isIndexTooLarge) {
-            printlnWithIndent(" You alright? I can't mark a task that doesn't exist as done xD");
-            return null;
+            throw new RicaTaskException(TaskManager.INVALID_TASK_INDEX_ERROR);
         }
         Task selectedTask = TaskManager.getTask(indexOfTask);
         boolean isTaskATodo = selectedTask instanceof Todo;
         if (!isTaskATodo) {
-            printlnWithIndent(" Erm I don't think this task can be marked done xD");
-            return null;
+            throw new RicaTaskException(TaskManager.WRONG_TASK_TYPE);
         }
         // At this point, Task is definitely an instance of Todo. Can cast it to Todo safely
         Todo selectedTodo = (Todo) selectedTask;
@@ -150,18 +150,16 @@ public class TaskManager {
      * @return Task object representing the desired task being marked as not done,
      * null if not an instance of Todo
      */
-    public static Todo unmarkDone(int indexOfTask) {
+    public static Todo unmarkDone(int indexOfTask) throws RicaTaskException {
         boolean isIndexNegative = indexOfTask < 0;
         boolean isIndexTooLarge = indexOfTask >= TaskManager.getTasks().size();
         if (isIndexNegative || isIndexTooLarge) {
-            printlnWithIndent(" You alright? I don't think that task exists xD");
-            return null;
+            throw new RicaTaskException(TaskManager.INVALID_TASK_INDEX_ERROR);
         }
         Task selectedTask = TaskManager.getTask(indexOfTask);
         boolean isTaskATodo = selectedTask instanceof Todo;
         if (!isTaskATodo) {
-            printlnWithIndent(" Erm I don't think this task can be marked as not done? xD");
-            return null;
+            throw new RicaTaskException(TaskManager.WRONG_TASK_TYPE);
         }
         Todo selectedTodo = (Todo) selectedTask;
         if (!selectedTodo.getIsDone()) {
