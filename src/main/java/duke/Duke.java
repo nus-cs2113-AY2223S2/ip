@@ -1,3 +1,6 @@
+package duke;
+import duke.addable.*;
+import duke.exception.*;
 import java.util.Scanner;
 import java.util.Arrays;
 public class Duke {
@@ -47,7 +50,7 @@ public class Duke {
                     throw new UnknownCommandException(words[0]);
                 }
             } catch (MarkNonexistentTaskException e) {
-                printInvalidInputMessage("Task " + e.taskIndex + " does not currently exist.");
+                printInvalidInputMessage("task " + e.taskIndex + " does not currently exist.");
             } catch (ArrayIndexOutOfBoundsException e) {
                 printInvalidInputMessage("Unknown command");
             } catch (UnknownCommandException e) {
@@ -94,7 +97,10 @@ public class Duke {
         } catch (ArrayIndexOutOfBoundsException e) {
             printInvalidInputMessage();
         } catch (ArgumentBlankException e) {
-            printInvalidInputMessage("Argument \'" + e.argumentType + "\' cannot be blank");
+            printInvalidInputMessage(
+                    "Argument \'" + e.argumentType + "\' cannot be blank for command \'" +
+                            e.commandType + "\'"
+                    );
         } catch (UnknownCommandException e) {
             printInvalidInputMessage("Unknown command \'" + e.unknownCommand + "\'");
         }
@@ -115,10 +121,10 @@ public class Duke {
     public static Task addTask(String input) throws ArgumentBlankException, UnknownCommandException {
         String[] inputSections = input.split("/");
         String[] firstSectionArguments = inputSections[0].split(" ", 2);
-        if (firstSectionArguments.length < 2) {
-            throw new ArgumentBlankException("description");
-        }
         String taskType = firstSectionArguments[0];
+        if (firstSectionArguments.length < 2) {
+            throw new ArgumentBlankException(taskType, "description");
+        }
         String taskDescription = firstSectionArguments[1];
 
         Task taskToAdd;
