@@ -1,3 +1,15 @@
+package duke;
+
+import duke.tasks.Deadline;
+import duke.tasks.Todo;
+import duke.tasks.Task;
+import duke.tasks.Event;
+
+import duke.exception.DukeException;
+import duke.exception.EmptyCommandException;
+import duke.exception.InvalidCommandException;
+import duke.exception.InvalidIndexException;
+
 import java.util.Scanner;
 
 public class Duke {
@@ -151,7 +163,5 @@ public class Duke {
     public static void printIndexMessage(){
         System.out.println("No such task exist! Try again.");
     }
-
-
 }
 
