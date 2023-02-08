@@ -87,7 +87,6 @@ public class Duke {
         }
     }
 
-
     public static void dukeCommandMark(String nextLine, List<Task> list) {
         String[] inputArray = nextLine.split(" ", 0);
         if (inputArray.length != 2) {
