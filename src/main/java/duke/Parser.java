@@ -1,4 +1,5 @@
-import java.util.Arrays;
+package duke;
+
 public class Parser {
 
     public String[] parseInput(String userInput) {

@@ -1,4 +1,9 @@
-import java.util.Scanner;
+package duke;
+
+import duke.task.Deadline;
+import duke.task.Event;
+import duke.task.Task;
+import duke.task.ToDo;
 
 public class Duke {
 
