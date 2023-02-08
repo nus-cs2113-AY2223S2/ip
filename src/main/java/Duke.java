@@ -2,16 +2,33 @@ import java.util.Scanner;
 import java.util.Arrays;
 public class Duke {
 
-    public static void echo(String line) {
+    public static void command(String line) {
         String exitCommand = "bye";
+        String toDo = "list";
+        String[] toDoList = new String[100];
+        int numberOfItems = 0;
+
         while (!line.equals(exitCommand)) {
-            System.out.println(line);
-            Scanner in = new Scanner(System.in);
-            line = in.nextLine();
+            if (line.equals(toDo)) {
+                for (int i = 0; i < numberOfItems; ++i) {
+                    System.out.format("%d. ", (i + 1));
+                    System.out.println(toDoList[i]);
+                }
+                Scanner in = new Scanner(System.in);
+                line = in.nextLine();
+            } else {
+                toDoList[numberOfItems] = line;
+                ++numberOfItems;
+
+                System.out.println("added: " + line);
+
+                Scanner in = new Scanner(System.in);
+                line = in.nextLine();
+            }
         }
         System.out.println("Bye! Hope to see you again");
     }
-    
+
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -24,6 +41,6 @@ public class Duke {
         String line;
         Scanner in = new Scanner(System.in);
         line = in.nextLine();
-        echo(line);
+        command(line);
     }
 }
