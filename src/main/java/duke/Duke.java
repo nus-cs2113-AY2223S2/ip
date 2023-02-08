@@ -1,6 +1,7 @@
 package duke;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -23,8 +24,20 @@ public class Duke {
     static final String COMMAND_DEADLINE = "deadline";
     static Task[] tasks = new Task[100];
     static boolean isFileEdited = false;
+
+    static boolean toPrint = true;
     static int textCount = 0;
 
+
+    public static void extractData(File fileName) throws FileNotFoundException {
+        Scanner s = new Scanner(fileName);
+        while (s.hasNext()) {
+            toPrint = false;
+            String currentLine = s.nextLine();
+            handleUserCommand(currentLine);
+        }
+        toPrint = true;
+    }
     public static void doCreateOrEditFile(boolean flag) {
         String home = System.getProperty("user.home");
         java.nio.file.Path path = java.nio.file.Paths.get(home, "duke.txt");
@@ -32,23 +45,24 @@ public class Duke {
             File fileName = new java.io.File(path.toUri());
             if (fileName.createNewFile()) {
                 System.out.println("File \"duke.txt\" created!");
+
             } else {
                 if (flag) {
                     System.out.println(LINE);
                     System.out.println("\tHere are your pending tasks!");
                     Scanner s = new Scanner(fileName);
                     while (s.hasNext()) {
-                        System.out.println(s.nextLine());
+                        System.out.println("\t" + s.nextLine());
                     }
+                    System.out.println(LINE);
+                    extractData(fileName);
                 } else {
                     if (isFileEdited) {
                         FileWriter savedFile = new FileWriter(fileName, false);
-                        savedFile.write(System.getProperty("line.separator"));
                         for (int index = 0; index < textCount; index++) {
-                            savedFile.write("\t" + String.valueOf(tasks[index]));
+                            savedFile.write(tasks[index].returnCommand());
                             savedFile.write(System.getProperty("line.separator"));
                         }
-                        savedFile.write(LINE);
                         savedFile.write(System.getProperty("line.separator"));
                         savedFile.close();
                     }
@@ -126,33 +140,39 @@ public class Duke {
         isFileEdited = true;
         tasks[textCount] = new Todo(taskName);
         textCount++;
-        System.out.println(LINE);
-        System.out.println("\t" + "Task added!");
-        System.out.println("\t  " + tasks[textCount - 1]);
-        System.out.println("\t" + "Now you have " + textCount + " pending tasks.");
-        System.out.println(LINE);
+        if (toPrint) {
+            System.out.println(LINE);
+            System.out.println("\t" + "Task added!");
+            System.out.println("\t  " + tasks[textCount - 1]);
+            System.out.println("\t" + "Now you have " + textCount + " pending tasks.");
+            System.out.println(LINE);
+        }
     }
 
     public static void doCommandDeadline(String taskName, String taskDeadline) {
         isFileEdited = true;
         tasks[textCount] = new Deadline(taskName, taskDeadline);
         textCount++;
-        System.out.println(LINE);
-        System.out.println("\t" + "Task added!");
-        System.out.println("\t  " + tasks[textCount - 1]);
-        System.out.println("\t" + "Now you have " + textCount + " pending tasks.");
-        System.out.println(LINE);
+        if (toPrint) {
+            System.out.println(LINE);
+            System.out.println("\t" + "Task added!");
+            System.out.println("\t  " + tasks[textCount - 1]);
+            System.out.println("\t" + "Now you have " + textCount + " pending tasks.");
+            System.out.println(LINE);
+        }
     }
 
     public static void doCommandEvent(String eventName, String eventDetailsPartOne, String eventDetailsPartTwo) {
         isFileEdited = true;
         tasks[textCount] = new Event(eventName, eventDetailsPartOne, eventDetailsPartTwo);
         textCount++;
-        System.out.println(LINE);
-        System.out.println("\t" + "Task added!");
-        System.out.println("\t  " + tasks[textCount - 1]);
-        System.out.println("\t" + "Now you have " + textCount + " pending tasks.");
-        System.out.println(LINE);
+        if (toPrint) {
+            System.out.println(LINE);
+            System.out.println("\t" + "Task added!");
+            System.out.println("\t  " + tasks[textCount - 1]);
+            System.out.println("\t" + "Now you have " + textCount + " pending tasks.");
+            System.out.println(LINE);
+        }
     }
 
     public static void handleUserCommand(String userCommand) {
