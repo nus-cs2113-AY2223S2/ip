@@ -27,10 +27,8 @@ public class Arsdorint {
     }
 
     public static void add(String command) {
-        /*toDoList[Task.numOfTasks] = new Task(command);
-        System.out.print("Added: ");
-        echo(command);*/
         String newTaskType = command.split(" ")[0];
+        //if the commands are not todo/ deadline/ event, ask user to rewrite the commmand
         if (!(newTaskType.equalsIgnoreCase("todo") ||
                 newTaskType.equalsIgnoreCase("deadline") ||
                         newTaskType.equalsIgnoreCase("event")))
@@ -62,7 +60,7 @@ public class Arsdorint {
         }
     }
 
-    public static void mark(String command) {
+    public static void mark(String command) {  // mark the completed task
         String[] num = command.split(" ");
         int idx = Integer.parseInt(num[1]);
         if (num[0].equalsIgnoreCase("mark"))
@@ -71,7 +69,7 @@ public class Arsdorint {
         list();
     }
 
-    public static void unmark(String command) {
+    public static void unmark(String command) { // unmark task if needed
         String[] num = command.split(" ");
         int idx = Integer.parseInt(num[1]);
         if (num[0].equalsIgnoreCase("mark"))
@@ -81,9 +79,6 @@ public class Arsdorint {
     }
 
     public static void main(String[] args) {
-        //System.out.println("____________________________________________________________\n" +
-                //" Hello! I'm Arsdorint\n" +
-                //" What can I do for you?");
         String command = " ";
         System.out.println("Hello from\n" + logo);
         System.out.println("____________________________________________________________\n" +

@@ -1,4 +1,5 @@
 public class Task {
+    // initial number of task must be set to 0
     public static int numOfTasks = 0;
     public String description;
     public boolean isDone;
@@ -10,6 +11,7 @@ public class Task {
         numOfTasks++;
     }
 
+    //status is marked or not
     public String getStatus() {
         return (isDone) ? "[X}" : "[ ]";
     }
