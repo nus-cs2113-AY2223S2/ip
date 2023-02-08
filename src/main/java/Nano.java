@@ -20,6 +20,16 @@ public class Nano {
     public static final String MESSAGE_TASK_ALREADY_DONE = " is already done";
     public static final String MESSAGE_TASK_ALREADY_UNDONE = " is already not done";
     public static final String MESSAGE_TASK_UNMARKED = " set to undone";
+    public static final String MESSAGE_HELP_COMMAND = "Enter \"/help\" for full command list";
+    public static final String MESSAGE_EXIT = "Sleep mode activated.";
+    public static final String MESSAGE_HELP_LIST_COMMAND = "/list : Displays list of tasks";
+    public static final String MESSAGE_HELP_ADD_EVENT = "/add <Event_Name> from/<Start_Date> to/<End_Date> : Add new event";
+    public static final String MESSAGE_HELP_ADD_DEADLINE = "/add <Deadline_Name> by/<Deadline> : Add new deadline";
+    public static final String MESSAGE_HELP_ADD_TODO = "/add <Todo_Name> : Add new Todo";
+    public static final String MESSAGE_HELP_MARK_TASK = "/mark <task> : set task as completed";
+    public static final String MESSAGE_HELP_UNMARK_TASK = "/unmark <task> : set task as undone";
+    public static final String MESSAGE_HELP_HELP = "/help : Displays list of all commands";
+    public static final String MEESAGE_HELP_EXIT = "/exit : Exit chatbot";
 
     private static Task[] tasks;
 
@@ -50,6 +60,9 @@ public class Nano {
             break;
         case "unmark":
             unmarkTask(userInputs[TASK_NAME_INDEX]);
+            break;
+        case "help":
+            displayCommandList();
             break;
         case "exit":
             displayExitMessage();
@@ -112,7 +125,8 @@ public class Nano {
             newTask = new Deadline(taskDetails[TASK_NAME_INDEX], taskDetails[TASK_DUE_DATE_INDEX]);
             break;
         case "event":
-            newTask = new Event(taskDetails[TASK_NAME_INDEX], taskDetails[TASK_START_DATE_INDEX], taskDetails[TASK_END_DATE_INDEX]);
+            newTask = new Event(taskDetails[TASK_NAME_INDEX], taskDetails[TASK_START_DATE_INDEX],
+                    taskDetails[TASK_END_DATE_INDEX]);
             break;
         default:
             newTask = new Todo(taskDetails[TASK_NAME_INDEX]);
@@ -131,9 +145,20 @@ public class Nano {
         return false;
     }
 
+    private static void displayCommandList() {
+        // list,add,mark,unmark,help,exit
+        printHorizontalLine();
+        System.out.println(MESSAGE_HELP_LIST_COMMAND);
+        System.out.println(MESSAGE_HELP_ADD_EVENT);
+        System.out.println(MESSAGE_HELP_ADD_DEADLINE);
+        System.out.println(MESSAGE_HELP_ADD_TODO);
+        System.out.println(MESSAGE_HELP_MARK_TASK);
+        System.out.println(MESSAGE_HELP_UNMARK_TASK);
+        System.out.println(MESSAGE_HELP_HELP);
+        System.out.println(MEESAGE_HELP_EXIT);
+    }
     private static void displayHelpMessage() {
-        //TODO to be improved
-        System.out.println("Invalid input!");
+        System.out.println(MESSAGE_HELP_COMMAND);
     }
 
     private static String[] processInput(String userInput) {
@@ -179,7 +204,7 @@ public class Nano {
     }
 
     private static void displayExitMessage() {
-        System.out.println("Sleep mode activated.");
+        System.out.println(MESSAGE_EXIT);
     }
 
     //creates a list of task (1-index)
