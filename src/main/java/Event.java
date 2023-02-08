@@ -16,7 +16,6 @@ public class Event extends Task {
         this.end = end;
     }
 
-    @Override
     public String getTaskType() {
         return "E";
     }

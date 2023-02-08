@@ -16,4 +16,10 @@ list
 deadline return book /by Sunday
 event project meeting /from Mon 2pm /to 4pm
 list
+todo
+deadline
+event
+blah
+deadline test
+event test
 bye

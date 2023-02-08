@@ -1,4 +1,4 @@
-public class Task {
+public abstract class Task {
     protected String description;
     protected boolean isDone;
 
@@ -23,12 +23,9 @@ public class Task {
         return this.description;
     }
 
-    public String getTaskType() {
-        return " ";
-    }
+    public abstract String getTaskType();
 
     public String getSummary() {
         return "[" + getTaskType() + "][" + getStatusIcon() + "] " + getDescription();
-
     }
 }
