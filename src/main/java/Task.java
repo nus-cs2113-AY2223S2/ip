@@ -24,7 +24,7 @@ public class Task {
         return "["+getStatusIcon()+"] "+getName();
     }
     
-    public void addTaskMessage() {
+    public void addMessage() {
         System.out.println("\t____________________________________________________________\r\n"
         		+ "\t Got it. I've added this task:\r\n"
         		+ "\t  " + toString() +"\r\n"
@@ -32,7 +32,7 @@ public class Task {
                 + "\t____________________________________________________________\r\n");
     }
 
-    public void printMessage() {
+    public void markMessage() {
     	if(isDone) {
     		System.out.println("\t____________________________________________________________\r\n"
                     + "\t Nice! I've marked this task as done:\r\n"
