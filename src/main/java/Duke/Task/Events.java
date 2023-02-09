@@ -1,3 +1,7 @@
+package Duke.Task;
+
+import Duke.Exception.EmptyEventsException;
+
 public class Events extends Task {
     private static final int EVENT_INDEX = 6;
     private static final int FIRST_COLON_INDEX = 4;

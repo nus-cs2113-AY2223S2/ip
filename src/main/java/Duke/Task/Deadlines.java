@@ -1,10 +1,15 @@
+package Duke.Task;
+
+import Duke.Exception.EmptyDeadlineException;
+import Duke.Task.Task;
+
 public class Deadlines extends Task {
     private static final int DEADLINE_INDEX = 9;
     private static final int COLON_INDEX = 2;
     private String endTime;
     private String taskLabel = "[D]";
 
-    public Deadlines(String input) throws EmptyDeadlineException{
+    public Deadlines(String input) throws EmptyDeadlineException {
         super(input.substring(DEADLINE_INDEX, input.indexOf('/') - 1)); // Sanitize input by removing "deadline" at the start
         super.setTaskLabel(taskLabel);
         endTime = "(" + getEndTime(input) + ")";

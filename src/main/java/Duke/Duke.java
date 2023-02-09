@@ -1,3 +1,14 @@
+package Duke;
+
+import Duke.Exception.EmptyDeadlineException;
+import Duke.Exception.EmptyEventsException;
+import Duke.Exception.EmptyToDoException;
+import Duke.Exception.NullCommandException;
+import Duke.Task.Deadlines;
+import Duke.Task.Events;
+import Duke.Task.Task;
+import Duke.Task.ToDos;
+
 import java.util.Arrays;
 import java.util.Scanner;
 

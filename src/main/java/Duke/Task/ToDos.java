@@ -1,3 +1,7 @@
+package Duke.Task;
+
+import Duke.Exception.EmptyToDoException;
+
 public class ToDos extends Task {
     private static final int TODOS_INDEX = 5;
     private String taskLabel = "[T]";

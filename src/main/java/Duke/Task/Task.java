@@ -1,3 +1,5 @@
+package Duke.Task;
+
 public class Task {
     protected String taskLabel;
     protected String description;
