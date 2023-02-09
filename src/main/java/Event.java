@@ -30,4 +30,12 @@ public class Event extends Deadline {
             System.out.println(".[E][ ]" + this.taskName + "(from: " + this.getStartTime() + " to: " + this.getEndTime() + ")");
         }
     }
+    @Override
+    public void setTaskType(Task type){
+        this.taskType = "E";
+    }
+    @Override
+    public String getTaskType (Task task){
+        return this.taskType;
+    }
 }

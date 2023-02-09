@@ -1,13 +1,20 @@
 public class Task {
+    public String startTime;
+    public String endTime;
     protected String taskName;
     protected boolean isCompleted;
+
     protected int taskNumber;
+    protected String taskType;
+
+
 
 
 
     public Task(String description) {
         this.taskName = description;
         this.isCompleted = false;
+        this.taskType = "T";
     }
 
 
@@ -15,9 +22,23 @@ public class Task {
         this.taskName = name;
 
     }
+    public void setTaskType(Task type){
+        this.taskType = "T";
+    }
+    public String getTaskType (Task task){
+        return this.taskType;
+    }
 
     public String getTaskName(){
         return taskName;
+    }
+
+    public void setTaskProgress(boolean inputCommand){
+        this.isCompleted = inputCommand;
+    }
+
+    public boolean getTaskProgress(){
+        return this.isCompleted;
     }
 
 

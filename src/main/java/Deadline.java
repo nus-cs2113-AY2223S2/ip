@@ -30,5 +30,13 @@ public class Deadline extends Task {
         }
 
     }
+    @Override
+    public void setTaskType(Task type){
+        this.taskType = "D";
+    }
+    @Override
+    public String getTaskType (Task task){
+        return this.taskType;
+    }
 
 }
