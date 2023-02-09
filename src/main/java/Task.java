@@ -1,7 +1,6 @@
 public class Task {
 	protected String name;
 	protected boolean isCompleted;
-
 	public Task(String info) {
 		this.name = info;
 	}
