@@ -50,7 +50,7 @@ public class CommandHandler {
         } catch (ListTooLarge error) {
             System.out.println(error.getMessage());
         } catch (IndexOutOfBoundsException outOfBounds) {
-            System.out.println("No such item exists!");
+            System.out.println("Please input all the necessary details");
         }
 
     }
@@ -68,7 +68,7 @@ public class CommandHandler {
         } catch (ListTooLarge error) {
             System.out.println(error.getMessage());
         } catch (IndexOutOfBoundsException outOfBounds) {
-            System.out.println("No such item exists!");
+            System.out.println("Please input all the necessary details");
         }
     }
 
@@ -87,9 +87,24 @@ public class CommandHandler {
         } catch (ListTooLarge error) {
             System.out.println(error.getMessage());
         } catch (IndexOutOfBoundsException outOfBounds) {
-            System.out.println("No such item exists!");
+            System.out.println("Please input all the necessary details");
         }
 
+    }
+
+    /**
+     * Takes in index of task and delete from list
+     *
+     * @param index position of the task to be removed
+     */
+    public void handleDeleteCommand(String index) {
+        try {
+            myList.deleteTask(Integer.parseInt(index) - 1);
+        } catch (IndexOutOfBoundsException outOfBounds) {
+            System.out.println("Please choose an appropriate index");
+        } catch (NumberFormatException notANumber) {
+            System.out.println("Please enter a number");
+        }
     }
 
     /**
@@ -103,4 +118,5 @@ public class CommandHandler {
                 "<todo>\n" +
                 "<list>");
     }
+
 }
