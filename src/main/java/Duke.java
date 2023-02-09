@@ -1,5 +1,11 @@
-import java.util.Scanner;
+import exception.DukeException;
+import exception.ErrorMessage;
+import tasks.Deadline;
+import tasks.Event;
+import tasks.Task;
+import tasks.Todo;
 
+import java.util.Scanner;
 
 public class Duke {
     private static void logoWithHello() {
@@ -124,7 +130,7 @@ public class Duke {
     private static void markUnmarkCommand(Task[] tasks, String[] words) throws DukeException {
         horizontalLine();
         int taskNumber = Integer.parseInt(words[1]);
-        if （taskNumber < Task.getNumberOfTasks()）{
+        if (taskNumber < Task.getNumberOfTasks()) {
             throw new DukeException(ErrorMessage.INVALID_TASK.toString());
         }
 
