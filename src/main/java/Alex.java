@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Alex {
@@ -8,14 +11,22 @@ public class Alex {
         /** Constantly asks for user input until bye is received */
         while(!taskManager.getExit()) {
             String userInput = myObj.nextLine();
-            handleInput(userInput, taskManager);
-        }
+            try {
+                handleInput(userInput, taskManager);
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("☹ OOPS!!! The description of a " + e.getMessage() + " cannot be empty.");
+                printLine();
+            } catch (DukeException e) {
+                System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+                printLine();
+            }
 
+            }
 
     }
     public static void echoResponse(Task task, int number) {
         System.out.println("Got it. I've added this task:" + "\n " + task + "\n" +
-                "Now you have " + number + " tasks in the list" );
+                    "Now you have " + number + " tasks in the list" );
         printLine();
     }
     public static void printLine() {
@@ -34,9 +45,17 @@ public class Alex {
         printLine();
     }
     /** Method that utilises a taskManager to handle different user inputs accordingly */
-    public static void handleInput(String userInput, TaskManager taskManager) {
+    public static void handleInput(String userInput, TaskManager taskManager) throws DukeException {
         String[] words = userInput.split(" ");
+        String[] allCommands = new String[]{"todo" , "bye", "event", "list" , "unmark" , "mark", "deadline"};
+        List<String> commandList = new ArrayList<>(Arrays.asList(allCommands));
         String command = words[0].toLowerCase();
+        if(!commandList.contains(command)) {
+            throw new DukeException();
+        }
+        if(words.length < 2 && !command.equals("bye") && !command.equals("list")) {
+            throw new IndexOutOfBoundsException(command);
+        }
         if(command.equals("list")) {
             for(int i = 1; i <= taskManager.getNumberOfTasks(); i++) {
                 System.out.print(i);
