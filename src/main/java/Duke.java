@@ -1,3 +1,10 @@
+import exception.DukeException;
+import exception.ErrorMessage;
+import task.Deadline;
+import task.Event;
+import task.Task;
+import task.Todo;
+
 import java.util.Scanner;
 
 
@@ -124,7 +131,7 @@ public class Duke {
     private static void markUnmarkCommand(Task[] tasks, String[] words) throws DukeException {
         horizontalLine();
         int taskNumber = Integer.parseInt(words[1]);
-        if （taskNumber < Task.getNumberOfTasks()）{
+        if (taskNumber > Task.getNumberOfTasks()) {
             throw new DukeException(ErrorMessage.INVALID_TASK.toString());
         }
 
@@ -135,7 +142,7 @@ public class Duke {
             tasks[taskNumber - 1].markUndone();
             System.out.println("OK, I've marked this task as not done yet:");
         }
-        System.out.println(tasks[taskNumber]);
+        System.out.println(tasks[taskNumber-1]);
         horizontalLine();
     }
 
