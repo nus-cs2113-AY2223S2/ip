@@ -1,3 +1,5 @@
+package duke;
+
 public class Task {
     protected static final String OPEN_SQUARE_BRACKET = "[";
     protected static final String CLOSE_SQUARE_BRACKET = "]";
