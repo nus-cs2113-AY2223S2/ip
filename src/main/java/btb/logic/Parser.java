@@ -25,14 +25,6 @@ public class Parser {
 
         splitStrings = description.split("/", 2);
         splitStrings[1] = splitStrings[1].substring(3);
-//        try {
-//            splitStrings = description.split("/", 2);
-//            splitStrings[1] = splitStrings[1].substring(3);
-//        } catch (ArrayIndexOutOfBoundsException e) {
-//            throw new ArrayIndexOutOfBoundsException();
-//        } catch (StringIndexOutOfBoundsException e) {
-//            throw new StringIndexOutOfBoundsException();
-//        }
 
         return splitStrings;
     }

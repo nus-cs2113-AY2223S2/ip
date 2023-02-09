@@ -97,7 +97,7 @@ public class TaskManager {
         } catch (IndexOutOfBoundsException e) {
             System.out.println("\t Invalid task number(►__◄).\n" +
                     "\t Please try again!");
-        }catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             System.out.println("\t Please enter an integer task number ╰（‵□′）╯.");
         }
 
@@ -125,7 +125,7 @@ public class TaskManager {
         } catch (IndexOutOfBoundsException e) {
             System.out.println("\t Invalid task number(►__◄).\n" +
                     "\t Please try again!");
-        }catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             System.out.println("\t Please enter an integer task number ╰（‵□′）╯.");
         }
     }

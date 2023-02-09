@@ -42,11 +42,9 @@ public class Logic {
                 tasks.addTask(task, command);
                 break;
             case "mark":
-//            int taskNumber = Integer.parseInt(description);
                 tasks.markTask(description);
                 break;
             case "unmark":
-//            taskNumber = Integer.parseInt(description);
                 tasks.unmarkTask(description);
                 break;
             case "list":
