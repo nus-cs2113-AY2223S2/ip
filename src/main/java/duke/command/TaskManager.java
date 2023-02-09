@@ -1,5 +1,7 @@
 package duke.command;
 
+import duke.filemanager.TaskLoader;
+import duke.filemanager.TaskWriter;
 import duke.task.Deadline;
 import duke.task.Task;
 import duke.task.Event;
@@ -10,9 +12,15 @@ import java.util.ArrayList;
 
 public class TaskManager {
     private ArrayList<Task> taskList;
+    TaskWriter taskWriter = new TaskWriter();
 
     public TaskManager() {
         this.taskList = new ArrayList<Task>();
+    }
+
+    public void setData() {
+        TaskLoader taskLoader = new TaskLoader();
+        this.taskList = taskLoader.setClasses();
     }
 
     /**
@@ -23,6 +31,7 @@ public class TaskManager {
     public void addToList(String description) throws ListTooLarge {
         Task task = new Task(description);
         taskList.add(task);
+        taskWriter.writeToJson(taskList);
         System.out.println("Got it! Added \n"
                 + "[T][ ]" + description + "\n"
                 + "to the list.");
@@ -38,6 +47,7 @@ public class TaskManager {
 
         Deadline deadline = new Deadline(description, dueBy);
         taskList.add(deadline);
+        taskWriter.writeToJson(taskList);
         String deadlineDuration = deadline.getDueDate();
         System.out.println("Got it! Added \n"
                 + "[D][ ] " + description + deadlineDuration + "\n"
@@ -53,6 +63,7 @@ public class TaskManager {
     public void addToList(String description, String startDate, String endDate) throws ListTooLarge {
         Event event = new Event(description, startDate, endDate);
         taskList.add(event);
+        taskWriter.writeToJson(taskList);
         String eventDuration = event.getDuration();
         System.out.println("Got it! Added \n"
                 + "[E][ ] " + description + eventDuration + "\n"
@@ -68,6 +79,7 @@ public class TaskManager {
     public void markAsDone(int taskIndex) {
         String taskType = taskList.get(taskIndex).getTaskType();
         String task = taskList.get(taskIndex).setAsDone();
+        taskWriter.writeToJson(taskList);
         System.out.println("Noted sir, I have marked \n"
                 + taskType + "[X] " + task + "\n"
                 + "as done.");
@@ -82,6 +94,7 @@ public class TaskManager {
     public void markAsUndone(int taskIndex) {
         String taskType = taskList.get(taskIndex).getTaskType();
         String task = taskList.get(taskIndex).setAsUndone();
+        taskWriter.writeToJson(taskList);
         System.out.println("Noted sir, I have marked \n"
                 + taskType + "[ ]" + task + "\n"
                 + "as not done.");
