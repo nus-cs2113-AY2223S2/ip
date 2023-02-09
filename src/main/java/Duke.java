@@ -29,7 +29,9 @@ public class Duke {
             " WHOOPS! The description/date/time of a deadline cannot be \n empty.";
     private static final String EMPTY_EVENT_DESC_ERR =
             " WHOOPS! The description/dates/times of an event cannot be \n empty.";
-
+    private static final String EMPTY_MARK_NO_ERR = " WHOOPS! Task number cannot be empty.";
+    private static final String WRONG_MARK_NO_FORMAT_ERR = " WHOOPS! Task number must be an integer.";
+    private static final String MARK_NO_OUT_OF_RANGE_ERR = " WHOOPS! There is no such task number.";
 
     private static Task[] taskItems = new Task[MAX_ITEMS];
     private static int taskItemCount = 0;
@@ -111,6 +113,21 @@ public class Duke {
         System.out.println(printErrMsg);
     }
 
+    public static void printEmptyMarkNoErr() {
+        String printErrMsg = TOP_DIVIDER + EMPTY_MARK_NO_ERR + BOTTOM_DIVIDER;
+        System.out.println(printErrMsg);
+    }
+
+    public static void printWrongMarkNoFormatErr() {
+        String printErrMsg = TOP_DIVIDER + WRONG_MARK_NO_FORMAT_ERR + BOTTOM_DIVIDER;
+        System.out.println(printErrMsg);
+    }
+
+    public static void printMarkNoOutOfRangeErr() {
+        String printErrMsg = TOP_DIVIDER + MARK_NO_OUT_OF_RANGE_ERR + BOTTOM_DIVIDER;
+        System.out.println(printErrMsg);
+    }
+
     public static String getInput(Scanner in) {
         String line = in.nextLine();
         return line;
@@ -126,8 +143,16 @@ public class Duke {
             break;
         case COMMAND_MARK_TASK:
         case COMMAND_UNMARK_TASK:
-            int taskItemNo = Integer.parseInt(words[1]) - 1;
-            markTaskItems(taskItemNo, command);
+            try {
+                int taskItemNo = Integer.parseInt(words[1]) - 1;
+                markTaskItems(taskItemNo, command);
+            } catch (IndexOutOfBoundsException e) {
+                printEmptyMarkNoErr();
+            } catch (NullPointerException e) {
+                printMarkNoOutOfRangeErr();
+            } catch (NumberFormatException e) {
+                printWrongMarkNoFormatErr();
+            }
             break;
         case COMMAND_ADD_DEADLINE:
             try {
