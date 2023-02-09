@@ -1,3 +1,5 @@
+package duke.task;
+
 public class Event extends Task {
     protected static final String OPEN_CURVE_BRACKET = " (";
     protected static final String CLOSE_CURVE_BRACKET = ")";
