@@ -1,4 +1,4 @@
-package duke;
+package duke.task;
 
 public class Todo extends Task {
     protected static final String TODO_ICON = "T";

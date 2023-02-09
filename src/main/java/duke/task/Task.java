@@ -1,4 +1,4 @@
-package duke;
+package duke.task;
 
 public class Task {
     protected static final String OPEN_SQUARE_BRACKET = "[";

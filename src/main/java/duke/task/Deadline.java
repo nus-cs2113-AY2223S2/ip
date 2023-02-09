@@ -1,4 +1,4 @@
-package duke;
+package duke.task;
 
 public class Deadline extends Task {
     protected static final String OPEN_CURVE_BRACKET = " (";
