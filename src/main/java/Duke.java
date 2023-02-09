@@ -133,7 +133,15 @@ public class Duke {
         return line;
     }
 
-    public static void processInput(String input) {
+    public static void handleInput(String input) {
+        try {
+            processInput(input);
+        } catch (UnknownCommandException e) {
+            printUnknownCmdErr();
+        }
+    }
+
+    public static void processInput(String input) throws UnknownCommandException {
         String[] words = input.split(" ", 2);
         String command = words[0];
 
@@ -185,8 +193,7 @@ public class Duke {
             }
             break;
         default:
-            printUnknownCmdErr();
-            break;
+            throw new UnknownCommandException();
         }
     }
 
@@ -201,7 +208,7 @@ public class Duke {
                 printExitMessage();
                 break;
             } else {
-                processInput(input);
+                handleInput(input);
             }
         }
     }
