@@ -1,4 +1,6 @@
-package duke.models;
+package duke.event;
+
+import duke.item.Item;
 
 public class Event extends Item {
     private String from;

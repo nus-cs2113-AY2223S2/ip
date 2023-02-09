@@ -23,7 +23,12 @@ public enum Message {
     ERROR_DEADLINE_MISSING_PARAMETER("Parameters contain missing fields. Example: deadline to eat /by tomorrow"),
     ERROR_EVENT_MISSING_PARAMETER("Parameters contain missing fields. Example: event to eat /from 2pm /to 4pm"),
 
-    ERROR_FILE_IO("Could not retrieve data file");
+    SUCCESS_LOADED_FILE("Data file has been loaded successfully."),
+    WARNING_MISSING_FILE("Could not locate data file. Using an empty list..."),
+    ERROR_FILE_INPUT("Could not open data file!\n" +
+        "Duke application will be terminated."),
+    ERROR_FILE_OUTPUT("Could not save data file!\n" +
+        "Duke application will be terminated.");
 
     private final String message;
 
