@@ -2,27 +2,41 @@ import java.util.Scanner;
 import java.util.Arrays;
 public class Duke {
 
+    private static Scanner in = new Scanner(System.in);
+    public static String getStatus(int itemNumber, Boolean[] isDone) {
+        if (isDone[itemNumber] == true) {
+            return "[X]";
+        } else {
+            return "[ ]";
+        }
+    }
+
     public static void command(String line) {
         String exitCommand = "bye";
         String toDo = "list";
+        String checkDone = "mark";
         String[] toDoList = new String[100];
+        Boolean[] isDone = new Boolean[100];
         int numberOfItems = 0;
 
         while (!line.equals(exitCommand)) {
             if (line.equals(toDo)) {
+                System.out.println("Here are your list of tasks to complete!");
                 for (int i = 0; i < numberOfItems; ++i) {
                     System.out.format("%d. ", (i + 1));
-                    System.out.println(toDoList[i]);
+                    String status = getStatus(i, isDone);
+                    System.out.println(status + " " + toDoList[i]);
                 }
-                Scanner in = new Scanner(System.in);
+                line = in.nextLine();
+            } else if (line.equals(checkDone)){
+                System.out.println("check done");
                 line = in.nextLine();
             } else {
                 toDoList[numberOfItems] = line;
+                isDone[numberOfItems] = false;
                 ++numberOfItems;
 
                 System.out.println("added: " + line);
-
-                Scanner in = new Scanner(System.in);
                 line = in.nextLine();
             }
         }
@@ -39,7 +53,6 @@ public class Duke {
         System.out.println("Hi! My name is Duke. \n Nice to meet you!");
 
         String line;
-        Scanner in = new Scanner(System.in);
         line = in.nextLine();
         command(line);
     }
