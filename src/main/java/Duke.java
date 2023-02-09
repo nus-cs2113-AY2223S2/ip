@@ -4,8 +4,11 @@ import duke.task.Deadline;
 import duke.task.Event;
 import duke.util.DukeException;
 import java.util.Scanner;
-import java.util.HashMap;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Duke {
     static private final String HI = "\n" +
@@ -24,7 +27,8 @@ public class Duke {
             "╚═════╝░░╚════╝░╚═════╝░  ╚═════╝░╚═╝░░╚═╝░░░╚═╝░░░╚═════╝░  ╚═════╝░░░░╚═╝░░░╚══════╝";
     static private final String DIV = "\n===========================================================================\n";
     static private final ArrayList<Task> tasks = new ArrayList<>();
-    static private final HashMap<String, String> helpOutputs = new HashMap<>();
+    static private final ArrayList<String>storedData = new ArrayList<>();
+//    static private final HashMap<String, String> helpOutputs = new HashMap<>();
     static private int taskCount = 0;
 
     public static void hello() {
@@ -39,21 +43,21 @@ public class Duke {
         System.out.println(DIV + "\nWhat do you want from me boss?\n" + DIV);
     }
 
-    public static void generateHelp() {
-        helpOutputs.put("list", "");
-        helpOutputs.put("todo", "");
-        helpOutputs.put("deadline", "");
-        helpOutputs.put("event", "");
-        helpOutputs.put("mark", "");
-        helpOutputs.put("unmark", "");
-        helpOutputs.put("help", "");
-    }
+//    public static void generateHelp() {
+//        helpOutputs.put("list", "");
+//        helpOutputs.put("todo", "");
+//        helpOutputs.put("deadline", "");
+//        helpOutputs.put("event", "");
+//        helpOutputs.put("mark", "");
+//        helpOutputs.put("unmark", "");
+//        helpOutputs.put("help", "");
+//    }
 
-    public static void printHelp(String str) {
-        for (String i:helpOutputs.keySet()) {
-            System.out.println(i + ": " + helpOutputs.get(i));
-        }
-    }
+//    public static void printHelp(String str) {
+//        for (String i:helpOutputs.keySet()) {
+//            System.out.println(i + ": " + helpOutputs.get(i));
+//        }
+//    }
 
     public static void listOut() {
         if (taskCount == 0) {
@@ -98,6 +102,119 @@ public class Duke {
         ++taskCount;
     }
 
+    public static void handleMark(String checkCmd, String next) throws DukeException {
+        int num;
+        try {
+            num = convertString(next.trim());
+            checkMarkStatus(num, true, checkCmd);
+        } catch (DukeException e) {
+            throw new DukeException();
+        }
+        System.out.println("Bob commends you! *Nods head* ");
+        tasks.get(num - 1).setDone(true);
+        System.out.println(tasks.get(num - 1));
+    }
+
+    public static void handleUnmark (String checkCmd, String next) throws DukeException {
+        int num;
+        try {
+            num = convertString(next.trim());
+            checkMarkStatus(num, false, checkCmd);
+        } catch (DukeException e) {
+            throw new DukeException();
+        }
+        System.out.println("A mistake! *Shakes head* ");
+        tasks.get(num - 1).setDone(false);
+        System.out.println(tasks.get(num - 1));
+    }
+
+    public static void handleTodo(String next) {
+        System.out.println("Understood! *Salutes* Task added!");
+        tasks.add(new ToDo(next.stripLeading(), taskCount + 1, false));
+        echo();
+    }
+
+    public static void handleDeadline(String next) throws DukeException {
+        try {
+            String[] deadline = next.split("/by", 2);
+            tasks.add(new Deadline(deadline[0].trim(), taskCount + 1, false,
+                    deadline[1].trim()));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            printError();
+            throw new DukeException();
+        }
+        System.out.println("Understood *Salutes* Task with deadline added!\n"
+                + "Remember to complete it by the deadline!");
+        echo();
+    }
+
+    public static void handleEvent(String next) throws DukeException {
+        try {
+            String[] eventName = next.split("/from", 2);
+            String[] eventTime = eventName[1].split("/to", 2);
+            tasks.add(new Event(eventName[0].trim(), taskCount + 1, false,
+                    eventTime[0].trim(), eventTime[1].trim()));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            printError();
+            throw new DukeException();
+        }
+        System.out.println("Understood *Salutes* Event added!\n"
+                + "Remember the starting time! Don't be late!");
+        echo();
+    }
+
+    public static void readFile(String path) throws FileNotFoundException {
+        File f = new File(path);
+        Scanner s = new Scanner(f);
+        while (s.hasNext()) {
+            storedData.add(s.nextLine());
+        }
+    }
+
+    public static void writeFile(String path) throws IOException {
+        //Overwrites previous text in file
+        FileWriter fw = new FileWriter(path, false);
+        for (Task i: tasks) {
+            String t = i.checkType();
+            char done = i.checkDone().charAt(1);
+            String w = t.charAt(1) + " % " + done + " % " + i.getTask();
+            fw.write(w);
+        }
+        fw.close();
+    }
+
+//    public static void createFile(String path) {
+//        try {
+//            File newFile = new File(path);
+//            if (newFile.createNewFile()) {
+//                System.out.println("File created.");
+//            } else {
+//                System.out.println("File not created.");
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+    public  static void handleFile() throws DukeException {
+        for (String str: storedData) {
+            String[] temp = str.split("%",4);
+            switch (temp[0].trim()) {
+            case ("T"):
+                handleTodo(temp[2].trim());
+                if (temp[1].trim().equals("X")) {
+                    handleMark("task", temp[2].trim());
+                }
+            case ("D"):
+                try {
+                    handleDeadline(temp[2].trim());
+                } catch (DukeException e) {
+                    throw new DukeException();
+                }
+            }
+        }
+    }
+
     public static void command() {
         Scanner in = new Scanner(System.in);
         do {
@@ -112,69 +229,45 @@ public class Duke {
             case "list":
                 listOut();
                 break;
-            case "help":
-                String next = in.nextLine();
-                printHelp(next.trim());
-                break;
+//            case "help":
+//                String next = in.nextLine();
+//                printHelp(next.trim());
+//                break;
             case "mark":
-                next = in.nextLine();
-                int num;
+                String next = in.nextLine();
                 try {
-                    num = convertString(next.trim());
-                    checkMarkStatus(num, true, checkCmd);
+                    handleMark(checkCmd, next);
                 } catch (DukeException e) {
                     break;
                 }
-                System.out.println("Bob commends you! *Nods head* ");
-                tasks.get(num - 1).setDone(true);
-                System.out.println(tasks.get(num - 1));
                 break;
             case "unmark":
                 next = in.nextLine();
                 try {
-                    num = convertString(next.trim());
-                    checkMarkStatus(num, false, checkCmd);
+                    handleUnmark(checkCmd, next);
                 } catch (DukeException e) {
                     break;
                 }
-                System.out.println("A mistake! *Shakes head* ");
-                tasks.get(num - 1).setDone(false);
-                System.out.println(tasks.get(num - 1));
                 break;
             case "todo":
                 next = in.nextLine();
-                System.out.println("Understood! *Salutes* Task added!");
-                tasks.add(new ToDo(next.stripLeading(), taskCount + 1, false));
-                echo();
+                handleTodo(next);
                 break;
             case "deadline":
                 next = in.nextLine();
                 try {
-                    String[] deadline = next.split("/by", 2);
-                    tasks.add(new Deadline(deadline[0].trim(), taskCount + 1, false,
-                            deadline[1].trim()));
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    printError();
+                    handleDeadline(next);
+                } catch (DukeException e) {
                     break;
                 }
-                System.out.println("Understood *Salutes* Task with deadline added!\n"
-                        + "Remember to complete it by the deadline!");
-                echo();
                 break;
             case "event":
                 next = in.nextLine();
                 try {
-                    String[] eventName = next.split("/from", 2);
-                    String[] eventTime = eventName[1].split("/to", 2);
-                    tasks.add(new Event(eventName[0].trim(), taskCount + 1, false,
-                            eventTime[0].trim(), eventTime[1].trim()));
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    printError();
+                    handleEvent(next);
+                } catch (DukeException e) {
                     break;
                 }
-                System.out.println("Understood *Salutes* Event added!\n"
-                        + "Remember the starting time! Don't be late!");
-                echo();
                 break;
             default:
                 printError();
@@ -185,10 +278,26 @@ public class Duke {
     }
 
     public static void main(String[] args) {
+        String path = "data/tasks.txt";
+        try {
+            readFile(path);
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        }
+        try {
+            handleFile();
+        } catch (DukeException e) {
+            System.out.println("Reading file failed");
+        }
         hello();
-        generateHelp();
+//        generateHelp();
         query();
         command();
+        try {
+            writeFile(path);
+        } catch (IOException e) {
+            System.out.println("Unforeseen error occurred! List not saved!");
+        }
         shutdown();
     }
 }
