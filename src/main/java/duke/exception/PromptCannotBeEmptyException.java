@@ -1,5 +1,5 @@
 package duke.exception;
 
-public class PromptCannotBeEmptyException extends Exception{
+public class PromptCannotBeEmptyException extends Exception {
 
 }
