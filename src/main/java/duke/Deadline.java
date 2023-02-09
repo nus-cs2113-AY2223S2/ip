@@ -1,3 +1,5 @@
+package duke;
+
 public class Deadline extends Todo {
     private String by;
     public Deadline(String description, String by) {

@@ -1,3 +1,5 @@
+package duke;
+
 import java.util.Scanner;
 public class Duke {
     private static final int LIST_SIZE = 100;
