@@ -19,7 +19,6 @@ public class Limey {
         String inLine;
         String firstWord;
         String[] wordList;
-        int taskIndex = 0;
 
         //start user interface
         Speech.sayHi();
@@ -28,7 +27,7 @@ public class Limey {
         wordList = Parser.splitInput(inLine);
         firstWord = Parser.getFirstWord(inLine);
 
-        initialiseLimey(firstWord, tasks, wordList, inLine, taskIndex, in);
+        initialiseLimey(firstWord, tasks, wordList, inLine, in);
 
         //loop until input 'bye'
         Speech.sayBye();
@@ -39,10 +38,20 @@ public class Limey {
         Task taskIn;
         switch (firstWord) {
         case "deadline":
-            taskIn = new Deadline(inLine);
+            try {
+                taskIn = new Deadline(inLine);
+            } catch (invalidDateException | StringIndexOutOfBoundsException e){
+                Speech.invalidMessage("Invalid deadline Date");
+                return;
+            }
             break;
         case "event":
-            taskIn = new Event(inLine);
+            try {
+                taskIn = new Event(inLine);
+            } catch (invalidDateException | StringIndexOutOfBoundsException e){
+                Speech.invalidMessage("Invalid event Date");
+                return;
+            }
             break;
         case "todo": // currently default create a todo object
             taskIn = new Todo(inLine);
@@ -55,7 +64,7 @@ public class Limey {
         Speech.printAdded(taskIn, Task.numTasks);
     }
 
-    private static void initialiseLimey(String firstWord, Task[] tasks, String[] wordList, String inLine, int taskIndex, Scanner in) {
+    private static void initialiseLimey(String firstWord, Task[] tasks, String[] wordList, String inLine,  Scanner in) {
         while (!firstWord.equals("bye")) {
             //switch case to decide what to do
             switch (firstWord) {
@@ -74,7 +83,6 @@ public class Limey {
                 } catch (commandNotFoundException e){
                     Speech.invalidMessage("Invalid Command");
                 }
-
                 break;
             }
             inLine = in.nextLine().trim();
