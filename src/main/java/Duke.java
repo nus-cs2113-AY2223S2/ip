@@ -6,11 +6,15 @@ public class Duke {
 
     public static void main(String[] args) {
         greetingMessage();
-        readAndRespond();
+        try {
+            readAndRespond();
+        } catch (DukeException e) {
+            System.out.println("--FATAL ERROR--");
+        }
         exitMessage();
     }
 
-    private static void readAndRespond() {
+    private static void readAndRespond() throws DukeException {
         Scanner sc = new Scanner(System.in);
         String input = sc.nextLine();
         Task[] listOfTasks = new Task[MAX_TASKS]; // 1-base indexing
@@ -19,8 +23,7 @@ public class Duke {
             if (input.equals("list")) {
                 printList(listOfTasks);
             } else if (input.isBlank()) {
-                System.out.println("Please enter a non-empty string! Start with words: todo/deadline/event " +
-                        "to add a specific task accordingly!!");
+                throw new DukeException();
             } else if (isValidUnmark(input, words)) {
                 unmarkTask(listOfTasks, words);
             } else if (isValidMark(input, words)) {
@@ -121,7 +124,7 @@ public class Duke {
         }
     }
 
-    private static void unmarkTask(Task[] listOfTasks, String[] words) {
+    private static void unmarkTask(Task[] listOfTasks, String[] words) throws DukeException {
         int number = Integer.parseInt(words[1]);
         if (number <= 0 || number >= MAX_TASKS || listOfTasks[number] == null || words.length == 1 || !isInt(words[1])) {
             System.out.println("Please unmark only valid tasks! List out your tasks if you are unsure!!");
