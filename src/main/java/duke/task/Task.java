@@ -11,10 +11,6 @@ public class Task {
         this.type = "todo";
     }
 
-    public String getDescription() {
-        return this.task;
-    }
-
     /**
      * sets the current task to be marked as done
      *
@@ -30,7 +26,6 @@ public class Task {
      *
      * @return the String of the marked task
      */
-
     public String setAsUndone() {
         this.isDone = false;
         return this.task;
@@ -42,7 +37,6 @@ public class Task {
      *
      * @return the String indicating the status of the task
      */
-
     public String getStatusIcon() {
         return (this.isDone ? "X" : " ");
     }
@@ -52,7 +46,6 @@ public class Task {
      *
      * @return letter representing type of task
      */
-
     public String getTaskType() {
         return "[T]";
     }
@@ -62,7 +55,6 @@ public class Task {
      *
      * @return task status and description
      */
-
     public String getTaskStatus() {
         return "[T]" + "[" + getStatusIcon() + "]" + task;
     }
