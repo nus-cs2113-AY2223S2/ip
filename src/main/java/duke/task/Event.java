@@ -11,6 +11,11 @@ public class Event extends Task {
     }
 
     @Override
+    public String getTask() {
+        return super.getTask() + " | " + fromDate + " " + byDate;
+    }
+
+    @Override
     public String toString() {
         return super.toString() + " (from: " + fromDate + " to: " + byDate + ")";
     }
