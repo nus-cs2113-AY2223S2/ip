@@ -18,9 +18,7 @@ public class Duke {
     public static void main(String[] args) {
 
 
-        Storage storage = new Storage(filePath);
 
-        storage.readFile(filePath,tasks);
 
         String command;
         int numberOfTasks = tasks.size();
