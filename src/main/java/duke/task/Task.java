@@ -1,7 +1,6 @@
 package duke.task;
 public class Task {
     protected String task;
-    protected int number;
     protected boolean isDone;
     protected String type;
 
@@ -11,14 +10,6 @@ public class Task {
 
     public void setTask(String task) {
         this.task = task;
-    }
-
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
     }
 
     public String checkDone() {
@@ -39,9 +30,8 @@ public class Task {
         isDone = done;
     }
 
-    public Task(String task, int number, boolean isDone) {
+    public Task(String task, boolean isDone) {
         setTask(task);
-        setNumber(number);
         setDone(isDone);
     }
 

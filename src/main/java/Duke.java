@@ -4,7 +4,6 @@ import duke.task.Deadline;
 import duke.task.Event;
 import duke.util.DukeException;
 import java.util.Scanner;
-import java.util.HashMap;
 import java.util.ArrayList;
 
 public class Duke {
@@ -24,7 +23,7 @@ public class Duke {
             "╚═════╝░░╚════╝░╚═════╝░  ╚═════╝░╚═╝░░╚═╝░░░╚═╝░░░╚═════╝░  ╚═════╝░░░░╚═╝░░░╚══════╝";
     static private final String DIV = "\n===========================================================================\n";
     static private final ArrayList<Task> tasks = new ArrayList<>();
-    static private final HashMap<String, String> helpOutputs = new HashMap<>();
+//    static private final HashMap<String, String> helpOutputs = new HashMap<>();
     static private int taskCount = 0;
 
     public static void hello() {
@@ -39,21 +38,21 @@ public class Duke {
         System.out.println(DIV + "\nWhat do you want from me boss?\n" + DIV);
     }
 
-    public static void generateHelp() {
-        helpOutputs.put("list", "");
-        helpOutputs.put("todo", "");
-        helpOutputs.put("deadline", "");
-        helpOutputs.put("event", "");
-        helpOutputs.put("mark", "");
-        helpOutputs.put("unmark", "");
-        helpOutputs.put("help", "");
-    }
+//    public static void generateHelp() {
+//        helpOutputs.put("list", "");
+//        helpOutputs.put("todo", "");
+//        helpOutputs.put("deadline", "");
+//        helpOutputs.put("event", "");
+//        helpOutputs.put("mark", "");
+//        helpOutputs.put("unmark", "");
+//        helpOutputs.put("help", "");
+//    }
 
-    public static void printHelp(String str) {
-        for (String i:helpOutputs.keySet()) {
-            System.out.println(i + ": " + helpOutputs.get(i));
-        }
-    }
+//    public static void printHelp(String str) {
+//        for (String i:helpOutputs.keySet()) {
+//            System.out.println(i + ": " + helpOutputs.get(i));
+//        }
+//    }
 
     public static void listOut() {
         if (taskCount == 0) {
@@ -63,7 +62,12 @@ public class Duke {
             System.out.println("Here's your list boss! *Crosses arms and nods* : ");
         }
         for (int i = 0; i < taskCount; ++i) {
-            System.out.println(tasks.get(i).getNumber() + "." + tasks.get(i));
+            System.out.println(i + 1 + "." + tasks.get(i));
+        }
+        if (taskCount == 1) {
+            System.out.println("Looks like you have " + taskCount + " thing on your list!");
+        } else {
+            System.out.println("Looks like you have " + taskCount + " things on your list!");
         }
     }
 
@@ -112,12 +116,12 @@ public class Duke {
             case "list":
                 listOut();
                 break;
-            case "help":
-                String next = in.nextLine();
-                printHelp(next.trim());
-                break;
+//            case "help":
+//                String next = in.nextLine();
+//                printHelp(next.trim());
+//                break;
             case "mark":
-                next = in.nextLine();
+                String next = in.nextLine();
                 int num;
                 try {
                     num = convertString(next.trim());
@@ -144,14 +148,14 @@ public class Duke {
             case "todo":
                 next = in.nextLine();
                 System.out.println("Understood! *Salutes* Task added!");
-                tasks.add(new ToDo(next.stripLeading(), taskCount + 1, false));
+                tasks.add(new ToDo(next.stripLeading(), false));
                 echo();
                 break;
             case "deadline":
                 next = in.nextLine();
                 try {
                     String[] deadline = next.split("/by", 2);
-                    tasks.add(new Deadline(deadline[0].trim(), taskCount + 1, false,
+                    tasks.add(new Deadline(deadline[0].trim(), false,
                             deadline[1].trim()));
                 } catch (ArrayIndexOutOfBoundsException e) {
                     printError();
@@ -166,7 +170,7 @@ public class Duke {
                 try {
                     String[] eventName = next.split("/from", 2);
                     String[] eventTime = eventName[1].split("/to", 2);
-                    tasks.add(new Event(eventName[0].trim(), taskCount + 1, false,
+                    tasks.add(new Event(eventName[0].trim(), false,
                             eventTime[0].trim(), eventTime[1].trim()));
                 } catch (ArrayIndexOutOfBoundsException e) {
                     printError();
@@ -175,6 +179,17 @@ public class Duke {
                 System.out.println("Understood *Salutes* Event added!\n"
                         + "Remember the starting time! Don't be late!");
                 echo();
+                break;
+            case "delete":
+                next = in.nextLine();
+                try {
+                    num = convertString(next.trim());
+                } catch (DukeException e) {
+                    break;
+                }
+                System.out.println("Roger!" + tasks.get(num - 1) + " removed!");
+                tasks.remove(tasks.get(num - 1));
+                --taskCount;
                 break;
             default:
                 printError();
@@ -186,7 +201,7 @@ public class Duke {
 
     public static void main(String[] args) {
         hello();
-        generateHelp();
+//        generateHelp();
         query();
         command();
         shutdown();
