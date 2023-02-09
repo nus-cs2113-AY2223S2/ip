@@ -6,7 +6,7 @@ public class Duke {
         String userCommand, userInputDetails;
 
         Message.hello();
-        
+
         do {
             userCommand = inputScanner.next();
             switch(userCommand) {
@@ -14,12 +14,32 @@ public class Duke {
                 List.printList();
                 break;
             case "mark":
-                userInputDetails = inputScanner.next();
-                List.markDone(Integer.parseInt(userInputDetails));
+                userInputDetails = inputScanner.nextLine();
+                try {
+                    List.markDone(Integer.parseInt(userInputDetails.trim()));
+                } catch (NumberFormatException e) {
+                    Message.line();
+                    System.out.println("Please input a list index to mark!");
+                    Message.line();
+                } catch (IndexOutOfBoundsException e) {
+                    Message.line();
+                    System.out.println("The list index you have input is not in the list!");
+                    Message.line();
+                }
                 break;
             case "unmark":
-                userInputDetails = inputScanner.next();
-                List.markUndone(Integer.parseInt(userInputDetails));
+                userInputDetails = inputScanner.nextLine();
+                try {
+                    List.markUndone(Integer.parseInt(userInputDetails.trim()));
+                } catch (NumberFormatException e) {
+                    Message.line();
+                    System.out.println("Please input a list index to mark!");
+                    Message.line();
+                } catch (IndexOutOfBoundsException e) {
+                    Message.line();
+                    System.out.println("The list index you have input is not in the list!");
+                    Message.line();
+                }
                 break;
             case "todo":
                 userInputDetails = inputScanner.nextLine();
