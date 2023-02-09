@@ -27,25 +27,25 @@ Now you have 2 tasks in the list.
 ____________________________________________________________
 
 ____________________________________________________________
-Got it. I've added this task:
+Got it. I've added this duke.task:
   [T][ ] todo study
 
 Now you have 3tasks in the list.
 ____________________________________________________________
 
-Nice! I've marked this task as DONE:
+Nice! I've marked this duke.task as DONE:
 [X] write
 ____________________________________________________________
 
 ____________________________________________________________
-Got it. I've added this task:
+Got it. I've added this duke.task:
   [E][ ] event cook  (from: 2 to: 5)
 
 Now you have 4 tasks in the list.
 ____________________________________________________________
 
 ____________________________________________________________
-Got it. I've added this task:
+Got it. I've added this duke.task:
   [D][ ] deadline do homework  (by: 7)
 
 Now you have 5 tasks in the list.
@@ -63,7 +63,7 @@ ____________________________________________________________
 
 ____________________________________________________________
 
-OK! I've marked this task as NOT DONE YET:
+OK! I've marked this duke.task as NOT DONE YET:
 [ ] write
 ____________________________________________________________
 
