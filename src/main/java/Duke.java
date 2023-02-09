@@ -98,6 +98,14 @@ public class Duke {
                             System.out.println("OOPS! Event cannot be left empty!\n" + SPACE);
                         }
                         break;
+                    case "delete" :
+                        x = Integer.parseInt(line.substring(7));
+                        Task task = storage.get(x-1);
+                        storage.remove(x-1);
+                        taskCounter--;
+                        System.out.println("Noted. I've removed this task:");
+                        System.out.println(task.getDesc());
+                        System.out.println("Now you have " + taskCounter + " tasks in the list.");
                     default:
                         System.out.println(ERROR);
                         break;

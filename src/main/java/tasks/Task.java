@@ -15,6 +15,7 @@ public class Task {
         this.isDone = false;
     }
 
+
     public String isDone(){
         return (isDone ? "[X] " : "[ ] ");
     }
