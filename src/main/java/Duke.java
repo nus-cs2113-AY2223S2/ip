@@ -55,20 +55,28 @@ public class Duke {
     }
 
     public void changeTaskState(boolean doneState, Integer index) {
-        index--;
-        if (doneState) {
-            taskList.get(index).markAsDone();
+        if (index > taskList.size()) {
+            System.out.println("Please input valid task number!");
         } else {
-            taskList.get(index).markAsUndone();
+            index--;
+            if (doneState) {
+                taskList.get(index).markAsDone();
+            } else {
+                taskList.get(index).markAsUndone();
+            }
         }
     }
 
     public void list() {
-        System.out.println("Here are the tasks in your list:");
-        Integer i = 0;
-        for (Task task : taskList) {
-            System.out.printf(String.format("%d.%s\n", i + 1, task.toString()));
-            i++;
+        if (taskList.size() == 0) {
+            System.out.println("Task list is empty.");
+        } else {
+            System.out.println("Here are the tasks in your list:");
+            Integer i = 0;
+            for (Task task : taskList) {
+                System.out.printf(String.format("%d.%s\n", i + 1, task.toString()));
+                i++;
+            }
         }
     }
 }
