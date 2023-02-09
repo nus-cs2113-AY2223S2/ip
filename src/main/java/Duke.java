@@ -53,15 +53,15 @@ public class Duke {
                 String splitresponse = response.split(" ", 2)[1];
                 String descresponse = splitresponse.split("/by")[0];
                 String dateresponse = splitresponse.split("/by")[1];
-                list.add(new Deadline(descresponse,dateresponse));
+                list.add(new Deadline(descresponse, dateresponse));
             } else if (response.startsWith("event")) {
                 String splitresponse = response.split(" ", 2)[1];
                 String descresponse = splitresponse.split("/from")[0];
                 String timeresponse = splitresponse.split("/from")[1];
                 String fromresponse = timeresponse.split("/to")[0];
                 String toresponse = timeresponse.split("/to")[1];
-                list.add(new Event(descresponse,fromresponse,toresponse));
-            } else if(response.startsWith("todo")){
+                list.add(new Event(descresponse, fromresponse, toresponse));
+            } else if (response.startsWith("todo")) {
                 String description = response.split(" ", 2)[1];
                 list.add(new Todo(description));
             } else {
@@ -72,8 +72,6 @@ public class Duke {
             System.out.println("Got it. I've added this task:");
             System.out.println(list.get(size - 1).toString());
             System.out.println("Now you have " + size + " tasks in the list");
-
-
-            }
         }
     }
+}
