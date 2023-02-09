@@ -1,3 +1,8 @@
+package duke.command;
+
+import duke.task.Task;
+import duke.*;
+
 public class TodoList {
     
     private static final int MAXLISTNUM = 100;
@@ -5,7 +10,7 @@ public class TodoList {
     private Task[] tasks = new Task[MAXLISTNUM];
     private int listnum;
 
-    TodoList(){
+    public TodoList(){
         listnum = 0;
     }
 
