@@ -45,6 +45,9 @@ public class Duke {
                 case EVENT:
                     addEvent(parameters);
                     break;
+                case DELETE:
+                    deleteItem(parameters);
+                    break;
                 case EXIT:
                     in.close();
                     exitProgram();
@@ -212,6 +215,23 @@ public class Duke {
     }
 
     /**
+     * Removes an item from the list.
+     * 
+     * @param parameters Gets the description and from/to of the item.
+     * @throws DukeException when parseInt fails or User tries to access element that is out of bounds
+     */
+    private static void deleteItem(String parameters) throws DukeException {
+        try {
+            int num = Integer.parseInt(parameters);
+
+            Item removedItem = items.remove(num - 1);
+            printDeleteItemMessage(removedItem);
+        } catch (IndexOutOfBoundsException err) {
+            throw new DukeException(Message.ERROR_MARK_OUT_OF_BOUNDS.toString());
+        }
+    }
+
+    /**
      * Prints the welcome message when application is launched.
      */
     private static void printWelcomeMessage() {
@@ -227,6 +247,17 @@ public class Duke {
      */
     private static void printAddItemMessage(Item item) {
         System.out.println(Message.INFO_ITEM_ADD);
+        System.out.println(item);
+        System.out.printf(Message.INFO_ITEM_COUNT.toString(), items.size());
+    }
+
+    /**
+     * Prints the message after an item is deleted.
+     * 
+     * @param item Prints the description and status of the item
+     */
+    private static void printDeleteItemMessage(Item item) {
+        System.out.println(Message.INFO_ITEM_DELETE);
         System.out.println(item);
         System.out.printf(Message.INFO_ITEM_COUNT.toString(), items.size());
     }
