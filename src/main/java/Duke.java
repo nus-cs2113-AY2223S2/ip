@@ -23,7 +23,8 @@ public class Duke {
     private static final String COMMAND_ADD_TODO = "todo";
     private static final String COMMAND_ADD_DEADLINE = "deadline";
     private static final String COMMAND_ADD_EVENT = "event";
-    private static final String UNKNOWN_CMD_ERR_MSG = " WHOOPS! I'm sorry, but I don't know what that means :(";
+    private static final String UNKNOWN_CMD_ERR = " WHOOPS! I'm sorry, but I don't know what that means :(";
+    private static final String EMPTY_TODO_DESC_ERR = " WHOOPS! The description of a todo cannot be empty.";
 
     private static Task[] taskItems = new Task[MAX_ITEMS];
     private static int taskItemCount = 0;
@@ -85,9 +86,14 @@ public class Duke {
         System.out.print(printExit);
     }
 
-    private static void printUnknownCmdErrMsg() {
-        String printErrMsg = TOP_DIVIDER + UNKNOWN_CMD_ERR_MSG + BOTTOM_DIVIDER;
+    public static void printUnknownCmdErr() {
+        String printErrMsg = TOP_DIVIDER + UNKNOWN_CMD_ERR + BOTTOM_DIVIDER;
         System.out.print(printErrMsg);
+    }
+
+    public static void printEmptyTodoDescErr() {
+        String printErrMsg = TOP_DIVIDER + EMPTY_TODO_DESC_ERR + BOTTOM_DIVIDER;
+        System.out.println(printErrMsg);
     }
 
     public static String getInput(Scanner in) {
@@ -123,11 +129,15 @@ public class Duke {
             addEventTaskItems(eventTaskName, from, to);
             break;
         case COMMAND_ADD_TODO:
-            String todoTaskName = words[1];
-            addTodoTaskItems(todoTaskName);
+            try {
+                String todoTaskName = words[1];
+                addTodoTaskItems(todoTaskName);
+            } catch (IndexOutOfBoundsException e) {
+                printEmptyTodoDescErr();
+            }
             break;
         default:
-            printUnknownCmdErrMsg();
+            printUnknownCmdErr();
             break;
         }
     }
