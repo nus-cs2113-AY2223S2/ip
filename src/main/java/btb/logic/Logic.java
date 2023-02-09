@@ -1,11 +1,6 @@
 package btb.logic;
 
-import btb.constants.Constant;
-import btb.tasks.Task;
-import btb.tasks.TaskManager;
-import btb.tasks.Todo;
-import btb.tasks.Deadline;
-import btb.tasks.Event;
+import btb.tasks.*;
 
 public class Logic {
 
@@ -58,14 +53,14 @@ public class Logic {
                 tasks.listTasks();
                 break;
             case "":
-                System.out.println(Constant.TAB_SPACE + "Please enter some commands");
+                System.out.println("\t Please enter some commands");
                 break;
             default:
-                System.out.println(Constant.TAB_SPACE + "☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+                System.out.println("\t ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
                 break;
             }
         } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {
-            System.out.println(Constant.TAB_SPACE + "Please enter a valid command (╬▔皿▔)╯.");
+            System.out.println("\t Please enter a valid command (╬▔皿▔)╯.");
         }
     }
 }

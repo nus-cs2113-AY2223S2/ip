@@ -1,6 +1,5 @@
 package btb.tasks;
 
-import btb.constants.Constant;
 import btb.exceptions.EmptyTaskNumberException;
 
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ public class TaskManager {
      */
     public void printNumberOfTasks() {
         int numberOfTasks = tasks.size();
-        System.out.println(Constant.TAB_SPACE + "Now you have " + numberOfTasks +
+        System.out.println("\t Now you have " + numberOfTasks +
                 " tasks in the list.");
     }
 
@@ -24,7 +23,7 @@ public class TaskManager {
      */
     public void addTask(Task task, String command) {
         if (task.description.equals("")) {
-            System.out.println(Constant.TAB_SPACE + "☹ OOPS!!! The description of a task cannot be empty.");
+            System.out.println("\t ☹ OOPS!!! The description of a task cannot be empty.");
         } else {
             tasks.add(task);
             printAcknowledgeCommand(task, command);
@@ -44,20 +43,18 @@ public class TaskManager {
         case "todo":
         case "deadline":
         case "event":
-            System.out.println(Constant.TAB_SPACE +
-                    "Got it. I've added this task:");
+            System.out.println("\t Got it. I've added this task:");
             break;
         case "mark":
-            System.out.println(Constant.TAB_SPACE +
-                    "Great! I've marked this task as done:");
+            System.out.println("\t Great! I've marked this task as done:");
             break;
         case "unmark":
-            System.out.println(Constant.TAB_SPACE +
-                    "OK, I've marked this task as not done yet:");
+            System.out.println("\t OK, I've marked this task as not done yet:");
             break;
         }
 
-        System.out.println(Constant.TAB_SPACE + Constant.TAB_SPACE + task);
+//        System.out.println(Constant.TAB_SPACE + Constant.TAB_SPACE + task);
+        System.out.printf("\t\t%s\n", task);
     }
 
     /**
@@ -65,18 +62,16 @@ public class TaskManager {
      */
     public void listTasks() {
         if (tasks.size() == 0) {
-            System.out.println(Constant.TAB_SPACE + "You currently don't have any task added.\n" +
-                    Constant.TAB_SPACE + "Please add some tasks.");
+            System.out.println("\t You currently don't have any task added.\n" +
+                    "\t Please add some tasks.");
             return;
         }
 
-        System.out.println(Constant.TAB_SPACE +
-                "Here are the tasks in your list:");
+        System.out.println("\t Here are the tasks in your list:");
 
         int index = 1;
         for (Task task : tasks) {
-            System.out.printf(Constant.TAB_SPACE + Constant.TAB_SPACE +
-                    "%d.%s\n", index, task);
+            System.out.printf("\t\t%d.%s\n", index, task);
             index++;
         }
     }
@@ -100,10 +95,10 @@ public class TaskManager {
         } catch (EmptyTaskNumberException e) {
             System.out.println(e.getMessage());
         } catch (IndexOutOfBoundsException e) {
-            System.out.println(Constant.TAB_SPACE + "Invalid task number(►__◄).\n" +
-                    Constant.TAB_SPACE + "Please try again!");
+            System.out.println("\t Invalid task number(►__◄).\n" +
+                    "\t Please try again!");
         }catch (NumberFormatException e) {
-            System.out.println(Constant.TAB_SPACE + "Please enter an integer task number ╰（‵□′）╯.");
+            System.out.println("\t Please enter an integer task number ╰（‵□′）╯.");
         }
 
     }
@@ -128,10 +123,10 @@ public class TaskManager {
         } catch (EmptyTaskNumberException e) {
             System.out.println(e.getMessage());
         } catch (IndexOutOfBoundsException e) {
-            System.out.println(Constant.TAB_SPACE + "Invalid task number(►__◄).\n" +
-                    Constant.TAB_SPACE + "Please try again!");
+            System.out.println("\t Invalid task number(►__◄).\n" +
+                    "\t Please try again!");
         }catch (NumberFormatException e) {
-            System.out.println(Constant.TAB_SPACE + "Please enter an integer task number ╰（‵□′）╯.");
+            System.out.println("\t Please enter an integer task number ╰（‵□′）╯.");
         }
     }
 }

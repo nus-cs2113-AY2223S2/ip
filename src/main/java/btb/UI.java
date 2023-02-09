@@ -19,10 +19,8 @@ public abstract class UI {
      * greets the user.
      */
     public static void greetUser() {
-        System.out.println(Constant.TAB_SPACE +
-                "Hello! I'm Bob the Bot, aka BtB.");
-        System.out.println(Constant.TAB_SPACE +
-                "Please enter some tasks in the todo list.");
+        System.out.println("\t Hello! I'm Bob the Bot, aka BtB.");
+        System.out.println("\t Please enter some tasks in the todo list.");
     }
 
     /**
@@ -62,7 +60,7 @@ public abstract class UI {
                 Logic.runCommand(tasks, userInput);
                 System.out.println(Constant.DOTTED_LINE);
             } catch (NoSuchElementException e) {
-                System.out.println("Invalid input ┻ ︵ヽ(`Д´)ﾉ︵ ┻. Please try again!");
+                System.out.println("\t Invalid input ┻ ︵ヽ(`Д´)ﾉ︵ ┻. Please try again!");
                 break;
             }
         } while (isRepeat);
