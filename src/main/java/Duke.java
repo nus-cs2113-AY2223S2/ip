@@ -21,7 +21,8 @@ public class Duke {
         if (input[1].contains("/by")) {
             return input[1].split("/by",2)[1];
         } else {
-            System.out.println("When is this due by?"); {
+            System.out.println("When is this due by?");
+            {
                 return in.nextLine().trim();
             }
         }
@@ -55,10 +56,9 @@ public class Duke {
 
         while (true) {
             String userInput = in.nextLine().trim();
-            //String[] input = new String[2];
             String[] input = userInput.split(" ",2);
-
             String inputCommand = input[0];
+
             switch (inputCommand) {
             case "bye":
                 exitMessage();
@@ -71,6 +71,7 @@ public class Duke {
                     TaskList.viewList();
                 }
                 break;
+
             case "mark": {
                 String itemNum = getItemDescription(input);
 
@@ -95,6 +96,7 @@ public class Duke {
                 TaskList.addItem(newTask);
                 break;
             }
+
             case "todo": {
                 String itemDescription = getItemDescription(input);
                 Todo newTask = new Todo(itemDescription);
