@@ -1,3 +1,4 @@
+import java.io.FileNotFoundException;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -9,8 +10,17 @@ public class Duke {
 
     private static final ArrayList<Task> tasks = new ArrayList<>();
 
+    private static String filePath = "data/duke.txt";
+
+
+
 
     public static void main(String[] args) {
+
+
+        Storage storage = new Storage(filePath);
+
+        storage.readFile(filePath,tasks);
 
         String command;
         int numberOfTasks = tasks.size();
