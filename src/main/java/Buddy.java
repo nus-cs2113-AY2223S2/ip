@@ -102,7 +102,7 @@ public class Buddy {
                 if (currentPosition == 1){
                     System.out.println(" task remaining! Let's finish it quickly!");
                 }
-                else{
+                else {
                     System.out.println(" tasks remaining! You got this, buddy!");  // all these same for all three subtasks so put at the bottom
                 }
 
