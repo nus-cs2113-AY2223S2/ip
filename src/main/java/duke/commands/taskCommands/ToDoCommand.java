@@ -8,6 +8,7 @@ import duke.tasks.ToDo;
 
 public class ToDoCommand extends Command {
 
+
     @Override
     public void handleCommand(String line, TaskList taskList){
         int markIndex;
@@ -21,7 +22,7 @@ public class ToDoCommand extends Command {
 
             description = line.substring(markIndex + 1).trim();
             ToDo newTask = new ToDo(description);
-            taskList.addTask(indexCount, newTask);
+            taskList.addTask(newTask);
         } catch (InvalidTaskException e) {
             System.out.println(e.getMessage());
         }

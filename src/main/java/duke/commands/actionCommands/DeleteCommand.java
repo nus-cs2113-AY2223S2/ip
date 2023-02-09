@@ -5,31 +5,27 @@ import duke.exceptions.EmptyListException;
 import duke.exceptions.InvalidArgsException;
 import duke.tasks.Task;
 import duke.tasks.TaskList;
+
 import static duke.constants.Constants.LINEBREAK;
 
-public class UnmarkCommand extends Command {
+public class DeleteCommand extends Command {
 
     @Override
     public void handleCommand(String line, TaskList tasks) {
+        int indexSelect;
+        int indexCount = Task.getIndexCount();
         try {
-            int indexCount = Task.getIndexCount();
-            int indexSelect;
-
-            if (getArgumentNumber(line) != 2) {
+            if (getArgumentNumber(line) != 2){
                 throw new InvalidArgsException();
             }
+            String indexSelectString = line.split(" ")[1];
 
-            String undo = line.split(" ")[1];
             if (indexCount == 0) {
                 throw new EmptyListException();
             }
 
-            indexSelect = Integer.parseInt(undo) - 1;
-
-            tasks.get(indexSelect).setDone(false);
-            System.out.println("OK, I've marked this task as not done yet:");
-            System.out.println(tasks.get(indexSelect));
-            System.out.println(LINEBREAK);
+            indexSelect = Integer.parseInt(indexSelectString) - 1;
+            tasks.deleteTask(indexSelect);
 
         } catch (IndexOutOfBoundsException | NullPointerException e) {
             System.out.println("Invalid task number. Please try again.");

@@ -2,9 +2,22 @@ package duke.commands;
 
 import duke.tasks.TaskList;
 
-import static duke.constants.Constants.LINEBREAK;
-
 public abstract class Command {
+
+    /**
+     * Returns the number of words there are in a user input.
+     *
+     * @param line User input into the system
+     * @return Number of words in the user input.
+     */
+    protected int getArgumentNumber(String line){
+        if (line == null || line.isEmpty()){
+            return 0;
+        }
+
+        String[] words = line.split("\\s+");
+        return words.length;
+    }
 
     /**
      * Handles the command based on user input.

@@ -2,6 +2,7 @@ package duke.commands.actionCommands;
 
 import duke.commands.Command;
 import duke.exceptions.EmptyListException;
+import duke.exceptions.InvalidArgsException;
 import duke.tasks.Task;
 import duke.tasks.TaskList;
 import static duke.constants.Constants.LINEBREAK;
@@ -9,10 +10,13 @@ import static duke.constants.Constants.LINEBREAK;
 public class MarkCommand extends Command {
 
     @Override
-    public void handleCommand(String line, TaskList taskList){
+    public void handleCommand(String line, TaskList tasks){
         int indexCount = Task.getIndexCount();
         int indexSelect;
         try {
+            if (getArgumentNumber(line) != 2) {
+                throw new InvalidArgsException();
+            }
 
             String done = line.split(" ")[1];
             if (indexCount == 0) {
@@ -20,21 +24,19 @@ public class MarkCommand extends Command {
             }
             indexSelect = Integer.parseInt(done) - 1;
 
-            taskList.getTask(indexSelect).setDone(true);
+            tasks.get(indexSelect).setDone(true);
             System.out.println("Nice! I've marked this task as done:");
-            System.out.println(taskList.getTask(indexSelect));
+            System.out.println(tasks.get(indexSelect));
             System.out.println(LINEBREAK);
         } catch (IndexOutOfBoundsException | NullPointerException e) {
             System.out.println("Invalid task number. Please try again.");
             System.out.println(LINEBREAK);
 
-        } catch (EmptyListException e) {
+        } catch (EmptyListException | InvalidArgsException e) {
             System.out.println(e.getMessage());
-
         } catch (NumberFormatException e) {
             System.out.println("Invalid command. Please try again.");
             System.out.println(LINEBREAK);
-
         }
     }
 }
