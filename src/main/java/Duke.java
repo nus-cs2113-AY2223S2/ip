@@ -27,10 +27,7 @@ public class Duke {
             "╚═════╝░░╚════╝░╚═════╝░  ╚═════╝░╚═╝░░╚═╝░░░╚═╝░░░╚═════╝░  ╚═════╝░░░░╚═╝░░░╚══════╝";
     static private final String DIV = "\n===========================================================================\n";
     static private final ArrayList<Task> tasks = new ArrayList<>();
-<<<<<<< HEAD
-=======
     static private final ArrayList<String>storedData = new ArrayList<>();
->>>>>>> branch-Level-7
 //    static private final HashMap<String, String> helpOutputs = new HashMap<>();
     static private int taskCount = 0;
 
@@ -138,14 +135,14 @@ public class Duke {
 
     public static void handleTodo(String next) {
         System.out.println("Understood! *Salutes* Task added!");
-        tasks.add(new ToDo(next.stripLeading(), taskCount + 1, false));
+        tasks.add(new ToDo(next.stripLeading(), false));
         echo();
     }
 
     public static void handleDeadline(String next) throws DukeException {
         try {
             String[] deadline = next.split("/by", 2);
-            tasks.add(new Deadline(deadline[0].trim(), taskCount + 1, false,
+            tasks.add(new Deadline(deadline[0].trim(), false,
                     deadline[1].trim()));
         } catch (ArrayIndexOutOfBoundsException e) {
             printError();
@@ -160,7 +157,7 @@ public class Duke {
         try {
             String[] eventName = next.split("/from", 2);
             String[] eventTime = eventName[1].split("/to", 2);
-            tasks.add(new Event(eventName[0].trim(), taskCount + 1, false,
+            tasks.add(new Event(eventName[0].trim(), false,
                     eventTime[0].trim(), eventTime[1].trim()));
         } catch (ArrayIndexOutOfBoundsException e) {
             printError();
@@ -243,10 +240,7 @@ public class Duke {
 //                break;
             case "mark":
                 String next = in.nextLine();
-<<<<<<< HEAD
                 int num;
-=======
->>>>>>> branch-Level-7
                 try {
                     handleMark(checkCmd, next);
                 } catch (DukeException e) {
@@ -263,44 +257,21 @@ public class Duke {
                 break;
             case "todo":
                 next = in.nextLine();
-<<<<<<< HEAD
-                System.out.println("Understood! *Salutes* Task added!");
-                tasks.add(new ToDo(next.stripLeading(), false));
-                echo();
-=======
                 handleTodo(next);
->>>>>>> branch-Level-7
                 break;
             case "deadline":
                 next = in.nextLine();
                 try {
-<<<<<<< HEAD
-                    String[] deadline = next.split("/by", 2);
-                    tasks.add(new Deadline(deadline[0].trim(), false,
-                            deadline[1].trim()));
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    printError();
-=======
                     handleDeadline(next);
                 } catch (DukeException e) {
->>>>>>> branch-Level-7
                     break;
                 }
                 break;
             case "event":
                 next = in.nextLine();
                 try {
-<<<<<<< HEAD
-                    String[] eventName = next.split("/from", 2);
-                    String[] eventTime = eventName[1].split("/to", 2);
-                    tasks.add(new Event(eventName[0].trim(), false,
-                            eventTime[0].trim(), eventTime[1].trim()));
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    printError();
-=======
                     handleEvent(next);
                 } catch (DukeException e) {
->>>>>>> branch-Level-7
                     break;
                 }
                 break;

@@ -10,7 +10,7 @@ public class Deadline extends Task {
 
     @Override
     public String getTask() {
-        return super.getTask() + " | " + byDate;
+        return super.getTask() + " % " + byDate;
     }
 
     @Override

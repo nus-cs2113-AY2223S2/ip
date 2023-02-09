@@ -37,7 +37,11 @@ public class Task {
 
     @Override
     public String toString() {
-        return "  " + this.checkType() + this.checkDone() + " " + this.getTask();
+        String [] temp = this.getTask().split("%", 2);
+        if (temp.length == 2) {
+            return "  " + this.checkType() + this.checkDone() + " " + temp[0].trim() + temp[1].trim();
+        }
+        return "  " + this.checkType() + this.checkDone() + " " + getTask();
     }
 
     public boolean getIsDone() {
