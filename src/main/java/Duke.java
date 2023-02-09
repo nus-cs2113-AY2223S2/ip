@@ -1,17 +1,13 @@
 import java.util.Scanner;
 
+//TODO: specify error: empty description vs event/ddl timing not found
+
 public class Duke {
     public static String line = "____________________________________________________________\n";
     public static int countTask = 0;
     public static Task[] tasks = new Task[100];
 
     public static void main(String[] args) {
-//        String logo = " ____        _        \n"
-//                + "|  _ \\ _   _| | _____ \n"
-//                + "| | | | | | | |/ / _ \\\n"
-//                + "| |_| | |_| |   <  __/\n"
-//                + "|____/ \\__,_|_|\\_\\___|\n";
-//        System.out.println("Hello from\n" + logo);
 
         String greet = line +
                 "Hello! I'm Duke.\n" +
@@ -25,6 +21,7 @@ public class Duke {
                 "Type 'list' to view the current todo list.\n" +
                 "Type 'mark' and task event index to mark the task as done " +
                 "and type 'unmark' and index to undo the task.\n" +
+                "Type 'bye' to exit Duke.\n" +
                 line;
         System.out.println(greet);
 
@@ -37,23 +34,45 @@ public class Duke {
             } else {
                 break;
             }
-            if (userInput.equals("bye")) {
-                System.out.println("Thank you for using Duke. Hope to see you soon!");
-                break;
-            } else if (userInput.equals("list")) {
-                printTaskList();
-            } else if (userInput.startsWith("mark")) {
-                markTask(userInput);
-            } else if (userInput.startsWith("unmark")) {
-                unmarkTask(userInput);
-            } else if (userInput.startsWith("todo")) {
-                createTodo(userInput);
-            } else if (userInput.startsWith("deadline")) {
-                createDeadline(userInput);
-            } else if (userInput.startsWith("event")) {
-                createEvent(userInput);
-            } else {
-                createTask(userInput);
+            try {
+                if (userInput.equals("bye")) {
+                    System.out.println("Thank you for using Duke. Hope to see you soon!");
+                    break;
+                } else if (userInput.equals("list")) {
+                    printTaskList();
+                } else if (userInput.startsWith("mark")) {
+                    markTask(userInput);
+                } else if (userInput.startsWith("unmark")) {
+                    unmarkTask(userInput);
+                } else if (userInput.startsWith("todo")) {
+                    try {
+                        createTodo(userInput);
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("Description of a todo cannot be empty. Adding todo failed.\n" + line);
+                    }
+                } else if (userInput.startsWith("deadline")) {
+                    try {
+                        createDeadline(userInput);
+                    } catch (StringIndexOutOfBoundsException e) {
+                        System.out.println("Insufficient input for deadline. Adding deadline failed.\n" + line);
+                    }
+                } else if (userInput.startsWith("event")) {
+                    try {
+                        createEvent(userInput);
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("Insufficient input for event. Adding event failed.\n" + line);
+                    }
+                } else {
+                    throw new TaskTypeException();
+                }
+            } catch (TaskTypeException e) {
+                System.out.println("Sorry, Duke does not recognise the task. " +
+                        "Type 'todo'/'deadline'/'event' to add task of respective type.\n" + line);
+            } catch (NumberFormatException e) {
+                System.out.println("Task number not specified. Please try again.\n" + line);
+            } catch (EventTimingException e) {
+                System.out.println("Starting and ending time for event are in the wrong order. " +
+                        "Please try again.\n" + line);
             }
         }
     }
@@ -67,36 +86,29 @@ public class Duke {
         System.out.println(line);
     }
 
-    public static void markTask(String input) {
+    public static void markTask(String input) throws NumberFormatException {
         int taskIndex = Integer.parseInt(input.substring(4).trim());
         if (taskIndex >= 1 && taskIndex <= countTask) {
             tasks[taskIndex - 1].markAsDone();
             System.out.println(line + "Task " + taskIndex + " marked as done:\n" +
                     tasks[taskIndex - 1].printTask() + line);
         } else {
-            System.out.println("Task " + taskIndex + " not found. Please try again.");
+            System.out.println("Task " + taskIndex + " not found. Please try again.\n" + line);
         }
     }
 
-    public static void unmarkTask(String input) {
+    public static void unmarkTask(String input) throws NumberFormatException {
         int taskIndex = Integer.parseInt(input.substring(6).trim());
         if (taskIndex >= 1 && taskIndex <= countTask) {
             tasks[taskIndex - 1].markAsUndone();
             System.out.println(line + "Task " + taskIndex + " marked as not done yet:\n" +
                     tasks[taskIndex - 1].printTask() + line);
         } else {
-            System.out.println("Task " + taskIndex + " not found. Please try again.");
+            System.out.println("Task " + taskIndex + " not found. Please try again.\n" + line);
         }
     }
 
-    public static void createTask(String input) {
-        Task t = new Task(input);
-        tasks[countTask] = t;
-        countTask++;
-        System.out.println(line + "added: " + t.getDescription() + '\n' + line);
-    }
-
-    public static void createTodo(String input) {
+    public static void createTodo(String input) throws IndexOutOfBoundsException {
         ToDo todoTask = new ToDo(input.substring(5));
         tasks[countTask] = todoTask;
         countTask++;
@@ -104,7 +116,10 @@ public class Duke {
         System.out.println("Now you have " + countTask + " task(s) in the list.\n" + line);
     }
 
-    public static void createDeadline(String input) {
+    public static void createDeadline(String input) throws IndexOutOfBoundsException {
+        if (!input.contains("/by") || input.indexOf("/by") + 4 > input.length()) {
+            throw new StringIndexOutOfBoundsException();
+        }
         Deadline deadlineTask = new Deadline(input.substring(9));
         tasks[countTask] = deadlineTask;
         countTask++;
@@ -112,7 +127,13 @@ public class Duke {
         System.out.println("Now you have " + countTask + " task(s) in the list.\n" + line);
     }
 
-    public static void createEvent(String input) {
+    public static void createEvent(String input) throws IndexOutOfBoundsException, EventTimingException {
+        if (!input.contains("/from") || !input.contains("/to") || input.indexOf("/from") + 6 > input.length()
+                || input.indexOf("/to") + 4 > input.length()) {
+            throw new StringIndexOutOfBoundsException();
+        } else if (input.indexOf("/from") > input.indexOf("/to")) {
+            throw new EventTimingException();
+        }
         Event eventTask = new Event(input.substring(6));
         tasks[countTask] = eventTask;
         countTask++;
