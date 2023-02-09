@@ -1,4 +1,4 @@
-public class Task {
+public abstract class Task {
     protected String description;
 
 
@@ -9,11 +9,8 @@ public class Task {
     public String getStatusIcon() {
         return "";
     }
-    public String getTypeIcon() {
-        return "";
-    }
-    public void setDone(boolean b) {
-    }
+    public abstract String getTypeIcon();
+    public abstract void setDone(boolean b);
     public String getDescription () {
         return this.description;
     }
