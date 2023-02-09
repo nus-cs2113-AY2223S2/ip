@@ -16,24 +16,9 @@ import timer.WorkTask;
 
 //test commit for level 5 branch
 public class Chronos {
+    //define within the class as a better code standard
     private static Input inOut;
     private static Stash stash;
-
-    private static void addNew(Task task) {
-        stash.addNewTask(task);
-        Output.printNewTask(task, stash.ObtainTaskCount());
-    }
-
-    private static void toggleTaskStatus(String details) {
-        try {
-            int index = Integer.parseInt(details) - 1;
-            Task task = stash.getTask(index);
-            task.toggleDone();
-            Output.printIsDone(stash, index);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("The index you have entered is invalid");
-        }
-    }
 
     public static void main(String[] args) {
         inOut = new Input();
@@ -75,7 +60,6 @@ public class Chronos {
             //test commit to master
             case "timer":
                 timerModule();
-
                 continue;
 
             default:
@@ -102,6 +86,21 @@ public class Chronos {
         }
     }
 
+    private static void addNew(Task task) {
+        stash.addNewTask(task);
+        Output.printNewTask(task, stash.ObtainTaskCount());
+    }
+
+    private static void toggleTaskStatus(String details) {
+        try {
+            int index = Integer.parseInt(details) - 1;
+            Task task = stash.getTask(index);
+            task.toggleDone();
+            Output.printIsDone(stash, index);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("The index you have entered is invalid");
+        }
+    }
 
     private static void getUserName(Input inOut) {
         System.out.println("What is your name? (Please enter name)\n");
