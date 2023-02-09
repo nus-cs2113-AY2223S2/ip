@@ -108,7 +108,6 @@ public class Duke {
         }
     }
 
-
     public static void dukeCommandEvent(String nextLine, List<Task> list) {
         String lineWithoutCommand;
         try {
@@ -154,9 +153,6 @@ public class Duke {
         list.add(task);
 
     }
-
-
-
 
 
     //Code not needed for Level-1
