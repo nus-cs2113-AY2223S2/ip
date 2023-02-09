@@ -12,13 +12,13 @@ public class Deadline extends Task {
 
         String deadlineContent = instruction.substring(0, contentIdx);
 
-        if (deadlineContent.equals("")){
+        if (deadlineContent.trim().equals("")){
             throw new DukeException("The description of a deadline cannot be empty.");
         }
 
         String deadlineBy = instruction.substring(contentIdx + "/by ".length());
         
-        if (deadlineBy.equals("")){
+        if (deadlineBy.trim().equals("")){
             throw new DukeException("The time of a deadline cannot be empty.");
         }
 

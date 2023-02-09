@@ -17,19 +17,19 @@ public class Event extends Task {
 
         String eventContent = instruction.substring(0, contentIdx);
 
-        if(eventContent.equals("")){
+        if(eventContent.trim().equals("")){
             throw new DukeException("The content of an event cannot be empty.");
         }
 
         String eventFrom = instruction.substring(contentIdx + "/from ".length(), fromIdx);
 
-        if(eventFrom.equals("")){
+        if(eventFrom.trim().equals("")){
             throw new DukeException("The start time of an event cannot be empty.");
         }
 
         String eventTo = instruction.substring(fromIdx + "/to ".length());
         
-        if(eventTo.equals("")){
+        if(eventTo.trim().equals("")){
             throw new DukeException("The end time of an event cannot be empty.");
         }
         
