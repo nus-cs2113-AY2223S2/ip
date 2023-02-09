@@ -70,8 +70,10 @@ public class Duke {
                     System.out.println(LINE);
                     System.out.println("\tHere are your pending tasks!");
                     Scanner s = new Scanner(fileName);
+                    int index = 1;
                     while (s.hasNext()) {
-                        System.out.println("\t" + s.nextLine());
+                        System.out.println("\t" + index + ". " + s.nextLine());
+                        index++;
                     }
                     System.out.println(LINE);
                     extractData(fileName);
