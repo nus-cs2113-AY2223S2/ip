@@ -1,3 +1,6 @@
+import exceptions.BlankDescException;
+import exceptions.DukeException;
+
 import java.util.Scanner;
 
 public class Duke {
@@ -17,7 +20,7 @@ public class Duke {
         String description, by, from, to;
 
         while(!isExit){
-            switch (userCommand.split(" ")[0]){
+            switch (userCommand.split(" ")[0]) {
             case "list":
                 MainFunctions.listTasks(userTextCount, storedUserTasks);
                 break;
@@ -31,14 +34,31 @@ public class Duke {
                 MainFunctions.unmarkTask(userCommand, storedUserTasks);
                 break;
             case "todo":
-                MainFunctions.createTodo(userCommand, storedUserTasks);
+                try {
+                    MainFunctions.createTodo(userCommand, storedUserTasks);
+                } catch (BlankDescException e) {
+                    BlankDescException.errorMessage("todo");
+                } catch (DukeException e) {
+                    DukeException.errorMessage();
+                }
                 break;
             case "deadline":
-                MainFunctions.createDeadline(userCommand, storedUserTasks);
+                try {
+                    MainFunctions.createDeadline(userCommand, storedUserTasks);
+                } catch (BlankDescException e) {
+                    BlankDescException.errorMessage("deadline");
+                } catch (DukeException e) {
+                    DukeException.errorMessage();
+                }
                 break;
             case "event":
-
-                MainFunctions.createEvent(userCommand, storedUserTasks);
+                try {
+                    MainFunctions.createEvent(userCommand, storedUserTasks);
+                } catch (BlankDescException e) {
+                    BlankDescException.errorMessage("event");
+                } catch (DukeException e) {
+                    DukeException.errorMessage();
+                }
                 break;
             default:
                 MainFunctions.invalidInput();

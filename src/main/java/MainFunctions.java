@@ -1,3 +1,6 @@
+import exceptions.BlankDescException;
+import exceptions.DukeException;
+
 public class MainFunctions {
     public static final String LOGO =
             "\t __   __\n"
@@ -24,7 +27,7 @@ public class MainFunctions {
 
     public static void invalidInput() {
         System.out.println(DIVIDER);
-        System.out.println(SPACER+"Please enter a valid input.");
+        System.out.println(SPACER+"☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
         System.out.println(DIVIDER);
     }
 
@@ -55,7 +58,10 @@ public class MainFunctions {
         System.out.println(DIVIDER);
     }
 
-    public static void createTodo(String userCommand, Task[] storedUserTasks) {
+    public static void createTodo(String userCommand, Task[] storedUserTasks) throws DukeException {
+        if (userCommand.length()<=4) {
+            throw new BlankDescException();
+        }
         String description = userCommand.substring(5);
         storedUserTasks[Duke.userTextCount] = new Todo(description);
         System.out.println(DIVIDER);
@@ -66,7 +72,10 @@ public class MainFunctions {
         System.out.println(DIVIDER);
     }
 
-    public static void createDeadline(String userCommand, Task[] storedUserTasks) {
+    public static void createDeadline(String userCommand, Task[] storedUserTasks) throws DukeException {
+        if (userCommand.length()<=8) {
+            throw new BlankDescException();
+        }
         int indexOfBy = userCommand.indexOf("/by");
         String description = userCommand.substring( 9, indexOfBy-1);
         String by = userCommand.substring(indexOfBy+4);
@@ -79,7 +88,10 @@ public class MainFunctions {
         System.out.println(DIVIDER);
     }
 
-    public static void createEvent(String userCommand, Task[] storedUserTasks) {
+    public static void createEvent(String userCommand, Task[] storedUserTasks) throws DukeException {
+        if (userCommand.length()<=5) {
+            throw new BlankDescException();
+        }
         int indexOfFrom = userCommand.indexOf("/from");
         int indexOfTo = userCommand.indexOf("/to");
         String description = userCommand.substring(6,indexOfFrom-1);
