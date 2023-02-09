@@ -1,5 +1,7 @@
+package duke;
+
 public class Todo extends Task {
-    protected boolean isDone;
+    public boolean isDone;
     public Todo(String description) {
         super(description);
         this.isDone = false;
