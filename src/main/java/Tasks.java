@@ -24,6 +24,10 @@ public class Tasks {
                     "  Now you have " + taskList.size() + " tasks in the list.";
         } catch (IllegalArgumentException e) {
             return "☹ OOPS!!! The description of a " + type + " cannot be empty.";
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return "☹ OOPS!!! The date information of the " + type + " is invalid!" +
+                    "\n  Use the command /by for deadlines, and /from, /to for events!" +
+                    "\n  Please try again.";
         }
 
     }

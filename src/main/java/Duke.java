@@ -4,6 +4,7 @@ public class Duke {
     private final static String LINE_BREAK = " ____________________________________________________________";
     private final static String GREETING = "Hello! I'm Duke\n  What can I do for you?";
     private final static String EXITING = "Bye. Hope to see you again soon!";
+    private final static String ERR_MESSAGE = "☹ OOPS!!! I'm sorry, but I don't know what that means :-(";
     private final static Tasks tasks = new Tasks();
 
     public static void main(String[] args) {
@@ -29,6 +30,8 @@ public class Duke {
                 speak(tasks.addTask("event", commandByWord));
             } else if (commandByWord[0].equals("todo")) {
                 speak(tasks.addTask("todo", commandByWord));
+            } else {
+                speak(ERR_MESSAGE);
             }
         }
     }

@@ -8,7 +8,7 @@ public class Event extends Task {
         this.endDate = endDate;
     }
 
-    static Event createEvent(String[] commandByWord) throws IllegalArgumentException {
+    static Event createEvent(String[] commandByWord) throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
 
         if (commandByWord.length < 2) {
             throw new IllegalArgumentException();
