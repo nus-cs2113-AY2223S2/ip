@@ -6,6 +6,7 @@ public class Deadline extends Item {
     public Deadline(String description, String by) {
         super(description);
         this.by = by;
+        type = "Deadline";
     }
 
     @Override

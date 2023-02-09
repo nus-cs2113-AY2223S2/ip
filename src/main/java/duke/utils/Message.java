@@ -20,7 +20,9 @@ public enum Message {
     ERROR_MARK_OUT_OF_BOUNDS("Invalid item."),
     ERROR_REMIND_MISSING_PARAMETER("Parameters contain missing fields. Example: remind to eat"),
     ERROR_DEADLINE_MISSING_PARAMETER("Parameters contain missing fields. Example: deadline to eat /by tomorrow"),
-    ERROR_EVENT_MISSING_PARAMETER("Parameters contain missing fields. Example: event to eat /from 2pm /to 4pm");
+    ERROR_EVENT_MISSING_PARAMETER("Parameters contain missing fields. Example: event to eat /from 2pm /to 4pm"),
+
+    ERROR_FILE_IO("Could not retrieve data file");
 
     private final String message;
 
