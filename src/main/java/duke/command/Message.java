@@ -1,3 +1,5 @@
+package duke.command;
+
 public class Message {
     public static final String HORIZONTAL_LINE = "____________________________________________________________";
 
