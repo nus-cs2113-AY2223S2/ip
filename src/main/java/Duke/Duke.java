@@ -1,5 +1,10 @@
 package Duke;
 
+import Duke.Exception.DukeException;
+import Duke.Exception.MarkIndexException;
+import Duke.Exception.NoTaskException;
+import Duke.Exception.TaskInfoException;
+
 import java.util.Scanner;
 
 public class Duke {
