@@ -3,3 +3,5 @@
 /Todo.class
 /Event.class
 /Deadline.class
+/ArgumentCannotBeNullException.class
+/PromptCannotBeEmptyException.class
