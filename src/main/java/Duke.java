@@ -1,5 +1,13 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import duke.models.Deadline;
 import duke.models.Event;
@@ -8,6 +16,7 @@ import duke.models.Remind;
 
 import duke.utils.Command;
 import duke.utils.Message;
+import duke.utils.RuntimeTypeAdapterFactory;
 
 import duke.exceptions.DukeException;
 
@@ -15,10 +24,17 @@ public class Duke {
     private static ArrayList<Item> items = new ArrayList<Item>(); // List of items
 
     public static void main(String[] args) {
+        try {
+            getFile();
+        } catch (Exception err) {
+            System.out.println(err.getMessage());
+            exitProgram();
+        }
+        
         printWelcomeMessage();
 
         Scanner in = new Scanner(System.in);
-        while (true) {
+        while (in.hasNextLine()) {
             String input = in.nextLine();
             System.out.println(Message.LINE);
 
@@ -50,6 +66,7 @@ public class Duke {
                     break;
                 case EXIT:
                     in.close();
+                    exportItems();
                     exitProgram();
                     break;
                 default:
@@ -260,6 +277,55 @@ public class Duke {
         System.out.println(Message.INFO_ITEM_DELETE);
         System.out.println(item);
         System.out.printf(Message.INFO_ITEM_COUNT.toString(), items.size());
+    }
+    
+    /**
+     * Check if the file exists and returns the File object. 
+     * 
+     */
+    private static void getFile() throws DukeException {
+        File file = new File("items.txt");
+        if (file.exists()) {
+            importItems(file);
+        }
+    }
+
+    /**
+     * Imports the file and put into the list
+     * 
+     * @param file File object that retrieves the file location
+     */
+    private static void importItems(File file) throws DukeException {
+        try(FileReader fileReader = new FileReader(file)) {
+            RuntimeTypeAdapterFactory<Item> itemAdapterFactory = RuntimeTypeAdapterFactory.of(Item.class, "type")
+                .registerSubtype(Remind.class)
+                .registerSubtype(Deadline.class)
+                .registerSubtype(Event.class);
+
+            Gson gson = new GsonBuilder().registerTypeAdapterFactory(itemAdapterFactory).create();
+            items = gson.fromJson(fileReader, new TypeToken<ArrayList<Item>>(){}.getType());
+            fileReader.close();
+        } catch (IOException err) {
+            throw new DukeException(Message.ERROR_FILE_IO.toString());
+        }
+    }
+
+    /**
+     * Exports the list into a file
+     * 
+     */
+    private static void exportItems() {
+        try {
+            Gson gson = new Gson();
+            FileWriter fw = new FileWriter("items.txt");
+            String jsonString = gson.toJson(items);
+            fw.write(jsonString);
+            fw.flush();
+            fw.close();
+            
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     /**

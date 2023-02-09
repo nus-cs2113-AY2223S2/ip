@@ -8,6 +8,7 @@ public class Event extends Item {
         super(description);
         this.from = from;
         this.to = to;
+        type = "Event";
     }
 
     @Override
