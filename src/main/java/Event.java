@@ -8,7 +8,12 @@ public class Event extends Task {
         this.endDate = endDate;
     }
 
-    static Event createEvent(String[] commandByWord) {
+    static Event createEvent(String[] commandByWord) throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
+
+        if (commandByWord.length < 2) {
+            throw new IllegalArgumentException();
+        }
+
         int index = 1;
         String taskToDo = "";
         String startDate = "";

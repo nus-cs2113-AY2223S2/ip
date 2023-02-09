@@ -6,7 +6,12 @@ public class Deadline extends Task {
         this.dueDate = dueDate;
     }
 
-    static Deadline createDeadline(String[] commandByWord) {
+    static Deadline createDeadline(String[] commandByWord) throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
+
+        if (commandByWord.length < 2) {
+            throw new IllegalArgumentException();
+        }
+
         int index = 1;
         String taskToDo = "";
         String dueDate = "";
