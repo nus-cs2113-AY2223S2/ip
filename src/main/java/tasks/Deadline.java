@@ -1,3 +1,7 @@
+package tasks;
+
+import dukeException.DukeException;
+
 public class Deadline extends Task {
 
     protected String by;

@@ -1,3 +1,7 @@
+package tasks;
+
+import dukeException.DukeException;
+
 public class Event extends Task {
 
     private String start;

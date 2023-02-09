@@ -1,5 +1,15 @@
+package duke;
+
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import tasks.Task;
+import tasks.Deadline;
+import tasks.Event;
+import tasks.Todo;
+
+import dukeException.DukeException;
+import dukeException.DukeIOBException;
 
 public class Duke {
 

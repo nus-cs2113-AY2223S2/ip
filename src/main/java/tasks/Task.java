@@ -1,3 +1,7 @@
+package tasks;
+
+import dukeException.DukeException;
+
 public class Task {
     private String description;
     private boolean isMark;
