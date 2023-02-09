@@ -23,6 +23,7 @@ public class Duke {
     private static final String COMMAND_ADD_TODO = "todo";
     private static final String COMMAND_ADD_DEADLINE = "deadline";
     private static final String COMMAND_ADD_EVENT = "event";
+    private static final String UNKNOWN_CMD_ERR_MSG = " WHOOPS! I'm sorry, but I don't know what that means :(";
 
     private static Task[] taskItems = new Task[MAX_ITEMS];
     private static int taskItemCount = 0;
@@ -31,12 +32,6 @@ public class Duke {
         String printAddItem = TOP_DIVIDER + ADD_TASK_ITEM_DESC + taskItems[taskItemCount]
                 + CUR_NO_OF_TASK_START_DESC + (taskItemCount + 1) + CUR_NO_OF_TASK_END_DESC + BOTTOM_DIVIDER;
         System.out.print(printAddItem);
-    }
-
-    public static void addDefaultTaskItems(String taskName) {
-        taskItems[taskItemCount] = new Task(taskName);
-        printAddTaskItems();
-        taskItemCount++;
     }
 
     public static void addDeadlineTaskItems(String taskName, String by) {
@@ -90,6 +85,11 @@ public class Duke {
         System.out.print(printExit);
     }
 
+    private static void printUnknownCmdErrMsg() {
+        String printErrMsg = TOP_DIVIDER + UNKNOWN_CMD_ERR_MSG + BOTTOM_DIVIDER;
+        System.out.print(printErrMsg);
+    }
+
     public static String getInput(Scanner in) {
         String line = in.nextLine();
         return line;
@@ -127,7 +127,7 @@ public class Duke {
             addTodoTaskItems(todoTaskName);
             break;
         default:
-            addDefaultTaskItems(input);
+            printUnknownCmdErrMsg();
             break;
         }
     }
