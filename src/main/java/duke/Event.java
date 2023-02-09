@@ -1,3 +1,5 @@
+package duke;
+
 public class Event extends Todo {
     protected String by;
     protected String end;

@@ -1,3 +1,5 @@
+package duke;
+
 public class EmptyLineException {
     static void validate(String str) throws DukeException {
         if (str.equals("")) {
