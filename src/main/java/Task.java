@@ -1,6 +1,6 @@
 public class Task {
-    public String startTime;
-    public String endTime;
+    protected String startTime;
+    protected String endTime;
     protected String taskName;
     protected boolean isCompleted;
 
@@ -10,50 +10,49 @@ public class Task {
 
 
 
-
     public Task(String description) {
         this.taskName = description;
         this.isCompleted = false;
         this.taskType = "T";
+
+
     }
 
 
-    public void setTaskName(String name){
+    public void setTaskName(String name) {
         this.taskName = name;
 
     }
-    public void setTaskType(Task type){
+
+    public void setAsTask() {
         this.taskType = "T";
     }
-    public String getTaskType (Task task){
+
+    public String getTaskType(Task task) {
         return this.taskType;
     }
 
-    public String getTaskName(){
+    public String getTaskName() {
         return taskName;
     }
 
-    public void setTaskProgress(boolean inputCommand){
+    public void setTaskProgress(boolean inputCommand) {
         this.isCompleted = inputCommand;
     }
 
-    public boolean getTaskProgress(){
+    public boolean getTaskProgress() {
         return this.isCompleted;
     }
 
 
-    public void printTask(){
-        if (this.isCompleted){
-            System.out.println( ".[T][X] " + this.taskName);
-        }else {
-            System.out.println( ".[T][ ] " + this.taskName);
+    public void printTask() {
+        if (this.isCompleted) {
+            System.out.println(".[T][X] " + this.taskName);
+        } else {
+            System.out.println(".[T][ ] " + this.taskName);
         }
 
     }
-
-
-
-
 
 
     public String getStatusIcon() {
@@ -67,7 +66,6 @@ public class Task {
     public void markAsNotDone() {
         this.isCompleted = false;
     }
-
 
 
 }

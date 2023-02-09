@@ -1,6 +1,6 @@
 public class Deadline extends Task {
 
-    private String endTime;
+    protected String endTime;
 
     public void setEndTime(String endTime) {
         this.endTime = endTime;
@@ -30,8 +30,8 @@ public class Deadline extends Task {
         }
 
     }
-    @Override
-    public void setTaskType(Task type){
+
+    public void setAsDeadline(){
         this.taskType = "D";
     }
     @Override

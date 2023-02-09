@@ -1,5 +1,5 @@
 public class Event extends Deadline {
-    private String startTime;
+    protected String startTime;
 
 
     public void setStartTime(String startTime) {
@@ -30,8 +30,8 @@ public class Event extends Deadline {
             System.out.println(".[E][ ]" + this.taskName + "(from: " + this.getStartTime() + " to: " + this.getEndTime() + ")");
         }
     }
-    @Override
-    public void setTaskType(Task type){
+
+    public void setAsEvent(){
         this.taskType = "E";
     }
     @Override
