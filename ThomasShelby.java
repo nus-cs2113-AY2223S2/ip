@@ -58,6 +58,14 @@ public class ThomasShelby {
         System.out.println(taskManager[whichTask]);
     }
 
+    private static void deleteTask(String[] cmdSplit) {
+        int whichTask;
+        whichTask = Integer.parseInt(cmdSplit[1]) - 1; // shift back index
+        taskManager[whichTask].setIsDone(false);
+        System.out.println("You've gotten lazy.");
+        System.out.println(taskManager[whichTask]);
+    }
+
     public static void main(String[] args) throws IncompleteTaskException {
         System.out.print("Good day, I'm Thomas Shelby.\nTo what do I owe the pleasure?\n");
         Scanner in = new Scanner(System.in);
@@ -87,6 +95,9 @@ public class ThomasShelby {
                     break;
                 case "unmark":
                     unmarkTask(cmdSplit);
+                    break;
+                case "delete":
+                    deleteTask(cmdSplit);
                     break;
                 default:
                     throw new Exception();
