@@ -1,5 +1,3 @@
-package exception;
-
 public enum ErrorMessage {
     INVALID_COMMAND("I am sorry, I do not understand what this command means"),
     MISSING_TODO_PARAMETER("I am sorry, you are missing something"),

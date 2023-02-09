@@ -1,5 +1,3 @@
-package tasks;
-
 public class Event extends Task {
     private String dateTime;
     private String startTime;
