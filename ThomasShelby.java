@@ -58,7 +58,7 @@ public class ThomasShelby {
         System.out.println(taskManager[whichTask]);
     }
 
-    public static void main(String[] args) throws IncompleteTaskException {
+    public static void main(String[] args) {
         System.out.print("Good day, I'm Thomas Shelby.\nTo what do I owe the pleasure?\n");
         Scanner in = new Scanner(System.in);
         while (true) {
