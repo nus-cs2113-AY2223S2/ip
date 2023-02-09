@@ -3,25 +3,32 @@ import java.util.Scanner;
 public class IPChat {
     public static void main(String[] args) {
 
-        // Level 2: Add, List
+        // Level 3: Mark as done
         System.out.println("Hello I'm IPChat, What can I do for you");
         System.out.println("------------------------------------------");
 
-        String[] items = new String [100]; // array to store the items in the list
         Scanner input =  new Scanner(System.in);
         String statement = input.nextLine();
-        int count = 0;
+        Task[] tasks = new Task [100];
+        int tasks_count = 0;
 
         while(!statement.equals("bye")) {
             System.out.println("------------------------------------------");
             if (statement.equals("list")) {
-                for (int i = 0; i < count; i += 1) {
-                    System.out.println((i + 1) + ". " + items[i]);
+                System.out.println("Here is the list of tasks for the day! All the best :) \n");
+                for (int i = 0; i < tasks_count; i += 1) {
+                    System.out.println((i + 1) + "." +"[" + tasks[i].getStatusIcon() + "] " + tasks[i].getDescription());
                 }
                 System.out.println("------------------------------------------");
+            } else if (statement.contains("mark")) {
+                System.out.println("I have marked the task as done");
+                int index = Integer.parseInt(statement.substring(statement.length()-1)) - 1;
+                tasks[index].markAsDone();
+                System.out.println("------------------------------------------");
             } else {
-                items[count] = statement;
-                count += 1;
+                tasks[tasks_count] = new Task(statement);
+                tasks_count += 1;
+                System.out.println("Adding new tasks to the list");
                 System.out.println("added: " + statement);
                 System.out.println("------------------------------------------");
             }
