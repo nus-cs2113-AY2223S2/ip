@@ -23,6 +23,15 @@ public class Duke {
     private static final String COMMAND_ADD_TODO = "todo";
     private static final String COMMAND_ADD_DEADLINE = "deadline";
     private static final String COMMAND_ADD_EVENT = "event";
+    private static final String UNKNOWN_CMD_ERR = " WHOOPS! I'm sorry, but I don't know what that means :(";
+    private static final String EMPTY_TODO_DESC_ERR = " WHOOPS! The description of a todo cannot be empty.";
+    private static final String EMPTY_DEADLINE_DESC_ERR =
+            " WHOOPS! The description/date/time of a deadline cannot be \n empty.";
+    private static final String EMPTY_EVENT_DESC_ERR =
+            " WHOOPS! The description/dates/times of an event cannot be \n empty.";
+    private static final String EMPTY_MARK_NO_ERR = " WHOOPS! Task number cannot be empty.";
+    private static final String WRONG_MARK_NO_FORMAT_ERR = " WHOOPS! Task number must be an integer.";
+    private static final String MARK_NO_OUT_OF_RANGE_ERR = " WHOOPS! There is no such task number.";
 
     private static Task[] taskItems = new Task[MAX_ITEMS];
     private static int taskItemCount = 0;
@@ -31,12 +40,6 @@ public class Duke {
         String printAddItem = TOP_DIVIDER + ADD_TASK_ITEM_DESC + taskItems[taskItemCount]
                 + CUR_NO_OF_TASK_START_DESC + (taskItemCount + 1) + CUR_NO_OF_TASK_END_DESC + BOTTOM_DIVIDER;
         System.out.print(printAddItem);
-    }
-
-    public static void addDefaultTaskItems(String taskName) {
-        taskItems[taskItemCount] = new Task(taskName);
-        printAddTaskItems();
-        taskItemCount++;
     }
 
     public static void addDeadlineTaskItems(String taskName, String by) {
@@ -90,12 +93,55 @@ public class Duke {
         System.out.print(printExit);
     }
 
+    public static void printUnknownCmdErr() {
+        String printErrMsg = TOP_DIVIDER + UNKNOWN_CMD_ERR + BOTTOM_DIVIDER;
+        System.out.print(printErrMsg);
+    }
+
+    public static void printEmptyTodoDescErr() {
+        String printErrMsg = TOP_DIVIDER + EMPTY_TODO_DESC_ERR + BOTTOM_DIVIDER;
+        System.out.println(printErrMsg);
+    }
+
+    public static void printEmptyDeadlineDescErr() {
+        String printErrMsg = TOP_DIVIDER + EMPTY_DEADLINE_DESC_ERR + BOTTOM_DIVIDER;
+        System.out.println(printErrMsg);
+    }
+
+    public static void printEmptyEventDescErr() {
+        String printErrMsg = TOP_DIVIDER + EMPTY_EVENT_DESC_ERR + BOTTOM_DIVIDER;
+        System.out.println(printErrMsg);
+    }
+
+    public static void printEmptyMarkNoErr() {
+        String printErrMsg = TOP_DIVIDER + EMPTY_MARK_NO_ERR + BOTTOM_DIVIDER;
+        System.out.println(printErrMsg);
+    }
+
+    public static void printWrongMarkNoFormatErr() {
+        String printErrMsg = TOP_DIVIDER + WRONG_MARK_NO_FORMAT_ERR + BOTTOM_DIVIDER;
+        System.out.println(printErrMsg);
+    }
+
+    public static void printMarkNoOutOfRangeErr() {
+        String printErrMsg = TOP_DIVIDER + MARK_NO_OUT_OF_RANGE_ERR + BOTTOM_DIVIDER;
+        System.out.println(printErrMsg);
+    }
+
     public static String getInput(Scanner in) {
         String line = in.nextLine();
         return line;
     }
 
-    public static void processInput(String input) {
+    public static void handleInput(String input) {
+        try {
+            processInput(input);
+        } catch (UnknownCommandException e) {
+            printUnknownCmdErr();
+        }
+    }
+
+    public static void processInput(String input) throws UnknownCommandException {
         String[] words = input.split(" ", 2);
         String command = words[0];
 
@@ -105,30 +151,49 @@ public class Duke {
             break;
         case COMMAND_MARK_TASK:
         case COMMAND_UNMARK_TASK:
-            int taskItemNo = Integer.parseInt(words[1]) - 1;
-            markTaskItems(taskItemNo, command);
+            try {
+                int taskItemNo = Integer.parseInt(words[1]) - 1;
+                markTaskItems(taskItemNo, command);
+            } catch (IndexOutOfBoundsException e) {
+                printEmptyMarkNoErr();
+            } catch (NullPointerException e) {
+                printMarkNoOutOfRangeErr();
+            } catch (NumberFormatException e) {
+                printWrongMarkNoFormatErr();
+            }
             break;
         case COMMAND_ADD_DEADLINE:
-            words = words[1].split(" /by ");
-            String deadlineTaskName = words[0];
-            String by = words[1];
-            addDeadlineTaskItems(deadlineTaskName, by);
+            try {
+                words = words[1].split(" /by ");
+                String deadlineTaskName = words[0];
+                String by = words[1];
+                addDeadlineTaskItems(deadlineTaskName, by);
+            } catch (IndexOutOfBoundsException e) {
+                printEmptyDeadlineDescErr();
+            }
             break;
         case COMMAND_ADD_EVENT:
-            words = words[1].split(" /from ");
-            String eventTaskName = words[0];
-            words = words[1].split(" /to ");
-            String from = words[0];
-            String to = words[1];
-            addEventTaskItems(eventTaskName, from, to);
+            try {
+                words = words[1].split(" /from ");
+                String eventTaskName = words[0];
+                words = words[1].split(" /to ");
+                String from = words[0];
+                String to = words[1];
+                addEventTaskItems(eventTaskName, from, to);
+            } catch (IndexOutOfBoundsException e) {
+                printEmptyEventDescErr();
+            }
             break;
         case COMMAND_ADD_TODO:
-            String todoTaskName = words[1];
-            addTodoTaskItems(todoTaskName);
+            try {
+                String todoTaskName = words[1];
+                addTodoTaskItems(todoTaskName);
+            } catch (IndexOutOfBoundsException e) {
+                printEmptyTodoDescErr();
+            }
             break;
         default:
-            addDefaultTaskItems(input);
-            break;
+            throw new UnknownCommandException();
         }
     }
 
@@ -143,7 +208,7 @@ public class Duke {
                 printExitMessage();
                 break;
             } else {
-                processInput(input);
+                handleInput(input);
             }
         }
     }

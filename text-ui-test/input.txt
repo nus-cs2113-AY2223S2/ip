@@ -13,7 +13,6 @@ list
 mark 7
 list
 buy bread
-mark 8
 list
 unmark 7
 list
