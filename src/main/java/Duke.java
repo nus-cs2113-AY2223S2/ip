@@ -87,6 +87,7 @@ public class Duke {
 
     public static void main(String[] args) {
         Task[] tasks = new Task[100];
+        Print.printGreet();
 
         Scanner in = new Scanner(System.in);
         int cnt = 0;
@@ -122,5 +123,6 @@ public class Duke {
             }
         }
         in.close();
+        Print.printBye();
     }
 }

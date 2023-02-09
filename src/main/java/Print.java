@@ -30,4 +30,15 @@ public class Print {
         printUnderline();
         System.out.println(unmark);
     }
+    public static void printGreet(){
+        printUnderline();
+        System.out.println("\t Hello! I'm onandon");
+        System.out.println("\t What can I do for you?");
+        printUnderline();
+    }
+    public static void printBye(){
+        printUnderline();
+        System.out.println("\t Bye. Hope to see you again soon!");
+        printUnderline();
+    }
 }
