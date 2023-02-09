@@ -34,7 +34,27 @@ public class Duke {
         System.out.print("   "); System.out.println(print);
         System.out.println("Now you have " + Integer.toString(taskCounter) + " task in the list");
     }
-    private static void readInput() {
+    public static String parseInput(String[] inputs) throws IllegalInputException {
+        String todoInput = "";
+        if (inputs.length < 2) throw new IllegalInputException();
+        for (int i = 1; i < inputs.length; i ++) {
+            todoInput += inputs[i];
+            todoInput += " ";
+        }
+        return todoInput;
+    }
+    public static void inputTodo(String[] inputs, int taskCounter) {
+        try {
+            String todoInput = parseInput(inputs);
+            Todo todo = new Todo(todoInput);
+            tasks[taskCounter] = todo;
+            taskCounter += 1;
+            printAddTodo(todo, taskCounter);
+        } catch(IndexOutOfBoundsException | IllegalInputException e) {
+            System.out.println(" ☹ OOPS!!! The description of a todo cannot be empty.");
+        }
+    }
+    private static boolean readInput() throws IllegalInputException {
         Scanner sc = new Scanner(System.in);
         String input = "";
         input = sc.nextLine();
@@ -65,14 +85,7 @@ public class Duke {
                 printList(taskCounter);
                 break;
             case "todo":
-                String todoInput = "";
-                for (int i = 1; i < inputs.length; i ++) {
-                    todoInput += inputs[i];
-                    todoInput += " ";
-                }
-                Todo todo = new Todo(todoInput);
-                tasks[taskCounter] = todo; taskCounter += 1;
-                printAddTodo(todo, taskCounter);
+                inputTodo(inputs, taskCounter);
                 break;
             case "deadline":
                 String deadlineInput = "";
@@ -127,21 +140,27 @@ public class Duke {
                 printAddEvent(event, taskCounter);
                 break;
             default:
-                Task t = new Task(input);
-                tasks[taskCounter] = t; taskCounter += 1;
-                System.out.println("added: " + input);
-                break;
+                throw new IllegalInputException();
             }
 
             printLine();
 
             input = sc.nextLine();
         }
-
+        return true;
     }
     public static void main(String[] args) {
         printWelcomeMessage();
-        readInput();
+        boolean isBye = false;
+        while (!isBye) {
+            try {
+                isBye = readInput();
+            } catch (Exception e) {
+                System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+                printLine();
+            }
+        }
+
         // Print end text line
         printLine();
     }
