@@ -15,12 +15,12 @@ public class Task {
         return isDone;
     }
 
-    public void setDone(boolean isDone){
+    public void setDone(boolean isDone) {
         this.isDone = isDone;
     }
 
-    @Override
-    public String toString() {                      // overrides --> print task prints this!
+    @Override   // overrides --> print task prints this!
+    public String toString() {
         return "[" + this.getStatusIcon() + "] " + this.description;
     }
 }
