@@ -1,6 +1,7 @@
 package wilsonoh.sagyo.tasklist;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 
 import wilsonoh.sagyo.exceptions.InvalidTaskException;
@@ -56,5 +57,12 @@ public class TaskList implements Iterable<Task> {
             idx++;
         }
         return taskStrings;
+    }
+
+    public String[] getFilteredTasksString(String filter) {
+        String[] tasksString = getTasksString();
+        return Arrays.stream(tasksString)
+            .filter(s -> s.toLowerCase().contains(filter.toLowerCase()))
+            .toArray(String[] ::new);
     }
 }
