@@ -29,7 +29,7 @@ public class TodoList {
         }
     }
 
-    public int markItem(int num, boolean mark){
+    public int markItem(int num, boolean mark) throws DukeException{
         if(num < listnum && num >= 0){
             // marks[num] = mark;
             tasks[num].mark(mark);
@@ -47,8 +47,7 @@ public class TodoList {
             System.out.println();
             return 1;
         }else{
-            Duke.printError("Wrong index");
-            return 0;
+            throw new DukeException("Index out of bound!");
         }
     }
 

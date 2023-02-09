@@ -2,15 +2,16 @@ import java.util.Scanner;
 
 public class Duke {
 
+    private static TodoList todoList = new TodoList();
+
     public static void printError(String errMsg){
         String printContent = "    ____________________________________________________________\n"
-        + "     " + "ERROR: " + errMsg + "!\n"
+        + "     " + errMsg + "\n"
         + "    ____________________________________________________________\n";
         System.out.println(printContent);
     }
 
-    public static void doCommand(String line, String command, String cmdContent, int cmdIdx){
-        TodoList todoList = new TodoList();
+    public static void doCommand(String line, String command, String cmdContent, int cmdIdx) throws DukeException{
         if(line.equals("list")){
             // show to-do list
             todoList.showList();
@@ -19,8 +20,8 @@ public class Duke {
             int index;
             try {                        
                 index = Integer.parseInt(line.substring(cmdIdx+1, line.length())) - 1;
-            } catch (Exception e) {
-                index = -1;
+            } catch (NumberFormatException e) {
+                throw new DukeException("Wrong number format: " + line.substring(cmdIdx+1, line.length()));
             }
             todoList.markItem(index, true);
         }else if(command.equals("unmark")){
@@ -28,35 +29,22 @@ public class Duke {
             int index;
             try {                        
                 index = Integer.parseInt(line.substring(cmdIdx+1, line.length())) - 1;
-            } catch (Exception e) {
-                index = -1;
+            } catch (NumberFormatException e) {
+                throw new DukeException("Wrong number format: " + line.substring(cmdIdx+1, line.length()));
             }
             todoList.markItem(index, false);
         }else if(command.equals("todo")){
             Todo todo = Todo.toTodo(cmdContent);
-            if(todo == null){
-                printError("Wrong todo format");
-                return;
-            }
             todoList.addItem(todo);
         }else if(command.equals("deadline")){
             Deadline deadline = Deadline.toDeadline(cmdContent);
-            if(deadline == null){
-                printError("Wrong deadline format");
-                return;
-            }
             todoList.addItem(deadline);
         }else if(command.equals("event")){
             Event event = Event.toEvent(cmdContent);
-            if(event == null){
-                printError("Wrong event format");
-                return;
-            }
-            todoList.addItem(Event.toEvent(cmdContent));
+            todoList.addItem(event);
         }else{
-            // add item to to-do list
-            Task todo = new Todo(line);
-            todoList.addItem(todo);
+            // invalid command
+            throw new DukeException("I'm sorry, but I don't know what that means :-(");
         }
     }
 
@@ -97,7 +85,11 @@ public class Duke {
                 }
 
                 // do commands
-                doCommand(line, command, cmdContent, cmdIdx);
+                try{
+                    doCommand(line, command, cmdContent, cmdIdx);
+                }catch(DukeException e){
+                    printError(e.getMessage());
+                }
             }
         }
         in.close();
