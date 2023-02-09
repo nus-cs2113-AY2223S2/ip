@@ -3,7 +3,7 @@ public class Task {
 
     private static final String LINE = "____________________________________________________________";
     private static final String BLANK = "    ";
-    private final String taskName;
+    protected String taskName;
     protected boolean isDone;
     protected int taskNumber;
 
@@ -11,10 +11,6 @@ public class Task {
         this.taskName = taskName;
         this.isDone = false;
         this.taskNumber = taskNumber;
-    }
-
-    public boolean getIsDone() {
-        return isDone;
     }
     public void setDone() {
         isDone = true;
@@ -27,8 +23,8 @@ public class Task {
     }
 
     public void printTaskType() {
-        System.out.print("T");
-    }
+
+    };
     public void printTask() {
         System.out.print("[");
         printTaskType();

@@ -25,24 +25,11 @@ public class Duke {
             //mark/unmark command
             case "mark":
             case "unmark":
-                int indexToChange = Integer.parseInt(command[1]) - 1;
-                //Check for error
-                if (!(indexToChange < numberOfTasks)) {
-                    System.out.println("Error");
-                    continue;
-                }
-                if (command[0].equals("mark")) {
-                    tasks[indexToChange].setDone();
-                    tasks[indexToChange].printMarkedTask();
-                } else {
-                    tasks[indexToChange].setNotDone();
-                    tasks[indexToChange].printUnmarkedTask();
-                }
-            break;
+                doMarkOrUnmarked(tasks, numberOfTasks, command);
+                break;
             //add task to list
             case "todo":
-                tasks[numberOfTasks] = new Task(command[1], numberOfTasks + 1);
-                tasks[numberOfTasks].printAddTask();
+                addTodo(tasks, numberOfTasks, command);
                 numberOfTasks += 1;
                 break;
 
@@ -51,9 +38,7 @@ public class Duke {
                     System.out.println("Error: Use /by");
                     break;
                 }
-                String[] deadLineInputs = command[1].split("/by", 2);
-                tasks[numberOfTasks] = new Deadline(deadLineInputs[0], numberOfTasks + 1, deadLineInputs[1]);
-                tasks[numberOfTasks].printAddTask();
+                addDeadline(tasks, numberOfTasks, command);
                 numberOfTasks += 1;
                 break;
 
@@ -62,12 +47,43 @@ public class Duke {
                     System.out.println("Error: Use /from and /to");
                     break;
                 }
-                String eventInputs[] = command[1].split("/from|/to");
-                tasks[numberOfTasks] = new Event(eventInputs[0], numberOfTasks + 1, eventInputs[1], eventInputs[2]);
-                tasks[numberOfTasks].printAddTask();
+                addEvent(tasks, numberOfTasks, command);
                 numberOfTasks += 1;
                 break;
             }
+        }
+    }
+
+    private static void addEvent(Task[] tasks, int numberOfTasks, String[] command) {
+        String[] eventInputs = command[1].split("/from|/to");
+        tasks[numberOfTasks] = new Event(eventInputs[0], numberOfTasks + 1, eventInputs[1], eventInputs[2]);
+        tasks[numberOfTasks].printAddTask();
+    }
+
+    private static void addTodo(Task[] tasks, int numberOfTasks, String[] command) {
+        tasks[numberOfTasks] = new Todo(command[1], numberOfTasks + 1);
+        tasks[numberOfTasks].printAddTask();
+    }
+
+    private static void addDeadline(Task[] tasks, int numberOfTasks, String[] command) {
+        String[] deadLineInputs = command[1].split("/by", 2);
+        tasks[numberOfTasks] = new Deadline(deadLineInputs[0], numberOfTasks + 1, deadLineInputs[1]);
+        tasks[numberOfTasks].printAddTask();
+    }
+
+    private static void doMarkOrUnmarked(Task[] tasks, int numberOfTasks, String[] command) {
+        int indexToChange = Integer.parseInt(command[1]) - 1;
+        //Check for error
+        if (!(indexToChange < numberOfTasks)) {
+            System.out.println("Error");
+            return;
+        }
+        if (command[0].equals("mark")) {
+            tasks[indexToChange].setDone();
+            tasks[indexToChange].printMarkedTask();
+        } else {
+            tasks[indexToChange].setNotDone();
+            tasks[indexToChange].printUnmarkedTask();
         }
     }
 
