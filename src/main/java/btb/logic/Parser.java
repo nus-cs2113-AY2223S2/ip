@@ -21,8 +21,18 @@ public class Parser {
      * @return string array consisting of the split inputs
      */
     public static String[] handleDeadline(String description) {
-        String[] splitStrings = description.split("/", 2);
+        String[] splitStrings;
+
+        splitStrings = description.split("/", 2);
         splitStrings[1] = splitStrings[1].substring(3);
+//        try {
+//            splitStrings = description.split("/", 2);
+//            splitStrings[1] = splitStrings[1].substring(3);
+//        } catch (ArrayIndexOutOfBoundsException e) {
+//            throw new ArrayIndexOutOfBoundsException();
+//        } catch (StringIndexOutOfBoundsException e) {
+//            throw new StringIndexOutOfBoundsException();
+//        }
 
         return splitStrings;
     }

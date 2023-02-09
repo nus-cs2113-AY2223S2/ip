@@ -1,6 +1,6 @@
 package btb.tasks;
 
-import btb.constants.Constant;
+import btb.exceptions.EmptyTaskNumberException;
 
 import java.util.ArrayList;
 
@@ -12,7 +12,7 @@ public class TaskManager {
      */
     public void printNumberOfTasks() {
         int numberOfTasks = tasks.size();
-        System.out.println(Constant.TAB_SPACE + "Now you have " + numberOfTasks +
+        System.out.println("\t Now you have " + numberOfTasks +
                 " tasks in the list.");
     }
 
@@ -22,9 +22,13 @@ public class TaskManager {
      * @param task the task that we want to add to the list
      */
     public void addTask(Task task, String command) {
-        tasks.add(task);
-        printAcknowledgeCommand(task, command);
-        printNumberOfTasks();
+        if (task.description.equals("")) {
+            System.out.println("\t ☹ OOPS!!! The description of a task cannot be empty.");
+        } else {
+            tasks.add(task);
+            printAcknowledgeCommand(task, command);
+            printNumberOfTasks();
+        }
     }
 
     /**
@@ -39,32 +43,35 @@ public class TaskManager {
         case "todo":
         case "deadline":
         case "event":
-            System.out.println(Constant.TAB_SPACE +
-                    "Got it. I've added this task:");
+            System.out.println("\t Got it. I've added this task:");
             break;
         case "mark":
-            System.out.println(Constant.TAB_SPACE +
-                    "Great! I've marked this task as done:");
+            System.out.println("\t Great! I've marked this task as done:");
             break;
         case "unmark":
-            System.out.println(Constant.TAB_SPACE +
-                    "OK, I've marked this task as not done yet:");
+            System.out.println("\t OK, I've marked this task as not done yet:");
             break;
         }
 
-        System.out.println(Constant.TAB_SPACE + Constant.TAB_SPACE + task);
+//        System.out.println(Constant.TAB_SPACE + Constant.TAB_SPACE + task);
+        System.out.printf("\t\t%s\n", task);
     }
 
     /**
      * Lists the tasks in the tasks list.
      */
     public void listTasks() {
-        System.out.println(Constant.TAB_SPACE +
-                "Here are the tasks in your list:");
+        if (tasks.size() == 0) {
+            System.out.println("\t You currently don't have any task added.\n" +
+                    "\t Please add some tasks.");
+            return;
+        }
+
+        System.out.println("\t Here are the tasks in your list:");
+
         int index = 1;
         for (Task task : tasks) {
-            System.out.printf(Constant.TAB_SPACE + Constant.TAB_SPACE +
-                    "%d.%s\n", index, task);
+            System.out.printf("\t\t%d.%s\n", index, task);
             index++;
         }
     }
@@ -73,23 +80,53 @@ public class TaskManager {
      * marks the task indicated by the
      * taskNumber as done.
      *
-     * @param taskNumber the task number that we want to mark as completed
+     * @param description the task number that we want to mark as completed
      */
-    public void markTask(int taskNumber) {
-        Task task = tasks.get(taskNumber - 1);
-        task.setDone(true);
-        printAcknowledgeCommand(task, "mark");
+    public void markTask(String description) {
+        try {
+            if (description.equals("")) {
+                throw new EmptyTaskNumberException();
+            }
+
+            int taskNumber = Integer.parseInt(description);
+            Task task = tasks.get(taskNumber - 1);
+            task.setDone(true);
+            printAcknowledgeCommand(task, "mark");
+        } catch (EmptyTaskNumberException e) {
+            System.out.println(e.getMessage());
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("\t Invalid task number(►__◄).\n" +
+                    "\t Please try again!");
+        }catch (NumberFormatException e) {
+            System.out.println("\t Please enter an integer task number ╰（‵□′）╯.");
+        }
+
     }
 
     /**
      * marks the task indicate by
      * task as not done.
      *
-     * @param taskNumber the task number that we want to mark as incomplete again.
+     * @param description the task number that we want to mark as incomplete again.
      */
-    public void unmarkTask(int taskNumber) {
-        Task task = tasks.get(taskNumber - 1);
-        task.setDone(false);
-        printAcknowledgeCommand(task, "unmark");
+    public void unmarkTask(String description) {
+        try {
+            if (description.equals("")) {
+                throw new EmptyTaskNumberException();
+            }
+
+            int taskNumber = Integer.parseInt(description);
+            Task task = tasks.get(taskNumber - 1);
+            task.setDone(false);
+            printAcknowledgeCommand(task, "unmark");
+
+        } catch (EmptyTaskNumberException e) {
+            System.out.println(e.getMessage());
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("\t Invalid task number(►__◄).\n" +
+                    "\t Please try again!");
+        }catch (NumberFormatException e) {
+            System.out.println("\t Please enter an integer task number ╰（‵□′）╯.");
+        }
     }
 }

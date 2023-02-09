@@ -4,7 +4,6 @@ public abstract class Constant {
 
     // declaration of final variables
     public static final String DOTTED_LINE = "    --------------------------------------------------";
-    public static final String TAB_SPACE = "     ";
 
     public static final String LOGO = "        ___     _       ___\n" +
             "       | _ )   | |_    | _ )\n" +

@@ -4,6 +4,7 @@ import btb.constants.Constant;
 import btb.logic.Logic;
 import btb.tasks.TaskManager;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public abstract class UI {
@@ -18,10 +19,8 @@ public abstract class UI {
      * greets the user.
      */
     public static void greetUser() {
-        System.out.println(Constant.TAB_SPACE +
-                "Hello! I'm Bob the Bot, aka BtB.");
-        System.out.println(Constant.TAB_SPACE +
-                "Please enter some tasks in the todo list.");
+        System.out.println("\t Hello! I'm Bob the Bot, aka BtB.");
+        System.out.println("\t Please enter some tasks in the todo list.");
     }
 
     /**
@@ -49,16 +48,21 @@ public abstract class UI {
         boolean isRepeat = true;
 
         do {
-            userInput = scanner.nextLine().trim();
+            try {
+                userInput = scanner.nextLine().trim();
 
-            if (userInput.equals("bye")) {
-                isRepeat = false;
-                continue;
+                if (userInput.equals("bye")) {
+                    isRepeat = false;
+                    continue;
+                }
+
+                System.out.println(Constant.DOTTED_LINE);
+                Logic.runCommand(tasks, userInput);
+                System.out.println(Constant.DOTTED_LINE);
+            } catch (NoSuchElementException e) {
+                System.out.println("\t Invalid input ┻ ︵ヽ(`Д´)ﾉ︵ ┻. Please try again!");
+                break;
             }
-
-            System.out.println(Constant.DOTTED_LINE);
-            Logic.runCommand(tasks, userInput);
-            System.out.println(Constant.DOTTED_LINE);
         } while (isRepeat);
     }
 
