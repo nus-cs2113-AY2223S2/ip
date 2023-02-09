@@ -1,3 +1,7 @@
+package Alex.manager;
+
+import Alex.task.Task;
+
 public class TaskManager {
     private Task[] allTasks = new Task[100];
     private boolean isExit = false;
