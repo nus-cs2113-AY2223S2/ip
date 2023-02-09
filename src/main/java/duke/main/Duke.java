@@ -3,6 +3,8 @@ package duke.main;
 import duke.commands.Ui;
 import duke.tasks.TaskList;
 
+import java.io.File;
+
 public class Duke {
 
     public static void main(String[] args) {

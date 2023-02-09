@@ -27,14 +27,21 @@ public class Task {
     }
 
     /**
-     * Getters for indexCount
+     * Getters for indexCount.
      *
-     * @return indexCount
+     * @return Current index count of a
      */
     public static int getIndexCount(){
        return indexCount;
     }
 
+    /**
+     * Getters for Task type
+     * @return a String representing the type of the task
+     */
+    public String getType(){
+        return this.type;
+    }
 
     @Override
     public String toString(){

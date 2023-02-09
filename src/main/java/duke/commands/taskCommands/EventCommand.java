@@ -2,11 +2,10 @@ package duke.commands.taskCommands;
 
 import duke.commands.Command;
 import duke.exceptions.InvalidTaskException;
-import duke.tasks.Events;
+import duke.tasks.Event;
 import duke.tasks.Task;
 import duke.tasks.TaskList;
 import duke.tasks.ToDo;
-import static duke.constants.Constants.LINEBREAK;
 
 public class EventCommand extends Command {
 
@@ -35,7 +34,7 @@ public class EventCommand extends Command {
                 throw new InvalidTaskException();
             }
 
-            ToDo newDeadline = new Events(description, from, to);
+            ToDo newDeadline = new Event(description, from, to);
             taskList.addTask(indexCount, newDeadline);
 
         } catch (InvalidTaskException e) {
