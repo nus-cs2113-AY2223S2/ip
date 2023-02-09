@@ -4,42 +4,58 @@ public class Duke {
     private static int taskNum = 0;
     public static void main(String[] args) {
         showGreetings();
+
         String command = "";
         Scanner in = new Scanner(System.in);
+        Task[] storedTasks = new Task[LIST_SIZE];         // array of stored tasks
 
-        Task[] storedTasks = new Task[LIST_SIZE];         // array of stored texts
         while (!command.equals("bye")) {
             printLineBreak();
             command = in.nextLine();
             String[] commandLine = command.split(" ", 2);
-
             printLineBreak();
-
-            switch (commandLine[0]) {
-            case "todo":
-                addTodoTask(storedTasks, commandLine);
-                break;
-            case "deadline":
-                addDeadlineTask(storedTasks, commandLine);
-                break;
-            case "event":
-                addEventTask(storedTasks, commandLine);
-                break;
-            case "mark":
-                markTask(storedTasks, commandLine);
-                break;
-            case "unmark":
-                unmarkTask(storedTasks, commandLine);
-                break;
-            case "list":
-                listTasks(storedTasks);
-                break;
-            }
+            doCommand(storedTasks, commandLine);
 
         }
 
-        System.out.println("Bye. Hope to see you again soon!");
 
+
+    }
+
+    private static void doCommand(Task[] storedTasks, String[] commandLine) {
+        switch (commandLine[0]) {
+        case "todo":
+            addTodoTask(storedTasks, commandLine);
+            break;
+        case "deadline":
+            addDeadlineTask(storedTasks, commandLine);
+            break;
+        case "event":
+            addEventTask(storedTasks, commandLine);
+            break;
+        case "mark":
+            markTask(storedTasks, commandLine);
+            break;
+        case "unmark":
+            unmarkTask(storedTasks, commandLine);
+            break;
+        case "list":
+            listTasks(storedTasks);
+            break;
+        case "bye":
+            System.out.println("Bye. Hope to see you again soon!");
+            break;
+        default:
+            try {
+                throwErrorInput();
+            } catch (IllegalDukeArgumentException e) {
+                System.out.println("Oh no! I don't understand what you are saying.");
+            }
+        }
+    }
+
+    private static void throwErrorInput() throws IllegalDukeArgumentException {
+        throw new IllegalDukeArgumentException();
     }
 
     private static void listTasks(Task[] storedTasks) {
@@ -79,12 +95,24 @@ public class Duke {
     }
 
     private static void addTodoTask(Task[] storedTasks, String[] commandLine) {
+        try {
+            validateTodo(commandLine);
+        } catch (IllegalDukeArgumentException e) {
+            System.out.println("Oh no! The description of a todo cannot be empty.");
+            return;
+        }
         Todo td = new Todo(commandLine[1]);
         storedTasks[taskNum] = td;
         addTaskMessage();
         System.out.println("  " + td.getTypeIcon() + td.getStatusIcon() + " " + td.getDescription());
         taskNum++;
         displayTasksNum();
+    }
+
+    private static void validateTodo(String[] commandLine) throws IllegalDukeArgumentException{
+        if (commandLine.length == 1) {
+            throw new IllegalDukeArgumentException();
+        }
     }
 
     private static void addDeadlineTask(Task[] storedTasks, String[] commandLine) {
