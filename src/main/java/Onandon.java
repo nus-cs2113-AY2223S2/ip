@@ -1,7 +1,7 @@
 
 import java.util.Scanner;
 
-public class Duke {
+public class Onandon {
 
     public static int printTodoAction(String inputText, Task[] tasks, int cnt){
         String description;
@@ -85,6 +85,35 @@ public class Duke {
         Print.printUnderline();
     }
 
+    public static void checkException(String inputText) throws OnandonEmptyException, OnandonUnknownException{
+        String tgt = inputText.split(" ")[0];
+        Boolean isNotTodo = !tgt.equals("todo");
+        Boolean isNotDeadline = !tgt.equals("deadline");
+        Boolean isNotEvent = !tgt.equals("event");
+        Boolean isNotMark = !tgt.equals("mark");
+        Boolean isNotUnmark = !tgt.equals("unmark");
+
+        if(inputText.length() == 0){
+            throw new OnandonEmptyException();
+        } else if(isNotTodo && isNotDeadline && isNotEvent && isNotMark && isNotUnmark){
+            throw new OnandonUnknownException();
+        }
+    }
+
+    public static void printException(String inputText){
+        try{
+           checkException(inputText);
+        } catch (OnandonEmptyException e){
+            Print.printUnderline();
+            System.out.println("\t ☹ OOPS!!! The description of a todo cannot be empty.");
+            Print.printUnderline();
+        } catch (OnandonUnknownException e){
+            Print.printUnderline();
+            System.out.println("\t ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+            Print.printUnderline();
+        }
+    }
+
     public static void main(String[] args) {
         Task[] tasks = new Task[100];
 
@@ -95,9 +124,10 @@ public class Duke {
 
         while(true){
             inputText = in.nextLine();
-            if(inputText.length() == 0)
+            if(inputText.equals("exit"))
                 break;
 
+            printException(inputText);
             tgt = inputText.split(" ")[0];
 
             switch(tgt){
