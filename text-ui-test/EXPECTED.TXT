@@ -9,35 +9,44 @@ Hello from
 Hello! I'm Duke
 Send me a list of things to remember!
 Type <bye> to exit
-Here are the tasks in your list:
-There are no tasks in your list!
-=============================
 Got it! Added 
 [T][ ] Buy milk
 to the list.
 Now you have 1 task(s) in the list.
 =============================
 Got it! Added 
-[T][ ] Buy eggs
+[D][ ] bake a cake (by: 17/02/2023)
 to the list.
 Now you have 2 task(s) in the list.
 =============================
 Got it! Added 
-[D][ ] bake a cake (by: 17/02/2023)
+[E][ ] attend baking course (from: 16/02/2023 to: 19/02/2023)
 to the list.
 Now you have 3 task(s) in the list.
 =============================
-Can't Add anymore items, the list has reached its max size
-=============================
-Can't Add anymore items, the list has reached its max size
+Here are the tasks in your list:
+1. [T][ ] Buy milk
+2. [D][ ] bake a cake (by: 17/02/2023)
+3. [E][ ] attend baking course (from: 16/02/2023 to: 19/02/2023)
+Now you have 3 tasks in the list.
 =============================
 Noted sir, I have marked 
 [T][X]  Buy milk
 as done.
 =============================
 Noted sir, I have marked 
-[T][X]  Buy eggs
+[D][X] bake a cake 
 as done.
+=============================
+Noted sir, I have marked 
+[E][X] attend baking course 
+as done.
+=============================
+Here are the tasks in your list:
+1. [T][X] Buy milk
+2. [D][X] bake a cake (by: 17/02/2023)
+3. [E][X] attend baking course (from: 16/02/2023 to: 19/02/2023)
+Now you have 3 tasks in the list.
 =============================
 Noted sir, I have marked 
 [T][ ] Buy milk
@@ -45,32 +54,18 @@ as not done.
 =============================
 Here are the tasks in your list:
 1. [T][ ] Buy milk
-2. [T][X] Buy eggs
-3. [D][ ] bake a cake (by: 17/02/2023)
+2. [D][X] bake a cake (by: 17/02/2023)
+3. [E][X] attend baking course (from: 16/02/2023 to: 19/02/2023)
 Now you have 3 tasks in the list.
 =============================
-Noted sir, I have marked 
-[D][X] bake a cake 
-as done.
+Noted sir, I have removed 
+[T][ ] Buy milk
+Now you have 2 task(s) in the list.
 =============================
-No such item exists!
+Noted sir, I have removed 
+[E][X] attend baking course (from: 16/02/2023 to: 19/02/2023)
+Now you have 1 task(s) in the list.
 =============================
-Noted sir, I have marked 
-[T][X]  Buy milk
-as done.
-=============================
-No such item exists!
-=============================
-No such item exists!
-=============================
-Can't Add anymore items, the list has reached its max size
-=============================
-Here are the tasks in your list:
-1. [T][X] Buy milk
-2. [T][X] Buy eggs
-3. [D][X] bake a cake (by: 17/02/2023)
-Now you have 3 tasks in the list.
-=============================
-Please enter a number
+Please choose an appropriate index
 =============================
 Bye. Hope to see you again soon!

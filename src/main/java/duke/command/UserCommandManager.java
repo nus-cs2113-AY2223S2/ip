@@ -36,6 +36,9 @@ public class UserCommandManager {
         case "event":
             commandHandler.handleEventCommand(userInput);
             break;
+        case "delete":
+            commandHandler.handleDeleteCommand(userInput.replace(" ", ""));
+            break;
         default:
             commandHandler.handleUnknownCommand();
             break;
