@@ -6,6 +6,7 @@ public class Deadline extends Task {
     public Deadline(String task, String dueBy) {
         super(task);
         this.dueBy = dueBy;
+        this.type = "Deadline";
     }
 
     /**

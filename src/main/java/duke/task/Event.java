@@ -8,6 +8,7 @@ public class Event extends Task {
         super(task);
         this.startTime = startTime;
         this.endTime = endTime;
+        this.type = "Event";
     }
 
     /**

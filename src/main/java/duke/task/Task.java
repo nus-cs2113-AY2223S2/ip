@@ -1,12 +1,14 @@
 package duke.task;
 
 public class Task {
+    protected String type;
     protected String task;
     private boolean isDone;
 
     public Task(String task) {
         this.task = task;
         this.isDone = false;
+        this.type = "todo";
     }
 
     /**
@@ -14,7 +16,6 @@ public class Task {
      *
      * @return the String of the marked task
      */
-
     public String setAsDone() {
         this.isDone = true;
         return this.task;

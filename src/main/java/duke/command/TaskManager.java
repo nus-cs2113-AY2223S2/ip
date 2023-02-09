@@ -1,5 +1,7 @@
 package duke.command;
 
+import duke.filemanager.TaskLoader;
+import duke.filemanager.TaskWriter;
 import duke.task.Deadline;
 import duke.task.Task;
 import duke.task.Event;
@@ -9,10 +11,17 @@ public class TaskManager {
     private Task[] taskList;
     private int listSize;
     private static final int MAX_LIST_SIZE = 3;
+    TaskWriter taskWriter = new TaskWriter();
+
 
     public TaskManager() {
         this.listSize = 0;
         this.taskList = new Task[MAX_LIST_SIZE];
+    }
+
+    public void setData() {
+        TaskLoader taskLoader = new TaskLoader();
+        this.taskList = taskLoader.setClasses();
     }
 
     /**
@@ -27,6 +36,7 @@ public class TaskManager {
         Task task = new Task(description);
         taskList[this.listSize] = task;
         this.listSize += 1;
+        taskWriter.writeToJson(taskList);
         System.out.println("Got it! Added \n"
                 + "[T][ ]" + description + "\n"
                 + "to the list.");
@@ -45,6 +55,7 @@ public class TaskManager {
         Deadline deadline = new Deadline(description, dueBy);
         taskList[this.listSize] = deadline;
         this.listSize += 1;
+        taskWriter.writeToJson(taskList);
         String deadlineDuration = deadline.getDueDate();
         System.out.println("Got it! Added \n"
                 + "[D][ ] " + description + deadlineDuration + "\n"
@@ -64,6 +75,7 @@ public class TaskManager {
         Event event = new Event(description, startDate, endDate);
         taskList[this.listSize] = event;
         this.listSize += 1;
+        taskWriter.writeToJson(taskList);
         String eventDuration = event.getDuration();
         System.out.println("Got it! Added \n"
                 + "[E][ ] " + description + eventDuration + "\n"
@@ -79,6 +91,7 @@ public class TaskManager {
     public void markAsDone(int taskIndex) {
         String taskType = taskList[taskIndex].getTaskType();
         String task = taskList[taskIndex].setAsDone();
+        taskWriter.writeToJson(taskList);
         System.out.println("Noted sir, I have marked \n"
                 + taskType + "[X] " + task + "\n"
                 + "as done.");
@@ -93,6 +106,7 @@ public class TaskManager {
     public void markAsUndone(int taskIndex) {
         String taskType = taskList[taskIndex].getTaskType();
         String task = taskList[taskIndex].setAsUndone();
+        taskWriter.writeToJson(taskList);
         System.out.println("Noted sir, I have marked \n"
                 + taskType + "[ ]" + task + "\n"
                 + "as not done.");
@@ -104,12 +118,10 @@ public class TaskManager {
      */
     public void printList() {
         System.out.println("Here are the tasks in your list:");
-        if (this.listSize == 0) {
-            System.out.println("There are no tasks in your list!");
-            return;
-        }
-        for (int i = 1; i < this.listSize + 1; i++) {
-            System.out.println(i + ". " + taskList[i - 1].getTaskStatus());
+        int count = 1;
+        for (Task i : taskList) {
+            System.out.println(count + ". " + i.getTaskStatus());
+            count++;
         }
         System.out.println("Now you have " + this.listSize + " tasks in the list.");
     }

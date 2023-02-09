@@ -10,7 +10,7 @@ if exist ACTUAL.TXT del ACTUAL.TXT
 FOR /L %%A IN (10,1,20) DO CALL COUNTER %%A%%
 
 REM compile the code into the bin folder
-javac  -cp ..\src\main\java -Xlint:none -d ..\bin ..\src\main\java\duke\main\*.java
+javac  -cp "..\src\main\java;..\lib\gson-2.8.2.jar" -Xlint:none -d ..\bin ..\src\main\java\duke\main\*.java 
 
 FOR /L %%A IN (20,1,30) DO CALL COUNTER %%A%%
 
@@ -23,8 +23,7 @@ REM no error here, errorlevel == 0
 FOR /L %%A IN (30,1,70) DO CALL COUNTER %%A%%
 
 REM run the program, feed commands from input.txt file and redirect the output to the ACTUAL.TXT
-java -classpath ..\bin duke.main.Duke < input.txt > ACTUAL.TXT
-
+java -classpath "..\bin;..\lib\gson-2.8.2.jar" duke.main.Duke < input.txt > ACTUAL.TXT
 FOR /L %%A IN (70,1,80) DO CALL COUNTER %%A%%
 
 REM compare the output to the expected output

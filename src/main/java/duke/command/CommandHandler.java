@@ -1,12 +1,19 @@
 package duke.command;
 
 import duke.exceptions.ListTooLarge;
+import duke.filemanager.TaskLoader;
 
 import java.util.Scanner;
+
 
 public class CommandHandler {
 
     TaskManager myList = new TaskManager();
+
+    public CommandHandler() {
+        myList.setData();
+    }
+
 
     /**
      * Prints the current items and status in the list

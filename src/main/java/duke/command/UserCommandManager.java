@@ -2,8 +2,6 @@ package duke.command;
 
 import java.util.Scanner;
 
-import duke.command.CommandHandler;
-
 public class UserCommandManager {
 
     CommandHandler commandHandler = new CommandHandler();
