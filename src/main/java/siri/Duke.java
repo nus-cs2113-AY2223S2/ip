@@ -1,3 +1,8 @@
+import task.Deadline;
+import task.Event;
+import task.Task;
+import task.ToDo;
+
 import java.util.Scanner;
 
 public class Duke {
@@ -47,12 +52,12 @@ public class Duke {
 
         if (marker.equals("mark")) {
             //mark task as done
-            tasks[taskNumber - 1].isDone = true;
+            tasks[taskNumber - 1].setDone(true);
             System.out.println("Nice! I've marked this task as done: ");
             System.out.println(tasks[taskNumber-1].toString());
         } else {
             //mark task as undone
-            tasks[taskNumber - 1].isDone = false;
+            tasks[taskNumber - 1].setDone(false);
             System.out.println("Ok! I've marked this task as not done yet: ");
             System.out.println(tasks[taskNumber-1].toString());
         }
