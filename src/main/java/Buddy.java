@@ -2,6 +2,7 @@ import java.util.Scanner;
 import java.util.Arrays;
 
 // camelCase used as a coding standard
+// indented according to Java coding standards
 
 public class Buddy {
 
@@ -31,7 +32,8 @@ public class Buddy {
                     index++;
                 }
             } else if (command.startsWith("mark")) {  // .startsWith(" ")
-                int taskNumber = Integer.parseInt(command.substring(5));
+                int taskNumberIndexMark = 5;
+                int taskNumber = Integer.parseInt(command.substring(taskNumberIndexMark));
                 // have to parse
                 Task currentTask = listOfThings[taskNumber - 1];
                 currentTask.setDone(true);
@@ -40,7 +42,8 @@ public class Buddy {
                 System.out.println(currentTask);
                 System.out.println(divider);
             } else if (command.startsWith("unmark")) {
-                int taskNumber = Integer.parseInt(command.substring(7));
+                int taskNumberIndexUnmark = 7;
+                int taskNumber = Integer.parseInt(command.substring(taskNumberIndexUnmark));
                 Task currentTask = listOfThings[taskNumber - 1];
                 currentTask.setDone(false);
                 System.out.println(divider);
@@ -51,14 +54,14 @@ public class Buddy {
                 System.out.println(divider);
                 System.out.println("Got it! I have added this task: ");
                 if (command.startsWith("todo")) {
-                    int todo_starting_index = 5;
-                    Todo todoBeingAdded = new Todo(command.substring(todo_starting_index));
+                    int todoStartingIndex = 5;
+                    Todo todoBeingAdded = new Todo(command.substring(todoStartingIndex));
                     listOfThings[currentPosition] = todoBeingAdded;
                     // Task is not a Todo but Todo is a task
                     System.out.println(todoBeingAdded);
                 } else if (command.startsWith("deadline")) {
-                    int deadline_starting_index = 9;
-                    Task taskBeingAdded = new Task(command.substring(deadline_starting_index)); // task + date + slash (Description)
+                    int deadlineStartingIndex = 9;
+                    Task taskBeingAdded = new Task(command.substring(deadlineStartingIndex)); // task + date + slash (Description)
                     // filter the description and date
                     String taskWithDate = taskBeingAdded.description;
                     int indexOfSlash = taskWithDate.indexOf('/');
@@ -68,8 +71,9 @@ public class Buddy {
                     listOfThings[currentPosition] = deadlineBeingAdded;
                     System.out.println(deadlineBeingAdded);
 
-                } else if (command.startsWith("event")) {
-                    Task taskBeingAdded = new Task(command.substring(6));
+                } else if (command.startsWith("event")){
+                    int eventStartingIndex = 6;
+                    Task taskBeingAdded = new Task(command.substring(eventStartingIndex));
                     // filter the description, from and to
                     String wholeLine = taskBeingAdded.description;
                     int indexOfFirstSlash = wholeLine.indexOf('/');
