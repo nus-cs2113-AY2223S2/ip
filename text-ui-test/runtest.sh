@@ -13,14 +13,15 @@ then
 fi
 
 # compile the code into the bin folder, terminates if error occurred
-if ! javac -cp ../src/main/java -Xlint:none -d ../bin ../src/main/java/duke/*.java
+if ! javac -cp "../src/main/java:../build/install/ip/lib/*" -Xlint:none -d ../bin ../src/main/java/duke/*.java ../src/main/java/parser/*.java ../src/main/java/task/*.java ../src/main/java/ui/*.java
 then
     echo "********** BUILD FAILURE **********"
     exit 1
 fi
 
 # run the program, feed commands from input.txt file and redirect the output to the ACTUAL.TXT
-java -classpath ../bin/ duke/Duke < input.txt > ACTUAL.TXT
+java -cp '../build/install/ip/lib/*:../bin' duke/Duke < input.txt > ACTUAL.TXT
+
 
 # convert to UNIX format
 cp EXPECTED.TXT EXPECTED-UNIX.TXT
