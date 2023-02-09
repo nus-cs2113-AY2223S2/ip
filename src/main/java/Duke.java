@@ -34,10 +34,17 @@ public class Duke {
                 exit();
                 return;
             case "todo":
-                tsk = new Todo(input, false);
-                addToList(input, userInputs);
-                tasks.add(tsk);
-                addTaskPrint(tasks, tsk);
+                try {                
+                    tsk = new Todo(splitInput[1], false);
+                    addToList(input, userInputs);
+                    tasks.add(tsk);
+                    addTaskPrint(tasks, tsk);
+                } catch (IndexOutOfBoundsException de) {
+                    printExceptionMsg("todo", "description of a todo cannot be empty.");
+                } catch (DukeException de) {
+
+                }
+                
 
                 break;               
             case "event":
@@ -45,7 +52,6 @@ public class Duke {
                 addToList(input, userInputs);
                 tasks.add(tsk);
                 addTaskPrint(tasks, tsk);
-
                 break;
             case "deadline": 
                 tsk = parseDeadline(input);
@@ -71,11 +77,19 @@ public class Duke {
                 System.out.println("\t____________________________________________________________");
                 break;
             default:
+                System.out.println("\t____________________________________________________________");
+                System.out.println(" ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");;
+                System.out.println("\t____________________________________________________________");
+
                 break;
             }                            
         }
     }
-
+    public static void printExceptionMsg(String task, String err) {
+        System.out.println("\t____________________________________________________________");
+        System.out.println(" ☹ OOPS!!! The description of a todo cannot be empty.");
+        System.out.println("\t____________________________________________________________");
+    }
     public static void addTaskPrint(ArrayList<Task> tasks, Task tsk) {
         System.out.println("\t____________________________________________________________");
         System.out.println("\tGot it. I've added this task:");
@@ -90,7 +104,13 @@ public class Duke {
         int idx = input.indexOf("/by");
         String desc = input.substring(8, idx);
         String by = input.substring(idx + 3);
-        return new Deadline(desc, false, by);
+        Deadline tsk = null;
+        try {
+            tsk = new Deadline(desc, false, by);
+        } catch (DukeException de) {
+
+        }
+        return tsk;
     }
     /*
     This Returns the input as a Event object
@@ -101,8 +121,13 @@ public class Duke {
         String desc = input.substring(5, idx);
         String start = input.substring(idx + 5, idx1);
         String end = input.substring(idx1 + 3, input.length());
+        Event tsk = null;
+        try {
+            tsk = new Event(desc, false, start, end);
+        } catch (DukeException de) {
 
-        return new Event(desc, false, start, end);
+        }
+        return tsk;
     }
     /*
     This Adds the input to an input array for the ability to keep track of

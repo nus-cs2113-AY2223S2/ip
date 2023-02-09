@@ -4,7 +4,7 @@ public class Event extends Task {
     private String end;
 
 
-    public Event(String description, boolean isMark, String start, String end) {
+    public Event(String description, boolean isMark, String start, String end) throws DukeException {
         super(description, isMark);
         this.start = start;
         this.end = end;

@@ -1,7 +1,10 @@
 public class Task {
     private String description;
     private boolean isMark;
-    public Task(String inDescription, boolean isMark) {
+    public Task(String inDescription, boolean isMark) throws DukeException {
+        if (inDescription.length() == 0) {
+            throw new DukeException();
+        }
         this.description = inDescription;
         this.isMark = isMark;
     }

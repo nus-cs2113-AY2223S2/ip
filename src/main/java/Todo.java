@@ -1,6 +1,7 @@
 public class Todo extends Task {
-    public Todo(String description, boolean isMark) {
+    public Todo(String description, boolean isMark)  throws DukeException {
         super(description, isMark);
+        
     }
 
     @Override
