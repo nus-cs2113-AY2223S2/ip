@@ -7,6 +7,10 @@ public class List {
         String taskString;
         Task task = new Task(item);
         try {
+            if (item.length() == 0) {
+                throw new EmptyTaskInputException();
+            }
+
             switch (taskType) {
             case DEADLINE:
                 task = new Deadline(item);
@@ -23,6 +27,11 @@ public class List {
         } catch (ArrayIndexOutOfBoundsException e) {
             Message.line();
             System.out.println("You are missing some parameters in the input! Please try again!");
+            Message.line();
+            return;
+        } catch (EmptyTaskInputException e) {
+            Message.line();
+            System.out.println("Your input description cannot be empty! Please try again!");
             Message.line();
             return;
         }

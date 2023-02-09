@@ -14,9 +14,9 @@ public class Duke {
                 List.printList();
                 break;
             case "mark":
-                userInputDetails = inputScanner.next();
+                userInputDetails = inputScanner.nextLine();
                 try {
-                    List.markDone(Integer.parseInt(userInputDetails));
+                    List.markDone(Integer.parseInt(userInputDetails.trim()));
                 } catch (NumberFormatException e) {
                     Message.line();
                     System.out.println("Please input a list index to mark!");
@@ -28,9 +28,9 @@ public class Duke {
                 }
                 break;
             case "unmark":
-                userInputDetails = inputScanner.next();
+                userInputDetails = inputScanner.nextLine();
                 try {
-                    List.markUndone(Integer.parseInt(userInputDetails));
+                    List.markUndone(Integer.parseInt(userInputDetails.trim()));
                 } catch (NumberFormatException e) {
                     Message.line();
                     System.out.println("Please input a list index to mark!");
