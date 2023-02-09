@@ -11,7 +11,7 @@ public class Duke {
     public static String[] words = new String[10];
     public static String[] phrases = new String[10];
     public static int currentTaskNum = 0;
-    public static String LINE = "____________________________________________________________\n";
+    public static String LINE = "────────────────────────────────────────────────────────────────────────\n";
     public static String GENERAL_ERROR_MESSAGE = LINE + "Invalid input. Please try again! (=ಠᆽಠ=)\n" + LINE;
     public static String INVALID_NUM_ERROR_MESSAGE = LINE + "The duke.task number is out of bound. Please try again! (=ಠᆽಠ=)\n" + LINE;
     public static String EVENT_TIME_ERROR_MESSAGE = LINE + "There is no start and end time for the event. " +
