@@ -1,3 +1,9 @@
+package duke;
+
+import duke.command.Message;
+import duke.task.List;
+import duke.task.TaskType;
+
 import java.util.Scanner;
 
 public class Duke {
