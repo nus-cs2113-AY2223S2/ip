@@ -1,5 +1,9 @@
-import exceptions.BlankDescException;
-import exceptions.DukeException;
+package duke;
+
+import duke.exception.BlankDescException;
+import duke.exception.DukeException;
+import duke.command.MainFunctions;
+import duke.task.Task;
 
 import java.util.Scanner;
 
@@ -16,8 +20,6 @@ public class Duke {
 
         Task[] storedUserTasks = new Task[100];
         boolean isExit = false;
-        int taskIndex;
-        String description, by, from, to;
 
         while(!isExit){
             switch (userCommand.split(" ")[0]) {

@@ -1,4 +1,4 @@
-package exceptions;
+package duke.exception;
 
 public class DukeException extends Exception{
     public static final String DIVIDER = "\t____________________________________________________________";

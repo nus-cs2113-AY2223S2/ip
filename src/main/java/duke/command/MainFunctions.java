@@ -1,5 +1,12 @@
-import exceptions.BlankDescException;
-import exceptions.DukeException;
+package duke.command;
+
+import duke.task.Deadline;
+import duke.Duke;
+import duke.task.Event;
+import duke.task.Task;
+import duke.task.Todo;
+import duke.exception.BlankDescException;
+import duke.exception.DukeException;
 
 public class MainFunctions {
     public static final String LOGO =
