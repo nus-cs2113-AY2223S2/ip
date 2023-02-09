@@ -1,7 +1,7 @@
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
-import duke.task.ToDos;
+import duke.task.Todos;
 import duke.utils.DukeException;
 
 import java.util.Scanner;
@@ -54,16 +54,15 @@ public class Duke {
 
     public static void printList(int currentTaskNum) {
         int currentPrintedTask = 0;
-        int tempPos = currentTaskNum;
-        if (tempPos == 0) {
-            System.out.println(LINE);
+        int placeHolder = currentTaskNum;
+        System.out.println(LINE);
+        if (placeHolder == 0) {
             System.out.println("No duke.task.Task! 〲⚆ﻌ⚆〉");
         } else {
-            System.out.println(LINE);
-            while (tempPos > 0) {
+            while (placeHolder > 0) {
                 System.out.println(currentPrintedTask + 1 + ". " + list[currentPrintedTask].toString());
                 currentPrintedTask++;
-                tempPos--;
+                placeHolder--;
             }
         }
         System.out.println(LINE);
@@ -127,7 +126,7 @@ public class Duke {
             System.out.println(FAREWELL_MESSAGE);
             setShouldExit();
         } else if (userInput.startsWith("todo")) {
-            list[currentTaskNum] = new ToDos(userInput.replace("mark ", ""));
+            list[currentTaskNum] = new Todos(userInput.replace("mark ", ""));
             processAddTaskRequest();
         } else if (userInput.startsWith("deadline")) {
             phrases = userInput.split("/by ");
