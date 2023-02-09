@@ -1,3 +1,5 @@
+package siri.exception;
+
 public class AddTaskIndexOutOfBounds extends Exception{
     protected String taskType;
 

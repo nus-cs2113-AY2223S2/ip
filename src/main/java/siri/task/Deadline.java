@@ -1,4 +1,4 @@
-package task;
+package siri.task;
 
 public class Deadline extends Task{
     protected String by;
