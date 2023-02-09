@@ -3,8 +3,13 @@ public class ToDo extends Task {
         super(content);
     }
 
-    static ToDo createToDo(String[] commandByWord) {
+    static ToDo createToDo(String[] commandByWord) throws IllegalArgumentException{
         String task = "";
+
+        if (commandByWord.length < 2) {
+            throw new IllegalArgumentException();
+        }
+
         for (int i = 1; i < commandByWord.length; ++i) {
             if (i != 1) {
                 task += " ";

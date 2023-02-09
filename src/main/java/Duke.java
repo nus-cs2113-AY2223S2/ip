@@ -14,7 +14,7 @@ public class Duke {
         while (running) {
             String command = scanner.nextLine();
             String[] commandByWord = command.split(" ");
-            if (command.equals("bye")) { // whats the difference between equals and ==
+            if (command.equals("bye")) {
                 speak(EXITING);
                 running = false;
             } else if (command.equals("list")) {
@@ -24,11 +24,11 @@ public class Duke {
             } else if (commandByWord[0].equals("unmark")) {
                 speak(tasks.unmark(Integer.parseInt(commandByWord[1])));
             } else if (commandByWord[0].equals("deadline")) {
-                speak(tasks.addTask(Deadline.createDeadline(commandByWord)));
+                speak(tasks.addTask("deadline", commandByWord));
             } else if (commandByWord[0].equals("event")) {
-                speak(tasks.addTask(Event.createEvent(commandByWord)));
+                speak(tasks.addTask("event", commandByWord));
             } else if (commandByWord[0].equals("todo")) {
-                speak(tasks.addTask(ToDo.createToDo(commandByWord)));
+                speak(tasks.addTask("todo", commandByWord));
             }
         }
     }

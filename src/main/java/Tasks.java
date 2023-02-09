@@ -7,11 +7,25 @@ public class Tasks {
         this.taskList = new ArrayList<Task>();
     }
 
-    String addTask(Task task) {
-        taskList.add(task);
-        return "Got it. I've added this task:\n    " +
-                task.toString() + "\n" +
-                "  Now you have " + taskList.size() + " tasks in the list.";
+    String addTask(String type, String[] commandByWord) {
+        try {
+            Task task = new Task("");
+
+            if (type == "todo") {
+                task = ToDo.createToDo(commandByWord);
+            } else if (type == "deadline") {
+                task = Deadline.createDeadline(commandByWord);
+            } else if (type == "event") {
+                task = Event.createEvent(commandByWord);
+            }
+            taskList.add(task);
+            return "Got it. I've added this task:\n    " +
+                    task.toString() + "\n" +
+                    "  Now you have " + taskList.size() + " tasks in the list.";
+        } catch (IllegalArgumentException e) {
+            return "☹ OOPS!!! The description of a " + type + " cannot be empty.";
+        }
+
     }
 
     String mark(int index) {
