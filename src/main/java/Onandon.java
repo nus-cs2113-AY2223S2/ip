@@ -1,8 +1,12 @@
 
+import Onandon.function.*;
+import Onandon.print.Print;
+import Onandon.exception.OnandonEmptyException;
+import Onandon.exception.OnandonUnknownException;
+
 import java.util.Scanner;
 
 public class Onandon {
-
     public static int printTodoAction(String inputText, Task[] tasks, int cnt){
         String description;
         description = inputText.replaceAll("todo ", "");
@@ -85,7 +89,7 @@ public class Onandon {
         Print.printUnderline();
     }
 
-    public static void checkException(String inputText) throws OnandonEmptyException, OnandonUnknownException{
+    public static void checkException(String inputText) throws OnandonEmptyException, OnandonUnknownException {
         String tgt = inputText.split(" ")[0];
         Boolean isNotTodo = !tgt.equals("todo");
         Boolean isNotDeadline = !tgt.equals("deadline");
