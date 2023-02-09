@@ -1,3 +1,12 @@
+package Alex;
+
+import Alex.exception.DukeException;
+import Alex.manager.TaskManager;
+import Alex.task.Deadline;
+import Alex.task.Event;
+import Alex.task.Task;
+import Alex.task.Todo;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
