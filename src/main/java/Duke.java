@@ -1,4 +1,3 @@
-import java.io.FileNotFoundException;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -10,17 +9,8 @@ public class Duke {
 
     private static final ArrayList<Task> tasks = new ArrayList<>();
 
-    private static String filePath = "data/duke.txt";
-
-
-
 
     public static void main(String[] args) {
-
-
-        Storage storage = new Storage(filePath);
-
-        storage.readFile(filePath,tasks);
 
         String command;
         int numberOfTasks = tasks.size();
@@ -53,43 +43,56 @@ public class Duke {
                 break;
 
             } else if (command.contains("unmark")) {
-                boolean isValidUnmarkInput = checkUnmarkInput(command, numberOfTasks);
+                boolean isValidUnmarkInput = checkUnmarkInput(command, tasks.size());
                 if (isValidUnmarkInput) {
-                    unmarkTask(command, numberOfTasks);
+                    unmarkTask(command, tasks.size());
                 }
 
 
             } else if (command.contains("mark")) {
-                boolean isValidMarkInput = checkMarkInput(command, numberOfTasks);
+                boolean isValidMarkInput = checkMarkInput(command, tasks.size());
                 if (isValidMarkInput) {
-                    markTask(command, numberOfTasks);
+                    markTask(command, tasks.size());
+                }
+
+            } else if (command.contains("delete")) {
+                boolean isValidDeleteInput = checkDeleteInput(command,tasks.size());
+
+                if (isValidDeleteInput) {
+                    DeleteTask(command);
                 }
 
             } else if (command.contains("deadline")) {
                 boolean isValidDeadlineInput = checkDeadlineInput(command);
                 if (isValidDeadlineInput) {
-                    createDeadline(command, numberOfTasks);
-                    numberOfTasks++;
+                    createDeadline(command);
                 }
 
 
             } else if (command.contains("event")) {
                 boolean isValidEventInput = checkEventInput(command);
                 if (isValidEventInput) {
-                    createEvent(command, numberOfTasks);
-                    numberOfTasks++;
+                    createEvent(command);
                 }
 
 
+            } else if (command.contains("todo")) {
+                boolean isValidTodoInput = checkTodoInput(command);
+                if (isValidTodoInput) {
+                    createTask(command);
+                }
+
 
             } else {
-                createTask(command, numberOfTasks);
-                numberOfTasks++;
+                System.out.println("Sorry I didn't get that!");
+
 
             }
 
 
-            System.out.println("There are currently "+numberOfTasks + " task(s) in the list");
+            System.out.println("There are currently " + tasks.size() + " task(s) in the list");
+
+
             printHorizontalBar();
             latestResponse = checkForAdditionalTask();
             hasAdditionalTask = true;
