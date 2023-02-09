@@ -1,4 +1,4 @@
-package siri.task;
+package task;
 
 public class Task {
 
