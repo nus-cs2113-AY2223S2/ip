@@ -1,8 +1,6 @@
 import java.util.Scanner;
 
-//TODO: specify error eg. event/ddl timing not found
-//TODO: event /from /by wrong order
-//TODO: insufficient input -> task still added -> printTask returns stringIndexOutOfBoundsException
+//TODO: specify error: empty description vs event/ddl timing not found
 
 public class Duke {
     public static String line = "____________________________________________________________\n";
@@ -10,12 +8,6 @@ public class Duke {
     public static Task[] tasks = new Task[100];
 
     public static void main(String[] args) {
-//        String logo = " ____        _        \n"
-//                + "|  _ \\ _   _| | _____ \n"
-//                + "| | | | | | | |/ / _ \\\n"
-//                + "| |_| | |_| |   <  __/\n"
-//                + "|____/ \\__,_|_|\\_\\___|\n";
-//        System.out.println("Hello from\n" + logo);
 
         String greet = line +
                 "Hello! I'm Duke.\n" +
@@ -76,6 +68,11 @@ public class Duke {
             } catch (TaskTypeException e) {
                 System.out.println("Sorry, Duke does not recognise the task. " +
                         "Type 'todo'/'deadline'/'event' to add task of respective type.\n" + line);
+            } catch (NumberFormatException e) {
+                System.out.println("Task number not specified. Please try again.\n" + line);
+            } catch (EventTimingException e) {
+                System.out.println("Starting and ending time for event are in the wrong order. " +
+                        "Please try again.\n" + line);
             }
         }
     }
@@ -89,25 +86,25 @@ public class Duke {
         System.out.println(line);
     }
 
-    public static void markTask(String input) {
+    public static void markTask(String input) throws NumberFormatException {
         int taskIndex = Integer.parseInt(input.substring(4).trim());
         if (taskIndex >= 1 && taskIndex <= countTask) {
             tasks[taskIndex - 1].markAsDone();
             System.out.println(line + "Task " + taskIndex + " marked as done:\n" +
                     tasks[taskIndex - 1].printTask() + line);
         } else {
-            System.out.println("Task " + taskIndex + " not found. Please try again.");
+            System.out.println("Task " + taskIndex + " not found. Please try again.\n" + line);
         }
     }
 
-    public static void unmarkTask(String input) {
+    public static void unmarkTask(String input) throws NumberFormatException {
         int taskIndex = Integer.parseInt(input.substring(6).trim());
         if (taskIndex >= 1 && taskIndex <= countTask) {
             tasks[taskIndex - 1].markAsUndone();
             System.out.println(line + "Task " + taskIndex + " marked as not done yet:\n" +
                     tasks[taskIndex - 1].printTask() + line);
         } else {
-            System.out.println("Task " + taskIndex + " not found. Please try again.");
+            System.out.println("Task " + taskIndex + " not found. Please try again.\n" + line);
         }
     }
 
@@ -130,10 +127,12 @@ public class Duke {
         System.out.println("Now you have " + countTask + " task(s) in the list.\n" + line);
     }
 
-    public static void createEvent(String input) throws IndexOutOfBoundsException {
-        if (!input.contains("/from") || ! input.contains("/to") || input.indexOf("/from") + 6 > input.length()
-            || input.indexOf("/to") + 4 > input.length()) {
+    public static void createEvent(String input) throws IndexOutOfBoundsException, EventTimingException {
+        if (!input.contains("/from") || !input.contains("/to") || input.indexOf("/from") + 6 > input.length()
+                || input.indexOf("/to") + 4 > input.length()) {
             throw new StringIndexOutOfBoundsException();
+        } else if (input.indexOf("/from") > input.indexOf("/to")) {
+            throw new EventTimingException();
         }
         Event eventTask = new Event(input.substring(6));
         tasks[countTask] = eventTask;
