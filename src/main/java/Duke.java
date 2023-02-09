@@ -1,3 +1,8 @@
+import duke.task.Deadline;
+import duke.task.Event;
+import duke.task.Task;
+import duke.task.ToDo;
+
 import java.util.Scanner;
 
 //TODO: specify error: empty description vs event/ddl timing not found
