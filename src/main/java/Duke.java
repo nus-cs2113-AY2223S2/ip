@@ -47,20 +47,30 @@ public class Duke {
         System.out.println(LINE);
     }
 
-    private static void markThisTask(int idx) {
-        taskList[idx].markAsDone();
-        System.out.println(LINE);
-        System.out.println("   > Nice! I've marked this task as done:");
-        System.out.println("   > " + taskList[idx].toString());
-        System.out.println(LINE);
+    private static void unmarkThisTask(String command) throws TaskNumberOutOfRange {
+        int idx = Integer.parseInt(command) - 1;
+        if (idx >= taskNum || idx < 0) {
+            throw new TaskNumberOutOfRange("task number out of range!!");
+        } else {
+            taskList[idx].unmark();
+            System.out.println(line);
+            System.out.println("   > OK, I've marked this task as not done yet:");
+            System.out.println("   > " + taskList[idx].toString());
+            System.out.println(line);
+        }
     }
 
-    private static void unmarkThisTask(int idx) {
-        taskList[idx].unmark();
-        System.out.println(LINE);
-        System.out.println("   > OK, I've marked this task as not done yet:");
-        System.out.println("   > " + taskList[idx].toString());
-        System.out.println(LINE);
+    private static void markThisTask(String command) throws TaskNumberOutOfRange {
+        int idx = Integer.parseInt(command) - 1;
+        if (idx >= taskNum || idx < 0) {
+            throw new TaskNumberOutOfRange("task number out of range!!");
+        } else {
+            taskList[idx].markAsDone();
+            System.out.println(line);
+            System.out.println("   > Nice! I've marked this task as done:");
+            System.out.println("   > " + taskList[idx].toString());
+            System.out.println(line);
+        }
     }
 
     private static void addTask(Task taskDiscription) {
