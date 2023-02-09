@@ -16,12 +16,19 @@ public class Duke {
                 System.out.println("See you soon, I hope. Goodbye.");
                 break;
             }
-            int firstSpaceIndex = command.indexOf(" ");
-            String firstWord = command.substring(0, firstSpaceIndex);
-            String remainingWords = command.substring(firstSpaceIndex + 1, command.length());
+            String firstWord;
+            String remainingWords;
+            if (command.contains(" ")) {
+                int firstSpaceIndex = command.indexOf(" ");
+                firstWord = command.substring(0, firstSpaceIndex);
+                remainingWords = command.substring(firstSpaceIndex + 1, command.length());
+            } else {
+                firstWord = command;
+                remainingWords = null;
+            }
             switch (firstWord) {
             //if command is list, either display empty or display list
-            case "list":
+            case "List":
                 if (taskIndex == 0) {
                     System.out.println("Empty, list is.");
                 } else {
@@ -40,7 +47,7 @@ public class Duke {
                 }
                 break;
             //if command is mark, mark the appropriate entry in the list
-            case "mark":
+            case "Mark":
                 int indexToMark = Integer.parseInt(remainingWords);
                 if (taskIndex == 0 || indexToMark > taskIndex) {
                     System.out.println("In list, it is not.");
@@ -59,7 +66,7 @@ public class Duke {
                 }
                 break;
             //if command is unmark, unmark the appropriate entry in the list
-            case "unmark":
+            case "Unmark":
                 int indexToUnmark = Integer.parseInt(remainingWords);
                 if (taskIndex == 0 || indexToUnmark > taskIndex) {
                     System.out.println("In list, it is not.");
@@ -80,9 +87,17 @@ public class Duke {
                 break;
             //if command is todo, prompt for task and add into list
             case "Todo":
-                taskArray[taskIndex] = new ToDo(remainingWords, false, "[T]");
-                System.out.println(taskIndex + ". " + ((ToDo) taskArray[taskIndex]).getToDo() + " " + taskArray[taskIndex].getDoneStatus() + " " + taskArray[taskIndex].getDescription() + " - Added, I have");
-                ++taskIndex;
+                try {
+                    if (remainingWords == null) {
+                        throw new IllegalCommandException();
+                    }
+                    taskArray[taskIndex] = new ToDo(remainingWords, false, "[T]");
+                    System.out.println(taskIndex + ". " + ((ToDo) taskArray[taskIndex]).getToDo() + " " + taskArray[taskIndex].getDoneStatus() + " " + taskArray[taskIndex].getDescription() + " - Added, I have");
+                    ++taskIndex;
+                } catch (IllegalCommandException e) {
+                    System.out.println("Error: To do what, I ask?");
+                    break;
+                }
                 break;
             //if command is Deadline, prompt for task then deadline and add into list
             case "Deadline":
@@ -102,8 +117,14 @@ public class Duke {
                 System.out.println(taskIndex + ". " + ((Event) taskArray[taskIndex]).getEvent() + " " + taskArray[taskIndex].getDoneStatus() + " " + taskArray[taskIndex].getDescription() + " " + ((Event) taskArray[taskIndex]).getStartAndEnd() + " - Added, I have");
                 ++taskIndex;
                 break;
+            //throws IllegalCommandException if the input is not one of the above cases
+            default:
+                try {
+                    throw new IllegalCommandException();
+                } catch (IllegalCommandException e1) {
+                    System.out.println("Error: Understand, I do not.");
+                }
             }
-
         }
     }
 }
