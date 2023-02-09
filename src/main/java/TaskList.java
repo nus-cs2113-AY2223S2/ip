@@ -1,14 +1,12 @@
 import java.util.ArrayList;
 
-public class ToDoList {
+public class TaskList {
     private static final ArrayList<Task> TaskList = new ArrayList<>(10);
     private static int NumTasks = 0;
-    public static void addItem (String in) {
-        Task task = new Task(in);
-
-        TaskList.add(task);
+    public static void addItem (Task newTask) {
+        TaskList.add(newTask);
         NumTasks += 1;
-        System.out.println("added: " + in);
+        System.out.println("Okay! I've added: [" + newTask.getTypeIcon() +"] " + newTask.getDescription());
     }
     public static int getNumItems() {
         return NumTasks;

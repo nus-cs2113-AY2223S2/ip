@@ -11,7 +11,10 @@ public class Task {
     public String getStatusIcon() {
         return (isDone ? "X" : " "); // mark done task with X
     }
-
+    public String getTypeIcon() {
+        return "NULL";
+    }
+    public String taskTypeIcon() { return "[" + getTypeIcon() + "]";}
     public void setDescription(String description) {
         this.description = description;
     }
@@ -24,13 +27,13 @@ public class Task {
         isDone = false;
     }
 
+    public String isDoneIcon() { return "[" + getStatusIcon() + "]";}
     public String getDescription() {
         return description;
     }
 
     public String getTask() {
-        String Task = "[";
-        return Task.concat(getStatusIcon() + "] " + getDescription());
+        return taskTypeIcon() + isDoneIcon() + " " + getDescription();
     }
 
 }
