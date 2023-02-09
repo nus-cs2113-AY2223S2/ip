@@ -4,6 +4,7 @@ import btb.constants.Constant;
 import btb.logic.Logic;
 import btb.tasks.TaskManager;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public abstract class UI {
@@ -49,16 +50,21 @@ public abstract class UI {
         boolean isRepeat = true;
 
         do {
-            userInput = scanner.nextLine().trim();
+            try {
+                userInput = scanner.nextLine().trim();
 
-            if (userInput.equals("bye")) {
-                isRepeat = false;
-                continue;
+                if (userInput.equals("bye")) {
+                    isRepeat = false;
+                    continue;
+                }
+
+                System.out.println(Constant.DOTTED_LINE);
+                Logic.runCommand(tasks, userInput);
+                System.out.println(Constant.DOTTED_LINE);
+            } catch (NoSuchElementException e) {
+                System.out.println("Invalid input ┻ ︵ヽ(`Д´)ﾉ︵ ┻. Please try again!");
+                break;
             }
-
-            System.out.println(Constant.DOTTED_LINE);
-            Logic.runCommand(tasks, userInput);
-            System.out.println(Constant.DOTTED_LINE);
         } while (isRepeat);
     }
 

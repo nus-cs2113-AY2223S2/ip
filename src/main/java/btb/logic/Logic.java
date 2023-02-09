@@ -1,5 +1,6 @@
 package btb.logic;
 
+import btb.constants.Constant;
 import btb.tasks.Task;
 import btb.tasks.TaskManager;
 import btb.tasks.Todo;
@@ -27,37 +28,44 @@ public class Logic {
         }
         Task task;
 
-        switch (command) {
-        case "todo":
-            task = new Todo(description);
-            tasks.addTask(task, command);
-            break;
-        case "deadline":
-            // splits the description into [task description, dueDate]
-            String[] deadlineDescriptions = Parser.handleDeadline(description);
-            task = new Deadline(deadlineDescriptions[0], deadlineDescriptions[1]);
-            tasks.addTask(task, command);
-            break;
-        case "event":
-            // splits the description into [task description, startDate, endDate]
-            String[] eventDescription = Parser.handleEvent(description);
-            task = new Event(eventDescription[0], eventDescription[1], eventDescription[2]);
-            tasks.addTask(task, command);
-            break;
-        case "mark":
-            int taskNumber = Integer.parseInt(description);
-            tasks.markTask(taskNumber);
-            break;
-        case "unmark":
-            taskNumber = Integer.parseInt(description);
-            tasks.unmarkTask(taskNumber);
-            break;
-        case "list":
-            tasks.listTasks();
-            break;
-        default:
-            System.out.println("Please enter a valid input.");
-            break;
+        try {
+            switch (command) {
+            case "todo":
+                task = new Todo(description);
+                tasks.addTask(task, command);
+                break;
+            case "deadline":
+                // splits the description into [task description, dueDate]
+                String[] deadlineDescriptions = Parser.handleDeadline(description);
+                task = new Deadline(deadlineDescriptions[0], deadlineDescriptions[1]);
+                tasks.addTask(task, command);
+                break;
+            case "event":
+                // splits the description into [task description, startDate, endDate]
+                String[] eventDescription = Parser.handleEvent(description);
+                task = new Event(eventDescription[0], eventDescription[1], eventDescription[2]);
+                tasks.addTask(task, command);
+                break;
+            case "mark":
+//            int taskNumber = Integer.parseInt(description);
+                tasks.markTask(description);
+                break;
+            case "unmark":
+//            taskNumber = Integer.parseInt(description);
+                tasks.unmarkTask(description);
+                break;
+            case "list":
+                tasks.listTasks();
+                break;
+            case "":
+                System.out.println(Constant.TAB_SPACE + "Please enter some commands");
+                break;
+            default:
+                System.out.println(Constant.TAB_SPACE + "☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+                break;
+            }
+        } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {
+            System.out.println(Constant.TAB_SPACE + "Please enter a valid command (╬▔皿▔)╯.");
         }
     }
 }
