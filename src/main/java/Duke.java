@@ -17,6 +17,9 @@ public class Duke {
         UI.showWelcomeMessage();
         do {
             input = in.nextLine();
+            if (DukeException.hasError(input)){
+                continue;
+            }
             command(input);
         } while (!input.equals("bye"));
     }
