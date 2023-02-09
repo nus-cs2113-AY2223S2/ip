@@ -1,7 +1,12 @@
-import task.Deadline;
-import task.Event;
-import task.Task;
-import task.ToDo;
+package siri;
+
+import siri.siri_exceptions.AddTaskIndexOutOfBounds;
+import siri.siri_exceptions.MarkerArrayIndexOutOfBoundsException;
+import siri.siri_exceptions.UnknownCommandException;
+import siri.task.Deadline;
+import siri.task.Event;
+import siri.task.Task;
+import siri.task.ToDo;
 
 import java.util.Scanner;
 
