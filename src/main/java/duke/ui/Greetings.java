@@ -1,3 +1,5 @@
+package duke.ui;
+
 public class Greetings {
 	private static final String LOGO =
 			" ____        _        \n"
@@ -5,7 +7,7 @@ public class Greetings {
 					+ "| | | | | | | |/ / _ \\\n"
 					+ "| |_| | |_| |   <  __/\n"
 					+ "|____/ \\__,_|_|\\_\\___|\n";
-	private static final String OPENING_LINE = "Hello! I'm Duke"
+	private static final String OPENING_LINE = "Hello! I'm duke.Duke"
 					+ System.lineSeparator()
 					+ "What can I do for you? Type 'help' for the command list";
 

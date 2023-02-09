@@ -1,4 +1,11 @@
-import java.awt.*;
+package duke;
+
+import duke.tasks.Deadline;
+import duke.tasks.Event;
+import duke.tasks.Task;
+import duke.tasks.Todo;
+import duke.ui.Greetings;
+
 import java.util.Scanner;
 
 public class Duke {
@@ -29,7 +36,7 @@ public class Duke {
 				System.out.println("Got it. I've added this task: ");
 				tasks[taskCount].printTask();
 				taskCount += 1;
-				System.out.println("Now you have " + taskCount + " tasks in the list.");
+				System.out.println("Now you have " + taskCount + " duke.tasks in the list.");
 				dukeGreeting.printDivider();
 			} else if (userMessage.startsWith("deadline")) {
 				userMessage.substring(10);
@@ -39,7 +46,7 @@ public class Duke {
 				System.out.println("Got it. I've added this deadline: ");
 				tasks[taskCount].printTask();
 				taskCount += 1;
-				System.out.println("Now you have " + taskCount + " tasks in the list.");
+				System.out.println("Now you have " + taskCount + " duke.tasks in the list.");
 				dukeGreeting.printDivider();
 			} else if (userMessage.startsWith("event")) {
 				userMessage.substring(7);
@@ -53,7 +60,7 @@ public class Duke {
 				System.out.println("Got it. I've added this deadline: ");
 				tasks[taskCount].printTask();
 				taskCount += 1;
-				System.out.println("Now you have " + taskCount + " tasks in the list.");
+				System.out.println("Now you have " + taskCount + " duke.tasks in the list.");
 				dukeGreeting.printDivider();
 			} else if (userMessage.startsWith("mark")) {
 				dukeGreeting.printDivider();
@@ -92,7 +99,7 @@ public class Duke {
 				dukeGreeting.printDivider();
 				if (taskCount > 0) {
 					for (int i = 0; i < taskCount; i += 1) {
-						System.out.println("Here are the tasks in your list: ");
+						System.out.println("Here are the duke.tasks in your list: ");
 						System.out.print(i + 1);
 						System.out.print(".");
 						tasks[i].printTask();
