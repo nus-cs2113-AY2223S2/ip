@@ -24,20 +24,6 @@ public class StorageFile {
         parseFile(taskList);
 
     }
-//
-//    public void createFile() {
-//
-//        try {
-//
-//            f.createNewFile();
-//
-//        } catch (IOException e) {
-//
-//            System.out.println("never create file");
-//
-//        }
-//
-//    }
 
     public void parseFile(TaskList taskList) {
         try {
@@ -65,7 +51,7 @@ public class StorageFile {
 
             FileWriter fw = new FileWriter(DEFAULT_STORAGE_FILEPATH);
 
-            for (int i = 0; i < taskList.getListIndex(); i++) {
+            for (int i = 0; i < taskList.getTaskListSize(); i++) {
 
                 Task currentTask = taskList.getTask(i);
                 String fileEntry = currentTask.encodeTask() + System.lineSeparator();
