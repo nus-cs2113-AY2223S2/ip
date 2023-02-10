@@ -1,52 +1,59 @@
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
+    static final int COMMAND_INDEX = 0;
+    static final int MAX_COMMAND_LENGTH = 1;
+    static final int DESCRIPTION_INDEX = 1;
+    static final int STARTDATE_INDEX = 0;
+    static final int ENDDATE_INDEX = 1;
+
     public static void exitMessage() {
         System.out.println("Go away Anna");
         System.out.println("O-kay bye......");
     }
 
-    public static String getItemDescription(String[] input) {
+    public static String getItemDescription(String userInput) {
         Scanner in = new Scanner(System.in);
-        if (input.length != 1) {
-            return input[1];
-        } else {
+        String description;
+        try {
+            description = userInput.split(" ", 2)[DESCRIPTION_INDEX];
+        } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("What are you referring to?");
-            return in.nextLine().trim();
+            description = in.nextLine().trim();
         }
+        return description;
     }
 
-    public static String getDueDate(String[] input) {
+    public static String getDueDate(String userInput) {
         Scanner in = new Scanner(System.in);
-        if (input[1].contains("/by")) {
-            return input[1].split("/by",2)[1];
+        String dueDate;
+        if (userInput.contains("/by")) {
+            dueDate = userInput.substring(userInput.indexOf("/by"));
         } else {
             System.out.println("When is this due by?");
-            {
-                return in.nextLine().trim();
-            }
-        }
+            dueDate = in.nextLine().trim();
+         }
+        return dueDate;
     }
-    public static String[] getStartEndDates(String[] input) {
+
+    public static String[] getStartEndDates(String userInput) {
         Scanner in = new Scanner(System.in);
         String[] StartEndDates = new String[2];
 
-        if (input[1].contains("/from") && input[1].contains("/to")) {
-            StartEndDates[0] = input[1].substring(input[1].indexOf("/from"),input[1].indexOf("/to")).trim();
-            StartEndDates[1] = input[1].substring(input[1].indexOf("/to")).trim();
-        } else if (input[1].contains("/from")) {
-            StartEndDates[0] = input[1].substring(input[1].indexOf("/from")).trim();
-            System.out.println("When does this event end?");
-            StartEndDates[1] = in.nextLine().trim();
-        } else if (input[1].contains("/to")) {
-            System.out.println("When does this event start?");
-            StartEndDates[0] = in.nextLine().trim();
-            StartEndDates[1] = input[1].substring(input[1].indexOf("/to")).trim();
+        if (userInput.contains("/from")) {
+            StartEndDates[STARTDATE_INDEX] = userInput.substring(userInput.indexOf("/from"),userInput.indexOf("/to")).trim();
         } else {
             System.out.println("When does this event start?");
-            StartEndDates[0] = in.nextLine().trim();
+            StartEndDates[STARTDATE_INDEX] = in.nextLine().trim();
+        }
+
+        if (userInput.contains("/to")) {
+            StartEndDates[ENDDATE_INDEX] = userInput.substring(userInput.indexOf("/to")).trim();
+        } else {
             System.out.println("When does this event end?");
-            StartEndDates[1] = in.nextLine().trim();
+            StartEndDates[ENDDATE_INDEX] = in.nextLine().trim();
         }
         return StartEndDates;
     }
@@ -56,8 +63,9 @@ public class Duke {
 
         while (true) {
             String userInput = in.nextLine().trim();
-            String[] input = userInput.split(" ",2);
-            String inputCommand = input[0];
+            ArrayList <String> input = new ArrayList<>();
+            input.add(COMMAND_INDEX, userInput.split(" ", 2)[COMMAND_INDEX]);
+            String inputCommand = input.get(COMMAND_INDEX);
 
             switch (inputCommand) {
             case "bye":
@@ -73,7 +81,7 @@ public class Duke {
                 break;
 
             case "mark": {
-                String itemNum = getItemDescription(input);
+                String itemNum = getItemDescription(userInput);
 
                 TaskList.markDone(Integer.parseInt(itemNum) - 1);
                 System.out.println("Okay I've marked item " + itemNum + " as done:");
@@ -82,7 +90,7 @@ public class Duke {
             }
 
             case "unmark": {
-                String itemNum = getItemDescription(input);
+                String itemNum = getItemDescription(userInput);
 
                 TaskList.markNotDone(Integer.parseInt(itemNum) - 1);
                 System.out.println("Oh no! Are we not done with " + itemNum + " after all?");
@@ -91,32 +99,32 @@ public class Duke {
             }
 
             case "add": {
-                String itemDescription = getItemDescription(input);
+                String itemDescription = getItemDescription(userInput);
                 Task newTask = new Task(itemDescription);
                 TaskList.addItem(newTask);
                 break;
             }
 
             case "todo": {
-                String itemDescription = getItemDescription(input);
+                String itemDescription = getItemDescription(userInput);
                 Todo newTask = new Todo(itemDescription);
                 TaskList.addItem(newTask);
                 break;
             }
 
             case "deadline": {
-                String itemDescription = getItemDescription(input);
-                String dueDate = getDueDate(input);
+                String itemDescription = getItemDescription(userInput);
+                String dueDate = getDueDate(userInput);
                 Deadline newTask = new Deadline(itemDescription,dueDate);
                 TaskList.addItem(newTask);
                 break;
             }
 
             case "event":
-                String itemDescription = getItemDescription(input);
-                String[] StartEndDates = getStartEndDates(input);
-                String startDate = StartEndDates[0];
-                String endDate = StartEndDates[1];
+                String itemDescription = getItemDescription(userInput);
+                String[] StartEndDates = getStartEndDates(userInput);
+                String startDate = StartEndDates[STARTDATE_INDEX];
+                String endDate = StartEndDates[ENDDATE_INDEX];
                 Event newTask = new Event(itemDescription,startDate,endDate);
                 TaskList.addItem(newTask);
                 break;
