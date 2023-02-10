@@ -9,8 +9,8 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Duke {
-    static ArrayList<Task> tasks = new ArrayList<Task>();//Create an arraylist object to store commands
-    static int size = tasks.size();
+    static ArrayList<Task> tasks = new ArrayList<>();//Create an arraylist object to store commands
+    static int size;
 
     public static void add_todo(String line){
         try {
@@ -39,8 +39,6 @@ public class Duke {
             print_list_count();
         } catch (StringIndexOutOfBoundsException e) {
             System.out.println(":(OOPS! Please pay attention to the input format.");
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println(":(OOPS! Please pay attention to the input format.");
         }
     }
 
@@ -57,8 +55,6 @@ public class Duke {
             size = tasks.size();
             print_list_count();
         } catch (StringIndexOutOfBoundsException e) {
-            System.out.println(":(OOPS! Please pay attention to the input format.");
-        } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println(":(OOPS! Please pay attention to the input format.");
         }
     }
@@ -86,19 +82,36 @@ public class Duke {
         }
     }
 
-    public static void list_tasks(String line){
+    public static void delete(String line) {
+        int index = Integer.parseInt(line.split(" ")[1])-1;
+        System.out.println("Noted. I've removed this task: ");
+        System.out.println(tasks.get(index));
+        tasks.remove(index);
+        print_list_count();
+    }
+
+    public static void list_tasks(){
+        size = tasks.size();
         System.out.println("Here are the tasks in your list: ");
-        for(int i = 0; i<size; i++){
-            System.out.println(String.valueOf(i+1) + ". " + tasks.get(i).toString());
+        if(size > 0) {
+            for (int i = 0; i < size; i++) {
+                System.out.println(i + 1 + ". " + tasks.get(i).toString());
+            }
+        } else {
+            System.out.println("Hooray! Your task list is empty.");
         }
     }
 
     public static void print_list_count() {
-        if(size == 1) {
+        size = tasks.size();
+        if (size == 1) {
             System.out.println("Now you have 1 task in the list.");
         }
-        else{
-            System.out.println("Now you have "+ String.valueOf(size)+" tasks in the list.");
+        else if (size == 0) {
+            System.out.println("Now you have 0 task in the list.");
+        }
+        else {
+            System.out.println("Now you have "+ size+" tasks in the list.");
         }
     }
 
@@ -134,7 +147,7 @@ public class Duke {
                 unmark(line);
             }
             else if(line.equals("list")){
-                list_tasks(line);
+                list_tasks();
             }
             else if(line.startsWith("deadline")){
                 add_deadline(line);
@@ -145,6 +158,9 @@ public class Duke {
             else if(line.startsWith("event")){
                 add_event(line);
             }
+            else if(line.startsWith("delete")) {
+                delete(line)
+;            }
             else {
                 System.out.println(":( OOPS!!! Please choose from the command: todo, deadline, event, list, mark, unmark, bye.");
             }
