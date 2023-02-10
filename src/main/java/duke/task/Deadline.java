@@ -12,6 +12,7 @@ public class Deadline extends Task{
     private String endDate;
     public Deadline(String command){
         super();
+        setInitCommand(command);
         setDescription(command.substring(command.indexOf(" "),command.indexOf("/by")).trim());
         setEndDate(command.substring(command.indexOf("/by")+3).trim());
     }

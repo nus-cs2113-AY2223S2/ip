@@ -21,6 +21,7 @@ public class Event extends Task{
     }
     public Event(String command){
         super();
+        setInitCommand(command);
         setDescription(command.substring(command.indexOf(" "),command.indexOf("/from")).trim());
         setStartDate(command.substring(command.indexOf("/from")+5,command.indexOf("/to")).trim());
         setEndDate(command.substring(command.indexOf("/to")+3).trim());
