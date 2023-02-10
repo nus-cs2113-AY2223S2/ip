@@ -1,5 +1,9 @@
-public class Todo extends Task{
-    protected String by;
+package tasks;
+
+import tasks.Task;
+
+public class Todo extends Task {
+    public String by;
 
     public Todo(String description) {
         super(description);

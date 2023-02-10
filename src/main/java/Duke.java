@@ -28,7 +28,7 @@ public class Duke {
         System.out.println("PIKAPIKAPI HELLOO\n" + logo);
         System.out.println("Please let Pikapi write you a lists");
 
-        Addlist addList = new Addlist();
-        addList.AddList();
+        StartPikaDuke addList = new StartPikaDuke();
+        addList.startPikaDuke();
     }
 }
