@@ -17,6 +17,10 @@ public class TaskList extends ArrayList<Task> {
         System.out.println(LINEBREAK);
     }
 
+    public void loadTask(int i, Task taskToAdd){
+        this.add(taskToAdd);
+    }
+
     /**
      * Deletes a task from the task list.
      *

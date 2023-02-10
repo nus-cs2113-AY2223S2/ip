@@ -1,6 +1,6 @@
 package duke.tasks;
 
-public class Events extends ToDo {
+public class Event extends ToDo {
 
     protected String start;
     protected String end;
@@ -12,11 +12,19 @@ public class Events extends ToDo {
      * @param start Start time of event.
      * @param end  End time of event.
      */
-    public Events(String taskName, String start, String end) {
+    public Event(String taskName, String start, String end) {
         super(taskName);
         super.type = "[E]";
         this.start = start;
         this.end = end;
+    }
+
+    public String getStart(){
+        return this.start;
+    }
+
+    public String getEnd(){
+        return this.end;
     }
 
     @Override

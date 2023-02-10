@@ -2,11 +2,13 @@ package duke.commands.taskCommands;
 
 import duke.commands.Command;
 import duke.exceptions.InvalidTaskException;
-import duke.tasks.Events;
+import duke.save.FileOperation;
+import duke.tasks.Event;
 import duke.tasks.Task;
 import duke.tasks.TaskList;
 import duke.tasks.ToDo;
-import static duke.constants.Constants.LINEBREAK;
+
+import java.io.IOException;
 
 public class EventCommand extends Command {
 
@@ -35,11 +37,14 @@ public class EventCommand extends Command {
                 throw new InvalidTaskException();
             }
 
-            ToDo newDeadline = new Events(description, from, to);
+            ToDo newDeadline = new Event(description, from, to);
             taskList.addTask(newDeadline);
+            FileOperation.updateFile(taskList);
 
         } catch (InvalidTaskException e) {
             System.out.println(e.getMessage());
+        } catch (IOException e) {
+            System.out.println("Something went wrong!");
         }
     }
 }

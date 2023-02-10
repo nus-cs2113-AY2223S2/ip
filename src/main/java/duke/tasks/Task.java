@@ -27,9 +27,18 @@ public class Task {
     }
 
     /**
-     * Getters for indexCount
+     * Gettera for isDone.
      *
-     * @return indexCount
+     * @return The current "done" status of the task
+     */
+    public boolean getIsDone(){
+        return isDone;
+    }
+
+    /**
+     * Getters for indexCount.
+     *
+     * @return Current index count of a
      */
     public static int getIndexCount(){
        return indexCount;
@@ -38,8 +47,25 @@ public class Task {
     /**
      * Decrements indexCount by 1
      */
-    public static void decrementIndexCount(){
+    public static void decrementIndexCount() {
         indexCount--;
+    }
+
+    /*
+     * Getters for Task type
+     * @return a String representing the type of the task
+     */
+    public String getType(){
+        return type;
+    }
+
+    /**
+     * Getters for taskName.
+     *
+     * @return Task description.
+     */
+    public String getTaskName(){
+        return taskName;
     }
 
     @Override
