@@ -27,6 +27,15 @@ public class Task {
     }
 
     /**
+     * Gettera for isDone.
+     *
+     * @return The current "done" status of the task
+     */
+    public boolean getIsDone(){
+        return isDone;
+    }
+
+    /**
      * Getters for indexCount.
      *
      * @return Current index count of a
@@ -40,7 +49,7 @@ public class Task {
      * @return a String representing the type of the task
      */
     public String getType(){
-        return this.type;
+        return type;
     }
 
     /**
@@ -49,7 +58,7 @@ public class Task {
      * @return Task description.
      */
     public String getTaskName(){
-        return this.taskName;
+        return taskName;
     }
 
     @Override
