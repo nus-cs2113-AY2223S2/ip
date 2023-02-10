@@ -1,5 +1,9 @@
 import java.util.Scanner;
 import java.util.Arrays;
+
+import exceptions.MarkOutOfBounds;
+import exceptions.UnmarkOutOfBounds;
+
 public class Duke {
     /***
      * MAX_TASK_NUM shows the maximum number of tasks it can store
@@ -65,7 +69,7 @@ public class Duke {
      * Reads in the user inputs and processes the commands.
      */
     private static void acceptUserInputs() {
-        Scanner in = new Scanner (System.in);
+        Scanner in = new Scanner(System.in);
         String line = in.nextLine();
         Task[] storedValues = new Task[MAX_TASK_NUM];
         while (!hasProcessedAllInputs(line, storedValues)) {
@@ -83,41 +87,52 @@ public class Duke {
 
         String splitInputs[] = line.split(" ", 2);
         String command = splitInputs[0];
-        try {
-            switch (command) {
-            case "bye":
-                return true;
-            case "list":
-                printList(storedValues, taskNum);
-                break;
-            case "mark":
-                markItem(storedValues, line);
-                break;
-            case "unmark":
+        switch (command) {
+        case "bye":
+            return true;
+        case "list":
+            printList(storedValues, taskNum);
+            break;
+        case "mark":
+            try {
+                markItem(storedValues, line, taskNum);
+            } catch (MarkOutOfBounds e) {
+                System.out.println("Item to mark is not in list!");
+            }
+            break;
+        case "unmark":
+            try {
                 unmarkItem(storedValues, line);
-                break;
-            case "deadline":
+            } catch (UnmarkOutOfBounds e) {
+                System.out.println("Item to unmark is not in list!");
+            }
+            break;
+        case "deadline":
+            try {
                 taskNum = processDeadline(storedValues, taskNum, line);
-                break;
-            case "todo":
+            } catch (StringIndexOutOfBoundsException e) {
+                System.out.println("Deadline is not added in the correct format! \n" +
+                        "deadline <description> /by <date> \n");
+            }
+            break;
+        case "todo":
+            try {
                 taskNum = processToDo(storedValues, taskNum, line);
-                break;
-            case "event":
+            } catch (StringIndexOutOfBoundsException e) {
+                System.out.println("The description after todo cannot be empty!");
+            }
+            break;
+        case "event":
+            try {
                 taskNum = processEvent(storedValues, taskNum, line);
-                break;
-            default:
-                // Commands that are not listed above
-                System.out.println("Invalid command, try again! \n");
+            } catch (StringIndexOutOfBoundsException e) {
+                System.out.println("Event is not added in the correct format! \n" +
+                        "event <description> /from <date> /to <date> \n");
             }
-        } catch (NullPointerException e) {
-            System.out.println("Item to mark/unmark is not in list!");
-        } catch (StringIndexOutOfBoundsException e) {
-            if (command.equals("todo")) {
-                System.out.println("The description of the todo cannot be empty!");
-            } else {
-                System.out.println("Task is not added in correct format. " +
-                        "Please include '/' in front of by/from/to");
-            }
+            break;
+        default:
+            // Commands that are not listed above
+            System.out.println("Invalid command, try again! \n");
         }
         return false;
     }
@@ -132,12 +147,12 @@ public class Duke {
      */
     private static int processEvent(Task[] storedValues, int taskNum, String line) {
         int firstForwardSlash = line.indexOf('/');
-        String taskName = line.substring(REMOVE_EVENT_NUM,firstForwardSlash-1);
-        String duration = line.substring(firstForwardSlash+REMOVE_FROM_NUM);
+        String taskName = line.substring(REMOVE_EVENT_NUM, firstForwardSlash - 1);
+        String duration = line.substring(firstForwardSlash + REMOVE_FROM_NUM);
 
         int secondForwardSlash = duration.indexOf('/');
-        String startingTime = duration.substring(0,secondForwardSlash-1);
-        String endingTime = duration.substring(secondForwardSlash+REMOVE_TO_NUM);
+        String startingTime = duration.substring(0, secondForwardSlash - 1);
+        String endingTime = duration.substring(secondForwardSlash + REMOVE_TO_NUM);
         Event eventInput = new Event(taskName, startingTime, endingTime);
 
         taskNum = addTask(storedValues, taskNum, eventInput);
@@ -154,7 +169,7 @@ public class Duke {
      */
     private static int processToDo(Task[] storedValues, int taskNum, String line) {
         String removeCommand = line.substring(REMOVE_TODO_NUM);
-        Todo todoInput= new Todo(removeCommand);
+        Todo todoInput = new Todo(removeCommand);
         taskNum = addTask(storedValues, taskNum, todoInput);
         return taskNum;
     }
@@ -171,7 +186,7 @@ public class Duke {
         int forwardSlash = line.indexOf('/');
         int endOfTask = forwardSlash - 1;
         int dates = forwardSlash + REMOVE_BY_NUM;
-        Deadline deadlineInput = new Deadline(line.substring(9,endOfTask), line.substring(dates));
+        Deadline deadlineInput = new Deadline(line.substring(9, endOfTask), line.substring(dates));
         taskNum = addTask(storedValues, taskNum, deadlineInput);
         return taskNum;
     }
@@ -185,7 +200,7 @@ public class Duke {
      */
     private static int addTask(Task[] storedValues, int taskNum, Task line) {
         formattingLine();
-        System.out.println("Got it. I've added this task: \n" + line.toString() + "\n"+
+        System.out.println("Got it. I've added this task: \n" + line.toString() + "\n" +
                 "Now you have " + (taskNum + 1) + " tasks in the list.\n");
         formattingLine();
         // Store value in line into list
@@ -200,16 +215,20 @@ public class Duke {
      * @param storedValues List of tasks from user inputs
      * @param line User input to be processed.
      */
-    private static void unmarkItem(Task[] storedValues, String line) {
+    private static void unmarkItem(Task[] storedValues, String line) throws UnmarkOutOfBounds {
         int length = line.length();
         String itemToMark = line.substring(REMOVE_UNMARK_NUM, length);
         int numToMark = Integer.parseInt(itemToMark);
         // Unmark the item
-        storedValues[numToMark-1].unmarkAsDone();
-        formattingLine();
-        System.out.println("OK, I've marked this task as not done yet: \n" +
-                storedValues[numToMark-1].toString() + "\n");
-        formattingLine();
+        if (taskNum < numToMark) {
+            throw new UnmarkOutOfBounds();
+        } else {
+            storedValues[numToMark - 1].unmarkAsDone();
+            formattingLine();
+            System.out.println("OK, I've marked this task as not done yet: \n" +
+                    storedValues[numToMark - 1].toString() + "\n");
+            formattingLine();
+        }
     }
 
     /***
@@ -217,16 +236,21 @@ public class Duke {
      * @param storedValues List of tasks from user inputs.
      * @param line User input to be processed.
      */
-    private static void markItem(Task[] storedValues, String line) {
+    private static void markItem(Task[] storedValues, String line, int taskNum) throws MarkOutOfBounds {
         int length = line.length();
         String itemToMark = line.substring(REMOVE_MARK_NUM, length);
         int numToMark = Integer.parseInt(itemToMark);
         // Mark the item as complete
-        storedValues[numToMark-1].markAsDone();
-        formattingLine();
-        System.out.println("Nice! I've marked this task as done: \n"
-                + storedValues[numToMark-1].toString() + "\n");
-        formattingLine();
+        if (taskNum < numToMark) {
+            // Means that it is out of bounds
+            throw new MarkOutOfBounds();
+        } else {
+            storedValues[numToMark - 1].markAsDone();
+            formattingLine();
+            System.out.println("Nice! I've marked this task as done: \n"
+                    + storedValues[numToMark - 1].toString() + "\n");
+            formattingLine();
+        }
     }
 
     /***
@@ -240,7 +264,7 @@ public class Duke {
         formattingLine();
         System.out.println("Here are the tasks in your list:");
         for (Task value : existingValues) {
-            System.out.println((currValue+1) + "." + value.toString());
+            System.out.println((currValue + 1) + "." + value.toString());
             currValue += 1;
         }
         formattingLine();
