@@ -131,8 +131,7 @@ public class Duke {
             case "todo":
                 try {
                     taskList[taskNum] = new Todo(splittedCommand[1]);
-                    addTask(taskList[taskNum]);
-                    taskNum++;
+                    addTask(taskList[taskNum++]);
                 } catch (LackOfTaskDetail e) {
                     System.out.println("   > lack of task detail");
                 }
@@ -141,8 +140,7 @@ public class Duke {
                 try {
                     String splittedDiscription[] = splittedCommand[1].split("/", 2);
                     taskList[taskNum] = new Deadline(splittedDiscription[0], splittedDiscription[1]);
-                    addTask(taskList[taskNum]);
-                    taskNum++;
+                    addTask(taskList[taskNum++]);
                 } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println("   > Please enter a task and a deadline behind the task seperated by \"/\" ");
                 } catch (LackOfTaskDetail e) {
@@ -153,8 +151,7 @@ public class Duke {
                 try {
                     String[] splittedDiscription = splittedCommand[1].split("/", 2);
                     taskList[taskNum] = new Event(splittedDiscription[0], splittedDiscription[1]);
-                    addTask(taskList[taskNum]);
-                    taskNum++;
+                    addTask(taskList[taskNum++]);
                 } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println("   > Please enter a task and the time behind the task seperated by \"/\" ");
                 } catch (LackOfTaskDetail e) {
