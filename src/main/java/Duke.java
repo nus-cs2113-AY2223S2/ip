@@ -5,6 +5,8 @@ import task.Event;
 import task.Task;
 import task.Todo;
 
+import java.io.*;
+
 import java.util.Scanner;
 
 
@@ -142,13 +144,42 @@ public class Duke {
             tasks[taskNumber - 1].markUndone();
             System.out.println("OK, I've marked this task as not done yet:");
         }
-        System.out.println(tasks[taskNumber-1]);
+        System.out.println(tasks[taskNumber - 1]);
         horizontalLine();
+    }
+
+    private static void writeToFile(Task[] tasks) {
+        try {
+            FileOutputStream writeData = new FileOutputStream("./src/main/duke.txt");
+            ObjectOutputStream writeStream = new ObjectOutputStream(writeData);
+
+            writeStream.writeObject(tasks);
+            writeStream.flush();
+            writeStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static Task[] readFromFile() {
+        try {
+            FileInputStream readData = new FileInputStream("./src/main/duke.txt");
+            ObjectInputStream readStream = new ObjectInputStream(readData);
+
+            Task[] tasks = (Task[]) readStream.readObject();
+            readStream.close();
+            return tasks;
+        } catch (IOException error) {
+            File f = new File("./src/main/duke.txt");
+        } catch (ClassNotFoundException error) {
+            System.out.println("error");
+        }
+        return new Task[100];
     }
 
     public static void main(String[] args) {
         logoWithHello();
-        Task[] tasks = new Task[100];
+        Task[] tasks = readFromFile();
 
         greet();
         Scanner in = new Scanner(System.in);
@@ -166,6 +197,7 @@ public class Duke {
                 horizontalLine();
             }
         }
+        writeToFile(tasks);
         exit();
     }
 }
