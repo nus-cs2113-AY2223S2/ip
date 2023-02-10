@@ -10,12 +10,12 @@ public class Duke {
 
     private static final ArrayList<Task> tasks = new ArrayList<>();
 
-    private static String filePath = "data/duke.txt";
+    private static String filePath = "data/tasklist.txt";
 
 
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
 
 
 
@@ -111,6 +111,7 @@ public class Duke {
 
         }
 
+        storage.writeFile(filePath,tasks);
         //to say bye
         System.out.println("Bye! Hope to see you again soon!\n");
         printHorizontalBar();
@@ -123,7 +124,6 @@ public class Duke {
         Task task = tasks.get(val-1);
         System.out.print(val);
         task.printTask();
-        System.out.println(" Now you have "+ tasks.size()+ " tasks in the list.");
         tasks.remove(val-1);
     }
 
@@ -163,6 +163,7 @@ public class Duke {
         Event newEvent = new Event(title);
         newEvent.setStartTime(startTime);
         newEvent.setEndTime(endTime);
+        newEvent.setAsEvent();
         tasks.add(newEvent);
         newEvent.newEventResponse();
     }
@@ -174,6 +175,7 @@ public class Duke {
         String dueDate = contents[1];
         Deadline newDeadline = new Deadline(title);
         newDeadline.setEndTime(dueDate);
+        newDeadline.setAsDeadline();
         tasks.add(newDeadline);
         newDeadline.newDeadlineResponse();
     }
