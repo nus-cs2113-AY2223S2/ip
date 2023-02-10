@@ -34,6 +34,10 @@ public class Task {
         return isEvent;
     }
 
+    /**
+     * Function to return the type of task
+     * @return T if task is TODO, D if task is DEADLINE, E if task is EVENT
+     */
     public String getTypeIcon() {
         if (isTodo) {
             return "T";
