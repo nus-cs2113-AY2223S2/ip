@@ -7,16 +7,28 @@ import duke.tasks.Task;
 import duke.tasks.Todo;
 import duke.tools.UI;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 /**
  * Task manager with private attribute task array to store tasks.
  * Public methods to read/write tasks
  */
 public class TaskManager {
-    private static Task[] tasks = new Task[100];
+    private static ArrayList<Task> tasks = new ArrayList<>();
     private static int numTasks;
     private final static UI ECHO_BACK = new UI();
     private final static String MARKED_CAPTION = "      Nice! I've marked this task as done:";
     private final static String UNMARKED_CAPTION = "      OK, I've marked this task as not done yet:";
+    private final static String DATA_PATH = "duke_data.text";
+    private final static File DATA_FILE = new File(DATA_PATH);
+
 
 
     public TaskManager() {
@@ -27,11 +39,17 @@ public class TaskManager {
     /**
      * Create new todoTask.
      *
-     * @param taskDescription
+     * @param task
      * @return
      */
-    public Todo createNewTodo(String taskDescription){
+
+    public static void loadTask(Task task){
+        tasks.add(task);
+    }
+    public Todo createNewTodo(String taskDescription) throws IOException{
         Todo newTodo = new Todo(taskDescription);
+        String data = "T|0|"+taskDescription+"\n";
+        ECHO_BACK.writeToFile(data, DATA_PATH);
         return newTodo;
     }
 
@@ -42,7 +60,7 @@ public class TaskManager {
      * @param taskDescription
      * @return
      */
-    public Deadline createNewDeadline(String taskDescription) throws MissingParameterException {
+    public Deadline createNewDeadline(String taskDescription) throws MissingParameterException, IOException {
         int index = taskDescription.indexOf("/by");
         if(index==-1){
             throw new MissingParameterException();
@@ -50,6 +68,8 @@ public class TaskManager {
         String deadlineContent = taskDescription.substring(0,index-1);
         String deadlineDate = taskDescription.substring(index+4);
         Deadline newDeadline = new Deadline(deadlineContent, deadlineDate);
+        String data = "D|0|"+deadlineContent+"|"+deadlineDate+"\n";
+        ECHO_BACK.writeToFile(data, DATA_PATH);
         return newDeadline;
     }
 
@@ -60,7 +80,7 @@ public class TaskManager {
      * @param taskDescription
      * @return
      */
-    public Event createNewEvent(String taskDescription) throws MissingParameterException{
+    public Event createNewEvent(String taskDescription) throws MissingParameterException, IOException {
         int indexStart = taskDescription.indexOf("/from");
         int indexEnd = taskDescription.indexOf("/to");
         if(indexStart==-1||indexEnd==-1){
@@ -70,6 +90,8 @@ public class TaskManager {
         String eventStartTime = taskDescription.substring(indexStart+6, indexEnd-1);
         String eventEndTime = taskDescription.substring(indexEnd+4);
         Event newEvent = new Event(eventContent, eventStartTime, eventEndTime);
+        String data = "E|0|"+eventContent+"|"+eventStartTime+"|"+eventEndTime+"\n";
+        ECHO_BACK.writeToFile(data, DATA_PATH);
         return newEvent;
     }
 
@@ -80,7 +102,7 @@ public class TaskManager {
      * @param taskDescription
      * @return
      */
-    public Task generateNewTask(String taskType, String taskDescription) throws MissingParameterException{
+    public Task generateNewTask(String taskType, String taskDescription) throws MissingParameterException, IOException{
         Task newTask;
 
         if(taskType.equals("todo")){
@@ -100,11 +122,10 @@ public class TaskManager {
      * @param taskType .
      * @param taskDescription
      */
-    public void addTask(String taskType, String taskDescription) throws MissingParameterException{
+    public void addTask(String taskType, String taskDescription) throws MissingParameterException, IOException{
         Task newTask = generateNewTask(taskType, taskDescription);
-        tasks[numTasks]=newTask;
-        numTasks+=1;
-        ECHO_BACK.echoNewTask(numTasks,newTask);
+        tasks.add(newTask);
+        ECHO_BACK.echoNewTask(tasks.size(),newTask);
 
     }
 
@@ -114,12 +135,13 @@ public class TaskManager {
      * @param taskIndex index of the task to be edited.
      * @param status mark/unmark.
      */
-    public void editTaskStatus(String taskIndex, String status){
+    public void editTaskStatus(String taskIndex, String status) throws FileNotFoundException, IOException {
         int index = Integer.parseInt(taskIndex)-1;
-        if(status.equals("mark")){
-            tasks[index].markDone();
+        if(status.equals("mark")) {
+            tasks.get(index).markDone();
+            ECHO_BACK.updateData(index);
         }else{
-            tasks[index].undo();
+            tasks.get(index).undo();
         }
         String caption;
         if(status.equals("mark")){
@@ -127,7 +149,7 @@ public class TaskManager {
         }else{
             caption = UNMARKED_CAPTION;
         }
-        ECHO_BACK.updateTaskStatus(tasks[index], caption);
+        ECHO_BACK.updateTaskStatus(tasks.get(index), caption);
     }
 
     /**
@@ -135,7 +157,7 @@ public class TaskManager {
      */
     public void listTask(){
 
-        ECHO_BACK.listCurrentTasks(tasks, numTasks);
+        ECHO_BACK.listCurrentTasks(tasks, tasks.size());
 
     }
 }

@@ -7,6 +7,8 @@ import duke.tasks.Bye;
 import duke.tasks.Greet;
 import duke.tools.Parser;
 
+import java.io.IOException;
+
 /**
  * Manage input commands.
  * Keep reading input command until 'bye'.
@@ -45,7 +47,7 @@ public class CommandManager {
      * If command is unmark, mark a particular task as undone.
      * Else add new task.
      */
-    public void executeCommand() throws MissingParameterException {
+    public void executeCommand() throws MissingParameterException, IOException {
         if(commandType.equals("bye")){
             sayBye();
             System.exit(0);
