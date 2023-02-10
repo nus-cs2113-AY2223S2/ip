@@ -11,6 +11,12 @@ public abstract class Task {
         this.isDone = false;
     }
 
+    public Task(String description, char type, boolean isDone) {
+        this.description = description;
+        this.type = type;
+        this.isDone = isDone;
+    }
+
     public String getDescription() {
         return this.description;
     }
@@ -40,4 +46,9 @@ public abstract class Task {
     }
 
     public abstract String getListDescription();
+
+    @Override
+    public String toString() {
+        return this.getType() + " | " + this.getIsDone() + " | " + this.getDescription();
+    }
 }

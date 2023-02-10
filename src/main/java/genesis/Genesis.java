@@ -1,5 +1,6 @@
 package genesis;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import task.Deadline;
@@ -8,6 +9,7 @@ import task.Task;
 import task.Todo;
 
 import utility.ConsolePrinter;
+import utility.FileHandler;
 
 import exception.GenesisException;
 import exception.UnknownCommandException;
@@ -99,11 +101,12 @@ public class Genesis {
             switch (command) {
             case "list": {
                 handleListTasks();
-                break;
+                return;
             }
             case "mark": {
                 validateIndex(contentArr);
                 handleMarkTask(contentArr[1]);
+                FileHandler.saveToFile(tasks);
                 break;
             }
             case "unmark": {
@@ -131,6 +134,8 @@ public class Genesis {
             }
             }
 
+            FileHandler.saveToFile(tasks);
+
         } catch (GenesisException e) {
             System.out.println(e.getMessage());
         } catch (UnknownCommandException e) {
@@ -141,6 +146,8 @@ public class Genesis {
             System.out.println("☹ OOPS!!! Index is not a number");
         } catch (IndexOutOfBoundsException e) {
             System.out.println("☹ OOPS!!! task.Task index does not exist");
+        } catch (IOException e) {
+            System.out.println("☹ OOPS!!! Failed to update to local file storage");
         } finally {
             ConsolePrinter.breakLine();
         }
