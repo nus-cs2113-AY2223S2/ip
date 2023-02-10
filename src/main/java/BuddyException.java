@@ -1,2 +1,2 @@
-package PACKAGE_NAME;public class BuddyException {
+public class BuddyException {
 }

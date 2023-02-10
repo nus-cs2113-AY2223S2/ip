@@ -11,11 +11,13 @@ public class Buddy {
     public static void main(String[] args) {
         String greeting = "Hello there! I'm Buddy\n"
                 + "How may I assist you?";
+        String listOfCommands = "Here are the commands you can use: todo, deadline, event,  list, mark, unmark, bye";
         String exitMessage = "Hope I was of help to you! Have a great day and see you again, Buddy :)";
         String divider = "________________________________________________________________________________";
 
         System.out.println(divider);
         System.out.println(greeting);
+        System.out.println(listOfCommands);
         System.out.println(divider);
 
         Task[] listOfThings = new Task[TOTAL_TASKS];  // why cannot private static?
@@ -24,7 +26,9 @@ public class Buddy {
         Scanner in = new Scanner(System.in);
         command = in.nextLine();
 
+
         while (!command.equals("bye")) {
+
             int index = 1;
             if (command.equals("list")) {
                 for (int i = 0; i < currentPosition; i++) { // while not null
@@ -35,30 +39,46 @@ public class Buddy {
                 int taskNumberIndexMark = 5;
                 int taskNumber = Integer.parseInt(command.substring(taskNumberIndexMark));
                 // have to parse
-                Task currentTask = listOfThings[taskNumber - 1];
-                currentTask.setDone(true);
-                System.out.println(divider);
-                System.out.println("Great work on completing this task! Marked as done! :)");
-                System.out.println(currentTask);
-                System.out.println(divider);
+
+                try {
+                    Task currentTask = listOfThings[taskNumber - 1];
+                    currentTask.setDone(true);
+                    System.out.println(divider);
+                    System.out.println("Great work on completing this task! Marked as done! :)");
+                    System.out.println(currentTask);
+                    System.out.println(divider);
+                } catch (IndexOutOfBoundsException a) {
+                    System.out.println("That is not a valid task to mark! Please check your list again and input a valid task");
+
+                }
             } else if (command.startsWith("unmark")) {
                 int taskNumberIndexUnmark = 7;
                 int taskNumber = Integer.parseInt(command.substring(taskNumberIndexUnmark));
-                Task currentTask = listOfThings[taskNumber - 1];
-                currentTask.setDone(false);
-                System.out.println(divider);
-                System.out.println("Remember to come back to this task! Marked as undone!");
-                System.out.println(currentTask);
-                System.out.println(divider);
-            } else { //todo or deadline or event --> put together so don't have to repeat the same code thrice
+
+                try {
+                    Task currentTask = listOfThings[taskNumber - 1];
+
+                    currentTask.setDone(false);
+                    System.out.println(divider);
+                    System.out.println("Remember to come back to this task! Marked as undone!");
+                    System.out.println(currentTask);
+                    System.out.println(divider);
+                } catch (IndexOutOfBoundsException a) {
+                    System.out.println("That is not a valid task to unmark! Please check your list again and input a valid task");
+
+                }
+            } else if (command.startsWith("todo") || command.startsWith("deadline") || command.startsWith("event")) { //todo or deadline or event --> put together so don't have to repeat the same code thrice
                 System.out.println(divider);
                 System.out.println("Got it! I have added this task: ");
                 if (command.startsWith("todo")) {
                     int todoStartingIndex = 5;
+
                     Todo todoBeingAdded = new Todo(command.substring(todoStartingIndex));
                     listOfThings[currentPosition] = todoBeingAdded;
+
                     // Task is not a Todo but Todo is a task
                     System.out.println(todoBeingAdded);
+
                 } else if (command.startsWith("deadline")) {
                     int deadlineStartingIndex = 9;
                     Task taskBeingAdded = new Task(command.substring(deadlineStartingIndex)); // task + date + slash (Description)
@@ -71,7 +91,7 @@ public class Buddy {
                     listOfThings[currentPosition] = deadlineBeingAdded;
                     System.out.println(deadlineBeingAdded);
 
-                } else if (command.startsWith("event")){
+                } else if (command.startsWith("event")) {
                     int eventStartingIndex = 6;
                     Task taskBeingAdded = new Task(command.substring(eventStartingIndex));
                     // filter the description, from and to
@@ -93,8 +113,11 @@ public class Buddy {
                 } else {
                     System.out.println(" tasks remaining! You got this, buddy!");  // all these same for all three subtasks so put at the bottom
                 }
+            } else {
+                System.out.println("This command does not exist! Please type a valid command!");
             }
             command = in.nextLine();
+
         }
         System.out.println(divider);
         System.out.println(exitMessage);
