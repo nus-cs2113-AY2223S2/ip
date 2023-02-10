@@ -19,8 +19,7 @@ public class ThomasShelby {
         ToDo newToDo = new ToDo(cmdSplit[1]);
         taskManager.add(newToDo);
         taskCount++;
-        System.out.println("Don't sleep on it.");
-        System.out.println("added: " + newToDo);
+        System.out.println("Don't sleep on it.\n" + "added: " + newToDo);
     }
 
     private static void addDeadline(String[] cmdSplit) {
@@ -28,8 +27,7 @@ public class ThomasShelby {
         Deadline newDeadline = new Deadline(taskAndDeadline[0], taskAndDeadline[1]);
         taskManager.add(newDeadline);
         taskCount++;
-        System.out.println("Time is money, chop chop!");
-        System.out.println("added: " + newDeadline);
+        System.out.println("Time is money, chop chop!\n" + "added: " + newDeadline);
     }
 
     private static void addEvent(String[] cmdSplit) {
@@ -37,24 +35,27 @@ public class ThomasShelby {
         Event newEvent = new Event(taskAndDuration[0], taskAndDuration[1], taskAndDuration[2]);
         taskManager.add(newEvent);
         taskCount++;
-        System.out.println("I'll see you there.");
-        System.out.println("added: " + newEvent);
+        System.out.println("I'll see you there.\n" + "added: " + newEvent);
     }
 
     private static void markTask(String[] cmdSplit) {
-        int whichTask;
-        whichTask = Integer.parseInt(cmdSplit[1]) - 1; // shift back index
+        int whichTask = Integer.parseInt(cmdSplit[1]) - 1; // shift back index
         taskManager.get(whichTask).setIsDone(true);
-        System.out.println("That was long due, well done.");
-        System.out.println(taskManager.get(whichTask));
+        System.out.println("That was long due, well done.\n" + taskManager.get(whichTask));
     }
 
     private static void unmarkTask(String[] cmdSplit) {
-        int whichTask;
-        whichTask = Integer.parseInt(cmdSplit[1]) - 1; // shift back index
+        int whichTask = Integer.parseInt(cmdSplit[1]) - 1; // shift back index
         taskManager.get(whichTask).setIsDone(false);
-        System.out.println("You've gotten lazy.");
-        System.out.println(taskManager.get(whichTask));
+        System.out.println("You've gotten lazy.\n" + taskManager.get(whichTask));
+    }
+
+    private static void deleteTask(String[] cmdSplit) {
+        int whichTask = Integer.parseInt(cmdSplit[1]) - 1; // shift back index
+        Task taskToDelete = taskManager.get(whichTask); // store in temp var to print later
+        taskManager.remove(whichTask);
+        System.out.println("Thats off the list: \n" + taskToDelete);
+        System.out.println("You're left with " + taskManager.size() + " tasks.");
     }
 
     public static void main(String[] args) {
@@ -86,6 +87,9 @@ public class ThomasShelby {
                     break;
                 case "unmark":
                     unmarkTask(cmdSplit);
+                    break;
+                case "delete":
+                    deleteTask(cmdSplit);
                     break;
                 default:
                     throw new Exception();
