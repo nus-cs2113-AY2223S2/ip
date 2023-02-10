@@ -1,3 +1,5 @@
+package Duke.Task;
+
 public class Event extends Task {
     public Event(String description, String startDate, String endDate) {
         super(description);
