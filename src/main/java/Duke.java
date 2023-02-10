@@ -5,6 +5,7 @@ import task.Event;
 import task.Task;
 import task.Todo;
 
+import java.io.*;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -163,9 +164,41 @@ public class Duke {
         horizontalLine();
     }
 
+    private static void writeToFile(ArrayList<Task> tasks) {
+        try {
+            FileOutputStream writeData = new FileOutputStream("./src/main/duke.txt");
+            ObjectOutputStream writeStream = new ObjectOutputStream(writeData);
+
+            writeStream.writeObject(tasks);
+            writeStream.flush();
+            writeStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static ArrayList<Task> readFromFile(ArrayList<Task> tasks) {
+        try {
+            try {
+                FileInputStream readData = new FileInputStream("./src/main/duke.txt");
+                ObjectInputStream readStream = new ObjectInputStream(readData);
+                @SuppressWarnings("unchecked")
+                ArrayList<Task> tasks2 = (ArrayList<Task>) readStream.readObject();
+                tasks = tasks2;
+                readStream.close();
+            } catch (FileNotFoundException error) {
+                File f = new File("/src/main/duke.txt");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return tasks;
+    }
+
     public static void main(String[] args) {
         logoWithHello();
         ArrayList<Task> tasks = new ArrayList<>();
+        tasks = readFromFile(tasks);
 
         greet();
         Scanner in = new Scanner(System.in);
@@ -183,6 +216,7 @@ public class Duke {
                 horizontalLine();
             }
         }
+        writeToFile(tasks);
         exit();
     }
 }
