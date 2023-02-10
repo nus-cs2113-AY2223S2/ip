@@ -1,26 +1,30 @@
 package duke;
 
 import duke.command.Message;
+import duke.command.Parser;
 import duke.task.List;
 import duke.task.TaskType;
 
-import java.util.Scanner;
-
 public class Duke {
     public static void main(String[] args) {
-        Scanner inputScanner = new Scanner(System.in);
-        String userCommand, userInputDetails;
 
         Message.hello();
+        String userCommand, userInputDetails;
 
         do {
-            userCommand = inputScanner.next();
+            Parser.getUserInput();
+            userCommand = Parser.getUserCommand();
             switch(userCommand) {
             case "list":
-                List.printList();
+                userInputDetails = Parser.getUserInputDetails();
+                if (userInputDetails.equals("")) {
+                    List.printList();
+                } else {
+                    Message.unknownCommandHandler();
+                }
                 break;
             case "mark":
-                userInputDetails = inputScanner.nextLine();
+                userInputDetails = Parser.getUserInputDetails();
                 try {
                     List.markDone(Integer.parseInt(userInputDetails.trim()));
                 } catch (NumberFormatException e) {
@@ -34,7 +38,7 @@ public class Duke {
                 }
                 break;
             case "unmark":
-                userInputDetails = inputScanner.nextLine();
+                userInputDetails = Parser.getUserInputDetails();
                 try {
                     List.markUndone(Integer.parseInt(userInputDetails.trim()));
                 } catch (NumberFormatException e) {
@@ -48,15 +52,15 @@ public class Duke {
                 }
                 break;
             case "todo":
-                userInputDetails = inputScanner.nextLine();
+                userInputDetails = Parser.getUserInputDetails();
                 List.addTask(userInputDetails, TaskType.TODO);
                 break;
             case "deadline":
-                userInputDetails = inputScanner.nextLine();
+                userInputDetails = Parser.getUserInputDetails();
                 List.addTask(userInputDetails, TaskType.DEADLINE);
                 break;
             case "event":
-                userInputDetails = inputScanner.nextLine();
+                userInputDetails = Parser.getUserInputDetails();
                 List.addTask(userInputDetails, TaskType.EVENT);
                 break;
             default:

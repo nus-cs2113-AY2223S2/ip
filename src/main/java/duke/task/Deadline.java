@@ -12,7 +12,7 @@ public class Deadline extends Task {
         String descriptionDetails = descriptionParts[0];
         String descriptionDeadline = descriptionParts[1];
 
-        return "[" + this.getType() + "][" + this.getStatusIcon() + "]" +
+        return "[" + this.getType() + "][" + this.getStatusIcon() + "] " +
                 descriptionDetails + "(by:" + descriptionDeadline + ")";
     }
 
