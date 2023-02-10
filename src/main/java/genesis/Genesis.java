@@ -13,7 +13,7 @@ import exception.GenesisException;
 import exception.UnknownCommandException;
 
 public class Genesis {
-    private static ArrayList<Task> tasks = new ArrayList<Task>();
+    private static ArrayList<Task> tasks = new ArrayList<>();
 
     private static void handleListTasks() throws GenesisException {
         if (tasks.size() < 1) {
@@ -77,6 +77,13 @@ public class Genesis {
         ConsolePrinter.onTaskAdded(event.getListDescription(), tasks.size());
     }
 
+    private static void handleDelete(String content) {
+        int index = Integer.parseInt(content) - 1;
+        Task task = tasks.remove(index);
+
+        ConsolePrinter.onTaskDelete(task.getListDescription(), tasks.size());
+    }
+
     private static void validateIndex(String[] contentArr) throws GenesisException {
         if (contentArr.length < 2) {
             throw new GenesisException("Index cannot be empty");
@@ -126,6 +133,11 @@ public class Genesis {
                 handleEvent(contentArr[1]);
                 break;
             }
+            case "delete": {
+                validateIndex(contentArr);
+                handleDelete(contentArr[1]);
+                break;
+            }
             default: {
                 throw new UnknownCommandException("I'm sorry, but I don't know what that means :-(");
             }
@@ -140,7 +152,7 @@ public class Genesis {
         } catch (NumberFormatException e) {
             System.out.println("☹ OOPS!!! Index is not a number");
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("☹ OOPS!!! task.Task index does not exist");
+            System.out.println("☹ OOPS!!! Task index does not exist");
         } finally {
             ConsolePrinter.breakLine();
         }

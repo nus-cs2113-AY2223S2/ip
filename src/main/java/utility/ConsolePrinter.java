@@ -59,6 +59,12 @@ public class ConsolePrinter {
         System.out.println("Now you have " + size + " tasks in the list.");
     }
 
+    public static void onTaskDelete(String description, int size) {
+        System.out.println("Noted. I've removed this task:");
+        System.out.println(description);
+        System.out.println("Now you have " + size + " tasks in the list.");
+    }
+
     public static void helpAll() {
         System.out.println("Commands:");
         System.out.println("  list");
