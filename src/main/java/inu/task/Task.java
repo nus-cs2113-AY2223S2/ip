@@ -50,4 +50,10 @@ public class Task {
 
     }
 
+    public String encodeTask() {
+
+        return "";
+
+    }
+
 }

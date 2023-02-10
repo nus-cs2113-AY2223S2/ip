@@ -45,4 +45,11 @@ public class Event extends Task {
 
     }
 
+    @Override
+    public String encodeTask() {
+
+        return "E" + "//" + getStatusIcon() + "//" + getDescription() + "//" + getFrom() + "//" + getTo();
+
+    }
+
 }
