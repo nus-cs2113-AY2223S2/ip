@@ -66,6 +66,7 @@ public class Parser {
         case "delete":
             newCommand = new DeleteCommand();
             newCommand.handleCommand(line, taskList);
+            break;
 
         case "list":
             newCommand = new ListCommand();

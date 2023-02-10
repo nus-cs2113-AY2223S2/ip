@@ -3,8 +3,11 @@ package duke.commands.actionCommands;
 import duke.commands.Command;
 import duke.exceptions.EmptyListException;
 import duke.exceptions.InvalidArgsException;
+import duke.save.FileOperation;
 import duke.tasks.Task;
 import duke.tasks.TaskList;
+
+import java.io.IOException;
 
 import static duke.constants.Constants.LINEBREAK;
 
@@ -26,6 +29,7 @@ public class DeleteCommand extends Command {
 
             indexSelect = Integer.parseInt(indexSelectString) - 1;
             tasks.deleteTask(indexSelect);
+            FileOperation.updateFile(tasks);
 
         } catch (IndexOutOfBoundsException | NullPointerException e) {
             System.out.println("Invalid task number. Please try again.");
@@ -37,6 +41,8 @@ public class DeleteCommand extends Command {
         } catch (NumberFormatException e) {
             System.out.println("Invalid command. Please try again.");
             System.out.println(LINEBREAK);
+        } catch (IOException e){
+            System.out.println("Something went wrong!");
         }
     }
 }
