@@ -141,7 +141,7 @@ public class Duke {
 			invalidMarkArgs();
 
 		} catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
-			// prompt > listLength | non-positive
+			// prompt > listLength / non-positive
 			OutOfBoundArgs();
 
 		} catch (BlankListException e) {
