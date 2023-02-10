@@ -19,6 +19,14 @@ public class Event extends ToDo {
         this.end = end;
     }
 
+    public String getStart(){
+        return this.start;
+    }
+
+    public String getEnd(){
+        return this.end;
+    }
+
     @Override
     public String toString(){
         return checkBoxOutput() + this.taskName + " (from: " + this.start + " to: "+ this.end + ")";

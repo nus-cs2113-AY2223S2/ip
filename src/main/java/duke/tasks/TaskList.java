@@ -17,6 +17,10 @@ public class TaskList {
         System.out.println(LINEBREAK);
     }
 
+    public void loadTask(int index, Task taskToAdd){
+        tasks[index] = taskToAdd;
+    }
+
     /**
      * Gets the task from the task list at the specified index.
      *

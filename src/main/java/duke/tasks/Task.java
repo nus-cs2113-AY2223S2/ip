@@ -43,6 +43,15 @@ public class Task {
         return this.type;
     }
 
+    /**
+     * Getters for taskName.
+     *
+     * @return Task description.
+     */
+    public String getTaskName(){
+        return this.taskName;
+    }
+
     @Override
     public String toString(){
         return "";

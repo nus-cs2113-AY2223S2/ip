@@ -2,9 +2,12 @@ package duke.commands.taskCommands;
 
 import duke.commands.Command;
 import duke.exceptions.InvalidTaskException;
+import duke.save.FileOperation;
 import duke.tasks.Task;
 import duke.tasks.TaskList;
 import duke.tasks.ToDo;
+
+import java.io.IOException;
 
 public class ToDoCommand extends Command {
 
@@ -22,8 +25,11 @@ public class ToDoCommand extends Command {
             description = line.substring(markIndex + 1).trim();
             ToDo newTask = new ToDo(description);
             taskList.addTask(indexCount, newTask);
+            FileOperation.updateFile(taskList);
         } catch (InvalidTaskException e) {
             System.out.println(e.getMessage());
+        } catch (IOException e) {
+            System.out.println("Something went wrong!");
         }
     }
 }
