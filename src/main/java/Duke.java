@@ -1,4 +1,6 @@
+import java.util.Arrays;
 import java.util.Scanner;
+import java.util.ArrayList;
 public class Duke {
 
     public static void main(String[] args) {
@@ -11,7 +13,8 @@ public class Duke {
 
         String line = "    ____________________________________________________________\n";
 
-        Task[] tasks = new Task[100];
+//        Task[] tasks = new Task[100];
+        ArrayList<Task> tasks = new ArrayList<>();
         Scanner in = new Scanner(System.in);
         String action = in.nextLine();
         int index = 0;
@@ -135,6 +138,26 @@ public class Duke {
                     }
 
                     break;
+                case "delete":
+
+                    if(hasDescription) {
+
+                        try {
+
+                            index = deleteTask(tasks, inputs[1], index);
+
+                        } catch (DukeException e) {
+
+                            System.out.println("       " + e.getMessage());
+
+                        }
+                    } else {
+
+                        System.out.println("       ☹ OOPS!!! The description of an delete cannot be empty.");
+
+                    }
+
+                    break;
                 default:
 
                     System.out.println("       ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
@@ -151,7 +174,26 @@ public class Duke {
 
     }
 
-    private static int addEvent(Task[] tasks, String todoTask, int index) throws DukeException {
+    private static int deleteTask(ArrayList<Task> tasks, String input, int index) throws DukeException {
+        int val = Integer.parseInt(input);
+        val--;
+
+        if(val >= index) {
+            throw new DukeException("Task " + (val + 1) + " does not exist.");
+        }
+
+        System.out.println("     Noted. I've removed this task:");
+        System.out.println(tasks.get(val));
+        System.out.println("     Now you have " + (index - 1) + (index - 1 == 1 ? " task" : " tasks") + " in the list.");
+
+
+        tasks.remove(val);
+        index--;
+
+        return index;
+    }
+
+    private static int addEvent(ArrayList<Task> tasks, String todoTask, int index) throws DukeException {
 
         String[] taskAndDeadline = todoTask.split(" /from ");
 
@@ -173,17 +215,18 @@ public class Duke {
 
         String start = startAndEnd[0];
         String end = startAndEnd[1];
-        tasks[index] = new Event(theTask, start, end);
+        tasks.add(new Event(theTask, start, end));
         index = index + 1;
         System.out.println("     Got it. I've added this task:");
-        System.out.println("       [E][ ] " + theTask + " (from: " + start + " to: " + end + ")");
+        System.out.println(tasks.get(index - 1));
         System.out.println("     Now you have "
                             + index + (index > 1 ? " tasks " : " task ")
                             + "in the list.");
+
         return index;
     }
 
-    private static int addDeadline(Task[] tasks, String todoTask, int index) throws DukeException {
+    private static int addDeadline(ArrayList<Task> tasks, String todoTask, int index) throws DukeException {
 
         String[] taskAndDeadline = todoTask.split(" /by ");
 
@@ -195,29 +238,29 @@ public class Duke {
 
         String theTask = taskAndDeadline[0];
         String dueBy = taskAndDeadline[1];
-        tasks[index] = new Deadline(theTask, dueBy);
+        tasks.add(new Deadline(theTask, dueBy));
         index = index + 1;
         System.out.println("     Got it. I've added this task:");
-        System.out.println("       [D][ ] " + theTask + " (by: " + dueBy + ")");
+        System.out.println(tasks.get(index -1));
         System.out.println("     Now you have "
                             + index + (index > 1 ? " tasks " : " task ")
                             + "in the list.");
         return index;
     }
 
-    private static int addTodo(Task[] tasks, String todoTask, int index) throws DukeException {
+    private static int addTodo(ArrayList<Task> tasks, String todoTask, int index) throws DukeException {
 
-        tasks[index] = new Todo(todoTask);
+        tasks.add(new Todo(todoTask));
         index = index + 1;
         System.out.println("     Got it. I've added this task:");
-        System.out.println("       [T][ ] " + todoTask);
+        System.out.println(tasks.get(index - 1));
         System.out.println("     Now you have "
                             + index + (index > 1 ? " tasks " : " task ")
                             + "in the list.");
         return index;
     }
 
-    private static void unmarkTask(Task[] tasks, String taskNumber, int index) throws DukeException {
+    private static void unmarkTask(ArrayList<Task> tasks, String taskNumber, int index) throws DukeException {
 
         int ind = Integer.parseInt(taskNumber) - 1;
 
@@ -225,14 +268,14 @@ public class Duke {
             throw new DukeException("Task " + (ind + 1) + " does not exist.");
         }
 
-        tasks[ind].unmark();
+        tasks.get(ind).unmark();
         System.out.println("     OK, I've marked this task as not done yet:\n");
         System.out.println("       "
-                            + "[" + tasks[ind].getStatusIcon() + "] "
-                            + tasks[ind].getDescription());
+                            + "[" + tasks.get(ind).getStatusIcon() + "] "
+                            + tasks.get(ind).getDescription());
     }
 
-    private static void markTask(Task[] tasks, String taskNumber, int index) throws DukeException {
+    private static void markTask(ArrayList<Task> tasks, String taskNumber, int index) throws DukeException {
 
         int ind = Integer.parseInt(taskNumber) - 1;
 
@@ -240,21 +283,21 @@ public class Duke {
             throw new DukeException("Task " + (ind + 1) + " does not exist.");
         }
 
-        tasks[ind].mark();
+        tasks.get(ind).mark();
         System.out.println("     Nice! I've marked this task as done:\n");
         System.out.println("       "
-                            + "[" + tasks[ind].getStatusIcon() + "] "
-                            + tasks[ind].getDescription());
+                            + "[" + tasks.get(ind).getStatusIcon() + "] "
+                            + tasks.get(ind).getDescription());
     }
 
-    private static void listTask(Task[] tasks, int index) {
+    private static void listTask(ArrayList<Task> tasks, int index) {
         System.out.println("     Here are the tasks in your list:\n");
         for (int i = 0; i < index; i = i + 1) {
             int num = i + 1;
             System.out.println("     " + num
-                                + ".[" + tasks[i].getTypeOfTask()
-                                + "][" + tasks[i].getStatusIcon()
-                                + "] " + tasks[i].getDescription());
+                                + ".[" + tasks.get(i).getTypeOfTask()
+                                + "][" + tasks.get(i).getStatusIcon()
+                                + "] " + tasks.get(i).getDescription());
         }
     }
 
