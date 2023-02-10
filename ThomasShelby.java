@@ -1,11 +1,13 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Arrays;
 import tasks.*;
 
 public class ThomasShelby {
     static final int MAX_TASKS = 100;
 
     static Task[] taskManager = new Task[MAX_TASKS];
+//    ArrayList<Task> listOfTasks = new ArrayList<>(Arrays.asList(taskManager));
     static int taskCount = 0;
 
     private static void listTasks() {
@@ -66,7 +68,7 @@ public class ThomasShelby {
         System.out.println(taskManager[whichTask]);
     }
 
-    public static void main(String[] args) throws IncompleteTaskException {
+    public static void main(String[] args) {
         System.out.print("Good day, I'm Thomas Shelby.\nTo what do I owe the pleasure?\n");
         Scanner in = new Scanner(System.in);
         while (true) {
