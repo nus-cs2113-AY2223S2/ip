@@ -1,3 +1,5 @@
+package Duke.Task;
+
 public class Deadline extends Task {
     public Deadline(String description, String endDate) {
         super(description);
