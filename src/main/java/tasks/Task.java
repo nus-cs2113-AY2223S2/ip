@@ -1,7 +1,13 @@
+package tasks;
+
 public class Task {
     protected String taskName;
     protected boolean isDone;
     protected static int numberOfTasks;
+
+    public static void printLines(){
+        System.out.println("--------------------------------------------------");
+    }
 
     public Task(String taskName){
         this.taskName = taskName;
@@ -10,27 +16,27 @@ public class Task {
     }
 
     public void MarkTask(){
-        Rolex.printLines();
+        printLines();
         if(this.isDone){
-            System.out.println("Task is already marked.");
+            System.out.println("tasks.Task.tasks.Task is already marked.");
         } else{
             this.isDone = true;
-            System.out.println("Well Done. This task is marked as done:");
+            System.out.println("Well Done. This rolex.task is marked as done:");
             System.out.println("[" + this.taskStatus() + "] " + this.taskName);
         }
-        Rolex.printLines();
+        printLines();
     }
 
     public void unMarkTask(){
-        Rolex.printLines();
+        printLines();
         if(this.isDone){
             this.isDone = false;
-            System.out.println("Oh no, I've unmarked this task as it is not done:");
+            System.out.println("Oh no, I've unmarked this rolex.task as it is not done:");
             System.out.println("[" + this.taskStatus() + "] " + this.taskName);
         } else{
-            System.out.println("Task is already unmarked.");
+            System.out.println("tasks.Task.tasks.Task is already unmarked.");
         }
-        Rolex.printLines();
+        printLines();
     }
 
     public String taskStatus(){
@@ -41,4 +47,4 @@ public class Task {
         return "[" + this.taskStatus() + "] " + this.taskName;
     }
 
-} // Task class ends here
+} // tasks.Task.tasks.Task class ends here

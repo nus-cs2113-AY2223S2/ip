@@ -1,3 +1,5 @@
+package tasks;
+
 public class Event extends Task {
     protected String startTime;
     protected String endTime;
@@ -12,4 +14,4 @@ public class Event extends Task {
         return "[E]" + super.toString()+ " (from: " + startTime + " to: " + endTime + ")";
     }
 
-} // Event class ends here
+} // tasks.Task.tasks.Event class ends here

@@ -1,3 +1,9 @@
+import tasks.Task;
+import tasks.Deadline;
+import tasks.Event;
+import tasks.Todo;
+import exception.RolexException;
+
 import java.util.Scanner;
 
 public class Rolex {
@@ -54,14 +60,14 @@ public class Rolex {
 
     public static void addPrintTask(){
         printLines();
-        System.out.println("Got it. I've added this task:");
+        System.out.println("Got it. I've added this rolex.task:");
         System.out.println(task[taskCount-1]);
         System.out.println("\nNow you have " + taskCount + " tasks in the list.");
         printLines();
     }
 
     public static void inputIsTodo(String userInput){
-        if(userInput.equalsIgnoreCase("todo")){
+        if(userInput.startsWith("todo")){
             RolexException.detectError(userInput);
         } else{
             String todoName = userInput.substring(5);
@@ -131,4 +137,4 @@ public class Rolex {
 
     } // main() ends here
 
-} // Rolex class ends here
+} // rolex.Rolex class ends here

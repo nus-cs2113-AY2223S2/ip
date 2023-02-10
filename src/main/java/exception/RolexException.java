@@ -1,7 +1,13 @@
+package exception;
+
 public class RolexException {
 
+    public static void printLines(){
+        System.out.println("--------------------------------------------------");
+    }
+
     public static void detectError(String userInput){
-        Rolex.printLines();
+        printLines();
         if(userInput.startsWith("todo")){
             runTodoError();
         } else if(userInput.startsWith("event")){
@@ -17,7 +23,7 @@ public class RolexException {
         } else{
             System.out.println("OOPS!! I cannot understand the input! ☹ ");
         }
-        Rolex.printLines();
+        printLines();
     }
 
     public static void runTodoError(){

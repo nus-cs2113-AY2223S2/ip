@@ -1,3 +1,5 @@
+package tasks;
+
 public class Todo extends Task {
     public Todo(String taskName) {
         super(taskName);
@@ -7,4 +9,4 @@ public class Todo extends Task {
         return "[T]" + super.toString();
     }
 
-} //Todo class ends here
+} // tasks.Task.tasks.Todo class ends here
