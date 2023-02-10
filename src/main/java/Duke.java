@@ -17,7 +17,8 @@ public class Duke {
 
     public static void main(String[] args) throws FileNotFoundException {
 
-
+        Storage storage = new  Storage(filePath);
+        storage.readFile(filePath,tasks);
 
 
         String command;
