@@ -18,13 +18,7 @@ public class Duke {
     public static boolean isTheSame(String userInput, String toCompare) {
         return userInput.split(" ")[0].equals(toCompare);
     }
-
-    /**
-     * Issue regarding index marking being off by one has been resolved.
-     * @param userInput
-     * @param currentIndex
-     * @return boolean
-     */
+    
 
     public static boolean isInRange(String userInput, int currentIndex) {
         return (Integer.parseInt(userInput.split(" ")[1])>0 && Integer.parseInt(userInput.split(" ")[1])<currentIndex+1);
