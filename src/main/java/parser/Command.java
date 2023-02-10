@@ -8,5 +8,6 @@ public enum Command {
     TASK,
     MARK,
     UNMARK,
+    DELETE,
     EXIT
 }

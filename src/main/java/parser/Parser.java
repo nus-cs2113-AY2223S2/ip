@@ -34,6 +34,9 @@ public class Parser implements IParser {
     private boolean isUnmark(){
         return (message.split(" ")[0].toLowerCase().equals("unmark"));
     }
+    private boolean isDelete() {
+        return (message.split(" ")[0].toLowerCase().equals("delete"));
+    }
     /**
      * Method checks the type of task given by the user
      * @return TaskTypeEnum
@@ -92,11 +95,15 @@ public class Parser implements IParser {
         else if (isMark()) {
             currentCommand =  Command.MARK;
         }
+        else if (isDelete()) {
+            currentCommand =  Command.DELETE;
+        }
         else {
             currentCommand =  Command.TASK;
         }
         return currentCommand;
     }
+
     @Override
     public Task getTask() throws InvalidCommandException {
         TaskTypeEnum tasking = typeOfTask();
@@ -133,7 +140,9 @@ public class Parser implements IParser {
     @Override
 	public int getTaskIndex() throws InvalidCommandException{
         // Assert that mark or unmark is the command
-        assert (currentCommand == Command.MARK) || (currentCommand == Command.UNMARK);
+        assert (currentCommand == Command.MARK) ||
+               (currentCommand == Command.UNMARK) ||
+               (currentCommand == Command.DELETE);
 
         try {
             // Try to get the index from the command

@@ -18,19 +18,19 @@ public class Duke {
     private static Scanner sc = new Scanner(System.in);
     private static IParser parser = new Parser(sc);
     private static ITaskController taskController = new TaskController();
-    private static IUi uiController = new Ui();
+    private static IUi ui = new Ui();
     /**
      * Main program that runs the Duke program.
      * Greets users and exits.
      * @param args
      */
     public static void main(String[] args) {
-        uiController.greet();
+        ui.greet();
         boolean isExit = false;
         do {
             isExit = executeProgram();
         } while(!isExit);
-        uiController.bye();
+        ui.bye();
     }
     /**
      * Executes the logic of the program. Returns true when program should exit.
@@ -42,22 +42,24 @@ public class Duke {
             case EXIT:
                 return true;
             case LIST:
-                uiController.printSystemMessage(taskController.getTasks());
+                ui.printSystemMessage(taskController.getTasks());
                 return false;
             case TASK:
-                uiController.printSystemMessage(taskController.addTask(parser.getTask()));
+                ui.printSystemMessage(taskController.addTask(parser.getTask()));
                 return false;
             case UNMARK:
-                uiController.printSystemMessage(taskController.unmarkTask(parser.getTaskIndex()));
+                ui.printSystemMessage(taskController.unmarkTask(parser.getTaskIndex()));
                 return false;
             case MARK:
-                uiController.printSystemMessage(taskController.markTask(parser.getTaskIndex()));
+                ui.printSystemMessage(taskController.markTask(parser.getTaskIndex()));
                 return false;
+            case DELETE:
+                ui.printSystemMessage(taskController.deleteTask(parser.getTaskIndex()));
             default:
                 return false;
             }
         } catch (DukeException e) {
-            uiController.printSystemErrorMessage(e.getMessage());
+            ui.printSystemErrorMessage(e.getMessage());
             return false;
         } 
     }
