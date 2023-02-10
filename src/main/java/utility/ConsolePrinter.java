@@ -78,6 +78,8 @@ public class ConsolePrinter {
         helpMark();
         System.out.print("  ");
         helpUnark();
+        System.out.print("  ");
+        helpDelete();
         System.out.println("  bye");
     }
 
@@ -99,5 +101,9 @@ public class ConsolePrinter {
 
     public static void helpUnark() {
         System.out.println("unmark <index>");
+    }
+
+    public static void helpDelete() {
+        System.out.println("delete <index>");
     }
 }

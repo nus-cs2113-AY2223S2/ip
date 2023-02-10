@@ -1,0 +1,3 @@
+D | false | return book | June 6th
+E | false | project meeting | Aug 6th 2pm | Aug 6th 4pm
+T | true | join sports club

@@ -8,7 +8,9 @@ public class Main {
     public static void main(String[] args) {
         ConsolePrinter.greet();
 
+        Genesis genesis = new Genesis();
         Scanner sc = new Scanner(System.in);
+
         while (true) {
             String userInput = sc.nextLine();
 
@@ -24,7 +26,7 @@ public class Main {
                 break;
             }
 
-            Genesis.askGenesis(userInput);
+            genesis.askGenesis(userInput);
         }
 
         ConsolePrinter.goodbye();
