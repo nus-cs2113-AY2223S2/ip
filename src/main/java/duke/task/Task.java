@@ -14,6 +14,10 @@ public abstract class Task {
         totalTasks += 1;
     }
 
+    public static int getTotalTasks() {
+        return totalTasks;
+    }
+
     public String getStatusIcon() {
         if (isDone) {
             return "X";
