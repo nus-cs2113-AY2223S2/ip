@@ -1,8 +1,14 @@
+package commands;
+
+import exceptions.LackOfTaskDetail;
+
 public class Task {
     protected String taskDiscription;
     protected boolean isDone;
 
-    public Task() throws LackOfTaskDetail {}
+    public Task() throws LackOfTaskDetail {
+
+    }
 
     public Task(String task) throws LackOfTaskDetail {
         if (task.equals("")) {

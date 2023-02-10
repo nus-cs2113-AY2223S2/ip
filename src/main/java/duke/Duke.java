@@ -1,5 +1,13 @@
 import java.util.Scanner;
 
+import commands.Event;
+import commands.Task;
+import commands.Todo;
+import commands.Deadline;
+import exceptions.LackOfTaskDetail;
+import exceptions.DukeException;
+import exceptions.TaskNumberOutOfRange;
+
 public class Duke {
     private static final String LINE = "---------------------------------------------------------";
     private static final String KEQING = """
@@ -53,10 +61,10 @@ public class Duke {
             throw new TaskNumberOutOfRange("task number out of range!!");
         } else {
             taskList[idx].unmark();
-            System.out.println(line);
+            System.out.println(LINE);
             System.out.println("   > OK, I've marked this task as not done yet:");
             System.out.println("   > " + taskList[idx].toString());
-            System.out.println(line);
+            System.out.println(LINE);
         }
     }
 
@@ -66,10 +74,10 @@ public class Duke {
             throw new TaskNumberOutOfRange("task number out of range!!");
         } else {
             taskList[idx].markAsDone();
-            System.out.println(line);
+            System.out.println(LINE);
             System.out.println("   > Nice! I've marked this task as done:");
             System.out.println("   > " + taskList[idx].toString());
-            System.out.println(line);
+            System.out.println(LINE);
         }
     }
 
@@ -146,15 +154,15 @@ public class Duke {
                     addTask(taskList[taskNum]);
                     taskNum++;
                 } catch (ArrayIndexOutOfBoundsException e) {
-                    System.out.println("   > Please enter a task and a deadline behind the task seperated by \"/\" ");
+                    System.out.println("   > Please enter a task and the time behind the task seperated by \"/\" ");
                 } catch (LackOfTaskDetail e) {
                     System.out.println("   > lack of task detail!");
                 }
                 break;
             default:
-                System.out.println(line);
+                System.out.println(LINE);
                 System.out.println("Sorry, command not found");
-                System.out.println(line);
+                System.out.println(LINE);
                 break;
             }
         }

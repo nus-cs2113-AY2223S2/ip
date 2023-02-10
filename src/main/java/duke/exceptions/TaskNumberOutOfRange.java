@@ -1,5 +1,7 @@
+package exceptions;
+
 public class TaskNumberOutOfRange extends DukeException {
-    TaskNumberOutOfRange(String s) {
+    public TaskNumberOutOfRange(String s) {
         super(s);
     }
 }

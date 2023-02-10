@@ -1,5 +1,7 @@
+package exceptions;
+
 public class LackOfTaskDetail extends DukeException {
-    LackOfTaskDetail(String s) {
+    public LackOfTaskDetail (String s) {
         super(s);
     }
 }
