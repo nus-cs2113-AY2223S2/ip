@@ -26,7 +26,6 @@ public class ToDoCommand extends Command {
             description = line.substring(markIndex + 1).trim();
             ToDo newTask = new ToDo(description);
             taskList.addTask(newTask);
-            taskList.addTask(newTask);
             FileOperation.updateFile(taskList);
         } catch (InvalidTaskException e) {
             System.out.println(e.getMessage());
