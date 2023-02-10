@@ -35,3 +35,11 @@ buildNumber.properties
 .vscode/settings.json
 text-ui-test/EXPECTED-UNIX.TXT
 data/duke.txt
+text-ui-test/ACTUAL.TXT
+text-ui-test/EXPECTED-UNIX.TXT
+text-ui-test/.gradle/6.2/gc.properties
+text-ui-test/.gradle/6.2/fileChanges/last-build.bin
+text-ui-test/.gradle/6.2/fileHashes/fileHashes.lock
+text-ui-test/.gradle/checksums/checksums.lock
+text-ui-test/.gradle/vcs-1/gc.properties
+text-ui-test/data/duke.txt

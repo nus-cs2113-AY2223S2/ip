@@ -24,7 +24,7 @@ java -cp '../build/install/ip/lib/*:../bin' duke/Duke < input.txt > ACTUAL.TXT
 
 
 # convert to UNIX format
-cp EXPECTED.TXT EXPECTED-UNIX.TXT
+cp EXPECTED-LINUX.TXT EXPECTED-UNIX.TXT
 dos2unix ACTUAL.TXT EXPECTED-UNIX.TXT
 
 # compare the output to the expected output
