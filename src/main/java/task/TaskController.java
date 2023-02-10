@@ -91,4 +91,12 @@ public class TaskController implements ITaskController  {
             throw new TaskIndexOutOfRangeException("Task to be deleted is out of range!", e);
         }
     }
+    @Override
+    public boolean isEmpty() {
+        return TaskList.size() == 0;
+    }
+    @Override
+    public Task removeTaskForStorage() {
+        return TaskList.remove(0);
+    }
 }

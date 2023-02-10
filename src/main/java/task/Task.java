@@ -2,6 +2,7 @@ package task;
 
 import java.lang.NullPointerException;
 import parser.InvalidCommandException;
+import serialiser.SerialiseException;
 
 /**
  * Task class that all other tasks will inherit from
@@ -61,4 +62,6 @@ public abstract class Task{
      * @throws EmptyDescriptionException
      */
     public abstract void parseArgument(String arguments) throws InvalidCommandException, EmptyDescriptionException;
+    public abstract String[] fromString(String taskString) throws SerialiseException;
+    public abstract String toStorageString();
 }
