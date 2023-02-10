@@ -71,6 +71,11 @@ public class Duke {
                     Task.addEventTask(nextInput[1], taskList);
                     continue;
                 }
+                if (nextInput[0].equals("delete")) {
+                    int taskNumber = Integer.parseInt(nextInput[1]);
+                    Task.deleteTask(taskNumber, taskList);
+                    continue;
+                }
                 throw new DukeException("     ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
             } catch (DukeException exception) {
                 printErrorMessage(exception.getMessage());

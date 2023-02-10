@@ -66,6 +66,14 @@ public class Task {
         System.out.println("    ____________________________________________________________");
     }
 
+    public static void printDeletedTask(Task deletedTask, int numOfTasks) {
+        System.out.println("    ____________________________________________________________");
+        System.out.println("     Noted. I've removed this task:");
+        System.out.println("       " + deletedTask);
+        System.out.println("     Now you have " + numOfTasks + " tasks in the list.");
+        System.out.println("    ____________________________________________________________");
+    }
+
     public static void addTodoTask(String description, ArrayList<Task> taskList) throws DukeException {
         if (description.isBlank()) {
             //for the case where user keys in a space after the command
@@ -108,5 +116,12 @@ public class Task {
         Event newEventTask = new Event(details, from, to);
         taskList.add(newEventTask);
         Task.printAddedTask(newEventTask, taskList.size());
+    }
+
+    public static void deleteTask(int taskNumber, ArrayList<Task> taskList) {
+        int index = taskNumber - 1;
+        Task deletedTask = taskList.get(index);
+        taskList.remove(index);
+        printDeletedTask(deletedTask, taskList.size());
     }
 }
