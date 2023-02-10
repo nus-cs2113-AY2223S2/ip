@@ -2,7 +2,7 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class Duke {
-    private static void checkError(String input) throws DukeException{
+    private static void checkError(String input) throws DukeException {
         if (Objects.equals(input, "event") || Objects.equals(input, "todo") || Objects.equals(input, "deadline")) {
             throw new DukeException("The description of the body cannot be empty! Please enter a proper input.");
         } else if (Objects.equals(input, "")) {
@@ -28,7 +28,7 @@ public class Duke {
 
         boolean isBye = false;
         Task[] inputs = new Task[100];
-        for(int k = 0; k < 100; k++) {
+        for (int k = 0; k < 100; k++) {
             inputs[k] = new Task("");
         }
 
