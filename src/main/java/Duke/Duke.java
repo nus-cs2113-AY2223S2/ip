@@ -21,13 +21,29 @@ public class Duke {
                 System.out.println("--------------------------------");
                 break;
             } else if (line.substring(0, 4).equals("mark")) {
-                String number = line.substring(5, 6);
-                int markIndex = Integer.parseInt(number);
-                lists[markIndex - 1].isDone = true;
+                try{
+                    String number = line.substring(5, 6);
+                    int markIndex = Integer.parseInt(number);
+                    lists[markIndex - 1].isDone = true;
+                }catch(NumberFormatException e){
+                    System.out.println("Oops! Mark should be followed by a number. " +
+                            "(The index number should be separated by a space after the mark)");
+                }catch(IndexOutOfBoundsException e){
+                    System.out.println("Oops! Mark index out of bound! " +
+                            "(The index number should be separated by a space after the mark)");
+                }
             } else if (line.contains("unmark")) {
-                String number = line.substring(7, 8);
-                int unMarkIndex = Integer.parseInt(number);
-                lists[unMarkIndex - 1].isDone = false;
+                try{
+                    String number = line.substring(7, 8);
+                    int unMarkIndex = Integer.parseInt(number);
+                    lists[unMarkIndex - 1].isDone = false;
+                }catch(NumberFormatException e){
+                    System.out.println("Oops! Unmark should be followed by a number. " +
+                            "(The index number should be separated by a space after the unmark)");
+                }catch(IndexOutOfBoundsException e){
+                    System.out.println("Oops! Unmark index out of bound! " +
+                            "(The index number should be separated by a space after the unmark)");
+                }
             } else if (line.equals("list")) {
                 System.out.println("list:");
                 for (int i = 0; i < index; i++) {
@@ -36,12 +52,14 @@ public class Duke {
             } else {
                 if (line.substring(0, LENGTH_TODO).equals("todo")) {
                     lists[index] = new Todo(line.substring(LENGTH_TODO + 1));
+                    printMessage(lists,index);
                     index++;
                 } else if (line.substring(0, LENGTH_DEADLINE).equals("deadline")) {
                     int breakingPoint = line.indexOf("/by");
                     String description = line.substring(LENGTH_DEADLINE + 1, breakingPoint);
                     String by = line.substring(breakingPoint + 4);
                     lists[index] = new Deadline(description, by);
+                    printMessage(lists,index);
                     index++;
                 } else if (line.substring(0, LENGTH_EVENT).equals("event")) {
                     int breakingPoint_1 = line.indexOf("/from");
@@ -50,11 +68,19 @@ public class Duke {
                     String start = line.substring(breakingPoint_1 + 6, breakingPoint_2);
                     String end = line.substring(breakingPoint_2 + 4);
                     lists[index] = new Event(description, start, end);
+                    printMessage(lists,index);
                     index++;
                 }
 
             }
 
         }
+    }
+    public static void printMessage(Task[] Tasks, int taskIndex){
+        System.out.println("--------------------------------");
+        System.out.println("Got it. I've added this task:");
+        System.out.println(Tasks[taskIndex].toString());
+        System.out.println("Now you have "+(taskIndex+1)+" task(s) in the list");
+        System.out.println("--------------------------------");
     }
 }
