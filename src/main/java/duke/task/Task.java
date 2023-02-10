@@ -4,6 +4,19 @@ import duke.exception.IllegalCommandException;
 public class Task {
     private String description;
     private boolean isDone;
+
+    public String getInitCommand() {
+        return initCommand;
+    }
+
+    public void setInitCommand(String initCommand) {
+        this.initCommand = initCommand;
+    }
+    public String getSaveString(){
+        return initCommand+" "+(isDone() ? "1":"0")+System.lineSeparator();
+    }
+
+    private String initCommand;
     public Task(){
         this.isDone=false;
         this.description="";

@@ -4,8 +4,12 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.Todo;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileWriter;
 public class Duke {
     private static final String LINE = "____________________________________________________________";
     private static final String INVALID_COMMAND_PRINTER = "One hour of lifespan has been deducted, in accordance with our Terms and Services.";
@@ -64,6 +68,11 @@ public class Duke {
         System.out.println("Task has been marked as: completed");
         System.out.println(tasks.get(index).toString());
         System.out.println(LINE);
+        try{
+            save();
+        }catch(IOException e){
+            System.out.println("There was an error in saving.");
+        }
     }
     private static void unmark(String[] commands){
         if (commands.length!=2){
@@ -98,6 +107,11 @@ public class Duke {
         System.out.println("Task has been marked as: not completed");
         System.out.println(tasks.get(index).toString());
         System.out.println(LINE);
+        try{
+            save();
+        }catch(IOException e){
+            System.out.println("There was an error in saving.");
+        }
     }
     private static void delete(String[] commands){
         if (commands.length!=2){
@@ -170,6 +184,32 @@ public class Duke {
         }
         System.out.println(VALID_COMMAND_PRINTER);
         System.out.println(LINE+'\n'+"New task has been added: "+command+'\n'+LINE);
+        try{
+            save();
+        }catch(IOException e){
+            System.out.println("There was an error in saving.");
+        }
+    }
+    private static void silentlyAddTask(String command) throws IllegalCommandException{
+        taskType currentTaskType = getTaskType(command);
+        if(currentTaskType==taskType.INVALID){
+            throw new IllegalCommandException("Illegal task type");
+        }else if(currentTaskType==taskType.TODO){
+            if(command.split(" ").length<=1){
+                throw new IllegalCommandException("Illegal todo command");
+            }
+            tasks.add(new Todo(command));
+        }else if(currentTaskType==taskType.DEADLINE){
+            if(!command.contains("/by")){
+                throw new IllegalCommandException("Illegal deadline command");
+            }
+            tasks.add(new Deadline(command));
+        }else if(currentTaskType==taskType.EVENT){
+            if(!(command.contains("/from")&&command.contains("/to"))){
+                throw new IllegalCommandException("Illegal event command");
+            }
+            tasks.add(new Event(command));
+        }
     }
     private static String getCommand(){
         return in.nextLine();
@@ -233,8 +273,60 @@ public class Duke {
         System.out.println("Syntax: bye");
         System.out.println(LINE);
     }
-    public static void main(String[] args) {
+    private static void load() throws IOException, IllegalCommandException {
+        File folder = new File("data");
+        if(!(folder.exists()&&folder.isDirectory())){
+            new File("data").mkdirs();
+        }
+        File f = new File("data/araxys.txt");
+        if(!f.exists()){
+            f.createNewFile();
+        }
+        Scanner s = new Scanner(f);
+        while(s.hasNext()){
+            String nextLine =  s.nextLine();
+            String[] saveLine = nextLine.split(" ");
+            String cmd="";
+            for(int i=0;i<saveLine.length-1;i++){
+                cmd+=" ";
+                cmd+=saveLine[i];
+            }
+            cmd=cmd.trim();
+            String done = saveLine[saveLine.length-1].trim();
+            try{
+                silentlyAddTask(cmd);
+            }catch(IllegalCommandException e){
+                throw new IllegalCommandException("parsing error");
+            }
+            if(done.equals("1")){
+                tasks.get(tasks.size()-1).setDone(true);
+            }
+        }
+    }
+    private static void save() throws IOException {
+        File f = new File("data/araxys.txt");
+        if(f.exists()){
+            f.delete();
+        }
+        f.createNewFile();
+        FileWriter fw = new FileWriter(f);
+        for(Task t: tasks){
+            fw.write(t.getSaveString());
+        }
+        fw.close();
+    }
+    private static void initialise(){
         greet();
+        try{
+            load();
+        }catch(IOException e){
+            System.out.println("There was an error in loading.");
+        }catch(IllegalCommandException e){
+            System.out.println("Unhandled loading exception. 3 hours of lifetime have been added for your inconvenience.");
+        }
+    }
+    public static void main(String[] args) {
+        initialise();
         while(true){
             command = getCommand();
             command = transformCommand(command);
