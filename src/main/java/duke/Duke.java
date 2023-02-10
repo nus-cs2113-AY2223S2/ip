@@ -91,6 +91,15 @@ public class Duke {
                             Output.printTaskStatus(tasks.get(indexTask)); 
                     	} 
                         break;
+                        
+                    case "delete":
+                		indexTask = Input.scanTaskIndex(tasks.size());
+                		if(indexTask != -1) {
+                			Task.setNumTask(Task.getNumTask()-1);
+                			Output.printDeleteTaskMessage(tasks.get(indexTask)); 
+                    		tasks.remove(tasks.get(indexTask));                 		                        
+                    	} 
+                        break;
                     
                     case "bye":
                     	break;
