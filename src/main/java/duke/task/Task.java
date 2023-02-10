@@ -1,12 +1,9 @@
-package duke;
+package duke.task;
 
-public class Task {
-    protected String taskName;
-    protected boolean isDone;
-    protected static int totalTasks = 0;
-
-    public Task() {
-    }
+public abstract class Task {
+    public String taskName;
+    public boolean isDone;
+    public static int totalTasks = 0;
 
     public Task(String taskName) {
         this.taskName = taskName;

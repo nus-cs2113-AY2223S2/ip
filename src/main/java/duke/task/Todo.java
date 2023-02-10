@@ -1,4 +1,4 @@
-package duke;
+package duke.task;
 
 public class Todo extends Task {
     // tasks without any date/time attached to it

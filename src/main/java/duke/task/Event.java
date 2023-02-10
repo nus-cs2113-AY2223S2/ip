@@ -1,9 +1,9 @@
-package duke;
+package duke.task;
 
 public class Event extends Task {
     // tasks that start at a specific date/time and ends at specific date/time
-    protected String startDateTime;
-    protected String endDateTime;
+    public String startDateTime;
+    public String endDateTime;
 
     public Event(String taskName, String startDateTime, String endDateTime) {
         super(taskName);
