@@ -42,12 +42,12 @@ public class Messages {
             + "Namely, when it starts and ends after following the </> symbol respectively! ^.^" + "\n"
             + "For example: /<from when> /<to when>";
 
-    public static final String MESSAGE_PROMPT_VALID_MARK_AND_UN_MARK_INDEX = " Sorry! "
+    public static final String MESSAGE_PROMPT_VALID_TASK_INDEX = " Sorry! "
             + "This task does not exist in your list! ^.^";
 
-    public static final String MESSAGE_PROMPT_VALID_MARK_AND_UN_MARK = " Sorry! "
-            + "You need a space between your command and mark or unmark input!" + "\n"
-            + "Please enter your task to mark or unmark as such: <mark/unmark> <task number> ^.^";
+    public static final String MESSAGE_PROMPT_VALID_TASK_INDEX_ENTRY = " Sorry! "
+            + "You need a space between your command and task number to mark/unmark/delete!" + "\n"
+            + "Please enter your task to mark or unmark as such: <mark/unmark/delete> <task number> ^.^";
 
     public static final String MESSAGE_PROMPT_VALID_MARK_ENTRY = " Sorry! "
             + "Please provide some information on which task you would like to mark as complete! ^.^";
@@ -55,7 +55,11 @@ public class Messages {
     public static final String MESSAGE_PROMPT_VALID_UN_MARK_ENTRY = " Sorry! "
             + "Please provide some information on which task you would like to mark as incomplete! ^.^";
 
+    public static final String MESSAGE_PROMPT_VALID_DELETE_ENTRY = " Sorry! "
+            + "Please provide some information on which task you would like to delete! ^.^";
 
-    public static final String MESSAGE_PROMPT_EMPTY_TASK_LIST= " Woof Woof! Your task list is empty! ^.^";
+    public static final String MESSAGE_PROMPT_EMPTY_TASK_LIST = " Woof Woof! Your task list is empty! ^.^";
+
+    public static final String MESSAGE_DELETE_TASK = " Woof! I've deleted this task for you:";
 
 }

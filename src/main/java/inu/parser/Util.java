@@ -10,13 +10,7 @@ public class Util {
 
     protected static final int INDEX_OFFSET_IN_COMMAND = 1;
 
-    public static int fetchMarkIndex(String userString) {
-
-        return Integer.parseInt(userString) - INDEX_OFFSET_IN_COMMAND;
-
-    }
-
-    public static int fetchUnMarkIndex(String userString) {
+    public static int fetchIndexFromString(String userString) {
 
         return Integer.parseInt(userString) - INDEX_OFFSET_IN_COMMAND;
 
@@ -65,4 +59,5 @@ public class Util {
         return userString.substring(secondSlashEntry + INDEX_OFFSET_IN_COMMAND);
 
     }
+
 }
