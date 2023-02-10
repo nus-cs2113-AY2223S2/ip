@@ -1,3 +1,5 @@
+package duke.classes;
+
 public class Todo extends Task{
     protected String by;
 
