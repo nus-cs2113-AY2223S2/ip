@@ -5,7 +5,13 @@ import task.Event;
 import task.Task;
 import task.Todo;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileInputStream;
+import java.io.ObjectOutputStream;
+import java.io.ObjectInputStream;
+import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -80,19 +86,20 @@ public class Duke {
 
     private static void eventCommand(ArrayList<Task> tasks, String userInput) throws DukeException {
         try {
-            int positionOfSlash = userInput.indexOf("/");
-            if (positionOfSlash == -1) {
+            int firstPositionOfSlash = userInput.indexOf("/");
+            if (firstPositionOfSlash == -1) {
                 throw new DukeException(ErrorMessage.MISSING_TWO_EVENT_PARAMETER.toString());
             }
-            String startEnd = userInput.substring(positionOfSlash + 1);
-            positionOfSlash = startEnd.indexOf("/");
-            if (positionOfSlash == -1) {
+            String startEnd = userInput.substring(firstPositionOfSlash + 1);
+            int secondPositionOfSlash = startEnd.indexOf("/");
+            if (secondPositionOfSlash == -1) {
                 throw new DukeException(ErrorMessage.MISSING_ONE_EVENT_PARAMETER.toString());
             }
-            String start = startEnd.substring(5, positionOfSlash - 1);
-            String end = startEnd.substring(positionOfSlash + 4);
 
-            String description = userInput.substring(6, positionOfSlash - 1);
+            String start = startEnd.substring(0, secondPositionOfSlash - 1);
+            String end = startEnd.substring(secondPositionOfSlash + 1);
+
+            String description = userInput.substring(6, firstPositionOfSlash - 1);
             tasks.add(new Event(description, start, end));
             taskAdded(tasks);
         } catch (IndexOutOfBoundsException error) {
@@ -166,7 +173,7 @@ public class Duke {
 
     private static void writeToFile(ArrayList<Task> tasks) {
         try {
-            FileOutputStream writeData = new FileOutputStream("./src/main/duke.txt");
+            FileOutputStream writeData = new FileOutputStream("duke.txt");
             ObjectOutputStream writeStream = new ObjectOutputStream(writeData);
 
             writeStream.writeObject(tasks);
@@ -180,7 +187,7 @@ public class Duke {
     private static ArrayList<Task> readFromFile(ArrayList<Task> tasks) {
         try {
             try {
-                FileInputStream readData = new FileInputStream("./src/main/duke.txt");
+                FileInputStream readData = new FileInputStream("duke.txt");
                 ObjectInputStream readStream = new ObjectInputStream(readData);
                 @SuppressWarnings("unchecked")
                 ArrayList<Task> tasks2 = (ArrayList<Task>) readStream.readObject();
@@ -198,7 +205,7 @@ public class Duke {
     public static void main(String[] args) {
         logoWithHello();
         ArrayList<Task> tasks = new ArrayList<>();
-        File file = new File("./src/main/duke.txt");
+        File file = new File("duke.txt");
         if (file.exists()) {
             tasks = readFromFile(tasks);
         }
