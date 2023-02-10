@@ -29,7 +29,7 @@ public class Duke {
     public static void printInvalidNumber(String taskType) {
         System.out.println(LINE);
         System.out.println("\t☹ Error! Invalid input.");
-        System.out.println("\tPlease provide a integer number for \"" + taskType + "\" command.");
+        System.out.println("\tPlease provide an integer number for \"" + taskType + "\" command.");
         System.out.println("\tPlease use \"list\" command to see your task numbers.");
         System.out.println(LINE);
     }
