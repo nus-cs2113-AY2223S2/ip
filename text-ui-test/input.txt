@@ -15,3 +15,8 @@ event do stuff /from 6pm /to 10pm
 event do stuff /from 6pm
 event do stuff /to 10pm
 list
+delete 5
+delete
+delete the fifth element
+delete 3
+list

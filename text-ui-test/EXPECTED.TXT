@@ -7,30 +7,23 @@ ____________________________________________________________
 ____________________________________________________________
 Welcome to Araxys Systems, the only system powered by LifeForce™
 How may I help you today?
+Type "help" to get help.
 ____________________________________________________________
 ____________________________________________________________
 list: lists out all current items and their current status.
 Syntax: list
-todo: adds a todo task
+todo: adds a todo task.
 Syntax: todo {task}
 deadline: adds a deadline task.
 Syntax: deadline {task} /by {endDate}
 event: adds an event task.
 Syntax: event {task} /from {startDate} /to {endDate}
-help: brings you here.
-Syntax: help
-bye: exits the program.
-Syntax: bye
-____________________________________________________________
-____________________________________________________________
-list: lists out all current items and their current status.
-Syntax: list
-todo: adds a todo task
-Syntax: todo {task}
-deadline: adds a deadline task.
-Syntax: deadline {task} /by {endDate}
-event: adds an event task.
-Syntax: event {task} /from {startDate} /to {endDate}
+mark: marks a task as done.
+Syntax: mark {index}
+unmark: marks a task as not done.
+Syntax: unmark {index}
+delete: deletes an event.
+Syntax: delete {index}
 help: brings you here.
 Syntax: help
 bye: exits the program.
@@ -104,4 +97,26 @@ Command acknowledged. Reducing user lifespan by 30 minutes.
 1:[T][ ]//////try out new thing
 2:[D][ ]//////do thing (by: 5pm)
 3:[E][ ]//////do stuff (from: 6pm to: 10pm)
+____________________________________________________________
+____________________________________________________________
+Sorry, index is invalid.
+____________________________________________________________
+One hour of lifespan has been deducted, in accordance with our Terms and Services.
+____________________________________________________________
+Please only input "delete" followed by an integer.
+One hour of lifespan has been deducted, in accordance with our Terms and Services.
+____________________________________________________________
+____________________________________________________________
+Please only input "delete" followed by an integer.
+One hour of lifespan has been deducted, in accordance with our Terms and Services.
+____________________________________________________________
+____________________________________________________________
+Command acknowledged. Reducing user lifespan by 30 minutes.
+Task has been deleted:
+[E][ ]//////do stuff (from: 6pm to: 10pm)
+____________________________________________________________
+____________________________________________________________
+Command acknowledged. Reducing user lifespan by 30 minutes.
+1:[T][ ]//////try out new thing
+2:[D][ ]//////do thing (by: 5pm)
 ____________________________________________________________

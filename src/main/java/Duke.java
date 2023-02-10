@@ -99,6 +99,38 @@ public class Duke {
         System.out.println(tasks.get(index).toString());
         System.out.println(LINE);
     }
+    private static void delete(String[] commands){
+        if (commands.length!=2){
+            System.out.println(LINE);
+            System.out.println("Please only input \"delete\" followed by an integer.");
+            System.out.println(INVALID_COMMAND_PRINTER);
+            System.out.println(LINE);
+            return;
+        }
+        int index;
+        try{
+            index = Integer.parseInt(commands[1]);
+        } catch (NumberFormatException numberFormatException){
+            System.out.println(LINE+'\n'+"Sorry, index is not numeric."+'\n'+LINE);
+            System.out.println(INVALID_COMMAND_PRINTER);
+            return;
+        }
+        index--;
+        String taskString;
+        try{
+            taskString = tasks.get(index).toString();
+            tasks.remove(index);
+        } catch (IndexOutOfBoundsException e){
+            System.out.println(LINE+'\n'+"Sorry, index is invalid."+'\n'+LINE);
+            System.out.println(INVALID_COMMAND_PRINTER);
+            return;
+        }
+        System.out.println(LINE);
+        System.out.println(VALID_COMMAND_PRINTER);
+        System.out.println("Task has been deleted:");
+        System.out.println(taskString);
+        System.out.println(LINE);
+    }
     private static taskType getTaskType(String command){
         String[] commands = command.split(" ");
         switch (commands[0]) {
@@ -160,6 +192,8 @@ public class Duke {
                 mark(commands);
             }else if(commands[0].equals("unmark")){
                 unmark(commands);
+            }else if(commands[0].equals("delete")){
+                delete(commands);
             }else{
                 try{
                     addTask(command);
@@ -174,19 +208,25 @@ public class Duke {
         System.out.println(LINE+'\n'+LOGO+'\n'+LINE);
         System.out.println("Welcome to Araxys Systems, the only system powered by LifeForce™");
         System.out.println("How may I help you today?");
+        System.out.println("Type \"help\" to get help.");
         System.out.println(LINE);
-        printHelp();
     }
     private static void printHelp(){
         System.out.println(LINE);
         System.out.println("list: lists out all current items and their current status.");
         System.out.println("Syntax: list");
-        System.out.println("todo: adds a todo task");
+        System.out.println("todo: adds a todo task.");
         System.out.println("Syntax: todo {task}");
         System.out.println("deadline: adds a deadline task.");
         System.out.println("Syntax: deadline {task} /by {endDate}");
         System.out.println("event: adds an event task.");
         System.out.println("Syntax: event {task} /from {startDate} /to {endDate}");
+        System.out.println("mark: marks a task as done.");
+        System.out.println("Syntax: mark {index}");
+        System.out.println("unmark: marks a task as not done.");
+        System.out.println("Syntax: unmark {index}");
+        System.out.println("delete: deletes an event.");
+        System.out.println("Syntax: delete {index}");
         System.out.println("help: brings you here.");
         System.out.println("Syntax: help");
         System.out.println("bye: exits the program.");
