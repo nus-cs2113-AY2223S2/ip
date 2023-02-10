@@ -11,6 +11,7 @@ public enum StandardOutput {
     ADD_MESSAGE(" The following task has been added:" + System.lineSeparator()
             + "   %s" + System.lineSeparator() + " There is now %d task[s] in total." + System.lineSeparator()),
     INVALID_MARK_MESSAGE(" Invalid input! Valid input format: \"mark <number>\"!"),
+    OVER_TASK_COUNT_MESSAGE(" Invalid task number provided, current task count: %s"), 
     INVALID_UNMARK_MESSAGE(" Invalid input! Valid input format: \"unmark <number>\"!"),
     INVALID_INPUT_MESSAGE(" Invalid input! Please provide a valid input!"),
     INVALID_TODO_MESSAGE(" Invalid input! Valid input format: \"todo <task name>\""),
