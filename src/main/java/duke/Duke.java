@@ -218,7 +218,7 @@ public class Duke {
         boolean isFromPassed = false;
         boolean isToPassed = false;
 
-        // Checks if userInput contains "\by"
+        // Checks if userInput contains "\from" and "\to"
         if (!userInput.contains("/from") || !userInput.contains("/to")) {
             throw new DukeIllegalSyntaxException();
         }
