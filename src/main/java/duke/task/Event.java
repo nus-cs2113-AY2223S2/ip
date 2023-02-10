@@ -1,4 +1,4 @@
-package Duke.Task;
+package duke.task;
 
 public class Event extends Task {
     public Event(String description, String startDate, String endDate) {

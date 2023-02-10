@@ -1,10 +1,10 @@
-package Duke;
+package duke;
 
-import Duke.Exceptions.DukeWrongArgsException;
-import Duke.Task.Deadline;
-import Duke.Task.Event;
-import Duke.Task.Todo;
-import Duke.Task.Task;
+import duke.exceptions.DukeWrongArgsException;
+import duke.task.Deadline;
+import duke.task.Event;
+import duke.task.Todo;
+import duke.task.Task;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
