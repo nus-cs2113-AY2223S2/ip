@@ -7,22 +7,17 @@ import duke.tasks.Task;
 import duke.tasks.Todo;
 import duke.tools.UI;
 
+import java.util.ArrayList;
+
 /**
  * Task manager with private attribute task array to store tasks.
  * Public methods to read/write tasks
  */
 public class TaskManager {
-    private static Task[] tasks = new Task[100];
-    private static int numTasks;
+    private static ArrayList<Task> tasks = new ArrayList<>();
     private final static UI ECHO_BACK = new UI();
     private final static String MARKED_CAPTION = "      Nice! I've marked this task as done:";
     private final static String UNMARKED_CAPTION = "      OK, I've marked this task as not done yet:";
-
-
-    public TaskManager() {
-
-        this.numTasks = 0;
-    }
 
     /**
      * Create new todoTask.
@@ -102,9 +97,8 @@ public class TaskManager {
      */
     public void addTask(String taskType, String taskDescription) throws MissingParameterException{
         Task newTask = generateNewTask(taskType, taskDescription);
-        tasks[numTasks]=newTask;
-        numTasks+=1;
-        ECHO_BACK.echoNewTask(numTasks,newTask);
+        tasks.add(newTask);
+        ECHO_BACK.echoNewTask(tasks.size(),newTask);
 
     }
 
@@ -117,9 +111,9 @@ public class TaskManager {
     public void editTaskStatus(String taskIndex, String status){
         int index = Integer.parseInt(taskIndex)-1;
         if(status.equals("mark")){
-            tasks[index].markDone();
+            tasks.get(index).markDone();
         }else{
-            tasks[index].undo();
+            tasks.get(index).undo();
         }
         String caption;
         if(status.equals("mark")){
@@ -127,7 +121,7 @@ public class TaskManager {
         }else{
             caption = UNMARKED_CAPTION;
         }
-        ECHO_BACK.updateTaskStatus(tasks[index], caption);
+        ECHO_BACK.updateTaskStatus(tasks.get(index), caption);
     }
 
     /**
@@ -135,7 +129,7 @@ public class TaskManager {
      */
     public void listTask(){
 
-        ECHO_BACK.listCurrentTasks(tasks, numTasks);
+        ECHO_BACK.listCurrentTasks(tasks, tasks.size());
 
     }
 }

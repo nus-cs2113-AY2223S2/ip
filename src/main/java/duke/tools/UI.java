@@ -2,6 +2,7 @@ package duke.tools;
 
 import duke.tasks.Task;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -22,13 +23,13 @@ public class UI {
      * @param tasks
      * @param count
      */
-    public void listCurrentTasks(Task[] tasks, int count){
+    public void listCurrentTasks(ArrayList<Task> tasks, int count){
         FORMATTER.drawSeparationLine();
         System.out.println(LIST_CAPTION);
         for (int i=1; i<=count; i+=1){
             FORMATTER.printIndentation(8);
             System.out.print(i+".");
-            System.out.print(tasks[i-1]);
+            System.out.print(tasks.get(i-1));
             System.out.print('\n');
         }
         FORMATTER.drawSeparationLine();
