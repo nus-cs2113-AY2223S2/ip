@@ -19,7 +19,7 @@ public class CommandManager {
     }
 
     public static void sayBye() {
-        System.out.println(DIVIDER + "\n\t Bye. Hope to see you again soon!\n" + DIVIDER);
+            System.out.println(DIVIDER + "\n\t Bye. Hope to see you again soon!\n" + DIVIDER);
     }
 
     public CommandManager() {
@@ -33,8 +33,7 @@ public class CommandManager {
     }
 
     public void setUserInput(String input) {
-
-        this.userInput = input;
+            this.userInput = input;
     }
 
     public void setKey(String key) {
