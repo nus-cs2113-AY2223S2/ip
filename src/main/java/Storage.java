@@ -22,14 +22,16 @@ public class Storage {
             FileWriter writeFile = new FileWriter(savedFile);
             for (Task task : list) {
 
-                System.out.println(task.startTime);
-                System.out.println(task.endTime);
-                if (Objects.equals(task.taskType, "T")) {
-                    writeFile.write(task.taskType + "|" + task.isCompleted + "|" + task.taskName + System.lineSeparator());
-                } else if (Objects.equals(task.taskType, "D")) {
-                    writeFile.write(task.taskType + "|" + task.isCompleted + "|" + task.taskName + "|" + task.endTime + System.lineSeparator());
+                //System.out.println(task.startTime);
+                //System.out.println(task.endTime);
+                if (Objects.equals(task.taskType, "D")) {
+                    Deadline newDeadline = (Deadline)task;
+                    writeFile.write(newDeadline.taskType + "|" + newDeadline.isCompleted + "|" + newDeadline.taskName + "|" + newDeadline.endTime + System.lineSeparator());
                 } else if (Objects.equals(task.taskType, "E")) {
-                    writeFile.write(task.taskType + "|" + task.isCompleted + "|" + task.taskName + "|" + task.startTime + "|" + task.endTime + System.lineSeparator());
+                    Event newEvent = (Event)task;
+                    writeFile.write(newEvent.taskType + "|" + newEvent.isCompleted + "|" + newEvent.taskName + "|" + newEvent.startTime + "|" + newEvent.endTime + System.lineSeparator());
+                } else if (Objects.equals(task.taskType, "T")) {
+                    writeFile.write(task.taskType + "|" + task.isCompleted + "|" + task.taskName + System.lineSeparator());
                 }
 
             }
@@ -62,6 +64,7 @@ public class Storage {
             if (Objects.equals(inputCommands[1], "false")) {
                 isCompleted = false;
             }
+
 
             if (Objects.equals(fileType, "T")) {
                 Task newTask = new Task(inputCommands[2]);

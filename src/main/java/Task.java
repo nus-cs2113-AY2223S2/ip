@@ -1,6 +1,6 @@
 public class Task {
-    protected String startTime;
-    protected String endTime;
+    //public String startTime;
+    //public String endTime;
     protected String taskName;
     protected boolean isCompleted;
 

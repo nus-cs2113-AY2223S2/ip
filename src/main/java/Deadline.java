@@ -1,6 +1,7 @@
 public class Deadline extends Task {
 
-    protected String endTime;
+
+    public String endTime;
 
     public void setEndTime(String endTime) {
         this.endTime = endTime;

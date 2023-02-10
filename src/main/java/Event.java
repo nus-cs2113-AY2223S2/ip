@@ -1,5 +1,5 @@
 public class Event extends Deadline {
-    protected String startTime;
+    public String startTime;
 
 
     public void setStartTime(String startTime) {
