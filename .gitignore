@@ -34,3 +34,4 @@ buildNumber.properties
 .classpath
 .vscode/settings.json
 text-ui-test/EXPECTED-UNIX.TXT
+data/duke.txt
