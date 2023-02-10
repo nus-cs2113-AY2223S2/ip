@@ -1,5 +1,7 @@
 package duke;
 
+import duke.exceptions.DeleteEmptyTasks;
+import duke.exceptions.DeleteIndexOutOfBound;
 import duke.exceptions.MissingParameterException;
 import duke.tasks.Deadline;
 import duke.tasks.Event;
@@ -17,6 +19,8 @@ public class TaskManager {
     private static ArrayList<Task> tasks = new ArrayList<>();
     private final static UI ECHO_BACK = new UI();
     private final static String MARKED_CAPTION = "      Nice! I've marked this task as done:";
+    private final static String NEW_TASK_CAPTION = "      Got it. I've added this task:";
+    private final static String DELETE_TASK_CAPTION = "      Noted! I've removed this task:c";
     private final static String UNMARKED_CAPTION = "      OK, I've marked this task as not done yet:";
 
     /**
@@ -98,7 +102,7 @@ public class TaskManager {
     public void addTask(String taskType, String taskDescription) throws MissingParameterException{
         Task newTask = generateNewTask(taskType, taskDescription);
         tasks.add(newTask);
-        ECHO_BACK.echoNewTask(tasks.size(),newTask);
+        ECHO_BACK.echoTask(tasks.size(),newTask, NEW_TASK_CAPTION);
 
     }
 
@@ -131,5 +135,18 @@ public class TaskManager {
 
         ECHO_BACK.listCurrentTasks(tasks, tasks.size());
 
+    }
+
+    public void deleteTask(String description) throws DeleteIndexOutOfBound, DeleteEmptyTasks {
+        if(tasks.size()==0){
+            throw new DeleteEmptyTasks();
+        }
+        //The command description is base 1
+        int index = Integer.parseInt(description)-1;
+        if(index<0 || index>=tasks.size()){
+            throw new DeleteIndexOutOfBound();
+        }
+        ECHO_BACK.echoTask(tasks.size(), tasks.get(index), DELETE_TASK_CAPTION);
+        tasks.remove(index);
     }
 }

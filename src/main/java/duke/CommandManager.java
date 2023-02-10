@@ -1,8 +1,6 @@
 package duke;
 
-import duke.exceptions.ContentEmptyException;
-import duke.exceptions.MissingParameterException;
-import duke.exceptions.UnknownCommandException;
+import duke.exceptions.*;
 import duke.tasks.Bye;
 import duke.tasks.Greet;
 import duke.tools.Parser;
@@ -22,7 +20,7 @@ public class CommandManager {
         this.inputCommand = command;
 
         this.commandType = COMMAND_PARSER.getCommandType(command);
-        if(!(commandType.equals("todo")||commandType.equals("event")||commandType.equals("deadline")||commandType.equals("list")||commandType.equals("bye")||commandType.equals("mark")||commandType.equals("unmark"))){
+        if(!(commandType.equals("todo")||commandType.equals("event")||commandType.equals("deadline")||commandType.equals("list")||commandType.equals("bye")||commandType.equals("mark")||commandType.equals("unmark")||commandType.equals("delete"))){
             throw new UnknownCommandException();
         }
         this.commandDescription = COMMAND_PARSER.getCommandDescription(command);
@@ -45,7 +43,7 @@ public class CommandManager {
      * If command is unmark, mark a particular task as undone.
      * Else add new task.
      */
-    public void executeCommand() throws MissingParameterException {
+    public void executeCommand() throws MissingParameterException, DeleteIndexOutOfBound, DeleteEmptyTasks {
         if(commandType.equals("bye")){
             sayBye();
             System.exit(0);
@@ -57,6 +55,8 @@ public class CommandManager {
             TASK_MANAGER.editTaskStatus(this.commandDescription, "unmark");
         }else if(commandType.equals("todo")||commandType.equals("event")||commandType.equals("deadline")){
             TASK_MANAGER.addTask(this.commandType, this.commandDescription);
+        }else if(commandType.equals("delete")){
+            TASK_MANAGER.deleteTask(this.commandDescription);
         }
     }
 }

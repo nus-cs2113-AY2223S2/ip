@@ -13,7 +13,6 @@ import java.util.Scanner;
 public class UI {
     private static final Scanner SCANNER = new Scanner(System.in);
     private static final Formatter FORMATTER = new Formatter();
-    private final static String NEW_TASK_CAPTION = "      Got it. I've added this task:";
     private final static String LIST_CAPTION = "      Here are the tasks in your list:";
 
 
@@ -41,9 +40,9 @@ public class UI {
      * @param numTasks
      * @param task
      */
-    public void echoNewTask(int numTasks, Task task){
+    public void echoTask(int numTasks, Task task, String caption){
         FORMATTER.drawSeparationLine();
-        System.out.println(NEW_TASK_CAPTION);
+        System.out.println(caption);
         FORMATTER.printIndentation(8);
         System.out.println(task);
         System.out.println("      Now you have "+numTasks+" tasks in the list.");
