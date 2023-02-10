@@ -144,6 +144,11 @@ public class Duke {
         System.out.println("Task has been deleted:");
         System.out.println(taskString);
         System.out.println(LINE);
+        try{
+            save();
+        }catch(IOException e){
+            System.out.println("There was an error in saving.");
+        }
     }
     private static taskType getTaskType(String command){
         String[] commands = command.split(" ");
