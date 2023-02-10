@@ -1,3 +1,5 @@
+package Exception;
+
 public class EmptyLineException {
     static void validate (String input){
         if(input.equals("")){

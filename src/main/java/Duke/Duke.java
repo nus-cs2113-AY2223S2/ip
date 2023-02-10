@@ -1,3 +1,5 @@
+package Duke;
+
 import java.util.Scanner;
 
 public class Duke {
@@ -8,7 +10,7 @@ public class Duke {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         System.out.println("--------------------------------");
-        System.out.println("Hello! I'm Duke");
+        System.out.println("Hello! I'm Duke.Duke");
         System.out.println("What can I do for you?");
         System.out.println("--------------------------------");
         Task[] lists = new Task[100];
@@ -27,10 +29,13 @@ public class Duke {
                     lists[markIndex - 1].isDone = true;
                 }catch(NumberFormatException e){
                     System.out.println("Oops! Mark should be followed by a number. " +
-                            "(The index number should be separated by a space after the mark)");
+                            "(A valid index number should be separated by a space after the mark)");
                 }catch(IndexOutOfBoundsException e){
                     System.out.println("Oops! Mark index out of bound! " +
-                            "(The index number should be separated by a space after the mark)");
+                            "(A valid index number should be separated by a space after the mark)");
+                }catch(NullPointerException e){
+                    System.out.println("Oops! Mark index out of bound! " +
+                            "(A valid index number should be separated by a space after the mark)");
                 }
             } else if (line.contains("unmark")) {
                 try{
@@ -39,10 +44,13 @@ public class Duke {
                     lists[unMarkIndex - 1].isDone = false;
                 }catch(NumberFormatException e){
                     System.out.println("Oops! Unmark should be followed by a number. " +
-                            "(The index number should be separated by a space after the unmark)");
+                            "(A valid index number should be separated by a space after the unmark)");
                 }catch(IndexOutOfBoundsException e){
                     System.out.println("Oops! Unmark index out of bound! " +
-                            "(The index number should be separated by a space after the unmark)");
+                            "(A valid index number should be separated by a space after the unmark)");
+                }catch(NullPointerException e){
+                    System.out.println("Oops! Unmark index out of bound! " +
+                            "(A valid index number should be separated by a space after the mark)");
                 }
             } else if (line.equals("list")) {
                 System.out.println("list:");
