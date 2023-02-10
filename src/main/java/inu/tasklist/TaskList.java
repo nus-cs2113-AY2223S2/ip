@@ -1,49 +1,61 @@
 package inu.tasklist;
 
+import java.util.ArrayList;
 import inu.task.*;
 
 public class TaskList {
 
-    private Task[] taskList;
+    private ArrayList<Task> taskList;
 
-    private int listIndex = 0;
+    private final int INDEX_OFFSET = 1;
 
     public TaskList() {
 
-        this.taskList = new Task[100];
+        taskList = new ArrayList<>();
 
     }
 
     public void printList() {
 
-        for (int i = 0; i < listIndex; i++) {
-            System.out.println((i + 1) + ". " + taskList[i].toString());
+        for (int taskIndex = 0; taskIndex < taskList.size(); taskIndex++) {
+
+            int taskNumber = taskIndex + INDEX_OFFSET;
+            System.out.println(taskNumber + ". " + taskList.get(taskIndex).toString());
+
         }
 
     }
 
     public void addTask(Task t) {
 
-        taskList[listIndex] = t;
-        listIndex++;
+        taskList.add(t);
 
     }
 
-    public int getListIndex() {
+    public void deleteTask(int taskIndex) {
 
-        return listIndex;
+        taskList.remove(taskIndex);
+        taskList.trimToSize();
+
+    }
+
+    public int getTaskListSize() {
+
+        return taskList.size();
 
     }
 
     public Task getTask(int index) {
 
-        return taskList[index];
+        return taskList.get(index);
 
     }
 
     public Task getLastTask() {
 
-        return taskList[listIndex - 1];
+        int lastIndex = getTaskListSize() - INDEX_OFFSET;
+        return taskList.get(lastIndex);
 
     }
+
 }

@@ -16,9 +16,9 @@ public class ExceptionManager {
 
     public static void checkEmptyTaskList(TaskList taskList) throws EmptyTaskListException {
 
-        if (taskList.getListIndex() == 0) {
-                throw new EmptyTaskListException();
-            }
+        if (taskList.getTaskListSize() == 0) {
+            throw new EmptyTaskListException();
+        }
 
     }
 

@@ -3,7 +3,6 @@ package inu.parser;
 import java.util.Scanner;
 
 import inu.task.*;
-import inu.tasklist.*;
 import inu.exceptionhandling.*;
 import inu.tasklist.TaskList;
 
@@ -30,6 +29,8 @@ public class UserCommands {
     public static final String DEADLINE = "deadline";
 
     public static final String EVENT = "event";
+
+    public static final String DELETE = "delete";
 
     public static final String MARK = "mark";
 
@@ -149,6 +150,33 @@ public class UserCommands {
                 }
                 break;
 
+            case DELETE:
+
+                try {
+
+                    entry = userString[INDEX_ENTRY];
+
+                    ExceptionManager.checkEmptyUserInput(entry);
+
+                    int deleteTaskNumber = Util.fetchIndexFromString(entry);
+                    Ui.printDelete(taskList, deleteTaskNumber);
+                    taskList.deleteTask(deleteTaskNumber);
+
+                } catch (ArrayIndexOutOfBoundsException e) {
+
+                    Ui.printPromptValidTaskIndexEntry();
+
+                } catch (IndexOutOfBoundsException e) {
+
+                    Ui.printPromptValidTaskIndex();
+
+                } catch (EmptyUserInputException e) {
+
+                    Ui.printPromptValidDelete();
+
+                }
+                break;
+
             case LIST:
 
                 try {
@@ -171,17 +199,17 @@ public class UserCommands {
 
                     ExceptionManager.checkEmptyUserInput(entry);
 
-                    int markIndex = Util.fetchMarkIndex(entry);
+                    int markIndex = Util.fetchIndexFromString(entry);
                     Util.markTask(taskList, markIndex);
                     Ui.printMark(taskList, markIndex);
 
                 } catch (ArrayIndexOutOfBoundsException e) {
 
-                    Ui.printPromptValidMarkAndUnMark();
+                    Ui.printPromptValidTaskIndexEntry();
 
-                } catch (NullPointerException e) {
+                } catch (IndexOutOfBoundsException e) {
 
-                    Ui.printPromptValidMarkAndUnMarkIndex();
+                    Ui.printPromptValidTaskIndex();
 
                 } catch (EmptyUserInputException e) {
 
@@ -198,17 +226,17 @@ public class UserCommands {
 
                     ExceptionManager.checkEmptyUserInput(entry);
 
-                    int unMarkIndex = Util.fetchUnMarkIndex(entry);
+                    int unMarkIndex = Util.fetchIndexFromString(entry);
                     Util.unMarkTask(taskList, unMarkIndex);
                     Ui.printUnMark(taskList, unMarkIndex);
 
                 } catch (ArrayIndexOutOfBoundsException e) {
 
-                    Ui.printPromptValidMarkAndUnMark();
+                    Ui.printPromptValidTaskIndexEntry();
 
-                } catch (NullPointerException e) {
+                } catch (IndexOutOfBoundsException e) {
 
-                    Ui.printPromptValidMarkAndUnMarkIndex();
+                    Ui.printPromptValidTaskIndex();
 
                 } catch (EmptyUserInputException e) {
 

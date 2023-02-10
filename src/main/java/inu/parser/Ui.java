@@ -1,6 +1,5 @@
 package inu.parser;
 
-import inu.tasklist.*;
 import inu.tasklist.TaskList;
 
 public class Ui {
@@ -51,7 +50,7 @@ public class Ui {
 
         System.out.println(Messages.MESSAGE_DIVIDER);
         System.out.println("added: " + taskList.getLastTask().toString() + "\n"
-                + "Now you have " + taskList.getListIndex() + " tasks in your list.");
+                + "Now you have " + taskList.getTaskListSize() + " tasks in your list.");
         System.out.println(Messages.MESSAGE_DIVIDER);
 
     }
@@ -112,10 +111,10 @@ public class Ui {
 
     }
 
-    public static void printPromptValidMarkAndUnMark() {
+    public static void printPromptValidTaskIndexEntry() {
 
         System.out.println(Messages.MESSAGE_DIVIDER);
-        System.out.println(Messages.MESSAGE_PROMPT_VALID_MARK_AND_UN_MARK);
+        System.out.println(Messages.MESSAGE_PROMPT_VALID_TASK_INDEX_ENTRY);
         System.out.println(Messages.MESSAGE_DIVIDER);
 
     }
@@ -136,10 +135,18 @@ public class Ui {
 
     }
 
-    public static void printPromptValidMarkAndUnMarkIndex() {
+    public static void printPromptValidDelete() {
 
         System.out.println(Messages.MESSAGE_DIVIDER);
-        System.out.println(Messages.MESSAGE_PROMPT_VALID_MARK_AND_UN_MARK_INDEX);
+        System.out.println(Messages.MESSAGE_PROMPT_VALID_DELETE_ENTRY);
+        System.out.println(Messages.MESSAGE_DIVIDER);
+
+    }
+
+    public static void printPromptValidTaskIndex() {
+
+        System.out.println(Messages.MESSAGE_DIVIDER);
+        System.out.println(Messages.MESSAGE_PROMPT_VALID_TASK_INDEX);
         System.out.println(Messages.MESSAGE_DIVIDER);
 
     }
@@ -148,6 +155,14 @@ public class Ui {
 
         System.out.println(Messages.MESSAGE_DIVIDER);
         System.out.println(Messages.MESSAGE_PROMPT_EMPTY_TASK_LIST);
+        System.out.println(Messages.MESSAGE_DIVIDER);
+
+    }
+
+    public static void printDelete(TaskList taskList, int deleteTaskNumber) {
+
+        System.out.println(Messages.MESSAGE_DIVIDER);
+        System.out.println(Messages.MESSAGE_DELETE_TASK + "\n" + taskList.getTask(deleteTaskNumber).toString());
         System.out.println(Messages.MESSAGE_DIVIDER);
 
     }
