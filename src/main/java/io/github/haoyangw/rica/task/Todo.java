@@ -1,3 +1,7 @@
+package io.github.haoyangw.rica.task;
+
+import io.github.haoyangw.rica.exception.RicaTaskException;
+
 public class Todo extends Task {
     private static final String MISSING_DESCRIPTION_ERROR = " Remember to provide a description of the todo task you're adding y'know!";
     private static final String TYPE = "T";

@@ -1,3 +1,5 @@
+package io.github.haoyangw.rica.exception;
+
 public class RicaTaskException extends RicaException {
 
     public RicaTaskException() {

@@ -1,3 +1,5 @@
+package io.github.haoyangw.rica.task;
+
 public class Task {
     protected final String description;
 

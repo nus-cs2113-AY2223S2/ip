@@ -1,3 +1,9 @@
+package io.github.haoyangw.rica;
+
+import io.github.haoyangw.rica.exception.RicaException;
+import io.github.haoyangw.rica.exception.RicaTaskException;
+import io.github.haoyangw.rica.task.TaskManager;
+
 import java.util.Scanner;
 
 public class Rica {

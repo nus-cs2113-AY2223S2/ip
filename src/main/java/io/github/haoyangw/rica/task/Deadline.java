@@ -1,3 +1,7 @@
+package io.github.haoyangw.rica.task;
+
+import io.github.haoyangw.rica.exception.RicaTaskException;
+
 public class Deadline extends Todo {
     private static final String COMMAND = "deadline";
     private static final String DEADLINE_KEYWORD = "/by";

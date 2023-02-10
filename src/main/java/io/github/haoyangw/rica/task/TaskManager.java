@@ -1,3 +1,7 @@
+package io.github.haoyangw.rica.task;
+
+import io.github.haoyangw.rica.exception.RicaTaskException;
+
 import java.util.ArrayList;
 
 public class TaskManager {
@@ -98,8 +102,8 @@ public class TaskManager {
      * Mark a given task in the task list as done
      *
      * @param indexOfTask Index of given task in the task list
-     * @return Task object representing the desired task being marked as done,
-     * null if not an instance of Todo
+     * @return rica.Task object representing the desired task being marked as done,
+     * null if not an instance of rica.Todo
      */
     public static Todo markDone(int indexOfTask) throws RicaTaskException {
         boolean isNegativeIndex = indexOfTask < 0;
@@ -112,7 +116,7 @@ public class TaskManager {
         if (!isTaskATodo) {
             throw new RicaTaskException(TaskManager.WRONG_TASK_TYPE);
         }
-        // At this point, Task is definitely an instance of Todo. Can cast it to Todo safely
+        // At this point, rica.Task is definitely an instance of rica.Todo. Can cast it to rica.Todo safely
         Todo selectedTodo = (Todo) selectedTask;
         if (selectedTodo.getIsDone()) {
             printlnWithIndent(" Take a break maybe? Alright marked as done my friend:");
@@ -147,8 +151,8 @@ public class TaskManager {
      * Mark a given task in the task list as not done
      *
      * @param indexOfTask Index of desired task in the task list
-     * @return Task object representing the desired task being marked as not done,
-     * null if not an instance of Todo
+     * @return rica.Task object representing the desired task being marked as not done,
+     * null if not an instance of rica.Todo
      */
     public static Todo unmarkDone(int indexOfTask) throws RicaTaskException {
         boolean isIndexNegative = indexOfTask < 0;

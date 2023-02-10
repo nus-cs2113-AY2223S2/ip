@@ -1,3 +1,7 @@
+package io.github.haoyangw.rica.task;
+
+import io.github.haoyangw.rica.exception.RicaTaskException;
+
 public class Event extends Todo {
     private static final String COMMAND = "event";
     private static final String MISSING_DESC_ERROR = " Remember to provide a description of the event you're adding y'know!";
