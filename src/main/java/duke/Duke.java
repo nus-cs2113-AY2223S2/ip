@@ -1,23 +1,16 @@
+package duke;
+
+import duke.command.*;
+import duke.exception.*;
+import duke.task.Task;
+
+import static duke.print.Print.*;
+
 import java.util.Scanner;
 
+
 public class Duke {
-
-    /**
-     * Prints welcome message at the start of the program
-     */
-    private static void showWelcomeMessage() {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        println("Hello from\n" + logo);
-
-        printOneLine();
-        println("    Hello! I'm Duke");
-        println("    What can I do for you?");
-        printOneLine();
-    }
+    static final int USER_INPUT_EXPECTED_SIZE = 2;
 
     public static void main(String[] args) {
         showWelcomeMessage();
@@ -28,6 +21,7 @@ public class Duke {
         Scanner input = new Scanner(System.in);
 
         while (true) {
+
             String text = input.nextLine();
 
             if ("bye".equalsIgnoreCase(text)) {
@@ -60,29 +54,44 @@ public class Duke {
                     break;
 
                 case "event":
-                    addEvent(taskList, taskIndex, userInput);
+                    try {
+                        if (userInput.length != USER_INPUT_EXPECTED_SIZE) {
+                            throw new EventException();
+                        } else {
+                            addEvent(taskList, taskIndex, userInput);
 
-                    taskIndex += 1;
+                            taskIndex += 1;
+                        }
+                    } catch (EventException e) {
+                        continue;
+                    }
+
                     break;
 
                 case "todo":
-                    addTodo(taskList, taskIndex, userInput);
+                    try {
+                        if (userInput.length != USER_INPUT_EXPECTED_SIZE) {
+                            throw new TodoException();
+                        } else {
+                            addTodo(taskList, taskIndex, userInput);
 
-                    taskIndex += 1;
+                            taskIndex += 1;
+                        }
+                    } catch (TodoException e) {
+                        continue;
+                    }
                     break;
+
+                default:
+                    try {
+                        throw new KeywordException();
+                    } catch (KeywordException e) {
+                        break;
+                    }
             }
         }
 
         showExitMessage();
-    }
-
-    /**
-     * Prints exit message at the end of the program
-     */
-    private static void showExitMessage() {
-        printOneLine();
-        println("    Bye. Hope to see you again soon!");
-        printOneLine();
     }
 
     /**
@@ -92,16 +101,15 @@ public class Duke {
      * @param taskIndex The current index to insert the task in the list
      * @param userInput The details of the task to be added
      */
-    private static void addTodo(Task[] taskList, int taskIndex, String[] userInput) {
+    private static void addTodo(Task[] taskList, int taskIndex, String[] userInput) throws TodoException {
         Todo new_todo = new Todo(userInput[1]);
-
         taskList[taskIndex] = new_todo;
 
         printAddingOneTask(new_todo, taskIndex);
     }
 
     /**
-     * Creates a new task, classified as a event task
+     * Creates a new task, classified as an event task
      *
      * @param taskList  The list to insert the task into
      * @param taskIndex The current index to insert the task in the list
@@ -155,9 +163,9 @@ public class Duke {
         println("     OK, I've marked this task as not done yet:");
 
         printTypeAndStatus(selectedTask);
-        print(selectedTask.description);
+        print(selectedTask.getDescription());
 
-        switch (selectedTask.getType()) {
+        switch (selectedTask.getTypeIcon()) {
             case "D":
                 println(" (by:" + selectedTask.getBy() + ")");
                 break;
@@ -190,9 +198,9 @@ public class Duke {
         println("     Nice! I've marked this task as done:");
 
         printTypeAndStatus(selectedTask);
-        print(selectedTask.description);
+        print(selectedTask.getDescription());
 
-        switch (selectedTask.getType()) {
+        switch (selectedTask.getTypeIcon()) {
             case "D":
                 println(" (by:" + selectedTask.getBy() + ")");
                 break;
@@ -204,111 +212,6 @@ public class Duke {
             default:
                 println("");
         }
-
-        printOneLine();
-    }
-
-
-    /**
-     * Prints the list of tasks
-     *
-     * @param taskList the list of tasks to print out
-     */
-    private static void printTaskList(Task[] taskList) {
-        printOneLine();
-        println("     Here are the tasks in your list:");
-
-        for (int i = 0; i < taskList.length; i += 1) {
-            if (taskList[i] == null) {
-                break;
-            }
-
-            print("     " + (i + 1) + ".");
-            print("[" + taskList[i].getType() + "]");
-            print("[" + taskList[i].getDoneIcon() + "] " + taskList[i].description);
-
-            switch (taskList[i].getType()) {
-                case "D":
-                    println(" (by:" + taskList[i].getBy() + ")");
-                    break;
-
-                case "E":
-                    println("(from: " + taskList[i].getFrom() + " to:" + taskList[i].getTo() + ")");
-                    break;
-
-                case "T":
-                    println("");
-            }
-        }
-        printOneLine();
-    }
-
-    /**
-     * Simplifies the default Java System.out.print method
-     *
-     * @param str Input string to print
-     */
-    public static void print(String str) {
-        System.out.print(str);
-    }
-
-    /**
-     * Simplifies the default Java System.out.println method
-     *
-     * @param str Input string to print with a newline character
-     *            at the end
-     */
-    public static void println(String str) {
-        System.out.println(str);
-    }
-
-    /**
-     * Prints out one line of underscores, with a newline character at the end
-     * <p>
-     * 4 spaces is included at the front of the string
-     */
-    public static void printOneLine() {
-        System.out.println("    ____________________________________");
-    }
-
-
-    /**
-     * Prints the type of task and the marked-done status of the task
-     *
-     * @param selectedTask The selected task to print its task Type and Done status
-     */
-    public static void printTypeAndStatus(Task selectedTask) {
-        print("       [" + selectedTask.getType() + "]" + "[" + selectedTask.getDoneIcon() + "] ");
-    }
-
-    /**
-     * Prints the details of a newly added task
-     *
-     * @param task      The task to print the details of.
-     * @param taskIndex The index of the current last task, to determine the current number of tasks in the list
-     */
-    private static void printAddingOneTask(Task task, int taskIndex) {
-        printOneLine();
-        println("     Got it. I've added this task:");
-        print("       [" + task.getType() + "]" + "[" + task.getDoneIcon() + "] ");
-
-        if (task.isTodo) {
-            print(task.description);
-
-        } else if (task.isDeadline) {
-
-            print(task.description);
-            print(" (by:" + task.getBy() + ")");
-
-        } else if (task.isEvent) {
-
-            print(task.description);
-            print("(from: " + task.getFrom() + " to:" + task.getTo() + ")");
-
-        }
-        println("");
-
-        println("     Now you have " + (taskIndex + 1) + " tasks in the list");
 
         printOneLine();
     }
