@@ -42,13 +42,13 @@ public class Duke {
             } else {
                 Task t;
                 if (instruction.toLowerCase().contains("deadline")) {
-                    try {
+                    try{
                         String description = instruction.substring(instruction.indexOf(' ') + 1, instruction.indexOf('/'));
                         String ddl = instruction.substring(instruction.indexOf('/') + 1);
                         String by = ddl.replace("by", "");
                         t = new Deadline(description, by);
                         taskListAdd(t);
-                    } catch (StringIndexOutOfBoundsException e) {
+                    }catch (StringIndexOutOfBoundsException e) {
                         System.out.println(lineBreak + '\n' + "☹ OOPS!!! The description of a deadline cannot be empty." + '\n' + lineBreak);
                     }
                 } else if (instruction.toLowerCase().contains("event")) {
