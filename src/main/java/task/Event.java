@@ -1,9 +1,8 @@
 package task;
 
 public class Event extends Task {
-    private String dateTime;
-    private String startTime;
-    private String endTime;
+    private final String startTime;
+    private final String endTime;
 
     public Event(String description, String startTime, String endTime) {
         super(description);

@@ -7,7 +7,7 @@ public enum ErrorMessage {
     MISSING_ONE_EVENT_PARAMETER("I am sorry, you are missing an end time"),
     MISSING_EVENT_PARAMETER("I am sorry, you are missing a description for event."),
     MISSING_DEADLINE_BY_PARAMETER("I am sorry, you are missing the by parameter for your deadline"),
-    EMPTY_DEADLINE_BY_PARAMETER("I am sorry, you are inputing an empty by parameter for your deadline"),
+    EMPTY_DEADLINE_BY_PARAMETER("I am sorry, you are inputting an empty by parameter for your deadline"),
     MISSING_DEADLINE_PARAMETER("I am sorry, you are missing a description for deadline."),
     INVALID_TASK("I am sorry, you are trying to mark/unmark a task that does not exist."),
     INVALID_DELETE("I am sorry, you are trying to delete a task that does not exist."),

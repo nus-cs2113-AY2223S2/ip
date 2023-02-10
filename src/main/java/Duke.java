@@ -187,7 +187,7 @@ public class Duke {
                 tasks = tasks2;
                 readStream.close();
             } catch (FileNotFoundException error) {
-                File f = new File("/src/main/duke.txt");
+                System.out.println("File");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -198,7 +198,10 @@ public class Duke {
     public static void main(String[] args) {
         logoWithHello();
         ArrayList<Task> tasks = new ArrayList<>();
-        tasks = readFromFile(tasks);
+        File file = new File("./src/main/duke.txt");
+        if (file.exists()) {
+            tasks = readFromFile(tasks);
+        }
 
         greet();
         Scanner in = new Scanner(System.in);

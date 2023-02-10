@@ -3,7 +3,7 @@ package task;
 import java.io.Serializable;
 
 public class Task implements Serializable {
-    private String description;
+    private final String description;
     private boolean isDone;
 
     public Task(String description){
@@ -20,10 +20,6 @@ public class Task implements Serializable {
 
     public String getStatusIcon() {
         return (isDone ? "X" : "");
-    }
-
-    public String getDescription(){
-        return description;
     }
 
     @Override
