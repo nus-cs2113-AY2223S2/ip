@@ -1,12 +1,14 @@
+package duke;
+
 import java.util.Scanner;
 
-import commands.Event;
-import commands.Task;
-import commands.Todo;
-import commands.Deadline;
-import exceptions.LackOfTaskDetail;
-import exceptions.DukeException;
-import exceptions.TaskNumberOutOfRange;
+import duke.commands.Event;
+import duke.commands.Task;
+import duke.commands.Todo;
+import duke.commands.Deadline;
+import duke.exceptions.LackOfTaskDetail;
+import duke.exceptions.DukeException;
+import duke.exceptions.TaskNumberOutOfRange;
 
 public class Duke {
     private static final String LINE = "---------------------------------------------------------";
