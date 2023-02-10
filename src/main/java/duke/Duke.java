@@ -192,8 +192,8 @@ public class Duke {
     public static void doCommandDelete(int taskNum) {
         isFileEdited = true;
         System.out.println(LINE);
-        System.out.println("\t" + "Task removed!");
         System.out.println("\t  " + tasks.get(taskNum - 1));
+        System.out.println("\t" + "Task removed!");
         System.out.println("\t" + "Now you have " + (taskCount - 1) + " pending tasks.");
         tasks.remove(taskNum - 1);
         System.out.println(LINE);
