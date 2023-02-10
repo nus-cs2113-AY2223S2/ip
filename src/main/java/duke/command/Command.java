@@ -1,6 +1,7 @@
 package duke.command;
 
 import duke.DukeException;
+import duke.ErrorTypes;
 import duke.output.Printer;
 import duke.output.StandardOutput;
 import duke.task.Deadline;
@@ -17,8 +18,7 @@ public class Command {
     public static void evaluate(String input, Task[] tasks) {
         try {
             String[] arrayOfInput = input.split(" ");
-            boolean isInputList = input.equals(CommandWords.LIST.COMMAND);
-            if (isInputList) {
+            if (input.equals(CommandWords.LIST.COMMAND)) {
                 Printer.listTasks(tasks);
             } else if (isMark(arrayOfInput)) {
                 // if command is "mark <int>"
@@ -31,7 +31,7 @@ public class Command {
                 decideTaskGroup(input, tasks, arrayOfInput);
             }
         } catch (DukeException e) {
-            System.out.println(StandardOutput.SEGMENT_LINE.STANDARD_OUTPUT + System.lineSeparator());
+            Printer.endLine();
         }
     }
 
@@ -43,18 +43,57 @@ public class Command {
         }
         if (!isTwoWordInput) {
             // user only provided "mark"
-            System.out.println(StandardOutput.SEGMENT_LINE.STANDARD_OUTPUT);
-            System.out.println(StandardOutput.INVALID_MARK_MESSAGE.STANDARD_OUTPUT);
-            throw new DukeException();
+            throwError(ErrorTypes.INVALID_MARK_COMMAND.ERROR_TYPE);
         }
         boolean isSecondWordNumber = isStringOfInteger(input[1]);
         if (!isSecondWordNumber) {
             // user provided "mark <non digit chara>"
-            System.out.println(StandardOutput.SEGMENT_LINE.STANDARD_OUTPUT);
-            System.out.println(StandardOutput.INVALID_MARK_MESSAGE.STANDARD_OUTPUT);
-            throw new DukeException();
-        } // todo also check whether the number !> than no of task
+            throwError(ErrorTypes.INVALID_MARK_COMMAND.ERROR_TYPE);
+        }
+        checkWithinCount(Integer.parseInt(input[1]));
         return true;
+    }
+
+    public static void throwError(int errorNumber) throws DukeException {
+        if (errorNumber == ErrorTypes.INVALID_MARK_COMMAND.ERROR_TYPE) {
+            Printer.invalidMarkCommand();
+        } else if (errorNumber == ErrorTypes.NOT_WITHIN_TASK_COUNT.ERROR_TYPE) {
+            Printer.exceedTaskCount();
+        } else if (errorNumber == ErrorTypes.INVALID_UNMARK_COMMAND.ERROR_TYPE) {
+            Printer.invalidUnmarkCommand();
+        } else if (errorNumber == ErrorTypes.INVALID_INPUT.ERROR_TYPE) {
+            Printer.invalidInput();
+        } else if (errorNumber == ErrorTypes.INVALID_TODO.ERROR_TYPE) {
+            Printer.invalidTodo();
+        } else if (errorNumber == ErrorTypes.INVALID_DEADLINE_COMMAND.ERROR_TYPE) {
+            Printer.invalidDeadline();
+        } else if (errorNumber == ErrorTypes.INSUFFICIENT_DEADLINE_ARGUMENT.ERROR_TYPE) {
+            Printer.insufficientDeadline();
+        } else if (errorNumber == ErrorTypes.INVALID_EVENT_COMMAND.ERROR_TYPE) {
+            Printer.invalidEvent();
+        } else if (errorNumber == ErrorTypes.INSUFFICIENT_EVENT_ARGUMENT.ERROR_TYPE) {
+            Printer.insufficientEvent();
+        }
+        throw new DukeException();
+    }
+
+    public static boolean isStringOfInteger(String input) {
+        // takes in a string and checks whether the string only contains digits characters
+        char[] inputInArray = input.toCharArray();
+        for (char c : inputInArray) {
+            if (!Character.isDigit(c)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void checkWithinCount(int inputValue) throws DukeException {
+        boolean isOverMaxTasks = (inputValue > Task.getTotalTasks());
+        if (isOverMaxTasks) {
+            // user provided taskNumber that is > noOfTasks
+            throwError(ErrorTypes.NOT_WITHIN_TASK_COUNT.ERROR_TYPE);
+        }
     }
 
     public static boolean isUnmark(String[] input) throws DukeException {
@@ -66,29 +105,14 @@ public class Command {
         }
         if (!isTwoWordInput) {
             // user only provided "unmark"
-            System.out.println(StandardOutput.SEGMENT_LINE.STANDARD_OUTPUT);
-            System.out.println(StandardOutput.INVALID_UNMARK_MESSAGE.STANDARD_OUTPUT);
-            throw new DukeException();
+            throwError(ErrorTypes.INVALID_UNMARK_COMMAND.ERROR_TYPE);
         }
         boolean isSecondWordNumber = isStringOfInteger(input[1]);
         if (!isSecondWordNumber) {
             // user provided "unmark <non digit chara>"
-            System.out.println(StandardOutput.SEGMENT_LINE.STANDARD_OUTPUT);
-            System.out.println(StandardOutput.INVALID_UNMARK_MESSAGE.STANDARD_OUTPUT);
-            throw new DukeException();
+            throwError(ErrorTypes.INVALID_UNMARK_COMMAND.ERROR_TYPE);
         }
-        // todo also check whether the number !> than no of task
-        return true;
-    }
-
-    public static boolean isStringOfInteger(String input) {
-        // takes in a string and checks whether the string only contains digits characters
-        char[] inputInArray = input.toCharArray();
-        for (char c : inputInArray) {
-            if (!Character.isDigit(c)) {
-                return false;
-            }
-        }
+        checkWithinCount(Integer.parseInt(input[1]));
         return true;
     }
 
@@ -118,9 +142,7 @@ public class Command {
             addEventTask(tasks, input);
         } else {
             // if input doesn't contain any keywords
-            System.out.println(StandardOutput.SEGMENT_LINE.STANDARD_OUTPUT);
-            System.out.println(StandardOutput.INVALID_INPUT_MESSAGE.STANDARD_OUTPUT);
-            throw new DukeException();
+            throwError(ErrorTypes.INVALID_INPUT.ERROR_TYPE);
         }
         Printer.echoAddTasks(tasks);
         Task.incrementTotalTasks();
@@ -128,9 +150,7 @@ public class Command {
 
     public static void checkValidTodo(String[] input) throws DukeException {
         if (input.length < MINIMUM_TODO_LENGTH) {
-            System.out.println(StandardOutput.SEGMENT_LINE.STANDARD_OUTPUT);
-            System.out.println(StandardOutput.INVALID_TODO_MESSAGE.STANDARD_OUTPUT);
-            throw new DukeException();
+            throwError(ErrorTypes.INVALID_TODO.ERROR_TYPE);
         }
     }
 
@@ -140,14 +160,10 @@ public class Command {
 
     public static void checkValidDeadline(String input, String[] arrayOfInput) throws DukeException {
         if (!input.contains("/by")) {
-            System.out.println(StandardOutput.SEGMENT_LINE.STANDARD_OUTPUT);
-            System.out.println(StandardOutput.MISSING_DEADLINE_KEYWORD_MESSAGE.STANDARD_OUTPUT);
-            throw new DukeException();
+            throwError(ErrorTypes.INVALID_DEADLINE_COMMAND.ERROR_TYPE);
         }
         if (arrayOfInput.length < MINIMUM_DEADLINE_LENGTH) {
-            System.out.println(StandardOutput.SEGMENT_LINE.STANDARD_OUTPUT);
-            System.out.println(StandardOutput.INSUFFICIENT_DEADLINE_FIELD_MESSAGE.STANDARD_OUTPUT);
-            throw new DukeException();
+            throwError(ErrorTypes.INSUFFICIENT_DEADLINE_ARGUMENT.ERROR_TYPE);
         }
     }
 
@@ -158,20 +174,11 @@ public class Command {
     }
 
     public static void checkValidEvent(String input, String[] arrayOfInput) throws DukeException {
-        if (!input.contains("/from") || !input.contains("/to")) {
-            System.out.println(StandardOutput.SEGMENT_LINE.STANDARD_OUTPUT);
-            System.out.println(StandardOutput.INVALID_EVENT_FORMAT_MESSAGE.STANDARD_OUTPUT);
-            throw new DukeException();
-        }
-        if (input.indexOf("/from") > input.indexOf("/to")) {
-            System.out.println(StandardOutput.SEGMENT_LINE.STANDARD_OUTPUT);
-            System.out.println(StandardOutput.INVALID_EVENT_FORMAT_MESSAGE.STANDARD_OUTPUT);
-            throw new DukeException();
+        if ((!input.contains("/from") || !input.contains("/to")) || (input.indexOf("/from") > input.indexOf("/to"))) {
+            throwError(ErrorTypes.INVALID_EVENT_COMMAND.ERROR_TYPE);
         }
         if (arrayOfInput.length < MINIMUM_EVENT_LENGTH) {
-            System.out.println(StandardOutput.SEGMENT_LINE.STANDARD_OUTPUT);
-            System.out.println(StandardOutput.INSUFFICIENT_EVENT_FIELD_MESSAGE.STANDARD_OUTPUT);
-            throw new DukeException();
+            throwError(ErrorTypes.INSUFFICIENT_EVENT_ARGUMENT.ERROR_TYPE);
         }
     }
 
