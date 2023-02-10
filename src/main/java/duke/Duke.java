@@ -1,5 +1,7 @@
 package duke;
 
+import java.util.ArrayList;
+
 import task.Task;
 import task.Deadline;
 import task.Event;
@@ -7,12 +9,14 @@ import task.Todo;
 import error.DukeAlreadyMarkedException;
 import error.DukeIllegalCommandException;
 import error.DukeIllegalSyntaxException;
+import error.DukeTaskDoesNotExistException;
 
 import java.util.Scanner;
 
 public class Duke {
 
     static final String HORIZONTAL_LINE = "____________________________________________________________";
+    static ArrayList<Task> tasks = new ArrayList<Task>();
 
     public static void greet() {
         System.out.println(HORIZONTAL_LINE);
@@ -27,9 +31,6 @@ public class Duke {
         Scanner scanner = new Scanner(System.in);
         String userInput;
         String command;
-        Task[] tasks = new Task[100];
-        int inputCounter = 0;
-
 
         // Get first task
         userInput = scanner.nextLine();
@@ -44,19 +45,36 @@ public class Duke {
 
                 // Print list upon user request
                 if (userInput.equals("list")) {
-                    printList(tasks, inputCounter);
+                    printList(tasks);
                 }
 
                 // Mark as done
                 else if (userInput.startsWith("mark")) {
                     int taskIndex = Integer.parseInt(userInput.substring(userInput.length() - 1));
-                    tasks[taskIndex - 1].markAsDone();
+                    tasks.get(taskIndex - 1).markAsDone();
                 }
 
                 // Mark as undone
                 else if (userInput.startsWith("unmark")) {
                     int taskIndex = Integer.parseInt(userInput.substring(userInput.length() - 1));
-                    tasks[taskIndex - 1].markAsNotDone();
+                    tasks.get(taskIndex - 1).markAsNotDone();
+                }
+
+                // Delete task from array
+                else if (userInput.startsWith("delete")) {
+                    int taskIndex = Integer.parseInt(userInput.substring(userInput.length() - 1));
+
+                    // If task does not exist, throw exception
+                    if (taskIndex > tasks.size() || taskIndex < 0) {
+                        throw new DukeTaskDoesNotExistException();
+                    }
+
+                    System.out.println("Noted. I've removed this task: ");
+                    System.out.println(taskIndex + "." + tasks.get(taskIndex - 1).toString());
+
+                    tasks.remove(taskIndex - 1);
+                    printNumberOfTasks();
+
                 }
 
                 // Add other tasks into list
@@ -82,15 +100,10 @@ public class Duke {
                         throw new DukeIllegalCommandException();
                     }
 
-                    tasks[inputCounter] = newTask;
-                    inputCounter++;
+                    tasks.add(newTask);
                     System.out.println("Got it. I've added this task: \n" + newTask);
 
-                    if (inputCounter == 1) {
-                        System.out.println("Now you have " + inputCounter + " task in the list.");
-                    } else {
-                        System.out.println("Now you have " + inputCounter + " tasks in the list.");
-                    }
+                    printNumberOfTasks();
 
                 }
 
@@ -137,6 +150,17 @@ public class Duke {
 
             }
 
+            // This runs when a user tries to delete a non-existent task index number
+            catch (DukeTaskDoesNotExistException exception) {
+                System.out.println("☹ OOPS!!! This task does not exist :-(");
+
+                // Print trailing horizontal line and take in next input
+                System.out.println(HORIZONTAL_LINE + "\n");
+                userInput = scanner.nextLine();
+                command = userInput.split(" ")[0];
+
+            }
+
 
         }
 
@@ -149,9 +173,19 @@ public class Duke {
         System.exit(0);
     }
 
-    public static void printList(Task[] listOfInputs, int inputCounter) {
-        for (int i = 0; i < inputCounter; i++) {
-            System.out.println(i + 1 + "." + listOfInputs[i].toString());
+    public static void printList(ArrayList<Task> listOfInputs) {
+        int counter = 0;
+        for (Task inputs: listOfInputs) {
+            System.out.println(counter + 1 + "." + inputs.toString());
+            counter++;
+        }
+    }
+
+    public static void printNumberOfTasks() {
+        if (tasks.size() == 1) {
+            System.out.println("Now you have 1 task in the list.");
+        } else {
+            System.out.println("Now you have " + tasks.size() + " tasks in the list.");
         }
     }
 
