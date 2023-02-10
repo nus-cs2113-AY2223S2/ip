@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Duke {
 
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws NoKeyException{
         Scanner in = new Scanner(System.in);
         CommandManager.sayHi();
         CommandManager command = new CommandManager();
@@ -38,22 +38,27 @@ public class Duke {
                 break;
 
             case "todo":
-                Tasks newToDo = new Todo(userInput[1], false);
-                Tasks.addToList(newToDo);
-                command.setKey("add");
-                command.printOutput(newToDo);
+
+                try {
+                    Tasks newToDo = new Todo(userInput[1], false);
+                    Tasks.addToList(newToDo);
+                    command.setKey("add");
+                    command.printOutput(newToDo);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println("There is NO description!!!");
+                }
                 break;
 
             case "deadline":
                 try {
-                String[] taskSlashDate  = userInput[1].split("/", 2);
-                Tasks newDeadline = new Dateline(taskSlashDate[0], false, taskSlashDate[1]);
-                Tasks.addToList(newDeadline);
-                command.setKey("add");
-                command.printOutput(newDeadline);
-            } catch (ArrayIndexOutOfBoundsException e) {
+                    String[] taskSlashDate = userInput[1].split("/", 2);
+                    Tasks newDeadline = new Dateline(taskSlashDate[0], false, taskSlashDate[1]);
+                    Tasks.addToList(newDeadline);
+                    command.setKey("add");
+                    command.printOutput(newDeadline);
+                } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println("INVALID DEADLINE FORMAT:" + "\nCORRECT DEADLINE FORMAT: \"deadline return book/by Sunday\"");
-            }
+                }
                 break;
             case "event":
                 String[] eventSlashDate = userInput[1].split("/", 3);
@@ -67,10 +72,7 @@ public class Duke {
                 break;
 
             default:
-                Tasks newTask = new Tasks(command.getUserInput(), false);
-                Tasks.addToList(newTask);
-                command.setKey("echo");
-                command.printOutput(newTask);
+                throw new NoKeyException("Come on, give me something that I can work with!");
             }
             command.setUserInput(in.nextLine());
         }
