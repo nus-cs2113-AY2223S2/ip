@@ -15,4 +15,11 @@ public class Todo extends Task {
 
     }
 
+    @Override
+    public String encodeTask() {
+
+        return "T" + "//" + getStatusIcon() + "//" + getDescription();
+
+    }
+
 }

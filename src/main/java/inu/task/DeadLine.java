@@ -29,4 +29,11 @@ public class DeadLine extends Task {
 
     }
 
+    @Override
+    public String encodeTask() {
+
+        return "D" + "//" + getStatusIcon() + "//" + getDescription() + "//" + getBy();
+
+    }
+
 }
