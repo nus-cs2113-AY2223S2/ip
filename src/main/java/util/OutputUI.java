@@ -102,6 +102,14 @@ public class OutputUI {
         }
     }
 
+    public void printDeleteTaskMessage(Task task , int numTasks){
+        printLine();
+        System.out.println(
+                ADD_TO_LIST_PIKACHU_LOGO + "\n" + "Pikapi has deleted the task: " + "\n" + "  [T][" + task.getStatusIcon() + "]" + task.description);
+        System.out.println("Pikapi sees that now you have " + numTasks + " tasks in the list");
+    }
+
+
     public void printByeByeMessage() {
         System.out.println("    *surprised Pikachu face* \n");
         System.out.println(SURPRISED_PIKACHU_FACE_LOGO + "\n");

@@ -1,14 +1,15 @@
+package util;
+
 import errors.ErrorMessages;
 import errors.TaskAddError;
 import tasks.Deadline;
 import tasks.Event;
 import tasks.Task;
 import tasks.Todo;
-import util.OutputUI;
 
 import java.util.ArrayList;
 
-public abstract class ListAdder extends ErrorMessages {
+public class TaskAdder extends ErrorMessages {
     private static final String BLANK = "";
 
     private static final String TODO_TASK = "todo";

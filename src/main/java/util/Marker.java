@@ -14,7 +14,7 @@ public class Marker extends ErrorMessages{
         String[] markActions = (input.split(BLANK, 2));
         try {
             if (markActions.length != 2){
-                throw new MarkTaskError(provideMarkNoNumberText());
+                throw new MarkTaskError(provideNoNumberText());
             }
             int indexToMark = Integer.parseInt(markActions[1]);
             if (markActions[0].equals(MARK_TASK)) {
@@ -27,7 +27,7 @@ public class Marker extends ErrorMessages{
             System.out.println(e.getMessage());
         }
         catch (NumberFormatException e){
-            System.out.println(provideMarkStringAsNumber());
+            System.out.println(provideStringAsNumber());
         }
     }
 
@@ -41,12 +41,12 @@ public class Marker extends ErrorMessages{
 
     private boolean verifyMarkAction(ArrayList<Task> taskList, int indexToMark) throws MarkTaskError{
         if (taskList.size() == 0){
-            throw new MarkTaskError(provideMarkEmptyListText());
+            throw new MarkTaskError(provideEmptyListText());
         }
         else if (indexToMark > taskList.size()){
-            throw new MarkTaskError((provideMarkExceedListLengthText(taskList.size())));
+            throw new MarkTaskError((provideExceedListLengthText(taskList.size())));
         }else if (indexToMark <= 0){
-            throw new MarkTaskError(provideMarkInvalidNumberText());
+            throw new MarkTaskError(provideInvalidNumberText());
         }
         return true;
     }

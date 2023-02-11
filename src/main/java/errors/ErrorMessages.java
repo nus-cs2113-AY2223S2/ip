@@ -32,31 +32,28 @@ public class ErrorMessages {
     }
 
     //The following are meant for Marking tasks
-    public String provideMarkEmptyListText(){
+    public String provideEmptyListText(){
         return "PIKAPII the list is currently empty! You can't mark/unmark an empty list! Please input some tasks for Pikapi to add :3";
     }
 
-    public String provideMarkExceedListLengthText(int listLength){
+    public String provideExceedListLengthText(int listLength){
         if (listLength == 1){
             return "PIKAPII you dont have that many tasks! You only have 1 task hehe :3";
         }
         return "PIKAPII you dont have that many tasks! Please write a number between 1 and " + listLength;
     }
 
-    public String provideMarkInvalidNumberText(){
+    public String provideInvalidNumberText(){
         return "PIKAPII we dont have negative or tasks indexed as 0 >:<";
     }
 
-    public String provideMarkNoNumberText(){
+    public String provideNoNumberText(){
         return "PIKAPII you did not input a number beside your marking action!";
     }
 
-    public String provideMarkStringAsNumber(){
-        return "Pikapiii you did not give me an index to mark! Please give me a number after the mark/unmark keyword please :3 UwU";
+    public String provideStringAsNumber(){
+        return "Pikapiii you did not give me an index(number)! Please give me a number after the mark/unmark/delete keyword please :3 UwU";
     }
-
-
-
     public String provideWrongCommandText(){
         return "Pikapi is unable to find that command, please type in a correct command";
     }
