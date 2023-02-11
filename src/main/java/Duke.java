@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Arrays;
 
@@ -5,10 +6,6 @@ import exceptions.MarkOutOfBounds;
 import exceptions.UnmarkOutOfBounds;
 
 public class Duke {
-    /***
-     * MAX_TASK_NUM shows the maximum number of tasks it can store
-     */
-    public static final int MAX_TASK_NUM = 100;
     /***
      * Ensures that a fixed line formatting is made.
      */
@@ -54,6 +51,10 @@ public class Duke {
      * Keeps track of the current position of task in the list.
      */
     private static int taskNum = 0;
+    /***
+     * Resizeable array that stores the user inputs.
+     */
+    private static ArrayList<Task> storedValues = new ArrayList<>();
 
     /***
      * Main function greets the user and runs processInputs().
@@ -71,7 +72,6 @@ public class Duke {
     private static void acceptUserInputs() {
         Scanner in = new Scanner(System.in);
         String line = in.nextLine();
-        Task[] storedValues = new Task[MAX_TASK_NUM];
         while (!hasProcessedAllInputs(line, storedValues)) {
             line = in.nextLine();
         }
@@ -83,7 +83,7 @@ public class Duke {
      * @param storedValues List of inputs stored by the user.
      * @return False if bye command is not called.
      */
-    private static boolean hasProcessedAllInputs(String line, Task[] storedValues) {
+    private static boolean hasProcessedAllInputs(String line, ArrayList<Task> storedValues) {
 
         String splitInputs[] = line.split(" ", 2);
         String command = splitInputs[0];
@@ -145,7 +145,7 @@ public class Duke {
      * @param line User input to be processed.
      * @return Updated position in the list.
      */
-    private static int processEvent(Task[] storedValues, int taskNum, String line) {
+    private static int processEvent(ArrayList<Task> storedValues, int taskNum, String line) {
         int firstForwardSlash = line.indexOf('/');
         String taskName = line.substring(REMOVE_EVENT_NUM, firstForwardSlash - 1);
         String duration = line.substring(firstForwardSlash + REMOVE_FROM_NUM);
@@ -167,7 +167,7 @@ public class Duke {
      * @param line User input to be processed.
      * @return Updated position in the list.
      */
-    private static int processToDo(Task[] storedValues, int taskNum, String line) {
+    private static int processToDo(ArrayList<Task> storedValues, int taskNum, String line) {
         String removeCommand = line.substring(REMOVE_TODO_NUM);
         Todo todoInput = new Todo(removeCommand);
         taskNum = addTask(storedValues, taskNum, todoInput);
@@ -182,7 +182,7 @@ public class Duke {
      * @param line User input to be processed.
      * @return Updated position in the list.
      */
-    private static int processDeadline(Task[] storedValues, int taskNum, String line) {
+    private static int processDeadline(ArrayList<Task> storedValues, int taskNum, String line) {
         int forwardSlash = line.indexOf('/');
         int endOfTask = forwardSlash - 1;
         int dates = forwardSlash + REMOVE_BY_NUM;
@@ -198,14 +198,14 @@ public class Duke {
      * @param line User input to be processed.
      * @return Updated position in the list.
      */
-    private static int addTask(Task[] storedValues, int taskNum, Task line) {
+    private static int addTask(ArrayList<Task> storedValues, int taskNum, Task line) {
         formattingLine();
         System.out.println("Got it. I've added this task: \n" + line.toString() + "\n" +
                 "Now you have " + (taskNum + 1) + " tasks in the list.\n");
         formattingLine();
         // Store value in line into list
         Task newInput = line;
-        storedValues[taskNum] = newInput;
+        storedValues.add(taskNum,newInput);
         taskNum += 1;
         return taskNum;
     }
@@ -215,7 +215,7 @@ public class Duke {
      * @param storedValues List of tasks from user inputs
      * @param line User input to be processed.
      */
-    private static void unmarkItem(Task[] storedValues, String line) throws UnmarkOutOfBounds {
+    private static void unmarkItem(ArrayList<Task> storedValues, String line) throws UnmarkOutOfBounds {
         int length = line.length();
         String itemToMark = line.substring(REMOVE_UNMARK_NUM, length);
         int numToMark = Integer.parseInt(itemToMark);
@@ -223,10 +223,10 @@ public class Duke {
         if (taskNum < numToMark) {
             throw new UnmarkOutOfBounds();
         } else {
-            storedValues[numToMark - 1].unmarkAsDone();
+            storedValues.get(numToMark-1).unmarkAsDone();
             formattingLine();
             System.out.println("OK, I've marked this task as not done yet: \n" +
-                    storedValues[numToMark - 1].toString() + "\n");
+                    storedValues.get(numToMark-1).toString() + "\n");
             formattingLine();
         }
     }
@@ -236,7 +236,7 @@ public class Duke {
      * @param storedValues List of tasks from user inputs.
      * @param line User input to be processed.
      */
-    private static void markItem(Task[] storedValues, String line, int taskNum) throws MarkOutOfBounds {
+    private static void markItem(ArrayList<Task> storedValues, String line, int taskNum) throws MarkOutOfBounds {
         int length = line.length();
         String itemToMark = line.substring(REMOVE_MARK_NUM, length);
         int numToMark = Integer.parseInt(itemToMark);
@@ -245,10 +245,10 @@ public class Duke {
             // Means that it is out of bounds
             throw new MarkOutOfBounds();
         } else {
-            storedValues[numToMark - 1].markAsDone();
+            storedValues.get(numToMark-1).markAsDone();
             formattingLine();
             System.out.println("Nice! I've marked this task as done: \n"
-                    + storedValues[numToMark - 1].toString() + "\n");
+                    + storedValues.get(numToMark-1).toString() + "\n");
             formattingLine();
         }
     }
@@ -258,12 +258,11 @@ public class Duke {
      * @param storedValues List of tasks from user inputs.
      * @param taskNum The existing position in the list.
      */
-    private static void printList(Task[] storedValues, int taskNum) {
+    private static void printList(ArrayList<Task> storedValues, int taskNum) {
         int currValue = 0;
-        Task[] existingValues = Arrays.copyOf(storedValues, taskNum);
         formattingLine();
         System.out.println("Here are the tasks in your list:");
-        for (Task value : existingValues) {
+        for (Task value : storedValues) {
             System.out.println((currValue + 1) + "." + value.toString());
             currValue += 1;
         }
