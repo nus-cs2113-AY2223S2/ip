@@ -1,22 +1,23 @@
 package duke;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import task.Task;
 import task.Deadline;
 import task.Event;
 import task.Todo;
+
 import error.DukeAlreadyMarkedException;
 import error.DukeIllegalCommandException;
 import error.DukeIllegalSyntaxException;
 import error.DukeTaskDoesNotExistException;
 
-import java.util.Scanner;
-
 public class Duke {
 
     static final String HORIZONTAL_LINE = "____________________________________________________________";
-    static ArrayList<Task> tasks = new ArrayList<Task>();
+    static ArrayList<Task> tasks = FileOperations.loadArrayListFromFile();
 
     public static void greet() {
         System.out.println(HORIZONTAL_LINE);
@@ -46,22 +47,9 @@ public class Duke {
                 // Print list upon user request
                 if (userInput.equals("list")) {
                     printList(tasks);
-                }
+                } else if (userInput.startsWith("mark") || userInput.startsWith("unmark")
+                        || userInput.startsWith("delete")) {
 
-                // Mark as done
-                else if (userInput.startsWith("mark")) {
-                    int taskIndex = Integer.parseInt(userInput.substring(userInput.length() - 1));
-                    tasks.get(taskIndex - 1).markAsDone();
-                }
-
-                // Mark as undone
-                else if (userInput.startsWith("unmark")) {
-                    int taskIndex = Integer.parseInt(userInput.substring(userInput.length() - 1));
-                    tasks.get(taskIndex - 1).markAsNotDone();
-                }
-
-                // Delete task from array
-                else if (userInput.startsWith("delete")) {
                     int taskIndex = Integer.parseInt(userInput.substring(userInput.length() - 1));
 
                     // If task does not exist, throw exception
@@ -69,14 +57,25 @@ public class Duke {
                         throw new DukeTaskDoesNotExistException();
                     }
 
-                    System.out.println("Noted. I've removed this task: ");
-                    System.out.println(taskIndex + "." + tasks.get(taskIndex - 1).toString());
+                    // Mark as done
+                    if (userInput.startsWith("mark") && userInput.charAt(4) == ' ') {
+                        tasks.get(taskIndex - 1).markAsDone();
+                    }
 
-                    tasks.remove(taskIndex - 1);
-                    printNumberOfTasks();
+                    // Mark as undone
+                    else if (userInput.startsWith("unmark") && userInput.charAt(6) == ' ') {
+                        tasks.get(taskIndex - 1).markAsNotDone();
+                    }
+
+                    // Delete task from array
+                    else if (userInput.startsWith("delete")) {
+                        System.out.println("Noted. I've removed this task: ");
+                        System.out.println(taskIndex + "." + tasks.get(taskIndex - 1).toString());
+                        tasks.remove(taskIndex - 1);
+                        printNumberOfTasks();
+                    }
 
                 }
-
                 // Add other tasks into list
                 else {
 
@@ -102,66 +101,47 @@ public class Duke {
 
                     tasks.add(newTask);
                     System.out.println("Got it. I've added this task: \n" + newTask);
-
                     printNumberOfTasks();
 
                 }
 
-                // Print trailing horizontal line and take in next input
-                System.out.println(HORIZONTAL_LINE + "\n");
-                userInput = scanner.nextLine();
-                command = userInput.split(" ")[0];
+                // Save task ArrayList information into tasks.txt
+                FileOperations.saveArrayListToFile(tasks);
 
             }
 
             // This runs when the user enters an invalid command
             catch (DukeIllegalCommandException exception) {
-
                 System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
-
-                // Print trailing horizontal line and take in next input
-                System.out.println(HORIZONTAL_LINE + "\n");
-                userInput = scanner.nextLine();
-                command = userInput.split(" ")[0];
-
             }
 
             // This runs when a user enters the wrong syntax for a command
             catch (DukeIllegalSyntaxException exception) {
-
                 System.out.println("☹ OOPS!!! I'm sorry, You entered an incorrect syntax :-(");
-
-                // Print trailing horizontal line and take in next input
-                System.out.println(HORIZONTAL_LINE + "\n");
-                userInput = scanner.nextLine();
-                command = userInput.split(" ")[0];
-
             }
 
             // This runs when a user tries to mark or unmark a task that already has that marking
             catch (DukeAlreadyMarkedException exception) {
-
                 System.out.println("☹ OOPS!!! This task already has this marking :-(");
-
-                // Print trailing horizontal line and take in next input
-                System.out.println(HORIZONTAL_LINE + "\n");
-                userInput = scanner.nextLine();
-                command = userInput.split(" ")[0];
-
             }
 
             // This runs when a user tries to delete a non-existent task index number
             catch (DukeTaskDoesNotExistException exception) {
                 System.out.println("☹ OOPS!!! This task does not exist :-(");
+            }
 
+            // This runs when there is an unexpected error with file reading/writing
+            catch (IOException exception) {
+                System.out.println("☹ OOPS!!! Read/write file error :-(");
+            }
+
+            // Enter the next input and continue the loop
+            finally {
                 // Print trailing horizontal line and take in next input
                 System.out.println(HORIZONTAL_LINE + "\n");
                 userInput = scanner.nextLine();
                 command = userInput.split(" ")[0];
-
             }
-
-
         }
 
     }
@@ -175,7 +155,7 @@ public class Duke {
 
     public static void printList(ArrayList<Task> listOfInputs) {
         int counter = 0;
-        for (Task inputs: listOfInputs) {
+        for (Task inputs : listOfInputs) {
             System.out.println(counter + 1 + "." + inputs.toString());
             counter++;
         }
