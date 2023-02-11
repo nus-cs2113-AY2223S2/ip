@@ -4,6 +4,11 @@ import java.util.Arrays;
 import exceptions.MarkOutOfBounds;
 import exceptions.UnmarkOutOfBounds;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class Duke {
     /***
      * MAX_TASK_NUM shows the maximum number of tasks it can store
@@ -55,14 +60,30 @@ public class Duke {
      */
     private static int taskNum = 0;
 
+    private static String filePath = "src/main/data/duke-inputs.txt";
+
     /***
      * Main function greets the user and runs processInputs().
      */
 
     public static void main(String[] args) {
-        showGreetings();
-        acceptUserInputs();
-        showGoodbye();
+        try {
+            fileAvailability();
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found!\n");
+        }
+    }
+
+    public static void fileAvailability() throws FileNotFoundException {
+        File data = new File (filePath);
+        System.out.println("full path: " + data.getAbsolutePath());
+        System.out.println("File exists? " + data.exists());
+        //Scanner readData = new Scanner(data);
+        if (data.exists()) {
+            showGreetings();
+            acceptUserInputs();
+            showGoodbye();
+        }
     }
 
     /***
@@ -137,6 +158,19 @@ public class Duke {
         return false;
     }
 
+    private static void writeToFile(Task storedValues) throws IOException {
+        FileWriter fw = new FileWriter(filePath, true);
+        int marked = ((storedValues.getStatusIcon() == " ") ? 0 : 1);
+        if (storedValues.getClass().getSimpleName() == "Todo") {
+            fw.write("Todo | " + marked + " | " + storedValues.description + "\n");
+        } else if (storedValues.getClass().getSimpleName() == "Deadline") {
+            fw.write("Deadline | " + marked + " | " + storedValues.description + "\n");
+        } else {
+            fw.write("Event | " + marked + " | " + storedValues.description + "\n");
+        }
+        fw.close();
+    }
+
     /***
      * Prior to adding events to the list, processEvent separates the important details
      * within the input for further data storage.
@@ -207,6 +241,11 @@ public class Duke {
         Task newInput = line;
         storedValues[taskNum] = newInput;
         taskNum += 1;
+        try {
+            writeToFile(line);
+        } catch (IOException e) {
+            System.out.println("Something went wrong..." + e.getMessage());
+        }
         return taskNum;
     }
 
