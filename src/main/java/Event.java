@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Event extends Task {
 
     protected String start;
@@ -26,11 +28,11 @@ public class Event extends Task {
         this.taskLabel = "[E]";
     }
 
-    public static int add(String line, Task[] list, int currentNumber) {
+    public static int add(String line, ArrayList<Task> list, int currentNumber) {
         System.out.println("     Got it. I've added this task:");
         Event newTask = new Event(line);
         System.out.println("       " + newTask.taskLabel + newTask.getStatusIcon() + " " + newTask.description);
-        list[currentNumber] = newTask;
+        list.add(newTask);
         ++currentNumber;
         System.out.println("     Now you have " + currentNumber + " tasks in the list.");
         return currentNumber;
