@@ -3,6 +3,8 @@ package tasks;
 public class Event extends Task{
     private String from;
     private String to;
+    private String type = "E";
+
     public Event(String taskName, String from, String to) {
         super(taskName);
         this.from = from;
@@ -10,7 +12,12 @@ public class Event extends Task{
     }
 
     @Override
+    public String getType() {
+        return type;
+    }
+
+    @Override
     public String toString() {
-        return "[E] [" + getStatus() + "] " + getTask() + " (From: " + from + " To: " + to + ")";
+        return "[" + type + "] [" + getStatus() + "] " + getTask() + " (From: " + from + " To: " + to + ")";
     }
 }

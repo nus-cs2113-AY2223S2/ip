@@ -8,9 +8,13 @@ import tasks.Todo;
 import java.util.Scanner;
 import java.util.ArrayList;
 
+import java.io.FileWriter;
+import java.io.File;
+import java.io.IOException;
+
 public class Duke {
     /* --- GLOBAL VARIABLES --- */
-    private static final String LOGO = " ____        _        \n|  _ \\ _   _| | _____ \n| | | | | | | |/ / _ \\\n| |_| | |_| |   <  __/\n|____/ \\__,_|_|\\_\\___|\n";
+    private static final String LOGO = " ____        _        \n|  _ / _   _| | _____ \n| | | | | | | |/ / _ /\n| |_| | |_| |   <  __/\n|____/ /__,_|_|/_/___|\n";
 
     // Horizontal Rule to act as a divider
     private static final String HORIZONTAL_RULE = "___________________________________________________________________";
@@ -22,26 +26,80 @@ public class Duke {
 
 
     /* --- FUNCTIONS --- */
+    public static void startFileProcessing(ArrayList<Task> tasks) throws IndexOutOfBoundsException {
+        try {
+            File saveFile = new File("duke.txt");
 
-    /**
-     * Start up function.
-     * Prints ASCII art and prompts users for input
-     */
-    public static void startUp() {
-        System.out.println(LOGO);
-        printHorizontalRule();
-        System.out.println("Hello! I'm Duke. \nWhat can I do for you?");
-        printHorizontalRule();
+            if (saveFile.createNewFile()) {
+                System.out.println("You do not have a save file! Creating one now...");
+            } else {
+                System.out.println("You already have a file! Processing contents...");
+            }
+            final Scanner READ_FILE = new Scanner(saveFile);
+            int counter = 0;
+            while (READ_FILE.hasNext()) {
+                String[] savedTask = READ_FILE.nextLine().split(" / ");
+                switch (savedTask[0]) {
+                    case "T": {
+                        String temp = savedTask[2];
+                        Todo newTodo = new Todo(temp);
+                        tasks.add(newTodo);
+
+                        if (savedTask[1].equals("X")) {
+                            tasks.get(counter).setComplete();
+                        }
+                        break;
+                    }
+
+                    case "D": {
+                        String[] deadlineDescription = savedTask[2].split(" ");
+                        String by = deadlineDescription[2].substring(0, deadlineDescription[2].length() - 1);
+                        Deadline deadline = new Deadline(deadlineDescription[0], by);
+                        tasks.add(deadline);
+
+                        if (savedTask[1].equals("X")) {
+                            tasks.get(counter).setComplete();
+                        }
+                        break;
+                    }
+
+                    case "E": {
+                        String[] eventDescription = savedTask[2].split(" ");
+                        String to = eventDescription[4].substring(0, eventDescription[4].length() - 1);
+                        Event event = new Event (eventDescription[0], eventDescription[2], to);
+                        tasks.add(event);
+
+                        if (savedTask[1].equals("X")) {
+                            tasks.get(counter).setComplete();
+                        }
+                        break;
+                    }
+                }
+                counter++;
+            }
+
+        } catch (IOException e) {
+            System.out.println("An error has occurred. Please try again.");
+            System.exit(1);
+        }
     }
 
-    /**
-     * Shut down function.
-     * Informs users that Duke is no longer accepting commands
-     */
-    public static void shutDown() {
-        printHorizontalRule();
-        System.out.println("Shutting Down! Hope to see you again soon!");
-        printHorizontalRule();
+    public static void endFileProcessing(ArrayList<Task> tasks) {
+        try {
+            System.out.println("Saving current tasks...");
+            FileWriter saveFile = new FileWriter("duke.txt");
+
+            for (int i = 0; i < tasks.size(); ++i) {
+                String task = String.valueOf(tasks.get(i));
+                String[] splitTaskDescription = task.split("] ", 3);
+                saveFile.write(tasks.get(i).getType() + " / "  + tasks.get(i).getStatus() + " / " + splitTaskDescription[2] + '\n');
+            }
+
+            saveFile.close();
+        } catch (IOException e) {
+            System.out.println("An error has occurred. Please try again.");
+            System.exit(1);
+        }
     }
 
     /**
@@ -101,12 +159,16 @@ public class Duke {
     /* --- MAIN FUNCTION --- */
     public static void main(String[] args) {
         // tasks for storing tasks + taskCounter to track next empty cell
-        ArrayList<Task> tasks = new ArrayList<Task>();
+        ArrayList<Task> tasks = new ArrayList<>();
 
         // Setting up input reading
         final Scanner INPUT = new Scanner(System.in);
 
-        startUp();
+        System.out.println(LOGO);
+        printHorizontalRule();
+        startFileProcessing(tasks);
+        System.out.println("Hello! I'm Duke. \nWhat can I do for you?");
+        printHorizontalRule();
 
         // Reads inputs until "bye" is sent
         while (true) {
@@ -119,11 +181,15 @@ public class Duke {
 
             // initializing variables
             int taskIndex;
-            String withoutCommand = "", description = "";
+            String withoutCommand = "";
+            String description = "";
 
             switch (firstWord) {
                 case ("bye"): {
-                    shutDown();
+                    printHorizontalRule();
+                    endFileProcessing(tasks);
+                    System.out.println("Shutting Down! Hope to see you again soon!");
+                    printHorizontalRule();
                     return;
                 }
 
