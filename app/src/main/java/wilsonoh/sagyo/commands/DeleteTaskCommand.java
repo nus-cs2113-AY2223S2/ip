@@ -1,23 +1,22 @@
 package wilsonoh.sagyo.commands;
 
-import wilsonoh.sagyo.exceptions.InvalidCommandException;
 import wilsonoh.sagyo.tasklist.TaskList;
 import wilsonoh.sagyo.tasks.Task;
 
-public class DeleteTaskCommand extends Command implements IndexedCommand {
+public class DeleteTaskCommand extends Command {
 
     private TaskList tasks;
     private int idx;
     private Task toDelete;
 
-    public DeleteTaskCommand(TaskList tasks, String idxGroup) throws InvalidCommandException {
+    public DeleteTaskCommand(TaskList tasks, int idx) {
         this.tasks = tasks;
-        this.idx = getValidatedIndex(tasks, idxGroup);
+        this.idx = idx;
         this.toDelete = tasks.getTask(idx);
     }
 
     @Override
-    public void executeCommand() throws InvalidCommandException {
+    public void executeCommand() {
         tasks.deleteTask(idx);
     }
 

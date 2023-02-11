@@ -1,18 +1,17 @@
 package wilsonoh.sagyo.commands;
 
-import wilsonoh.sagyo.exceptions.InvalidCommandException;
 import wilsonoh.sagyo.tasklist.TaskList;
 import wilsonoh.sagyo.tasks.Task;
 
-public class MarkTaskCommand extends Command implements IndexedCommand {
+public class MarkTaskCommand extends Command {
 
     private final Task toMark;
     private final int idx;
     private final TaskList tasks;
 
-    public MarkTaskCommand(TaskList tasks, String idxGroup) throws InvalidCommandException {
+    public MarkTaskCommand(TaskList tasks, int idx) {
         this.tasks = tasks;
-        this.idx = getValidatedIndex(tasks, idxGroup);
+        this.idx = idx;
         this.toMark = tasks.getTask(this.idx);
     }
 
@@ -22,7 +21,7 @@ public class MarkTaskCommand extends Command implements IndexedCommand {
     }
 
     @Override
-    public void executeCommand() throws InvalidCommandException {
+    public void executeCommand() {
         tasks.markTask(idx);
     }
 }
