@@ -42,19 +42,18 @@ public class Orca {
                     boolean isDone = line.charAt(4) == 'X';
                     if (line.charAt(1) == 'T') {
                         String description = line.substring(7);
-                        tasks[taskCount] = new Todo(description, isDone);
+                        tasks.add(new Todo(description, isDone));
                     } else if (line.charAt(1) == 'D') {
                         String description = line.substring(7, line.indexOf(" (by: "));
                         String by = line.substring(line.indexOf(" (by: ") + 6, line.length() - 1);
-                        tasks[taskCount] = new Deadline(description, by, isDone);
+                        tasks.add(new Deadline(description, by, isDone));
                     } else if (line.charAt(1) == 'E') {
                         String description = line.substring(7, line.indexOf(" (from: "));
                         String from =
                                 line.substring(line.indexOf(" (from: ") + 8, line.indexOf(" to: "));
                         String to = line.substring(line.indexOf(" to: ") + 5, line.length() - 1);
-                        tasks[taskCount] = new Event(description, from, to, isDone);
+                        tasks.add(new Event(description, from, to, isDone));
                     }
-                    taskCount++;
                 }
                 reader.close();
 
@@ -67,8 +66,8 @@ public class Orca {
     private static void writeToFile() {
         try {
             FileWriter writer = new FileWriter(FILE_PATH);
-            for (int i = 0; i < taskCount; i++) {
-                writer.write(tasks[i].toString() + "\n");
+            for (Task task : tasks) {
+                writer.write(task.toString() + "\n");
             }
             writer.close();
         } catch (IOException e) {
