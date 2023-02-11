@@ -33,6 +33,12 @@ public class Echo {
                 } catch (DukeException e) {
                     System.out.println("☹ OOPS!!! Which task do you want to mark?");
                 }
+            } else if (command.equals("delete")) {
+                try {
+                    delete(tasks, task);
+                } catch (DukeException e){
+                    System.out.println("☹ OOPS!!! Which task do you want to delete?");
+                }
             } else if (command.equals("todo")) {
                 try {
                     count = todo_Input(tasks, count, task);
@@ -123,6 +129,17 @@ public class Echo {
         tasks.get(taskNoInt - 1).markAsUndone();
         System.out.println("OK, I've marked this task as not done yet:");
         System.out.println(tasks.get(taskNoInt - 1).toString());
+    }
+
+    private static void delete(ArrayList<Task> tasks, String task) throws DukeException {
+        if (task == " ") {
+            throw new DukeException();
+        }
+        int taskNoInt = Integer.parseInt(task);
+        System.out.println("Noted. I've removed this task: ");
+        System.out.println(tasks.get(taskNoInt - 1).toString());
+        tasks.remove(taskNoInt - 1);
+        System.out.println("Now you have " + tasks.size() +" tasks in the list.");
     }
 
     private static void list_Input(ArrayList<Task> tasks, int count) {
