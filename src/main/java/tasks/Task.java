@@ -3,6 +3,7 @@ package tasks;
 public class Task {
     private String taskName;
     private boolean isComplete;
+    private String type;
 
     public Task(String taskName) {
         this.taskName = taskName;
@@ -12,6 +13,8 @@ public class Task {
     public String getTask() {
         return taskName;
     }
+
+    public String getType() { return type; }
 
     public Character getStatus() {
         if (isComplete) {
@@ -26,10 +29,6 @@ public class Task {
 
     public void setIncomplete() {
         this.isComplete = false;
-    }
-
-    public String printTask() {
-        return "[" + getStatus() + "]" + getTask();
     }
 }
 
