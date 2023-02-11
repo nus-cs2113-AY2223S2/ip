@@ -17,4 +17,6 @@ todo
 blah
 mark
 unmark
+delete 3
+list
 bye
