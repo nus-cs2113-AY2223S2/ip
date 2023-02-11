@@ -151,7 +151,5 @@ public class Duke {
     public static void printIndexMessage(){
         System.out.println("No such task exist! Try again.");
     }
-
-
 }
 
