@@ -1,4 +1,4 @@
-package duke;
+package duke.error;
 
 public enum ErrorTypes {
     INVALID_MARK_COMMAND(1),
