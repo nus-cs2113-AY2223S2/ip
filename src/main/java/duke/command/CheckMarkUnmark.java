@@ -18,32 +18,13 @@ public class CheckMarkUnmark {
             // user only provided "mark"
             ThrowError.throwError(ErrorTypes.INVALID_MARK_COMMAND.ERROR_TYPE);
         }
-        boolean isSecondWordNumber = isStringOfInteger(input[1]);
+        boolean isSecondWordNumber = VerifyInput.isStringOfInteger(input[1]);
         if (!isSecondWordNumber) {
             // user provided "mark <non digit chara>"
             ThrowError.throwError(ErrorTypes.INVALID_MARK_COMMAND.ERROR_TYPE);
         }
-        checkWithinCount(Integer.parseInt(input[1]));
+        VerifyInput.checkWithinCount(Integer.parseInt(input[1]));
         return true;
-    }
-
-    public static boolean isStringOfInteger(String input) {
-        // takes in a string and checks whether the string only contains digits characters
-        char[] inputInArray = input.toCharArray();
-        for (char c : inputInArray) {
-            if (!Character.isDigit(c)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public static void checkWithinCount(int inputValue) throws DukeException {
-        boolean isOverMaxTasks = (inputValue > Task.getTotalTasks());
-        if (isOverMaxTasks) {
-            // user provided taskNumber that is > noOfTasks
-            ThrowError.throwError(ErrorTypes.NOT_WITHIN_TASK_COUNT.ERROR_TYPE);
-        }
     }
 
     public static boolean isUnmark(String[] input) throws DukeException {
@@ -57,12 +38,12 @@ public class CheckMarkUnmark {
             // user only provided "unmark"
             ThrowError.throwError(ErrorTypes.INVALID_UNMARK_COMMAND.ERROR_TYPE);
         }
-        boolean isSecondWordNumber = isStringOfInteger(input[1]);
+        boolean isSecondWordNumber = VerifyInput.isStringOfInteger(input[1]);
         if (!isSecondWordNumber) {
             // user provided "unmark <non digit chara>"
             ThrowError.throwError(ErrorTypes.INVALID_UNMARK_COMMAND.ERROR_TYPE);
         }
-        checkWithinCount(Integer.parseInt(input[1]));
+        VerifyInput.checkWithinCount(Integer.parseInt(input[1]));
         return true;
     }
 }

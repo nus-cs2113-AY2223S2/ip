@@ -7,7 +7,8 @@ public enum CommandWords {
     UNMARK("unmark"),
     TODO("todo"),
     DEADLINE("deadline"),
-    EVENT("event");
+    EVENT("event"),
+    DELETE("delete");
     public final String COMMAND;
     CommandWords(String command) {
         COMMAND = command;

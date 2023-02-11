@@ -81,6 +81,11 @@ public class Printer {
         System.out.println(StandardOutput.INSUFFICIENT_EVENT_FIELD_MESSAGE.STANDARD_OUTPUT);
     }
 
+    public static void invalidDeleteCommand() {
+        System.out.println(StandardOutput.SEGMENT_LINE.STANDARD_OUTPUT);
+        System.out.println(StandardOutput.INVALID_DELETE_COMMAND_MESSAGE.STANDARD_OUTPUT);
+    }
+
     public static void markOrUnmark(ArrayList<Task> tasks, int taskIndex) {
         System.out.println(StandardOutput.SEGMENT_LINE.STANDARD_OUTPUT);
         if (tasks.get(taskIndex).isDone) {
@@ -93,10 +98,19 @@ public class Printer {
     }
 
     public static void echoAddTasks(ArrayList<Task> tasks) {
-        System.out.println(StandardOutput.SEGMENT_LINE.STANDARD_OUTPUT);
         int numberOfTasks = Task.totalTasks + 1;
+        System.out.println(StandardOutput.SEGMENT_LINE.STANDARD_OUTPUT);
         System.out.printf(StandardOutput.ADD_MESSAGE.STANDARD_OUTPUT,
                 tasks.get(Task.totalTasks).getFullTaskDetail(), numberOfTasks);
+        endLine();
+    }
+
+    public static void deleteTask(ArrayList<Task> tasks, int taskIndex) {
+        int numberOfTasks = Task.totalTasks - 1;
+        System.out.println(StandardOutput.SEGMENT_LINE.STANDARD_OUTPUT);
+        System.out.println(StandardOutput.DELETE_MESSAGE.STANDARD_OUTPUT);
+        System.out.println("   " + tasks.get(taskIndex).getFullTaskDetail());
+        System.out.printf(StandardOutput.REMAINING_TASK_COUNT.STANDARD_OUTPUT, numberOfTasks);
         endLine();
     }
 }
