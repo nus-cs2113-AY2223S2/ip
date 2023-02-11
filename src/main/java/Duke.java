@@ -1,6 +1,7 @@
 import duke.DukeException;
+import duke.FileDataHandler;
 import duke.Task;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -34,6 +35,13 @@ public class Duke {
         startDuke();
         Scanner input = new Scanner(System.in);
         ArrayList<Task> taskList = new ArrayList<>();
+        try {
+            if(!FileDataHandler.createFile("data/duke.txt", "data")) {
+                FileDataHandler.loadFile("data/duke.txt", taskList);
+            }
+        } catch (IOException exception) {
+            printErrorMessage("     ☹ OOPS!!! As an error has occurred, the current task list will not be saved in a file!");
+        }
         while (input.hasNextLine()) {
             String[] nextInput = input.nextLine().split(" ", 2);
             try {
@@ -51,24 +59,29 @@ public class Duke {
                     int taskNumber = Integer.parseInt(nextInput[1]);
                     taskList.get(taskNumber - 1).markAsDone();
                     Task.printMarkedTask(taskNumber - 1, taskList);
+                    FileDataHandler.saveFile("data/duke.txt", taskList);
                     continue;
                 }
                 if (nextInput[0].equals("unmark")) {
                     int taskNumber = Integer.parseInt(nextInput[1]);
                     taskList.get(taskNumber - 1).markAsNotDone();
                     Task.printUnmarkedTask(taskNumber - 1, taskList);
+                    FileDataHandler.saveFile("data/duke.txt", taskList);
                     continue;
                 }
                 if (nextInput[0].equals("todo")) {
                     Task.addTodoTask(nextInput[1], taskList);
+                    FileDataHandler.saveFile("data/duke.txt", taskList);
                     continue;
                 }
                 if (nextInput[0].equals("deadline")) {
                     Task.addDeadlineTask(nextInput[1], taskList);
+                    FileDataHandler.saveFile("data/duke.txt", taskList);
                     continue;
                 }
                 if (nextInput[0].equals("event")) {
                     Task.addEventTask(nextInput[1], taskList);
+                    FileDataHandler.saveFile("data/duke.txt", taskList);
                     continue;
                 }
                 if (nextInput[0].equals("delete")) {
@@ -82,6 +95,8 @@ public class Duke {
             } catch (ArrayIndexOutOfBoundsException exception) {
                 //for the case of no space after calling a command
                 printErrorMessage("     ☹ OOPS!!! The description of a " + nextInput[0] + " cannot be empty.");
+            } catch (IOException exception) {
+                printErrorMessage("     ☹ OOPS!!! There is an error writing to the file :-(");
             }
         }
         endDuke();
