@@ -1,0 +1,18 @@
+help
+list
+todo
+todo eat lunch
+deadline
+deadline submit tutorial
+deadline submit tutorial /by 10pm
+event
+event lecture /from 9am
+event lecture /from 9am /to 11am
+list
+mark 4
+mark 2
+list
+unmark 2
+list
+hello
+bye
