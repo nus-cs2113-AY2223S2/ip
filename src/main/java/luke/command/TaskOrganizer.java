@@ -8,6 +8,8 @@ import luke.task.Task;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.function.BiConsumer;
 
 public class TaskOrganizer {
     /** Unique ID to be given to each new task for identification */
@@ -16,12 +18,16 @@ public class TaskOrganizer {
     /** A container containing all tasks added */
     private HashMap<Integer, Task> tasks;
 
+    /** A dictionary that maps the serial number of the task list printed out to the taskID */
+    private HashMap<Integer, Integer> serialNumbers;
+
     /** A list containing all valid task types */
     private ArrayList<String> taskTypes;
 
     public TaskOrganizer() {
         newTaskID = 1;
         tasks = new HashMap<Integer, Task>();
+        serialNumbers = new HashMap<Integer, Integer>();
         taskTypes = new ArrayList<String>(
                 Arrays.asList("todo", "event", "deadline")
         );
@@ -44,7 +50,7 @@ public class TaskOrganizer {
      * @return True if the index provided is out of bounds, False if the index provides is not out of bounds.
      */
     public boolean isOutOfBounds(int index) {
-        return (index <= 0 || index >= newTaskID);
+        return (index <= 0 || index > tasks.size());
     }
 
     /**
@@ -93,35 +99,60 @@ public class TaskOrganizer {
         }
         tasks.put(newTaskID, newTask);
         newTaskID += 1;
+        updateSerialNumbers();
         return true;
     }
 
     /**
-     * Given the ID of a task, this function marks the corresponding task as completed.
+     * Given the serial number of a task, this function marks the corresponding task as completed.
      *
-     * @param toMarkID The ID of the task to be marked.
+     * @param toMarkSerialNumber The serial number of the task to be marked.
      */
-    public void markTask(int toMarkID) {
+    public void markTask(int toMarkSerialNumber) {
+        int toMarkID = serialNumbers.get(toMarkSerialNumber);
         tasks.get(toMarkID).markTask();
     }
 
     /**
-     * Given the ID of a task, this function unmarks a task.
+     * Given the serial number of a task, this function unmarks a task.
      *
-     * @param toUnmarkID The ID of the task to be unmarked.
+     * @param toUnmarkSerialNumber The serial number of the task to be unmarked.
      */
-    public void unmarkTask(int toUnmarkID) {
+    public void unmarkTask(int toUnmarkSerialNumber) {
+        int toUnmarkID = serialNumbers.get(toUnmarkSerialNumber);
         tasks.get(toUnmarkID).unmarkTask();
     }
 
     /**
-     * Returns the name of a task, given its ID.
+     * Given the ID of a task, this function deletes a task.
      *
-     * @param taskID The ID of the task.
-     * @return The name of the task with taskID.
+     * @param toDeleteSerialNumber The ID of the task to be deleted.
      */
-    public String getTaskByID(int taskID) {
+    public void deleteTask(int toDeleteSerialNumber) {
+        int toDeleteID = serialNumbers.get(toDeleteSerialNumber);
+        tasks.remove(toDeleteID);
+        updateSerialNumbers();
+    }
+
+    /**
+     * Returns the name of a task, given its serial number.
+     *
+     * @param taskSerialNumber The serial number of the task.
+     * @return The name of the task with taskSerialNumber.
+     */
+    public String getTaskBySerialNumber(int taskSerialNumber) {
+        int taskID = serialNumbers.get(taskSerialNumber);
         return tasks.get(taskID).getTaskName();
+    }
+
+    /** Updates the serialNumbers to match the current IDs of the tasks */
+    private void updateSerialNumbers() {
+        int serialNumber = 1;
+        for (Map.Entry<Integer, Task> entry : tasks.entrySet()) {
+            Task task = entry.getValue();
+            serialNumbers.put(serialNumber, task.getTaskID());
+            serialNumber += 1;
+        }
     }
 
     /**
@@ -131,8 +162,9 @@ public class TaskOrganizer {
      */
     public ArrayList<Task> getTaskList() {
         ArrayList<Task> copy = new ArrayList<Task>();
-        for (int i = 1; i < newTaskID; i++) {
-            copy.add(tasks.get(i));
+        for (Map.Entry<Integer, Task> entry : tasks.entrySet()) {
+            Task task = entry.getValue();
+            copy.add(task);
         }
         return copy;
     }

@@ -83,6 +83,18 @@ public class Response {
     }
 
     /**
+     * Prints a confirmation to the user that a task have been deleted.
+     *
+     * @param taskName The name of the task to be deleted.
+     */
+    public void printDeleteTask(String taskName) {
+        printLine();
+        printSignature();
+        System.out.println(taskName + " has been deleted.");
+        printLine();
+    }
+
+    /**
      * Prints a list of all the task in the TaskOrganizer.
      *
      * @param tasks The list of all the tasks in the TaskOrganizer.

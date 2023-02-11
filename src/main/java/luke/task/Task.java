@@ -30,10 +30,18 @@ public class Task {
 
     /**
      * Returns the name of the task.
-     * @return taskName
+     * @return taskName The name of the task.
      */
     public String getTaskName() {
         return taskName;
+    }
+
+    /**
+     * Returns the ID of the task.
+     * @return taskID the ID of the task.
+     */
+    public int getTaskID() {
+        return taskID;
     }
 
     /** Prints out the checkBox followed by the name of the task */

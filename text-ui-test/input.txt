@@ -13,4 +13,20 @@ list
 mark 1
 mark 3
 list
+add todo todoDelete1
+list
+add deadline deadlineDelete1 dueDate1
+list
+delete
+add event eventDelete1 start1 end1
+list
+mark 5
+list
+delete 4
+list
+delete 4
+list
+delete 5
+delete 4
+list
 bye
