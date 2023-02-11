@@ -85,6 +85,7 @@ public class Duke {
             "⠀⠀⣼⣿⡿⣛⣭⣶⣿⡿⢟⣫⣵⣶⣿⣿⣿⣿⣿⣿⣿⣷⣌⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⡰⠁⠀⠀⢀⣤⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⡰⠙⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀\n" +
             "⠀⣼⡿⣻⣾⣿⡿⢛⣥⣾⣿⣿⣿⣿⣿⠿⣋⣴⡙⣿⣿⣿⣿⣷⣍⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⠀⠀⠀⠀⠘⠁⠀⣤⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀⠀⠀⠀⠀⠰⠁⠀⠹⣿⣿⣿⣿⣿⣧⣽⣿⢸⠀\n" +
             "You must think you're funny, Ningen";
+    public static final String ACTION_DELETE = "delete";
 
 
     public static String[] processInputMessage(Scanner in) {
@@ -175,6 +176,12 @@ public class Duke {
         }
     }
 
+    private static void printRemovedMessage(int sizeOfTodoList, Task currentTodo) {
+        System.out.println("Task removed:");
+        System.out.println(currentTodo);
+        System.out.println("You have " + sizeOfTodoList + " tasks left");
+    }
+
     public static void main(String[] args) {
         System.out.println(GREETING_MESSAGE);
 
@@ -194,8 +201,18 @@ public class Duke {
                 }
                 inputMessage = processInputMessage(in);
                 break;
-            case ACTION_MARK_COMPLETE:
+            case ACTION_DELETE:
                 int taskIndex = checkActionInputValidity(inputMessage, sizeOfTodoList);
+                if(taskIndex >= 0) {
+                    currentTodo = todoList.get(taskIndex);
+                    todoList.remove(taskIndex);
+                    sizeOfTodoList -= 1;
+                    printRemovedMessage(sizeOfTodoList, currentTodo);
+                }
+                inputMessage = processInputMessage(in);
+                break;
+            case ACTION_MARK_COMPLETE:
+                taskIndex = checkActionInputValidity(inputMessage, sizeOfTodoList);
                 if (taskIndex >= 0) {
                     currentTodo = todoList.get(taskIndex);
                     currentTodo.setComplete();
