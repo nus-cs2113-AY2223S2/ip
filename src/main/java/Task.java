@@ -41,6 +41,16 @@ public class Task {
         case "event":
             addEventToTasksList(input, listOfTasks);
             break;
+            //read from file methods
+        case "T":
+            loadTodoTaskToList();
+            break;
+        case "D":
+            loadDeadlineTaskToList();
+            break;
+        case "E":
+            loadEventTaskToList();
+            break;
         default:
             throw new InvalidTaskTypeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
         }
@@ -88,6 +98,18 @@ public class Task {
         Task event = new Event(name, false, eventStart, eventEnd);
         listOfTasks.add(event);
         printAddTaskMessage(event, listOfTasks);
+    }
+
+    public static void loadTodoTaskToList() {
+
+    }
+
+    public static void loadDeadlineTaskToList() {
+
+    }
+
+    public static void loadEventTaskToList() {
+
     }
 
     public String toString() {

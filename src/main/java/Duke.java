@@ -1,5 +1,8 @@
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.File;
+
 public class Duke {
     public static void printHorizontalLine() {
         System.out.println("____________________________________________________________");
@@ -11,6 +14,23 @@ public class Duke {
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
         printHorizontalLine();
+    }
+    
+    public static void initialiseDuke(ArrayList<Task> listOfTasks) throws IOException {
+        String homePath = System.getProperty("user.home") + "/Desktop";
+        String folderPath = homePath + "/data";
+        new File (folderPath).mkdir();
+        File dukeDataFile = new File(folderPath + "/duke.txt");
+        dukeDataFile.createNewFile();
+        Scanner dukeData = new Scanner(dukeDataFile);
+        while(dukeData.hasNext()) {
+            try {
+                Task.checkTaskType(dukeData.next(), listOfTasks);
+            }
+            catch (InvalidTaskTypeException e) {
+                System.out.println(e);
+            }
+        }
     }
 
     public static void checkInput(String input, ArrayList<Task> listOfTasks) {
@@ -51,12 +71,18 @@ public class Duke {
         printHelloMessage(logo);
         String input;
         ArrayList<Task> listOfTasks = new ArrayList<>();
+        try {
+            initialiseDuke(listOfTasks);
+        } catch (IOException e) {
+            System.out.println("File already Exists");
+        }
         do {
             Scanner in = new Scanner(System.in);
             input = in.nextLine();
             printHorizontalLine();
             checkInput(input, listOfTasks);
             printHorizontalLine();
+            //write into file method
         } while (!input.equals("bye"));
     }
 }
