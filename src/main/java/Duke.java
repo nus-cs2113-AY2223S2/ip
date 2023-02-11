@@ -1,7 +1,13 @@
 import java.util.Scanner;
 import java.util.Arrays;
 import duke.Task;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+
 public class Duke {
+
+    private static String filePath = "data/duke.txt";
     public static void printLine() { //print line
         System.out.println("______________________________________________________________");
     }
@@ -15,12 +21,14 @@ public class Duke {
             throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
         }
     }
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DukeException, IOException, FileNotFoundException {
         String line;
         String lowerCaseLine;
         Task[] textList = new Task[100]; //store in array of Tasks to track both description and mark status
         int textListCount = 0;
         Scanner in = new Scanner(System.in);
+        Save save = new Save(filePath);
+        save.readFile(textList, textListCount);
 
         printLine();
         System.out.println("Hello! I'm Duke");
@@ -33,6 +41,7 @@ public class Duke {
             Task task = new Task(line);
             printLine();
             if (lowerCaseLine.equals("bye")) {
+                save.saveFile(textList, textListCount);
                 System.out.println("Bye. Hope to see you again soon!");
                 printLine();
                 return;
@@ -46,12 +55,14 @@ public class Duke {
             } else if (lowerCaseLine.contains("mark") && !lowerCaseLine.contains("unmark")) { //mark is in unmark so need to check like this to avoid unmark being detected as mark
                 int indexOfTask = Integer.parseInt(lowerCaseLine.substring(5)) - 1; //find index of the task number starting from 0
                 textList[indexOfTask].markAsDone();
+                save.saveFile(textList, textListCount);
                 System.out.println("Nice! I've marked this task as done: ");
                 System.out.println(" " + textList[indexOfTask].toString());
                 printLine();
             } else if (lowerCaseLine.contains("unmark")) {
                 int indexOfTask = Integer.parseInt(lowerCaseLine.substring(7)) - 1;
                 textList[indexOfTask].unmarkAsDone();
+                save.saveFile(textList, textListCount);
                 System.out.println("OK, I've marked this task as not done yet: ");
                 System.out.println(" " + textList[indexOfTask].toString());
                 printLine();
@@ -92,6 +103,7 @@ public class Duke {
                     checkCommand(lowerCaseLine);
                     textList[textListCount] = task; //add all input except for list, bye, mark and unmark to array of tasks
                     textListCount++; //counter to help input tasks into correct index in tasks array
+                    save.saveFile(textList, textListCount);
                     System.out.println("Got it. I've added this task: ");
                     System.out.println(" " + task.toString());
                     System.out.println("Now you have " + textListCount + " tasks in the list.");
