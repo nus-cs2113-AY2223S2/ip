@@ -20,7 +20,10 @@ public enum StandardOutput {
             + System.lineSeparator() + " Valid input format: \"deadline <task name> /by <date>\""),
     INVALID_EVENT_FORMAT_MESSAGE(" Invalid input! Valid input format: \"event <task name> /from <date> /to <date>\""),
     INSUFFICIENT_EVENT_FIELD_MESSAGE(" Invalid input! Please provide enough arguments! " + System.lineSeparator()
-            + " Valid input format: \"event <task name> /from <date> /to <date>\"");
+            + " Valid input format: \"event <task name> /from <date> /to <date>\""),
+    INVALID_DELETE_COMMAND_MESSAGE(" Invalid input! Valid input format: \"delete <number>\"!"),
+    DELETE_MESSAGE(" Noted. Task removed: "),
+    REMAINING_TASK_COUNT(" Now you have %d task[s] in the list." + System.lineSeparator());
     public final String STANDARD_OUTPUT;
     StandardOutput(String standardOutput) {
         STANDARD_OUTPUT = standardOutput;
