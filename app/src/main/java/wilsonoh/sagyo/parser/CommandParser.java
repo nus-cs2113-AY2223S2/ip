@@ -25,6 +25,19 @@ public class CommandParser {
         this.tasks = tasks;
     }
 
+    int getValidatedIndex(String commandName, String idxGroup) throws InvalidCommandException {
+        if (idxGroup == null) {
+            throw new InvalidCommandException(
+                String.format("The %s command must be followed by the index of a task", commandName));
+        }
+        int index = Integer.parseInt(idxGroup) - 1;
+        if (index < 0 || index > tasks.size() - 1) {
+            throw new InvalidCommandException(
+                String.format("Task index %d is invalid for task list of size %d", index + 1, tasks.size()));
+        }
+        return index;
+    }
+
     public Command parseCommand(String input) throws InvalidCommandException, InvalidTaskException {
         CommandType[] commands = CommandType.values();
         for (CommandType command : commands) {
@@ -35,8 +48,9 @@ public class CommandParser {
                 case MARK:
                 case UNMARK: {
                     boolean isMark = command.equals(CommandType.MARK);
-                    String idxGroup = matcher.group("idx");
-                    return isMark ? new MarkTaskCommand(tasks, idxGroup) : new UnMarkTaskCommand(tasks, idxGroup);
+                    String commandName = isMark ? "mark" : "unmark";
+                    int idx = getValidatedIndex(commandName, matcher.group("idx"));
+                    return isMark ? new MarkTaskCommand(tasks, idx) : new UnMarkTaskCommand(tasks, idx);
                 }
                 case BYE:
                     return new ByeCommand();
@@ -46,8 +60,9 @@ public class CommandParser {
                     String filter = matcher.group("filter");
                     return new FindCommand(filter, tasks);
                 case DELETE: {
-                    String idxGroup = matcher.group("idx");
-                    return new DeleteTaskCommand(tasks, idxGroup);
+                    String commandName = "delete";
+                    int idx = getValidatedIndex(commandName, matcher.group("idx"));
+                    return new DeleteTaskCommand(tasks, idx);
                 }
                 case DEADLINE:
                 case EVENT:

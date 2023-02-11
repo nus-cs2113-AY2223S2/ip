@@ -75,7 +75,7 @@ public class Storage {
                     toAdd = gson.fromJson(element, DeadlineTask.class);
                     break;
                 default:
-                    throw new InvalidTaskException("json stuff");
+                    throw new InvalidTaskException("Invalid task type");
                 }
                 ret.add(toAdd);
             }
