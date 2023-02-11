@@ -35,6 +35,9 @@ public class Duke {
           case "event":
             ModifyTaskUtil.addEvent(taskManager, userInput);
             break;
+          case "remove":
+            ModifyTaskUtil.removeTask(taskManager, userInput);
+            break;
           default:
             PrintUtil.printText(
               "☹ OOPS!!! I'm sorry, but I don't know what that means :-("

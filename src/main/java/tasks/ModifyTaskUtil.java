@@ -16,6 +16,17 @@ public class ModifyTaskUtil {
     );
   }
 
+  public static void confirmRemoveTask(TaskManager taskManager, Task task) {
+    PrintUtil.printText(
+      "Noted. I've removed this task:\n\t" +
+      task +
+      String.format(
+        "\n\tNow you have %d tasks in the list.",
+        taskManager.getNumberOfTasks() - 1
+      )
+    );
+  }
+
   public static void markTaskDone(TaskManager taskManager, String userInput)
     throws InvalidTaskException {
     try {
@@ -90,6 +101,20 @@ public class ModifyTaskUtil {
       ModifyTaskUtil.confirmAddTask(taskManager, event);
     } catch (IndexOutOfBoundsException e) {
       throw new NoToFromException();
+    }
+  }
+
+  public static void removeTask(TaskManager taskManager, String userInput)
+    throws InvalidTaskException {
+    try {
+      int index = Integer.parseInt(userInput.split(" ")[1]) - 1;
+      Task task = taskManager.getTask(index);
+      ModifyTaskUtil.confirmRemoveTask(taskManager, task);
+      taskManager.removeTask(index);
+    } catch (IndexOutOfBoundsException e) {
+      throw new InvalidTaskException();
+    } catch (NumberFormatException e) {
+      throw new InvalidTaskException();
     }
   }
 }
