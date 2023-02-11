@@ -1,19 +1,25 @@
 package jonathan;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileWriter;
 
 public class Jonathan {
     public static void main(String[] args) {
+
+
         Scanner input = new Scanner((System.in));
         String command;
         String line = "    ____________________________________________________________";
         String welcome = line + "\n    Hello! I'm Jonathan\n" +
                 "    What can I do for you?\n" + line + "\n";
-        String goodbye = "    Bye. Hope to see you again soon!\n" + line;
+        String goodbye = line + "\n    Bye. Hope to see you again soon!\n" + line;
 
-        ArrayList<Task> list = new ArrayList<>();
-        int taskCounter = 0;
+        ArrayList<Task> list = readData();
+        int taskCounter = list.size();
 
         System.out.println(welcome);
 
@@ -23,6 +29,7 @@ public class Jonathan {
 
             try {
                 if (Objects.equals(command, "bye")) {
+                    saveData(list);
                     System.out.println(goodbye);
                     break; // quit the program
 
@@ -133,5 +140,107 @@ public class Jonathan {
         }
     }
 
+    /*
+    Method to export the data into .txt file
+     */
+    public static void saveData(ArrayList<Task> tasks) {
+        try {
+            File outFile = new File("data/jonathan.txt");
+            outFile.createNewFile();
+
+            FileWriter outFileWriter = new FileWriter(outFile);
+
+            for (int i = 0; i < tasks.size(); i++) {
+                Task task = tasks.get(i);
+
+                if (task instanceof Todo) {
+                    Todo todo = (Todo) task;
+                    String line = "T | " + todo.getIsDone() + " | " + todo.getDescription() + "\n";
+                    outFileWriter.write(line);
+                } else if (task instanceof Deadline) {
+                    Deadline deadline = (Deadline) task;
+                    String line = "D | " + deadline.getIsDone() + " | " + deadline.getDescription() +
+                            " | " + deadline.getBy() + "\n";
+                    outFileWriter.write(line);
+                } else if (task instanceof Event) {
+                    Event event = (Event) task;
+                    String line = "E | " + event.getIsDone() + " | " + event.getDescription() +
+                            " | " + event.getStart() + " | " + event.getEnd() + "\n";
+                    outFileWriter.write(line);
+                }
+            }
+
+            outFileWriter.flush();
+            outFileWriter.close();
+
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+
+    public static ArrayList<Task> readData() {
+        ArrayList<Task> tasks = new ArrayList<>();
+
+        try {
+            File file = new File("data/jonathan.txt");
+
+            Scanner reader = new Scanner(file);
+
+            while (reader.hasNextLine()) {
+                String line = reader.nextLine();
+                String[] extract = line.split("\\|");
+                String symbol = extract[0].trim();
+                String isDone = extract[1].trim();
+                String description = extract[2].trim();
+
+                switch (symbol) {
+                    case "T":
+                        Todo todo = new Todo(description);
+
+                        if (isDone.equals("1")) {
+                            todo.setDone(true);
+                        }
+
+                        tasks.add(todo);
+
+                        break;
+                    case "D":
+                        String by = extract[3].trim();
+                        Deadline deadline = new Deadline(description, by);
+
+                        if (isDone.equals("1")) {
+                            deadline.setDone(true);
+                        }
+
+                        tasks.add(deadline);
+
+                        break;
+                    case "E":
+                        String start = extract[3].trim();
+                        String end = extract[4].trim();
+                        Event event = new Event(description, start, end);
+
+                        if (isDone.equals("1")) {
+                            event.setDone(true);
+                        }
+
+                        tasks.add(event);
+
+                        break;
+                }
+
+            }
+
+            reader.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred while reading the file.");
+            e.printStackTrace();
+        }
+
+        return tasks;
+
+    }
 }
 

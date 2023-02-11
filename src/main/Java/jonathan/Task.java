@@ -25,6 +25,10 @@ public class Task {
         return (isDone ? "X" : " "); // mark done task with X
     }
 
+    public String getIsDone() {
+        return (isDone ? "1" : "0");
+    }
+
     public String stringRepresentation() {
         return "[" + getStatusIcon() + "] " + getDescription();
     }
