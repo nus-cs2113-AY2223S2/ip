@@ -14,6 +14,8 @@ public class Deadline extends Task {
         this.isDone = false;
         this.taskLabel = "[D]";
     }
+
+    public Deadline(){}
     public static int add(String line, ArrayList<Task> list, int currentNumber) {
         System.out.println("     Got it. I've added this task:");
         Deadline newTask = new Deadline(line);
@@ -25,3 +27,5 @@ public class Deadline extends Task {
     }
 
 }
+
+

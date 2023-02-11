@@ -1,12 +1,17 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Arrays;
 import java.util.List;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 
 public class Duke {
     public static final List<String> taskTypes = Arrays.asList("todo", "deadline", "event");
-    public static final List<String> commands = Arrays.asList("todo", "deadline", "event", "mark", "unmark", "list", "delete", "bye");
+    public static final List<String> listEditableCommands = Arrays.asList("todo", "deadline", "event", "mark","unmark");
+    public static final List<String> commands = Arrays.asList("todo", "deadline", "event", "mark", "unmark", "list", "bye");
 
     public static void printHorizontalLine() {
         System.out.print("    ____________________________________________________________\n");
@@ -62,6 +67,12 @@ public class Duke {
         ArrayList<Task> taskArrayList= new ArrayList<>(); // Array of Tasks
         int currentNumber = 0; // Current number of tasks
 
+        try {
+            currentNumber = LoadFile.loadFileContents("C:\\Users\\aviel\\OneDrive - National University of Singapore\\Documents\\NUS\\Y2\\SEM 4\\CS2113\\ip\\data\\duke.txt",taskArrayList,currentNumber);
+        }catch(FileNotFoundException e){
+            System.out.println("File Not Found");
+        }
+
         while (true) {
             Scanner in = new Scanner(System.in);
             line = in.nextLine(); // Take in input line
@@ -98,7 +109,7 @@ public class Duke {
                         }
                     }
                 } catch (InvalidCommand e) {
-                        System.out.println("     ☹ OOPS!!! The description of a " + lineComponents[0] + " cannot be empty.");
+                    System.out.println("     ☹ OOPS!!! The description of a " + lineComponents[0] + " cannot be empty.");
                 } finally {
                     printHorizontalLine();
                 }
@@ -110,6 +121,14 @@ public class Duke {
                 System.out.println("     ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
                 printHorizontalLine();
             }
+            try {
+                if(listEditableCommands.contains(type)){
+                    WriteFile.writeToFile("C:\\Users\\aviel\\OneDrive - National University of Singapore\\Documents\\NUS\\Y2\\SEM 4\\CS2113\\ip\\data\\duke.txt",taskArrayList);
+                }
+                else{
+                    continue;
+                }
+            } catch(IOException e){};
         }
     }
 }

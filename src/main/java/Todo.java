@@ -8,6 +8,7 @@ public class Todo extends Task {
         this.taskLabel = "[T]";
     }
 
+    public Todo(){}
 
     public static int add(String line, ArrayList<Task> list, int currentNumber) {
         System.out.println("     Got it. I've added this task:");

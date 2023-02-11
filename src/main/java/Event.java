@@ -28,6 +28,8 @@ public class Event extends Task {
         this.taskLabel = "[E]";
     }
 
+    public Event(){}
+
     public static int add(String line, ArrayList<Task> list, int currentNumber) {
         System.out.println("     Got it. I've added this task:");
         Event newTask = new Event(line);

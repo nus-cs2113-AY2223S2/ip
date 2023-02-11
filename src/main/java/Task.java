@@ -16,6 +16,8 @@ public abstract class Task {
         this.isDone = false;
     }
 
+    public Task(){};
+
     /**
      * Mark done task with X
      */
