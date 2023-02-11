@@ -53,6 +53,9 @@ public class Duke {
         } else if (command.equals("todo")) {
             line = line.substring(command.length() + 1);
             addItem(new Todo(line));
+        } else if (command.equals("delete") || command.equals("remove")) {
+            line = line.substring(command.length() + 1);
+            removeItem(Integer.parseInt(lineParts[1]));
         } else if (command.equals("deadline")) {
             line = line.substring(command.length() + 1);
             createDeadline(line);
@@ -106,6 +109,13 @@ public class Duke {
     private static void addItem(Todo item) {
         itemList.add(item);
         printResponse(String.format(OperationsMessages.ADDED_MSG, item.toString(), itemList.size()));
+    }
+
+    private static void removeItem(int itemIdx) {
+        itemIdx--;
+        Todo itemToDelete = itemList.get(itemIdx);
+        printResponse(String.format(OperationsMessages.DELETED_MSG, itemToDelete.toString(), itemList.size()));
+        itemList.remove(itemIdx);
     }
 
     private static void printItems() {
