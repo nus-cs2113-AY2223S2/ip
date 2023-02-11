@@ -1,0 +1,4 @@
+T|0|potato|
+E|1|potato | 4 jan | 6 jan|
+D|1|tomato | 8 jan|
+D|0|zebi | yo mama|
