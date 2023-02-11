@@ -25,7 +25,7 @@ public class Duke {
         try {
             index = loadTasks(tasks, dataFilePath);
         } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage() + "notfoundcheebai");
+            System.out.println(e.getMessage());
         }
         System.out.println(line);
         System.out.println("     All Tasks loaded from memory");
