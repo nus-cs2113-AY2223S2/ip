@@ -5,7 +5,7 @@ import java.io.BufferedWriter; // Import the BufferedWriter class
 import java.io.IOException; // Import the IOException class to handle errors
 import java.util.ArrayList; // Import the ArrayList class
 
-public class FileRW {
+public class Storage {
    
     //method that tand reads the file and returns an arraylist of tasks 
     public static ArrayList<Task> readFile(){

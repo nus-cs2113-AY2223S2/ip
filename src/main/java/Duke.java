@@ -3,6 +3,49 @@ import java.util.ArrayList; // Import the ArrayList class
 
 public class Duke {
 
+    //define the file path
+    public static final String FILE_PATH = "data/duke.txt";
+
+    //Initialize the storage, tasklist and ui
+    private Storage storage;
+    private TaskList tasks;
+    private Ui ui;
+
+    public Duke(String filePath) {
+        ui = new Ui();
+        storage = new Storage(filePath);
+        try {
+            tasks = new TaskList(storage.load());
+        } catch (DukeException e) {
+            ui.showLoadingError();
+            tasks = new TaskList();
+        }
+    }
+
+    public void run() {
+        ui.showWelcome();
+        boolean isExit = false;
+        while (!isExit) {
+            try {
+                String fullCommand = ui.readCommand();
+                ui.showLine();
+                Command c = Parser.parse(fullCommand);
+                c.execute(tasks, ui, storage);
+                isExit = c.isExit();
+            } catch (DukeException e) {
+                ui.showError(e.getMessage());
+            } finally {
+                ui.showLine();
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        new Duke(FILE_PATH).run();
+    }
+
+
+
     //Initialize create a arraylist of tasks
     public static ArrayList<Task> tasks = new ArrayList<Task>();
 
@@ -12,20 +55,12 @@ public class Duke {
     public static void main(String[] args) {
 
         //read the file
-        tasks = FileRW.readFile();
+        tasks = Storage.readFile();
         taskCount = tasks.size();
 
-        //Print out the logo
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);
-
-        //Create a greeting message for the user
-        System.out.println("Hello! I'm Duke");
-        System.out.println("What can I do for you?");
+        //Print the welcome message
+        Ui.printWelcomeMessage();
+        
 
         //Get user input
         Scanner userScan = new Scanner(System.in);  // Create scanner object
@@ -231,14 +266,19 @@ public class Duke {
             
         }
 
-        //Print out a goodbye message
-        System.out.println("Bye. Hope to see you again soon!");
+        //Print out a goodbye message using the goodbye method
+        Ui.printGoodbyeMessage();
         
+
         //Close the scanner
         userScan.close();
 
-        //Write the tasks to the file
-        FileRW.writeFile(tasks,taskCount);
+        //Write the tasks to the file using the writeToFile method
+
+        Storage.writeFile(tasks, taskCount);
+
+        
+        
 
     }
 
