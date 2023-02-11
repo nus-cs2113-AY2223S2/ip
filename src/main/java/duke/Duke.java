@@ -1,9 +1,11 @@
 package duke;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import duke.exception.ArgumentNotValidException;
 import duke.exception.PromptCannotBeEmptyException;
+import duke.storage.StorageManager;
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
@@ -12,8 +14,8 @@ import duke.utils.Input;
 import duke.utils.Output;
 
 public class Duke {
-    public static void main(String[] args) throws ArgumentNotValidException, PromptCannotBeEmptyException {
-        ArrayList<Task> tasks = new ArrayList<Task>();
+    public static void main(String[] args) throws ArgumentNotValidException, PromptCannotBeEmptyException, IOException {
+        ArrayList<Task> tasks = StorageManager.readFileContents();
         int indexTask;
         Task newTask;
        
@@ -104,6 +106,7 @@ public class Duke {
                 }
                 
             }
+        StorageManager.writeToFile(tasks);
         Output.printGoodbye();
     }
 }

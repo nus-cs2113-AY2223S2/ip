@@ -1,18 +1,18 @@
 package duke.task;
 
-public class Task {
-    private String name;
+public abstract class Task {
+    private String desciption;
     private boolean isDone;
     private static int numTask;
 
-    public Task(String name) {
-        this.name = name;
+    public Task(String desciption) {
+        this.desciption = desciption;
         this.isDone = false;
         numTask++;
     }
 
-    public String getName() {
-        return name;
+    public String getTaskDescription() {
+        return desciption;
     }
 
     public int getNumTask() {
@@ -32,6 +32,8 @@ public class Task {
     }
 
     public String toString() {
-        return "[" + getStatusIcon() + "] " + getName();
+        return "[" + getStatusIcon() + "] " + getTaskDescription();
     }
+    
+    public abstract String getTaskType();
 }

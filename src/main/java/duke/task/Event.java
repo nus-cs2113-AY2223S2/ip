@@ -4,14 +4,27 @@ public class Event extends Task {
     private String from;
     private String to;
 
-    public Event(String taskName, String from, String to) {
-        super(taskName);
+    public Event(String desciption, String from, String to) {
+        super(desciption);
         this.from = from;
         this.to = to;
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + from + " to: " + to + ")";
+        return "["+getTaskType()+"]" + super.toString() + " (from: " + from + " to: " + to + ")";
+    }
+    
+    @Override
+    public String getTaskType() {
+    	return "E";
+    }
+    
+    public String getStartTime() {
+    	return from;
+    }
+    
+    public String getEndTime() {
+    	return to;
     }
 }
