@@ -1,6 +1,9 @@
 package duke.tools;
 
-import duke.exceptions.ContentEmptyException;
+import duke.exceptions.CommandDescriptionEmptyException;
+import duke.tasks.Deadline;
+import duke.tasks.Event;
+import duke.tasks.Todo;
 
 public class Parser {
 
@@ -46,13 +49,13 @@ public class Parser {
      * @param inputWords
      * @return
      */
-    public String getCommandDescription(String inputWords) throws ContentEmptyException {
+    public String getCommandDescription(String inputWords) throws CommandDescriptionEmptyException {
         String command = getCommandType(inputWords);
         if(command.equals("bye")||command.equals("list")){
             return inputWords;
         }else{
             if(command.length() == inputWords.length()){
-                throw new ContentEmptyException();
+                throw new CommandDescriptionEmptyException();
             }
             String commandDescriptionString = inputWords.substring((command.length())+1);
             return commandDescriptionString;

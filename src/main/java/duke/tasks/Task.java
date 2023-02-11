@@ -24,6 +24,10 @@ public class Task {
         return (isDone ? "X" : " "); // mark done task with X
     }
 
+    public String getTaskDescription() {
+        return taskDescription;
+    }
+
     /**
      * Mark task as done.
      */
@@ -44,5 +48,9 @@ public class Task {
     public String toString(){
         String taskObjectString = "[" + getTaskStatus() + "]" + this.taskDescription;
         return taskObjectString;
+    }
+
+    public String convertToData(){
+        return "";
     }
 }

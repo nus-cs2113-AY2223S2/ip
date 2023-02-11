@@ -93,7 +93,6 @@ public class UI {
                     }
                     TaskManager.loadTask(task);
                 }
-
             }
             readFile.close();
         }
@@ -102,6 +101,21 @@ public class UI {
     public void writeToFile(String data, String path) throws IOException {
         FileWriter fileWriter = new FileWriter(path, true);
         fileWriter.write(data);
+        fileWriter.close();
+    }
+
+    public void copyToFile(String path) throws IOException {
+        FileWriter fileWriter = new FileWriter(path);
+        ArrayList<Task> tasks = TaskManager.getALLTasks();
+        if(tasks.size()==0){
+            fileWriter.write("");
+        }else{
+            for(Task task: tasks){
+                String data = task.convertToData();
+                fileWriter.write(data);
+            }
+        }
+
         fileWriter.close();
     }
     /**

@@ -1,13 +1,11 @@
 package duke;
 
-import duke.exceptions.DeleteEmptyTasks;
-import duke.exceptions.DeleteIndexOutOfBound;
-import duke.exceptions.MissingFileException;
-import duke.exceptions.MissingParameterException;
+import duke.exceptions.*;
 import duke.tasks.Deadline;
 import duke.tasks.Event;
 import duke.tasks.Task;
 import duke.tasks.Todo;
+import duke.tools.Parser;
 import duke.tools.UI;
 
 import java.util.ArrayList;
@@ -42,6 +40,9 @@ public class TaskManager {
         tasks.add(task);
     }
 
+    public static ArrayList<Task> getALLTasks(){
+        return tasks;
+    }
     /**
      * Create new todoTask.
      *
@@ -50,8 +51,6 @@ public class TaskManager {
      */
     public Todo createNewTodo(String taskDescription) throws IOException{
         Todo newTodo = new Todo(taskDescription);
-        String data = "T|0|"+taskDescription+"\n";
-        ECHO_BACK.writeToFile(data, DATA_PATH);
         return newTodo;
     }
 
@@ -70,8 +69,6 @@ public class TaskManager {
         String deadlineContent = taskDescription.substring(0,index-1);
         String deadlineDate = taskDescription.substring(index+4);
         Deadline newDeadline = new Deadline(deadlineContent, deadlineDate);
-        String data = "D|0|"+deadlineContent+"|"+deadlineDate+"\n";
-        ECHO_BACK.writeToFile(data, DATA_PATH);
         return newDeadline;
     }
 
@@ -92,8 +89,6 @@ public class TaskManager {
         String eventStartTime = taskDescription.substring(indexStart+6, indexEnd-1);
         String eventEndTime = taskDescription.substring(indexEnd+4);
         Event newEvent = new Event(eventContent, eventStartTime, eventEndTime);
-        String data = "E|0|"+eventContent+"|"+eventStartTime+"|"+eventEndTime+"\n";
-        ECHO_BACK.writeToFile(data, DATA_PATH);
         return newEvent;
     }
 
@@ -106,7 +101,6 @@ public class TaskManager {
      */
     public Task generateNewTask(String taskType, String taskDescription) throws MissingParameterException, IOException{
         Task newTask;
-
         if(taskType.equals("todo")){
             newTask = createNewTodo(taskDescription);
         }else if(taskType.equals("deadline")){
@@ -127,8 +121,8 @@ public class TaskManager {
     public void addTask(String taskType, String taskDescription) throws MissingParameterException, IOException{
         Task newTask = generateNewTask(taskType, taskDescription);
         tasks.add(newTask);
+        ECHO_BACK.copyToFile(DATA_PATH);
         ECHO_BACK.echoTask(tasks.size(),newTask, NEW_TASK_CAPTION);
-
     }
 
     /**
@@ -137,10 +131,12 @@ public class TaskManager {
      * @param taskIndex index of the task to be edited.
      * @param status mark/unmark.
      */
-    public void editTaskStatus(String taskIndex, String status) throws MissingFileException, IOException {
-        if(!DATA_FILE.exists()){
-            throw new MissingFileException();
+    public void editTaskStatus(String taskIndex, String status) throws EditEmptyTasks, IOException {
+        if(tasks.size()==0){
+            throw new EditEmptyTasks();
         }
+        ECHO_BACK.copyToFile(DATA_PATH);
+
         int index = Integer.parseInt(taskIndex)-1;
         if(status.equals("mark")) {
             tasks.get(index).markDone();
@@ -167,16 +163,21 @@ public class TaskManager {
 
     }
 
-    public void deleteTask(String description) throws DeleteIndexOutOfBound, DeleteEmptyTasks {
+    public void deleteTask(String description) throws DeleteIndexOutOfBound, DeleteEmptyTasks, IOException {
         if(tasks.size()==0){
             throw new DeleteEmptyTasks();
         }
+        ECHO_BACK.copyToFile(DATA_PATH);
+
         //The command description is base 1
         int index = Integer.parseInt(description)-1;
         if(index<0 || index>=tasks.size()){
             throw new DeleteIndexOutOfBound();
         }
-        ECHO_BACK.echoTask(tasks.size(), tasks.get(index), DELETE_TASK_CAPTION);
+        ECHO_BACK.echoTask(tasks.size()-1, tasks.get(index), DELETE_TASK_CAPTION);
         tasks.remove(index);
+        ECHO_BACK.copyToFile(DATA_PATH);
+
+
     }
 }

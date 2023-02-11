@@ -1,6 +1,6 @@
 package duke;
 
-import duke.exceptions.ContentEmptyException;
+import duke.exceptions.CommandDescriptionEmptyException;
 import duke.exceptions.MissingFileException;
 import duke.exceptions.MissingParameterException;
 import duke.exceptions.UnknownCommandException;
@@ -22,7 +22,7 @@ public class CommandManager {
     private static final TaskManager TASK_MANAGER = new TaskManager();
     private static final Parser COMMAND_PARSER = new Parser();
 
-    public void setCommand(String command) throws UnknownCommandException, ContentEmptyException {
+    public void setCommand(String command) throws UnknownCommandException, CommandDescriptionEmptyException {
         this.inputCommand = command;
 
         this.commandType = COMMAND_PARSER.getCommandType(command);
@@ -49,7 +49,7 @@ public class CommandManager {
      * If command is unmark, mark a particular task as undone.
      * Else add new task.
      */
-    public void executeCommand() throws MissingParameterException, MissingFileException, IOException,  DeleteIndexOutOfBound, DeleteEmptyTasks{
+    public void executeCommand() throws MissingParameterException,EditEmptyTasks,MissingFileException, IOException,  DeleteIndexOutOfBound, DeleteEmptyTasks{
         if(commandType.equals("bye")){
             sayBye();
             System.exit(0);

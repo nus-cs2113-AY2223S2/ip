@@ -10,8 +10,27 @@ public class Event extends Task{
         this.endTime = end;
     }
 
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
     @Override
     public String toString() {
         return "[E]" + super.toString() + " (from: " + this.startTime + " to: " + this.endTime + ")";
+    }
+
+    public String convertToData(){
+        String status;
+        if(getTaskStatus().equals("X")){
+            status = "1";
+        }else{
+            status = "0";
+        }
+        String data = "E|"+status+"|"+getTaskDescription()+"|"+getStartTime()+"|"+getEndTime()+"\n";
+        return data;
     }
 }
