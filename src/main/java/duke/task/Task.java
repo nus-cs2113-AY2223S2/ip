@@ -1,6 +1,10 @@
 package duke.task;
 
-public class Task {
+import duke.main.Storage;
+
+import java.util.StringJoiner;
+
+public abstract class Task {
     protected String description;
     protected boolean isDone = false;
 
@@ -14,5 +18,13 @@ public class Task {
 
     public String toString() {
         return "[" + (isDone ? "X" : " ") + "] " + description;
+    }
+
+    public String toSaveString(String... taskParameters) {
+        StringJoiner saveString = new StringJoiner(Storage.DELIMITER);
+        for (String string : taskParameters) {
+            saveString.add(string);
+        }
+        return saveString.toString();
     }
 }

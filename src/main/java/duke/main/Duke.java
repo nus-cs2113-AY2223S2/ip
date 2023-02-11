@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class Duke {
     public static void main(String[] args) {
-        TaskList taskList = new TaskList();
+        TaskList taskList = Storage.readTasksFromFile(Storage.SAVE_PATH);
 
         // Try-with-resources to automatically close Scanner
         try (Scanner in = new Scanner(System.in)) {
@@ -21,6 +21,7 @@ public class Duke {
                 Command command = Parser.parseCommand(str, taskList);
                 command.run(taskList);
                 isRunning = !command.isExit();
+                Storage.saveTasksToFile(Storage.SAVE_PATH, taskList);
             }
         }
     }
