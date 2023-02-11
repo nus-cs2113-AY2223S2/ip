@@ -1,1 +1,3 @@
-hello
+[T][X] homework
+[D][X] homework (by: soon)
+[E][X] homework (from: now to: soon)
