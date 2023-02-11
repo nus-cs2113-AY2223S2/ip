@@ -1,0 +1,19 @@
+todo Hosea: Answer CS2113 tutorial questions
+deadline weekly CS2113 quiz /by Monday 9pm
+list
+event CS2113 lecture /from Friday 4pm /to 6pm
+list
+invalidcommand description is here
+mark 1
+mark 2
+list
+unmark 1
+unmark 2
+list
+event /from /to
+event badevent /from wer /to
+deadline rejwkjr wnrmqe
+list
+save
+load
+list
