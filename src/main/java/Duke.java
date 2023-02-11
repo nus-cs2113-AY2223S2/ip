@@ -8,17 +8,9 @@ public class Duke {
     private static final String COMMAND_UNMARK_WORD = "unmark";
     private static final String COMMAND_LIST_WORD = "list";
     private static final String COMMAND_EXIT_WORD = "bye";
+    private static final String COMMAND_HELP_WORD = "help";
 
     private static final String DIVIDER = "____________________________________________________________\n";
-
-//    public static final String INVALID_DEADLINE =
-//            DIVIDER + "Please enter deadline as \"deadline [task] /by [date]\". \n" + DIVIDER;
-//    public static final String INVALID_EVENT =
-//            DIVIDER + "Please enter event as \"event [task] /from [date] /to [date]\". \n" + DIVIDER;
-//    public static final String INVALID_COMMAND =
-//            DIVIDER + "Sorry, but I don't know what that means :( \n" + DIVIDER;
-//    public static final String EMPTY_TASK_DESCRIPTION =
-//            DIVIDER + "Oops! The description of a task cannot be empty. \n" + DIVIDER;
 
     // max number of tasks
     private static final int CAPACITY = 100;
@@ -53,6 +45,9 @@ public class Duke {
         case COMMAND_EXIT_WORD:
             Output.printExitMessage();
             System.exit(0);
+        case COMMAND_HELP_WORD:
+            Output.printHelpMessage();
+            break;
         case COMMAND_LIST_WORD:
             Output.printList(allTasks);
             break;
@@ -133,15 +128,12 @@ public class Duke {
     private static void markNotDone(String param) {
         try {
             int idx = Integer.parseInt(param) - 1;
-//            if (idx < 0 || idx >= Task.getCounter()) {
-//                printErrorForIdx();
-//                return;
-//            }
+            if (idx < 0 || idx >= Task.getCounter()) {
+                Output.printErrorForIdx();
+                return;
+            }
             allTasks[idx].setDone(false);
-            System.out.println(DIVIDER +
-                    "OK, I've marked this task as not done yet:\n" +
-                    "[ ] " + allTasks[idx].getDescription() + "\n" +
-                    DIVIDER);
+            Output.printMarkNotDone(allTasks[idx]);
         } catch (NumberFormatException ex) {
             Output.printErrorForIdx();
         }
@@ -150,13 +142,12 @@ public class Duke {
     private static void markDone(String param) {
         try {
             int idx = Integer.parseInt(param) - 1;
-//            if (idx < 0 || idx >= Task.getCounter()) {
-//                printErrorForIdx();
-//                return;
-//            }
+            if (idx < 0 || idx >= Task.getCounter()) {
+                Output.printErrorForIdx();
+                return;
+            }
             allTasks[idx].setDone(true);
-            System.out.println(DIVIDER + "Nice!, I've marked this task as done:\n" +
-                    allTasks[idx] + "\n" + DIVIDER);
+            Output.printMarkDone(allTasks[idx]);
         } catch (NumberFormatException ex) {
             Output.printErrorForIdx();
         }
@@ -176,37 +167,4 @@ public class Duke {
         allTasks[Task.getCounter()] = new Event(param, from, to);
         Output.printAddMessage(allTasks[Task.getCounter()-1]);
     }
-
-//    private static void printAddMessage(Task store) {
-//        System.out.println(DIVIDER + "Got it. I've added this task: \n" +
-//                "  " + store + "\n" + DIVIDER);
-//    }
-//
-//    private static void printErrorForStorage() {
-//        System.out.println(DIVIDER +
-//                "Maximum number of tasks reached. \n" +
-//                DIVIDER);
-//    }
-//
-//    private static void printErrorForIdx() {
-//        System.out.println(DIVIDER +
-//                "Please enter [idx] in the form of an integer from 1 to " + Task.getCounter() + ". \n" +
-//                DIVIDER);
-//    }
-//
-//    private static void printList() {
-//        System.out.println(DIVIDER +
-//                "Here are the tasks in your list: ");
-//        for (int i = 0; i < Task.getCounter(); i++) {
-//            System.out.println(i+1 + "." + allTasks[i]);
-//        }
-//        System.out.println(DIVIDER);
-//    }
-//
-//    private static void printExitMessage() {
-//        System.out.println(DIVIDER +
-//                " Bye. Hope to see you again soon!\n" +
-//                DIVIDER);
-//        return;
-//    }
 }
