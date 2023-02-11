@@ -24,6 +24,12 @@ public class TaskList {
         return tasks.get(i).toString();
     }
 
+    public String deleteTask(int i) {
+        String taskString = tasks.get(i).toString();
+        tasks.remove(i);
+        return taskString;
+    }
+
     public String toString() {
         StringJoiner taskListString = new StringJoiner(System.lineSeparator());
         for (int i = 0; i < size(); i++) {

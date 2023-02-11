@@ -9,13 +9,15 @@ public enum Messages {
     LIST_TASKS ("Here are the tasks in your list:"),
     MARK_TASK  ("Nice! I've marked this task as done:"),
     UNMARK_TASK("OK, I've marked this task as not done yet:"),
-    TASK_COUNT ("Now you have %d task%s in the list."),
+    TASK_COUNT ("Now you have %d task%s in your list."),
+    DELETE_TASK("Noted. I've removed this task:"),
 
     TODO_HELP    ("Usage: todo <description>"),
     DEADLINE_HELP("Usage: deadline <description> /by <time>"),
     EVENT_HELP   ("Usage: event <description> /from <time> /by <time>"),
     MARK_HELP    ("Usage: mark <task index>"),
     UNMARK_HELP  ("Usage: unmark <task index>"),
+    DELETE_HELP  ("Usage: delete <task index>"),
     GENERIC_HELP ("Valid commands are: todo, deadline, event, list, mark, unmark, bye");
 
     public final String MESSAGE;
