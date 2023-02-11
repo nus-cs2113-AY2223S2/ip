@@ -1,8 +1,9 @@
 package duke;
 
 public class Task {
-    private String task;
+    private final String task;
     private boolean isComplete;
+    protected String type = "";
 
     public Task(String name) {
         this.task = name;
@@ -27,4 +28,9 @@ public class Task {
     public void setIncomplete() {
         this.isComplete = false;
     }
+
+    public String getType() {
+        return this.type;
+    }
+
 }
