@@ -57,6 +57,8 @@ public class Duke {
             addDeadline(message);
         } else if (message[0].equalsIgnoreCase("event")) {
             addEvent(message);
+        } else if (message[0].equalsIgnoreCase("delete")) {
+            deleteTask(message);
         } else {
             addTask(cleanInput);
         }
@@ -68,7 +70,7 @@ public class Duke {
         separator();
         try {
             taskNumber = getTaskNumber(message);
-            userList.get(taskNumber - 1).setAsNotDone();
+            userList.get(taskNumber - 1).setAsDone();
             String outputMessage = String.format("Nice! I've marked task %d as done:", taskNumber);
             printMessage(outputMessage);
             printMessage(userList.get(taskNumber - 1).toString());
@@ -297,6 +299,39 @@ public class Duke {
             printMessage(outputMessage);
         }
         separator();
+    }
+
+    public static void deleteTask(String[] message) {
+        int taskNumber = 0;
+
+        separator();
+        try {
+            taskNumber = getTaskNumber(message);
+            String taskDescription = userList.get(taskNumber - 1).toString();
+            userList.remove(taskNumber - 1);
+            String outputMessage = "Noted. I've removed this task:";
+            String outputRemaining = String.format("Now you have %d tasks in the list.", userList.size());
+            printMessage(outputMessage);
+            printMessage(taskDescription);
+            printMessage(outputRemaining);
+        } catch (DukeWrongArgsException error) {
+            String errorMessage = String.format("Wrong number of arguments. Expected 2, received %d",
+                    message.length);
+            printMessage(errorMessage);
+        } catch (NumberFormatException error) {
+            String errorMessage = "Expected a valid number for second argument.";
+            String errorMessageEcho = String.format("You entered %s, which is invalid!", message[1]);
+            printMessage(errorMessage);
+            printMessage(errorMessageEcho);
+        } catch (IndexOutOfBoundsException error) {
+            String errorMessage = "Out of bounds value provided.";
+            String errorMessageEcho = String.format("List only has %d items, you entered %d!",
+                    userList.size(), taskNumber);
+            printMessage(errorMessage);
+            printMessage(errorMessageEcho);
+        } finally {
+            separator();
+        }
     }
 
     public static void main(String[] args) {

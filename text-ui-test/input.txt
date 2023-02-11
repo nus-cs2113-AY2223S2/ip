@@ -21,4 +21,9 @@ unmark 2 zzz
 deadline return book Sunday
 deadline
 event
+delete
+delete 999
+delete abc
+delete 2
+list
 bye
