@@ -32,6 +32,7 @@ public class Todo extends Task {
         return this.isDone;
     }
 
+    @Override
     protected String getType() {
         return Todo.TYPE;
     }
