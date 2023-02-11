@@ -6,10 +6,12 @@
 ./src/main/java/exceptions/NoDueDateException.java
 ./src/main/java/exceptions/NoToFromException.java
 ./src/main/java/exceptions/TaskException.java
+./src/main/java/misc/Constants.java
+./src/main/java/misc/PrintUtil.java
+./src/main/java/storage/Database.java
 ./src/main/java/tasks/Deadline.java
 ./src/main/java/tasks/Event.java
 ./src/main/java/tasks/ModifyTaskUtil.java
 ./src/main/java/tasks/Task.java
 ./src/main/java/tasks/TaskManager.java
 ./src/main/java/tasks/Todo.java
-./src/main/java/utils/PrintUtil.java

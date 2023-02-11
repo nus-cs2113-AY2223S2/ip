@@ -6,7 +6,11 @@ public class Task {
   protected String description;
 
   public Task(String description) {
-    this.description = description;
+    this.description = description.trim();
+  }
+
+  public boolean getIsDone() {
+    return this.isDone;
   }
 
   public void markDone() {

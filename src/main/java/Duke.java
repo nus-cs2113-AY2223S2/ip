@@ -1,11 +1,12 @@
 import exceptions.*;
 import java.util.Scanner;
+import misc.PrintUtil;
+import storage.Database;
 import tasks.*;
-import utils.PrintUtil;
 
 public class Duke {
 
-  private static TaskManager taskManager = new TaskManager();
+  private static TaskManager taskManager = Database.loadDatabase();
 
   public static void chat() {
     Scanner sc = new Scanner(System.in);
@@ -43,6 +44,7 @@ public class Duke {
               "☹ OOPS!!! I'm sorry, but I don't know what that means :-("
             );
         }
+        Database.writeToDatabase(taskManager);
       } catch (EmptyDescriptorException e) {
         PrintUtil.printText(
           String.format(

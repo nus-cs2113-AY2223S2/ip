@@ -10,6 +10,10 @@ public class TaskManager {
     this.tasks = new ArrayList<Task>();
   }
 
+  public ArrayList<Task> getAllTasks() {
+    return this.tasks;
+  }
+
   public void addTask(Task task) {
     tasks.add(task);
   }

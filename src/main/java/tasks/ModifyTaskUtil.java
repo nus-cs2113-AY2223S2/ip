@@ -1,7 +1,7 @@
 package tasks;
 
 import exceptions.*;
-import utils.PrintUtil;
+import misc.PrintUtil;
 
 public class ModifyTaskUtil {
 
