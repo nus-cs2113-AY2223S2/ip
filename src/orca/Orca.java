@@ -72,6 +72,8 @@ public class Orca {
             commandType = CommandType.DEADLINE;
         } else if (userInput.startsWith("event")) {
             commandType = CommandType.EVENT;
+        } else if (userInput.startsWith("delete")) {
+            commandType = CommandType.DELETE;
         } else {
             commandType = CommandType.UNKNOWN;
         }
@@ -117,6 +119,19 @@ public class Orca {
         tasks.add(newTask);
     }
 
+    private static void deleteTask(int taskNo) throws OrcaException {
+        try {
+            Task removedTask = tasks.remove(taskNo - 1);
+            System.out.println("    --------------------------------------------------");
+            System.out.println("    Noted. I've removed this task:");
+            System.out.println("      " + removedTask);
+            System.out.println("    Now you have " + tasks.size() + " tasks in the list.");
+            System.out.println("    --------------------------------------------------\n");
+        } catch (IndexOutOfBoundsException e) {
+            throw new OrcaException("There is no task with this number.");
+        }
+    }
+
     public static int parseTaskNo(String userInput, int startIdx) throws OrcaException {
         try {
             return Integer.parseInt(userInput.substring(startIdx));
@@ -157,6 +172,10 @@ public class Orca {
                 newTask = new Event(userInput, 6);
                 addTask(newTask);
                 printLatestAddedTask();
+                break;
+            case DELETE:
+                taskNo = parseTaskNo(userInput, 7);
+                deleteTask(taskNo);
                 break;
             default:
                 throw new OrcaException("Sorry. I can't understand what you mean. :(");
