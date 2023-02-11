@@ -8,6 +8,11 @@ import tasks.Todo;
 import java.util.Scanner;
 import java.util.ArrayList;
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.File;
+import java.io.IOException;
+
 public class Duke {
     /* --- GLOBAL VARIABLES --- */
     private static final String LOGO = " ____        _        \n|  _ \\ _   _| | _____ \n| | | | | | | |/ / _ \\\n| |_| | |_| |   <  __/\n|____/ \\__,_|_|\\_\\___|\n";
@@ -22,7 +27,6 @@ public class Duke {
 
 
     /* --- FUNCTIONS --- */
-
     /**
      * Start up function.
      * Prints ASCII art and prompts users for input
@@ -30,6 +34,7 @@ public class Duke {
     public static void startUp() {
         System.out.println(LOGO);
         printHorizontalRule();
+        startFileProcessing();
         System.out.println("Hello! I'm Duke. \nWhat can I do for you?");
         printHorizontalRule();
     }
@@ -40,8 +45,52 @@ public class Duke {
      */
     public static void shutDown() {
         printHorizontalRule();
+        endFileProcessing();
         System.out.println("Shutting Down! Hope to see you again soon!");
         printHorizontalRule();
+    }
+
+    //https://www.w3schools.com/java/java_files_create.asp
+    public static void startFileProcessing() {
+        try {
+            File saveFile = new File("duke.txt");
+
+            if (saveFile.createNewFile()) {
+                System.out.println("You do not have a save file! Creating one now...");
+            } else {
+                System.out.println("You already have a file! Processing contents...");
+            }
+
+            // add the illusion of actual creation/processing
+            try {
+                Thread.sleep(2500);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+
+        } catch (IOException e) {
+            System.out.println("An error has occurred. Please try again.");
+            System.exit(1);
+        }
+    }
+
+    public static void endFileProcessing() {
+        try {
+            System.out.println("Saving current tasks...");
+
+            // add the illusion of actual creation/processing
+            try {
+                Thread.sleep(2500);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+
+            FileWriter saveFile = new FileWriter("duke.txt");
+            saveFile.close();
+        } catch (IOException e) {
+            System.out.println("An error has occurred. Please try again.");
+            System.exit(1);
+        }
     }
 
     /**
