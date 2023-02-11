@@ -129,6 +129,22 @@ public class Duke {
                 break;
             }
 
+            case "delete": {
+                try {
+                    if (!isValidInput(splitInput[1])) {
+                            throw new DukeExceptions.invalidNumberException(BARRIER + "\n\nBlast! That isn't a valid number lad!\n" + BARRIER + "\n");
+                    }
+                    int index = Integer.parseInt(splitInput[1]) - 1;
+                    System.out.println(BARRIER + "\n\nAye! The task be removed:");
+                    System.out.println("    " + Task.getTasksArray().get(index).printTask());
+                    Task.getTasksArray().remove(index);
+                    printListLength();
+                    System.out.println(BARRIER + "\n");
+                } finally {
+                    break;
+                }
+            }
+
             // Adds a new task if no case is hit
             default: {
                 System.out.println(BARRIER + "\n");
