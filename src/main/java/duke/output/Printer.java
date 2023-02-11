@@ -2,6 +2,8 @@ package duke.output;
 
 import duke.task.Task;
 
+import java.util.ArrayList;
+
 public class Printer {
     public static void endLine() {
         System.out.println(StandardOutput.SEGMENT_LINE.STANDARD_OUTPUT + System.lineSeparator());
@@ -19,7 +21,7 @@ public class Printer {
         endLine();
     }
 
-    public static void listTasks(Task[] tasks) {
+    public static void listTasks(ArrayList<Task> tasks) {
         System.out.println(StandardOutput.SEGMENT_LINE.STANDARD_OUTPUT);
         boolean isTaskCountZero = (Task.totalTasks == 0);
         if (isTaskCountZero) {
@@ -27,7 +29,7 @@ public class Printer {
         } else {
             System.out.println(StandardOutput.LIST_MESSAGE.STANDARD_OUTPUT);
             for (int i = 0; i < Task.totalTasks; i += 1) {
-                System.out.println(" " + (i + 1) + "." + tasks[i].getFullTaskDetail());
+                System.out.println(" " + (i + 1) + "." + tasks.get(i).getFullTaskDetail());
             }
         }
         endLine();
@@ -79,22 +81,22 @@ public class Printer {
         System.out.println(StandardOutput.INSUFFICIENT_EVENT_FIELD_MESSAGE.STANDARD_OUTPUT);
     }
 
-    public static void markOrUnmark(Task[] tasks, int taskIndex) {
+    public static void markOrUnmark(ArrayList<Task> tasks, int taskIndex) {
         System.out.println(StandardOutput.SEGMENT_LINE.STANDARD_OUTPUT);
-        if (tasks[taskIndex].isDone) {
+        if (tasks.get(taskIndex).isDone) {
             System.out.println(StandardOutput.MARK_MESSAGE.STANDARD_OUTPUT);
         } else {
             System.out.println(StandardOutput.UNMARK_MESSAGE.STANDARD_OUTPUT);
         }
-        System.out.println("   " + tasks[taskIndex].getFullTaskDetail());
+        System.out.println("   " + tasks.get(taskIndex).getFullTaskDetail());
         endLine();
     }
 
-    public static void echoAddTasks(Task[] tasks) {
+    public static void echoAddTasks(ArrayList<Task> tasks) {
         System.out.println(StandardOutput.SEGMENT_LINE.STANDARD_OUTPUT);
         int numberOfTasks = Task.totalTasks + 1;
         System.out.printf(StandardOutput.ADD_MESSAGE.STANDARD_OUTPUT,
-                tasks[Task.totalTasks].getFullTaskDetail(), numberOfTasks);
+                tasks.get(Task.totalTasks).getFullTaskDetail(), numberOfTasks);
         endLine();
     }
 }

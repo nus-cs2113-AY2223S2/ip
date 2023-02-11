@@ -9,10 +9,12 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.Todo;
 
+import java.util.ArrayList;
+
 public class Command {
 
 
-    public static void evaluate(String input, Task[] tasks) {
+    public static void evaluate(String input, ArrayList<Task> tasks) {
         try {
             String[] arrayOfInput = input.split(" ");
             if (input.equals(CommandWords.LIST.COMMAND)) {
@@ -32,17 +34,17 @@ public class Command {
         }
     }
 
-    public static void markTask(Task[] tasks, String[] arrayOfInput) {
-        tasks[Integer.parseInt(arrayOfInput[1]) - 1].markAsDone();
+    public static void markTask(ArrayList<Task> tasks, String[] arrayOfInput) {
+        tasks.get(Integer.parseInt(arrayOfInput[1]) - 1).markAsDone();
         Printer.markOrUnmark(tasks, Integer.parseInt(arrayOfInput[1]) - 1);
     }
 
-    public static void unmarkTask(Task[] tasks, String[] arrayOfInput) {
-        tasks[Integer.parseInt(arrayOfInput[1]) - 1].markAsNotDone();
+    public static void unmarkTask(ArrayList<Task> tasks, String[] arrayOfInput) {
+        tasks.get(Integer.parseInt(arrayOfInput[1]) - 1).markAsNotDone();
         Printer.markOrUnmark(tasks, Integer.parseInt(arrayOfInput[1]) - 1);
     }
 
-    public static void decideTaskGroup(String input, Task[] tasks, String[] arrayOfInput) throws DukeException {
+    public static void decideTaskGroup(String input, ArrayList<Task> tasks, String[] arrayOfInput) throws DukeException {
         boolean isInputTodo = arrayOfInput[0].equals(CommandWords.TODO.COMMAND);
         boolean isInputDeadline = arrayOfInput[0].equals(CommandWords.DEADLINE.COMMAND);
         boolean isInputEvent = arrayOfInput[0].equals(CommandWords.EVENT.COMMAND);
@@ -64,20 +66,20 @@ public class Command {
         Task.incrementTotalTasks();
     }
 
-    public static void addTodoTask(Task[] tasks, String[] input) {
-        tasks[Task.totalTasks] = new Todo(input[1]);
+    public static void addTodoTask(ArrayList<Task> tasks, String[] input) {
+        tasks.add(Task.totalTasks, new Todo(input[1]));
     }
 
-    public static void addDeadlineTask(Task[] tasks, String input) {
+    public static void addDeadlineTask(ArrayList<Task> tasks, String input) {
         String[] commandInformation = input.split(" ", 2);
         String[] taskNameAndDate = commandInformation[1].split("/by", 2);
-        tasks[Task.totalTasks] = new Deadline(taskNameAndDate[0].trim(), taskNameAndDate[1].trim());
+        tasks.add(Task.totalTasks, new Deadline(taskNameAndDate[0].trim(), taskNameAndDate[1].trim()));
     }
 
-    public static void addEventTask(Task[] tasks, String input) {
+    public static void addEventTask(ArrayList<Task> tasks, String input) {
         String taskNameInformation = input.split(" ", 2)[1];
         String[] taskNameAndDate = taskNameInformation.split("/from", 2); // name fromTo
         String[] fromAndTo = taskNameAndDate[1].split("/to", 2); // from to
-        tasks[Task.totalTasks] = new Event(taskNameAndDate[0].trim(), fromAndTo[0].trim(), fromAndTo[1].trim());
+        tasks.add(Task.totalTasks, new Event(taskNameAndDate[0].trim(), fromAndTo[0].trim(), fromAndTo[1].trim()));
     }
 }
