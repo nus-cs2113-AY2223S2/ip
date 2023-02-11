@@ -22,6 +22,7 @@ public class Duke {
         while (!line.equals("bye")) {
             System.out.println("____________________________________________________________\n");
 
+            //List command when list is not empty
             if (line.equals("list") && !tasks.isEmpty()) {
                 System.out.println("Here are the tasks in your list: \n ");
                 for (int i = 0; i < tasks.size(); i++) {
@@ -31,6 +32,7 @@ public class Duke {
                 System.out.println("____________________________________________________________\n");
             }
 
+            //unmark command to indicate completion of tasks
             else if (line.contains("unmark")) {
                 int index = line.indexOf(" ");
                 if (line.length() > 7 && (tasks.size() >= index)){
@@ -48,6 +50,7 @@ public class Duke {
                 }
             }
 
+            //mark tasks to indicate completion
             else if (line.contains("mark")) {
                 int index = line.indexOf(" ");
                 if (line.length() > 5 && (tasks.size() >= index)){
@@ -65,6 +68,7 @@ public class Duke {
                 }
             }
 
+            //Expected format : todo borrow book
             else if (line.contains("todo")) {
                 if (line.length() > 5){
                     int index = line.indexOf(" ");
@@ -81,6 +85,7 @@ public class Duke {
                 }
             }
 
+            //Expected format : deadline finish submission /by Monday 7pm
             else if (line.contains("deadline")) {
                 if (line.length() > 9 && line.contains("/")){
                     int index = line.indexOf(" ");
@@ -99,12 +104,13 @@ public class Duke {
                 }
             }
 
+            //Expected format : event attend Aarushi's marriage /from Monday 7pm to Thursday 7pm
             else if (line.contains("event")) {
                 if (line.length() > 6 && line.contains("/")){
                     int index = line.indexOf(" ");
                     int startDate = line.indexOf("/");
                     String activity = line.substring(index, startDate);
-                    String timeFrame = line.substring(startDate + 3, line.length());
+                    String timeFrame = line.substring(startDate + 5, line.length());
                     Event event = new Event(activity, timeFrame);
                     tasks.add(event);
                     System.out.println("Added: " + "\n" + event.toString() + "\n");
@@ -117,11 +123,13 @@ public class Duke {
                 }
             }
 
+            //When the list is empty
             else if(tasks.isEmpty()){
                 System.out.println("🤪The list is empty. Do something in order to have tasks in your list");
                 System.out.println("____________________________________________________________\n");
             }
 
+            //When non duke command are entered
             else {
                 System.out.println("🤪Sorry enter a valid Duke command");
                 System.out.println("____________________________________________________________\n");
