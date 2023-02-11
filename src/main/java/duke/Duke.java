@@ -325,6 +325,42 @@ public class Duke {
         }
     }
 
+    public static void loadTaskList(String fileContent) {
+        String[] lines = fileContent.split("\n");
+        for (String line : lines) {
+            String[] taskInfo = line.split("\\|");
+            switch (taskInfo[0]) {
+            case "T":
+                Todo todo = new Todo(taskInfo[2]);
+                if (taskInfo[1].equals("X")) {
+                    todo.setAsDone();
+                } else {
+                    todo.setAsNotDone();
+                }
+                userList.add(todo);
+                break;
+            case "D":
+                Deadline deadline = new Deadline(taskInfo[2], taskInfo[3]);
+                if (taskInfo[1].equals("X")) {
+                    deadline.setAsDone();
+                } else {
+                    deadline.setAsNotDone();
+                }
+                userList.add(deadline);
+                break;
+            case "E":
+                Event event = new Event(taskInfo[2], taskInfo[4], taskInfo[3]);
+                if (taskInfo[1].equals("X")) {
+                    event.setAsDone();
+                } else {
+                    event.setAsNotDone();
+                }
+                userList.add(event);
+                break;
+            }
+        }
+    }
+
     public static void startDuke() throws IOException {
         separator();
         printMessage("Hello! I'm Duke");
@@ -340,6 +376,7 @@ public class Duke {
             databaseFile.getParentFile().mkdirs();
             databaseFile.createNewFile();
         } else {
+            printMessage("Loading previous task list...");
             FileReader fileReader = new FileReader(databaseFile);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String fileContent = "";
@@ -347,7 +384,11 @@ public class Duke {
             while ((line = bufferedReader.readLine()) != null) {
                 fileContent += line + "\n";
             }
-            System.out.println("File content: " + fileContent);
+
+            loadTaskList(fileContent);
+            printMessage("Done loading previous task list:");
+            String outputMessage = String.format("Loaded a total of %d tasks!", userList.size());
+            printMessage(outputMessage);
             bufferedReader.close();
             fileReader.close();
         }
@@ -360,7 +401,7 @@ public class Duke {
 
         Path filepath = Paths.get("data", "duke.txt");
         File databaseFile = filepath.toFile();
-        FileWriter databaseFileWriter = new FileWriter(databaseFile, true);
+        FileWriter databaseFileWriter = new FileWriter(databaseFile);
 
         for (Task task : userList) {
             String taskInfo = "";
