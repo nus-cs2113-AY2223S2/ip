@@ -1,6 +1,9 @@
 package Duke;
+
+import java.util.ArrayList;
+
 public class DukeSortInputTask {
-    public static void dukeSortInputTask(DukeTasks[] list, Integer taskLength, String taskName) throws DukeExceptions {
+    public static void dukeSortInputTask(ArrayList<DukeTasks> list, Integer taskLength, String taskName) throws DukeExceptions {
         String[] taskType = taskName.split(" ", 2);
         String[] taskDescription;
 
@@ -10,19 +13,19 @@ public class DukeSortInputTask {
         }
         
         if (taskType[0].equals("todo")) {
-            list[taskLength] = new DukeToDos(taskType[1]);
+            list.add(new DukeToDos(taskType[1]));
         } else if (taskType[0].equals("deadline")) {
             if (!taskType[1].contains("/by")) {
                 throw new DukeExceptions("Did you perhaps forget to set a deadline for the task?");
             }
             taskDescription = taskType[1].split("/by", 2);
-            list[taskLength] = new DukeDeadlines(taskDescription[0], taskDescription[1]);
+            list.add(new DukeDeadlines(taskDescription[0], taskDescription[1]));
         } else if (taskType[0].equals("event")) {
             if (!taskType[1].contains("/from")) {
                 throw new DukeExceptions("Did you perhaps forget to specify the duration for the event?");
             }
             taskDescription = taskType[1].split("/from", 2);
-            list[taskLength] = new DukeEvents(taskDescription[0], taskDescription[1]);
+            list.add(new DukeEvents(taskDescription[0], taskDescription[1]));
         } else {
             throw new DukeExceptions("Huh? I did not quite catch that");
         }
