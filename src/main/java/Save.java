@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class Save {
     }
     public static void readFile(ArrayList<Task> textList) throws FileNotFoundException, ArrayIndexOutOfBoundsException {
         File f = new File("data/duke.txt"); // create a File for the given file path
-        Scanner s = new Scanner(f); // create a Scanner using the File as the source
+        Scanner s = new Scanner(new FileInputStream(("data/duke.txt"))); // create a Scanner using the File as the source
         while (s.hasNext()) {
             String line = s.nextLine();
             String[] lineArray = line.split("\\|");
