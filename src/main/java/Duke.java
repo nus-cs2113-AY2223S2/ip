@@ -53,32 +53,24 @@ public class Duke {
 
             // Marks a task as complete
             case "mark": {
-                char dynamicInput = splitInput[1].charAt(0);
                 try {
-                    if (!Character.isDigit(dynamicInput) || dynamicInput == '0' || splitInput[1].length() > 1) {
+                    if (!isValidInput(splitInput[1])) {
                         throw new DukeExceptions.invalidNumberException(BARRIER + "\n\nBlast! That isn't a valid number lad!\n" + BARRIER + "\n");
                     }
                     int index = Integer.parseInt(splitInput[1]) - 1;
-                    if (index > numTasks - 1){
-                        throw new DukeExceptions.noTasksException("Blast! That task does not exist, please add tasks first, ye landlubbers!\n" + BARRIER + "\n");
-                    }
                     Task.getTasksArray().get(index).markAsComplete();
                 } finally {
                     break;
                 }
             }
 
-                // Unmarks a previous completed task
+            // Unmarks a previous completed task
             case "unmark": {
-                char dynamicInput = splitInput[1].charAt(0);
                 try {
-                    if (!Character.isDigit(dynamicInput) || dynamicInput == '0' || splitInput[1].length() > 1) {
+                    if (!isValidInput(splitInput[1])) {
                         throw new DukeExceptions.invalidNumberException(BARRIER + "\n\nBlast! That isn't a valid number lad!\n" + BARRIER + "\n");
                     }
                     int index = Integer.parseInt(splitInput[1]) - 1;
-                    if (index > numTasks - 1){
-                        throw new DukeExceptions.noTasksException("Blast! That task does not exist, please add tasks first, ye landlubbers!\n" + BARRIER + "\n");
-                    }
                     Task.getTasksArray().get(index).unmarkAsComplete();
                 } finally {
                     break;
@@ -137,6 +129,22 @@ public class Duke {
                 break;
             }
 
+            case "delete": {
+                try {
+                    if (!isValidInput(splitInput[1])) {
+                            throw new DukeExceptions.invalidNumberException(BARRIER + "\n\nBlast! That isn't a valid number lad!\n" + BARRIER + "\n");
+                    }
+                    int index = Integer.parseInt(splitInput[1]) - 1;
+                    System.out.println(BARRIER + "\n\nAye! The task be removed:");
+                    System.out.println("    " + Task.getTasksArray().get(index).printTask());
+                    Task.getTasksArray().remove(index);
+                    printListLength();
+                    System.out.println(BARRIER + "\n");
+                } finally {
+                    break;
+                }
+            }
+
             // Adds a new task if no case is hit
             default: {
                 System.out.println(BARRIER + "\n");
@@ -172,5 +180,18 @@ public class Duke {
         } else {
             System.out.println("Now you have " + Task.getTasksArray().size() + " tasks in the list!");
         }
+    }
+
+    public static boolean isValidInput(String input) {
+        char dynamicInput = input.charAt(0);
+        boolean isOneChar = input.length() == 1;
+        if (!isOneChar) {
+            return false;
+        }
+        int index = Integer.parseInt(input) - 1;
+        boolean isNumber = Character.isDigit(dynamicInput);
+        boolean isZero = dynamicInput == '0';
+        boolean isInRange = index <= Task.getTasksArray().size() - 1;
+        return (isNumber && !isZero && isInRange);
     }
 }
