@@ -1,7 +1,10 @@
 package Duke;
+
+import java.util.ArrayList;
+
 public class DukeCommands {
     public static String spacer = "__________________________________________\n";
-    public static DukeTasks[] list = new DukeTasks[100];
+    public static ArrayList<DukeTasks> list = new ArrayList<>();
     static Integer taskLength = 0;
 
     // Still requires addition of speach lines
@@ -29,9 +32,6 @@ public class DukeCommands {
         Integer taskIndex = 1;
         System.out.println("Here is your list of tasks: \n");
         for (DukeTasks task : list) {
-            if (taskIndex > taskLength) {
-                break;
-            }
             System.out.println(taskIndex + ".[" + task.getTaskType() + "] " + "[" + task.getStatusIcon() + "] " + task.toString());
             taskIndex += 1;
         }
@@ -44,9 +44,9 @@ public class DukeCommands {
      * @param taskIndex Index number of task from list printed by Duke, to be marked
      */
     public static void markTask(Integer taskIndex) {
-        list[taskIndex - 1].markDone();
+        list.get(taskIndex - 1).markDone();
         System.out.println("Some tasks have been marked off your list: \n");
-        System.out.println("  [" + list[taskIndex - 1].getStatusIcon() + "] " + list[taskIndex - 1].toString());
+        System.out.println("  [" + list.get(taskIndex - 1).getTaskType() + "] " + "[" + list.get(taskIndex - 1).getStatusIcon() + "] " + list.get(taskIndex - 1).toString());
         System.out.println(spacer);
     }
     
@@ -56,9 +56,9 @@ public class DukeCommands {
      * @param taskIndex Index number of task from list printed by Duke, to be unmarked
      */
     public static void unmarkTask(Integer taskIndex) {
-        list[taskIndex - 1].unmarkDone();
+        list.get(taskIndex - 1).unmarkDone();
         System.out.println("Some tasks have been unmarked. Procrastinating much?\n");
-        System.out.println("  [" + list[taskIndex - 1].getStatusIcon() + "] " + list[taskIndex - 1].toString());
+        System.out.println("  [" + list.get(taskIndex - 1).getTaskType() + "] " + "[" + list.get(taskIndex - 1).getStatusIcon() + "] " + list.get(taskIndex - 1).toString());
         System.out.println(spacer);
     }
 }
