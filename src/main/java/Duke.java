@@ -1,3 +1,11 @@
+import exceptions.DeadlineParamsFormatException;
+import exceptions.EventParamsFormatException;
+import exceptions.TaskIndexNotFoundException;
+import task.Deadline;
+import task.Event;
+import task.Task;
+import task.Todo;
+
 import java.util.*;
 
 public class Duke {
@@ -72,7 +80,7 @@ public class Duke {
         try{
             index = Integer.parseInt(taskToMarkIndexString);
         }catch (NumberFormatException nfe){
-            feedback = "TaskIndexFormatError: Cannot format your input to a Task Index!";
+            feedback = "TaskIndexFormatError: Cannot format your input to a task.Task Index!";
             return feedback;
         }
 
@@ -115,7 +123,7 @@ public class Duke {
     }
 
     public static String executeDeadlineCommand(String commandParams)
-            throws ArrayIndexOutOfBoundsException, DeadlineParamsFormatException{
+            throws ArrayIndexOutOfBoundsException, DeadlineParamsFormatException {
         //input: String /by [ddl]        [have not done]: String /by ddl or /by ddl String
         //Exception 1: No '/'
         if(commandParams.indexOf('/')==-1){
@@ -144,7 +152,7 @@ public class Duke {
         return feedback;
     }
 
-    public static String executeEventCommand(String commandParams) throws EventParamsFormatException{
+    public static String executeEventCommand(String commandParams) throws EventParamsFormatException {
         //input: String /from [startTime] /to [endTime]        [haven't done]: process case like /to /from
         //Exception 1: No '/'
         if(commandParams.indexOf('/') == -1){
