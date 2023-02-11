@@ -33,11 +33,11 @@ public class Messages {
     public static final String MESSAGE_PROMPT_VALID_TASK_ENTRY = " Sorry! "
             + "Please provide some information about your task! ^.^";
 
-    public static final String MESSAGE_PROMPT_VALID_DEAD_LINE_ENTRY_AFTER_SLASH = " Sorry! "
+    public static final String MESSAGE_PROMPT_VALID_BY_DATE_ENTRY_AFTER_SLASH = " Sorry! "
             + "Please provide some information on your deadline" + "\n"
             + "Namely, when it is due following the </> symbol! ^.^";
 
-    public static final String MESSAGE_PROMPT_VALID_EVENT_ENTRY_AFTER_SLASH = " Sorry! "
+    public static final String MESSAGE_PROMPT_VALID_FROM_AND_TO_ENTRY_AFTER_SLASH = " Sorry! "
             + "Please provide some information on your event" + "\n"
             + "Namely, when it starts and ends after following the </> symbol respectively! ^.^" + "\n"
             + "For example: /<from when> /<to when>";

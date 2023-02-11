@@ -2,8 +2,6 @@ package inu.parser;
 
 import java.util.Scanner;
 
-import inu.task.*;
-import inu.exceptionhandling.*;
 import inu.tasklist.TaskList;
 
 public class UserCommands {
@@ -15,14 +13,6 @@ public class UserCommands {
     public static String command;
 
     public static String entry;
-
-    public static String task;
-
-    public static String deadLine;
-
-    public static String from;
-
-    public static String to;
 
     public static final String TODO = "todo";
 
@@ -72,20 +62,11 @@ public class UserCommands {
                 try {
 
                     entry = userString[INDEX_ENTRY];
-
-                    ExceptionManager.checkEmptyUserInput(entry);
-
-                    Todo todoTask = new Todo(entry);
-                    taskList.addTask(todoTask);
-                    Ui.printAcknowledgment(taskList);
+                    Util.runTodo(taskList, entry);
 
                 } catch (ArrayIndexOutOfBoundsException e) {
 
-                    Ui.printPromptValidTask();
-
-                } catch (EmptyUserInputException e) {
-
-                    Ui.printPromptValidTaskEntry();
+                    Ui.printPromptValidInput();
 
                 }
 
@@ -96,28 +77,14 @@ public class UserCommands {
                 try {
 
                     entry = userString[INDEX_ENTRY];
-                    task = Util.fetchTask(entry);
-                    deadLine = Util.fetchDeadLine(entry);
-
-                    ExceptionManager.checkEmptyUserInput(task, deadLine);
-
-                    DeadLine deadLineTask = new DeadLine(task, deadLine);
-                    taskList.addTask(deadLineTask);
-                    Ui.printAcknowledgment(taskList);
+                    Util.runDeadLine(taskList, entry);
 
                 } catch (ArrayIndexOutOfBoundsException e) {
 
-                    Ui.printPromptValidTask();
-
-                } catch (EmptyUserInputException e) {
-
-                    Ui.printPromptValidDeadLineEntry();
-
-                } catch (StringIndexOutOfBoundsException e) {
-
-                    Ui.printPromptValidDeadLine();
+                    Ui.printPromptValidInput();
 
                 }
+
                 break;
 
             case EVENT:
@@ -125,29 +92,14 @@ public class UserCommands {
                 try {
 
                     entry = userString[INDEX_ENTRY];
-                    task = Util.fetchTask(entry);
-                    from = Util.fetchFrom(entry);
-                    to = Util.fetchTo(entry);
-
-                    ExceptionManager.checkEmptyUserInput(task, from, to);
-
-                    Event eventTask = new Event(task, from, to);
-                    taskList.addTask(eventTask);
-                    Ui.printAcknowledgment(taskList);
+                    Util.runEvent(taskList, entry);
 
                 } catch (ArrayIndexOutOfBoundsException e) {
 
-                    Ui.printPromptValidTask();
-
-                } catch (EmptyUserInputException e) {
-
-                    Ui.printPromptValidEventEntry();
-
-                } catch (StringIndexOutOfBoundsException e) {
-
-                    Ui.printPromptValidEvent();
+                    Ui.printPromptValidInput();
 
                 }
+
                 break;
 
             case DELETE:
@@ -155,40 +107,19 @@ public class UserCommands {
                 try {
 
                     entry = userString[INDEX_ENTRY];
-
-                    ExceptionManager.checkEmptyUserInput(entry);
-
-                    int deleteTaskNumber = Util.fetchIndexFromString(entry);
-                    Ui.printDelete(taskList, deleteTaskNumber);
-                    taskList.deleteTask(deleteTaskNumber);
+                    Util.runDelete(taskList, entry);
 
                 } catch (ArrayIndexOutOfBoundsException e) {
 
                     Ui.printPromptValidTaskIndexEntry();
 
-                } catch (IndexOutOfBoundsException e) {
-
-                    Ui.printPromptValidTaskIndex();
-
-                } catch (EmptyUserInputException e) {
-
-                    Ui.printPromptValidDelete();
-
                 }
+
                 break;
 
             case LIST:
 
-                try {
-
-                    ExceptionManager.checkEmptyTaskList(taskList);
-                    Ui.printTaskList(taskList);
-
-                } catch (EmptyTaskListException e) {
-
-                    Ui.printPromptEmptyTaskList();
-
-                }
+                Util.runList(taskList);
                 break;
 
             case MARK:
@@ -196,26 +127,14 @@ public class UserCommands {
                 try {
 
                     entry = userString[INDEX_ENTRY];
-
-                    ExceptionManager.checkEmptyUserInput(entry);
-
-                    int markIndex = Util.fetchIndexFromString(entry);
-                    Util.markTask(taskList, markIndex);
-                    Ui.printMark(taskList, markIndex);
+                    Util.runMark(taskList, entry);
 
                 } catch (ArrayIndexOutOfBoundsException e) {
 
                     Ui.printPromptValidTaskIndexEntry();
 
-                } catch (IndexOutOfBoundsException e) {
-
-                    Ui.printPromptValidTaskIndex();
-
-                } catch (EmptyUserInputException e) {
-
-                    Ui.printPromptValidMarkEntry();
-
                 }
+
                 break;
 
             case UNMARK:
@@ -223,26 +142,14 @@ public class UserCommands {
                 try {
 
                     entry = userString[INDEX_ENTRY];
-
-                    ExceptionManager.checkEmptyUserInput(entry);
-
-                    int unMarkIndex = Util.fetchIndexFromString(entry);
-                    Util.unMarkTask(taskList, unMarkIndex);
-                    Ui.printUnMark(taskList, unMarkIndex);
+                    Util.runUnMark(taskList, entry);
 
                 } catch (ArrayIndexOutOfBoundsException e) {
 
                     Ui.printPromptValidTaskIndexEntry();
 
-                } catch (IndexOutOfBoundsException e) {
-
-                    Ui.printPromptValidTaskIndex();
-
-                } catch (EmptyUserInputException e) {
-
-                    Ui.printPromptValidUnMarkEntry();
-
                 }
+
                 break;
 
             case BYE:

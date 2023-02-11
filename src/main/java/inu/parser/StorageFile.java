@@ -2,14 +2,10 @@ package inu.parser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.nio.file.FileAlreadyExistsException;
 import java.util.Scanner;
 import java.io.FileWriter;
 import java.io.IOException;
 import inu.task.Task;
-import inu.task.Todo;
-import inu.task.DeadLine;
-import inu.task.Event;
 import inu.tasklist.TaskList;
 
 
@@ -40,7 +36,7 @@ public class StorageFile {
 
         } catch (FileNotFoundException e) {
 
-            System.out.println("never parse");
+            System.out.println(e.getMessage());
 
         }
     }
@@ -63,7 +59,7 @@ public class StorageFile {
 
         } catch (IOException e) {
 
-            System.out.println("never write");
+            System.out.println(e.getMessage());
 
         }
 

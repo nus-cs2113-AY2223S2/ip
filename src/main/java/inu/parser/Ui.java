@@ -63,7 +63,7 @@ public class Ui {
 
     }
 
-    public static void printPromptValidTask() {
+    public static void printPromptValidInput() {
 
         System.out.println(Messages.MESSAGE_DIVIDER);
         System.out.println(Messages.MESSAGE_PROMPT_VALID_INPUT);
@@ -95,18 +95,18 @@ public class Ui {
 
     }
 
-    public static void printPromptValidDeadLineEntry() {
+    public static void printPromptValidByDateEntryAfterSlash() {
 
         System.out.println(Messages.MESSAGE_DIVIDER);
-        System.out.println(Messages.MESSAGE_PROMPT_VALID_DEAD_LINE_ENTRY_AFTER_SLASH);
+        System.out.println(Messages.MESSAGE_PROMPT_VALID_BY_DATE_ENTRY_AFTER_SLASH);
         System.out.println(Messages.MESSAGE_DIVIDER);
 
     }
 
-    public static void printPromptValidEventEntry() {
+    public static void printPromptValidFromAndToEntryAfterSlash() {
 
         System.out.println(Messages.MESSAGE_DIVIDER);
-        System.out.println(Messages.MESSAGE_PROMPT_VALID_EVENT_ENTRY_AFTER_SLASH);
+        System.out.println(Messages.MESSAGE_PROMPT_VALID_FROM_AND_TO_ENTRY_AFTER_SLASH);
         System.out.println(Messages.MESSAGE_DIVIDER);
 
     }
@@ -135,7 +135,7 @@ public class Ui {
 
     }
 
-    public static void printPromptValidDelete() {
+    public static void printPromptValidDeleteEntry() {
 
         System.out.println(Messages.MESSAGE_DIVIDER);
         System.out.println(Messages.MESSAGE_PROMPT_VALID_DELETE_ENTRY);
