@@ -15,4 +15,9 @@ public class Deadline extends Task {
     public String getDescription() {
         return super.getDescription() + " (by: " + this.by + ")";
     }
+
+    @Override
+    public String getDetailsToSave() {
+        return super.description + " /by " + this.by;
+    }
 }

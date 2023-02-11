@@ -1,4 +1,8 @@
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.FileNotFoundException;
 public class Duke {
 
     public static void main(String[] args) {
@@ -7,14 +11,25 @@ public class Duke {
                 "     What can I do for you?\n" +
                 "    ____________________________________________________________\n";
 
-        System.out.println(logo);
+
 
         String line = "    ____________________________________________________________\n";
 
         Task[] tasks = new Task[100];
+
+        String dataFilePath = "src/main/data/duke.txt";
+        int index = 0;
+        try {
+            index = loadTasks(tasks, dataFilePath);
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage() + "notfoundcheebai");
+        }
+        System.out.println(line);
+        System.out.println("     All Tasks loaded from memory");
+        System.out.println(line);
+        System.out.println(logo);
         Scanner in = new Scanner(System.in);
         String action = in.nextLine();
-        int index = 0;
         String bye = "bye";
 
         while (!action.equals(bye)) {
@@ -145,10 +160,73 @@ public class Duke {
             action = in.nextLine();
         }
 
+        try {
+            saveTasks(tasks, dataFilePath, index);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
         System.out.println(line);
         System.out.println("     " + "Bye. Hope to see you again soon!");
         System.out.println(line);
 
+    }
+
+    private static void saveTasks(Task[] tasks, String filePath, int index) throws IOException{
+        FileWriter fw = new FileWriter(filePath);
+
+        for(int i = 0; i<index; i++) {
+            fw.write(tasks[i].getTypeOfTask() + " | " + (tasks[i].isDone? "1" : "0") + " | " + tasks[i].getDetailsToSave() + System.lineSeparator());
+        }
+        fw.close();
+    }
+
+    private static int loadTasks(Task[] tasks, String filePath) throws FileNotFoundException {
+        int count = 0;
+        File f = new File(filePath);
+        Scanner s = new Scanner(f); // create a Scanner using the File as the source
+        while (s.hasNext()) {
+            String line = s.nextLine();
+            String[] args = line.split(" \\| ");
+            System.out.println(args[0] + "==" + args [1] + "==" + args[2] + "==");
+
+            switch (args[0]) {
+                case "T":
+                    try {
+                        count = addTodo(tasks, args[2], count);
+                        if(args[1].equals("1")) {
+                            markTask(tasks, Integer.toString(count), count);
+                        }
+                    } catch (DukeException e) {
+
+                    }
+                    break;
+                case "D":
+                    try {
+                        count = addDeadline(tasks, args[2], count);
+                        if(args[1].equals("1")) {
+                            markTask(tasks, Integer.toString(count), count);
+                        }
+                    } catch (DukeException e) {
+
+                    }
+                    break;
+                case "E":
+                    try {
+                        count = addEvent(tasks, args[2], count);
+                        if(args[1].equals("1")) {
+                            markTask(tasks, Integer.toString(count), count);
+                        }
+                    } catch (DukeException e) {
+
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return count;
     }
 
     private static int addEvent(Task[] tasks, String todoTask, int index) throws DukeException {

@@ -28,4 +28,8 @@ public class Task {
         return " ";
     }
 
+    public String getDetailsToSave() {
+        return "";
+    }
+
 }
