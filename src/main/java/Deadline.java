@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Deadline extends Task {
 
     protected String whenDue;
@@ -12,14 +14,17 @@ public class Deadline extends Task {
         this.isDone = false;
         this.taskLabel = "[D]";
     }
-    public static int add(String line, Task[] list, int currentNumber) {
+
+    public Deadline(){}
+    public static int add(String line, ArrayList<Task> list, int currentNumber) {
         System.out.println("     Got it. I've added this task:");
         Deadline newTask = new Deadline(line);
         System.out.println("       " + newTask.taskLabel + newTask.getStatusIcon() + " " + newTask.description);
-        list[currentNumber] = newTask;
+        list.add(newTask);
         ++currentNumber;
         System.out.println("     Now you have " + currentNumber + " tasks in the list.");
         return currentNumber;
     }
 
 }
+

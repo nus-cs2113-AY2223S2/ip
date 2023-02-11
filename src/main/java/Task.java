@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public abstract class Task {
     protected String description;
     protected boolean isDone;
@@ -13,6 +15,8 @@ public abstract class Task {
         this.description = description;
         this.isDone = false;
     }
+
+    public Task(){};
 
     /**
      * Mark done task with X
@@ -42,7 +46,7 @@ public abstract class Task {
      * executeNonAdd method executes all instructions
      * except the instructions to add tasks to the list
      */
-    public static void markOrUnmark(String command, Task[] listOfTasks, int currentNumber) {
+    public static void markOrUnmark(String command, ArrayList<Task> listOfTasks, int currentNumber) {
         if (command.matches("mark \\d")) {
             mark(command, listOfTasks);
         } else if (command.matches("unmark \\d")) {
@@ -50,24 +54,24 @@ public abstract class Task {
         }
     }
 
-    protected static int add(String line, Task[] list, int currentNumber) {
+    protected static int add(String line, ArrayList<Task> list, int currentNumber) {
         return currentNumber;
     }
 
-    protected static void unmark(String command, Task[] listOfTasks) {
+    protected static void unmark(String command, ArrayList<Task>  listOfTasks) {
         String[] seperated = command.split(" ");
         int number = Integer.parseInt(seperated[1]) - TASK_NUMBER_OFFSET;
-        listOfTasks[number].setDone(false);
+        listOfTasks.get(number).setDone(false);
         System.out.println("     OK, I've marked this task as not done yet:");
-        System.out.println("     " + listOfTasks[number].taskLabel + listOfTasks[number].getStatusIcon() + " " + listOfTasks[number].description);
+        System.out.println("     " + listOfTasks.get(number).taskLabel + listOfTasks.get(number).getStatusIcon() + " " + listOfTasks.get(number).description);
     }
 
-    protected static void mark(String command, Task[] listOfTasks) {
+    protected static void mark(String command, ArrayList<Task>  listOfTasks) {
         String[] seperated = command.split(" ");
         int number = Integer.parseInt(seperated[1]) - TASK_NUMBER_OFFSET;
-        listOfTasks[number].setDone(true);
+        listOfTasks.get(number).setDone(true);
         System.out.println("     Nice! I've marked this task as done:");
-        System.out.println("     " + listOfTasks[number].taskLabel + listOfTasks[number].getStatusIcon() + " " + listOfTasks[number].description);
+        System.out.println("     " + listOfTasks.get(number).taskLabel + listOfTasks.get(number).getStatusIcon() + " " + listOfTasks.get(number).description);
     }
 
 

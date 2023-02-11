@@ -1,24 +1,31 @@
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Arrays;
 import java.util.List;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 
 public class Duke {
     public static final List<String> taskTypes = Arrays.asList("todo", "deadline", "event");
+    public static final List<String> listEditableCommands = Arrays.asList("todo", "deadline", "event", "mark","unmark");
     public static final List<String> commands = Arrays.asList("todo", "deadline", "event", "mark", "unmark", "list", "bye");
 
     public static void printHorizontalLine() {
         System.out.print("    ____________________________________________________________\n");
     }
 
-    public static void listing(Task[] listOfTasks, int currentNumberIndex) {
+    public static void listing(ArrayList<Task> listOfTasks, int currentNumberIndex) {
         System.out.println("     Here are the tasks in your list:");
         for (int i = 0; i < currentNumberIndex; ++i) {
             int counter = i + 1;
-            System.out.print("     " + counter + "." + listOfTasks[i].taskLabel + listOfTasks[i].getStatusIcon() + " ");
-            System.out.println(listOfTasks[i].description);
+            System.out.print("     " + counter + "." + listOfTasks.get(i).taskLabel + listOfTasks.get(i).getStatusIcon() + " ");
+            System.out.println(listOfTasks.get(i).description);
         }
     }
+
 
     public static void checkIfValid(String[] lineComponents) throws InvalidCommand {
         boolean isNotValidCommand = !commands.contains(lineComponents[0]);
@@ -50,9 +57,14 @@ public class Duke {
         System.out.println(greet);
 
         String line;
-        final int TOTAL_TASKS = 100; // Total number of tasks
-        Task[] tasksList = new Task[TOTAL_TASKS]; // Array of Tasks
+        ArrayList<Task> taskArrayList= new ArrayList<>(); // Array of Tasks
         int currentNumber = 0; // Current number of tasks
+
+        try {
+            currentNumber = LoadFile.loadFileContents("C:\\Users\\aviel\\OneDrive - National University of Singapore\\Documents\\NUS\\Y2\\SEM 4\\CS2113\\ip\\data\\duke.txt",taskArrayList,currentNumber);
+        }catch(FileNotFoundException e){
+            System.out.println("File Not Found");
+        }
 
         while (true) {
             Scanner in = new Scanner(System.in);
@@ -66,28 +78,28 @@ public class Duke {
                     checkIfEmpty(lineComponents);
                     switch (type) {
                     case "todo":
-                        currentNumber = Todo.add(line, tasksList, currentNumber);
+                        currentNumber = Todo.add(line, taskArrayList, currentNumber);
                         break;
                     case "deadline":
-                        currentNumber = Deadline.add(line, tasksList, currentNumber);
+                        currentNumber = Deadline.add(line, taskArrayList, currentNumber);
                         break;
                     case "event":
-                        currentNumber = Event.add(line, tasksList, currentNumber);
+                        currentNumber = Event.add(line, taskArrayList, currentNumber);
                         break;
                     case "list":
-                        listing(tasksList, currentNumber);
+                        listing(taskArrayList, currentNumber);
                         break;
                     case "bye":
                         System.out.println("     Bye. Hope to see you again soon!");
                         break;
                     default:
                         if (line.matches("mark \\d") || line.matches("unmark \\d")) {
-                            Task.markOrUnmark(line, tasksList, currentNumber);
+                            Task.markOrUnmark(line, taskArrayList, currentNumber);
                             break;
                         }
                     }
                 } catch (InvalidCommand e) {
-                        System.out.println("     ☹ OOPS!!! The description of a " + lineComponents[0] + " cannot be empty.");
+                    System.out.println("     ☹ OOPS!!! The description of a " + lineComponents[0] + " cannot be empty.");
                 } finally {
                     printHorizontalLine();
                 }
@@ -99,9 +111,14 @@ public class Duke {
                 System.out.println("     ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
                 printHorizontalLine();
             }
+            try {
+                if(listEditableCommands.contains(type)){
+                    WriteFile.writeToFile("C:\\Users\\aviel\\OneDrive - National University of Singapore\\Documents\\NUS\\Y2\\SEM 4\\CS2113\\ip\\data\\duke.txt",taskArrayList);
+                }
+                else{
+                    continue;
+                }
+            } catch(IOException e){};
         }
     }
 }
-
-
-
