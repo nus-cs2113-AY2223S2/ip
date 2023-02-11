@@ -13,6 +13,7 @@ import error.DukeAlreadyMarkedException;
 import error.DukeIllegalCommandException;
 import error.DukeIllegalSyntaxException;
 import error.DukeTaskDoesNotExistException;
+import error.DukeIllegalCharacterException;
 
 public class Duke {
 
@@ -37,12 +38,17 @@ public class Duke {
         userInput = scanner.nextLine();
         command = userInput.split(" ")[0];
 
+
         // Loop for next tasks to add
         while (!userInput.equals("bye")) {
 
             try {
 
                 System.out.println(HORIZONTAL_LINE);
+
+                if (userInput.contains("|")) {
+                    throw new DukeIllegalCharacterException();
+                }
 
                 // Print list upon user request
                 if (userInput.equals("list")) {
@@ -130,6 +136,11 @@ public class Duke {
                 System.out.println("☹ OOPS!!! This task does not exist :-(");
             }
 
+            // This runs when a user enters `|` in their input
+            catch (DukeIllegalCharacterException exception) {
+                System.out.println("☹ OOPS!!! Please do not have '|' in your input :-(");
+            }
+
             // This runs when there is an unexpected error with file reading/writing
             catch (IOException exception) {
                 System.out.println("☹ OOPS!!! Read/write file error :-(");
@@ -138,7 +149,7 @@ public class Duke {
             // Enter the next input and continue the loop
             finally {
                 // Print trailing horizontal line and take in next input
-                System.out.println(HORIZONTAL_LINE + "\n");
+                System.out.println(HORIZONTAL_LINE);
                 userInput = scanner.nextLine();
                 command = userInput.split(" ")[0];
             }
