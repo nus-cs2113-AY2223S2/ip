@@ -1,5 +1,6 @@
 package duke;
 
+import duke.exceptions.MissingFileException;
 import duke.exceptions.MissingParameterException;
 import duke.tasks.Deadline;
 import duke.tasks.Event;
@@ -8,13 +9,11 @@ import duke.tasks.Todo;
 import duke.tools.UI;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.nio.file.Path;
+
 
 /**
  * Task manager with private attribute task array to store tasks.
@@ -26,8 +25,8 @@ public class TaskManager {
     private final static UI ECHO_BACK = new UI();
     private final static String MARKED_CAPTION = "      Nice! I've marked this task as done:";
     private final static String UNMARKED_CAPTION = "      OK, I've marked this task as not done yet:";
-    private final static String DATA_PATH = "duke_data.text";
-    private final static File DATA_FILE = new File(DATA_PATH);
+    private final static String DATA_PATH = "./ip/duke_data.text";
+    private final File DATA_FILE = new File(DATA_PATH);
 
 
 
@@ -135,13 +134,17 @@ public class TaskManager {
      * @param taskIndex index of the task to be edited.
      * @param status mark/unmark.
      */
-    public void editTaskStatus(String taskIndex, String status) throws FileNotFoundException, IOException {
+    public void editTaskStatus(String taskIndex, String status) throws IOException, MissingFileException {
+        if(!DATA_FILE.exists()){
+            throw new MissingFileException();
+        }
         int index = Integer.parseInt(taskIndex)-1;
         if(status.equals("mark")) {
             tasks.get(index).markDone();
-            ECHO_BACK.updateData(index);
+            ECHO_BACK.updateData("mark", index);
         }else{
             tasks.get(index).undo();
+            ECHO_BACK.updateData("unmark", index);
         }
         String caption;
         if(status.equals("mark")){

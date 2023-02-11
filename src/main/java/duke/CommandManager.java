@@ -1,6 +1,7 @@
 package duke;
 
 import duke.exceptions.ContentEmptyException;
+import duke.exceptions.MissingFileException;
 import duke.exceptions.MissingParameterException;
 import duke.exceptions.UnknownCommandException;
 import duke.tasks.Bye;
@@ -47,7 +48,7 @@ public class CommandManager {
      * If command is unmark, mark a particular task as undone.
      * Else add new task.
      */
-    public void executeCommand() throws MissingParameterException, IOException {
+    public void executeCommand() throws MissingParameterException, IOException, MissingFileException {
         if(commandType.equals("bye")){
             sayBye();
             System.exit(0);

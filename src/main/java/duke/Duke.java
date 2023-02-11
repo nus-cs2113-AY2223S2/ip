@@ -1,10 +1,12 @@
 package duke;
 
 import duke.exceptions.ContentEmptyException;
+import duke.exceptions.MissingFileException;
 import duke.exceptions.MissingParameterException;
 import duke.exceptions.UnknownCommandException;
 import duke.tools.UI;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Duke {
@@ -15,6 +17,7 @@ public class Duke {
     private final static String EMPTY_CONTENT = "☹ OOPS!!! The description of a task cannot be empty.\n";
     private final static String MISSING_PARAMETER = "☹ Date/Timing is missing!!\n";
     private final static String DATA_ERROR = "☹ Loading/Writing to file has error!\n";
+    private final static String FILE_NOT_FOUND_ERROR = "☹ Your list is empty, please add tasks!!\n";
 
     public static void startDuke() throws IOException{
         COMMAND_MANAGER.sayHello();
@@ -35,6 +38,8 @@ public class Duke {
                 READ_COMMAND.printError(EMPTY_CONTENT);
             }catch(IOException dataError){
                 READ_COMMAND.printError(DATA_ERROR);
+            }catch(MissingFileException fileNotFound){
+                READ_COMMAND.printError(FILE_NOT_FOUND_ERROR);
             }finally{
                 continue;
             }
