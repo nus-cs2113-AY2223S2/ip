@@ -54,8 +54,14 @@ public class Duke {
         } else if (message[0].equalsIgnoreCase("delete")) {
             deleteTask(message);
         } else {
-            addTask(cleanInput);
+            unknownCommand();
         }
+    }
+
+    public static void unknownCommand() {
+        separator();
+        printMessage("Unknown command entered, please enter a proper command!");
+        separator();
     }
 
     public static void markItem(String[] message) {
@@ -205,15 +211,6 @@ public class Duke {
         eventArray[2] = String.join(" ", endDateArray);
 
         return new Event(eventArray[0], eventArray[1], eventArray[2]);
-    }
-
-    public static void addTask(String description) {
-        separator();
-        Task t = new Task(description);
-        userList.add(t);
-        String outputMessage = String.format("added: %s", description);
-        printMessage(outputMessage);
-        separator();
     }
 
     public static void addTodo(String cleanInput) {
