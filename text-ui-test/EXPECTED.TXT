@@ -6,6 +6,46 @@
       Here are the tasks in your list:
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      Unknown command 'fdjks'
+      Please see below for a list of valid commands
+      - list
+      - mark [TASK NUMBER]
+      - unmark [TASK NUMBER]
+      - todo [TASK DESCRIPTION]
+      - event [EVENT DESCRIPTION] /from [START DATE] /to [END DATE]
+      - deadline [DEADLINE DESCRIPTION] /by [DUE DATE]
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      task 1 does not currently exist.
+      Please see below for a list of valid commands
+      - list
+      - mark [TASK NUMBER]
+      - unmark [TASK NUMBER]
+      - todo [TASK DESCRIPTION]
+      - event [EVENT DESCRIPTION] /from [START DATE] /to [END DATE]
+      - deadline [DEADLINE DESCRIPTION] /by [DUE DATE]
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      Argument 'description' cannot be blank for command 'todo'
+      Please see below for a list of valid commands
+      - list
+      - mark [TASK NUMBER]
+      - unmark [TASK NUMBER]
+      - todo [TASK DESCRIPTION]
+      - event [EVENT DESCRIPTION] /from [START DATE] /to [END DATE]
+      - deadline [DEADLINE DESCRIPTION] /by [DUE DATE]
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      Argument 'description' cannot be blank for command 'deadline'
+      Please see below for a list of valid commands
+      - list
+      - mark [TASK NUMBER]
+      - unmark [TASK NUMBER]
+      - todo [TASK DESCRIPTION]
+      - event [EVENT DESCRIPTION] /from [START DATE] /to [END DATE]
+      - deadline [DEADLINE DESCRIPTION] /by [DUE DATE]
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       Got it. I've added this task:
             [T][ ] borrow book
       Now you have 1 tasks in the list.
@@ -49,7 +89,8 @@
       3. [E][ ] project meeting  (from:  Mon 2pm  to: 4pm)
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      Invalid input. Available commands are:
+      Unknown command 'fdsjk'
+      Please see below for a list of valid commands
       - list
       - mark [TASK NUMBER]
       - unmark [TASK NUMBER]

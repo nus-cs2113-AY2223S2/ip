@@ -3,6 +3,7 @@ import duke.addable.*;
 import duke.exception.*;
 import java.util.Scanner;
 import java.util.Arrays;
+import java.util.ArrayList;
 public class Duke {
     private static final String[] INVALID_INPUT_MESSAGE = {
             "Invalid input format",
@@ -15,9 +16,7 @@ public class Duke {
             "- deadline [DEADLINE DESCRIPTION] /by [DUE DATE]"
     };
     private static final String INDENT = "      ";
-    private static Task[] tasks = new Task[100];
-    private static int currentStoredTaskIndex = 0;
-
+    private static ArrayList<Task> tasks = new ArrayList<>();
     public static void main(String[] args) {
         printIntro();
         mainLoop();
@@ -67,26 +66,26 @@ public class Duke {
 
     public static void mark(String[] words) throws MarkNonexistentTaskException {
         int taskIndex = Integer.parseInt(words[1]) - 1;
-        if (currentStoredTaskIndex <= taskIndex) {
+        if (taskIndex > tasks.size()) {
             throw new MarkNonexistentTaskException(taskIndex + 1);
         }
-        tasks[taskIndex].setDone(true);
+        tasks.get(taskIndex).setDone(true);
         String[] message = {
                 "Cool! I've marked this task as done:",
-                tasks[taskIndex].toString()
+                tasks.get(taskIndex).toString()
         };
         printMessage(message);
     }
 
     public static void unmark(String[] words) throws MarkNonexistentTaskException {
         int taskIndex = Integer.parseInt(words[1]) - 1;
-        if (currentStoredTaskIndex < taskIndex) {
-            throw new MarkNonexistentTaskException(taskIndex);
+        if (taskIndex > tasks.size()) {
+            throw new MarkNonexistentTaskException(taskIndex + 1);
         }
-        tasks[taskIndex].setDone(false);
+        tasks.get(taskIndex).setDone(false);
         String[] message = {
                 "Ok, I've marked this task as not done yet:",
-                tasks[taskIndex].toString()
+                tasks.get(taskIndex).toString()
         };
         printMessage(message);
     }
@@ -114,7 +113,7 @@ public class Duke {
         String[] message = {
                 "Got it. I've added this task:",
                 INDENT + addedTask.toString(),
-                "Now you have " + (currentStoredTaskIndex) + " tasks in the list."
+                "Now you have " + (tasks.size()) + " tasks in the list."
         };
         return message;
     }
@@ -142,8 +141,7 @@ public class Duke {
         default:
             throw new UnknownCommandException(taskType);
         }
-        tasks[currentStoredTaskIndex] = taskToAdd;
-        currentStoredTaskIndex ++;
+        tasks.add(taskToAdd);
         return taskToAdd;
     }
     public static Deadline getNewDeadline(String taskDescription, String[] inputSections) throws ArgumentBlankException {
@@ -179,10 +177,10 @@ public class Duke {
     }
 
     public static String[] getFormattedList() {
-        String[] formattedList = new String[currentStoredTaskIndex + 1];
+        String[] formattedList = new String[tasks.size() + 1];
         formattedList[0] = "Here are the tasks in your list:";
-        for (int i = 0; i < currentStoredTaskIndex; i++) {
-            formattedList[i + 1] = getFormattedTask(tasks[i], i + 1);
+        for (int i = 0; i < tasks.size(); i++) {
+            formattedList[i + 1] = getFormattedTask(tasks.get(i), i + 1);
         }
         return formattedList;
     }
