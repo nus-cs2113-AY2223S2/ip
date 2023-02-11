@@ -4,7 +4,7 @@ import duke.task.TaskList;
 
 public abstract class Ui {
     private static String getTaskCountString(int taskListSize) {
-        return String.format(Messages.TASK_COUNT.MESSAGE, taskListSize, taskListSize > 1 ? "s" : "");
+        return String.format(Messages.TASK_COUNT.MESSAGE, taskListSize, taskListSize == 1 ? "" : "s");
     }
 
     public static void print(String... strings) {
