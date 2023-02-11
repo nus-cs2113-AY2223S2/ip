@@ -39,7 +39,8 @@ public class Duke {
         return commandTypeAndParams;
     }
 
-    public static String executeListCommand(String commandParams){
+    public static String executeListCommand(String commandParams) {
+        //[have not done]: exception
         if(commandParams != null){
             return "ListParamsError: List command do not have Params!";
         }
@@ -63,7 +64,7 @@ public class Duke {
         return feedback;
     }
 
-    public static String executeMarkUnmarkTaskCommand(String taskToMarkIndexString, boolean IsMarkAsDone){
+    public static String executeMarkUnmarkTaskCommand(String taskToMarkIndexString, boolean IsMarkAsDone) throws TaskIndexNotFoundException {
         int index;
         String feedback;
 
@@ -78,8 +79,7 @@ public class Duke {
         //Input Index out of range
         index = index - 1;
         if(index < 0 || index >= tasksList.size()){
-            feedback = "TaskIndexNotFoundError: Cannot find the index in TasksList!";
-            return feedback;
+            throw new TaskIndexNotFoundException();
         }
 
         //set mark or unmark status, and get feedback
@@ -96,8 +96,14 @@ public class Duke {
         return feedback;
     }
 
+    /*
+    * Function for todo command
+    * input todo command: todo [thing]
+    * */
     public static String executeTodoCommand(String todoString){
-        if(todoString == null)return "";
+        if(todoString == null){
+            throw new NullPointerException();
+        }
 
         Todo newTodoObject = new Todo(todoString);
         tasksList.add(newTodoObject);
@@ -108,12 +114,26 @@ public class Duke {
         return feedback;
     }
 
-    public static String executeDeadlineCommand(String commandParams){
-        //[have not done]: String /by or /by String
-        //[have not done]: some error conditions
+    public static String executeDeadlineCommand(String commandParams)
+            throws ArrayIndexOutOfBoundsException, DeadlineParamsFormatException{
+        //input: String /by [ddl]        [have not done]: String /by ddl or /by ddl String
+        //Exception 1: No '/'
+        if(commandParams.indexOf('/')==-1){
+            throw new NullPointerException();
+        }
+
+        //Exception 2: Multiple '/'
         String[] commandParamsList = commandParams.split("/");
+        if(commandParamsList.length!=2){
+            throw new ArrayIndexOutOfBoundsException();
+        }
+
+        //Exception 3: no 'by'
+        if(!commandParamsList[1].startsWith("by ")){
+            throw new DeadlineParamsFormatException();
+        }
         String todoString = commandParamsList[0];
-        String deadlineString = commandParamsList[1];
+        String deadlineString = commandParamsList[1].substring(3);
 
         Deadline newDeadlineObject = new Deadline(todoString, deadlineString);
         tasksList.add(newDeadlineObject);
@@ -124,11 +144,24 @@ public class Duke {
         return feedback;
     }
 
-    public static String executeEventCommand(String commandParams){
-        //[haven't done]: some error conditions, e.g. check commandParms has /from, /to
-        //[haven't done]: process case like /to /from
+    public static String executeEventCommand(String commandParams) throws EventParamsFormatException{
+        //input: String /from [startTime] /to [endTime]        [haven't done]: process case like /to /from
+        //Exception 1: No '/'
+        if(commandParams.indexOf('/') == -1){
+            throw new NullPointerException();
+        }
+
+        //Exception 2: Less than 2 '/' or Multiple '/'
         String[] commandParamsList = commandParams.split("/");
+        if(commandParamsList.length != 3){
+            throw new ArrayIndexOutOfBoundsException();
+        }
+
+        //Exception 3: no 'from' or 'to'
         String eventString = commandParamsList[0].trim();
+        if(!(commandParamsList[1].startsWith("from ")&&commandParamsList[2].startsWith("to "))){
+            throw new EventParamsFormatException();
+        }
         String fromString = commandParamsList[1].substring(5).trim();   //magic number
         String toString = commandParamsList[2].substring(3).trim();
 
@@ -146,7 +179,7 @@ public class Duke {
         String commandType = commandTypeAndParams[0];
         String commandParams = commandTypeAndParams[1];
 
-        String feedback = null;
+        String feedback = "";
 
         /*
         /[have not done]: create methods to deal with input commandParams,
@@ -156,25 +189,57 @@ public class Duke {
 
         switch (commandType){
             case("list"):{
+                if(commandParams != null){
+                    return "ListParamsError: List command do not have Params!";
+                }
                 feedback = executeListCommand(commandParams);
                 break;
             } case("add"):{
                 feedback = executeAddTaskCommand(commandParams);
                 break;
             } case("mark"):{
-                feedback = executeMarkUnmarkTaskCommand(commandParams, true);
+                try{
+                    feedback = executeMarkUnmarkTaskCommand(commandParams, true);
+                }catch(TaskIndexNotFoundException e){
+                    feedback = "TaskIndexNotFoundError: Cannot find the index in TasksList!";
+                }
                 break;
             } case("unmark"):{
-                feedback = executeMarkUnmarkTaskCommand(commandParams, false);
+                try{
+                    feedback = executeMarkUnmarkTaskCommand(commandParams, false);
+                }catch(TaskIndexNotFoundException e){
+                    feedback = "TaskIndexNotFoundError: Cannot find the index in TasksList!";
+                }
                 break;
             } case("todo"):{
-                feedback = executeTodoCommand(commandParams);
+                try {
+                    feedback = executeTodoCommand(commandParams);
+                }catch(NullPointerException e){
+                    feedback = "ParamsError: Please input something.";
+                }
                 break;
             } case("deadline"):{
-                feedback = executeDeadlineCommand(commandParams);
+                //[have not done]: maybe multiple feedback should be compacted to one
+                try {
+                    feedback = executeDeadlineCommand(commandParams);
+                }catch(ArrayIndexOutOfBoundsException e){
+                    feedback = "ParamsError: Please input in the format: [String] /by [time]";
+                }catch(NullPointerException e){
+                    feedback = "ParamsError: Please input something.";
+                }catch (DeadlineParamsFormatException e){
+                    feedback = "ParamsError: Please input in the format: [String] /by [time]";
+                }
                 break;
             } case("event"):{
-                feedback = executeEventCommand(commandParams);
+                try{
+                    feedback = executeEventCommand(commandParams);
+                }catch(ArrayIndexOutOfBoundsException e){
+                    feedback = "ParamsError: Please input in the format: [String] /[from] /[to]";
+                }catch(NullPointerException e){
+                    feedback = "ParamsError: Please input something.";
+                }catch(EventParamsFormatException e){
+                    feedback = "ParamsError: Please input in the format: [String] /[from] /[to]";
+                }
                 break;
             } default:{
                 feedback = "CommandError: I can't understand \"" + userCommand +"\"!";
