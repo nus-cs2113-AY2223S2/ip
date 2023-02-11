@@ -1,5 +1,4 @@
 E | 0 | project meeting /from Aug 6th 2 /to 4pm
 T | 1 | join sports club
-T | 1 | lol
 E | 0 | lolol /from tonight /to tmr
 D | 1 | lololol /by tmr

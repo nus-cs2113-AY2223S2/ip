@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileWriter;
@@ -20,12 +19,20 @@ public class Duke {
 
 
         ArrayList<Task> tasks = new ArrayList<>();
-        String dataFilePath = "src/main/data/duke.txt";
+        String dataFilePath = "data/duke.txt";
         int index = 0;
         try {
             index = loadTasks(tasks, dataFilePath);
         } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
+            File dir = new File("data");
+            dir.mkdir();
+            File myObj = new File("data/duke.txt");
+            try{
+                myObj.createNewFile();
+            } catch (IOException e2) {
+                System.out.println(e2.getMessage());
+            }
+
         }
         System.out.println(line);
         System.out.println("     All Tasks loaded from memory");
