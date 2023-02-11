@@ -1,5 +1,10 @@
 package orca;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Orca {
@@ -12,6 +17,7 @@ public class Orca {
             + "    |_______||___|  |_||_______||__| |__| \n";
     static final int MAX_TASKS = 100;
     static final boolean FINISHED = true;
+    static final String FILE_PATH = "./data/orca.txt";
 
     static Task[] tasks = new Task[MAX_TASKS];
     static int taskCount = 0;
@@ -20,6 +26,55 @@ public class Orca {
     static CommandType commandType;
     static int taskNo;
     static Task newTask;
+
+    public Orca() {
+        File f = new File(FILE_PATH);
+        if (!f.exists()) {
+            f.getParentFile().mkdirs();
+        } else {
+            // Load data from file.
+            try {
+                FileReader reader = new FileReader(FILE_PATH);
+                BufferedReader bufferedReader = new BufferedReader(reader);
+
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    boolean isDone = line.charAt(4) == 'X';
+                    if (line.charAt(1) == 'T') {
+                        String description = line.substring(7);
+                        tasks[taskCount] = new Todo(description, isDone);
+                    } else if (line.charAt(1) == 'D') {
+                        String description = line.substring(7, line.indexOf(" (by: "));
+                        String by = line.substring(line.indexOf(" (by: ") + 6, line.length() - 1);
+                        tasks[taskCount] = new Deadline(description, by, isDone);
+                    } else if (line.charAt(1) == 'E') {
+                        String description = line.substring(7, line.indexOf(" (from: "));
+                        String from =
+                                line.substring(line.indexOf(" (from: ") + 8, line.indexOf(" to: "));
+                        String to = line.substring(line.indexOf(" to: ") + 5, line.length() - 1);
+                        tasks[taskCount] = new Event(description, from, to, isDone);
+                    }
+                    taskCount++;
+                }
+                reader.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static void writeToFile() {
+        try {
+            FileWriter writer = new FileWriter(FILE_PATH);
+            for (int i = 0; i < taskCount; i++) {
+                writer.write(tasks[i].toString() + "\n");
+            }
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void printGreetingMessage() {
         System.out.println("    --------------------------------------------------");
@@ -133,6 +188,7 @@ public class Orca {
         switch (commandType) {
             case BYE:
                 printByeMessage();
+                writeToFile();
                 return FINISHED;
             case LIST:
                 printTasks();
