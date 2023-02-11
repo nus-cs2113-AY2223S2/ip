@@ -30,9 +30,18 @@ public class Output {
         System.out.println("\t____________________________________________________________\r\n"
                 + "\t Got it. I've added this task:\r\n"
                 + "\t  " + task.toString() + "\r\n"
-                + "\t Now you have " + task.getNumTask() + " tasks in the list.\r\n"
+                + "\t Now you have " + Task.getNumTask() + " tasks in the list.\r\n"
                 + "\t____________________________________________________________\r\n");
     }
+    
+    public static void printDeleteTaskMessage(Task task) {
+    	System.out.println("\t____________________________________________________________\r\n"
+                + "\t Noted. I've removed this task:\r\n"
+                + "\t  " + task.toString() + "\r\n"
+                + "\t Now you have " + Task.getNumTask() + " tasks in the list.\r\n"
+                + "\t____________________________________________________________\r\n");
+		
+	}
 
     public static void printTaskStatus(Task task) {
         if (task.getStatus()) {
@@ -46,7 +55,8 @@ public class Output {
                     + "\t " + task.toString() + "\r\n"
                     + "\t____________________________________________________________\r\n");
         }
-    }
+    }    
+    
 
     public static void printGoodbye() {
         System.out.println("\t____________________________________________________________\r\n"
@@ -98,5 +108,7 @@ public class Output {
                 + "\t OOPS!!! I'm sorry, but I don't know what that means :-(\r\n"
                 + "\t____________________________________________________________");
     }
+
+	
 
 }

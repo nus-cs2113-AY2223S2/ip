@@ -10,15 +10,20 @@ public class Task {
         this.isDone = false;
         numTask++;
     }
+    
+    public static void setNumTask(int number) {
+    	numTask = number;
+    }
+    
+    public static int getNumTask() {
+        return numTask;
+    }
 
     public String getName() {
         return name;
     }
 
-    public int getNumTask() {
-        return numTask;
-    }
-
+    
     public String getStatusIcon() {
         return (isDone ? "X" : " "); // mark done task with X
     }
