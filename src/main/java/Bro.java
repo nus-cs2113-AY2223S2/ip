@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import bro.exceptions.invalidInputFormat;
 import bro.exceptions.invalidTaskIndexException;
+import bro.tasks.Type;
 import bro.tasks.Task;
 import bro.tasks.ToDo;
 import bro.tasks.Deadline;
@@ -34,8 +35,7 @@ public class Bro {
                 for (int i = 0; i < tasks.size(); ++i) {
                     Task currentTask = tasks.get(i);
                     String mark = currentTask.mark();
-                    reply.append(" ").append(i + 1).append(".[").append(currentTask.getType()).append("]").append("[")
-                            .append(mark).append("] ").append(currentTask).append("\n");
+                    reply.append(" ").append(i + 1).append(".[").append(currentTask.getType()).append("][").append(mark).append("] ").append(currentTask).append("\n");
                 }
                 break;
             case "mark": // Fallthrough
@@ -82,6 +82,15 @@ public class Bro {
                 tasks.add(event);
                 reply = new StringBuilder(" added: " + event);
                 break;
+            case "delete":
+                try {
+                    reply = deleteTask(tasks, arrayOfInputs);
+                } catch (invalidInputFormat e) {
+                    reply = new StringBuilder(e.toString());
+                } catch (invalidTaskIndexException e) {
+                    reply = new StringBuilder(TASK_DOES_NOT_EXIST);
+                }
+                break;
             default:
                 reply = new StringBuilder(" Not a valid command bro...");
             }
@@ -100,7 +109,7 @@ public class Bro {
     private static StringBuilder createToDo(ArrayList<Task> tasks, String[] arrayOfInputs) throws invalidInputFormat {
         StringBuilder todoName = new StringBuilder();
         if (arrayOfInputs.length < 2) {
-            throw new invalidInputFormat("t");
+            throw new invalidInputFormat(Type.TODO);
         }
         for (int i = 1; i < arrayOfInputs.length; ++i) {
             todoName.append(" ").append(arrayOfInputs[i]);
@@ -121,7 +130,7 @@ public class Bro {
     private static StringBuilder createDeadline(ArrayList<Task> tasks, String[] arrayOfInputs) throws invalidInputFormat {
         int indexOfDeadline = Arrays.asList(arrayOfInputs).indexOf("/by");
         if (indexOfDeadline == -1 || indexOfDeadline == arrayOfInputs.length - 1) { // user did not input "/by" or did not input a deadline time
-            throw new invalidInputFormat("d");
+            throw new invalidInputFormat(Type.DEADLINE);
         }
         // Separate arrayOfInputs into `deadlineName` and `by` to construct deadline object
         StringBuilder deadlineName = new StringBuilder();
@@ -138,6 +147,29 @@ public class Bro {
     }
 
     /**
+     * @param queryType Type of the Task that the input is referring to (this variable is meant for exception handling)
+     * @param sizeOfTaskList Size of the list of all Tasks
+     * @param arrayOfInputs Array of input words
+     * @return The valid input Task Index
+     * @throws invalidInputFormat
+     * @throws invalidTaskIndexException
+     */
+    private static int checkAndGetValidTaskIndex(Type queryType, int sizeOfTaskList, String[] arrayOfInputs) throws invalidInputFormat, invalidTaskIndexException {
+        int taskIndex;
+        // Validate if input format is valid
+        try {
+            taskIndex = Integer.parseInt(arrayOfInputs[1]) - 1;
+        } catch (NumberFormatException | IndexOutOfBoundsException e) {
+            throw new invalidInputFormat(queryType);
+        }
+        // Validate if input Task index is valid
+        if (taskIndex + 1 > sizeOfTaskList || taskIndex < 0) {
+            throw new invalidTaskIndexException();
+        }
+        return taskIndex;
+    }
+
+    /**
      * Validate the input format and task index, sets the task completion status and returns Bro's reply according to said completion status.
      *
      * @param markAsComplete boolean that decides if this method marks the input task as Completed or Uncompleted
@@ -147,18 +179,8 @@ public class Bro {
      * @throws invalidTaskIndexException
      */
     private static StringBuilder markComplete(boolean markAsComplete, ArrayList<Task> tasks, String[] arrayOfInputs) throws invalidInputFormat, invalidTaskIndexException {
-        // Validate if input format is valid
-        int taskIndex;
-        try {
-            taskIndex = Integer.parseInt(arrayOfInputs[1]) - 1;
-        } catch (NumberFormatException | IndexOutOfBoundsException e) {
-            throw new invalidInputFormat("m");
-        }
-        // Validate if input Task index is valid
-        if (taskIndex + 1 > tasks.size() || taskIndex < 0) {
-            throw new invalidTaskIndexException();
-        }
-        else if (markAsComplete){   // mark as Completed
+        int taskIndex = checkAndGetValidTaskIndex(Type.MARK, tasks.size(), arrayOfInputs);
+        if (markAsComplete){   // mark as Completed
             tasks.get(taskIndex).setCompleted();
             return new StringBuilder(" Marked " + tasks.get(taskIndex) + " as done.");
         }
@@ -166,5 +188,19 @@ public class Bro {
             tasks.get(taskIndex).setUncompleted();
             return new StringBuilder(" Marked " + tasks.get(taskIndex) + " as not done.");
         }
+    }
+
+    /**
+     * @param tasks List of all Tasks
+     * @param arrayOfInputs Array of input words
+     * @return Bro's reply
+     * @throws invalidInputFormat
+     * @throws invalidTaskIndexException
+     */
+    private static StringBuilder deleteTask(ArrayList<Task> tasks, String[] arrayOfInputs) throws invalidInputFormat, invalidTaskIndexException {
+        int taskIndex = checkAndGetValidTaskIndex(Type.DELETE, tasks.size(), arrayOfInputs);
+        Task currentTask = tasks.get(taskIndex);
+        tasks.remove(taskIndex);
+        return new StringBuilder(" Ok bro I remove this task:\n" + "   [" + currentTask.getType() + "][" + currentTask.mark() + "] " + currentTask + "\n Now you have " + tasks.size() + " tasks in the list.");
     }
 }
