@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class Duke {
     private static boolean hasEnteredBye = false;
-    private static final int NUM_OF_TASKS = 100;
     
     public static void greetUser() {
         printLine();
@@ -79,7 +78,7 @@ public class Duke {
         }
     }
     
-    public static TaskList taskList = new TaskList(NUM_OF_TASKS);
+    public static TaskList taskList = new TaskList();
     
     public static void main(String[] args) {
         greetUser();

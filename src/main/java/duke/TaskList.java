@@ -1,12 +1,14 @@
 package duke;
 
+import java.util.ArrayList;
+
 import duke.tasks.Deadline;
 import duke.tasks.Event;
 import duke.tasks.Task;
 import duke.tasks.ToDo;
 
 public class TaskList {
-    private Task[] tasks;
+    private ArrayList<Task> tasks;
     private int noOfTasks;
 
     private boolean isValidTaskNo(int taskNo) {
@@ -21,14 +23,14 @@ public class TaskList {
         return true;
     }
 
-    public TaskList(int size) {
-        this.tasks = new Task[size];
+    public TaskList() {
+        this.tasks = new ArrayList<>();
         noOfTasks = 0;
     }
 
     private void printAddTaskMessage(int taskNo) {
         System.out.println("Got it. I have added this task:");
-        System.out.println(tasks[noOfTasks].toString());
+        System.out.println(tasks.get(taskNo - 1).toString());
         System.out.println("Now you have " + noOfTasks + " tasks in the list");
     }
 
@@ -64,7 +66,7 @@ public class TaskList {
         if(hasBlankArgument(args, "Name")) {
             return;
         }
-        tasks[noOfTasks] = new ToDo(args);
+        tasks.add(new ToDo(args));
         printAddTaskMessage(noOfTasks);
     }
 
@@ -85,7 +87,7 @@ public class TaskList {
         if (hasBlankArgument(by, "by")) {
             return;
         }
-        tasks[noOfTasks] = new Deadline(name, by);
+        tasks.add(new Deadline(name, by));
         printAddTaskMessage(noOfTasks);
     }
 
@@ -122,7 +124,7 @@ public class TaskList {
         if (hasBlankArgument(to, "to")) {
             return;
         }
-        tasks[noOfTasks] = new Event(name, from, to);
+        tasks.add(new Event(name, from, to));
         printAddTaskMessage(noOfTasks);
     }
 
@@ -130,9 +132,9 @@ public class TaskList {
         if (noOfTasks == 0) {
             System.out.println("No tasks yet. Please input a task.");
         }
-        for (int i = 1; i <= noOfTasks; i++) {
-            System.out.print(i + ". ");
-            System.out.println(tasks[i].toString());
+        for (int i = 0; i < noOfTasks; i++) {
+            System.out.print((i + 1) + ". ");
+            System.out.println(tasks.get(i).toString());
         }
     }
 
@@ -140,12 +142,12 @@ public class TaskList {
         if (!isValidTaskNo(taskNo)) {
             return;
         }
-        if (tasks[taskNo].isDone()) {
+        if (tasks.get(taskNo - 1).isDone()) {
             System.out.println("Already done.");
         } else {
-            tasks[taskNo].setStatus(true);
+            tasks.get(taskNo - 1).setStatus(true);
             System.out.println("Nice! I have marked this task as done.");
-            System.out.println(tasks[taskNo].toString());
+            System.out.println(tasks.get(taskNo - 1).toString());
         }
     }
 
@@ -153,12 +155,12 @@ public class TaskList {
         if (!isValidTaskNo(taskNo)) {
             return;
         }
-        if (!tasks[taskNo].isDone()) {
+        if (!tasks.get(taskNo - 1).isDone()) {
             System.out.println("Not done yet. Please finish it.");
         } else {
-            tasks[taskNo].setStatus(false);
+            tasks.get(taskNo - 1).setStatus(false);
             System.out.println("Ok I have marked this as not done yet.");
-            System.out.println(tasks[taskNo].toString());
+            System.out.println(tasks.get(taskNo - 1).toString());
         }
     }
 }
