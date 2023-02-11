@@ -26,6 +26,7 @@ public class Duke {
         " Adds an event with specified time period.");
         System.out.println("mark <task number>: Marks the task specified as done.");
         System.out.println("unmark <task number>: Marks the task specified as not done.");
+        System.out.println("delete <task number>: Deletes the task from the list.");
         System.out.println("bye: Exits the program.");
     }
     
