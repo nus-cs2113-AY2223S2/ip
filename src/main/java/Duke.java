@@ -151,7 +151,6 @@ public class Duke {
         while (s.hasNext()) {
             String line = s.nextLine();
             String[] args = line.split(" \\| ");
-            System.out.println(args[0] + "==" + args [1] + "==" + args[2] + "==");
 
             switch (args[0]) {
                 case "T":
