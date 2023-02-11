@@ -12,8 +12,8 @@ public class Task {
     public static ArrayList<Task> tasks = new ArrayList<Task>(); 
 
     // Task class attributes
-    String description;
-    boolean isComplete;
+    public String description;
+    public boolean isComplete;
 
     // Reusable barrier
     public static final String BARRIER = "____________________________________________________________";
@@ -41,7 +41,9 @@ public class Task {
             this.isComplete = true;
             System.out.println("\nNice! I've marked this task as done, me hearties!\n");
             System.out.println("     " + this.printTask() + "\n" + BARRIER + "\n");
-        } finally {}
+        } finally {
+            // Empty block to continue the program
+        }
     }
 
     // Changes task isComplete attribute to true
@@ -53,7 +55,9 @@ public class Task {
         this.isComplete = false;
         System.out.println("\nAye, I've marked this task as not done yet, ye scallywag: \n");
         System.out.println("     " + this.printTask() + "\n"  + BARRIER + "\n");
-        } finally {}
+        } finally {
+            // Empty block to continue the program
+        }
     }
 
     // Prints the task completion status and description
