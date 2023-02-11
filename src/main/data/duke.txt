@@ -1,5 +1,5 @@
-T | 1 | read book
-D | 1 | return book /by June 6th
 E | 0 | project meeting /from Aug 6th 2 /to 4pm
 T | 1 | join sports club
-T | 1 | fuck your mom
+T | 1 | lol
+E | 0 | lolol /from tonight /to tmr
+D | 1 | lololol /by tmr
