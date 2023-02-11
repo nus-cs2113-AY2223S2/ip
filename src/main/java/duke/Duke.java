@@ -3,6 +3,7 @@ import duke.addable.*;
 import duke.exception.*;
 import java.util.Scanner;
 import java.util.Arrays;
+import java.util.ArrayList;
 public class Duke {
     private static final String[] INVALID_INPUT_MESSAGE = {
             "Invalid input format",
@@ -12,12 +13,11 @@ public class Duke {
             "- unmark [TASK NUMBER]",
             "- todo [TASK DESCRIPTION]",
             "- event [EVENT DESCRIPTION] /from [START DATE] /to [END DATE]",
-            "- deadline [DEADLINE DESCRIPTION] /by [DUE DATE]"
+            "- deadline [DEADLINE DESCRIPTION] /by [DUE DATE]",
+            "- delete [TASK NUMBER]"
     };
     private static final String INDENT = "      ";
-    private static Task[] tasks = new Task[100];
-    private static int currentStoredTaskIndex = 0;
-
+    private static ArrayList<Task> tasks = new ArrayList<>();
     public static void main(String[] args) {
         printIntro();
         mainLoop();
@@ -37,6 +37,9 @@ public class Duke {
                 case "event":
                     handleAddTask(currentInput);
                     break;
+                case "delete":
+                    delete(words);
+                    break;
                 case "list":
                     list();
                     break;
@@ -55,38 +58,51 @@ public class Duke {
                 printInvalidInputMessage("Unknown command");
             } catch (UnknownCommandException e) {
                 printInvalidInputMessage("Unknown command \'" + e.unknownCommand + "\'");
+            } catch (NumberFormatException e) {
+                printInvalidInputMessage("Argument for mark/unmark/delete must be an integer");
             }
             currentInput = in.nextLine();
         }
     }
-
     // COMMAND HANDLERS
+
+    public static void delete(String[] words) throws MarkNonexistentTaskException {
+        int taskIndex = getTaskIndex(words[1]);
+        String[] taskDeletedMessage = {
+                "Noted. I've removed this task:",
+                tasks.get(taskIndex).toString(),
+                "Now you have " + (tasks.size() - 1) + " tasks in the list."
+        };
+        tasks.remove(taskIndex );
+        printMessage(taskDeletedMessage);
+    }
     public static void list() {
         printMessage(getFormattedList());
     }
 
-    public static void mark(String[] words) throws MarkNonexistentTaskException {
-        int taskIndex = Integer.parseInt(words[1]) - 1;
-        if (currentStoredTaskIndex <= taskIndex) {
+    public static int getTaskIndex(String index) throws MarkNonexistentTaskException {
+        int taskIndex = Integer.parseInt(index) - 1;
+        if (taskIndex > tasks.size() - 1) {
             throw new MarkNonexistentTaskException(taskIndex + 1);
         }
-        tasks[taskIndex].setDone(true);
+        return taskIndex;
+    }
+    public static void mark(String[] words) throws MarkNonexistentTaskException {
+        int taskIndex = getTaskIndex(words[1]);
+        tasks.get(taskIndex).setDone(true);
         String[] message = {
                 "Cool! I've marked this task as done:",
-                tasks[taskIndex].toString()
+                tasks.get(taskIndex).toString()
         };
         printMessage(message);
     }
 
     public static void unmark(String[] words) throws MarkNonexistentTaskException {
-        int taskIndex = Integer.parseInt(words[1]) - 1;
-        if (currentStoredTaskIndex < taskIndex) {
-            throw new MarkNonexistentTaskException(taskIndex);
-        }
-        tasks[taskIndex].setDone(false);
+        int taskIndex = getTaskIndex(words[1]);
+        tasks.get(taskIndex).setDone(false);
         String[] message = {
                 "Ok, I've marked this task as not done yet:",
-                tasks[taskIndex].toString()
+                tasks.get(taskIndex).toString()
         };
         printMessage(message);
     }
@@ -114,7 +130,7 @@ public class Duke {
         String[] message = {
                 "Got it. I've added this task:",
                 INDENT + addedTask.toString(),
-                "Now you have " + (currentStoredTaskIndex) + " tasks in the list."
+                "Now you have " + (tasks.size()) + " tasks in the list."
         };
         return message;
     }
@@ -142,8 +158,7 @@ public class Duke {
         default:
             throw new UnknownCommandException(taskType);
         }
-        tasks[currentStoredTaskIndex] = taskToAdd;
-        currentStoredTaskIndex ++;
+        tasks.add(taskToAdd);
         return taskToAdd;
     }
     public static Deadline getNewDeadline(String taskDescription, String[] inputSections) throws ArgumentBlankException {
@@ -179,10 +194,10 @@ public class Duke {
     }
 
     public static String[] getFormattedList() {
-        String[] formattedList = new String[currentStoredTaskIndex + 1];
+        String[] formattedList = new String[tasks.size() + 1];
         formattedList[0] = "Here are the tasks in your list:";
-        for (int i = 0; i < currentStoredTaskIndex; i++) {
-            formattedList[i + 1] = getFormattedTask(tasks[i], i + 1);
+        for (int i = 0; i < tasks.size(); i++) {
+            formattedList[i + 1] = getFormattedTask(tasks.get(i), i + 1);
         }
         return formattedList;
     }
