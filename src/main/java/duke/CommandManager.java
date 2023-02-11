@@ -48,7 +48,7 @@ public class CommandManager {
      * If command is unmark, mark a particular task as undone.
      * Else add new task.
      */
-    public void executeCommand() throws MissingParameterException, IOException, MissingFileException {
+    public void executeCommand() throws MissingParameterException, MissingFileException, IOException {
         if(commandType.equals("bye")){
             sayBye();
             System.exit(0);
