@@ -1,3 +1,10 @@
+package duke;
+
+import tasks.Deadline;
+import tasks.Event;
+import tasks.Task;
+import tasks.Todo;
+
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -6,7 +13,7 @@ public class Duke {
     private static final String LOGO = " ____        _        \n|  _ \\ _   _| | _____ \n| | | | | | | |/ / _ \\\n| |_| | |_| |   <  __/\n|____/ \\__,_|_|\\_\\___|\n";
 
     // Horizontal Rule to act as a divider
-    private static final String HORIZONTAL_RULE = "__________________________________________________";
+    private static final String HORIZONTAL_RULE = "___________________________________________________________________";
 
     public static void printHorizontalRule() {
         System.out.println(HORIZONTAL_RULE);
@@ -251,7 +258,7 @@ public class Duke {
                         tasks.add(event);
 
                         // Prints acknowledgement
-                        printAcknowledgement("Deadline", description, String.valueOf(tasks.size()));
+                        printAcknowledgement("Event", description, String.valueOf(tasks.size()));
                     } catch (IndexOutOfBoundsException e) {
                         printHorizontalRule();
                         System.out.println("Wrong usage of event. Format is: event {description} /from {date} /to {date}");
