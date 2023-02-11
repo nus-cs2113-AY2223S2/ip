@@ -34,6 +34,12 @@ public class TaskList {
         System.out.println("Now you have " + noOfTasks + " tasks in the list");
     }
 
+    private void printDeleteTaskMessage(int taskNo) {
+        System.out.println("Noted. I've removed this task:");
+        System.out.println(tasks.get(taskNo-1).toString());
+        System.out.println("Now you have " + noOfTasks + " tasks in the list");
+    }
+
     private void printBlankArgumentError(String type) {
         System.out.println(type + " cannot be blank.");
     }
@@ -162,5 +168,14 @@ public class TaskList {
             System.out.println("Ok I have marked this as not done yet.");
             System.out.println(tasks.get(taskNo - 1).toString());
         }
+    }
+
+    public void deleteTask(int taskNo) {
+        if (!isValidTaskNo(taskNo)) {
+            return;
+        }
+        noOfTasks--;
+        printDeleteTaskMessage(taskNo);
+        tasks.remove(taskNo - 1);
     }
 }

@@ -72,7 +72,14 @@ public class Duke {
         case "event":
             taskList.addEvent(args);
             break;
-            default:
+        case "delete":
+            try {
+                taskList.deleteTask(Integer.parseInt(args));
+            } catch (Exception e) {
+                System.out.println("Please input an integer after delete.");
+            }
+            break;
+        default:
             System.out.println("Invalid command entered, please enter 'help' to see " +
             "the list of commands.");
         }
