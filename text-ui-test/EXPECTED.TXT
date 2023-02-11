@@ -77,23 +77,6 @@ You need to include the correct fields for this command
 You need to include the correct fields for this command
     ____________________________________________________________
     ____________________________________________________________
-    Here are the tasks in your list:
-    1.[T][ ] Hosea: Answer CS2113 tutorial questions
-    2.[D][ ] weekly CS2113 quiz (by: Monday 9pm)
-    3.[E][ ] CS2113 lecture (from: Friday 4pm to: 6pm)
-
-    ____________________________________________________________
-    ____________________________________________________________
-    Got it. I've added this task:
-      [E][ ] goodevent (from: start to: )
-    Now you have 4 tasks in your list.
-    ____________________________________________________________
-    ____________________________________________________________
-    Got it. I've added this task:
-      [E][ ] goodevent2 (from:   to: )
-    Now you have 5 tasks in your list.
-    ____________________________________________________________
-    ____________________________________________________________
 You need to include the correct fields for this command
     ____________________________________________________________
     ____________________________________________________________
@@ -101,35 +84,5 @@ You need to include the correct fields for this command
     1.[T][ ] Hosea: Answer CS2113 tutorial questions
     2.[D][ ] weekly CS2113 quiz (by: Monday 9pm)
     3.[E][ ] CS2113 lecture (from: Friday 4pm to: 6pm)
-    4.[E][ ] goodevent (from: start to: )
-    5.[E][ ] goodevent2 (from:   to: )
-
-    ____________________________________________________________
-    ____________________________________________________________
-You need to include more details about your item!
-    ____________________________________________________________
-    ____________________________________________________________
-    Noted. I've removed this task:
-      [T][ ] Hosea: Answer CS2113 tutorial questions
-    Now you have 5 tasks in the list.
-    ____________________________________________________________
-    ____________________________________________________________
-    Here are the tasks in your list:
-    1.[D][ ] weekly CS2113 quiz (by: Monday 9pm)
-    2.[E][ ] CS2113 lecture (from: Friday 4pm to: 6pm)
-    3.[E][ ] goodevent (from: start to: )
-    4.[E][ ] goodevent2 (from:   to: )
-
-    ____________________________________________________________
-    ____________________________________________________________
-    Noted. I've removed this task:
-      [D][ ] weekly CS2113 quiz (by: Monday 9pm)
-    Now you have 4 tasks in the list.
-    ____________________________________________________________
-    ____________________________________________________________
-    Here are the tasks in your list:
-    1.[E][ ] CS2113 lecture (from: Friday 4pm to: 6pm)
-    2.[E][ ] goodevent (from: start to: )
-    3.[E][ ] goodevent2 (from:   to: )
 
     ____________________________________________________________

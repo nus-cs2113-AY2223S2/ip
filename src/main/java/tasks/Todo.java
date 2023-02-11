@@ -19,6 +19,15 @@ public class Todo extends Task {
     public boolean isDone() {
         return isDone;
     }
+
+    public String getTypeRep() {
+        return TYPE_REPRESENTATION;
+    }
+
+    public String getSaveRepresentation() {
+        int doneRepresentation = isDone() ? 1 : 0;
+        return String.format("%s /// %d /// %s", TYPE_REPRESENTATION, doneRepresentation, getDescription());
+    }
     
     public String toString() {
         char mark;

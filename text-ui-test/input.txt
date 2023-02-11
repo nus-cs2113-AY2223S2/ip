@@ -12,13 +12,5 @@ unmark 2
 list
 event /from /to
 event badevent /from wer /to
-list
-event goodevent /from start /to 
-event goodevent2 /from   /to 
 deadline rejwkjr wnrmqe
-list
-remove 
-delete 1
-list
-delete 1
 list
