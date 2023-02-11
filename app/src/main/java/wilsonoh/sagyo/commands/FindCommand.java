@@ -3,7 +3,6 @@ package wilsonoh.sagyo.commands;
 import java.util.ArrayList;
 import java.util.List;
 
-import wilsonoh.sagyo.exceptions.InvalidCommandException;
 import wilsonoh.sagyo.tasklist.TaskList;
 
 public class FindCommand extends Command {
@@ -24,9 +23,6 @@ public class FindCommand extends Command {
     }
 
     @Override
-    public void executeCommand() throws InvalidCommandException {
-        if (this.filter == null) {
-            throw new InvalidCommandException("The find command must be followed by a search term");
-        }
+    public void executeCommand() {
     }
 }

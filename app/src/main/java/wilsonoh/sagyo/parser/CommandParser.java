@@ -58,6 +58,9 @@ public class CommandParser {
                     return new ListCommand(tasks);
                 case FIND:
                     String filter = matcher.group("filter");
+                    if (filter == null) {
+                        throw new InvalidCommandException("The find command must be followed by a search term");
+                    }
                     return new FindCommand(filter, tasks);
                 case DELETE: {
                     String commandName = "delete";
