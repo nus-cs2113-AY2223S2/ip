@@ -40,6 +40,7 @@ public class FileDataHandler {
             }
         }
     }
+
     public static void saveFile (String filePath, ArrayList<Task> taskList) throws IOException {
         FileWriter fileWriter = new FileWriter(filePath);
         for (int i = 0; i < taskList.size(); i++) {

@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
 public class Duke {
+    public static final String FILE_PATH = "data/duke.txt";
     public static void startDuke() {
         System.out.println("    ____________________________________________________________");
         System.out.println("     Hello! I'm Duke");
@@ -36,8 +38,8 @@ public class Duke {
         Scanner input = new Scanner(System.in);
         ArrayList<Task> taskList = new ArrayList<>();
         try {
-            if(!FileDataHandler.createFile("data/duke.txt", "data")) {
-                FileDataHandler.loadFile("data/duke.txt", taskList);
+            if(!FileDataHandler.createFile(FILE_PATH, "data")) {
+                FileDataHandler.loadFile(FILE_PATH, taskList);
             }
         } catch (IOException exception) {
             printErrorMessage("     ☹ OOPS!!! As an error has occurred, the current task list will not be saved in a file!");
@@ -59,34 +61,35 @@ public class Duke {
                     int taskNumber = Integer.parseInt(nextInput[1]);
                     taskList.get(taskNumber - 1).markAsDone();
                     Task.printMarkedTask(taskNumber - 1, taskList);
-                    FileDataHandler.saveFile("data/duke.txt", taskList);
+                    FileDataHandler.saveFile(FILE_PATH, taskList);
                     continue;
                 }
                 if (nextInput[0].equals("unmark")) {
                     int taskNumber = Integer.parseInt(nextInput[1]);
                     taskList.get(taskNumber - 1).markAsNotDone();
                     Task.printUnmarkedTask(taskNumber - 1, taskList);
-                    FileDataHandler.saveFile("data/duke.txt", taskList);
+                    FileDataHandler.saveFile(FILE_PATH, taskList);
                     continue;
                 }
                 if (nextInput[0].equals("todo")) {
                     Task.addTodoTask(nextInput[1], taskList);
-                    FileDataHandler.saveFile("data/duke.txt", taskList);
+                    FileDataHandler.saveFile(FILE_PATH, taskList);
                     continue;
                 }
                 if (nextInput[0].equals("deadline")) {
                     Task.addDeadlineTask(nextInput[1], taskList);
-                    FileDataHandler.saveFile("data/duke.txt", taskList);
+                    FileDataHandler.saveFile(FILE_PATH, taskList);
                     continue;
                 }
                 if (nextInput[0].equals("event")) {
                     Task.addEventTask(nextInput[1], taskList);
-                    FileDataHandler.saveFile("data/duke.txt", taskList);
+                    FileDataHandler.saveFile(FILE_PATH, taskList);
                     continue;
                 }
                 if (nextInput[0].equals("delete")) {
                     int taskNumber = Integer.parseInt(nextInput[1]);
                     Task.deleteTask(taskNumber, taskList);
+                    FileDataHandler.saveFile(FILE_PATH, taskList);
                     continue;
                 }
                 throw new DukeException("     ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
