@@ -17,6 +17,14 @@ public class Event extends Task {
         this.type = "E";
     }
 
+    Event(String description, String from, String to, boolean isDone) {
+        this.description = description;
+        this.from = from;
+        this.to = to;
+        this.isDone = isDone;
+        this.type = "E";
+    }
+
     @Override
     public String toString() {
         return super.toString() + " (from: " + this.from + " to: " + this.to + ")";
