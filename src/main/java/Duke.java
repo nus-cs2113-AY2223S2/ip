@@ -96,6 +96,10 @@ public class Duke {
         return feedback;
     }
 
+    /*
+    * Function for todo command
+    * input todo command: todo [thing]
+    * */
     public static String executeTodoCommand(String todoString){
         if(todoString == null){
             throw new NullPointerException();
