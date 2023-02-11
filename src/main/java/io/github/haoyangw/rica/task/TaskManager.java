@@ -92,34 +92,6 @@ public class TaskManager {
         return TaskManager.getTasks().remove(indexOfTask);
     }
 
-    public static void rmTask(String command) throws RicaTaskException {
-        String[] parameters = command.split(" ");
-        if (!parameters[0].equals(TaskManager.DELETE_CMD)) {
-            String cmdType = "deleting a task";
-            throw new RicaTaskException(String.format(TaskManager.WRONG_CMD_ERROR, cmdType));
-        }
-        if (!TaskManager.hasAnyTasks()) {
-            throw new RicaTaskException(TaskManager.NO_TASKS_TO_DELETE_ERROR);
-        }
-        int givenIndex;
-        try {
-            givenIndex = Integer.parseInt(parameters[1]);
-        } catch (NumberFormatException exception) {
-            throw new RicaTaskException(TaskManager.NOT_A_TASK_INDEX_ERROR);
-        }
-        // givenIndex is 1-based, but rmTask() expects 0-based indexing, so subtract one
-        //   before passing to rmTask()
-        Task removedTask = TaskManager.rmTask(givenIndex - 1);
-        printlnWithIndent(TaskManager.TASK_REMOVED_PHRASE);
-        printlnWithIndent("   " + removedTask.toString());
-        int numTasksLeft = TaskManager.getTasks().size();
-        if (numTasksLeft == 1) {
-            printlnWithIndent(TaskManager.TASK_REMAINING_PHRASE);
-        } else {
-            printlnWithIndent(String.format(TaskManager.TASKS_REMAINING_PHRASE, numTasksLeft));
-        }
-    }
-
     public void createTaskFrom(String command) {
         String[] parameters = command.split(" ");
         String typeOfTask = parameters[0];
@@ -180,6 +152,34 @@ public class TaskManager {
             for (int i = 1; i <= tasks.size(); i += 1) {
                 printlnWithIndent(" " + i + "." + tasks.get(i - 1));
             }
+        }
+    }
+
+    public static void rmTask(String command) throws RicaTaskException {
+        String[] parameters = command.split(" ");
+        if (!parameters[0].equals(TaskManager.DELETE_CMD)) {
+            String cmdType = "deleting a task";
+            throw new RicaTaskException(String.format(TaskManager.WRONG_CMD_ERROR, cmdType));
+        }
+        if (!TaskManager.hasAnyTasks()) {
+            throw new RicaTaskException(TaskManager.NO_TASKS_TO_DELETE_ERROR);
+        }
+        int givenIndex;
+        try {
+            givenIndex = Integer.parseInt(parameters[1]);
+        } catch (NumberFormatException exception) {
+            throw new RicaTaskException(TaskManager.NOT_A_TASK_INDEX_ERROR);
+        }
+        // givenIndex is 1-based, but rmTask() expects 0-based indexing, so subtract one
+        //   before passing to rmTask()
+        Task removedTask = TaskManager.rmTask(givenIndex - 1);
+        printlnWithIndent(TaskManager.TASK_REMOVED_PHRASE);
+        printlnWithIndent("   " + removedTask.toString());
+        int numTasksLeft = TaskManager.getTasks().size();
+        if (numTasksLeft == 1) {
+            printlnWithIndent(TaskManager.TASK_REMAINING_PHRASE);
+        } else {
+            printlnWithIndent(String.format(TaskManager.TASKS_REMAINING_PHRASE, numTasksLeft));
         }
     }
 
