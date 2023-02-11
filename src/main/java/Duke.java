@@ -1,13 +1,10 @@
 import java.util.Arrays;
 import java.util.Scanner;
-<<<<<<< HEAD
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
-=======
 import java.util.ArrayList;
->>>>>>> branch-Level-6
 public class Duke {
 
     public static void main(String[] args) {
@@ -35,9 +32,6 @@ public class Duke {
         System.out.println(line);
         System.out.println(logo);
 
-//        Task[] tasks = new Task[100];
-
-
         Scanner in = new Scanner(System.in);
         String action = in.nextLine();
         String bye = "bye";
@@ -51,137 +45,76 @@ public class Duke {
 
             switch (cmd) {
                 case "list":
-
                     listTask(tasks, index);
-
                     break;
                 case "mark":
-
                     if (hasDescription) {
-
                         try {
-
                             markTask(tasks, inputs[1], index);
-
                         } catch (DukeException e) {
-
                             System.out.println("       " + e.getMessage());
-
                         }
-
                     } else {
-
                         System.out.println("       ☹ OOPS!!! The task number cannot be empty.");
-
                     }
-
                     break;
                 case "unmark":
-
                     if (hasDescription) {
-
                         try {
-
                             unmarkTask(tasks, inputs[1], index);
-
                         } catch (DukeException e) {
-
                             System.out.println("       " + e.getMessage());
-
                         }
-
                     } else {
-
                         System.out.println("       ☹ OOPS!!! The task number cannot be empty.");
-
                     }
-
                     break;
                 case "todo":
-
                     if (hasDescription) {
-
                         try {
-
                             index = addTodo(tasks, inputs[1], index);
-
                         } catch (DukeException e) {
-
                             System.out.println("       " + e.getMessage());
-
                         }
-
                     } else {
-
                         System.out.println("       ☹ OOPS!!! The description of a todo cannot be empty.");
-
                     }
-
                     break;
                 case "deadline":
-
                     if (hasDescription) {
-
                         try {
-
                             index = addDeadline(tasks, inputs[1], index);
-
                         } catch (DukeException e) {
-
                             System.out.println("       " + e.getMessage());
-
                         }
-
                     } else {
-
                         System.out.println("       ☹ OOPS!!! The description of a deadline cannot be empty.");
-
                     }
-
                     break;
                 case "event":
-
                     if (hasDescription) {
-
                         try {
-
                             index = addEvent(tasks, inputs[1], index);
-
                         } catch (DukeException e) {
-
                             System.out.println("       " + e.getMessage());
-
                         }
-
                     } else {
-
                         System.out.println("       ☹ OOPS!!! The description of an event cannot be empty.");
-
                     }
-
                     break;
                 case "delete":
-
                     if(hasDescription) {
-
                         try {
-
                             index = deleteTask(tasks, inputs[1], index);
-
                         } catch (DukeException e) {
-
                             System.out.println("       " + e.getMessage());
-
                         }
                     } else {
-
                         System.out.println("       ☹ OOPS!!! The description of an delete cannot be empty.");
-
                     }
 
                     break;
                 default:
-
                     System.out.println("       ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
                     break;
             }
@@ -202,16 +135,16 @@ public class Duke {
 
     }
 
-    private static void saveTasks(Task[] tasks, String filePath, int index) throws IOException{
+    private static void saveTasks(ArrayList<Task> tasks, String filePath, int index) throws IOException{
         FileWriter fw = new FileWriter(filePath);
 
         for(int i = 0; i<index; i++) {
-            fw.write(tasks[i].getTypeOfTask() + " | " + (tasks[i].isDone? "1" : "0") + " | " + tasks[i].getDetailsToSave() + System.lineSeparator());
+            fw.write(tasks.get(i).getTypeOfTask() + " | " + (tasks.get(i).isDone? "1" : "0") + " | " + tasks.get(i).getDetailsToSave() + System.lineSeparator());
         }
         fw.close();
     }
 
-    private static int loadTasks(Task[] tasks, String filePath) throws FileNotFoundException {
+    private static int loadTasks(ArrayList<Task> tasks, String filePath) throws FileNotFoundException {
         int count = 0;
         File f = new File(filePath);
         Scanner s = new Scanner(f); // create a Scanner using the File as the source
@@ -283,9 +216,7 @@ public class Duke {
         String[] taskAndDeadline = todoTask.split(" /from ");
 
         if(taskAndDeadline.length < 2) {
-
             throw new DukeException("The start date/time cannot be empty.");
-
         }
 
         String theTask = taskAndDeadline[0];
@@ -293,9 +224,7 @@ public class Duke {
         String[] startAndEnd = dueBy.split(" /to ");
 
         if(startAndEnd.length < 2) {
-
             throw new DukeException("The end date/time cannot be empty.");
-
         }
 
         String start = startAndEnd[0];
@@ -316,9 +245,7 @@ public class Duke {
         String[] taskAndDeadline = todoTask.split(" /by ");
 
         if(taskAndDeadline.length < 2) {
-
             throw new DukeException("The due date/time cannot be empty.");
-
         }
 
         String theTask = taskAndDeadline[0];
