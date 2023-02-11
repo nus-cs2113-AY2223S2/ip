@@ -32,7 +32,7 @@ public class Jonathan {
                 } else if (command.split(" ")[0].equals("mark") || command.split(" ")[0].equals("unmark")) {
                     boolean isDone = command.split(" ")[0].equals("mark");
                     int taskNum = Integer.parseInt(command.split(" ")[1]);
-                    Task task = list.get(taskNum-1);
+                    Task task = list.get(taskNum - 1);
                     changeStatus(task, isDone);
 
                 } else if (command.split(" ")[0].equals("todo")) {
@@ -63,6 +63,17 @@ public class Jonathan {
                     list.add(event);
                     taskCounter += 1;
                     addedMessage(event, taskCounter);
+
+                } else if (command.split(" ")[0].equals("delete")) {
+                    int taskNum = Integer.parseInt(command.split(" ")[1]);
+                    Task task = list.get(taskNum-1);
+                    list.remove(taskNum - 1);
+                    taskCounter -= 1;
+                    System.out.println("     ____________________________________________________________\n" +
+                            "     Noted. I've removed this task:\n" +
+                            "       " + task + "\n" +
+                            "     Now you have " + taskCounter + " tasks in the list.\n" +
+                            "    ____________________________________________________________\n");
 
                 } else {
                     throw new JonathanException();
@@ -117,7 +128,7 @@ public class Jonathan {
     /*
     Method to change the status of a Task
      */
-    public static void changeStatus(Task task, boolean isDone){
+    public static void changeStatus(Task task, boolean isDone) {
         task.setDone(isDone);
         // If the Task is mark done
         if (isDone) {
@@ -132,6 +143,5 @@ public class Jonathan {
                     "    ____________________________________________________________\n");
         }
     }
-
 }
 
