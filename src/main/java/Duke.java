@@ -46,6 +46,11 @@ public class Duke {
      * the input.
      */
     public static final int REMOVE_MARK_NUM = 5;
+    /***
+     * The fixed number of spaces when processing commands involving "delete" in
+     * the input.
+     */
+    public static final int REMOVE_DELETE_NUM = 7;
 
     /***
      * Keeps track of the current position of task in the list.
@@ -130,11 +135,28 @@ public class Duke {
                         "event <description> /from <date> /to <date> \n");
             }
             break;
+        case "delete":
+            taskNum = deleteTask(line, storedValues);
+            break;
         default:
             // Commands that are not listed above
             System.out.println("Invalid command, try again! \n");
         }
         return false;
+    }
+
+    private static int deleteTask(String line, ArrayList<Task> storedValues) {
+        int length = line.length();
+        String itemToDelete = line.substring(REMOVE_DELETE_NUM, length);
+        int posToDelete = Integer.parseInt(itemToDelete);
+        formattingLine();
+        System.out.println("Noted. I've removed this task: \n" +
+                storedValues.get(posToDelete-1) + "\n" +
+                "Now you have " + (taskNum-1) + " tasks in the list. \n");
+        formattingLine();
+        storedValues.remove(posToDelete-1);
+        taskNum -= 1;
+        return taskNum;
     }
 
     /***
