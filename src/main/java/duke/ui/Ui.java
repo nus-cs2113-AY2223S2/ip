@@ -32,7 +32,11 @@ public abstract class Ui {
     }
 
     public static void printTaskList(TaskList taskList) {
-        print(Messages.LIST_TASKS.MESSAGE, taskList.toString());
+        if (taskList.size() == 0) {
+            print(Messages.EMPTY_LIST.MESSAGE);
+        } else {
+            print(Messages.LIST_TASKS.MESSAGE, taskList.toString());
+        }
     }
 
     public static void printError(String errorMessage, String command) {
@@ -51,6 +55,9 @@ public abstract class Ui {
             return;
         case "unmark":
             print(errorMessage, Messages.UNMARK_HELP.MESSAGE);
+            return;
+        case "save":
+            print(errorMessage, Messages.SAVE_HELP.MESSAGE);
             return;
         default:
             print(errorMessage, Messages.GENERIC_HELP.MESSAGE);
