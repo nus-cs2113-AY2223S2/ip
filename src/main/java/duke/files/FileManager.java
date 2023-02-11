@@ -11,25 +11,27 @@ import java.util.ArrayList;
 public class FileManager {
 
     private static final String filePath = "duke/files/data.txt";
-    private static boolean isFile = false;
 
     public static boolean checkFile() {
         File f = new File(filePath);
         return (f.exists() && !f.isDirectory());
     }
 
+    // Write to a file
     private static void writeToFile(String filePath, String textToAdd) throws IOException {
         FileWriter fw = new FileWriter(filePath);
         fw.write(textToAdd);
         fw.close();
     }
 
+    // Append to a file
     private static void appendToFile(String filePath, String textToAppend) throws IOException {
         FileWriter fw = new FileWriter(filePath, true); // create a FileWriter in append mode
         fw.write(textToAppend);
         fw.close();
     }
 
+    // Retrieve the contents of a file as an array of strings where each line is a string
     private static ArrayList<String> retrieveFileContents(String filePath) throws FileNotFoundException {
         ArrayList<String> taskStrings = new ArrayList<String>(); 
         File f = new File(filePath); // create a File for the given file path
@@ -40,6 +42,7 @@ public class FileManager {
         return taskStrings;
     }
 
+    // Parse a string and create and add a task from it
     private static void addTaskFromFile(String parsedTask) {
         char type = parsedTask.charAt(1);
         char status = parsedTask.charAt(4);
@@ -61,7 +64,8 @@ public class FileManager {
         }
     }
 
-    private static void populateTaskList() throws FileNotFoundException {
+    // Parse all tasks from the file to list
+    public static void populateTaskList() throws FileNotFoundException {
         try {
             ArrayList<String> fileContents = retrieveFileContents(filePath);
             for(int i = 0; i<fileContents.size(); i++) {
@@ -72,13 +76,15 @@ public class FileManager {
         }
     }
 
-    public static void main(String[] args) {
-        try {
-            populateTaskList();
-            Task.printAllTasks();
-        } catch (FileNotFoundException e) {
-            System.out.print("Oops!");
+    // Parse all tasks from list to file
+    public static void populateFile() throws IOException {
+        ArrayList<Task> taskList = Task.getTasksArray();
+        for(int i = 0; i<taskList.size(); i++) {
+            if (i == 0) {
+                writeToFile(filePath, taskList.get(i).printTask()+"\n");
+            } else {
+                appendToFile(filePath, taskList.get(i).printTask()+"\n");
+            }
         }
     }
-
 }
