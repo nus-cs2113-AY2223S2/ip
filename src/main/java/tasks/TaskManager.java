@@ -30,6 +30,10 @@ public class TaskManager {
     return tasks.size();
   }
 
+  public void removeTask(int index) {
+    tasks.remove(index);
+  }
+
   @Override
   public String toString() {
     String toPrint = "";
