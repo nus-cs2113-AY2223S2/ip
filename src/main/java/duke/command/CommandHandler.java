@@ -28,7 +28,7 @@ public class CommandHandler {
     public void handleMarkAsDone(String index) {
         try {
             myList.markAsDone(Integer.parseInt(index) - 1);
-        } catch (NullPointerException | ArrayIndexOutOfBoundsException arraySizeException) {
+        } catch (NullPointerException | IndexOutOfBoundsException arraySizeException) {
             System.out.println("No such item exists! Please select a number within the list size");
         } catch (NumberFormatException notANumber) {
             System.out.println("Please enter a number");

@@ -1,57 +1,41 @@
-[
-  {
-    "type": "todo",
-    "task": " Buy milk",
-    "isDone": false
-  },
-  {
-    "startTime": " 16/02/2023 ",
-    "endTime": " 19/02/2023",
-    "type": "Event",
-    "task": "attend baking course ",
-    "isDone": true
-  },
-  {
-    "dueBy": " 17/02/2023",
-    "type": "Deadline",
-    "task": "bake a cake ",
-    "isDone": true
-  },
-  {
-    "type": "todo",
-    "task": " Buy milk",
-    "isDone": false
-  },
-  {
-    "dueBy": " 17/02/2023",
-    "type": "Deadline",
-    "task": "bake a cake ",
-    "isDone": false
-  },
-  {
-    "startTime": " 16/02/2023 ",
-    "endTime": " 19/02/2023",
-    "type": "Event",
-    "task": "attend baking course ",
-    "isDone": false
-  },
-  {
-    "startTime": " 16/02/2023 ",
-    "endTime": " 19/02/2023",
-    "type": "Event",
-    "task": "attend baking course ",
-    "isDone": false
-  },
-  {
-    "dueBy": " 17/02/2023",
-    "type": "Deadline",
-    "task": "bake a cake ",
-    "isDone": false
-  },
-  {
-    "dueBy": " 18/02/2023",
-    "type": "Deadline",
-    "task": "sell the cake ",
-    "isDone": false
-  }
-]
+{
+  "taskList": [
+    {
+      "type": "todo",
+      "task": " Buy milk",
+      "isDone": false
+    },
+    {
+      "dueBy": " 17/02/2023",
+      "type": "Deadline",
+      "task": "bake a cake ",
+      "isDone": true
+    },
+    {
+      "startTime": " 16/02/2023 ",
+      "endTime": " 19/02/2023",
+      "type": "Event",
+      "task": "attend baking course ",
+      "isDone": true
+    },
+    {
+      "startTime": " 16/02/2023 ",
+      "endTime": " 19/02/2023",
+      "type": "Event",
+      "task": "attend baking course ",
+      "isDone": false
+    },
+    {
+      "dueBy": " 17/02/2023",
+      "type": "Deadline",
+      "task": "bake a cake ",
+      "isDone": false
+    },
+    {
+      "dueBy": " 18/02/2023",
+      "type": "Deadline",
+      "task": "sell the cake ",
+      "isDone": false
+    }
+  ]
+}

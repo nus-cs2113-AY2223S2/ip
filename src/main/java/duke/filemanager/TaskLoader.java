@@ -23,8 +23,11 @@ public class TaskLoader {
             jsonArray = jsonTree.getAsJsonObject().getAsJsonArray("taskList");
         } catch (FileNotFoundException notFound) {
             System.out.println("Data file does not exist, starting fresh");
+        } catch (IllegalStateException i) {
+            System.out.println("Corrupted data file, starting fresh");
         } catch (Exception e) {
             System.out.println("Unexpected error occurred");
+            System.out.println(e);
         }
         for (JsonElement element : jsonArray) {
             if (element.getAsJsonObject().has("type") && element.getAsJsonObject().get("type").getAsString().equals("todo")) {

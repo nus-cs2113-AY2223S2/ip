@@ -83,7 +83,6 @@ public class TaskManager {
         System.out.println("Noted sir, I have marked \n"
                 + taskType + "[X] " + task + "\n"
                 + "as done.");
-
     }
 
     /**
