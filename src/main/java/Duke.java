@@ -41,10 +41,10 @@ public class Duke {
      * Prints an acknowledgement, based on the type of task.
      * Also prints the description of the task and the current number of tasks
      */
-    public static void printAcknowledgement(String taskType, String description, int taskCounter) {
+    public static void printAcknowledgement(String taskType, String description, String size) {
         printHorizontalRule();
         System.out.println("Added " + taskType + ": " + description);
-        System.out.println("Total Number of Tasks: " + taskCounter);
+        System.out.println("Total Number of Tasks: " + size);
         printHorizontalRule();
     }
 
@@ -95,7 +95,6 @@ public class Duke {
     public static void main(String[] args) {
         // tasks for storing tasks + taskCounter to track next empty cell
         ArrayList<Task> tasks = new ArrayList<Task>();
-        int taskCounter = 0;
 
         // Setting up input reading
         final Scanner INPUT = new Scanner(System.in);
@@ -116,23 +115,24 @@ public class Duke {
             String withoutCommand = "", description = "";
 
             switch (firstWord) {
-                case ("bye") -> {
+                case ("bye"): {
                     shutDown();
                     return;
                 }
 
-                case ("list") -> {
+                case ("list"): {
                     // Prints all contents of task Array
                     printHorizontalRule();
-                    for (int i = 0; i < taskCounter; i++) {
+                    for (int i = 0; i < tasks.size(); i++) {
                         System.out.println((i + 1) + ". " + tasks.get(i));
                     }
                     // Prints total number
-                    System.out.println("Total number of tasks: " + taskCounter);
+                    System.out.println("Total number of tasks: " + tasks.size());
                     printHorizontalRule();
+                    break;
                 }
 
-                case ("mark") -> {
+                case ("mark"): {
                     try {
                         // Sets specified task to complete
                         taskIndex = Integer.parseInt(userInput.split(" ", 2)[1]);
@@ -147,9 +147,10 @@ public class Duke {
                         System.out.println("Please provide a valid index!");
                         printHorizontalRule();
                     }
+                    break;
                 }
 
-                case ("unmark") -> {
+                case ("unmark"): {
                     try {
                         // Sets specified task to incomplete
                         taskIndex = Integer.parseInt(userInput.split(" ", 2)[1]);
@@ -164,9 +165,30 @@ public class Duke {
                         System.out.println("Please provide a valid index!");
                         printHorizontalRule();
                     }
+                    break;
                 }
 
-                case ("todo") -> {
+                case ("delete"): {
+                    try {
+                        // Sets specified task to incomplete
+                        taskIndex = Integer.parseInt(userInput.split(" ", 2)[1]) - 1;
+
+                        // Prints acknowledgement
+                        printHorizontalRule();
+                        System.out.println("Deleting task: \"" + (tasks.get(taskIndex)).getTask() + "\"");
+                        printHorizontalRule();
+
+                        tasks.remove(taskIndex);
+
+                    } catch (IndexOutOfBoundsException e) {
+                        printHorizontalRule();
+                        System.out.println("Please provide a valid index!");
+                        printHorizontalRule();
+                    }
+                    break;
+                }
+
+                case ("todo"): {
                 /*
                   For to do tasks
                   Removes the command word, then adds a new to do with the description to the array
@@ -175,18 +197,18 @@ public class Duke {
                         String todoDescription = removeCommandWord(userInput);
                         Todo newTodo = new Todo(todoDescription);
                         tasks.add(newTodo);
-                        taskCounter += 1;
 
                         // Prints acknowledgement
-                        printAcknowledgement("Todo", todoDescription, taskCounter);
+                        printAcknowledgement("Todo", todoDescription, String.valueOf(tasks.size()));
                     } catch (IndexOutOfBoundsException e) {
                         printHorizontalRule();
                         System.out.println("Invalid command for todo. Cannot have a blank description!");
                         printHorizontalRule();
                     }
+                    break;
                 }
 
-                case ("deadline") -> {
+                case ("deadline"): {
                 /*
                   For deadline tasks
                   Removes the command word and extracts the description
@@ -200,18 +222,18 @@ public class Duke {
 
                         Deadline deadline = new Deadline(description, by);
                         tasks.add(deadline);
-                        taskCounter += 1;
 
                         // Prints acknowledgement
-                        printAcknowledgement("Deadline", description, taskCounter);
+                        printAcknowledgement("Deadline", description, String.valueOf(tasks.size()));
                     } catch (IndexOutOfBoundsException e) {
                         printHorizontalRule();
                         System.out.println("Wrong usage of deadline. Format is: deadline {description} /by {date}");
                         System.out.println("You entered: " + userInput);
                         printHorizontalRule();
                     }
+                    break;
                 }
-                case ("event") -> {
+                case ("event"): {
                 /*
                   For event tasks
                   Removes the command word and extracts the description
@@ -227,22 +249,23 @@ public class Duke {
 
                         Event event = new Event(description, timings[0], timings[1]);
                         tasks.add(event);
-                        taskCounter += 1;
 
                         // Prints acknowledgement
-                        printAcknowledgement("Deadline", description, taskCounter);
+                        printAcknowledgement("Deadline", description, String.valueOf(tasks.size()));
                     } catch (IndexOutOfBoundsException e) {
                         printHorizontalRule();
                         System.out.println("Wrong usage of event. Format is: event {description} /from {date} /to {date}");
                         System.out.println("You entered: " + userInput);
                         printHorizontalRule();
                     }
+                    break;
                 }
-                default -> {
+                default: {
                     // If none of the above, invalid command - prints error informing user
                     printHorizontalRule();
                     System.out.println(userInput + " is an invalid command. Please try again!");
                     printHorizontalRule();
+                    break;
                 }
             }
         }
