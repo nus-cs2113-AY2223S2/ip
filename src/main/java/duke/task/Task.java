@@ -1,6 +1,6 @@
 package duke.task;
 
-public class Task {
+public abstract class Task {
     protected String description;
     protected String startDate;
     protected String endDate;
@@ -27,6 +27,14 @@ public class Task {
 
     public void setAsNotDone() {
         this.isDone = false;
+    }
+
+    public String getStartDate() {
+        return this.startDate;
+    }
+
+    public String getEndDate() {
+        return this.endDate;
     }
 
     @Override
