@@ -1,3 +1,5 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Task {
@@ -12,6 +14,10 @@ public class Task {
 
     public boolean getStatus() {
         return isCompleted;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setStatus(boolean isCompleted) {
@@ -37,6 +43,7 @@ public class Task {
         default:
             throw new InvalidTaskTypeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
         }
+
     }
 
     public static void addTodoToTasksList(String input, ArrayList<Task> listOfTasks) {
@@ -74,6 +81,36 @@ public class Task {
         Task event = new Event(name, false, eventStart, eventEnd);
         listOfTasks.add(event);
         printAddTaskMessage(event, listOfTasks);
+    }
+
+    public static void saveTasks(ArrayList <Task> listOfTasks) throws IOException {
+        String homePath = System.getProperty("user.home") + "/Desktop";
+        String folderPath = homePath + "/data";
+        String filePath = folderPath + "/duke.txt";
+        String content = "";
+        for (Task task : listOfTasks) {
+            content += formatContentToBeSaved(task);
+        }
+        FileWriter fileToWriteTo = new FileWriter(filePath);
+        fileToWriteTo.write(content);
+        fileToWriteTo.close();
+    }
+
+    public static String formatContentToBeSaved (Task task) {
+        String content = "";
+        String type;
+        if (task instanceof Todo) {
+            type = "todo";
+            content = type + " " + task.getName();
+        } else if (task instanceof Deadline) {
+            type = "deadline";
+            content = type + " " + task.getName() + " /by " + ((Deadline) task).getBy();
+        } else {
+            type = "event";
+            content = type + " " + task.getName() + " /from " + ((Event) task).getStart()
+                    + " /to " + ((Event) task).getEnd();
+        }
+        return content + "\n";
     }
 
     public String toString() {

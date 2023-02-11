@@ -1,5 +1,8 @@
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.File;
+
 public class Duke {
     public static void printHorizontalLine() {
         System.out.println("____________________________________________________________");
@@ -14,8 +17,26 @@ public class Duke {
         System.out.println("Hello from\n" + logo);
         printHorizontalLine();
         System.out.println("Hello! I'm Duke");
-        System.out.println("What can I do for you?");
+        System.out.println("Saved tasks have all been added. What can I help you with today?");
         printHorizontalLine();
+    }
+
+    public static void initialiseDuke(ArrayList<Task> listOfTasks) throws IOException {
+        String homePath = System.getProperty("user.home") + "/Desktop";
+        String folderPath = homePath + "/data";
+        new File (folderPath).mkdir();
+        File dukeDataFile = new File(folderPath + "/duke.txt");
+        dukeDataFile.createNewFile();
+        Scanner dukeData = new Scanner(dukeDataFile);
+        while(dukeData.hasNextLine()) {
+            try {
+                Task.checkTaskType(dukeData.nextLine(), listOfTasks);
+                printHorizontalLine();
+            }
+            catch (InvalidTaskTypeException e) {
+                System.out.println(e);
+            }
+        }
     }
 
     public static void checkInput(String input, ArrayList<Task> listOfTasks) {
@@ -52,9 +73,14 @@ public class Duke {
     }
 
     public static void main(String[] args) {
+        ArrayList<Task> listOfTasks = new ArrayList<>();
+        try {
+            initialiseDuke(listOfTasks);
+        } catch (IOException e) {
+            System.out.println("File already Exists");
+        }
         printHelloMessage();
         String input;
-        ArrayList<Task> listOfTasks = new ArrayList<>();
         do {
             Scanner in = new Scanner(System.in);
             input = in.nextLine();
@@ -62,5 +88,10 @@ public class Duke {
             checkInput(input, listOfTasks);
             printHorizontalLine();
         } while (!input.equals("bye"));
+        try {
+            Task.saveTasks(listOfTasks);
+        } catch (IOException e) {
+            System.out.println("File not found");
+        }
     }
 }
