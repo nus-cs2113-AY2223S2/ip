@@ -9,7 +9,8 @@ public enum ErrorTypes {
     INVALID_DEADLINE_COMMAND(6),
     INSUFFICIENT_DEADLINE_ARGUMENT(7),
     INVALID_EVENT_COMMAND(8),
-    INSUFFICIENT_EVENT_ARGUMENT(9);
+    INSUFFICIENT_EVENT_ARGUMENT(9),
+    INVALID_DELETE_COMMAND(10);
     public final int ERROR_TYPE;
     ErrorTypes(int errorType) {
         ERROR_TYPE = errorType;

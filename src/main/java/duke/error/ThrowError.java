@@ -22,6 +22,8 @@ public class ThrowError {
             Printer.invalidEvent();
         } else if (errorNumber == ErrorTypes.INSUFFICIENT_EVENT_ARGUMENT.ERROR_TYPE) {
             Printer.insufficientEvent();
+        } else if (errorNumber == ErrorTypes.INVALID_DELETE_COMMAND.ERROR_TYPE) {
+            Printer.invalidDeleteCommand();
         }
         throw new DukeException();
     }
