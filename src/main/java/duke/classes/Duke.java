@@ -2,7 +2,6 @@ package duke.classes;
 
 import java.util.Objects;
 import java.util.Scanner;
-
 public class Duke {
     private static void checkError(String input) throws DukeException {
         if (Objects.equals(input, "event") || Objects.equals(input, "todo") || Objects.equals(input, "deadline")) {
@@ -13,7 +12,6 @@ public class Duke {
             throw new DukeException("I'm sorry, but i don't know what that means. Please enter a proper input.");
         }
     }
-
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
