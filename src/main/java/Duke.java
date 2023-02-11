@@ -2,6 +2,8 @@ import duke.tasks.*;
 import duke.exceptions.*;
 import duke.files.FileManager;
 
+import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Duke {
@@ -23,6 +25,13 @@ public class Duke {
         // Scanner declaration and initial input
         final Scanner CONSOLE = new Scanner(System.in);
         String input = CONSOLE.nextLine();
+
+        // Scan data.txt for saved tasks
+        try {
+            FileManager.populateTaskList();
+        } catch (FileNotFoundException e) {
+            System.out.println("Argh! There was an issue fetching yer saved tasks! Ye must be in the 'java' directory!");
+        }
 
         // Read input such that it is not "bye"
         while(!input.equals("bye")) {
@@ -152,6 +161,13 @@ public class Duke {
         }
 
         System.out.println(EXIT);
+
+        // Save files to data.txt
+        try {
+            FileManager.populateFile();
+        } catch (IOException e) {
+            System.out.println("Argh! There was an issue saving yer tasks!");
+        }
     }
 
     // Local Duke method to list all functions

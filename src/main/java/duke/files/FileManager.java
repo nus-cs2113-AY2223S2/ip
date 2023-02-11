@@ -8,14 +8,15 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
+/* 
+    Upon cloning, user will have an empty data file duke/files/data.txt
+    After first use, all tasks on the user list will save in data.txt
+    When Duke is restarted, all tasks from data.txt will load to the list
+*/
+
 public class FileManager {
 
     private static final String filePath = "duke/files/data.txt";
-
-    public static boolean checkFile() {
-        File f = new File(filePath);
-        return (f.exists() && !f.isDirectory());
-    }
 
     // Write to a file
     private static void writeToFile(String filePath, String textToAdd) throws IOException {
@@ -44,16 +45,16 @@ public class FileManager {
 
     // Parse a string and create and add a task from it
     private static void addTaskFromFile(String parsedTask) {
-        char type = parsedTask.charAt(1);
-        char status = parsedTask.charAt(4);
-        String description = parsedTask.substring(7);
+        char type = parsedTask.charAt(1); // Type will be at index 1 based on how data is saved
+        char status = parsedTask.charAt(4); // Status will be at index 4
+        String description = parsedTask.substring(7); // Description starts at index 7
         Task temp;
-        if (type == 'T') {
+        if (type == 'T') { // Adding a todo
             temp = new Todo(description);
-        } else if (type == 'D') {
+        } else if (type == 'D') { // Adding a deadline
             String dueDate = description.substring(description.indexOf(":")+2, description.indexOf(")"));
             temp = new Deadline(description, dueDate);
-        } else {
+        } else { // Adding an event
             String startTime = description.substring(description.indexOf("from"), description.indexOf("to"));
             String endTime = description.substring(description.indexOf("to"));
             endTime = endTime.substring(0, endTime.length()-1);
