@@ -13,13 +13,10 @@ public class TaskController {
 
   protected TaskView view = new TaskView();
   protected Validator validator = new Validator();
-  protected Database db;
+  protected Database db = Database.getInstance();
   static int counter = 0;
 
   // We connect our controller to the instance of the database
-  public TaskController(Database db) {
-    this.db = db;
-  }
 
   private void printDescription(Task model) {
     System.out.println(Message.TASK_ADDED.message);

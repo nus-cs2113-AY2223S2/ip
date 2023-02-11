@@ -3,13 +3,11 @@ import constants.ErrorMessage;
 import constants.Message;
 import controller.TaskController;
 import java.util.Scanner;
-import storage.Database;
 import validator.error.InvalidTaskError;
 
 public class Duke {
 
-  private static final Database db = new Database();
-  private static final TaskController controller = new TaskController(db);
+  private static final TaskController controller = new TaskController();
   private static boolean isRunning = true;
 
   private static void terminate() {
