@@ -136,7 +136,11 @@ public class Duke {
             }
             break;
         case "delete":
-            taskNum = deleteTask(line, storedValues);
+            try {
+                taskNum = deleteTask(line, storedValues);
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Item to delete is not in the list!");
+            }
             break;
         default:
             // Commands that are not listed above
@@ -149,12 +153,13 @@ public class Duke {
         int length = line.length();
         String itemToDelete = line.substring(REMOVE_DELETE_NUM, length);
         int posToDelete = Integer.parseInt(itemToDelete);
+        Task value = storedValues.get(posToDelete-1);
+        storedValues.remove(posToDelete-1);
         formattingLine();
         System.out.println("Noted. I've removed this task: \n" +
-                storedValues.get(posToDelete-1) + "\n" +
+                value + "\n" +
                 "Now you have " + (taskNum-1) + " tasks in the list. \n");
         formattingLine();
-        storedValues.remove(posToDelete-1);
         taskNum -= 1;
         return taskNum;
     }
