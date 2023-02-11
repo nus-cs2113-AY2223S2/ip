@@ -1,3 +1,7 @@
+package Support;
+
+import BasisSupport.Status;
+
 public class Task {
     protected String description;
     protected boolean isDone;
@@ -8,7 +12,16 @@ public class Task {
         this.description = description;
         this.taskStatus = taskStatus;
         this.isDone = false;
+    }
 
+    public Task(String description, Status taskStatus, boolean isDone) {
+        this.description = description;
+        this.taskStatus = taskStatus;
+        this.isDone = isDone;
+    }
+
+    public void setIsDone(boolean isDone) {
+        this.isDone = isDone;
     }
 
     public String getStatusIcon() {

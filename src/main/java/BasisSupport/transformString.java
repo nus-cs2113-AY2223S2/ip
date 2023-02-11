@@ -1,7 +1,9 @@
+package BasisSupport;
+
 // Transform the line with "/" to common
 public class transformString {
     public static String transformString(String line) {
-        String transformedLine = "";
+        String transformedLine;
         String[] wordsListOfLine = line.split(" ");
         boolean firstTimeOccurence = true; // Indicates the occurrence time of "/"
 
@@ -23,6 +25,4 @@ public class transformString {
 
         return transformedLine;
     }
-
-
 }
