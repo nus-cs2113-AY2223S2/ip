@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+
 import java.util.Scanner;
 
 public class Orca {
@@ -15,12 +17,10 @@ public class Orca {
             + "    |  |_|  ||    __  ||      _||       | \n"
             + "    |       ||   |  | ||     |_ |   _   | \n"
             + "    |_______||___|  |_||_______||__| |__| \n";
-    static final int MAX_TASKS = 100;
     static final boolean FINISHED = true;
     static final String FILE_PATH = "./data/orca.txt";
 
-    static Task[] tasks = new Task[MAX_TASKS];
-    static int taskCount = 0;
+    static ArrayList<Task> tasks = new ArrayList<>();
     static Scanner in = new Scanner(System.in);
     static String userInput = "";
     static CommandType commandType;
@@ -99,8 +99,8 @@ public class Orca {
     public static void printTasks() {
         System.out.println("    --------------------------------------------------");
         System.out.println("    Here are the tasks in your list:");
-        for (int i = 0; i < taskCount; i++) {
-            System.out.println("    " + (i + 1) + "." + tasks[i]);
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println("    " + (i + 1) + "." + tasks.get(i));
         }
         System.out.println("    --------------------------------------------------\n");
     }
@@ -108,8 +108,8 @@ public class Orca {
     public static void printLatestAddedTask() {
         System.out.println("    --------------------------------------------------");
         System.out.println("    Got it. I've added this task:");
-        System.out.println("      " + tasks[taskCount - 1]);
-        System.out.println("    Now you have " + taskCount + " tasks in the list.");
+        System.out.println("      " + tasks.get(tasks.size() - 1));
+        System.out.println("    Now you have " + tasks.size() + " tasks in the list.");
         System.out.println("    --------------------------------------------------\n");
     }
 
@@ -128,6 +128,8 @@ public class Orca {
             commandType = CommandType.DEADLINE;
         } else if (userInput.startsWith("event")) {
             commandType = CommandType.EVENT;
+        } else if (userInput.startsWith("delete")) {
+            commandType = CommandType.DELETE;
         } else {
             commandType = CommandType.UNKNOWN;
         }
@@ -143,7 +145,7 @@ public class Orca {
 
     public static void markTask(int taskNo) throws OrcaException {
         try {
-            tasks[taskNo - 1].setDone(true);
+            tasks.get(taskNo - 1).setDone(true);
         } catch (NullPointerException e) {
             throw new OrcaException("There is no task with this number.");
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -151,13 +153,13 @@ public class Orca {
         }
         System.out.println("    --------------------------------------------------");
         System.out.println("    Nice! I've marked this task as done:");
-        System.out.println("      " + tasks[taskNo - 1]);
+        System.out.println("      " + tasks.get(taskNo - 1));
         System.out.println("    --------------------------------------------------\n");
     }
 
     public static void unmarkTask(int taskNo) throws OrcaException {
         try {
-            tasks[taskNo - 1].setDone(false);
+            tasks.get(taskNo - 1).setDone(false);
         } catch (NullPointerException e) {
             throw new OrcaException("There is no task with this number.");
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -165,13 +167,25 @@ public class Orca {
         }
         System.out.println("    --------------------------------------------------");
         System.out.println("    I've marked this task as not done yet:");
-        System.out.println("      " + tasks[taskNo - 1]);
+        System.out.println("      " + tasks.get(taskNo - 1));
         System.out.println("    --------------------------------------------------\n");
     }
 
     public static void addTask(Task newTask) {
-        tasks[taskCount] = newTask;
-        taskCount++;
+        tasks.add(newTask);
+    }
+
+    private static void deleteTask(int taskNo) throws OrcaException {
+        try {
+            Task removedTask = tasks.remove(taskNo - 1);
+            System.out.println("    --------------------------------------------------");
+            System.out.println("    Noted. I've removed this task:");
+            System.out.println("      " + removedTask);
+            System.out.println("    Now you have " + tasks.size() + " tasks in the list.");
+            System.out.println("    --------------------------------------------------\n");
+        } catch (IndexOutOfBoundsException e) {
+            throw new OrcaException("There is no task with this number.");
+        }
     }
 
     public static int parseTaskNo(String userInput, int startIdx) throws OrcaException {
@@ -215,6 +229,10 @@ public class Orca {
                 newTask = new Event(userInput, 6);
                 addTask(newTask);
                 printLatestAddedTask();
+                break;
+            case DELETE:
+                taskNo = parseTaskNo(userInput, 7);
+                deleteTask(taskNo);
                 break;
             default:
                 throw new OrcaException("Sorry. I can't understand what you mean. :(");
