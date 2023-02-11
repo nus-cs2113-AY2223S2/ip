@@ -27,6 +27,12 @@ public class Event extends Todo {
         return to;
     }
     
+    @Override
+    public String getSaveRepresentation() {
+        int doneRepresentation = isDone() ? 1 : 0;
+        return String.format("%s /// %d /// %s /// %s /// %s", TYPE_REPRESENTATION, doneRepresentation, getDescription(), getFrom(), getTo());
+    }
+    
     public String toString() {
         char mark;
         if (isDone) {

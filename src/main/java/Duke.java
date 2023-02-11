@@ -1,16 +1,24 @@
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.File;
+import java.io.FileNotFoundException;
+
 import messages.ErrorMessages;
 import messages.OperationsMessages;
 import tasks.Deadline;
 import tasks.Event;
 import tasks.Todo;
-import java.util.ArrayList;
 import exceptions.EmptyInputException;
 import exceptions.InvalidCommand;
 
 public class Duke {
-    // Messages
-    private static final String BOT_NAME = "Duke";    // Constants 
+    // Constants
+    private static final String BOT_NAME = "Duke"; 
+    private static final String saveFilePath = "./data/duke.txt";
     private static ArrayList<Todo> itemList = new ArrayList<Todo>(0);
     // private static Set<String> markedItems = new HashSet<String>(MAX_ITEMS);
     private static int numItems = 0;
@@ -37,18 +45,30 @@ public class Duke {
                 printResponse(ErrorMessages.INVALID_COMMAND);
             } catch (ArrayIndexOutOfBoundsException e) {
                 printResponse(ErrorMessages.INCORRECT_FIELDS);
+            } catch (FileNotFoundException e) {
+                printResponse(ErrorMessages.LOAD_FAIL);
+            } catch (IOException e) {
+                printResponse(ErrorMessages.SAVE_FAIL);
             }
         }
         scanner.close();
     }
 
-    private static void handleInput(String line) throws EmptyInputException, InvalidCommand {
+    private static void handleInput(String line) throws EmptyInputException, InvalidCommand, IOException {
         String[] lineParts = line.split(" ");
         String command = lineParts[0];
-        if (!command.equals("list") && lineParts.length <= 1) {
+        if (command.equals("list")) {
+            printItems();
+        } else if (command.equals("save")) {
+            save(saveFilePath);
+            printResponse(OperationsMessages.SAVED_MSG);
+        } else if (command.equals("load")) {
+            load(saveFilePath);
+            printResponse(OperationsMessages.LOADED_MSG);
+        } else if (lineParts.length <= 1) {
+            // dont move on if less than 2 parts
             throw new EmptyInputException();
-        }
-        if (command.equals("bye")) {
+        } else if (command.equals("bye")) {
             printResponse(OperationsMessages.BYE_MSG);
         } else if (command.equals("todo")) {
             line = line.substring(command.length() + 1);
@@ -115,6 +135,54 @@ public class Duke {
             response += String.format("    %d.%s\n", i+1, item.toString());
         }
         printResponse(response);
+    }
+
+    private static void writeToFile(String filePath, String content) throws IOException {
+        FileWriter fw = new FileWriter(filePath);
+        fw.write(content);
+        fw.close();
+    }
+
+    private static void save(String filePath) throws IOException {
+        String saveString = "";
+        for (Todo item: itemList) {
+            saveString += item.getSaveRepresentation() + "\n";
+        }
+        writeToFile(filePath, saveString);
+    }
+
+    private static void load(String filePath) throws FileNotFoundException {
+        File loadFile = new File(filePath);
+        Scanner fileScanner = new Scanner(loadFile);
+        while(fileScanner.hasNext()) {
+            String line = fileScanner.nextLine();
+            String[] lineParts = line.split(" /// ");
+            String itemType = lineParts[0];
+            // load each item one by one
+            boolean isMarked = lineParts[1] == "1";
+            Todo newItem;
+            switch (itemType) {
+            case "T":
+                newItem = new Todo(lineParts[2]);
+                newItem.setDone(isMarked);
+                addItem(newItem);
+                break;
+            case "D":
+                newItem = new Deadline(lineParts[2], lineParts[3]);
+                newItem.setDone(isMarked);
+                addItem(newItem);
+                break;
+            case "E":
+                newItem = new Event(lineParts[2], lineParts[3], lineParts[4]);
+                newItem.setDone(isMarked);
+                addItem(newItem);
+                break;
+            default:
+                // TODO add exception
+                break;
+            }
+        }
+        fileScanner.close();
     }
 
     private static void printResponse(String response) {

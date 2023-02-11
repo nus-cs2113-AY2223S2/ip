@@ -6,6 +6,5 @@ list
 invalidcommand description is here
 event /from /to
 event badevent /from wer /to
-event goodevent /from start /to 
-event goodevent2 /from   /to 
 deadline rejwkjr wnrmqe
+list
