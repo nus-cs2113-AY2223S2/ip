@@ -2,11 +2,11 @@ package inu.parser;
 
 import inu.exceptionhandling.EmptyTaskListException;
 import inu.exceptionhandling.ExceptionManager;
+import inu.exceptionhandling.EmptyUserInputException;
 import inu.task.Task;
 import inu.task.Todo;
 import inu.task.DeadLine;
 import inu.task.Event;
-import inu.exceptionhandling.EmptyUserInputException;
 import inu.tasklist.TaskList;
 
 public class Util {

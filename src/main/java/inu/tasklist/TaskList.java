@@ -1,7 +1,7 @@
 package inu.tasklist;
 
 import java.util.ArrayList;
-import inu.task.*;
+import inu.task.Task;
 
 public class TaskList {
 
