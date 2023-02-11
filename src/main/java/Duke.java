@@ -84,6 +84,12 @@ public class Duke {
             } catch (StringIndexOutOfBoundsException e) {
                 System.out.println("☹ Sorry! your event description is invalid!");
             }
+        } else if (command.toLowerCase().startsWith("delete")) {
+            try {
+                deleteTask(tasks, command);
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("☹ ERROR! this task to delete is not recognized.");
+            }
         } else {
             throw new DukeException();
         }
@@ -99,7 +105,7 @@ public class Duke {
     private static void addTodo(String line, ArrayList<Task> tasks) {
         tasks.add(new Todo(line.substring(5)));
         int taskCount = getTaskIndex(tasks, line.substring(5));
-        printTaskAddedDescription(tasks, taskCount);
+        printTaskDescription(tasks, taskCount, "add");
     }
 
     /**
@@ -119,7 +125,7 @@ public class Duke {
         String eventEnd = line.substring(toIndex + 4);
         tasks.add(new Event(event, eventStart, eventEnd));
         int taskCount = getTaskIndex(tasks, event);
-        printTaskAddedDescription(tasks, taskCount);
+        printTaskDescription(tasks, taskCount, "add");
     }
 
     /**
@@ -136,7 +142,19 @@ public class Duke {
         String deadline = line.substring(byIndex + 4);
         tasks.add(new Deadline(taskDescription, deadline));
         int taskCount = getTaskIndex(tasks, taskDescription);
-        printTaskAddedDescription(tasks, taskCount);
+        printTaskDescription(tasks, taskCount, "add");
+    }
+
+    /**
+     * Deletes the task from the ArrayList of task objects
+     *
+     * @param tasks An ArrayList holding the task objects.
+     * @param task  The command to delete the task
+     */
+    private static void deleteTask(ArrayList<Task> tasks, String task) {
+        int index = Integer.parseInt(task.substring(7));
+        printTaskDescription(tasks, index-1, "delete");
+        tasks.remove(index-1);
     }
 
     /**
@@ -207,14 +225,23 @@ public class Duke {
     /**
      * Prints the description of the added task.
      *
-     * @param tasks An ArrayList holding the task objects.
+     * @param tasks     An ArrayList holding the task objects.
      * @param taskIndex The index of the task.
+     * @param type      The description of task type (add/delete)
      */
-    private static void printTaskAddedDescription(ArrayList<Task> tasks, int taskIndex) {
-        System.out.println(" Got it. I've added this task:");
-        //print Task Description
-        System.out.println(tasks.get(taskIndex).toString());
-        System.out.println(" Now you have " + tasks.size() + " tasks in your list.");
+    private static void printTaskDescription(ArrayList<Task> tasks, int taskIndex, String type) {
+        if (type == "add") {
+            System.out.println(" Got it. I've added this task:");
+            //print Task Description
+            System.out.println(tasks.get(taskIndex).toString());
+            System.out.println(" Now you have " + tasks.size() + " tasks in your list.");
+        } else {
+            System.out.println(" Noted. I've deleted this task:");
+            //print Task Description
+            System.out.println(tasks.get(taskIndex).toString());
+            int index = tasks.size()-1;
+            System.out.println(" Now you have " + index + " tasks in your list.");
+        }
     }
 
     private static void printByeMessage() {
