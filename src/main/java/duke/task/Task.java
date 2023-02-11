@@ -29,6 +29,14 @@ public class Task {
         this.isDone = false;
     }
 
+    public String getStartDate() {
+        return this.startDate;
+    }
+
+    public String getEndDate() {
+        return this.endDate;
+    }
+
     @Override
     public String toString() {
         String itemStatus = this.getStatusIcon();

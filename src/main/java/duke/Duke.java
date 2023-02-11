@@ -5,6 +5,13 @@ import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Todo;
 import duke.task.Task;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,19 +23,6 @@ public class Duke {
 
     public static boolean isCompleted = false;
     private static final List<Task> userList = new ArrayList<>();
-
-    public static void welcomeMessage() {
-        separator();
-        printMessage("Hello! I'm Duke");
-        printMessage("What can I do for you?");
-        separator();
-    }
-
-    public static void endingMessage() {
-        separator();
-        printMessage("Bye. Hope to see you again soon!");
-        separator();
-    }
 
     public static void separator() {
         String separatorLine = "-".repeat(BOX_WIDTH);
@@ -334,8 +328,73 @@ public class Duke {
         }
     }
 
+    public static void startDuke() throws IOException {
+        separator();
+        printMessage("Hello! I'm Duke");
+        printMessage("Let me check the current list of tasks");
+
+        // Check for database file
+        // Create parent directory and file if it does not exist,
+        // otherwise show current list of tasks
+        Path filepath = Paths.get("data", "duke.txt");
+        File databaseFile = filepath.toFile();
+        if (!databaseFile.exists()) {
+            printMessage("Database file does not exist, creating one now!");
+            databaseFile.getParentFile().mkdirs();
+            databaseFile.createNewFile();
+        } else {
+            FileReader fileReader = new FileReader(databaseFile);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String fileContent = "";
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                fileContent += line + "\n";
+            }
+            System.out.println("File content: " + fileContent);
+            bufferedReader.close();
+            fileReader.close();
+        }
+        separator();
+    }
+
+    public static void endDuke() throws IOException {
+        separator();
+        printMessage("Saving current list of data into database...");
+
+        Path filepath = Paths.get("data", "duke.txt");
+        File databaseFile = filepath.toFile();
+        FileWriter databaseFileWriter = new FileWriter(databaseFile, true);
+
+        for (Task task : userList) {
+            String taskInfo = "";
+
+            if (task instanceof Todo) {
+                taskInfo = "T" + "|" + task.getStatusIcon() + "|" + task.getDescription()
+                        + System.lineSeparator();
+            } else if (task instanceof Deadline) {
+                taskInfo = "D" + "|" + task.getStatusIcon() + "|" + task.getDescription() + "|"
+                        + task.getEndDate() + System.lineSeparator();
+            } else if (task instanceof Event) {
+                taskInfo = "E" + "|" + task.getStatusIcon() + "|" + task.getDescription() + "|"
+                        + task.getEndDate() + "|" + task.getStartDate() + System.lineSeparator();
+            }
+
+            databaseFileWriter.write(taskInfo);
+        }
+
+        databaseFileWriter.close();
+        printMessage("Done saving list of tasks.");
+        printMessage("Bye. Hope to see you again soon!");
+        separator();
+    }
+
     public static void main(String[] args) {
-        welcomeMessage();
+        try {
+            startDuke();
+        } catch (IOException error) {
+            printMessage("Unable to load/create database file! Printing error stack trace...");
+            error.printStackTrace();
+        }
 
         String line;
         Scanner in = new Scanner(System.in);
@@ -345,6 +404,11 @@ public class Duke {
             checkInput(line);
         } while (!isCompleted);
 
-        endingMessage();
+        try {
+            endDuke();
+        } catch (IOException error) {
+            printMessage("Unable to load/create database file! Printing error stack trace...");
+            error.printStackTrace();
+        }
     }
 }
