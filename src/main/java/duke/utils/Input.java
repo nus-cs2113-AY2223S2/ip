@@ -4,6 +4,10 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import duke.exception.PromptCannotBeEmptyException;
+import duke.task.Deadline;
+import duke.task.Event;
+import duke.task.Task;
+import duke.task.Todo;
 
 public class Input {
     static Scanner sc = new Scanner(System.in);
@@ -77,5 +81,79 @@ public class Input {
             Output.printIncorrectFormatError("event");
             return null;
         }
+    }
+    
+    public static String parseTaskToWrite (Task task) {
+    	Boolean isDone = task.getStatus();
+    	String taskType = task.getTaskType();    	
+    	String encodedBooleanIsDone;
+    	String description = task.getTaskDescription();  	
+    	String startTime;
+    	String endTime;
+    	String parseResult = null;
+    	
+    	if(isDone) {
+    		encodedBooleanIsDone = "1";
+    	}else {
+    		encodedBooleanIsDone = "0";
+    	}
+    	
+    	switch(taskType) {
+    	case "T":
+    		parseResult = taskType+" | "+encodedBooleanIsDone+" | "+description;
+    		break;
+    	case "D":
+    		endTime = ((Deadline) task).getEndTime();
+    		parseResult = taskType+" | "+encodedBooleanIsDone+" | "+description+" | "+endTime;
+    		break;
+    	case "E":
+    		startTime = ((Event) task).getStartTime();
+    		endTime = ((Event) task).getEndTime();
+    		parseResult = taskType+" | "+encodedBooleanIsDone+" | "+description+" | "+startTime+" | "+endTime;
+    		break;
+    	default:
+    		parseResult="Error";
+    	}
+    	
+    	return parseResult;
+    }
+    
+    public static Task parseFileContent(String text) {
+    	Task readTask = null;
+    	Boolean isDone;
+    	String[] arrOfStr = text.split("[|]");
+    	String taskType = arrOfStr[0].trim();
+    	String doneString = arrOfStr[1].trim();
+    	String description = arrOfStr[2].trim(); 	
+    	String startTime;
+    	String endTime;
+    	
+    	if(doneString.equals("1")) {
+    		isDone = true;
+    	}else {
+    		isDone = false;
+    	}
+    	
+    	switch(taskType) {
+    	case "T":
+    		readTask = new Todo(description);
+    		readTask.setStatus(isDone);
+    		break;
+    	case "D":
+    		endTime = arrOfStr[3].trim();
+    		readTask = new Deadline(description, endTime);
+    		readTask.setStatus(isDone);
+    		break;
+    	case "E":
+    		startTime = arrOfStr[3].trim();
+    		endTime = arrOfStr[4].trim();
+    		readTask = new Event(description, startTime, endTime);
+    		readTask.setStatus(isDone); 
+    		break;
+    	default:
+    		readTask = null;
+    	}
+    	
+    	return readTask;
     }
 }
