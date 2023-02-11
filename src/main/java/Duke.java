@@ -4,14 +4,14 @@ import messages.OperationsMessages;
 import tasks.Deadline;
 import tasks.Event;
 import tasks.Todo;
+import java.util.ArrayList;
 import exceptions.EmptyInputException;
 import exceptions.InvalidCommand;
 
 public class Duke {
     // Messages
     private static final String BOT_NAME = "Duke";    // Constants 
-    private static final int MAX_ITEMS = 100;
-    private static Todo[] itemList = new Todo[MAX_ITEMS];
+    private static ArrayList<Todo> itemList = new ArrayList<Todo>(0);
     // private static Set<String> markedItems = new HashSet<String>(MAX_ITEMS);
     private static int numItems = 0;
 
@@ -92,26 +92,26 @@ public class Duke {
     }
 
     private static void markItem(int itemNo) {
-        Todo item = itemList[itemNo - 1];
+        Todo item = itemList.get(itemNo - 1);
         item.setDone(true);
         printResponse("    " + OperationsMessages.MARK_MSG + "\n" + "    " + item.toString());
     }
 
     private static void unmarkItem(int itemNo) {
-        Todo item = itemList[itemNo - 1];
+        Todo item = itemList.get(itemNo - 1);
         item.setDone(false);
         printResponse("    " + OperationsMessages.UNMARK_MSG + "\n" + "    " + item.toString());
     }
 
     private static void addItem(Todo item) {
-        itemList[numItems++] = item;
-        printResponse(String.format(OperationsMessages.ADDED_MSG, item.toString(), numItems));
+        itemList.add(item);
+        printResponse(String.format(OperationsMessages.ADDED_MSG, item.toString(), itemList.size()));
     }
 
     private static void printItems() {
         String response = OperationsMessages.SHOW_ITEMS_MSG + "\n";
-        for (int i = 0; i < numItems; i++) {
-            Todo item = itemList[i];
+        for (int i = 0; i < itemList.size(); i++) {
+            Todo item = itemList.get(i);
             response += String.format("    %d.%s\n", i+1, item.toString());
         }
         printResponse(response);
