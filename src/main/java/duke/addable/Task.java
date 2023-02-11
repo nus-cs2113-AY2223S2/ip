@@ -1,7 +1,7 @@
 package duke.addable;
 import duke.exception.ArgumentBlankException;
 
-public class Task {
+public abstract class Task {
     private String description;
     private boolean isDone;
     protected final String commandString = "task";
@@ -14,18 +14,21 @@ public class Task {
         isDone = done;
     }
 
-    public Task(String description) throws ArgumentBlankException {
+    public Task(String description, boolean isDone) throws ArgumentBlankException {
         if (description.isBlank()) {
             throw new ArgumentBlankException(this.getCommandString(), "description");
         }
         this.setDescription(description);
-        this.isDone = false;
+        this.isDone = isDone;
     }
 
     public String getCommandString() {
         return commandString;
     }
 
+    public String getLetter() {
+        return "A";
+    }
     public String getDescription() {
         return description;
     }
@@ -37,7 +40,7 @@ public class Task {
     public String getStatusIcon() {
         return (isDone ? "X" : " "); // mark done task with X
     }
-
+    public abstract String[] getExtraArguments();
     @Override
     public String toString() {
         return "[" + getStatusIcon() + "] " + description;

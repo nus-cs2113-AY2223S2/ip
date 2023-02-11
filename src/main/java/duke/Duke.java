@@ -1,6 +1,9 @@
 package duke;
 import duke.addable.*;
 import duke.exception.*;
+
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -18,11 +21,16 @@ public class Duke {
     };
     private static final String INDENT = "      ";
     private static ArrayList<Task> tasks = new ArrayList<>();
+    private static FileManager fm;
+
     public static void main(String[] args) {
+        fm = new FileManager();
+        tasks = fm.getTasks();
         printIntro();
+        printMessage("Loading tasks from hard disk...");
+        list();
         mainLoop();
         printExit();
-
     }
 
     public static void mainLoop() {
@@ -52,6 +60,7 @@ public class Duke {
                 default:
                     throw new UnknownCommandException(words[0]);
                 }
+                fm.saveCurrentTaskList();
             } catch (MarkNonexistentTaskException e) {
                 printInvalidInputMessage("task " + e.taskIndex + " does not currently exist.");
             } catch (ArrayIndexOutOfBoundsException e) {
@@ -165,18 +174,20 @@ public class Duke {
         String date = inputSections[1].replaceFirst("by", "");
         return new Deadline(
                 taskDescription,
-                date
+                date,
+                false
         );
     }
     public static Event getNewEvent(String taskDescription, String[] inputSections) throws ArgumentBlankException {
         return new Event(
                 taskDescription,
                 inputSections[1].replaceFirst("from", ""),
-                inputSections[2].replaceFirst("to", "")
+                inputSections[2].replaceFirst("to", ""),
+                false
         );
     }
     public static ToDo getNewTodo(String taskDescription) throws ArgumentBlankException {
-        return new ToDo(taskDescription);
+        return new ToDo(taskDescription, false);
     }
 
     // PRINTING UTILITIES
