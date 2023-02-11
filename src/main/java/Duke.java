@@ -37,6 +37,10 @@ public class Duke {
             taskToBeUnmarked.setStatus(false);
             Task.printUpdateStatusMessage(taskToBeUnmarked.getStatus(), taskToBeUnmarked);
             break;
+        case "delete":
+            int taskNumber = Integer.parseInt(inputs[1]) - 1;
+            Task.deleteTask(taskNumber, listOfTasks);
+            break;
         default:
             try {
                 Task.checkTaskType(input, listOfTasks);
