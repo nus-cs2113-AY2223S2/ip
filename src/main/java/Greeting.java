@@ -2,6 +2,7 @@ public class Greeting {
 
     /**
      * Prints out the farewell message.
+     *
      * @param isSinglish Whether the language setting is currently in Singlish
      */
     public static void sayGoodbye(boolean isSinglish) {
@@ -15,6 +16,7 @@ public class Greeting {
 
     /**
      * Prints out horizontal lines for formatting.
+     *
      * @param isSinglish Whether the language setting is currently in Singlish
      */
     public static void printHorizontalLines(boolean isSinglish) {
@@ -27,6 +29,7 @@ public class Greeting {
 
     /**
      * Prints out the greeting message.
+     *
      * @param isSinglish Whether the language setting is currently in Singlish
      */
     public static void sayHello(boolean isSinglish) {
@@ -45,6 +48,7 @@ public class Greeting {
 
     /**
      * Prints out a message informing the user that it has typed a command with invalid syntax
+     *
      * @param isSinglish Whether the language setting is currently in Singlish
      */
     public static void warnWrongSyntax(boolean isSinglish) {
@@ -57,6 +61,7 @@ public class Greeting {
 
     /**
      * Prints out a message informing the user that language has changed
+     *
      * @param isSinglish Whether the language setting is currently in Singlish
      */
     public static void sayChangeLanguage(boolean isSinglish) {
@@ -72,18 +77,20 @@ public class Greeting {
 
     /**
      * Prints out a message informing the user that the index selected does not have a task
+     *
      * @param isSinglish Whether the language setting is currently in Singlish
      */
     public static void warnOutOfRange(boolean isSinglish) {
         if (isSinglish) {
-            System.out.println("Eh, your list dun have a task at that index lah");
+            System.out.println("Eh, either you type wrongly or your list dun have a task at that index lah");
         } else {
-            System.out.println(("The list does not have a task of that index"));
+            System.out.println(("Command inputted has wrong syntax or the list does not have a task of that index"));
         }
     }
 
     /**
      * Prints out a message informing the user that the task has been sucessfully updated
+     *
      * @param isSinglish Whether the language setting is currently in Singlish
      */
     public static void sayUpdatedTask(boolean isSinglish) {
@@ -96,6 +103,7 @@ public class Greeting {
 
     /**
      * Prints out a message informing the user that the task description is empty
+     *
      * @param isSinglish Whether the language setting is currently in Singlish
      */
     public static void warnEmptyDesc(boolean isSinglish) {
@@ -106,11 +114,29 @@ public class Greeting {
         }
     }
 
+    /**
+     * Prints out a message informing the user that the task has been added to the list
+     *
+     * @param isSinglish Whether the language setting is currently in Singlish
+     */
     public static void sayAddToList(boolean isSinglish) {
         if (isSinglish) {
             System.out.println("Ok, I add in already");
         } else {
-            System.out.println("Task has been added to list.");
+            System.out.println("Task has been added to the list.");
+        }
+    }
+
+    /**
+     * Prints out a message informing the user that the task at a specified index has been deleted
+     *
+     * @param isSinglish Whether the language setting is currently in Singlish
+     */
+    public static void sayDeleteTaskFromList(boolean isSinglish) {
+        if (isSinglish) {
+            System.out.println("Ok, I delete it already");
+        } else {
+            System.out.println(("Task has been removed from the list"));
         }
     }
 
