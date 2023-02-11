@@ -1,9 +1,15 @@
 package duke;
 
+import duke.exceptions.ContentEmptyException;
+import duke.exceptions.MissingFileException;
+import duke.exceptions.MissingParameterException;
+import duke.exceptions.UnknownCommandException;
 import duke.exceptions.*;
 import duke.tasks.Bye;
 import duke.tasks.Greet;
 import duke.tools.Parser;
+
+import java.io.IOException;
 
 /**
  * Manage input commands.
@@ -43,7 +49,7 @@ public class CommandManager {
      * If command is unmark, mark a particular task as undone.
      * Else add new task.
      */
-    public void executeCommand() throws MissingParameterException, DeleteIndexOutOfBound, DeleteEmptyTasks {
+    public void executeCommand() throws MissingParameterException, MissingFileException, IOException,  DeleteIndexOutOfBound, DeleteEmptyTasks{
         if(commandType.equals("bye")){
             sayBye();
             System.exit(0);
