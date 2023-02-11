@@ -10,8 +10,8 @@ import java.util.Scanner;
 
 public class Duke {
     public static final List<String> taskTypes = Arrays.asList("todo", "deadline", "event");
-    public static final List<String> listEditableCommands = Arrays.asList("todo", "deadline", "event", "mark","unmark");
-    public static final List<String> commands = Arrays.asList("todo", "deadline", "event", "mark", "unmark", "list", "bye");
+    public static final List<String> listEditableCommands = Arrays.asList("todo", "deadline", "event", "mark","unmark","delete");
+    public static final List<String> commands = Arrays.asList("todo", "deadline", "event", "mark", "unmark", "list","delete", "bye");
 
     public static void printHorizontalLine() {
         System.out.print("    ____________________________________________________________\n");

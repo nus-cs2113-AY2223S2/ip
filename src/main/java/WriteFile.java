@@ -20,14 +20,14 @@ public class WriteFile {
                 String[] splitNameDate = listOfTasks.get(i).description.split(" \\(by: " );
                 //System.out.println(splitNameDate.length);
                 name = splitNameDate[0];
-                period = splitNameDate[1].replaceAll("\\)", " ");
+                period = splitNameDate[1].replaceAll("\\)", "");
                 fw.write(charLabel + "/" + binIsDone + "/" + name + "/" + period + "\n");
                 break;
             case "E":
                 String[] splitNameFromPeriod = listOfTasks.get(i).description.split(" \\(from: ");
                 //System.out.println(splitNameFromPeriod.length);
                 name = splitNameFromPeriod[0];
-                period = splitNameFromPeriod[1].replaceAll("\\)"," ");
+                period = splitNameFromPeriod[1].replaceAll("\\)","");
                 period = period.replace("to:","-");
                 fw.write(charLabel + "/" + binIsDone + "/" + name + "/" + period + "\n");
                 break;

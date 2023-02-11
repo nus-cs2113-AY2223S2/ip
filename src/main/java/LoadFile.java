@@ -34,7 +34,7 @@ public class LoadFile {
                 newEvent.taskLabel = "[E]";
                 newEvent.isDone = lineComponents[1].equals("1");
                 newEvent.description = lineComponents[2];
-                String[] splitPeriod = lineComponents[3].split("-");
+                String[] splitPeriod = lineComponents[3].split(" - ");
                 newEvent.start = splitPeriod[0];
                 newEvent.end = splitPeriod[1];
                 newEvent.description = newEvent.description + " (from: " + newEvent.start + " to: " + newEvent.end + ")";
