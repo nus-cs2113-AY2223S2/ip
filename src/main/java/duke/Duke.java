@@ -13,7 +13,8 @@ public class Duke {
             "- unmark [TASK NUMBER]",
             "- todo [TASK DESCRIPTION]",
             "- event [EVENT DESCRIPTION] /from [START DATE] /to [END DATE]",
-            "- deadline [DEADLINE DESCRIPTION] /by [DUE DATE]"
+            "- deadline [DEADLINE DESCRIPTION] /by [DUE DATE]",
+            "- delete [TASK NUMBER]"
     };
     private static final String INDENT = "      ";
     private static ArrayList<Task> tasks = new ArrayList<>();
@@ -36,6 +37,9 @@ public class Duke {
                 case "event":
                     handleAddTask(currentInput);
                     break;
+                case "delete":
+                    delete(words);
+                    break;
                 case "list":
                     list();
                     break;
@@ -54,21 +58,37 @@ public class Duke {
                 printInvalidInputMessage("Unknown command");
             } catch (UnknownCommandException e) {
                 printInvalidInputMessage("Unknown command \'" + e.unknownCommand + "\'");
+            } catch (NumberFormatException e) {
+                printInvalidInputMessage("Argument for mark/unmark/delete must be an integer");
             }
             currentInput = in.nextLine();
         }
     }
-
     // COMMAND HANDLERS
+
+    public static void delete(String[] words) throws MarkNonexistentTaskException {
+        int taskIndex = getTaskIndex(words[1]);
+        String[] taskDeletedMessage = {
+                "Noted. I've removed this task:",
+                tasks.get(taskIndex).toString(),
+                "Now you have " + (tasks.size() - 1) + " tasks in the list."
+        };
+        tasks.remove(taskIndex );
+        printMessage(taskDeletedMessage);
+    }
     public static void list() {
         printMessage(getFormattedList());
     }
 
-    public static void mark(String[] words) throws MarkNonexistentTaskException {
-        int taskIndex = Integer.parseInt(words[1]) - 1;
-        if (taskIndex > tasks.size()) {
+    public static int getTaskIndex(String index) throws MarkNonexistentTaskException {
+        int taskIndex = Integer.parseInt(index) - 1;
+        if (taskIndex > tasks.size() - 1) {
             throw new MarkNonexistentTaskException(taskIndex + 1);
         }
+        return taskIndex;
+    }
+    public static void mark(String[] words) throws MarkNonexistentTaskException {
+        int taskIndex = getTaskIndex(words[1]);
         tasks.get(taskIndex).setDone(true);
         String[] message = {
                 "Cool! I've marked this task as done:",
@@ -78,10 +98,7 @@ public class Duke {
     }
 
     public static void unmark(String[] words) throws MarkNonexistentTaskException {
-        int taskIndex = Integer.parseInt(words[1]) - 1;
-        if (taskIndex > tasks.size()) {
-            throw new MarkNonexistentTaskException(taskIndex + 1);
-        }
+        int taskIndex = getTaskIndex(words[1]);
         tasks.get(taskIndex).setDone(false);
         String[] message = {
                 "Ok, I've marked this task as not done yet:",
