@@ -1,2 +1,5 @@
-package PACKAGE_NAME;public class TaskIndexNotFoundException {
+public class TaskIndexNotFoundException extends Exception{
+    public TaskIndexNotFoundException(){
+
+    }
 }
