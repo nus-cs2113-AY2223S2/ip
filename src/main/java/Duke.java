@@ -45,10 +45,8 @@ public class Duke {
                 printResponse(ErrorMessages.INVALID_COMMAND);
             } catch (ArrayIndexOutOfBoundsException e) {
                 printResponse(ErrorMessages.INCORRECT_FIELDS);
-            } catch (FileNotFoundException e) {
-                printResponse(ErrorMessages.LOAD_FAIL);
             } catch (IOException e) {
-                printResponse(ErrorMessages.SAVE_FAIL);
+                printResponse(ErrorMessages.LOAD_FAIL);
             }
         }
         scanner.close();
@@ -144,6 +142,10 @@ public class Duke {
     }
 
     private static void save(String filePath) throws IOException {
+        // create directory and file if they dont exist
+        File fileObj = new File(filePath);
+        File dirObj = fileObj.getParentFile();
+        dirObj.mkdirs();
         String saveString = "";
         for (Todo item: itemList) {
             saveString += item.getSaveRepresentation() + "\n";
