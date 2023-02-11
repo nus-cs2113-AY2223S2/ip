@@ -17,7 +17,12 @@ public class Deadline extends Task {
     }
 
     @Override
+
     public String getDetailsToSave() {
         return super.description + " /by " + this.by;
+    }
+
+    public String toString() {
+        return "       [D][ ] " + super.description + " (by: " + this.by + ")";
     }
 }

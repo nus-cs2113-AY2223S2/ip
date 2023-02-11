@@ -23,4 +23,8 @@ public class Event extends Task {
     public String getDetailsToSave() {
         return super.description + " /from " + this.startTime + " /to " + this.endTime;
     }
+
+    public String toString() {
+        return "       [E][ ] " + super.getDescription() + " (from: " + this.startTime + " to: " + this.endTime + ")";
+    }
 }

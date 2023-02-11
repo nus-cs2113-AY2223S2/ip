@@ -19,4 +19,8 @@ public class Todo extends Task {
         return super.description;
     }
 
+    public String toString() {
+        return "       [T][ ] " + super.description;
+    }
+
 }
