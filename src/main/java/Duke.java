@@ -28,11 +28,13 @@ public class Duke {
     public static final String COMPLETED_TASK_MESSAGE = "Nice! I've marked this task as done!";
     public static final String INCOMPLETE_TASK_MESSAGE = "Why are you being lazy? >:(";
     public static final String ADDED_TASK_MESSAGE = "Done! Added: ";
+    public static final String TASK_REMOVED_MESSAGE_ONE = "Task removed:";
+    public static final String TASK_REMOVED_MESSAGE_TWO = "Total tasks left: ";
     //Error Strings
     public static final String ERROR_UNKNOWN_INSTRUCTION = "What are you talking about?";
     public static final String ERROR_NON_INTEGER_INDEX = "Invalid Input. Give Just an Integer!";
     public static final String ERROR_NON_EXISTENT_TASK = "That task doesn't exist...";
-    public static final String ERROR_NO_INDEX_PROVIDED = "Do you want me to mark the whole list?";
+    public static final String ERROR_NO_INDEX_PROVIDED = "Do you want me to edit the whole list?";
     public static final String ERROR_MISSING_OR_EMPTY_FIELDS = "1 or more Missing/Empty Fields found!";
     public static final String ERROR_MISSING_TASK = "Why is your task empty?";
     public static final String ERROR_BAD_FORMATTING = "That's some terrible formatting.";
@@ -107,7 +109,7 @@ public class Duke {
             } else {
                 System.out.println(MESSAGE_DATA_LOADED_ON_STARTUP);
                 Scanner in = new Scanner(data);
-                boolean brokenFile = false;
+                boolean fileIsBroken = false;
                 while (in.hasNextLine()) {
                     String[] inputMessage = processInputMessage(in);
                     switch (inputMessage[0]) {
@@ -137,9 +139,9 @@ public class Duke {
                         todoList.add(newEvent);
                         break;
                     default:
-                        brokenFile = true;
+                        fileIsBroken = true;
                     }
-                    if (brokenFile) {
+                    if (fileIsBroken) {
                         System.out.println(ERROR_LOADING_FILE);
                         //TODO: introduce clear feature to wipe everything, to force-use here + use as feature.
                     }
@@ -236,10 +238,16 @@ public class Duke {
         }
     }
 
+    private static void DeleteATask(ArrayList<Task> todoList, int taskIndex) {
+        Task currentTodo = todoList.get(taskIndex);
+        todoList.remove(taskIndex);
+        printRemovedMessage(todoList.size(), currentTodo);
+    }
+
     private static void printRemovedMessage(int sizeOfTodoList, Task currentTodo) {
-        System.out.println("Task removed:");
+        System.out.println(TASK_REMOVED_MESSAGE_ONE);
         System.out.println(currentTodo);
-        System.out.println("You have " + sizeOfTodoList + " tasks left");
+        System.out.println(TASK_REMOVED_MESSAGE_TWO + sizeOfTodoList);
     }
 
     private static void addNewEventTask(ArrayList<Task> todoList, String[] inputMessage) {
@@ -261,16 +269,14 @@ public class Duke {
     }
 
     private static void markTaskIncomplete(ArrayList<Task> todoList, int taskIndex) {
-        Task currentTodo;
-        currentTodo = todoList.get(taskIndex);
+        Task currentTodo = todoList.get(taskIndex);
         currentTodo.setIncomplete();
         System.out.println(INCOMPLETE_TASK_MESSAGE);
         System.out.println(currentTodo);
     }
 
     private static void markTaskComplete(ArrayList<Task> todoList, int taskIndex) {
-        Task currentTodo;
-        currentTodo = todoList.get(taskIndex);
+        Task currentTodo = todoList.get(taskIndex);
         currentTodo.setComplete();
         System.out.println(COMPLETED_TASK_MESSAGE);
         System.out.println(currentTodo);
@@ -312,7 +318,6 @@ public class Duke {
                     break;
                 default:
                     instruction = "Something is wrong I can feel it\n";
-
                 }
                 writer.write(instruction);
                 if (currentTodo.getComplete() == 'X') {
@@ -343,10 +348,9 @@ public class Duke {
                 break;
             case ACTION_DELETE:
                 int taskIndex = checkActionInputValidity(inputMessage, todoList.size());
-                if(taskIndex >= 0) {
-                    currentTodo = todoList.get(taskIndex);
-                    todoList.remove(taskIndex);
-                    printRemovedMessage(todoList.size(), currentTodo);
+                if (taskIndex >= 0) {
+                    DeleteATask(todoList, taskIndex);
+                    madeAValidInstruction = true;
                 }
                 inputMessage = processInputMessage(in);
                 break;
