@@ -2,7 +2,14 @@ import java.util.Scanner;
 import java.util.Arrays;
 import duke.Task;
 import java.util.ArrayList;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+
 public class Duke {
+
+    private static String filePath = "data/duke.txt";
+    private static ArrayList<Task> textList = new ArrayList<Task>(); //store in array of Tasks to track both description and mark status
     public static void printLine() { //print line
         System.out.println("______________________________________________________________");
     }
@@ -16,12 +23,13 @@ public class Duke {
             throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
         }
     }
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DukeException, IOException, FileNotFoundException {
         String line;
         String lowerCaseLine;
-        ArrayList<Task> textList = new ArrayList<Task>(); //store in array of Tasks to track both description and mark status
-        int textListCount = 0;
         Scanner in = new Scanner(System.in);
+        Save save = new Save(filePath);
+        save.readFile(textList);
+        int textListCount = textList.size();
 
         printLine();
         System.out.println("Hello! I'm Duke");
@@ -34,6 +42,7 @@ public class Duke {
             Task task = new Task(line);
             printLine();
             if (lowerCaseLine.equals("bye")) {
+                save.saveFile(textList);
                 System.out.println("Bye. Hope to see you again soon!");
                 printLine();
                 return;
@@ -101,6 +110,7 @@ public class Duke {
                     checkCommand(lowerCaseLine);
                     textList.add(task); //add all input except for list, bye, mark and unmark to array of tasks
                     textListCount++; //counter to help input tasks into correct index in tasks array
+                    save.saveFile(textList);
                     System.out.println("Got it. I've added this task: ");
                     System.out.println(" " + task.toString());
                     System.out.println("Now you have " + textListCount + " tasks in the list.");

@@ -1,7 +1,10 @@
 package duke;
 public class Task {
-    protected String description;
-    protected boolean isDone;
+    public String description;
+    public String by;
+    public String from;
+    public String to;
+    public boolean isDone;
 
     public Task(String description) {
         this.description = description;
