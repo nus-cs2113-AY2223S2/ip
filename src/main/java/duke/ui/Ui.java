@@ -27,6 +27,10 @@ public abstract class Ui {
         Ui.print(Messages.ADD_TASK.MESSAGE, taskString, getTaskCountString(taskList.size()));
     }
 
+    public static void printDeleteTaskMessage(String taskString, TaskList taskList) {
+        Ui.print(Messages.DELETE_TASK.MESSAGE, taskString, getTaskCountString(taskList.size()));
+    }
+
     public static void printMarkTaskMessage(String taskString, boolean isDone) {
         Ui.print(isDone ? Messages.MARK_TASK.MESSAGE : Messages.UNMARK_TASK.MESSAGE, taskString);
     }
@@ -51,6 +55,9 @@ public abstract class Ui {
             return;
         case "unmark":
             print(errorMessage, Messages.UNMARK_HELP.MESSAGE);
+            return;
+        case "delete":
+            print(errorMessage, Messages.DELETE_HELP.MESSAGE);
             return;
         default:
             print(errorMessage, Messages.GENERIC_HELP.MESSAGE);
