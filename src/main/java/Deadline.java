@@ -13,7 +13,6 @@ public class Deadline extends Task {
         this.taskLabel = "[D]";
     }
     public static int add(String line, Task[] list, int currentNumber) {
-        System.out.print("    ____________________________________________________________\n");
         System.out.println("     Got it. I've added this task:");
         Deadline newTask = new Deadline(line);
         System.out.println("       " + newTask.taskLabel + newTask.getStatusIcon() + " " + newTask.description);
