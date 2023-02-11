@@ -12,19 +12,19 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return "["+getTaskType()+"]" + super.toString() + " (from: " + from + " to: " + to + ")";
+        return "[" + getTaskType() + "]" + super.toString() + " (from: " + from + " to: " + to + ")";
     }
-    
+
     @Override
     public String getTaskType() {
-    	return "E";
+        return "E";
     }
-    
+
     public String getStartTime() {
-    	return from;
+        return from;
     }
-    
+
     public String getEndTime() {
-    	return to;
+        return to;
     }
 }

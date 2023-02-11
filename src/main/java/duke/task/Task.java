@@ -10,11 +10,11 @@ public abstract class Task {
         this.isDone = false;
         numTask++;
     }
-    
+
     public static void setNumTask(int number) {
-    	numTask = number;
+        numTask = number;
     }
-    
+
     public static int getNumTask() {
         return numTask;
     }
@@ -23,7 +23,7 @@ public abstract class Task {
         return desciption;
     }
 
-    
+
     public String getStatusIcon() {
         return (isDone ? "X" : " "); // mark done task with X
     }
@@ -39,6 +39,6 @@ public abstract class Task {
     public String toString() {
         return "[" + getStatusIcon() + "] " + getTaskDescription();
     }
-    
+
     public abstract String getTaskType();
 }

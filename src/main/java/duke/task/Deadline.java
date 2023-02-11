@@ -11,15 +11,15 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return "["+getTaskType()+"]" + super.toString() + " (by: " + by + ")";
+        return "[" + getTaskType() + "]" + super.toString() + " (by: " + by + ")";
     }
-    
+
     @Override
     public String getTaskType() {
-    	return "D";
+        return "D";
     }
-    
+
     public String getEndTime() {
-    	return by;
+        return by;
     }
 }
