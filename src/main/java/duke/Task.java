@@ -2,7 +2,7 @@ package duke;
 
 public class Task {
     private boolean isDone = false;
-    public static int maxTaskNumber = 1;
+    public static int maxTaskNumber = 0;
     private String taskName;
 
     public String getDone() {

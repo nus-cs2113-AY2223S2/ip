@@ -4,12 +4,13 @@ import duke.exceptions.InsufficientInputException;
 import duke.exceptions.InvalidTaskNumberException;
 import duke.exceptions.UnkownCommandException;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
 
     public static String HorizontalLine = "__________________________\n";
-    private static Task[] taskList = new Task[101];
+    private static ArrayList<Task> taskList = new ArrayList<>();
 
     public static void main(String[] args) throws UnkownCommandException {
         System.out.println(HorizontalLine + "Hello! I'm Duke\n" + "What can I do for you?\n"
@@ -63,7 +64,7 @@ public class Duke {
         if (event.length < 3) {
             throw new InsufficientInputException("Event command has insufficient input, please try again.");
         }
-        taskList[Task.maxTaskNumber] = new Event(event[0], event[1], event[2]);
+        taskList.add(new Event(event[0], event[1], event[2]));
         Task.maxTaskNumber++;
         System.out.printf(HorizontalLine + "Event added: %s (from: %s to: %s)\n" + HorizontalLine, event[0], event[1], event[2]);
     }
@@ -76,7 +77,7 @@ public class Duke {
         if (deadline.length < 2) {
             throw new InsufficientInputException("Deadline command has insufficient input, please try again.");
         }
-        taskList[Task.maxTaskNumber] = new Deadline(deadline[0], deadline[1]);
+        taskList.add(new Deadline(deadline[0], deadline[1]));
         Task.maxTaskNumber++;
         System.out.printf(HorizontalLine + "Deadline added: %s (by: %s)\n" + HorizontalLine, deadline[0], deadline[1]);
     }
@@ -85,7 +86,7 @@ public class Duke {
         if (inputWords.length < 2) {
             throw new InsufficientInputException("Todo command has insufficient input, please try again.");
         }
-        taskList[Task.maxTaskNumber] = new ToDo(inputWords[1]);
+        taskList.add(new ToDo(inputWords[1]));
         Task.maxTaskNumber++;
         System.out.println(HorizontalLine + "To do added: " + inputWords[1] + "\n" + HorizontalLine);
     }
@@ -94,35 +95,35 @@ public class Duke {
         if (inputWords.length < 2) {
             throw new InsufficientInputException("Task number not specified, please try again");
         }
-        int unmarkTaskNumber = Integer.valueOf(inputWords[1]);
-        if (unmarkTaskNumber >= Task.maxTaskNumber) {
+        int unmarkTaskNumber = Integer.valueOf(inputWords[1])-1;
+        if (unmarkTaskNumber >= Task.maxTaskNumber || unmarkTaskNumber < 0) {
             throw new InvalidTaskNumberException("Task number not found, please try again.");
             // System.out.println("No such task found\n" + HorizontalLine);
         } else {
-            taskList[unmarkTaskNumber].unsetDone();
-            System.out.println(HorizontalLine + "Task set as undone: " + taskList[unmarkTaskNumber].getTaskName() +
+            taskList.get(unmarkTaskNumber).unsetDone();
+            System.out.println(HorizontalLine + "Task set as undone: " + taskList.get(unmarkTaskNumber).getTaskName() +
                     "\n" + HorizontalLine);
         }
     }
 
     private static void markTask(String[] inputWords) throws InvalidTaskNumberException {
-        int markTaskNumber = Integer.valueOf(inputWords[1]);
-        if (markTaskNumber >= Task.maxTaskNumber) {
+        int markTaskNumber = Integer.valueOf(inputWords[1])-1;
+        if (markTaskNumber >= Task.maxTaskNumber || markTaskNumber < 0) {
             throw new InvalidTaskNumberException("Task number not found, please try again.");
             //System.out.println("No such task found\n" + HorizontalLine);
         } else {
-            taskList[markTaskNumber].setDone();
-            System.out.println(HorizontalLine + "Task set as done: " + taskList[markTaskNumber].getTaskName() + "\n"
+            taskList.get(markTaskNumber).setDone();
+            System.out.println(HorizontalLine + "Task set as done: " + taskList.get(markTaskNumber).getTaskName() + "\n"
                     + HorizontalLine);
         }
     }
 
     private static void displayList() {
-        if (taskList[1] != null) {
+        if (taskList.size() != 0) {
             System.out.println(HorizontalLine + "List of Tasks: \n");
-            for (int i = 1; i < Task.maxTaskNumber; i++) {
-                System.out.printf("%d.", i);
-                taskList[i].getTaskStatus();
+            for (int i = 0; i < Task.maxTaskNumber; i++) {
+                System.out.printf("%d.", i+1);
+                taskList.get(i).getTaskStatus();
             }
             System.out.println(HorizontalLine);
         } else {
