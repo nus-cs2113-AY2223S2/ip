@@ -1,5 +1,6 @@
-import java.util.Scanner;
+package DukeMain;
 
+import java.util.Scanner;
 
 public class Duke {
     public static String parseEventString(String input) {

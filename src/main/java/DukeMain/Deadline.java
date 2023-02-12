@@ -1,3 +1,5 @@
+package DukeMain;
+
 public class Deadline extends Todos {
 
     protected String type = "D";

@@ -1,3 +1,5 @@
+package DukeMain;
+
 public class Event extends Todos {
 
     protected String type = "E";
