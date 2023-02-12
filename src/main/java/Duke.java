@@ -10,7 +10,7 @@ public class Duke {
 		int count = 0;
 		while (!("bye".equalsIgnoreCase (input)) && !(input.isEmpty ())) {
 			try {
-				checkInput (input, tasks, count);
+				count = checkInput (input, tasks, count);
 			} catch (DukeException de) {
 				System.out.println (de.getMessage ());
 				System.out.println ("Please enter again: ");
@@ -25,7 +25,7 @@ public class Duke {
 
 	}
 
-	public static void checkInput (String input, Task[] tasks, int count) throws DukeException {
+	public static int checkInput (String input, Task[] tasks, int count) throws DukeException {
 		if (input.length () > 4) {
 			if (input.startsWith ("mark") || input.startsWith ("unmark")) {
 				changeStatus (input, tasks);
@@ -33,19 +33,20 @@ public class Duke {
 				count = addTask (input, tasks, count);
 			} else {
 				printLine ();
-				throw new DukeException ("☹ OOPS!!! The description of a " + input + " cannot be empty.");
+				throw new DukeException ("OOPS!!! The description of a " + input + " cannot be empty.");
 			}
 		} else {
 			if ("list".equalsIgnoreCase (input)) {
 				listTasks (tasks, count);
 			} else if ("mark".equalsIgnoreCase (input) || "unmark".equalsIgnoreCase (input) || "todo".equalsIgnoreCase (input) || "event".equalsIgnoreCase (input) || "deadline".equalsIgnoreCase (input)) {
 				printLine ();
-				throw new DukeException ("☹ OOPS!!! The description of a " + input + " cannot be empty.");
+				throw new DukeException ("OOPS!!! The description of a " + input + " cannot be empty.");
 			} else {
 				printLine ();
-				throw new DukeException ("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+				throw new DukeException ("OOPS!!! I'm sorry, but I don't know what that means :-(");
 			}
 		}
+		return count;
 	}
 
 	public static int addTask (String input, Task[] tasks, int count) {
@@ -66,7 +67,7 @@ public class Duke {
 
 		System.out.println (tasks[count].getType () + tasks[count].toString ());
 		count++;
-		System.out.println ("Now you have " + (count > 1 ? "tasks " : "task ") + " in the list.");
+		System.out.println ("Now you have " + count+ (count > 1 ? " tasks " : " task ") + "in the list.");
 		printLine ();
 		return count;
 	}
@@ -83,7 +84,7 @@ public class Duke {
 		}
 
 		printLine ();
-		System.out.println ("Nice! I've marked this task as done:");
+		System.out.println ("Nice! I've marked this task as "+ (tasks[index].isDone? "done" : "undone")+":");
 		System.out.println (tasks[index].getType () + tasks[index].toString ());
 		printLine ();
 	}
