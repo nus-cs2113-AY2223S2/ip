@@ -1,0 +1,15 @@
+This file is for personal use, and should not be used for grading purposes.
+
+Savefile format:
+for todos: t|NAME|IS_DONE
+for deadlines: d|NAME|BY|IS_DONE
+for events: e|NAME|FROM|TO|IS_DONE
+
+delimiter is |, if it is not obvious enough
+there is probably no need for keywords, since the delimiter should be good enough
+to act as replacement for keywords. But screw whoever who ever decides to put | as 
+part of their arguments.
+
+
+Yay parsing done, now left with saving into the file. File corruption not handled, 
+so if stupid shit like ||||||| got entered into the savefile, I am screwed

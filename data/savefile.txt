@@ -1,0 +1,3 @@
+t|hi|Y
+d|hihi|crack|N
+e|hi hi hi|cracked|even cracked|Y

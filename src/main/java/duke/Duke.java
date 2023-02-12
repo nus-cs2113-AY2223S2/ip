@@ -89,8 +89,9 @@ public class Duke {
         }
     }
 
-    public static void parseSavefile() {
-        
+    public static void parseSavefile() throws IOException {
+        Scanner s = new Scanner(SAVE_FILE);
+        taskList = new TaskList(s);
     }
 
     public static void savefileChecker() throws FileNotFoundException, IOException {
@@ -108,6 +109,7 @@ public class Duke {
             try {
                 if (SAVE_FILE.createNewFile()) {
                     System.out.println("savefile successfully created.");
+                    taskList = new TaskList();
                 } else {
                     System.out.println("savefile creation unsuccessful, exiting program.");
                     throw new FileNotFoundException();
@@ -118,12 +120,18 @@ public class Duke {
             }
         } else {
             System.out.println("savefile found. Parsing savefile.");
-            parseSavefile();
+            try {
+                parseSavefile();  
+            } catch (Exception e) {
+                System.out.println("Savefile cannot be found, please delete the savefile yourself");
+                System.out.println("cos I am too lazy to delete it for you for now.");
+                throw e;
+            }
         }
         printLine();
     }
     
-    public static TaskList taskList = new TaskList();
+    public static TaskList taskList;
     public static final File SAVE_DIR = new File("data");
     public static final File SAVE_FILE = new File("data/savefile.txt");
     
