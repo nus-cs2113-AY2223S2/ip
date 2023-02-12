@@ -9,21 +9,19 @@ public class SaveHandler {
     public ArrayList<Task> load() {
         ArrayList<Task> tasks = new ArrayList<>();
 
-        java.nio.file.Path path = java.nio.file.Paths.get("data");
-
         try {
-            File file = new java.io.File( "./data/duke.txt");
+            File file = new java.io.File( "./duke.txt");
             Scanner fileReader = new Scanner(file);
             while (fileReader.hasNextLine()) {
                 String data = fileReader.nextLine();
                 tasks.add(stringToTask(data));
             }
         } catch (FileNotFoundException fe) {
-            File file = new java.io.File( "./data/duke.txt");
+            File file = new java.io.File( "./duke.txt");
             try {
                 file.createNewFile();
             } catch (IOException ioe) {
-                System.out.println("Error creating new data file.");
+                System.out.println("Error creating new data file.\n"+ioe);
                 System.exit(-1);
             }
         } catch (StreamCorruptedException e) {
@@ -35,14 +33,14 @@ public class SaveHandler {
     }
 
     public void save(ArrayList<Task> list) {
-        String data = "";
+        StringBuilder data = new StringBuilder();
         for (Task task : list) {
-            data = data + taskToString(task);
+            data.append(taskToString(task));
         }
 
         try {
-            FileWriter writer = new FileWriter("./data/duke.txt");
-            writer.write(data);
+            FileWriter writer = new FileWriter("./duke.txt");
+            writer.write(data.toString());
             writer.close();
         } catch (IOException e) {
             System.out.println("Error saving data file.");
@@ -78,14 +76,17 @@ public class SaveHandler {
     private String taskToString(Task task) {
         String output = "";
         switch (task.getClass().getName()) {
+            case "duke.Task":
             case "duke.Todo":
-                output = "T/" + (task.isDone ? "1/" : "0/") + task.getLabel();
+                output = "T/" + (task.isDone ? "1/" : "0/") + task.description + "\n";
                 break;
             case "duke.Deadline":
-                output = "D/" + (task.isDone ? "1/" : "0/") + task.getLabel() + "/" + ((Deadline) task).by;
+                output = "D/" + (task.isDone ? "1/" : "0/") + task.description + "/"
+                        + ((Deadline) task).by + "\n";
                 break;
             case "duke.Event":
-                output = "E/" + (task.isDone ? "1/" : "0/") + task.getLabel() + "/" + ((Event) task).by + "/" + ((Event) task).from;
+                output = "E/" + (task.isDone ? "1/" : "0/") + task.description + "/"
+                        + ((Event) task).by + "/" + ((Event) task).from + "\n";
                 break;
         }
         return output;
