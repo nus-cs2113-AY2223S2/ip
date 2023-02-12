@@ -1,7 +1,7 @@
 package duke;
 
 public class Event extends Deadline {
-    private String from;
+    public String from;
 
     public Event(String description, String from, String to) {
         super(description, to);

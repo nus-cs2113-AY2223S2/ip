@@ -1,5 +1,7 @@
 package duke;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Duke {
@@ -12,7 +14,10 @@ public class Duke {
         System.out.println("    What can I do for you?");
         System.out.println("____________________________________________________________");
 
-        Task[] list = new Task[100];
+        SaveHandler saveHandler = new SaveHandler();
+        ArrayList<Task> list = saveHandler.load();
+
+//      Task[] list = new Task[100];
         int nextEmptyIndex = 0;
 
         boolean isExitCommandReceived = false;
