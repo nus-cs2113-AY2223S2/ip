@@ -5,7 +5,7 @@ import userinterface.TaskManager;
 import userinterface.UserHandler;
 
 public class Chronos {
-    //define within the class as a better code standard
+
     private static Input inOut;
     private static Stash stash;
     private static TaskManager taskManager;
