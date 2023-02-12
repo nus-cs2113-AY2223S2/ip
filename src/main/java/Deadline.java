@@ -2,11 +2,16 @@ public class Deadline extends Todo {
     protected String by;
     String deliverable;
 
-    public Deadline(String inputContents) {
+    public Deadline(String inputContents) throws MissingInputException {
         super(inputContents);
         String[] parts = inputContents.split("/by");
         String deliverable = parts[0];
-        this.by = (parts.length > 1) ? parts[1].trim() : "";
+        if (parts.length > 1) {
+            this.by = parts[1].trim();
+        } else {
+            throw new MissingInputException();
+        }
+        //this.by = (parts.length > 1) ? parts[1].trim() : throw new MissingInputException();
         this.deliverable = deliverable;
         this.type = "D";
 
