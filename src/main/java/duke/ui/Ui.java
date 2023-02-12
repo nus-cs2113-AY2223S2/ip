@@ -20,6 +20,7 @@ public class Ui {
     }
 
     public static void printExit() {
+        printDivider();
         System.out.println("\tSaving tasks... Hope to see you again soon!");
         printDivider();
     }

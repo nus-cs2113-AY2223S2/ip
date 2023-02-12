@@ -19,12 +19,11 @@ public class FileManager {
     private String dataDirectory;
 
     public FileManager() {
-        this.dataDirectory = "./ip/data/";
+        this.dataDirectory = "./data/";
         this.filePath = this.dataDirectory + "duke.txt";
         this.file = new File(this.filePath);
         File directory = new File(this.dataDirectory);
         try {
-            System.out.println(dataDirectory);
             if (!directory.exists()) {
                 directory.mkdirs();
             }
@@ -55,7 +54,6 @@ public class FileManager {
             scanner = new Scanner(this.file);
             while (scanner.hasNextLine()) {
                 String encoded = scanner.nextLine();
-                System.out.println(encoded);
                 taskList.add(this.decodeTask(encoded));
             }
         } catch (FileNotFoundException e) {

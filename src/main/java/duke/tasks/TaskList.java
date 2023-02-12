@@ -49,6 +49,10 @@ public class TaskList {
      * @param taskNum The number corresponding to the task to be deleted.
      */
     public void deleteTask(int deleteIndex) {
+        if (deleteIndex > this.tasks.size() || deleteIndex <= 0) {
+            System.out.println("\tNo such task exists! Please try again");
+            return;
+        }
         Task taskToDelete = this.tasks.get(deleteIndex-1);
         this.tasks.remove(taskToDelete);
 
@@ -74,11 +78,11 @@ public class TaskList {
      * @param taskNum The number corresponding to the task to be marked as completed.
      */
     public void markTask(int taskNum) {
-        Task currentTask = this.tasks.get(taskNum - 1);
         if (taskNum > this.tasks.size() || taskNum <= 0) {
             System.out.println("\tNo such task exists! Please try again");
             return;
         }
+        Task currentTask = this.tasks.get(taskNum - 1);
         currentTask.markDone();
 
         String markMessage = "\tNice! I've marked this task as done:\n" + "\t  " + currentTask;
@@ -92,11 +96,11 @@ public class TaskList {
      * @param taskNum The number corresponding to the task to be unmarked.
      */
     public void unmarkTask(int taskNum) {
-        Task currentTask = this.tasks.get(taskNum - 1);
         if (taskNum > this.tasks.size() || taskNum <= 0) {
             System.out.println("\tNo such task exists! Please try again");
             return;
         }
+        Task currentTask = this.tasks.get(taskNum - 1);
         currentTask.markUndone();
 
         String unmarkMessage =
