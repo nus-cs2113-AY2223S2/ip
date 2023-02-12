@@ -1,9 +1,0 @@
-<<<<<<< HEAD
-1 deadline something         /by         someday
-=======
-1 deadline something          /by          someday
->>>>>>> 79b8c33eec3a00cd0e6bff68b507047b881e75eb
-0 event some evenet /from today /to tomorrowlist
-0 todo  something hehe
-1 todo  check 1
-1 todo  check 5

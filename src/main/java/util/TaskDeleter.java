@@ -15,10 +15,15 @@ public class TaskDeleter extends ErrorMessages{
                 throw new DeleteTaskError(provideNoNumberText());
             }
             int indexToDelete = Integer.parseInt(deleteActions[1]);
+            if (indexToDelete > listOfTasks.size()){
+                throw new DeleteTaskError(provideExceedListLengthText(listOfTasks.size()));
+            }
+            if (indexToDelete <= 0){
+                throw new DeleteTaskError(provideInvalidNumberText());
+            }
             OutputUI outputUI = new OutputUI();
-            outputUI.printDeleteTaskMessage(listOfTasks.get(indexToDelete - 1), listOfTasks.size());
+            outputUI.printDeleteTaskMessage(listOfTasks.get(indexToDelete - 1), listOfTasks.size() - 1);
             deleteTask(listOfTasks, indexToDelete);
-
         }
         catch (DeleteTaskError e) {
             System.out.println(e.getMessage());
