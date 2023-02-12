@@ -20,9 +20,12 @@ public class Duke {
         ArrayList<Task> tasks = new ArrayList<>();
 
         System.out.println("loading stored data >>> Here is the content we found: ");
+        String home = System.getProperty("user.home");
+        java.nio.file.Path path = java.nio.file.Paths.get(home, "ip/src/main/java/DukeData.txt");
+        File f = new java.io.File(path.toUri());
         try {
-            printFileContents();
-            addFileContents(tasks);
+            printFileContents(f);
+            addFileContents(f, tasks);
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
         } catch (IOException e) {
@@ -38,7 +41,7 @@ public class Duke {
                 break;
             }
             try {
-                executeDukeCommands(line, tasks);
+                executeDukeCommands(f, line, tasks);
             } catch (DukeException e) {
                 System.out.println("☹ ERROR! Sorry, this is not a recognized Duke command!");
             }
@@ -62,12 +65,12 @@ public class Duke {
     /**
      * Reads contents of DukeData file and adds them to the Tasks ArrayList.
      *
+     * @param f The DukeData file holding the data.
      * @param tasks The ArrayList holding the task objects.
      * @throws IOException if there is some error in file reading.
      * */
 
-    private static void addFileContents(ArrayList<Task> tasks) throws IOException {
-        File f = new File("src/main/java/DukeData.txt"); // create a File for the given file path
+    private static void addFileContents(File f, ArrayList<Task> tasks) throws IOException {
         Scanner s = new Scanner(f);
         int index = 0;
         while (s.hasNext()) {
@@ -119,22 +122,21 @@ public class Duke {
         tasks.add(new Event(event, eventStart, eventEnd));
     }
 
-    private static void printFileContents() throws FileNotFoundException {
-        File f = new File("src/main/java/DukeData.txt"); // create a File for the given file path
+    private static void printFileContents(File f) throws FileNotFoundException {
         Scanner s = new Scanner(f); // create a Scanner using the File as the source
         while (s.hasNext()) {
             System.out.println(s.nextLine());
         }
     }
 
-    private static void clearFileContents() throws IOException {
-        FileWriter fw = new FileWriter("src/main/java/DukeData.txt");
+    private static void clearFileContents(File f) throws IOException {
+        FileWriter fw = new FileWriter(f);
         fw.write("");
         fw.close();
     }
-    
-    private static void appendToFile(String textToAppend) throws IOException {
-        FileWriter fw = new FileWriter("src/main/java/DukeData.txt", true); // create a FileWriter in append mode
+
+    private static void appendToFile(File f, String textToAppend) throws IOException {
+        FileWriter fw = new FileWriter(f, true); // create a FileWriter in append mode
         fw.write(textToAppend);
         fw.close();
     }
@@ -142,14 +144,15 @@ public class Duke {
     /**
      * Executes duke commands: list, mark, unmark, todo, deadline, and event with exception handling.
      *
+     * @param f The DukeData file holding the data.
      * @param command The user inputted command.
      * @param tasks   An ArrayList holding the task objects.
      * @throws DukeException if input is not any of the supported duke commands.
      */
 
-    private static void executeDukeCommands(String command, ArrayList<Task> tasks) throws DukeException {
+    private static void executeDukeCommands(File f, String command, ArrayList<Task> tasks) throws DukeException {
         if (command.trim().equalsIgnoreCase("list")) {
-            printAllTasks(tasks);
+            printAllTasks(f, tasks);
         } else if (command.toLowerCase().startsWith("mark")) {
             try {
                 markTaskAsComplete(command, tasks);
@@ -276,14 +279,15 @@ public class Duke {
     /**
      * Prints all tasks in the ArrayList.
      *
+     * @param f The DukeData file holding the data.
      * @param tasks An ArrayList holding the task objects.
      */
 
-    private static void printAllTasks(ArrayList<Task> tasks) {
+    private static void printAllTasks(File f, ArrayList<Task> tasks) {
         System.out.println(" Here are the tasks in your list:");
         int index = 1;
         try {
-            clearFileContents();
+            clearFileContents(f);
         } catch (IOException e) {
             System.out.println("Something went wrong: " + e.getMessage());
         }
@@ -291,7 +295,7 @@ public class Duke {
             //print Task Description
             System.out.println("  " + index + "." + userTask.toString());
             try {
-                appendToFile(userTask + System.lineSeparator());
+                appendToFile(f, userTask + System.lineSeparator());
             } catch (IOException e) {
                 System.out.println("Something went wrong: " + e.getMessage());
             }
