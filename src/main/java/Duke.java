@@ -239,6 +239,8 @@ public class Duke {
                 taskNum = deleteTask(line, storedValues);
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("Item to delete is not in the list!");
+            } catch (IOException e) {
+                System.out.println("Error!");
             }
             break;
         default:
@@ -248,17 +250,38 @@ public class Duke {
         return false;
     }
 
-    private static int deleteTask(String line, ArrayList<Task> storedValues) {
+    private static int deleteTask(String line, ArrayList<Task> storedValues) throws IOException {
         int length = line.length();
         String itemToDelete = line.substring(REMOVE_DELETE_NUM, length);
         int posToDelete = Integer.parseInt(itemToDelete);
         Task value = storedValues.get(posToDelete - 1);
+        int currLine = 0;
+        String lineInfo;
+
+        File dukeInputs = filePath;
+        String newContent = "";
+        BufferedReader reader = new BufferedReader(new FileReader(dukeInputs));
+        String input = reader.readLine();
+        while (input != null) {
+            if (posToDelete-1 != currLine) {
+                newContent = newContent + input + "\n";
+            }
+            currLine += 1;
+            input = reader.readLine();
+        }
+
+        FileWriter writer = new FileWriter(dukeInputs);
+        writer.write(newContent);
+        reader.close();
+        writer.close();
+
         storedValues.remove(posToDelete - 1);
         formattingLine();
         System.out.println("Noted. I've removed this task: \n" +
                 value + "\n" +
                 "Now you have " + (taskNum - 1) + " tasks in the list. \n");
         formattingLine();
+
         taskNum -= 1;
         return taskNum;
     }
