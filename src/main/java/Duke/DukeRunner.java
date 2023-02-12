@@ -9,7 +9,8 @@ import Tasks.Task;
 public class DukeRunner {
 
     public static void main(String[] args) {
-        System.out.println("Hello! I'm Duke\nWhat can I do for you?");
+        System.out.println("Hello! I'm Duke\nWhat can I do for you?\n");
+        System.out.println("==============================\n");
         Scanner in = new Scanner(System.in);
         boolean isComplete = false;
 
@@ -47,6 +48,8 @@ public class DukeRunner {
                 System.out.println("Unrecognized command. Please try again.");
                 break;
             }
+
+            System.out.println("==============================\n");
         }
 
         in.close();
