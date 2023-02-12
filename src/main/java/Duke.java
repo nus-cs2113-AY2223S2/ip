@@ -1,5 +1,10 @@
 import java.util.Scanner;
-
+import java.io.FileWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.nio.file.Path;
 import duke.Task;
 import duke.Deadline;
 import duke.Event;
@@ -16,6 +21,7 @@ public class Duke {
     private static Task[] userTaskList = new Task[100];
     private static String userInput;
     private static Scanner scan = new Scanner(System.in);
+    private static final String FILE_PATH = "tasks.txt";
 
     private enum taskType {
         TODO, DEADLINE, EVENT
@@ -122,10 +128,29 @@ public class Duke {
         }
     }
 
-    public static void echo(String userString) {
-        System.out.println(LINE);
-        System.out.println(userInput);
-        System.out.println(LINE);
+    public static void addExistingTasks() {
+        try (Scanner s = new Scanner(new File(FILE_PATH))) {
+            while (s.hasNextLine()) {
+                System.out.println(s.nextLine());
+            }
+        } catch (IOException e) {
+            reportError("Error accessing file!");
+        }
+    }
+
+    public static void saveExistingTasks() {
+
+    }
+
+    public static void processFile() {
+        try {
+            File f = new File(FILE_PATH);
+            if (!f.createNewFile()) {
+                addExistingTasks();
+            }
+        } catch (IOException e) {
+            reportError("Error accessing file!");
+        }
     }
 
     public static void processUserInput() {
@@ -172,6 +197,7 @@ public class Duke {
 
     public static void main(String[] args) {
         greetUser();
+        processFile();
         while (scan.hasNextLine()) {
             processUserInput();
         }
