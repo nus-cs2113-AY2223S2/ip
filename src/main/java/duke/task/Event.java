@@ -17,7 +17,11 @@ public class Event extends Task {
      * @param to ending time of the Event.
      */
     public Event(String content, String from, String to) {
-        super(content);
+        this(content, from, to, false);
+    }
+
+    public Event(String content, String from, String to, boolean isMarked) {
+        super(content, isMarked);
         this.from = from;
         this.to = to;
     }
@@ -80,6 +84,13 @@ public class Event extends Task {
 
     public void setTo(String to) {
         this.to = to;
+    }
+
+    public String toCSV() {
+        return "event," +
+                super.toCSV() + "," +
+                "\"" + from + "\"" + "," +
+                "\"" + to + "\"";
     }
 
     /**

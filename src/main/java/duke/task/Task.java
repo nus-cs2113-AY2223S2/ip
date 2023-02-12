@@ -3,7 +3,7 @@ package duke.task;
 /**
  * The Task class represents real-world tasks with content and marking status.
  */
-public class Task {
+public abstract class Task {
 
     protected String content;
     protected boolean isMarked;
@@ -82,6 +82,11 @@ public class Task {
         } else {
             System.err.println("\t This task is already not marked!");
         }
+    }
+
+    public String toCSV() {
+        return (isMarked ? "1" : "0") + "," +
+                "\"" + content + "\"";
     }
 
     /**
