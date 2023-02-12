@@ -20,6 +20,10 @@ public class Stash {
 //        this.tasks[listLength] = task;
     }
 
+    public void generateTask(int count, Task task){
+        this.tasks.add(task);
+    }
+
     public Task getTask(int index) {
         return this.tasks.get(index);
     }

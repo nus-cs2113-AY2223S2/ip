@@ -4,12 +4,17 @@ public class Task {
     private boolean isDone;
     private String description;
 
+
     public Task(String description){
         if (description == null){
             throw new IllegalArgumentException("This field cannot be empty.");
         }
         this.description = description;
         this.isDone = false;
+    }
+
+    public void setDone(boolean done) {
+        isDone = done;
     }
 
     public String getDescription() {
