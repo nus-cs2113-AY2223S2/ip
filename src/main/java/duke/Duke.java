@@ -153,9 +153,10 @@ public class Duke {
         int deleteIndex = Integer.parseInt(words[1]) - 1; // 0 indexing
         String taskDescription = String.valueOf(tasks.get(deleteIndex));
         Task toDelete = tasks.get(deleteIndex);
+        int taskLeft = tasks.get(0).getNumberOfTasks() - 1;
         toDelete.remove();
         tasks.remove(deleteIndex);
-        System.out.println(DELETED_THIS_TASK + "\n" + taskDescription + "\nNow you have " + tasks.get(0).getNumberOfTasks() + " tasks in the list.");
+        System.out.println(DELETED_THIS_TASK + "\n" + taskDescription + "\nNow you have " + taskLeft + " tasks in the list.");
     }
 
     private static void checkIfCommandEmpty(String[] words) throws EmptyCommandException {
