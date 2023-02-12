@@ -7,11 +7,12 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.Todo;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
 
-    public static final int MAX_ARRAY_SIZE = 100;
     public static final String GREET_MESSAGE = "Hello! I'm Duke\nWhat can I do for you?";
     public static final String EXIT_MESSAGE = "Bye. Hope to see you again soon!\n";
     public static final String LINE = "____________________________________________________________\n";
@@ -20,14 +21,17 @@ public class Duke {
 
     public static boolean isProgramRunning = true;
 
-    private static Task[] tasks = new Task[MAX_ARRAY_SIZE];
-
     private static int commandCount = 0;
+
+    private static Database database = null;
+    private static ArrayList<Task> tasks = null;
 
     public static void main(String[] args) {
         greeting();
         Scanner in = new Scanner(System.in);
-
+        database = new Database();
+        tasks = database.tasks;
+        commandCount = tasks.size();
         while (isProgramRunning) {
             String command = in.nextLine();
             String firstWord = command.split(" ")[0];
@@ -106,7 +110,9 @@ public class Duke {
         if (isInvalidString(startToEndTime)) {
             throw new IllegalCommandException();
         }
-        tasks[commandCount] = new Event(stringSplit[0], startToEndTime[0], startToEndTime[1]);
+        Task currTask = new Event(stringSplit[0], startToEndTime[0], startToEndTime[1]);
+        tasks.add(currTask);
+        addTaskToDatabase(currTask);
         addSpecialTaskMessage();
         commandCount++;
     }
@@ -125,7 +131,9 @@ public class Duke {
         if (isInvalidString(stringSplit)) {
             throw new IllegalCommandException();
         }
-        tasks[commandCount] = new Deadline(stringSplit[0], stringSplit[1]);
+        Task currTask = new Deadline(stringSplit[0], stringSplit[1]);
+        tasks.add(currTask);
+        addTaskToDatabase(currTask);
         addSpecialTaskMessage();
         commandCount++;
     }
@@ -135,13 +143,23 @@ public class Duke {
         if (todo.isEmpty()) {
             throw new EmptyCommandException();
         }
-        tasks[commandCount] = new Todo(todo);
+        Task currTask = new Todo(todo);
+        tasks.add(currTask);
+        addTaskToDatabase(currTask);
         addSpecialTaskMessage();
         commandCount++;
     }
 
+    private static void addTaskToDatabase(Task currTask) {
+        try {
+            database.saveAddTask(currTask.getTaskString());
+        } catch (IOException e) {
+            System.out.println("save failed");
+        }
+    }
+
     private static void addSpecialTaskMessage() {
-        System.out.println(LINE + tasks[commandCount].addTaskMessage() + "Now you have " + (commandCount + 1)
+        System.out.println(LINE + tasks.get(commandCount).addTaskMessage() + "Now you have " + (commandCount + 1)
                 + " tasks in the list." + System.lineSeparator() + LINE);
     }
 
@@ -160,14 +178,19 @@ public class Duke {
 
     private static void createMarkOrUnmark(String command, String[] words, int indexOfMarking) {
         indexOfMarking--; // change to 0-index
-        tasks[indexOfMarking].setDone(words[0]);
+        tasks.get(indexOfMarking).setDone(words[0]);
         System.out.print(LINE);
         if (command.startsWith("mark ")) {
             System.out.println(MARK_MESSAGE);
         } else {
             System.out.println(UNMARK_MESSAGE);
         }
-        System.out.println("  " + tasks[indexOfMarking].toString() + System.lineSeparator() + LINE);
+        try {
+            database.updateDatabaseTask();
+        } catch (IOException e) {
+            System.out.println("edit failed");
+        }
+        System.out.println("  " + tasks.get(indexOfMarking).toString() + System.lineSeparator() + LINE);
     }
 
     private static boolean isValidMarking(int indexOfMarking) {
@@ -185,7 +208,7 @@ public class Duke {
     private static void printList() {
         System.out.print(LINE);
         for (int i = 0; i < commandCount; ++i) {
-            System.out.println((i + 1) + "." + tasks[i].toString());
+            System.out.println((i + 1) + "." + tasks.get(i).toString());
         }
         System.out.println(LINE);
     }
