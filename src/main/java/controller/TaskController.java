@@ -53,7 +53,6 @@ public class TaskController {
   public void addTodoTask(String taskDescription) throws Exception {
     Todo model = new Todo(taskDescription);
     counter += 1;
-    System.out.println("Entered here");
     db.create(model);
     printDescription(model);
   }
