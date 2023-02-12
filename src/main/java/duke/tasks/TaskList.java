@@ -21,6 +21,14 @@ public class TaskList {
     public TaskList(List<Task> tasks) {
         this.tasks = tasks;
     }
+    
+    /**
+     * Gets the list of tasks.
+     * @return List of tasks.
+     */
+    public List<Task> getTasks() {
+        return this.tasks;
+    }
 
     /**
      * Adds a given task to the TaskList object.
