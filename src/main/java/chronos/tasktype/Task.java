@@ -1,4 +1,5 @@
 package chronos.tasktype;
+import chronos.savehandler.*;
 
 public class Task {
     private boolean isDone;
@@ -46,4 +47,7 @@ public class Task {
         return String.format("%c %s", setCheckMark(), getDescription());
     }
 
+    public Save toSave(String taskType) {
+        return new Save(taskType, isDone, description, "", "", "");
+    }
 }

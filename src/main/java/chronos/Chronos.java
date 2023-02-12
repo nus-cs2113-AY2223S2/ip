@@ -2,9 +2,15 @@ package chronos;
 
 import chronos.inoutput.Input;
 import chronos.inoutput.Output;
+
 import chronos.tasktype.Stash;
+
 import chronos.userinterface.TaskManager;
 import chronos.userinterface.UserHandler;
+
+import java.io.File;
+import java.io.IOException;
+
 
 public class Chronos {
     //dummy commit to level-6 branch
@@ -20,7 +26,26 @@ public class Chronos {
         Output.printWelcome();
         Output.printHelp();
         userHandler.getUserName();
+        fileInit();
+        fileWriter();
         taskManager.inputCommands();
+    }
+
+    private static void fileInit() {
+        File file = new File("src/main/java/chronos/taskList.txt");
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void fileWriter() {
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            public void run() {
+                stash.saveTasksToFile();
+            }
+        });
     }
 }
 

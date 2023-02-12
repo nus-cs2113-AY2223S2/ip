@@ -1,5 +1,7 @@
 package chronos.tasktype;
 
+import chronos.savehandler.Save;
+
 public class Todo extends Task{
     public Todo(String description) {
         super(description);
@@ -13,4 +15,8 @@ public class Todo extends Task{
         return String.format("[T] %s", super.toString());
     }
 
+    @Override
+    public Save toSave(String taskType) {
+        return new Save(taskType, isDone(), getDescription(), "", "", "");
+    }
 }

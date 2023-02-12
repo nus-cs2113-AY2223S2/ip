@@ -1,10 +1,14 @@
 package chronos.tasktype;
 
+import chronos.savehandler.Save;
+import chronos.savehandler.Storage;
+
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 //this class stores all the tasks
 public class Stash {
-//    private Task[] tasks;
+
     private ArrayList<Task> tasks;
     public Stash() {
         this.tasks = new ArrayList<Task>();;
@@ -12,10 +16,6 @@ public class Stash {
 
     public void addNewTask(Task task) {
         this.tasks.add(task);
-        //instead of a fixed sized array, use an array that 'dynamically' increases in size for every task added
-//        int listLength = this.tasks.length;
-//        this.tasks = Arrays.copyOf(this.tasks, listLength + 1);
-//        this.tasks[listLength] = task;
     }
 
     public void generateTask(int count, Task task){
@@ -41,7 +41,23 @@ public class Stash {
         }
         System.out.printf("Currently, you have %d tasks(s) in your ToDo list.", ObtainTaskCount());
         System.out.print("\n");
-
     }
+    public void saveTasksToFile() {
+        ArrayList<Save> saveTasks = new ArrayList<>();
+        for (Task task : this.tasks) {
+            if (task instanceof Todo) {
+                Todo todo = (Todo) task;
+                saveTasks.add(new Save("[T]", todo.isDone(), todo.getDescription(), "", "", ""));
+            } else if (task instanceof Event) {
+                Event event = (Event) task;
+                saveTasks.add(new Save("[E]", event.isDone(), event.getDescription(), "", event.getStart(), event.getEnd()));
+            } else if (task instanceof Deadline) {
+                Deadline deadline = (Deadline) task;
+                saveTasks.add(new Save("[D]", deadline.isDone(), deadline.getDescription(), deadline.getDue(), "", ""));
+            }
+        }
+        Storage.saveTasks(saveTasks.stream().map(Save::bucketConverter).collect(Collectors.toCollection(ArrayList::new)));
+    }
+
 
 }

@@ -1,4 +1,7 @@
 package chronos.tasktype;
+
+import chronos.savehandler.Save;
+
 //simple inheritance, that's all
 public class Deadline extends Task {
     private String due;
@@ -24,8 +27,13 @@ public class Deadline extends Task {
         return due;
     }
 
-    @Override
+
     public String toString() {
         return String.format("[D] %s (DUE: %s)", super.toString(), getDue());
+    }
+
+    @Override
+    public Save toSave(String taskType) {
+        return new Save(taskType, isDone(), getDescription(), due, "", "");
     }
 }
