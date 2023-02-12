@@ -2,7 +2,15 @@
 // import java.util.Arrays;
 import java.util.Scanner;
 
-public class Duke {
+import Exceptions.InvalidTypeException;
+import Exceptions.TaskManagerException;
+import Tasks.Deadline;
+import Tasks.Event;
+import Tasks.Task;
+import Tasks.TaskManager;
+import Tasks.Todo;
+
+public class DukeRunner {
 
     public static void main(String[] args) {
         System.out.println("Hello! I'm Duke\nWhat can I do for you?");
