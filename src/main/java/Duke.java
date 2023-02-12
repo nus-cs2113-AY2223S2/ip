@@ -1,3 +1,5 @@
+import java.io.File;
+import java.nio.file.Files;
 import java.util.Scanner;
 import java.util.Arrays;
 import duke.Task;
@@ -30,7 +32,6 @@ public class Duke {
         Save save = new Save(filePath);
         save.readFile(textList);
         int textListCount = textList.size();
-
         printLine();
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
