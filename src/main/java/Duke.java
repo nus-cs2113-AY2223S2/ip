@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 import duke.Task;
 import duke.Deadline;
@@ -13,7 +14,7 @@ public class Duke {
             + "| | | | | | | |/ / _ \\\n"
             + "| |_| | |_| |   <  __/\n"
             + "|____/ \\__,_|_|\\_\\___|\n";
-    private static Task[] userTaskList = new Task[100];
+    private static ArrayList<Task> userTaskList = new ArrayList<>();
     private static String userInput;
     private static Scanner scan = new Scanner(System.in);
 
@@ -58,23 +59,23 @@ public class Duke {
         /** Handle different task types **/
         if (variation == taskType.TODO) {
             /** Handle todo tasks **/
-            userTaskList[userTaskCount] = new Todo(userInput);
+            userTaskList.add(new Todo(userInput));
         } else if (variation == taskType.DEADLINE) {
             /** Handle deadline tasks **/
             if (!userInput.contains("/by")) {
                 throw new MissingCommandException("Please specify a deadline via the /by command!");
             }
-            userTaskList[userTaskCount] = new Deadline(userInput);
+            userTaskList.add(new Deadline(userInput));
         } else if (variation == taskType.EVENT) {
             /** Handle event tasks **/
             if (!userInput.contains("/start") || !userInput.contains("/end")) {
                 throw new MissingCommandException(
                         "Please specify both start and end dates/times via the /start and /end commands!");
             }
-            userTaskList[userTaskCount] = new Event(userInput);
+            userTaskList.add(new Event(userInput));
         }
         System.out.println(LINE);
-        System.out.println("Added the following task:\n" + userTaskList[userTaskCount]);
+        System.out.println("Added the following task:\n" + userTaskList.get(userTaskCount));
         System.out.println(LINE);
         userTaskCount++;
 
@@ -91,7 +92,7 @@ public class Duke {
             int index = i;
             index++;
             System.out.print(index + ".");
-            System.out.println(userTaskList[i]);
+            System.out.println(userTaskList.get(i));
             System.out.println(LINE);
         }
 
@@ -101,9 +102,9 @@ public class Duke {
         try {
             int taskIndex = Integer.parseInt(userInputArray[1]);
             taskIndex--;
-            userTaskList[taskIndex].markAsDone();
+            userTaskList.get(taskIndex).markAsDone();
             System.out.println(LINE + System.lineSeparator() + "The following task has been marked done: [X] "
-                    + userTaskList[taskIndex].description + System.lineSeparator() + LINE);
+                    + userTaskList.get(taskIndex).description + System.lineSeparator() + LINE);
         } catch (Exception e) {
             reportError("Please enter a valid numerical index of the task!");
             return;
@@ -114,18 +115,26 @@ public class Duke {
         try {
             int taskIndex = Integer.parseInt(userInputArray[1]);
             taskIndex--;
-            userTaskList[taskIndex].markAsUndone();
+            userTaskList.get(taskIndex).markAsUndone();
             System.out.println(LINE + System.lineSeparator() + "The following task has been marked undone: [ ] "
-                    + userTaskList[taskIndex].description + System.lineSeparator() + LINE);
+                    + userTaskList.get(taskIndex).description + System.lineSeparator() + LINE);
         } catch (Exception e) {
+            // potential IndexOutOfBoundsException or NumberFormatException
             reportError("Please enter a valid numerical index of the task!");
         }
     }
 
-    public static void echo(String userString) {
-        System.out.println(LINE);
-        System.out.println(userInput);
-        System.out.println(LINE);
+    public static void deleteTask(String[] userInputArray) {
+        try {
+            int taskIndex = Integer.parseInt(userInputArray[1]);
+            taskIndex--;
+            System.out.println(LINE + System.lineSeparator() + "The following task has been removed: [ ] "
+                    + userTaskList.get(taskIndex).description + System.lineSeparator() + LINE);
+            userTaskList.remove(taskIndex);
+            userTaskCount--;
+        } catch (Exception e) {
+            reportError("Please enter a valid numerical index of the task!");
+        }
     }
 
     public static void processUserInput() {
@@ -163,11 +172,15 @@ public class Duke {
                 markTask(userInputArray);
             } else if (userInputArray[0].equals("/unmark")) {
                 unmarkTask(userInputArray);
+            } else if (userInputArray[0].equals("/delete")) {
+                deleteTask(userInputArray);
+
             } else {
                 /** Handle non-command inputs **/
                 reportError("Please enter a valid command!");
             }
         }
+
     }
 
     public static void main(String[] args) {
