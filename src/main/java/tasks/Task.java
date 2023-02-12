@@ -1,5 +1,8 @@
+package tasks;
+
 public class Task {
-    protected String description;
+
+    public String description;
     protected boolean isDone;
 
     public Task(String description){
@@ -22,5 +25,4 @@ public class Task {
     public String printTask(){
         return description;
     }
-
 }
