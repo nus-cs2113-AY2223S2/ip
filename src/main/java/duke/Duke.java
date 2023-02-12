@@ -6,13 +6,11 @@ import duke.command.Command;
 import duke.output.Printer;
 
 import java.util.Scanner;
-
+import java.util.ArrayList;
 public class Duke {
-    private static final int MAX_TASKS = 100;
-
     public static void main(String[] args) {
         Printer.greeting();
-        Task[] tasks = new Task[MAX_TASKS];
+        ArrayList<Task> tasks = new ArrayList<>();
         Scanner in = new Scanner(System.in);
         String input = in.nextLine();
         while (!input.equals(CommandWords.BYE.COMMAND)) {
