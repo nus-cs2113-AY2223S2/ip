@@ -1,5 +1,9 @@
+import java.nio.file.Paths;
 import java.util.Scanner;
 import java.util.Arrays;
+
+import java.nio.file.Path;
+import java.nio.file.Files;
 
 import exceptions.MarkOutOfBounds;
 import exceptions.UnmarkOutOfBounds;
@@ -62,7 +66,9 @@ public class Duke {
      */
     private static int taskNum = 0;
 
-    private static String filePath = "src/main/data/duke-inputs.txt";
+    private static final String home = System.getProperty("user.home");
+    private static final File filePath = Paths.get(home, "IdeaProjects", "ip", "src",
+            "main", "data", "duke-inputs.txt").toFile();
 
     /***
      * Main function greets the user and runs processInputs().
@@ -77,10 +83,24 @@ public class Duke {
     }
 
     public static void fileAvailability() throws FileNotFoundException {
-        File data = new File (filePath);
-        System.out.println("full path: " + data.getAbsolutePath());
-        System.out.println("File exists? " + data.exists());
-        //Scanner readData = new Scanner(data);
+        Path path = Paths.get(home, "IdeaProjects", "ip", "src", "main", "data");
+        boolean directoryExists = Files.exists(path);
+        if (!directoryExists) {
+            try {
+                Files.createDirectory(path);
+            } catch (IOException e) {
+                System.out.println("Error occurred!\n");
+            }
+        }
+        Path textFile = Paths.get(home, "IdeaProjects", "ip", "src", "main", "data", "duke-inputs.txt");
+        try {
+            Files.createFile(textFile);
+        } catch (IOException e) {
+            System.out.println("File already exists!\n");
+        }
+
+        File data = textFile.toFile();
+
         if (data.exists()) {
             showGreetings();
             acceptUserInputs(data);
@@ -328,7 +348,7 @@ public class Duke {
                     storedValues[numToMark - 1].toString() + "\n");
             formattingLine();
 
-            File dukeInputs = new File(filePath);
+            File dukeInputs = filePath;
             String prevContent = "";
             BufferedReader reader = new BufferedReader(new FileReader(dukeInputs));
             String input = reader.readLine();
@@ -368,7 +388,7 @@ public class Duke {
                     + storedValues[numToMark - 1].toString() + "\n");
             formattingLine();
 
-            File dukeInputs = new File(filePath);
+            File dukeInputs = filePath;
             String prevContent = "";
             BufferedReader reader = new BufferedReader(new FileReader(dukeInputs));
             String input = reader.readLine();
