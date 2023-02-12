@@ -39,6 +39,9 @@ public class Duke {
                 case "event":
                     createEvent(inputWords);
                     break;
+                case "delete":
+                    deleteTask(inputWords);
+                    break;
                 default:
                     throw new UnkownCommandException("Unknown command, please try again.");
                 }
@@ -46,8 +49,6 @@ public class Duke {
                 System.out.println(e.getMessage());
             } catch (UnkownCommandException e) {
                 System.out.println(e.getMessage());
-            } catch (NumberFormatException e) {
-                System.out.println("Please input a valid task number");
             } catch (InvalidTaskNumberException e) {
                 System.out.println(e.getMessage());
             }
@@ -128,6 +129,16 @@ public class Duke {
             System.out.println(HorizontalLine);
         } else {
             System.out.println(HorizontalLine + "no task added yet\n" + HorizontalLine);
+        }
+    }
+    private static void deleteTask(String[] inputWords) throws InvalidTaskNumberException{
+        int taskIndex = Integer.valueOf(inputWords[1])-1;
+        if(taskIndex > Task.maxTaskNumber || taskIndex < 0) {
+            throw new InvalidTaskNumberException("Task number not found, please try again.");
+        }else{
+            taskList.remove(taskIndex);
+            Task.maxTaskNumber--;
+            System.out.printf(HorizontalLine + "Task %d has been deleted\n" + HorizontalLine, taskIndex+1);
         }
     }
 }
