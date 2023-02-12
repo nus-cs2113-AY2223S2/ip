@@ -65,10 +65,10 @@ public class Duke {
     /**
      * Reads contents of DukeData file and adds them to the Tasks ArrayList.
      *
-     * @param f The DukeData file holding the data.
+     * @param f     The DukeData file holding the data.
      * @param tasks The ArrayList holding the task objects.
      * @throws IOException if there is some error in file reading.
-     * */
+     */
 
     private static void addFileContents(File f, ArrayList<Task> tasks) throws IOException {
         Scanner s = new Scanner(f);
@@ -81,7 +81,8 @@ public class Duke {
                 readDeadlineIntoTasksList(tasks, line);
             } else if (line.charAt(3) == 'E') {
                 readEventIntoTasksList(tasks, line);
-            } if (line.charAt(6) == 'X') {
+            }
+            if (line.charAt(6) == 'X') {
                 tasks.get(index).setTaskStatus(true);
             } else if (line.charAt(6) == ' ') {
                 tasks.get(index).setTaskStatus(false);
@@ -94,13 +95,13 @@ public class Duke {
      * Reads deadline tasks into tasks list.
      *
      * @param tasks The ArrayList holding the task objects.
-     * @param line The deadline to be read into tasks ArrayList.
-     * */
+     * @param line  The deadline to be read into tasks ArrayList.
+     */
 
     private static void readDeadlineIntoTasksList(ArrayList<Task> tasks, String line) {
         int byIndex = line.indexOf("(by");
         String taskDescription = line.substring(9, byIndex);
-        String deadline = line.substring(byIndex + 4, line.length()-1);
+        String deadline = line.substring(byIndex + 4, line.length() - 1);
         tasks.add(new Deadline(taskDescription, deadline));
     }
 
@@ -108,8 +109,8 @@ public class Duke {
      * Reads event tasks into tasks list.
      *
      * @param tasks The ArrayList holding the task objects.
-     * @param line The event to be read into tasks ArrayList.
-     * */
+     * @param line  The event to be read into tasks ArrayList.
+     */
 
     private static void readEventIntoTasksList(ArrayList<Task> tasks, String line) {
         //index of event start date/time
@@ -118,7 +119,7 @@ public class Duke {
         //index of event end date/time
         int toIndex = line.indexOf("to");
         String eventStart = line.substring(fromIndex + 6, toIndex);
-        String eventEnd = line.substring(toIndex + 3, line.length()-1);
+        String eventEnd = line.substring(toIndex + 3, line.length() - 1);
         tasks.add(new Event(event, eventStart, eventEnd));
     }
 
@@ -144,7 +145,7 @@ public class Duke {
     /**
      * Executes duke commands: list, mark, unmark, todo, deadline, and event with exception handling.
      *
-     * @param f The DukeData file holding the data.
+     * @param f       The DukeData file holding the data.
      * @param command The user inputted command.
      * @param tasks   An ArrayList holding the task objects.
      * @throws DukeException if input is not any of the supported duke commands.
@@ -279,7 +280,7 @@ public class Duke {
     /**
      * Prints all tasks in the ArrayList.
      *
-     * @param f The DukeData file holding the data.
+     * @param f     The DukeData file holding the data.
      * @param tasks An ArrayList holding the task objects.
      */
 
