@@ -22,6 +22,8 @@ public class Event extends Task {
         super(description);
         setFrom(from);
         setTo(to);
+        System.out.println("Added!");
+        System.out.println(String.format(" [%s] [%s] %s (%s %s)", 'E', " ",description,from,to));
     }
 
     @Override
