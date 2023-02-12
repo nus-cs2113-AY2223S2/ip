@@ -9,6 +9,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Duke {
     static private final String HI = "\n" +
@@ -27,7 +30,7 @@ public class Duke {
             "╚═════╝░░╚════╝░╚═════╝░  ╚═════╝░╚═╝░░╚═╝░░░╚═╝░░░╚═════╝░  ╚═════╝░░░░╚═╝░░░╚══════╝";
     static private final String DIV = "\n===========================================================================\n";
     static private final ArrayList<Task> tasks = new ArrayList<>();
-    static private final ArrayList<String>storedData = new ArrayList<>();
+    static private final ArrayList<String> storedData = new ArrayList<>();
 //    static private final HashMap<String, String> helpOutputs = new HashMap<>();
     static private int taskCount = 0;
 
@@ -182,40 +185,58 @@ public class Duke {
         for (Task i: tasks) {
             String t = i.checkType();
             char done = i.checkDone().charAt(1);
-            String w = t.charAt(1) + " % " + done + " % " + i.getTask();
+            String w = t.charAt(1) + " % " + done + " % " + i.getTask() + "\n";
             fw.write(w);
         }
         fw.close();
     }
 
-//    public static void createFile(String path) {
-//        try {
-//            File newFile = new File(path);
-//            if (newFile.createNewFile()) {
-//                System.out.println("File created.");
-//            } else {
-//                System.out.println("File not created.");
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public static void createFile(String path) {
+        try {
+            Path dir = Paths.get("data");
+            Files.createDirectories(dir);
+            File newFile = new File(path);
+            if (newFile.createNewFile()) {
+                System.out.println("File created.");
+            } else {
+                System.out.println("File already exists.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public  static void handleFile() throws DukeException {
         for (String str: storedData) {
-            String[] temp = str.split("%",4);
+            String[] temp = str.split("%",3);
+            System.out.println(temp[2]);
             switch (temp[0].trim()) {
             case ("T"):
                 handleTodo(temp[2].trim());
                 if (temp[1].trim().equals("X")) {
                     handleMark("task", temp[2].trim());
                 }
+                break;
             case ("D"):
                 try {
                     handleDeadline(temp[2].trim());
+                    if (temp[1].trim().equals("X")) {
+                        handleMark("task", temp[2].trim());
+                    }
                 } catch (DukeException e) {
                     throw new DukeException();
                 }
+                break;
+            case ("E"):
+                try {
+                    handleEvent(temp[2].trim());
+                    if (temp[1].trim().equals("X")) {
+                        handleMark("task", temp[2].trim());
+                    }
+                } catch (DukeException e) {
+                    throw new DukeException();
+                }
+                break;
             }
         }
     }
@@ -295,11 +316,12 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-        String path = "data/tasks.txt";
+        String path = "data\\tasks.txt";
         try {
             readFile(path);
         } catch (FileNotFoundException e) {
-            System.out.println("File not found");
+            System.out.println("File not found\nCreating file");
+            createFile(path);
         }
         try {
             handleFile();
