@@ -1,8 +1,6 @@
 package duke;
 
-import duke.exceptions.EmptyMarkException;
-import duke.exceptions.EmptyTodoException;
-import duke.exceptions.EmptyUnmarkException;
+import duke.exceptions.EmptyCommandException;
 import duke.exceptions.UnknownCommandException;
 
 import java.util.ArrayList;
@@ -28,9 +26,7 @@ public class Duke {
     public static final String MARKED_THIS_TASK_AS_DONE = "Nice! I've marked this task as done: ";
     public static final String UNMARKED_THIS_TASK_AS_DONE = "Okay, I've marked this task as not done yet: ";
     public static final String UNKNOWN_COMAMND_MESSAGE = "OOPS!!! I'm sorry, but I don't know what that means :-(";
-    public static final String EMPTY_TODO_MESSAGE = "OOPS!!! The description of a todo cannot be empty.";
-    public static final String EMPTY_UNMARK_MESSAGE = "OOPS!!! The index of unmark cannot be empty.";
-    public static final String EMPTY_MARK_MESSAGE = "OOPS!!! The index of mark cannot be empty.";
+    public static final String DELETED_THIS_TASK = "Noted. I've removed this task:";
     public static final String MARK_UNMARK_INDEX_IS_NOT_A_NUMBER_MESSAGE = "mark/unmark index is not a number";
     public static final String MARK_UNMARK_INDEX_DOES_NOT_EXIST_MESSAGE = "mark/unmark index does not exist";
     public static final String TODO_COMMAND = "todo";
@@ -39,6 +35,8 @@ public class Duke {
     public static final String MARK_COMMAND = "mark";
     public static final String UNMARK_COMMAND = "unmark";
     public static final String LIST_COMMAND = "list";
+    public static final String DELETE_COMMAND = "delete";
+    public static final String EMPTY_COMMAND_MESSAGE = "Command is empty!";
 
     private static ArrayList<Task> tasks = new ArrayList<>();
 
@@ -61,12 +59,8 @@ public class Duke {
                 Duke.processInput(line);
             } catch (UnknownCommandException e) {
                 System.out.println(UNKNOWN_COMAMND_MESSAGE);
-            } catch (EmptyTodoException e) {
-                System.out.println(EMPTY_TODO_MESSAGE);
-            } catch (EmptyMarkException e) {
-                System.out.println(EMPTY_MARK_MESSAGE);
-            } catch (EmptyUnmarkException e) {
-                System.out.println(EMPTY_UNMARK_MESSAGE);
+            } catch (EmptyCommandException e) {
+                System.out.println(EMPTY_COMMAND_MESSAGE);
             } catch (NumberFormatException e) {
                 System.out.println(MARK_UNMARK_INDEX_IS_NOT_A_NUMBER_MESSAGE);
             } catch (NullPointerException e) {
@@ -93,12 +87,12 @@ public class Duke {
         System.out.println(ADDED_TASK + t + "\nNow you have " + t.getNumberOfTasks() + " tasks in the list.");
     }
 
-    public static void processInput(String line) throws UnknownCommandException, EmptyTodoException, EmptyMarkException, EmptyUnmarkException {
+    public static void processInput(String line) throws UnknownCommandException, EmptyCommandException {
 
         String[] words = line.split(" ", 2);
         String command = words[0];
         // words[0] is the command, words[n] is the next few words
-
+        checkIfCommandEmpty(words);
         switch (command) {
         case TODO_COMMAND:
             Todo td = getTodo(words);
@@ -115,15 +109,16 @@ public class Duke {
             tasks.add(e);
             printAddTaskMessage(e);
             break;
-
+        case DELETE_COMMAND:
+            deleteTask(words);
+            break;
         case MARK_COMMAND:
-            CheckIfMarkEmpty(words);
+
             int markIndex = Integer.parseInt(words[1]) - 1; // 0 indexing
             tasks.get(markIndex).markAsDone();
             System.out.println(MARKED_THIS_TASK_AS_DONE + "\n" + tasks.get(markIndex));
             break;
         case UNMARK_COMMAND:
-            CheckIfUnmarkEmpty(words);
             int unmarkIndex = Integer.parseInt(words[1]) - 1; // 0 indexing
             tasks.get(unmarkIndex).markAsNotDone();
             System.out.println(UNMARKED_THIS_TASK_AS_DONE + "\n" + tasks.get(unmarkIndex));
@@ -137,8 +132,25 @@ public class Duke {
         }
     }
 
-    private static Todo getTodo(String[] words) throws EmptyTodoException {
-        checkIfTodoEmpty(words);
+    private static void deleteTask(String[] words) {
+        int deleteIndex = Integer.parseInt(words[1]) - 1; // 0 indexing
+        String taskDescription = String.valueOf(tasks.get(deleteIndex));
+        Task toDelete = tasks.get(deleteIndex);
+        toDelete.remove();
+        tasks.remove(deleteIndex);
+        System.out.println(DELETED_THIS_TASK + "\n" + taskDescription + "\nNow you have " + tasks.get(0).getNumberOfTasks() + " tasks in the list.");
+    }
+
+    private static void checkIfCommandEmpty(String[] words) throws EmptyCommandException {
+        if (words[0].equals(LIST_COMMAND)) {
+            return;
+        }
+        if (words.length < 2 || words[1].equals("")) {
+            throw new EmptyCommandException();
+        }
+    }
+
+    private static Todo getTodo(String[] words) {
         Todo td = new Todo(words[1]);
         return td;
     }
@@ -172,21 +184,4 @@ public class Duke {
         return e;
     }
 
-    private static void CheckIfMarkEmpty(String[] words) throws EmptyMarkException {
-        if (words.length < 2 || words[1].equals("")) {
-            throw new EmptyMarkException();
-        }
-    }
-
-    private static void CheckIfUnmarkEmpty(String[] words) throws EmptyUnmarkException {
-        if (words.length < 2 || words[1].equals("")) {
-            throw new EmptyUnmarkException();
-        }
-    }
-
-    private static void checkIfTodoEmpty(String[] words) throws EmptyTodoException {
-        if (words.length < 2 || words[1].equals("")) {
-            throw new EmptyTodoException();
-        }
-    }
 }

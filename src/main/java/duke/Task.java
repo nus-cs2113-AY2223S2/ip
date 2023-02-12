@@ -18,15 +18,15 @@ public class Task {
         numberOfTasks++;
     }
 
+    public void remove() {
+        numberOfTasks--;
+    }
 
 
     public String getStatusIcon() {
         return (isDone ? DONE_ICON : NOT_DONE_ICON); // mark done task with X
     }
 
-//    public String getDescription() {
-//        return this.description;
-//    }
 
     public void markAsDone() {
         this.isDone = true;
