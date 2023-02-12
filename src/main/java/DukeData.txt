@@ -1,4 +1,3 @@
   [T][X] read book
-  [E][ ] disco party (from Sunday 2pm to 7pm)
-  [E][X] road show (from Monday 3pm to 7pm)
+  [E][ ] road show (from Monday 3pm to 7pm)
   [D][ ] submit report (by 10pm)
