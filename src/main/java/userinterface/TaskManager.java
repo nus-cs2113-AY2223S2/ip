@@ -9,6 +9,7 @@ import tasktype.Task;
 import tasktype.Stash;
 import tasktype.Deadline;
 import tasktype.Todo;
+import exceptions.ChronosExceptions;
 
 import java.util.Scanner;
 
@@ -27,6 +28,19 @@ public class TaskManager {
         Output.printNewTask(task, stash.ObtainTaskCount());
     }
 
+   public void deleteTask(String details) throws ChronosExceptions.InvalidInputException {
+       try {
+           int index = Integer.parseInt(details) - 1;
+           Task task = stash.getTask(index);
+           stash.deleteTask(index);
+           //Output.printIsDone(stash, index);
+           Output.printDeletedTask(task, stash.ObtainTaskCount());
+       } catch (ArrayIndexOutOfBoundsException e) {
+           System.out.println("The index you have entered is invalid");
+       }
+
+   }
+
     public void toggleTaskStatus(String details) {
         try {
             int index = Integer.parseInt(details) - 1;
@@ -37,6 +51,8 @@ public class TaskManager {
             System.out.println("The index you have entered is invalid");
         }
     }
+
+
 
     public void  timerModule() {
         Scanner timerCommand = new Scanner(System.in);
@@ -56,41 +72,47 @@ public class TaskManager {
     }
     public void inputCommands() {
         while (true) {
-            Command userCommand = InputParser.parseInput(inOut.readInput());
-            String category = userCommand.getAction();
+            try {
+                Command userCommand = InputParser.parseInput(inOut.readInput());
+                String category = userCommand.getAction();
 
-            switch (category) {
-            case "list":
-                Output.printList(stash);
-                continue;
-            case "mark":
-            case "unmark":
-                toggleTaskStatus(userCommand.getDetails());
-                continue;
-            case "help":
-                Output.printHelp();
-                continue;
-            case "todo":
-                addNew(new Todo(userCommand.getDetails()));
-                continue;
-            case "event":
-                addNew(new Event(userCommand.getDetails(), userCommand.getStart(), userCommand.getEnd()));
-                continue;
-            case "deadline":
-                addNew(new Deadline((userCommand.getDetails()), userCommand.getDue()));
-                continue;
-            case "done":
-                System.out.println("Bye bye, hope to see you some time soon!");
-                return;
+                switch (category) {
+                case "list":
+                    Output.printList(stash);
+                    continue;
+                case "mark":
+                case "unmark":
+                    toggleTaskStatus(userCommand.getDetails());
+                    continue;
+                case "help":
+                    Output.printHelp();
+                    continue;
+                case "todo":
+                    addNew(new Todo(userCommand.getDetails()));
+                    continue;
+                case "delete":
+                    deleteTask(userCommand.getDetails());
+                    continue;
+                case "event":
+                    addNew(new Event(userCommand.getDetails(), userCommand.getStart(), userCommand.getEnd()));
+                    continue;
+                case "deadline":
+                    addNew(new Deadline((userCommand.getDetails()), userCommand.getDue()));
+                    continue;
+                case "done":
+                    System.out.println("Bye bye, hope to see you some time soon!");
+                    return;
 
-            case "timer":
-                timerModule();
-                continue;
+                case "timer":
+                    timerModule();
+                    continue;
 
-            default:
-                System.out.println("Sorry, I do not understand the input at this point in time.");
+                default:
+                    System.out.println("Sorry, I do not understand the input at this point in time.");
+                }
+            } catch(ChronosExceptions.InvalidInputException exceptions){
+                System.out.println("INVALID INPUT");
             }
-
         }
     }
 
