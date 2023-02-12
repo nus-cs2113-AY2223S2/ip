@@ -1,4 +1,4 @@
-package commandhandler;
+package chronos.commandhandler;
 /**
  * The InputParser class contains a single public static method named parseInput.
  * This method is used to parse the input string into a Command object.

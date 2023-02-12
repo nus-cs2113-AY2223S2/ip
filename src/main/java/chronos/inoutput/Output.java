@@ -1,7 +1,7 @@
-package inoutput;
+package chronos.inoutput;
 
-import tasktype.Task;
-import tasktype.Stash;
+import chronos.tasktype.Task;
+import chronos.tasktype.Stash;
 
 public class Output {
     private static void printLogo() {

@@ -1,4 +1,4 @@
-package exceptions;
+package chronos.exceptions;
 
 public class ChronosExceptions extends Exception {
     public ChronosExceptions(String message) {

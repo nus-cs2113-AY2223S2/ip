@@ -1,5 +1,5 @@
-package userinterface;
-import inoutput.Input;
+package chronos.userinterface;
+import chronos.inoutput.Input;
 
 public class UserHandler {
     private static Input inOut;
