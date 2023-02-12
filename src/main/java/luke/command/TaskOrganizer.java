@@ -5,9 +5,14 @@ import luke.task.Deadline;
 import luke.task.Event;
 import luke.task.Task;
 
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+
+import com.google.gson.Gson;
 
 public class TaskOrganizer {
     /** Unique ID to be given to each new task for identification */
@@ -17,14 +22,18 @@ public class TaskOrganizer {
     private HashMap<Integer, Task> tasks;
 
     /** A list containing all valid task types */
-    private ArrayList<String> taskTypes;
+    private ArrayList<String> taskTypes = new ArrayList<String>(
+            Arrays.asList("todo", "event", "deadline")
+    );;
 
     public TaskOrganizer() {
         newTaskID = 1;
         tasks = new HashMap<Integer, Task>();
-        taskTypes = new ArrayList<String>(
-                Arrays.asList("todo", "event", "deadline")
-        );
+    }
+
+    public TaskOrganizer(int newTaskID, HashMap<Integer, Task> savedHashMap) {
+        this.newTaskID = newTaskID;
+        this.tasks = savedHashMap;
     }
 
     /**
@@ -76,7 +85,7 @@ public class TaskOrganizer {
             }
             newTask = new Deadline(taskName, newTaskID, taskDate);
             break;
-        case "event":
+        default:
             if (taskDate == null) {
                 return false;
             }
@@ -88,8 +97,6 @@ public class TaskOrganizer {
             String endDate = taskDates[1];
             newTask = new Event(taskName, newTaskID, startDate, endDate);
             break;
-        default:
-            newTask = new Task(taskName, newTaskID);
         }
         tasks.put(newTaskID, newTask);
         newTaskID += 1;
@@ -135,5 +142,22 @@ public class TaskOrganizer {
             copy.add(tasks.get(i));
         }
         return copy;
+    }
+
+    public void serializeTaskOrganizer() {
+        try {
+            String tasksJson = new Gson().toJson(tasks);
+            FileWriter saveTasks = new FileWriter("C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data/taskList.txt");
+            saveTasks.write(tasksJson);
+            saveTasks.close();
+
+            FileWriter saveTaskID = new FileWriter("C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data/id.txt");
+            saveTaskID.write(Integer.toString(newTaskID));
+            saveTaskID.close();
+        } catch (FileNotFoundException e) {
+
+        } catch (IOException e) {
+
+        }
     }
 }

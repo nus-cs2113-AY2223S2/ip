@@ -38,6 +38,7 @@ public class Task {
 
     /** Prints out the checkBox followed by the name of the task */
     public void printTaskName() {
+        label.printLabel();
         checkBox.printCheckBox();
         System.out.println(taskName);
     }
