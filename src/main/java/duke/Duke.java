@@ -7,6 +7,7 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.Todo;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
@@ -20,9 +21,8 @@ public class Duke {
 
     public static boolean isProgramRunning = true;
 
-    private static Task[] tasks = new Task[MAX_ARRAY_SIZE];
+    private static ArrayList<Task> tasks = new ArrayList<>();
 
-    private static int commandCount = 0;
 
     public static void main(String[] args) {
         greeting();
@@ -43,10 +43,33 @@ public class Duke {
                 deadlineTaskHandler(command);
             } else if (firstWord.equals("event")) {
                 eventTaskHandler(command);
+            } else if (firstWord.equals("delete")) {
+                deleteTaskHandler(command);
             } else {
                 illegalCommandMessage();
             }
         }
+    }
+
+    private static void deleteTaskHandler(String command) {
+        try {
+            deleteTask(command);
+        } catch (IllegalCommandException e) {
+            illegalCommandMessage();
+        }
+    }
+
+    private static void deleteTask(String command) throws IllegalCommandException, IndexOutOfBoundsException {
+        String[] words = command.trim().split(" ");
+        if (isInvalidString(words)) {
+            throw new IllegalCommandException();
+        }
+        int deleteIndex = getIndex(words[1]);
+        if (!isValidIndex(deleteIndex)) {
+            throw new IllegalCommandException();
+        }
+        deleteTaskMessage(deleteIndex);
+        tasks.remove(deleteIndex);
     }
 
     private static void MarkOrUnmarkHandler(String command) {
@@ -106,9 +129,8 @@ public class Duke {
         if (isInvalidString(startToEndTime)) {
             throw new IllegalCommandException();
         }
-        tasks[commandCount] = new Event(stringSplit[0], startToEndTime[0], startToEndTime[1]);
+        tasks.add(new Event(stringSplit[0], startToEndTime[0], startToEndTime[1]));
         addSpecialTaskMessage();
-        commandCount++;
     }
 
 
@@ -125,9 +147,8 @@ public class Duke {
         if (isInvalidString(stringSplit)) {
             throw new IllegalCommandException();
         }
-        tasks[commandCount] = new Deadline(stringSplit[0], stringSplit[1]);
+        tasks.add(new Deadline(stringSplit[0], stringSplit[1]));
         addSpecialTaskMessage();
-        commandCount++;
     }
 
     private static void initTodoTask(String command) throws EmptyCommandException {
@@ -135,16 +156,21 @@ public class Duke {
         if (todo.isEmpty()) {
             throw new EmptyCommandException();
         }
-        tasks[commandCount] = new Todo(todo);
+        tasks.add(new Todo(todo));
         addSpecialTaskMessage();
-        commandCount++;
     }
 
     private static void addSpecialTaskMessage() {
-        System.out.println(LINE + tasks[commandCount].addTaskMessage() + "Now you have " + (commandCount + 1)
+        int lastElement = tasks.size() - 1;
+        System.out.println(LINE + tasks.get(lastElement).addTaskMessage() + "Now you have " + (lastElement + 1)
                 + " tasks in the list." + System.lineSeparator() + LINE);
     }
 
+    private static void deleteTaskMessage(int deleteIndex) {
+        int lastElement = tasks.size() - 1;
+        System.out.println(LINE + tasks.get(deleteIndex).deleteTaskMessage() + "Now you have " + (tasks.size() - 1) +
+                " tasks in the list." + System.lineSeparator() + LINE);
+    }
 
     private static void markAndUnmarkTask(String command) throws IllegalCommandException {
         String[] words = command.split(" ");
@@ -152,26 +178,25 @@ public class Duke {
             throw new IllegalCommandException();
         }
         int indexOfMarking = getIndex(words[1]);
-        if (!isValidMarking(indexOfMarking)) {
+        if (!isValidIndex(indexOfMarking)) {
             throw new IllegalCommandException();
         }
         createMarkOrUnmark(command, words, indexOfMarking);
     }
 
     private static void createMarkOrUnmark(String command, String[] words, int indexOfMarking) {
-        indexOfMarking--; // change to 0-index
-        tasks[indexOfMarking].setDone(words[0]);
+        tasks.get(indexOfMarking).setDone(words[0]);
         System.out.print(LINE);
         if (command.startsWith("mark ")) {
             System.out.println(MARK_MESSAGE);
         } else {
             System.out.println(UNMARK_MESSAGE);
         }
-        System.out.println("  " + tasks[indexOfMarking].toString() + System.lineSeparator() + LINE);
+        System.out.println("  " + tasks.get(indexOfMarking).toString() + System.lineSeparator() + LINE);
     }
 
-    private static boolean isValidMarking(int indexOfMarking) {
-        if (indexOfMarking == -1) {
+    private static boolean isValidIndex(int indexOfMarking) {
+        if (indexOfMarking < 0 || indexOfMarking > (tasks.size() - 1)) {
             return false;
         }
         return true;
@@ -184,8 +209,8 @@ public class Duke {
 
     private static void printList() {
         System.out.print(LINE);
-        for (int i = 0; i < commandCount; ++i) {
-            System.out.println((i + 1) + "." + tasks[i].toString());
+        for (int i = 0; i < tasks.size(); ++i) {
+            System.out.println((i + 1) + "." + tasks.get(i).toString());
         }
         System.out.println(LINE);
     }
@@ -205,9 +230,7 @@ public class Duke {
         } catch (NumberFormatException nfe) {
             return -1;
         }
-        if (index > commandCount) {
-            return -1;
-        }
-        return index; // Returns 1-index of Task or -1 if the input does not fit a number or is bigger than array size
+        index--;
+        return index; // Returns 0-index of parsing Integer or -1 if string is not a number or empty
     }
 }

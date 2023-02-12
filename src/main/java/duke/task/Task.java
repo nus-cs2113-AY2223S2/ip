@@ -28,5 +28,8 @@ public class Task {
         return "Got it. I've added this task:\n  " + this.toString() + System.lineSeparator();
     }
 
+    public String deleteTaskMessage() {
+        return "Noted. I've removed this task:\n  " + this.toString() + System.lineSeparator();
+    }
 
 }
