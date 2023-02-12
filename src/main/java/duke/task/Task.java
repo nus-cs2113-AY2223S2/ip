@@ -15,7 +15,7 @@ public class Task {
         this.isDone = false;
     }
 
-    public String Completed() {
+    public String completed() {
         if (isDone) {
             return DONE;
         } else {
@@ -24,7 +24,7 @@ public class Task {
     }
 
     public String getTaskNameAndStatus() {
-        return Completed() + taskName;
+        return completed() + taskName;
     }
 
     public String returnCommand() {
@@ -32,6 +32,6 @@ public class Task {
     }
 
     public String toString() {
-        return Completed() + taskName;
+        return completed() + taskName;
     }
 }
