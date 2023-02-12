@@ -12,6 +12,16 @@ public class Task {
         this.isDone = false;
     }
 
+    public static void deleteTask(ArrayList<Task> tasks, String commandDescriptor) {
+        try {
+            int taskNumber = Integer.parseInt(commandDescriptor);
+            tasks.remove(taskNumber - 1);
+        } catch (NumberFormatException e) {
+            System.out.println("ONO! Please choose a valid task to delete.");
+        }
+        System.out.println(line);
+    }
+
     public boolean isDone() {
         return isDone;
     }
@@ -24,7 +34,7 @@ public class Task {
         return (isDone ? "X" : " "); //Marks a task done with an X
     }
 
-    public static void taskStatusHandler(ArrayList<Task>tasks, String commandWord, String commandDescriptor) {
+    public static void taskStatusHandler(ArrayList<Task> tasks, String commandWord, String commandDescriptor) {
         System.out.println(line);
         int taskNumber = Integer.parseInt(commandDescriptor);
         if (commandWord.equals("mark")) {

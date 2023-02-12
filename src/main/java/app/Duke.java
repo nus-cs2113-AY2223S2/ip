@@ -31,6 +31,9 @@ public class Duke {
                 case "list":
                     Task.printTasks(tasks);
                     break;
+                case "delete":
+                    Task.deleteTask(tasks, commandDescriptor);
+                    break;
                 case "todo":
                     ToDo.todoHandler(tasks, commandDescriptor);
                     break;
