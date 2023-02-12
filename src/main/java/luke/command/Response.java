@@ -104,9 +104,9 @@ public class Response {
         printSignature();
         int serialNumber = 1;
         System.out.println("Printing Tasks...");
-        for (Task i : tasks) {
+        for (Task task : tasks) {
             System.out.print(serialNumber + ". ");
-            i.printTaskName();
+            task.printTaskName();
             serialNumber += 1;
         }
         printLine();

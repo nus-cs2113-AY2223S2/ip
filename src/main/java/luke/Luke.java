@@ -4,9 +4,19 @@ import luke.command.Response;
 import luke.command.TaskOrganizer;
 import luke.exception.InvalidIndexException;
 
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Scanner;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import luke.task.Task;
 
 public class Luke {
     /** An object to manage the responses of LUKE */
@@ -21,23 +31,65 @@ public class Luke {
     /** A list of valid commands */
     private static ArrayList<String> commands;
 
+    private static boolean isAbleToRead() {
+        Path dataFolderPath = Path.of("C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data");
+        Path IDFilePath = Path.of("C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data/id.txt");
+        Path taskListFilePath = Path.of("C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data/taskList.txt");
+        File IDFile = new File(IDFilePath.toUri());
+        File taskListFile = new File(taskListFilePath.toUri());
+        boolean doesExist = (Files.exists(dataFolderPath) && Files.exists(IDFilePath) && Files.exists(taskListFilePath));
+        boolean isNotEmpty = (IDFile.length() != 0 && taskListFile.length() != 0);
+        return doesExist && isNotEmpty;
+    }
+
     /** Initializes all the objects used in LUKE, says "Hi" to the user */
     private static void initialize() {
         // Initialization
         response = new Response();
         scanner = new Scanner(System.in);
-        taskOrganizer = new TaskOrganizer();
         commands = new ArrayList<String>(
                 Arrays.asList("add", "list", "mark", "unmark", "delete")
         );
+
+        if (isAbleToRead()) {
+            loadPreviousData();
+        }
+        else {
+            loadNewData();
+        }
 
         // Say "Hi" to the user
         response.sayHi();
     }
 
+    /** Loads a completely new set of data */
+    private static void loadNewData() {
+        taskOrganizer = new TaskOrganizer();
+    }
+
+    /** Loads in the taskID and tasks hashmap that is stored in the txt files */
+    private static void loadPreviousData() {
+        Type taskListType = new TypeToken<HashMap<Integer, Task>>(){}.getType();
+        Path IDFile = Path.of("C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data/id.txt");
+        Path taskListFile = Path.of("C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data/taskList.txt");
+        File temp = new File(IDFile.toUri());
+        try {
+            String IDFileJson = Files.readString(IDFile);
+            String taskListJson = Files.readString(taskListFile);
+            int savedID = Integer.parseInt(IDFileJson);
+            HashMap<Integer, Task> savedTaskList = new Gson().fromJson(taskListJson, taskListType);
+            taskOrganizer = new TaskOrganizer(savedID, savedTaskList);
+        } catch (NumberFormatException e) {
+            //Handle invalid loading
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /** Closes the scanner and says "Bye" to the user */
     public static void endProgram() {
         scanner.close();
+        taskOrganizer.serializeTaskOrganizer();
         response.sayBye();
     }
 
