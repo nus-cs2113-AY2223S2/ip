@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class FileManager {
 
-    private static final String filePath = "duke/files/data.txt";
+    private static final String filePath = "./data.txt";
 
     // Write to a file
     private static void writeToFile(String filePath, String textToAdd) throws IOException {
@@ -66,8 +66,13 @@ public class FileManager {
     }
 
     // Parse all tasks from the file to list
-    public static void populateTaskList() throws FileNotFoundException {
+    public static void populateTaskList() throws Exception {
         try {
+            File f = new File(filePath);
+            if (!f.exists()) {
+                FileWriter fw = new FileWriter(filePath);
+                fw.write("");
+            }
             ArrayList<String> fileContents = retrieveFileContents(filePath);
             for(int i = 0; i<fileContents.size(); i++) {
                 addTaskFromFile(fileContents.get(i));
