@@ -2,8 +2,8 @@ import duke.Deadline;
 import duke.Event;
 import duke.Todo;
 
-import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Vector;
 
 public class Duke {
     public static void main(String[] args) {
@@ -26,7 +26,7 @@ public class Duke {
         Scanner in;
 
         //Set up list to store user inputs
-        ArrayList<Todo> tasks = new ArrayList<Todo>();
+        Vector<Todo> tasks = new Vector<Todo>();
         int counter = 0;
 
         //setup of exit flag
@@ -113,7 +113,8 @@ public class Duke {
                 tasks.get(taskNumber).printInList();
                 System.out.println("    _________________________________________");
                 System.out.println("    ");
-                tasks.remove(taskNumber);
+                tasks.removeElement(tasks.get(taskNumber));
+                counter--;
                 break;
 
             default:
@@ -136,13 +137,13 @@ public class Duke {
         return inputString;
     }
 
-    private static void printUnmarkedAcknowledgement(ArrayList<Todo> tasks, int taskNumber) {
+    private static void printUnmarkedAcknowledgement(Vector<Todo> tasks, int taskNumber) {
         System.out.println("    _________________________________________");
         System.out.println("    " + taskNumber + "." + "[ ] " + tasks.get(taskNumber - 1).getDescription());
         System.out.println("    _________________________________________");
     }
 
-    private static void printMarkedAcknowledgement(ArrayList<Todo> tasks, int taskNumber) {
+    private static void printMarkedAcknowledgement(Vector<Todo> tasks, int taskNumber) {
         System.out.println("    _________________________________________");
         System.out.println("    " + taskNumber + "." + "[X] " + tasks.get(taskNumber - 1).getDescription());
         System.out.println("    _________________________________________");
@@ -153,7 +154,7 @@ public class Duke {
         return Integer.parseInt(inputString);
     }
 
-    private static void printListContents(ArrayList<Todo> tasks, int counter) {
+    private static void printListContents(Vector<Todo> tasks, int counter) {
         for (int i = 0; i < counter; ++i) {
             if (tasks.get(i).isDone) {
                 System.out.print("    " + (i + 1) + ".");
