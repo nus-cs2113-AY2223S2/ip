@@ -2,6 +2,7 @@ import duke.Deadline;
 import duke.Event;
 import duke.Todo;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
@@ -25,7 +26,7 @@ public class Duke {
         Scanner in;
 
         //Set up list to store user inputs
-        Todo[] tasks = new Todo[100];
+        ArrayList<Todo> tasks = new ArrayList<Todo>();
         int counter = 0;
 
         //setup of exit flag
@@ -49,14 +50,14 @@ public class Duke {
             case "mark":
                 System.out.println("    Please specify task number: ");
                 int taskNumber = getTaskNumber();
-                tasks[taskNumber - 1].setDone(true);
+                tasks.get(taskNumber - 1).setDone(true);
                 printMarkedAcknowledgement(tasks, taskNumber);
                 break;
 
             case "unmark":
                 System.out.println("    Please specify task number: ");
                 taskNumber = getTaskNumber();
-                tasks[taskNumber - 1].setDone(false);
+                tasks.get(taskNumber - 1).setDone(false);
                 printUnmarkedAcknowledgement(tasks, taskNumber);
                 break;
 
@@ -68,8 +69,8 @@ public class Duke {
                     System.out.println("☹ OOPS!!! The description of a todo cannot be empty.");
                     break;
                 } else {
-                    tasks[counter] = new Todo(inputString);
-                    tasks[counter].print();
+                    tasks.add(new Todo(inputString));
+                    tasks.get(counter).print();
                     counter++;
                     System.out.println("    Now you have " + counter + " tasks in your list!");
                     break;
@@ -84,8 +85,8 @@ public class Duke {
                 int endPosition = inputString.indexOf("\0");
                 String taskName = inputString.substring(0, deadlinePosition);
                 String deadline = inputString.substring(deadlinePosition + 1, endPosition);
-                tasks[counter] = new Deadline(taskName, deadline);
-                tasks[counter].print();
+                tasks.add(new Deadline(taskName, deadline));
+                tasks.get(counter).print();
                 counter++;
                 break;
 
@@ -100,9 +101,19 @@ public class Duke {
                 taskName = inputString.substring(0, deadlineStartPosition);
                 String deadlineStart = inputString.substring(deadlineStartPosition + 1, deadlineEndPosition);
                 String deadlineEnd = inputString.substring(deadlineEndPosition + 1, endPosition);
-                tasks[counter] = new Event(taskName, deadlineStart, deadlineEnd);
-                tasks[counter].print();
+                tasks.add(new Event(taskName, deadlineStart, deadlineEnd));
+                tasks.get(counter).print();
                 counter++;
+                break;
+
+            case "delete":
+                System.out.println("    Please specify task number: ");
+                taskNumber = getTaskNumber() - 1;
+                System.out.println("    _________________________________________");
+                tasks.get(taskNumber).printInList();
+                System.out.println("    _________________________________________");
+                System.out.println("    ");
+                tasks.remove(taskNumber);
                 break;
 
             default:
@@ -110,7 +121,6 @@ public class Duke {
             break;
         }
     }
-
 
         //When user types "bye"
         System.out.println("    Bye. Hope to see you again soon!");
@@ -126,15 +136,15 @@ public class Duke {
         return inputString;
     }
 
-    private static void printUnmarkedAcknowledgement(Todo[] tasks, int taskNumber) {
+    private static void printUnmarkedAcknowledgement(ArrayList<Todo> tasks, int taskNumber) {
         System.out.println("    _________________________________________");
-        System.out.println("    " + taskNumber + "." + "[ ] " + tasks[taskNumber - 1].getDescription());
+        System.out.println("    " + taskNumber + "." + "[ ] " + tasks.get(taskNumber - 1).getDescription());
         System.out.println("    _________________________________________");
     }
 
-    private static void printMarkedAcknowledgement(Todo[] tasks, int taskNumber) {
+    private static void printMarkedAcknowledgement(ArrayList<Todo> tasks, int taskNumber) {
         System.out.println("    _________________________________________");
-        System.out.println("    " + taskNumber + "." + "[X] " + tasks[taskNumber - 1].getDescription());
+        System.out.println("    " + taskNumber + "." + "[X] " + tasks.get(taskNumber - 1).getDescription());
         System.out.println("    _________________________________________");
     }
 
@@ -143,14 +153,14 @@ public class Duke {
         return Integer.parseInt(inputString);
     }
 
-    private static void printListContents(Todo[] tasks, int counter) {
+    private static void printListContents(ArrayList<Todo> tasks, int counter) {
         for (int i = 0; i < counter; ++i) {
-            if (tasks[i].isDone) {
+            if (tasks.get(i).isDone) {
                 System.out.print("    " + (i + 1) + ".");
-                tasks[i].printInList();
+                tasks.get(i).printInList();
             } else {
                 System.out.print("    " + (i + 1) + ".");
-                tasks[i].printInList();
+                tasks.get(i).printInList();
             }
         }
         System.out.println("    _________________________________________");
