@@ -15,4 +15,16 @@ public class Deadline extends Task {
         taskDetail = "[D][" + getStatusIcon() + "] " + taskName + " (by: " + deadline + ")";
         return taskDetail;
     }
+
+    public String getSavedData() {
+        String taskStatus;
+        if (getStatusIcon().equals("X")) {
+            taskStatus = "1";
+        } else {
+            taskStatus = "0";
+        }
+        String fullDetails = String.join(" / ", "D", taskStatus, taskName, deadline);
+        return fullDetails;
+    }
+
 }

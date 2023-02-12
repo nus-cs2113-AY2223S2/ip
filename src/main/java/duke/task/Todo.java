@@ -13,4 +13,15 @@ public class Todo extends Task {
         taskDetail = "[T][" + getStatusIcon() + "] " + taskName;
         return taskDetail;
     }
+
+    public String getSavedData() {
+        String taskStatus;
+        if (getStatusIcon().equals("X")) {
+            taskStatus = "1";
+        } else {
+            taskStatus = "0";
+        }
+        String fullDetails = String.join(" / ", "T", taskStatus, taskName);
+        return fullDetails;
+    }
 }

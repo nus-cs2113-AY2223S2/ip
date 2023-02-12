@@ -38,4 +38,6 @@ public abstract class Task {
     public void markAsNotDone() {
         this.isDone = false;
     }
+
+    public abstract String getSavedData();
 }

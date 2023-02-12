@@ -18,4 +18,16 @@ public class Event extends Task {
                 + endDateTime + ")";
         return taskDetail;
     }
+
+    public String getSavedData() {
+        String taskStatus;
+        if (getStatusIcon().equals("X")) {
+            taskStatus = "1";
+        } else {
+            taskStatus = "0";
+        }
+        String date = String.join(" to ", startDateTime, endDateTime);
+        String fullDetails = String.join(" / ", "E", taskStatus, taskName, date);
+        return fullDetails;
+    }
 }
