@@ -1,6 +1,7 @@
 package DukeMain;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Duke {
     public static String parseEventString(String input) {
@@ -26,7 +27,7 @@ public class Duke {
         System.out.println("what can i do for you");
 
         String input = myObj.nextLine();
-        Todos[] todo = new Todos[100];
+        ArrayList<Todos> todoItems = new ArrayList<Todos>();
         int new_tasks = 0;
         while (!input.equalsIgnoreCase("bye")) {
             if (!ErrorHandler.isInputValid(input)) {
@@ -36,32 +37,32 @@ public class Duke {
             if (input.equalsIgnoreCase("list")) {
                 System.out.println("-------TODO-LIST------");
                 System.out.println("----------------------");
-                for (int i = 0; i < todo.length && todo[i] != null; i++) {
+                for (int i = 0; i < todoItems.size(); i++) {
                     char x = ' ';
-                    if (todo[i].isMarked) {
+                    if (todoItems.get(i).isMarked) {
                         x = 'X';
                     }
-                    System.out.println(i + 1 + ". " + "[" + todo[i].type + "]" + "[" + x + "] " + todo[i].item);
+                    System.out.println(i + 1 + ". " + "[" + todoItems.get(i).type + "]" + "[" + x + "] " + todoItems.get(i).item);
                 }
                 System.out.println("----------------------");
             } else if (input.startsWith("mark")) {
                 int i = Integer.parseInt(input.substring(5));
-                todo[i - 1].setMark();
+                todoItems.get(i - 1).setMark();
                 System.out.println("Item has been marked");
-                assert todo[i - 1] != null;
-                System.out.println(i + ". " + "[" + todo[i = 1].type + "]" + "[X] " + todo[i - 1].item);
+                System.out.println(i + ". " + "[" + todoItems.get(i - 1).type + "]" + "[X] " + todoItems.get(i-1).item);
             } else if (input.startsWith("unmark")) {
                 int i = Integer.parseInt(input.substring(7));
-                todo[i - 1].unMark();
+                todoItems.get(i - 1).unMark();
                 System.out.println("Item has been unmarked");
-                System.out.println(i + ". " + "[" + todo[i - 1].type + "]" + "[ ] " + todo[i - 1].item);
+                System.out.println(i + ". " + "[" + todoItems.get(i - 1).type + "]" + "[ ] " + todoItems.get(i - 1).item);
             } else if (input.startsWith("event")) {
                 int count = new_tasks + 1;
                 input = parseEventString(input);
                 System.out.println("Got it, ive done the Following");
                 System.out.println("Added: " + input);
                 System.out.println("now you have: " + count + " tasks in this list.");
-                todo[new_tasks] = new Event(input, false, "E");
+                Event x = new Event(input, false, "E");
+                todoItems.add(x);
                 new_tasks++;
             } else if (input.startsWith("deadline")) {
                 int count = new_tasks + 1;
@@ -70,12 +71,14 @@ public class Duke {
                 System.out.println("Got it, ive done the Following");
                 System.out.println("Added: " + input);
                 System.out.println("now you have: " + count + " tasks in this list.");
-                todo[new_tasks] = new Deadline(input, false, "D");
+                Deadline x = new Deadline(input, false, "D");
+                todoItems.add(x);
                 new_tasks++;
             } else if (input.startsWith("todo")) {
-                todo[new_tasks] = new Todos(input.substring(input.indexOf((" "))), false, "T");
+                Todos x = new Todos(input.substring(input.indexOf((" "))), false, "T");
+                todoItems.add(x);
                 System.out.println("Got it, Ive done the Following!");
-                System.out.println("Added: " + "[" + todo[new_tasks].type + "]" + "[ ]" + input.substring(input.indexOf((" "))));
+                System.out.println("Added: " + "[" + todoItems.get(new_tasks).type + "]" + "[ ]" + input.substring(input.indexOf((" "))));
                 int count = new_tasks + 1;
                 System.out.println("now you have: " + count + " tasks in this list.");
                 new_tasks++;
