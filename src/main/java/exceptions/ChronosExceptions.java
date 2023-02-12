@@ -10,6 +10,4 @@ public class ChronosExceptions extends Exception {
             super(message);
         }
     }
-
-
 }
