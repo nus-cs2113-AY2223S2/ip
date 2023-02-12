@@ -33,6 +33,7 @@ public abstract class Task {
     public String addTaskMessage() {
         return "Got it. I've added this task:\n  " + this.toString() + System.lineSeparator();
     }
+
     public String getTaskString() {
         return taskString;
     }
