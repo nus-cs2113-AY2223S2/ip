@@ -85,6 +85,29 @@ public class Duke {
         }
     }
 
+    public static void deleteTask(String listId) {
+        try {
+            String taskStr = deleteTask(Integer.parseInt(listId));
+            System.out.println(spacer + "Noted. I've removed this task:\n");
+            System.out.println(spacer + taskStr);
+            System.out.printf(spacer + "Now you have %d tasks in the list.\n", taskList.size());
+        } catch (NumberFormatException e) {
+            System.err.println("Please input a valid index!");
+        }
+    }
+
+    public static String deleteTask(int listId) {
+        int index = listId - 1;
+        if (index < 0 || index >= taskList.size()) {
+            System.err.println(spacer + "Index out of range!");
+        } else {
+            String taskStr = taskList.get(index).toString();
+            taskList.remove(index);
+            return taskStr;
+        }
+        return null;
+    }
+
     /**
      * Add a task from user's command.
      * @param cmd user's input command.
@@ -153,6 +176,8 @@ public class Duke {
                 markTask(cmdArgs[1]);
             } else if (cmdArgs[0].equals("unmark")) {
                 unmarkTask(cmdArgs[1]);
+            } else if (cmdArgs[0].equals("delete")) {
+                deleteTask(cmdArgs[1]);
             } else {
                 addTask(cmd);
             }
