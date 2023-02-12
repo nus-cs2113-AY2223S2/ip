@@ -51,7 +51,7 @@ public class Command {
             }
         }
         String[] datelineDetails = userInputArray[1].split("/by");
-        if (datelineDetails.length == 2 ){
+        if (datelineDetails.length == 2){
             descriptionAndDatesExists = true;           //descriptionAndDateExists = false if parameter is missing
         }
         return byExists && descriptionAndDatesExists;
