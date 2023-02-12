@@ -39,6 +39,7 @@ public abstract class TaskList {
         }
 
         tasks.add(newTask);
+
         Io.printOutput("Got it. I've added this task:");
         Io.printOutput("  " + newTask.getTaskPrint());
         Io.printOutput("Now you have " + tasks.size() + " tasks in the list.");
@@ -72,6 +73,32 @@ public abstract class TaskList {
     }
 
     /**
+     * loads a task from the save file into the task list
+     * 
+     * @param loadString
+     *                   the string to be loaded
+     * @throws GrandException
+     *                        if the string is not in the correct format
+     */
+    public static void loadTask(String loadString) throws GrandException {
+        Task newTask;
+
+        String[] loadStringArray = loadString.split("\\|");
+        String type = loadStringArray[0].trim();
+        Boolean isDone = loadStringArray[1].trim().equals("1");
+        String input = loadStringArray[2].trim();
+
+        try {
+            newTask = Parser.parseNewTask(input, type);
+        } catch (GrandException e) {
+            throw e;
+        }
+
+        newTask.markDone(isDone, true);
+        tasks.add(newTask);
+    }
+
+    /**
      * Prints the tasks in the task list in a numbered and orderly fashion
      */
     public static void printTaskList() {
@@ -101,7 +128,10 @@ public abstract class TaskList {
         if (taskNum >= tasks.size()) {
             throw new OutOfBoundsException();
         }
-        tasks.get(taskNum).markDone(isDone);
+        tasks.get(taskNum).markDone(isDone, false);
     }
 
+    public static int getTaskListSize() {
+        return tasks.size();
+    }
 }

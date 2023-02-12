@@ -7,9 +7,9 @@ public class Deadline extends Task {
      * Creates a new Deadline object
      * 
      * @param taskDesc
-     *            the description of the task
+     *                 the description of the task
      * @param deadline
-     *            the deadline of the task
+     *                 the deadline of the task
      */
     public Deadline(String taskDesc, String deadline) {
         super(taskDesc);
@@ -24,4 +24,19 @@ public class Deadline extends Task {
         return "[D]" + super.getTaskPrint() + " (by: " + deadline + ")";
     }
 
+    /**
+     * Returns the string representation of the Deadline object to be saved in the
+     * data file
+     */
+    public String getDeadline() {
+        return deadline;
+    }
+
+    /**
+     * Returns the string representation of the Deadline object to be saved in the
+     */
+    @Override
+    public String getTaskSaveString() {
+        return "deadline | " + (super.getIsDone() ? "1" : "0") + " | " + super.getTaskDesc() + " /by " + deadline;
+    }
 }
