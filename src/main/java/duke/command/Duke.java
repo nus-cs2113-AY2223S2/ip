@@ -5,8 +5,13 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.Todo;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileWriter;
 
 public class Duke {
     static ArrayList<Task> tasks = new ArrayList<>();//Create an arraylist object to store commands
@@ -129,14 +134,86 @@ public class Duke {
         System.out.println("____________________________________________________________");
     }
 
-    public static void main(String[] args) {
+    public static void FileReading(String filePath) {
+        File f = new File(filePath);
+        try {
+            Scanner s = new Scanner(f);
+            while (s.hasNext()) {
+                String line = s.nextLine();
+                String[] text = line.split("\\|");
+                if (line.startsWith("T")) {
+                    Todo todo = new Todo(text[2]);
+                    todo.setDone(!text[1].equals(" "));
+                    tasks.add(todo);
+                } else if (line.startsWith("D")) {
+                    Deadline deadline = new Deadline(text[2], text[3]);
+                    deadline.setDone(!text[1].equals(" "));
+                    tasks.add(deadline);
+                } else if (line.startsWith("E")) {
+                    Event event = new Event(text[2], text[3], text[4]);
+                    event.setDone(!text[1].equals(" "));
+                    tasks.add(event);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Something went wrong: " + e.getMessage());
+            throw new RuntimeException(e);
+        } catch (NoSuchElementException e) {
+            System.out.println("Sorry no line found. ");
+        }
+    }
+
+    public static void FileWriting(String filePath) {
+        //File f = new File(filePath);
+        try {
+            FileWriter fw1 = new FileWriter(filePath);
+            fw1.write("");
+            FileWriter fw2 = new FileWriter(filePath, true);
+            for (Task t: tasks) {
+                if (t instanceof duke.task.Todo) {
+                    Todo todo = (Todo) t;
+                    String text = "T|" + todo.getStatusIcon() + "|" + todo.getDescription() + "\n";
+                    fw2.write(text);
+                } else if (t instanceof duke.task.Deadline) {
+                    Deadline deadline = (Deadline) t;
+                    String text = "D|" + deadline.getStatusIcon() + "|" + deadline.getDescription() + "|" + deadline.getBy() + "\n";
+                    fw2.write(text);
+                } else if (t instanceof duke.task.Event) {
+                    Event event = (Event) t;
+                    String text = "E|" + event.getStatusIcon() + "|" + event.getDescription() + "|" + event.getFrom() + "|" + event.getTo() + "\n";
+                    fw2.write(text);
+                }
+            }
+            fw1.close();
+            fw2.close();
+            System.out.println("Your task list is saved!");
+        } catch (IOException e) {
+            System.out.println("Something went wrong: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public static void main(String[] args) throws IOException {
 
         greeting();
+
+        File duke = new File("./duke.txt");
+        if (duke.exists()) {
+            System.out.println("Task list already exists.");
+            FileReading("./duke.txt");
+            list_tasks();
+        } else {
+            System.out.println("Your new task list is created!");
+        }
+        System.out.println("Please input your command: ");
+
 
         while(true){
             Scanner in = new Scanner(System.in);
             String line = in.nextLine();
             if(line.equals("bye")){
+                FileWriting("./duke.txt");
                 System.out.println("Bye. Hope to see you again soon!");
                 break;
             }
@@ -159,8 +236,8 @@ public class Duke {
                 add_event(line);
             }
             else if(line.startsWith("delete")) {
-                delete(line)
-;            }
+                delete(line);
+            }
             else {
                 System.out.println(":( OOPS!!! Please choose from the command: todo, deadline, event, list, mark, unmark, bye.");
             }
