@@ -60,4 +60,13 @@ public class Output {
         System.out.printf("\n");
     }
 
+    public static void printDeletedTask(Task task, int stashSize){
+        System.out.printf("Deleted Task ");
+        System.out.printf("\n");
+        System.out.printf(" %s", task.toString());
+        System.out.printf("\n");
+        System.out.printf("You now have %d task(s) in the list.", stashSize);
+        System.out.printf("\n");
+    }
+
 }

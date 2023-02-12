@@ -27,6 +27,19 @@ public class TaskManager {
         Output.printNewTask(task, stash.ObtainTaskCount());
     }
 
+   public void deleteTask(String details){
+       try {
+           int index = Integer.parseInt(details) - 1;
+           Task task = stash.getTask(index);
+           stash.deleteTask(index);
+           //Output.printIsDone(stash, index);
+           Output.printDeletedTask(task, stash.ObtainTaskCount());
+       } catch (ArrayIndexOutOfBoundsException e) {
+           System.out.println("The index you have entered is invalid");
+       }
+
+   }
+
     public void toggleTaskStatus(String details) {
         try {
             int index = Integer.parseInt(details) - 1;
@@ -37,6 +50,8 @@ public class TaskManager {
             System.out.println("The index you have entered is invalid");
         }
     }
+
+
 
     public void  timerModule() {
         Scanner timerCommand = new Scanner(System.in);
@@ -72,6 +87,9 @@ public class TaskManager {
                 continue;
             case "todo":
                 addNew(new Todo(userCommand.getDetails()));
+                continue;
+            case "delete":
+                deleteTask(userCommand.getDetails());
                 continue;
             case "event":
                 addNew(new Event(userCommand.getDetails(), userCommand.getStart(), userCommand.getEnd()));
