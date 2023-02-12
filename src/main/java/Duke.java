@@ -1,9 +1,20 @@
 import java.util.ArrayList;
+import java.nio.file.Paths;
 import java.util.Scanner;
 import java.util.Arrays;
 
+import java.nio.file.Path;
+import java.nio.file.Files;
+
 import exceptions.MarkOutOfBounds;
 import exceptions.UnmarkOutOfBounds;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.IOException;
 
 public class Duke {
     /***
@@ -61,24 +72,108 @@ public class Duke {
      */
     private static ArrayList<Task> storedValues = new ArrayList<>();
 
+    private static final String home = System.getProperty("user.home");
+    private static final File filePath = Paths.get(home, "IdeaProjects", "ip", "src",
+            "main", "data", "duke-inputs.txt").toFile();
+
     /***
      * Main function greets the user and runs processInputs().
      */
 
     public static void main(String[] args) {
-        showGreetings();
-        acceptUserInputs();
-        showGoodbye();
+        try {
+            fileAvailability();
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found!\n");
+        }
+    }
+
+    public static void fileAvailability() throws FileNotFoundException {
+        Path path = Paths.get(home, "IdeaProjects", "ip", "src", "main", "data");
+        boolean directoryExists = Files.exists(path);
+        if (!directoryExists) {
+            try {
+                Files.createDirectory(path);
+            } catch (IOException e) {
+                System.out.println("Error occurred!\n");
+            }
+        }
+        Path textFile = Paths.get(home, "IdeaProjects", "ip", "src", "main", "data", "duke-inputs.txt");
+        try {
+            Files.createFile(textFile);
+        } catch (IOException e) {
+            System.out.println("File already exists!\n");
+        }
+
+        File data = textFile.toFile();
+
+        if (data.exists()) {
+            showGreetings();
+            acceptUserInputs(data);
+            showGoodbye();
+        }
     }
 
     /***
      * Reads in the user inputs and processes the commands.
      */
-    private static void acceptUserInputs() {
+    private static void acceptUserInputs(File data) {
+        try {
+            readExistingData(data, storedValues);
+        } catch (FileNotFoundException e) {
+            System.out.println("File is not found!");
+        }
         Scanner in = new Scanner(System.in);
         String line = in.nextLine();
         while (!hasProcessedAllInputs(line, storedValues)) {
             line = in.nextLine();
+        }
+    }
+
+    private static void readExistingData(File data, ArrayList<Task> storedValues) throws FileNotFoundException {
+        Scanner readData = new Scanner(data);
+        while (readData.hasNext()) {
+            // Previous data stored from calling duke
+            String extractType[] = readData.nextLine().split(" | ", 5);
+            String type = extractType[0];
+            String marked = extractType[2];
+            String task = extractType[4];
+
+            switch (type) {
+            case "T":
+                Todo addInputT = new Todo(task);
+                storedValues.add(taskNum,addInputT);
+                if (marked.equals("1")) {
+                    storedValues.get(taskNum).markAsDone();
+                }
+                taskNum += 1;
+                break;
+            case "D":
+                int slash = extractType[4].indexOf("|");
+                String deadlineTask = extractType[4].substring(0, slash-1);
+                String deadlineBy = extractType[4].substring(slash+2);
+                Deadline addInputD = new Deadline(deadlineTask, deadlineBy);
+                storedValues.add(taskNum,addInputD);
+                if (marked.equals("1")) {
+                    storedValues.get(taskNum).markAsDone();
+                }
+                taskNum += 1;
+                break;
+            case "E":
+                int firstSlash = extractType[4].indexOf("|");
+                String eventName = extractType[4].substring(0,firstSlash-1);
+                String eventDuration = extractType[4].substring(firstSlash+2);
+                int secondSlash = eventDuration.indexOf("|");
+                String eventFrom = eventDuration.substring(0,secondSlash-1);
+                String eventTo = eventDuration.substring(secondSlash+2);
+                Event addInputE = new Event(eventName, eventFrom, eventTo);
+                storedValues.add(taskNum,addInputE);
+                if (marked.equals("1")) {
+                    storedValues.get(taskNum).markAsDone();
+                }
+                taskNum += 1;
+                break;
+            }
         }
     }
 
@@ -103,6 +198,8 @@ public class Duke {
                 markItem(storedValues, line, taskNum);
             } catch (MarkOutOfBounds e) {
                 System.out.println("Item to mark is not in list!");
+            } catch (IOException e) {
+                System.out.println("File is not found!");
             }
             break;
         case "unmark":
@@ -110,6 +207,8 @@ public class Duke {
                 unmarkItem(storedValues, line);
             } catch (UnmarkOutOfBounds e) {
                 System.out.println("Item to unmark is not in list!");
+            } catch (IOException e) {
+                System.out.println("File is not found!");
             }
             break;
         case "deadline":
@@ -153,15 +252,30 @@ public class Duke {
         int length = line.length();
         String itemToDelete = line.substring(REMOVE_DELETE_NUM, length);
         int posToDelete = Integer.parseInt(itemToDelete);
-        Task value = storedValues.get(posToDelete-1);
-        storedValues.remove(posToDelete-1);
+        Task value = storedValues.get(posToDelete - 1);
+        storedValues.remove(posToDelete - 1);
         formattingLine();
         System.out.println("Noted. I've removed this task: \n" +
                 value + "\n" +
-                "Now you have " + (taskNum-1) + " tasks in the list. \n");
+                "Now you have " + (taskNum - 1) + " tasks in the list. \n");
         formattingLine();
         taskNum -= 1;
         return taskNum;
+    }
+
+    private static void writeToFile(Task storedValues) throws IOException {
+        FileWriter fw = new FileWriter(filePath, true);
+        int marked = ((storedValues.getStatusIcon() == " ") ? 0 : 1);
+        if (storedValues.getClass().getSimpleName() == "Todo") {
+            fw.write("T | " + marked + " | " + storedValues.description + "\n");
+        } else if (storedValues.getClass().getSimpleName() == "Deadline") {
+            fw.write("D | " + marked + " | " + storedValues.description + " | " +
+                    ((Deadline) storedValues).by + "\n");
+        } else {
+            fw.write("E | " + marked + " | " + storedValues.description + " | " +
+                    ((Event) storedValues).by + " | " + ((Event) storedValues).to + "\n");
+        }
+        fw.close();
     }
 
     /***
@@ -234,6 +348,11 @@ public class Duke {
         Task newInput = line;
         storedValues.add(taskNum,newInput);
         taskNum += 1;
+        try {
+            writeToFile(line);
+        } catch (IOException e) {
+            System.out.println("Something went wrong..." + e.getMessage());
+        }
         return taskNum;
     }
 
@@ -242,7 +361,8 @@ public class Duke {
      * @param storedValues List of tasks from user inputs
      * @param line User input to be processed.
      */
-    private static void unmarkItem(ArrayList<Task> storedValues, String line) throws UnmarkOutOfBounds {
+
+    private static void unmarkItem(ArrayList<Task> storedValues, String line) throws UnmarkOutOfBounds, IOException {
         int length = line.length();
         String itemToMark = line.substring(REMOVE_UNMARK_NUM, length);
         int numToMark = Integer.parseInt(itemToMark);
@@ -255,6 +375,24 @@ public class Duke {
             System.out.println("OK, I've marked this task as not done yet: \n" +
                     storedValues.get(numToMark-1).toString() + "\n");
             formattingLine();
+
+            File dukeInputs = filePath;
+            String prevContent = "";
+            BufferedReader reader = new BufferedReader(new FileReader(dukeInputs));
+            String input = reader.readLine();
+            while (input != null) {
+                prevContent = prevContent + input + "\n";
+                input = reader.readLine();
+            }
+
+            char type = storedValues.get(numToMark-1).getClass().toString().substring(6).charAt(0);
+            String toReplace = (type + " | 1 | " + storedValues.get(numToMark-1).description);
+            String toReplaceWith = (type + " | 0 | " + storedValues.get(numToMark-1).description);
+            String newContent = prevContent.replace(toReplace, toReplaceWith);
+            FileWriter writer = new FileWriter(dukeInputs);
+            writer.write(newContent);
+            reader.close();
+            writer.close();
         }
     }
 
@@ -263,7 +401,8 @@ public class Duke {
      * @param storedValues List of tasks from user inputs.
      * @param line User input to be processed.
      */
-    private static void markItem(ArrayList<Task> storedValues, String line, int taskNum) throws MarkOutOfBounds {
+
+    private static void markItem(ArrayList<Task> storedValues, String line, int taskNum) throws MarkOutOfBounds, IOException {
         int length = line.length();
         String itemToMark = line.substring(REMOVE_MARK_NUM, length);
         int numToMark = Integer.parseInt(itemToMark);
@@ -277,6 +416,24 @@ public class Duke {
             System.out.println("Nice! I've marked this task as done: \n"
                     + storedValues.get(numToMark-1).toString() + "\n");
             formattingLine();
+
+            File dukeInputs = filePath;
+            String prevContent = "";
+            BufferedReader reader = new BufferedReader(new FileReader(dukeInputs));
+            String input = reader.readLine();
+            while (input != null) {
+                prevContent = prevContent + input + "\n";
+                input = reader.readLine();
+            }
+
+            char type = storedValues.get(numToMark-1).getClass().toString().substring(6).charAt(0);
+            String toReplace = (type + " | 0 | " + storedValues.get(numToMark-1).description);
+            String toReplaceWith = (type + " | 1 | " + storedValues.get(numToMark-1).description);
+            String newContent = prevContent.replace(toReplace, toReplaceWith);
+            FileWriter writer = new FileWriter(dukeInputs);
+            writer.write(newContent);
+            reader.close();
+            writer.close();
         }
     }
 
