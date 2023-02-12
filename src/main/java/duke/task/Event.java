@@ -12,7 +12,7 @@ public class Event extends Task {
 
     @Override
     public String getTask() {
-        return super.getTask() + " % " + fromDate + " " + byDate;
+        return super.getTask() + " % " + fromDate + " % " + byDate;
     }
 
     @Override

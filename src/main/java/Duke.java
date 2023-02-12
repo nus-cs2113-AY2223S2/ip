@@ -208,8 +208,7 @@ public class Duke {
 
     public  static void handleFile() throws DukeException {
         for (String str: storedData) {
-            String[] temp = str.split("%",3);
-            System.out.println(temp[2]);
+            String[] temp = str.split("%",5);
             switch (temp[0].trim()) {
             case ("T"):
                 handleTodo(temp[2].trim());
@@ -219,7 +218,7 @@ public class Duke {
                 break;
             case ("D"):
                 try {
-                    handleDeadline(temp[2].trim());
+                    handleDeadline(temp[2].trim() + "/by" + temp[3]);
                     if (temp[1].trim().equals("X")) {
                         handleMark("task", temp[2].trim());
                     }
@@ -229,7 +228,7 @@ public class Duke {
                 break;
             case ("E"):
                 try {
-                    handleEvent(temp[2].trim());
+                    handleEvent(temp[2].trim() + "/from" + temp[3] + "/to" + temp[4]);
                     if (temp[1].trim().equals("X")) {
                         handleMark("task", temp[2].trim());
                     }

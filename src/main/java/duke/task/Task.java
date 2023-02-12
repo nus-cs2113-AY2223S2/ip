@@ -39,7 +39,7 @@ public class Task {
     public String toString() {
         String [] temp = this.getTask().split("%", 2);
         if (temp.length == 2) {
-            return "  " + this.checkType() + this.checkDone() + " " + temp[0].trim() + temp[1].trim();
+            return "  " + this.checkType() + this.checkDone() + " " + temp[0].trim();
         }
         return "  " + this.checkType() + this.checkDone() + " " + getTask();
     }
