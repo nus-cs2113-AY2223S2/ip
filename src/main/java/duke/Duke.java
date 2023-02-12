@@ -1,5 +1,6 @@
 package duke;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
@@ -12,8 +13,7 @@ public class Duke {
         System.out.println("    What can I do for you?");
         System.out.println("____________________________________________________________");
 
-        Task[] list = new Task[100];
-        int nextEmptyIndex = 0;
+        ArrayList<Task> list = new ArrayList<>();
 
         boolean isExitCommandReceived = false;
 
@@ -23,24 +23,24 @@ public class Duke {
                 Command command = new Command(line);
 
                 if (command.getCommandType() == CommandType.CREATE_TODO) {
-                    list[nextEmptyIndex] = new Task(command.getCommandValue());
-                    nextEmptyIndex++;
-                    printAddedTask(list, nextEmptyIndex);
+                    list.add(new Task(command.getCommandValue()));
+                    printAddedTask(list);
                 } else if (command.getCommandType() == CommandType.CREATE_DEADLINE) {
                     String description = command.getCommandValue();
                     String deadline = command.getParameterValueByType(ParameterType.DEADLINE);
-                    list[nextEmptyIndex] = new Deadline(description, deadline);
-                    nextEmptyIndex++;
-                    printAddedTask(list, nextEmptyIndex);
+                    list.add(new Deadline(description, deadline));
+                    printAddedTask(list);
                 } else if (command.getCommandType() == CommandType.CREATE_EVENT) {
                     String description = command.getCommandValue();
                     String from = command.getParameterValueByType(ParameterType.EVENT_START);
                     String to = command.getParameterValueByType(ParameterType.EVENT_END);
-                    list[nextEmptyIndex] = new Event(description, from, to);
-                    nextEmptyIndex++;
-                    printAddedTask(list, nextEmptyIndex);
+                    list.add(new Event(description, from, to));
+                    printAddedTask(list);
+                } else if (command.getCommandType() == CommandType.DELETE) {
+                    int indexToDelete = Integer.parseInt(command.getCommandValue())-1;
+                    handleDeleteTask(list, indexToDelete);
                 } else if (command.getCommandType() == CommandType.LIST) {
-                    handleShowTaskList(list, nextEmptyIndex);
+                    handleShowTaskList(list);
                 } else if (command.getCommandType() == CommandType.MARK) {
                     int indexToMark = Integer.parseInt(command.getCommandValue())-1;
                     handleMarkTask(list, indexToMark);
@@ -59,37 +59,45 @@ public class Duke {
         handleExitProgram();
     }
 
-    public static void printAddedTask(Task[] list, int nextEmptyIndex) {
+    public static void printAddedTask(ArrayList<Task> list) {
         System.out.println("____________________________________________________________");
         System.out.println("    Got it. I've added this task:");
-        System.out.println("    " + list[nextEmptyIndex-1].getLabel());
-        System.out.println("    Now you have " + nextEmptyIndex + " tasks in the list.");
+        System.out.println("    " + list.get(list.size()-1).getLabel());
+        System.out.println("    Now you have " + list.size() + " tasks in the list.");
         System.out.println("____________________________________________________________");
     }
 
-    public static void handleShowTaskList(Task[] list, int nextEmptyIndex) {
+    public static void handleShowTaskList(ArrayList<Task> list) {
         System.out.println("____________________________________________________________");
         System.out.println("    Here are the tasks in your list:");
-        for (int i = 0; i < nextEmptyIndex; i++) {
+        for (int i = 0; i < list.size(); i++) {
             String prefix = (i + 1) + ".";
-            System.out.println("    " + prefix + list[i].getLabel());
+            System.out.println("    " + prefix + list.get(i).getLabel());
         }
         System.out.println("____________________________________________________________");
     }
 
-    public static void handleMarkTask(Task[] list, int indexToMark) {
-        list[indexToMark].setIsDone(true);
+    public static void handleDeleteTask(ArrayList<Task> list, int index) {
+        list.remove(index-1);
         System.out.println("____________________________________________________________");
-        System.out.println("    Nice! I've marked this task as done:");
-        System.out.println(list[indexToMark].getLabel());
+        System.out.println("    Noted. I've removed this task:");
+        System.out.println(list.get(index-1).getLabel());
         System.out.println("____________________________________________________________");
     }
 
-    public static void handleUnmarkTask(Task[] list, int indexToUnmark) {
-        list[indexToUnmark].setIsDone(false);
+    public static void handleMarkTask(ArrayList<Task> list, int indexToMark) {
+        list.get(indexToMark).setIsDone(true);
+        System.out.println("____________________________________________________________");
+        System.out.println("    Nice! I've marked this task as done:");
+        System.out.println(list.get(indexToMark).getLabel());
+        System.out.println("____________________________________________________________");
+    }
+
+    public static void handleUnmarkTask(ArrayList<Task> list, int indexToUnmark) {
+        list.get(indexToUnmark).setIsDone(false);
         System.out.println("____________________________________________________________");
         System.out.println("    OK, I've marked this task as not done yet:");
-        System.out.println(list[indexToUnmark].getLabel());
+        System.out.println(list.get(indexToUnmark).getLabel());
         System.out.println("____________________________________________________________");
     }
 
@@ -101,7 +109,7 @@ public class Duke {
 
     public static void handleExceptions(Exception e) {
         switch (e.getClass().getName()) {
-            case "IllegalCommandException":
+            case "duke.IllegalCommandException":
                 IllegalCommandException commandError = (IllegalCommandException) e;
                 if (commandError.type == IllegalCommandExceptionType.COMMAND_DOES_NOT_EXIST) {
                     System.out.println("____________________________________________________________");
@@ -117,7 +125,7 @@ public class Duke {
                     System.out.println("____________________________________________________________");
                 }
                 break;
-            case "IllegalParameterException":
+            case "duke.IllegalParameterException":
                 IllegalParameterException parameterError = (IllegalParameterException) e;
                 if (parameterError.type == IllegalParameterExceptionType.PARAMETER_DOES_NOT_EXIST) {
                     System.out.println("____________________________________________________________");
@@ -130,6 +138,7 @@ public class Duke {
                 }
                 break;
             default:
+                System.out.println(e);
                 break;
         }
     }

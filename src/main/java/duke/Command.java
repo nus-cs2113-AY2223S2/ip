@@ -32,6 +32,9 @@ public class Command {
             case "event":
                 this.type = CommandType.CREATE_EVENT;
                 break;
+            case "delete":
+                this.type = CommandType.DELETE;
+                break;
             case "bye":
                 this.type = CommandType.EXIT;
                 break;
@@ -43,6 +46,7 @@ public class Command {
                 this.type == CommandType.CREATE_TODO ||
                 this.type == CommandType.CREATE_DEADLINE ||
                 this.type == CommandType.CREATE_EVENT ||
+                this.type == CommandType.DELETE ||
                 this.type == CommandType.MARK ||
                 this.type == CommandType.UNMARK
         ) {
@@ -88,5 +92,5 @@ public class Command {
 }
 
 enum CommandType {
-    LIST, MARK, UNMARK, CREATE_TODO, CREATE_DEADLINE, CREATE_EVENT, EXIT
+    LIST, MARK, UNMARK, CREATE_TODO, CREATE_DEADLINE, CREATE_EVENT, DELETE, EXIT
 }
