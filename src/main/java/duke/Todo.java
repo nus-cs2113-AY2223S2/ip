@@ -7,8 +7,14 @@ public class Todo extends Task {
     public Todo(String description) {
         super(description);
     }
+
     @Override
     public String toString() {
         return TODO_ICON + super.toString();
+    }
+
+    @Override
+    public String saveFormat() {
+        return "T|" + super.saveFormat();
     }
 }
