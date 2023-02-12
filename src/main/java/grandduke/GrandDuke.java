@@ -16,6 +16,7 @@ public class GrandDuke {
         Io.printIntro();
         Storage.loadData();
         Io.getInputs();
+        Storage.saveData();
         Io.printExit();
 
     }

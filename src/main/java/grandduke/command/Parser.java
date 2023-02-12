@@ -55,15 +55,15 @@ public abstract class Parser {
                     break;
 
                 case Io.TODO_COMMAND:
-                    TaskList.addTask(commandDetails, Io.TODO_COMMAND, false);
+                    TaskList.addTask(commandDetails, Io.TODO_COMMAND);
                     break;
 
                 case Io.DEADLINE_COMMAND:
-                    TaskList.addTask(commandDetails, Io.DEADLINE_COMMAND, false);
+                    TaskList.addTask(commandDetails, Io.DEADLINE_COMMAND);
                     break;
 
                 case Io.EVENT_COMMAND:
-                    TaskList.addTask(commandDetails, Io.EVENT_COMMAND, false);
+                    TaskList.addTask(commandDetails, Io.EVENT_COMMAND);
                     break;
 
                 default:

@@ -28,7 +28,7 @@ public abstract class TaskList {
      * @param input
      *              the description of the new task to be added
      */
-    public static void addTask(String input, String type, boolean isLoading) throws GrandException {
+    public static void addTask(String input, String type) throws GrandException {
         Task newTask;
 
         try {
@@ -38,16 +38,36 @@ public abstract class TaskList {
         }
 
         tasks.add(newTask);
-        if (isLoading) {
-            return;
-        }
+
         Io.printOutput("Got it. I've added this task:");
         Io.printOutput("  " + newTask.getTaskPrint());
         Io.printOutput("Now you have " + tasks.size() + " tasks in the list.");
     }
 
-    public static void loadTask(Task task) {
+    /**
+     * loads a task from the save file into the task list
+     * 
+     * @param loadString
+     *                   the string to be loaded
+     * @throws GrandException
+     *                        if the string is not in the correct format
+     */
+    public static void loadTask(String loadString) throws GrandException {
+        Task newTask;
 
+        String[] loadStringArray = loadString.split("\\|");
+        String type = loadStringArray[0].trim();
+        Boolean isDone = loadStringArray[1].trim().equals("1");
+        String input = loadStringArray[2].trim();
+
+        try {
+            newTask = Parser.parseNewTask(input, type);
+        } catch (GrandException e) {
+            throw e;
+        }
+
+        newTask.markDone(isDone, true);
+        tasks.add(newTask);
     }
 
     /**
@@ -80,7 +100,10 @@ public abstract class TaskList {
         if (taskNum >= tasks.size()) {
             throw new OutOfBoundsException();
         }
-        tasks.get(taskNum).markDone(isDone);
+        tasks.get(taskNum).markDone(isDone, false);
     }
 
+    public static int getTaskListSize() {
+        return tasks.size();
+    }
 }

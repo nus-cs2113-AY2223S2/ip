@@ -11,7 +11,7 @@ public class Task {
      * task. The task is set to unmarked at initialization
      * 
      * @param taskDesc
-     *            the description of the new task created
+     *                 the description of the new task created
      */
     public Task(String taskDesc) {
         this.taskDesc = taskDesc;
@@ -48,13 +48,39 @@ public class Task {
     /**
      * Set the task status as done
      */
-    public void markDone(boolean isDone) {
+    public void markDone(boolean isDone, boolean isSilent) {
         this.isDone = isDone;
+
+        if (isSilent) {
+            return;
+        }
+
         if (this.isDone) {
             Io.printOutput("Alright!, I helped you mark this task as done:");
         } else {
             Io.printOutput("OK, I helped you mark this task as not done yet:");
         }
         Io.printOutput("  " + getTaskPrint());
+    }
+
+    /**
+     * Getter for task status
+     * 
+     * @return the status of the task
+     */
+    public boolean getIsDone() {
+        return isDone;
+    }
+
+    /**
+     * Returns the string representation of the Task object to be saved in the data
+     * file
+     * 
+     * @param task
+     *             the task to be saved
+     * @return the string representation of the task to be saved
+     */
+    public String getTaskSaveString() {
+        return "";
     }
 }
