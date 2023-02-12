@@ -35,7 +35,7 @@ public class VerifyInput {
     }
 
     public static void checkValidDeadline(String input, String[] arrayOfInput) throws DukeException {
-        if (!input.contains("/by")) {
+        if (!input.contains(" /by ")) {
             ThrowError.throwError(ErrorTypes.INVALID_DEADLINE_COMMAND.ERROR_TYPE);
         }
         if (arrayOfInput.length < MINIMUM_DEADLINE_LENGTH) {
@@ -44,7 +44,8 @@ public class VerifyInput {
     }
 
     public static void checkValidEvent(String input, String[] arrayOfInput) throws DukeException {
-        if ((!input.contains("/from") || !input.contains("/to")) || (input.indexOf("/from") > input.indexOf("/to"))) {
+        if ((!input.contains(" /from ") || !input.contains(" /to "))
+                || (input.indexOf(" /from ") > input.indexOf(" /to "))) {
             ThrowError.throwError(ErrorTypes.INVALID_EVENT_COMMAND.ERROR_TYPE);
         }
         if (arrayOfInput.length < MINIMUM_EVENT_LENGTH) {

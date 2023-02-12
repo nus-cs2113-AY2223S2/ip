@@ -25,14 +25,14 @@ public class CommandActions {
 
     public static void addDeadlineTask(ArrayList<Task> tasks, String input) {
         String[] commandInformation = input.split(" ", 2);
-        String[] taskNameAndDate = commandInformation[1].split("/by", 2);
+        String[] taskNameAndDate = commandInformation[1].split(" /by ", 2);
         tasks.add(Task.totalTasks, new Deadline(taskNameAndDate[0].trim(), taskNameAndDate[1].trim()));
     }
 
     public static void addEventTask(ArrayList<Task> tasks, String input) {
         String taskNameInformation = input.split(" ", 2)[1];
-        String[] taskNameAndDate = taskNameInformation.split("/from", 2); // name fromTo
-        String[] fromAndTo = taskNameAndDate[1].split("/to", 2); // from to
+        String[] taskNameAndDate = taskNameInformation.split(" /from ", 2); // name fromTo
+        String[] fromAndTo = taskNameAndDate[1].split(" /to ", 2); // from to
         tasks.add(Task.totalTasks, new Event(taskNameAndDate[0].trim(), fromAndTo[0].trim(), fromAndTo[1].trim()));
     }
 
