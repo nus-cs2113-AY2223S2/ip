@@ -12,7 +12,7 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return DEADLINE_ICON + super.toString() + "(by: " + by + ")";
+        return DEADLINE_ICON + super.toString() + " (by: " + by + ")";
     }
 
     @Override

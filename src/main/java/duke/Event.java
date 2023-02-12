@@ -13,7 +13,7 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return EVENT_ICON + super.toString() + "(from: " + from + " to: " + to + ")";
+        return EVENT_ICON + super.toString() + " (from: " + from + " to: " + to + ")";
     }
 
     @Override

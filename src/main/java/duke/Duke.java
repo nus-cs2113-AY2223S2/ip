@@ -5,6 +5,7 @@ import duke.exceptions.EmptyTodoException;
 import duke.exceptions.EmptyUnmarkException;
 import duke.exceptions.UnknownCommandException;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -44,6 +45,7 @@ public class Duke {
     public static final String LIST_COMMAND = "list";
     public static final String OUTPUT_FILE = "outputfile.txt";
     public static final String IOEXCEPTION_ERROR_MESSAGE = "IOException Error";
+    public static final String FILE_NOT_FOUND_MESSAGE = "File Not Found";
 
     private static ArrayList<Task> tasks = new ArrayList<>();
 
@@ -51,6 +53,7 @@ public class Duke {
 
         Duke.logo();
         Duke.greeting();
+        Duke.load(OUTPUT_FILE);
         Duke.starting();
         Duke.ending();
 
@@ -76,7 +79,7 @@ public class Duke {
                 System.out.println(MARK_UNMARK_INDEX_IS_NOT_A_NUMBER_MESSAGE);
             } catch (NullPointerException e) {
                 System.out.println(MARK_UNMARK_INDEX_DOES_NOT_EXIST_MESSAGE);
-            } catch (IOException e){
+            } catch (IOException e) {
                 System.out.println(IOEXCEPTION_ERROR_MESSAGE);
             }
             line = input.nextLine();
@@ -170,7 +173,6 @@ public class Duke {
         FileWriter fw = new FileWriter(filePath);
         for (Task t : tasks) {
             if (t != null) {
-                //System.out.println(t.saveFormat());
                 fw.write(t.saveFormat() + System.lineSeparator());
             }
         }
@@ -184,6 +186,71 @@ public class Duke {
         } catch (IOException e) {
             System.out.println("Something went wrong: " + e.getMessage());
         }
+    }
+
+    private static void load(String filename) {
+        File f = new File(filename);
+
+        if (f.exists()) {
+            try {
+                loadFileContents(f);
+            } catch (FileNotFoundException e) {
+                System.out.println(FILE_NOT_FOUND_MESSAGE);
+            }
+        }
+    }
+
+    private static void loadFileContents(File f) throws FileNotFoundException {
+        Scanner s = new Scanner(f); // create a Scanner using the File as the source
+        while (s.hasNext()) {
+            processFileContents(s.nextLine());
+        }
+    }
+
+    private static void processFileContents(String line){
+        String[] words = line.split("\\|");
+        String type = words[0];
+        boolean isDone = false;
+        if (Integer.valueOf(words[1]) == 1) {
+            isDone = true;
+        }
+        switch (type) {
+        case "T":
+            loadTodo(words, isDone);
+            break;
+        case "E":
+            loadEvent(words, isDone);
+            break;
+        case "D":
+            loadDeadline(words, isDone);
+            break;
+        default:
+            // unknown char error
+        }
+    }
+
+    private static void loadDeadline(String[] words, boolean isDone) {
+        Deadline deadline = new Deadline(words[2], words[3]);
+        if(isDone){
+            deadline.markAsDone();
+        }
+        tasks.add(deadline);
+    }
+
+    private static void loadEvent(String[] words, boolean isDone) {
+        Event event = new Event(words[2], words[3], words[4]);
+        if(isDone){
+            event.markAsDone();
+        }
+        tasks.add(event);
+    }
+
+    private static void loadTodo(String[] words, boolean isDone) {
+        Todo todo = new Todo(words[2]);
+        if(isDone){
+            todo.markAsDone();
+        }
+        tasks.add(todo);
     }
 
     private static Deadline getDeadline(String[] words) {
