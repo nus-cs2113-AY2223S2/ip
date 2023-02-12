@@ -28,7 +28,7 @@ public class Task {
     }
 
     public String returnCommand() {
-        return "hello";
+        return null;
     }
 
     public String toString() {

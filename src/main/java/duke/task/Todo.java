@@ -9,7 +9,7 @@ public class Todo extends Task {
     }
 
     public String returnCommand() {
-        return "todo " + taskName;
+        return super.completed() + "todo " + taskName;
     }
 
     public String toString() {

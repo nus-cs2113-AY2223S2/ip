@@ -11,7 +11,7 @@ public class Deadline extends Task {
     }
 
     public String returnCommand() {
-        return "deadline " + taskName + " /by " + dueBy;
+        return super.completed() + "deadline " + taskName + " /by " + dueBy;
     }
 
     public String toString() {

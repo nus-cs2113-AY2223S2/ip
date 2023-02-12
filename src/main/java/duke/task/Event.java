@@ -13,7 +13,7 @@ public class Event extends Task {
     }
 
     public String returnCommand() {
-        return "event " + taskName + " /from " + eventDetailsPartOne + " /to " + eventDetailsPartTwo;
+        return super.completed() + "event " + taskName + " /from " + eventDetailsPartOne + " /to " + eventDetailsPartTwo;
     }
 
     public String toString() {
