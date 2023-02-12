@@ -17,4 +17,9 @@ public class Label {
     public void printLabel() {
         System.out.print(label);
     }
+
+    /** Returns the label */
+    public String getLabel() {
+        return this.label;
+    }
 }

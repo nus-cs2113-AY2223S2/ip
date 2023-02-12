@@ -5,6 +5,7 @@ import luke.task.Deadline;
 import luke.task.Event;
 import luke.task.Task;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -28,7 +29,8 @@ public class TaskOrganizer {
     /** A list containing all valid task types */
     private ArrayList<String> taskTypes = new ArrayList<String>(
             Arrays.asList("todo", "event", "deadline")
-    );;
+    );
+    ;
 
     public TaskOrganizer() {
         this.newTaskID = 1;
@@ -36,11 +38,31 @@ public class TaskOrganizer {
         this.serialNumbers = new HashMap<Integer, Integer>();
     }
 
-    public TaskOrganizer(int newTaskID, HashMap<Integer, Task> savedHashMap) {
+    public TaskOrganizer(int newTaskID, HashMap<Integer, Task> savedTaskOrders, HashMap<Integer, ToDo> savedToDos,
+                         HashMap<Integer, Deadline> savedDeadlines,HashMap<Integer, Event> savedEvents,
+                         HashMap<Integer, Integer> savedSerialNumbers) {
         this.newTaskID = newTaskID;
-        this.serialNumbers = new HashMap<Integer, Integer>();
-        this.tasks = savedHashMap;
+        this.serialNumbers = savedSerialNumbers;
+        this.tasks = new HashMap<Integer, Task>();
+
+        // Repopulate map with the correct data types.
+        for (Map.Entry<Integer, Task> entry : savedTaskOrders.entrySet()) {
+            Task task = entry.getValue();
+            String taskLabel = task.getTaskLabel();
+            int taskID = task.getTaskID();
+            switch (taskLabel) {
+            case "[T]":
+                tasks.put(taskID, savedToDos.get(taskID));
+                break;
+            case "[D]": ;
+                tasks.put(taskID, savedDeadlines.get(taskID));
+                break;
+            default:
+                tasks.put(taskID, savedEvents.get(taskID));
+            }
+        }
     }
+
 
     /**
      * Checks if the type given is a valid task type.
@@ -176,20 +198,71 @@ public class TaskOrganizer {
         return copy;
     }
 
-    public void serializeTaskOrganizer() {
-        try {
-            String tasksJson = new Gson().toJson(tasks);
-            FileWriter saveTasks = new FileWriter("C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data/taskList.txt");
-            saveTasks.write(tasksJson);
-            saveTasks.close();
+    private void serializeTasks() throws FileNotFoundException, IOException {
+        // Buckets to store each data type
+        HashMap<Integer, ToDo> toDos = new HashMap<>();
+        HashMap<Integer, Deadline> deadlines = new HashMap<>();
+        HashMap<Integer, Event> events = new HashMap<>();
 
-            FileWriter saveTaskID = new FileWriter("C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data/id.txt");
-            saveTaskID.write(Integer.toString(newTaskID));
-            saveTaskID.close();
-        } catch (FileNotFoundException e) {
-
-        } catch (IOException e) {
-
+        // Populate the buckets
+        for (Map.Entry<Integer, Task> entry : tasks.entrySet()) {
+            Task task = entry.getValue();
+            String taskLabel = task.getTaskLabel();
+            switch (taskLabel) {
+            case "[T]":
+                toDos.put(task.getTaskID(), (ToDo) task);
+                break;
+            case "[D]":
+                deadlines.put(task.getTaskID(), (Deadline) task);
+                break;
+            default:
+                events.put(task.getTaskID(), (Event) task);
+            }
         }
+
+        // Serialize toDos
+        String toDosJson = new Gson().toJson(toDos);
+        FileWriter saveToDos = new FileWriter("C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data/toDos.txt");
+        saveToDos.write(toDosJson);
+        saveToDos.close();
+
+        // Serialize deadlines
+        String deadlinesJson = new Gson().toJson(deadlines);
+        FileWriter saveDeadlines = new FileWriter("C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data/deadlines.txt");
+        saveDeadlines.write(deadlinesJson);
+        saveDeadlines.close();
+
+        // Serialize events
+        String eventsJson = new Gson().toJson(events);
+        FileWriter saveEvents = new FileWriter("C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data/events.txt");
+        saveEvents.write(eventsJson);
+        saveEvents.close();
+    }
+
+    private void serialzeSerialNumbers() throws FileNotFoundException, IOException {
+        String serialNumbersJson = new Gson().toJson(serialNumbers);
+        FileWriter saveSerialNumbers = new FileWriter("C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data/serialNumbers.txt");
+        saveSerialNumbers.write(serialNumbersJson);
+        saveSerialNumbers.close();
+    }
+
+    private void serializeTaskID() throws IOException {
+        FileWriter saveTaskID = new FileWriter("C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data/id.txt");
+        saveTaskID.write(Integer.toString(newTaskID));
+        saveTaskID.close();
+    }
+
+    private void serializeTaskOrders() throws IOException {
+        String taskOrdersJson = new Gson().toJson(tasks);
+        FileWriter saveTaskOrders = new FileWriter("C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data/taskList.txt");
+        saveTaskOrders.write(taskOrdersJson);
+        saveTaskOrders.close();
+    }
+
+    public void serializeTaskOrganizer() throws FileNotFoundException, IOException{
+        serializeTasks();
+        serializeTaskOrders();
+        serializeTaskID();
+        serialzeSerialNumbers();
     }
 }

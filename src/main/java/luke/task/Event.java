@@ -1,11 +1,13 @@
 package luke.task;
 
-public class Event extends Deadline {
+public class Event extends Task {
     protected String startDate;
+    protected String endDate;
     public Event(String name, int ID, String startDate, String endDate) {
-        super(name, ID, endDate);
+        super(name, ID);
         this.label.setLabel("E");
         this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     /** Prints out the label, checkBox, name followed by the deadline */

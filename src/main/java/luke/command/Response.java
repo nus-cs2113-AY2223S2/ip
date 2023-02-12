@@ -1,7 +1,10 @@
 package luke.command;
 
 import luke.icon.LukeLogo;
+import luke.task.Deadline;
+import luke.task.Event;
 import luke.task.Task;
+import luke.task.ToDo;
 
 import java.util.ArrayList;
 
@@ -133,6 +136,14 @@ public class Response {
         printLine();
         printSignature();
         System.out.println("You have entered an index that does not exist!");
+        printLine();
+    }
+
+    /** Prints a message telling the user that there is an error when loading saved data */
+    public void printSaveError() {
+        printLine();
+        printSignature();
+        System.out.println("There is an error when loading saved data.");
         printLine();
     }
 }

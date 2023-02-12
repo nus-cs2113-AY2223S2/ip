@@ -19,7 +19,6 @@ public class Task {
     /** The unique ID assgied to this task */
     private int taskID;
 
-
     public Task(String name, int ID) {
         this.taskName = name;
         this.taskID = ID;
@@ -33,7 +32,7 @@ public class Task {
      * @return taskName The name of the task.
      */
     public String getTaskName() {
-        return taskName;
+        return this.taskName;
     }
 
     /**
@@ -41,12 +40,20 @@ public class Task {
      * @return taskID the ID of the task.
      */
     public int getTaskID() {
-        return taskID;
+        return this.taskID;
+    }
+
+    /**
+     * Returns the label of the task.
+     * @return label of the task.
+     */
+    public String getTaskLabel() {
+        return this.label.getLabel();
     }
 
     /** Prints out the checkBox followed by the name of the task */
     public void printTaskName() {
-        label.printLabel();
+        //label.printLabel();
         checkBox.printCheckBox();
         System.out.println(taskName);
     }
