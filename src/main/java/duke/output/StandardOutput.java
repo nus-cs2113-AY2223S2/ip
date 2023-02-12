@@ -10,6 +10,10 @@ public enum StandardOutput {
     UNMARK_MESSAGE(" OK, I've marked this task as not done yet:"),
     ADD_MESSAGE(" The following task has been added:" + System.lineSeparator()
             + "   %s" + System.lineSeparator() + " There is now %d task[s] in total." + System.lineSeparator()),
+    DELETE_MESSAGE(" Noted. Task removed: "),
+    REMAINING_TASK_COUNT(" Now you have %d task[s] in the list." + System.lineSeparator()),
+
+
     INVALID_MARK_MESSAGE(" Invalid input! Valid input format: \"mark <number>\"!"),
     OVER_TASK_COUNT_MESSAGE(" Invalid task number provided, current task count: %s"), 
     INVALID_UNMARK_MESSAGE(" Invalid input! Valid input format: \"unmark <number>\"!"),
@@ -22,8 +26,10 @@ public enum StandardOutput {
     INSUFFICIENT_EVENT_FIELD_MESSAGE(" Invalid input! Please provide enough arguments! " + System.lineSeparator()
             + " Valid input format: \"event <task name> /from <date> /to <date>\""),
     INVALID_DELETE_COMMAND_MESSAGE(" Invalid input! Valid input format: \"delete <number>\"!"),
-    DELETE_MESSAGE(" Noted. Task removed: "),
-    REMAINING_TASK_COUNT(" Now you have %d task[s] in the list." + System.lineSeparator());
+    CREATE_NEW_FILE_EXCEPTION_MESSAGE(" Exception received from creating file"),
+    FILE_NOT_FOUND_EXCEPTION_MESSAGE(" File not found exception from trying to read data from file"),
+    IO_EXCEPTION_MESSAGE(" IO exception received from trying to update data");
+
     public final String STANDARD_OUTPUT;
     StandardOutput(String standardOutput) {
         STANDARD_OUTPUT = standardOutput;

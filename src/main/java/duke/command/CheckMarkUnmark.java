@@ -3,7 +3,6 @@ package duke.command;
 import duke.error.DukeException;
 import duke.error.ErrorTypes;
 import duke.error.ThrowError;
-import duke.task.Task;
 
 public class CheckMarkUnmark {
     private static final int VALID_MARK_LENGTH = 2;

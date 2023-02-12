@@ -1,7 +1,8 @@
 package duke;
 
-import duke.data.FileData;
 import duke.task.Task;
+import duke.data.FileActions;
+import duke.data.DataActions;
 import duke.command.CommandWords;
 import duke.command.Command;
 import duke.output.Printer;
@@ -15,12 +16,14 @@ public class Duke {
         Printer.greeting();
         ArrayList<Task> tasks = new ArrayList<>();
 
-        // add saved tasks to program
-        FileData.makeDirectory();
-        File dataFile = FileData.openDataFile();
-        FileData.uploadData(dataFile, tasks);
+        // make dir if it does not exist
+        FileActions.makeDirectory();
+        // make file if it does not exist
+        File dataFile = FileActions.openDataFile();
+        // import the data from file to program
+        DataActions.importData(dataFile, tasks);
 
-        // asks user for updates
+        // user to input update
         Scanner in = new Scanner(System.in);
         String input = in.nextLine();
         while (!input.equals(CommandWords.BYE.COMMAND)) {
@@ -28,7 +31,8 @@ public class Duke {
             input = in.nextLine();
         }
 
-        FileData.writeToFile(dataFile, tasks);
+        // save data to file
+        DataActions.updateSavedData(tasks);
 
         Printer.bye();
     }
