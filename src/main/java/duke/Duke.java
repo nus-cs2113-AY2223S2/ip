@@ -5,12 +5,12 @@ import duke.exceptions.EmptyTodoException;
 import duke.exceptions.EmptyUnmarkException;
 import duke.exceptions.UnknownCommandException;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
 
     public static final String EXIT_PROGRAM = "bye";
-    public static final int TASK_ARRAY_SIZE = 100;
     public static final String LOGO = "   _____  .__   _____                   .___\n" +
             "  /  _  \\ |  |_/ ____\\______   ____   __| _/\n" +
             " /  /_\\  \\|  |\\   __\\\\_  __ \\_/ __ \\ / __ |\n" +
@@ -40,6 +40,8 @@ public class Duke {
     public static final String UNMARK_COMMAND = "unmark";
     public static final String LIST_COMMAND = "list";
 
+    private static ArrayList<Task> tasks = new ArrayList<>();
+
     public static void main(String[] args) {
 
         Duke.logo();
@@ -53,16 +55,15 @@ public class Duke {
         Scanner input = new Scanner(System.in);
         String line = "";
 
-        Task[] tasks = new Task[TASK_ARRAY_SIZE];
         line = input.nextLine();
         while (!line.equals(EXIT_PROGRAM)) {
             try {
-                Duke.processInput(line, tasks);
+                Duke.processInput(line);
             } catch (UnknownCommandException e) {
-               System.out.println(UNKNOWN_COMAMND_MESSAGE);
-            } catch (EmptyTodoException e){
+                System.out.println(UNKNOWN_COMAMND_MESSAGE);
+            } catch (EmptyTodoException e) {
                 System.out.println(EMPTY_TODO_MESSAGE);
-            } catch (EmptyMarkException e){
+            } catch (EmptyMarkException e) {
                 System.out.println(EMPTY_MARK_MESSAGE);
             } catch (EmptyUnmarkException e) {
                 System.out.println(EMPTY_UNMARK_MESSAGE);
@@ -92,63 +93,43 @@ public class Duke {
         System.out.println(ADDED_TASK + t + "\nNow you have " + t.getNumberOfTasks() + " tasks in the list.");
     }
 
-    public static void processInput(String line, Task[] tasks) throws UnknownCommandException, EmptyTodoException, EmptyMarkException, EmptyUnmarkException{
+    public static void processInput(String line) throws UnknownCommandException, EmptyTodoException, EmptyMarkException, EmptyUnmarkException {
 
         String[] words = line.split(" ", 2);
         String command = words[0];
-        int tasksCount = 0;
-        if (tasks[0] != null) {
-            tasksCount = tasks[0].getNumberOfTasks();
-        }
         // words[0] is the command, words[n] is the next few words
 
         switch (command) {
         case TODO_COMMAND:
-            checkIfTodoEmpty(words);
-            Task td = new Todo(words[1]);
-            tasks[tasksCount] = td;
+            Todo td = getTodo(words);
+            tasks.add(td);
             printAddTaskMessage(td);
             break;
         case DEADLINE_COMMAND:
-            line = words[1]; // to remove the command
-            String[] deadlineDetails = line.split(BY_DELIMITER);
-            Task d = new Deadline(deadlineDetails[0], deadlineDetails[1]);
-            tasks[tasksCount] = d;
+            Deadline d = getDeadline(words);
+            tasks.add(d);
             printAddTaskMessage(d);
             break;
         case EVENT_COMMAND:
-            line = words[1]; // to remove the command
-            String[] eventDetails = line.split(FROM_DELIMITER);
-            String eventName = eventDetails[0];
-            String from = line.substring(line.indexOf(FROM_DELIMITER) + FROM_DELIMITER.length(), line.indexOf(TO_DELIMITER));
-            eventDetails = line.split(TO_DELIMITER);
-            String to = eventDetails[1];
-            Task e = new Event(eventName, from, to);
-            tasks[tasksCount] = e;
+            Event e = getEvent(words);
+            tasks.add(e);
             printAddTaskMessage(e);
             break;
 
         case MARK_COMMAND:
             CheckIfMarkEmpty(words);
             int markIndex = Integer.parseInt(words[1]) - 1; // 0 indexing
-            tasks[markIndex].markAsDone();
-            System.out.println(MARKED_THIS_TASK_AS_DONE);
-            System.out.println(tasks[markIndex]);
+            tasks.get(markIndex).markAsDone();
+            System.out.println(MARKED_THIS_TASK_AS_DONE + "\n" + tasks.get(markIndex));
             break;
         case UNMARK_COMMAND:
             CheckIfUnmarkEmpty(words);
             int unmarkIndex = Integer.parseInt(words[1]) - 1; // 0 indexing
-            tasks[unmarkIndex].markAsNotDone();
-            System.out.println(UNMARKED_THIS_TASK_AS_DONE);
-            System.out.println(tasks[unmarkIndex]);
+            tasks.get(unmarkIndex).markAsNotDone();
+            System.out.println(UNMARKED_THIS_TASK_AS_DONE + "\n" + tasks.get(unmarkIndex));
             break;
         case LIST_COMMAND:
-            int listIndex = 0;
-            for (Task t : tasks) {
-                if (t != null) {
-                    System.out.println(++listIndex + ". " + t);
-                }
-            }
+            printList();
             break;
 
         default:
@@ -156,20 +137,55 @@ public class Duke {
         }
     }
 
+    private static Todo getTodo(String[] words) throws EmptyTodoException {
+        checkIfTodoEmpty(words);
+        Todo td = new Todo(words[1]);
+        return td;
+    }
+
+    private static void printList() {
+        int listIndex = 0;
+        for (Task t : tasks) {
+            if (t != null) {
+                System.out.println(++listIndex + ". " + t);
+            }
+        }
+    }
+
+    private static Deadline getDeadline(String[] words) {
+        String line;
+        line = words[1]; // to remove the command
+        String[] deadlineDetails = line.split(BY_DELIMITER);
+        Deadline d = new Deadline(deadlineDetails[0], deadlineDetails[1]);
+        return d;
+    }
+
+    private static Event getEvent(String[] words) {
+        String line;
+        line = words[1]; // to remove the command
+        String[] eventDetails = line.split(FROM_DELIMITER);
+        String eventName = eventDetails[0];
+        String from = line.substring(line.indexOf(FROM_DELIMITER) + FROM_DELIMITER.length(), line.indexOf(TO_DELIMITER));
+        eventDetails = line.split(TO_DELIMITER);
+        String to = eventDetails[1];
+        Event e = new Event(eventName, from, to);
+        return e;
+    }
+
     private static void CheckIfMarkEmpty(String[] words) throws EmptyMarkException {
-        if(words.length < 2 || words[1].equals("")){
+        if (words.length < 2 || words[1].equals("")) {
             throw new EmptyMarkException();
         }
     }
 
     private static void CheckIfUnmarkEmpty(String[] words) throws EmptyUnmarkException {
-        if(words.length < 2 || words[1].equals("")){
+        if (words.length < 2 || words[1].equals("")) {
             throw new EmptyUnmarkException();
         }
     }
 
     private static void checkIfTodoEmpty(String[] words) throws EmptyTodoException {
-        if(words.length < 2 || words[1].equals("")){
+        if (words.length < 2 || words[1].equals("")) {
             throw new EmptyTodoException();
         }
     }
