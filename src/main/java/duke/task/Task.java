@@ -26,6 +26,7 @@ public abstract class Task {
         } else {
             this.isDone = false;
         }
+        this.taskString = saveTaskString();
     }
 
     public abstract String saveTaskString();
