@@ -31,14 +31,25 @@ public class Duke {
     public static final String EMPTY_TODO_MESSAGE = "OOPS!!! The description of a todo cannot be empty.";
     public static final String EMPTY_UNMARK_MESSAGE = "OOPS!!! The index of unmark cannot be empty.";
     public static final String EMPTY_MARK_MESSAGE = "OOPS!!! The index of mark cannot be empty.";
-    public static final String MARK_UNMARK_INDEX_IS_NOT_A_NUMBER_MESSAGE = "Mark/Unmark Index is not a number";
+    public static final String MARK_UNMARK_INDEX_IS_NOT_A_NUMBER_MESSAGE = "mark/unmark index is not a number";
     public static final String MARK_UNMARK_INDEX_DOES_NOT_EXIST_MESSAGE = "mark/unmark index does not exist";
+    public static final String TODO_COMMAND = "todo";
+    public static final String DEADLINE_COMMAND = "deadline";
+    public static final String EVENT_COMMAND = "event";
+    public static final String MARK_COMMAND = "mark";
+    public static final String UNMARK_COMMAND = "unmark";
+    public static final String LIST_COMMAND = "list";
 
     public static void main(String[] args) {
 
         Duke.logo();
         Duke.greeting();
+        Duke.starting();
+        Duke.ending();
 
+    }
+
+    private static void starting() {
         Scanner input = new Scanner(System.in);
         String line = "";
 
@@ -62,10 +73,6 @@ public class Duke {
             }
             line = input.nextLine();
         }
-
-        Duke.ending();
-        System.exit(0);
-
     }
 
     public static void logo() {
@@ -78,6 +85,7 @@ public class Duke {
 
     public static void ending() {
         System.out.println(ENDING + DIVIDER);
+        System.exit(0);
     }
 
     public static void printAddTaskMessage(Task t) {
@@ -95,20 +103,20 @@ public class Duke {
         // words[0] is the command, words[n] is the next few words
 
         switch (command) {
-        case "todo":
+        case TODO_COMMAND:
             checkIfTodoEmpty(words);
             Task td = new Todo(words[1]);
             tasks[tasksCount] = td;
             printAddTaskMessage(td);
             break;
-        case "deadline":
+        case DEADLINE_COMMAND:
             line = words[1]; // to remove the command
             String[] deadlineDetails = line.split(BY_DELIMITER);
             Task d = new Deadline(deadlineDetails[0], deadlineDetails[1]);
             tasks[tasksCount] = d;
             printAddTaskMessage(d);
             break;
-        case "event":
+        case EVENT_COMMAND:
             line = words[1]; // to remove the command
             String[] eventDetails = line.split(FROM_DELIMITER);
             String eventName = eventDetails[0];
@@ -120,21 +128,21 @@ public class Duke {
             printAddTaskMessage(e);
             break;
 
-        case "mark":
+        case MARK_COMMAND:
             CheckIfMarkEmpty(words);
             int markIndex = Integer.parseInt(words[1]) - 1; // 0 indexing
             tasks[markIndex].markAsDone();
             System.out.println(MARKED_THIS_TASK_AS_DONE);
             System.out.println(tasks[markIndex]);
             break;
-        case "unmark":
+        case UNMARK_COMMAND:
             CheckIfUnmarkEmpty(words);
             int unmarkIndex = Integer.parseInt(words[1]) - 1; // 0 indexing
             tasks[unmarkIndex].markAsNotDone();
             System.out.println(UNMARKED_THIS_TASK_AS_DONE);
             System.out.println(tasks[unmarkIndex]);
             break;
-        case "list":
+        case LIST_COMMAND:
             int listIndex = 0;
             for (Task t : tasks) {
                 if (t != null) {
