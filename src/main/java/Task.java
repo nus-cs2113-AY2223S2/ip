@@ -1,5 +1,7 @@
+import java.util.ArrayList;
+
 public class Task {
-    protected static Task[] tasks = new Task[100];
+    protected static ArrayList<Task> tasks = new ArrayList<>();
     protected static int numOfTasks = 0;
     protected String description;
     protected boolean isDone;
