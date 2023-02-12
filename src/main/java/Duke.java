@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.nio.file.Paths;
 import java.util.Scanner;
-import java.util.Arrays;
 
 import java.nio.file.Path;
 import java.nio.file.Files;
@@ -71,15 +70,19 @@ public class Duke {
      * Resizeable array that stores the user inputs.
      */
     private static ArrayList<Task> storedValues = new ArrayList<>();
-
-    private static final String home = System.getProperty("user.home");
-    private static final File filePath = Paths.get(home, "IdeaProjects", "ip", "src",
+    /***
+     * Home directory for creating directory and txt file.
+     */
+    private static final String HOME = System.getProperty("user.home");
+    /***
+     * Fixed directory where txt file will be saved.
+     */
+    private static final File FILEPATH = Paths.get(HOME, "IdeaProjects", "ip", "src",
             "main", "data", "duke-inputs.txt").toFile();
 
     /***
      * Main function greets the user and runs processInputs().
      */
-
     public static void main(String[] args) {
         try {
             fileAvailability();
@@ -88,8 +91,14 @@ public class Duke {
         }
     }
 
+    /***
+     * Checks if the file is already created in the user's environment. If not, fileAvailability will
+     * create the directory or txt file, depending on what is missing.
+     * Duke will only proceed when the txt file is detected.
+     * @throws FileNotFoundException When the file is not found in the environment.
+     */
     public static void fileAvailability() throws FileNotFoundException {
-        Path path = Paths.get(home, "IdeaProjects", "ip", "src", "main", "data");
+        Path path = Paths.get(HOME, "IdeaProjects", "ip", "src", "main", "data");
         boolean directoryExists = Files.exists(path);
         if (!directoryExists) {
             try {
@@ -98,7 +107,7 @@ public class Duke {
                 System.out.println("Error occurred!\n");
             }
         }
-        Path textFile = Paths.get(home, "IdeaProjects", "ip", "src", "main", "data", "duke-inputs.txt");
+        Path textFile = Paths.get(HOME, "IdeaProjects", "ip", "src", "main", "data", "duke-inputs.txt");
         try {
             Files.createFile(textFile);
         } catch (IOException e) {
@@ -130,6 +139,13 @@ public class Duke {
         }
     }
 
+    /***
+     * Reads the existing data within the txt file before new user inputs are allowed. Ensures that the
+     * list is the most updated since the last interaction with Duke.
+     * @param data The txt file in the local environment.
+     * @param storedValues List of inputs stored by the user.
+     * @throws FileNotFoundException Thrown when file is not found in the environment.
+     */
     private static void readExistingData(File data, ArrayList<Task> storedValues) throws FileNotFoundException {
         Scanner readData = new Scanner(data);
         while (readData.hasNext()) {
@@ -141,40 +157,72 @@ public class Duke {
 
             switch (type) {
             case "T":
-                Todo addInputT = new Todo(task);
-                storedValues.add(taskNum,addInputT);
-                if (marked.equals("1")) {
-                    storedValues.get(taskNum).markAsDone();
-                }
-                taskNum += 1;
+                readExistingToDo(storedValues, marked, task);
                 break;
             case "D":
-                int slash = extractType[4].indexOf("|");
-                String deadlineTask = extractType[4].substring(0, slash-1);
-                String deadlineBy = extractType[4].substring(slash+2);
-                Deadline addInputD = new Deadline(deadlineTask, deadlineBy);
-                storedValues.add(taskNum,addInputD);
-                if (marked.equals("1")) {
-                    storedValues.get(taskNum).markAsDone();
-                }
-                taskNum += 1;
+                readExistingDeadline(storedValues, extractType, marked);
                 break;
             case "E":
-                int firstSlash = extractType[4].indexOf("|");
-                String eventName = extractType[4].substring(0,firstSlash-1);
-                String eventDuration = extractType[4].substring(firstSlash+2);
-                int secondSlash = eventDuration.indexOf("|");
-                String eventFrom = eventDuration.substring(0,secondSlash-1);
-                String eventTo = eventDuration.substring(secondSlash+2);
-                Event addInputE = new Event(eventName, eventFrom, eventTo);
-                storedValues.add(taskNum,addInputE);
-                if (marked.equals("1")) {
-                    storedValues.get(taskNum).markAsDone();
-                }
-                taskNum += 1;
+                readExistingEvent(storedValues, extractType, marked);
                 break;
             }
         }
+    }
+
+    /***
+     * Reads the existing events within the txt file, processes it and displays it when the command "list"
+     * is called by the user.
+     * @param storedValues List of inputs stored by the user.
+     * @param extractType Description of task with duration.
+     * @param marked Status of marked in txt file.
+     */
+    private static void readExistingEvent(ArrayList<Task> storedValues, String[] extractType, String marked) {
+        int firstSlash = extractType[4].indexOf("|");
+        String eventName = extractType[4].substring(0,firstSlash-1);
+        String eventDuration = extractType[4].substring(firstSlash+2);
+        int secondSlash = eventDuration.indexOf("|");
+        String eventFrom = eventDuration.substring(0,secondSlash-1);
+        String eventTo = eventDuration.substring(secondSlash+2);
+        Event addInputE = new Event(eventName, eventFrom, eventTo);
+        storedValues.add(taskNum,addInputE);
+        if (marked.equals("1")) {
+            storedValues.get(taskNum).markAsDone();
+        }
+        taskNum += 1;
+    }
+
+    /***
+     * Reads the existing deadlines within the txt file, processes it and displays it when the command "list"
+     * is called by the user.
+     * @param storedValues List of inputs stored by the user.
+     * @param extractType Description of task with duration.
+     * @param marked Status of marked in txt file.
+     */
+    private static void readExistingDeadline(ArrayList<Task> storedValues, String[] extractType, String marked) {
+        int slash = extractType[4].indexOf("|");
+        String deadlineTask = extractType[4].substring(0, slash-1);
+        String deadlineBy = extractType[4].substring(slash+2);
+        Deadline addInputD = new Deadline(deadlineTask, deadlineBy);
+        storedValues.add(taskNum,addInputD);
+        if (marked.equals("1")) {
+            storedValues.get(taskNum).markAsDone();
+        }
+        taskNum += 1;
+    }
+    /***
+     * Reads the existing todos within the txt file, processes it and displays it when the command "list"
+     * is called by the user.
+     * @param storedValues List of inputs stored by the user.
+     * @param marked Status of marked in txt file.
+     * @param task Description of task.
+     */
+    private static void readExistingToDo(ArrayList<Task> storedValues, String marked, String task) {
+        Todo addInputT = new Todo(task);
+        storedValues.add(taskNum,addInputT);
+        if (marked.equals("1")) {
+            storedValues.get(taskNum).markAsDone();
+        }
+        taskNum += 1;
     }
 
     /***
@@ -191,7 +239,7 @@ public class Duke {
         case "bye":
             return true;
         case "list":
-            printList(storedValues, taskNum);
+            printList(storedValues);
             break;
         case "mark":
             try {
@@ -236,7 +284,7 @@ public class Duke {
             break;
         case "delete":
             try {
-                taskNum = deleteTask(line, storedValues);
+                deleteTask(line, storedValues);
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("Item to delete is not in the list!");
             } catch (IOException e) {
@@ -250,20 +298,44 @@ public class Duke {
         return false;
     }
 
-    private static int deleteTask(String line, ArrayList<Task> storedValues) throws IOException {
+    /***
+     * Deletes the task in the list and the txt file, when the user no longer needs the task.
+     * @param line The command input from user.
+     * @param storedValues List of inputs stored by the user.
+     * @throws IOException Thrown when error is detected.
+     */
+    private static void deleteTask(String line, ArrayList<Task> storedValues) throws IOException {
         int length = line.length();
         String itemToDelete = line.substring(REMOVE_DELETE_NUM, length);
         int posToDelete = Integer.parseInt(itemToDelete);
         Task value = storedValues.get(posToDelete - 1);
         int currLine = 0;
-        String lineInfo;
 
-        File dukeInputs = filePath;
+        deleteTaskInTxt(posToDelete, currLine);
+
+        storedValues.remove(posToDelete - 1);
+        formattingLine();
+        System.out.println("Noted. I've removed this task: \n" +
+                value + "\n" +
+                "Now you have " + (taskNum - 1) + " tasks in the list. \n");
+        formattingLine();
+
+        taskNum -= 1;
+    }
+
+    /***
+     * Deletes task in txt file.
+     * @param posToDelete Row to delete.
+     * @param currLine Tracks the current line that it is on.
+     * @throws IOException Thrown when error is detected.
+     */
+    private static void deleteTaskInTxt(int posToDelete, int currLine) throws IOException {
+        File dukeInputs = FILEPATH;
         String newContent = "";
         BufferedReader reader = new BufferedReader(new FileReader(dukeInputs));
         String input = reader.readLine();
         while (input != null) {
-            if (posToDelete-1 != currLine) {
+            if (posToDelete -1 != currLine) {
                 newContent = newContent + input + "\n";
             }
             currLine += 1;
@@ -274,24 +346,19 @@ public class Duke {
         writer.write(newContent);
         reader.close();
         writer.close();
-
-        storedValues.remove(posToDelete - 1);
-        formattingLine();
-        System.out.println("Noted. I've removed this task: \n" +
-                value + "\n" +
-                "Now you have " + (taskNum - 1) + " tasks in the list. \n");
-        formattingLine();
-
-        taskNum -= 1;
-        return taskNum;
     }
 
+    /***
+     * Writes all the inputs made by user to the txt file so that data is saved in hard disk.
+     * @param storedValues List of input values made by the user.
+     * @throws IOException Thrown when error is detected.
+     */
     private static void writeToFile(Task storedValues) throws IOException {
-        FileWriter fw = new FileWriter(filePath, true);
-        int marked = ((storedValues.getStatusIcon() == " ") ? 0 : 1);
-        if (storedValues.getClass().getSimpleName() == "Todo") {
+        FileWriter fw = new FileWriter(FILEPATH, true);
+        int marked = ((storedValues.getStatusIcon().equals(" ")) ? 0 : 1);
+        if (storedValues.getClass().getSimpleName().equals("Todo")) {
             fw.write("T | " + marked + " | " + storedValues.description + "\n");
-        } else if (storedValues.getClass().getSimpleName() == "Deadline") {
+        } else if (storedValues.getClass().getSimpleName().equals("Deadline")) {
             fw.write("D | " + marked + " | " + storedValues.description + " | " +
                     ((Deadline) storedValues).by + "\n");
         } else {
@@ -368,8 +435,7 @@ public class Duke {
                 "Now you have " + (taskNum + 1) + " tasks in the list.\n");
         formattingLine();
         // Store value in line into list
-        Task newInput = line;
-        storedValues.add(taskNum,newInput);
+        storedValues.add(taskNum,line);
         taskNum += 1;
         try {
             writeToFile(line);
@@ -381,10 +447,11 @@ public class Duke {
 
     /***
      * Unmarks the task in the list when called.
-     * @param storedValues List of tasks from user inputs
+     * @param storedValues List of tasks from user inputs.
      * @param line User input to be processed.
+     * @throws UnmarkOutOfBounds Thrown when the value input is out of bounds.
+     * @throws IOException Thrown when other errors are detected.
      */
-
     private static void unmarkItem(ArrayList<Task> storedValues, String line) throws UnmarkOutOfBounds, IOException {
         int length = line.length();
         String itemToMark = line.substring(REMOVE_UNMARK_NUM, length);
@@ -393,38 +460,50 @@ public class Duke {
         if (taskNum < numToMark) {
             throw new UnmarkOutOfBounds();
         } else {
-            storedValues.get(numToMark-1).unmarkAsDone();
-            formattingLine();
-            System.out.println("OK, I've marked this task as not done yet: \n" +
-                    storedValues.get(numToMark-1).toString() + "\n");
-            formattingLine();
-
-            File dukeInputs = filePath;
-            String prevContent = "";
-            BufferedReader reader = new BufferedReader(new FileReader(dukeInputs));
-            String input = reader.readLine();
-            while (input != null) {
-                prevContent = prevContent + input + "\n";
-                input = reader.readLine();
-            }
-
-            char type = storedValues.get(numToMark-1).getClass().toString().substring(6).charAt(0);
-            String toReplace = (type + " | 1 | " + storedValues.get(numToMark-1).description);
-            String toReplaceWith = (type + " | 0 | " + storedValues.get(numToMark-1).description);
-            String newContent = prevContent.replace(toReplace, toReplaceWith);
-            FileWriter writer = new FileWriter(dukeInputs);
-            writer.write(newContent);
-            reader.close();
-            writer.close();
+            unmarkTaskInTxt(storedValues, numToMark);
         }
+    }
+
+    /***
+     * Unmarks the tast in the txt file when called.
+     * @param storedValues List of tasks from user inputs.
+     * @param numToMark The row in txt file to be unmarked.
+     * @throws IOException Thrown when file cannot be read.
+     */
+    private static void unmarkTaskInTxt(ArrayList<Task> storedValues, int numToMark) throws IOException {
+        storedValues.get(numToMark -1).unmarkAsDone();
+        formattingLine();
+        System.out.println("OK, I've marked this task as not done yet: \n" +
+                storedValues.get(numToMark -1).toString() + "\n");
+        formattingLine();
+
+        File dukeInputs = FILEPATH;
+        String prevContent = "";
+        BufferedReader reader = new BufferedReader(new FileReader(dukeInputs));
+        String input = reader.readLine();
+        while (input != null) {
+            prevContent = prevContent + input + "\n";
+            input = reader.readLine();
+        }
+
+        char type = storedValues.get(numToMark -1).getClass().toString().substring(6).charAt(0);
+        String toReplace = (type + " | 1 | " + storedValues.get(numToMark -1).description);
+        String toReplaceWith = (type + " | 0 | " + storedValues.get(numToMark -1).description);
+        String newContent = prevContent.replace(toReplace, toReplaceWith);
+        FileWriter writer = new FileWriter(dukeInputs);
+        writer.write(newContent);
+        reader.close();
+        writer.close();
     }
 
     /***
      * Marks the task in the list when called.
      * @param storedValues List of tasks from user inputs.
      * @param line User input to be processed.
+     * @param taskNum The task number from user input that is to be marked.
+     * @throws MarkOutOfBounds Thrown when the task number exceeds the number of items in list.
+     * @throws IOException Thrown when error is detected.
      */
-
     private static void markItem(ArrayList<Task> storedValues, String line, int taskNum) throws MarkOutOfBounds, IOException {
         int length = line.length();
         String itemToMark = line.substring(REMOVE_MARK_NUM, length);
@@ -434,38 +513,47 @@ public class Duke {
             // Means that it is out of bounds
             throw new MarkOutOfBounds();
         } else {
-            storedValues.get(numToMark-1).markAsDone();
-            formattingLine();
-            System.out.println("Nice! I've marked this task as done: \n"
-                    + storedValues.get(numToMark-1).toString() + "\n");
-            formattingLine();
-
-            File dukeInputs = filePath;
-            String prevContent = "";
-            BufferedReader reader = new BufferedReader(new FileReader(dukeInputs));
-            String input = reader.readLine();
-            while (input != null) {
-                prevContent = prevContent + input + "\n";
-                input = reader.readLine();
-            }
-
-            char type = storedValues.get(numToMark-1).getClass().toString().substring(6).charAt(0);
-            String toReplace = (type + " | 0 | " + storedValues.get(numToMark-1).description);
-            String toReplaceWith = (type + " | 1 | " + storedValues.get(numToMark-1).description);
-            String newContent = prevContent.replace(toReplace, toReplaceWith);
-            FileWriter writer = new FileWriter(dukeInputs);
-            writer.write(newContent);
-            reader.close();
-            writer.close();
+            markTaskInTxt(storedValues, numToMark);
         }
+    }
+
+    /***
+     * Marks the task in the txt file.
+     * @param storedValues List of tasks from user inputs.
+     * @param numToMark Task number from user input that is to be marked.
+     * @throws IOException Thrown when file cannot be read.
+     */
+    private static void markTaskInTxt(ArrayList<Task> storedValues, int numToMark) throws IOException {
+        storedValues.get(numToMark -1).markAsDone();
+        formattingLine();
+        System.out.println("Nice! I've marked this task as done: \n"
+                + storedValues.get(numToMark -1).toString() + "\n");
+        formattingLine();
+
+        File dukeInputs = FILEPATH;
+        String prevContent = "";
+        BufferedReader reader = new BufferedReader(new FileReader(dukeInputs));
+        String input = reader.readLine();
+        while (input != null) {
+            prevContent = prevContent + input + "\n";
+            input = reader.readLine();
+        }
+
+        char type = storedValues.get(numToMark -1).getClass().toString().substring(6).charAt(0);
+        String toReplace = (type + " | 0 | " + storedValues.get(numToMark -1).description);
+        String toReplaceWith = (type + " | 1 | " + storedValues.get(numToMark -1).description);
+        String newContent = prevContent.replace(toReplace, toReplaceWith);
+        FileWriter writer = new FileWriter(dukeInputs);
+        writer.write(newContent);
+        reader.close();
+        writer.close();
     }
 
     /***
      * Print all items within the list of stored tasks.
      * @param storedValues List of tasks from user inputs.
-     * @param taskNum The existing position in the list.
      */
-    private static void printList(ArrayList<Task> storedValues, int taskNum) {
+    private static void printList(ArrayList<Task> storedValues) {
         int currValue = 0;
         formattingLine();
         System.out.println("Here are the tasks in your list:");
