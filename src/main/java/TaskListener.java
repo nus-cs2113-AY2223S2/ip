@@ -5,8 +5,8 @@ public class TaskListener {
     static final String DIVIDER = "--------------------------------------------------------------------";
     private TasksList tasksList;
 
-    public TaskListener(int expectedTasksCount) {
-        this.tasksList = new TasksList(expectedTasksCount);
+    public TaskListener() {
+        this.tasksList = new TasksList();
     }
 
     public static void greet() {
@@ -30,7 +30,6 @@ public class TaskListener {
         }
         System.out.println(DIVIDER + System.lineSeparator());
     }
-
     private void printAddedTask(Task task) {
         String tasksWord = tasksList.getTasksCount() == 1 ? " task" : " tasks";
         final String FIRST_SENTENCE = "Got it. I've added this task:";
@@ -129,14 +128,31 @@ public class TaskListener {
                 : "OK, I've marked this task as not done yet:";
 
         try {
-            Task task = this.tasksList.getTasks()[taskIndex];
+            Task task = this.tasksList.getTasks().get(taskIndex);
             task.setIsDone(isDone);
             printLines(successMessage, task.toString());
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             printLines("No task at such index!");
         }
     }
 
+    private void removeTask(int taskIndex) {
+        try {
+            Task removedTask = this.tasksList.removeTask(taskIndex);
+
+            String tasksWord = tasksList.getTasksCount() == 1 ? " task " : " tasks ";
+
+            String successMessage =  "Noted. I've removed this task:" +
+                    System.lineSeparator() +
+                    removedTask +
+                    System.lineSeparator() +
+                    "Now you have " + tasksList.getTasksCount() + tasksWord + "in the list.";
+
+           printLines(successMessage);
+        } catch (IndexOutOfBoundsException e) {
+            printLines("No task at such index!");
+        }
+    }
     public void listen() {
         Scanner in = new Scanner(System.in);
 
@@ -175,14 +191,23 @@ public class TaskListener {
             boolean intendedDoneValue = command.equals("mark");
 
             try {
-                String indexArgument = arguments.substring(0);
-                int taskIndex = Integer.parseInt(indexArgument) - 1;
+                int taskIndex = Integer.parseInt(arguments) - 1;
 
                 modifyDoneValue(intendedDoneValue, taskIndex);
             } catch (NumberFormatException e) {
                 printLines("Please provide a valid index");
             }
 
+            break;
+        }
+
+        case "delete": {
+            try {
+                int taskIndex = Integer.parseInt(arguments) - 1;
+                removeTask(taskIndex);
+            } catch (NumberFormatException e) {
+                printLines("Please provide a valid index");
+            }
             break;
         }
 
@@ -196,4 +221,6 @@ public class TaskListener {
 
         listen();
     }
+
+
 }

@@ -1,41 +1,42 @@
-import java.util.Arrays;
+import java.util.ArrayList;
 
 public class TasksList {
-    private Task[] tasks;
-    private static int tasksCount = 0;
+    private ArrayList<Task> tasks;
 
-    public TasksList (int expectedTasksCount) {
-        this.tasks = new Task[expectedTasksCount];
+    public TasksList () {
+        this.tasks = new ArrayList<>();
     }
 
 
-    public Task[] getTasks() {
-        return Arrays.copyOfRange(this.tasks, 0,  tasksCount);
+    public ArrayList<Task> getTasks() {
+        return tasks;
     }
 
     public int getTasksCount() {
-        return tasksCount;
+        return tasks.size();
     }
 
     public String toString() {
         int index = 1;
         StringBuilder output = new StringBuilder();
         for (Task task: tasks) {
-            if (task != null) {
                 output.append(index).append(". ").append(task);
-
                 // Don't add a break after the last line
-                if (index != tasksCount){
+                if (index != tasks.size()){
                     output.append(System.lineSeparator());
                 }
                 index++;
-            }
         }
         return output.toString();
     }
 
     public void addTask(Task task) {
-        this.tasks[tasksCount] = task;
-        tasksCount += 1;
+        tasks.add(task);
+    }
+
+    public Task removeTask(int index) {
+        Task taskToRemove = tasks.get(index);
+        tasks.remove(index);
+        return taskToRemove;
     }
 }
