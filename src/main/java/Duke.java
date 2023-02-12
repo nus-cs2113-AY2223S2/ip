@@ -59,6 +59,13 @@ public class Duke {
         System.out.println("____________________________________________________________");
     }
 
+    /**
+     * Reads contents of DukeData file and adds them to the Tasks ArrayList.
+     *
+     * @param tasks The ArrayList holding the task objects.
+     * @throws IOException if there is some error in file reading.
+     * */
+
     private static void addFileContents(ArrayList<Task> tasks) throws IOException {
         File f = new File("src/main/java/DukeData.txt"); // create a File for the given file path
         Scanner s = new Scanner(f);
@@ -80,12 +87,26 @@ public class Duke {
         }
     }
 
+    /**
+     * Reads deadline tasks into tasks list.
+     *
+     * @param tasks The ArrayList holding the task objects.
+     * @param line The deadline to be read into tasks ArrayList.
+     * */
+
     private static void readDeadlineIntoTasksList(ArrayList<Task> tasks, String line) {
         int byIndex = line.indexOf("(by");
         String taskDescription = line.substring(9, byIndex);
         String deadline = line.substring(byIndex + 4, line.length()-1);
         tasks.add(new Deadline(taskDescription, deadline));
     }
+
+    /**
+     * Reads event tasks into tasks list.
+     *
+     * @param tasks The ArrayList holding the task objects.
+     * @param line The event to be read into tasks ArrayList.
+     * */
 
     private static void readEventIntoTasksList(ArrayList<Task> tasks, String line) {
         //index of event start date/time
@@ -111,7 +132,7 @@ public class Duke {
         fw.write("");
         fw.close();
     }
-
+    
     private static void appendToFile(String textToAppend) throws IOException {
         FileWriter fw = new FileWriter("src/main/java/DukeData.txt", true); // create a FileWriter in append mode
         fw.write(textToAppend);
@@ -221,10 +242,10 @@ public class Duke {
     }
 
     /**
-     * Deletes the task from the ArrayList of task objects
+     * Deletes the task from the ArrayList of task objects.
      *
      * @param tasks An ArrayList holding the task objects.
-     * @param task  The command to delete the task
+     * @param task  The command to delete the task.
      */
     private static void deleteTask(ArrayList<Task> tasks, String task) {
         int index = Integer.parseInt(task.trim().substring(7));
