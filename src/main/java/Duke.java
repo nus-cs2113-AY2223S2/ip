@@ -1,3 +1,11 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.MissingFormatArgumentException;
 import java.util.Scanner;
@@ -19,6 +27,8 @@ public class Duke {
     public static final int COMMAND_BUFFER = 1;
     /** The return result when a substring is not found */
     public static final int OUT_OF_BOUNDS = -1;
+    public static final String STORAGE_INFO_TXT = "storage-info.txt";
+    public static final String STORE_DIR = "store";
 
     /** Language state of the program. */
     public static boolean isSinglish = false;
@@ -97,9 +107,74 @@ public class Duke {
         Greeting.printHorizontalLines(isSinglish);
     }
 
-    public static void main(String[] args) {
+    public static void updateList(Path storageFilePath) throws IOException {
+        try (BufferedWriter bufferedWriter = new BufferedWriter(
+                (new FileWriter(storageFilePath.toFile())))) {
+            for (Task task : tasks) {
+                String line = task.formatString();
+                bufferedWriter.write(line);
+                bufferedWriter.newLine();
+            }
+        } catch (IOException e) {
+            throw new IOException();
+        }
+    }
+
+    public static void readAndStoreList(Path storageFilePath) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(storageFilePath.toFile()))) {
+            String line;
+            line = reader.readLine();
+            int index = 0;
+            //process line
+            while (line != null) {
+                String[] commands = line.split(" ");
+                if (commands[0].charAt(2) == 'T') {
+                    Todo todo = new Todo(commands[1], index);
+                    if (commands[0].charAt(5) == 'X') {
+                        todo.isDone = true;
+                    }
+                    tasks.add(todo);
+                } else if (commands[0].charAt(2) == 'D') {
+                    Deadline deadline = new Deadline(commands[1], index, commands[3].substring(0, (commands[3].length() - 2)));
+                    if (commands[0].charAt(5) == 'X') {
+                        deadline.isDone = true;
+                    }
+                    tasks.add(deadline);
+                } else if (commands[0].charAt(2) == 'E') {
+                    Event event = new Event(commands[1], index, commands[3], commands[5].substring(0, (commands[5].length() - 2)));
+                    if (commands[0].charAt(5) == 'X') {
+                        event.isDone = true;
+                    }
+                    tasks.add(event);
+                }
+                index++;
+                line = reader.readLine();
+            }
+        } catch (IOException e) {
+            throw new IOException();
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
         Greeting.sayHello(isSinglish);
 
+        //
+        new File("store").mkdirs();
+        String ipFolderPath = System.getProperty("user.dir");
+        java.nio.file.Path storageFolderPath = java.nio.file.Paths.get(ipFolderPath, STORE_DIR);
+        System.out.println(storageFolderPath);
+        java.nio.file.Path storageFilePath = java.nio.file.Paths.get(storageFolderPath.toString(), STORAGE_INFO_TXT);
+        System.out.println(storageFilePath);
+
+        try {
+            java.nio.file.Files.createFile(storageFilePath);
+            System.out.println("File created successfully at: " + storageFilePath);
+        } catch (IOException e) {
+            System.out.println("File already exist: " + e.getMessage());
+        }
+        //
+
+        readAndStoreList(storageFilePath);
 
         while (true) {
             Scanner in = new Scanner(System.in);
@@ -124,12 +199,16 @@ public class Duke {
                     printList();
                 } else if (isValidMarkOrUnmarkCommand) {
                     checkAndMarkTask(commands);
+                    updateList(storageFilePath);
                 } else if (isTodo) {
                     addTodo(line);
+                    updateList(storageFilePath);
                 } else if (isDeadline) {
                     addDeadline(line);
+                    updateList(storageFilePath);
                 } else if (isEvent) {
                     addEvent(line);
+                    updateList(storageFilePath);
                 } else {
                     throw new IllegalAccessException();
                 }
@@ -141,6 +220,8 @@ public class Duke {
                 Greeting.warnWrongSyntax(isSinglish);
             } catch (MissingFormatArgumentException e) {
                 Greeting.warnEmptyDesc(isSinglish);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
     }

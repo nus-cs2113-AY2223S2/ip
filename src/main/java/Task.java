@@ -22,7 +22,7 @@ public class Task {
      * @return The symbol whether the task is done or not.
      */
     public String getStatusIcon() {
-        return (isDone ? "X" : " "); // mark done task with X
+        return (isDone ? "X" : "_"); // mark done task with X
     }
 
     /**
@@ -71,14 +71,19 @@ public class Task {
         return "Task";
     }
 
+
+
     /**
      * Prints out the task according to a format
      */
     public void printTask() {
-        System.out.println((this.index + 1) +
-                            ".[" + this.getStatusForTypeOfTask() + "]" +
-                            "[" + this.getStatusIcon() + "] " +
-                            this.getDescription());
+        System.out.println((this.index + 1) + formatString());
+    }
+
+    public String formatString() {
+        return (".[" + this.getStatusForTypeOfTask() + "]" +
+                "[" + this.getStatusIcon() + "] " +
+                this.getDescription());
     }
 
 }

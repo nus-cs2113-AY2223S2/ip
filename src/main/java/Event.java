@@ -19,13 +19,13 @@ public class Event extends Task{
     /**
      * Prints out the event according to a format
      */
+
     @Override
-    public void printTask() {
-        System.out.println((this.index + 1) +
-                            ".[" + this.getStatusForTypeOfTask() + "]" +
-                            "[" + this.getStatusIcon() + "] " +
-                            this.getDescription() +
-                            "(from: " + this.startDate + "to: " + this.endDate + ")");
+    public String formatString() {
+        return (".[" + this.getStatusForTypeOfTask() + "]" +
+                "[" + this.getStatusIcon() + "] " +
+                this.getDescription() +
+                "(from: " + this.startDate + "to: " + this.endDate + ")");
     }
 
 }

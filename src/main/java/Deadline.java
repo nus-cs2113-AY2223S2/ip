@@ -17,13 +17,12 @@ public class Deadline extends Task {
     /**
      * Prints out the deadline according to a format
      */
-    @Override
-    public void printTask() {
-        System.out.println((this.index + 1) +
-                            ".[" + this.getStatusForTypeOfTask() + "]" +
-                            "[" + this.getStatusIcon() + "] " +
-                            this.getDescription() +
-                            "(by: " + this.date + ")");
+
+    public String formatString() {
+        return (".[" + this.getStatusForTypeOfTask() + "]" +
+                "[" + this.getStatusIcon() + "] " +
+                this.getDescription() +
+                "(by: " + this.date + ")");
     }
 
 }
