@@ -11,72 +11,84 @@ public class Duke {
         int numberOfTasks = 0;
 
         while (true) {
-            inputString = in.nextLine();
-            String[] command = inputString.split(" ", 2);
-            //list command
-            switch (command[0]) {
-            case "list":
-                doList(tasks, numberOfTasks);
-                break;
-            //bye command
-            case "bye":
-                doExit();
-                return;
-            //mark/unmark command
-            case "mark":
-            case "unmark":
-                doMarkOrUnmarked(tasks, numberOfTasks, command);
-                break;
-            //add task to list
-            case "todo":
-                addTodo(tasks, numberOfTasks, command);
-                numberOfTasks += 1;
-                break;
-
-            case "deadline":
-                if (!command[1].contains("/by")) {
-                    System.out.println("Error: Use /by");
+            try {
+                inputString = in.nextLine();
+                String[] command = inputString.split(" ", 2);
+                //list command
+                switch (command[0]) {
+                case "list":
+                    doList(tasks, numberOfTasks);
                     break;
-                }
-                addDeadline(tasks, numberOfTasks, command);
-                numberOfTasks += 1;
-                break;
-
-            case "event":
-                if (!(command[1].contains("/from") || command[1].contains("/to")) ) {
-                    System.out.println("Error: Use /from and /to");
+                //bye command
+                case "bye":
+                    doExit();
+                    return;
+                //mark/unmark command
+                case "mark":
+                case "unmark":
+                    doMarkOrUnmarked(tasks, numberOfTasks, command);
                     break;
+                //add task to list
+                case "todo":
+                    addTodo(tasks, numberOfTasks, command);
+                    numberOfTasks += 1;
+                    break;
+
+                case "deadline":
+                    addDeadline(tasks, numberOfTasks, command);
+                    numberOfTasks += 1;
+                    break;
+
+                case "event":
+                    addEvent(tasks, numberOfTasks, command);
+                    numberOfTasks += 1;
+                    break;
+
+                default:
+                    System.out.println("Unknown command issued");
                 }
-                addEvent(tasks, numberOfTasks, command);
-                numberOfTasks += 1;
-                break;
+            }
+            catch (IndexOutOfBoundsException e) {
+                System.out.println("Missing arguments");
+            }
+            catch (DukeException e) {
             }
         }
     }
 
-    private static void addEvent(Task[] tasks, int numberOfTasks, String[] command) {
-        String[] eventInputs = command[1].split("/from|/to");
-        tasks[numberOfTasks] = new Event(eventInputs[0], numberOfTasks + 1, eventInputs[1], eventInputs[2]);
-        tasks[numberOfTasks].printAddTask();
-    }
 
     private static void addTodo(Task[] tasks, int numberOfTasks, String[] command) {
-        tasks[numberOfTasks] = new Todo(command[1], numberOfTasks + 1);
-        tasks[numberOfTasks].printAddTask();
+            tasks[numberOfTasks] = new Todo(command[1], numberOfTasks + 1);
+            tasks[numberOfTasks].printAddTask();
+
     }
 
-    private static void addDeadline(Task[] tasks, int numberOfTasks, String[] command) {
-        String[] deadLineInputs = command[1].split("/by", 2);
-        tasks[numberOfTasks] = new Deadline(deadLineInputs[0], numberOfTasks + 1, deadLineInputs[1]);
-        tasks[numberOfTasks].printAddTask();
+    private static void addDeadline (Task[] tasks, int numberOfTasks, String[] command) throws DukeException {
+            if (!command[1].contains("/by")) {
+                System.out.println("Error: Use /by");
+                throw new DukeException();
+            }
+            String[] deadLineInputs = command[1].split("/by", 2);
+            tasks[numberOfTasks] = new Deadline(deadLineInputs[0], numberOfTasks + 1, deadLineInputs[1]);
+            tasks[numberOfTasks].printAddTask();
     }
 
-    private static void doMarkOrUnmarked(Task[] tasks, int numberOfTasks, String[] command) {
+    private static void addEvent(Task[] tasks, int numberOfTasks, String[] command) throws DukeException {
+        if (!(command[1].contains("/from") && command[1].contains("/to"))) {
+            System.out.println("Error: Use /from and /to");
+            throw new DukeException();
+        }
+            String[] eventInputs = command[1].split("/from|/to");
+            tasks[numberOfTasks] = new Event(eventInputs[0], numberOfTasks + 1, eventInputs[1], eventInputs[2]);
+            tasks[numberOfTasks].printAddTask();
+    }
+
+    private static void doMarkOrUnmarked (Task[] tasks, int numberOfTasks, String[] command) throws DukeException{
         int indexToChange = Integer.parseInt(command[1]) - 1;
         //Check for error
-        if (!(indexToChange < numberOfTasks)) {
-            System.out.println("Error");
-            return;
+        if (indexToChange >= numberOfTasks || indexToChange < 0) {
+            System.out.println("Index not found");
+            throw new DukeException();
         }
         if (command[0].equals("mark")) {
             tasks[indexToChange].setDone();
