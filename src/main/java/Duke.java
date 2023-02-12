@@ -7,6 +7,8 @@ import exceptions.UnmarkOutOfBounds;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.io.FileReader;
+import java.io.BufferedReader;
 import java.io.IOException;
 
 public class Duke {
@@ -111,9 +113,6 @@ public class Duke {
             String type = extractType[0];
             String marked = extractType[2];
             String task = extractType[4];
-            System.out.println(type);
-            System.out.println(extractType[2]);
-            System.out.println(extractType[4]);
 
             switch (type) {
             case "T":
@@ -174,6 +173,8 @@ public class Duke {
                 markItem(storedValues, line, taskNum);
             } catch (MarkOutOfBounds e) {
                 System.out.println("Item to mark is not in list!");
+            } catch (IOException e) {
+                System.out.println("File is not found!");
             }
             break;
         case "unmark":
@@ -181,6 +182,8 @@ public class Duke {
                 unmarkItem(storedValues, line);
             } catch (UnmarkOutOfBounds e) {
                 System.out.println("Item to unmark is not in list!");
+            } catch (IOException e) {
+                System.out.println("File is not found!");
             }
             break;
         case "deadline":
@@ -311,7 +314,7 @@ public class Duke {
      * @param storedValues List of tasks from user inputs
      * @param line User input to be processed.
      */
-    private static void unmarkItem(Task[] storedValues, String line) throws UnmarkOutOfBounds {
+    private static void unmarkItem(Task[] storedValues, String line) throws UnmarkOutOfBounds, IOException {
         int length = line.length();
         String itemToMark = line.substring(REMOVE_UNMARK_NUM, length);
         int numToMark = Integer.parseInt(itemToMark);
@@ -324,6 +327,24 @@ public class Duke {
             System.out.println("OK, I've marked this task as not done yet: \n" +
                     storedValues[numToMark - 1].toString() + "\n");
             formattingLine();
+
+            File dukeInputs = new File(filePath);
+            String prevContent = "";
+            BufferedReader reader = new BufferedReader(new FileReader(dukeInputs));
+            String input = reader.readLine();
+            while (input != null) {
+                prevContent = prevContent + input + "\n";
+                input = reader.readLine();
+            }
+
+            char type = storedValues[numToMark -1].getClass().toString().substring(6).charAt(0);
+            String toReplace = (type + " | 1 | " + storedValues[numToMark-1].description);
+            String toReplaceWith = (type + " | 0 | " + storedValues[numToMark-1].description);
+            String newContent = prevContent.replace(toReplace, toReplaceWith);
+            FileWriter writer = new FileWriter(dukeInputs);
+            writer.write(newContent);
+            reader.close();
+            writer.close();
         }
     }
 
@@ -332,7 +353,7 @@ public class Duke {
      * @param storedValues List of tasks from user inputs.
      * @param line User input to be processed.
      */
-    private static void markItem(Task[] storedValues, String line, int taskNum) throws MarkOutOfBounds {
+    private static void markItem(Task[] storedValues, String line, int taskNum) throws MarkOutOfBounds, IOException {
         int length = line.length();
         String itemToMark = line.substring(REMOVE_MARK_NUM, length);
         int numToMark = Integer.parseInt(itemToMark);
@@ -346,6 +367,24 @@ public class Duke {
             System.out.println("Nice! I've marked this task as done: \n"
                     + storedValues[numToMark - 1].toString() + "\n");
             formattingLine();
+
+            File dukeInputs = new File(filePath);
+            String prevContent = "";
+            BufferedReader reader = new BufferedReader(new FileReader(dukeInputs));
+            String input = reader.readLine();
+            while (input != null) {
+                prevContent = prevContent + input + "\n";
+                input = reader.readLine();
+            }
+
+            char type = storedValues[numToMark -1].getClass().toString().substring(6).charAt(0);
+            String toReplace = (type + " | 0 | " + storedValues[numToMark-1].description);
+            String toReplaceWith = (type + " | 1 | " + storedValues[numToMark-1].description);
+            String newContent = prevContent.replace(toReplace, toReplaceWith);
+            FileWriter writer = new FileWriter(dukeInputs);
+            writer.write(newContent);
+            reader.close();
+            writer.close();
         }
     }
 
