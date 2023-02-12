@@ -1,4 +1,4 @@
-package timer;
+package chronos.timer;
 
 import java.util.Timer;
 

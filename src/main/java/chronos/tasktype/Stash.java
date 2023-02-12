@@ -1,6 +1,4 @@
-package tasktype;
-
-import tasktype.Task;
+package chronos.tasktype;
 
 import java.util.ArrayList;
 

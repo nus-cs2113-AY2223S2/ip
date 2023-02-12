@@ -1,8 +1,10 @@
-import inoutput.Input;
-import inoutput.Output;
-import tasktype.Stash;
-import userinterface.TaskManager;
-import userinterface.UserHandler;
+package chronos;
+
+import chronos.inoutput.Input;
+import chronos.inoutput.Output;
+import chronos.tasktype.Stash;
+import chronos.userinterface.TaskManager;
+import chronos.userinterface.UserHandler;
 
 public class Chronos {
     //dummy commit to level-6 branch

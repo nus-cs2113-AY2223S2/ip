@@ -1,4 +1,4 @@
-package inoutput;
+package chronos.inoutput;
 
 import java.util.Scanner;
 

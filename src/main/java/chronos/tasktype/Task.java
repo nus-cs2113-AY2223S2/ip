@@ -1,9 +1,13 @@
-package tasktype;
+package chronos.tasktype;
 
 public class Task {
     private boolean isDone;
     private String description;
 
+    public Task(boolean isDone, String description) {
+        this.isDone = isDone;
+        this.description = description;
+    }
 
     public Task(String description){
         if (description == null){

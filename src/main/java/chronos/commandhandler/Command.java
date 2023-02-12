@@ -1,4 +1,4 @@
-package commandhandler;
+package chronos.commandhandler;
 
 public class Command {
     private String action;

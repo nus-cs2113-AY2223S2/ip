@@ -1,4 +1,4 @@
-package tasktype;
+package chronos.tasktype;
 //more inheritance
 public class Event extends Task {
     private String start;
@@ -12,6 +12,16 @@ public class Event extends Task {
         this.end = end;
         this.start = start;
     }
+    public Event(String description, String start, String end, boolean isDone) {
+        super(isDone, description);
+        if (start == null || end == null) {
+            throw new IllegalArgumentException("Please provide BOTH start and end times.");
+        }
+        this.end = end;
+        this.start = start;
+    }
+
+    //second constructor
 
     public String getStart() {
         return start;
