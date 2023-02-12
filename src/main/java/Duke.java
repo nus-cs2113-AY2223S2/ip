@@ -8,6 +8,7 @@ public class Duke {
 
     private static void addTasks(Task a) {
         tasksList.add(a);
+        System.out.println("Now you have " + tasksList.size() + " tasks in your list");
     }
 
     private static void printMarking(int i) {
@@ -27,6 +28,15 @@ public class Duke {
         Task.markAsNotDone(tasksList.get(Integer.parseInt(remainingWords) - 1));
         int i = Integer.parseInt(remainingWords) - 1;
         printMarking(i);
+    }
+    private static void deleteTasks(String remainingWords){
+        System.out.println("Noted. I've removed this task:");
+        int i = Integer.parseInt(remainingWords) - 1;
+        printMarking(i);
+        System.out.println("Now you have "+tasksList.size()+" tasks left");
+        tasksList.remove(i);
+
+
     }
 
     private static void printIntro() {
@@ -60,7 +70,8 @@ public class Duke {
                 && (!Objects.equals(input[0], "event"))
                 && (!Objects.equals(input[0], "deadline"))
                 && (!Objects.equals(input[0], "mark"))
-                && (!Objects.equals(input[0], "unmark"))) {
+                && (!Objects.equals(input[0], "unmark"))
+                && (!Objects.equals(input[0], "delete"))) {
             throw new DukeException.InvalidInputException("I'm sorry, but I don't know what that means :-(");
         } else if ((input.length == 1)
                 && ((!Objects.equals(input[0], "list")
@@ -72,6 +83,7 @@ public class Duke {
 
     }
 
+
     public static void main(String[] args) {
         printIntro();
         String line;
@@ -79,8 +91,8 @@ public class Duke {
 
         while (true) {
             line = in.nextLine();
-
             String arr[] = line.split(" ", 2);
+
             try {
                 validateInput(arr);
             } catch (DukeException.InvalidInputException e1) {
@@ -93,37 +105,34 @@ public class Duke {
                 System.out.println("Please input a proper command again");
                 continue;
             }
-            if (line.equals("bye")) {
+
+            switch (arr[0]) {
+            case "bye":
                 System.out.println("Bye see you again!");
-                break;
-            } else if (line.equals("list")) {
+                return;
+            case "list":
                 processList();
-
-            } else if (arr[0].equals("mark")) {
+                break;
+            case "mark":
                 addMark(arr[1]);
-
-            } else if (arr[0].equals("unmark")) {
+                break;
+            case "unmark":
                 unMark(arr[1]);
-
-            } else if (arr[0].equals("todo")) {
+                break;
+            case "delete" :
+                deleteTasks(arr[1]);
+                break;
+            case "todo":
                 addTasks(new Todo(arr[1]));
-                System.out.println(arr[1]);
-                System.out.println("Now you have " + tasksList.size() + " tasks in your list");
-
-            } else if (arr[0].equals("deadline")) {
+                break;
+            case "deadline":
                 String[] parts = arr[1].split("/");
                 addTasks(new Deadline(parts[0], parts[1]));
-                System.out.println("Added!");
-                System.out.println(String.format(" [%s] [%s] %s (%s)", 'D', " ", parts[0], parts[1]));
-                System.out.println("Now you have " + tasksList.size() + " tasks in your list");
-
-            } else if (arr[0].equals("event")) {
-                String[] parts = arr[1].split("/");
-                addTasks(new Event(parts[0], parts[1], parts[2]));
-                System.out.println("Added!");
-                System.out.println(String.format(" [%s] [%s] %s (%s %s)", 'E', " ", parts[0], parts[1], parts[2]));
-                System.out.println("Now you have " + tasksList.size() + " tasks in your list");
-
+                break;
+            case "event":
+                String[] words = arr[1].split("/");
+                addTasks(new Event(words[0], words[1], words[2]));
+                break;
             }
         }
     }

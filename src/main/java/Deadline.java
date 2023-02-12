@@ -12,6 +12,10 @@ public class Deadline extends Todo {
     Deadline(String description, String by) {
         super(description);
         setBy(by);
+        System.out.println("Added!");
+        System.out.println(String.format(" [%s] [%s] %s (%s)", 'D', " ", description,by));
+
+
 
     }
 
