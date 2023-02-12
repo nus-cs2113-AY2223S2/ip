@@ -14,9 +14,11 @@ public enum Command {
     TASK_EVENT(3, "event", new String[]{"from", "to"}),
     MARK(1, "mark", new String[]{}),
     UNMARK(1, "unmark", new String[]{}),
+    DELETE(1, "delete", new String[]{}),
     EXIT(1, "exit", new String[]{}),
     LIST(1, "list", new String[]{}),
     UNKNOWN_COMMAND(1, "", new String[]{});
+
 
     // Defines how many arguments (subcommands + main command) a Command has
     // The argument length for a command must be minimally 1 (itself) e.g. list, mark
