@@ -6,6 +6,7 @@ import grandduke.command.Io;
 import grandduke.command.Parser;
 import grandduke.exception.GrandException;
 import grandduke.exception.OutOfBoundsException;
+import grandduke.exception.delete.DeleteFormatException;
 import grandduke.exception.mark.MarkFormatException;
 import grandduke.exception.mark.MarkMissingDescriptionException;
 
@@ -40,6 +41,33 @@ public abstract class TaskList {
         tasks.add(newTask);
         Io.printOutput("Got it. I've added this task:");
         Io.printOutput("  " + newTask.getTaskPrint());
+        Io.printOutput("Now you have " + tasks.size() + " tasks in the list.");
+    }
+
+    /**
+     * Deletes a task at a index specified by the user in the tasklist
+     * 
+     * @param input
+     *              the input by the user that specifies the index
+     */
+    public static void deleteTask(String index) throws OutOfBoundsException, DeleteFormatException {
+        if (index.equals("")) {
+            throw new DeleteFormatException();
+        }
+
+        if (!index.matches("\\d+")) {
+            throw new DeleteFormatException();
+        }
+
+        int taskNum = Integer.parseInt(index) - 1;
+
+        if (taskNum >= tasks.size()) {
+            throw new OutOfBoundsException();
+        }
+
+        Io.printOutput("Alright. I've removed this task:");
+        Io.printOutput("  " + tasks.get(taskNum).getTaskPrint());
+        tasks.remove(taskNum);
         Io.printOutput("Now you have " + tasks.size() + " tasks in the list.");
     }
 

@@ -65,6 +65,10 @@ public abstract class Parser {
                     TaskList.addTask(commandDetails, Io.EVENT_COMMAND);
                     break;
 
+                case Io.DELETE_COMMAND:
+                    TaskList.deleteTask(commandDetails);
+                    break;
+
                 default:
                     throw new UnrecognisedCommandException();
             }
