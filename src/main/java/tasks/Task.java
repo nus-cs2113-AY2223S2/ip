@@ -4,6 +4,7 @@ public class Task {
     private String description;
     private boolean isDone;
 
+    private String command;
     public Task(String description) {
         this.description = description;
         this.isDone = false;
@@ -27,5 +28,9 @@ public class Task {
 
     public String toString() {
         return ("[" + this.getStatusIcon() + "] " + this.getDescription());
+    }
+
+    public String getCommand() {
+        return this.command;
     }
 }

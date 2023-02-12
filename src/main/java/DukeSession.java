@@ -1,3 +1,4 @@
+import file.methods.FileHandler;
 import utility.Methods;
 import utility.commandChecker;
 
@@ -6,22 +7,23 @@ import tasks.Event;
 import tasks.Task;
 import tasks.Todo;
 
+import java.io.File;
 import java.util.Scanner;
 import java.util.ArrayList;
 
 
 public class DukeSession {
-    public static void execute() {
-        Methods.printGreetings();
-
-        ArrayList<Task> actions = new ArrayList<>();
-
+    private ArrayList<Task> actions = new ArrayList<>();
+    public void setUpArrayList() {
+        FileHandler.setUpFile(actions);
+    }
+    public void execute() {
         String line;
-        Scanner in = new Scanner(System.in);
         int taskNumber;
         String[] decisions;
         Task toBeAdded;
         String[] dates;
+        Scanner in = new Scanner(System.in);
         do {
             line = in.nextLine();
             decisions = line.split(" ");
@@ -83,6 +85,8 @@ public class DukeSession {
                     Methods.printCurrentSupportedActions();
             }
         } while (!decisions[0].equals("bye"));
+        FileHandler.saveFile(actions);
         System.out.println("That's all from me! Goodbye!");
     }
+
 }
