@@ -10,8 +10,6 @@ import duke.task.Task;
 import duke.task.Todo;
 
 public class Command {
-
-
     public static void evaluate(String input, Task[] tasks) {
         try {
             String[] arrayOfInput = input.split(" ");
