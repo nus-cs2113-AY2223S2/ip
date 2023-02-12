@@ -1,12 +1,16 @@
 package duke.task;
 
-public class Task {
+public abstract class Task {
     protected String description;
     protected boolean isDone;
+
+    protected String taskString;
+    public static final String COMMA = " , ";
 
     public Task(String description) {
         this.description = description;
         this.isDone = false;
+        this.taskString = saveTaskString();
     }
 
     public String toString() {
@@ -22,7 +26,10 @@ public class Task {
         } else {
             this.isDone = false;
         }
+        this.taskString = saveTaskString();
     }
+
+    public abstract String saveTaskString();
 
     public String addTaskMessage() {
         return "Got it. I've added this task:\n  " + this.toString() + System.lineSeparator();
@@ -30,6 +37,10 @@ public class Task {
 
     public String deleteTaskMessage() {
         return "Noted. I've removed this task:\n  " + this.toString() + System.lineSeparator();
+    }
+
+    public String getTaskString() {
+        return taskString;
     }
 
 }

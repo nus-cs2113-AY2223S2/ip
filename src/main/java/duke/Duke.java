@@ -7,12 +7,13 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.Todo;
 
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
 
-    public static final int MAX_ARRAY_SIZE = 100;
     public static final String GREET_MESSAGE = "Hello! I'm Duke\nWhat can I do for you?";
     public static final String EXIT_MESSAGE = "Bye. Hope to see you again soon!\n";
     public static final String LINE = "____________________________________________________________\n";
@@ -21,13 +22,15 @@ public class Duke {
 
     public static boolean isProgramRunning = true;
 
-    private static ArrayList<Task> tasks = new ArrayList<>();
 
+    private static Database database = null;
+    private static ArrayList<Task> tasks = null;
 
     public static void main(String[] args) {
         greeting();
         Scanner in = new Scanner(System.in);
-
+        database = new Database();
+        tasks = database.tasks;
         while (isProgramRunning) {
             String command = in.nextLine();
             String firstWord = command.split(" ")[0];
@@ -70,6 +73,11 @@ public class Duke {
         }
         deleteTaskMessage(deleteIndex);
         tasks.remove(deleteIndex);
+        try {
+            database.updateDatabaseTask();
+        } catch (IOException e) {
+            System.out.println("Update database failure");
+        }
     }
 
     private static void MarkOrUnmarkHandler(String command) {
@@ -129,7 +137,9 @@ public class Duke {
         if (isInvalidString(startToEndTime)) {
             throw new IllegalCommandException();
         }
-        tasks.add(new Event(stringSplit[0], startToEndTime[0], startToEndTime[1]));
+        Task currTask = new Event(stringSplit[0], startToEndTime[0], startToEndTime[1]);
+        tasks.add(currTask);
+        addTaskToDatabase(currTask);
         addSpecialTaskMessage();
     }
 
@@ -147,7 +157,9 @@ public class Duke {
         if (isInvalidString(stringSplit)) {
             throw new IllegalCommandException();
         }
-        tasks.add(new Deadline(stringSplit[0], stringSplit[1]));
+        Task currTask = new Deadline(stringSplit[0], stringSplit[1]);
+        tasks.add(currTask);
+        addTaskToDatabase(currTask);
         addSpecialTaskMessage();
     }
 
@@ -156,8 +168,18 @@ public class Duke {
         if (todo.isEmpty()) {
             throw new EmptyCommandException();
         }
-        tasks.add(new Todo(todo));
+        Task currTask = new Todo(todo);
+        tasks.add(currTask);
+        addTaskToDatabase(currTask);
         addSpecialTaskMessage();
+    }
+
+    private static void addTaskToDatabase(Task currTask) {
+        try {
+            database.saveAddTask(currTask.getTaskString());
+        } catch (IOException e) {
+            System.out.println("save failed");
+        }
     }
 
     private static void addSpecialTaskMessage() {
@@ -191,6 +213,11 @@ public class Duke {
             System.out.println(MARK_MESSAGE);
         } else {
             System.out.println(UNMARK_MESSAGE);
+        }
+        try {
+            database.updateDatabaseTask();
+        } catch (IOException e) {
+            System.out.println("Update database failure");
         }
         System.out.println("  " + tasks.get(indexOfMarking).toString() + System.lineSeparator() + LINE);
     }
