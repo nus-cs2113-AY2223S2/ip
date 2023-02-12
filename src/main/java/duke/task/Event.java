@@ -1,5 +1,7 @@
 package duke.task;
 
+import duke.output.Symbols;
+
 public class Event extends Task {
     // tasks that start at a specific date/time and ends at specific date/time
     public String startDateTime;
@@ -21,13 +23,14 @@ public class Event extends Task {
 
     public String getSavedData() {
         String taskStatus;
-        if (getStatusIcon().equals("X")) {
-            taskStatus = "1";
+        if (getStatusIcon().equals(Symbols.PROGRAM_MARK.SYMBOL)) {
+            taskStatus = Symbols.DATA_MARK.SYMBOL;
         } else {
-            taskStatus = "0";
+            taskStatus = Symbols.DATA_UNMARK.SYMBOL;
         }
-        String date = String.join(" to ", startDateTime, endDateTime);
-        String fullDetails = String.join(" / ", "E", taskStatus, taskName, date);
+        String date = String.join(Symbols.EVENT_DATE_DELIMITER.SYMBOL, startDateTime, endDateTime);
+        String fullDetails = String.join(Symbols.DATA_DELIMITER.SYMBOL,
+                Symbols.EVENT.SYMBOL, taskStatus, taskName, date);
         return fullDetails;
     }
 }
