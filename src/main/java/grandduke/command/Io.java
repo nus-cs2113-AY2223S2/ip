@@ -19,6 +19,7 @@ public abstract class Io {
     public static final String TODO_COMMAND = "todo";
     public static final String DEADLINE_COMMAND = "deadline";
     public static final String EVENT_COMMAND = "event";
+    public static final String DELETE_COMMAND = "delete";
 
     /**
      * Prints a horizontal line
@@ -31,7 +32,7 @@ public abstract class Io {
      * Prints a custom message to the command line
      * 
      * @param message
-     *            the message to be printed
+     *                the message to be printed
      */
     public static void printOutput(String message) {
         System.out.print("        ");

@@ -1,4 +1,6 @@
-package grandduke.exception;
+package grandduke.exception.deadline;
+
+import grandduke.exception.GrandException;
 
 public class MissingByException extends GrandException {
     @Override

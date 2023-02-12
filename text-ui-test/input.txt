@@ -19,4 +19,7 @@ mark hello
 unmark 1
 anyhow 
 list hello
+delete 10
+delete asd
+delete 1
 bye

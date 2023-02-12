@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import grandduke.command.Io;
 import grandduke.command.Parser;
 import grandduke.exception.GrandException;
-import grandduke.exception.MarkFormatException;
 import grandduke.exception.OutOfBoundsException;
-import grandduke.exception.MarkMissingDescriptionException;
+import grandduke.exception.delete.DeleteFormatException;
+import grandduke.exception.mark.MarkFormatException;
+import grandduke.exception.mark.MarkMissingDescriptionException;
 
 public abstract class TaskList {
     // ArrayList used as a list for tasks
@@ -26,7 +27,7 @@ public abstract class TaskList {
      * Creates and adds a new task into the tasks ArrayList
      * 
      * @param input
-     *            the description of the new task to be added
+     *              the description of the new task to be added
      */
     public static void addTask(String input, String type) throws GrandException {
         Task newTask;
@@ -44,6 +45,33 @@ public abstract class TaskList {
     }
 
     /**
+     * Deletes a task at a index specified by the user in the tasklist
+     * 
+     * @param input
+     *              the input by the user that specifies the index
+     */
+    public static void deleteTask(String index) throws OutOfBoundsException, DeleteFormatException {
+        if (index.equals("")) {
+            throw new DeleteFormatException();
+        }
+
+        if (!index.matches("\\d+")) {
+            throw new DeleteFormatException();
+        }
+
+        int taskNum = Integer.parseInt(index) - 1;
+
+        if (taskNum >= tasks.size()) {
+            throw new OutOfBoundsException();
+        }
+
+        Io.printOutput("Alright. I've removed this task:");
+        Io.printOutput("  " + tasks.get(taskNum).getTaskPrint());
+        tasks.remove(taskNum);
+        Io.printOutput("Now you have " + tasks.size() + " tasks in the list.");
+    }
+
+    /**
      * Prints the tasks in the task list in a numbered and orderly fashion
      */
     public static void printTaskList() {
@@ -56,7 +84,7 @@ public abstract class TaskList {
      * mark a task at a index specified by the user in the tasklist as done/undone
      * 
      * @param input
-     *            the input by the user that specifies the index
+     *              the input by the user that specifies the index
      */
     public static void markTask(String index, Boolean isDone)
             throws OutOfBoundsException, MarkMissingDescriptionException, MarkFormatException {
