@@ -90,6 +90,19 @@ public class commandChecker {
                 }
                 break;
 
+            case "delete":
+                if (decisions.length < 2) {
+                    currentException.setDescription("task you wish to delete does not exist!");
+                    throw currentException;
+                } else if (decisions.length > 2) {
+                    currentException.setDescription("you may only delete one task at a time");
+                    throw currentException;
+                }
+                if (Integer.parseInt(decisions[1]) > actionCounter || Integer.parseInt(decisions[1]) < 1) {
+                    currentException.setDescription("out of bounds!");
+                    throw currentException;
+                }
+
             case "bye":
                 break;
 

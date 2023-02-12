@@ -14,7 +14,7 @@ public class Methods {
         System.out.println("Hello! Do you need anything from me?\n"
                 + "I have only been trained to greet, echo and list you so far.\n"
                 + "Once my owner is more proficient in what he does, he will give me more functions!\n"
-                + " 1)echo \n 2)todo\n 3)mark\n 4)unmark\n 5)deadline\n 6)event\n"
+                + " 1)echo \n 2)todo\n 3)mark\n 4)unmark\n 5)deadline\n 6)event\n 7)delete\n"
                 + "When you wish to exit, do tell me by typing : bye");
     }
 
@@ -41,6 +41,9 @@ public class Methods {
     }
 
     public static void printCurrentSupportedActions() {
-        Methods.print("I am currently only able to do: \n 1)echo \n 2)todo\n 3)mark\n 4)unmark\n 5)deadline\n 6)event\n");
+        Methods.print("I am currently only able to do: \n 1)echo \n 2)todo\n 3)mark\n 4)unmark\n 5)deadline\n 6)event\n 7)delete\n");
+    }
+    public static void printDeleteAcknowledgement(Task action, int actionCounter) {
+        print("Got it. I've removed this task" + action.toString() + System.lineSeparator() + "Now you have " + actionCounter + " tasks in the list.");
     }
 }
