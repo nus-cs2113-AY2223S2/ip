@@ -10,4 +10,5 @@ public class ToDo extends Task {
     public void getTaskStatus() {
         System.out.printf("[T][%s] %s\n", this.getDone(), this.getTaskName());
     }
+
 }

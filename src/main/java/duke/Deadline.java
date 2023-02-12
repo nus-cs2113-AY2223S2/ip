@@ -12,4 +12,8 @@ public class Deadline extends Task {
     public void getTaskStatus() {
         System.out.printf("[D][%s] %s (by: %s)\n", this.getDone(), this.getTaskName(), this.by);
     }
+
+    public String getBy() {
+        return this.by;
+    }
 }

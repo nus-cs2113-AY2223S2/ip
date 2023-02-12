@@ -14,4 +14,11 @@ public class Event extends Task {
     public void getTaskStatus() {
         System.out.printf("[E][%s] %s (from: %s to: %s)\n", this.getDone(), this.getTaskName(), this.startDate, this.endDate);
     }
+
+    public String getStartDate() {
+        return this.startDate;
+    }
+    public String getEndDate() {
+        return this.endDate;
+    }
 }
