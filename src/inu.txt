@@ -1,5 +1,3 @@
 T// //1
 D// //2 //2
-E// //4 //5 //6
-T// //ppe
-E// //loll //lol //;lo
+E//X//loll //lol //;lo

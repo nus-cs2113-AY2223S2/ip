@@ -1,8 +1,8 @@
 package inu.parser;
 
 import java.util.Scanner;
-
-import inu.tasklist.TaskList;
+import inu.task.TaskList;
+import inu.commons.Ui;
 
 public class UserCommands {
 
@@ -40,10 +40,8 @@ public class UserCommands {
 
         String userString;
         String[] userCommand;
-
         userString = input.nextLine();
         userCommand = userString.split(" ", USER_STRING_SPLIT_LIMIT);
-
         return userCommand;
 
     }
@@ -56,111 +54,82 @@ public class UserCommands {
             command = userString[INDEX_COMMAND];
 
             switch (command) {
-
             case TODO:
-
                 try {
 
                     entry = userString[INDEX_ENTRY];
-                    Util.runTodo(taskList, entry);
+                    Parser.runTodo(taskList, entry);
 
                 } catch (ArrayIndexOutOfBoundsException e) {
-
                     Ui.printPromptValidInput();
-
                 }
-
                 break;
 
             case DEADLINE:
-
                 try {
 
                     entry = userString[INDEX_ENTRY];
-                    Util.runDeadLine(taskList, entry);
+                    Parser.runDeadLine(taskList, entry);
 
                 } catch (ArrayIndexOutOfBoundsException e) {
-
                     Ui.printPromptValidInput();
-
                 }
-
                 break;
 
             case EVENT:
-
                 try {
 
                     entry = userString[INDEX_ENTRY];
-                    Util.runEvent(taskList, entry);
+                    Parser.runEvent(taskList, entry);
 
                 } catch (ArrayIndexOutOfBoundsException e) {
-
                     Ui.printPromptValidInput();
-
                 }
-
                 break;
 
             case DELETE:
-
                 try {
 
                     entry = userString[INDEX_ENTRY];
-                    Util.runDelete(taskList, entry);
+                    Parser.runDelete(taskList, entry);
 
                 } catch (ArrayIndexOutOfBoundsException e) {
-
                     Ui.printPromptValidTaskIndexEntry();
-
                 }
-
                 break;
 
             case LIST:
-
-                Util.runList(taskList);
+                Parser.runList(taskList);
                 break;
 
             case MARK:
-
                 try {
 
                     entry = userString[INDEX_ENTRY];
-                    Util.runMark(taskList, entry);
+                    Parser.runMark(taskList, entry);
 
                 } catch (ArrayIndexOutOfBoundsException e) {
-
                     Ui.printPromptValidTaskIndexEntry();
-
                 }
-
                 break;
 
             case UNMARK:
-
                 try {
 
                     entry = userString[INDEX_ENTRY];
-                    Util.runUnMark(taskList, entry);
+                    Parser.runUnMark(taskList, entry);
 
                 } catch (ArrayIndexOutOfBoundsException e) {
-
                     Ui.printPromptValidTaskIndexEntry();
-
                 }
-
                 break;
 
             case BYE:
-
                 break;
 
             default:
-
-                Ui.printInvalid();
+                Parser.runInvalid();
                 break;
-
             }
 
         } while (!command.equals(BYE));

@@ -1,19 +1,18 @@
 package inu.parser;
 
 import inu.exceptionhandling.EmptyTaskListException;
-import inu.exceptionhandling.ExceptionManager;
 import inu.exceptionhandling.EmptyUserInputException;
-import inu.task.Task;
-import inu.task.Todo;
+import inu.exceptionhandling.ExceptionManager;
 import inu.task.DeadLine;
 import inu.task.Event;
-import inu.tasklist.TaskList;
+import inu.task.Task;
+import inu.task.Todo;
+import inu.task.TaskList;
+import inu.commons.Ui;
+import inu.commons.Util;
 
-public class Util {
 
-    protected static final int INDEX_BEGIN = 0;
-
-    protected static final int INDEX_OFFSET_IN_COMMAND = 1;
+public class Parser {
 
     protected static final int DECODED_TASK_TYPE = 0;
 
@@ -35,62 +34,11 @@ public class Util {
 
     protected static final String MARKED = "X";
 
-    public static int fetchIndexFromString(String userString) {
-
-        return Integer.parseInt(userString) - INDEX_OFFSET_IN_COMMAND;
-
-    }
-
-    public static void markTask(TaskList taskList, int taskIndex) {
-
-        taskList.getTask(taskIndex).setDone();
-
-    }
-
-    public static void unMarkTask(TaskList taskList, int taskIndex) {
-
-        taskList.getTask(taskIndex).resetDone();
-
-    }
-
-    public static String fetchTask(String userString) {
-
-        int indexOfFirstSlash = userString.indexOf("/");
-        return userString.substring(INDEX_BEGIN, indexOfFirstSlash);
-
-    }
-
-    public static String fetchDeadLine(String userString) {
-
-        int firstSlashEntry = userString.indexOf("/");
-        return userString.substring(firstSlashEntry + INDEX_OFFSET_IN_COMMAND);
-
-    }
-
-    public static String fetchFrom(String userString) throws EmptyUserInputException {
-
-        int firstSlashEntry = userString.indexOf("/");
-        int secondSlashEntry = userString.lastIndexOf("/");
-        if (firstSlashEntry != secondSlashEntry) {
-            return userString.substring(firstSlashEntry + INDEX_OFFSET_IN_COMMAND, secondSlashEntry);
-        }
-        throw new EmptyUserInputException();
-
-    }
-
-    public static String fetchTo(String userString) {
-
-        int secondSlashEntry = userString.lastIndexOf("/");
-        return userString.substring(secondSlashEntry + INDEX_OFFSET_IN_COMMAND);
-
-    }
-
     public static void runTodo(TaskList taskList, String entry) {
 
         try {
 
             ExceptionManager.checkEmptyUserInput(entry);
-
             Todo todoTask = new Todo(entry);
             taskList.addTask(todoTask);
             Ui.printAcknowledgment(taskList);
@@ -107,11 +55,9 @@ public class Util {
 
         try {
 
-            String task = fetchTask(entry);
-            String deadLine = fetchDeadLine(entry);
-
+            String task = Util.fetchTask(entry);
+            String deadLine = Util.fetchDeadLine(entry);
             ExceptionManager.checkEmptyUserInput(task, deadLine);
-
             DeadLine deadLineTask = new DeadLine(task, deadLine);
             taskList.addTask(deadLineTask);
             Ui.printAcknowledgment(taskList);
@@ -132,12 +78,10 @@ public class Util {
 
         try {
 
-            String task = fetchTask(entry);
-            String from = fetchFrom(entry);
-            String to = fetchTo(entry);
-
+            String task = Util.fetchTask(entry);
+            String from = Util.fetchFrom(entry);
+            String to = Util.fetchTo(entry);
             ExceptionManager.checkEmptyUserInput(task, from, to);
-
             Event eventTask = new Event(task, from, to);
             taskList.addTask(eventTask);
             Ui.printAcknowledgment(taskList);
@@ -159,8 +103,7 @@ public class Util {
         try {
 
             ExceptionManager.checkEmptyUserInput(entry);
-
-            int deleteTaskNumber = fetchIndexFromString(entry);
+            int deleteTaskNumber = Util.fetchIndexFromString(entry);
             Ui.printDelete(taskList, deleteTaskNumber);
             taskList.deleteTask(deleteTaskNumber);
 
@@ -196,49 +139,36 @@ public class Util {
         try {
 
             ExceptionManager.checkEmptyUserInput(entry);
-
-            int markIndex = fetchIndexFromString(entry);
-            markTask(taskList, markIndex);
-
+            int markIndex = Util.fetchIndexFromString(entry);
+            Util.markTask(taskList, markIndex);
             Ui.printMark(taskList, markIndex);
 
         } catch (IndexOutOfBoundsException e) {
-
             Ui.printPromptValidTaskIndex();
-
         } catch (EmptyUserInputException e) {
-
             Ui.printPromptValidMarkEntry();
-
         }
-
     }
 
     public static void runUnMark(TaskList taskList, String entry) {
-
         try {
 
             ExceptionManager.checkEmptyUserInput(entry);
-
-            int unMarkIndex = fetchIndexFromString(entry);
-            unMarkTask(taskList, unMarkIndex);
-
+            int unMarkIndex = Util.fetchIndexFromString(entry);
+            Util.unMarkTask(taskList, unMarkIndex);
             Ui.printUnMark(taskList, unMarkIndex);
 
         } catch (ArrayIndexOutOfBoundsException e) {
-
             Ui.printPromptValidTaskIndexEntry();
-
         } catch (IndexOutOfBoundsException e) {
-
             Ui.printPromptValidTaskIndex();
-
         } catch (EmptyUserInputException e) {
-
             Ui.printPromptValidUnMarkEntry();
-
         }
+    }
 
+    public static void runInvalid() {
+        Ui.printInvalid();
     }
 
     public static Task decodeString(String fileString) {
@@ -254,24 +184,17 @@ public class Util {
 
             Todo todo = new Todo(task);
             if (markStatus.equals(MARKED)) {
-
                 todo.setDone();
-
             }
-
             return todo;
 
         case D:
 
             String dueDate = fileStrings[DECODED_DUE_DATE];
             DeadLine deadLine = new DeadLine(task, dueDate);
-
             if (markStatus.equals(MARKED)) {
-
                 deadLine.setDone();
-
             }
-
             return deadLine;
 
         case E:
@@ -279,19 +202,13 @@ public class Util {
             String fromDate = fileStrings[DECODED_FROM_DATE];
             String toDate = fileStrings[DECODED_TO_DATE];
             Event event = new Event(task, fromDate, toDate);
-
             if (markStatus.equals(MARKED)) {
-
                 event.setDone();
-
             }
-
             return event;
 
         default:
-
             return null;
-
         }
 
     }

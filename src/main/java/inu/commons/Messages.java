@@ -1,4 +1,4 @@
-package inu.parser;
+package inu.commons;
 
 public class Messages {
 

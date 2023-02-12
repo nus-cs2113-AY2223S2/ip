@@ -1,6 +1,6 @@
 package inu.exceptionhandling;
 
-import inu.tasklist.*;
+import inu.task.TaskList;
 
 public class ExceptionManager {
 

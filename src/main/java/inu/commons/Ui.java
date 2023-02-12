@@ -1,6 +1,7 @@
-package inu.parser;
+package inu.commons;
 
-import inu.tasklist.TaskList;
+import inu.task.TaskList;
+
 
 public class Ui {
 

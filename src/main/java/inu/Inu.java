@@ -1,28 +1,24 @@
-package inu.parser;
+package inu;
 
-import inu.tasklist.*;
-import inu.tasklist.TaskList;
-import inu.parser.StorageFile.*;
+import inu.task.TaskList;
+import inu.storage.StorageFile;
+import inu.commons.Ui;
+import inu.parser.UserCommands;
 
 public class Inu {
 
     public TaskList taskList;
 
     public Inu() {
-
         taskList = new TaskList();
-        new StorageFile(taskList);
-
+        StorageFile.loadTaskListFromFile(taskList);
         Ui.printGreeting();
         UserCommands.parseCommand(taskList);
         Ui.printFarewell();
-        StorageFile.writeFile(taskList);
-
+        StorageFile.saveTaskListToFile(taskList);
     }
 
     public static void main(String[] args) {
-
         new Inu();
-
     }
 }
