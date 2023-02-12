@@ -26,9 +26,9 @@ public abstract class TaskList {
      * Creates and adds a new task into the tasks ArrayList
      * 
      * @param input
-     *            the description of the new task to be added
+     *              the description of the new task to be added
      */
-    public static void addTask(String input, String type) throws GrandException {
+    public static void addTask(String input, String type, boolean isLoading) throws GrandException {
         Task newTask;
 
         try {
@@ -38,9 +38,16 @@ public abstract class TaskList {
         }
 
         tasks.add(newTask);
+        if (isLoading) {
+            return;
+        }
         Io.printOutput("Got it. I've added this task:");
         Io.printOutput("  " + newTask.getTaskPrint());
         Io.printOutput("Now you have " + tasks.size() + " tasks in the list.");
+    }
+
+    public static void loadTask(Task task) {
+
     }
 
     /**
@@ -56,7 +63,7 @@ public abstract class TaskList {
      * mark a task at a index specified by the user in the tasklist as done/undone
      * 
      * @param input
-     *            the input by the user that specifies the index
+     *              the input by the user that specifies the index
      */
     public static void markTask(String index, Boolean isDone)
             throws OutOfBoundsException, MarkMissingDescriptionException, MarkFormatException {

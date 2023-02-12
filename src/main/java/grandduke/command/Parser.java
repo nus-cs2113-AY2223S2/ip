@@ -26,7 +26,7 @@ public abstract class Parser {
      * execute
      * 
      * @param input
-     *            the command sent by the user
+     *              the command sent by the user
      */
     public static void parseCommand(String input) throws UnrecognisedCommandException {
         String[] inputArr = input.split(" ", 2);
@@ -42,32 +42,32 @@ public abstract class Parser {
 
         try {
             switch (command) {
-            case Io.LIST_COMMAND:
-                TaskList.printTaskList();
-                break;
+                case Io.LIST_COMMAND:
+                    TaskList.printTaskList();
+                    break;
 
-            case Io.MARK_COMMAND:
-                TaskList.markTask(commandDetails, true);
-                break;
+                case Io.MARK_COMMAND:
+                    TaskList.markTask(commandDetails, true);
+                    break;
 
-            case Io.UNMARK_COMMAND:
-                TaskList.markTask(commandDetails, false);
-                break;
+                case Io.UNMARK_COMMAND:
+                    TaskList.markTask(commandDetails, false);
+                    break;
 
-            case Io.TODO_COMMAND:
-                TaskList.addTask(commandDetails, Io.TODO_COMMAND);
-                break;
+                case Io.TODO_COMMAND:
+                    TaskList.addTask(commandDetails, Io.TODO_COMMAND, false);
+                    break;
 
-            case Io.DEADLINE_COMMAND:
-                TaskList.addTask(commandDetails, Io.DEADLINE_COMMAND);
-                break;
+                case Io.DEADLINE_COMMAND:
+                    TaskList.addTask(commandDetails, Io.DEADLINE_COMMAND, false);
+                    break;
 
-            case Io.EVENT_COMMAND:
-                TaskList.addTask(commandDetails, Io.EVENT_COMMAND);
-                break;
+                case Io.EVENT_COMMAND:
+                    TaskList.addTask(commandDetails, Io.EVENT_COMMAND, false);
+                    break;
 
-            default:
-                throw new UnrecognisedCommandException();
+                default:
+                    throw new UnrecognisedCommandException();
             }
         } catch (GrandException e) {
             Io.printOutput(e.getMessage());
@@ -78,9 +78,9 @@ public abstract class Parser {
      * Parses the input and creates a new task based on the type of task
      * 
      * @param input
-     *            the input from the user
+     *              the input from the user
      * @param type
-     *            the type of task
+     *              the type of task
      * @return the new task
      */
     public static Task parseNewTask(String input, String type) throws GrandException {
@@ -88,18 +88,18 @@ public abstract class Parser {
 
         try {
             switch (type) {
-            case Io.TODO_COMMAND:
-                newTask = createTodo(input);
-                break;
-            case Io.DEADLINE_COMMAND:
-                newTask = createDeadline(input);
-                break;
-            case Io.EVENT_COMMAND:
-                newTask = createEvent(input);
-                break;
-            default:
-                newTask = null;
-                break;
+                case Io.TODO_COMMAND:
+                    newTask = createTodo(input);
+                    break;
+                case Io.DEADLINE_COMMAND:
+                    newTask = createDeadline(input);
+                    break;
+                case Io.EVENT_COMMAND:
+                    newTask = createEvent(input);
+                    break;
+                default:
+                    newTask = null;
+                    break;
             }
         } catch (GrandException e) {
             throw e;
@@ -112,7 +112,7 @@ public abstract class Parser {
      * Creates a new Todo task
      * 
      * @param input
-     *            the input from the user
+     *              the input from the user
      * @return the new Todo task
      */
     public static Task createTodo(String input) throws EmptyTodoException {
@@ -126,7 +126,7 @@ public abstract class Parser {
      * Creates a new Deadline task
      * 
      * @param input
-     *            the input from the user
+     *              the input from the user
      * @return the new Deadline task
      */
     public static Task createDeadline(String input) throws EmptyDeadlineException, MissingByException,
@@ -158,7 +158,7 @@ public abstract class Parser {
      * Creates a new Event task
      * 
      * @param input
-     *            the input from the user
+     *              the input from the user
      * @return the new Event task
      */
     public static Task createEvent(String input) throws EmptyEventException, MissingFromException,
