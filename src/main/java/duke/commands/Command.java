@@ -1,5 +1,6 @@
 package duke.commands;
 
+import java.util.Scanner;
 import duke.exceptions.InvalidCommandException;
 import duke.exceptions.InvalidFormatException;
 import duke.exceptions.InvalidTaskException;
@@ -7,145 +8,113 @@ import duke.tasks.Deadline;
 import duke.tasks.Event;
 import duke.tasks.Task;
 import duke.tasks.Todo;
-import duke.ui.Ui;
+import duke.tasks.TaskList;
+
 
 public class Command {
-    private static Task[] taskList = new Task[100];
-    private static int listSize = 0;
+    private TaskList taskList;
 
-    public static void addTask(Task task) {
-        if (listSize >= 100) {
-            System.out.println("List size exceeded!");
-            return;
-        }
-        taskList[listSize] = task;
-        listSize++;
-
-        String addedMessage = "\tgot it. I've added this task:\n" + "\t  " + task;
-        String sizeMessage = "\tNow you have " + listSize + " tasks in the list.";
-
-        String[] messagePacket = {addedMessage, sizeMessage};
-        Ui.printMessage(messagePacket);
+    public Command(TaskList tasks) {
+        this.taskList = tasks;
     }
 
-    public static void markTask(int taskNum) {
-        Task currentTask = taskList[taskNum - 1];
-        if (taskNum > listSize || taskNum <= 0) {
-            System.out.println("\tNo such task exists! Please try again");
-            return;
-        }
-        currentTask.markDone();
-
-        String markMessage =
-                "\tNice! I've marked this task as done:\n" + "\t  " + currentTask.toString();
-
-        String[] messagePacket = {markMessage};
-        Ui.printMessage(messagePacket);
-    }
-
-    public static void unmarkTask(int taskNum) {
-        Task currentTask = taskList[taskNum - 1];
-        if (taskNum > listSize || taskNum <= 0) {
-            System.out.println("\tNo such task exists! Please try again");
-            return;
-        }
-        currentTask.markUndone();
-
-        String unmarkMessage =
-                "\tOK, I've marked this task as not done yet:\n" + "\t  " + currentTask.toString();
-
-        String[] messagePacket = {unmarkMessage};
-        Ui.printMessage(messagePacket);
-    }
-
-    public static void printTasks() {
-        String[] messagePacket = new String[listSize + 1];
-        messagePacket[0] = "\tHere are the tasks in your list:";
-        int messageCount = 1;
-
-        for (int i = 0; i < listSize; i++) {
-            String line = "\t" + (i + 1) + ". " + taskList[i];
-            messagePacket[messageCount++] = line;
-        }
-        Ui.printMessage(messagePacket);
-    }
-
-    public static void handleCommand(String[] inputArray) throws InvalidCommandException, InvalidTaskException, InvalidFormatException {
+    public void handleCommand(String[] inputArray) throws InvalidCommandException, InvalidTaskException, InvalidFormatException {
         String command = inputArray[0];
-
-        try { 
-            switch (command) {
-            case "todo":
-                if (inputArray.length == 1) {
-                    throw new InvalidTaskException(command);
-                }
-                String todoDetails = inputArray[1];
-                Task todo = new Todo(todoDetails);
-                addTask(todo);
-                break;
-
-            case "deadline":
-                if (inputArray.length == 1) {
-                    throw new InvalidTaskException(command);
-                }
-                if (!inputArray[1].contains("/by")) {
-                    throw new InvalidFormatException("/by");
-                }
-                //splits input according to deadlineDescription, /by
-                String[] deadlineDetails = inputArray[1].split(" /by ", 2);
-
-                Task deadline = new Deadline(deadlineDetails[0],deadlineDetails[1]);
-                addTask(deadline);
-                break;
-
-            case "event":
-                if (inputArray.length == 1) {
-                    throw new InvalidTaskException(command);
-                }
-                if (!inputArray[1].contains("/from") && !inputArray[1].contains("/to")) {
-                    throw new InvalidFormatException("/from", "/to");
-                }
-                //splits input according to eventDescription, /from, /to
-                String[] eventDetails = inputArray[1].split(" /from | /to ", 3);
-
-                Task event = new Event(eventDetails[0],eventDetails[1],eventDetails[2]);
-                addTask(event);
-                break;
-
-            case "list":
-                printTasks();
-                break;
-
-            case "mark":
-                if (inputArray.length == 1) {
-                    throw new InvalidTaskException(command);
-                }
-                int taskNum = Integer.parseInt(inputArray[1]);
-                markTask(taskNum);
-                break;
-
-            case "unmark":
-                if (inputArray.length == 1) {
-                    throw new InvalidTaskException(command);
-                }
-                int unmarkTaskNum = Integer.parseInt(inputArray[1]);
-                unmarkTask(unmarkTaskNum);
-                break;
-
-            case "bye":
-                Ui.printExit();
-                System.exit(0);
-                break;
-
-            default:
-                throw new InvalidCommandException();
+        
+        switch (command) {
+        case "todo":
+            if (inputArray.length == 1) {
+                throw new InvalidTaskException(command);
             }
-        } catch (InvalidTaskException e) {
-            System.out.println(e.getMessage());
-        } catch (InvalidCommandException e) {
-            System.out.println(e.getMessage());
-        } catch (InvalidFormatException e) {
-            System.out.println(e.getMessage());
+            String todoDetails = inputArray[1];
+            Task todo = new Todo(todoDetails);
+            taskList.addTask(todo);
+            break;
+
+        case "deadline":
+            if (inputArray.length == 1) {
+                throw new InvalidTaskException(command);
+            }
+            if (!inputArray[1].contains("/by")) {
+                throw new InvalidFormatException("/by");
+            }
+            //splits input according to deadlineDescription, /by
+            String[] deadlineDetails = inputArray[1].split(" /by ", 2);
+
+            Task deadline = new Deadline(deadlineDetails[0],deadlineDetails[1]);
+            taskList.addTask(deadline);
+            break;
+
+        case "event":
+            if (inputArray.length == 1) {
+                throw new InvalidTaskException(command);
+            }
+            if (!inputArray[1].contains("/from") && !inputArray[1].contains("/to")) {
+                throw new InvalidFormatException("/from", "/to");
+            }
+            //splits input according to eventDescription, /from, /to
+            String[] eventDetails = inputArray[1].split(" /from | /to ", 3);
+
+            Task event = new Event(eventDetails[0],eventDetails[1],eventDetails[2]);
+            taskList.addTask(event);
+            break;
+
+        case "list":
+            taskList.printTasks();
+            break;
+
+        case "mark":
+            if (inputArray.length == 1) {
+                throw new InvalidTaskException(command);
+            }
+            int taskNum = Integer.parseInt(inputArray[1]);
+            taskList.markTask(taskNum);
+            break;
+
+        case "unmark":
+            if (inputArray.length == 1) {
+                throw new InvalidTaskException(command);
+            }
+            int unmarkTaskNum = Integer.parseInt(inputArray[1]);
+            taskList.unmarkTask(unmarkTaskNum);
+            break;
+            
+        case "delete":
+            if (inputArray.length == 1) {
+                throw new InvalidTaskException(command);
+            }
+            int deleteIndex = Integer.parseInt(inputArray[1]);
+            taskList.deleteTask(deleteIndex);
+            break;
+            
+        case "bye":
+            break;
+
+        default:
+            throw new InvalidCommandException();
         }
+    }
+
+    public void getInput() throws InvalidCommandException, InvalidTaskException, InvalidFormatException {
+        Scanner input = new Scanner(System.in);
+        boolean isRunning = true;
+        do {
+            String inputString = input.nextLine();
+            String[] inputArray = inputString.split(" ", 2);
+            if (inputArray[0].equals("bye")) {
+                isRunning = false;
+            } else {
+                try {
+                    this.handleCommand(inputArray);
+                } catch (InvalidTaskException e) {
+                    System.out.println(e.getMessage());
+                } catch (InvalidCommandException e) {
+                    System.out.println(e.getMessage());
+                } catch (InvalidFormatException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        } while (isRunning);
+        input.close();
     }
 }
