@@ -1,14 +1,18 @@
+package utility;
+
 public class commandChecker {
     private final String[] decisions;
     private final String[] dates;
     private final int actionCounter;
-    boolean hasErrorFlags = false;
+    private boolean hasErrorFlags = false;
+
     public commandChecker(String[] decisions, String[] dates, int actionCounter) {
         this.decisions = decisions;
         this.dates = dates;
         this.actionCounter = actionCounter;
     }
-    public boolean hasErrors(){
+
+    public boolean hasErrors() {
         try {
             validateCommand();
         } catch (DukeException e) {
@@ -20,7 +24,8 @@ public class commandChecker {
             return this.hasErrorFlags;
         }
     }
-    public void validateCommand() throws DukeException {
+
+    private void validateCommand() throws DukeException {
         DukeException currentException = new DukeException();
         switch (decisions[0]) {
             case "echo":
@@ -58,6 +63,10 @@ public class commandChecker {
                     currentException.setDescription("you may only mark one task at a time");
                     throw currentException;
                 }
+                if (Integer.parseInt(decisions[1]) > actionCounter || Integer.parseInt(decisions[1]) < 1) {
+                    currentException.setDescription("out of bounds!");
+                    throw currentException;
+                }
                 break;
 
             case "unmark":
@@ -68,6 +77,10 @@ public class commandChecker {
                     currentException.setDescription("you may only unmark one task at a time");
                     throw currentException;
                 }
+                if (Integer.parseInt(decisions[1]) > actionCounter || Integer.parseInt(decisions[1]) < 1) {
+                    currentException.setDescription("out of bounds!");
+                    throw currentException;
+                }
                 break;
 
             case "list":
@@ -76,6 +89,10 @@ public class commandChecker {
                     throw currentException;
                 }
                 break;
+
+            case "bye":
+                break;
+
             default:
                 currentException.setDescription("Invalid action word! e.g. echo, todo, list, etc.");
                 throw currentException;
