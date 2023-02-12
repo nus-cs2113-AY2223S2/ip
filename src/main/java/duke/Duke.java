@@ -45,8 +45,7 @@ public class Duke {
                 eventTaskHandler(command);
             } else if (firstWord.equals("delete")) {
                 deleteTaskHandler(command);
-            }
-            else {
+            } else {
                 illegalCommandMessage();
             }
         }
@@ -60,7 +59,7 @@ public class Duke {
         }
     }
 
-    private static void deleteTask (String command) throws IllegalCommandException, IndexOutOfBoundsException {
+    private static void deleteTask(String command) throws IllegalCommandException, IndexOutOfBoundsException {
         String[] words = command.trim().split(" ");
         if (isInvalidString(words)) {
             throw new IllegalCommandException();
@@ -72,6 +71,7 @@ public class Duke {
         deleteTaskMessage(deleteIndex);
         tasks.remove(deleteIndex);
     }
+
     private static void MarkOrUnmarkHandler(String command) {
         try {
             markAndUnmarkTask(command);
@@ -161,14 +161,14 @@ public class Duke {
     }
 
     private static void addSpecialTaskMessage() {
-        int lastElement = tasks.size()-1;
+        int lastElement = tasks.size() - 1;
         System.out.println(LINE + tasks.get(lastElement).addTaskMessage() + "Now you have " + (lastElement + 1)
                 + " tasks in the list." + System.lineSeparator() + LINE);
     }
 
     private static void deleteTaskMessage(int deleteIndex) {
-        int lastElement = tasks.size()-1;
-        System.out.println(LINE + tasks.get(deleteIndex).deleteTaskMessage() + "Now you have " + (tasks.size()-1) +
+        int lastElement = tasks.size() - 1;
+        System.out.println(LINE + tasks.get(deleteIndex).deleteTaskMessage() + "Now you have " + (tasks.size() - 1) +
                 " tasks in the list." + System.lineSeparator() + LINE);
     }
 
@@ -196,7 +196,7 @@ public class Duke {
     }
 
     private static boolean isValidIndex(int indexOfMarking) {
-        if (indexOfMarking < 0 || indexOfMarking > (tasks.size()-1)) {
+        if (indexOfMarking < 0 || indexOfMarking > (tasks.size() - 1)) {
             return false;
         }
         return true;
