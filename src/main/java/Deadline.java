@@ -1,7 +1,7 @@
 public class Deadline extends Task {
     String date;
-    public Deadline(String description, int index, String date) {
-        super(description, index, TypeOfTask.DEADLINE);
+    public Deadline(String description, String date) {
+        super(description, TypeOfTask.DEADLINE);
         this.date = date;
     }
 
@@ -19,8 +19,7 @@ public class Deadline extends Task {
      */
     @Override
     public void printTask() {
-        System.out.println((this.index + 1) +
-                            ".[" + this.getStatusForTypeOfTask() + "]" +
+        System.out.println(".[" + this.getStatusForTypeOfTask() + "]" +
                             "[" + this.getStatusIcon() + "] " +
                             this.getDescription() +
                             "(by: " + this.date + ")");

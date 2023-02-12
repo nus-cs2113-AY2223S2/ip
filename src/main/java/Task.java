@@ -3,16 +3,13 @@ public class Task {
     protected String description;
     /** The state of the task, whether it is done or not. */
     protected boolean isDone;
-    /** The index of the task in the list */
-    protected int index;
     /** The type of task the following task is
      * Possible values: TODO, DEADLINE, EVENT
      * */
     protected TypeOfTask typeOfTask;
 
-    public Task(String description, int index, TypeOfTask typeOfTask) {
+    public Task(String description, TypeOfTask typeOfTask) {
         this.description = description;
-        this.index = index;
         this.isDone = false;
         this.typeOfTask = typeOfTask;
     }
@@ -49,14 +46,6 @@ public class Task {
     }
 
     /**
-     * Returns the index of the task in the list
-     * @return index
-     */
-    public int getIndex() {
-        return index;
-    }
-
-    /**
      * Returns the type of task
      * @return typeOfTask
      */
@@ -75,8 +64,7 @@ public class Task {
      * Prints out the task according to a format
      */
     public void printTask() {
-        System.out.println((this.index + 1) +
-                            ".[" + this.getStatusForTypeOfTask() + "]" +
+        System.out.println(".[" + this.getStatusForTypeOfTask() + "]" +
                             "[" + this.getStatusIcon() + "] " +
                             this.getDescription());
     }

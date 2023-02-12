@@ -1,8 +1,8 @@
 public class Event extends Task{
     String startDate;
     String endDate;
-    public Event(String description, int index, String startDate, String endDate) {
-        super(description, index, TypeOfTask.EVENT);
+    public Event(String description, String startDate, String endDate) {
+        super(description, TypeOfTask.EVENT);
         this.startDate = startDate;
         this.endDate = endDate;
     }
@@ -21,8 +21,7 @@ public class Event extends Task{
      */
     @Override
     public void printTask() {
-        System.out.println((this.index + 1) +
-                            ".[" + this.getStatusForTypeOfTask() + "]" +
+        System.out.println(".[" + this.getStatusForTypeOfTask() + "]" +
                             "[" + this.getStatusIcon() + "] " +
                             this.getDescription() +
                             "(from: " + this.startDate + "to: " + this.endDate + ")");
