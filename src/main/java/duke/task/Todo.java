@@ -11,7 +11,11 @@ public class Todo extends Task {
      * @param content content of the task.
      */
     public Todo(String content) {
-        super(content);
+        this(content, false);
+    }
+
+    public Todo(String content, boolean isMarked) {
+        super(content, isMarked);
     }
 
     /**
@@ -29,6 +33,12 @@ public class Todo extends Task {
             throw new IllegalArgumentException("☹ OOPS!!! The description of a todo cannot be empty.");
         }
         this.content = content.toString().trim();
+    }
+
+    @Override
+    public String toCSV() {
+        return "todo," +
+                super.toCSV();
     }
 
     /**

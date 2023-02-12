@@ -14,7 +14,11 @@ public class Deadline extends Task {
      * @param by deadline of the Deadline task.
      */
     public Deadline(String content, String by) {
-        super(content);
+        this(content, by, false);
+    }
+
+    public Deadline(String content, String by, boolean isMarked) {
+        super(content, isMarked);
         this.by = by;
     }
 
@@ -68,6 +72,12 @@ public class Deadline extends Task {
         this.by = by;
     }
 
+
+    public String toCSV() {
+        return "deadline," +
+                super.toCSV() + "," +
+                "\"" + by + "\"";
+    }
     /**
      * Converts the task to a string with label, mark status and deadline.
      * @return a string containing the task's label, mark status and deadline.

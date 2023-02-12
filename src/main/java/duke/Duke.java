@@ -1,5 +1,9 @@
 package duke;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -12,6 +16,8 @@ public class Duke {
     private static final Scanner scanner = new Scanner(System.in);
     private static final ArrayList<Task> taskList = new ArrayList<>();
     private static final String spacer = "\t ";
+    private static final String DATA_PATH = "data";
+    private static final String DATA_FILE = "task-list.csv";
 
     /**
      * Helper method to print a horizontal line.
@@ -124,6 +130,78 @@ public class Duke {
         }
     }
 
+    private static void initData(String path, String fileName) {
+        File directory = new File(path);
+        directory.mkdir();
+        File file = new File(path + "/" + fileName);
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private static void readData(String fileName) throws FileNotFoundException {
+        File file = new File(fileName);
+        if (!file.exists()) {
+            throw new FileNotFoundException();
+        }
+        Scanner fileScanner = new Scanner(file);
+        while (fileScanner.hasNext()) {
+            String line = fileScanner.nextLine();
+            String otherThanQuote = " [^\"] ";
+            String quotedString = String.format(" \" %s* \" ", otherThanQuote);
+            String regex = String.format("(?x) " + // enable comments, ignore white spaces
+                            ",                         " + // match a comma
+                            "(?=                       " + // start positive look ahead
+                            "  (?:                     " + //   start non-capturing group 1
+                            "    %s*                   " + //     match 'otherThanQuote' zero or more times
+                            "    %s                    " + //     match 'quotedString'
+                            "  )*                      " + //   end group 1 and repeat it zero or more times
+                            "  %s*                     " + //   match 'otherThanQuote'
+                            "  $                       " + // match the end of the string
+                            ")                         ", // stop positive look ahead
+                    otherThanQuote, quotedString, otherThanQuote);
+            String[] args = line.split(regex, -1);
+            try {
+                boolean isMarked = Integer.parseInt(args[1]) == 1;
+                for (int i = 2; i < args.length; ++i) {
+                    args[i] = args[i].substring(1, args[i].length()-1);
+                }
+                String content = args[2];
+                switch (args[0]) {
+                case "todo":
+                    taskList.add(new Todo(content, isMarked));
+                    break;
+                case "deadline":
+                    taskList.add(new Deadline(content, args[3], isMarked));
+                    break;
+                case "event":
+                    taskList.add(new Event(content, args[3], args[4], isMarked));
+                    break;
+                default:
+                    throw new IllegalArgumentException();
+                }
+            } catch (IllegalArgumentException e) {
+                System.err.println("Cannot add task: " + line);
+            }
+        }
+    }
+
+    private static void writeData(String fileName) {
+        try {
+            FileWriter fw = new FileWriter(fileName);
+            for (Task task : taskList) {
+                fw.write(task.toCSV() + System.lineSeparator());
+            }
+            fw.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     public static void main(String[] args) {
         String logo = " ____        _        \n"
@@ -138,6 +216,13 @@ public class Duke {
         System.out.println(spacer + "Hello! I'm Tohru.");
         System.out.println(spacer + "What can I do for you?");
         printDivider();
+        try {
+            readData(DATA_PATH + "/" + DATA_FILE);
+            System.out.println("Read data from file " + DATA_PATH + "/" + DATA_FILE);
+        } catch (IOException ioe) {
+            System.out.println("Creating new data file in " + DATA_PATH + "/" + DATA_FILE);
+            initData(DATA_PATH, DATA_FILE);
+        }
 
         // user interactions
         while (true) {
@@ -156,6 +241,7 @@ public class Duke {
             } else {
                 addTask(cmd);
             }
+            writeData(DATA_PATH + "/" + DATA_FILE);
             printDivider();
         }
 
