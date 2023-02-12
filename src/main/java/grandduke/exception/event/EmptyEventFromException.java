@@ -1,4 +1,6 @@
-package grandduke.exception;
+package grandduke.exception.event;
+
+import grandduke.exception.GrandException;
 
 public class EmptyEventFromException extends GrandException {
     @Override

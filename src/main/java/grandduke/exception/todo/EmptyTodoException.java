@@ -1,4 +1,6 @@
-package grandduke.exception;
+package grandduke.exception.todo;
+
+import grandduke.exception.GrandException;
 
 public class EmptyTodoException extends GrandException {
     @Override

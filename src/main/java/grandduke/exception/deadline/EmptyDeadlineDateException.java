@@ -1,4 +1,6 @@
-package grandduke.exception;
+package grandduke.exception.deadline;
+
+import grandduke.exception.GrandException;
 
 public class EmptyDeadlineDateException extends GrandException {
     @Override

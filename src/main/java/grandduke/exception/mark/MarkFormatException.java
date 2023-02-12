@@ -1,4 +1,6 @@
-package grandduke.exception;
+package grandduke.exception.mark;
+
+import grandduke.exception.GrandException;
 
 public class MarkFormatException extends GrandException {
     @Override

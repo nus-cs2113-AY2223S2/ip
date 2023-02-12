@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import grandduke.command.Io;
 import grandduke.command.Parser;
 import grandduke.exception.GrandException;
-import grandduke.exception.MarkFormatException;
 import grandduke.exception.OutOfBoundsException;
-import grandduke.exception.MarkMissingDescriptionException;
+import grandduke.exception.mark.MarkFormatException;
+import grandduke.exception.mark.MarkMissingDescriptionException;
 
 public abstract class TaskList {
     // ArrayList used as a list for tasks
@@ -26,7 +26,7 @@ public abstract class TaskList {
      * Creates and adds a new task into the tasks ArrayList
      * 
      * @param input
-     *            the description of the new task to be added
+     *              the description of the new task to be added
      */
     public static void addTask(String input, String type) throws GrandException {
         Task newTask;
@@ -56,7 +56,7 @@ public abstract class TaskList {
      * mark a task at a index specified by the user in the tasklist as done/undone
      * 
      * @param input
-     *            the input by the user that specifies the index
+     *              the input by the user that specifies the index
      */
     public static void markTask(String index, Boolean isDone)
             throws OutOfBoundsException, MarkMissingDescriptionException, MarkFormatException {
