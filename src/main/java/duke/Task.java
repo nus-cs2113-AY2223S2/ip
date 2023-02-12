@@ -4,6 +4,7 @@ public class Task {
     private boolean isDone = false;
     public static int maxTaskNumber = 0;
     private String taskName;
+    private String taskType;
 
     public String getDone() {
         return isDone ? "X" : " ";
@@ -25,6 +26,12 @@ public class Task {
         this.taskName = taskName;
     }
 
+    public void setTaskType(String taskType) {
+        this.taskType = taskType;
+    }
+    public String getTaskType() {
+        return this.taskType;
+    }
     public void getTaskStatus() {
     }
 }
