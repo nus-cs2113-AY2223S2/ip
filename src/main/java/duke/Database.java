@@ -81,14 +81,18 @@ public class Database {
             default:
                 isCorrupted = true;
             }
-            if (!isCorrupted) {
-                if (information[1].equals("true")) {
-                    task.setDone("mark");
-                } else if (information[1].equals("false")) {
-                    task.setDone("unmark");
-                }
-                tasks.add(task);
+            updateMarkings(information, task, isCorrupted);
+        }
+    }
+
+    private void updateMarkings(String[] information, Task task, boolean isCorrupted) {
+        if (!isCorrupted) {
+            if (information[1].equals("true")) {
+                task.setDone("mark");
+            } else if (information[1].equals("false")) {
+                task.setDone("unmark");
             }
+            tasks.add(task);
         }
     }
 }
