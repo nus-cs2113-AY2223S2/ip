@@ -81,7 +81,7 @@ public class Duke {
         //Scanner readData = new Scanner(data);
         if (data.exists()) {
             showGreetings();
-            acceptUserInputs();
+            acceptUserInputs(data);
             showGoodbye();
         }
     }
@@ -89,12 +89,67 @@ public class Duke {
     /***
      * Reads in the user inputs and processes the commands.
      */
-    private static void acceptUserInputs() {
+    private static void acceptUserInputs(File data) {
+        Task[] storedValues = new Task[MAX_TASK_NUM];
+        try {
+            readExistingData(data, storedValues);
+        } catch (FileNotFoundException e) {
+            System.out.println("File is not found!");
+        }
         Scanner in = new Scanner(System.in);
         String line = in.nextLine();
-        Task[] storedValues = new Task[MAX_TASK_NUM];
         while (!hasProcessedAllInputs(line, storedValues)) {
             line = in.nextLine();
+        }
+    }
+
+    private static void readExistingData(File data, Task[] storedValues) throws FileNotFoundException {
+        Scanner readData = new Scanner(data);
+        while (readData.hasNext()) {
+            // Previous data stored from calling duke
+            String extractType[] = readData.nextLine().split(" | ", 5);
+            String type = extractType[0];
+            String marked = extractType[2];
+            String task = extractType[4];
+            System.out.println(type);
+            System.out.println(extractType[2]);
+            System.out.println(extractType[4]);
+
+            switch (type) {
+            case "T":
+                Todo addInputT = new Todo(task);
+                storedValues[taskNum] = addInputT;
+                if (marked.equals("1")) {
+                    storedValues[taskNum].markAsDone();
+                }
+                taskNum += 1;
+                break;
+            case "D":
+                int slash = extractType[4].indexOf("|");
+                String deadlineTask = extractType[4].substring(0, slash-1);
+                String deadlineBy = extractType[4].substring(slash+2);
+                Deadline addInputD = new Deadline(deadlineTask, deadlineBy);
+                storedValues[taskNum] = addInputD;
+                if (marked.equals("1")) {
+                    storedValues[taskNum].markAsDone();
+                }
+                taskNum += 1;
+                break;
+            case "E":
+                int firstSlash = extractType[4].indexOf("|");
+                String eventName = extractType[4].substring(0,firstSlash-1);
+                String eventDuration = extractType[4].substring(firstSlash+2);
+                int secondSlash = eventDuration.indexOf("|");
+                String eventFrom = eventDuration.substring(0,secondSlash-1);
+                String eventTo = eventDuration.substring(secondSlash+2);
+                Event addInputE = new Event(eventName, eventFrom, eventTo);
+                storedValues[taskNum] = addInputE;
+                if (marked.equals("1")) {
+                    storedValues[taskNum].markAsDone();
+                }
+                taskNum += 1;
+                break;
+            }
         }
     }
 
@@ -162,11 +217,13 @@ public class Duke {
         FileWriter fw = new FileWriter(filePath, true);
         int marked = ((storedValues.getStatusIcon() == " ") ? 0 : 1);
         if (storedValues.getClass().getSimpleName() == "Todo") {
-            fw.write("Todo | " + marked + " | " + storedValues.description + "\n");
+            fw.write("T | " + marked + " | " + storedValues.description + "\n");
         } else if (storedValues.getClass().getSimpleName() == "Deadline") {
-            fw.write("Deadline | " + marked + " | " + storedValues.description + "\n");
+            fw.write("D | " + marked + " | " + storedValues.description + " | " +
+                    ((Deadline) storedValues).by + "\n");
         } else {
-            fw.write("Event | " + marked + " | " + storedValues.description + "\n");
+            fw.write("E | " + marked + " | " + storedValues.description + " | " +
+                    ((Event) storedValues).by + " | " + ((Event) storedValues).to + "\n");
         }
         fw.close();
     }
