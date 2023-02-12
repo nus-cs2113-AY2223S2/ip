@@ -13,7 +13,8 @@ public class Duke {
         System.out.println("    What can I do for you?");
         System.out.println("____________________________________________________________");
 
-        ArrayList<Task> list = new ArrayList<>();
+        SaveHandler saveHandler = new SaveHandler();
+        ArrayList<Task> list = saveHandler.load();
 
         boolean isExitCommandReceived = false;
 
@@ -24,11 +25,13 @@ public class Duke {
 
                 if (command.getCommandType() == CommandType.CREATE_TODO) {
                     list.add(new Task(command.getCommandValue()));
+                    saveHandler.save(list);
                     printAddedTask(list);
                 } else if (command.getCommandType() == CommandType.CREATE_DEADLINE) {
                     String description = command.getCommandValue();
                     String deadline = command.getParameterValueByType(ParameterType.DEADLINE);
                     list.add(new Deadline(description, deadline));
+                    saveHandler.save(list);
                     printAddedTask(list);
                 } else if (command.getCommandType() == CommandType.CREATE_EVENT) {
                     String description = command.getCommandValue();
@@ -39,14 +42,18 @@ public class Duke {
                 } else if (command.getCommandType() == CommandType.DELETE) {
                     int indexToDelete = Integer.parseInt(command.getCommandValue())-1;
                     handleDeleteTask(list, indexToDelete);
+                    saveHandler.save(list);
+                    printAddedTask(list);
                 } else if (command.getCommandType() == CommandType.LIST) {
                     handleShowTaskList(list);
                 } else if (command.getCommandType() == CommandType.MARK) {
                     int indexToMark = Integer.parseInt(command.getCommandValue())-1;
                     handleMarkTask(list, indexToMark);
+                    saveHandler.save(list);
                 } else if (command.getCommandType() == CommandType.UNMARK) {
                     int indexToUnmark = Integer.parseInt(command.getCommandValue())-1;
                     handleUnmarkTask(list, indexToUnmark);
+                    saveHandler.save(list);
                 } else if (command.getCommandType() == CommandType.EXIT) {
                     isExitCommandReceived = true;
                 } else {
@@ -143,4 +150,3 @@ public class Duke {
         }
     }
 }
-
