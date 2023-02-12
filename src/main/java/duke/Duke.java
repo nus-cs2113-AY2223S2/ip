@@ -34,6 +34,9 @@ public class Duke {
             case "unmark":
                 Command.unmarkTask(Command.retrieveMarkIndex(userInputArray));
                 break;
+            case "delete":
+                Command.deleteTask(Command.retrieveMarkIndex(userInputArray));
+                break;    
             case "todo":
                 Command.addTodo(userInputArray);
                 break;
@@ -48,9 +51,9 @@ public class Duke {
                 break;
             }
         } catch (NumberFormatException e){
-            System.out.println("Please type an integer behind mark/unmark!");
+            System.out.println("Please type an integer behind mark/unmark/delete!");
         } catch (TaskListOutofBoundsException e){
-            System.out.println("The task you want to mark/unmark is not found!");
+            System.out.println("The task you want to mark/unmark/delete is not found!");
         } catch (InvalidCommandException e){
             System.out.println("Please input a valid command!");
         } catch (InvalidAddTaskException e){
