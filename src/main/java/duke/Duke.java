@@ -138,6 +138,10 @@ public class Duke {
             throw new IllegalCommandException();
         }
         Task currTask = new Event(stringSplit[0], startToEndTime[0], startToEndTime[1]);
+        addTaskBackgroundProcess(currTask);
+    }
+
+    private static void addTaskBackgroundProcess(Task currTask) {
         tasks.add(currTask);
         addTaskToDatabase(currTask);
         addSpecialTaskMessage();
@@ -158,9 +162,7 @@ public class Duke {
             throw new IllegalCommandException();
         }
         Task currTask = new Deadline(stringSplit[0], stringSplit[1]);
-        tasks.add(currTask);
-        addTaskToDatabase(currTask);
-        addSpecialTaskMessage();
+        addTaskBackgroundProcess(currTask);
     }
 
     private static void initTodoTask(String command) throws EmptyCommandException {
@@ -169,9 +171,7 @@ public class Duke {
             throw new EmptyCommandException();
         }
         Task currTask = new Todo(todo);
-        tasks.add(currTask);
-        addTaskToDatabase(currTask);
-        addSpecialTaskMessage();
+        addTaskBackgroundProcess(currTask);
     }
 
     private static void addTaskToDatabase(Task currTask) {
