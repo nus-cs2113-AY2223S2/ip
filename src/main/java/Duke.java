@@ -22,8 +22,11 @@ public class Duke {
         System.out.println("loading stored data >>> Here is the content we found: ");
         try {
             printFileContents();
+            addFileContents(tasks);
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
         System.out.println("____________________________________________________________");
 
@@ -56,6 +59,45 @@ public class Duke {
         System.out.println("____________________________________________________________");
     }
 
+    private static void addFileContents(ArrayList<Task> tasks) throws IOException {
+        File f = new File("src/main/java/DukeData.txt"); // create a File for the given file path
+        Scanner s = new Scanner(f);
+        int index = 0;
+        while (s.hasNext()) {
+            String line = s.nextLine();
+            if (line.charAt(3) == 'T') {
+                tasks.add(new Todo(line.substring(9)));
+            } else if (line.charAt(3) == 'D') {
+                readDeadlineIntoTasksList(tasks, line);
+            } else if (line.charAt(3) == 'E') {
+                readEventIntoTasksList(tasks, line);
+            } if (line.charAt(6) == 'X') {
+                tasks.get(index).setTaskStatus(true);
+            } else if (line.charAt(6) == ' ') {
+                tasks.get(index).setTaskStatus(false);
+            }
+            index++;
+        }
+    }
+
+    private static void readDeadlineIntoTasksList(ArrayList<Task> tasks, String line) {
+        int byIndex = line.indexOf("(by");
+        String taskDescription = line.substring(9, byIndex);
+        String deadline = line.substring(byIndex + 4, line.length()-1);
+        tasks.add(new Deadline(taskDescription, deadline));
+    }
+
+    private static void readEventIntoTasksList(ArrayList<Task> tasks, String line) {
+        //index of event start date/time
+        int fromIndex = line.indexOf("(from");
+        String event = line.substring(9, fromIndex);
+        //index of event end date/time
+        int toIndex = line.indexOf("to");
+        String eventStart = line.substring(fromIndex + 6, toIndex);
+        String eventEnd = line.substring(toIndex + 3, line.length()-1);
+        tasks.add(new Event(event, eventStart, eventEnd));
+    }
+
     private static void printFileContents() throws FileNotFoundException {
         File f = new File("src/main/java/DukeData.txt"); // create a File for the given file path
         Scanner s = new Scanner(f); // create a Scanner using the File as the source
@@ -85,7 +127,7 @@ public class Duke {
      */
 
     private static void executeDukeCommands(String command, ArrayList<Task> tasks) throws DukeException {
-        if (command.equalsIgnoreCase("list")) {
+        if (command.trim().equalsIgnoreCase("list")) {
             printAllTasks(tasks);
         } else if (command.toLowerCase().startsWith("mark")) {
             try {
@@ -185,7 +227,7 @@ public class Duke {
      * @param task  The command to delete the task
      */
     private static void deleteTask(ArrayList<Task> tasks, String task) {
-        int index = Integer.parseInt(task.substring(7));
+        int index = Integer.parseInt(task.trim().substring(7));
         String description = tasks.get(index - 1).toString();
         printTaskDeletedDescription(tasks, description);
         tasks.remove(index - 1);
@@ -228,7 +270,7 @@ public class Duke {
             //print Task Description
             System.out.println("  " + index + "." + userTask.toString());
             try {
-                appendToFile("  " + index + "." + userTask + System.lineSeparator());
+                appendToFile(userTask + System.lineSeparator());
             } catch (IOException e) {
                 System.out.println("Something went wrong: " + e.getMessage());
             }
@@ -244,7 +286,7 @@ public class Duke {
      */
 
     private static void markTaskAsNotComplete(String line, ArrayList<Task> tasks) {
-        int index = Integer.parseInt(line.substring(7));
+        int index = Integer.parseInt(line.trim().substring(7));
         tasks.get(index - 1).setTaskStatus(false);
         System.out.println(" Okay, I've marked this task as not done yet:");
         //print Task Description
@@ -259,7 +301,7 @@ public class Duke {
      */
 
     private static void markTaskAsComplete(String line, ArrayList<Task> tasks) {
-        int index = Integer.parseInt(line.substring(5));
+        int index = Integer.parseInt(line.trim().substring(5));
         tasks.get(index - 1).setTaskStatus(true);
         System.out.println(" Nice! I've marked this task as done:");
         //print Task Description
