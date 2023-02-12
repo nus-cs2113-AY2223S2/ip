@@ -2,20 +2,17 @@ package duke.commands.taskCommands;
 
 import duke.commands.Command;
 import duke.exceptions.InvalidTaskException;
-import duke.save.FileOperation;
+import duke.save.Storage;
 import duke.tasks.Deadline;
-import duke.tasks.Task;
 import duke.tasks.TaskList;
 import duke.tasks.ToDo;
 
 import java.io.IOException;
 
-import static duke.constants.Constants.LINEBREAK;
-
 public class DeadlineCommand extends Command {
 
     @Override
-    public void handleCommand(String line, TaskList taskList){
+    public void handleCommand(String line, TaskList taskList, Storage storage){
         int markIndex;
         String description;
         String deadline;
@@ -35,7 +32,7 @@ public class DeadlineCommand extends Command {
 
             ToDo newDeadline = new Deadline(description, deadline);
             taskList.addTask(newDeadline);
-            FileOperation.updateFile(taskList);
+            storage.updateFile(taskList);
         } catch (InvalidTaskException e) {
             System.out.println(e.getMessage());
         } catch (IOException e){

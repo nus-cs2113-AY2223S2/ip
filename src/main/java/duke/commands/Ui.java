@@ -2,6 +2,7 @@ package duke.commands;
 
 import duke.commands.Parser;
 import duke.exceptions.InvalidTaskException;
+import duke.save.Storage;
 import duke.tasks.TaskList;
 import java.util.Scanner;
 import static duke.constants.Constants.LINEBREAK;
@@ -36,7 +37,7 @@ public class Ui {
      *
      * @param taskList List containing the tasks input by user.
      */
-    public void run(TaskList taskList){
+    public void run(TaskList taskList, Storage storage){
         Scanner in = new Scanner(System.in);
         Parser newProcess = new Parser();
 
@@ -52,7 +53,7 @@ public class Ui {
                 isRunning = false;
             } else {
                 try{
-                    newProcess.handleCommand(taskList);
+                    newProcess.handleCommand(taskList, storage);
                 } catch (InvalidTaskException e){
                     System.out.println(e.getMessage());
                 }

@@ -8,19 +8,26 @@ import duke.tasks.ToDo;
 
 import java.io.*;
 
-public class FileOperation {
+public class Storage {
 
-    public static void initFile() throws IOException {
-        File newFile = new File("./taskList.csv");
+    private String filepath;
+
+    public Storage(String filepath){
+        this.filepath = filepath;
+    }
+
+    public void initFile() throws IOException {
+        File newFile = new File(filepath);
 
         if (!newFile.exists()) {
+            newFile.mkdirs();
             newFile.createNewFile();
         }
     }
 
-    public static void loadFile(TaskList list) {
+    public void loadFile(TaskList list) {
         try {
-            FileReader reader = new FileReader("./tasklist.csv");
+            FileReader reader = new FileReader(filepath);
             BufferedReader bufferedReader = new BufferedReader(reader);
             String line;
             while ((line = bufferedReader.readLine()) != null) {
@@ -56,8 +63,8 @@ public class FileOperation {
         }
     }
 
-    public static void updateFile(TaskList taskList) throws IOException {
-        FileWriter overwriteFile = new FileWriter("./taskList.csv");
+    public void updateFile(TaskList taskList) throws IOException {
+        FileWriter overwriteFile = new FileWriter(filepath);
         for (int i = 0; i < Task.getIndexCount(); i++) {
             Task temp = taskList.get(i);
             String type = temp.getType();

@@ -5,6 +5,7 @@ import duke.commands.taskCommands.DeadlineCommand;
 import duke.commands.taskCommands.EventCommand;
 import duke.commands.taskCommands.ToDoCommand;
 import duke.exceptions.InvalidTaskException;
+import duke.save.Storage;
 import duke.tasks.TaskList;
 
 public class Parser {
@@ -43,49 +44,49 @@ public class Parser {
      *
      * @param taskList List containing the tasks input by user.
      */
-    public void handleCommand(TaskList taskList) throws InvalidTaskException {
+    public void handleCommand(TaskList taskList, Storage storage) throws InvalidTaskException {
         String command = parseCommand();
         Command newCommand;
         switch (command) {
 
         case "todo":
             newCommand = new ToDoCommand();
-            newCommand.handleCommand(line, taskList);
+            newCommand.handleCommand(line, taskList, storage);
             break;
 
         case "deadline":
             newCommand = new DeadlineCommand();
-            newCommand.handleCommand(line, taskList);
+            newCommand.handleCommand(line, taskList, storage);
             break;
 
         case "event":
             newCommand = new EventCommand();
-            newCommand.handleCommand(line, taskList);
+            newCommand.handleCommand(line, taskList, storage);
             break;
 
         case "delete":
             newCommand = new DeleteCommand();
-            newCommand.handleCommand(line, taskList);
+            newCommand.handleCommand(line, taskList, storage);
             break;
 
         case "list":
             newCommand = new ListCommand();
-            newCommand.handleCommand(line, taskList);
+            newCommand.handleCommand(line, taskList, storage);
             break;
 
         case "mark":
             newCommand = new MarkCommand();
-            newCommand.handleCommand(line, taskList);
+            newCommand.handleCommand(line, taskList, storage);
             break;
 
         case "unmark":
             newCommand = new UnmarkCommand();
-            newCommand.handleCommand(line, taskList);
+            newCommand.handleCommand(line, taskList, storage);
             break;
 
         case "help":
             newCommand = new HelpCommand();
-            newCommand.handleCommand(line, taskList);
+            newCommand.handleCommand(line, taskList, storage);
             break;
 
         default:

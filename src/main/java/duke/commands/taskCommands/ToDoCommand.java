@@ -2,7 +2,7 @@ package duke.commands.taskCommands;
 
 import duke.commands.Command;
 import duke.exceptions.InvalidTaskException;
-import duke.save.FileOperation;
+import duke.save.Storage;
 import duke.tasks.Task;
 import duke.tasks.TaskList;
 import duke.tasks.ToDo;
@@ -13,7 +13,7 @@ public class ToDoCommand extends Command {
 
 
     @Override
-    public void handleCommand(String line, TaskList taskList){
+    public void handleCommand(String line, TaskList taskList, Storage storage){
         int markIndex;
         int indexCount = Task.getIndexCount();
         String description;
@@ -26,7 +26,7 @@ public class ToDoCommand extends Command {
             description = line.substring(markIndex + 1).trim();
             ToDo newTask = new ToDo(description);
             taskList.addTask(newTask);
-            FileOperation.updateFile(taskList);
+            storage.updateFile(taskList);
         } catch (InvalidTaskException e) {
             System.out.println(e.getMessage());
         } catch (IOException e) {

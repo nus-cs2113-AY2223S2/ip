@@ -1,5 +1,6 @@
 package duke.commands;
 
+import duke.save.Storage;
 import duke.tasks.TaskList;
 
 public abstract class Command {
@@ -25,5 +26,5 @@ public abstract class Command {
      * @param line User input represented as a String.
      * @param taskList List containing the tasks input by user.
      */
-    public abstract void handleCommand(String line, TaskList taskList);
+    public abstract void handleCommand(String line, TaskList taskList, Storage storage);
 }

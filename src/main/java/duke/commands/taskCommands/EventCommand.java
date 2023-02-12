@@ -2,7 +2,7 @@ package duke.commands.taskCommands;
 
 import duke.commands.Command;
 import duke.exceptions.InvalidTaskException;
-import duke.save.FileOperation;
+import duke.save.Storage;
 import duke.tasks.Event;
 import duke.tasks.Task;
 import duke.tasks.TaskList;
@@ -13,7 +13,7 @@ import java.io.IOException;
 public class EventCommand extends Command {
 
     @Override
-    public void handleCommand(String line, TaskList taskList){
+    public void handleCommand(String line, TaskList taskList, Storage storage){
         int markIndex;
         int markIndex1;
         int indexCount = Task.getIndexCount();
@@ -39,7 +39,7 @@ public class EventCommand extends Command {
 
             ToDo newDeadline = new Event(description, from, to);
             taskList.addTask(newDeadline);
-            FileOperation.updateFile(taskList);
+            storage.updateFile(taskList);
 
         } catch (InvalidTaskException e) {
             System.out.println(e.getMessage());

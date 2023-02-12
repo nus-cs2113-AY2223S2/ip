@@ -3,7 +3,7 @@ package duke.commands.actionCommands;
 import duke.commands.Command;
 import duke.exceptions.EmptyListException;
 import duke.exceptions.InvalidArgsException;
-import duke.save.FileOperation;
+import duke.save.Storage;
 import duke.tasks.Task;
 import duke.tasks.TaskList;
 
@@ -14,7 +14,7 @@ import static duke.constants.Constants.LINEBREAK;
 public class UnmarkCommand extends Command {
 
     @Override
-    public void handleCommand(String line, TaskList tasks) {
+    public void handleCommand(String line, TaskList tasks, Storage storage) {
         try {
             int indexCount = Task.getIndexCount();
             int indexSelect;
@@ -34,7 +34,7 @@ public class UnmarkCommand extends Command {
             System.out.println("OK, I've marked this task as not done yet:");
             System.out.println(tasks.get(indexSelect));
             System.out.println(LINEBREAK);
-            FileOperation.updateFile(tasks);
+            storage.updateFile(tasks);
 
         } catch (IndexOutOfBoundsException | NullPointerException e) {
             System.out.println("Invalid task number. Please try again.");
