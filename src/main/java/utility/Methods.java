@@ -44,6 +44,6 @@ public class Methods {
         Methods.print("I am currently only able to do: \n 1)echo \n 2)todo\n 3)mark\n 4)unmark\n 5)deadline\n 6)event\n 7)delete\n");
     }
     public static void printDeleteAcknowledgement(Task action, int actionCounter) {
-        print("Got it. I've removed this task" + action.toString() + System.lineSeparator() + "Now you have " + actionCounter + " tasks in the list.");
+        print("Got it. I've removed this task\n" + action.toString() + System.lineSeparator() + "Now you have " + actionCounter + " tasks in the list.");
     }
 }

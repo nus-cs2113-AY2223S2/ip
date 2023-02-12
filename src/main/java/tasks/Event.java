@@ -16,4 +16,8 @@ public class Event extends Task {
         return "[E]" + super.toString() + " (from: " + from + "to: " + to + ")";
 
     }
+
+    public String getCommand() {
+        return "e/" + this.getStatusIcon() + "/" + this.getDescription() + "/" + this.from + "/" + this.to ;
+    }
 }
