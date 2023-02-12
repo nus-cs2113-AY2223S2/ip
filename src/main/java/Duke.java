@@ -1,3 +1,8 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -13,6 +18,14 @@ public class Duke {
         printWelcomeMessage();
         Scanner in = new Scanner(System.in);
         ArrayList<Task> tasks = new ArrayList<>();
+
+        System.out.println("loading stored data >>> Here is the content we found: ");
+        try {
+            printFileContents();
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        }
+        System.out.println("____________________________________________________________");
 
         while (true) {
             String line = in.nextLine();
@@ -41,6 +54,26 @@ public class Duke {
         System.out.println(" Hello! I'm Duke, your personal task manager.");
         System.out.println(" What can I do for you?");
         System.out.println("____________________________________________________________");
+    }
+
+    private static void printFileContents() throws FileNotFoundException {
+        File f = new File("src/main/java/DukeData.txt"); // create a File for the given file path
+        Scanner s = new Scanner(f); // create a Scanner using the File as the source
+        while (s.hasNext()) {
+            System.out.println(s.nextLine());
+        }
+    }
+
+    private static void clearFileContents() throws IOException {
+        FileWriter fw = new FileWriter("src/main/java/DukeData.txt");
+        fw.write("");
+        fw.close();
+    }
+
+    private static void appendToFile(String textToAppend) throws IOException {
+        FileWriter fw = new FileWriter("src/main/java/DukeData.txt", true); // create a FileWriter in append mode
+        fw.write(textToAppend);
+        fw.close();
     }
 
     /**
@@ -186,9 +219,19 @@ public class Duke {
     private static void printAllTasks(ArrayList<Task> tasks) {
         System.out.println(" Here are the tasks in your list:");
         int index = 1;
+        try {
+            clearFileContents();
+        } catch (IOException e) {
+            System.out.println("Something went wrong: " + e.getMessage());
+        }
         for (Task userTask : tasks) {
             //print Task Description
             System.out.println("  " + index + "." + userTask.toString());
+            try {
+                appendToFile("  " + index + "." + userTask + System.lineSeparator());
+            } catch (IOException e) {
+                System.out.println("Something went wrong: " + e.getMessage());
+            }
             index++;
         }
     }
