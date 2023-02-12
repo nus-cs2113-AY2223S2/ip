@@ -54,6 +54,13 @@ public class ErrorMessages {
     public String provideStringAsNumber(){
         return "Pikapiii you did not give me an index(number)! Please give me a number after the mark/unmark/delete keyword please :3 UwU";
     }
+
+    //The following are meant for Load Data errors
+    public String provideCorruptDataError(){
+        return "PIKAPII There seems to be something wrong with this task in your save file, not loading a specific task into the task list";
+    }
+
+    //The following are meant for wrong command errors
     public String provideWrongCommandText(){
         return "Pikapi is unable to find that command, please type in a correct command";
     }

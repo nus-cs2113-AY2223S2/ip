@@ -1,0 +1,4 @@
+1 deadline something        /by        someday
+0 event some evenet /from today /to tomorrowlist
+0 todo  something hehe
+1 todo  check 1

@@ -1,14 +1,13 @@
 import errors.DukeException;
 import errors.ErrorMessages;
 import tasks.Task;
-import util.TaskAdder;
-import util.Marker;
-import util.OutputUI;
-import util.TaskDeleter;
+import util.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+
 public class StartPikaDuke {
+    private static final boolean NOT_FROM_SAVE_DATA = false;
     private static final String CHAR_SPACE = " ";
     private static final String LIST_COMMAND  = "list";
     private static final String EXIT_COMMAND  = "bye";
@@ -21,12 +20,16 @@ public class StartPikaDuke {
     static ArrayList<Task> listOfTasks = new ArrayList<>();
 
     public void startPikaDuke() {
+        Storage storage = new Storage();
+        storage.loadData(listOfTasks);
+
         Scanner newScanner = new Scanner(System.in);
         OutputUI outPutUI = new OutputUI();
         ErrorMessages errMsgs  = new ErrorMessages();
         Marker marker = new Marker();
         TaskDeleter taskDeleter = new TaskDeleter();
         TaskAdder taskAdder = new TaskAdder();
+        Storage storageManager = new Storage();
         while (true) {
             try {
                 String input = newScanner.nextLine();
@@ -37,15 +40,17 @@ public class StartPikaDuke {
                     break;
                 case EXIT_COMMAND:
                     outPutUI.printByeByeMessage();
+                    newScanner.close();
+                    storageManager.saveListDate(listOfTasks);
                     System.exit((0));
                 case TODO_COMMAND:
                 case DEADLINE_COMMAND:
                 case EVENT_COMMAND:
-                    taskAdder.addTaskToList(listOfTasks, input);
+                    taskAdder.addTaskToList(listOfTasks, input, NOT_FROM_SAVE_DATA);
                     break;
                 case MARK_COMMAND:
                 case UNMARK_COMMAND:
-                    marker.handleMarkUnmarkAction(listOfTasks, input);
+                    marker.handleMarkUnmarkAction(listOfTasks, input, NOT_FROM_SAVE_DATA);
                     break;
                 case DELETE_COMMAND:
                     taskDeleter.handleDeleteAction(listOfTasks, input);
