@@ -4,10 +4,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
 import duke.task.Todo;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -49,48 +51,64 @@ public class Duke {
 
     public static void extractData(File fileName) throws FileNotFoundException {
         Scanner s = new Scanner(fileName);
+        int count = 1;
         while (s.hasNext()) {
             toPrint = false;
             String currentLine = s.nextLine();
-            handleUserCommand(currentLine);
+            String userCommand = currentLine.substring(4);
+            handleUserCommand(userCommand);
+            String markStatus = currentLine.substring(0,4);
+            if (markStatus.equals("[X] ")) {
+                doCommandMark(count);
+            } else if (!markStatus.equals("[ ] ")) {
+                System.out.println("\t☹ Error! File saved in wrong format.");
+            }
+            count++;
         }
         toPrint = true;
     }
 
-    public static void doCreateOrEditFile(boolean flag) {
-        String home = System.getProperty("user.home");
-        java.nio.file.Path path = java.nio.file.Paths.get(home, "duke.txt");
+    public static void doEditFile(java.nio.file.Path path) throws IOException {
+        File fileName = new java.io.File(path.toUri());
+        FileWriter savedFile = new FileWriter(fileName, false);
+        for (int index = 0; index < taskCount; index++) {
+            savedFile.write(tasks.get(index).returnCommand());
+            savedFile.write(System.getProperty("line.separator"));
+        }
+        savedFile.write(System.getProperty("line.separator"));
+        savedFile.close();
+    }
+
+    public static void doLoadFile(java.nio.file.Path path) {
         try {
             File fileName = new java.io.File(path.toUri());
             if (fileName.createNewFile()) {
-                System.out.println("File \"duke.txt\" created!");
-
+                System.out.println(LINE);
+                System.out.println("\tFile \"duke.txt\" created!");
+                System.out.println(LINE);
             } else {
-                if (flag) {
+                Scanner s = new Scanner(fileName);
+                if (!s.hasNext()) {
                     System.out.println(LINE);
-                    System.out.println("\tHere are your pending tasks!");
-                    Scanner s = new Scanner(fileName);
+                    System.out.println("\tSaved file is empty.");
+                    System.out.println(LINE);
+                } else {
+                    System.out.println(LINE);
+                    System.out.println("\tHere are your stored tasks!");
+
                     int index = 1;
                     while (s.hasNext()) {
                         System.out.println("\t" + index + ". " + s.nextLine());
                         index++;
                     }
                     System.out.println(LINE);
-                    extractData(fileName);
-                } else {
-                    if (isFileEdited) {
-                        FileWriter savedFile = new FileWriter(fileName, false);
-                        for (int index = 0; index < taskCount; index++) {
-                            savedFile.write(tasks.get(index).returnCommand());
-                            savedFile.write(System.getProperty("line.separator"));
-                        }
-                        savedFile.write(System.getProperty("line.separator"));
-                        savedFile.close();
-                    }
                 }
+                extractData(fileName);
             }
         } catch (IOException e) {
             System.out.println("☹ Error! Failed to create file.");
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("☹ Error! Tasks saved in incorrect format.");
         }
     }
 
@@ -105,19 +123,22 @@ public class Duke {
         System.out.println(LINE);
         System.out.println("\tBye! Remember to finish your tasks.\n");
         System.out.println(LINE);
-        doCreateOrEditFile(false);
     }
 
     public static void doCommandMark(int taskNum) {
         isFileEdited = true;
         try {
             tasks.get(--taskNum).setStatus(true);
-            System.out.println(LINE);
-            System.out.println("\tNoted. Task " + (taskNum + 1) + " has been marked as \"complete\":");
-            System.out.println("\t  " + tasks.get(taskNum).getTaskNameAndStatus());
-            System.out.println(LINE);
+            if (toPrint) {
+                System.out.println(LINE);
+                System.out.println("\tNoted. Task " + (taskNum + 1) + " has been marked as \"complete\":");
+                System.out.println("\t  " + tasks.get(taskNum).getTaskNameAndStatus());
+                System.out.println(LINE);
+            }
         } catch (IndexOutOfBoundsException | NullPointerException out_mark_b) {
-            printInvalidNumber("mark");
+            if (toPrint) {
+                printInvalidNumber("mark");
+            }
         }
     }
 
@@ -125,12 +146,16 @@ public class Duke {
         isFileEdited = true;
         try {
             tasks.get(--taskNum).setStatus(false);
-            System.out.println(LINE);
-            System.out.println("\tOh, ok. Task " + (taskNum + 1) + " has been marked as \"incomplete\":");
-            System.out.println("\t  " + tasks.get(taskNum).getTaskNameAndStatus());
-            System.out.println(LINE);
+            if (toPrint) {
+                System.out.println(LINE);
+                System.out.println("\tOh, ok. Task " + (taskNum + 1) + " has been marked as \"incomplete\":");
+                System.out.println("\t  " + tasks.get(taskNum).getTaskNameAndStatus());
+                System.out.println(LINE);
+            }
         } catch (IndexOutOfBoundsException | NullPointerException out_unmark_b) {
-            printInvalidNumber("unmark");
+            if (toPrint) {
+                printInvalidNumber("unmark");
+            }
         }
     }
 
@@ -269,14 +294,18 @@ public class Duke {
             }
             break;
         default:
-            System.out.println(LINE);
-            System.out.println("\t☹ Error! Please input a valid command!");
-            System.out.println(LINE);
+            if (toPrint) {
+                System.out.println(LINE);
+                System.out.println("\t☹ Error! Please input a valid command!");
+                System.out.println(LINE);
+            }
         }
     }
 
     public static void main(String[] args) {
-        doCreateOrEditFile(true);
+        String home = System.getProperty("user.home");
+        java.nio.file.Path path = java.nio.file.Paths.get(home, "duke.txt");
+        doLoadFile(path);
         doCommandGreet();
         Scanner in = new Scanner(System.in);
         String userCommand;
@@ -284,5 +313,12 @@ public class Duke {
             userCommand = in.nextLine();
             handleUserCommand(userCommand);
         } while (!userCommand.equals(COMMAND_BYE));
+        try {
+            if (isFileEdited) {
+                doEditFile(path);
+            }
+        } catch (IOException e) {
+            System.out.println("☹ Error! Failed to create file.");
+        }
     }
 }
