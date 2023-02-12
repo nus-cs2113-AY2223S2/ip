@@ -1,7 +1,6 @@
 import java.util.Scanner;
 
 public class Duke {
-
     public static final String DIVIDER  = "______________________________";
 
     //Commands
