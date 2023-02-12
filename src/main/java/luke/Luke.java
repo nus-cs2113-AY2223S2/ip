@@ -28,7 +28,7 @@ public class Luke {
         scanner = new Scanner(System.in);
         taskOrganizer = new TaskOrganizer();
         commands = new ArrayList<String>(
-                Arrays.asList("add", "list", "mark", "unmark")
+                Arrays.asList("add", "list", "mark", "unmark", "delete")
         );
 
         // Say "Hi" to the user
@@ -163,7 +163,7 @@ public class Luke {
                 throw new InvalidIndexException();
             }
             taskOrganizer.markTask(serialNumber);
-            response.printMarkTask(taskOrganizer.getTaskByID(serialNumber));
+            response.printMarkTask(taskOrganizer.getTaskBySerialNumber(serialNumber));
         } catch (NumberFormatException e) {
             handleInvalidCommand();
         } catch (InvalidIndexException e) {
@@ -187,7 +187,31 @@ public class Luke {
                 throw new InvalidIndexException();
             }
             taskOrganizer.unmarkTask(serialNumber);
-            response.printUnmarkTask(taskOrganizer.getTaskByID(serialNumber));
+            response.printUnmarkTask(taskOrganizer.getTaskBySerialNumber(serialNumber));
+        } catch (NumberFormatException e) {
+            handleInvalidCommand();
+        } catch (InvalidIndexException e) {
+            handleOutOfBounds();
+        }
+    }
+
+    /**
+     * Deletes the specified task.
+     *
+     * @param taskSerialNumber The serial number of the task to be unmarked.
+     */
+    private static void executeDeleteTask(String taskSerialNumber) {
+        if (taskSerialNumber == null) {
+            handleInvalidCommand();
+            return;
+        }
+        try {
+            int serialNumber = Integer.parseInt(taskSerialNumber);
+            if (taskOrganizer.isOutOfBounds(serialNumber)) {
+                throw new InvalidIndexException();
+            }
+            response.printDeleteTask(taskOrganizer.getTaskBySerialNumber(serialNumber));
+            taskOrganizer.deleteTask(serialNumber);
         } catch (NumberFormatException e) {
             handleInvalidCommand();
         } catch (InvalidIndexException e) {
@@ -212,9 +236,11 @@ public class Luke {
         case "mark":
             executeMarkTask(description);
             break;
-        default:
+        case "unmark":
             executeUnmarkTask(description);
             break;
+        default:
+            executeDeleteTask(description);
         }
     }
 
