@@ -84,6 +84,12 @@ public class Duke {
             } catch (StringIndexOutOfBoundsException e) {
                 System.out.println("☹ Sorry! your event description is invalid!");
             }
+        } else if (command.toLowerCase().startsWith("delete")) {
+            try {
+                deleteTask(tasks, command);
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("☹ ERROR! this task to delete is not recognized.");
+            }
         } else {
             throw new DukeException();
         }
@@ -137,6 +143,19 @@ public class Duke {
         tasks.add(new Deadline(taskDescription, deadline));
         int taskCount = getTaskIndex(tasks, taskDescription);
         printTaskAddedDescription(tasks, taskCount);
+    }
+
+    /**
+     * Deletes the task from the ArrayList of task objects
+     *
+     * @param tasks An ArrayList holding the task objects.
+     * @param task  The command to delete the task
+     */
+    private static void deleteTask(ArrayList<Task> tasks, String task) {
+        int index = Integer.parseInt(task.substring(7));
+        String description = tasks.get(index - 1).toString();
+        printTaskDeletedDescription(tasks, description);
+        tasks.remove(index - 1);
     }
 
     /**
@@ -207,7 +226,7 @@ public class Duke {
     /**
      * Prints the description of the added task.
      *
-     * @param tasks An ArrayList holding the task objects.
+     * @param tasks     An ArrayList holding the task objects.
      * @param taskIndex The index of the task.
      */
     private static void printTaskAddedDescription(ArrayList<Task> tasks, int taskIndex) {
@@ -215,6 +234,20 @@ public class Duke {
         //print Task Description
         System.out.println(tasks.get(taskIndex).toString());
         System.out.println(" Now you have " + tasks.size() + " tasks in your list.");
+    }
+
+    /**
+     * Prints the description of the added task.
+     *
+     * @param tasks       An ArrayList holding the task objects.
+     * @param description The description of the task.
+     */
+    private static void printTaskDeletedDescription(ArrayList<Task> tasks, String description) {
+        System.out.println(" Noted. I've deleted this task:");
+        //print Task Description
+        System.out.println(description);
+        int items = tasks.size() - 1;
+        System.out.println(" Now you have " + items + " tasks in your list.");
     }
 
     private static void printByeMessage() {
