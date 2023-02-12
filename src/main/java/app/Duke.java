@@ -6,6 +6,7 @@ import app.tasks.Event;
 import app.tasks.Task;
 import app.tasks.ToDo;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
@@ -13,12 +14,9 @@ public class Duke {
 
     public static void main(String[] args) {
 
-        Task[] tasks = new Task[100];
-
+        ArrayList<Task> tasks = new ArrayList<>();
         printHelloMessage();
-
         Scanner myObj = new Scanner(System.in);
-        int[] index = new int[1];
 
         while (true) {
             String userInput = myObj.nextLine();
@@ -31,16 +29,16 @@ public class Duke {
                     printByeMessage();
                     return;
                 case "list":
-                    Task.printTasks(tasks, index);
+                    Task.printTasks(tasks);
                     break;
                 case "todo":
-                    ToDo.todoHandler(tasks, index, commandDescriptor);
+                    ToDo.todoHandler(tasks, commandDescriptor);
                     break;
                 case "deadline":
-                    Deadline.deadlineHandler(tasks, index, commandDescriptor);
+                    Deadline.deadlineHandler(tasks, commandDescriptor);
                     break;
                 case "event":
-                    Event.eventHandler(tasks, index, commandDescriptor);
+                    Event.eventHandler(tasks, commandDescriptor);
                     break;
                 case "mark":
                 case "unmark":
