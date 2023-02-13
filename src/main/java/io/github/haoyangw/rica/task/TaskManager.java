@@ -105,6 +105,7 @@ public class TaskManager {
         String[] parameters = command.split(" ");
         String typeOfTask = parameters[0];
         this.createTask(typeOfTask, command);
+        this.getStorageManager().saveTasks(this.getTasks());
         int howManyTasks = this.getTasks().size();
         if (howManyTasks > 1) {
             printlnWithIndent(String.format(TaskManager.TASK_ADDED_PHRASE,
@@ -143,6 +144,7 @@ public class TaskManager {
         this.rmTask(indexOfTask);
         selectedTodo = selectedTodo.setDone(true);
         this.insertTask(indexOfTask, selectedTodo);
+        this.getStorageManager().saveTasks(this.getTasks());
         printlnWithIndent(" Shall remember that this task is done:");
         printlnWithIndent("    " + selectedTodo);
         return selectedTodo;
@@ -191,6 +193,7 @@ public class TaskManager {
         this.rmTask(indexOfTask);
         selectedTodo = selectedTodo.setDone(false);
         this.insertTask(indexOfTask, selectedTodo);
+        this.getStorageManager().saveTasks(this.getTasks());
         printlnWithIndent(" (Why??) Anyway, I've marked this task as not done yet:");
         printlnWithIndent("    " + selectedTodo);
         return selectedTodo;
