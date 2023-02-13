@@ -4,19 +4,20 @@ import tasks.Event;
 import tasks.Task;
 import tasks.Todo;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 import static java.lang.Integer.parseInt;
 
 public class DukeNUS {
-    private static Task[] tasks = new Task[100]; //Assuming the user will not have more than 100 tasks.
+    private static ArrayList<Task> tasks = new ArrayList<Task>();
     private static int taskCount = 0; //The count of the valid objects in the tasks array that is incremented on pushing into it.
 
     /**
      * @param todo A newly constructed todo object as a child of Task that has a user-defined description.
      */
     public static void addTodo(Todo todo) {
-        tasks[taskCount] = todo;
+        tasks.add(todo);
         taskCount += 1;
         DukeNUSPrinter.printAddedTask(todo.getTaskString(), taskCount);
     }
@@ -26,7 +27,7 @@ public class DukeNUS {
      *                 and due date.
      */
     public static void addDeadline(Deadline deadline) {
-        tasks[taskCount] = deadline;
+        tasks.add(deadline);
         taskCount += 1;
         DukeNUSPrinter.printAddedTask(deadline.getTaskString(), taskCount);
     }
@@ -36,18 +37,26 @@ public class DukeNUS {
      *              from date, and to date.
      */
     public static void addEvent(Event event) {
-        tasks[taskCount] = event;
+        tasks.add(event);
         taskCount += 1;
         DukeNUSPrinter.printAddedTask(event.getTaskString(), taskCount);
     }
 
     /**
+     * @param taskIndex The 1-based index of the task the user is referring to. Will remove the task from the array.
+     */
+    private static void deleteTask(int taskIndex) {
+        DukeNUSPrinter.printDeletedTask(tasks.get(taskIndex - 1).getTaskString());
+        tasks.remove(taskIndex - 1);
+        taskCount -= 1;
+    }
+    /**
      * @param taskIndex The 1-based index of the task the user is referring to. Will cause the isDone property of the
      *                  task to be true.
      */
     public static void markTask(int taskIndex) {
-        tasks[taskIndex - 1].setDone(true);
-        DukeNUSPrinter.printMarkedTask(tasks[taskIndex - 1].getTaskString());
+        tasks.get(taskIndex - 1).setDone(true);
+        DukeNUSPrinter.printMarkedTask(tasks.get(taskIndex - 1).getTaskString());
     }
 
     /**
@@ -55,8 +64,8 @@ public class DukeNUS {
      *                  task to be false.
      */
     public static void unmarkTask(int taskIndex) {
-        tasks[taskIndex - 1].setDone(false);
-        DukeNUSPrinter.printUnmarkedTask(tasks[taskIndex - 1].getTaskString());
+        tasks.get(taskIndex - 1).setDone(false);
+        DukeNUSPrinter.printUnmarkedTask(tasks.get(taskIndex - 1).getTaskString());
     }
 
     /**
@@ -74,10 +83,21 @@ public class DukeNUS {
                 DukeNUSPrinter.printTasks(tasks, taskCount);
             }
             break;
+        case "delete":
+            try {
+                deleteTask(parseInt(userInputWords[1]));
+            } catch (IndexOutOfBoundsException exception) {
+                DukeNUSPrinter.printMessage("☹ Error: The index of the task is missing or out of bounds.");
+            } catch (NumberFormatException exception) {
+                DukeNUSPrinter.printMessage("☹ Error: The task index you have entered is not a number.");
+            } catch (NullPointerException exception) {
+                DukeNUSPrinter.printMessage("☹ Error: The task index you have provided returns a null task.");
+            }
+            break;
         case "mark":
             try {
                 markTask(parseInt(userInputWords[1]));
-            } catch (ArrayIndexOutOfBoundsException exception) {
+            } catch (IndexOutOfBoundsException exception) {
                 DukeNUSPrinter.printMessage("☹ Error: The index of the task is missing or out of bounds.");
             } catch (NumberFormatException exception) {
                 DukeNUSPrinter.printMessage("☹ Error: The task index you have entered is not a number.");
@@ -126,6 +146,8 @@ public class DukeNUS {
             break;
         }
     }
+
+
 
 
     public static void main(String[] args) {

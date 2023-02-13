@@ -2,6 +2,9 @@ package io;
 
 import tasks.Task;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 /**
  * A tool to print messages to the terminal. Used by Duke chatbot.
  */
@@ -44,6 +47,16 @@ public class DukeNUSPrinter {
     }
 
     /**
+     * @param taskDisplayDescription The description of the task, its type and status.
+     */
+    public static void printDeletedTask(String taskDisplayDescription) {
+        printHorizontalLine();
+        System.out.println(INDENT + "Noted. I've removed this task:");
+        System.out.println(INDENT + taskDisplayDescription);
+        printHorizontalLine();
+    }
+
+    /**
      * Prints a message to the console whenever a task is marked.
      *
      * @param taskDisplayDescription The formatted description of the task with indications of its isDone and Task object type.
@@ -73,11 +86,11 @@ public class DukeNUSPrinter {
      * @param tasks     The array of tasks. The array used in practice is of fixed size 100.
      * @param taskCount The number of non-null tasks already pushed into the array.
      */
-    public static void printTasks(Task[] tasks, int taskCount) {
+    public static void printTasks(ArrayList<Task> tasks, int taskCount) {
         printHorizontalLine();
         System.out.println(INDENT + "Here are the tasks in your list:");
         for (int i = 0; i < taskCount; i += 1) {
-            System.out.println(INDENT + (i + 1) + '.' + tasks[i].getTaskString());
+            System.out.println(INDENT + (i + 1) + '.' + tasks.get(i).getTaskString());
         }
         printHorizontalLine();
     }
