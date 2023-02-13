@@ -24,7 +24,6 @@ public class Database {
     if (counter >= MAX_TASK) {
       throw new Exception("The database is full. Don't ask me how");
     }
-    parser.writeToFile(task.getDescriptionText());
     tasks[counter] = task;
     counter += 1;
   }

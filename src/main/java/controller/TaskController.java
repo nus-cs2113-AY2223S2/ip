@@ -5,6 +5,7 @@ import model.task.Deadline;
 import model.task.Event;
 import model.task.Task;
 import model.task.Todo;
+import parser.FileParser;
 import storage.Database;
 import validator.Validator;
 import view.TaskView;
@@ -13,10 +14,9 @@ public class TaskController {
 
   protected TaskView view = new TaskView();
   protected Validator validator = new Validator();
+  protected FileParser parser = FileParser.getInstance();
   protected Database db = Database.getInstance();
   static int counter = 0;
-
-  // We connect our controller to the instance of the database
 
   private void printDescription(Task model) {
     System.out.println(Message.TASK_ADDED.message);
@@ -51,6 +51,7 @@ public class TaskController {
     Todo model = new Todo(taskDescription);
     counter += 1;
     db.create(model);
+    parser.writeToFile(model.getDescriptionText());
     printDescription(model);
   }
 
@@ -85,6 +86,7 @@ public class TaskController {
     String endDuration = taskDescription.substring(index + "/by ".length());
     Deadline model = new Deadline(description, endDuration);
     counter += 1;
+    parser.writeToFile(model.getDescriptionText());
     db.create(model);
     printDescription(model);
   }
@@ -108,6 +110,7 @@ public class TaskController {
     String to = taskDescription.substring(indexOfTo + "/to ".length());
     counter += 1;
     Event model = new Event(description, from, to);
+    parser.writeToFile(model.getDescriptionText());
     db.create(model);
     printDescription(model);
   }
