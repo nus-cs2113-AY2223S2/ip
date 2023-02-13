@@ -4,7 +4,7 @@ public enum Message {
     LINE("_________________"),
     INFO_WELCOME("Hello! I'm Duke, your friendly remainder chatbot!\n" +
         "What can I do for you today? " +
-        "Commands: list, mark, unmark, remind, deadline, event, exit"),
+        "Commands: list, mark, unmark, remind, deadline, event, delete, exit"),
     INFO_EXIT("Bye. Thanks for using me!"),
 
     INFO_LIST("Here are the items in your shopping list:"),
@@ -13,6 +13,7 @@ public enum Message {
     INFO_UNMARK("OK, I've marked this item as not done yet:"),
 
     INFO_ITEM_ADD("Got it. I've added this item:"),
+    INFO_ITEM_DELETE("Got it. I've deleted this item:"),
     INFO_ITEM_COUNT("Now you have %d items in the list.\n"),
 
     ERROR_INVALID_COMMAND("Please enter a valid command."),
@@ -22,7 +23,12 @@ public enum Message {
     ERROR_DEADLINE_MISSING_PARAMETER("Parameters contain missing fields. Example: deadline to eat /by tomorrow"),
     ERROR_EVENT_MISSING_PARAMETER("Parameters contain missing fields. Example: event to eat /from 2pm /to 4pm"),
 
-    ERROR_FILE_IO("Could not retrieve data file");
+    SUCCESS_LOADED_FILE("Data file has been loaded successfully."),
+    WARNING_MISSING_FILE("Could not locate data file. Using an empty list..."),
+    ERROR_FILE_INPUT("Could not open data file!\n" +
+        "Duke application will be terminated."),
+    ERROR_FILE_OUTPUT("Could not save data file!\n" +
+        "Duke application will be terminated.");
 
     private final String message;
 

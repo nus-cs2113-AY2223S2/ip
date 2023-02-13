@@ -1,4 +1,6 @@
-package duke.models;
+package duke.deadline;
+
+import duke.item.Item;
 
 public class Deadline extends Item {
     private String by;

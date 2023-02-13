@@ -1,4 +1,4 @@
-package duke.models;
+package duke.item;
 
 public abstract class Item {
     private String description; // item name
