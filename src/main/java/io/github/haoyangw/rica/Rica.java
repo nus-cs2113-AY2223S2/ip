@@ -10,6 +10,7 @@ public class Rica {
     private static final String BYE_PHRASE = " Leaving so soon? Come back anytime, I'll be happy to help!";
     private static final String BYE_TRIGGER = "bye";
     private static final String DEADLINE_TRIGGER = "deadline";
+    private static final String DELETE_TRIGGER = "delete";
     private static final String EVENT_TRIGGER = "event";
     private static final String LINE = "____________________________________________________________";
     private static final String LIST_TRIGGER = "list";
@@ -55,6 +56,13 @@ public class Rica {
             case Rica.TODO_TRIGGER:
                 try {
                     Rica.getTaskManager().createTaskFrom(command);
+                } catch (RicaTaskException exception) {
+                    printlnWithIndent(exception.getMessage());
+                }
+                break;
+            case Rica.DELETE_TRIGGER:
+                try {
+                    Rica.getTaskManager().rmTask(command);
                 } catch (RicaTaskException exception) {
                     printlnWithIndent(exception.getMessage());
                 }

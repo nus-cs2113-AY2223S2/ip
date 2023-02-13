@@ -7,12 +7,20 @@ import java.util.ArrayList;
 public class TaskManager {
     private static ArrayList<Task> tasks = new ArrayList<>();
     private static final String ADD_PHRASE = " New %s I'll remember: ";
+    private static final String BAD_TASK_INDEX_ERROR = " Invalid task number? Are you trying too hard to avoid work xP";
     private static final String DEADLINE_CMD = "deadline";
+    private static final String DELETE_CMD = "delete";
     private static final String EVENT_CMD = "event";
     private static final String INVALID_TASK_INDEX_ERROR = " You alright? I can't mark a task that doesn't exist as done xD";
+    private static final String NO_TASKS_TO_DELETE_ERROR = " Add a task first... Then ask me to delete one xD";
+    private static final String NOT_A_TASK_INDEX_ERROR = " Fat fingers? That's not a task number LOL";
     private static final String SINGLE_TASK_ADDED_PHRASE = " You have %d task for now, all the best!";
     private static final String TASK_ADDED_PHRASE = " You have %d tasks for now, all the best!";
+    private static final String TASK_REMAINING_PHRASE = " Wow, just 1 task left! Congratulations, come party with me when you're done with work!";
+    private static final String TASK_REMOVED_PHRASE = " I have removed this task for you:";
+    private static final String TASKS_REMAINING_PHRASE = " Let's see... You now have %d tasks left. Keep going!";
     private static final String TODO_CMD = "todo";
+    private static final String WRONG_CMD_ERROR = " Hello wrong command for %s! Check again?";
     private static final String WRONG_TASK_TYPE = " Erm I don't think this task can be marked done xD";
 
     private static void addTask(Task newTask) {
@@ -75,13 +83,13 @@ public class TaskManager {
         System.out.println(line);
     }
 
-    private static void rmTask(int indexOfTask) {
+    private static Task rmTask(int indexOfTask) throws RicaTaskException {
         boolean isNegativeIndex = indexOfTask < 0;
         boolean isIndexTooLarge = indexOfTask >= TaskManager.getTasks().size();
         if (isNegativeIndex || isIndexTooLarge) {
-            return;
+            throw new RicaTaskException(TaskManager.BAD_TASK_INDEX_ERROR);
         }
-        TaskManager.getTasks().remove(indexOfTask);
+        return TaskManager.getTasks().remove(indexOfTask);
     }
 
     public void createTaskFrom(String command) {
@@ -144,6 +152,34 @@ public class TaskManager {
             for (int i = 1; i <= tasks.size(); i += 1) {
                 printlnWithIndent(" " + i + "." + tasks.get(i - 1));
             }
+        }
+    }
+
+    public static void rmTask(String command) throws RicaTaskException {
+        String[] parameters = command.split(" ");
+        if (!parameters[0].equals(TaskManager.DELETE_CMD)) {
+            String cmdType = "deleting a task";
+            throw new RicaTaskException(String.format(TaskManager.WRONG_CMD_ERROR, cmdType));
+        }
+        if (!TaskManager.hasAnyTasks()) {
+            throw new RicaTaskException(TaskManager.NO_TASKS_TO_DELETE_ERROR);
+        }
+        int givenIndex;
+        try {
+            givenIndex = Integer.parseInt(parameters[1]);
+        } catch (NumberFormatException exception) {
+            throw new RicaTaskException(TaskManager.NOT_A_TASK_INDEX_ERROR);
+        }
+        // givenIndex is 1-based, but rmTask() expects 0-based indexing, so subtract one
+        //   before passing to rmTask()
+        Task removedTask = TaskManager.rmTask(givenIndex - 1);
+        printlnWithIndent(TaskManager.TASK_REMOVED_PHRASE);
+        printlnWithIndent("   " + removedTask.toString());
+        int numTasksLeft = TaskManager.getTasks().size();
+        if (numTasksLeft == 1) {
+            printlnWithIndent(TaskManager.TASK_REMAINING_PHRASE);
+        } else {
+            printlnWithIndent(String.format(TaskManager.TASKS_REMAINING_PHRASE, numTasksLeft));
         }
     }
 
