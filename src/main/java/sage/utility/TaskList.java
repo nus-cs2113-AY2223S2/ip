@@ -10,11 +10,17 @@ import sage.tasktypes.Deadline;
 import sage.tasktypes.Event;
 import sage.tasktypes.Task;
 import sage.tasktypes.Todo;
+import sage.utility.FileMgmt;
 
 public class TaskList {
     private static ArrayList<Task> list = new ArrayList<>();
 
     private static final Display UI = new Display();
+    private static final FileMgmt fm = new FileMgmt();
+
+    public void update(FileMgmt fm) {
+        fm.updateFile(list);
+    }
 
     /**
      * This method instantiate a Todo object and add the Todo object to the TaskList
@@ -30,6 +36,7 @@ public class TaskList {
                 list.add(t);
             }
             UI.addedTask(taskName, list.size());
+            fm.updateFile(list);
         } catch (MissingParameterException e) {
             System.out.println(e.missingParamDesc());
         }
@@ -50,6 +57,7 @@ public class TaskList {
                 list.add(d);
             }
             UI.addedTask(taskName, byWhen, list.size());
+            fm.updateFile(list);
         } catch (MissingParameterException e) {
             if (taskName == null) {
                 System.out.println(e.missingParamDesc());
@@ -75,6 +83,7 @@ public class TaskList {
                 list.add(e);
             }
             UI.addedTask(taskName, startWhen, endWhen, list.size());
+            fm.updateFile(list);
         } catch (MissingParameterException e) {
             if (taskName == null) {
                 System.out.println(e.missingParamDesc());
@@ -101,6 +110,7 @@ public class TaskList {
             } else {
                 list.get(taskNumber - 1).setCompleted(false);
                 UI.validUnmark(list, taskNumber);
+                fm.updateFile(list);
             }
         } catch (InvalidTaskException e) {
             System.out.println(e.errorUnmark());
@@ -127,6 +137,7 @@ public class TaskList {
             } else {
                 list.get(taskNumber - 1).setCompleted(true);
                 UI.validMark(list, taskNumber);
+                fm.updateFile(list);
             }
         } catch (InvalidTaskException e) {
             System.out.println(e.errorMark());
