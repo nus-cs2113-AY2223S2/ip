@@ -27,4 +27,14 @@ public class ToDos extends Task{
         OutputDialogueManager.printInteraction(DialogueTypes.COUNT_OF_TASKS);
         System.out.println(getItemCount());
     }
+
+    @Override
+    public String getClassType () {
+        return "T";
+    }
+
+    @Override
+    public String getToStore() {
+        return " " + this.getItemName();
+    }
 }

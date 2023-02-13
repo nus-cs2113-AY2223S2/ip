@@ -39,4 +39,14 @@ public class Deadlines extends Task{
         OutputDialogueManager.printInteraction(DialogueTypes.COUNT_OF_TASKS);
         System.out.println(getItemCount());
     }
+
+    @Override
+    public String getClassType() {
+        return "D";
+    }
+
+    @Override
+    public String getToStore() {
+        return (" " + this.itemName + " /by " + this.deadline);
+    }
 }

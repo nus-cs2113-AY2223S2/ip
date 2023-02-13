@@ -23,17 +23,11 @@ public abstract class Task {
         return itemCount;
     }
 
-    public int getItemId() {
-        return itemId;
-    }
 
     public static void incrementItemCount() {
         Task.itemCount++;
     }
 
-    public void setItemId(int itemId) {
-        this.itemId = itemId;
-    }
 
     public boolean isDone() {
         return isDone;
@@ -45,4 +39,6 @@ public abstract class Task {
     public abstract void printTask();
 
     public abstract void printTaskWithoutId();
+    public abstract String getClassType();
+    public abstract String getToStore();
 }
