@@ -21,4 +21,9 @@ todo
 deadline return book by June 6th
 event project meeting from Aug 6th /to 4pm
 list
+delete 4
+delete -1
+delete 999
+delete 1
+list
 bye

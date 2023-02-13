@@ -101,7 +101,17 @@ public class Duke {
             task = new Event(splitEvent[0], splitEvent[1]);
             addAndPrintTask(listOfTasks, task);
             break;
-
+        case "delete":
+            int taskNumber;
+            try {
+                taskNumber = Integer.parseInt(userInputNoCommand.trim());
+                listOfTasks.get(taskNumber - 1);
+                deleteAndPrintTask(listOfTasks, taskNumber);
+            } catch (NumberFormatException | IndexOutOfBoundsException e) {
+                System.out.println("Please give me a valid integer that is within the list!");
+                System.out.println("Usage: delete <integer>");
+            }
+            break;
         default:
             System.out.println("OOPS!! I'm sorry, but I don't know what that means. Please give me a valid command.");
             System.out.println("List of valid commands:");
@@ -109,10 +119,26 @@ public class Duke {
             System.out.println("Usage: mark/unmark <task number>");
             System.out.println("Usage: deadline /by <specify by when>");
             System.out.println("Usage: event /from <specify from when> /to <specify to when>");
+            System.out.println("Usage: delete <integer>");
             break;
 
         }
         return true;
+    }
+
+    /**
+     *
+     * @param listOfTasks An arraylist storing the list of tasks the user created.
+     * @param taskNumber The task number to delete from the arraylist.
+     */
+    private static void deleteAndPrintTask(ArrayList<Task> listOfTasks, int taskNumber) {
+        Task task;
+        int taskNumberInList = taskNumber - 1;
+        task = listOfTasks.get(taskNumberInList);
+        listOfTasks.remove(taskNumberInList);
+        System.out.println("Noted. I've removed this task:");
+        System.out.println(task);
+        System.out.println("Now you have " + listOfTasks.size() + " tasks in the list.");
     }
 
     /**
