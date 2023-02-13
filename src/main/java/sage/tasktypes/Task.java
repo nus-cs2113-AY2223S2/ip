@@ -21,6 +21,13 @@ public class Task {
         return isCompleted;
     }
 
+    public char printStatusSymbol() {
+        if (isCompleted) {
+            return 'X';
+        }
+        return ' ';
+    }
+
     public String toString() {
         return "";
     }

@@ -138,15 +138,15 @@ public class Display {
         Task taskObj = list.get(taskNumber - 1);
         System.out.println("Noted. I've removed this task:");
         if (taskObj instanceof Deadline) {
-            System.out.println("[E][X] " + taskObj.getTaskName() + "(by: " +
+            System.out.println("[E][" + taskObj.printStatusSymbol() + "] " + taskObj.getTaskName() + "(by: " +
                     ((Deadline) taskObj).getByWhen() + ") ");
         } else if (taskObj instanceof Event) {
             Event event = (Event) taskObj;
-            System.out.println("[E][X] " + event.getTaskName() + "(from: "
+            System.out.println("[E][" + taskObj.printStatusSymbol() + "] " + event.getTaskName() + "(from: "
                     + event.getStartWhen() + " to: " + event.getEndWhen() + ")");
         } else {
             Todo todo = (Todo) taskObj;
-            System.out.println("[T][X] " + todo.getTaskName());
+            System.out.println("[T][" + taskObj.printStatusSymbol() + "] " + todo.getTaskName());
         }
         System.out.println("Now you have " + String.valueOf(list.size() - 1) + " tasks in the list.");
     }
