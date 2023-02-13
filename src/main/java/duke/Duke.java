@@ -1,6 +1,7 @@
 package duke;
 
 import duke.exception.DukeException;
+import duke.exception.EmptyListError;
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Todo;
@@ -64,9 +65,10 @@ public class Duke {
             UI.printTaskList(tasksList.size());
             break;
         case "list":
-            UI.printMessage("Here are the tasks in your list:");
-            for (int i = 0; i < tasksList.size(); i++) {
-                System.out.println((i + 1) + "." + tasksList.get(i).toString());
+            try{
+                printList();
+            } catch (EmptyListError err){
+                UI.printMessage("There is nothing inside the list");
             }
             break;
         case "mark":
@@ -81,6 +83,13 @@ public class Duke {
             tasksList.get(taskNum).markAsUndone();
             System.out.println("  [" + tasksList.get(taskNum).getStatusIcon() + "]" + tasksList.get(taskNum).description);
             break;
+        case "delete":
+            taskNum = Integer.parseInt(inputWords[1]) - 1;
+            UI.printMessage("Noted. I've removed this task:");
+            System.out.println("  " + tasksList.get(taskNum).toString());
+            tasksList.remove(taskNum);
+            UI.printTaskList(tasksList.size());
+            break;
         case "bye":
             UI.showByeMessage();
             break;
@@ -88,6 +97,16 @@ public class Duke {
             UI.printMessage("added: " + input);
             Task u = new Task(input, "");
             tasksList.add(u);
+        }
+    }
+
+    private static void printList() throws EmptyListError {
+        if (tasksList.isEmpty()){
+            throw new EmptyListError();
+        }
+        UI.printMessage("Here are the tasks in your list:");
+        for (int i = 0; i < tasksList.size(); i++) {
+            System.out.println((i + 1) + "." + tasksList.get(i).toString());
         }
     }
 }
