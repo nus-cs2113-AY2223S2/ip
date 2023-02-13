@@ -9,6 +9,12 @@ public class Todo extends Task {
     }
 
     @Override
+    public String formattedString() {
+        String formatted = "Todo:" + super.isDone + ":" + super.description;
+        return formatted;
+    }
+
+    @Override
     public String toString() {
         return "[TODO]\n" + super.toString();
     }

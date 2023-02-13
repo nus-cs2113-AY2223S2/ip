@@ -17,6 +17,12 @@ public class Event extends Task {
     }
 
     @Override
+    public String formattedString() {
+        String formatted = "Event:" + super.isDone + ":" + super.description + ":" + startTime + ":" + endTime;
+        return formatted;
+    }
+
+    @Override
     public String toString() {
         return "[EVENT]\n" + super.toString() + " (From: " + startTime + " | To: " + endTime + ")";
     }

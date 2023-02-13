@@ -14,6 +14,12 @@ public class Deadline extends Task {
     }
 
     @Override
+    public String formattedString() {
+        String formatted = "Deadline:" + super.isDone + ":" + super.description + ":" + cutoffDate;
+        return formatted;
+    }
+
+    @Override
     public String toString() {
         return "[DEADLINE]\n" + super.toString() + " (By: " + cutoffDate + ")";
     }

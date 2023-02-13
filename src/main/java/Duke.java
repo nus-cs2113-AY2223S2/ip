@@ -1,12 +1,12 @@
 import java.util.Scanner;
 import java.util.ArrayList;
-
 import java.io.FileWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.nio.file.Path;
+import java.nio.file.Files;
 import duke.Task;
 import duke.Deadline;
 import duke.Event;
@@ -29,6 +29,10 @@ public class Duke {
         TODO, DEADLINE, EVENT
     }
 
+    private enum markStorageTask {
+        MARK, UNMARK
+    }
+
     public static void reportError(String description) {
         System.out.println(LINE);
         System.out.println("[ERROR] " + description);
@@ -48,6 +52,7 @@ public class Duke {
         System.out.println("/list - List out all the tasks in ur task list.");
         System.out.println("/mark { numerical index } - Mark a specific task done.");
         System.out.println("/unmark { numerical index } - Mark a specific task undone.");
+        System.out.println("/delete { numerical index } - Delete a specific task.");
         System.out.println("/bye - Terminate the program.");
         System.out.println(LINE);
     }
@@ -63,24 +68,27 @@ public class Duke {
         if (userInputArray.length == 1) {
             throw new MissingCommandException("Please enter a description for your task!");
         }
+        Task task;
         /** Handle different task types **/
         if (variation == taskType.TODO) {
             /** Handle todo tasks **/
-            userTaskList.add(new Todo(userInput));
+            task = new Todo(userInput);
         } else if (variation == taskType.DEADLINE) {
             /** Handle deadline tasks **/
             if (!userInput.contains("/by")) {
                 throw new MissingCommandException("Please specify a deadline via the /by command!");
             }
-            userTaskList.add(new Deadline(userInput));
-        } else if (variation == taskType.EVENT) {
+            task = new Deadline(userInput);
+        } else {
             /** Handle event tasks **/
             if (!userInput.contains("/start") || !userInput.contains("/end")) {
                 throw new MissingCommandException(
                         "Please specify both start and end dates/times via the /start and /end commands!");
             }
-            userTaskList.add(new Event(userInput));
+            task = new Event(userInput);
         }
+        userTaskList.add(task);
+        saveTask(task, userTaskCount);
         System.out.println(LINE);
         System.out.println("Added the following task:\n" + userTaskList.get(userTaskCount));
         System.out.println(LINE);
@@ -105,29 +113,118 @@ public class Duke {
 
     }
 
+    public static void markStorageTask(int index, Duke.markStorageTask mark) {
+        String indexToRemove = Integer.toString(index);
+        ArrayList<String> savedTasksList = new ArrayList<>();
+        // copy all saved tasks into ArrayList
+        try {
+            savedTasksList.addAll(Files.readAllLines(Paths.get("tasks.txt")));
+        } catch (IOException e) {
+            reportError("Error accessing file!");
+        }
+        // edit the selected task
+        try {
+            File file = new File("tasks.txt");
+            Scanner s = new Scanner(file);
+            while (s.hasNextLine()) {
+                String line = s.nextLine();
+                String[] lineArray = line.split(":");
+                if (lineArray[0].equals(indexToRemove)) {
+                    if (mark == markStorageTask.MARK) {
+                        lineArray[2] = "true";
+                    } else {
+                        lineArray[2] = "false";
+                    }
+                    savedTasksList.set(Integer.parseInt(indexToRemove), String.join(":", lineArray));
+                }
+            }
+
+            s.close();
+        } catch (IOException e) {
+            reportError("Error accessing file!");
+        }
+        // rewrite tasks into tasks.txt
+        try {
+            FileWriter writer = new FileWriter("tasks.txt");
+            for (String task : savedTasksList) {
+                writer.write(task + "\n");
+            }
+            writer.close();
+        } catch (IOException e) {
+            reportError("Error accessing file!");
+        }
+    }
+
     public static void markTask(String[] userInputArray) {
         try {
             int taskIndex = Integer.parseInt(userInputArray[1]);
             taskIndex--;
+            if (userTaskList.get(taskIndex).getStatusIcon().equals("X")) {
+                reportError("Task is already marked!");
+                return;
+            }
             userTaskList.get(taskIndex).markAsDone();
             System.out.println(LINE + System.lineSeparator() + "The following task has been marked done: [X] "
                     + userTaskList.get(taskIndex).description + System.lineSeparator() + LINE);
+            // Edit tasks.txt to reflect marked
+            markStorageTask(taskIndex, markStorageTask.MARK);
         } catch (Exception e) {
             reportError("Please enter a valid numerical index of the task!");
             return;
         }
+
     }
 
     public static void unmarkTask(String[] userInputArray) {
         try {
             int taskIndex = Integer.parseInt(userInputArray[1]);
             taskIndex--;
+            if (userTaskList.get(taskIndex).getStatusIcon().equals(" ")) {
+                reportError("Task is already unmarked!");
+                return;
+            }
             userTaskList.get(taskIndex).markAsUndone();
             System.out.println(LINE + System.lineSeparator() + "The following task has been marked undone: [ ] "
                     + userTaskList.get(taskIndex).description + System.lineSeparator() + LINE);
+            // Edit tasks.txt to reflect marked
+            markStorageTask(taskIndex, markStorageTask.UNMARK);
         } catch (Exception e) {
             // potential IndexOutOfBoundsException or NumberFormatException
             reportError("Please enter a valid numerical index of the task!");
+        }
+    }
+
+    public static void deleteStorageTask(int index) {
+        String indexToRemove = Integer.toString(index);
+        ArrayList<String> savedTasksList = new ArrayList<>();
+        int newTaskIndex = 0;
+        // Add all tasks to ArrayList except task to be deleted
+        try {
+            File file = new File("tasks.txt");
+            Scanner s = new Scanner(file);
+            while (s.hasNextLine()) {
+                String line = s.nextLine();
+                String[] lineArray = line.split(":");
+                if (!(lineArray[0].equals(indexToRemove))) {
+                    lineArray[0] = Integer.toString(newTaskIndex);
+                    String newTaskString = String.join(":", lineArray);
+                    savedTasksList.add(newTaskString);
+                    newTaskIndex++;
+                }
+            }
+            s.close();
+        } catch (IOException e) {
+            reportError("Error accessing file!");
+        }
+        // rewrite tasks into tasks.txt
+        try {
+            FileWriter writer = new FileWriter("tasks.txt");
+            for (String task : savedTasksList) {
+                writer.write(task + "\n");
+            }
+            writer.close();
+        } catch (IOException e) {
+            reportError("Error accessing file!");
         }
     }
 
@@ -138,23 +235,64 @@ public class Duke {
             System.out.println(LINE + System.lineSeparator() + "The following task has been removed: [ ] "
                     + userTaskList.get(taskIndex).description + System.lineSeparator() + LINE);
             userTaskList.remove(taskIndex);
+            deleteStorageTask(taskIndex);
             userTaskCount--;
         } catch (Exception e) {
             reportError("Please enter a valid numerical index of the task!");
         }
     }
 
-    public static void addExistingTasks() {
+    /*
+     * arr[0] -> index
+     * arr[1] -> task type
+     * arr[2] -> isDone
+     * arr[3] -> task description
+     * 
+     * For event:
+     * arr[4] -> start
+     * arr[5] -> end
+     * 
+     * For deadline:
+     * arr[4] -> cutoff
+     */
+    public static void addSavedTasks() {
         try (Scanner s = new Scanner(new File(FILE_PATH))) {
             while (s.hasNextLine()) {
-                System.out.println(s.nextLine());
+                String task = s.nextLine();
+                Task newTask;
+                String[] taskStringArray = task.split(":");
+                if (taskStringArray[1].equals("Todo")) {
+                    String inputFormat = "/todo " + taskStringArray[3];
+                    newTask = new Todo(inputFormat);
+                    userTaskList.add(newTask);
+                } else if (taskStringArray[1].equals("Deadline")) {
+                    String inputFormat = "/deadline " + taskStringArray[3] + " /by " + taskStringArray[4];
+                    newTask = new Deadline(inputFormat);
+                    userTaskList.add(newTask);
+                } else {
+                    String inputFormat = "/event " + taskStringArray[3] + " /start " + taskStringArray[4] + " /end "
+                            + taskStringArray[5];
+                    newTask = new Event(inputFormat);
+                    userTaskList.add(newTask);
+                }
+                if (taskStringArray[2].equals("true")) {
+                    newTask.markAsDone();
+                }
+                userTaskCount++;
             }
         } catch (IOException e) {
             reportError("Error accessing file!");
         }
     }
 
-    public static void saveExistingTasks() {
+    public static void saveTask(Task task, Integer taskCount) {
+        try {
+            FileWriter fw = new FileWriter(FILE_PATH, true);
+            fw.write(taskCount.toString() + ":" + task.formattedString() + "\n");
+            fw.close();
+        } catch (IOException e) {
+            reportError("Error accessing file!");
+        }
 
     }
 
@@ -162,7 +300,7 @@ public class Duke {
         try {
             File f = new File(FILE_PATH);
             if (!f.createNewFile()) {
-                addExistingTasks();
+                addSavedTasks();
             }
         } catch (IOException e) {
             reportError("Error accessing file!");
