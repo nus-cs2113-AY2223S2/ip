@@ -15,10 +15,10 @@ public class UnmarkTask extends Command {
             throw new InvalidTaskException();
         }
 
-        tasksList[taskIndex].markAsNotDone();
+        tasksList[taskIndex - 1].markAsNotDone();
         printHorizontalLine();
         System.out.println("OK, I've marked this task as not done yet:");
-        System.out.println(tasksList[taskIndex].toString());
+        System.out.println(tasksList[taskIndex - 1].toString());
         printHorizontalLine();
 
     }
