@@ -35,6 +35,8 @@ public class Duke {
                 dukeCommandDeadline(nextLine, list);
             } else if (nextLine.split(" ", 0)[0].equals("todo")) {
                 dukeCommandToDo(nextLine, list);
+            } else if (nextLine.split(" ", 0)[0].equals("delete")) {
+                dukeCommandDelete(nextLine, list);
             } else if (nextLine.split(" ", 0)[0].equals("event")) {
                 dukeCommandEvent(nextLine, list);
             } else if (nextLine.equals("bye")) {
@@ -46,44 +48,66 @@ public class Duke {
         }
     }
 
+    public static void dukeCommandDelete(String nextLine, List<Task> list) {
+        String[] inputArray = nextLine.split(" ", 0);
+        if (inputArray.length != 2) {
+            return;
+        }
+        String indexString = inputArray[1];
+        int index;
+        try {
+            index = Integer.parseInt(indexString);
+        } catch (NumberFormatException e) {
+            //throw some error here
+            return;
+        }
+        if (list.size() < index - 1) {
+            //throw some error here
+            return;
+        }
+
+        list.remove(index);
+        System.out.println("Removed task at " + index);
+    }
 
     public static void dukeCommandList (List<Task> list) {
-        for (Task task : list) {
+        for (int i = 0; i < list.size(); i++ ) {
+            Task task = list.get(i);
             if (task instanceof Event) {
-                printEvent((Event) task);
+                printEvent((Event) task, i);
             } else if (task instanceof Deadline) {
-                printDeadline((Deadline) task);
+                printDeadline((Deadline) task, i);
             } else {
-                printTodo(task);
+                printTodo(task, i);
             }
         }
     }
 
     // Helper functions for dukeCommandList
-    private static void printEvent(Event event) {
+    private static void printEvent(Event event, int index) {
         if (event.isDone()) {
-            System.out.println(event.getIndex() + ". [E][X] " + event.getTaskName() +
+            System.out.println(index + ". [E][X] " + event.getTaskName() +
                     " (from: " + event.getStart() + " to: " + event.getDeadline() + ")");
         } else {
-            System.out.println(event.getIndex() + ". [E][ ] " + event.getTaskName() +
+            System.out.println(index + ". [E][ ] " + event.getTaskName() +
                     " (from: " + event.getStart() + " to: " + event.getDeadline() + ")");
         }
     }
-    private static void printDeadline(Deadline deadline) {
+    private static void printDeadline(Deadline deadline, int index) {
         if (deadline.isDone()) {
-            System.out.println(deadline.getIndex() + ". [D][X] " + deadline.getTaskName() +
+            System.out.println(index + ". [D][X] " + deadline.getTaskName() +
                     " (by: " + deadline.getDeadline() + ")");
         } else {
-            System.out.println(deadline.getIndex() + ". [D][ ] " + deadline.getTaskName() +
+            System.out.println(index + ". [D][ ] " + deadline.getTaskName() +
                     " (by: " + deadline.getDeadline() + ")");
         }
     }
 
-    private static void printTodo(Task task) {
+    private static void printTodo(Task task, int index) {
         if (task.isDone()) {
-            System.out.println(task.getIndex() + ". [T][X] " + task.getTaskName());
+            System.out.println(index + ". [T][X] " + task.getTaskName());
         } else {
-            System.out.println(task.getIndex() + ". [T][ ] " + task.getTaskName());
+            System.out.println(index + ". [T][ ] " + task.getTaskName());
         }
     }
 
