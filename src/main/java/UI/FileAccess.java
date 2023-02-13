@@ -8,13 +8,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 public class FileAccess {
-    private static String filePath = "data/duke.txt" ; //location of file to be read
+    private static String filePath = "data" ; //location of file to be read
+    private static String file = "data/duke.txt";
     public static void initFile() throws IOException {
-        File dir = new File("data");
+        File dir = new File(filePath);
         if(!dir.exists()) {
             dir.mkdir();
         }
-        File f = new File("data/duke.txt");
+        File f = new File(file);
         if(!f.exists()) {
             f.createNewFile();
         }
@@ -26,7 +27,7 @@ public class FileAccess {
     }
     public static void readFromFile() throws IOException {
         ArrayList<Task> tasks = TaskList.getTasks();
-        File f = new File("data/duke.txt");
+        File f = new File(file);
         Scanner s = new Scanner(f);
         while(s.hasNext()) {
             String text = s.nextLine();
@@ -68,7 +69,7 @@ public class FileAccess {
     public static void writeToFile() {
         ArrayList<Task> tasks = TaskList.getTasks();
         try {
-            FileWriter fw = new FileWriter(filePath);
+            FileWriter fw = new FileWriter(file);
             for(int i = 0; i < tasks.size(); i += 1) {
                 Task currentTask = tasks.get(i);
                 String taskType = currentTask.getType();
