@@ -1,11 +1,8 @@
 import command.*;
 import exception.DukeException;
-import task.Deadline;
-import task.Event;
+import parser.Parser;
 import task.Task;
-import task.Todo;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class Duke {
@@ -68,7 +65,7 @@ public class Duke {
                     taskCount += 1;
                     break;
                 default:
-                    System.out.println("____________________________________________________________" + "\nOOPS!!! I'm sorry, but I don't know what that means :-(\n" + "____________________________________________________________");
+                    throw new DukeException("OOPS!!! I'm sorry, but I don't know what that means :-(");
                 }
             } catch (DukeException e) {
                 String errorMessage = e.getMessage();

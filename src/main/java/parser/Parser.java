@@ -1,3 +1,5 @@
+package parser;
+
 import exception.DukeException;
 
 public class Parser {

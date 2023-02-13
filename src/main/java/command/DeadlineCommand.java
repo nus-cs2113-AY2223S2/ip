@@ -3,7 +3,7 @@ package command;
 import task.Deadline;
 import task.Task;
 
-public class DeadlineCommand extends Command{
+public class DeadlineCommand extends Command {
 
     public DeadlineCommand(String[] commands) {
         super(commands);
@@ -18,7 +18,7 @@ public class DeadlineCommand extends Command{
         System.out.println("____________________________________________________________");
         System.out.println("Got it. I've added this task:");
         System.out.println(deadlineTask.getSummary());
-        System.out.printf("Now you have %d tasks in the list.\n", taskCount+1);
+        System.out.printf("Now you have %d tasks in the list.\n", taskCount + 1);
         System.out.println("____________________________________________________________");
     }
 }
