@@ -64,6 +64,7 @@ public class TaskList {
             tasks.get(taskNumber).markAsDone();
             System.out.println("Nice! I've marked this task as done:");
             System.out.println(tasks.get(taskNumber).fullDescription());
+            FileAccess.writeToFile();
         } catch(Exception error) {
             throw new DukeException("Use case: mark ITEM_NUMBER");
         }
@@ -75,6 +76,7 @@ public class TaskList {
             tasks.get(taskNumber).markAsNotDone();
             System.out.println("Ok, I've marked this task as not done yet:");
             System.out.println(tasks.get(taskNumber).fullDescription());
+            FileAccess.writeToFile();
         } catch(Exception error) {
             throw new DukeException("Use case: unmark ITEM_NUMBER");
         }
@@ -88,6 +90,7 @@ public class TaskList {
             System.out.println("Noted. I've removed this task:");
             System.out.println(removalDescription);
             System.out.println("Now you have " + tasks.size() + " task(s) in the list.");
+            FileAccess.writeToFile();
         } catch(Exception error) {
             throw new DukeException("Use case: delete ITEM_NUMBER");
         }
