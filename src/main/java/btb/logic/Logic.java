@@ -57,6 +57,10 @@ public class Logic {
             case "list":
                 tasks.listTasks();
                 break;
+            case "delete":
+                taskNumber = Integer.parseInt(description);
+                tasks.deleteTask(taskNumber);
+                break;
             case "":
                 System.out.println("\t Please enter some commands");
                 break;
@@ -67,7 +71,5 @@ public class Logic {
         } catch (DukeException e) {
             System.out.println(e.getMessage());
         }
-//        catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {
-//            System.out.println("\t Please enter a valid command (╬▔皿▔)╯.");
     }
 }

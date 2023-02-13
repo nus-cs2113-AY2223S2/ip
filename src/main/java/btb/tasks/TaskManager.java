@@ -57,6 +57,9 @@ public class TaskManager {
         case "unmark":
             System.out.println("\t OK, I've marked this task as not done yet:");
             break;
+        case "delete":
+            System.out.println("\t Noted, I've removed this task:");
+            break;
         }
 
 //        System.out.println(Constant.TAB_SPACE + Constant.TAB_SPACE + task);
@@ -104,5 +107,17 @@ public class TaskManager {
         task.setDone(false);
         tasks.set(taskNumber - 1, task);
         printAcknowledgeCommand(task, "unmark");
+    }
+
+    /**
+     * delete task from task list
+     *
+     * @param taskNumber the task number to be deleted.
+     */
+    public void deleteTask(int taskNumber) {
+        Task task = tasks.get(taskNumber - 1);
+        tasks.remove(taskNumber - 1);
+        printAcknowledgeCommand(task, "delete");
+        printNumberOfTasks();
     }
 }
