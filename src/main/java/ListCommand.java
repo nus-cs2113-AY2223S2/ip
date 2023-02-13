@@ -1,17 +1,12 @@
 import task.Task;
 
 public class ListCommand extends Command {
-    private final int taskCount;
-    private final Task[] tasks;
-
-    public ListCommand(int taskCount, Task[] tasks, String[] commands) {
+    public ListCommand(String[] commands) {
         super(commands);
-        this.taskCount = taskCount;
-        this.tasks = tasks;
     }
 
     @Override
-    public void doCommand() {
+    public void doCommand(int taskCount, Task[] tasks) {
         System.out.println("____________________________________________________________"
                 + "\nHere are the tasks in your list:");
         for (int i = 0; i < taskCount; i++) {

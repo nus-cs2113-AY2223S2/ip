@@ -1,15 +1,12 @@
 import task.Task;
 
 public class UnmarkCommand extends Command {
-    private final Task[] tasks;
-
-    public UnmarkCommand(Task[] tasks, String[] commands) {
+    public UnmarkCommand(String[] commands) {
         super(commands);
-        this.tasks = tasks;
     }
 
     @Override
-    public void doCommand() {
+    public void doCommand(int taskCount, Task[] tasks) {
         int taskNum = Integer.parseInt(getCommands()[1]);
         tasks[taskNum - 1].unmarkDone();
         System.out.println("____________________________________________________________" +

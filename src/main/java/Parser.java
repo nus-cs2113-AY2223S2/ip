@@ -1,8 +1,5 @@
-import exception.DukeException;
-import task.Task;
-
 public class Parser {
-    public static String[] parse(String input) throws DukeException {
+    public static String[] parse(String input) {
         String[] commands = new String[10];
         input = input.trim();
         String[] inputs = input.split(" ");

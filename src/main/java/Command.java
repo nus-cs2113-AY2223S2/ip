@@ -1,3 +1,5 @@
+import task.Task;
+
 public abstract class Command {
     private final String[] commands;
 
@@ -9,5 +11,5 @@ public abstract class Command {
         return commands;
     }
 
-    public abstract void doCommand();
+    public abstract void doCommand(int taskCount, Task[] tasks);
 }
