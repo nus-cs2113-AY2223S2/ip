@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class Duke {
     private static ArrayList<Task> tasks = new ArrayList<>();
     private static Scanner in = new Scanner(System.in);
-    private static final String FILE_PATH = "src/main/duke.txt";
+    private static final String FILE_PATH = "duke.txt";
 
     private static void printDuke() {
         String logo = " ____        _\n"
@@ -167,7 +167,7 @@ public class Duke {
         int taskIdx = Integer.parseInt(taskNumber) - 1;
         try {
             Task currentTask = tasks.get(taskIdx);
-            currentTask.mark();
+            currentTask.unmark();
             System.out.print(breakLine()
                     + "\tOh. I've unmarked this task as not done yet :(\n\t"
                     + currentTask + '\n'
@@ -207,7 +207,7 @@ public class Duke {
     private static void saveDataToFile() {
         try {
             FileWriter fw = new FileWriter(FILE_PATH);
-            for (Task task: tasks) {
+            for (Task task : tasks) {
                 fw.write(task.toFileFormat());
             }
             fw.close();
