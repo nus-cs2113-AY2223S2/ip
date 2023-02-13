@@ -28,8 +28,9 @@ public class TaskList {
             } else {
                 Todo t = new Todo(taskName);
                 list.add(t);
+                UI.printAddedTask(t, list.size());
             }
-            UI.printAddedTask(taskName, list.size());
+
         } catch (MissingParameterException e) {
             e.missingParamDesc();
         }
@@ -48,8 +49,8 @@ public class TaskList {
             } else {
                 Deadline d = new Deadline(taskName, byWhen);
                 list.add(d);
+                UI.printAddedTask(d, list.size());
             }
-            UI.printAddedTask(taskName, byWhen, list.size());
         } catch (MissingParameterException e) {
             if (taskName == null) {
                 e.missingParamDesc();
@@ -73,8 +74,8 @@ public class TaskList {
             } else {
                 Event e = new Event(taskName, startWhen, endWhen);
                 list.add(e);
+                UI.printAddedTask(e, list.size());
             }
-            UI.printAddedTask(taskName, startWhen, endWhen, list.size());
         } catch (MissingParameterException e) {
             if (taskName == null) {
                 e.missingParamDesc();
@@ -121,7 +122,7 @@ public class TaskList {
                 throw new IllegalOperationException();
             } else {
                 list.get(taskNumber - 1).setCompleted(false);
-                UI.printValidUnmark(list, taskNumber);
+                UI.printMarking(list, taskNumber, false);
             }
         } catch (OutOfBoundException e) {
             e.errorUnmark();
@@ -147,7 +148,7 @@ public class TaskList {
                 throw new IllegalOperationException();
             } else {
                 list.get(taskNumber - 1).setCompleted(true);
-                UI.printValidMark(list, taskNumber);
+                UI.printMarking(list, taskNumber, true);
             }
         } catch (OutOfBoundException e) {
             e.errorMark();
@@ -164,7 +165,7 @@ public class TaskList {
             if (list.size() > 0) {
                 System.out.println("Here are the tasks in your list:");
                 for (int i = 0; i < list.size(); i++) {
-                    System.out.print(i + 1);
+                    System.out.print(i + 1 + ".");
                     System.out.println(list.get(i).toString());
                 }
             } else {
