@@ -11,6 +11,10 @@ public class Task {
         return description;
     }
     
+    public boolean getIsDone() {
+        return isDone;
+    }
+    
     public String getStatusIcon() {
         return isDone ? "[X] " : "[ ] ";
     }
@@ -21,5 +25,13 @@ public class Task {
     
     public String toString() {
         return getStatusIcon() + description;
+    }
+    
+    public String getTaskType() {
+        return "";
+    }
+    
+    public String getTaskContent() {
+        return "";
     }
 }

@@ -12,4 +12,15 @@ public class Event extends Task {
 	public String toString() {
 		return "[E]" + super.toString() + " (from: " + from + " to: " + to + ")";
 	}
+	
+	@Override
+	public String getTaskType() {
+		return "E";
+	}
+	
+	@Override
+	public String getTaskContent() {
+		String output = description + " / " + from + " / " + to;
+		return output;
+	}
 }

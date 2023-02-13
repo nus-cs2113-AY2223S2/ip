@@ -1,10 +1,12 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Tasks {
+    public static final String SAVE_FILE_PARTITION = " / ";
     protected ArrayList<Task> tasks;
     private int tasksCount;
     
@@ -53,7 +55,6 @@ public class Tasks {
     }
     
     public void readTask(String taskString) {
-        // TODO: read from the scanner
         String[] commandAndArg = splitCommandAndArg(taskString);
         String command = commandAndArg[0];
         String mark = commandAndArg[1];
@@ -79,7 +80,7 @@ public class Tasks {
     }
     
     private String[] splitCommandAndArg(String line) {
-        String[] splitStrings = line.split(" / ");
+        String[] splitStrings = line.split(SAVE_FILE_PARTITION);
         return splitStrings; // assumed that there when used there is no exception where it cannot be split
     }
     
@@ -88,7 +89,6 @@ public class Tasks {
     }
     
     private void loadTodo(boolean isMark, String description) {
-        // TODO
         Todo newTodo = new Todo(description);
         tasksCount++;
         tasks.add(newTodo);
@@ -98,8 +98,6 @@ public class Tasks {
     }
     
     private void loadDeadline(boolean isMark, String description, String by) {
-        // TODO
-        
         Deadline newDeadline = new Deadline(description, by);
         tasksCount++;
         tasks.add(newDeadline);
@@ -109,8 +107,6 @@ public class Tasks {
     }
     
     private void loadEvent(boolean isMark, String description, String from, String to) {
-        // TODO
-        
         Event newEvent = new Event(description, from, to);
         tasksCount++;
         tasks.add(newEvent);
@@ -119,9 +115,30 @@ public class Tasks {
         }
     }
     
-    public void saveTasks(File saveFile) {
+    public void saveTasks(File saveFile) throws IOException {
         // TODO: overwrite and save tasks into scanner everytime a command is made
-        
+        FileWriter fw = new FileWriter(saveFile);
+        fw.flush();
+        String fileContent = getFileContent();
+        fw.write(fileContent);
+        fw.close();
+    }
+    
+    private String getFileContent() {
+        String output = "";
+        for (int i = 1; i <= tasksCount; i++) {
+            Task task = tasks.get(i);
+            String taskType = task.getTaskType();
+            output = output.concat(taskType + SAVE_FILE_PARTITION);
+            if (task.getIsDone()) {
+                output = output.concat("1" + SAVE_FILE_PARTITION);
+            } else {
+                output = output.concat("0" + SAVE_FILE_PARTITION);
+            }
+            String taskContent = task.getTaskContent();
+            output = output.concat(taskContent + '\n');
+        }
+        return output;
     }
     public void addTask(Task newTask) {
         tasksCount++;

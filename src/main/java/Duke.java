@@ -35,7 +35,7 @@ public class Duke {
 		
 		list.initTasks(saveDir, saveFile);
 		greet();
-		readCommandLine(list);
+		readCommandLine(list, saveFile);
 		exit();
 	}
 	
@@ -46,7 +46,7 @@ public class Duke {
 		System.out.println(greet);
 	}
 	
-	private static void readCommandLine(Tasks list) {
+	private static void readCommandLine(Tasks list, File saveFile) {
 		Scanner in = new Scanner(System.in);
 		String line = in.nextLine();
 		
@@ -55,8 +55,14 @@ public class Duke {
 			System.out.print(DIVIDER);
 			runCommand(list, line);
 			System.out.println(DIVIDER);
-			
 			line = in.nextLine();
+			try {
+				list.saveTasks(saveFile);
+			} catch (IOException e) {
+				System.out.println("Error: Unable to save changes");
+			} catch (NullPointerException e) {
+				System.out.println("Error: idk what");
+			}
 		}
 	}
 	
