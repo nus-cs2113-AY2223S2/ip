@@ -71,6 +71,7 @@ public class Duke {
         } else if (action.startsWith("event")) {
             int dividerPosition1 = action.indexOf("/from");
             int dividerPosition2 = action.indexOf("/to");
+            //extract the event details
             tasks[taskCount] = new Event(action.substring(6,dividerPosition1 - 1),
                     action.substring(dividerPosition1 + 6, dividerPosition2 - 1),
                     action.substring(dividerPosition2 + 4));
