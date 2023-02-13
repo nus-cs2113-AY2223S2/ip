@@ -1,3 +1,5 @@
+package Duke.task;
+
 public class Task {
 	protected String description;
 	protected String type;
@@ -9,17 +11,31 @@ public class Task {
 		this.type = "[T]";
 	}
 
+	public boolean getIsDone () {
+
+		return isDone;
+	}
+
+	public void setIsDone (boolean done) {
+
+		isDone = done;
+	}
+
+
 	public String getType () {
+
 		return type;
 	}
 
 	@Override
 	public String toString () {
+
 		return "[" + getStatusIcon () + "] " + description;
 	}
 
 
 	public String getStatusIcon () {
+
 		return (isDone ? "X" : " ");
 	}
 

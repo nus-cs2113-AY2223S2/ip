@@ -1,5 +1,11 @@
 package Duke;
+
 import java.util.Scanner;
+
+import Duke.task.Deadline;
+import Duke.task.Event;
+import Duke.task.Task;
+import Duke.exception.DukeException;
 
 public class Duke {
 	public static void main (String[] args) {
@@ -79,13 +85,13 @@ public class Duke {
 		index -= 1;
 
 		if (input.startsWith ("mark")) {
-			tasks[index].isDone = true;
+			tasks[index].setIsDone (true);
 		} else {
-			tasks[index].isDone = false;
+			tasks[index].setIsDone (false);
 		}
 
 		printLine ();
-		System.out.println ("Nice! I've marked this task as " + (tasks[index].isDone ? "done" : "undone") + ":");
+		System.out.println ("Nice! I've marked this task as " + (tasks[index].getIsDone () ? "done" : "undone") + ":");
 		System.out.println (tasks[index].getType () + tasks[index].toString ());
 		printLine ();
 	}
