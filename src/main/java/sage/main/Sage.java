@@ -11,12 +11,12 @@ public class Sage {
         TaskList taskList = new TaskList();
         Display ui = new Display();
         Scanner input = new Scanner(System.in);
-        ui.welcomeUser();
+        ui.printWelcomeUser();
         while (input.hasNextLine()) {
             Command command = new Command(input.nextLine());
             switch (command.getTaskType()) {
             case "bye":
-                ui.goodByeUser();
+                ui.printGoodByeUser();
                 return;
             case "list":
                 taskList.listTask();
@@ -26,6 +26,9 @@ public class Sage {
                 break;
             case "mark":
                 taskList.markTask(command.getTaskDescription());
+                break;
+            case "delete":
+                taskList.deleteTask(command.getTaskDescription());
                 break;
             case "todo":
                 taskList.addTask(command.getTaskDescription());
@@ -37,7 +40,7 @@ public class Sage {
                 taskList.addTask(command.getTaskDescription(), command.getFrom(), command.getTo());
                 break;
             default:
-                ui.unknownInput();
+                ui.printUnknownInput();
                 break;
             }
         }

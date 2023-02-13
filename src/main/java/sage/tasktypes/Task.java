@@ -2,11 +2,11 @@ package sage.tasktypes;
 
 public class Task {
     private String taskName = "";
-    private boolean completed = false;
+    private boolean isCompleted = false;
 
     public Task(String taskName) {
         this.taskName = taskName;
-        this.completed = false;
+        this.isCompleted = false;
     }
 
     public String getTaskName() {
@@ -14,11 +14,11 @@ public class Task {
     }
 
     public void setCompleted(boolean completed) {
-        this.completed = completed;
+        this.isCompleted = completed;
     }
 
     public boolean isCompleted() {
-        return completed;
+        return isCompleted;
     }
 
     public String toString() {

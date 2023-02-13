@@ -22,32 +22,24 @@ public class Display {
         return LINE;
     }
 
-    public void welcomeUser() {
+    public void printWelcomeUser() {
         String welcome = "Hello! I'm SAGE, the knowledgeable one\n"
                 + "What can I do for you today?\n";
         System.out.println(LOGO);
         System.out.println(welcome);
     }
 
-    public void goodByeUser() {
+    public void printGoodByeUser() {
         System.out.println("Bye. Hope to see you again soon!");
     }
 
     /**
-     * Displays the list of tasks stored in the taskList.
+     * This method prints a message to the console indicating the addition of a TODO task to the task list and its details.
      *
-     * @param taskList The TaskList object that contains the tasks to be displayed.
+     * @param taskDescription The description of the task.
+     * @param taskCount       The number of tasks in list.
      */
-
-    /**
-     * This method prints a message to the console indicating the addition of a task to the task list and its details.
-     * The message includes the type of task, the task description and the task count after adding the task.
-     *
-     * @param userInput The input entered by the user in the form of an array of strings after character split
-     * @param taskType  The type of task being added (TODO, EVENT or DEADLINE)
-     * @param taskList  The list of tasks to which the new task is being added
-     **/
-    public void addedTask(String taskDescription, int taskCount) {
+    public void printAddedTask(String taskDescription, int taskCount) {
         System.out.println(LINE);
         System.out.println("Got it. I've added this task:");
         System.out.println("[T][ ] " + taskDescription);
@@ -55,7 +47,14 @@ public class Display {
         System.out.println(LINE);
     }
 
-    public void addedTask(String taskDescription, String by, int taskCount) {
+    /**
+     * This method prints a message to the console indicating the addition of a DEADLINE task to the task list and its details.
+     *
+     * @param taskDescription The description of the task.
+     * @param by              The deadline date/time of the task
+     * @param taskCount       The number of tasks in list.
+     */
+    public void printAddedTask(String taskDescription, String by, int taskCount) {
         System.out.println(LINE);
         System.out.println("Got it. I've added this task:");
         System.out.println("[D][ ] " + taskDescription + "(by: "
@@ -64,7 +63,15 @@ public class Display {
         System.out.println(LINE);
     }
 
-    public void addedTask(String taskDescription, String from, String to, int taskCount) {
+    /**
+     * This method prints a message to the console indicating the addition of an EVENT task to the task list and its details.
+     *
+     * @param taskDescription The description of the task.
+     * @param from            The starting date/time of the task
+     * @param to              The ending date/time of the task
+     * @param taskCount       The number of tasks in list.
+     */
+    public void printAddedTask(String taskDescription, String from, String to, int taskCount) {
         System.out.println(LINE);
         System.out.println("Got it. I've added this task:");
         System.out.println("[E][ ] " + taskDescription + "(from: "
@@ -73,11 +80,11 @@ public class Display {
         System.out.println(LINE);
     }
 
-    public void taskNotFound() {
+    public void printTaskNotFound() {
         System.out.println("Uh-oh! Task Not Found!");
     }
 
-    public void unknownInput() {
+    public void printUnknownInput() {
         System.out.println("I don't understand what you mean, please try again!");
     }
 
@@ -88,7 +95,7 @@ public class Display {
      * @param list       the list of tasks
      * @param taskNumber the taskNumber index that is to be unmarked
      */
-    public void validUnmark(ArrayList<Task> list, int taskNumber) {
+    public void printValidUnmark(ArrayList<Task> list, int taskNumber) {
 
         Task taskObj = list.get(taskNumber - 1);
         System.out.println("OK, I've marked this task as not done yet:");
@@ -111,7 +118,7 @@ public class Display {
      * @param list       the list of tasks
      * @param taskNumber the taskNumber index that is to be marked
      */
-    public void validMark(ArrayList<Task> list, int taskNumber) {
+    public void printValidMark(ArrayList<Task> list, int taskNumber) {
         Task taskObj = list.get(taskNumber - 1);
         System.out.println("Nice! I've marked this task as done:");
         if (taskObj instanceof Deadline) {
@@ -125,6 +132,23 @@ public class Display {
             Todo todo = (Todo) taskObj;
             System.out.println("[T][X] " + todo.getTaskName());
         }
+    }
+
+    public void printDeletedTask(ArrayList<Task> list, int taskNumber) {
+        Task taskObj = list.get(taskNumber - 1);
+        System.out.println("Noted. I've removed this task:");
+        if (taskObj instanceof Deadline) {
+            System.out.println("[E][X] " + taskObj.getTaskName() + "(by: " +
+                    ((Deadline) taskObj).getByWhen() + ") ");
+        } else if (taskObj instanceof Event) {
+            Event event = (Event) taskObj;
+            System.out.println("[E][X] " + event.getTaskName() + "(from: "
+                    + event.getStartWhen() + " to: " + event.getEndWhen() + ")");
+        } else {
+            Todo todo = (Todo) taskObj;
+            System.out.println("[T][X] " + todo.getTaskName());
+        }
+        System.out.println("Now you have " + String.valueOf(list.size() - 1) + " tasks in the list.");
     }
 
 }
