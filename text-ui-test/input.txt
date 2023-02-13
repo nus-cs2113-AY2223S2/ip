@@ -19,6 +19,8 @@ list
 todo
 deadline
 event
+mark
+unmark
 blah
 deadline test
 event test
