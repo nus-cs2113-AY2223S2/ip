@@ -9,7 +9,7 @@ public class Duke {
 	public static final String ERROR_EMPTY_EVENT_DESCRIPTION_MESSAGE = "Error: The description, from or to cannot be empty";
 	public static final String ERROR_EMPTY_DEADLINE_DESCRIPTION = "Error: The description or by cannot be empty";
 	public static final String ERROR_TASK_NUMBER_OUT_OF_RANGE_MESSAGE = "Error: task number given out of range";
-	public static final String ERROR_TASK_NUMBER_NOT_INT_MESSAGE = "Error: Task Number given is a text and not a number!";
+	public static final String ERROR_TASK_NUMBER_NOT_INT_MESSAGE = "Error: Task Number given empty/not a number!";
 	public static final String PRINT_HELP_INSTRUCTIONS_MESSAGE = "The following are the commands available and their arguments: ";
 	public static final String HELP_TODO_FORMAT = "Todo [description]";
 	public static final String HELP_TODO_DESCRIPTION = "Creates Todo task. Requires a description text.";
@@ -25,6 +25,9 @@ public class Duke {
 	public static final String HELP_LIST_DESCRIPTION = "Lists the available commands.";
 	public static final String HELP_BYE_FORMAT = "bye";
 	public static final String HELP_BYE_DESCRIPTION = "Exits and closes the program";
+	public static final String RUN_CLEAR_COMPLETE_MESSAGE = "List has been cleared";
+	public static final String ERROR_WRONG_INPUT_RUN_CLEAR_MESSAGE = "Error: Please input either y (yes) or n (no)";
+	public static final String RUN_CLEAR_WARNING_MESSAGE = "You are about to clear your entire list. Are you sure? [y/n] ";
 	
 	public static void main(String[] args) {
 		greet();
@@ -82,6 +85,12 @@ public class Duke {
 			break;
 		case "deadline":
 			addDeadline(list, arg);
+			break;
+		case "delete":
+			runDelete(list, arg);
+			break;
+		case "clear":
+			runClear(list);
 			break;
 		default:
 			printUnknownCommandMessage();
@@ -221,6 +230,37 @@ public class Duke {
 	private static String[] splitDeadlineArg(String arg) {
 		String[] splitDescriptionAndBy = arg.split("/by", 2);
 		return new String[]{splitDescriptionAndBy[0].trim(), splitDescriptionAndBy[1].trim()};
+	}
+
+	private static void runDelete(Tasks list, String arg) {
+		try {
+			int taskNumber = Integer.parseInt(arg);
+			if (taskNumber <= list.getTasksCount()) {
+				list.deleteTask(taskNumber);
+			} else {
+				System.out.println(ERROR_TASK_NUMBER_OUT_OF_RANGE_MESSAGE);
+			}
+		} catch (NumberFormatException e) {
+			System.out.println(ERROR_TASK_NUMBER_NOT_INT_MESSAGE);
+		}
+	}
+	
+	private static void runClear(Tasks list) {
+		System.out.println(RUN_CLEAR_WARNING_MESSAGE);
+		Scanner in = new Scanner(System.in);
+		String line = in.nextLine();
+		switch (line) {
+		case "y":
+		case "Y":
+			list.clear();
+			System.out.println(RUN_CLEAR_COMPLETE_MESSAGE);
+			break;
+		case "n":
+		case "N":
+			break;
+		default:
+			System.out.println(ERROR_WRONG_INPUT_RUN_CLEAR_MESSAGE);
+		}
 	}
 	
 	private static void printUnknownCommandMessage() {
