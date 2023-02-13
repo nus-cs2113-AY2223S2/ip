@@ -1,6 +1,6 @@
 public class Task {
-    private String name;
-    private Boolean isDone;
+    protected String name;
+    protected Boolean isDone;
 
 
     public Task (String name, Boolean isDone) {
@@ -8,11 +8,15 @@ public class Task {
         this.isDone = isDone;
     }
 
+
+    public String getType() {
+        return "TASK";
+    }
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName (String name) {
         this.name = name;
     }
 
@@ -27,5 +31,9 @@ public class Task {
     public String toString() {
         String checker = this.isDone ? "[X]" : "[ ]";
         return checker + " " + this.name;
+    }
+
+    public String getFileFormatString() {
+        return String.format("%s | %d | %s", getType(), isDone ? 1 : 0, name);
     }
 }
