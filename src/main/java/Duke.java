@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Duke {
-    private static final String logo = " ____        _        \n" + "|  _ \\ _   _| | _____ \n" + "| | | | | | | |/ / _ \\\n" + "| |_| | |_| |   <  __/\n" + "|____/ \\__,_|_|\\_\\___|\n";
     private static final String line = "____________________________________________________________";
     private static final int MAX_TASKS = 100;
     private static int taskCount = 0;
@@ -23,7 +22,6 @@ public class Duke {
     }
 
     private static void greetUser() {
-        System.out.println(logo);
         System.out.println(line + "\nHello! I'm Duke\nWhat can I do for you?\n" + line);
     }
 
