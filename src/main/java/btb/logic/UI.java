@@ -1,7 +1,6 @@
-package btb;
+package btb.logic;
 
 import btb.constants.Constant;
-import btb.logic.Logic;
 import btb.tasks.TaskManager;
 
 import java.util.NoSuchElementException;

@@ -1,6 +1,11 @@
 package btb.logic;
 
-import btb.tasks.*;
+import btb.exceptions.DukeException;
+import btb.tasks.Deadline;
+import btb.tasks.Event;
+import btb.tasks.Task;
+import btb.tasks.TaskManager;
+import btb.tasks.Todo;
 
 public class Logic {
 
@@ -42,10 +47,12 @@ public class Logic {
                 tasks.addTask(task, command);
                 break;
             case "mark":
-                tasks.markTask(description);
+                int taskNumber = Parser.handleMark(tasks, description);
+                tasks.markTask(taskNumber);
                 break;
             case "unmark":
-                tasks.unmarkTask(description);
+                taskNumber = Parser.handleMark(tasks, description);
+                tasks.unmarkTask(taskNumber);
                 break;
             case "list":
                 tasks.listTasks();
@@ -57,8 +64,10 @@ public class Logic {
                 System.out.println("\t ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
                 break;
             }
-        } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {
-            System.out.println("\t Please enter a valid command (╬▔皿▔)╯.");
+        } catch (DukeException e) {
+            System.out.println(e.getMessage());
         }
+//        catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {
+//            System.out.println("\t Please enter a valid command (╬▔皿▔)╯.");
     }
 }

@@ -1,5 +1,8 @@
 package btb.logic;
 
+import btb.exceptions.*;
+import btb.tasks.TaskManager;
+
 public class Parser {
 
     /**
@@ -20,11 +23,19 @@ public class Parser {
      * @param description description entered by user
      * @return string array consisting of the split inputs
      */
-    public static String[] handleDeadline(String description) {
-        String[] splitStrings;
+    public static String[] handleDeadline(String description) throws
+            InvalidDeadlineCommandException, EmptyTaskDescriptionException {
+        if (!description.contains(" /by ")) {
+            throw new InvalidDeadlineCommandException();
+        }
 
+        String[] splitStrings;
         splitStrings = description.split("/", 2);
         splitStrings[1] = splitStrings[1].substring(3);
+
+        if (splitStrings[0].trim().equals("")) {
+            throw new EmptyTaskDescriptionException();
+        }
 
         return splitStrings;
     }
@@ -36,11 +47,57 @@ public class Parser {
      * @param description description entered by user
      * @return string array consisting of the split inputs
      */
-    public static String[] handleEvent(String description) {
+    public static String[] handleEvent(String description) throws
+            InvalidEventCommandException, EmptyTaskDescriptionException {
+        if (!description.contains(" /from ") || !description.contains(" /to ")) {
+            throw new InvalidEventCommandException();
+        }
         String[] splitStrings = description.split("/", 3);
         splitStrings[1] = splitStrings[1].substring(5);
         splitStrings[2] = splitStrings[2].substring(3);
 
+        if (splitStrings[0].trim().equals("")) {
+            throw new EmptyTaskDescriptionException();
+        }
+
         return splitStrings;
+    }
+
+    public static int handleMark(TaskManager tasks, String description) throws
+            TaskNumberOutOfBoundException, NotIntegerTaskNumberException, EmptyTaskNumberException {
+        int taskNumber = 0;
+
+        if (description.equals("")) {
+            throw new EmptyTaskNumberException();
+        }
+
+        taskNumber = convertStringToInt(description);
+        boolean isOutOfBound = taskNumber < 1 || taskNumber > tasks.getSize();
+
+        if (isOutOfBound) {
+            throw new TaskNumberOutOfBoundException(taskNumber);
+        }
+
+        return taskNumber;
+    }
+
+    private static boolean isInteger(String string) {
+        for (int i = 0; i < string.length(); i++) {
+            if (string.charAt(i) < '0' || string.charAt(i) > '9') {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static int convertStringToInt(String string) throws NotIntegerTaskNumberException {
+        int number;
+        if (isInteger(string)) {
+            number = Integer.parseInt(string);
+        } else {
+            throw new NotIntegerTaskNumberException(string);
+        }
+        return number;
     }
 }
