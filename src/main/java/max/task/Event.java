@@ -12,10 +12,23 @@ public class Event extends Task {
 
     @Override
     public String getDescription() {
-        String desc = "[E]" + super.getDescription();
+        String desc = "[" + getTaskLabel()+ "]" + super.getDescription();
         String fromStr = " (FROM: " + eventFrom + ", ";
         String toStr = "TO: " + eventTo + ")";
         desc = desc.concat(fromStr).concat(toStr);
         return desc;
+    }
+
+    @Override
+    public String getTaskLabel() {
+        return "E";
+    }
+
+    public String getEventFrom() {
+        return eventFrom;
+    }
+
+    public String getEventTo() {
+        return eventTo;
     }
 }

@@ -7,7 +7,11 @@ public class Todo extends Task {
 
     @Override
     public String getDescription() {
-        return "[T]" + super.getDescription();
+        return "[" + getTaskLabel() + "]" + super.getDescription();
     }
 
+    @Override
+    public String getTaskLabel() {
+        return "T";
+    }
 }

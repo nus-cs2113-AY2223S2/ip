@@ -17,6 +17,7 @@ public enum Command {
     DELETE(1, "delete", new String[]{}),
     EXIT(1, "exit", new String[]{}),
     LIST(1, "list", new String[]{}),
+    DEBUG(1, "debug", new String[]{}),
     UNKNOWN_COMMAND(1, "", new String[]{});
 
 

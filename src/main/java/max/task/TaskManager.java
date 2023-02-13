@@ -1,6 +1,8 @@
 package max.task;
 
 import max.command.Command;
+import max.command.InvalidCommandException;
+import max.data.PersistentDataHandler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -97,6 +99,15 @@ public class TaskManager {
         System.out.println(tasks.get(taskNum).getDescription());
         tasks.remove(taskNum);
         System.out.println("You have have " + tasks.size() + " tasks left.");
+    }
+
+    public void loadData(){
+        PersistentDataHandler dataHandler = new PersistentDataHandler();
+        this.tasks = dataHandler.loadTasksFromDisk();
+    }
+    public void saveData(){
+        PersistentDataHandler dataHandler = new PersistentDataHandler();
+        dataHandler.saveTasksToDisk(tasks);
     }
 
     public void resetTaskList(){

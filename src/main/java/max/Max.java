@@ -73,6 +73,7 @@ public class Max {
         case TASK_EVENT:
         case TASK_DEADLINE:
         case TASK_TODO:
+            // TODO: Consider refactoring Task logic to a TaskHandler class
             try {
                 taskManager.createTask(commandPayload, mainCommand);
             }catch (TaskException exception){
@@ -87,6 +88,10 @@ public class Max {
             // { Command.UNKNOWN_COMMAND }
             System.out.println("Awoo? I don't understand that command.");
             break;
+        }
+        // Backup data after every command
+        if(!isDebugMode){
+            taskManager.saveData();
         }
     }
 
@@ -110,6 +115,7 @@ public class Max {
 
         // Init task subsystem (Controller)
         taskManager = new TaskManager();
+        taskManager.loadData();
 
         greet();
         setIsListening(true);
