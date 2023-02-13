@@ -8,6 +8,7 @@ import wilsonoh.sagyo.commands.ByeCommand;
 import wilsonoh.sagyo.commands.Command;
 import wilsonoh.sagyo.commands.CommandType;
 import wilsonoh.sagyo.commands.DeleteTaskCommand;
+import wilsonoh.sagyo.commands.FindCommand;
 import wilsonoh.sagyo.commands.ListCommand;
 import wilsonoh.sagyo.commands.MarkTaskCommand;
 import wilsonoh.sagyo.commands.UnMarkTaskCommand;
@@ -55,6 +56,12 @@ public class CommandParser {
                     return new ByeCommand();
                 case LIST:
                     return new ListCommand(tasks);
+                case FIND:
+                    String filter = matcher.group("filter");
+                    if (filter == null) {
+                        throw new InvalidCommandException("The find command must be followed by a search term");
+                    }
+                    return new FindCommand(filter, tasks);
                 case DELETE: {
                     String commandName = "delete";
                     int idx = getValidatedIndex(commandName, matcher.group("idx"));
