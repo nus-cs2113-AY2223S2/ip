@@ -71,6 +71,15 @@ public class Shizuka {
                     break;
                 }
                 break;
+            case "delete":
+                try {
+                    taskNum = parseNumber(command[1]);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    Printer.noArgsError();
+                    break;
+                }
+                list0.deleteTask(taskNum);
+                break;
             default:
                 Printer.parseError();
             }
