@@ -17,7 +17,7 @@ public class Duke {
     private static ArrayList<Task> taskList = new ArrayList<>();
 
     public static void main(String[] args) throws UnkownCommandException {
-        File f = new File("data.txt");
+        File f = new File("./data.txt");
         try{
             readData(f);
         }catch (IOException e){
@@ -66,7 +66,7 @@ public class Duke {
         }
         try {
             createTasklistFile();
-            saveTasklist("data.txt", taskList);
+            saveTasklist("./data.txt", taskList);
         } catch (IOException e) {
             System.out.println("Error occurred while saving file\n");
         }
@@ -102,8 +102,8 @@ public class Duke {
     }
 
     private static void createTasklistFile() throws IOException {
-        File tasklistFile = new File("data.txt");
-        if (!tasklistFile.exists()) {
+        File tasklistFile = new File("./data.txt");
+        if (!tasklistFile.createNewFile()) {
             throw new IOException();
         }
     }
