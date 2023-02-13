@@ -25,6 +25,9 @@ public class Duke {
 	public static final String HELP_LIST_DESCRIPTION = "Lists the available commands.";
 	public static final String HELP_BYE_FORMAT = "bye";
 	public static final String HELP_BYE_DESCRIPTION = "Exits and closes the program";
+	public static final String RUN_CLEAR_COMPLETE_MESSAGE = "List has been cleared";
+	public static final String ERROR_WRONG_INPUT_RUN_CLEAR_MESSAGE = "Error: Please input either y (yes) or n (no)";
+	public static final String RUN_CLEAR_WARNING_MESSAGE = "You are about to clear your entire list. Are you sure? [y/n] ";
 	
 	public static void main(String[] args) {
 		greet();
@@ -85,6 +88,9 @@ public class Duke {
 			break;
 		case "delete":
 			runDelete(list, arg);
+			break;
+		case "clear":
+			runClear(list);
 			break;
 		default:
 			printUnknownCommandMessage();
@@ -236,6 +242,24 @@ public class Duke {
 			}
 		} catch (NumberFormatException e) {
 			System.out.println(ERROR_TASK_NUMBER_NOT_INT_MESSAGE);
+		}
+	}
+	
+	private static void runClear(Tasks list) {
+		System.out.println(RUN_CLEAR_WARNING_MESSAGE);
+		Scanner in = new Scanner(System.in);
+		String line = in.nextLine();
+		switch (line) {
+		case "y":
+		case "Y":
+			list.clear();
+			System.out.println(RUN_CLEAR_COMPLETE_MESSAGE);
+			break;
+		case "n":
+		case "N":
+			break;
+		default:
+			System.out.println(ERROR_WRONG_INPUT_RUN_CLEAR_MESSAGE);
 		}
 	}
 	

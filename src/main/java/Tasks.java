@@ -55,6 +55,14 @@ public class Tasks {
         tasksCount--;
     }
     
+    public void clear() {
+        tasks.clear();
+        
+        // reinitialise tasks to make it 1-based indexing
+        tasks.add(null);
+        tasksCount = 0;
+    }
+    
     public void printList() {
         System.out.println(PRINT_LIST_ALERT);
         
