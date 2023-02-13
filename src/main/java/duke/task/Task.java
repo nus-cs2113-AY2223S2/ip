@@ -14,12 +14,10 @@ public class Task {
     }
 
     public void mark() {
-
         this.isMarked = true;
     }
 
     public void unmark() {
-
         this.isMarked = false;
     }
 }
