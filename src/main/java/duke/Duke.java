@@ -29,8 +29,8 @@ public class Duke {
     // Greet
     private static void greet() {
         System.out.println(breakLine()
-                + "Hello! I'm Momo :)\n"
-                + "What can I do for you?\n"
+                + "\tHello! I'm Duke :)\n"
+                + "\tWhat can I do for you?\n"
                 + breakLine());
     }
 
@@ -129,6 +129,24 @@ public class Duke {
         }
     }
 
+    // delete Task
+    private static void deleteTask(String taskNumber) {
+        int taskIdx = Integer.parseInt(taskNumber) - 1;
+        try {
+            Task currentTask = tasks.get(taskIdx);
+            tasks.remove(taskIdx);
+            System.out.println(breakLine()
+                    + "\tOk! I've deleted the task :D\n\t\t"
+                    + currentTask);
+            System.out.print("\tThere are " + tasks.size() + " remaining tasks.\n"
+                    + breakLine());
+        } catch (IndexOutOfBoundsException e) {
+            System.out.print(breakLine()
+                    + "\t(!) Invalid task number. Please try again :(\n"
+                    + breakLine());
+        }
+    }
+
     // read input
     private static String readInput() {
         System.out.print(">> ");
@@ -169,6 +187,8 @@ public class Duke {
                     addDeadline(inputArgs[1]);
                 } else if (command.equals("event")) {
                     addEvent(inputArgs[1]);
+                } else if (command.equals("delete")) {
+                    deleteTask(inputArgs[1]);
                 } else {
                     System.out.print(breakLine()
                             + "\t(!) Invalid command :(\n"
