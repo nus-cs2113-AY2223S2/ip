@@ -7,6 +7,16 @@ public class Event extends Task {
         this.startTime = startTime;
         this.endTime = endTime;
     }
+    public String getFrom() {
+        return startTime;
+    }
+    public String getTo() {
+        return endTime;
+    }
+    @Override
+    public String getType() {
+        return "event";
+    }
     @Override
     public String fullDescription() {
         String fullSentence = (isDone ? "[E][X] " : "[E][ ] ") + this.description +
