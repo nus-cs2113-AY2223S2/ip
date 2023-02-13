@@ -1,3 +1,5 @@
+package command;
+
 import task.Event;
 import task.Task;
 
@@ -17,7 +19,7 @@ public class EventCommand extends Command {
         System.out.println("____________________________________________________________");
         System.out.println("Got it. I've added this task:");
         System.out.println(eventTask.getSummary());
-        System.out.printf("Now you have %d tasks in the list.\n", taskCount);
+        System.out.printf("Now you have %d tasks in the list.\n", taskCount+1);
         System.out.println("____________________________________________________________");
     }
 }
