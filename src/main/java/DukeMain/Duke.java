@@ -82,7 +82,10 @@ public class Duke {
                 int count = new_tasks + 1;
                 System.out.println("now you have: " + count + " tasks in this list.");
                 new_tasks++;
-            } else {
+            } else if(input.startsWith("delete")) {
+                System.out.println("i have deleted the task:" + todoItems.get(Integer.parseInt(input.substring(7))-1).item);
+                todoItems.remove(Integer.parseInt(input.substring(7))-1);
+            }else {
                 System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
             }
             input = myObj.nextLine();
