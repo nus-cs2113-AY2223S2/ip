@@ -4,6 +4,7 @@ import max.command.Command;
 import max.command.CommandParser;
 import max.command.CommandValidator;
 import max.command.InvalidCommandException;
+import max.data.PersistentDataHandler;
 import max.task.Deadline;
 import max.task.Event;
 import max.task.Task;
@@ -14,6 +15,7 @@ import java.util.Scanner;
 
 public class Max {
     private static boolean isListening;
+    private static boolean isDebugMode = false;
     private static final int TASK_NUMBER_LIMIT = 100;
     private static Task[] tasks = new Task[TASK_NUMBER_LIMIT];
     private static int numTasks;
@@ -161,10 +163,20 @@ public class Max {
                 System.out.println(exception.getMessage());
             }
             break;
+        case DEBUG:
+            tasks = new Task[TASK_NUMBER_LIMIT];
+            System.out.println("MAX is now in debug mode. No data will be saved or loaded from disk.");
+            System.out.println("To exit debug mode, restart MAX.");
+            break;
         default:
             // { Command.UNKNOWN_COMMAND }
             System.out.println("Awoo? I don't understand that command.");
             break;
+        }
+        // Backup data after every command
+        if(!isDebugMode){
+            PersistentDataHandler dataHandler = new PersistentDataHandler();
+            dataHandler.saveTasksToDisk(tasks);
         }
     }
 
@@ -186,14 +198,16 @@ public class Max {
                 "|__/     |__/|__/  |__/|__/  |__/     V__)  ||";
         System.out.println(logo);
 
-        greet();
-        setIsListening(true);
-
         // Init tasks subsystem
-        numTasks = 0;
+        PersistentDataHandler dataHandler = new PersistentDataHandler();
+        tasks = dataHandler.loadTasksFromDisk();
+        numTasks = tasks.length;
 
         // Init IO
         Scanner input = new Scanner(System.in);
+        greet();
+        setIsListening(true);
+
 
         // Event driver loop to continuously listen for inputs
         while (isListening) {
