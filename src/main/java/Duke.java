@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Duke {
@@ -27,12 +29,45 @@ public class Duke {
 	public static final String HELP_BYE_DESCRIPTION = "Exits and closes the program";
 	
 	public static void main(String[] args) {
-		greet();
-		
 		Tasks list = new Tasks();
-		readCommandLine(list);
+		File saveDir = new File("./data");
+		File saveFile = new File("data/save.txt");
 		
+		createSaveFile(saveDir, saveFile);
+		greet();
+		readCommandLine(list);
+		updateSaveFile(saveFile);
 		exit();
+	}
+	
+	public static void createSaveFile(File dir, File f) {
+		// check if directory exists
+		if (!dir.isDirectory()) {
+			if (dir.mkdir()) {
+				System.out.println("Data directory created");
+			} else {
+				System.out.println("Error: Data directory cannot be created");
+			}
+		}
+		
+		try {
+			if (f.createNewFile()) {
+				System.out.println("Save File created!");
+			} else {
+				// file exists, read file
+				readSaveFile(f);
+			}
+		} catch (IOException e) {
+			System.out.println("Error: Save file cannot be read");
+		}
+	}
+	
+	public static void readSaveFile(File f) {
+		System.out.println("Save file loaded!");
+	}
+	
+	public static void updateSaveFile(File f) {
+		System.out.println("Save file updated!");
 	}
 	
 	public static void greet() {
