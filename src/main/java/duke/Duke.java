@@ -1,5 +1,7 @@
 package duke;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -11,14 +13,24 @@ import task.Task;
 import task.Todo;
 import task.Deadline;
 import task.Event;
+import storage.Storage;
 
 public class Duke {
-    public static void main(String[] args) {
+    private static Storage store = new Storage();
+
+    public static void main(String[] args) throws FileNotFoundException {
         printBanner();
         Scanner in = new Scanner(System.in);
         String userInput;
         ArrayList<Task> listOfTasks = new ArrayList<>();
         boolean isRunning = true;
+        store.createDirectory();
+        try {
+            store.readAndLoadFromFile(listOfTasks);
+        } catch (FileNotFoundException e) {
+            System.out.println("Notice: Local save not found. A new file will be created after adding tasks :)");
+        }
+
 
         while (isRunning) {
             userInput = in.nextLine();
@@ -37,6 +49,8 @@ public class Duke {
             } catch (EventCommandException e) {
                 System.out.println("OOPS!!! please give me a event.");
                 System.out.println("Usage: event /from <specify from when> /to <specify to when>");
+            } catch (IOException e) {
+                System.out.println("OOPS!!! Something went wrong with the file writing.");
             }
 
         }
@@ -52,7 +66,8 @@ public class Duke {
      * @return false only if "bye" is typed. true otherwise.
      */
     private static boolean runCommand(String userInput, ArrayList<Task> listOfTasks, String[] userInputSplit)
-            throws TodoCommandException, MarkUnmarkCommandException, DeadlineCommandException, EventCommandException {
+            throws TodoCommandException, MarkUnmarkCommandException, DeadlineCommandException, EventCommandException,
+            IOException {
         Task task;
         String userInputNoCommand = userInput.replace(userInputSplit[0], "");
         switch (userInputSplit[0]) {
@@ -109,6 +124,7 @@ public class Duke {
             System.out.println("Usage: mark/unmark <task number>");
             System.out.println("Usage: deadline /by <specify by when>");
             System.out.println("Usage: event /from <specify from when> /to <specify to when>");
+            System.out.println("Usage: bye");
             break;
 
         }
@@ -124,7 +140,7 @@ public class Duke {
      * @throws NumberFormatException          if the user gave something that is not an integer, this exception will be thrown.
      */
     private static void markUnmarkTask(ArrayList<Task> listOfTasks, String[] userInputSplit, String markOrUnmark)
-            throws MarkUnmarkCommandException {
+            throws MarkUnmarkCommandException, IOException {
         Task task;
         int selectedTask;
         try {
@@ -148,6 +164,7 @@ public class Duke {
             System.out.println(task);
 
         }
+        store.writeToFile(listOfTasks);
 
     }
 
@@ -157,11 +174,12 @@ public class Duke {
      * @param listOfTasks An arraylist storing the list of tasks the user created.
      * @param task        Store the type of task the user ask to create.
      */
-    private static void addAndPrintTask(ArrayList<Task> listOfTasks, Task task) {
+    private static void addAndPrintTask(ArrayList<Task> listOfTasks, Task task) throws IOException {
         listOfTasks.add(task);
         System.out.println("Got it. I've added this task:");
         System.out.println(task);
         System.out.println("Now you have " + listOfTasks.size() + " tasks in the list.");
+        store.writeToFile(listOfTasks);
     }
 
     /**

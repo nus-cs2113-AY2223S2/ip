@@ -38,4 +38,14 @@ public class Task {
     public String toString() {
         return "[" + getStatusIcon() + "]" + description;
     }
+
+    public String saveStringToFile() {
+        String status;
+        if (getStatusIcon().equals(" ")) {
+            status = "0";
+        } else {
+            status = "1";
+        }
+        return status + "|" + description;
+    }
 }
