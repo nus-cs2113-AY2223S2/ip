@@ -13,7 +13,6 @@ public class Parser {
     public static void parseInput(String input) throws EmptyInputException {
         String[] commands = input.split(" ", 2);
         String nextCommand = formatNextInput(commands);
-        int index;
         try {
             switch (commands[0]) {
 
@@ -34,6 +33,9 @@ public class Parser {
                 break;
             case "unmark":
                 ListManager.markUndone(nextCommand);
+                break;
+            case"delete":
+                ListManager.deleteTask(nextCommand);
                 break;
             default:
                 throw new EmptyInputException();

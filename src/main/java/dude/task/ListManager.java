@@ -11,24 +11,18 @@ public class ListManager {
     private static final ArrayList<Task> list = new ArrayList<>();
     private static int index = 0;
 
-    public static int getSize() {
-        return index;
+    public static Task getTask(int index){
+        return list.get(index) ;
     }
-
-//    public static void addToList(String input,) {
-//        if (index == 100) {
-//            Interface.listFullMessage();
-//            return;
-//        }
-//        Task inputTask = ;
-//        list.add(inputTask);
-//        index += 1;
-//        Interface.addedMessage(input);
-//    }
 
     public static void printList() {
         System.out.println(Interface.LINE);
-        for (int i = 0; i < index; i++) {
+        if(list.size() == 0){
+            System.out.println("List currently empty! Please input tasks");
+            System.out.println(Interface.LINE);
+            return;
+        }
+        for (int i = 0; i < list.size(); i++) {
             System.out.println((i + 1) + "." + list.get(i));
         }
         System.out.println(Interface.LINE);
@@ -39,8 +33,11 @@ public class ListManager {
     }
 
     public static void markDone(String index) throws InvalidMarkException {
+        if(index.equals("")){
+            throw new InvalidMarkException();
+        }
         int intIndex = Integer.parseInt(index) - 1;
-        if (index.equals("") | intIndex >= list.size() | intIndex < 0) {
+        if (intIndex >= list.size() | intIndex < 0) {
             throw new InvalidMarkException();
         }
         list.get(intIndex).setDone();
@@ -50,12 +47,15 @@ public class ListManager {
     }
 
     public static void markUndone(String index) throws InvalidMarkException {
+        if(index.equals("")){
+            throw new InvalidMarkException();
+        }
         int intIndex = Integer.parseInt(index) - 1;
-        if (index.equals("") | intIndex >= list.size() | intIndex < 0) {
+        if (intIndex >= list.size() | intIndex < 0) {
             throw new InvalidMarkException();
         }
         list.get(intIndex).setUndone();
-        Interface.markDoneMessage();
+        Interface.markUndoneMessage();
         System.out.println(list.get(intIndex));
         System.out.println(Interface.LINE);
     }
@@ -82,4 +82,15 @@ public class ListManager {
         index++;
     }
 
+    public static void deleteTask(String index) throws InvalidDeleteException{
+        int intIndex = Integer.parseInt(index) - 1;
+        if (intIndex < list.size() && intIndex > 0) {
+            Interface.deletedMessage(intIndex);
+            list.remove(intIndex);
+            System.out.println("You now have " + list.size() + " tasks in your list");
+            ListManager.index--;
+        } else {
+            throw new InvalidDeleteException();
+        }
+    }
 }

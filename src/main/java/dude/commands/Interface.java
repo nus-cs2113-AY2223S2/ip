@@ -62,6 +62,11 @@ public abstract class Interface {
         System.out.println("I have Unmarked this task:");
     }
 
+    public static void deletedMessage(int index){
+        System.out.println("Okay, I have removed this task from your list");
+        System.out.println(ListManager.getTask(index));
+    }
+
     public static void readInput() {
         Scanner in = new Scanner(System.in);
         String userInput;
