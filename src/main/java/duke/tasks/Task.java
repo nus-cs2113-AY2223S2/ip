@@ -32,4 +32,9 @@ public abstract class Task {
         String taskTypeString = '[' + taskType + ']';
         return taskTypeString + completionStatusString + ' ' + name;
     }
+
+    public String toSaveString() {
+        String completionStatusString = completionStatus ? "Y" : "N";
+        return taskType + '|' + completionStatusString + '|' + name;
+    }
 }

@@ -2,6 +2,7 @@ package duke;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -33,8 +34,22 @@ public class Duke {
         System.out.println("bye: Exits the program.");
     }
 
+    public static void save() {
+        System.out.println("Saving tasks to savefile, please do not close the application.");
+        try {
+            FileWriter fileWriter = new FileWriter(SAVE_FILE, false);
+            fileWriter.write("");
+            taskList.saveToFile(fileWriter);
+            fileWriter.close();
+        } catch (IOException e) {
+            System.out.println("Saving failed for some reason.");
+            e.printStackTrace();
+        }
+    }
+
     public static void exit() {
         printLine();
+        save();
         System.out.println("Bye. Hope to see you again soon!");
     }
     

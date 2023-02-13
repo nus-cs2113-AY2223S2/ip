@@ -1,5 +1,7 @@
 package duke;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -26,17 +28,17 @@ public class TaskList {
 
     private void parseTasks(String[] args) {
         switch (args[0]) {
-        case "t":
-            tasks.add(new ToDo(args[1]));
-            tasks.get(tasks.size() - 1).setStatus(args[2].equals("Y"));
+        case "T":
+            tasks.add(new ToDo(args[2]));
+            tasks.get(tasks.size() - 1).setStatus(args[1].equals("Y"));
             break;
-        case "d":
-            tasks.add(new Deadline(args[1], args[2]));
-            tasks.get(tasks.size() - 1).setStatus(args[3].equals("Y"));
+        case "D":
+            tasks.add(new Deadline(args[2], args[3]));
+            tasks.get(tasks.size() - 1).setStatus(args[1].equals("Y"));
             break;
-        case "e":
-            tasks.add(new Event(args[1], args[2], args[3]));
-            tasks.get(tasks.size() - 1).setStatus(args[4].equals("Y"));
+        case "E":
+            tasks.add(new Event(args[2], args[3], args[4]));
+            tasks.get(tasks.size() - 1).setStatus(args[1].equals("Y"));
             break;
         }
     }
@@ -207,5 +209,11 @@ public class TaskList {
         noOfTasks--;
         printDeleteTaskMessage(taskNo);
         tasks.remove(taskNo - 1);
+    }
+
+    public void saveToFile(FileWriter fileWriter) throws IOException {
+        for (Task task : tasks) {
+            fileWriter.write(task.toSaveString() + System.lineSeparator());
+        }
     }
 }

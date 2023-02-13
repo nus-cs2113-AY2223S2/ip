@@ -1,3 +1,3 @@
-t|hi|Y
-d|hihi|crack|N
-e|hi hi hi|cracked|even cracked|Y
+T|Y|hi
+D|N|hihi|this time
+E|Y|hihihi|here|there
