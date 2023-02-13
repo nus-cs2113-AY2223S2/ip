@@ -2,10 +2,10 @@ package sage.utility;
 
 import java.util.ArrayList;
 
-import sage.exceptions.IllegalTaskOperation;
+import sage.exceptions.IllegalOperationException;
 import sage.exceptions.MissingParameterException;
 import sage.exceptions.EmptyListException;
-import sage.exceptions.InvalidTaskException;
+import sage.exceptions.OutOfBoundException;
 import sage.tasktypes.Deadline;
 import sage.tasktypes.Event;
 import sage.tasktypes.Task;
@@ -28,10 +28,11 @@ public class TaskList {
             } else {
                 Todo t = new Todo(taskName);
                 list.add(t);
+                UI.printAddedTask(t, list.size());
             }
-            UI.addedTask(taskName, list.size());
+
         } catch (MissingParameterException e) {
-            System.out.println(e.missingParamDesc());
+            e.missingParamDesc();
         }
     }
 
@@ -48,13 +49,13 @@ public class TaskList {
             } else {
                 Deadline d = new Deadline(taskName, byWhen);
                 list.add(d);
+                UI.printAddedTask(d, list.size());
             }
-            UI.addedTask(taskName, byWhen, list.size());
         } catch (MissingParameterException e) {
             if (taskName == null) {
-                System.out.println(e.missingParamDesc());
+                e.missingParamDesc();
             } else {
-                System.out.println(e.missingParamBy());
+                e.missingParamBy();
             }
         }
     }
@@ -73,41 +74,62 @@ public class TaskList {
             } else {
                 Event e = new Event(taskName, startWhen, endWhen);
                 list.add(e);
+                UI.printAddedTask(e, list.size());
             }
-            UI.addedTask(taskName, startWhen, endWhen, list.size());
         } catch (MissingParameterException e) {
             if (taskName == null) {
-                System.out.println(e.missingParamDesc());
+                e.missingParamDesc();
             } else if (startWhen == null) {
-                System.out.println(e.missingParamStart());
+                e.missingParamStart();
             } else {
-                System.out.println(e.missingParamEnd());
+                e.missingParamEnd();
             }
+        }
+    }
+
+    /**
+     * Deletes a task.
+     *
+     * @param taskIndex string that represents the index of the task to unmark (1-Indexed).
+     */
+    public void deleteTask(String taskIndex) {
+        try {
+            int taskNumber = Integer.parseInt(taskIndex);
+            if (taskNumber <= 0 || taskNumber > list.size()) {
+                throw new OutOfBoundException();
+            } else {
+                UI.printDeletedTask(list, taskNumber);
+                list.remove(taskNumber - 1);
+            }
+        } catch (OutOfBoundException e) {
+            e.errorDelete();
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
         }
     }
 
     /**
      * Unmarks a completed task.
      *
-     * @param taskDescription string that represents the index of the task to unmark (1-Indexed).
+     * @param taskIndex string that represents the index of the task to unmark (1-Indexed).
      */
-    public void unmarkTask(String taskDescription) {
+    public void unmarkTask(String taskIndex) {
         try {
-            int taskNumber = Integer.parseInt(taskDescription);
+            int taskNumber = Integer.parseInt(taskIndex);
             if (taskNumber <= 0 || taskNumber > list.size()) {
-                throw new InvalidTaskException();
+                throw new OutOfBoundException();
             } else if (!list.get(taskNumber - 1).isCompleted()) {
-                throw new IllegalTaskOperation();
+                throw new IllegalOperationException();
             } else {
                 list.get(taskNumber - 1).setCompleted(false);
-                UI.validUnmark(list, taskNumber);
+                UI.printMarking(list, taskNumber, false);
             }
-        } catch (InvalidTaskException e) {
-            System.out.println(e.errorUnmark());
-        } catch (IllegalTaskOperation e) {
-            System.out.println(e.errorAlreadyUnmarked());
+        } catch (OutOfBoundException e) {
+            e.errorUnmark();
+        } catch (IllegalOperationException e) {
+            e.errorAlreadyUnmarked();
         } catch (NumberFormatException e) {
-            System.out.println("No index is provided!");
+            e.printStackTrace();
         }
 
     }
@@ -115,25 +137,25 @@ public class TaskList {
     /**
      * Marks a completed task.
      *
-     * @param taskDescription a string that represents the index of the task to mark (1-Indexed).
+     * @param taskIndex a string that represents the index of the task to mark (1-Indexed).
      */
-    public void markTask(String taskDescription) {
+    public void markTask(String taskIndex) {
         try {
-            int taskNumber = Integer.parseInt(taskDescription);
+            int taskNumber = Integer.parseInt(taskIndex);
             if (taskNumber <= 0 || taskNumber > list.size()) {
-                throw new InvalidTaskException();
+                throw new OutOfBoundException();
             } else if (list.get(taskNumber - 1).isCompleted()) {
-                throw new IllegalTaskOperation();
+                throw new IllegalOperationException();
             } else {
                 list.get(taskNumber - 1).setCompleted(true);
-                UI.validMark(list, taskNumber);
+                UI.printMarking(list, taskNumber, true);
             }
-        } catch (InvalidTaskException e) {
-            System.out.println(e.errorMark());
-        } catch (IllegalTaskOperation e) {
-            System.out.println(e.errorAlreadyMarked());
+        } catch (OutOfBoundException e) {
+            e.errorMark();
+        } catch (IllegalOperationException e) {
+            e.errorAlreadyMarked();
         } catch (NumberFormatException e) {
-            System.out.println("No index is provided!");
+            e.printStackTrace();
         }
     }
 
@@ -143,14 +165,14 @@ public class TaskList {
             if (list.size() > 0) {
                 System.out.println("Here are the tasks in your list:");
                 for (int i = 0; i < list.size(); i++) {
-                    System.out.print(i + 1);
+                    System.out.print(i + 1 + ".");
                     System.out.println(list.get(i).toString());
                 }
             } else {
                 throw new EmptyListException();
             }
         } catch (EmptyListException e) {
-            System.out.println(e.errorMsg());
+            e.errorMsg();
         }
         System.out.println(UI.printLine());
     }
