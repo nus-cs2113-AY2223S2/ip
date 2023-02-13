@@ -33,31 +33,33 @@ public class ListManager {
     }
 
     public static void markDone(String index) throws InvalidMarkException {
-        if(index.equals("")){
+        try {
+            int intIndex = Integer.parseInt(index) - 1;
+            if (intIndex >= list.size() | intIndex < 0) {
+                throw new InvalidMarkException();
+            }
+            list.get(intIndex).setDone();
+            Interface.markDoneMessage();
+            System.out.println(list.get(intIndex));
+            System.out.println(Interface.LINE);
+        } catch (NumberFormatException e){
             throw new InvalidMarkException();
         }
-        int intIndex = Integer.parseInt(index) - 1;
-        if (intIndex >= list.size() | intIndex < 0) {
-            throw new InvalidMarkException();
-        }
-        list.get(intIndex).setDone();
-        Interface.markDoneMessage();
-        System.out.println(list.get(intIndex));
-        System.out.println(Interface.LINE);
     }
 
-    public static void markUndone(String index) throws InvalidMarkException {
-        if(index.equals("")){
-            throw new InvalidMarkException();
+    public static void markUndone(String index) throws InvalidUnmarkException {
+        try {
+            int intIndex = Integer.parseInt(index) - 1;
+            if (intIndex >= list.size() | intIndex < 0) {
+                throw new InvalidUnmarkException();
+            }
+            list.get(intIndex).setUndone();
+            Interface.markUndoneMessage();
+            System.out.println(list.get(intIndex));
+            System.out.println(Interface.LINE);
+        } catch (NumberFormatException e){
+            throw new InvalidUnmarkException();
         }
-        int intIndex = Integer.parseInt(index) - 1;
-        if (intIndex >= list.size() | intIndex < 0) {
-            throw new InvalidMarkException();
-        }
-        list.get(intIndex).setUndone();
-        Interface.markUndoneMessage();
-        System.out.println(list.get(intIndex));
-        System.out.println(Interface.LINE);
     }
 
 
@@ -83,13 +85,16 @@ public class ListManager {
     }
 
     public static void deleteTask(String index) throws InvalidDeleteException{
-        int intIndex = Integer.parseInt(index) - 1;
-        if (intIndex < list.size() && intIndex > 0) {
+        try {
+            int intIndex = Integer.parseInt(index) - 1;
+            if (intIndex >= list.size() | intIndex < 0) {
+                throw new InvalidDeleteException();
+            }
             Interface.deletedMessage(intIndex);
             list.remove(intIndex);
             System.out.println("You now have " + list.size() + " tasks in your list");
             ListManager.index--;
-        } else {
+        } catch (NumberFormatException e) {
             throw new InvalidDeleteException();
         }
     }
