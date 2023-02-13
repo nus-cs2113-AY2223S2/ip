@@ -5,13 +5,24 @@ import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Todo;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Duke {
     public static ArrayList<Task> tasksList = new ArrayList<>();
 
     public static void main(String[] args) {
+
+        try {
+            String filePath = "src/main/java/duke/duke.txt";
+            List<Task> taskLists = Storage.convertToArray(filePath);
+            tasksList.addAll(taskLists);
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        }
 
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"

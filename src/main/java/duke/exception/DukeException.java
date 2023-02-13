@@ -20,7 +20,7 @@ public class DukeException extends Exception  {
     private static void catchError(String input) throws UnknownInputFieldError, EmptyTaskDescription {
         String[] inputWords = input.split(" ");
         String[] taskTypes = {"todo", "deadline", "event", "list", "mark", "unmark", "bye"};
-        List taskType = Arrays.asList(taskTypes);
+        List<String> taskType = Arrays.asList(taskTypes);
         if (!taskType.contains(inputWords[0])) {
             UI.printMessage("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
             throw new UnknownInputFieldError();
