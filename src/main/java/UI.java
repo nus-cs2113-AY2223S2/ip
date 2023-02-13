@@ -41,4 +41,9 @@ public class UI {
         System.out.println("  " + listOfTasks.get(taskNumber));
         System.out.println("Now you have " + (listOfTasks.size() - 1) + " task in the list.");
     }
+
+    public static void printFindTaskMessage(int index, Task task) {
+        System.out.println("Here are the matching tasks in your list:");
+        System.out.println(index + ". " + task);
+    }
 }

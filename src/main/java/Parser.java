@@ -23,6 +23,9 @@ public class Parser {
             int taskNumber = Integer.parseInt(inputs[1]) - 1;
             TaskList.deleteTask(taskNumber, listOfTasks);
             break;
+        case "find":
+            TaskList.findTask(input, listOfTasks);
+            break;
         default:
             try {
                 Parser.checkTaskType(input, listOfTasks);
