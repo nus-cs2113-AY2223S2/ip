@@ -137,12 +137,12 @@ public class Duke {
     }
 
     private static void markTaskDone(int taskIndex) throws InvalidTaskNumberException {
-                if (taskIndex < 0 || taskIndex >= tasks.size()) {
-                    throw new InvalidTaskNumberException();
-                } else {
-                    tasks.get(taskIndex).markDone();
-                }
-                printDivider();
+        if (taskIndex < 0 || taskIndex >= tasks.size()) {
+            throw new InvalidTaskNumberException();
+        } else {
+            tasks.get(taskIndex).markDone();
+        }
+        printDivider();
     }
 
     private static void markTaskUndone(int taskIndex) throws InvalidTaskNumberException {
@@ -151,6 +151,7 @@ public class Duke {
         } else {
             tasks.get(taskIndex).markUndone();
         }
+
         printDivider();
     }
 
@@ -184,6 +185,7 @@ public class Duke {
 
         System.out.println("Got it. I've added this task:\n " + tasks.get(tasks.size()-1)
                 + "\nNow you have " + tasks.size() + " tasks in the list.");
+
         printDivider();
     }
 
@@ -191,9 +193,11 @@ public class Duke {
         if (taskIndex < 0 || taskIndex >= tasks.size()) {
             throw new InvalidTaskNumberException();
         } else {
-            System.out.println("Removed " + tasks.get(taskIndex) + " from task list.");
+            System.out.println("Noted. I've removed this task:\n " + tasks.get(taskIndex)
+                    + "\nNow you have " + tasks.size() + "tasks in the list.");
             tasks.remove(tasks.get(taskIndex));
         }
+
         printDivider();
     }
 
