@@ -74,4 +74,18 @@ Here are the tasks in your list:
 3.[E][ ] project meeting (from: Aug 6th to: 4pm)
 4.[T][X] join sports club
 5.[T][ ] read book
+Noted. I've removed this task:
+[T][X] join sports club
+Now you have 4 tasks in the list.
+Please give me a valid integer that is within the list!
+Usage: delete <integer>
+Please give me a valid integer that is within the list!
+Usage: delete <integer>
+Noted. I've removed this task:
+[T][X] borrow book
+Now you have 3 tasks in the list.
+Here are the tasks in your list:
+1.[D][ ] return book (by: June 6th)
+2.[E][ ] project meeting (from: Aug 6th to: 4pm)
+3.[T][ ] read book
 Bye. Hope to see you again soon!
