@@ -12,7 +12,7 @@ import errors.TaskNumberOutOfRangeException;
 import java.util.ArrayList;
 
 public class InputManager {
-    private static final ArrayList<Task> todoList = new ArrayList<Task>();
+    private static final ArrayList<Task> todoList = SaveManager.initialiseData();
     public static final int TODO_BEGIN_INDEX = 5;
     public static final int DEADLINE_BEGIN_INDEX = 9;
     public static final int EVENT_BEGIN_INDEX = 6;
@@ -27,6 +27,7 @@ public class InputManager {
             String[] words = line.split(" ");
             try {
                 processComplicatedCommands(line, words);
+                SaveManager.saveCurrentState(todoList);
             } catch (NumberFormatException e) {
                 OutputDialogueManager.printErrorDialogue(DialogueTypes.INVALID_TASK_NUMBER);
                 listAllItems();

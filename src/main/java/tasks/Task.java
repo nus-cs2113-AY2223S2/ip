@@ -39,4 +39,6 @@ public abstract class Task {
     public abstract void printTask();
 
     public abstract void printTaskWithoutId();
+    public abstract String getClassType();
+    public abstract String getToStore();
 }
