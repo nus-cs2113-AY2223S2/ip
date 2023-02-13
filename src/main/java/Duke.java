@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Duke {
@@ -30,11 +32,13 @@ public class Duke {
 	public static final String RUN_CLEAR_WARNING_MESSAGE = "You are about to clear your entire list. Are you sure? [y/n] ";
 	
 	public static void main(String[] args) {
-		greet();
-		
 		Tasks list = new Tasks();
-		readCommandLine(list);
+		File saveDir = new File("./data");
+		File saveFile = new File("data/save.txt");
 		
+		list.initTasks(saveDir, saveFile);
+		greet();
+		readCommandLine(list, saveFile);
 		exit();
 	}
 	
@@ -45,7 +49,7 @@ public class Duke {
 		System.out.println(greet);
 	}
 	
-	private static void readCommandLine(Tasks list) {
+	private static void readCommandLine(Tasks list, File saveFile) {
 		Scanner in = new Scanner(System.in);
 		String line = in.nextLine();
 		
@@ -54,8 +58,14 @@ public class Duke {
 			System.out.print(DIVIDER);
 			runCommand(list, line);
 			System.out.println(DIVIDER);
-			
 			line = in.nextLine();
+			try {
+				list.saveTasks(saveFile);
+			} catch (IOException e) {
+				System.out.println("Error: Unable to save changes");
+			} catch (NullPointerException e) {
+				System.out.println("Error: idk what");
+			}
 		}
 	}
 	
