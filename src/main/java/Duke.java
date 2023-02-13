@@ -1,5 +1,10 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+
 
 public class Duke {
 
@@ -47,9 +52,9 @@ public class Duke {
         Scanner in = new Scanner(System.in);
         userInput = in.nextLine();
         String[] inputType = userInput.split(" ", 2);
+        Boolean isPolling = true;
 
         while (!inputType[0].equals("bye")) {
-
             switch (inputType[0]) {
             case "list":
                 printTasks();
@@ -106,6 +111,54 @@ public class Duke {
             userInput = in.nextLine();
             inputType = userInput.split(" ", 2);
         }
+
+        try {
+            clearFile();
+        } catch (IOException e){
+            System.out.println(e);
+        }
+        updateFile();
+        isPolling = false;
+
+    }
+
+    private static void updateFile() {
+        for (int i = 0; i < tasks.size(); i++) {
+            Task currentTask = tasks.get(i);
+            String taskStatus = currentTask.getStatusIcon();
+            String taskType = currentTask.getTaskIcon();
+            String taskName = currentTask.getTask();
+            String taskStatusBinary = (taskStatus == "X") ? "1" : "0";
+
+            switch (taskType) {
+            case "T":
+                try {
+                    writeToFile("T:"+taskStatusBinary+":"+taskName);
+                } catch (IOException e){
+                    System.out.println(e);
+                }
+                break;
+            case "D":
+                String deadlineDay = currentTask.getBy();
+                try {
+                    writeToFile("T:"+taskStatusBinary+":"+taskName+":"+deadlineDay);
+                } catch (IOException e){
+                    System.out.println(e);
+                }
+                break;
+            case "E":
+                String eventFrom = currentTask.getFrom();
+                String eventTo = currentTask.getTo();
+                try {
+                    writeToFile("T:"+taskStatusBinary+":"+taskName+":"+eventTo+":"+eventFrom);
+                } catch (IOException e){
+                    System.out.println(e);
+                }
+                break;
+            default:
+                Greeting.printHelp();
+            }
+        }
     }
 
      
@@ -116,6 +169,7 @@ public class Duke {
             throw new IllegalInputException();
         }
         tasks.add(new Todo (todoTask));
+
         return;
     }
 
@@ -133,6 +187,13 @@ public class Duke {
             throw new IllegalDayException();
         }
         tasks.add(new Deadline(deadlineTask, deadlineDay));
+
+        try {
+            writeToFile("T:0:"+deadlineTask+":"+deadlineDay);
+        } catch (IOException e){
+            System.out.println(e);
+        }
+
         return;
     }
 
@@ -151,12 +212,66 @@ public class Duke {
             throw new IllegalDayException();
         }
         tasks.add(new Event(eventTask, eventFrom, eventTo));
+
+        try {
+            writeToFile("T:0:"+eventTask+":"+eventFrom+":"+eventTo);
+        } catch (IOException e){
+            System.out.println(e);
+        }
+
         return;
     }
 
+    private static void readFileContents(String filePath) throws FileNotFoundException {
+        File f = new File(filePath); // create a File for the given file path
+        Scanner s = new Scanner(f); // create a Scanner using the File as the source
+        while (s.hasNext()) {
+            String newLine = s.nextLine(); 
+            String[] newInput = newLine.split(":");
+            String taskName = newInput[2];
+            String taskType = newInput[0];
 
+            switch (taskType) {
+            case "T":
+                tasks.add(new Todo (taskName));
+                break;
+            case "D":
+                String deadlineDay = newInput[3];
+                tasks.add(new Deadline(taskName, deadlineDay));
+                break;
+            case "E":
+                String eventFrom = newInput[3];
+                String eventTo = newInput[4];
+                tasks.add(new Event(taskName, eventFrom, eventTo));
+                break;
+            default:
+                Greeting.printHelp();
+            }
+            if (newInput[1].equals("1")) {
+                tasks.get(tasks.size() - 1).MarkStatusDone();
+            }
+        }
+    }
+
+    private static void writeToFile(String textToAdd) throws IOException {
+        FileWriter fw = new FileWriter("data/duke.txt", true);
+        fw.write(textToAdd+System.lineSeparator());
+        fw.close();
+    }
+
+    private static void clearFile() throws IOException {
+        FileWriter fw = new FileWriter("data/duke.txt");
+        fw.write("");
+        fw.close();
+    }
 
     public static void main (String[]args){
+        try {
+            readFileContents("data/duke.txt");
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        }
+
         Greeting.printLogo();
         Greeting.printWelcome();
         ChatPolling();

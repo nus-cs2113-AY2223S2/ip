@@ -11,6 +11,10 @@ public class Deadline extends Task{
         return "D";
     }
 
+    public String getBy() {
+        return day;
+    }
+
     @Override
     public String printTask() {
         return super.printTask() + "(by: " + day + ")";
