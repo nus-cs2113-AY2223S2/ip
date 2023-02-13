@@ -63,7 +63,6 @@ public class Duke {
         Scanner in = new Scanner(System.in);
         userInput = in.nextLine();
         String[] inputType = userInput.split(" ", 2);
-        Boolean isPolling = true;
 
         while (!inputType[0].equals("bye")) {
             switch (inputType[0]) {
@@ -134,8 +133,6 @@ public class Duke {
             System.out.println(e);
         }
         updateFile();
-        isPolling = false;
-
     }
 
     private static void updateFile() {
