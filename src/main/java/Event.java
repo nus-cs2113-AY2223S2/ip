@@ -7,6 +7,11 @@ public class Event extends Task{
         this.to = to;
     }
 
+    @Override
+    public String getType() {
+        return "E";
+    }
+
     public String getTo() {
         return to;
     }
@@ -27,5 +32,16 @@ public class Event extends Task{
     @Override
     public String toString() {
         return "[E]" + super.toString() + " (" + "from: " + from + " to: " + to + ")";
+    }
+
+    @Override
+    public String getFileFormatString() {
+        return String.format("%s | %d | %s | %s | %s",
+                this.getType(),
+                this.isDone ? 1 : 0,
+                this.name,
+                this.from,
+                this.to
+        );
     }
 }

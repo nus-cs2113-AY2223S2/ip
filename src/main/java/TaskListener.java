@@ -1,12 +1,14 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class TaskListener {
     static final String DIVIDER = "--------------------------------------------------------------------";
     private TasksList tasksList;
-
-    public TaskListener(TasksList tasksList) {
+    private TasksLoader tasksLoader;
+    public TaskListener(TasksList tasksList, TasksLoader tasksLoader) {
         this.tasksList = tasksList;
+        this.tasksLoader = tasksLoader;
     }
 
     public static void greet() {
@@ -44,7 +46,10 @@ public class TaskListener {
             return;
         }
         this.tasksList.addTask(new Task(name, false));
+
         printLines("added: " + name);
+
+        tasksLoader.writeToFile(tasksList);
     }
 
     private void createTodo(String arguments) {
@@ -56,29 +61,34 @@ public class TaskListener {
         Todo todo = new Todo(name, false);
         this.tasksList.addTask(todo);
         printAddedTask(todo);
+
+        tasksLoader.writeToFile(tasksList);
     }
 
     private void createDeadline(String arguments) {
-            int byCommandIndex = arguments.indexOf("/by");
-            if (byCommandIndex < 0) {
-                printLines("Please specify the /by command");
-                return;
-            }
-            String name = arguments.substring(0, byCommandIndex).trim();
-            String byArgumentValue = arguments.substring(byCommandIndex).substring("/by".length()).trim();
+        int byCommandIndex = arguments.indexOf("/by");
+        if (byCommandIndex < 0) {
+            printLines("Please specify the /by command");
+            return;
+        }
+        String name = arguments.substring(0, byCommandIndex).trim();
+        String byArgumentValue = arguments.substring(byCommandIndex).substring("/by".length()).trim();
 
-            if (name.isEmpty()) {
-                printLines("Please provide name argument");
-                return;
-            }
+        if (name.isEmpty()) {
+            printLines("Please provide name argument");
+            return;
+        }
 
-            if (byArgumentValue.isEmpty()) {
-                printLines("Please provide /by argument");
-                return;
-            }
-            Deadline deadline = new Deadline(name, false, byArgumentValue);
-            this.tasksList.addTask(deadline);
-            printAddedTask(deadline);
+        if (byArgumentValue.isEmpty()) {
+            printLines("Please provide /by argument");
+            return;
+        }
+        Deadline deadline = new Deadline(name, false, byArgumentValue);
+        this.tasksList.addTask(deadline);
+
+        printAddedTask(deadline);
+
+        tasksLoader.writeToFile(tasksList);
     }
 
     private void createEvent(String arguments) {
@@ -120,7 +130,10 @@ public class TaskListener {
 
             Event event = new Event(name, false, fromArgumentValue, toArgumentValue);
             this.tasksList.addTask(event);
+
             printAddedTask(event);
+
+            tasksLoader.writeToFile(tasksList);
         }
     }
 
@@ -131,7 +144,10 @@ public class TaskListener {
         try {
             Task task = this.tasksList.getTasks()[taskIndex];
             task.setIsDone(isDone);
+
             printLines(successMessage, task.toString());
+
+            tasksLoader.writeToFile(tasksList);
         } catch (ArrayIndexOutOfBoundsException e) {
             printLines("No task at such index!");
         }
@@ -182,7 +198,6 @@ public class TaskListener {
             } catch (NumberFormatException e) {
                 printLines("Please provide a valid index");
             }
-
             break;
         }
 
@@ -193,7 +208,6 @@ public class TaskListener {
         default:
             printLines("No such command exists!");
         }
-
         listen();
     }
 }

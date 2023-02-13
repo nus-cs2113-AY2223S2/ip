@@ -6,7 +6,7 @@ public class Sherlock {
 
         TaskListener.greet();
 
-        TaskListener taskListener = new TaskListener(tasksList);
+        TaskListener taskListener = new TaskListener(tasksList, tasksLoader);
         taskListener.listen();
     }
 }

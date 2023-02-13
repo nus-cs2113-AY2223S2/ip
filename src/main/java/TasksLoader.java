@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -21,6 +22,7 @@ public class TasksLoader {
                 String line = s.nextLine();
                 String[] arguments = line.split("\\|");
 
+//                Check for empty arguments
                 int argCount = 1;
                 for (String arg: arguments) {
                     if (arg.trim().equals("")){
@@ -29,12 +31,18 @@ public class TasksLoader {
                     }
                 }
 
+//                Parse tasks from file
                 try {
                     String taskType = arguments[0].trim();
                     Boolean isDone = arguments[1].trim().equals("1");
                     String name = arguments[2].trim();
 
                     switch (taskType){
+                        case "TASK":
+                            Task task = new Task(name, isDone);
+                            tasksList.addTask(task);
+                            break;
+
                         case "T":
                             Todo todo = new Todo(name, isDone);
                             tasksList.addTask(todo);
@@ -51,7 +59,6 @@ public class TasksLoader {
                             Event event = new Event(name, isDone, from, to);
                             tasksList.addTask(event);
                             break;
-
                         default:
                             System.out.println("An invalid task type "
                                     + taskType + " is given in input file on line #" + lineIndex);
@@ -66,5 +73,27 @@ public class TasksLoader {
         } catch (IOException e) {
             System.out.println("Couldn't read from file data/sherlock.txt");
         }
+    }
+
+    public void writeToFile(TasksList tasksList) {
+        try {
+            FileWriter fw = new FileWriter("data/sherlock.txt");
+
+            StringBuilder output = new StringBuilder();
+
+            Task[] tasks = tasksList.getTasks();
+
+//            Construct a file output
+            for (Task task : tasks) {
+                output.append(task.getFileFormatString()).append(System.lineSeparator());
+            }
+
+            fw.write(output.toString());
+            fw.close();
+
+        } catch (IOException e) {
+            System.out.println("Couldn't add a change to file data/sherlock.txt");
+        }
+
     }
 }
