@@ -6,18 +6,15 @@ import duke.task.Task;
 import duke.task.Todo;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
-    private static int totalTasks = 0;
     private static ArrayList<Task> tasks = new ArrayList<>();
     private static Scanner in = new Scanner(System.in);
+    private static final String FILE_PATH = "src/main/duke.txt";
 
     private static void printDuke() {
         String logo = " ____        _\n"
@@ -42,7 +39,7 @@ public class Duke {
 
     // read existing data
     private static void getFileData() {
-        File file = new File("src/main/duke.txt");
+        File file = new File(FILE_PATH);
         System.out.println("\tLoading existing data . . .\n");
         String input;
         try {
@@ -50,18 +47,20 @@ public class Duke {
                 Scanner fileInput = new Scanner(file);
                 while (fileInput.hasNext()) {
                     input = fileInput.nextLine();
-                    String[] inputArgs = input.split("|");
-                    writeDataToList(inputArgs);
+                    String[] inputArgs = input.split(" \\| ");
+                    addFileDataToList(inputArgs);
                 }
             }
         } catch (IOException e) {
             System.out.print("\t(!) IOException error: get existing file data.\n" + breakLine());
+        } catch (IllegalStateException e) {
+            System.out.print("\t(!) IllegalStateException: (!) Invalid file contents.\n" + breakLine());
         }
         System.out.print("\tLoading Done :)\n" + breakLine());
     }
 
     // add data read from file to list
-    private static void writeDataToList(String[] inputArgs) {
+    private static void addFileDataToList(String[] inputArgs) {
         Task newTask;
         String command = inputArgs[0];
         boolean isMarked = Boolean.parseBoolean(inputArgs[1]);
@@ -80,6 +79,7 @@ public class Duke {
         }
         if (isMarked) {
             newTask.mark();
+
         }
         tasks.add(newTask);
     }
@@ -90,7 +90,7 @@ public class Duke {
         tasks.add(newTask);
         System.out.print(breakLine()
                 + "\tadded:\n\t\t" + newTask + '\n'
-                + "\t(total: " + (totalTasks + 1) + " tasks)\n"
+                + "\t(total: " + tasks.size() + " tasks)\n"
                 + breakLine());
     }
 
@@ -109,7 +109,7 @@ public class Duke {
         tasks.add(newTask);
         System.out.print(breakLine()
                 + "\tadded:\n\t\t" + newTask + '\n'
-                + "\t(total: " + (totalTasks + 1) + " tasks)\n"
+                + "\t(total: " + tasks.size() + " tasks)\n"
                 + breakLine());
     }
 
@@ -130,7 +130,7 @@ public class Duke {
         tasks.add(newTask);
         System.out.print(breakLine()
                 + "\tadded:\n\t\t" + newTask + '\n'
-                + "\t(total: " + (totalTasks + 1) + " tasks)\n"
+                + "\t(total: " + tasks.size() + " tasks)\n"
                 + breakLine());
     }
 
@@ -185,6 +185,19 @@ public class Duke {
         return in.nextLine();
     }
 
+    // write data to a file
+    private static void saveDataToFile() {
+        try {
+            FileWriter fw = new FileWriter(FILE_PATH);
+            for (Task task: tasks) {
+                fw.write(task.toFileFormat());
+            }
+            fw.close();
+        } catch (IOException e) {
+            System.out.print("\t(!) IOException Error : save the data to the file.\n" + breakLine());
+        }
+    }
+
     // exit
     private static void exit() {
         System.out.print(breakLine()
@@ -230,6 +243,7 @@ public class Duke {
                         + "\t(!) Please provide the appropriate information for the task\n"
                         + breakLine());
             }
+            saveDataToFile();
         }
         exit();
     }

@@ -1,5 +1,7 @@
 package duke.task;
 
+import jdk.jfr.Percentage;
+
 public class Task {
     protected String description;
     protected boolean isMarked;
@@ -21,5 +23,9 @@ public class Task {
     public void unmark() {
 
         this.isMarked = false;
+    }
+
+    public String toFileFormat() {
+        return description;
     }
 }

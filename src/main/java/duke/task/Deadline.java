@@ -9,6 +9,11 @@ public class Deadline extends Task {
     }
 
     @Override
+    public String toFileFormat() {
+        return "D | " + isMarked + " | " + description + " | " + deadline + "\n";
+    }
+
+    @Override
     public String toString() {
         return "[D]" + super.getStatusIcon() + " " + super.description + "(by:" + deadline + ")";
     }

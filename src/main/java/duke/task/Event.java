@@ -11,6 +11,11 @@ public class Event extends Task {
     }
 
     @Override
+    public String toFileFormat() {
+        return "E | " + isMarked + " | " + description + " | " + from + " | " + to + "\n";
+    }
+
+    @Override
     public String toString() {
         return "[E]" + super.getStatusIcon() + " " + super.description + "(from:" + from + "to:" + to + ")";
     }
