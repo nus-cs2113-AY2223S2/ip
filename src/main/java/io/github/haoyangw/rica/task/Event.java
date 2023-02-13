@@ -122,6 +122,12 @@ public class Event extends Todo {
     }
 
     @Override
+    public Event setDone(boolean isDone) {
+        return new Event(super.getDescription(), isDone, this.getStartTime(),
+                this.getEndTime());
+    }
+
+    @Override
     public String toString() {
         return String.format("%s (from: %s to: %s)", super.toString(),
                 this.getStartTime(), this.getEndTime());

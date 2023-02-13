@@ -100,6 +100,11 @@ public class Deadline extends Todo {
     }
 
     @Override
+    public Deadline setDone(boolean isDone) {
+        return new Deadline(super.getDescription(), isDone, this.getDeadline());
+    }
+
+    @Override
     public String toString() {
         return String.format("%s (by: %s)", super.toString(), this.getDeadline());
     }
