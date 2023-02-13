@@ -30,6 +30,10 @@ public class Duke extends DukeCommands{
                 }
             } else if (word.startsWith("unmark ") && word.substring(7).matches("[0-9]{1,3}")) {
                 unmarkTask(Integer.parseInt(word.substring(7)));
+            } else if (word.equals("save")) {
+                DukeSave.saveDukeToFile(list);
+            } else if (word.equals("load")) {
+                list = DukeSave.loadDukeFromFile();
             } else {
                 DukeCommands.addToList(word);
             }
