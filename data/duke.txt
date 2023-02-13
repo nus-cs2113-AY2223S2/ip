@@ -1,10 +1,3 @@
 [T][ ] hel
-[T][ ] hel
-[T][ ] hello
-[T][ ] hel
-[T][ ] hel
-[T][ ] hel
-[T][ ] hel
-[T][ ] hello
-[T][ ] hel
-[T][ ] hel
+[D][ ] to (by: now) 
+[E][ ] from (from:now to:now) 

@@ -54,8 +54,8 @@ public class Duke {
         printLine();
         System.out.println("This command is not valid, please read through the info and try again :)");
         System.out.println("Type: [todo] [something], and the system will add a new todo item to your list");
-        System.out.println("Type: [event] [something] /from [when] /to [when], and the system will add an event and the timing");
-        System.out.println("Type: [deadline] [something] /by[when], and the system will add a deadline");
+        System.out.println("Type: [event] [something] from: [when] to: [when], and the system will add an event and the timing");
+        System.out.println("Type: [deadline] [something] by: [when], and the system will add a deadline");
         System.out.println("Type: [mark] [number], and the system will mark the item of the number as done");
         System.out.println("Type: [unmark] [number], and the system will unmark the item of the number.");
         System.out.println("Type: bye, to say goodbye to Duke!");
@@ -84,7 +84,7 @@ public class Duke {
                 break;
             case "E":
                 final int eventDescriptionId = task.lastIndexOf("]");
-                String eventDescription = task.substring(eventDescriptionId+1).trim();
+                String eventDescription = task.substring(eventDescriptionId+1).trim().replace('(', ' ').replace(')', ' ');
                 try {
                     addEvent(eventDescription);
                 } catch (NoDescriptionException e) {
@@ -97,7 +97,7 @@ public class Duke {
                 break;
             case "D":
                 final int deadlineDescriptionId = task.lastIndexOf("]");
-                String deadlineDescription = task.substring(deadlineDescriptionId+1).trim();
+                String deadlineDescription = task.substring(deadlineDescriptionId+1).trim().replace('(', ' ').replace(')', ' ');
                 try {
                     addDeadline(deadlineDescription);
                 } catch (NoDescriptionException e) {
@@ -125,6 +125,10 @@ public class Duke {
         case "todo":
             try {
                 addTodo(commandArgs);
+                printLine();
+                System.out.println("Got it. I've added this task: \n" + tasks[taskCount - 1]);
+                System.out.println("Now you have " + taskCount + " tasks in your list.");
+                printLine();
             } catch (NoDescriptionException e) {
                 System.out.println("WOOFS!!! The description of a todo cannot be empty.");
                 System.out.println("Please try to add todo again υ´• ﻌ •`υ");
@@ -134,6 +138,10 @@ public class Duke {
         case "deadline":
             try {
                 addDeadline(commandArgs);
+                printLine();
+                System.out.println("Got it. I've added this task: \n" + tasks[taskCount - 1]);
+                System.out.println("Now you have " + taskCount + " tasks in your list.");
+                printLine();
             } catch (NoDescriptionException e) {
                 System.out.println("WOOFS!!! The description of a deadline cannot be empty.");
                 System.out.println("Please try to add deadline again υ´• ﻌ •`υ");
@@ -147,6 +155,10 @@ public class Duke {
         case "event":
             try {
                 addEvent(commandArgs);
+                printLine();
+                System.out.println("Got it. I've added this task: \n" + tasks[taskCount - 1]);
+                System.out.println("Now you have " + taskCount + " tasks in your list.");
+                printLine();
             } catch (NoDescriptionException e) {
                 System.out.println("WOOFS!!! The description of a event cannot be empty.");
                 System.out.println("Please try to add event again υ´• ﻌ •`υ");
@@ -239,26 +251,23 @@ public class Duke {
     }
 
     private static void addEvent(String commandArgs) throws NoDescriptionException, FormatException {
-        final int indexOfFrom = commandArgs.indexOf("/from");
-        final int indexOfTo = commandArgs.indexOf("/to");
+        final int indexOfFrom = commandArgs.indexOf("from:");
+        final int indexOfTo = commandArgs.indexOf("to:");
         if (indexOfTo == -1 || indexOfFrom == -1) {
             throw new FormatException();
         }
         String eventDescription = commandArgs.substring(0, indexOfFrom).trim();
-        String from = commandArgs.substring(indexOfFrom, indexOfTo).trim().replace("/from", "");
-        String to = commandArgs.substring(indexOfTo, commandArgs.length()).trim().replace("/to", "");
-        if (eventDescription.trim().length() == 0 || from.trim().length() == 0 || to.trim().length() == 0) {
+        String from = commandArgs.substring(indexOfFrom, indexOfTo).trim().replace("from:", "").trim();
+        // System.out.println(from);
+        String to = commandArgs.substring(indexOfTo, commandArgs.length()).trim().replace("to:", "").trim();
+        if (eventDescription.trim().length() == 0 || from.length() == 0 || to.length() == 0) {
             throw new NoDescriptionException();
         }
         addTask(new Event(eventDescription, from, to));
-        printLine();
-        System.out.println("Got it. I've added this task: \n" + tasks[taskCount - 1]);
-        System.out.println("Now you have " + taskCount + " tasks in your list.");
-        printLine();
     }
 
     private static void addDeadline(String commandArgs) throws NoDescriptionException, FormatException {
-        final int indexOfDeadline = commandArgs.indexOf("/by");
+        final int indexOfDeadline = commandArgs.indexOf("by:");
         if (indexOfDeadline == -1) {
             throw new FormatException();
         }
@@ -266,15 +275,11 @@ public class Duke {
         if (deadlineDescription.trim().length() == 0) {
             throw new NoDescriptionException();
         }
-        String deadline = commandArgs.substring(indexOfDeadline, commandArgs.length()).trim().replace("/by", "");
+        String deadline = commandArgs.substring(indexOfDeadline, commandArgs.length()).trim().replace("by:", "");
         if (deadline.trim().length() == 0) {
             throw new NoDescriptionException();
         }
         addTask(new Deadline(deadlineDescription, deadline));
-        printLine();
-        System.out.println("Got it. I've added this task: \n" + tasks[taskCount - 1]);
-        System.out.println("Now you have " + taskCount + " tasks in your list.");
-        printLine();
     }
 
     private static void addTodo(String commandArgs) throws NoDescriptionException {
@@ -282,10 +287,6 @@ public class Duke {
             throw new NoDescriptionException();
         }
         addTask(new Todo(commandArgs));
-        printLine();
-        System.out.println("Got it. I've added this task: \n" + tasks[taskCount - 1]);
-        System.out.println("Now you have " + taskCount + " tasks in your list.");
-        printLine();
     }
 
     private static void printListOfTasks() {
