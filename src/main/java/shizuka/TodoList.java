@@ -14,7 +14,7 @@ public class TodoList {
     static final String FROM_COMMAND = " /from ";
     static final String TO_COMMAND = " /to ";
     private int numberOfTasks;
-    private ArrayList<Todo> todos;
+    private final ArrayList<Todo> todos;
 
     public TodoList(){
         numberOfTasks = 0;
