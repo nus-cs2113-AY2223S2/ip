@@ -12,9 +12,13 @@ public class TodoList {
     static final String BY_COMMAND = " /by ";
     static final String FROM_COMMAND = " /from ";
     static final String TO_COMMAND = " /to ";
-    private static int numberOfTasks = 0;
+    private int numberOfTasks;
+    private Todo[] todos;
 
-    private static Todo[] todos = new Todo[MAX_TASKS];
+    public TodoList(){
+        numberOfTasks = 0;
+        this.todos = new Todo[MAX_TASKS];
+    }
 
     private static String[] parseDeadline(String args) throws InvalidCommandFormatException {
         String[] vars = args.split(BY_COMMAND, MAX_DEADLINE_ARGS);
@@ -37,13 +41,13 @@ public class TodoList {
         return vars;
     }
 
-    public static void todo(String args) {
-        todos[numberOfTasks] = new Todo(args);
+    public void addTodo(String args) {
+        this.todos[numberOfTasks] = new Todo(args);
         numberOfTasks += 1;
         Printer.addToList(args);
     }
 
-    public static void deadline(String args) {
+    public void addDeadline(String args) {
         String[] vars;
         try {
             vars = parseDeadline(args);
@@ -51,12 +55,12 @@ public class TodoList {
             Printer.formatError();
             return;
         }
-        todos[numberOfTasks] = new Deadline(vars);
+        this.todos[numberOfTasks] = new Deadline(vars);
         numberOfTasks += 1;
         Printer.addToList(vars[0]);
     }
 
-    public static void event(String args) {
+    public void addEvent(String args) {
         String[] vars;
         try {
             vars = parseEvent(args);
@@ -64,28 +68,28 @@ public class TodoList {
             Printer.formatError();
             return;
         }
-        todos[numberOfTasks] = new Event(vars);
+        this.todos[numberOfTasks] = new Event(vars);
         numberOfTasks += 1;
         Printer.addToList(vars[0]);
     }
 
-    public static void list() {
+    public void list() {
         System.out.print(LINE_BREAK + YOUR_TODO_LIST + LINE_BREAK);
         for (int i = 0; i < numberOfTasks; i += 1) {
-            System.out.println(i + 1 + "." + todos[i].printTask());
+            System.out.println(i + 1 + "." + this.todos[i].printTask());
         }
         System.out.print(LINE_BREAK);
     }
 
-    public static void mark(int num) {
-        todos[num - 1].isDone = true;
-        System.out.println(LINE_BREAK + MARKED_TASK + num + IN_LIST + todos[num - 1].getStatusIcon()
-                + ' ' + todos[num - 1].description + "\n" + LINE_BREAK);
+    public void mark(int num) {
+        this.todos[num - 1].isDone = true;
+        System.out.println(LINE_BREAK + MARKED_TASK + num + IN_LIST + this.todos[num - 1].getStatusIcon()
+                + ' ' + this.todos[num - 1].description + "\n" + LINE_BREAK);
     }
 
-    public static void unmark(int num) {
-        todos[num - 1].isDone = false;
-        System.out.println(LINE_BREAK + UNMARKED_TASK + num + IN_LIST + todos[num - 1].getStatusIcon()
-                + ' ' + todos[num - 1].description + "\n" + LINE_BREAK);
+    public void unmark(int num) {
+        this.todos[num - 1].isDone = false;
+        System.out.println(LINE_BREAK + UNMARKED_TASK + num + IN_LIST + this.todos[num - 1].getStatusIcon()
+                + ' ' + this.todos[num - 1].description + "\n" + LINE_BREAK);
     }
 }

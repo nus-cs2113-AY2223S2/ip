@@ -16,6 +16,7 @@ public class Shizuka {
         Printer.intro();
         Scanner in = new Scanner(System.in);
         String line, lineTrimmed;
+        TodoList list0 = new TodoList();
 
         do {
             line = in.nextLine();
@@ -26,7 +27,7 @@ public class Shizuka {
             case "bye":
                 break;
             case "list":
-                TodoList.list();
+                list0.list();
                 break;
             case "mark":
                 try {
@@ -35,7 +36,7 @@ public class Shizuka {
                     Printer.noArgsError();
                     break;
                 }
-                TodoList.mark(taskNum);
+                list0.mark(taskNum);
                 break;
             case "unmark":
                 try {
@@ -44,11 +45,11 @@ public class Shizuka {
                     Printer.noArgsError();
                     break;
                 }
-                TodoList.unmark(taskNum);
+                list0.unmark(taskNum);
                 break;
             case "todo":
                 try {
-                    TodoList.todo(command[1]);
+                    list0.addTodo(command[1]);
                 } catch (ArrayIndexOutOfBoundsException e) {
                     Printer.noArgsError();
                     break;
@@ -56,7 +57,7 @@ public class Shizuka {
                 break;
             case "deadline":
                 try {
-                    TodoList.deadline(command[1]);
+                    list0.addDeadline(command[1]);
                 } catch (ArrayIndexOutOfBoundsException e) {
                     Printer.noArgsError();
                     break;
@@ -64,7 +65,7 @@ public class Shizuka {
                 break;
             case "event":
                 try {
-                    TodoList.event(command[1]);
+                    list0.addEvent(command[1]);
                 } catch (ArrayIndexOutOfBoundsException e) {
                     Printer.noArgsError();
                     break;
