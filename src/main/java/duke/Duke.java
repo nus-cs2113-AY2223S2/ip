@@ -9,11 +9,10 @@ import duke.task.Task;
 import duke.task.ToDo;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 public class Duke {
 
-    public static final int TASK_LIST_SIZE = 100;
-    public static Task[] tasks = new Task[TASK_LIST_SIZE];
-    public static int taskCounter = 0;
+    public static ArrayList<Task> tasks = new ArrayList<>();
 
     public static void main(String[] args) {
         printGreeting();
@@ -115,62 +114,65 @@ public class Duke {
     }
 
     private static void printTaskList() {
-        if (taskCounter == 0) {
+        if (tasks.size() == 0) {
             System.out.println("You are free today :)");
         } else {
-            for (int i = 0; i < taskCounter; ++i) {
-                System.out.print(i + 1 + ".");
-                System.out.println(tasks[i]);
+            for (int i = 0; i < tasks.size(); ++i) {
+                System.out.print(i+1 + ".");
+                System.out.println(tasks.get(i));
             }
         }
         printDivider();
     }
 
     private static void markTaskDone(int taskIndex) throws InvalidTaskNumberException {
-                if (taskIndex < 0 || taskIndex >= taskCounter) {
+                if (taskIndex < 0 || taskIndex >= tasks.size()) {
                     throw new InvalidTaskNumberException();
                 } else {
-                    tasks[taskIndex].markDone();
+                    tasks.get(taskIndex).markDone();
                 }
                 printDivider();
     }
 
     private static void markTaskUndone(int taskIndex) throws InvalidTaskNumberException {
-        if (taskIndex < 0 || taskIndex >= taskCounter) {
+        if (taskIndex < 0 || taskIndex >= tasks.size()) {
             throw new InvalidTaskNumberException();
         } else {
-            tasks[taskIndex].markUndone();
+            tasks.get(taskIndex).markUndone();
         }
         printDivider();
     }
 
     private static void addTodoTask(String input) {
-            tasks[taskCounter] = new ToDo(input.substring(Command.COMMAND_TODO.length() + 1));
-            taskCounter++;
-            printTaskAdded();
+        tasks.add(new ToDo(input.substring(Command.COMMAND_TODO.length() + 1)));
+
+        printTaskAdded();
     }
 
     private static void addDeadlineTask(String input) {
-            int indexOfBy = input.indexOf(Command.COMMAND_DEADLINE_BY);
-            tasks[taskCounter] = new Deadline(input.substring(Command.COMMAND_DEADLINE.length() + 1, indexOfBy)
-                    , input.substring(indexOfBy + Command.COMMAND_DEADLINE_BY.length()));
-            taskCounter++;
-            printTaskAdded();
+        int indexOfBy = input.indexOf(Command.COMMAND_DEADLINE_BY);
+
+        tasks.add(new Deadline(input.substring(Command.COMMAND_DEADLINE.length() + 1, indexOfBy)
+                , input.substring(indexOfBy + Command.COMMAND_DEADLINE_BY.length())));
+
+        printTaskAdded();
     }
 
     private static void addEventTask(String input) {
         int indexOfFrom = input.indexOf(Command.COMMAND_EVENT_FROM);
         int indexOfTo = input.indexOf(Command.COMMAND_EVENT_TO);
-        tasks[taskCounter] = new Event(input.substring(Command.COMMAND_EVENT.length() + 1, indexOfFrom)
+
+        tasks.add(new Event(input.substring(Command.COMMAND_EVENT.length() + 1, indexOfFrom)
                 , input.substring(indexOfFrom + Command.COMMAND_EVENT_FROM.length(), indexOfTo)
-                , input.substring(indexOfTo + Command.COMMAND_EVENT_TO.length()));
-        taskCounter++;
+                , input.substring(indexOfTo + Command.COMMAND_EVENT_TO.length())));
+
         printTaskAdded();
     }
 
     private static void printTaskAdded() {
-        System.out.println("Got it. I've added this task:\n  " + tasks[taskCounter -1]
-                + "\nNow you have " + taskCounter + " tasks in the list.");
+
+        System.out.println("Got it. I've added this task:\n " + tasks.get(tasks.size()-1)
+                + "\nNow you have " + tasks.size() + " tasks in the list.");
         printDivider();
     }
 
