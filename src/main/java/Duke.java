@@ -1,7 +1,12 @@
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.util.MissingFormatArgumentException;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.File;
+
 
 public class Duke {
 
@@ -19,61 +24,107 @@ public class Duke {
     private static final int REMOVE_FROM = 5;
     private static final int REMOVE_TO = 3;
     private static final int REMOVE_BY = 3;
+    private static final File F = new File("Data/duke.txt");
     public static void main(String[] args) {
         printWelcomeMessage();
+        boolean canPrintFeedback;
         Scanner in = new Scanner(System.in);
         ArrayList<Task> tasks = new ArrayList<Task>();
+        ArrayList<String> inputCommands = new ArrayList<String>();
+        try {
+            canPrintFeedback = false;
+            loadFileContents(F, tasks,inputCommands,canPrintFeedback);
+        }catch(FileNotFoundException e){
+            System.out.println("File does not exist.");
+        }
         while (true) {
             String userInput = in.nextLine();
-            processUserInput(tasks, userInput);
+            canPrintFeedback = true;
+            processUserInput(tasks,inputCommands, userInput,F,canPrintFeedback);
         }
 
     }
+    private static void writeToFile(String filePath, ArrayList<String>inputCommands) throws IOException {
+        FileWriter fw = new FileWriter(filePath);
+        for(String s:inputCommands){
+            fw.write(s);
+            fw.write('\n');
 
+        }
+        fw.close();
+    }
+
+    private static void appendToFile(String filePath, String userInput) throws IOException{
+        FileWriter fw = new FileWriter(filePath,true);
+        fw.write(userInput);
+        fw.write('\n');
+        fw.close();
+    }
+
+    private static void loadFileContents(File F, ArrayList<Task>tasks, ArrayList<String>commandInput,
+                                         boolean canPrintFeedback) throws FileNotFoundException {
+        Scanner s = new Scanner(F);
+        while(s.hasNext()){
+            processUserInput(tasks,commandInput,s.nextLine(),F,canPrintFeedback);
+        }
+    }
     private static String[] splitCommandAndDescription(String userInput) {
         String[] commandAndArgs = userInput.split(" ", 2);
         return commandAndArgs.length == 2 ? commandAndArgs : new String[]{commandAndArgs[0], ""};
     }
 
-    private static void processUserInput(ArrayList<Task> tasks, String userInput) {
+    private static void processUserInput(ArrayList<Task> tasks, ArrayList<String> inputCommands,String userInput,File F,
+                                         boolean canPrintFeedback) {
+        inputCommands.add(userInput);
         String[] commandAndDescription = splitCommandAndDescription(userInput);
         String command = commandAndDescription[0];
         String description = commandAndDescription[1];
+        try {
             switch (command) {
             case COMMAND_BYE:
                 printByeMessage();
                 break;
-            case COMMAND_EVENT:
-                executeEventCommand(tasks, description);
+            case COMMAND_EVENT: //append
+                executeEventCommand(tasks, description,canPrintFeedback);
+                appendToFile(F.getPath(),userInput);
                 break;
-            case COMMAND_DEADLINE:
-                executeDeadlineCommand(tasks, description);
+            case COMMAND_DEADLINE: //append
+                executeDeadlineCommand(tasks, description,canPrintFeedback);
+                appendToFile(F.getPath(),userInput);
                 break;
             case COMMAND_LIST:
-                executeListCommand(tasks);
+                executeListCommand(tasks,canPrintFeedback);
                 break;
-            case COMMAND_TODO:
-                executeTodoCommand(tasks, description);
+            case COMMAND_TODO: //append
+                executeTodoCommand(tasks, description,canPrintFeedback);
+                appendToFile(F.getPath(),userInput);
                 break;
-            case COMMAND_MARK:
-                executeMarkCommand(tasks, description);
+            case COMMAND_MARK: //write
+                executeMarkCommand(tasks, description,canPrintFeedback);
+                writeToFile(F.getPath(), inputCommands);
                 break;
-            case COMMAND_UNMARK:
-                executeUnmarkCommand(tasks, description);
+            case COMMAND_UNMARK://write
+                executeUnmarkCommand(tasks, description,canPrintFeedback);
+                writeToFile(F.getPath(), inputCommands);
                 break;
             default:
                 System.out.println("No such commands found! Please try again!");
                 System.out.println(LINE);
             }
+        }catch(IOException e){
+            System.out.println("Unable to write/append to file.");
+        }
 
     }
 
-    private static void executeUnmarkCommand(ArrayList<Task> tasks, String description) {
+    private static void executeUnmarkCommand(ArrayList<Task> tasks, String description,boolean canPrintFeedback) {
         //description is the list number
         //convert description(string) to description(int)
         Integer index = Integer.parseInt(description) - 1;
         unmarkTaskAtIndex(tasks, index);
-        printUnmarkFeedback(tasks, index);
+        if(canPrintFeedback) {
+            printUnmarkFeedback(tasks, index);
+        }
     }
 
     private static void unmarkTaskAtIndex(ArrayList<Task> tasks, Integer index) {
@@ -87,10 +138,12 @@ public class Duke {
         System.out.println(LINE);
     }
 
-    private static void executeMarkCommand(ArrayList<Task> tasks, String description) {
+    private static void executeMarkCommand(ArrayList<Task> tasks, String description,boolean canPrintFeedback) {
         Integer index = Integer.parseInt(description) - 1;
         markTaskAtIndex(tasks, index);
-        printMarkFeedback(tasks, index);
+        if(canPrintFeedback) {
+            printMarkFeedback(tasks, index);
+        }
     }
 
     private static void markTaskAtIndex(ArrayList<Task> tasks, Integer index) {
@@ -104,10 +157,12 @@ public class Duke {
         System.out.println(LINE);
     }
 
-    private static void executeTodoCommand(ArrayList<Task> tasks, String description) {
+    private static void executeTodoCommand(ArrayList<Task> tasks, String description,boolean canPrintFeedback) {
         try {
             addTodoToList(tasks, description);
-            printAcknowledgement(tasks);
+            if(canPrintFeedback) {
+                printAcknowledgement(tasks);
+            }
         }catch (Exception e){
             System.out.println("Unable to add todo: No tasks given.");
             System.out.println(LINE);
@@ -121,13 +176,15 @@ public class Duke {
         tasks.add(new Todo(description));
     }
 
-    private static void executeDeadlineCommand(ArrayList<Task> tasks, String description) {
+    private static void executeDeadlineCommand(ArrayList<Task> tasks, String description,boolean canPrintFeedback) {
         try {
             String[] indexArr = splitDescriptionDeadline(description);
             String name = indexArr[0].trim();
             String byDate = indexArr[1].substring(REMOVE_BY).trim();
             addDeadlineToList(tasks, name, byDate);
-            printAcknowledgement(tasks);
+            if(canPrintFeedback) {
+                printAcknowledgement(tasks);
+            }
         }catch(DukeException e){
             System.out.println("Not enough commands to execute \"deadline\"");
             System.out.println(LINE);
@@ -146,10 +203,12 @@ public class Duke {
         return indexArr;
     }
 
-    private static void executeListCommand(ArrayList<Task> tasks) {
-        System.out.println(LINE);
-        printList(tasks);
-        System.out.println(LINE);
+    private static void executeListCommand(ArrayList<Task> tasks,boolean canPrintFeedback) {
+        if(canPrintFeedback) {
+            System.out.println(LINE);
+            printList(tasks);
+            System.out.println(LINE);
+        }
     }
 
     private static void printList(ArrayList<Task> tasks) {
@@ -159,14 +218,16 @@ public class Duke {
         }
     }
 
-    private static void executeEventCommand(ArrayList<Task> tasks, String description) {
+    private static void executeEventCommand(ArrayList<Task> tasks, String description,boolean canPrintFeedback) {
         try {
             String[] indexArr = splitDescriptionEvent(description);
             String name = indexArr[0].trim();
             String fromDate = indexArr[1].substring(REMOVE_FROM).trim();
             String toDate = indexArr[2].substring(REMOVE_TO).trim();
             addEventToList(tasks, name, fromDate, toDate);
-            printAcknowledgement(tasks);
+            if(canPrintFeedback) {
+                printAcknowledgement(tasks);
+            }
         }catch (DukeException e){
             System.out.println("Not enough commands to execute \"event\"");
             System.out.println(LINE);
