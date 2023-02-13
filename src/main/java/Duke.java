@@ -1,6 +1,7 @@
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.security.InvalidParameterException;
 import java.util.MissingFormatArgumentException;
 import java.util.Scanner;
@@ -20,6 +21,7 @@ public class Duke {
     private static final String COMMAND_DEADLINE = "deadline";
     private static final String COMMAND_MARK = "mark";
     private static final String COMMAND_UNMARK = "unmark";
+    private static final String COMMAND_DELETE = "delete";
 
     private static final int REMOVE_FROM = 5;
     private static final int REMOVE_TO = 3;
@@ -107,6 +109,9 @@ public class Duke {
                 executeUnmarkCommand(tasks, description,canPrintFeedback);
                 writeToFile(F.getPath(), inputCommands);
                 break;
+            case COMMAND_DELETE:
+                executeDeleteCommand(tasks,description);
+                break;
             default:
                 System.out.println("No such commands found! Please try again!");
                 System.out.println(LINE);
@@ -128,6 +133,7 @@ public class Duke {
     }
 
     private static void unmarkTaskAtIndex(ArrayList<Task> tasks, Integer index) {
+
         tasks.get(index).isDone = false;
     }
 
@@ -137,13 +143,31 @@ public class Duke {
         System.out.println(tasks.get(index).toString());
         System.out.println(LINE);
     }
+    private static void executeDeleteCommand(ArrayList<Task>tasks, String description){
+        Integer index = Integer.parseInt(description)-1;
+        String deletedTask = deleteTaskAtIndex(tasks,index);
+        printDeleteFeedback(tasks, deletedTask);
+    }
 
     private static void executeMarkCommand(ArrayList<Task> tasks, String description,boolean canPrintFeedback) {
         Integer index = Integer.parseInt(description) - 1;
         markTaskAtIndex(tasks, index);
-        if(canPrintFeedback) {
+        if (canPrintFeedback) {
             printMarkFeedback(tasks, index);
         }
+    }
+    private static String deleteTaskAtIndex(ArrayList<Task>tasks, Integer index){
+        String nameOfToBeDeletedTask = tasks.get(index).name;
+        tasks.remove((int)index);
+        return nameOfToBeDeletedTask;
+    }
+
+    public static void printDeleteFeedback(ArrayList<Task> tasks, String nameOfDeletedTask){
+        System.out.println(LINE);
+        System.out.println("Roger. I've removed this task:");
+        System.out.println(nameOfDeletedTask);
+        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+        System.out.println(LINE);
     }
 
     private static void markTaskAtIndex(ArrayList<Task> tasks, Integer index) {
