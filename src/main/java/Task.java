@@ -17,6 +17,21 @@ public class Task {
         this.isDone = isDone;
     }
 
+    public String getTaskType() {
+        return "";
+    }
+
+    public String getBy() {
+        return "";
+    }
+    public String getFrom() {
+        return "";
+    }
+
+    public String getTo() {
+        return "";
+    }
+
     @Override
     public String toString() {
         String icon = getStatusIcon();

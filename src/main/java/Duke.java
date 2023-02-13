@@ -1,4 +1,8 @@
+import java.io.IOException;
 import java.util.Scanner;
+import java.io.FileNotFoundException;
+import java.io.File;
+import java.io.FileWriter;
 
 public class Duke {
     public static final String HORIZONTAL_LINE = "\t____________________________________________________________"
@@ -188,7 +192,6 @@ public class Duke {
             firstWord = input;
         }
 
-
         // determine the type of command
         String output;
         try {
@@ -199,7 +202,122 @@ public class Duke {
         return output;
     }
 
+    public static void addOldTodo(String line) {
+        int isDone = Integer.parseInt(line.substring(0,1));
+        String description = line.substring(2);
+        Task.tasks[Task.numOfTasks] = new Todo(description);
+        if (isDone == 1) {
+            Task.tasks[Task.numOfTasks].isDone = true;
+        } else {
+            Task.tasks[Task.numOfTasks].isDone = false;
+        }
+        Task.numOfTasks++;
+    }
+
+    public static void addOldDeadline(String line) {
+        int isDone = Integer.parseInt(line.substring(0,1));
+        String restOfLine = line.substring(2);
+        int indexOfBy = restOfLine.indexOf("|");
+        String description = restOfLine.substring(0, indexOfBy);
+        String by = restOfLine.substring(indexOfBy + 1);
+
+        Task.tasks[Task.numOfTasks] = new Deadline(description, by);
+        if (isDone == 1) {
+            Task.tasks[Task.numOfTasks].isDone = true;
+        } else {
+            Task.tasks[Task.numOfTasks].isDone = false;
+        }
+        Task.numOfTasks++;
+    }
+
+    public static void addOldEvent(String line) {
+        int isDone = Integer.parseInt(line.substring(0,1));
+        String restOfLine = line.substring(2);
+        int indexOfFrom = restOfLine.indexOf("|");
+        String description = restOfLine.substring(0, indexOfFrom);
+        String fromAndToPart = restOfLine.substring(indexOfFrom + 1);
+        //1|description f|2356|34
+        int indexOfTo = fromAndToPart.indexOf("|");
+        String from = fromAndToPart.substring(0, indexOfTo);
+        String to = fromAndToPart.substring(indexOfTo + 1);
+
+        Task.tasks[Task.numOfTasks] = new Event(description, from, to);
+        if (isDone == 1) {
+            Task.tasks[Task.numOfTasks].isDone = true;
+        } else {
+            Task.tasks[Task.numOfTasks].isDone = false;
+        }
+        Task.numOfTasks++;
+    }
+    public static void addOldTask(String line) {
+        String taskType = line.substring(0,1);
+        String restOfLine = line.substring(2);
+        switch (taskType) {
+        case "T":
+            addOldTodo(restOfLine);
+            break;
+        case "D":
+            addOldDeadline(restOfLine);
+            break;
+        case "E":
+            addOldEvent(restOfLine);
+            break;
+        }
+    }
+    private static void writeToFile(String filePath) throws IOException {
+        FileWriter fw = new FileWriter(filePath);
+        for (int i = 0; i < Task.numOfTasks; i++) {
+            String taskType = Task.tasks[i].getTaskType();
+            String lineToWrite = "";
+            lineToWrite += taskType;
+            if (Task.tasks[i].isDone) {
+                lineToWrite += "|1";
+            } else {
+                lineToWrite += "|0";
+            }
+            lineToWrite += "|" + Task.tasks[i].description;
+
+            if (taskType == "D") {
+                lineToWrite += "|" + Task.tasks[i].getBy();
+            } else if (taskType == "E") {
+                lineToWrite += "|" + Task.tasks[i].getFrom() + "|" + Task.tasks[i].getTo();
+            }
+            lineToWrite += System.lineSeparator();
+            fw.write(lineToWrite);
+        }
+        fw.close();
+    }
+    public static void getFileContents(String dataFilePath) throws FileNotFoundException {
+        File dir = new File("data");
+        File f = new File(dataFilePath);
+
+        if (!dir.exists()){
+            // creates directory if it does not exist
+            dir.mkdirs();
+        }
+        try {
+            // create data file if it does not exist
+            f.createNewFile();
+        } catch (IOException e) {
+            System.out.println("An error occurred when creating the data file.");
+        }
+
+        Scanner s = new Scanner(f);
+        // reading from text file to get stored data
+        while (s.hasNext()) {
+            String line = s.nextLine();
+            addOldTask(line);
+        }
+    }
     public static void main(String[] args) {
+        String dataFilePath = "data/duke.txt";
+        try {
+            getFileContents(dataFilePath);
+        } catch (FileNotFoundException e) {
+            System.out.println("Data file was not found.");
+            return;
+        }
+
         String greetMsg = HORIZONTAL_LINE
                 + "\tHello! I'm Duke"
                 + System.lineSeparator()
@@ -216,6 +334,12 @@ public class Duke {
             input = in.nextLine();
             if (input.equals("bye")) {
                 shouldContinueChat = false;
+                try {
+                    writeToFile(dataFilePath);
+                } catch (IOException e) {
+                    System.out.println("Data was not saved to file.");
+                    return;
+                }
                 chatOutput = "\tBye. Hope to see you again soon!";
             } else {
                 chatOutput = getResponse(input);
