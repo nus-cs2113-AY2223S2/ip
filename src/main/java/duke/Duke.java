@@ -128,6 +128,7 @@ public class Duke {
             System.out.println("OK, I've marked this task as not done yet:");
             System.out.print("\t  ");
             System.out.println(tasks.get(taskNumber - 1));
+            printLine();
             saveTask();
         }
     }
