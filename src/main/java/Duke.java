@@ -257,9 +257,7 @@ public class Duke {
         new File("store").mkdirs();
         String ipFolderPath = System.getProperty("user.dir");
         Path storageFolderPath = java.nio.file.Paths.get(ipFolderPath, STORE_DIR);
-        System.out.println(storageFolderPath);
         Path storageFilePath = java.nio.file.Paths.get(storageFolderPath.toString(), STORAGE_INFO_TXT);
-        System.out.println(storageFilePath);
 
         try {
             java.nio.file.Files.createFile(storageFilePath);
