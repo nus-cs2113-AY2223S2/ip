@@ -5,48 +5,78 @@ public class Duke {
             + System.lineSeparator();
     public static final int MARK_TASK_NUMBER_INDEX = 5;
     public static final int UNMARK_TASK_NUMBER_INDEX = 7;
+    public static final int DELETE_TASK_NUMBER_INDEX = 7;
 
-    public static String printCurrTask() {
-        String output = "\t" + Task.tasks[Task.numOfTasks] + System.lineSeparator();
-        Task.numOfTasks++;
-        output += "\tNow you have " + Task.numOfTasks + " tasks in the list.";
-        return output;
+    public static String printCurrNumOfTask() {
+        return "\tNow you have " + Task.numOfTasks + " tasks in the list.";
     }
 
     public static String markTask(String input) {
-        int itemIndex = Integer.parseInt(input.substring(MARK_TASK_NUMBER_INDEX)) - 1;
         String output;
+        int itemIndex = 0;
         try {
-            Task.tasks[itemIndex].setTaskStatus(true);
+            itemIndex = Integer.parseInt(input.substring(MARK_TASK_NUMBER_INDEX)) - 1;
+        } catch (NumberFormatException | StringIndexOutOfBoundsException e) {
+            output = "\tSorry, you need to state a number after \'mark\'.";
+            return output;
+        }
+
+        try {
+            Task.tasks.get(itemIndex).setTaskStatus(true);
             output = "\tNice! I've marked this task as done:" + System.lineSeparator() + "\t\t"
-                    + Task.tasks[itemIndex];
-        } catch (NullPointerException e) {
-            output = "\tSorry, the task does not exist.";
-        } catch (ArrayIndexOutOfBoundsException e) {
+                    + Task.tasks.get(itemIndex);
+        } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
             output = "\tSorry, the task does not exist.";
         }
         return output;
     }
 
     public static String unmarkTask(String input) {
-        int itemIndex = Integer.parseInt(input.substring(UNMARK_TASK_NUMBER_INDEX)) - 1;
         String output;
+        int itemIndex = 0;
         try {
-            Task.tasks[itemIndex].setTaskStatus(false);
+            itemIndex = Integer.parseInt(input.substring(UNMARK_TASK_NUMBER_INDEX)) - 1;
+        } catch (NumberFormatException | StringIndexOutOfBoundsException e) {
+            output = "\tSorry, you need to state a number after \'unmark\'.";
+            return output;
+        }
+
+        try {
+            Task.tasks.get(itemIndex).setTaskStatus(false);
             output = "\tOK, I've marked this task as not done yet:" + System.lineSeparator() + "\t\t"
-                    + Task.tasks[itemIndex];
-        } catch (NullPointerException e) {
-            output = "\tSorry, the task does not exist.";
-        } catch (ArrayIndexOutOfBoundsException e) {
+                    + Task.tasks.get(itemIndex);
+        } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
             output = "\tSorry, the task does not exist.";
         }
+        return output;
+    }
+
+    public static String deleteTask(String input) {
+        String output;
+        int itemIndex = 0;
+        try {
+            itemIndex = Integer.parseInt(input.substring(DELETE_TASK_NUMBER_INDEX)) - 1;
+        } catch (NumberFormatException | StringIndexOutOfBoundsException e) {
+            output = "\tSorry, you need to state a number after \'delete\'.";
+            return output;
+        }
+
+        try {
+            output = "\tNoted. I've removed this task." + System.lineSeparator() + "\t\t"
+                    + Task.tasks.get(itemIndex);
+            Task.tasks.remove(itemIndex);
+            Task.numOfTasks--;
+        } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
+            output = "\tSorry, the task does not exist.";
+        }
+        output += System.lineSeparator() + printCurrNumOfTask();
         return output;
     }
 
     public static String getList() {
         String output = "\tHere are the tasks in your list:" + System.lineSeparator();
         for (int i = 0; i < Task.numOfTasks; i++) {
-            output += "\t" + (i + 1) + "." + Task.tasks[i];
+            output += "\t" + (i + 1) + "." + Task.tasks.get(i);
             if (i != Task.numOfTasks - 1) {
                 output += System.lineSeparator();
             }
@@ -59,7 +89,8 @@ public class Duke {
             // task has no description
             throw new DukeException();
         }
-        Task.tasks[Task.numOfTasks] = new Todo(input);
+
+        Task.tasks.add(Task.numOfTasks, new Todo(input));
     }
 
     public static void createDeadlineTask(String input) throws DukeException {
@@ -81,7 +112,7 @@ public class Duke {
             // /by's description only has spaces
             throw new DukeException();
         }
-        Task.tasks[Task.numOfTasks] = new Deadline(description, by);
+        Task.tasks.add(Task.numOfTasks, new Deadline(description, by));
     }
 
     public static void createEventTask(String input) throws DukeException {
@@ -123,7 +154,7 @@ public class Duke {
             throw new DukeException();
         }
 
-        Task.tasks[Task.numOfTasks] = new Event(description, from, to);
+        Task.tasks.add(Task.numOfTasks, new Event(description, from, to));
     }
 
     public static String addTask(String taskType, String restOfInput) {
@@ -151,12 +182,16 @@ public class Duke {
             }
             break;
         }
-        output += printCurrTask();
+        Task.numOfTasks++;
+        output += "\t" + Task.tasks.get(Task.numOfTasks - 1) + System.lineSeparator();
+        output += printCurrNumOfTask();
         return output;
     }
 
     public static String getCommand(String input, String firstWord, String restOfInput) throws DukeException {
         switch (firstWord) {
+        case "delete":
+            return deleteTask(input);
         case "list":
             return getList();
         case "todo":
@@ -187,7 +222,6 @@ public class Duke {
             // only 1 word in input
             firstWord = input;
         }
-
 
         // determine the type of command
         String output;
