@@ -29,7 +29,7 @@ public class Duke {
         tasks.get(taskNumber - 1).MarkStatusDone();
         Greeting.printSeperator();
         System.out.println("\tNice! I've marked this task as done:\n" +
-                "\t\t[X] " + tasks.get(taskNumber - 1).getTask());
+                "\t\t" + tasks.get(taskNumber - 1).printTask());
         Greeting.printSeperator();
     }
 
@@ -38,7 +38,18 @@ public class Duke {
         tasks.get(taskNumber - 1).MarkStatusUndone();
         Greeting.printSeperator();
         System.out.println("\tOK, I've marked this task as not done yet:\n" +
-                "\t\t[ ] " + tasks.get(taskNumber - 1).getTask());
+
+                "\t\t" + tasks.get(taskNumber - 1).printTask());
+        Greeting.printSeperator();
+    }
+
+    public static void deleteTask(String userInput) {
+        int taskNumber = Integer.parseInt(userInput);
+        Task taskToBeRemoved = tasks.get(taskNumber - 1);
+        tasks.remove(taskNumber - 1);
+        Greeting.printSeperator();
+        System.out.println("\tNoted. I've removed this task:\n" +
+                "\t\t" + taskToBeRemoved.printTask());
         Greeting.printSeperator();
     }
 
@@ -63,6 +74,11 @@ public class Duke {
             case "mark":
                 String taskNumberMark = userInput.substring(5);
                 mark(taskNumberMark);
+                break;
+
+            case "delete":
+                String taskNumberDelete = userInput.substring(7);
+                deleteTask(taskNumberDelete);
                 break;
 
             case "todo":
