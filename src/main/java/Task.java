@@ -28,4 +28,13 @@ public class Task {
     public void MarkStatusUndone() {
         this.isDone = false;
     }
+    public String getBy() {
+        return " ";
+    }
+    public String getTo() {
+        return " ";
+    }
+    public String getFrom() {
+        return " ";
+    }
 }
