@@ -68,7 +68,7 @@ public class Parser {
         return splitStrings;
     }
 
-    public static int handleMark(TaskManager tasks, String description) throws
+    public static int handleIntegerConversion(TaskManager tasks, String description) throws
             TaskNumberOutOfBoundException, NotIntegerTaskNumberException, EmptyTaskNumberException {
         int taskNumber = 0;
 
