@@ -192,6 +192,7 @@ public class TaskManager {
         // givenIndex is 1-based, but rmTask() expects 0-based indexing, so subtract one
         //   before passing to rmTask()
         Task removedTask = this.rmTask(givenIndex - 1);
+        this.getStorageManager().saveTasks(this.getTasks());
         TaskManager.printlnWithIndent(TaskManager.TASK_REMOVED_PHRASE);
         TaskManager.printlnWithIndent("   " + removedTask.toString());
         int numTasksLeft = this.getTasks().size();
