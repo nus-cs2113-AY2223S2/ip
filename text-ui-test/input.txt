@@ -24,4 +24,8 @@ unmark
 blah
 deadline test
 event test
+delete 2
+delete
+delete 10
+delete x
 bye
