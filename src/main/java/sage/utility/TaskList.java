@@ -10,11 +10,17 @@ import sage.tasktypes.Deadline;
 import sage.tasktypes.Event;
 import sage.tasktypes.Task;
 import sage.tasktypes.Todo;
+import sage.utility.FileMgmt;
 
 public class TaskList {
     private static ArrayList<Task> list = new ArrayList<>();
 
     private static final Display UI = new Display();
+    private static final FileMgmt fm = new FileMgmt();
+
+    public void update(FileMgmt fm) {
+        fm.updateFile(list);
+    }
 
     /**
      * This method instantiate a Todo object and add the Todo object to the TaskList
@@ -29,8 +35,8 @@ public class TaskList {
                 Todo t = new Todo(taskName);
                 list.add(t);
                 UI.printAddedTask(t, list.size());
+                fm.updateFile(list);
             }
-
         } catch (MissingParameterException e) {
             e.missingParamDesc();
         }
@@ -49,6 +55,7 @@ public class TaskList {
             } else {
                 Deadline d = new Deadline(taskName, byWhen);
                 list.add(d);
+                fm.updateFile(list);
                 UI.printAddedTask(d, list.size());
             }
         } catch (MissingParameterException e) {
@@ -74,6 +81,7 @@ public class TaskList {
             } else {
                 Event e = new Event(taskName, startWhen, endWhen);
                 list.add(e);
+                fm.updateFile(list);
                 UI.printAddedTask(e, list.size());
             }
         } catch (MissingParameterException e) {
@@ -122,6 +130,7 @@ public class TaskList {
                 throw new IllegalOperationException();
             } else {
                 list.get(taskNumber - 1).setCompleted(false);
+                fm.updateFile(list);
                 UI.printMarking(list, taskNumber, false);
             }
         } catch (OutOfBoundException e) {
@@ -148,6 +157,7 @@ public class TaskList {
                 throw new IllegalOperationException();
             } else {
                 list.get(taskNumber - 1).setCompleted(true);
+                fm.updateFile(list);
                 UI.printMarking(list, taskNumber, true);
             }
         } catch (OutOfBoundException e) {
