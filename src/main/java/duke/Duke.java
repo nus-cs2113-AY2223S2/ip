@@ -1,17 +1,32 @@
 package duke;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Duke {
     public static final int MAX_TASKS = 100;
     private static int taskCount = 0;
-    static Task[] tasks = new Task[MAX_TASKS];
+    static ArrayList <Task> tasks = new ArrayList<>();
 
     static String[] commands = {"todo", "mark", "unmark", "deadline", "list", "help", "event"};
 
     public static void addTask(Task t) {
-        tasks[taskCount] = t;
+        tasks.add(t);
         taskCount++;
+    }
+    public static void deleteTask(String commandArgs) throws NoDescriptionException, IndexOutOfBoundsException{
+        if (commandArgs.trim().length() == 0) {
+            throw new NoDescriptionException();
+        }
+        final int deleteId = Integer.parseInt(commandArgs) - 1;
+        if (deleteId < 0 || deleteId >= taskCount) {
+            throw new IndexOutOfBoundsException();
+        }
+        System.out.println("I've deleted this task ∪･ω･∪:");
+        System.out.println(tasks.get(deleteId));
+        printLine();
+        tasks.remove(deleteId);
+        taskCount--;
     }
 
     public static void printLine() {
@@ -113,6 +128,19 @@ public class Duke {
                 printLine();
             }
             break;
+        case "delete":
+            try {
+                deleteTask(commandArgs);
+            } catch (NoDescriptionException e) {
+                System.out.println("WOOFS!!! The index of entering task must be stated.");
+                System.out.println("Please try to delete task again υ´• ﻌ •`υ");
+                printLine();
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("WOOFS!!! The index of entering task is not valid.");
+                System.out.println("Please try to delete task again υ´• ﻌ •`υ");
+                printLine();
+            }
+            break;
         case "help":
             info();
             break;
@@ -140,12 +168,12 @@ public class Duke {
         if (unmarkId < 0 || unmarkId >= taskCount) {
             throw new IndexOutOfBoundsException();
         }
-        if (!tasks[unmarkId].isDone) {
+        if (!tasks.get(unmarkId).isDone) {
             System.out.println("This task hasn't been marked as done yet ∪･ω･∪");
         } else {
-            tasks[unmarkId].markAsNotDone();
+            tasks.get(unmarkId).markAsNotDone();
             System.out.println("I've unmarked this task ∪･ω･∪:");
-            System.out.println(tasks[unmarkId]);
+            System.out.println(tasks.get(unmarkId));
         }
         printLine();
     }
@@ -158,12 +186,12 @@ public class Duke {
         if (markId < 0 || markId >= taskCount) {
             throw new IndexOutOfBoundsException();
         }
-        if (tasks[markId].isDone) {
+        if (tasks.get(markId).isDone) {
             System.out.println("This task has already been marked as done ੯•໒꒱❤︎");
         } else {
-            tasks[markId].markAsDone();
+            tasks.get(markId).markAsDone();
             System.out.println("I've marked this task as done ੯•໒꒱❤︎:");
-            System.out.println(tasks[markId]);
+            System.out.println(tasks.get(markId));
         }
         printLine();
     }
@@ -182,7 +210,7 @@ public class Duke {
         }
         addTask(new Event(eventDescription, from, to));
         printLine();
-        System.out.println("Got it. I've added this task: \n" + tasks[taskCount - 1]);
+        System.out.println("Got it. I've added this task: \n" + tasks.get(taskCount - 1));
         System.out.println("Now you have " + taskCount + " tasks in your list.");
         printLine();
     }
@@ -202,7 +230,7 @@ public class Duke {
         }
         addTask(new Deadline(deadlineDescription, deadline));
         printLine();
-        System.out.println("Got it. I've added this task: \n" + tasks[taskCount - 1]);
+        System.out.println("Got it. I've added this task: \n" + tasks.get(taskCount - 1));
         System.out.println("Now you have " + taskCount + " tasks in your list.");
         printLine();
     }
@@ -213,7 +241,7 @@ public class Duke {
         }
         addTask(new Todo(commandArgs));
         printLine();
-        System.out.println("Got it. I've added this task: \n" + tasks[taskCount - 1]);
+        System.out.println("Got it. I've added this task: \n" + tasks.get(taskCount - 1));
         System.out.println("Now you have " + taskCount + " tasks in your list.");
         printLine();
     }
@@ -222,7 +250,7 @@ public class Duke {
         for (int i = 0; i < taskCount; i += 1) {
             System.out.print(i + 1);
             System.out.print(". ");
-            System.out.println(tasks[i]);
+            System.out.println(tasks.get(i));
         }
         printLine();
     }
