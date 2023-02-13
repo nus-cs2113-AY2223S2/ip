@@ -67,7 +67,7 @@ public class Todo extends Task {
     }
 
     public Todo setDone(boolean isDone) {
-        return new Todo(this.getDescription(), isDone);
+        return new Todo(super.getDescription(), isDone);
     }
 
     @Override
