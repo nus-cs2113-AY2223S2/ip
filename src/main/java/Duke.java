@@ -15,7 +15,7 @@ public class Duke {
      * @param args The command line arguments.
      */
     public static void main(String[] args) {
-        //Initialisation
+        //Initialisation of ArrayList and taking of inputs.
         String line = "start";
         ArrayList<Task> list = new ArrayList<>();
         int listSize = 0;
