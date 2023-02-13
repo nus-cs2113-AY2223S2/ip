@@ -16,7 +16,7 @@ public class Duke {
 				System.out.println ("Please enter again: ");
 				printLine ();
 				continue;
-			}finally {
+			} finally {
 				input = scan.nextLine ();
 			}
 		}
@@ -67,7 +67,7 @@ public class Duke {
 
 		System.out.println (tasks[count].getType () + tasks[count].toString ());
 		count++;
-		System.out.println ("Now you have " + count+ (count > 1 ? " tasks " : " task ") + "in the list.");
+		System.out.println ("Now you have " + count + (count > 1 ? " tasks " : " task ") + "in the list.");
 		printLine ();
 		return count;
 	}
@@ -84,7 +84,7 @@ public class Duke {
 		}
 
 		printLine ();
-		System.out.println ("Nice! I've marked this task as "+ (tasks[index].isDone? "done" : "undone")+":");
+		System.out.println ("Nice! I've marked this task as " + (tasks[index].isDone ? "done" : "undone") + ":");
 		System.out.println (tasks[index].getType () + tasks[index].toString ());
 		printLine ();
 	}
