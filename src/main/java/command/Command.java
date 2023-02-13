@@ -14,5 +14,5 @@ public abstract class Command {
         return commands;
     }
 
-    public abstract void doCommand(int taskCount, Task[] tasks);
+    public abstract void doCommand(int taskCount, Task[] tasks) throws DukeException;
 }
