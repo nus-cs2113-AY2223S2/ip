@@ -38,40 +38,40 @@ public class Duke {
         if (action.equals("bye")) {
             System.out.println(DIVIDER_LINE + "Bye. Hope to see you again soon!\n" + DIVIDER_LINE);
             shouldContinue = false;
-        }else if (action.equals("list")) {
+        } else if (action.equals("list")) {
             System.out.print(DIVIDER_LINE);
             for (int i = 0; i < taskCount; i += 1) {
                 System.out.println(Integer.toString(i + 1) + ". " +tasks[i].toString());
             }
             System.out.println(DIVIDER_LINE);
-        }else if (action.equals("todo") || action.equals("deadline") || action.equals("event")) {
+        } else if (action.equals("todo") || action.equals("deadline") || action.equals("event")) {
             throw new DukeException.TaskEmpty();
-        }else if (action.startsWith("mark")){
+        } else if (action.startsWith("mark")){
             int dividerPos = action.indexOf(" ");
             int toBeMarked = Integer.parseInt(action.substring(dividerPos + 1)) - 1;
             tasks[toBeMarked].markAsDone();
             System.out.println(DIVIDER_LINE + "Nice! I've marked this task as done:\n"
                     + tasks[toBeMarked].toString() + "\n" + DIVIDER_LINE);
-        }else if (action.startsWith("unmark")) {
+        } else if (action.startsWith("unmark")) {
             int dividerPos = action.indexOf(" ");
             int toBeUnmarked = Integer.parseInt(action.substring(dividerPos + 1)) - 1;
             tasks[toBeUnmarked].markAsUndone();
             System.out.println(DIVIDER_LINE + "Nice! I've marked this task as undone:\n"
                     + tasks[toBeUnmarked].getStatusIcon() + " " + tasks[toBeUnmarked].description
                     + "\n" + DIVIDER_LINE);
-        }else if (action.startsWith("todo")){
+        } else if (action.startsWith("todo")){
             tasks[taskCount] = new Task(action.substring(5));
             System.out.println(DIVIDER_LINE + "added:\n" + tasks[taskCount].toString() + "\n" + DIVIDER_LINE);
             taskCount += 1;
             printNumTask(taskCount);
-        }else if (action.startsWith("deadline")) {
+        } else if (action.startsWith("deadline")) {
             int dividerPosition = action.indexOf("/by");
             tasks[taskCount] = new Deadline(action.substring(9,dividerPosition - 1),
                     action.substring(dividerPosition + 4));
             System.out.println(DIVIDER_LINE + "added:\n" + tasks[taskCount].toString() + "\n" + DIVIDER_LINE);
             taskCount += 1;
             printNumTask(taskCount);
-        }else if (action.startsWith("event")) {
+        } else if (action.startsWith("event")) {
             int dividerPosition1 = action.indexOf("/from");
             int dividerPosition2 = action.indexOf("/to");
             tasks[taskCount] = new Event(action.substring(6,dividerPosition1 - 1),
@@ -80,7 +80,7 @@ public class Duke {
             System.out.println(DIVIDER_LINE + "added:\n" + tasks[taskCount].toString() + "\n" + DIVIDER_LINE);
             taskCount += 1;
             printNumTask(taskCount);
-        }else {
+        } else {
             throw new DukeException();
         }
         return tasks;
