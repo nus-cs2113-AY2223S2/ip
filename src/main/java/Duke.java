@@ -1,3 +1,7 @@
+import DukeFunctions.Event;
+import DukeFunctions.Todo;
+import DukeFunctions.Deadline;
+import Exceptions.MissingInputException;
 
 import java.util.Scanner;
 

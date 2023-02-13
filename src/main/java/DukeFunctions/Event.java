@@ -1,3 +1,7 @@
+package DukeFunctions;
+
+import Exceptions.MissingInputException;
+
 public class Event extends Todo {
 
     protected String from;

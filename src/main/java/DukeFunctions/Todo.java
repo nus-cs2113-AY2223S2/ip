@@ -1,9 +1,12 @@
+package DukeFunctions;
+
+
 public class Todo {
     String description;
     String type;
     protected boolean isDone;
 
-    Todo(String contents) {
+    public Todo(String contents) {
 
         this.description = contents;
         this.isDone = false;
