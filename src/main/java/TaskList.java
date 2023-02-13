@@ -58,4 +58,14 @@ public class TaskList {
         UI.printDeleteTaskMessage(taskNumber, listOfTasks);
         listOfTasks.remove(taskNumber);
     }
+
+    public static void findTask(String input, ArrayList<Task> listOfTasks) {
+        String keyword = input.substring(input.indexOf(" ") + 1);
+        for (int i = 0; i < listOfTasks.size(); i ++) {
+            String taskName = listOfTasks.get(i).getName();
+            if (taskName.contains(keyword)) {
+                UI.printFindTaskMessage(i+1, listOfTasks.get(i));
+            }
+        }
+    }
 }
