@@ -38,6 +38,7 @@ public class Duke {
         tasks.get(taskNumber - 1).MarkStatusUndone();
         Greeting.printSeperator();
         System.out.println("\tOK, I've marked this task as not done yet:\n" +
+
                 "\t\t" + tasks.get(taskNumber - 1).printTask());
         Greeting.printSeperator();
     }
