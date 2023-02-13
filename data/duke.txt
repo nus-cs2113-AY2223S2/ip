@@ -1,3 +1,6 @@
-[T][ ] hel
+[T][X] hel
 [D][ ] to (by: now) 
 [E][ ] from (from:now to:now) 
+[T][X] hello
+[T][X] hello
+[E][ ] heloo (from:n to:n) 

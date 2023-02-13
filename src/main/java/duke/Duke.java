@@ -71,22 +71,27 @@ public class Duke {
             String task = s.nextLine();
             System.out.println(task);
             String type = task.substring(1,2);
+            final int descriptionId = task.lastIndexOf("]");
+            String taskDescription = task.substring(descriptionId+1).trim().replace("(", "").replace(")", "");
+            final int doneId = task.indexOf("[X]");
             switch(type) {
             case "T":
-                final int todoDescriptionId = task.lastIndexOf("]");
-                String todoDescription = task.substring(todoDescriptionId+1).trim();
                 try {
-                    addTodo(todoDescription);
+                    addTodo(taskDescription);
+                    if (doneId != -1) {
+                        tasks[taskCount-1].markAsDone();
+                    }
                 } catch (NoDescriptionException e) {
                     System.out.println("WOOFS!!! Something went wrong");
                     printLine();
                 }
                 break;
             case "E":
-                final int eventDescriptionId = task.lastIndexOf("]");
-                String eventDescription = task.substring(eventDescriptionId+1).trim().replace('(', ' ').replace(')', ' ');
                 try {
-                    addEvent(eventDescription);
+                    addEvent(taskDescription);
+                    if (doneId != -1) {
+                        tasks[taskCount-1].markAsDone();
+                    }
                 } catch (NoDescriptionException e) {
                     System.out.println("WOOFS!!! Something went wrong");
                     printLine();
@@ -96,10 +101,11 @@ public class Duke {
                 }
                 break;
             case "D":
-                final int deadlineDescriptionId = task.lastIndexOf("]");
-                String deadlineDescription = task.substring(deadlineDescriptionId+1).trim().replace('(', ' ').replace(')', ' ');
                 try {
-                    addDeadline(deadlineDescription);
+                    addDeadline(taskDescription);
+                    if (doneId != -1) {
+                        tasks[taskCount-1].markAsDone();
+                    }
                 } catch (NoDescriptionException e) {
                     System.out.println("WOOFS!!! Something went wrong");
                     printLine();
@@ -258,7 +264,6 @@ public class Duke {
         }
         String eventDescription = commandArgs.substring(0, indexOfFrom).trim();
         String from = commandArgs.substring(indexOfFrom, indexOfTo).trim().replace("from:", "").trim();
-        // System.out.println(from);
         String to = commandArgs.substring(indexOfTo, commandArgs.length()).trim().replace("to:", "").trim();
         if (eventDescription.trim().length() == 0 || from.length() == 0 || to.length() == 0) {
             throw new NoDescriptionException();
