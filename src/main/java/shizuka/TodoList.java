@@ -98,6 +98,7 @@ public class TodoList {
         this.todos.remove(num - 1);
         numberOfTasks -= 1;
         System.out.println(LINE_BREAK + "I have deleted Task " + num + IN_LIST + LINE_BREAK);
+    }
 
     public String[] listWriter() {
         String[] list = new String[numberOfTasks];
