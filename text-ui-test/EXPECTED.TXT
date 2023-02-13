@@ -14,6 +14,10 @@ What can I do for you to MAXimize your day?
 There's nothing in your list. I'm gonna bite you.
 ────────────────────────────────────────────────────────────
 ~$ ────────────────────────────────────────────────────────────
+MAX is now in debug mode. No data will be saved or loaded from disk.
+To exit debug mode, restart MAX.
+────────────────────────────────────────────────────────────
+~$ ────────────────────────────────────────────────────────────
 Got it. Task added:
 [T][ ] Foobar
 You now have 1 tasks in your list.

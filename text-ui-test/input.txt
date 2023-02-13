@@ -1,4 +1,5 @@
 list
+debug
 todo Foobar
 deadline badArgument
 deadline badArgument -by foobar
