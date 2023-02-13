@@ -1,6 +1,8 @@
 package io.github.haoyangw.rica.task;
 
+import io.github.haoyangw.rica.exception.RicaStorageException;
 import io.github.haoyangw.rica.exception.RicaTaskException;
+import io.github.haoyangw.rica.util.StorageManager;
 
 import java.util.ArrayList;
 
@@ -13,10 +15,17 @@ public class TaskManager {
     private static final String TASK_ADDED_PHRASE = " You have %d tasks for now, all the best!";
     private static final String TODO_CMD = "todo";
     private static final String WRONG_TASK_TYPE = " Erm I don't think this task can be marked done xD";
+    private final StorageManager storageManager;
     private ArrayList<Task> tasks;
 
     public TaskManager() {
-        tasks = new ArrayList<>();
+        storageManager = new StorageManager();
+        try {
+            tasks = storageManager.getSavedTasks();
+        } catch (RicaStorageException exception) {
+            printlnWithIndent(exception.getMessage());
+            tasks = new ArrayList<>();
+        }
     }
 
     private void addTask(Task newTask) {
@@ -49,6 +58,10 @@ public class TaskManager {
             printlnWithIndent("   " + newEvent.toString());
             break;
         }
+    }
+
+    private StorageManager getStorageManager() {
+        return this.storageManager;
     }
 
     private Task getTask(int indexOfTask) {
