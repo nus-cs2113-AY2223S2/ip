@@ -7,9 +7,9 @@ public class Todo extends Task {
     private static final String MISSING_DESCRIPTION_ERROR = " Remember to provide a description of the todo task you're adding y'know!";
     private static final int NUM_OF_SERIALIZED_DATA = 3;
     protected static final String TYPE = "T";
-    protected final boolean isDone;
+    private final boolean isDone;
 
-    private Todo(String description, boolean isDone) {
+    protected Todo(String description, boolean isDone) {
         super(description);
         this.isDone = isDone;
     }
