@@ -1,6 +1,16 @@
 import java.util.ArrayList;
 
+/**
+ * Represents a checker that validates and categorise all user inputs
+ */
 public class Parser {
+    /**
+     * checks user input for valid commands.
+     * If no valid command is found, user is attempting to input task and check for task type.
+     *
+     * @param input the user input.
+     * @param listOfTasks the list of tasks that is currently in the ChatBot.
+     */
     public static void checkInput(String input, ArrayList<Task> listOfTasks) {
         String[] inputs = input.split(" ");
         switch (inputs[0]) {
@@ -35,6 +45,14 @@ public class Parser {
             }
         }
     }
+
+    /**
+     * Checks for valid task type in user input.
+     *
+     * @param input the user input.
+     * @param listOfTasks the list of tasks that is currently in the ChatBot.
+     * @throws InvalidTaskTypeException if task is not todo, deadline or event.
+     */
     public static void checkTaskType(String input, ArrayList<Task> listOfTasks) throws InvalidTaskTypeException {
         String taskType = input;
         int endTaskTypeIndex = input.indexOf(" ");

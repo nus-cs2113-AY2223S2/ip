@@ -1,3 +1,6 @@
+/**
+ * Represents a special type of Task that has a due date.
+ */
 public class Deadline extends Task {
     protected String by;
 

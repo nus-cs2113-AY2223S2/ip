@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Represents Duke ChatBot storage
+ */
 public class Storage {
     private String filePath;
     private String folderPath;
@@ -21,24 +24,38 @@ public class Storage {
         return folderPath;
     }
 
+    /**
+     * Returns an ArrayList that acts as the list of task that the user has saved previously.
+     * If it's a first time, returns empty list.
+     *
+     * @return List of tasks previously saved, else return empty list.
+     * @throws IOException If file is not found.
+     */
     public ArrayList<Task> initialiseDuke()  throws IOException {
-        ArrayList<Task> savedList = new ArrayList<>();
+        ArrayList<Task> savedTaskList = new ArrayList<>();
         new File(getFolderPath()).mkdir();
         File dukeDataFile = new File(getFilePath());
         new File(getFilePath()).createNewFile();
         try {
-            loadSavedData(dukeDataFile, savedList);
+            loadSavedData(dukeDataFile, savedTaskList);
         } catch (IOException e) {
             System.out.println(e);
         }
-        return savedList;
+        return savedTaskList;
     }
 
-    public void loadSavedData(File dukeDataFile, ArrayList<Task> savedList) throws IOException {
+    /**
+     * Puts all the user's previously saved tasks into an ArrayList.
+     *
+     * @param dukeDataFile The file which contains the user's saved tasks.
+     * @param savedTaskList List where all the user's saved task will be added to.
+     * @throws IOException If file is not found.
+     */
+    public void loadSavedData(File dukeDataFile, ArrayList<Task> savedTaskList) throws IOException {
         Scanner dukeData = new Scanner(dukeDataFile);
         while (dukeData.hasNextLine()) {
             try {
-                Parser.checkTaskType(dukeData.nextLine(), savedList);
+                Parser.checkTaskType(dukeData.nextLine(), savedTaskList);
                 UI.printHorizontalLine();
             } catch (InvalidTaskTypeException e) {
                 System.out.println(e);
@@ -46,6 +63,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Saves task that user has inputted in the current session into local file
+     *
+     * @param listOfTasks
+     * @throws IOException
+     */
     public void saveTasks(ArrayList<Task> listOfTasks) throws IOException {
         String content = "";
         for (Task task : listOfTasks) {
@@ -56,6 +79,12 @@ public class Storage {
         fileToWriteTo.close();
     }
 
+    /**
+     * Formats the content into a user input so that the bot is able to initialise it next time.
+     *
+     * @param task The current task to be saved.
+     * @return The current task details in the proper format
+     */
     public static String formatContentToBeSaved (Task task) {
         String content = "";
         String type;

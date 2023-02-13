@@ -1,5 +1,9 @@
 import java.util.ArrayList;
 
+/**
+ * Represents all the outputs that the ChatBot can display to the user so the user understands the current state of
+ * the ChatBot.
+ */
 public class UI {
     public static void printHorizontalLine() {
         System.out.println("____________________________________________________________");

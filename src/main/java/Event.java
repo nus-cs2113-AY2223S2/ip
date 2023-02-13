@@ -1,3 +1,6 @@
+/**
+ * Represents a special task that has a start date or time and an end date or time.
+ */
 public class Event extends Task {
     protected String start;
     protected String end;

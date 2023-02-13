@@ -1,3 +1,6 @@
+/**
+ * Represents a user inputted task.
+ */
 public class Task {
     private String name;
     private boolean isCompleted;
