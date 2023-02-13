@@ -5,6 +5,12 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.Todo;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -32,6 +38,50 @@ public class Duke {
                 + "Hello! I'm Momo :)\n"
                 + "What can I do for you?\n"
                 + breakLine());
+    }
+
+    // read existing data
+    private static void getFileData() {
+        File file = new File("src/main/duke.txt");
+        System.out.println("\tLoading existing data . . .\n");
+        String input;
+        try {
+            if (!file.createNewFile()) {
+                Scanner fileInput = new Scanner(file);
+                while (fileInput.hasNext()) {
+                    input = fileInput.nextLine();
+                    String[] inputArgs = input.split("|");
+                    writeDataToList(inputArgs);
+                }
+            }
+        } catch (IOException e) {
+            System.out.print("\t(!) IOException error: get existing file data.\n" + breakLine());
+        }
+        System.out.print("\tLoading Done :)\n" + breakLine());
+    }
+
+    // add data read from file to list
+    private static void writeDataToList(String[] inputArgs) {
+        Task newTask;
+        String command = inputArgs[0];
+        boolean isMarked = Boolean.parseBoolean(inputArgs[1]);
+        switch (command) {
+        case "T":
+            newTask = new Todo(inputArgs[2]);
+            break;
+        case "D":
+            newTask = new Deadline(inputArgs[2], inputArgs[3]);
+            break;
+        case "E":
+            newTask = new Event(inputArgs[2], inputArgs[3], inputArgs[4]);
+            break;
+        default:
+            throw new IllegalStateException("(!) Invalid file contents.");
+        }
+        if (isMarked) {
+            newTask.mark();
+        }
+        tasks.add(newTask);
     }
 
     // add a new task
@@ -148,6 +198,7 @@ public class Duke {
 
         printDuke();
         greet();
+        getFileData();
 
         while (true) {
             input = readInput();
