@@ -84,6 +84,7 @@ public class Duke {
         return tasks;
     }
 
+    
     public static void printNumTask(int taskCount) {
         System.out.println("Now you have " + taskCount + " tasks in the list");
     }
