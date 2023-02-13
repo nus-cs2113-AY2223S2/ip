@@ -23,7 +23,7 @@ public class Event extends Task {
         setFrom(from);
         setTo(to);
         System.out.println("Added!");
-        System.out.println(String.format(" [%s] [%s] %s (%s %s)", 'E', " ",description,from,to));
+        System.out.println(String.format(" [%s] [%s] %s (%s %s)", 'E', " ", description, from, to));
     }
 
     @Override
@@ -33,6 +33,6 @@ public class Event extends Task {
 
     @Override
     public String getDescription() {
-        return super.getDescription() + from + to;
+        return super.getDescription();
     }
 }

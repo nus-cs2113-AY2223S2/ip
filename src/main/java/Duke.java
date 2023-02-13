@@ -9,6 +9,7 @@ public class Duke {
     private static void addTasks(Task a) {
         tasksList.add(a);
         System.out.println("Now you have " + tasksList.size() + " tasks in your list");
+        FileWriterClass.writeToFile();
     }
 
     private static void printMarking(int i) {
@@ -21,6 +22,7 @@ public class Duke {
         Task.markAsDone(tasksList.get(Integer.parseInt(remainingWords) - 1));
         int i = Integer.parseInt(remainingWords) - 1;
         printMarking(i);
+        FileWriterClass.writeToFile();
     }
 
     private static void unMark(String remainingWords) {
@@ -28,14 +30,16 @@ public class Duke {
         Task.markAsNotDone(tasksList.get(Integer.parseInt(remainingWords) - 1));
         int i = Integer.parseInt(remainingWords) - 1;
         printMarking(i);
+        FileWriterClass.writeToFile();
     }
-    private static void deleteTasks(String remainingWords){
+
+    private static void deleteTasks(String remainingWords) {
         System.out.println("Noted. I've removed this task:");
         int i = Integer.parseInt(remainingWords) - 1;
         printMarking(i);
-        System.out.println("Now you have "+tasksList.size()+" tasks left");
+        System.out.println("Now you have " + tasksList.size() + " tasks left");
         tasksList.remove(i);
-
+        FileWriterClass.writeToFile();
 
     }
 
@@ -56,8 +60,9 @@ public class Duke {
             System.out.println("Here's your plan for a productive day!");
         }
         for (int i = 0; i < tasksList.size(); i++) {
-            System.out.println(String.format("%d.[%s] [%s] %s", i + 1,
-                    tasksList.get(i).getTypeIcon(), tasksList.get(i).getStatusIcon(), tasksList.get(i).getDescription()));
+            System.out.println(String.format("%d.[%s] [%s] %s ", i + 1,
+                    tasksList.get(i).getTypeIcon(), tasksList.get(i).getStatusIcon(), tasksList.get(i).getDescription()
+            ));
         }
     }
 
@@ -86,6 +91,7 @@ public class Duke {
 
     public static void main(String[] args) {
         printIntro();
+        FileWriterClass.loadFromFile();
         String line;
         Scanner in = new Scanner(System.in);
 
@@ -119,7 +125,7 @@ public class Duke {
             case "unmark":
                 unMark(arr[1]);
                 break;
-            case "delete" :
+            case "delete":
                 deleteTasks(arr[1]);
                 break;
             case "todo":
