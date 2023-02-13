@@ -16,7 +16,9 @@ public enum Command {
     UNMARK(1, "unmark", new String[]{}),
     EXIT(1, "exit", new String[]{}),
     LIST(1, "list", new String[]{}),
+    DEBUG(1, "debug", new String[]{}),
     UNKNOWN_COMMAND(1, "", new String[]{});
+
 
     // Defines how many arguments (subcommands + main command) a Command has
     // The argument length for a command must be minimally 1 (itself) e.g. list, mark
