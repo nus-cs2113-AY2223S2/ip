@@ -18,6 +18,9 @@ public class OutputDialogueManager {
         case UNMARK_TASK:
             System.out.println("_(@_@)_ Hmmm. I shall mark this task as not done:");
             break;
+        case DELETE_TASK:
+            System.out.println("|(0o0)> Gocha! I will now delete this task:");
+            break;
         case ADD_TASK:
             System.out.println("_(ovo)-| Added:");
             break;

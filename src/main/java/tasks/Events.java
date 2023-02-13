@@ -7,7 +7,6 @@ public class Events extends Task{
     private String itemName;
     private String startTime;
     private String endTime;
-    private int itemId;
     public Events(String itemName) throws InvalidEventException {
         super(itemName);
         int indexOfStartTime = itemName.indexOf("/from");
@@ -19,7 +18,6 @@ public class Events extends Task{
         this.startTime = itemName.substring(indexOfStartTime + 6, indexOfEndTime);
         this.endTime = itemName.substring(indexOfEndTime + 4);
         incrementItemCount();
-        this.itemId = getItemCount();
     }
 
     @Override
@@ -30,7 +28,7 @@ public class Events extends Task{
         } else {
             status = "[E] [ ]";
         }
-        System.out.println(this.itemId + "." + status + " " + this.itemName +
+        System.out.println("." + status + " " + this.itemName +
                 " (from: " + startTime + "To: " + endTime + ")");
     }
 

@@ -6,6 +6,7 @@ public enum DialogueTypes {
     MARK_TASK,
     UNMARK_TASK,
     ADD_TASK,
+    DELETE_TASK,
     UNKNOWN_TYPE,
     HELP_MENU,
     COUNT_OF_TASKS,
