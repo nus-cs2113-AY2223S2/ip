@@ -234,18 +234,18 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
 
+        try {
+            readData(DATA_PATH + "/" + DATA_FILE);
+            System.out.println(spacer + "Read data from file " + DATA_PATH + "/" + DATA_FILE);
+        } catch (IOException ioe) {
+            System.out.println(spacer + "Create new data file in " + DATA_PATH + "/" + DATA_FILE);
+            initData(DATA_PATH, DATA_FILE);
+        }
         // greeting messages
         printDivider();
         System.out.println(spacer + "Hello! I'm Tohru.");
         System.out.println(spacer + "What can I do for you?");
         printDivider();
-        try {
-            readData(DATA_PATH + "/" + DATA_FILE);
-            System.out.println("Read data from file " + DATA_PATH + "/" + DATA_FILE);
-        } catch (IOException ioe) {
-            System.out.println("Creating new data file in " + DATA_PATH + "/" + DATA_FILE);
-            initData(DATA_PATH, DATA_FILE);
-        }
 
         // user interactions
         while (true) {
