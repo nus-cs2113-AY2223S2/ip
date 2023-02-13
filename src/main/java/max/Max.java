@@ -73,7 +73,6 @@ public class Max {
         case TASK_EVENT:
         case TASK_DEADLINE:
         case TASK_TODO:
-            // TODO: Consider refactoring Task logic to a TaskHandler class
             try {
                 taskManager.createTask(commandPayload, mainCommand);
             }catch (TaskException exception){
@@ -84,11 +83,18 @@ public class Max {
             taskNumString = commandPayload.get("delete");
             taskManager.deleteTask(taskNumString);
             break;
+        case DEBUG:
+            isDebugMode = true;
+            taskManager.resetTaskList();
+            System.out.println("MAX is now in debug mode. No data will be saved or loaded from disk.");
+            System.out.println("To exit debug mode, restart MAX.");
+            break;
         default:
             // { Command.UNKNOWN_COMMAND }
             System.out.println("Awoo? I don't understand that command.");
             break;
         }
+
         // Backup data after every command
         if(!isDebugMode){
             taskManager.saveData();
@@ -117,6 +123,7 @@ public class Max {
         taskManager = new TaskManager();
         taskManager.loadData();
 
+        // Greet when data has been loaded and problematic saved data has been highlighted
         greet();
         setIsListening(true);
         // Init IO
