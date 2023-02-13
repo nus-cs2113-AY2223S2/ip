@@ -9,7 +9,7 @@ public class Duke {
 	public static final String ERROR_EMPTY_EVENT_DESCRIPTION_MESSAGE = "Error: The description, from or to cannot be empty";
 	public static final String ERROR_EMPTY_DEADLINE_DESCRIPTION = "Error: The description or by cannot be empty";
 	public static final String ERROR_TASK_NUMBER_OUT_OF_RANGE_MESSAGE = "Error: task number given out of range";
-	public static final String ERROR_TASK_NUMBER_NOT_INT_MESSAGE = "Error: Task Number given is a text and not a number!";
+	public static final String ERROR_TASK_NUMBER_NOT_INT_MESSAGE = "Error: Task Number given empty/not a number!";
 	public static final String PRINT_HELP_INSTRUCTIONS_MESSAGE = "The following are the commands available and their arguments: ";
 	public static final String HELP_TODO_FORMAT = "Todo [description]";
 	public static final String HELP_TODO_DESCRIPTION = "Creates Todo task. Requires a description text.";
@@ -82,6 +82,9 @@ public class Duke {
 			break;
 		case "deadline":
 			addDeadline(list, arg);
+			break;
+		case "delete":
+			runDelete(list, arg);
 			break;
 		default:
 			printUnknownCommandMessage();
@@ -221,6 +224,19 @@ public class Duke {
 	private static String[] splitDeadlineArg(String arg) {
 		String[] splitDescriptionAndBy = arg.split("/by", 2);
 		return new String[]{splitDescriptionAndBy[0].trim(), splitDescriptionAndBy[1].trim()};
+	}
+
+	private static void runDelete(Tasks list, String arg) {
+		try {
+			int taskNumber = Integer.parseInt(arg);
+			if (taskNumber <= list.getTasksCount()) {
+				list.deleteTask(taskNumber);
+			} else {
+				System.out.println(ERROR_TASK_NUMBER_OUT_OF_RANGE_MESSAGE);
+			}
+		} catch (NumberFormatException e) {
+			System.out.println(ERROR_TASK_NUMBER_NOT_INT_MESSAGE);
+		}
 	}
 	
 	private static void printUnknownCommandMessage() {
