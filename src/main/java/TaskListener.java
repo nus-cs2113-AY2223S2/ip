@@ -5,8 +5,8 @@ public class TaskListener {
     static final String DIVIDER = "--------------------------------------------------------------------";
     private TasksList tasksList;
 
-    public TaskListener(int expectedTasksCount) {
-        this.tasksList = new TasksList(expectedTasksCount);
+    public TaskListener(TasksList tasksList) {
+        this.tasksList = tasksList;
     }
 
     public static void greet() {
@@ -23,7 +23,7 @@ public class TaskListener {
         printLines("Hello! I'm SHERLOCK", "What can I do for you?");
     }
 
-    private static void printLines(String... lines) {
+    public static void printLines(String... lines) {
         System.out.println(DIVIDER);
         for (String line : lines) {
             System.out.println(line);
