@@ -1,8 +1,10 @@
 package duke;
 
+import java.io.*;
 import java.util.Scanner;
 
 public class Duke {
+    static String FILEPATH = "data/duke.txt";
     public static final int MAX_TASKS = 100;
     private static int taskCount = 0;
     static Task[] tasks = new Task[MAX_TASKS];
@@ -19,12 +21,30 @@ public class Duke {
     }
 
     public static void greet() {
+        try {
+            printFileContents(FILEPATH);
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        }
         printLine();
         System.out.println("Hello! I'm Duke  U ´ᴥ` U\n" + "What can I do for you?");
         printLine();
     }
-
+    private static void writeToFile(String filePath) throws IOException {
+        BufferedWriter outputWriter = null;
+        outputWriter = new BufferedWriter(new FileWriter(filePath));
+        for (int i = 0; i < taskCount; i += 1) {
+            outputWriter.write(tasks[i].toString() + System.lineSeparator());
+        }
+        outputWriter.flush();
+        outputWriter.close();
+    }
     public static void goodBye() {
+        try {
+            writeToFile(FILEPATH);
+        } catch (IOException e) {
+            System.out.println("Something went wrong: " + e.getMessage());
+        }
         printLine();
         System.out.println("Bye. Hope to see you again soon!ﾉ~");
         printLine();
@@ -43,7 +63,57 @@ public class Duke {
         printLine();
     }
 
-    public static void process(String s) throws InvalidCommandException{
+    private static void printFileContents(String filePath) throws FileNotFoundException {
+        File f = new File(filePath);
+        Scanner s = new Scanner(f);
+        System.out.println("These are the task from your file: ");
+        while (s.hasNext()) {
+            String task = s.nextLine();
+            System.out.println(task);
+            String type = task.substring(1,2);
+            switch(type) {
+            case "T":
+                final int todoDescriptionId = task.lastIndexOf("]");
+                String todoDescription = task.substring(todoDescriptionId+1).trim();
+                try {
+                    addTodo(todoDescription);
+                } catch (NoDescriptionException e) {
+                    System.out.println("WOOFS!!! Something went wrong");
+                    printLine();
+                }
+                break;
+            case "E":
+                final int eventDescriptionId = task.lastIndexOf("]");
+                String eventDescription = task.substring(eventDescriptionId+1).trim();
+                try {
+                    addEvent(eventDescription);
+                } catch (NoDescriptionException e) {
+                    System.out.println("WOOFS!!! Something went wrong");
+                    printLine();
+                } catch (FormatException e) {
+                    System.out.println("WOOFS!!! Something went wrong");
+                    printLine();
+                }
+                break;
+            case "D":
+                final int deadlineDescriptionId = task.lastIndexOf("]");
+                String deadlineDescription = task.substring(deadlineDescriptionId+1).trim();
+                try {
+                    addDeadline(deadlineDescription);
+                } catch (NoDescriptionException e) {
+                    System.out.println("WOOFS!!! Something went wrong");
+                    printLine();
+                } catch (FormatException e) {
+                    System.out.println("WOOFS!!! Something went wrong");
+                    printLine();
+                }
+                break;
+            }
+        }
+        printLine();
+    }
+
+    public static void process(String s) throws InvalidCommandException {
         final String[] split = s.trim().split("\\s+", 2);
         final String[] commandTypeAndParams = split.length == 2 ? split : new String[]{split[0], ""};
         final String commandType = commandTypeAndParams[0];
@@ -132,7 +202,7 @@ public class Duke {
         return s;
     }
 
-    private static void unmarkTask(String commandArgs) throws NoDescriptionException, IndexOutOfBoundsException{
+    private static void unmarkTask(String commandArgs) throws NoDescriptionException, IndexOutOfBoundsException {
         if (commandArgs.trim().length() == 0) {
             throw new NoDescriptionException();
         }
@@ -150,7 +220,7 @@ public class Duke {
         printLine();
     }
 
-    private static void markTask(String commandArgs) throws NoDescriptionException, IndexOutOfBoundsException{
+    private static void markTask(String commandArgs) throws NoDescriptionException, IndexOutOfBoundsException {
         if (commandArgs.trim().length() == 0) {
             throw new NoDescriptionException();
         }
@@ -168,7 +238,7 @@ public class Duke {
         printLine();
     }
 
-    private static void addEvent(String commandArgs) throws NoDescriptionException, FormatException{
+    private static void addEvent(String commandArgs) throws NoDescriptionException, FormatException {
         final int indexOfFrom = commandArgs.indexOf("/from");
         final int indexOfTo = commandArgs.indexOf("/to");
         if (indexOfTo == -1 || indexOfFrom == -1) {
@@ -187,7 +257,7 @@ public class Duke {
         printLine();
     }
 
-    private static void addDeadline(String commandArgs) throws NoDescriptionException, FormatException{
+    private static void addDeadline(String commandArgs) throws NoDescriptionException, FormatException {
         final int indexOfDeadline = commandArgs.indexOf("/by");
         if (indexOfDeadline == -1) {
             throw new FormatException();
