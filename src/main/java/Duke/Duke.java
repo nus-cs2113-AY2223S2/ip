@@ -39,6 +39,10 @@ public class Duke extends DukeCommands{
                     System.out.println("Hmm. Something's not right. Try checking if the task is still in the list.");
                 }
 
+            } else if (word.equals("save")) {
+                DukeSave.saveDukeToFile(list);
+            } else if (word.equals("load")) {
+                list = DukeSave.loadDukeFromFile();
             } else {
                 DukeCommands.addToList(word);
             }
