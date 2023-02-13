@@ -64,8 +64,14 @@ public class TaskController {
    * @throws Exception An exception if the task is invalid
    */
   public void toggleMark(boolean isMark, int index) throws Exception {
-    db.update(index, isMark);
     Task model = db.read(index);
+    String previousMessage = model.getDescriptionText();
+
+    db.update(index, isMark);
+    model = db.read(index);
+    String newMessage = model.getDescriptionText();
+
+    parser.updateFile(previousMessage, newMessage);
     System.out.printf(
       "%s\n",
       isMark ? Message.MARKED.message : Message.UNMARKED.message
