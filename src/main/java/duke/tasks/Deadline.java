@@ -15,4 +15,8 @@ public class Deadline extends Task {
     public String toString() {
         return super.toString() + " (by: " + byWhen + ')';
     }
+
+    public String toSaveString() {
+        return super.toSaveString() + '|' + byWhen;
+    }
 }

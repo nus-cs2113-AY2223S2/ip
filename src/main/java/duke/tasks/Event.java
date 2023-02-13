@@ -21,4 +21,8 @@ public class Event extends Task {
     public String toString() {
         return super.toString() + " (from: " + fromWhen + ")" + " (to: " + toWhen + ')';
     }
+
+    public String toSaveString() {
+        return super.toSaveString() + '|' + fromWhen + '|' + toWhen;
+    }
 }
