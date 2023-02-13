@@ -2,6 +2,8 @@ package duke.print;
 
 import duke.task.Task;
 
+import java.util.ArrayList;
+
 /**
  *
  * Custom Print class to include methods
@@ -9,6 +11,44 @@ import duke.task.Task;
  *
  */
 public class Print {
+
+    /**
+     * Simplifies the default Java System.out.print method
+     *
+     * @param str Input string to print
+     */
+    public static void print(String str) {
+        System.out.print(str);
+    }
+
+    /**
+     * Simplifies the default Java System.out.println method
+     *
+     * @param str Input string to print with a newline character
+     *            at the end
+     */
+    public static void println(String str) {
+        System.out.println(str);
+    }
+
+    /**
+     * Prints out one line of underscores, with a newline character at the end
+     * <p>
+     * 4 spaces is included at the front of the string
+     */
+    public static void printOneLine() {
+        System.out.println("    ____________________________________");
+    }
+
+    /**
+     * Prints the type of task and the marked-done status of the task
+     *
+     * @param selectedTask The selected task to print its task Type and Done status
+     */
+    public static void printTypeAndStatus(Task selectedTask) {
+        print("       [" + selectedTask.getTypeIcon() + "]" + "[" + selectedTask.getDoneIcon() + "] ");
+    }
+
     /**
      * Prints welcome message at the start of the program
      * Prints list of commands that DUKE can currently understand
@@ -56,101 +96,105 @@ public class Print {
      *
      * @param taskList the list of tasks to print out
      */
-    public static void printTaskList(Task[] taskList) {
+    public static void printTaskList(ArrayList<Task> taskList) {
         printOneLine();
-        println("     Here are the tasks in your list:");
+        if (taskList.isEmpty()) {
+            println("    Oops, I guess you have no tasks right now.");
+            printOneLine();
+        } else {
+            println("     Here are the tasks in your list:");
 
-        for (int i = 0; i < taskList.length; i += 1) {
-            if (taskList[i] == null) {
-                break;
-            }
-
-            print("     " + (i + 1) + ".");
-            print("[" + taskList[i].getTypeIcon() + "]");
-            print("[" + taskList[i].getDoneIcon() + "] " + taskList[i].getDescription());
-
-            switch (taskList[i].getTypeIcon()) {
-                case "D":
-                    println(" (by:" + taskList[i].getBy() + ")");
+            for (int i = 0; i < taskList.size(); i += 1) {
+                if (taskList.get(i) == null) {
                     break;
+                }
 
-                case "E":
-                    println("(from: " + taskList[i].getFrom() + " to:" + taskList[i].getTo() + ")");
-                    break;
+                print("     " + (i + 1) + ".");
+                print("[" + taskList.get(i).getTypeIcon() + "]");
+                print("[" + taskList.get(i).getDoneIcon() + "] " + taskList.get(i).getDescription());
 
-                case "T":
-                    println("");
+                switch (taskList.get(i).getTypeIcon()) {
+                    case "D":
+                        println(" (by:" + taskList.get(i).getBy() + ")");
+                        break;
+
+                    case "E":
+                        println("(from: " + taskList.get(i).getFrom() + " to:" + taskList.get(i).getTo() + ")");
+                        break;
+
+                    case "T":
+                        println("");
+                }
             }
+            printOneLine();
         }
-        printOneLine();
     }
 
-    /**
-     * Simplifies the default Java System.out.print method
-     *
-     * @param str Input string to print
-     */
-    public static void print(String str) {
-        System.out.print(str);
-    }
-
-    /**
-     * Simplifies the default Java System.out.println method
-     *
-     * @param str Input string to print with a newline character
-     *            at the end
-     */
-    public static void println(String str) {
-        System.out.println(str);
-    }
-
-    /**
-     * Prints out one line of underscores, with a newline character at the end
-     * <p>
-     * 4 spaces is included at the front of the string
-     */
-    public static void printOneLine() {
-        System.out.println("    ____________________________________");
-    }
-
-
-    /**
-     * Prints the type of task and the marked-done status of the task
-     *
-     * @param selectedTask The selected task to print its task Type and Done status
-     */
-    public static void printTypeAndStatus(Task selectedTask) {
-        print("       [" + selectedTask.getTypeIcon() + "]" + "[" + selectedTask.getDoneIcon() + "] ");
-    }
 
     /**
      * Prints the details of a newly added task
      *
-     * @param task      The task to print the details of.
-     * @param taskIndex The index of the current last task, to determine the current number of tasks in the list
+     * @param taskList  The list of tasks, to print the size (i.e. how many tasks in the list)
+     * @param taskToAdd The task to print the details of.
      */
-    public static void printAddingOneTask(Task task, int taskIndex) {
+    public static void printAddingOneTask(ArrayList<Task> taskList, Task taskToAdd) {
         printOneLine();
         println("     Got it. I've added this task:");
-        print("       [" + task.getTypeIcon() + "]" + "[" + task.getDoneIcon() + "] ");
+        printTypeAndStatus(taskToAdd);
 
-        if (task.isTodo()) {
-            print(task.getDescription());
+        if (taskToAdd.isTodo()) {
+            print(taskToAdd.getDescription());
 
-        } else if (task.isDeadline()) {
+        } else if (taskToAdd.isDeadline()) {
 
-            print(task.getDescription());
-            print(" (by:" + task.getBy() + ")");
+            print(taskToAdd.getDescription());
+            print(" (by:" + taskToAdd.getBy() + ")");
 
-        } else if (task.isEvent()) {
+        } else if (taskToAdd.isEvent()) {
 
-            print(task.getDescription());
-            print("(from: " + task.getFrom() + " to:" + task.getTo() + ")");
+            print(taskToAdd.getDescription());
+            print("(from: " + taskToAdd.getFrom() + " to:" + taskToAdd.getTo() + ")");
 
         }
         println("");
 
-        println("     Now you have " + (taskIndex + 1) + " tasks in the list");
+        println("     Now you have " + taskList.size() + " tasks in the list");
+
+        printOneLine();
+    }
+
+    /**
+     * Prints the details of a deleted task
+     *
+     * @param taskList     The list of tasks, to print the size (i.e. how many tasks in the list)
+     * @param taskToDelete The task to print the details of.
+     */
+    public static void printDeletingOneTask(ArrayList<Task> taskList, Task taskToDelete) {
+        printOneLine();
+        println("     Noted. I've removed this task:");
+        printTypeAndStatus(taskToDelete);
+
+        if (taskToDelete.isTodo()) {
+            print(taskToDelete.getDescription());
+
+        } else if (taskToDelete.isDeadline()) {
+
+            print(taskToDelete.getDescription());
+            print(" (by:" + taskToDelete.getBy() + ")");
+
+        } else if (taskToDelete.isEvent()) {
+
+            print(taskToDelete.getDescription());
+            print("(from: " + taskToDelete.getFrom() + " to:" + taskToDelete.getTo() + ")");
+
+        }
+        println("");
+
+        if (taskList.isEmpty()) {
+            println("     Well done! You have no more tasks!");
+        } else {
+            println("     Now you have " + taskList.size() + " tasks in the list");
+        }
 
         printOneLine();
     }
