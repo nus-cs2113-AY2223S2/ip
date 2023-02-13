@@ -3,23 +3,25 @@ package command;
 import task.Event;
 import task.Task;
 
+import java.util.ArrayList;
+
 public class EventCommand extends Command {
 
-    public EventCommand(String[] commands) {
+    public EventCommand(ArrayList<String> commands) {
         super(commands);
     }
 
     @Override
-    public void doCommand(int taskCount, Task[] tasks) {
-        String description = getCommands()[1];
-        String start = getCommands()[2];
-        String end = getCommands()[3];
+    public void doCommand(ArrayList<Task> tasks) {
+        String description = getCommands().get(1);
+        String start = getCommands().get(2);
+        String end = getCommands().get(3);
         Event eventTask = new Event(description, start, end);
-        tasks[taskCount] = eventTask;
+        tasks.add(eventTask);
         System.out.println("____________________________________________________________");
         System.out.println("Got it. I've added this task:");
         System.out.println(eventTask.getSummary());
-        System.out.printf("Now you have %d tasks in the list.\n", taskCount + 1);
+        System.out.printf("Now you have %d tasks in the list.\n", tasks.size());
         System.out.println("____________________________________________________________");
     }
 }

@@ -1,15 +1,20 @@
-import command.*;
+import command.Command;
+import command.DeadlineCommand;
+import command.EventCommand;
+import command.ListCommand;
+import command.MarkCommand;
+import command.TodoCommand;
+import command.UnmarkCommand;
 import exception.DukeException;
 import parser.Parser;
 import task.Task;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
     private static final String line = "____________________________________________________________";
-    private static final int MAX_TASKS = 100;
-    private static int taskCount = 0;
-    private static Task[] tasks = new Task[MAX_TASKS];
+    private static ArrayList<Task> tasks = new ArrayList<>();
     private static boolean isDone = false;
 
     public static void main(String[] args) {
@@ -31,38 +36,35 @@ public class Duke {
         while (!isDone) {
             try {
                 String input = in.nextLine();
-                String[] commands = Parser.parse(input);
+                ArrayList<String> commands = Parser.parse(input);
                 Command commandObject;
-                switch (commands[0]) {
+                switch (commands.get(0)) {
                 case "bye":
                     isDone = true;
                     break;
                 case "list":
                     commandObject = new ListCommand(commands);
-                    commandObject.doCommand(taskCount, tasks);
+                    commandObject.doCommand(tasks);
                     break;
                 case "mark":
                     commandObject = new MarkCommand(commands);
-                    commandObject.doCommand(taskCount, tasks);
+                    commandObject.doCommand(tasks);
                     break;
                 case "unmark":
                     commandObject = new UnmarkCommand(commands);
-                    commandObject.doCommand(taskCount, tasks);
+                    commandObject.doCommand(tasks);
                     break;
                 case "todo":
                     commandObject = new TodoCommand(commands);
-                    commandObject.doCommand(taskCount, tasks);
-                    taskCount += 1;
+                    commandObject.doCommand(tasks);
                     break;
                 case "deadline":
                     commandObject = new DeadlineCommand(commands);
-                    commandObject.doCommand(taskCount, tasks);
-                    taskCount += 1;
+                    commandObject.doCommand(tasks);
                     break;
                 case "event":
                     commandObject = new EventCommand(commands);
-                    commandObject.doCommand(taskCount, tasks);
-                    taskCount += 1;
+                    commandObject.doCommand(tasks);
                     break;
                 default:
                     throw new DukeException("OOPS!!! I'm sorry, but I don't know what that means :-(");

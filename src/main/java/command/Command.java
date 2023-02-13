@@ -3,16 +3,18 @@ package command;
 import exception.DukeException;
 import task.Task;
 
-public abstract class Command {
-    private final String[] commands;
+import java.util.ArrayList;
 
-    public Command(String[] commands) {
+public abstract class Command {
+    private final ArrayList<String> commands;
+
+    public Command(ArrayList<String> commands) {
         this.commands = commands;
     }
 
-    public String[] getCommands() {
+    public ArrayList<String> getCommands() {
         return commands;
     }
 
-    public abstract void doCommand(int taskCount, Task[] tasks) throws DukeException;
+    public abstract void doCommand(ArrayList<Task> tasks) throws DukeException;
 }
