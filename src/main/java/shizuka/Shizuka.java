@@ -77,8 +77,11 @@ public class Shizuka {
             case "save":
                 try {
                     WriteToFile.save(FILE_PATH, list0.listWriter());
+                    Printer.saveSuccess();
+                    break;
                 } catch (IOException e) {
-                    throw new RuntimeException("Something went wrong: " + e.getMessage());
+                    Printer.ioError();
+                    break;
                 }
             default:
                 Printer.parseError();

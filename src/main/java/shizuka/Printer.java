@@ -13,6 +13,7 @@ public class Printer {
     final static String FORMAT_ERROR = "Please reformat your command input.\n";
     final static String NO_ARGS_ERROR = "Please provide arguments for this command.";
     final static String IO_ERROR = "I'm sorry, but I'm having trouble reading your file.\n";
+    final static String SAVE_SUCCESS = "I have saved your todo list.\n";
     static final String HAVE_ADDED = "I have added ";
     static final String TO_LIST = " to your todo list.\n";
 
@@ -42,5 +43,9 @@ public class Printer {
 
     public static void ioError() {
         System.out.println(LINE_BREAK + IO_ERROR + LINE_BREAK);
+    }
+
+    public static void saveSuccess() {
+        System.out.println(LINE_BREAK + SAVE_SUCCESS + LINE_BREAK);
     }
 }
