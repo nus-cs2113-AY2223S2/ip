@@ -1,8 +1,11 @@
+import command.*;
 import exception.DukeException;
 import task.Deadline;
 import task.Event;
 import task.Task;
 import task.Todo;
+
+import java.util.List;
 import java.util.Scanner;
 
 public class Duke {
@@ -11,10 +14,11 @@ public class Duke {
     private static final int MAX_TASKS = 100;
     private static int taskCount = 0;
     private static Task[] tasks = new Task[MAX_TASKS];
+    private static boolean isDone = false;
 
     public static void main(String[] args) {
         greetUser();
-        startDuke();
+        runDuke();
         exitDuke();
     }
 
@@ -27,124 +31,48 @@ public class Duke {
         System.out.println(line + "\nBye. Hope to see you again soon!\n" + line);
     }
 
-    private static boolean isTasksFree() {
-        return taskCount < MAX_TASKS;
-    }
-
-    private static void listTasks() {
-        System.out.println(line + "\nHere are the tasks in your list:");
-        for (int i = 0; i < taskCount; i++) {
-            System.out.print(i + 1);
-            System.out.println(":" + tasks[i].getSummary());
-        }
-        System.out.println(line);
-    }
-
-    private static void markTask(String input) throws DukeException {
-        try {
-            int taskNum = Integer.parseInt(input.split("mark ")[1]);
-            tasks[taskNum - 1].markDone();
-            System.out.println(line + "\nNice! I've marked this task as done:\n[" + tasks[taskNum - 1].getTaskType() + "][X] " + tasks[taskNum - 1].getDescription() + "\n" + line);
-        } catch (NumberFormatException | ArrayIndexOutOfBoundsException | NullPointerException e) {
-            throw new DukeException("Invalid task number!");
-        }
-    }
-
-    private static void unmarkTask(String input) throws DukeException {
-        try {
-            int taskNum = Integer.parseInt(input.split("unmark ")[1]);
-            tasks[taskNum - 1].unmarkDone();
-            System.out.println(line + "\nOK, I've marked this task as not done yet:\n[" + tasks[taskNum - 1].getTaskType() + "][" + tasks[taskNum - 1].getStatusIcon() + "] " + tasks[taskNum - 1].getDescription() + "\n" + line);
-        } catch (NumberFormatException | ArrayIndexOutOfBoundsException | NullPointerException e) {
-            throw new DukeException("Invalid task number!");
-        }
-    }
-
-    private static Task createTask(String input) throws DukeException {
-        try {
-            String description;
-            if (input.matches("todo .+")) {
-                description = input.split("todo ")[1];
-                return new Todo(description);
-            } else if (input.matches("deadline .+")) {
-                String removedKeyword = input.split("deadline ")[1];
-                String[] splitString = removedKeyword.split(" /by ");
-                description = splitString[0];
-                String due = splitString[1];
-                return new Deadline(description, due);
-            } else if (input.matches("event .+")) {
-                String removedKeyword = input.split("event ")[1];
-                String[] splitString = removedKeyword.split(" /from ");
-                description = splitString[0];
-                splitString = splitString[1].split(" /to ");
-                String start = splitString[0];
-                String end = splitString[1];
-                return new Event(description, start, end);
-            }
-            else {
-                throw new DukeException("OOPS!!! The description of a task cannot be empty.");
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            throw new DukeException("Missing details for task!");
-        }
-    }
-
-    private static void addTask(Task task) throws DukeException {
-        if (!isTasksFree()) {
-            throw new DukeException("Too much tasks!");
-        }
-        tasks[taskCount] = task;
-        taskCount += 1;
-        System.out.println(line);
-        System.out.println("Got it. I've added this task:");
-        System.out.println(task.getSummary());
-        System.out.printf("Now you have %d tasks in the list.\n", taskCount);
-        System.out.println(line);
-    }
-
-    private static void doCommand(String input) throws DukeException {
-        input = input.trim();
-        String[] inputs = input.split(" ");
-        String command = inputs[0];
-
-        switch (command) {
-        case "list":
-            listTasks();
-            break;
-        case "mark":
-            markTask(input);
-            break;
-        case "unmark":
-            unmarkTask(input);
-            break;
-        case "todo":
-        case "deadline":
-        case "event":
-            Task newTask = createTask(input);
-            addTask(newTask);
-            break;
-        default:
-            throw new DukeException("OOPS!!! I'm sorry, but I don't know what that means :-(");
-        }
-    }
-
-    private static void loopCommand(Scanner in) {
-        while (true) {
-            String input = in.nextLine();
-            if (input.equals("bye")) {
-                return;
-            }
-            try {
-                doCommand(input);
-            } catch (DukeException e) {
-                String errorMessage = e.getMessage();
-                System.out.println(line + '\n' + errorMessage + '\n' + line);
-            }
-        }
-    }
-
-    private static void startDuke() {
+    private static void runDuke() {
         Scanner in = new Scanner(System.in);
-        loopCommand(in);
+        while (!isDone) {
+            String input = in.nextLine();
+            String[] commands = Parser.parse(input);
+            Command commandObject;
+            switch (commands[0]) {
+            case "bye":
+                isDone = true;
+                break;
+            case "list":
+                commandObject = new ListCommand(commands);
+                commandObject.doCommand(taskCount, tasks);
+                break;
+            case "mark":
+                commandObject = new MarkCommand(commands);
+                commandObject.doCommand(taskCount, tasks);
+                break;
+            case "unmark":
+                commandObject = new UnmarkCommand(commands);
+                commandObject.doCommand(taskCount, tasks);
+                break;
+            case "todo":
+                commandObject = new TodoCommand(commands);
+                commandObject.doCommand(taskCount, tasks);
+                taskCount += 1;
+                break;
+            case "deadline":
+                commandObject = new DeadlineCommand(commands);
+                commandObject.doCommand(taskCount, tasks);
+                taskCount += 1;
+                break;
+            case "event":
+                commandObject = new EventCommand(commands);
+                commandObject.doCommand(taskCount, tasks);
+                taskCount += 1;
+                break;
+            default:
+                System.out.println("____________________________________________________________"
+                        + "\nOOPS!!! I'm sorry, but I don't know what that means :-(\n"
+                        + "____________________________________________________________");
+            }
+        }
     }
 }

@@ -35,8 +35,6 @@ public class Parser {
             commands[2] = start;
             commands[3] = end;
             break;
-        default:
-            commands[0] = null;
         }
         return commands;
     }
