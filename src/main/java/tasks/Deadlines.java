@@ -7,7 +7,6 @@ public class Deadlines extends Task{
     public static final int DEADLINE_DIVIDER_LENGTH = 4;
     private String itemName;
     private String deadline;
-    private int itemId;
 
     public Deadlines(String itemName) throws InvalidDeadlineException {
         super(itemName);
@@ -19,7 +18,6 @@ public class Deadlines extends Task{
         this.itemName = super.getItemName().substring(0,indexOfDivider);
         this.deadline = itemName.substring(indexOfDivider + DEADLINE_DIVIDER_LENGTH);
         incrementItemCount();
-        this.itemId = getItemCount();
     }
 
     @Override
@@ -30,7 +28,7 @@ public class Deadlines extends Task{
         } else {
             status = "[D] [ ]";
         }
-        System.out.println(this.itemId + "." + status + " " + this.itemName + " (by: " + deadline + ")");
+        System.out.println( "." + status + " " + this.itemName + " (by: " + deadline + ")");
     }
 
     @Override

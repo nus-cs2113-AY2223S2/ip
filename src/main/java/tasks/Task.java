@@ -5,7 +5,6 @@ import managers.OutputDialogueManager;
 public abstract class Task {
     private static int itemCount = 0;
     private String itemName;
-    private int itemId;
     private boolean isDone;
 
 
@@ -23,16 +22,11 @@ public abstract class Task {
         return itemCount;
     }
 
-    public int getItemId() {
-        return itemId;
-    }
-
     public static void incrementItemCount() {
         Task.itemCount++;
     }
-
-    public void setItemId(int itemId) {
-        this.itemId = itemId;
+    public static void decreaseItemCount() {
+        Task.itemCount--;
     }
 
     public boolean isDone() {
