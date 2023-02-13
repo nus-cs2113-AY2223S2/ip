@@ -1,10 +1,17 @@
 package Tasks;
 import Exceptions.DukeException;
 import UI.Conversation;
+import UI.FileAccess;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class TaskList {
     private static ArrayList<Task> tasks = new ArrayList<>();
+    public static ArrayList<Task> getTasks() {
+        return tasks;
+    }
+
     public static void listTasks() {
         System.out.println("Here are the tasks in your list:");
         for(int i = 0; i < tasks.size(); i += 1){
@@ -47,6 +54,8 @@ public class TaskList {
         System.out.print("added: ");
         Conversation.copy(command);
         System.out.println("Now you have " + tasks.size() + " task(s) in the list.");
+        FileAccess.writeToFile();
+
     }
     public static void mark(String command) throws DukeException {
         try {

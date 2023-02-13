@@ -1,0 +1,4 @@
+todo:1:homework
+deadline:0:homework for cg2023:5pm on tuesday
+event:1:attend lecture on friday for cs2113:4pm Friday:6pm Friday
+todo:0:homework for 2023
