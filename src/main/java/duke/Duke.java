@@ -78,6 +78,8 @@ public class Duke {
             }
 
         }
+
+        System.out.println("You have " + tasks.size() + " tasks in your list.");
         printBorder();
     }
 
@@ -100,14 +102,14 @@ public class Duke {
     }
 
 //    delete task
-//    public static void deleteTask(ArrayList<Task> tasks, int taskIndex){
-//        Task temp = tasks.get(taskIndex);
-//        tasks.remove(taskIndex);
-//        System.out.println("Noted. I've removed this task: \n");
-//        System.out.println(temp);
-//        System.out.println("Now you have " + tasks.size() + " tasks in the list" );
-//        printBorder();
-//    }
+    public static void deleteTask(ArrayList<Task> tasks, int taskIndex){
+        Task temp = tasks.get(taskIndex);
+        tasks.remove(taskIndex);
+        System.out.println("Noted. I've removed this task: \n");
+        System.out.println(temp);
+        System.out.println("Now you have " + tasks.size() + " tasks in the list." );
+        printBorder();
+    }
 
     public static void main(String[] args) {
 
@@ -201,11 +203,16 @@ public class Duke {
                         entry = input.nextLine();
                         break;
 
-//                    case "delete":
-//                        Integer index_dl = Integer.parseInt(userInput[1]);
-//                        deleteTask(tasks, index_dl - 1);
-//                        entry = input.nextLine();
-//                        break;
+                    case "delete":
+                        Integer index_dl = Integer.parseInt(userInput[1]);
+                        try {
+                            deleteTask(tasks, index_dl - 1);
+                        } catch(IndexOutOfBoundsException e){
+                            System.out.println("Error! Specify a valid task index!");
+                            printBorder();
+                        }
+                        entry = input.nextLine();
+                        break;
 
 
                     default:
