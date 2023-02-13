@@ -15,6 +15,7 @@ public class Parser {
             break;
         case "mark":
         case "unmark":
+        case "delete":
             try {
                 commands.add(inputs[1]);
             } catch (ArrayIndexOutOfBoundsException e) {

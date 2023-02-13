@@ -1,5 +1,6 @@
 import command.Command;
 import command.DeadlineCommand;
+import command.DeleteCommand;
 import command.EventCommand;
 import command.ListCommand;
 import command.MarkCommand;
@@ -64,6 +65,10 @@ public class Duke {
                     break;
                 case "event":
                     commandObject = new EventCommand(commands);
+                    commandObject.doCommand(tasks);
+                    break;
+                case "delete":
+                    commandObject = new DeleteCommand(commands);
                     commandObject.doCommand(tasks);
                     break;
                 default:
