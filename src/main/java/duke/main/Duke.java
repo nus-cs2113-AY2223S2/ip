@@ -1,8 +1,10 @@
 package duke.main;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import duke.command.*;
+import duke.command.actionCommands.DeleteTask;
 import duke.command.actionCommands.ListTasks;
 import duke.command.actionCommands.MarkTask;
 import duke.command.actionCommands.UnmarkTask;
@@ -15,7 +17,8 @@ import duke.tasks.*;
 
 public class Duke {
     static final int limitTask = 100;
-    static Task[] tasksList = new Task[limitTask];
+    //    static Task[] tasksList = new Task[limitTask];
+    static ArrayList<Task> tasksList = new ArrayList<>();
     public static int taskCount = 0;
 
     public static void startBot() {
@@ -33,6 +36,10 @@ public class Duke {
                 case "list":
                     newCommand = new ListTasks();
                     newCommand.processCommand(tasksList, input);
+                    break;
+                case "delete":
+                    newCommand = new DeleteTask();
+                    newCommand.processCommand(tasksList, args[1]);
                     break;
                 case "mark":
                     newCommand = new MarkTask();
