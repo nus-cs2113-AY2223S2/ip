@@ -61,4 +61,11 @@ public class DukeCommands {
         System.out.println("  [" + list.get(taskIndex - 1).getTaskType() + "] " + "[" + list.get(taskIndex - 1).getStatusIcon() + "] " + list.get(taskIndex - 1).toString());
         System.out.println(spacer);
     }
+    
+    public static void deleteTask(Integer taskIndex) {
+        System.out.println("  Sure. The task: ");
+        System.out.println("    [" + list.get(taskIndex - 1).getTaskType() + "] " + "[" + list.get(taskIndex - 1).getStatusIcon() + "] " + list.get(taskIndex - 1).toString());
+        System.out.println("  was discarded. ");
+        list.remove(taskIndex - 1);
+    }
 }

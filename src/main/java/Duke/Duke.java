@@ -30,6 +30,15 @@ public class Duke extends DukeCommands{
                 }
             } else if (word.startsWith("unmark ") && word.substring(7).matches("[0-9]{1,3}")) {
                 unmarkTask(Integer.parseInt(word.substring(7)));
+
+            } else if (word.startsWith("delete ") && word.replaceFirst("delete ", "").strip().matches("[0-9]{1,3}")) {
+                // Call function to delete specified task
+                try {
+                    deleteTask(Integer.parseInt(word.replaceFirst("delete", "").strip()));
+                } catch (Exception e) {
+                    System.out.println("Hmm. Something's not right. Try checking if the task is still in the list.");
+                }
+
             } else {
                 DukeCommands.addToList(word);
             }
