@@ -26,8 +26,10 @@ public class Duke {
     private static final int REMOVE_FROM = 5;
     private static final int REMOVE_TO = 3;
     private static final int REMOVE_BY = 3;
-    private static final File F = new File("Data/duke.txt");
+
     public static void main(String[] args) {
+        File F =  new File("src/main/java/duke.txt");
+
         printWelcomeMessage();
         boolean canPrintFeedback;
         Scanner in = new Scanner(System.in);
@@ -88,26 +90,36 @@ public class Duke {
                 break;
             case COMMAND_EVENT: //append
                 executeEventCommand(tasks, description,canPrintFeedback);
-                appendToFile(F.getPath(),userInput);
+                if(canPrintFeedback){
+                    appendToFile(F.getPath(),userInput);
+                }
                 break;
             case COMMAND_DEADLINE: //append
                 executeDeadlineCommand(tasks, description,canPrintFeedback);
-                appendToFile(F.getPath(),userInput);
+                if(canPrintFeedback){
+                    appendToFile(F.getPath(),userInput);
+                }
                 break;
             case COMMAND_LIST:
                 executeListCommand(tasks,canPrintFeedback);
                 break;
             case COMMAND_TODO: //append
                 executeTodoCommand(tasks, description,canPrintFeedback);
-                appendToFile(F.getPath(),userInput);
+                if(canPrintFeedback){
+                    appendToFile(F.getPath(),userInput);
+                }
                 break;
             case COMMAND_MARK: //write
                 executeMarkCommand(tasks, description,canPrintFeedback);
-                writeToFile(F.getPath(), inputCommands);
+                if(canPrintFeedback){
+                    writeToFile(F.getPath(), inputCommands);
+                }
                 break;
             case COMMAND_UNMARK://write
                 executeUnmarkCommand(tasks, description,canPrintFeedback);
-                writeToFile(F.getPath(), inputCommands);
+                if(canPrintFeedback){
+                    writeToFile(F.getPath(), inputCommands);
+                }
                 break;
             case COMMAND_DELETE:
                 executeDeleteCommand(tasks,description);

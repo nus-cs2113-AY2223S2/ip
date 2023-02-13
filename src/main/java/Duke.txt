@@ -1,8 +1,4 @@
 todo eat
 todo sleep
 todo play
-list
-mark 2
 todo eat
-todo sleep
-todo play
