@@ -93,4 +93,12 @@ public class TodoList {
         System.out.println(LINE_BREAK + UNMARKED_TASK + num + IN_LIST + this.todos.get(num - 1).getStatusIcon()
                 + ' ' + this.todos.get(num - 1).description + "\n" + LINE_BREAK);
     }
+
+    public String[] listWriter() {
+        String[] list = new String[numberOfTasks];
+        for (int i = 0; i < numberOfTasks; i += 1) {
+            list[i] = this.todos.get(i).printTask();
+        }
+        return list;
+    }
 }

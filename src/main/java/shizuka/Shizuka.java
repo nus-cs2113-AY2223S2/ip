@@ -1,8 +1,11 @@
 package shizuka;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Shizuka {
+    static final String FILE_PATH = "shizuka.txt";
+
     public static String[] parseCommand(String args) {
         return args.split(" ", 2);
     }
@@ -71,6 +74,12 @@ public class Shizuka {
                     break;
                 }
                 break;
+            case "save":
+                try {
+                    WriteToFile.save(FILE_PATH, list0.listWriter());
+                } catch (IOException e) {
+                    throw new RuntimeException("Something went wrong: " + e.getMessage());
+                }
             default:
                 Printer.parseError();
             }
