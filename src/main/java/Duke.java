@@ -52,6 +52,9 @@ public class Duke {
                     DeleteCommand delete = new DeleteCommand(line);
                     delete.deleteCommandMethod(tasks);
                     Storage.saveFile(tasks);
+                } else if (firstWord.equals("find")) {
+                    FindCommand find = new FindCommand(line);
+                    find.findCommandMethod(tasks);
                 }
             }
             line = in.nextLine();

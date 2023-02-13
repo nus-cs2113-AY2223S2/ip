@@ -2,6 +2,8 @@ package Support;
 
 import BasisSupport.Status;
 
+import java.util.Collection;
+
 public class Task {
     protected String description;
     protected boolean isDone;
@@ -44,4 +46,7 @@ public class Task {
         return this.getStatus() + "[" + this.getStatusIcon() + "] " + this.description;
     }
 
+    public String getDescription() {
+        return this.description;
+    }
 }
