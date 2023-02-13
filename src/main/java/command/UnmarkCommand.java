@@ -16,9 +16,8 @@ public class UnmarkCommand extends Command {
             int taskNum = Integer.parseInt(getCommands().get(1));
             tasks.get(taskNum - 1).unmarkDone();
             System.out.println("____________________________________________________________"
-                    + "\nOK, I've marked this task as not done yet:\n[" + tasks.get(taskNum - 1).getTaskType()
-                    + "][" + tasks.get(taskNum - 1).getStatusIcon() + "] " + tasks.get(taskNum - 1).getDescription()
-                    + "\n" + "____________________________________________________________");
+                    + "\nOK, I've marked this task as not done yet:\n" + tasks.get(taskNum - 1).getSummary() + "\n" +
+                    "____________________________________________________________");
         } catch (NumberFormatException | IndexOutOfBoundsException | NullPointerException e) {
             throw new DukeException("Invalid task number!");
         }

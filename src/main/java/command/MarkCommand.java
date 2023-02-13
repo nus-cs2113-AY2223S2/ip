@@ -16,9 +16,8 @@ public class MarkCommand extends Command {
             int taskNum = Integer.parseInt(getCommands().get(1));
             tasks.get(taskNum - 1).markDone();
             System.out.println("____________________________________________________________"
-                    + "\nNice! I've marked this task as done:\n["
-                    + tasks.get(taskNum - 1).getTaskType() + "][X] "
-                    + tasks.get(taskNum - 1).getDescription() + "\n"
+                    + "\nNice! I've marked this task as done:\n"
+                    + tasks.get(taskNum - 1).getSummary() + "\n"
                     + "____________________________________________________________");
         } catch (NumberFormatException | IndexOutOfBoundsException | NullPointerException e) {
             throw new DukeException("Invalid task number!");
