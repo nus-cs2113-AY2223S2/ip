@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Duke {
     public static void main(String[] args) {
         Scanner input = dukeStart();
+        dukePersistance();
         dukeAddList(input);
     }
 
@@ -41,6 +42,7 @@ public class Duke {
                 dukeCommandEvent(nextLine, list);
             } else if (nextLine.equals("bye")) {
                 System.out.println("Bye. Hope to see you again soon!");
+                dukeSavePersistance(list);
                 return;
             } else {
                 continue;
@@ -178,8 +180,13 @@ public class Duke {
     }
 
 
+    public static void dukePersistance() {
 
+    }
 
+    public static void dukeSavePersistance(ArrayList<Task> list) {
+
+    }
 
     //Code not needed for Level-1
     public static void dukeEcho(Scanner inputScanner) {
