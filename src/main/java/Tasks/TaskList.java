@@ -13,12 +13,14 @@ public class TaskList {
     }
     public static void addToList(String command) throws DukeException {
         String[] arrayOfWords = command.split(" ", 2);
-        switch(arrayOfWords[0]) {
+        String commandWord = arrayOfWords[0];
+        switch(commandWord) {
         case "todo":
             if(arrayOfWords.length < 2) {
                 throw new DukeException("OOPS! Use case: todo TASK");
             }
-            tasks.add(new Todo(arrayOfWords[1]));
+            String todoDescription = arrayOfWords[1].trim();
+            tasks.add(new Todo(todoDescription));
             break;
         case "deadline":
             if(!command.contains("/by")) {
@@ -68,6 +70,19 @@ public class TaskList {
             throw new DukeException("Use case: unmark ITEM_NUMBER");
         }
     }
+    public static void delete(String command) throws DukeException {
+        try {
+            String[] arrOfCommand = command.split(" ");
+            int taskNumber = Integer.parseInt(arrOfCommand[1]) - 1;
+            String removalDescription = tasks.get(taskNumber).fullDescription();
+            tasks.remove(tasks.get(taskNumber));
+            System.out.println("Noted. I've removed this task:");
+            System.out.println(removalDescription);
+            System.out.println("Now you have " + tasks.size() + " task(s) in the list.");
+        } catch(Exception error) {
+            throw new DukeException("Use case: delete ITEM_NUMBER");
+        }
+    }
     public static void runDuke(boolean isContinue) {
         while(isContinue) {
             String command = Conversation.readCommand();
@@ -86,6 +101,13 @@ public class TaskList {
             case "unmark":
                 try {
                     TaskList.unmark(command);
+                } catch (DukeException e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
+            case "delete":
+                try {
+                    TaskList.delete(command);
                 } catch (DukeException e) {
                     System.out.println(e.getMessage());
                 }

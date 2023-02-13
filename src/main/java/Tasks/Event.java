@@ -10,7 +10,7 @@ public class Event extends Task {
     @Override
     public String fullDescription() {
         String fullSentence = (isDone ? "[E][X] " : "[E][ ] ") + this.description +
-                "(from:" + this.startTime + " to:" + this.endTime + ")";
+                "(from: " + this.startTime + " to: " + this.endTime + ")";
         return fullSentence;
     }
 }

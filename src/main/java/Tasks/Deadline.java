@@ -8,7 +8,7 @@ public class Deadline extends Task{
     @Override
     public String fullDescription() {
         String fullSentence = (isDone ? "[D][X] " : "[D][ ] ") + this.description +
-                " (by:" + this.by + ")";
+                " (by: " + this.by + ")";
         return fullSentence;
     }
 }
