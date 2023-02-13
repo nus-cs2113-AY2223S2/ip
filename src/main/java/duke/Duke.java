@@ -61,6 +61,8 @@ public class Duke {
                 System.out.println(e.getMessage());
             } catch (InvalidTaskNumberException e) {
                 System.out.println(e.getMessage());
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("Invalid task number");
             }
             input = in.nextLine();
         }
@@ -97,7 +99,7 @@ public class Duke {
                 taskList.get(Task.maxTaskNumber).setDone();
             }
             Task.maxTaskNumber++;
-            System.out.println(input);
+            //System.out.println(input);
         }
     }
 
