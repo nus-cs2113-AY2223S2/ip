@@ -8,9 +8,9 @@ public class Task {
      * */
     protected TypeOfTask typeOfTask;
 
-    public Task(String description, TypeOfTask typeOfTask) {
+    public Task(TypeOfTask typeOfTask, boolean isDone, String description) {
         this.description = description;
-        this.isDone = false;
+        this.isDone = isDone;
         this.typeOfTask = typeOfTask;
     }
 
@@ -19,7 +19,7 @@ public class Task {
      * @return The symbol whether the task is done or not.
      */
     public String getStatusIcon() {
-        return (isDone ? "X" : " "); // mark done task with X
+        return (isDone ? "X" : "_"); // mark done task with X
     }
 
     /**
@@ -29,6 +29,7 @@ public class Task {
     public boolean getIsDone() {
         return isDone;
     }
+
 
     /**
      * Toggles the state of the task between done and not done.
@@ -64,10 +65,13 @@ public class Task {
      * Prints out the task according to a format
      */
     public void printTask() {
-        System.out.println(".[" + this.getStatusForTypeOfTask() + "]" +
-                            "[" + this.getStatusIcon() + "] " +
-                            this.getDescription());
+        System.out.println(formatString());
     }
 
+    public String formatString() {
+        return (".[" + this.getStatusForTypeOfTask() + "]" +
+                "[" + this.getStatusIcon() + "] " +
+                this.getDescription());
+    }
 }
 

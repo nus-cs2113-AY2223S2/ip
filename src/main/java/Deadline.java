@@ -1,7 +1,7 @@
 public class Deadline extends Task {
     String date;
-    public Deadline(String description, String date) {
-        super(description, TypeOfTask.DEADLINE);
+    public Deadline(boolean isDone, String description, String date) {
+        super(TypeOfTask.DEADLINE,isDone, description);
         this.date = date;
     }
 
@@ -19,10 +19,18 @@ public class Deadline extends Task {
      */
     @Override
     public void printTask() {
-        System.out.println(".[" + this.getStatusForTypeOfTask() + "]" +
-                            "[" + this.getStatusIcon() + "] " +
-                            this.getDescription() +
-                            "(by: " + this.date + ")");
+        System.out.println(formatString());
+    }
+
+    public String formatString() {
+        return (".[" + this.getStatusForTypeOfTask() + "]" +
+                "[" + this.getStatusIcon() + "] " +
+                this.getDescription() +
+                "(by: " + this.date + ")");
+    }
+
+    public String getDate() {
+        return this.date;
     }
 
 }
