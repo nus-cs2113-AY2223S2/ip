@@ -61,7 +61,7 @@ public class Duke {
             try {
                 markTaskDone(Integer.parseInt(input.split(" ")[1]) - 1);
             } catch (NumberFormatException e) {
-                System.out.println("☹ OOPS!!! duke.task.Task number should be an integer.");
+                System.out.println("☹ OOPS!!! Task number should be an integer.");
                 printDivider();
             } catch (InvalidTaskNumberException e) {
                 System.out.println("☹ OOPS!!! The task specified does not exist in the task list.");
@@ -72,7 +72,7 @@ public class Duke {
             try {
                 markTaskUndone(Integer.parseInt(input.split(" ")[1]) - 1);
             } catch (NumberFormatException e) {
-                System.out.println("☹ OOPS!!! duke.task.Task number should be an integer.");
+                System.out.println("☹ OOPS!!! Task number should be an integer.");
                 printDivider();
             } catch (InvalidTaskNumberException e) {
                 System.out.println("☹ OOPS!!! The task specified does not exist in the task list.");
@@ -102,6 +102,17 @@ public class Duke {
                 System.out.println("☹ OOPS!!! The description of 'event' should include a task and time period.");
                 printDivider();
             }
+            break;
+        case Command.COMMAND_DELETE:
+            try {
+                deleteTask(Integer.parseInt(input.split(" ")[1]) - 1);
+            } catch (NumberFormatException e) {
+                System.out.println("☹ OOPS!!! Task number should be an integer.");
+                printDivider();
+            } catch (InvalidTaskNumberException e) {
+                System.out.println("☹ OOPS!!! The task specified does not exist in the task list.");
+                printDivider();
+            };
             break;
         default:
             throw new CommandNotRecognisedException();
@@ -173,6 +184,16 @@ public class Duke {
 
         System.out.println("Got it. I've added this task:\n " + tasks.get(tasks.size()-1)
                 + "\nNow you have " + tasks.size() + " tasks in the list.");
+        printDivider();
+    }
+
+    private static void deleteTask(int taskIndex) throws InvalidTaskNumberException {
+        if (taskIndex < 0 || taskIndex >= tasks.size()) {
+            throw new InvalidTaskNumberException();
+        } else {
+            System.out.println("Removed " + tasks.get(taskIndex) + " from task list.");
+            tasks.remove(tasks.get(taskIndex));
+        }
         printDivider();
     }
 
