@@ -10,12 +10,12 @@ public class Event extends Task{
         this.from = from;
         this.to = to;
         taskChar = "[E]";
-        System.out.print("Added: ");
         print();
     }
 
     @Override
     public void print() {
-        System.out.println(taskChar + status + " " + taskDescription + " (from: " + from + " to: " + to + ")");
+        formattedTask = taskChar + status + " " + taskDescription + " (from: " + from + " to: " + to + ")";
+        System.out.println(formattedTask);
     }
 }

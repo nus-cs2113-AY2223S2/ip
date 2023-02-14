@@ -5,12 +5,13 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
 
+import java.util.ArrayList;
 public class Duke {
 
     static final int MAX_TASKS = 100;
-    private static Task[] taskList = new Task[MAX_TASKS];
-    private static int listCount = 0;
-
+    // private static Task[] taskList = new Task[MAX_TASKS];
+    private static ArrayList<Task> taskList = new ArrayList<Task>();
+    // private static int listCount = 0;
 
     public static void main(String[] args) {
         Ui ui = new Ui();
@@ -40,48 +41,54 @@ public class Duke {
             }
             switch(parsedInput[0]) {
                 case ("todo"):
-                    taskList[listCount] = new ToDo(parsedInput[1]);
+                    taskList.add(new ToDo(parsedInput[1]));
                     break;
                 case ("deadline"):
                     try {
-                        taskList[listCount] = new Deadline(parsedInput[1], parsedInput[2]);
+                        taskList.add(new Deadline(parsedInput[1], parsedInput[2]));
                     } catch (ArrayIndexOutOfBoundsException e) {
                         System.out.println("Oops, deadline input has the wrong format");
-                        ui.showLine();
-                        input = ui.getUserInput();
-                        continue;
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("Oops, deadline task number does not exist");
                     }
                     break;
                 case ("event"):
-                    taskList[listCount] = new Event(parsedInput[1], parsedInput[2], parsedInput[3]);
+                    taskList.add(new Event(parsedInput[1], parsedInput[2], parsedInput[3]));
                     break;
                 case("mark"):
                     try {
-                        taskList[Integer.parseInt(parsedInput[1]) - 1].setDone();
+                        taskList.get(Integer.parseInt(parsedInput[1]) - 1).setDone();
                     } catch (NumberFormatException e) {
                         System.out.println("Oops, mark task description should be an integer");
-                        ui.showLine();
-                        input = ui.getUserInput();
-                        continue;
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("Oops, mark task number does not exist");
                     }
-                    listCount -= 1;
                     break;
                 case("unmark"):
                     try {
-                        taskList[Integer.parseInt(parsedInput[1]) - 1].setUndone();
+                        taskList.get(Integer.parseInt(parsedInput[1]) - 1).setUndone();
                     } catch (NumberFormatException e) {
                         System.out.println("Oops, unmark task description should be an integer");
-                        ui.showLine();
-                        input = ui.getUserInput();
-                        continue;
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("Oops, unmark task number does not exist");
                     }
-                    listCount -= 1;
                     break;
                 case("list"):
-                    ui.printList(taskList, listCount);
+                    ui.printList(taskList);
+                    break;
+                case ("delete"):
+                    try {
+                        Task removeTask = taskList.get(Integer.parseInt(parsedInput[1]) - 1);
+                        taskList.remove(Integer.parseInt(parsedInput[1]) - 1);
+                        removeTask.delete(taskList);
+                    } catch (NumberFormatException e) {
+                        System.out.println("Oops, delete task description should be an integer");
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("Oops, delete task number does not exist");
+                    }
+                    break;
             }
             ui.showLine();
-            listCount += 1;
             input = ui.getUserInput();
          }
         ui.farewell();
