@@ -20,6 +20,7 @@ public final class IO {
     public static final String COMMAND_BYE = "bye";
     public static final String COMMAND_MARK = "mark";
     public static final String COMMAND_UNMARK = "unmark";
+    public static final String COMMAND_DELETE = "delete";
 
     /** Add task commands. Sample usage as below. not delimited by spaces.
      *  todo: "todo task_name"

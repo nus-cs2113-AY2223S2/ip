@@ -4,6 +4,7 @@ import task.Deadline;
 import task.Event;
 import task.TaskList;
 import task.Todo;
+import task.Task;
 
 import java.util.Scanner;
 
@@ -59,6 +60,8 @@ public class Duke {
             return handleAddTaskDeadline(commandArgs);
         case IO.COMMAND_TASK_EVENT:
             return handleAddTaskEvent(commandArgs);
+        case IO.COMMAND_DELETE:
+            return handleDelete(commandArgs);
         case IO.COMMAND_BYE:
             IO.printExitMessage();
             System.exit(0);
@@ -106,5 +109,32 @@ public class Duke {
         } catch (DukeException e) {
             return IO.ERROR_MESSAGE_ARGUMENT_NUMBER;
         }
+    }
+
+    /**
+     * Validates input for delete command, and then deletes the task.
+     * @param commandArgs 1-indexed number to be parsed as integer.
+     * @return Feedback string, either successful delete or throw number exception.
+     */
+    private static String handleDelete(String commandArgs) {
+        int taskNumber;
+
+        // Parse Int first
+        try {
+            taskNumber = Integer.parseInt(commandArgs);
+        } catch (NumberFormatException e) {
+            return IO.ERROR_MESSAGE_TASK_INDEX;
+        }
+
+        // Index out of bounds
+        if (taskNumber > TaskList.getNumberOfTasks()) {
+            return IO.ERROR_MESSAGE_TASK_INDEX;
+        }
+
+        Task deletedTask = TaskList.deleteTask(taskNumber);
+        String output = "Noted. I've removed this task:\n"
+                + deletedTask.toString() + '\n'
+                + "Now you have " + TaskList.getNumberOfTasks() + " task(s) in the list.";
+        return output;
     }
 }
