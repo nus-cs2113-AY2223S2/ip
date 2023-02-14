@@ -14,4 +14,10 @@ public class Event extends Task {
     public String toString() {
         return "[E]" + super.toString() + "(from: " + from + " to: " + to + ")";
     }
+
+    @Override
+    public String toStringForSave() {
+        String doneStatus = super.isDone() ? "1" : "0";
+        return String.format("E | %s | %s | %s | %s", doneStatus, super.getDescription(), from, to);
+    }
 }
