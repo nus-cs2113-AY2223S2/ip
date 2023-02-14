@@ -24,7 +24,7 @@ public class Duke {
     }
 
     public static void createUserChatBox() {
-        System.out.println( "user: \n");
+        System.out.println("user: \n");
     }
 
 
@@ -59,52 +59,52 @@ public class Duke {
             //mark task as done
             tasks[taskNumber - 1].setDone(true);
             System.out.println("Nice! I've marked this task as done: ");
-            System.out.println(tasks[taskNumber-1].toString());
+            System.out.println(tasks[taskNumber - 1].toString());
         } else {
             //mark task as undone
             tasks[taskNumber - 1].setDone(false);
             System.out.println("Ok! I've marked this task as not done yet: ");
-            System.out.println(tasks[taskNumber-1].toString());
+            System.out.println(tasks[taskNumber - 1].toString());
         }
 
         //Null Pointer Exception (taskNumber > indexOfTask)
     }
 
     //Task Description = taskD
-    public static void addTask(String taskCommand, String taskD){
-        switch (taskCommand){
+    public static void addTask(String taskCommand, String taskD) {
+        switch (taskCommand) {
         case "todo":
             tasks[indexOfTask] = new ToDo(taskD.trim());
             break;
         case "deadline":
             String[] deadlineTaskD = taskD.split("/by ", 2);
-            tasks[indexOfTask] = new Deadline(deadlineTaskD[0].trim(),deadlineTaskD[1].trim());
+            tasks[indexOfTask] = new Deadline(deadlineTaskD[0].trim(), deadlineTaskD[1].trim());
             break;
         case "event":
             String[] eventName = taskD.split("/from ", 2);
             String[] eventDate = eventName[1].split("/to ", 2);
-            tasks[indexOfTask] = new Event(eventName[0].trim(), eventDate[0].trim(), eventDate[1].trim() );
+            tasks[indexOfTask] = new Event(eventName[0].trim(), eventDate[0].trim(), eventDate[1].trim());
             break;
         }
     }
 
-    public static void printThisTask(){
+    public static void printThisTask() {
         System.out.println("Got it. I've added this task:");
         System.out.println("  " + tasks[indexOfTask].toString());
-        System.out.println("Now you have " + (indexOfTask+1) + " tasks in the list." );
+        System.out.println("Now you have " + (indexOfTask + 1) + " tasks in the list.");
     }
 
     public static void readUserInput(String input) throws MarkerArrayIndexOutOfBoundsException, AddTaskIndexOutOfBounds, UnknownCommandException {
 
         String[] command = input.split(" ", 2);
 
-        switch (command[0]){
+        switch (command[0]) {
         case "list":
             printTaskList();
             break;
         case "mark":
         case "unmark":
-            if(command.length == 1) {
+            if (command.length == 1) {
                 throw new MarkerArrayIndexOutOfBoundsException();
             }
             markTask(command[0], command[1]);
@@ -112,7 +112,7 @@ public class Duke {
         case "todo":
         case "deadline":
         case "event":
-            if(command.length == 1){
+            if (command.length == 1) {
                 throw new AddTaskIndexOutOfBounds(command[0]);
             }
             addTask(command[0], command[1]);
@@ -153,7 +153,7 @@ public class Duke {
                 readUserInput(input);
             } catch (UnknownCommandException e) {
                 System.out.println("T^T OPPS!!! I'm sorry, but I don't know what that means");
-            } catch(AddTaskIndexOutOfBounds e) {
+            } catch (AddTaskIndexOutOfBounds e) {
                 e.printError();
             } catch (NullPointerException e) {
                 System.out.println("T^T OPPS!!! You have only " + indexOfTask + " tasks.");
@@ -164,7 +164,7 @@ public class Duke {
             } catch (NumberFormatException e) {
                 System.out.println("Please mark / unmark each task one by one, in the following format: ");
                 System.out.println("For example if you want to mark / unmark task 2 as done / undone: mark 2 / unmark 2");
-            } catch (ArrayIndexOutOfBoundsException e ) {
+            } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("Please add the tasks in the following format: \n");
                 System.out.println("Todo task format: todo task_name");
                 System.out.println("Deadline task format: deadline deadline_name /by deadline_date");

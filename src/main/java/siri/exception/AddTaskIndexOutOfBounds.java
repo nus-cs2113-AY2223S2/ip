@@ -1,9 +1,9 @@
 package siri.exception;
 
-public class AddTaskIndexOutOfBounds extends Exception{
+public class AddTaskIndexOutOfBounds extends Exception {
     protected String taskType;
 
-    public AddTaskIndexOutOfBounds(String taskType){
+    public AddTaskIndexOutOfBounds(String taskType) {
         this.taskType = taskType;
     }
 

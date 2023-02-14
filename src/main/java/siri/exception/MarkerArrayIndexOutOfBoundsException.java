@@ -1,4 +1,4 @@
 package siri.exception;
 
-public class MarkerArrayIndexOutOfBoundsException extends Exception{
+public class MarkerArrayIndexOutOfBoundsException extends Exception {
 }

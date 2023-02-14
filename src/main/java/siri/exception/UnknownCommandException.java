@@ -1,4 +1,4 @@
 package siri.exception;
 
-public class UnknownCommandException extends Exception{
+public class UnknownCommandException extends Exception {
 }
