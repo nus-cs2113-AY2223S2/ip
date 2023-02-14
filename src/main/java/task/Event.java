@@ -1,6 +1,7 @@
 package task;
 
 import parser.InvalidCommandException;
+import serialiser.SerialiseException;
 
 public class Event extends Deadline {
     protected String startDate;
@@ -35,5 +36,19 @@ public class Event extends Deadline {
         setDescription(arguments.substring(0,from - 1));
         setEndDate(arguments.substring(to + 4));
         setStartDate(arguments.substring(from + 6, to -1));
+    }
+    @Override
+    public String[] fromString(String taskString) throws SerialiseException{
+        try {
+            String[] arugments = super.fromString(taskString);
+            setStartDate(arugments[4]);
+            return arugments;
+        } catch (SerialiseException e) {
+            throw e;
+        }
+    }
+    @Override
+    public String toStorageString() {
+        return String.format("E | %d | %s | %s | %s", isMark()?1:0 , description, startDate, endDate);
     }
 }

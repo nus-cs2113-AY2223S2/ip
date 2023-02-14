@@ -1,12 +1,12 @@
 package task;
 
 import parser.InvalidCommandException;
+import serialiser.SerialiseException;
 
 public class Deadline extends ToDo {
     protected String endDate;
 
 	public Deadline(String description, String endDate) throws EmptyDescriptionException {
-        // TODO consider when endDate is null
         super(description);
         setEndDate(endDate);
     }
@@ -37,5 +37,19 @@ public class Deadline extends ToDo {
         } catch (IndexOutOfBoundsException e) {
             throw new InvalidCommandException("Command at /by is invalid", new IllegalArgumentException());
         }
+    }
+    @Override
+    public String[] fromString(String taskString) throws SerialiseException{
+        try {
+            String[] arugments = super.fromString(taskString);
+            setEndDate(arugments[3]);
+            return arugments;
+        } catch (SerialiseException e) {
+            throw e;
+        }
+    }
+    @Override
+    public String toStorageString() {
+        return String.format("D | %d | %s | %s", isMark()?1:0 , description, endDate);
     }
 }

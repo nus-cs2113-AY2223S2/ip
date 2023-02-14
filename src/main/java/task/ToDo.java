@@ -1,6 +1,7 @@
 package task;
 
 import parser.InvalidCommandException;
+import serialiser.SerialiseException;
 
 public class ToDo extends Task {
     public ToDo(String description) throws EmptyDescriptionException {
@@ -16,5 +17,22 @@ public class ToDo extends Task {
     @Override
     public void parseArgument(String arguments) throws InvalidCommandException,EmptyDescriptionException {
         setDescription(arguments);
+    }
+    @Override
+    public String[] fromString(String taskString) throws SerialiseException {
+        try {
+            String[] arguments = taskString.split("[ ][|][ ]");
+            setDescription(arguments[2]);
+            if (arguments[1].equals("1")){
+                setMark(true);
+            }
+            return arguments;
+        } catch (EmptyDescriptionException | TaskMarkException e) {
+            throw new SerialiseException("Unable to serialise a ToDo item", e);
+        }
+    }
+    @Override
+    public String toStorageString() {
+        return String.format("T | %d | %s", isMark()?1:0 , description);
     }
 }
