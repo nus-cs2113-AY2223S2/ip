@@ -8,11 +8,10 @@ public class ToDo extends Task {
 
     @Override
     public String listTask() {
-        if (getIsComplete()) {
-            return "[T][X] " + getTaskName();
-        } else {
-            return "[T][] " + getTaskName();
-        }
+            return taskTypeBoxFormat() + markedBoxFormat() + " " + getTaskName();
     }
-
+    @Override
+    public String taskTypeBoxFormat() {
+        return "[T]";
+    }
 }

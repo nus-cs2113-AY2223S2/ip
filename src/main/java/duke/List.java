@@ -7,37 +7,36 @@ import duke.tasks.Event;
 import duke.tasks.Task;
 import duke.tasks.ToDo;
 
-public class List {
-    private static final int TASKLIST_SIZE = 100;
-    private static final char SPACE = ' ';
+import java.util.ArrayList;
 
-    private int numItems = 0;
-    private Task[] taskList;
+public class List {
+
+    private ArrayList<Task> taskList;
 
     public List() {
-        taskList = new Task[TASKLIST_SIZE]; // Note: only initialise array of obj, but not individual obj
+        taskList = new ArrayList<>();
     }
 
     public void listDisplay() {
         System.out.println(" Here are the tasks in your list:");
-        for (int i = 0; i < numItems; i += 1) {
+        for (int i = 0; i < taskList.size(); i += 1) {
             // print index of task
             System.out.print(" " + (i + 1) + ".");
 
             // list the details about the task. Based on whether the task is ToDo, Deadline or Event.
-            System.out.println(taskList[i].listTask());
+            System.out.println(taskList.get(i).listTask());
         }
     }
 
-    private void printSuccessfulAddMessage(int numItems, Task currTask) {
+    private void printSuccessfulAddMessage(Task currTask) {
         System.out.println(" Got it. I've added this task: ");
         System.out.println("  " + currTask.listTask());
-        System.out.println(" Now you have " + numItems + " tasks in the list.");
+        System.out.println(" Now you have " + taskList.size() + " tasks in the list.");
 
     }
 
     private void listAddToDo(String taskName) {
-        taskList[numItems] = new ToDo(taskName);
+        taskList.add(new ToDo(taskName));
     }
 
     private void listAddDeadline(String taskDetails) throws InvalidCommandException {
@@ -47,7 +46,7 @@ public class List {
         }
         String taskName = taskDetails.substring(0, byIndex);
         String dueDate = taskDetails.substring(byIndex + 5); // rest of string after " /by "
-        taskList[numItems] = new Deadline(taskName, dueDate);
+        taskList.add(new Deadline(taskName, dueDate));
     }
 
     private void listAddEvent(String taskDetails) throws InvalidCommandException {
@@ -59,12 +58,12 @@ public class List {
         String taskName = taskDetails.substring(0, fromIndex);
         String startTime = taskDetails.substring(fromIndex + 7, toIndex);
         String endTime = taskDetails.substring(toIndex + 5);
-        taskList[numItems] = new Event(taskName, startTime, endTime);
+        taskList.add(new Event(taskName, startTime, endTime));
     }
 
 
     public void listAdd(String sentence) {
-        String[] words = sentence.split(" ", 2); // split sentence only on first occurance of space
+        String[] words = sentence.split(" ", 2); // split sentence only on first occurrence of space
         String taskType = words[0];
 
         switch (taskType) {
@@ -103,8 +102,7 @@ public class List {
             return;
         }
 
-        numItems += 1;
-        printSuccessfulAddMessage(numItems, taskList[numItems - 1]);
+        printSuccessfulAddMessage(taskList.get(taskList.size() - 1)); // get latest task in taskList
     }
 
 
@@ -115,7 +113,7 @@ public class List {
 
         indexInt = Integer.parseInt(indexString);
         indexInt -= 1; // convert to 0-index
-        if (indexInt >= numItems || indexInt < 0) {
+        if (indexInt >= taskList.size() || indexInt < 0) {
             throw new InvalidIndexException();
         }
         return indexInt;
@@ -126,10 +124,11 @@ public class List {
         int indexInt;
         try {
             indexInt = parseIndex(indexString);
-            taskList[indexInt].setIsComplete(true);
+            Task currTask = taskList.get(indexInt);
+            currTask.setIsComplete(true);
             System.out.println(" Nice! I've marked this task as done:");
-            System.out.print("   [X] ");
-            System.out.println(taskList[indexInt].getTaskName());
+            System.out.print("   " + currTask.taskTypeBoxFormat() + currTask.markedBoxFormat() + " ");
+            System.out.println(taskList.get(indexInt).getTaskName());
         } catch (NumberFormatException e) {
             System.out.println("Given index is not a number!");
         } catch (InvalidIndexException e) {
@@ -143,9 +142,32 @@ public class List {
 
         try {
             indexInt = parseIndex(indexString);
-            taskList[indexInt].setIsComplete(false);
+            Task currTask = taskList.get(indexInt);
+            currTask.setIsComplete(false);
+
             System.out.println(" OK, I've marked this task as not done yet:");
-            System.out.println("   [ ] " + taskList[indexInt].getTaskName());
+            System.out.println("   " + currTask.taskTypeBoxFormat() + currTask.markedBoxFormat() + " "
+                    + currTask.getTaskName());
+        } catch (NumberFormatException e) {
+            System.out.println("Given index is not a number!");
+        } catch (InvalidIndexException e) {
+            System.out.println("Given index is invalid!");
+        }
+    }
+
+    public void deleteTask(String indexString) {
+        int indexInt;
+
+        try {
+            indexInt = parseIndex(indexString);
+            Task removedTask = taskList.get(indexInt);
+            taskList.remove(indexInt);
+
+            System.out.println(" Noted. I've removed this task:");
+            System.out.println("   " + removedTask.taskTypeBoxFormat() + removedTask.markedBoxFormat() +
+                    " " + removedTask.getTaskName());
+            System.out.println("Now you have " + taskList.size() + " tasks in the list.");
+
         } catch (NumberFormatException e) {
             System.out.println("Given index is not a number!");
         } catch (InvalidIndexException e) {

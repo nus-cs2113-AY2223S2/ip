@@ -10,10 +10,12 @@ public class Deadline extends Task {
 
     @Override
     public String listTask() {
-        if (getIsComplete()) {
-            return "[D][X] " + getTaskName() + " (by: " + dueDate + ')';
-        } else {
-            return "[D][] " + getTaskName() + " (by: " + dueDate + ')';
-        }
+        return taskTypeBoxFormat() + markedBoxFormat() + " " + getTaskName() + " (by: " + dueDate + ')';
     }
+
+    @Override
+    public String taskTypeBoxFormat() {
+        return "[D]";
+    }
+
 }

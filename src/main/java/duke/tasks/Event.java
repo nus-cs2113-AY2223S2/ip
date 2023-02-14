@@ -11,11 +11,12 @@ public class Event extends Task {
     }
     @Override
     public String listTask() {
-        if (getIsComplete()) {
-            return "[E][X] " + getTaskName() + " (from: " + startTime + " to: " + endTime + ')';
-        } else {
-            return "[E][] " + getTaskName() + " (from: " + startTime + " to: " + endTime + ')';
-        }
+        return taskTypeBoxFormat() + markedBoxFormat() + " " + getTaskName() +
+                " (from: " + startTime + " to: " + endTime + ')';
+    }
+    @Override
+    public String taskTypeBoxFormat() {
+        return "[E]";
     }
 
 }
