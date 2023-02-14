@@ -8,7 +8,12 @@ public class Duke {
     public static final String HORIZONTAL = "---------------------------------";
     public static final String MARK_MSG = "Nice! I've marked this task as done:";
     public static final String UNMARK_MSG = "Oki! I've marked this task as not done yet:";
+    public static final String UNRECOGNISED_WORD = HORIZONTAL + "\n\tSorry, I don't know what that means!\n" + HORIZONTAL;
+    public static final String EMPTY_EVENT = HORIZONTAL + "\n\tCannot add, the description of an event cannot be empty!\n" + HORIZONTAL;
+    public static final String EMPTY_DEADLINE = HORIZONTAL + "\n\tCannot add, the description of a deadline cannot be empty!\n" + HORIZONTAL;
+    public static final String EMPTY_TODO = HORIZONTAL + "\n\tCannot add, the description of a todo cannot be empty!\n" + HORIZONTAL;
 
+    public static final String EMPTY_LISTNUM = HORIZONTAL + "\n\tI cannot change the status if I don't know the list number!\n" + HORIZONTAL;
     public static void main(String[] args) {
 
         System.out.println(HORIZONTAL + "\n\t" + OPENING_MSG + "\n" + HORIZONTAL);
@@ -21,9 +26,8 @@ public class Duke {
 
         while (!line.equals("bye")) {
             if (!(line.startsWith("event") || line.startsWith("deadline") || line.startsWith("todo") || line.equals("list") || line.startsWith("mark") || line.startsWith("unmark"))) {
-                System.out.println(HORIZONTAL);
-                System.out.println("\tSorry, I don't know what that means!");
-                System.out.println(HORIZONTAL);
+                System.out.println(UNRECOGNISED_WORD);
+
             } else {
                 // Add event
                 if (line.toLowerCase().startsWith("event")) {
@@ -88,9 +92,7 @@ public class Duke {
 
             item++;
         } catch (StringIndexOutOfBoundsException e) {
-            System.out.println(HORIZONTAL);
-            System.out.println("\tCannot add, the description of an event cannot be empty!");
-            System.out.println(HORIZONTAL);
+            System.out.println(EMPTY_EVENT);
 
         } finally {
             return item;
@@ -113,9 +115,7 @@ public class Duke {
 
             item++;
         } catch (StringIndexOutOfBoundsException e) {
-            System.out.println(HORIZONTAL);
-            System.out.println("\tCannot add, the description of a deadline cannot be empty!");
-            System.out.println(HORIZONTAL);
+            System.out.println(EMPTY_DEADLINE);
 
         } finally {
             return item;
@@ -136,9 +136,7 @@ public class Duke {
             item++;
 
         } catch (StringIndexOutOfBoundsException e) {
-            System.out.println(HORIZONTAL);
-            System.out.println("\tCannot add, the description of a todo cannot be empty!");
-            System.out.println(HORIZONTAL);
+            System.out.println(EMPTY_TODO);
 
         } finally {
             return item;
@@ -179,9 +177,7 @@ public class Duke {
             }
 
         } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println(HORIZONTAL);
-            System.out.println("\tI cannot change the status if I don't know the list number!");
-            System.out.println(HORIZONTAL);
+            System.out.println(EMPTY_LISTNUM);
 
         }
     }
