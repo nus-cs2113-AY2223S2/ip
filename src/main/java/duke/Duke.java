@@ -32,7 +32,7 @@ public class Duke {
         Output.printWelcomeMessage();
         while (true) {
             String userCommand = in.nextLine();
-            final String[] commandAndParam = processCommand(userCommand);
+            final String[] commandAndParam = Processor.command(userCommand);
             String command = commandAndParam[0];
             String param = commandAndParam[1];
 
@@ -48,7 +48,8 @@ public class Duke {
         }
     }
 
-    private static void executeCommand(String command, String param) throws IllegalCommandException, EmptyTaskException {
+    private static void executeCommand(String command, String param)
+            throws IllegalCommandException, EmptyTaskException {
         switch (command) {
         case COMMAND_EXIT_WORD:
             Output.printExitMessage();
@@ -81,7 +82,7 @@ public class Duke {
             if (param == "") {
                 throw new EmptyTaskException();
             }
-            final String[] paramAndBy = processDeadline(param);
+            final String[] paramAndBy = Processor.deadline(param);
             if (paramAndBy == null) {
                 Output.printInvalidDeadline();
             } else {
@@ -95,7 +96,7 @@ public class Duke {
             if (param == "") {
                 throw new EmptyTaskException();
             }
-            final String[] paramAndFromTo = processEvent(param);
+            final String[] paramAndFromTo = Processor.event(param);
             if (paramAndFromTo == null) {
                 Output.printInvalidEvent();
             } else {
@@ -118,20 +119,20 @@ public class Duke {
         allTasks = FileReader.initDuke();
     }
 
-    private static String[] processCommand(String userCommand) {
-        final String[] split = userCommand.trim().split("\\s+", 2);
-        return (split.length == 2) ? split : new String[]{split[0], ""};
-    }
-
-    private static String[] processDeadline(String param) {
-        String[] split = param.trim().split("\\s/by\\s", 2);
-        return split.length == 2 ? split : null;
-    }
-
-    private static String[] processEvent(String param) {
-        String[] split = param.trim().split("\\s/from\\s|\\s/to\\s", 3);
-        return split.length == 3 ? split : null;
-    }
+//    private static String[] processCommand(String userCommand) {
+//        final String[] split = userCommand.trim().split("\\s+", 2);
+//        return (split.length == 2) ? split : new String[]{split[0], ""};
+//    }
+//
+//    private static String[] processDeadline(String param) {
+//        String[] split = param.trim().split("\\s/by\\s", 2);
+//        return split.length == 2 ? split : null;
+//    }
+//
+//    private static String[] processEvent(String param) {
+//        String[] split = param.trim().split("\\s/from\\s|\\s/to\\s", 3);
+//        return split.length == 3 ? split : null;
+//    }
 
     private static void markNotDone(String param) {
         try {

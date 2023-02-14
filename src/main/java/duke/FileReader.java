@@ -1,18 +1,17 @@
 package duke;
 
+import duke.exception.InvalidSaveFile;
+import duke.task.Deadline;
+import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
 
-import java.util.ArrayList;
-import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.util.Scanner;
 
 import static duke.Duke.CAPACITY;
+import static duke.Output.DIVIDER;
 
 public class FileReader {
     private static final String FILE_PATH = "/Users/linshang/Documents/cs2113/ip/save.txt";
@@ -20,51 +19,67 @@ public class FileReader {
     private static final char TXT_DEADLINE_WORD = 'D';
     private static final char TXT_EVENT_WORD = 'E';
 
-    private static Task processContents(String text) throws FileNotFoundException {
+    private static Task addTask(String text) throws InvalidSaveFile {
         char type = text.charAt(0);
         char status = text.charAt(4);
-        String task = text.substring(8);
+        String param = text.substring(8);
         switch (type) {
         case TXT_TODO_WORD:
-            return new ToDo(task);
+            ToDo newToDo = new ToDo(param);
+            if (status == '1') {
+                newToDo.setDone(true);
+            }
+            return newToDo;
+        case TXT_DEADLINE_WORD:
+            final String[] paramAndBy = Processor.deadline(param);
+            Deadline newDeadline = new Deadline(paramAndBy[0], paramAndBy[1]);
+            if (status == '1') {
+                newDeadline.setDone(true);
+            }
+            return newDeadline;
+        case TXT_EVENT_WORD:
+            final String[] paramAndFromTo = Processor.event(param);
+            Event newEvent = new Event(paramAndFromTo[0], paramAndFromTo[1], paramAndFromTo[2]);
+            if (status == '1') {
+                newEvent.setDone(true);
+            }
+            return newEvent;
 
         // FIX THIS LATERER!!!!!!!!!!!!!!!!!!!!!!!!
-        case TXT_DEADLINE_WORD:
-            return new ToDo(task);
-        case TXT_EVENT_WORD:
-            return new ToDo(task);
         default:
-            throw new FileNotFoundException();
+            throw new InvalidSaveFile();
         }
     }
-    private static Task[] readFileContents(String filePath) throws FileNotFoundException {
-        File save = new File(filePath); // create a File for the given file path
-        Scanner s = new Scanner(save); // create a Scanner using the File as the source
+    private static Task[] readFileContents() throws FileNotFoundException {
+        File save = new File(FILE_PATH);
+        Scanner s = new Scanner(save);
         Task[] allTasks = new Task[CAPACITY];
         int counter = 0;
         while (s.hasNext()) {
-            allTasks[counter] = processContents(s.nextLine());
-            counter++;
+            try {
+                allTasks[counter] = addTask(s.nextLine());
+                counter++;
+            } catch (InvalidSaveFile e) {
+                System.out.println(DIVIDER + "There is an error in save.txt at line " + (counter+1) + "\n" +
+                        "Please edit the save file at " + FILE_PATH + "and try again. Sorry!\n" + DIVIDER);
+            }
         }
         return allTasks;
     }
 
-//     read from file save.txt
-//     process the txt
-//     add to allTasks
     public static Task[] initDuke() {
         Task[] allTasks = new Task[CAPACITY];
         try {
-            allTasks = readFileContents(FILE_PATH);
+            allTasks = readFileContents();
             return allTasks;
         } catch (FileNotFoundException e) {
-            System.out.println("peepee");
-            // create new empty file??? File newTxt = new File(FILE_PATH);
             return allTasks;
         }
     }
 
     // write from allTasks to save.txt
     private static void exitDuke() {
+        // delete existing save.txt
+        // write new save.txt
     }
 }
