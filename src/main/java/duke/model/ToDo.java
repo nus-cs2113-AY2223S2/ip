@@ -2,11 +2,13 @@ package duke.model;
 
 import duke.exception.InvalidCommandException;
 
-import java.util.Arrays;
-
 public class ToDo extends Task {
     public ToDo(String[] descriptionArray) throws InvalidCommandException {
-        super(descriptionArray);
+        if (descriptionArray.length < 1) {
+            throw new InvalidCommandException("Incomplete description of ToDo!");
+        }
+        this.taskName = descriptionArray[0];
+        this.isDone = false;
     }
 
     @Override
