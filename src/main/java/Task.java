@@ -34,7 +34,7 @@ public class Task {
        return "     Here are the task in your list: " + System.lineSeparator();
     }
     public String numberOfTask(int length){
-        return "     Now you have " + length + " tasks in the list";
+        return "     Now you have " + length + " tasks in the list.";
 
     }
 }
