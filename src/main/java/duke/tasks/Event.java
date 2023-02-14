@@ -28,13 +28,14 @@ public class Event extends Task {
 	}
 
 	// Prints task
-	public void printTask() {
+	public String showTask() {
+		String taskStatus;
 		if (isCompleted) {
-			System.out.println("[E][√]" + getDescription());
+			taskStatus = "[E][√] ";
 		} else {
-			System.out.println("[E][ ]" + getDescription());
+			taskStatus = "[E][ ] ";
 		}
-		System.out.print("(from: " + getStartTime());
-		System.out.println(" to: " + getEndTime() + ")");
+		String time = "from: " + getStartTime() + " to: " + getEndTime();
+		return taskStatus + getDescription() + " " + time;
 	}
 }

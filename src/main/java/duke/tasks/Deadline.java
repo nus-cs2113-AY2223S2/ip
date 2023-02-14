@@ -17,12 +17,13 @@ public class Deadline extends Task {
 		this.by = by;
 	}
 
-	public void printTask() {
+	public String showTask() {
+		String taskStatus;
 		if (isCompleted) {
-			System.out.print("[D][√]" + getDescription());
+			taskStatus = "[D][√] ";
 		} else {
-			System.out.print("[D][ ]" + getDescription());
+			taskStatus = "[D][ ] ";
 		}
-		System.out.println(" (by: " + getBy() + ")");
+		return taskStatus + getDescription() + " " + getBy();
 	}
 }

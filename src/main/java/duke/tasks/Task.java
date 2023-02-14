@@ -1,5 +1,6 @@
 package duke.tasks;
 
+
 public class Task {
 	protected String description;
 	protected boolean isCompleted;
@@ -16,21 +17,8 @@ public class Task {
 		return isCompleted;
 	}
 
-	public void markAsDone() throws TaskException {
-		if (isCompleted == true) {
-			throw new TaskException();
-		}
-		isCompleted = true;
-	}
-
-	public void markAsUndone() throws TaskException {
-		if (isCompleted == false) {
-			throw new TaskException();
-		}
-		isCompleted = false;
-	}
-	public void printTask(){
-		System.out.println(description);
+	public String showTask(){
+		return getDescription();
 	}
 }
 

@@ -5,11 +5,13 @@ public class Todo extends Task {
 		super(description);
 	}
 
-	public void printTask(){
+	public String showTask(){
+		String taskStatus;
 		if (isCompleted) {
-			System.out.println("[T][√]" + getDescription());
+			taskStatus= "[T][√] ";
 		} else {
-			System.out.println("[T][ ]" + getDescription());
+			taskStatus = "[T][ ] ";
 		}
+		return taskStatus + getDescription();
 	}
 }

@@ -1,10 +1,12 @@
 package duke;
 
-import duke.tasks.Deadline;
-import duke.tasks.Event;
-import duke.tasks.Task;
-import duke.tasks.Todo;
+import duke.exceptions.TaskDoneException;
+import duke.exceptions.TaskException;
+import duke.exceptions.TaskOutOfBoundsException;
+import duke.exceptions.TaskUndoneException;
 import duke.ui.Greetings;
+import duke.tasks.TaskList;
+
 
 import java.util.Scanner;
 
@@ -12,13 +14,12 @@ public class Duke {
 
 	public static void startDuke() {
 
+
 		Greetings dukeGreeting = new Greetings();
 		dukeGreeting.printGreetings();
 		dukeGreeting.printOpeningLine();
 		Scanner sc = new Scanner(System.in);
-
-		Task[] tasks = new Task[100];
-		int taskCount = 0;
+		TaskList taskList = new TaskList();
 
 		String userMessage;
 
@@ -26,41 +27,33 @@ public class Duke {
 
 		while (!shouldExit) {
 			userMessage = sc.nextLine();
-			if (userMessage.split(" ").length == 1) {
+			if (userMessage.split(" ").length == 0) {
 				System.out.println("Please key in proper task descriptions!!");
 				dukeGreeting.printDivider();
 			} else if (userMessage.startsWith("todo")) {
-				userMessage.substring(6);
-				tasks[taskCount] = new Todo(userMessage);
+
+				String message = userMessage.substring(5);
 				dukeGreeting.printDivider();
-				System.out.println("Got it. I've added this task: ");
-				tasks[taskCount].printTask();
-				taskCount += 1;
-				System.out.println("Now you have " + taskCount + " duke.tasks in the list.");
+				System.out.println(taskList.addTodo(message));
 				dukeGreeting.printDivider();
+
 			} else if (userMessage.startsWith("deadline")) {
+
 				userMessage.substring(10);
-				String[] message = userMessage.split(" /by ");
-				tasks[taskCount] = new Deadline(message[0], message[1]);
+
+				String[] messages = userMessage.split(" /by ");
 				dukeGreeting.printDivider();
-				System.out.println("Got it. I've added this deadline: ");
-				tasks[taskCount].printTask();
-				taskCount += 1;
-				System.out.println("Now you have " + taskCount + " duke.tasks in the list.");
+				System.out.println(taskList.addDeadline(messages[0], messages[1]));
 				dukeGreeting.printDivider();
+
 			} else if (userMessage.startsWith("event")) {
 				userMessage.substring(7);
-				String[] messages = userMessage.split(" /from ");
-				String description = messages[0];
-				String[] dates = messages[1].split(" /to");
+				String description = userMessage.split(" /from ")[0];
+				String[] dates = userMessage.split(" /from ")[1].split(" /to");
 				String from = dates[0];
 				String to = dates[1];
-				tasks[taskCount] = new Event(description, from, to);
 				dukeGreeting.printDivider();
-				System.out.println("Got it. I've added this deadline: ");
-				tasks[taskCount].printTask();
-				taskCount += 1;
-				System.out.println("Now you have " + taskCount + " duke.tasks in the list.");
+				System.out.println(taskList.addEvent(description, from, to));
 				dukeGreeting.printDivider();
 			} else if (userMessage.startsWith("mark")) {
 				dukeGreeting.printDivider();
@@ -68,11 +61,13 @@ public class Duke {
 				int taskNumber = Integer.parseInt(messages[1]);
 
 				try {
-					tasks[taskNumber - 1].markAsDone();
-					System.out.println("Niceeee!!I've marked this task as done: ");
-					tasks[taskCount - 1].printTask();
 
+					taskList.markAsDone(taskNumber);
+					System.out.println("Niceeee!!I've marked this task as done: ");
+					System.out.println(taskList.findTask(taskNumber).showTask());
 				} catch (TaskException e) {
+					System.out.println("Please key in the correct task index");
+				} catch (TaskDoneException e) {
 					System.out.println("You have already completed the task leh!");
 				} finally {
 					dukeGreeting.printDivider();
@@ -82,11 +77,12 @@ public class Duke {
 				String[] messages = userMessage.split(" ");
 				int taskNumber = Integer.parseInt(messages[1]);
 				try {
-					tasks[taskNumber - 1].markAsUndone();
-					System.out.println("Okiee...You better complete it fast");
-					tasks[taskCount - 1].printTask();
-
+					taskList.markAsUndone(taskNumber);
+					System.out.println("Okiee...I've unmarked this task: ");
+					System.out.println(taskList.findTask(taskNumber).showTask());
 				} catch (TaskException e) {
+					System.out.println("Please key in the correct task index");
+				} catch (TaskUndoneException e) {
 					System.out.println("You have not completed the task:(");
 				} finally {
 					dukeGreeting.printDivider();
@@ -97,17 +93,24 @@ public class Duke {
 				dukeGreeting.printDivider();
 			} else if (userMessage.equalsIgnoreCase("list")) {
 				dukeGreeting.printDivider();
-				if (taskCount > 0) {
-					for (int i = 0; i < taskCount; i += 1) {
-						System.out.println("Here are the duke.tasks in your list: ");
-						System.out.print(i + 1);
-						System.out.print(".");
-						tasks[i].printTask();
-					}
-				} else {
-					System.out.println("You have no task right now!!");
+				try {
+					taskList.printList();
+				} catch (TaskException e) {
+					System.out.println("Sorry, there is no task in your list");
+				} finally {
+					dukeGreeting.printDivider();
 				}
+			} else if (userMessage.startsWith("delete")) {
 				dukeGreeting.printDivider();
+				String[] messages = userMessage.split(" ");
+				int taskNumber = Integer.parseInt(messages[1]);
+				try {
+					System.out.println(taskList.deleteTask(taskNumber));
+				} catch (TaskOutOfBoundsException e) {
+					System.out.println("Please key in the correct task index");
+				} finally {
+					dukeGreeting.printDivider();
+				}
 			} else if (userMessage.equalsIgnoreCase("help")) {
 				dukeGreeting.printHelp();
 			} else if (userMessage.equalsIgnoreCase("exit")) {
@@ -117,7 +120,6 @@ public class Duke {
 				dukeGreeting.printErrorMessage();
 			}
 		}
-
 	}
 
 	public static void main(String[] args) {
