@@ -2,20 +2,15 @@ package duke.model;
 
 import duke.exception.InvalidCommandException;
 
-import java.util.Arrays;
-
 public class ToDo extends Task {
-    public ToDo(String[] descriptionArray) {
-        super(descriptionArray);
+    public ToDo(String[] descriptionArray) throws InvalidCommandException {
+        if (descriptionArray.length < 1) {
+            throw new InvalidCommandException("Incomplete description of ToDo!");
+        }
+        this.taskName = descriptionArray[0];
+        this.isDone = false;
     }
 
-    public static String[] parseCommand (String command) throws InvalidCommandException {
-        String[] commandArray = command.split(" ");
-        if (commandArray.length < 2){
-            throw new InvalidCommandException("Description of todo cannot be empty!");
-        }
-        return Arrays.copyOfRange(commandArray, 1, commandArray.length);
-    }
     @Override
     public String toString() {
         String todoPrefix = "[T]";

@@ -2,58 +2,42 @@ package duke.model;
 
 import duke.exception.InvalidCommandException;
 
-import java.util.Arrays;
-
 public class Task {
-    public String taskName;
+    protected String taskName;
     protected boolean isDone;
-    public static int numberOfTasks = 0;
 
-    public static String[] parseCommand (String command) throws InvalidCommandException {
-        String[] commandArray = command.split(" ");
-        if (commandArray.length < 2){
+    public Task() {
+    }
+
+    public Task(String[] descriptionArray) throws InvalidCommandException {
+        if (descriptionArray.length < 1) {
             throw new InvalidCommandException("Description of task cannot be empty!");
         }
-        return Arrays.copyOfRange(commandArray, 1, commandArray.length);
-    }
-
-    public Task (String[] descriptionArray) {
         this.taskName = descriptionArray[0];
         this.isDone = false;
-        numberOfTasks++;
     }
 
-    public Task (String[] descriptionArray, boolean isDone) {
+    public Task(String[] descriptionArray, boolean isDone) throws InvalidCommandException {
         this(descriptionArray);
         this.isDone = isDone;
     }
 
-    public static String getTasksList(Task[] tasks){
-        String tasksList = "";
-        for (int i = 0; i < numberOfTasks; i++) {
-            tasksList +=  String.format("%3d. ", (i+1)) + tasks[i].toString();
-            if (i < numberOfTasks - 1) {
-                tasksList += System.lineSeparator()+ "\t";
-            }
 
-        }
-        return tasksList;
-    }
-
-    public void markAsDone () {
+    public void markAsDone() {
         this.isDone = true;
     }
-    public void unmarkAsDone () {
-    this.isDone = false;
+
+    public void unmarkAsDone() {
+        this.isDone = false;
     }
-    public String getStatusIcon (){
+
+    public String getStatusIcon() {
         return this.isDone ? "X" : " ";
     }
 
-    public String toString () {
+    public String toString() {
         return "[" + this.getStatusIcon() + "]" + "\t" + this.taskName;
     }
-
 
 
 }
