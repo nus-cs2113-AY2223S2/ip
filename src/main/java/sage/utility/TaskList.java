@@ -121,52 +121,32 @@ public class TaskList {
      *
      * @param taskIndex string that represents the index of the task to unmark (1-Indexed).
      */
-    public void unmarkTask(String taskIndex) {
+    public void markingTask(String taskIndex, Boolean isMark) {
         try {
             int taskNumber = Integer.parseInt(taskIndex);
             if (taskNumber <= 0 || taskNumber > list.size()) {
                 throw new OutOfBoundException();
-            } else if (!list.get(taskNumber - 1).isCompleted()) {
+            } else if ((!isMark && !list.get(taskNumber - 1).isCompleted()) ||
+                    (isMark && list.get(taskNumber - 1).isCompleted())) {
                 throw new IllegalOperationException();
             } else {
-                list.get(taskNumber - 1).setCompleted(false);
+                list.get(taskNumber - 1).setCompleted(isMark);
                 fm.updateFile(list);
-                UI.printMarking(list, taskNumber, false);
+                UI.printMarking(list, taskNumber, isMark);
             }
         } catch (OutOfBoundException e) {
             e.errorUnmark();
         } catch (IllegalOperationException e) {
-            e.errorAlreadyUnmarked();
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    /**
-     * Marks a completed task.
-     *
-     * @param taskIndex a string that represents the index of the task to mark (1-Indexed).
-     */
-    public void markTask(String taskIndex) {
-        try {
-            int taskNumber = Integer.parseInt(taskIndex);
-            if (taskNumber <= 0 || taskNumber > list.size()) {
-                throw new OutOfBoundException();
-            } else if (list.get(taskNumber - 1).isCompleted()) {
-                throw new IllegalOperationException();
+            if (isMark) {
+                e.errorAlreadyMarked();
             } else {
-                list.get(taskNumber - 1).setCompleted(true);
-                fm.updateFile(list);
-                UI.printMarking(list, taskNumber, true);
+                e.errorAlreadyUnmarked();
             }
-        } catch (OutOfBoundException e) {
-            e.errorMark();
-        } catch (IllegalOperationException e) {
-            e.errorAlreadyMarked();
+
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
+
     }
 
     public void listTask() {

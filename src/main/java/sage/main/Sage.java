@@ -24,10 +24,10 @@ public class Sage {
                 taskList.listTask();
                 break;
             case "unmark":
-                taskList.unmarkTask(command.getTaskDescription());
+                taskList.markingTask(command.getTaskDescription(), false);
                 break;
             case "mark":
-                taskList.markTask(command.getTaskDescription());
+                taskList.markingTask(command.getTaskDescription(), true);
                 break;
             case "delete":
                 taskList.deleteTask(command.getTaskDescription());
