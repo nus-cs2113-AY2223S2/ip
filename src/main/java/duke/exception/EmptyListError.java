@@ -1,3 +1,4 @@
 package duke.exception;
-public class EmptyListError extends Exception{
+
+public class EmptyListError extends Exception {
 }

@@ -1,12 +1,4 @@
-T | 0 | read book now
+T | 1 | read book
 D | 0 | return book | June 6th
-E | 0 | project meeting | Aug 6th 2-4pm | DEC
+E | 0 | project meeting | Aug 6th 2-4pm | Dec
 T | 1 | join sports club
-D | 0 | xxx | yyy
-E | 0 | xxx | yyy | zzz
-T | 0 | adawd
-D | 0 | adsad | asdasd
-E | 0 | adsad | asd | asd
-T | 0 | x
-D | 0 | y | z
-E | 0 | x | y | z

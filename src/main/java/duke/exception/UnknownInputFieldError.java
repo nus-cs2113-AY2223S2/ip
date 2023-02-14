@@ -1,4 +1,4 @@
 package duke.exception;
 
-public class UnknownInputFieldError extends Exception{
+public class UnknownInputFieldError extends Exception {
 }

@@ -15,16 +15,17 @@ import java.util.Scanner;
 
 public class Duke {
     public static ArrayList<Task> tasksList = new ArrayList<>();
-    public static final String filePath = "src/main/java/duke/storage/duke.txt";
-
 
     public static void main(String[] args) {
 
         try {
-            List<Task> taskLists = Storage.convertToArray(filePath);
+            Storage.checkFileAccess();
+            List<Task> taskLists = Storage.convertToList();
             tasksList.addAll(taskLists);
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException err) {
             System.out.println("File not found");
+        } catch (IOException err) {
+            System.out.println("Something went wrong: " + err.getMessage());
         }
 
         String logo = " ____        _        \n"
@@ -38,22 +39,23 @@ public class Duke {
         UI.showWelcomeMessage();
         do {
             input = in.nextLine();
-            if (DukeException.hasError(input)){
+            if (DukeException.hasError(input)) {
                 continue;
             }
-            command(input);
+            run(input);
         } while (!input.equals("bye"));
     }
 
-    private static void command(String input) {
+    private static void run(String input) {
         String[] inputWords = input.split(" ");
-        switch (inputWords[0]){
+        switch (inputWords[0]) {
         case "todo":
             input = input.replaceFirst("todo", "").trim();
             UI.printTodo(input);
-            Todo t = new Todo(input, "T");
-            tasksList.add(t);
+            Todo todo = new Todo(input, "T");
+            tasksList.add(todo);
             UI.printTaskList(tasksList.size());
+            updateFile();
             break;
         case "deadline":
             input = input.replaceFirst("deadline", "").trim();
@@ -61,9 +63,10 @@ public class Duke {
             String taskName = input.substring(0, indexOfSlash - 1);
             String by = input.substring(indexOfSlash + 4);
             UI.printDeadline(taskName, by);
-            Deadline d = new Deadline(taskName, "D", by);
-            tasksList.add(d);
+            Deadline deadline = new Deadline(taskName, "D", by);
+            tasksList.add(deadline);
             UI.printTaskList(tasksList.size());
+            updateFile();
             break;
         case "event":
             input = input.replaceFirst("event", "").trim();
@@ -73,14 +76,15 @@ public class Duke {
             String start = input.substring(indexOfSlash + 6, lastIndexOfSlash - 1);
             String end = input.substring(lastIndexOfSlash + 4);
             UI.printEvent(taskName, start, end);
-            Event e = new Event(taskName, "E", start, end);
-            tasksList.add(e);
+            Event event = new Event(taskName, "E", start, end);
+            tasksList.add(event);
             UI.printTaskList(tasksList.size());
+            updateFile();
             break;
         case "list":
-            try{
+            try {
                 printList();
-            } catch (EmptyListError err){
+            } catch (EmptyListError err) {
                 UI.printMessage("There is nothing inside the list");
             }
             break;
@@ -89,12 +93,14 @@ public class Duke {
             UI.printMessage("Nice! I've marked this task as done:");
             tasksList.get(taskNum).markAsDone();
             System.out.println("  [" + tasksList.get(taskNum).getStatusIcon() + "] " + tasksList.get(taskNum).description);
+            updateFile();
             break;
         case "unmark":
             taskNum = Integer.parseInt(inputWords[1]) - 1;
             UI.printMessage("OK, I've marked this task as not done yet:");
             tasksList.get(taskNum).markAsUndone();
             System.out.println("  [" + tasksList.get(taskNum).getStatusIcon() + "] " + tasksList.get(taskNum).description);
+            updateFile();
             break;
         case "delete":
             taskNum = Integer.parseInt(inputWords[1]) - 1;
@@ -102,27 +108,30 @@ public class Duke {
             System.out.println("  " + tasksList.get(taskNum).toString());
             tasksList.remove(taskNum);
             UI.printTaskList(tasksList.size());
+            updateFile();
             break;
         case "bye":
             UI.showByeMessage();
-            try {
-                Storage.writeToFile(filePath, "");
-                for (Task task_i : tasksList){
-                    Storage.appendToFile(filePath, task_i.textToSave() + System.lineSeparator());
-                }
-            } catch (IOException err) {
-                System.out.println("Something went wrong: " + err.getMessage());
-            }
+            updateFile();
             break;
         default: //never reached
-            UI.printMessage("added: " + input);
-            Task u = new Task(input, "");
-            tasksList.add(u);
+            UI.printMessage("Never reached");
+        }
+    }
+
+    private static void updateFile() {
+        try {
+            Storage.writeToFile("");
+            for (Task task : tasksList) {
+                Storage.appendToFile(task.textToSave() + System.lineSeparator());
+            }
+        } catch (IOException err) {
+            System.out.println("Something went wrong: " + err.getMessage());
         }
     }
 
     private static void printList() throws EmptyListError {
-        if (tasksList.isEmpty()){
+        if (tasksList.isEmpty()) {
             throw new EmptyListError();
         }
         UI.printMessage("Here are the tasks in your list:");

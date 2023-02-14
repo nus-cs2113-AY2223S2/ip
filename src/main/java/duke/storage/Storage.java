@@ -1,9 +1,11 @@
 package duke.storage;
+
 import duke.Task;
 import duke.UI;
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Todo;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -11,35 +13,38 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 public class Storage {
 
-    public static List<Task> convertToArray(String filePath) throws FileNotFoundException {
-        List<Task> taskList = new ArrayList<>();
+    private static final String dirPath = "src/main/java/duke/storage";
+    private static final String filePath = "src/main/java/duke/storage/duke.txt";
 
-        File f = new File(filePath); // create a File for the given file path
-        Scanner s = new Scanner(f); // create a Scanner using the File as the source
+    public static List<Task> convertToList() throws FileNotFoundException {
+        List<Task> taskList = new ArrayList<>();
+        File file = new File(filePath); // create a File for the given file path
+        Scanner s = new Scanner(file); // create a Scanner using the File as the source
         while (s.hasNext()) {
             String textLine = s.nextLine();
             String[] textLineArray = textLine.split(" ");
             switch (textLineArray[0]) {
             case "T":
                 String taskName = textLine.substring(8);
-                Todo t = new Todo(taskName, "T");
+                Todo todo = new Todo(taskName, "T");
                 if (textLineArray[2].equals("1")) {
-                    t.markAsDone();
+                    todo.markAsDone();
                 }
-                taskList.add(t);
+                taskList.add(todo);
                 break;
             case "D":
                 textLine = textLine.substring(8);
                 int indexOfBoundary = textLine.indexOf("|");
                 taskName = textLine.substring(0, indexOfBoundary - 1);
                 String by = textLine.substring(indexOfBoundary + 2);
-                Deadline d = new Deadline(taskName, "D", by);
+                Deadline deadline = new Deadline(taskName, "D", by);
                 if (textLineArray[2].equals("1")) {
-                    d.markAsDone();
+                    deadline.markAsDone();
                 }
-                taskList.add(d);
+                taskList.add(deadline);
                 break;
             case "E":
                 textLine = textLine.substring(8);
@@ -48,11 +53,11 @@ public class Storage {
                 taskName = textLine.substring(0, indexOfBoundary - 1);
                 String from = textLine.substring(indexOfBoundary + 2, lastIndexOfBoundary - 1);
                 String to = textLine.substring(lastIndexOfBoundary + 2);
-                Event e = new Event(taskName, "E", from, to);
+                Event event = new Event(taskName, "E", from, to);
                 if (textLineArray[2].equals("1")) {
-                    e.markAsDone();
+                    event.markAsDone();
                 }
-                taskList.add(e);
+                taskList.add(event);
                 break;
             default:
                 UI.printMessage("finish converting");
@@ -61,16 +66,27 @@ public class Storage {
         return taskList;
     }
 
-    public static void writeToFile(String filePath, String textToAdd) throws IOException {
+    public static void writeToFile(String textToAdd) throws IOException {
         FileWriter fw = new FileWriter(filePath);
         fw.write(textToAdd);
         fw.close();
     }
 
-    public static void appendToFile(String filePath, String textToAppend) throws IOException {
+    public static void appendToFile(String textToAppend) throws IOException {
         FileWriter fw = new FileWriter(filePath, true); // create a FileWriter in append mode
         fw.write(textToAppend);
         fw.close();
+    }
+
+    public static void checkFileAccess() throws IOException {
+        File dir = new File(dirPath);
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
+        File f = new File(filePath);
+        if (!f.exists()) {
+            f.createNewFile();
+        }
     }
 
 }

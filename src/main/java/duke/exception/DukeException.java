@@ -4,15 +4,14 @@ import duke.UI;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
-public class DukeException extends Exception  {
-    public static boolean hasError(String input){
-        try{
+public class DukeException extends Exception {
+    public static boolean hasError(String input) {
+        try {
             catchError(input);
-        } catch (UnknownInputFieldError e) {
+        } catch (UnknownInputFieldError err) {
             return true;
-        } catch (EmptyTaskDescription e){
+        } catch (EmptyTaskDescription err) {
             return true;
         }
         return false;
@@ -20,17 +19,16 @@ public class DukeException extends Exception  {
 
     private static void catchError(String input) throws UnknownInputFieldError, EmptyTaskDescription {
         String[] inputWords = input.split(" ");
-        String[] taskTypes = {"todo", "deadline", "event", "list", "mark", "unmark", "delete", "bye"};
-        ArrayList<String> taskTypeList = new ArrayList<>(Arrays.asList(taskTypes));
-        if (!taskTypeList.contains(inputWords[0])) {
-
+        String command = inputWords[0];
+        String[] commandArray = {"todo", "deadline", "event", "list", "mark", "unmark", "delete", "bye"};
+        ArrayList<String> commandList = new ArrayList<>(Arrays.asList(commandArray));
+        if (!commandList.contains(command)) {
             UI.printMessage("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
             throw new UnknownInputFieldError();
-        } else if (inputWords[0].equals("list") | inputWords[0].equals("bye")) {
-        } else if(inputWords.length == 1){
-            UI.printMessage("☹ OOPS!!! The description of a " + inputWords[0] + " cannot be empty");
+        } else if (command.equals("list") | command.equals("bye")) {
+        } else if (inputWords.length == 1) {
+            UI.printMessage("☹ OOPS!!! The description of a " + command + " cannot be empty");
             throw new EmptyTaskDescription();
         }
     }
-
 }

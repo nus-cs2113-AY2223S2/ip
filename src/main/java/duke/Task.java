@@ -13,22 +13,23 @@ public class Task {
         this.isDone = false;
     }
 
-    public void markAsDone(){
+    public void markAsDone() {
         isDone = true;
     }
 
-    public void markAsUndone(){
+    public void markAsUndone() {
         isDone = false;
     }
 
     public String getStatusIcon() {
         return (isDone ? "X" : " "); // mark done task with X
     }
+
     public String toString() {
         return "[" + getStatusIcon() + "] " + description;
     }
 
-    public String textToSave(){
+    public String textToSave() {
         return "";
     }
 }

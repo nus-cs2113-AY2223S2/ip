@@ -1,43 +1,44 @@
 package duke;
 
 public class UI {
-    public static final String HORIZONTAL_LINE = "____________________________________________________________";
+    private static final String HORIZONTAL_LINE = "____________________________________________________________";
 
-    public static void printTodo(String message){
+    public static void printTodo(String message) {
         System.out.println("Got it. I've added this task:");
         System.out.println("  [T][ ] " + message);
     }
 
-    public static void printDeadline(String taskName, String by){
+    public static void printDeadline(String taskName, String by) {
         System.out.println("Got it. I've added this task:");
         System.out.println("  [D][ ] " + taskName + " (by: " + by + ")");
     }
 
-    public static void printEvent(String taskName, String start, String end){
+    public static void printEvent(String taskName, String start, String end) {
         System.out.println("Got it. I've added this task:");
         System.out.println("  [E][ ] " + taskName + " (from: " + start + " to: " + end + ")");
     }
 
-    public static void printTaskList(int taskListLength){
+    public static void printTaskList(int taskListLength) {
         System.out.println("Now you have " + taskListLength + " tasks in the list.");
     }
-    public static void printMessage(String message){
+
+    public static void printMessage(String message) {
         System.out.println(message);
     }
 
-    public static void showWelcomeMessage(){
+    public static void showWelcomeMessage() {
         printPicture(0);
         System.out.println(HORIZONTAL_LINE);
         System.out.println("Hello! I'm Duke\n" + "What can I do for you?");
         System.out.println(HORIZONTAL_LINE);
     }
 
-    public static void showByeMessage(){
+    public static void showByeMessage() {
         System.out.println("Bye. Hope to see you again soon!");
     }
 
-    public static void printPicture(int index){
-        switch(index){
+    private static void printPicture(int index) {
+        switch (index) {
         case 1:
             System.out.println("        ___\n" +
                     "      _/ ..\\\n" +
