@@ -9,8 +9,6 @@ public class Task {
     public String taskChar;
     public String formattedTask;
 
-    public String formattedTask;
-
     public Task(String taskDescription) {
         this.taskDescription = taskDescription;
         this.status = "[ ]";
@@ -30,7 +28,6 @@ public class Task {
     public void print() {
         formattedTask = taskChar + status + " " + taskDescription;
         System.out.println(formattedTask);
-<<<<<<< HEAD
     }
 
     public void delete(ArrayList<Task> taskList) {
@@ -41,7 +38,5 @@ public class Task {
             taskWord = "tasks";
         }
         System.out.println("Noted! I've removed this task:\n    " + formattedTask + "\nNow you have " + taskList.size() + " " + taskWord + " in your list.");
-=======
->>>>>>> branch-Level-7
     }
 }

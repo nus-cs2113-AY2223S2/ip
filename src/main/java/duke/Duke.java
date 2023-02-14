@@ -5,22 +5,11 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
 
-<<<<<<< HEAD
 import java.util.ArrayList;
-public class Duke {
-
-    static final int MAX_TASKS = 100;
-    // private static Task[] taskList = new Task[MAX_TASKS];
-    private static ArrayList<Task> taskList = new ArrayList<Task>();
-    // private static int listCount = 0;
-=======
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 
 public class Duke {
     private static ArrayList<Task> taskList = new ArrayList<Task>();
->>>>>>> branch-Level-7
 
     public static void main(String[] args) {
         FileProcessor fileProcessor = null;
@@ -63,12 +52,8 @@ public class Duke {
                         taskList.add(new Deadline(parsedInput[1], parsedInput[2]));
                     } catch (ArrayIndexOutOfBoundsException e) {
                         System.out.println("Oops, deadline input has the wrong format");
-<<<<<<< HEAD
                     } catch (IndexOutOfBoundsException e) {
                         System.out.println("Oops, deadline task number does not exist");
-=======
-
->>>>>>> branch-Level-7
                     }
                     break;
                 case ("event"):
@@ -79,11 +64,8 @@ public class Duke {
                         taskList.get(Integer.parseInt(parsedInput[1]) - 1).setDone();
                     } catch (NumberFormatException e) {
                         System.out.println("Oops, mark task description should be an integer");
-<<<<<<< HEAD
                     } catch (IndexOutOfBoundsException e) {
                         System.out.println("Oops, mark task number does not exist");
-=======
->>>>>>> branch-Level-7
                     }
                     break;
                 case ("unmark"):
@@ -91,12 +73,11 @@ public class Duke {
                         taskList.get(Integer.parseInt(parsedInput[1]) - 1).setUndone();
                     } catch (NumberFormatException e) {
                         System.out.println("Oops, unmark task description should be an integer");
-<<<<<<< HEAD
                     } catch (IndexOutOfBoundsException e) {
                         System.out.println("Oops, unmark task number does not exist");
                     }
                     break;
-                case("list"):
+                case ("list"):
                     ui.printList(taskList);
                     break;
                 case ("delete"):
@@ -109,14 +90,6 @@ public class Duke {
                     } catch (IndexOutOfBoundsException e) {
                         System.out.println("Oops, delete task number does not exist");
                     }
-                    break;
-=======
-                    }
-                    break;
-                case ("list"):
-                    ui.printList(taskList);
-                    break;
->>>>>>> branch-Level-7
             }
             ui.showLine();
             input = ui.getUserInput();
