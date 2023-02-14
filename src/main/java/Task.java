@@ -37,4 +37,8 @@ public class Task {
         return "[" + this.getStatusIcon() + "] " + this.getDescription();
     }
 
+    public String toStringForSave(){
+        String doneStatus = isDone() ? "1" : "0";
+        return String.format("T | %s | %s", doneStatus, getDescription());
+    }
 }
