@@ -1,4 +1,6 @@
-public class Event extends Deadline {
+package Duke;
+
+public final class Event extends Deadline {
     public String startTime;
 
 
@@ -38,4 +40,5 @@ public class Event extends Deadline {
     public String getTaskType (Task task){
         return this.taskType;
     }
+
 }

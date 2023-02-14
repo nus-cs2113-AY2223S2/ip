@@ -1,3 +1,5 @@
+package Duke;
+
 public class Deadline extends Task {
 
 
@@ -31,6 +33,8 @@ public class Deadline extends Task {
         }
 
     }
+
+
 
     public void setAsDeadline(){
         this.taskType = "D";

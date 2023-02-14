@@ -1,3 +1,4 @@
+package Duke;
 import java.io.*;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -22,8 +23,8 @@ public class Storage {
             FileWriter writeFile = new FileWriter(savedFile);
             for (Task task : list) {
 
-                //System.out.println(task.startTime);
-                //System.out.println(task.endTime);
+
+
                 if (Objects.equals(task.taskType, "D")) {
                     Deadline newDeadline = (Deadline)task;
                     writeFile.write(newDeadline.taskType + "|" + newDeadline.isCompleted + "|" + newDeadline.taskName + "|" + newDeadline.endTime + System.lineSeparator());

@@ -1,6 +1,7 @@
+package Duke;
+
 public class Task {
-    //public String startTime;
-    //public String endTime;
+
     protected String taskName;
     protected boolean isCompleted;
 
