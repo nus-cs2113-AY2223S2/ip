@@ -21,7 +21,7 @@ public class Duke {
 
 
     // max number of tasks
-    private static final int CAPACITY = 100;
+    public static final int CAPACITY = 100;
     // list of all tasks
     private static Task[] allTasks;
     private static Scanner in = new Scanner(System.in);
@@ -115,7 +115,7 @@ public class Duke {
     }
 
     private static void initTasks() {
-        allTasks = new Task[CAPACITY];
+        allTasks = FileReader.initDuke();
     }
 
     private static String[] processCommand(String userCommand) {
