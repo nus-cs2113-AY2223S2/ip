@@ -30,13 +30,17 @@ public class Duke {
                     Task curTask = tasks.get(taskIndex-1);
                     curTask.markAsDone();
                     printTaskStatusStatement(curTask, "mark");
-                } catch (IndexOutOfBoundsException exception) {
+                } catch (ArrayIndexOutOfBoundsException exception) {
                     printDottedLine();
                     System.out.println("☹ OOPS!!! The description of a mark cannot be empty");
                     printDottedLine();
-                } catch (NullPointerException exception) {
+                } catch (IndexOutOfBoundsException exception) {
                     printDottedLine();
-                    System.out.println("☹ OOPS!!! The description of a mark is invalid");
+                    System.out.println("☹ OOPS!!! The description of a mark does not exist");
+                    printDottedLine();
+                } catch (NumberFormatException exception) {
+                    printDottedLine();
+                    System.out.println("☹ OOPS!!! The description of a mark must be a number");
                     printDottedLine();
                 }
             } else if (input.startsWith("unmark")) {
@@ -46,13 +50,17 @@ public class Duke {
                     Task curTask = tasks.get(taskIndex-1);
                     curTask.unmarkAsDone();
                     printTaskStatusStatement(curTask, "unmark");
-                } catch (IndexOutOfBoundsException exception) {
+                } catch (ArrayIndexOutOfBoundsException exception) {
                     printDottedLine();
                     System.out.println("☹ OOPS!!! The description of a unmark cannot be empty");
                     printDottedLine();
-                } catch (NullPointerException exception) {
+                } catch (IndexOutOfBoundsException exception) {
                     printDottedLine();
-                    System.out.println("☹ OOPS!!! The description of a unmark is invalid");
+                    System.out.println("☹ OOPS!!! The description of a unmark does not exist");
+                    printDottedLine();
+                } catch (NumberFormatException exception) {
+                    printDottedLine();
+                    System.out.println("☹ OOPS!!! The description of a unmark must be a number");
                     printDottedLine();
                 }
             } else if (input.startsWith("delete")) {
@@ -62,20 +70,24 @@ public class Duke {
                     currentIndex--;
                     printTaskDeletedStatement(currentIndex, tasks.get(taskIndex-1));
                     tasks.remove(taskIndex-1);
-                } catch (IndexOutOfBoundsException exception) {
+                } catch (ArrayIndexOutOfBoundsException exception) {
                     printDottedLine();
                     System.out.println("☹ OOPS!!! The description of a delete cannot be empty");
                     printDottedLine();
-                } catch (NullPointerException exception) {
+                } catch (IndexOutOfBoundsException exception) {
                     printDottedLine();
-                    System.out.println("☹ OOPS!!! The description of a delete is invalid");
+                    System.out.println("☹ OOPS!!! The description of a delete does not exist");
+                    printDottedLine();
+                } catch (NumberFormatException exception) {
+                    printDottedLine();
+                    System.out.println("☹ OOPS!!! The description of a delete must be a number");
                     printDottedLine();
                 }
             } else if (input.startsWith("todo") & (currentIndex <= maxIndex)) {
                 try {
                     String[] temp = input.split("todo "); //separates todo description
                     String description = temp[1];
-                    ToDo todo = new ToDo(currentIndex + 1, description);
+                    ToDo todo = new ToDo(description);
                     tasks.add(todo);
                     currentIndex++;
                     printTaskAddedStatement(currentIndex, todo);
@@ -89,7 +101,7 @@ public class Duke {
                     String[] temp = input.split("deadline | /by "); //separates deadline description and time
                     String description = temp[1];
                     String by = temp[2];
-                    Deadline deadline = new Deadline(currentIndex + 1, description, by);
+                    Deadline deadline = new Deadline(description, by);
                     tasks.add(deadline);
                     currentIndex++;
                     printTaskAddedStatement(currentIndex, deadline);
@@ -104,7 +116,7 @@ public class Duke {
                     String description = temp[1];
                     String from = temp[2];
                     String to = temp[3];
-                    Event event = new Event(currentIndex + 1, description, from, to);
+                    Event event = new Event(description, from, to);
                     tasks.add(event);
                     currentIndex++;
                     printTaskAddedStatement(currentIndex, event);
@@ -130,10 +142,12 @@ public class Duke {
 
     private static void printAllTasks(ArrayList<Task> tasks) {
         printDottedLine();
+        int counter = 1;
         System.out.println("Here are the tasks in your list:");
         for (Task task : tasks) {
             if (task != null) {
-                System.out.println(task);
+                System.out.println(counter + "." + task);
+                counter++;
             }
         }
         printDottedLine();
