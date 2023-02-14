@@ -67,9 +67,9 @@ public class Duke {
             break;
         case Command.COMMAND_MARK:
             try {
-                markTaskDone(Integer.parseInt(input.substring(Command.COMMAND_MARK.length())) - 1);
+                markTaskDone(Integer.parseInt(input.substring(Command.COMMAND_MARK.length()).trim()) - 1);
             } catch (NumberFormatException e) {
-                System.out.println("☹ OOPS!!! duke.task.Task number should be an integer.");
+                System.out.println("☹ OOPS!!! Task number should be an integer.");
                 printDivider();
             } catch (InvalidTaskNumberException e) {
                 System.out.println("☹ OOPS!!! The task specified does not exist in the task list.");
@@ -81,9 +81,9 @@ public class Duke {
             break;
         case Command.COMMAND_UNMARK:
             try {
-                markTaskUndone(Integer.parseInt(input.substring(Command.COMMAND_UNMARK.length())) - 1);
+                markTaskUndone(Integer.parseInt(input.substring(Command.COMMAND_UNMARK.length()).trim()) - 1);
             } catch (NumberFormatException e) {
-                System.out.println("☹ OOPS!!! duke.task.Task number should be an integer.");
+                System.out.println("☹ OOPS!!! Task number should be an integer.");
                 printDivider();
             } catch (InvalidTaskNumberException e) {
                 System.out.println("☹ OOPS!!! The task specified does not exist in the task list.");
