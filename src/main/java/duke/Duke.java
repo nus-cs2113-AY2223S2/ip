@@ -5,6 +5,7 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
 public class Duke {
 
@@ -12,15 +13,29 @@ public class Duke {
     // private static Task[] taskList = new Task[MAX_TASKS];
     private static ArrayList<Task> taskList = new ArrayList<Task>();
     // private static int listCount = 0;
+=======
+import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
+public class Duke {
+    private static ArrayList<Task> taskList = new ArrayList<Task>();
+>>>>>>> branch-Level-7
 
     public static void main(String[] args) {
+        FileProcessor fileProcessor = null;
+        try {
+            fileProcessor = new FileProcessor(taskList);
+        } catch (IOException e) {
+            System.out.println("Error");
+        }
         Ui ui = new Ui();
         Parser parser = new Parser();
         ui.greet();
         String input = ui.getUserInput();
-        while(input.compareTo("bye") != 0) {
+        while (input.compareTo("bye") != 0) {
             String[] parsedInput;
-            try{
+            try {
                 parsedInput = parser.parseInput(input);
             } catch (DukeException e) {
                 System.out.println("Oops, I'm sorry, I don't know what that means :(");
@@ -39,7 +54,7 @@ public class Duke {
                 input = ui.getUserInput();
                 continue;
             }
-            switch(parsedInput[0]) {
+            switch (parsedInput[0]) {
                 case ("todo"):
                     taskList.add(new ToDo(parsedInput[1]));
                     break;
@@ -48,27 +63,35 @@ public class Duke {
                         taskList.add(new Deadline(parsedInput[1], parsedInput[2]));
                     } catch (ArrayIndexOutOfBoundsException e) {
                         System.out.println("Oops, deadline input has the wrong format");
+<<<<<<< HEAD
                     } catch (IndexOutOfBoundsException e) {
                         System.out.println("Oops, deadline task number does not exist");
+=======
+
+>>>>>>> branch-Level-7
                     }
                     break;
                 case ("event"):
                     taskList.add(new Event(parsedInput[1], parsedInput[2], parsedInput[3]));
                     break;
-                case("mark"):
+                case ("mark"):
                     try {
                         taskList.get(Integer.parseInt(parsedInput[1]) - 1).setDone();
                     } catch (NumberFormatException e) {
                         System.out.println("Oops, mark task description should be an integer");
+<<<<<<< HEAD
                     } catch (IndexOutOfBoundsException e) {
                         System.out.println("Oops, mark task number does not exist");
+=======
+>>>>>>> branch-Level-7
                     }
                     break;
-                case("unmark"):
+                case ("unmark"):
                     try {
                         taskList.get(Integer.parseInt(parsedInput[1]) - 1).setUndone();
                     } catch (NumberFormatException e) {
                         System.out.println("Oops, unmark task description should be an integer");
+<<<<<<< HEAD
                     } catch (IndexOutOfBoundsException e) {
                         System.out.println("Oops, unmark task number does not exist");
                     }
@@ -87,10 +110,18 @@ public class Duke {
                         System.out.println("Oops, delete task number does not exist");
                     }
                     break;
+=======
+                    }
+                    break;
+                case ("list"):
+                    ui.printList(taskList);
+                    break;
+>>>>>>> branch-Level-7
             }
             ui.showLine();
             input = ui.getUserInput();
-         }
+        }
+        fileProcessor.writeFile(taskList);
         ui.farewell();
     }
 }
