@@ -180,7 +180,7 @@ public class Duke {
     private static void printTaskAddedStatement(int currentIndex, Task task) {
         printDottedLine();
         System.out.println("Got it. I've added this task:");
-        System.out.println(task);
+        System.out.println(" " + task);
         if (currentIndex == 1) {
             System.out.println("Now you have " + currentIndex + " task in the list.");
         } else {
@@ -192,7 +192,7 @@ public class Duke {
     private static void printTaskDeletedStatement(int currentIndex, Task task) {
         printDottedLine();
         System.out.println("Noted. I've removed this task:");
-        System.out.println(task);
+        System.out.println(" " + task);
         if (currentIndex == 1) {
             System.out.println("Now you have " + currentIndex + " task in the list.");
         } else {
