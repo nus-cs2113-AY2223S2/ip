@@ -13,6 +13,8 @@ public class Duke {
 
     public static void main(String[] args) {
         IO.printGreeting();
+        IO.openFile();
+        IO.printHLine();
 
         // Input variables initialised.
         Scanner myScanner = new Scanner(System.in);
@@ -64,6 +66,7 @@ public class Duke {
             return handleDelete(commandArgs);
         case IO.COMMAND_BYE:
             IO.printExitMessage();
+            TaskList.writeAllToFile();
             System.exit(0);
             // Fallthrough (If somehow cannot exit? LOL)
         default:

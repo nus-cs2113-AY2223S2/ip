@@ -1,7 +1,10 @@
 package task;
 
+import io.IO;
+
 /**
  * Abstract class to cover different task types.
+ * Individual tasks. Has to be inherited.
  */
 
 public abstract class Task {
@@ -41,4 +44,14 @@ public abstract class Task {
         this.isDone = false;
         return "Marked as undone: " + this;
     }
+
+    /**
+     * To be used by child classes to append their own file write.
+     * @return String in the format " 1/0 | description"
+     */
+    public String getFileWriteFormat() {
+        String done = isDone ? "1" : "0";
+        return String.format("%s %s %s %s", IO.FILE_DELIMITER,
+                done, IO.FILE_DELIMITER, description);
+    };
 }

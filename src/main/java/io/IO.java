@@ -2,19 +2,19 @@ package io;
 
 import task.Task;
 import task.TaskList;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.FileWriter;
+import java.util.Scanner;
 
-/*
-* Use this class for INPUT and OUTPUT (IO) related stuff
-* Got some inspiration from Contacts (Week 4)
-*/
+/**
+ * This class manages Input and Output for Duke.<br>
+ * Includes Input validation, processing arguments, and also file writing I/O.<br>
+ * Credits to Contacts in Week 4 for input processing/handling methods.
+ * @author Choong Zhan Hong
+ */
 public final class IO {
-    /**
-     * ==============================================================
-     * This section will cover Inputs,
-     * Input Validations,
-     * and Input Processing Methods
-     * ==============================================================
-     */
     public static final String COMMAND_HELP = "help";
     public static final String COMMAND_LIST = "list";
     public static final String COMMAND_BYE = "bye";
@@ -118,7 +118,7 @@ public final class IO {
             "██║     ██║  ██║██║     ██║  ██║\n" +
             "╚═╝     ╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝";
     public static final String MESSAGE_INTRO =
-            "Hello! I'm PAPA, your Personal Assistant, Personal Angel." +
+            "Hello! I'm PAPA, your Personal Assistant, Personal Angel.\n" +
             "What can I do for you? Type 'help' for a list of commands.";
     public static final String MESSAGE_OUTRO = "Bye. Hope to see you again soon!";
     public static final String MESSAGE_TASK_ADDED =
@@ -143,8 +143,7 @@ public final class IO {
             "Erm, do make sure to give me the correct task number." +
             "Type 'task' to list out the existing tasks!";
 
-
-    // Prints a horizontal line of 32 '=' characters.
+    // Prints line separator.
     public static void printHLine() {
         System.out.println("================================");
     }
@@ -169,5 +168,117 @@ public final class IO {
         String output = MESSAGE_TASK_ADDED + '\n' + task + '\n';
         output += "Total number of tasks: " + TaskList.getNumberOfTasks();
         return output;
+    }
+
+    private static final String DIRECTORY_PATH = "data";
+    private static final String FILE_PATH = "data/papatask.txt";
+    // Using this in Task.java, hence public. Consider possibility of only using in IO?
+    public static final String FILE_DELIMITER = "|";
+
+    /**
+     * Open the saved tasks file upon startup of PAPA.<br>
+     * Checks if the directory and text file exist, and writes to the file.
+     */
+    public static void openFile() {
+        File dir = new File(DIRECTORY_PATH);
+        // Check if directory exists
+        if (!dir.exists()) {
+            // Make directory.
+            if (dir.mkdir()) {
+                System.out.println("Successfully created directory in " + dir.getAbsolutePath());
+            } else {
+                // Unable to create directory.
+                System.out.println("Sorry, I had trouble creating directory.");
+            }
+        }
+        // Now create the text file to input/output.
+        File f = new File(FILE_PATH);
+        // Check if file exists.
+        if (!f.exists()) {
+            try {
+                f.createNewFile();
+            } catch (IOException e) {
+                System.out.println("An error occurred in creating a new file.");
+            }
+            System.out.println("New file created in " + f.getAbsolutePath());
+        } else {
+            System.out.println("Loaded your saved tasks.");
+        }
+
+        readFile(FILE_PATH);
+    }
+
+    /**
+     * Appends input text to the save file.
+     * @param textToAdd The String to append to the file.
+     * @throws IOException Unable to write successfully.
+     */
+    public static void writeToFile(String textToAdd) {
+        try {
+            // 2nd argument true: indicates to append instead of overwrite.
+            // I want to overwrite.
+            FileWriter writer = new FileWriter(FILE_PATH);
+            writer.write(textToAdd);
+            // Add newline
+            writer.write(System.lineSeparator());
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("Something wrong: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Read the file at the file save data path
+     */
+    public static void readFile(String path) {
+        File f = new File(path);
+        Scanner s;
+        try {
+            s = new Scanner(f);
+            while (s.hasNext()) {
+                readLineAsTask(s.nextLine());
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found >_<: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Reads the line in the save file and invokes TaskList to add task, if any.
+     * @param line String line in the text file.
+     */
+    private static void readLineAsTask(String line) {
+        if (line.isBlank()) {
+            return;
+        }
+        // Delimiter and any amount of whitespace on left/right. Note, need to escape regex \\.
+        String[] linesSplit = line.split("\\s+" + "\\" + FILE_DELIMITER + "\\s+");
+
+
+        switch (linesSplit[0]) {
+        case "T":
+            // Has to contain T, isdone, and Description
+            if (linesSplit.length == 3) {
+                TaskList.addTaskFromFile(linesSplit);
+                break;
+            }
+            // FALLTHROUGH
+        case "D":
+            // Has to contain D, isdone, description, by
+            if (linesSplit.length == 4) {
+                TaskList.addTaskFromFile(linesSplit);
+                break;
+            }
+            // FALLTHROUGH
+        case "E":
+            // Has to contain E, isdone, description, from, to
+            if (linesSplit.length == 5) {
+                TaskList.addTaskFromFile(linesSplit);
+                break;
+            }
+            // FALLTHROUGH
+        default:
+            System.out.println("I think there's an error with the file.");
+        }
     }
 }
