@@ -2,16 +2,21 @@ import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
+
+import java.io.IOException;
 import java.util.Scanner;
 
+
 public class Duke {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Scanner in = new Scanner(System.in);
         int tasksSize = 100;
         Task[] tasks = new Task[tasksSize];
         int currentIndex = 0;
         int maxIndex = tasksSize - 1;
-
+        Save.filePath = "./taskSave.txt";
+        Save.createSaveFile();
+        Save.loadSaveFile(tasks);
         printHelloStatement();
         while (true) {
             String input;
@@ -27,6 +32,7 @@ public class Duke {
                     int taskIndex = Integer.parseInt(temp[1]);
                     Task curTask = tasks[taskIndex - 1];
                     curTask.markAsDone();
+                    Save.updateSaveFile(tasks);
                     printTaskStatusStatement(curTask, "mark");
                 } catch (IndexOutOfBoundsException exception) {
                     printDottedLine();
@@ -36,6 +42,8 @@ public class Duke {
                     printDottedLine();
                     System.out.println("☹ OOPS!!! The description of a mark is invalid");
                     printDottedLine();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
             } else if (input.startsWith("unmark")) {
                 try {
@@ -43,6 +51,7 @@ public class Duke {
                     int taskIndex = Integer.parseInt(temp[1]);
                     Task curTask = tasks[taskIndex - 1];
                     curTask.unmarkAsDone();
+                    Save.updateSaveFile(tasks);
                     printTaskStatusStatement(curTask, "unmark");
                 } catch (IndexOutOfBoundsException exception) {
                     printDottedLine();
@@ -52,6 +61,10 @@ public class Duke {
                     printDottedLine();
                     System.out.println("☹ OOPS!!! The description of a unmark is invalid");
                     printDottedLine();
+                } catch (IOException e) {
+                    printDottedLine();
+                    System.out.println("☹ OOPS!!! The file save failed");
+                    printDottedLine();
                 }
             } else if (input.startsWith("todo") & (currentIndex <= maxIndex)) {
                 try {
@@ -60,11 +73,14 @@ public class Duke {
                     ToDo todo = new ToDo(currentIndex + 1, description);
                     tasks[currentIndex] = todo;
                     currentIndex++;
+                    Save.updateSaveFile(tasks);
                     printTaskAddedStatement(currentIndex, todo);
                 } catch (IndexOutOfBoundsException exception) {
                     printDottedLine();
                     System.out.println("☹ OOPS!!! The description of a todo cannot be empty");
                     printDottedLine();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
             } else if (input.startsWith("deadline") & (currentIndex <= maxIndex)) {
                 try {
@@ -74,11 +90,14 @@ public class Duke {
                     Deadline deadline = new Deadline(currentIndex + 1, description, by);
                     tasks[currentIndex] = deadline;
                     currentIndex++;
+                    Save.updateSaveFile(tasks);
                     printTaskAddedStatement(currentIndex, deadline);
                 } catch (IndexOutOfBoundsException exception) {
                     printDottedLine();
                     System.out.println("☹ OOPS!!! The description of a deadline cannot be empty");
                     printDottedLine();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
             } else if (input.startsWith("event") & (currentIndex <= maxIndex)) {
                 try {
@@ -89,11 +108,14 @@ public class Duke {
                     Event event = new Event(currentIndex + 1, description, from, to);
                     tasks[currentIndex] = event;
                     currentIndex++;
+                    Save.updateSaveFile(tasks);
                     printTaskAddedStatement(currentIndex, event);
                 } catch (IndexOutOfBoundsException exception) {
                     printDottedLine();
                     System.out.println("☹ OOPS!!! The description of a event cannot be empty");
                     printDottedLine();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
             } else if ((input.startsWith("todo") | input.startsWith("deadline") | input.startsWith("event"))
                     & (currentIndex > maxIndex)) {
