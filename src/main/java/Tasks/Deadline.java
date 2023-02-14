@@ -11,6 +11,11 @@ public class Deadline extends Task {
     public String describeTask() {
         return "[D]" + super.describeTask() + " (by: " + dueDate + ")";
     }
+
+    @Override
+    public String describeTaskForFile() {
+        return "D | " + (isDone ? "1" : "0") + " | " + description + " | " + dueDate;
+    }
 }
     
 
