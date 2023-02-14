@@ -5,6 +5,7 @@ import exception.InvalidArgumentException;
 import exception.PromptCannotBeEmptyException;
 import Task.Task;
 import Task.Todo;
+import database.DatabaseManager;
 import Task.Deadline;
 import Task.Event;
 import IO.Input;
@@ -14,7 +15,7 @@ public class Duke {
     public static void main(String[] args) throws InvalidArgumentException, IOException, PromptCannotBeEmptyException {
         Scanner sc = new Scanner(System.in);
         Output.printIntroduction();
-        ArrayList<Task> items = new ArrayList<Task>();
+        ArrayList<Task> items = DatabaseManager.FileRead();
         String input = "";
 
         while (!input.equals("bye")) {
@@ -88,7 +89,7 @@ public class Duke {
 
 
         }
-
+        DatabaseManager.FIleWrite(items);
         Output.printGoodbye();
     }
 }
