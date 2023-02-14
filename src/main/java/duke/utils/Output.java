@@ -109,5 +109,22 @@ public class Output {
                 + "\t____________________________________________________________");
     }
 
+	public static void printMatchingTask(ArrayList<Task> tasks, String keyword) {
+		System.out.println("\t____________________________________________________________\r\n"
+                + "\t Here are the matching tasks in your list:");
+        if (tasks.size() == 0) {
+            System.out.println("\t No tasks is currently available!");
+        } else {
+            for (int i = 0; i < tasks.size(); i++) {
+                if(tasks.get(i).getTaskDescription().contains(keyword)) {
+                	System.out.println("\t " + (i + 1) + ". " + tasks.get(i).toString());
+                }         	
+            }
+        }
+
+        System.out.println("\n\t____________________________________________________________\r\n");
+		
+	}
+
 
 }
