@@ -11,10 +11,14 @@ import duke.task.ToDo;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Scanner;
 import java.io.File;
 import java.io.FileReader;
 import java.io.BufferedReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.Path;
+import java.util.Scanner;
+
 
 public class Duke {
 
@@ -56,9 +60,28 @@ public class Duke {
                 initialiseTaskList(line);
             }
         } catch (FileNotFoundException e) {
-            System.out.println("File not found.");
+            File dir = new File("./data");
+            if (!dir.isDirectory()) {
+                System.out.println("Data directory not found. Creating new data directory");
+                Path path = Paths.get("./data");
+                try {
+                    Files.createDirectories(path);
+                } catch (IOException f) {
+                    System.out.println("Failed to create directory");
+                }
+            }
+            if (!file.isFile()) {
+                System.out.println("File not found. Creating new text file");
+                Path filePath = Paths.get("./data/duke.txt");
+                try {
+                    Files.createFile(filePath);
+                } catch (IOException f) {
+                    System.out.println("Failed to create file");
+                }
+            }
+
         } catch (IOException e) {
-            System.out.println("Idk why need this yet.");
+            System.out.println("Failed to create file or directory");
         }
     }
 
@@ -80,6 +103,7 @@ public class Duke {
         if (task[1].contains("X")) {
             try {
                 markTaskDone(taskCounter-1);
+                //Is actually redundant as will never happen
             } catch (NumberFormatException e) {
                 System.out.println("☹ OOPS!!! Task number should be an integer.");
                 printDivider();
