@@ -14,7 +14,8 @@ public class Deadline extends Task{
 
     @Override
     public void print() {
-        System.out.println(taskChar + status + " " + taskDescription + " (by: " + by + ")");
+        formattedTask = taskChar + status + " " + taskDescription + " (by: " + by + ")";
+        System.out.println(formattedTask);
     }
 
 }

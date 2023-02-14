@@ -5,6 +5,7 @@ public class Task {
     public String taskDescription;
     public String status;
     public String taskChar;
+    public String formattedTask;
 
     public Task(String taskDescription) {
         this.taskDescription = taskDescription;
@@ -22,6 +23,7 @@ public class Task {
     }
 
     public void print() {
-        System.out.println(taskChar + status + " " + taskDescription);
+        formattedTask = taskChar + status + " " + taskDescription;
+        System.out.println(formattedTask);
     }
 }
