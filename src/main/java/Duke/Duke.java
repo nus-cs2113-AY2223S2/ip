@@ -10,11 +10,10 @@ import Duke.exception.DukeException;
 public class Duke {
 	public static void main (String[] args) {
 		printStart ();
-
 		Scanner scan = new Scanner (System.in);
 		String input = scan.nextLine ();
-		Task tasks[] = new Task[100];
-		int count = 0;
+		Task[] tasks = fileIO.readFile ();
+		int count = fileIO.getCount ();
 		while (!("bye".equalsIgnoreCase (input)) && !(input.isEmpty ())) {
 			try {
 				count = checkInput (input, tasks, count);
@@ -36,8 +35,10 @@ public class Duke {
 		if (input.length () > 4) {
 			if (input.startsWith ("mark") || input.startsWith ("unmark")) {
 				changeStatus (input, tasks);
+				fileIO.writeFile (tasks,count);
 			} else if (input.startsWith ("todo") || input.startsWith ("deadline") || input.startsWith ("event")) {
 				count = addTask (input, tasks, count);
+				fileIO.writeFile (tasks,count);
 			} else {
 				printLine ();
 				throw new DukeException ("OOPS!!! The description of a " + input + " cannot be empty.");
@@ -72,7 +73,7 @@ public class Duke {
 			tasks[count] = new Event (arrTask[0], eventTask[0], eventTask[1]);
 		}
 
-		System.out.println (tasks[count].getType () + tasks[count].toString ());
+		System.out.println ("["+tasks[count].getType () +"]"+ tasks[count].toString ());
 		count++;
 		System.out.println ("Now you have " + count + (count > 1 ? " tasks " : " task ") + "in the list.");
 		printLine ();
@@ -92,7 +93,7 @@ public class Duke {
 
 		printLine ();
 		System.out.println ("Nice! I've marked this task as " + (tasks[index].getIsDone () ? "done" : "undone") + ":");
-		System.out.println (tasks[index].getType () + tasks[index].toString ());
+		System.out.println ("["+tasks[index].getType () +"]"+ tasks[index].toString ());
 		printLine ();
 	}
 
@@ -101,7 +102,7 @@ public class Duke {
 		System.out.println ("Here are the tasks in your list:");
 
 		for (int i = 0; i < count; i++) {
-			System.out.println ((i + 1) + ". " + tasks[i].getType () + tasks[i].toString ());
+			System.out.println ((i + 1) + ". " + "["+tasks[i].getType () +"]"+ tasks[i].toString ());
 		}
 
 		printLine ();
