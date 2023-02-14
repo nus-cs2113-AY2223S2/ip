@@ -12,6 +12,12 @@ then
     rm ACTUAL.TXT
 fi
 
+# delete data & duke.txt from previous run
+if [ -e "./data" ]
+then
+    rm data -rf
+fi
+
 # compile the code into the bin folder, terminates if error occurred
 if ! javac -cp ../src/main/java -Xlint:none -d ../bin ../src/main/java/*.java
 then
@@ -28,6 +34,41 @@ dos2unix ACTUAL.TXT EXPECTED-UNIX.TXT
 
 # compare the output to the expected output
 diff ACTUAL.TXT EXPECTED-UNIX.TXT
+if [ $? -eq 0 ]
+then
+    echo "Test result: PASSED"
+    exit 0
+else
+    echo "Test result: FAILED"
+    exit 1
+fi
+
+# convert to UNIX format
+cp EXPECTED_DUKE.TXT EXPECTED_DUKE-UNIX.TXT
+dos2unix ./data/duke.txt EXPECTED_DUKE-UNIX.TXT
+
+# compare the duke.txt to the expected_duke.txt
+diff ./data/duke.txt EXPECTED_DUKE-UNIX.TXT
+if [ $? -eq 0 ]
+then
+    echo "Test result: PASSED"
+    exit 0
+else
+    echo "Test result: FAILED"
+    exit 1
+fi
+
+# ------ Rerun Duke to test if data loaded correctly ------
+
+# run the program, feed commands from input.txt file and redirect the output to the ACTUAL.TXT
+java -classpath ../bin Duke < input2.txt > ACTUAL2.TXT
+
+# convert to UNIX format
+cp EXPECTED2.TXT EXPECTED2-UNIX.TXT
+dos2unix ACTUAL2.TXT EXPECTED2-UNIX.TXT
+
+# compare the output to the expected output
+diff ACTUAL2.TXT EXPECTED2-UNIX.TXT
 if [ $? -eq 0 ]
 then
     echo "Test result: PASSED"
