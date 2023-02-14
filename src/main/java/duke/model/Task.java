@@ -9,21 +9,16 @@ public class Task {
     protected boolean isDone;
     public static int numberOfTasks = 0;
 
-    public static String[] parseCommand (String command) throws InvalidCommandException {
-        String[] commandArray = command.split(" ");
-        if (commandArray.length < 2){
+    public Task (String[] descriptionArray) throws InvalidCommandException{
+        if (descriptionArray.length < 1){
             throw new InvalidCommandException("Description of task cannot be empty!");
         }
-        return Arrays.copyOfRange(commandArray, 1, commandArray.length);
-    }
-
-    public Task (String[] descriptionArray) {
         this.taskName = descriptionArray[0];
         this.isDone = false;
         numberOfTasks++;
     }
 
-    public Task (String[] descriptionArray, boolean isDone) {
+    public Task (String[] descriptionArray, boolean isDone) throws InvalidCommandException {
         this(descriptionArray);
         this.isDone = isDone;
     }

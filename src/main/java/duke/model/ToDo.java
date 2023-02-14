@@ -5,17 +5,10 @@ import duke.exception.InvalidCommandException;
 import java.util.Arrays;
 
 public class ToDo extends Task {
-    public ToDo(String[] descriptionArray) {
+    public ToDo(String[] descriptionArray) throws InvalidCommandException {
         super(descriptionArray);
     }
 
-    public static String[] parseCommand (String command) throws InvalidCommandException {
-        String[] commandArray = command.split(" ");
-        if (commandArray.length < 2){
-            throw new InvalidCommandException("Description of todo cannot be empty!");
-        }
-        return Arrays.copyOfRange(commandArray, 1, commandArray.length);
-    }
     @Override
     public String toString() {
         String todoPrefix = "[T]";

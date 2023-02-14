@@ -13,14 +13,14 @@ public class Duke {
         Scanner scanner = new Scanner(System.in);
         printDuke();
         String input;
-        String command;
         String outputMessage;
         while (true) {
             input = scanner.nextLine();
-            command = input.split(" ")[0];
+            Command command = new Command(input);
+            String[] payloadData = command.getPayload().getData();
             int taskIndex;
             try {
-                switch (command) {
+                switch (command.getType()) {
                     case "list":
                         outputMessage = Task.getTasksList(tasks);
                         break;
@@ -37,29 +37,25 @@ public class Duke {
                                 + tasks[taskIndex].toString();
                         break;
                     case "task":
-                        String[] taskDescription = Task.parseCommand(input);
-                        Task newTask = new Task(taskDescription);
+                        Task newTask = new Task(payloadData);
                         tasks[Task.numberOfTasks - 1] = newTask;
                         outputMessage = TASK_ADDED_PREFIX + newTask.toString() + System.lineSeparator() + "\t"
                                 + getTaskAddedPostfix();
                         break;
                     case "todo":
-                        String[] toDoDescription = ToDo.parseCommand(input);
-                        Task newTodo = new ToDo(toDoDescription);
+                        Task newTodo = new ToDo(payloadData);
                         tasks[Task.numberOfTasks - 1] = newTodo;
                         outputMessage = TASK_ADDED_PREFIX + newTodo.toString() + System.lineSeparator() + "\t"
                                 + getTaskAddedPostfix();
                         break;
                     case "deadline":
-                        String[] deadlineDescription = Deadline.parseCommand(input);
-                        Deadline newDeadline = new Deadline(deadlineDescription);
+                        Deadline newDeadline = new Deadline(payloadData);
                         tasks[Task.numberOfTasks - 1] = newDeadline;
                         outputMessage = TASK_ADDED_PREFIX + newDeadline.toString() + System.lineSeparator() + "\t"
                                 + getTaskAddedPostfix();
                         break;
                     case "event":
-                        String[] eventDescription = Event.parseCommand(input);
-                        Task newEvent = new Event(eventDescription);
+                        Task newEvent = new Event(payloadData);
                         tasks[Task.numberOfTasks - 1] = newEvent;
                         outputMessage = TASK_ADDED_PREFIX + newEvent.toString() + System.lineSeparator() + "\t"
                                 + getTaskAddedPostfix();
@@ -68,7 +64,7 @@ public class Duke {
                         outputMessage = "Bye. Hope to see you again soon!";
                         System.exit(0);
                     default:
-                        throw new InvalidCommandException();
+                        throw new InvalidCommandException("Command is unidentified... Sorry :(");
                 }
             } catch (InvalidCommandException e) {
                 outputMessage = e.getMessage();
