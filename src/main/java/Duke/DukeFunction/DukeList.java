@@ -50,4 +50,13 @@ public class DukeList {
             DukePrinter.printLine();
         }
     }
+    public static void deleteTask(int id) {
+        if(isValidID(id)) {
+            System.out.println("Noted. I've removed this task:");
+            taskList.get(id).printTask();
+            taskList.remove(id);
+            System.out.println("Now you have " + taskList.size() + " tasks in the list.");
+            DukePrinter.printLine();
+        }
+    }
 }

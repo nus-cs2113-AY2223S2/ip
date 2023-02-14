@@ -58,7 +58,6 @@ public class DukeRobot {
         while (true) {
             String commandLine = in.nextLine();
             DukeCommandLineInput command = processCommandLine(commandLine);
-            System.out.println(command.getCommandMessage());
             int id;
             switch (command.getCommandType()){
             case "bye":
@@ -85,6 +84,15 @@ public class DukeRobot {
                     break;
                 }
                 DukeList.unmarkDone(id-1);
+                break;
+            case "delete":
+                try {
+                    id = Integer.parseInt(command.getCommandMessage());
+                } catch (NumberFormatException integerException) {
+                    DukePrinter.printErrorln("Sorry, the id is invalid!");
+                    break;
+                }
+                DukeList.deleteTask(id-1);
                 break;
             case "todo":
                 try {
