@@ -2,8 +2,15 @@
 
 //import required packages
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Ui {
+    //scanner object
+    private Scanner scan;
+    //constructor that creates a new scanner object
+    public Ui(){
+        scan = new Scanner(System.in);
+    }
     //method that prints the welcome message
     public static void printWelcomeMessage(){
         System.out.println("Hello! I'm Duke");
@@ -49,9 +56,18 @@ public class Ui {
             System.out.println((i+1) + "." + tasks.get(i));
         }
     }
+    //method that prints a line
+    public static void printLine(){
+        System.out.println("____________________________________________________________");
+    }
     //method that prints the error message
     public static void printErrorMessage(String errorMessage){
         System.out.println(errorMessage);
     }
+    //method that reads the user input
+    public String readCommand(){
+        return scan.nextLine();
+    }
+
     
 }
