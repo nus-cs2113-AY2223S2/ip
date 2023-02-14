@@ -20,6 +20,7 @@ then
 fi
 
 # run the program, feed commands from input.txt file and redirect the output to the ACTUAL.TXT
+cp save_test.txt /Users/linshang/Documents/cs2113/ip/save.txt
 java -classpath ../bin duke.Duke < input.txt > ACTUAL.TXT
 
 # convert to UNIX format

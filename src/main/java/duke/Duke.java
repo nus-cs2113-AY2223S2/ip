@@ -26,7 +26,7 @@ public class Duke {
     // max number of tasks
     public static final int CAPACITY = 100;
     // list of all tasks
-    private static Task[] allTasks;
+    public static Task[] allTasks;
     private static Scanner in = new Scanner(System.in);
 
 
@@ -40,12 +40,15 @@ public class Duke {
             String param = commandAndParam[1];
             try {
                 executeCommand(command, param);
+                Storage.updateDuke();
             } catch (IllegalCommandException e) {
                 Output.printInvalidCommand();
             } catch (IndexOutOfBoundsException e) {
                 Output.printErrorForStorage();
             } catch (EmptyTaskException e) {
                 Output.printEmptyTask();
+            } catch (IOException e) {
+                Output.printErrorForIO();
             }
         }
     }
@@ -111,10 +114,7 @@ public class Duke {
     }
 
     private static boolean isFullCapacity() {
-        if (Task.getCounter() < CAPACITY) {
-            return false;
-        }
-        return true;
+        return Task.getCounter() >= CAPACITY;
     }
 
     private static void initTasks() {

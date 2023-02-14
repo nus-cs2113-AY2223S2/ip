@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import static duke.Duke.CAPACITY;
+import static duke.Duke.allTasks;
 
 public class Storage {
     public static final String FILE_PATH = "/Users/linshang/Documents/cs2113/ip/save.txt";
@@ -64,34 +65,56 @@ public class Storage {
 
     private static Task[] readFileContents(File save) throws FileNotFoundException {
         Scanner s = new Scanner(save);
-        Task[] allTasks = new Task[CAPACITY];
+        Task[] newAllTasks = new Task[CAPACITY];
         int counter = 0;
         while (s.hasNext()) {
             try {
-                allTasks[counter] = addTask(s.nextLine());
+                newAllTasks[counter] = addTask(s.nextLine());
                 counter++;
             } catch (InvalidSaveFile e) {
                 Output.printInvalidSaveFile(counter);
             }
         }
-        return allTasks;
+        return newAllTasks;
     }
 
     public static Task[] initDuke() throws IOException {
-        Task[] allTasks = new Task[CAPACITY];
+        Task[] newAllTasks = new Task[CAPACITY];
         File save = new File(FILE_PATH);
         try {
-            allTasks = readFileContents(save);
-            return allTasks;
+            newAllTasks = readFileContents(save);
+            return newAllTasks;
         } catch (FileNotFoundException e) {
             Output.printErrorFileNotFound();
             save.createNewFile();
-            return allTasks;
+            return newAllTasks;
         }
     }
 
-    private static void updateDuke() throws IOException {
-        FileWriter overwriteFile = new FileWriter(FILE_PATH);
-        // write new save.txt
+    public static void updateDuke() throws IOException {
+        FileWriter overwrite = new FileWriter(FILE_PATH);
+        for (int i = 0; i < Task.getCounter(); i++) {
+            Task task = allTasks[i];
+            String desc = task.getDescription();
+            String type = task.getType();
+            String stat = task.getStatus();
+            switch (type) {
+            case "todo":
+                overwrite.write("T | " + stat + " | " + desc + "\n");
+                break;
+            case "deadline":
+                Deadline tempDeadline = (Deadline) task;
+                String by = tempDeadline.getBy();
+                overwrite.write("D | " + stat + " | " + desc + " /by " + by + "\n");
+                break;
+            case "event":
+                Event tempEvent = (Event) task;
+                String from = tempEvent.getFrom();
+                String to = tempEvent.getTo();
+                overwrite.write("E | " + stat + " | " + desc + " /from " + from + " /to " + to + "\n");
+                break;
+            }
+        }
+        overwrite.close();
     }
 }

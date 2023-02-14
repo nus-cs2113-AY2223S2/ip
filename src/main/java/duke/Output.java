@@ -87,7 +87,7 @@ public class Output {
 
     public static void printErrorForIO() {
         System.out.println(DIVIDER +
-                "Something went wrong with the file saved on the hard disk :(\n" +
+                "Something went wrong with the hard disk :(\n" +
                 DIVIDER);
     }
 
