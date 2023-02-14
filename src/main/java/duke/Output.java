@@ -1,10 +1,9 @@
 package duke;
 
 import duke.task.Task;
-
 import java.util.ArrayList;
-
 import static duke.Duke.allTasks;
+import static duke.Storage.FILE_PATH;
 
 public class Output {
     public static final String DIVIDER = "____________________________________________________________\n";
@@ -93,6 +92,18 @@ public class Output {
         }
     }
 
+    public static void printErrorForIO() {
+        System.out.println(DIVIDER +
+                "Something went wrong with the hard disk :(\n" +
+                DIVIDER);
+    }
+
+    public static void printErrorFileNotFound() {
+        System.out.println(DIVIDER +
+                "Save file not found, initialising empty list...\n" +
+                DIVIDER);
+    }
+
     public static void printInvalidDeadline() {
         System.out.println(INVALID_DEADLINE);
     }
@@ -103,6 +114,12 @@ public class Output {
 
     public static void printInvalidCommand() {
         System.out.println(INVALID_COMMAND);
+    }
+
+    public static void printInvalidSaveFile(int counter) {
+        System.out.println(DIVIDER + "There is an error in save.txt at line " + (counter+1) + "\n" +
+                "Task " + (counter+1) + " has been excluded. You can edit the save file at:\n" +
+                FILE_PATH + "\n" + DIVIDER);
     }
 
     public static void printEmptyTask() {
