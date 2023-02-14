@@ -56,4 +56,43 @@ public class TaskManager {
         }
     }
 
+    public static void readTaskFromFile(String line) {
+        //why do i need these backslashes?
+        String[] taskDetails = line.split("\\|");
+        String taskType = taskDetails[0].trim();
+        String taskStatus = taskDetails[1].trim();
+        String taskDescription = taskDetails[2].trim();
+        // System.out.println("taskDetails: " + taskDetails[0] + taskDetails[1] + taskDetails[2]);
+        
+        switch (taskType) {
+            case "T":
+            Task todo = new Tasks.Todo(taskDescription);
+            if (taskStatus.equals("1")) {
+                todo.markAsDone();
+            }
+            addTask(todo);
+            break;
+            case "D":
+            String taskDeadline = taskDetails[3].trim();
+            Task deadline = new Tasks.Deadline(taskDescription, taskDeadline);
+            if (taskStatus.equals("1")) {
+                deadline.markAsDone();
+            }
+            addTask(deadline);
+            break;
+            case "E":
+            String[] taskDate = taskDetails[3].split("-");
+            String taskDateFrom = taskDate[0].trim();
+            String taskDateTo = taskDate[1].trim();
+            Task event = new Tasks.Event(taskDescription, taskDateFrom, taskDateTo);
+            if (taskStatus.equals("1")) {
+                event.markAsDone();
+            }
+            addTask(event);
+            break;
+        default:
+            System.out.println("Error reading file");
+            break;
+        }
+    }
 }

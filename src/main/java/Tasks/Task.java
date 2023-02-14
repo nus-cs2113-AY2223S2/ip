@@ -23,4 +23,8 @@ public class Task {
     public String describeTask() {
         return "[" + getStatusIcon() + "] " + description;
     }
+
+    public String describeTaskForFile() {
+        return  "";
+    }
 }

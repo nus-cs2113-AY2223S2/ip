@@ -13,5 +13,10 @@ public class Event extends Task {
     public String describeTask() {
         return "[E]" + super.describeTask() + " (from: " + eventFrom + " to: " + eventTo + ")";
     }
+
+    @Override
+    public String describeTaskForFile() {
+        return "E | " + (isDone ? "1" : "0") + " | " + description + " | " + eventFrom + "-" + eventTo; 
+    }
 }
     

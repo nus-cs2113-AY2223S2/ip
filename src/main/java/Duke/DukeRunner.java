@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import Handlers.TaskManager;
 import Handlers.Parser;
+import Handlers.StorageManager;
 import Tasks.Task;
 import java.util.ArrayList;
 
@@ -12,7 +13,9 @@ public class DukeRunner {
     public static void main(String[] args) {
         System.out.println("Hello! I'm Duke\nWhat can I do for you?\n");
         System.out.println("==============================\n");
+        StorageManager.loadFileContents();
         Scanner in = new Scanner(System.in);
+
         boolean isComplete = false;
 
         while (!isComplete) {
@@ -58,6 +61,7 @@ public class DukeRunner {
         }
 
         in.close();
+        StorageManager.saveFileContents();
         System.out.println("Bye. Hope to see you again soon!");
     }
 }
