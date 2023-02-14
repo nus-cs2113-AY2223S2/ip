@@ -25,8 +25,10 @@ public class Duke {
             boolean created = DATAFILE.createNewFile();
             if (created) {
                 System.out.println("Data file created at " + DATAFILE.getAbsolutePath());
+                printDashLine();
             } else {
                 System.out.println("Data file already exists at " + DATAFILE.getAbsolutePath());
+                printDashLine();
             }
         } catch (IOException e) {
             System.out.println("An error occurred while creating the data file.");
