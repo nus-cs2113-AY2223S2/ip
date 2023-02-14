@@ -32,11 +32,23 @@ public class Duke {
                 }
                 System.out.println("____________________________________________________________\n");
             }
-            //helo
+
+            if (line.contains("delete") && !tasks.isEmpty()){
+                int index = line.indexOf(" ");
+                if (line.length() > 7) {
+                    String str = line.substring(index + 1);
+                    int pos = Integer.parseInt(str);
+                    System.out.println("Noted! The task has been removed \n");
+                    System.out.println("\t" + tasks.get(pos - 1));
+                    tasks.remove(pos - 1);
+                    System.out.println("You have " + tasks.size() + " number of tasks in you list.");
+                    System.out.println("____________________________________________________________\n");
+                }
+            }
 
             else if (line.contains("unmark")) {
                 int index = line.indexOf(" ");
-                if (line.length() > 7 && (tasks.size() >= index)){
+                if (line.length() > 7){
                     String str = line.substring(index + 1);
                     int pos = Integer.parseInt(str);
                     Task taskUnmarked = tasks.get(pos - 1);
@@ -53,7 +65,7 @@ public class Duke {
 
             else if (line.contains("mark")) {
                 int index = line.indexOf(" ");
-                if (line.length() > 5 && (tasks.size() >= index)){
+                if (line.length() > 5){
                     String str = line.substring(index + 1);
                     int pos = Integer.parseInt(str);
                     Task taskMarked = tasks.get(pos - 1);
@@ -125,7 +137,7 @@ public class Duke {
                 System.out.println("____________________________________________________________\n");
             }
 
-            else {
+            else if (!line.equals("list")){
                 System.out.println("🤪Sorry enter a valid Duke command");
                 System.out.println("____________________________________________________________\n");
             }
