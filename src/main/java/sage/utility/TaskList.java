@@ -102,6 +102,9 @@ public class TaskList {
      */
     public void deleteTask(String taskIndex) {
         try {
+            if (taskIndex == null) {
+                throw new MissingParameterException();
+            }
             int taskNumber = Integer.parseInt(taskIndex);
             if (taskNumber <= 0 || taskNumber > list.size()) {
                 throw new OutOfBoundException();
@@ -111,8 +114,8 @@ public class TaskList {
             }
         } catch (OutOfBoundException e) {
             e.errorDelete();
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
+        } catch (MissingParameterException e) {
+            e.missingParamTaskIndex();
         }
     }
 
@@ -122,7 +125,11 @@ public class TaskList {
      * @param taskIndex string that represents the index of the task to unmark (1-Indexed).
      */
     public void markingTask(String taskIndex, Boolean isMark) {
+
         try {
+            if (taskIndex == null) {
+                throw new MissingParameterException();
+            }
             int taskNumber = Integer.parseInt(taskIndex);
             if (taskNumber <= 0 || taskNumber > list.size()) {
                 throw new OutOfBoundException();
@@ -142,9 +149,8 @@ public class TaskList {
             } else {
                 e.errorAlreadyUnmarked();
             }
-
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
+        } catch (MissingParameterException e) {
+            e.missingParamTaskIndex();
         }
 
     }

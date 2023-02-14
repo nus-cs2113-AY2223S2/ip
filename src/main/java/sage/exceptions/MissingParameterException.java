@@ -25,6 +25,6 @@ public class MissingParameterException extends Exception {
     }
 
     public void missingParamTaskIndex() {
-        System.out.println("Delete \"index\" parameter is missing");
+        System.out.println("\"index\" parameter is missing");
     }
 }
