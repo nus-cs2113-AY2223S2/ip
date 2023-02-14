@@ -3,11 +3,12 @@ package duke;
 import duke.exception.InvalidCommandException;
 import duke.model.*;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
     static final String TASK_ADDED_PREFIX = "Got it. I've added this task:" + System.lineSeparator() + "\t";
-    static Task[] tasks = new Task[100];
+    static ArrayList<Task> tasks = new ArrayList<Task>();
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -25,38 +26,38 @@ public class Duke {
                         outputMessage = Task.getTasksList(tasks);
                         break;
                     case "mark":
-                        taskIndex = getTaskIndexFromInput(input);
-                        tasks[taskIndex].markAsDone();
+                        taskIndex = Integer.parseInt(command.getPayload().getData()[0]);
+                        tasks.get(taskIndex).markAsDone();
                         outputMessage = "Nice! I've marked this task as done:" + System.lineSeparator() + "\t"
-                                + tasks[taskIndex].toString();
+                                + tasks.get(taskIndex).toString();
                         break;
                     case "unmark":
-                        taskIndex = getTaskIndexFromInput(input);
-                        tasks[taskIndex].unmarkAsDone();
+                        taskIndex = Integer.parseInt(command.getPayload().getData()[0]);
+                        tasks.get(taskIndex).unmarkAsDone();
                         outputMessage = "Ok, I've marked this task as not done:" + System.lineSeparator() + "\t"
-                                + tasks[taskIndex].toString();
+                                + tasks.get(taskIndex).toString();
                         break;
                     case "task":
                         Task newTask = new Task(payloadData);
-                        tasks[Task.numberOfTasks - 1] = newTask;
+                        tasks.add(newTask);
                         outputMessage = TASK_ADDED_PREFIX + newTask.toString() + System.lineSeparator() + "\t"
                                 + getTaskAddedPostfix();
                         break;
                     case "todo":
                         Task newTodo = new ToDo(payloadData);
-                        tasks[Task.numberOfTasks - 1] = newTodo;
+                        tasks.add(newTodo);
                         outputMessage = TASK_ADDED_PREFIX + newTodo.toString() + System.lineSeparator() + "\t"
                                 + getTaskAddedPostfix();
                         break;
                     case "deadline":
                         Deadline newDeadline = new Deadline(payloadData);
-                        tasks[Task.numberOfTasks - 1] = newDeadline;
+                        tasks.add(newDeadline);
                         outputMessage = TASK_ADDED_PREFIX + newDeadline.toString() + System.lineSeparator() + "\t"
                                 + getTaskAddedPostfix();
                         break;
                     case "event":
                         Task newEvent = new Event(payloadData);
-                        tasks[Task.numberOfTasks - 1] = newEvent;
+                        tasks.add(newEvent);
                         outputMessage = TASK_ADDED_PREFIX + newEvent.toString() + System.lineSeparator() + "\t"
                                 + getTaskAddedPostfix();
                         break;
