@@ -37,7 +37,12 @@ public class Duke {
             printSeperator();
             list.unmarkTask(response.substring(7));
             printSeperator();
-        } else { // add task
+        } else if (response.length() >= 7 && response.substring(0, 7).equals("delete ")) {
+            printSeperator();
+            list.deleteTask(response.substring(7));
+            printSeperator();
+        }
+        else { // add task
             printSeperator();
             list.listAdd(response);
             printSeperator();

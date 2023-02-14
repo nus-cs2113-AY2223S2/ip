@@ -1,6 +1,6 @@
 package duke.tasks;
 
-public class Task {
+public abstract class Task {
     private boolean isComplete;
     private String taskName;
 
@@ -8,6 +8,7 @@ public class Task {
         isComplete = false;
         taskName = null;
     }
+
     public Task(String taskName) {
         isComplete = false;
         this.taskName = taskName;
@@ -29,9 +30,16 @@ public class Task {
         return isComplete;
     }
 
-    // return value doesnt matter because overridden by child class
-    public String listTask(){
-        return null;
+    public abstract String listTask();
+
+    public abstract String taskTypeBoxFormat();
+
+    public String markedBoxFormat() {
+        if (isComplete) {
+            return "[X]";
+        }
+        return "[ ]";
     }
+
 
 }
