@@ -46,7 +46,7 @@ public class Duke {
             try {
                 new File(FILEPATH).createNewFile();
             } catch (IOException ioe) {
-                throw new RuntimeException("Creation of file is failed.", ioe);
+                throw new RuntimeException("Creation of file failed.", ioe);
             }
         }
         printLine();
