@@ -1,26 +1,13 @@
 package duke.task;
 
 public class Task {
-    protected int Index;
     protected String description;
     protected boolean isDone;
+    protected String type;
 
-    public Task(int Index, String description) {
-        this.Index = Index;
+    public Task(String description) {
         this.description = description;
         this.isDone = false;
-    }
-
-    public void setIndex(int taskIndex) {
-        this.Index = taskIndex;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getIndex() {
-        return Index;
     }
 
     public String getDescription() {
@@ -32,7 +19,7 @@ public class Task {
     }
 
     public String getStatusIcon() {
-        return (isDone ? "X" : " "); // mark done task with X
+        return (isDone ? "[X] " : "[ ] "); // mark done task with X
     }
 
     public void markAsDone() {
@@ -43,7 +30,11 @@ public class Task {
         this.isDone = false;
     }
 
+    public String getType() {
+        return type;
+    }
+
     public String toString() {
-        return Index + ".";
+        return "";
     }
 }
