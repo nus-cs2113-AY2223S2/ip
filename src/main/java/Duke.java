@@ -27,9 +27,11 @@ public class Duke {
     private static final int REMOVE_TO = 3;
     private static final int REMOVE_BY = 3;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         File F =  new File("src/main/java/duke.txt");
-
+        if(!F.exists()){
+            F = new File("duke.txt");
+        }
         printWelcomeMessage();
         boolean canPrintFeedback;
         Scanner in = new Scanner(System.in);
@@ -40,6 +42,8 @@ public class Duke {
             loadFileContents(F, tasks,inputCommands,canPrintFeedback);
         }catch(FileNotFoundException e){
             System.out.println("File does not exist.");
+        }catch(IOException e){
+            System.out.println("Could not read file.");
         }
         while (true) {
             String userInput = in.nextLine();
@@ -66,7 +70,8 @@ public class Duke {
     }
 
     private static void loadFileContents(File F, ArrayList<Task>tasks, ArrayList<String>commandInput,
-                                         boolean canPrintFeedback) throws FileNotFoundException {
+                                         boolean canPrintFeedback) throws IOException {
+
         Scanner s = new Scanner(F);
         while(s.hasNext()){
             processUserInput(tasks,commandInput,s.nextLine(),F,canPrintFeedback);
