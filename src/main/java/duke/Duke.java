@@ -6,8 +6,8 @@ import duke.model.*;
 import java.util.Scanner;
 
 public class Duke {
-    static Task[] tasks = new Task[100];
     static final String TASK_ADDED_PREFIX = "Got it. I've added this task:" + System.lineSeparator() + "\t";
+    static Task[] tasks = new Task[100];
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -69,9 +69,6 @@ public class Duke {
             } catch (InvalidCommandException e) {
                 outputMessage = e.getMessage();
             }
-
-
-
             System.out.println("\t____________________________________________________________");
             System.out.println("\t" + outputMessage);
             System.out.println("\t____________________________________________________________");

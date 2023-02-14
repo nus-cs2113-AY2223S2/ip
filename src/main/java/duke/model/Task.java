@@ -30,7 +30,6 @@ public class Task {
             if (i < numberOfTasks - 1) {
                 tasksList += System.lineSeparator()+ "\t";
             }
-
         }
         return tasksList;
     }

@@ -11,8 +11,6 @@ public class Deadline extends Task {
             throw new InvalidCommandException("Incomplete deadline description");
         }
         this.deadlineBy = descriptionArray[1];
-
-
     }
 
     @Override
