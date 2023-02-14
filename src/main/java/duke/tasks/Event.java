@@ -1,6 +1,6 @@
 package duke.tasks;
 
-public class Event extends Task {
+public class Event extends Task implements java.io.Serializable {
     private String startTime;
     private String endTime;
 

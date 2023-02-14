@@ -1,6 +1,6 @@
 package duke.tasks;
 
-public class Deadline extends Task {
+public class Deadline extends Task implements java.io.Serializable {
     private String dueDate;
 
     public Deadline(String taskName, String dueDate) {

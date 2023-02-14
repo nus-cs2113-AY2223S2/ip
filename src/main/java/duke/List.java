@@ -7,7 +7,17 @@ import duke.tasks.Event;
 import duke.tasks.Task;
 import duke.tasks.ToDo;
 
-public class List {
+
+// https://intellij-support.jetbrains.com/hc/en-us/community/posts/206813395-using-gson
+// https://github.com/google/gson/blob/master/UserGuide.md#using-gson
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.FileWriter;
+import java.io.IOException;
+
+
+public class List implements java.io.Serializable {
     private static final int TASKLIST_SIZE = 100;
     private static final char SPACE = ' ';
 
@@ -152,4 +162,7 @@ public class List {
             System.out.println("Given index is invalid!");
         }
     }
+
+
+
 }

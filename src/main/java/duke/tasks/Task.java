@@ -1,6 +1,6 @@
 package duke.tasks;
 
-public class Task {
+public class Task implements java.io.Serializable {
     private boolean isComplete;
     private String taskName;
 
@@ -8,6 +8,7 @@ public class Task {
         isComplete = false;
         taskName = null;
     }
+
     public Task(String taskName) {
         isComplete = false;
         this.taskName = taskName;
@@ -30,7 +31,7 @@ public class Task {
     }
 
     // return value doesnt matter because overridden by child class
-    public String listTask(){
+    public String listTask() {
         return null;
     }
 
