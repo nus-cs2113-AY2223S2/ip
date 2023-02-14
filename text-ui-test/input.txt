@@ -1,3 +1,4 @@
+testing_mode
 add todo todoTask1
 list
 add todo

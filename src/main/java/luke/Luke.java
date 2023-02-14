@@ -35,7 +35,7 @@ public class Luke {
         response = new Response();
         scanner = new Scanner(System.in);
         commands = new ArrayList<String>(
-                Arrays.asList("add", "list", "mark", "unmark", "delete")
+                Arrays.asList("add", "list", "mark", "unmark", "delete", "testing_mode")
         );
         storage = new Storage();
         taskOrganizer = storage.loadData();
@@ -234,6 +234,11 @@ public class Luke {
         }
     }
 
+    private static void executeTestingMode() {
+        storage.clearFiles();
+        response.printTestingMode();
+    }
+
     /**
      * This function takes in the command keyword and description and executes the specified command.
      *
@@ -254,8 +259,11 @@ public class Luke {
         case "unmark":
             executeUnmarkTask(description);
             break;
-        default:
+        case "delete":
             executeDeleteTask(description);
+            break;
+        default:
+            executeTestingMode();
         }
     }
 

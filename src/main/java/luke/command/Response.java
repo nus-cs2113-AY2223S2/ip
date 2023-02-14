@@ -163,11 +163,11 @@ public class Response {
         printLine();
     }
 
-    /** Prints a message telling the user that there is an error when saving a file */
-    public void printFileSavingError() {
+    /** Indicating testing mode is enabled for automated testing. */
+    public void printTestingMode() {
         printLine();
         printSignature();
-        System.out.println("There has been an error saving the files. Please delete and try again.");
+        System.out.println("Testing Mode Enabled.");
         printLine();
     }
 }

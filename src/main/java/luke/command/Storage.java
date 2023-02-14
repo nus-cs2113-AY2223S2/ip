@@ -10,6 +10,7 @@ import luke.task.Task;
 import luke.task.ToDo;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
@@ -270,5 +271,17 @@ public class Storage {
     public void handleSaveError() {
         response.printFileLoadingError();
         System.exit(-1);
+    }
+
+    public void clearFiles() {
+        try {
+            FileWriter IDFile = new FileWriter(getFilePath(ID_FILENAME));
+            IDFile.write("");
+            loadNewData();
+        } catch (IOException e) {
+            handleSaveError();
+        } catch (CreateFileException e) {
+            handleFileCreationError();
+        }
     }
 }
