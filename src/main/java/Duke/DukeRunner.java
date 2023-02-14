@@ -5,6 +5,7 @@ import java.util.Scanner;
 import Handlers.TaskManager;
 import Handlers.Parser;
 import Tasks.Task;
+import java.util.ArrayList;
 
 public class DukeRunner {
 
@@ -18,16 +19,20 @@ public class DukeRunner {
 
             String line = in.nextLine();
             String firstWord = Parser.getFirstWord(line);
-            Task[] taskList = TaskManager.getTaskList();
+            ArrayList<Task> taskList = TaskManager.getTaskList();
 
             switch (firstWord) {
             case "mark":
                 int taskNumberMark = Parser.getTaskNumber(line);
-                TaskManager.markTask(taskList, taskNumberMark);
+                TaskManager.markTask(taskNumberMark);
                 break;
             case "unmark":
                 int taskNumberUnmark = Parser.getTaskNumber(line);
-                TaskManager.unmarkTask(taskList, taskNumberUnmark);
+                TaskManager.unmarkTask(taskNumberUnmark);
+                break;
+            case "delete":
+                int taskNumberDelete = Parser.getTaskNumber(line);
+                TaskManager.deleteTask(taskNumberDelete);
                 break;
             case "list":
                 TaskManager.listTask();
