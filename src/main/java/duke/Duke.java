@@ -60,7 +60,7 @@ public class Duke {
             System.out.println("\t____________________________________________________________");
             System.out.println("\t" + outputMessage);
             System.out.println("\t____________________________________________________________");
-            dataAccess.writeToFile(getTasksList());
+            dataAccess.writeToFile("\t" + getTasksList());
         }
 
     }
