@@ -6,13 +6,11 @@ public class Deadline extends Task {
     protected String deadlineBy;
 
     public Deadline(String[] descriptionArray) throws InvalidCommandException {
-        super(descriptionArray);
-        if (descriptionArray.length < 2){
-            throw new InvalidCommandException("Incomplete deadline description");
+        if (descriptionArray.length < 2) {
+            throw new InvalidCommandException("Incomplete deadline description!");
         }
+        this.taskName = descriptionArray[0];
         this.deadlineBy = descriptionArray[1];
-
-
     }
 
     @Override

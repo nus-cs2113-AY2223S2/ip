@@ -6,11 +6,12 @@ public class Event extends Task {
     protected String eventStart;
     protected String eventEnd;
 
-    public Event(String[] descriptionArray) throws InvalidCommandException{
-        super(descriptionArray);
-        if (descriptionArray.length < 3){
-            throw new InvalidCommandException();
+    public Event(String[] descriptionArray) throws InvalidCommandException {
+        if (descriptionArray.length < 3) {
+            throw new InvalidCommandException("Incomplete description of event!");
         }
+        System.out.println("test");
+        this.taskName = descriptionArray[0];
         this.eventStart = descriptionArray[1];
         this.eventEnd = descriptionArray[2];
     }
