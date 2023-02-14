@@ -16,72 +16,141 @@ public class Duke {
         System.out.println(HORIZONTAL + "\n\t" + OPENING_MSG + "\n" + HORIZONTAL);
 
         Scanner in = new Scanner(System.in);
-        String line = in.nextLine().toLowerCase();
+        String line = in.nextLine();
 
-        int listNum;
+        int numToMark;
 
         int item = 0;
 
         while (!line.equals("bye")) {
-            if (!(line.equals("list") || line.startsWith("mark") || line.startsWith("unmark"))) {
-                list[item] = new Task(line);
-                System.out.println(HORIZONTAL + "\n\tadded: " + list[item].description + "\n" + HORIZONTAL);
-                item++;
+
+            // Add event
+            if (line.toLowerCase().startsWith("event")) {
+                item = addEvent(line, item);
+            }
+            // Add deadline
+            if (line.toLowerCase().startsWith("deadline")){
+                item = addDeadline(line, item);
             }
 
-            line = in.nextLine().toLowerCase();
+            if (line.toLowerCase().startsWith("todo")){
+                item = addToDo(line, item);
+            }
 
-            // display list
-            if (line.equals("list")) {
-                System.out.println(HORIZONTAL + "\n\tHere are the tasks in your list:");
-                for (int i = 0; i < item; i++) {
-                    System.out.println("\n\t" + (i + 1) + ". [" + list[i].getStatusIcon() + "] " + list[i].description + "\n");
-                }
-                System.out.println(HORIZONTAL);
+            // Display list
+            if (line.equalsIgnoreCase("list")) {
+                displayList(item);
             }
 
             // Mark item as done: constraint - user input begins with "mark"
-            if (line.startsWith("mark")) {
-
-                StatusToggle(line, item, MARK_MSG, true);
-
+            if (line.toLowerCase().startsWith("mark")) {
+                toggleDoneStatus(line, item, MARK_MSG, true);
             }
-
             // Unmark item: constraint - user input begins with "mark"
-            if (line.startsWith("unmark")) {
-
-                StatusToggle(line, item, UNMARK_MSG, false);
-
+            if (line.toLowerCase().startsWith("unmark")) {
+                toggleDoneStatus(line, item, UNMARK_MSG, false);
             }
+
+            // Read next line
+            line = in.nextLine();
 
         }
-
         System.out.println(HORIZONTAL + "\n\t" + CLOSING_MSG + "\n" + HORIZONTAL);
 
     }
+    public static void displayTaskAddedMessage(Task item){
+        System.out.println(HORIZONTAL + "\n\tGot it! Added this task: " + "\n\t\t" + item.getDescription());
+    }
+    public static void displayNumItemsInList(int item){
+        if (item > 0) {
+            System.out.println("\tNow you have " + (item + 1) + " tasks in the list");
+        }
+        else {
+            System.out.println("\tNow you have " + (item + 1) + " task in the list");
+        }
+    }
 
-    public static void StatusToggle(String line, int item, String msg, boolean status) {
-        String lineAr[] = new String[2];
+    public static int addEvent(String line, int item){
 
-        lineAr = line.split(" ");
-        int listNum = Integer.parseInt(lineAr[1]) - 1;
+        int toIndex = line.indexOf("/to");
+        String toDate = line.substring(toIndex + 3);
+        int fromIndex = line.indexOf("/from");
+        String fromDate = line.substring(fromIndex + 5, toIndex);
+        int descriptionIndex = line.indexOf("event");
+        String description = line.substring(descriptionIndex + 6, fromIndex);
 
-        if (listNum >= 0 && listNum < item) {
+        list[item] = new Event(description, fromDate, toDate);
+
+        displayTaskAddedMessage(list[item]);
+        displayNumItemsInList(item);
+        System.out.println(HORIZONTAL);
+
+        item++;
+        return item;
+    }
+    public static int addDeadline(String line, int item){
+
+        int byIndex = line.indexOf("/by");
+        String byDate = line.substring(byIndex + 3);
+        int descriptionIndex = line.indexOf("deadline");
+        String description = line.substring(descriptionIndex + 9, byIndex);
+
+        list[item] = new Deadline(description, byDate);
+
+        displayTaskAddedMessage(list[item]);
+        displayNumItemsInList(item);
+        System.out.println(HORIZONTAL);
+
+        item++;
+        return item;
+    }
+    public static int addToDo(String line, int item){
+        int descriptionIndex = line.indexOf("todo");
+        String description = line.substring(descriptionIndex + 5);
+        list[item] = new Todo(description);
+
+        displayTaskAddedMessage(list[item]);
+        displayNumItemsInList(item);
+        System.out.println(HORIZONTAL);
+
+        item++;
+        return item;
+    }
+
+    public static void displayList(int item){
+        System.out.println(HORIZONTAL + "\n\tHere are the tasks in your list:");
+        for (int i = 0; i < item; i++) {
+//        System.out.println("\n\t" + (i + 1) + ". [" + list[i].getTaskTypeIcon() + "] "  + " [" + list[i].getStatusIcon() + "] " + list[i].description + "\n");
+            System.out.println("\n\t" + (i + 1) + ". " + list[i].getDescription() + "\n");
+        }
+        System.out.println(HORIZONTAL);
+    }
+
+    public static void toggleDoneStatus(String line, int item, String msg, boolean status) {
+        String inputMessageArray[] = new String[2];
+
+        inputMessageArray = line.split(" ");
+        int numToMark = Integer.parseInt(inputMessageArray[1]) - 1;
+
+        // Check if list item number exists in list
+        if (numToMark >= 0 && numToMark < item) {
 
             // Check if it is already done/not done in list
-            if (list[listNum].isDone != status) {
-                list[listNum].isDone = status;
+            if (list[numToMark].isDone != status) {
+                // Update IsDone status
+                list[numToMark].isDone = status;
 
                 System.out.println(HORIZONTAL + "\n\t" + msg);
-                System.out.println("\n\t\t" + "[" + list[listNum].getStatusIcon() + "] " + list[listNum].description + "\n");
+                System.out.println("\n\t\t" + "[" + list[numToMark].getStatusIcon() + "] " + list[numToMark].description + "\n");
                 System.out.println(HORIZONTAL);
             } else {
                 System.out.println("No change, task was already as is");
             }
 
         } else {
-            System.out.println("Item number " + (listNum + 1) + " does not exist yet");
+            System.out.println("Item number " + (numToMark + 1) + " does not exist yet");
         }
-
     }
+
+
 }
