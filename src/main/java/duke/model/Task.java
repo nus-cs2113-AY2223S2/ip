@@ -2,8 +2,6 @@ package duke.model;
 
 import duke.exception.InvalidCommandException;
 
-import java.util.ArrayList;
-
 public class Task {
     public static int numberOfTasks = 0;
     public String taskName;
@@ -23,16 +21,6 @@ public class Task {
         this.isDone = isDone;
     }
 
-    public static String getTasksList(ArrayList<Task> tasks) {
-        String tasksList = "";
-        for (int i = 0; i < numberOfTasks; i++) {
-            tasksList += String.format("%3d. ", (i + 1)) + tasks.get(i).toString();
-            if (i < numberOfTasks - 1) {
-                tasksList += System.lineSeparator() + "\t";
-            }
-        }
-        return tasksList;
-    }
 
     public void markAsDone() {
         this.isDone = true;

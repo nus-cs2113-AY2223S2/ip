@@ -19,47 +19,28 @@ public class Duke {
             input = scanner.nextLine();
             Command command = new Command(input);
             String[] payloadData = command.getPayload().getData();
-            int taskIndex;
             try {
                 switch (command.getType()) {
                     case "list":
-                        outputMessage = Task.getTasksList(tasks);
+                        outputMessage = getTasksList();
                         break;
                     case "mark":
-                        taskIndex = Integer.parseInt(command.getPayload().getData()[0]);
-                        tasks.get(taskIndex).markAsDone();
-                        outputMessage = "Nice! I've marked this task as done:" + System.lineSeparator() + "\t"
-                                + tasks.get(taskIndex).toString();
+                        outputMessage = handleMark(command);
                         break;
                     case "unmark":
-                        taskIndex = Integer.parseInt(command.getPayload().getData()[0]);
-                        tasks.get(taskIndex).unmarkAsDone();
-                        outputMessage = "Ok, I've marked this task as not done:" + System.lineSeparator() + "\t"
-                                + tasks.get(taskIndex).toString();
+                        outputMessage = handleUnmark(command);
                         break;
                     case "task":
-                        Task newTask = new Task(payloadData);
-                        tasks.add(newTask);
-                        outputMessage = TASK_ADDED_PREFIX + newTask.toString() + System.lineSeparator() + "\t"
-                                + getTaskAddedPostfix();
+                        outputMessage = handleAddTask(payloadData);
                         break;
                     case "todo":
-                        Task newTodo = new ToDo(payloadData);
-                        tasks.add(newTodo);
-                        outputMessage = TASK_ADDED_PREFIX + newTodo.toString() + System.lineSeparator() + "\t"
-                                + getTaskAddedPostfix();
+                        outputMessage = handleAddTodo(payloadData);
                         break;
                     case "deadline":
-                        Deadline newDeadline = new Deadline(payloadData);
-                        tasks.add(newDeadline);
-                        outputMessage = TASK_ADDED_PREFIX + newDeadline.toString() + System.lineSeparator() + "\t"
-                                + getTaskAddedPostfix();
+                        outputMessage = handleAddDeadline(payloadData);
                         break;
                     case "event":
-                        Task newEvent = new Event(payloadData);
-                        tasks.add(newEvent);
-                        outputMessage = TASK_ADDED_PREFIX + newEvent.toString() + System.lineSeparator() + "\t"
-                                + getTaskAddedPostfix();
+                        outputMessage = handleAddEvent(payloadData);
                         break;
                     case "bye":
                         outputMessage = "Bye. Hope to see you again soon!";
@@ -77,7 +58,64 @@ public class Duke {
 
     }
 
-    private static void printDuke() {
+
+    public static String handleAddEvent(String[] payloadData) throws InvalidCommandException {
+        String outputMessage;
+        Task newEvent = new Event(payloadData);
+        tasks.add(newEvent);
+        outputMessage = TASK_ADDED_PREFIX + newEvent.toString() + System.lineSeparator() + "\t"
+                + getTaskAddedPostfix();
+        return outputMessage;
+    }
+
+    public static String handleAddDeadline(String[] payloadData) throws InvalidCommandException {
+        String outputMessage;
+        Deadline newDeadline = new Deadline(payloadData);
+        tasks.add(newDeadline);
+        outputMessage = TASK_ADDED_PREFIX + newDeadline.toString() + System.lineSeparator() + "\t"
+                + getTaskAddedPostfix();
+        return outputMessage;
+    }
+
+    public static String handleAddTodo(String[] payloadData) throws InvalidCommandException {
+        String outputMessage;
+        Task newTodo = new ToDo(payloadData);
+        tasks.add(newTodo);
+        outputMessage = TASK_ADDED_PREFIX + newTodo.toString() + System.lineSeparator() + "\t"
+                + getTaskAddedPostfix();
+        return outputMessage;
+    }
+
+    public static String handleAddTask(String[] payloadData) throws InvalidCommandException {
+        String outputMessage;
+        Task newTask = new Task(payloadData);
+        tasks.add(newTask);
+        outputMessage = TASK_ADDED_PREFIX + newTask.toString() + System.lineSeparator() + "\t"
+                + getTaskAddedPostfix();
+        return outputMessage;
+    }
+
+    public static String handleMark(Command command) {
+        int taskIndex;
+        String outputMessage;
+        taskIndex = Integer.parseInt(command.getPayload().getData()[0]);
+        tasks.get(taskIndex).markAsDone();
+        outputMessage = "Nice! I've marked this task as done:" + System.lineSeparator() + "\t"
+                + tasks.get(taskIndex).toString();
+        return outputMessage;
+    }
+
+    public static String handleUnmark(Command command) {
+        String outputMessage;
+        int taskIndex;
+        taskIndex = Integer.parseInt(command.getPayload().getData()[0]);
+        tasks.get(taskIndex).unmarkAsDone();
+        outputMessage = "Ok, I've marked this task as not done:" + System.lineSeparator() + "\t"
+                + tasks.get(taskIndex).toString();
+        return outputMessage;
+    }
+
+    public static void printDuke() {
         String logo = " ____        _" + System.lineSeparator()
                 + "|  _ \\ _   _| | _____" + System.lineSeparator()
                 + "| | | | | | | |/ / _ \\" + System.lineSeparator()
@@ -95,8 +133,16 @@ public class Duke {
         return "Now you have " + Task.numberOfTasks + " tasks in the list.";
     }
 
-    public static int getTaskIndexFromInput(String inputText) {
-        return Integer.parseInt(inputText.split(" ")[1]) - 1;
+    public static String getTasksList() {
+        String tasksList = "";
+        int numberOfTasks = tasks.size();
+        for (int i = 0; i < numberOfTasks; i++) {
+            tasksList += String.format("%3d. ", (i + 1)) + tasks.get(i).toString();
+            if (i < numberOfTasks - 1) {
+                tasksList += System.lineSeparator() + "\t";
+            }
+        }
+        return tasksList;
     }
 
 }
