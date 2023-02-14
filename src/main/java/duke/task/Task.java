@@ -34,6 +34,10 @@ public class Task {
         return (isDone ? "X" : " ");
     }
 
+    public String printToFile() {
+        return "";
+    }
+
     @Override
     public String toString() {
         return "[" + getStatusIcon() + "] " + getDescription();

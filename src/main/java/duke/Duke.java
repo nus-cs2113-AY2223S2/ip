@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.File;
 import java.io.FileReader;
 import java.io.BufferedReader;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
@@ -43,6 +44,9 @@ public class Duke {
                 printDivider();
             }
         } while (!input.equals(Command.COMMAND_BYE));
+
+        File fileName = new File("./data/duke.txt");
+        writeToFile(fileName);
     }
 
     public static void openFile(String input) {
@@ -60,6 +64,18 @@ public class Duke {
                 initialiseTaskList(line);
             }
         } catch (FileNotFoundException e) {
+            System.out.println("You have no pre-existing tasks :)");
+        }  catch (IOException e) {
+            System.out.println("Error reading file :(");
+        }
+    }
+
+    public static void writeToFile(File filePath) {
+        try {
+            PrintWriter pw = new PrintWriter(filePath);
+            writeTaskToFile(pw);
+
+        }  catch (FileNotFoundException e) {
             File dir = new File("./data");
             if (!dir.isDirectory()) {
                 System.out.println("Data directory not found. Creating new data directory");
@@ -70,23 +86,27 @@ public class Duke {
                     System.out.println("Failed to create directory");
                 }
             }
-            if (!file.isFile()) {
+            if (!filePath.isFile()) {
                 System.out.println("File not found. Creating new text file");
-                Path filePath = Paths.get("./data/duke.txt");
+                Path fileLoc = Paths.get("./data/duke.txt");
                 try {
-                    Files.createFile(filePath);
+                    Files.createFile(fileLoc);
                 } catch (IOException f) {
                     System.out.println("Failed to create file");
                 }
             }
 
-        } catch (IOException e) {
-            System.out.println("Failed to create file or directory");
         }
     }
 
+    public static void writeTaskToFile(PrintWriter pw) {
+        for (int i = 0; i < taskCounter; ++i) {
+            pw.println(tasks[i].printToFile());
+        }
+        pw.close();
+    }
     public static void initialiseTaskList(String line) {
-        String[] task = line.split("\\|");
+        String[] task = line.split("\\||-");
 
         switch(task[0].trim()) {
         case "T":
@@ -96,7 +116,7 @@ public class Duke {
             addDeadlineTask(task[2].trim(), task[3].trim());
             break;
         case "E":
-            addEventTask(task[2].trim(), "", task[3].trim());
+            addEventTask(task[2].trim(), task[3].trim(), task[4].trim());
             break;
         }
 
@@ -130,7 +150,6 @@ public class Duke {
         printDivider();
         System.out.println("List Summary:");
         printTaskList();
-        printDivider();
         System.out.print(logo);
         System.out.println("Hi, I'm Dave!\n"
                 + "What can I do for you?");
@@ -150,8 +169,8 @@ public class Duke {
             break;
         case Command.COMMAND_MARK:
             try {
-                markTaskDone(Integer.parseInt(input.substring(Command.COMMAND_MARK.length()).trim()) - 1);
-                tasks[taskCounter].printMarkMessage();
+                markTaskDone(Integer.parseInt(input.split(" ")[1]) - 1);
+                tasks[Integer.parseInt(input.split(" ")[1].trim())-1].printUnmarkMessage();
             } catch (NumberFormatException e) {
                 System.out.println("☹ OOPS!!! Task number should be an integer.");
             } catch (InvalidTaskNumberException e) {
@@ -163,10 +182,10 @@ public class Duke {
             break;
         case Command.COMMAND_UNMARK:
             try {
-                markTaskUndone(Integer.parseInt(input.substring(Command.COMMAND_UNMARK.length()).trim()) - 1);
-                tasks[taskCounter].printUnmarkMessage();
+                markTaskUndone(Integer.parseInt(input.split(" ")[1].trim())-1);
+                tasks[Integer.parseInt(input.split(" ")[1].trim())-1].printUnmarkMessage();
             } catch (NumberFormatException e) {
-                System.out.println("☹ OOPS!!! Task number should be an integer.");
+                System.out.println("☹ OOPS!!! Task number should be an integer.this");
             } catch (InvalidTaskNumberException e) {
                 System.out.println("☹ OOPS!!! The task specified does not exist in the task list.");
             } catch (IndexOutOfBoundsException e) {
@@ -223,9 +242,10 @@ public class Duke {
                 System.out.println(tasks[i]);
             }
         }
+        printDivider();
     }
 
-    private static void markTaskDone(int taskIndex) throws InvalidTaskNumberException {
+    private static void markTaskDone(Integer taskIndex) throws InvalidTaskNumberException {
                 if (taskIndex < 0 || taskIndex >= taskCounter) {
                     throw new InvalidTaskNumberException();
                 } else {
@@ -233,7 +253,7 @@ public class Duke {
                 }
     }
 
-    private static void markTaskUndone(int taskIndex) throws InvalidTaskNumberException {
+    private static void markTaskUndone(Integer taskIndex) throws InvalidTaskNumberException {
         if (taskIndex < 0 || taskIndex >= taskCounter) {
             throw new InvalidTaskNumberException();
         } else {
@@ -259,7 +279,6 @@ public class Duke {
     private static void printTaskAdded() {
         System.out.println("Got it. I've added this task:\n  " + tasks[taskCounter -1]
                 + "\nNow you have " + taskCounter + " tasks in the list.");
-        printDivider();
     }
 
 }

@@ -14,4 +14,9 @@ public class Event extends Task {
     public String toString() {
         return "[E]" + super.toString() + " (from: " + fromDate + " to: " + toDate + ")";
     }
+
+    @Override
+    public String printToFile() {
+        return "E | " + this.getStatusIcon() + " | " + description + " | " + fromDate + "-" + toDate;
+    }
 }
