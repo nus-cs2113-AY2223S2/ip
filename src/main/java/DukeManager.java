@@ -27,6 +27,9 @@ class DukeManager {
                     //if mark / unmark is detected
                     isValidInput = true;
                     markTask(inputt, this.taskList);
+                } else if (inputt.contains("delete")) {
+                    isValidInput = true;
+                    deleteTask(inputt, this.taskList);
                 } else {
                     //else add task to array; create task based on input by user
                     if (inputt.contains("todo")) {
@@ -35,7 +38,7 @@ class DukeManager {
                     } else if (inputt.contains("deadline")) {
                         isValidInput = true;
                         createDeadline(inputt, this.taskList);
-                    } else if (inputt.contains("event")){
+                    } else if (inputt.contains("event")) {
                         isValidInput = true;
                         createEvent(inputt, this.taskList);
                     }
@@ -49,11 +52,11 @@ class DukeManager {
                     System.out.println("Now you have " + this.taskList.size() + " tasks in the list");
 
                 }
-            } catch(IncorrectCommandException i) {
+            } catch (IncorrectCommandException i) {
                 System.out.println("OOPS!!! " + i.getMessage());
-            } catch(MissingFieldException j) {
+            } catch (MissingFieldException j) {
                 System.out.println("OOPS!!! " + j.getMessage());
-            } catch(IncorrectParameterException k) {
+            } catch (IncorrectParameterException k) {
                 System.out.println("OOPS!!! " + k.getMessage());
             }
             inputt = io.nextLine();
@@ -85,6 +88,24 @@ class DukeManager {
         }
     }
 
+    public void deleteTask(String inputt, ArrayList<Task> taskList) throws MissingFieldException {
+        String[] inputtArray = inputt.split(" ");
+        if (inputtArray.length == 1) {
+            throw new MissingFieldException("There are missing fields in your input!");
+        } else {
+            try {
+                int index = Integer.parseInt(inputtArray[1]) - 1;
+                Task removedTask = taskList.get(index);
+                taskList.remove(index);
+
+                System.out.println("Noted. I've removed this task:");
+                System.out.println("  " + removedTask.toString());
+                System.out.println("Now you have " + taskList.size() + " tasks in the list.");
+            } catch (IndexOutOfBoundsException a) {
+                throw new MissingFieldException("The index provided is invalid!");
+            }
+        }
+    }
     public void createToDo(String inputt, ArrayList<Task> taskList) throws MissingFieldException {
         String description = inputt.substring(TODO, inputt.length());
         if (description.length() < 1) {
