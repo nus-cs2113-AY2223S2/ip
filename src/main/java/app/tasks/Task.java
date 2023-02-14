@@ -1,6 +1,6 @@
 package app.tasks;
 
-public class Task {
+public abstract class Task {
     public static final String line = ("─".repeat(50));
     protected String taskDescription;
     protected boolean isDone;
@@ -8,6 +8,10 @@ public class Task {
     public Task(String taskDescription) {
         this.taskDescription = taskDescription;
         this.isDone = false;
+    }
+
+    public String getTaskDescription() {
+        return taskDescription;
     }
 
     public boolean isDone() {
@@ -45,5 +49,9 @@ public class Task {
             System.out.println(tasks[i]);
         }
         System.out.println(line);
+    }
+
+    public String toString(){
+        return null;
     }
 }

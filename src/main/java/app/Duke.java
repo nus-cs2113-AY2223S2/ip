@@ -1,21 +1,27 @@
 package app;
 
 import app.exceptions.InvalidCommandException;
+import app.save.FileManager;
 import app.tasks.Deadline;
 import app.tasks.Event;
 import app.tasks.Task;
 import app.tasks.ToDo;
+import app.ui.Greetings;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Duke {
     public static final String line = ("─".repeat(50));
-
     public static void main(String[] args) {
-
+        try {
+            FileManager.loadTasks();
+        } catch (IOException | InvalidCommandException e) {
+            throw new RuntimeException(e);
+        }
         Task[] tasks = new Task[100];
 
-        printHelloMessage();
+        Greetings.printHelloMessage();
 
         Scanner myObj = new Scanner(System.in);
         int[] index = new int[1];
@@ -28,7 +34,7 @@ public class Duke {
             try {
                 switch (commandWord) {
                 case "bye":
-                    printByeMessage();
+                    Greetings.printByeMessage();
                     return;
                 case "list":
                     Task.printTasks(tasks, index);
@@ -54,17 +60,5 @@ public class Duke {
                 System.out.println(line);
             }
         }
-    }
-
-    private static void printHelloMessage() {
-        System.out.println(line);
-        System.out.println("Hello! I'm Duke\n" + "What can I do for you?");
-        System.out.println(line);
-    }
-
-    private static void printByeMessage() {
-        System.out.println(line);
-        System.out.println("Bye. Hope to see you again soon!");
-        System.out.println(line);
     }
 }

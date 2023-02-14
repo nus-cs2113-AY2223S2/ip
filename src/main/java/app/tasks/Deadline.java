@@ -1,6 +1,9 @@
 package app.tasks;
 
 import app.exceptions.IncompleteCommandException;
+import app.save.FileManager;
+
+import java.io.IOException;
 
 public class Deadline extends Task{
     public static final String line = ("─".repeat(50));
@@ -8,6 +11,10 @@ public class Deadline extends Task{
     public Deadline(String taskDescription, String by) {
         super(taskDescription);
         this.by = by;
+    }
+
+    public String getBy() {
+        return by;
     }
 
     @Override
@@ -29,6 +36,11 @@ public class Deadline extends Task{
             System.out.println(tasks[index[0]]);
             System.out.printf("Now you have %d tasks in the list.\n", index[0] + 1);
             System.out.println(line);
+            try {
+                FileManager.saveTasks(tasks);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
             index[0]++;
         } catch (IncompleteCommandException e){
             e.printErrorMessage("deadline");
