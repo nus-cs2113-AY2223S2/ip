@@ -1,7 +1,32 @@
-Hello from
- ____        _        
-|  _ \ _   _| | _____ 
-| | | | | | | |/ / _ \
-| |_| | |_| |   <  __/
-|____/ \__,_|_|\_\___|
-
+________________________________________
+Hello! I'm Duke
+What can I do for you?
+________________________________________
+________________________________________
+Sure, I've added this task: 
+[D] [ ] maths homework (by: tuesday)
+Your first task!
+________________________________________
+________________________________________
+Sure, I've added this task: 
+[E] [ ] birthday party (from: Friday 10am to: 2pm)
+You currently have 2 tasks in the list.
+________________________________________
+Good job! I've marked it as done!
+[X] maths homework 
+________________________________________
+Here are the tasks in your list: 
+1. [D] [X] maths homework (by: tuesday)
+2. [E] [ ] birthday party (from: Friday 10am to: 2pm)
+________________________________________
+Alright, I've marked the task as undone.
+[ ] maths homework 
+________________________________________
+Here are the tasks in your list: 
+1. [D] [ ] maths homework (by: tuesday)
+2. [E] [ ] birthday party (from: Friday 10am to: 2pm)
+________________________________________
+Invalid instruction. Please try again.
+________________________________________
+Bye. Hope to see you again soon!
+________________________________________
