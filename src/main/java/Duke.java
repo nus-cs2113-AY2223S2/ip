@@ -59,7 +59,9 @@ public class Duke {
                 try {
                     String[] temp = input.split(" ", 2);
                     int taskIndex = Integer.parseInt(temp[1]);
-                    tasks.remove(taskIndex);
+                    currentIndex--;
+                    printTaskDeletedStatement(currentIndex, tasks.get(taskIndex-1));
+                    tasks.remove(taskIndex-1);
                 } catch (IndexOutOfBoundsException exception) {
                     printDottedLine();
                     System.out.println("☹ OOPS!!! The description of a delete cannot be empty");
@@ -164,6 +166,18 @@ public class Duke {
     private static void printTaskAddedStatement(int currentIndex, Task task) {
         printDottedLine();
         System.out.println("Got it. I've added this task:");
+        System.out.println(task);
+        if (currentIndex == 1) {
+            System.out.println("Now you have " + currentIndex + " task in the list.");
+        } else {
+            System.out.println("Now you have " + currentIndex + " tasks in the list.");
+        }
+        printDottedLine();
+    }
+
+    private static void printTaskDeletedStatement(int currentIndex, Task task) {
+        printDottedLine();
+        System.out.println("Noted. I've removed this task:");
         System.out.println(task);
         if (currentIndex == 1) {
             System.out.println("Now you have " + currentIndex + " task in the list.");
