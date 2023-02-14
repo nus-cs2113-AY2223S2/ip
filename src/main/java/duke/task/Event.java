@@ -1,3 +1,5 @@
+package duke.task;
+
 public class Event extends Task {
     public static final String EVENT_LABEL = "E";
     protected String from;
