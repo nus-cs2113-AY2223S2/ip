@@ -50,14 +50,42 @@ public class Duke {
                             "(A valid index number should be separated by a space after the unmark)");
                 }catch(NullPointerException e){
                     System.out.println("Oops! Unmark index out of bound! " +
-                            "(A valid index number should be separated by a space after the mark)");
+                            "(A valid index number should be separated by a space after the unmark)");
                 }
             } else if (line.equals("list")) {
                 System.out.println("list:");
                 for (int i = 0; i < index; i++) {
                     System.out.println("\t" + (i + 1) + "." + lists[i].toString());
                 }
-            } else {
+            } else if(line.startsWith("delete")){
+                try{
+                    String number = line.substring(7, 8);
+                    int deleteIndex = Integer.parseInt(number);
+                    if(deleteIndex==index){
+                        printDeleteMessage(lists,deleteIndex-1,index);
+                        index=index-1;
+                    }
+                    else if(deleteIndex>=1 && deleteIndex<=index-1){
+                        printDeleteMessage(lists,deleteIndex-1,index);
+                        for(int i=deleteIndex-1;i<index-1;i++){
+                            lists[i] = lists[i + 1];
+                        }
+                        index=index-1;
+                    }else{
+                        System.out.println("Oops! Delete should be followed by a valid number. " +
+                                "(A valid index number should be separated by a space after the delete)");
+                    }
+                }catch(NumberFormatException e){
+                    System.out.println("Oops! Unmark should be followed by a number. " +
+                            "(A valid index number should be separated by a space after the delete)");
+                }catch(IndexOutOfBoundsException e){
+                    System.out.println("Oops! Unmark index out of bound! " +
+                            "(A valid index number should be separated by a space after the delete)");
+                }catch(NullPointerException e){
+                    System.out.println("Oops! Unmark index out of bound! " +
+                            "(A valid index number should be separated by a space after the delete)");
+                }
+            }else {
                 if (line.substring(0, LENGTH_TODO).equals("todo")) {
                     lists[index] = new Todo(line.substring(LENGTH_TODO + 1));
                     printMessage(lists,index);
@@ -78,6 +106,8 @@ public class Duke {
                     lists[index] = new Event(description, start, end);
                     printMessage(lists,index);
                     index++;
+                }else{
+                    System.out.println("Sorry I can't get your message! Please try again.");
                 }
 
             }
@@ -91,5 +121,11 @@ public class Duke {
         System.out.println("Now you have "+(taskIndex+1)+" task(s) in the list");
         System.out.println("--------------------------------");
     }
-    //commit
+    public static void printDeleteMessage(Task[] Tasks, int deleteIndex,int totalIndex){
+        System.out.println("--------------------------------");
+        System.out.println("Noted. I've removed this task:");
+        System.out.println(Tasks[deleteIndex].toString());
+        System.out.println("Now you have "+(totalIndex-1)+" task(s) in the list");
+        System.out.println("--------------------------------");
+    }
 }
