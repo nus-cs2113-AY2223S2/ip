@@ -6,11 +6,13 @@ import java.util.regex.Pattern;
 public class Task {
     private final String name;
     private boolean isCompleted;
+    private final TaskEnum type;
     private static final String checkbox = "X";
 
-    public Task(String name) {
+    public Task(String name, TaskEnum type) {
         this.name = name;
         isCompleted = false;
+        this.type = type;
     }
 
     public void setIsCompleted(boolean state) {

@@ -14,7 +14,7 @@ public class Deadline extends Task {
             Pattern.CASE_INSENSITIVE);
 
     public Deadline(ArrayList<String> details) {
-        super(details.get(0));
+        super(details.get(0), TaskEnum.DEADLINE);
         this.by = details.get(1);
     }
 
