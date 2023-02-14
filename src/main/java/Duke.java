@@ -2,17 +2,16 @@ import duke.Deadline;
 import duke.Event;
 import duke.Todo;
 
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Scanner;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.FileNotFoundException;
 
 
 public class Duke {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -124,18 +123,21 @@ public class Duke {
         System.out.println("    _________________________________________");
         System.out.println("     ");
 
+
         File f = new File("duke/list.txt");
-        if (f.exists()) {
-            //code to write list data to file since it exists
-            Path output = Paths.get("duke/list.txt");
-            Files.write(output, tasks);
-        } else {
+
             //code to create file, then write contents to it
-            Path output = Paths.get("duke/list.txt");
-            Files.write(output, tasks);
+        PrintWriter fw = new PrintWriter("C:\\Users\\Manoj\\OneDrive - National University of Singapore\\Documents\\Module Files\\Y2S2\\CS2113\\iP\\src\\main\\java\\duke\\list.txt");
+        for (int i = 0; i < counter; i++) {
+            fw.println(tasks[i].getDescription() + " | " + tasks[i].isDone + " | " + tasks[i].getBy() + " | " + tasks[i].getEnd());
         }
 
+        fw.close();
+        
+
     }
+
+
 
     private static String getInputString() {
         Scanner in;

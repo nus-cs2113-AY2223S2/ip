@@ -8,5 +8,12 @@ public class Task {
     public String getDescription() {
         return description;
     }
+    public String getBy()
+    {
+        return null;
+    }
+    public String getEnd() {
+        return null;
+    }
 }
 

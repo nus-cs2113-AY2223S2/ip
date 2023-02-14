@@ -7,6 +7,7 @@ public class Deadline extends Todo {
         this.by = by;
     }
 
+    @Override
     public String getBy() {
         return by;
     }
