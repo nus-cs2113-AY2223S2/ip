@@ -12,12 +12,15 @@ public class Deadline extends Task{
         showDeadline.insert(2, ":");
         String arrayOfDeadline = this.description.substring(description.indexOf(" ") + 1);
         String[] eventName = arrayOfDeadline.split("/");
-        return "      [D]" + "[" + getStatusIcon() + "]" +  " " + eventName[0] + " (" + showDeadline + ")" + System.lineSeparator();
+        return "      [D]" + "[" + getStatusIcon() + "]" +  " "
+                + eventName[0] + " (" + showDeadline + ")"
+                + System.lineSeparator();
     }
 
     @Override
     public String guideline(){
-        return "     Got it. I've added this task: " + System.lineSeparator();
+        return "     Got it. I've added this task: "
+                + System.lineSeparator();
     }
 
 }

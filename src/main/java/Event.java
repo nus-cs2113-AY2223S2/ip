@@ -14,14 +14,17 @@ public class Event extends Task{
         String eventEnd = arrayOfEvent[1].split("/to")[1].trim();
 
         String full;
-        full = "      [E]" + "[" + getStatusIcon() + "]" +  " " + arrayOfEvent[0] +
-                "(from: " + eventStart + " to: " + eventEnd + ")" + System.lineSeparator();
+        full = "      [E]" + "[" + getStatusIcon() + "]" +  " "
+                + arrayOfEvent[0] +
+                "(from: " + eventStart + " to: "
+                + eventEnd + ")" + System.lineSeparator();
 
         return full;
 }
 
 @Override
     public String guideline(){
-        return "     Got it. I've added this task: " + System.lineSeparator();
+        return "     Got it. I've added this task: "
+                + System.lineSeparator();
     }
 }

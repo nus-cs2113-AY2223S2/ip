@@ -31,9 +31,9 @@ public class Duke {
             case "list":
                 printLine();
                 System.out.print(task.guideline());
-                for (int i = 0; i < taskNameList.size(); i++) {
-                    System.out.print("     " + (i + 1) + "."
-                            + taskNameList.get(i).getState().trim() + System.lineSeparator());
+                for (int indexOfInstruction = 0; indexOfInstruction < taskNameList.size(); indexOfInstruction++) {
+                    System.out.print("     " + (indexOfInstruction + 1) + "."
+                            + taskNameList.get(indexOfInstruction).getState().trim() + System.lineSeparator());
                 }
                 printLine();
                 break;
@@ -42,7 +42,6 @@ public class Duke {
                 printLine();
                 int indexTask = Integer.parseInt(command[1]);
                 taskNameList.get(indexTask - 1).mark();
-                // new Task(isComplete);
                 System.out.print("     Nice! I've marked this task as done:"
                         + System.lineSeparator()
                         + taskNameList.get(indexTask - 1).getState());
@@ -62,7 +61,9 @@ public class Duke {
             case "todo":
                 printLine();
                 taskNameList.add(toDo);
-                String outputForTodo = toDo.guideline() + toDo.getState() + task.numberOfTask(taskNameList.size());
+                String outputForTodo = toDo.guideline()
+                                        + toDo.getState()
+                                        + task.numberOfTask(taskNameList.size());
                 System.out.println(outputForTodo);
                 printLine();
                 break;
@@ -70,7 +71,9 @@ public class Duke {
             case "deadline":
                 printLine();
                 taskNameList.add(deadLine);
-                String outputForDeadline = deadLine.guideline() + deadLine.getState() + task.numberOfTask(taskNameList.size());
+                String outputForDeadline = deadLine.guideline()
+                                            + deadLine.getState()
+                                            + task.numberOfTask(taskNameList.size());
                 System.out.println(outputForDeadline);
                 printLine();
                 break;
@@ -78,7 +81,9 @@ public class Duke {
             case "event":
                 printLine();
                 taskNameList.add(event);
-                String outputForEvent = event.guideline() + event.getState() + task.numberOfTask(taskNameList.size());
+                String outputForEvent = event.guideline()
+                                        + event.getState()
+                                        + task.numberOfTask(taskNameList.size());
                 System.out.println(outputForEvent);
                 printLine();
                 break;
@@ -92,7 +97,7 @@ public class Duke {
 
             default:
                 printLine();
-                System.out.println("     oops, cannot find amtch instruction, please type again");
+                System.out.println("     oops, cannot find match instruction, please type again");
                 printLine();
                 break;
 
