@@ -11,11 +11,11 @@ import Duke.exception.DukeException;
 public class Duke {
 	public static void main (String[] args) {
 		printStart ();
-
 		Scanner scan = new Scanner (System.in);
 		String input = scan.nextLine ();
-		ArrayList<Task> tasks = new ArrayList<Task> ();
-		int count = 0;
+		ArrayList<Task> tasks = fileIO.readFile ();
+		int count = fileIO.getCount ();
+
 		while (!("bye".equalsIgnoreCase (input)) && !(input.isEmpty ())) {
 			try {
 				count = checkInput (input, tasks, count);
@@ -28,19 +28,20 @@ public class Duke {
 				input = scan.nextLine ();
 			}
 		}
-
 		printEnd ();
-
 	}
 
 	public static int checkInput (String input, ArrayList<Task> tasks, int count) throws DukeException {
 		if (input.length () > 4) {
 			if (input.startsWith ("mark") || input.startsWith ("unmark")) {
 				changeStatus (input, tasks);
+				fileIO.writeFile (tasks);
 			} else if (input.startsWith ("todo") || input.startsWith ("deadline") || input.startsWith ("event")) {
 				count = addTask (input, tasks, count);
+				fileIO.writeFile (tasks);
 			} else if (input.startsWith ("delete") && !("delete".equalsIgnoreCase (input))) {
-				count = deleteTask (input, tasks,count);
+				count = deleteTask (input, tasks, count);
+				fileIO.writeFile (tasks);
 			} else {
 				printLine ();
 				throw new DukeException ("OOPS!!! The description of a " + input + " cannot be empty.");
@@ -74,8 +75,7 @@ public class Duke {
 			String[] eventTask = arrTask[1].split ("/to");
 			tasks.add (new Event (arrTask[0], eventTask[0], eventTask[1]));
 		}
-
-		System.out.println (tasks.get (count).getType () + tasks.get (count).toString ());
+		System.out.println ("[" + tasks.get (count).getType () + "]" + tasks.get (count).toString ());
 		count++;
 		System.out.println ("Now you have " + count + (count > 1 ? " tasks " : " task ") + "in the list.");
 		printLine ();
@@ -92,21 +92,18 @@ public class Duke {
 		} else {
 			tasks.get (index).setIsDone (false);
 		}
-
 		printLine ();
 		System.out.println ("Nice! I've marked this task as " + (tasks.get (index).getIsDone () ? "done" : "undone") + ":");
-		System.out.println (tasks.get (index).getType () + tasks.get (index).toString ());
+		System.out.println ("[" + tasks.get (index).getType () + "]" + tasks.get (index).toString ());
 		printLine ();
 	}
 
 	public static void listTasks (ArrayList<Task> tasks) {
 		printLine ();
 		System.out.println ("Here are the tasks in your list:");
-
 		for (int i = 0; i < tasks.size (); i++) {
-			System.out.println ((i + 1) + ". " + tasks.get (i).getType () + tasks.get (i).toString ());
+			System.out.println ((i + 1) + ". " + "[" + tasks.get (i).getType () + "]" + tasks.get (i).toString ());
 		}
-
 		printLine ();
 	}
 
@@ -116,7 +113,7 @@ public class Duke {
 		index -= 1;
 		printLine ();
 		System.out.println ("Noted. I've removed this task:");
-		System.out.println ("	"+tasks.get (index).getType () + tasks.get (index).toString ());
+		System.out.println ("	" + tasks.get (index).getType () + tasks.get (index).toString ());
 		tasks.remove (index);
 		count--;
 		System.out.println ("Now you have " + count + " tasks in the list.");

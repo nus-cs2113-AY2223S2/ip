@@ -8,7 +8,7 @@ public class Task {
 	public Task (String description) {
 		this.description = description;
 		this.isDone = false;
-		this.type = "[T]";
+		this.type = "T";
 	}
 
 	public boolean getIsDone () {
@@ -33,6 +33,9 @@ public class Task {
 		return "[" + getStatusIcon () + "] " + description;
 	}
 
+	public String toFile () {
+		return getType () + " | " + (getIsDone () ? 1 : 0) + " | " + description;
+	}
 
 	public String getStatusIcon () {
 
