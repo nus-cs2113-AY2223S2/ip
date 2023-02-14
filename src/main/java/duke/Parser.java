@@ -25,7 +25,7 @@ public class Parser {
                parsedInput[2] = intermediateInput[1].substring(fromIndex + 6, toIndex - 1);
                parsedInput[3] = intermediateInput[1].substring(toIndex + 4);
                 break;
-            case("todo"): case("mark"): case("unmark"):
+            case("todo"): case("mark"): case("unmark"): case("delete"):
                 parsedInput[1] = intermediateInput[1];
                 break;
             default:
@@ -33,4 +33,6 @@ public class Parser {
         }
         return parsedInput;
     }
+
+
 }

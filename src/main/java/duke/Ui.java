@@ -2,6 +2,7 @@ package duke;
 
 import duke.task.Task;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Ui {
@@ -25,7 +26,7 @@ public class Ui {
     }
 
     public void farewell() {
-        System.out.println("Bye. Hope to see you again soon!\n");
+        System.out.println("Bye. Hope to see you again soon!");
         showLine();
     }
 
@@ -35,9 +36,10 @@ public class Ui {
         return userInput;
     }
 
-    public void printList(Task[] taskList, int taskCount) {
-        for (int x = 0; x < taskCount; x += 1) {
-            taskList[x].print();
+    public void printList(ArrayList<Task> taskList) {
+        for (int x = 0; x < taskList.size(); x += 1) {
+            System.out.print((x + 1) + ". ");
+            taskList.get(x).print();
         }
     }
 }

@@ -8,13 +8,13 @@ public class Deadline extends Task{
         super(taskDescription);
         this.taskChar = "[D]";
         this.by = by;
-        System.out.print("Added: ");
         print();
     }
 
     @Override
     public void print() {
-        System.out.println(taskChar + status + " " + taskDescription + " (by: " + by + ")");
+        formattedTask = taskChar + status + " " + taskDescription + " (by: " + by + ")";
+        System.out.println(formattedTask);
     }
 
 }
