@@ -23,6 +23,7 @@ public class DukeException extends Exception  {
         String[] taskTypes = {"todo", "deadline", "event", "list", "mark", "unmark", "delete", "bye"};
         ArrayList<String> taskTypeList = new ArrayList<>(Arrays.asList(taskTypes));
         if (!taskTypeList.contains(inputWords[0])) {
+
             UI.printMessage("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
             throw new UnknownInputFieldError();
         } else if (inputWords[0].equals("list") | inputWords[0].equals("bye")) {
