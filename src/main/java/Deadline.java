@@ -22,5 +22,4 @@ public class Deadline extends Task{
         return "     Got it. I've added this task: "
                 + System.lineSeparator();
     }
-
 }

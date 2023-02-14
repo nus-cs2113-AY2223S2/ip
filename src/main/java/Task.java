@@ -38,5 +38,9 @@ public class Task {
         return "     Now you have " + length + " tasks in the list.";
 
     }
+    public static void printLine(){
+        System.out.println("    ____________________________________________________________");
+    }
+
 }
 
