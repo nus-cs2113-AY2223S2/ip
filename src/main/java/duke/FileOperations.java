@@ -5,7 +5,6 @@ import task.Event;
 import task.Task;
 import task.Todo;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 import java.io.BufferedReader;
@@ -15,7 +14,8 @@ import java.io.IOException;
 import java.io.File;
 
 /*
- * This class is in charge of the methods responsible for reading from and saving information about the tasks
+ * This class contains the methods responsible for reading from
+ * and saving information about the tasks
  * Each element in the ArrayList will be saved as a line in a txt file
  *
  * Examples of lines in the txt file are as follows:
