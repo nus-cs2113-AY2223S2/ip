@@ -1,0 +1,7 @@
+T | X | read book
+D |   | return book | June 6th
+E | X | CS2113 project meeting | Feb 13th 1-3pm
+T |   | join sports club
+D | X | complete tP UG | Wednesday
+E |   | CS2023 Tutorial | Feb 15th 1pm-2pm
+D |   | complete iP | Friday
