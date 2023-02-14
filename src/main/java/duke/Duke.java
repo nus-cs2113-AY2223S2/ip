@@ -102,7 +102,11 @@ public class Duke {
                         tasks.remove(tasks.get(indexTask));
                     }
                     break;
-
+                    
+                case "find":
+                	String keyword;
+                	keyword = Input.scanLine().trim();
+                	Output.printMatchingTask(tasks, keyword);
                 case "bye":
                     break;
 
