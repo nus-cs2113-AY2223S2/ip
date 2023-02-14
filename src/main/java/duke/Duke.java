@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Duke {
+    
     static Task[] tasks = new Task[100];
     private static int count = 0;
     public static final String LINE = "    ____________________________________________________________\n";
