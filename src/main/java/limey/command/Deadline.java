@@ -1,11 +1,10 @@
 package limey.command;
-
+import limey.exception.invalidDateException;
 public class Deadline extends Task{
     private String dueDate;
     public Deadline(String inLine) throws invalidDateException{
         super(inLine);
-        if(!inLine.contains("/by"))
-        {
+        if(!inLine.contains("/by")) {
             throw new invalidDateException();
         }
         int indexOfBy = inLine.indexOf("/by");

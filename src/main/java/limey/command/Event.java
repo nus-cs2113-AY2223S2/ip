@@ -1,10 +1,13 @@
 package limey.command;
-
+import limey.exception.invalidDateException;
 public class Event extends Task{
     private final String fromDate;
     private final String toDate;
-    public Event(String inLine){
+    public Event(String inLine) throws invalidDateException{
             super(inLine);
+            if(!inLine.contains("/from") |  !inLine.contains("/to")) {
+                throw new invalidDateException();
+            }
             int indexOfFrom = inLine.indexOf("/from");
             int indexOfTo =  inLine.indexOf("/to");
             fromDate = inLine.substring(indexOfFrom + 5, indexOfTo);

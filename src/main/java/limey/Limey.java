@@ -5,6 +5,7 @@ import limey.command.Event;
 import limey.command.Task;
 import limey.command.Todo;
 import limey.exception.commandNotFoundException;
+import limey.exception.invalidDateException;
 import limey.iohandler.Parser;
 import limey.iohandler.Speech;
 
@@ -41,7 +42,7 @@ public class Limey {
             try {
                 taskIn = new Deadline(inLine);
             } catch (invalidDateException | StringIndexOutOfBoundsException e){
-                Speech.invalidMessage("Invalid deadline Date");
+                Speech.invalidMessage("Invalid deadline date");
                 return;
             }
             break;
@@ -49,7 +50,7 @@ public class Limey {
             try {
                 taskIn = new Event(inLine);
             } catch (invalidDateException | StringIndexOutOfBoundsException e){
-                Speech.invalidMessage("Invalid event Date");
+                Speech.invalidMessage("Invalid event date");
                 return;
             }
             break;
