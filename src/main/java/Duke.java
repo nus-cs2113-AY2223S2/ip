@@ -1,11 +1,9 @@
 import duke.DukeException;
 import duke.FileDataHandler;
-import duke.Task;
+import duke.Parser;
 import duke.TaskList;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -49,54 +47,12 @@ public class Duke {
             printErrorMessage("     ☹ OOPS!!! As an error has occurred, the current task list will not be saved in a file!");
         }
         while (input.hasNextLine()) {
+            Parser parseInput = new Parser(taskList, fileDataHandler);
             String[] nextInput = input.nextLine().split(" ", 2);
             try {
-                if (nextInput[0].equals("bye")) {
+                if(parseInput.parse(nextInput)) {
                     break;
                 }
-                if (nextInput[0].isEmpty()) { //settle for the case of empty inputs
-                    continue;
-                }
-                if (nextInput[0].equals("list")) { //want to print out the task list
-                    taskList.printTaskList();
-                    continue;
-                }
-                if (nextInput[0].equals("mark")) {
-                    int taskNumber = Integer.parseInt(nextInput[1]);
-                    taskList.getTask(taskNumber - 1).markAsDone();
-                    taskList.printMarkedTask(taskNumber - 1);
-                    fileDataHandler.saveFile(taskList);
-                    continue;
-                }
-                if (nextInput[0].equals("unmark")) {
-                    int taskNumber = Integer.parseInt(nextInput[1]);
-                    taskList.getTask(taskNumber - 1).markAsNotDone();
-                    taskList.printUnmarkedTask(taskNumber - 1);
-                    fileDataHandler.saveFile(taskList);
-                    continue;
-                }
-                if (nextInput[0].equals("todo")) {
-                    taskList.addTodoTask(nextInput[1]);
-                    fileDataHandler.saveFile(taskList);
-                    continue;
-                }
-                if (nextInput[0].equals("deadline")) {
-                    taskList.addDeadlineTask(nextInput[1]);
-                    fileDataHandler.saveFile(taskList);
-                    continue;
-                }
-                if (nextInput[0].equals("event")) {
-                    taskList.addEventTask(nextInput[1]);
-                    fileDataHandler.saveFile(taskList);
-                    continue;
-                }
-                if (nextInput[0].equals("delete")) {
-                    int taskNumber = Integer.parseInt(nextInput[1]);
-                    taskList.deleteTask(taskNumber);
-                    fileDataHandler.saveFile(taskList);
-                    continue;
-                }
-                throw new DukeException("     ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
             } catch (DukeException exception) {
                 printErrorMessage(exception.getMessage());
             } catch (ArrayIndexOutOfBoundsException exception) {
