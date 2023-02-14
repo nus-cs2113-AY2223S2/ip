@@ -8,7 +8,9 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
 
+import java.io.*;
 import java.util.Scanner;
+
 public class Duke {
 
     public static final int TASK_LIST_SIZE = 100;
@@ -16,6 +18,7 @@ public class Duke {
     public static int taskCounter = 0;
 
     public static void main(String[] args) {
+
         printGreeting();
 
         String input;
@@ -31,6 +34,8 @@ public class Duke {
             }
         } while (!input.equals(Command.COMMAND_BYE));
     }
+
+
 
     public static void printDivider () {
         System.out.println("____________________________________________________________");
@@ -50,8 +55,8 @@ public class Duke {
     }
 
     public static void processCommand (String input) throws CommandNotRecognisedException {
-        String action = input.split(" ")[0];
-        switch (action) {
+        String[] taskInfo = input.split(" ");
+        switch (taskInfo[0]) {
         case Command.COMMAND_BYE:
             printBye();
             break;
@@ -60,46 +65,52 @@ public class Duke {
             break;
         case Command.COMMAND_MARK:
             try {
-                markTaskDone(Integer.parseInt(input.split(" ")[1]) - 1);
+                markTaskDone(Integer.parseInt(taskInfo[1]) - 1);
             } catch (NumberFormatException e) {
                 System.out.println("☹ OOPS!!! duke.task.Task number should be an integer.");
                 printDivider();
             } catch (InvalidTaskNumberException e) {
                 System.out.println("☹ OOPS!!! The task specified does not exist in the task list.");
+                printDivider();
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("☹ OOPS!!! The description of 'mark' cannot be empty.");
                 printDivider();
             }
             break;
         case Command.COMMAND_UNMARK:
             try {
-                markTaskUndone(Integer.parseInt(input.split(" ")[1]) - 1);
+                markTaskUndone(Integer.parseInt(taskInfo[1]) - 1);
             } catch (NumberFormatException e) {
                 System.out.println("☹ OOPS!!! duke.task.Task number should be an integer.");
                 printDivider();
             } catch (InvalidTaskNumberException e) {
                 System.out.println("☹ OOPS!!! The task specified does not exist in the task list.");
                 printDivider();
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("☹ OOPS!!! The description of 'unmark' cannot be empty.");
+                printDivider();
             }
             break;
         case Command.COMMAND_TODO:
             try {
-                addTodoTask(input);
-            } catch (StringIndexOutOfBoundsException e) {
+                addTodoTask(taskInfo[1]);
+            } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("☹ OOPS!!! The description of 'todo' cannot be empty.");
                 printDivider();
             }
             break;
         case Command.COMMAND_DEADLINE:
             try {
-                addDeadlineTask(input);
-            } catch (StringIndexOutOfBoundsException e) {
+                addDeadlineTask(taskInfo[1], taskInfo[3]);
+            } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("☹ OOPS!!! The description of 'deadline' should include a task and deadline.");
                 printDivider();
             }
             break;
         case Command.COMMAND_EVENT:
             try {
-                addEventTask(input);
-            } catch (StringIndexOutOfBoundsException e) {
+                addEventTask(taskInfo[1], taskInfo[3], taskInfo[5]);
+            } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("☹ OOPS!!! The description of 'event' should include a task and time period.");
                 printDivider();
             }
@@ -144,26 +155,20 @@ public class Duke {
         printDivider();
     }
 
-    private static void addTodoTask(String input) {
-            tasks[taskCounter] = new ToDo(input.substring(Command.COMMAND_TODO.length() + 1));
+    private static void addTodoTask(String task) {
+            tasks[taskCounter] = new ToDo(task);
             taskCounter++;
             printTaskAdded();
     }
 
-    private static void addDeadlineTask(String input) {
-            int indexOfBy = input.indexOf(Command.COMMAND_DEADLINE_BY);
-            tasks[taskCounter] = new Deadline(input.substring(Command.COMMAND_DEADLINE.length() + 1, indexOfBy)
-                    , input.substring(indexOfBy + Command.COMMAND_DEADLINE_BY.length()));
+    private static void addDeadlineTask(String task, String deadline) {
+            tasks[taskCounter] = new Deadline(task, deadline);
             taskCounter++;
             printTaskAdded();
     }
 
-    private static void addEventTask(String input) {
-        int indexOfFrom = input.indexOf(Command.COMMAND_EVENT_FROM);
-        int indexOfTo = input.indexOf(Command.COMMAND_EVENT_TO);
-        tasks[taskCounter] = new Event(input.substring(Command.COMMAND_EVENT.length() + 1, indexOfFrom)
-                , input.substring(indexOfFrom + Command.COMMAND_EVENT_FROM.length(), indexOfTo)
-                , input.substring(indexOfTo + Command.COMMAND_EVENT_TO.length()));
+    private static void addEventTask(String task, String fromDate, String byDate) {
+        tasks[taskCounter] = new Event(task, fromDate, byDate);
         taskCounter++;
         printTaskAdded();
     }
