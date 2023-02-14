@@ -1,3 +1,10 @@
+package hina;
+
+import hina.exceptions.HinaException;
+import hina.task.Deadline;
+import hina.task.Event;
+import hina.task.Task;
+
 import java.util.Scanner;
 
 public class HinaBot {

@@ -1,4 +1,8 @@
-public class Deadline extends Task{
+package hina.task;
+
+import hina.task.Task;
+
+public class Deadline extends Task {
     private String by;
     public Deadline(String description, String by) {
         super(description);
