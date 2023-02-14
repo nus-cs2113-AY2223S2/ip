@@ -1,8 +1,11 @@
 // Java program to read data of various types using Scanner class.
+import exceptions.EmptyInputException;
+import exceptions.IllegalInputException;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 public class Duke {
-    public static final int TASKS_COUNT = 100;
-    private static Task[] tasks = new Task[TASKS_COUNT];
+    private static ArrayList<Task> tasks = new ArrayList<>();
     public static void printWelcomeMessage() {
         String welcomeMessage = "____________________________________________________________\n" +
                 " Hello! I'm Elzi, your dog!\n" +
@@ -16,7 +19,7 @@ public class Duke {
     public static void printList(int taskCounter) {
         System.out.println("Your current tasks are as follows: ");
         for (int index = 0; index < taskCounter; index += 1) {
-            System.out.println((index + 1) + "." + tasks[index]);
+            System.out.println((index + 1) + "." + tasks.get(index));
         }
     }
     public static void printAddTodo(Todo print, int taskCounter) {
@@ -34,9 +37,8 @@ public class Duke {
         System.out.print("   "); System.out.println(print);
         System.out.println("Now you have " + Integer.toString(taskCounter) + " task in the list");
     }
-    public static String parseInput(String[] inputs) throws IllegalInputException {
+    public static String parseInput(String[] inputs){
         String todoInput = "";
-        if (inputs.length < 2) throw new IllegalInputException();
         for (int i = 1; i < inputs.length; i ++) {
             todoInput += inputs[i];
             todoInput += " ";
@@ -44,17 +46,13 @@ public class Duke {
         return todoInput;
     }
     public static void inputTodo(String[] inputs, int taskCounter) {
-        try {
-            String todoInput = parseInput(inputs);
-            Todo todo = new Todo(todoInput);
-            tasks[taskCounter] = todo;
-            taskCounter += 1;
-            printAddTodo(todo, taskCounter);
-        } catch(IndexOutOfBoundsException | IllegalInputException e) {
-            System.out.println(" ☹ OOPS!!! The description of a todo cannot be empty.");
-        }
+        String todoInput = parseInput(inputs);
+        Todo todo = new Todo(todoInput);
+        tasks.add(todo);
+        taskCounter += 1;
+        printAddTodo(todo, taskCounter);
     }
-    private static boolean readInput() throws IllegalInputException {
+    private static boolean readInput() throws EmptyInputException, IllegalInputException {
         Scanner sc = new Scanner(System.in);
         String input = "";
         input = sc.nextLine();
@@ -65,7 +63,9 @@ public class Duke {
 
             String[] inputs = input.split(" ");
             String command  = inputs[0];
-
+            if (inputs.length < 2) {
+                throw new EmptyInputException();
+            }
             printLine();
 
             switch (command) {
@@ -74,13 +74,13 @@ public class Duke {
                 break;
             case "mark":
                 int taskIndex = Integer.parseInt(inputs[1]);
-                tasks[taskIndex-1].markAsDone();
+                tasks.get(taskIndex-1).markAsDone();
                 System.out.println("I have marked this task as done");
                 printList(taskCounter);
                 break;
             case "unmark":
                 taskIndex = Integer.parseInt(inputs[1]);
-                tasks[taskIndex-1].markAsNotDone();
+                tasks.get(taskIndex-1).markAsNotDone();
                 System.out.println("I have unmarked this task");
                 printList(taskCounter);
                 break;
@@ -106,7 +106,7 @@ public class Duke {
                     }
                 }
                 Deadline deadline = new Deadline(deadlineInput, deadlineDeadline);
-                tasks[taskCounter] = deadline; taskCounter += 1;
+                tasks.add(deadline); taskCounter += 1;
                 printAddDeadline(deadline, taskCounter);
                 break;
             case "event":
@@ -136,8 +136,13 @@ public class Duke {
                     }
                 }
                 Event event = new Event(eventInput,eventFrom, eventTo);
-                tasks[taskCounter] = event; taskCounter += 1;
+                tasks.add(event); taskCounter += 1;
                 printAddEvent(event, taskCounter);
+                break;
+            case "delete":
+
+                System.out.print("I have removed");
+                printList(taskCounter);
                 break;
             default:
                 throw new IllegalInputException();
@@ -155,7 +160,11 @@ public class Duke {
         while (!isBye) {
             try {
                 isBye = readInput();
-            } catch (Exception e) {
+            }
+            catch (EmptyInputException e) {
+                System.out.println("Description Can Not Be Empty!");
+            }
+            catch (IllegalInputException e) {
                 System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
                 printLine();
             }
