@@ -7,7 +7,7 @@ public class Command {
 
     public static void linePrint() {
         for (int i = 0; i < 100; i++) {
-            System.out.print("=");
+            System.out.print("-");
         }
         System.out.println();
     }
@@ -61,6 +61,29 @@ public class Command {
         linePrint();
     }
 
+    public static void removeTask(String input, int space) {
+        try {
+            int taskNum = Integer.parseInt(input.substring(space + 1));
+            Task temp = Psyduck.getTask(taskNum);
+            Psyduck.removeTask(taskNum);
+            linePrint();
+            System.out.println("Psyduck has removed the task: " + temp);
+            linePrint();
+        } catch (NullPointerException e) {
+            linePrint();
+            System.out.println("Please mark a valid task.");
+            linePrint();
+        } catch (NumberFormatException e) {
+            linePrint();
+            System.out.println("Please mark a valid task with an integer from 1-100.");
+            linePrint();
+        } catch (IndexOutOfBoundsException e) {
+            linePrint();
+            System.out.println("Please unmark a valid task.");
+            linePrint();
+        }
+    }
+
     public static void markTask(String input, int space) {
         try {
             int taskNum = Integer.parseInt(input.substring(space + 1));
@@ -75,6 +98,10 @@ public class Command {
         } catch (NumberFormatException e) {
             linePrint();
             System.out.println("Please mark a valid task with an integer from 1-100.");
+            linePrint();
+        } catch (IndexOutOfBoundsException e) {
+            linePrint();
+            System.out.println("Please unmark a valid task.");
             linePrint();
         }
     }
@@ -93,6 +120,10 @@ public class Command {
         } catch (NumberFormatException e) {
             linePrint();
             System.out.println("Please unmark a valid task with an integer from 1-100.");
+            linePrint();
+        } catch (IndexOutOfBoundsException e) {
+            linePrint();
+            System.out.println("Please unmark a valid task.");
             linePrint();
         }
     }
@@ -155,6 +186,11 @@ public class Command {
             break;
         case "unmark":
             unmarkTask(input, space);
+            break;
+        case "delete":
+            //fallthrough
+        case "remove":
+            removeTask(input, space);
             break;
         case "todo":
             createToDo(input, space);

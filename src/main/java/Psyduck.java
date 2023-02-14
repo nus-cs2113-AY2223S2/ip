@@ -1,8 +1,9 @@
+import java.util.ArrayList;
 
 public class Psyduck {
     private static boolean shouldExit = false;
 
-    private static Task[] tasks = new Task[100];
+    private static ArrayList<Task> tasks = new ArrayList<>();
 
     private static int taskCount = 0;
 
@@ -11,11 +12,11 @@ public class Psyduck {
     }
 
     public static Task getTask(int taskNum) {
-        return tasks[taskNum - 1]; //array is 0-indexed, taskNum is 1-indexed
+        return tasks.get(taskNum-1); //array is 0-indexed, taskNum is 1-indexed
     }
 
     public static Task getNewestTask() {
-        return tasks[taskCount - 1]; //array is 0-indexed, taskNum is 1-indexed
+        return tasks.get(taskCount - 1); //array is 0-indexed, taskNum is 1-indexed
     }
 
     public static void setShouldExit(boolean shouldExit) {
@@ -24,28 +25,37 @@ public class Psyduck {
 
     public static void addToDo(String description) {
         ToDo newTask = new ToDo(description);
-        tasks[taskCount] = newTask;
+        tasks.add(newTask);
         taskCount++;
     }
 
 
     public static void addDeadline(String description, String by) {
         Deadline newTask = new Deadline(description, by);
-        tasks[taskCount] = newTask;
+        tasks.add(newTask);
         taskCount++;
     }
 
     public static void addEvent(String description, String from, String to) {
         Event newTask = new Event(description, from, to);
-        tasks[taskCount] = newTask;
+        tasks.add(newTask);
         taskCount++;
     }
 
+    public static void removeTask(int taskNum) {
+        tasks.remove(taskNum-1);
+        taskCount--;
+
+    }
     public static void listTasks() {
         Command.linePrint();
-        for (int i = 0; i < taskCount; i++) {
-            System.out.print(Integer.toString(i + 1) + ".");
-            System.out.println(tasks[i]);
+        if (taskCount == 0) { //list is empty
+            System.out.println("List is empty.");
+        } else {
+            for (int i = 0; i < taskCount; i++) {
+                System.out.print(Integer.toString(i + 1) + ".");
+                System.out.println(tasks.get(i));
+            }
         }
         Command.linePrint();
     }
