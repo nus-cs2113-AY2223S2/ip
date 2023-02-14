@@ -198,7 +198,7 @@ public class TaskOrganizer {
         return copy;
     }
 
-    private void serializeTasks() throws FileNotFoundException, IOException {
+    private void serializeTasks() throws IOException {
         // Buckets to store each data type
         HashMap<Integer, ToDo> toDos = new HashMap<>();
         HashMap<Integer, Deadline> deadlines = new HashMap<>();
@@ -239,7 +239,7 @@ public class TaskOrganizer {
         saveEvents.close();
     }
 
-    private void serialzeSerialNumbers() throws FileNotFoundException, IOException {
+    private void serialzeSerialNumbers() throws IOException {
         String serialNumbersJson = new Gson().toJson(serialNumbers);
         FileWriter saveSerialNumbers = new FileWriter("C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data/serialNumbers.txt");
         saveSerialNumbers.write(serialNumbersJson);
@@ -259,7 +259,7 @@ public class TaskOrganizer {
         saveTaskOrders.close();
     }
 
-    public void serializeTaskOrganizer() throws FileNotFoundException, IOException{
+    public void serializeTaskOrganizer() throws IOException{
         serializeTasks();
         serializeTaskOrders();
         serializeTaskID();

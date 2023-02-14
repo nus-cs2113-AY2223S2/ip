@@ -146,4 +146,28 @@ public class Response {
         System.out.println("There is an error when loading saved data.");
         printLine();
     }
+
+    /** Prints a message telling the user that there is an error when creating a file */
+    public void printFileCreationError() {
+        printLine();
+        printSignature();
+        System.out.println("There has been an error creating the files. Please delete and try again.");
+        printLine();
+    }
+
+    /** Prints a message telling the user that there is an error when loading a file */
+    public void printFileLoadingError() {
+        printLine();
+        printSignature();
+        System.out.println("There has been an error loading the files. Please delete and try again.");
+        printLine();
+    }
+
+    /** Prints a message telling the user that there is an error when saving a file */
+    public void printFileSavingError() {
+        printLine();
+        printSignature();
+        System.out.println("There has been an error saving the files. Please delete and try again.");
+        printLine();
+    }
 }

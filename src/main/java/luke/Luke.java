@@ -1,28 +1,17 @@
 package luke;
 
 import luke.command.Response;
+import luke.command.Storage;
 import luke.command.TaskOrganizer;
 import luke.exception.InvalidIndexException;
 
-import java.io.File;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.lang.reflect.Type;
-import java.nio.charset.IllegalCharsetNameException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Scanner;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import luke.task.Deadline;
-import luke.task.Event;
-import luke.task.Task;
-import luke.task.ToDo;
 
 public class Luke {
     /** An object to manage the responses of LUKE */
@@ -37,38 +26,8 @@ public class Luke {
     /** A list of valid commands */
     private static ArrayList<String> commands;
 
-    /** This function checks if the data files exist and not empty */
-    private static boolean isAbleToRead() {
-        Path dataFolderPath = Path.of("C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data");
-        Path IDFilePath = Path.of("C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data/id.txt");
-        Path taskOrderFilePath = Path.of(
-                "C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data/taskList.txt"
-        );
-        Path serialNumbersPath = Path.of(
-                "C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data/serialNumbers.txt"
-        );
-        Path toDosPath = Path.of("C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data/toDos.txt");
-        Path deadlinesPath = Path.of(
-                "C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data/deadlines.txt"
-        );
-        Path eventsPath = Path.of(
-                "C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data/events.txt"
-        );
-
-        File IDFile = new File(IDFilePath.toUri());
-        File taskOrderFile = new File(taskOrderFilePath.toUri());
-        File serialNumbersFile = new File(serialNumbersPath.toUri());
-        File toDosFile = new File(toDosPath.toUri());
-        File deadlinesFile = new File(deadlinesPath.toUri());
-        File eventsFile = new File(eventsPath.toUri());
-
-        boolean doesExist = (Files.exists(dataFolderPath) && Files.exists(IDFilePath) && Files.exists(taskOrderFilePath)
-                            && Files.exists(serialNumbersPath) && Files.exists(toDosPath) && Files.exists(deadlinesPath)
-                            && Files.exists(eventsPath));
-        boolean isNotEmpty = (IDFile.length() != 0 && taskOrderFile.length() != 0 && serialNumbersFile.length() != 0
-                            && toDosFile.length() != 0 && deadlinesFile.length() != 0 && eventsFile.length() != 0);
-        return doesExist && isNotEmpty;
-    }
+    /** An object to handle the save and loading of data */
+    private static Storage storage;
 
     /** Initializes all the objects used in LUKE, says "Hi" to the user */
     private static void initialize() {
@@ -78,79 +37,21 @@ public class Luke {
         commands = new ArrayList<String>(
                 Arrays.asList("add", "list", "mark", "unmark", "delete")
         );
-
-        if (isAbleToRead()) {
-            loadPreviousData();
-        }
-        else {
-            loadNewData();
-        }
+        storage = new Storage();
+        taskOrganizer = storage.loadData();
 
         // Say "Hi" to the user
         response.sayHi();
     }
 
-    /** Loads a completely new set of data */
-    private static void loadNewData() {
-        taskOrganizer = new TaskOrganizer();
-    }
-
-    /** Loads in the taskID and tasks hashmap that is stored in the txt files */
-    private static void loadPreviousData() {
-        try {
-            Type taskOrdersType = new TypeToken<HashMap<Integer, Task>>(){}.getType();
-            Type toDosType = new TypeToken<HashMap<Integer, ToDo>>(){}.getType();
-            Type deadlinesType = new TypeToken<HashMap<Integer, Deadline>>(){}.getType();
-            Type eventsType = new TypeToken<HashMap<Integer, Event>>(){}.getType();
-            Type serialNumbersType = new TypeToken<HashMap<Integer, Integer>>(){}.getType();
-
-            Path IDFile = Path.of("C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data/id.txt");
-            Path taskListFile = Path.of(
-                    "C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data/taskList.txt"
-            );
-            Path serialNumbersFile = Path.of(
-                    "C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data/serialNumbers.txt"
-            );
-            Path toDosFile = Path.of(
-                    "C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data/toDos.txt"
-            );
-            Path deadlinesFile = Path.of(
-                    "C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data/deadlines.txt"
-            );
-            Path eventsFile = Path.of(
-                    "C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data/events.txt"
-            );
-
-            String IDFileJson = Files.readString(IDFile);
-            String taskOrderJson = Files.readString(taskListFile);
-            String serialNumbersJson = Files.readString(serialNumbersFile);
-            String toDosJson = Files.readString(toDosFile);
-            String deadlinesJson = Files.readString(deadlinesFile);
-            String eventsJson = Files.readString(eventsFile);
-
-            int savedID = Integer.parseInt(IDFileJson);
-            HashMap<Integer, Task> savedTaskOrder = new Gson().fromJson(taskOrderJson, taskOrdersType);
-            HashMap<Integer, ToDo> savedToDos = new Gson().fromJson(toDosJson, toDosType);
-            HashMap<Integer, Deadline> savedDeadlines = new Gson().fromJson(deadlinesJson, deadlinesType);
-            HashMap<Integer, Event> savedEvents = new Gson().fromJson(eventsJson, eventsType);
-            HashMap<Integer, Integer> savedSerialNumbers = new Gson().fromJson(serialNumbersJson, serialNumbersType);
-
-            taskOrganizer = new TaskOrganizer(savedID, savedTaskOrder, savedToDos, savedDeadlines, savedEvents,
-                    savedSerialNumbers);
-        } catch (IOException e) {
-            handleSaveError();
-        }
-    }
 
     /** Closes the scanner and says "Bye" to the user */
     public static void endProgram() {
         scanner.close();
         try {
             taskOrganizer.serializeTaskOrganizer();
-        } catch (FileNotFoundException e) {
-            initialize();
         } catch (IOException e) {
-            handleSaveError();
+            storage.handleSaveError();
         }
         response.sayBye();
     }
@@ -208,11 +109,6 @@ public class Luke {
     /** Informs the user that index entered is out of bounds */
     private static void handleOutOfBounds() {
         response.printOutOfBounds();
-    }
-
-    private static void handleSaveError() {
-        response.printSaveError();
-        loadNewData();
     }
 
     /**
