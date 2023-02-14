@@ -20,7 +20,7 @@ public class FileMgmt {
             }
             FileWriter fw = new FileWriter(PROJECT_FILE_DIR);
             for (Task taskobj : list) {
-                fw.write(String.valueOf(taskobj));
+                fw.write(String.valueOf(taskobj) + " \r\n");
             }
             fw.close();
         } catch (IOException e) {

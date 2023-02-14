@@ -1,1 +1,3 @@
-.[T][X] Hello there
+[T][ ] test 
+[T][X] a skmdmas 
+[E][ ] samdakdsak (from: asndasd to: asjndda) 
