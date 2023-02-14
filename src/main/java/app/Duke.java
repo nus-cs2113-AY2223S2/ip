@@ -14,17 +14,16 @@ import java.util.Scanner;
 
 public class Duke {
     public static final String line = ("─".repeat(50));
+    private static final String filePath = "data/duke.txt";
     public static void main(String[] args) {
 
+        ArrayList<Task> tasks = null;
         try {
-            FileManager.loadTasks();
-        } catch (IOException | InvalidCommandException e) {
+            tasks = FileManager.loadTasks(filePath);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
         Greetings.printHelloMessage();
-        ArrayList<Task> tasks = new ArrayList<>();
-
         Scanner myObj = new Scanner(System.in);
 
         while (true) {

@@ -8,8 +8,8 @@ import java.util.ArrayList;
 public class Deadline extends Task{
     public static final String line = ("─".repeat(50));
     protected String by;
-    public Deadline(String taskDescription, String by) {
-        super(taskDescription);
+    public Deadline(String taskDescription, boolean isDone, String by) {
+        super(taskDescription, isDone);
         this.by = by;
     }
 
@@ -31,7 +31,7 @@ public class Deadline extends Task{
             String[] parts = commandDescriptor.split("/by");
             String taskDescription = parts[0].trim();
             String deadline = parts[1].trim();
-            tasks.add(tasks.size(), new Deadline(taskDescription, deadline));
+            tasks.add(tasks.size(), new Deadline(taskDescription, false, deadline));
             System.out.println("Got it. I've added this task:");
             System.out.println(tasks.get(tasks.size() - 1));
             System.out.printf("Now you have %d tasks in the list.\n", tasks.size());

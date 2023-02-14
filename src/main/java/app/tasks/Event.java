@@ -12,8 +12,8 @@ public class Event extends Task {
     protected String startTime;
     protected String endTime;
 
-    public Event(String taskDescription, String startTime, String endTime) {
-        super(taskDescription);
+    public Event(String taskDescription, boolean isDone, String startTime, String endTime) {
+        super(taskDescription, isDone);
         this.startTime = startTime;
         this.endTime = endTime;
     }
@@ -42,7 +42,7 @@ public class Event extends Task {
             String[] toParts = fromParts[1].split("/to");
             String startTime = toParts[0].trim();
             String endTime = toParts[1].trim();
-            tasks.add(tasks.size(), new Event(taskDescription, startTime, endTime));
+            tasks.add(tasks.size(), new Event(taskDescription, false, startTime, endTime));
             System.out.println("Got it. I've added this task:");
             System.out.println(tasks.get(tasks.size() - 1));
             System.out.printf("Now you have %d tasks in the list.\n", tasks.size());
