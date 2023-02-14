@@ -1,10 +1,10 @@
 package task;
 
 /**
- * Individual tasks.
+ * Abstract class to cover different task types.
  */
 
-public class Task {
+public abstract class Task {
     protected String description;
     protected boolean isDone;
     protected int taskNumber;
