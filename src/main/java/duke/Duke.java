@@ -2,19 +2,30 @@ package duke;
 
 import java.io.*;
 import java.util.Scanner;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.util.ArrayList;
+
 public class Duke {
     static String FILEPATH = "data/duke.txt";
-    public static final int MAX_TASKS = 100;
     private static int taskCount = 0;
-    static Task[] tasks = new Task[MAX_TASKS];
-
-    static String[] commands = {"todo", "mark", "unmark", "deadline", "list", "help", "event"};
+    static ArrayList <Task> tasks = new ArrayList<>();
 
     public static void addTask(Task t) {
-        tasks[taskCount] = t;
+        tasks.add(t);
         taskCount++;
+    }
+    public static void deleteTask(String commandArgs) throws NoDescriptionException, IndexOutOfBoundsException{
+        if (commandArgs.trim().length() == 0) {
+            throw new NoDescriptionException();
+        }
+        final int deleteId = Integer.parseInt(commandArgs) - 1;
+        if (deleteId < 0 || deleteId >= taskCount) {
+            throw new IndexOutOfBoundsException();
+        }
+        System.out.println("I've deleted this task ∪･ω･∪:");
+        System.out.println(tasks.get(deleteId));
+        printLine();
+        tasks.remove(deleteId);
+        taskCount--;
     }
 
     public static void printLine() {
@@ -31,7 +42,7 @@ public class Duke {
         try {
             printFileContents(FILEPATH);
         } catch (FileNotFoundException e) {
-            System.out.println("File not found");
+            System.out.println("No previous file, Duke will try to create a file to store your data.");
             try {
                 new File(FILEPATH).createNewFile();
             } catch (IOException ioe) {
@@ -43,10 +54,10 @@ public class Duke {
         printLine();
     }
     private static void writeToFile(String filePath) throws IOException {
-        BufferedWriter outputWriter = null;
+        BufferedWriter outputWriter;
         outputWriter = new BufferedWriter(new FileWriter(filePath));
         for (int i = 0; i < taskCount; i += 1) {
-            outputWriter.write(tasks[i].toString() + System.lineSeparator());
+            outputWriter.write(tasks.get(i).toString() + System.lineSeparator());
         }
         outputWriter.flush();
         outputWriter.close();
@@ -91,7 +102,7 @@ public class Duke {
                 try {
                     addTodo(taskDescription);
                     if (doneId != -1) {
-                        tasks[taskCount-1].markAsDone();
+                        tasks.get(taskCount-1).markAsDone();
                     }
                 } catch (NoDescriptionException e) {
                     System.out.println("WOOFS!!! Something went wrong");
@@ -102,12 +113,9 @@ public class Duke {
                 try {
                     addEvent(taskDescription);
                     if (doneId != -1) {
-                        tasks[taskCount-1].markAsDone();
+                        tasks.get(taskCount-1).markAsDone();
                     }
-                } catch (NoDescriptionException e) {
-                    System.out.println("WOOFS!!! Something went wrong");
-                    printLine();
-                } catch (FormatException e) {
+                } catch (NoDescriptionException | FormatException e) {
                     System.out.println("WOOFS!!! Something went wrong");
                     printLine();
                 }
@@ -116,12 +124,9 @@ public class Duke {
                 try {
                     addDeadline(taskDescription);
                     if (doneId != -1) {
-                        tasks[taskCount-1].markAsDone();
+                        tasks.get(taskCount-1).markAsDone();
                     }
-                } catch (NoDescriptionException e) {
-                    System.out.println("WOOFS!!! Something went wrong");
-                    printLine();
-                } catch (FormatException e) {
+                } catch (NoDescriptionException | FormatException e) {
                     System.out.println("WOOFS!!! Something went wrong");
                     printLine();
                 }
@@ -144,7 +149,7 @@ public class Duke {
             try {
                 addTodo(commandArgs);
                 printLine();
-                System.out.println("Got it. I've added this task: \n" + tasks[taskCount - 1]);
+                System.out.println("Got it. I've added this task: \n" + tasks.get(taskCount-1));
                 System.out.println("Now you have " + taskCount + " tasks in your list.");
                 printLine();
             } catch (NoDescriptionException e) {
@@ -157,7 +162,7 @@ public class Duke {
             try {
                 addDeadline(commandArgs);
                 printLine();
-                System.out.println("Got it. I've added this task: \n" + tasks[taskCount - 1]);
+                System.out.println("Got it. I've added this task: \n" + tasks.get(taskCount-1));
                 System.out.println("Now you have " + taskCount + " tasks in your list.");
                 printLine();
             } catch (NoDescriptionException e) {
@@ -174,7 +179,7 @@ public class Duke {
             try {
                 addEvent(commandArgs);
                 printLine();
-                System.out.println("Got it. I've added this task: \n" + tasks[taskCount - 1]);
+                System.out.println("Got it. I've added this task: \n" + tasks.get(taskCount-1));
                 System.out.println("Now you have " + taskCount + " tasks in your list.");
                 printLine();
             } catch (NoDescriptionException e) {
@@ -213,6 +218,19 @@ public class Duke {
                 printLine();
             }
             break;
+        case "delete":
+            try {
+                deleteTask(commandArgs);
+            } catch (NoDescriptionException e) {
+                System.out.println("WOOFS!!! The index of entering task must be stated.");
+                System.out.println("Please try to delete task again υ´• ﻌ •`υ");
+                printLine();
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("WOOFS!!! The index of entering task is not valid.");
+                System.out.println("Please try to delete task again υ´• ﻌ •`υ");
+                printLine();
+            }
+            break;
         case "help":
             info();
             break;
@@ -240,12 +258,12 @@ public class Duke {
         if (unmarkId < 0 || unmarkId >= taskCount) {
             throw new IndexOutOfBoundsException();
         }
-        if (!tasks[unmarkId].isDone) {
+        if (!tasks.get(unmarkId).isDone) {
             System.out.println("This task hasn't been marked as done yet ∪･ω･∪");
         } else {
-            tasks[unmarkId].markAsNotDone();
+            tasks.get(unmarkId).markAsNotDone();
             System.out.println("I've unmarked this task ∪･ω･∪:");
-            System.out.println(tasks[unmarkId]);
+            System.out.println(tasks.get(unmarkId));
         }
         printLine();
     }
@@ -258,12 +276,12 @@ public class Duke {
         if (markId < 0 || markId >= taskCount) {
             throw new IndexOutOfBoundsException();
         }
-        if (tasks[markId].isDone) {
+        if (tasks.get(markId).isDone) {
             System.out.println("This task has already been marked as done ੯•໒꒱❤︎");
         } else {
-            tasks[markId].markAsDone();
+            tasks.get(markId).markAsDone();
             System.out.println("I've marked this task as done ੯•໒꒱❤︎:");
-            System.out.println(tasks[markId]);
+            System.out.println(tasks.get(markId));
         }
         printLine();
     }
@@ -276,7 +294,7 @@ public class Duke {
         }
         String eventDescription = commandArgs.substring(0, indexOfFrom).trim();
         String from = commandArgs.substring(indexOfFrom, indexOfTo).trim().replace("from:", "").trim();
-        String to = commandArgs.substring(indexOfTo, commandArgs.length()).trim().replace("to:", "").trim();
+        String to = commandArgs.substring(indexOfTo).trim().replace("to:", "").trim();
         if (eventDescription.trim().length() == 0 || from.length() == 0 || to.length() == 0) {
             throw new NoDescriptionException();
         }
@@ -292,7 +310,7 @@ public class Duke {
         if (deadlineDescription.trim().length() == 0) {
             throw new NoDescriptionException();
         }
-        String deadline = commandArgs.substring(indexOfDeadline, commandArgs.length()).trim().replace("by:", "");
+        String deadline = commandArgs.substring(indexOfDeadline).trim().replace("by:", "");
         if (deadline.trim().length() == 0) {
             throw new NoDescriptionException();
         }
@@ -310,7 +328,7 @@ public class Duke {
         for (int i = 0; i < taskCount; i += 1) {
             System.out.print(i + 1);
             System.out.print(". ");
-            System.out.println(tasks[i]);
+            System.out.println(tasks.get(i));
         }
         printLine();
     }
