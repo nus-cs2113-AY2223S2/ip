@@ -2,11 +2,14 @@ package duke;
 
 import duke.exception.EmptyTaskException;
 import duke.exception.IllegalCommandException;
+import duke.exception.InvalidDeadline;
+import duke.exception.InvalidEvent;
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Duke {
@@ -35,7 +38,6 @@ public class Duke {
             final String[] commandAndParam = Processor.command(userCommand);
             String command = commandAndParam[0];
             String param = commandAndParam[1];
-
             try {
                 executeCommand(command, param);
             } catch (IllegalCommandException e) {
@@ -82,11 +84,11 @@ public class Duke {
             if (param == "") {
                 throw new EmptyTaskException();
             }
-            final String[] paramAndBy = Processor.deadline(param);
-            if (paramAndBy == null) {
-                Output.printInvalidDeadline();
-            } else {
+            try {
+                final String[] paramAndBy = Processor.deadline(param);
                 addDeadline(paramAndBy[0], paramAndBy[1]);
+            } catch (InvalidDeadline e) {
+                Output.printInvalidDeadline();
             }
             break;
         case COMMAND_EVENT_WORD:
@@ -96,11 +98,11 @@ public class Duke {
             if (param == "") {
                 throw new EmptyTaskException();
             }
-            final String[] paramAndFromTo = Processor.event(param);
-            if (paramAndFromTo == null) {
-                Output.printInvalidEvent();
-            } else {
+            try {
+                final String[] paramAndFromTo = Processor.event(param);
                 addEvent(paramAndFromTo[0], paramAndFromTo[1], paramAndFromTo[2]);
+            } catch (InvalidEvent e) {
+                Output.printInvalidEvent();
             }
             break;
         default:
@@ -116,23 +118,12 @@ public class Duke {
     }
 
     private static void initTasks() {
-        allTasks = FileReader.initDuke();
+        try {
+            allTasks = Storage.initDuke();
+        } catch (IOException e) {
+            Output.printErrorForIO();
+        }
     }
-
-//    private static String[] processCommand(String userCommand) {
-//        final String[] split = userCommand.trim().split("\\s+", 2);
-//        return (split.length == 2) ? split : new String[]{split[0], ""};
-//    }
-//
-//    private static String[] processDeadline(String param) {
-//        String[] split = param.trim().split("\\s/by\\s", 2);
-//        return split.length == 2 ? split : null;
-//    }
-//
-//    private static String[] processEvent(String param) {
-//        String[] split = param.trim().split("\\s/from\\s|\\s/to\\s", 3);
-//        return split.length == 3 ? split : null;
-//    }
 
     private static void markNotDone(String param) {
         try {
