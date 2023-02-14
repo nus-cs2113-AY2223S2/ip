@@ -149,25 +149,6 @@ public class Duke {
                         }
                         System.out.println(TaskPrinter.unmarkedMessage(tasks.get(taskIdx)));
                         break;
-                    
-                    case "delete":
-                        if (input.length() == command.length()) {
-                            throw new NoDescriptionException(command);
-                        }
-
-                        try {
-                            taskIdx = Integer.parseInt(input.substring(command.length() + 1)) - 1;
-                        } catch (NumberFormatException e) {
-                            throw new NonPositiveNumberException(e);
-                        }
-
-                        try {
-                            Task deletedTask = tasks.remove(taskIdx);
-                            System.out.println(TaskPrinter.deletedMessage(deletedTask, tasks.size()));
-                        } catch (IndexOutOfBoundsException e) {
-                            throw new InvalidTaskIndexException(tasks.size(), e);
-                        }
-                        break;
     
                     default:
                         throw new UnknownInputException();

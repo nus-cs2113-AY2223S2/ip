@@ -49,16 +49,4 @@ public class TaskPrinter {
             "\t----------------------------------------------------\n\n"
         ;
     }
-
-    public static String deletedMessage(Task t, int numTasks) {
-        return 
-            "\t----------------------------------------------------\n" + 
-            "\tNoted. I've removed this task:\n" + 
-            "\t   " + t.toString() + "\n" + 
-            "\tNow you have " + numTasks + 
-            " task" + (numTasks > 1 ? "s" : "") + 
-            " in the list.\n" + 
-            "\t----------------------------------------------------\n\n"
-        ;
-    }
 }
