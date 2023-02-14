@@ -29,6 +29,7 @@ public class Duke {
     private static final String COMMAND_TODO = "todo";
     private static final String COMMAND_DEADLINE = "deadline";
     private static final String COMMAND_EVENT = "event";
+    private static final String COMMAND_DELETE = "delete";
 
     // messages
     private static final String MESSAGE_COMMAND_UNRECOGNISED = "Unrecognised command, try again.";
@@ -90,6 +91,9 @@ public class Duke {
                 break;
             case COMMAND_EVENT:
                 handleCommandEvent(input);
+                break;
+            case COMMAND_DELETE:
+                handleCommandDelete(input);
                 break;
             default:
                 throw new InvalidInputException(MESSAGE_COMMAND_UNRECOGNISED);
@@ -231,5 +235,23 @@ public class Duke {
         // create task
         ArrayList<String> detailsArr = Event.convertInputIntoDetails(taskDetails);
         addTask(new Event(detailsArr));
+    }
+
+    private static void handleCommandDelete(Scanner input) throws InvalidInputException {
+        // check for valid task input
+        if (!input.hasNextInt()) {
+            throw new InvalidInputException(MESSAGE_TASKS_INVALID_ID);
+        }
+        int id = input.nextInt();
+        if (id < 1 || id > tasks.size()) {
+            throw new InvalidInputException(MESSAGE_TASKS_INVALID_ID);
+        }
+
+        Task toDelete = tasks.get(id - 1);
+        tasks.remove(id - 1);
+        printWithIndentation("Noted. I have removed this task:\n"
+                                     + INDENT + toDelete.describe() + "\n"
+                                     + "Now you have " + tasks.size() + " tasks in the list.");
+        printLine();
     }
 }
