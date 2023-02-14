@@ -8,9 +8,15 @@ import siri.task.Event;
 import siri.task.Task;
 import siri.task.ToDo;
 
-import java.lang.reflect.Array;
+import java.sql.SQLOutput;
 import java.util.Scanner;
 import java.util.ArrayList;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class Duke {
 
     private static ArrayList<Task> tasks = new ArrayList<>();
@@ -58,12 +64,10 @@ public class Duke {
         int taskNumber = Integer.parseInt(taskNumberString);
 
         if (marker.equals("mark")) {
-            //mark task as done
             tasks.get(taskNumber - 1).setDone(true);
             System.out.println("Nice! I've marked this task as done: ");
             System.out.println(tasks.get(taskNumber - 1).toString());
         } else {
-            //mark task as undone
             tasks.get(taskNumber - 1).setDone(false);
             System.out.println("Ok! I've marked this task as not done yet: ");
             System.out.println(tasks.get(taskNumber - 1).toString());
@@ -73,7 +77,7 @@ public class Duke {
     }
 
     //Task Description = taskD
-    public static void addTask(String taskCommand, String taskD) {
+    public static void addTask(String taskCommand, String taskD) throws IOException {
         switch (taskCommand) {
         case "todo":
             tasks.add(new ToDo(taskD.trim()));
@@ -88,12 +92,14 @@ public class Duke {
             tasks.add(new Event(eventName[0].trim(), eventDate[0].trim(), eventDate[1].trim()));
             break;
         }
+
+        appendToFile(getFilePath(), tasks.get(indexOfTask).toFileString());
     }
 
-    public static void deleteTask(String taskNumberString){
+    public static void deleteTask(String taskNumberString) {
         int taskNumber = Integer.parseInt(taskNumberString);
         printDeletedTask(taskNumber);
-        tasks.remove(taskNumber-1);
+        tasks.remove(taskNumber - 1);
         indexOfTask--;
 
         //IndexOutOfBoundsException
@@ -107,10 +113,45 @@ public class Duke {
 
     public static void printDeletedTask(int taskNumber) {
         System.out.println("Noted! I've deleted this task:");
-        System.out.println("  " + tasks.get(taskNumber-1).toString());
-        System.out.println("Now you have " + (indexOfTask-1) + " tasks in the list.");
+        System.out.println("  " + tasks.get(taskNumber - 1).toString());
+        System.out.println("Now you have " + (indexOfTask - 1) + " tasks in the list.");
     }
-    public static void readUserInput(String input) throws MarkerArrayIndexOutOfBoundsException, AddTaskIndexOutOfBounds, UnknownCommandException {
+
+    public static void overwriteEntireList(String filePath) throws IOException {
+        FileWriter fw = new FileWriter(filePath);
+        for(int i = 0; i < indexOfTask; ++i){
+            fw.write(tasks.get(i).toFileString() + System.lineSeparator());
+        }
+        fw.close();
+    }
+
+    private static void loadPreviousTasks(String taskCommand, String taskD){
+
+        String[] taskStatus = taskD.split(" | ", 3);//taskStatus[1] is the status
+        String[] taskName = taskStatus[2].split("| ", 2);
+        switch(taskCommand) {
+        case "T":
+            tasks.add(new ToDo(taskName[1].trim()));
+            break;
+        case "D":
+            String[] deadlineTaskD = taskName[1].split(" /by: ",2);
+            tasks.add(new Deadline(deadlineTaskD[0].trim(), deadlineTaskD[1].trim()));
+            break;
+        case "E":
+            String[] eventName = taskName[1].split(" /from: ", 2);
+            String[] eventDate = eventName[1].split(" to: ", 2);
+            tasks.add(new Event(eventName[0].trim(), eventDate[0].trim(), eventDate[1].trim()));
+            break;
+        }
+
+        if(taskStatus[1].equals("X")){
+            tasks.get(indexOfTask).setDone(true);
+        } else {
+            tasks.get(indexOfTask).setDone(false);
+        }
+    }
+
+    public static void readUserInput(String input) throws MarkerArrayIndexOutOfBoundsException, AddTaskIndexOutOfBounds, UnknownCommandException, IOException {
 
         String[] command = input.split(" ", 2);
 
@@ -143,7 +184,33 @@ public class Duke {
         }
     }
 
-    public static void main(String[] args) {
+    private static String getFilePath(){
+        String filePath = "data/tasklist.txt";
+        return filePath;
+    }
+    private static void readFile() throws FileNotFoundException {
+        File f = new File("data/tasklist.txt");
+
+        Scanner s = new Scanner(f);
+        while (s.hasNext()){
+            String[] command = s.nextLine().split(" | ", 2);
+            loadPreviousTasks(command[0], command[1]);
+            indexOfTask++;
+        }
+    }
+
+    private static void appendToFile(String filePath, String taskToAdd) throws IOException {
+        FileWriter fw = new FileWriter(filePath, true);
+        fw.write(taskToAdd + System.lineSeparator());
+        fw.close();
+    }
+    public static void main(String[] args) throws IOException {
+
+        try {
+            readFile();
+        } catch(FileNotFoundException e){
+            System.out.println("File not found.");
+        }
 
         String logo = "  ______     __     __  _____     __\n"
                 + " | _____|   |__|   |  |/ ____|   |__|\n"
@@ -154,10 +221,10 @@ public class Duke {
 
         System.out.println("Hello from \n" + logo);
         greet();
+
         createUserChatBox();
         Scanner in = new Scanner(System.in);
         String input = in.nextLine().trim();
-
 
         while (!input.equals("bye")) {
             drawLine();
@@ -182,12 +249,16 @@ public class Duke {
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("Please only mark / unmark / delete task that is available in your task list.");
                 System.out.println("You have up to " + indexOfTask + " number of tasks.");
+            } catch (IOException e) {
+                System.out.println("Unable to write to files.");
             }
 
             drawLine();
             createUserChatBox();
             input = in.nextLine().trim();
         }
+
+        overwriteEntireList(getFilePath());
         sayGoodbye();
     }
 }
