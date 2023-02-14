@@ -2,13 +2,15 @@ import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         int tasksSize = 100;
-        Task[] tasks = new Task[tasksSize];
+        ArrayList<Task> tasks = new ArrayList<>();
         int currentIndex = 0;
         int maxIndex = tasksSize - 1;
 
@@ -25,7 +27,7 @@ public class Duke {
                 try {
                     String[] temp = input.split(" ", 2);
                     int taskIndex = Integer.parseInt(temp[1]);
-                    Task curTask = tasks[taskIndex - 1];
+                    Task curTask = tasks.get(taskIndex-1);
                     curTask.markAsDone();
                     printTaskStatusStatement(curTask, "mark");
                 } catch (IndexOutOfBoundsException exception) {
@@ -41,7 +43,7 @@ public class Duke {
                 try {
                     String[] temp = input.split(" ", 2);
                     int taskIndex = Integer.parseInt(temp[1]);
-                    Task curTask = tasks[taskIndex - 1];
+                    Task curTask = tasks.get(taskIndex-1);
                     curTask.unmarkAsDone();
                     printTaskStatusStatement(curTask, "unmark");
                 } catch (IndexOutOfBoundsException exception) {
@@ -53,12 +55,26 @@ public class Duke {
                     System.out.println("☹ OOPS!!! The description of a unmark is invalid");
                     printDottedLine();
                 }
+            } else if (input.startsWith("delete")) {
+                try {
+                    String[] temp = input.split(" ", 2);
+                    int taskIndex = Integer.parseInt(temp[1]);
+                    tasks.remove(taskIndex);
+                } catch (IndexOutOfBoundsException exception) {
+                    printDottedLine();
+                    System.out.println("☹ OOPS!!! The description of a delete cannot be empty");
+                    printDottedLine();
+                } catch (NullPointerException exception) {
+                    printDottedLine();
+                    System.out.println("☹ OOPS!!! The description of a delete is invalid");
+                    printDottedLine();
+                }
             } else if (input.startsWith("todo") & (currentIndex <= maxIndex)) {
                 try {
                     String[] temp = input.split("todo "); //separates todo description
                     String description = temp[1];
                     ToDo todo = new ToDo(currentIndex + 1, description);
-                    tasks[currentIndex] = todo;
+                    tasks.add(todo);
                     currentIndex++;
                     printTaskAddedStatement(currentIndex, todo);
                 } catch (IndexOutOfBoundsException exception) {
@@ -72,7 +88,7 @@ public class Duke {
                     String description = temp[1];
                     String by = temp[2];
                     Deadline deadline = new Deadline(currentIndex + 1, description, by);
-                    tasks[currentIndex] = deadline;
+                    tasks.add(deadline);
                     currentIndex++;
                     printTaskAddedStatement(currentIndex, deadline);
                 } catch (IndexOutOfBoundsException exception) {
@@ -87,7 +103,7 @@ public class Duke {
                     String from = temp[2];
                     String to = temp[3];
                     Event event = new Event(currentIndex + 1, description, from, to);
-                    tasks[currentIndex] = event;
+                    tasks.add(event);
                     currentIndex++;
                     printTaskAddedStatement(currentIndex, event);
                 } catch (IndexOutOfBoundsException exception) {
@@ -110,7 +126,7 @@ public class Duke {
         System.out.println("____________________________________________________________");
     }
 
-    private static void printAllTasks(Task[] tasks) {
+    private static void printAllTasks(ArrayList<Task> tasks) {
         printDottedLine();
         System.out.println("Here are the tasks in your list:");
         for (Task task : tasks) {
