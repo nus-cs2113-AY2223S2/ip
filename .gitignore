@@ -60,3 +60,10 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
+
+# Save data
+/data/*
+/text-ui-test/data/*
+!/data/save.example.txt
+!/text-ui-test/data/save.example.txt
+

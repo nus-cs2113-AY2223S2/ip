@@ -12,7 +12,7 @@ public class ToDo extends Task {
             Pattern.CASE_INSENSITIVE);
 
     public ToDo(ArrayList<String> details) {
-        super(details.get(0));
+        super(details.get(0), TaskEnum.TODO);
     }
 
     @Override

@@ -1,0 +1,3 @@
+{"name":"Bake cookies","isCompleted":true,"type":"TODO"}
+{"by":"tomorrow 4pm","name":"Submit application form","isCompleted":false,"type":"DEADLINE"}
+{"from":"2pm","to":"6pm","name":"Christmas celebration","isCompleted":false,"type":"EVENT"}

@@ -15,7 +15,7 @@ public class Event extends Task {
             Pattern.CASE_INSENSITIVE);
 
     public Event(ArrayList<String> details) {
-        super(details.get(0));
+        super(details.get(0), TaskEnum.EVENT);
         this.from = details.get(1);
         this.to = details.get(2);
     }

@@ -8,8 +8,12 @@ import duke.tasks.Task;
 import duke.tasks.TaskEnum;
 import duke.tasks.ToDo;
 
+import data.Data;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
 
 public class Duke {
     private static final String INDENT = "    ";
@@ -30,6 +34,7 @@ public class Duke {
     private static final String COMMAND_DEADLINE = "deadline";
     private static final String COMMAND_EVENT = "event";
     private static final String COMMAND_DELETE = "delete";
+    private static final String COMMAND_SAVE = "save";
 
     // messages
     private static final String MESSAGE_COMMAND_UNRECOGNISED = "Unrecognised command, try again.";
@@ -46,6 +51,7 @@ public class Duke {
     private static ArrayList<Task> tasks = new ArrayList<>();
 
     public static void main(String[] args) {
+        tasks = Data.getTasks();
         Scanner scan = new Scanner(System.in);
         printLogo();
         greet();
@@ -94,10 +100,16 @@ public class Duke {
                 break;
             case COMMAND_DELETE:
                 handleCommandDelete(input);
+            case COMMAND_SAVE:
+                handleCommandSave();
                 break;
             default:
                 throw new InvalidInputException(MESSAGE_COMMAND_UNRECOGNISED);
             }
+            // update saved tasks
+            Data.writeTasks(tasks);
+        } catch (IOException e) {
+            printWithIndentation("Failed to update save data. Type \"save\" to try again");
         } catch (Exception e) {
             printWithIndentation(e.getMessage());
             printLine();
@@ -252,6 +264,11 @@ public class Duke {
         printWithIndentation("Noted. I have removed this task:\n"
                                      + INDENT + toDelete.describe() + "\n"
                                      + "Now you have " + tasks.size() + " tasks in the list.");
+    }
+
+    private static void handleCommandSave() throws IOException {
+        Data.writeTasks(tasks);
+        printWithIndentation("Saved tasks successfully.");
         printLine();
     }
 }
