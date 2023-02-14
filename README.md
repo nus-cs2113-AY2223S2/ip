@@ -22,4 +22,5 @@ Hello from
 - Enter ```event [task] /from [date] /to [date]``` to add a task that starts and ends at a specific date/time
 - Enter ```mark [idx]``` based on the task's index in the list to mark it as done 
 - Enter ```unmark [idx]``` based on the task's index in the list to mark it as not done 
+- Enter ```delete [idx]``` based on the task's index in the list to remove the task from your list
 - Enter ```bye``` to exit the program 

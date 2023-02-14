@@ -37,6 +37,7 @@ public class Output {
                 " Enter \"event [task] /from [date] /to [date]\" to add an event\n" +
                 " Enter \"mark [idx]\" to mark task as done\n" +
                 " Enter \"unmark [idx]\" to mark task as not done\n" +
+                " Enter \"delete [idx]\" to remove task from list\n" +
                 " Enter \"bye\" to exit the program\n" +
                 DIVIDER);
     }
