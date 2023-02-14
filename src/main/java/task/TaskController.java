@@ -76,4 +76,19 @@ public class TaskController implements ITaskController  {
             throw e;
         }
     }
+    @Override
+    public String deleteTask(int taskIndex) throws TaskIndexOutOfRangeException{
+        try {
+            // Note that the indexing is always +1 greater than the computer indexing
+            // Need to decremnet by 1 here
+            Task deletedTarget = TaskList.remove(taskIndex-1);
+            final String USER_VIEW_MESSAGE =
+                String.format("Noted I've removed this task:\n%s\nNow you have %d tasks in the list.",
+                              deletedTarget.toString(),
+                              TaskList.size());
+            return USER_VIEW_MESSAGE;
+        } catch (IndexOutOfBoundsException e) {
+            throw new TaskIndexOutOfRangeException("Task to be deleted is out of range!", e);
+        }
+    }
 }
