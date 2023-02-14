@@ -16,4 +16,8 @@ public class DukeDeadline extends DukeTask {
         System.out.println("[D] [" +
                 this.getStatusIcon() + "] " + this.taskName + " (by: " + this.deadline + ")");
     }
+    @Override
+    public String saveTask() {
+        return "D | " + (this.isDone ? "1" : "0") + " | " + this.taskName + " | " + this.deadline + '\n';
+    }
 }

@@ -30,4 +30,7 @@ public class DukeTask {
         System.out.println((id+1) + ".[T] [" +
                 this.getStatusIcon() + "] " + this.taskName);
     }
+    public String saveTask() {
+        return "T | " + (this.isDone ? "1" : "0") + " | " + this.taskName + '\n';
+    }
 }
