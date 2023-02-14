@@ -18,7 +18,7 @@ public class Duke {
             int index = Integer.parseInt(wordList[1]) - 1;
             tasks.get(index).setDone(true);
             System.out.println("Nice! I've marked this task as done:");
-            System.out.printf("[X] %s\n", tasks.get(index).getDescription());
+            System.out.println(tasks.get(index));
 
         } catch (Exception exception) {
             System.out.println(exception);
@@ -34,7 +34,7 @@ public class Duke {
             int index = Integer.parseInt(wordList[1]) - 1;
             tasks.get(index).setDone(false);
             System.out.println("OK, I've marked this task as not done yet:");
-            System.out.printf("[ ] %s\n", tasks.get(index).getDescription());
+            System.out.println(tasks.get(index));
         } catch (Exception exception) {
             System.out.println(exception);
         }
@@ -96,6 +96,28 @@ public class Duke {
         }
     }
 
+    private static void doDelete(ArrayList<Task> tasks, String[] wordList) throws DukeException {
+        if (wordList.length != 2) {
+            throw new DukeException("☹ OOPS!!! Wrong number of arguments for delete");
+        }
+        try {
+            int index = Integer.parseInt(wordList[1]) - 1;
+            if (index + 1 > tasks.size()) {
+                throw new DukeException("☹ OOPS!!! index out of bounds");
+            }
+            else {
+                System.out.println("Noted. I've removed this task:");
+                System.out.println(tasks.get(index));
+                tasks.remove(index);
+                System.out.printf("Now you have %d tasks in the list\n", tasks.size());
+            }
+
+        } catch (Exception exception) {
+            System.out.println(exception);
+        }
+        return;
+    }
+
     private static void processInput(String line, ArrayList<Task> tasks, String[] wordList, String command) throws DukeException {
         switch (command) {
         case "list":
@@ -116,10 +138,14 @@ public class Duke {
         case "event":
             doEvent(line, tasks);
             break;
+        case "delete":
+            doDelete(tasks, wordList);
+            break;
         default:
             throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
         }
     }
+
 
     public static void main(String[] args) throws DukeException {
         System.out.println("Hello! I'm Duke");
