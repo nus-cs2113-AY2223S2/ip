@@ -27,7 +27,7 @@ public class Duke {
         System.out.println("     ");
 
         //Read in input from user
-        String inputString;
+        String inputString = null;
         Scanner in;
 
         //Set up list to store user inputs
@@ -36,6 +36,9 @@ public class Duke {
 
         //setup of exit flag
         boolean exit = false;
+
+
+
 
         while (!exit) {
             in = new Scanner(System.in);
@@ -123,20 +126,13 @@ public class Duke {
         System.out.println("    _________________________________________");
         System.out.println("     ");
 
-
-        File f = new File("duke/list.txt");
-
-            //code to create file, then write contents to it
         PrintWriter fw = new PrintWriter("C:\\Users\\Manoj\\OneDrive - National University of Singapore\\Documents\\Module Files\\Y2S2\\CS2113\\iP\\src\\main\\java\\duke\\list.txt");
         for (int i = 0; i < counter; i++) {
-            fw.println(tasks[i].getDescription() + " | " + tasks[i].isDone + " | " + tasks[i].getBy() + " | " + tasks[i].getEnd());
+            fw.println(tasks[i].getClass() + " | " +tasks[i].getDescription() + " | " + tasks[i].isDone + " | " + tasks[i].getBy() + " | " + tasks[i].getEnd());
         }
-
         fw.close();
-        
 
     }
-
 
 
     private static String getInputString() {
