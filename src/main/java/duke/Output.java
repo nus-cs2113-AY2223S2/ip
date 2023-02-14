@@ -1,3 +1,7 @@
+package duke;
+
+import duke.task.Task;
+
 public class Output {
     public static final String DIVIDER = "____________________________________________________________\n";
     public static final String INVALID_DEADLINE =
