@@ -244,7 +244,7 @@ public class Storage {
 
     public TaskOrganizer loadData() {
         try {
-            boolean isOkToRead = isFolderPresent() && isFilesPresent() && isEmpty();
+            boolean isOkToRead = isFolderPresent() && isFilesPresent() && !isEmpty();
             if (!isOkToRead) {
                 return loadNewData();
             }
