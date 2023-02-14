@@ -2,19 +2,17 @@ package io;
 
 import task.Task;
 import task.TaskList;
+import java.io.File;
+import java.io.IOException;
+import java.io.FileWriter;
 
-/*
-* Use this class for INPUT and OUTPUT (IO) related stuff
-* Got some inspiration from Contacts (Week 4)
-*/
+/**
+ * This class manages Input and Output for Duke.<br>
+ * Includes Input validation, processing arguments, and also file writing I/O.<br>
+ * Credits to Contacts in Week 4 for input handling methods.
+ * @author Choong Zhan Hong
+ */
 public final class IO {
-    /**
-     * ==============================================================
-     * This section will cover Inputs,
-     * Input Validations,
-     * and Input Processing Methods
-     * ==============================================================
-     */
     public static final String COMMAND_HELP = "help";
     public static final String COMMAND_LIST = "list";
     public static final String COMMAND_BYE = "bye";
@@ -117,7 +115,7 @@ public final class IO {
             "██║     ██║  ██║██║     ██║  ██║\n" +
             "╚═╝     ╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝";
     public static final String MESSAGE_INTRO =
-            "Hello! I'm PAPA, your Personal Assistant, Personal Angel." +
+            "Hello! I'm PAPA, your Personal Assistant, Personal Angel.\n" +
             "What can I do for you? Type 'help' for a list of commands.";
     public static final String MESSAGE_OUTRO = "Bye. Hope to see you again soon!";
     public static final String MESSAGE_TASK_ADDED =
@@ -143,7 +141,7 @@ public final class IO {
             "Type 'task' to list out the existing tasks!";
 
 
-    // Prints a horizontal line of 32 '=' characters.
+    // Prints line separator.
     public static void printHLine() {
         System.out.println("================================");
     }
@@ -168,5 +166,62 @@ public final class IO {
         String output = MESSAGE_TASK_ADDED + '\n' + task + '\n';
         output += "Total number of tasks: " + TaskList.getNumberOfTasks();
         return output;
+    }
+
+    private static final String DIRECTORY_PATH = "data";
+    private static final String FILE_PATH = "data/papatask.txt";
+
+    /**
+     * Open the saved tasks file upon startup of PAPA.<br>
+     * Checks if the directory and text file exist, and writes to the file.
+     */
+    public static void openFile() {
+        File dir = new File(DIRECTORY_PATH);
+
+        // Check if directory exists
+        if (!dir.exists()) {
+
+            // Make directory.
+            if (dir.mkdir()) {
+                System.out.println("Successfully created directory in " + dir.getAbsolutePath());
+            } else {
+                // Unable to create directory.
+                System.out.println("Sorry, I had trouble creating directory.");
+            }
+        }
+
+        // Now create the text file to input/output.
+        File f = new File(FILE_PATH);
+
+        // Check if file exists.
+        if (!f.exists()) {
+            try {
+                f.createNewFile();
+            } catch (IOException e) {
+                System.out.println("An error occurred in creating a new file.");
+            }
+            System.out.println("New file created in " + f.getAbsolutePath());
+        } else {
+            System.out.println("Loaded your saved tasks.");
+        }
+    }
+
+    /**
+     * Appends input text to the save file.
+     * @param textToAdd The String to append to the file.
+     * @throws IOException Unable to write successfully.
+     */
+    public static void writeToFile(String textToAdd) {
+        try {
+            // 2nd argument true: indicates to append instead of overwrite.
+            FileWriter writer = new FileWriter(FILE_PATH, true);
+            writer.write(textToAdd);
+            // Add newline
+            writer.write(System.lineSeparator());
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("Something wrong: " + e.getMessage());
+        }
+
     }
 }

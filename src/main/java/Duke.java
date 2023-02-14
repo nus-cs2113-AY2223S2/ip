@@ -12,6 +12,8 @@ public class Duke {
 
     public static void main(String[] args) {
         IO.printGreeting();
+        IO.openFile();
+        IO.printHLine();
 
         // Input variables initialised.
         Scanner myScanner = new Scanner(System.in);

@@ -1,6 +1,7 @@
 package task;
 
 import java.util.Arrays;
+import io.IO;
 
 public class TaskList {
     private static final Task[] tasks = new Task[100];
@@ -24,6 +25,7 @@ public class TaskList {
     public void addTask(Task task) {
         tasks[numberOfTasks] = task;
         numberOfTasks++;
+        IO.writeToFile(task.getFileWriteFormat());
     }
 
     /**
