@@ -5,13 +5,18 @@ import duke.exceptions.MissingDescriptionException;
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
+import java.io.File;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import java.util.Scanner;
 
 public class Duke {
-
+    static Task[] tasks = new Task[100];
+    private static int count = 0;
     public static final String LINE = "    ____________________________________________________________\n";
-    public static final String GREET = "     past.Hello! I'm Duke\n" +
+    public static final String GREET = "     Hello! I'm Duke\n" +
             "     Welcome to Your To-do List!\n" +
             "     Enter \"todo 'task-name'\" to add a task.\n" +
             "     Enter \"deadline 'task-name' /by 'deadline'\" to add a task with a deadline.\n" +
@@ -23,6 +28,7 @@ public class Duke {
     public static final String NOT_DONE = "    OK :(, I've marked this task as not done yet: \n    ";
     public static final String DONE = "    Nice! I've marked this task as done: \n    ";
     public static final String ERROR = "    Invalid command! :( Check your input and try again! \n";
+    public static final String FILEPATH = "src/main/java/duke/data/duke.txt";
 
     public static void printAddedTask(Task task, int total) {
         System.out.print(LINE + "    Got it. I've added this task:\n      " +
@@ -88,7 +94,6 @@ public class Duke {
     }
 
     private static void processCommands(String line, int count, Scanner in) {
-        Task[] tasks = new Task[100];
         while (!line.equals("bye")) {
             String[] words = line.split(" ", 2);
             String command = words[0];
@@ -137,15 +142,72 @@ public class Duke {
 
     private static void readInputs() {
         String line;
-        int count = 0;
         Scanner in = new Scanner(System.in);
         line = in.nextLine();
         processCommands(line, count, in);
     }
 
+    private static void writeToFile() throws IOException {
+        BufferedWriter outputWriter;
+        outputWriter = new BufferedWriter(new FileWriter(FILEPATH));
+        for (int i = 0; i < count; i += 1) {
+            outputWriter.write(tasks[i].toString() + System.lineSeparator());
+        }
+        outputWriter.flush();
+        outputWriter.close();
+    }
+
+    private static void readFile() throws IOException {
+        String line;
+        File f = new File(FILEPATH);
+        Scanner s = new Scanner(f);
+        while (s.hasNext()) {
+            line = s.nextLine();
+            String[] words = line.split("] ", 2);
+            String command = words[0];
+            if (command.contains("[T]")) {
+                String description = words[1];
+                tasks[count] = new Task(description, "T");
+            } else if (command.contains("[D]")) {
+                String[] description = words[1].split(" by: ");
+                tasks[count] = new Deadline(description[0], "D", description[1]);
+            } else if (command.contains("[E]")) {
+                String[] description = words[1].split(" from: ");
+                String[] dates = description[1].split(" to: ");
+                tasks[count] = new Event(description[0], "E", dates[0], dates[1]);
+            } else {
+                System.out.print(LINE + "There are invalid inputs in you To-do List, " +
+                        "please edit it first." + LINE);
+            }
+            if (command.contains("X")) {
+                tasks[count].setDone(true);
+            }
+            count ++;
+        }
+    }
+    private static void createFile() throws IOException {
+        File file = new File(FILEPATH);
+        if (file.createNewFile()) {
+            System.out.println("     Data file has been created. Your list will be saved.");
+        } else {
+            System.out.println("     Data file already exists. You list will be updated.");
+        }
+    }
+
     public static void main(String[] args) {
         System.out.print(LINE + GREET + LINE);
+        try {
+            createFile();
+            readFile();
+        } catch (IOException e) {
+            System.out.println(LINE + "Data File Missing! Check if you have accidentally deleted it.\n" + LINE);
+        }
         readInputs();
+        try {
+            writeToFile();
+        } catch (IOException e) {
+            System.out.println("Something went wrong: " + e.getMessage());
+        }
         System.out.print(LINE + BYE + LINE);
     }
 }
