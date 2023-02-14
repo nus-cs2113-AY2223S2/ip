@@ -2,9 +2,12 @@ package app.tasks;
 
 import app.exceptions.IncompleteCommandException;
 import app.save.FileManager;
+
 import java.io.IOException;
 
-public class Event extends Task{
+import java.util.ArrayList;
+
+public class Event extends Task {
     public static final String line = ("─".repeat(50));
     protected String startTime;
     protected String endTime;
@@ -24,11 +27,11 @@ public class Event extends Task{
     }
 
     @Override
-    public String toString(){
-        return "[E][" + getStatusIcon() + "] " + taskDescription + " (from: " + startTime  + " to: " + endTime + ")" ;
+    public String toString() {
+        return " [E][" + getStatusIcon() + "] " + taskDescription + " (from: " + startTime + " to: " + endTime + ")";
     }
 
-    public static void eventHandler(Task[] tasks, int[] index, String commandDescriptor) {
+    public static void eventHandler(ArrayList<Task> tasks, String commandDescriptor) {
         try {
             System.out.println(line);
             if (commandDescriptor.length() == 0) {
@@ -39,21 +42,20 @@ public class Event extends Task{
             String[] toParts = fromParts[1].split("/to");
             String startTime = toParts[0].trim();
             String endTime = toParts[1].trim();
-            tasks[index[0]] = new Event(taskDescription, startTime, endTime);
+            tasks.add(tasks.size(), new Event(taskDescription, startTime, endTime));
             System.out.println("Got it. I've added this task:");
-            System.out.println(tasks[index[0]]);
-            System.out.printf("Now you have %d tasks in the list.\n", index[0] + 1);
+            System.out.println(tasks.get(tasks.size() - 1));
+            System.out.printf("Now you have %d tasks in the list.\n", tasks.size());
             System.out.println(line);
             try {
                 FileManager.saveTasks(tasks);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-            index[0]++;
-        } catch (IncompleteCommandException e){
+        } catch (IncompleteCommandException e) {
             e.printErrorMessage("event");
             System.out.println(line);
-        } catch (ArrayIndexOutOfBoundsException e){
+        } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("ONO! Please enter a valid command.");
             System.out.println(line);
         }

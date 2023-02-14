@@ -7,6 +7,7 @@ import app.tasks.Task;
 import app.tasks.ToDo;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FileManager {
@@ -26,7 +27,7 @@ public class FileManager {
         }
     }
 
-    public static void saveTasks(Task[] tasks) throws Exception {
+    public static void saveTasks(ArrayList<Task> tasks) throws Exception {
         File file = new File("data/tasklist.txt");
         FileWriter fw = new FileWriter(file);
         for (Task task: tasks){
