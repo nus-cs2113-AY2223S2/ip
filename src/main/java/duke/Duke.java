@@ -19,7 +19,6 @@ public class Duke {
     private static final String COMMAND_EXIT_WORD = "bye";
     private static final String COMMAND_HELP_WORD = "help";
 
-    private static final String DIVIDER = "____________________________________________________________\n";
 
     // max number of tasks
     private static final int CAPACITY = 100;
