@@ -6,12 +6,13 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
 import duke.exception.IllegalCommandException;
-
-import java.util.Objects;
+import duke.SaveManager.SaveState;
 
 public class TaskManager {
     protected Task[] taskList;
     protected int taskCount;
+
+    private SaveState saveState = new SaveState();
     public TaskManager(int taskCount){
         this.taskCount = 0;
         taskList = new Task[100];
@@ -56,23 +57,6 @@ public class TaskManager {
             System.out.println("Not a valid ID");
         }
     }
-    /* deprecated
-    public void markTask(String input) {
-        int whitespaceIndex = input.indexOf(" ");
-        int startingIndex = Integer.parseInt(input.substring(whitespaceIndex + 1));
-        if (input.indexOf("m") == 0) {
-            //taskList[startingIndex - 1].markAsDone();
-            this.markTaskAsDone(startingIndex);
-            System.out.println("Nice! I've marked this task as done: ");
-        } else {
-            //taskList[startingIndex - 1].markAsUndone();
-            this.markTaskAsUndone(startingIndex);
-            System.out.println("OK, I've marked this task as not done yet: ");
-        }
-        System.out.println(taskList[startingIndex - 1].toString());
-        //printSeparator();
-    }
-     */
     public void listTasks(){
         for (int i = 0; i < taskCount; i++){
             System.out.print((i+1)+ ".");
@@ -91,13 +75,16 @@ public class TaskManager {
             break;
         case "mark":
             this.markTaskAsDone(commandLine[1]);
+            saveState.saveToFile(this.taskList);
             break;
         case "unmark":
             this.markTaskAsUndone(commandLine[1]);
+            saveState.saveToFile(this.taskList);
             break;
         case "todo":
             try {
                 generateToDo(commandBody);
+                saveState.saveToFile(this.taskList);
             }catch (EmptyTaskException a){
                 System.out.println("The description of a todo cannot be empty.");
             }
@@ -105,6 +92,7 @@ public class TaskManager {
         case "deadline":
             try {
                 generateDeadline(commandBody);// as per todo
+                saveState.saveToFile(this.taskList);
             }catch(EmptyTaskException a){
                 System.out.println("The description of a event cannot be empty.");
             }
@@ -113,6 +101,7 @@ public class TaskManager {
         case "event":
             try {
                 generateEvent(commandBody); //as per todo
+                saveState.saveToFile(this.taskList);
             }
             catch(EmptyTaskException a){
                 System.out.println("The description of event cannot be empty.");
@@ -124,21 +113,7 @@ public class TaskManager {
         default:
             throw new IllegalCommandException();
         }
-        /* Old method. To be replaced with new array-based method for better exception handling
-        if (input.equals("list")) {
-            this.listTasks();
-        } else if (input.contains("mark")) {
-            this.markTask(input);
-        } else if (input.contains("todo")){
-            generateToDo(input);
-        } else if (input.contains("deadline")){
-            generateDeadline(input);
-        } else if (input.contains("event")){
-            generateEvent(input);
-        } else{
-            printHelp();
-        }
-         */
+
     }
 
     private void generateToDo(String input) throws EmptyTaskException{
