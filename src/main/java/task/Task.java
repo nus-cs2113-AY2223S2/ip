@@ -1,5 +1,7 @@
 package task;
 
+import io.IO;
+
 /**
  * Individual tasks. Has to be inherited.
  */
@@ -48,6 +50,6 @@ public abstract class Task {
      */
     public String getFileWriteFormat() {
         String done = isDone ? "1" : "0";
-        return String.format("%s | %s", done, description);
+        return String.format("%s %s %s", done,IO.FILE_DELIMITER, description);
     };
 }

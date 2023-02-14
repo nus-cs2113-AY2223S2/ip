@@ -6,6 +6,7 @@ public class Deadline extends Task {
     /**
      * A task with a deadline.
      * @param description Name of task
+     * @param taskNumber the 1-indexed number of task
      * @param by Deadline
      */
     public Deadline(String description, int taskNumber, String by) {

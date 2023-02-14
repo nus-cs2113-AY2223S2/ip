@@ -3,13 +3,15 @@ package io;
 import task.Task;
 import task.TaskList;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.FileWriter;
+import java.util.Scanner;
 
 /**
  * This class manages Input and Output for Duke.<br>
  * Includes Input validation, processing arguments, and also file writing I/O.<br>
- * Credits to Contacts in Week 4 for input handling methods.
+ * Credits to Contacts in Week 4 for input processing/handling methods.
  * @author Choong Zhan Hong
  */
 public final class IO {
@@ -140,7 +142,6 @@ public final class IO {
             "Erm, do make sure to give me the correct task number." +
             "Type 'task' to list out the existing tasks!";
 
-
     // Prints line separator.
     public static void printHLine() {
         System.out.println("================================");
@@ -169,7 +170,9 @@ public final class IO {
     }
 
     private static final String DIRECTORY_PATH = "data";
-    private static final String FILE_PATH = "data/papatask.txt";
+    private static final String FILE_PATH = "data/sample_papatask.txt";
+    // Using this in Task.java, hence public. Consider possibility of only using in IO?
+    public static final String FILE_DELIMITER = "|";
 
     /**
      * Open the saved tasks file upon startup of PAPA.<br>
@@ -177,10 +180,8 @@ public final class IO {
      */
     public static void openFile() {
         File dir = new File(DIRECTORY_PATH);
-
         // Check if directory exists
         if (!dir.exists()) {
-
             // Make directory.
             if (dir.mkdir()) {
                 System.out.println("Successfully created directory in " + dir.getAbsolutePath());
@@ -189,10 +190,8 @@ public final class IO {
                 System.out.println("Sorry, I had trouble creating directory.");
             }
         }
-
         // Now create the text file to input/output.
         File f = new File(FILE_PATH);
-
         // Check if file exists.
         if (!f.exists()) {
             try {
@@ -204,6 +203,8 @@ public final class IO {
         } else {
             System.out.println("Loaded your saved tasks.");
         }
+
+        readFile(FILE_PATH);
     }
 
     /**
@@ -222,6 +223,63 @@ public final class IO {
         } catch (IOException e) {
             System.out.println("Something wrong: " + e.getMessage());
         }
+    }
 
+    /**
+     * Read the file at the file save data path
+     */
+    public static void readFile(String path) {
+        File f = new File(path);
+        Scanner s;
+        try {
+            s = new Scanner(f);
+            while (s.hasNext()) {
+                readLineAsTask(s.nextLine());
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found >_<: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Reads the line in the save file and invokes TaskList to add task, if any.
+     * @param line String line in the text file.
+     */
+    private static void readLineAsTask(String line) {
+        // Delimiter and any amount of whitespace on left/right. Note, need to escape regex \\.
+        String[] linesSplit = line.split("\\s+" + "\\" + FILE_DELIMITER + "\\s+");
+
+        for (String s : linesSplit) {
+            System.out.println(s);
+        }
+        switch (linesSplit[0]) {
+        case "T":
+            // Shit man, do I want to do this in TaskList instead?
+            // Todo task = new Todo(linesSplit[1]);
+            // TaskList.addTask(task);
+
+            // Has to contain T, isdone, and Description
+            if (linesSplit.length == 3) {
+                TaskList.addTaskFromFile(linesSplit);
+                break;
+            }
+            // FALLTHROUGH
+        case "D":
+            // Has to contain D, isdone, description, by
+            if (linesSplit.length == 4) {
+                //TaskList.addTaskFromFile(linesSplit);
+                break;
+            }
+            // FALLTHROUGH
+        case "E":
+            // Has to contain E, isdone, description, from, to
+            if (linesSplit.length == 5) {
+                //TaskList.addTaskFromFile(linesSplit);
+                break;
+            }
+            // FALLTHROUGH
+        default:
+            System.out.println("I think there's an error with the file.");
+        }
     }
 }

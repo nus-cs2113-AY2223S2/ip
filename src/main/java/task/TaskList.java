@@ -22,10 +22,30 @@ public class TaskList {
      * Adds a String task to the list of strings.
      * @param task: Name of task, String to be added
      */
-    public void addTask(Task task) {
+    public static void addTask(Task task) {
         tasks[numberOfTasks] = task;
         numberOfTasks++;
-        IO.writeToFile(task.getFileWriteFormat());
+        // IO.writeToFile(task.getFileWriteFormat());
+        // Maybe just do this in Duke.java?
+    }
+
+    public static void addTaskFromFile(String[] input) {
+        switch(input[0]) {
+        case "T":
+            Todo newTodo = new Todo(input[2], getNextTaskNumber());
+            addTask(newTodo); //problem cos tasks is not instantiated/static.
+        case "D":
+            Deadline newDeadline = new Deadline(input[2], getNextTaskNumber(), input[3]);
+            addTask(newDeadline);
+        case "E":
+            Event newEvent = new Event(input[2], getNextTaskNumber(), input[3], input[4]);
+            addTask(newEvent);
+        }
+
+        // mark as done
+        if (input[1].equals("1")) {
+            tasks[getNumberOfTasks() - 1].markAsDone();
+        }
     }
 
     /**
