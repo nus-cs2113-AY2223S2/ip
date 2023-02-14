@@ -9,10 +9,15 @@ event
 event lecture /from 9am
 event lecture /from 9am /to 11am
 list
+mark eat lunch
 mark 4
 mark 2
 list
 unmark 2
+list
+delete me
+delete 0
+delete 2
 list
 hello
 bye
