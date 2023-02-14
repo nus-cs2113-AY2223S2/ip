@@ -1,4 +1,4 @@
 [T][X] read book
-[D][X] return book by: June 6th
+[D][ ] return book by: June 6th
 [E][ ] project meeting from: Aug 6th 2pm to: 4pm
 [T][X] join sports club
