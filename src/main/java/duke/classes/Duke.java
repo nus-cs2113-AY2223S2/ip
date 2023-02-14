@@ -71,12 +71,14 @@ public class Duke {
                     inputs[count] = new Todo(info);
                     inputs[count].isDone = false;
                     System.out.println("Got it. I've added this task: \n" + inputs[count] + "\nNow you have " + (count + 1) + " tasks in your list." );
+                    count++;
                 } else if (input.length() > 7 && input.substring(0,8).equals("deadline")) {
                     String info = input.substring(9,input.indexOf("/"));
                     String timeBy = input.substring(input.indexOf("/")+1, input.length());
                     inputs[count] = new Deadline(info, timeBy);
                     inputs[count].isDone = false;
                     System.out.println("Got it. I've added this task: \n" + inputs[count] + "\nNow you have " + (count + 1) + " tasks in your list." );
+                    count++;
                 } else if (input.length() > 4 && input.substring(0,5).equals("event")) {
                     String info = input.substring(6,input.indexOf("/"));
                     String timeFrom = input.substring(input.indexOf("/")+1, input.lastIndexOf("/") - 1);
@@ -84,6 +86,7 @@ public class Duke {
                     inputs[count] = new Event(info, timeFrom, timeBy);
                     inputs[count].isDone = false;
                     System.out.println("Got it. I've added this task: \n" + inputs[count] + "\nNow you have " + (count + 1) + " tasks in your list." );
+                    count++;
                 } else {
                     try {
                         checkError(input);
@@ -91,7 +94,6 @@ public class Duke {
                         System.out.println("Error: " + e);
                     }
                 }
-                count++;
             }
             input = scan.nextLine();
         }
