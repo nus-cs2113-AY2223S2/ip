@@ -10,12 +10,12 @@ public class UI {
 
     public static void printDeadline(String taskName, String by){
         System.out.println("Got it. I've added this task:");
-        System.out.println("  [D][ ] " + taskName + "(by:" + by + ")");
+        System.out.println("  [D][ ] " + taskName + " (by: " + by + ")");
     }
 
     public static void printEvent(String taskName, String start, String end){
         System.out.println("Got it. I've added this task:");
-        System.out.println("  [E][ ] " + taskName + "(from:" + start + "to:" + end + ")");
+        System.out.println("  [E][ ] " + taskName + " (from: " + start + " to: " + end + ")");
     }
 
     public static void printTaskList(int taskListLength){
