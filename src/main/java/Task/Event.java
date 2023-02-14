@@ -1,3 +1,4 @@
+package Task;
 public class Event extends Task {
 
     private String start;
@@ -13,5 +14,16 @@ public class Event extends Task {
     @Override
     public String toString() {
         return "[E]" + super.toString() + " (from: " + start + " to " + end + ")";
+    }
+    @Override
+    public String getTaskType() {
+        return "E";
+    }
+    public String getStartTime() {
+        return start;
+    }
+
+    public String getEndTime() {
+        return end;
     }
 }

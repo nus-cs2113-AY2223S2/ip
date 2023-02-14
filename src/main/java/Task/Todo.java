@@ -1,3 +1,4 @@
+package Task;
 public class Todo extends Task {
     public Todo(String Description){
         super(Description);
@@ -6,5 +7,9 @@ public class Todo extends Task {
     @Override
     public String toString() {
         return "[T]" +  super.toString();
+    }
+    @Override
+    public String getTaskType() {
+        return "T";
     }
 }

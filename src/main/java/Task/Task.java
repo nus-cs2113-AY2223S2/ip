@@ -1,4 +1,5 @@
-public class Task {
+package Task;
+public abstract class Task {
     private String description;
     private boolean isDone;
     private static int total;
@@ -31,7 +32,16 @@ public class Task {
                 + "\t Now you have " + total + " tasks in the list.\r\n"
                 + "\t____________________________________________________________\r\n");
     }
-
+    public static int getTotal() {
+        return total;
+    }
+    public boolean getStatus() {
+        return isDone;
+    }
+    public abstract String getTaskType();
+    public String getTaskDescription() {
+        return description;
+    }
 
     //...
 }
