@@ -5,7 +5,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-import Tasks.Task;
 
 public class StorageManager {
 
@@ -55,7 +54,7 @@ public class StorageManager {
     public static void writeToFile() throws IOException {
         FileWriter fw = new FileWriter(FILE_PATH);
         for (int i = 0; i < TaskManager.getTaskCount(); i++) {
-            fw.write(TaskManager.getTaskList()[i].describeTaskForFile() + "\n");
+            fw.write(TaskManager.getTaskList().get(i).describeTaskForFile() + "\n");
         }
         fw.close();
     }

@@ -22,7 +22,6 @@ public class DukeRunner {
 
             String line = in.nextLine();
             String firstWord = Parser.getFirstWord(line);
-            ArrayList<Task> taskList = TaskManager.getTaskList();
 
             switch (firstWord) {
             case "mark":
