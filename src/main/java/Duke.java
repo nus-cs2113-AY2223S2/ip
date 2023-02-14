@@ -2,7 +2,14 @@ import duke.Deadline;
 import duke.Event;
 import duke.Todo;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.FileNotFoundException;
+
 
 public class Duke {
     public static void main(String[] args) {
@@ -116,6 +123,18 @@ public class Duke {
         System.out.println("    Bye. Hope to see you again soon!");
         System.out.println("    _________________________________________");
         System.out.println("     ");
+
+        File f = new File("duke/list.txt");
+        if (f.exists()) {
+            //code to write list data to file since it exists
+            Path output = Paths.get("duke/list.txt");
+            Files.write(output, tasks);
+        } else {
+            //code to create file, then write contents to it
+            Path output = Paths.get("duke/list.txt");
+            Files.write(output, tasks);
+        }
+
     }
 
     private static String getInputString() {
