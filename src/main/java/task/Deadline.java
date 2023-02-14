@@ -20,4 +20,9 @@ public class Deadline extends Task {
     public String getSummary() {
         return super.getSummary() + " (by: " + getDue() + ")";
     }
+
+    @Override
+    public String getDataSummary() {
+        return super.getDataSummary() + " | " + getDue();
+    }
 }

@@ -27,4 +27,9 @@ public class Event extends Task {
         return super.getSummary() + " (from: " + getStart() + " " +
                 "to: " + getEnd() + ")";
     }
+
+    @Override
+    public String getDataSummary() {
+        return super.getDataSummary() + " | " + getStart() + " | " + getEnd();
+    }
 }

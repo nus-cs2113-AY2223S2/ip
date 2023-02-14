@@ -2,6 +2,7 @@ package task;
 
 public abstract class Task {
     protected String description;
+
     protected boolean isDone;
 
     public Task(String description) {
@@ -9,8 +10,16 @@ public abstract class Task {
         this.isDone = false;
     }
 
+    public boolean getIsDone() {
+        return this.isDone;
+    }
+
     public String getStatusIcon() {
         return (isDone ? "X" : " "); // mark done task with X
+    }
+
+    public String getStatusNum() {
+        return (isDone ? "1" : "0");
     }
 
     public void markDone() {
@@ -26,6 +35,10 @@ public abstract class Task {
     }
 
     public abstract String getTaskType();
+
+    public String getDataSummary() {
+        return getTaskType() + " | " + getStatusNum() + " | " + getDescription();
+    }
 
     public String getSummary() {
         return "[" + getTaskType() + "][" + getStatusIcon() + "] " + getDescription();
