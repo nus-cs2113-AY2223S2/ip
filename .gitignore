@@ -22,5 +22,8 @@ bin/
 # Checkstyle plugin config
 /config/
 
+# jar metadata
+/**/META-INF/
+
 /text-ui-test/ACTUAL.TXT
 text-ui-test/EXPECTED-UNIX.TXT
