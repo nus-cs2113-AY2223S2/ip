@@ -2,12 +2,14 @@ package duke;
 
 import duke.exception.InvalidCommandException;
 import duke.model.*;
+import duke.utils.DataAccess;
 
 import java.util.Scanner;
 
 public class Duke {
-    static Task[] tasks = new Task[100];
     static final String TASK_ADDED_PREFIX = "Got it. I've added this task:" + System.lineSeparator() + "\t";
+    static Task[] tasks = new Task[100];
+    static DataAccess dataAccess = new DataAccess("data/duke.txt");
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -71,10 +73,10 @@ public class Duke {
             }
 
 
-
             System.out.println("\t____________________________________________________________");
             System.out.println("\t" + outputMessage);
             System.out.println("\t____________________________________________________________");
+            dataAccess.writeToFile(Task.getTasksList(tasks));
         }
 
     }
