@@ -3,6 +3,7 @@ package duke;
 import duke.command.Deadline;
 import duke.command.Event;
 import duke.command.Todo;
+import duke.exception.IllegalCommandException;
 import duke.task.Task;
 
 import java.util.Scanner;
