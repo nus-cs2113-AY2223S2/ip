@@ -1,27 +1,22 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 import util.Task;
 import util.Todo;
 import util.Event;
 import util.Deadline;
 
 public class Duke {
-    public static int nextIndexInList = 1;
 
-    public static Task[] createList() {
-        Task[] commands = new Task[100];
+    public static ArrayList<Task> createList() {
+        ArrayList<Task> commands = new ArrayList<Task>();
         return commands;
     }
 
-    public static void addTaskToList(String line, Task[] commands) {
-        commands[nextIndexInList] = new Task(line);
-        nextIndexInList++;
-    }
-
-    public static void displayCommandsList(Task[] commands) {
+    public static void displayCommandsList(ArrayList<Task> commands) {
         int i = 1;
         System.out.println("\t_____________________________________________________");
-        while (i < nextIndexInList) {
-            System.out.println("\t" + i + "." + commands[i]);
+        for (Task task : commands) {
+            System.out.println("\t" + i + "." + task);
             i++;
         }
         System.out.println("\t_____________________________________________________");
@@ -56,16 +51,20 @@ public class Duke {
         System.out.println("____________________________________________________________\n");
     }
 
-    public static void printSpecificTask(int index, Task[] commands, String message) {
+    public static void printSpecificTask(int index, ArrayList<Task> commands, String message) {
         if (!message.equals("")) {
             System.out.println("\t " + message);
         }
-        System.out.println("\t" + index + "." + commands[index]);
+        System.out.println("\t" + index + "." + commands.get(index - 1));
+    }
+
+    public static void printLenghtOfTaskList(ArrayList<Task> commands) {
+        System.out.println("\t Now you have " + commands.size() + " tasks in the list.");
     }
 
     public static void main(String[] args) {
         printWelcomeMessage();
-        Task[] commands = createList();
+        ArrayList<Task> commands = createList();
         boolean not_finished = true;
         while (not_finished == true) {
             String line = ask();
@@ -76,13 +75,13 @@ public class Duke {
                 displayCommandsList(commands);
             } else if (line.split(" ")[0].equals("mark")) {
                 int index = Integer.parseInt(line.split(" ")[1]);
-                commands[index].setDone(true);
+                commands.get(index - 1).setDone(true);
                 printDashLine();
                 printSpecificTask(index, commands, "Nice! I've marked this task as done:");
                 printDashLine();
             } else if (line.split(" ")[0].equals("unmark")) {
                 int index = Integer.parseInt(line.split(" ")[1]);
-                commands[index].setDone(false);
+                commands.get(index - 1).setDone(false);
                 printDashLine();
                 printSpecificTask(index, commands, "OK, I've marked this task as not done yet:");
                 printDashLine();
@@ -92,29 +91,34 @@ public class Duke {
                     System.out.println("\t OOPS!!! The description of a todo cannot be empty.");
                     printDashLine();
                 } else {
-                    commands[nextIndexInList] = new Todo(line.substring(5));
-                    nextIndexInList++;
+                    commands.add(new Todo(line.substring(5)));
                     printDashLine();
-                    printSpecificTask(nextIndexInList - 1, commands, "Got it. I've added this task:");
+                    printSpecificTask(commands.size(), commands, "Got it. I've added this task:");
                     printDashLine();
                 }
 
             } else if (line.split(" ")[0].equals("event")) {
                 int indexFrom = line.indexOf("/");
                 int indexTo = line.indexOf("/", indexFrom + 1);
-                commands[nextIndexInList] = new Event(line.substring(6, indexFrom - 1),
-                        line.substring(indexFrom + 6, indexTo - 1), line.substring(indexTo + 4));
-                nextIndexInList++;
+                commands.add(new Event(line.substring(6, indexFrom - 1),
+                        line.substring(indexFrom + 6, indexTo - 1), line.substring(indexTo + 4)));
                 printDashLine();
-                printSpecificTask(nextIndexInList - 1, commands, "Got it. I've added this task:");
+                printSpecificTask(commands.size(), commands, "Got it. I've added this task:");
                 printDashLine();
             } else if (line.split(" ")[0].equals("deadline")) {
                 int index_by = line.indexOf("/");
-                commands[nextIndexInList] = new Deadline(line.substring(9, index_by - 1), line.substring(index_by + 4));
-                nextIndexInList++;
+                commands.add(new Deadline(line.substring(9, index_by - 1), line.substring(index_by + 4)));
                 printDashLine();
-                printSpecificTask(nextIndexInList - 1, commands, "Got it. I've added this task:");
+                printSpecificTask(commands.size(), commands, "Got it. I've added this task:");
                 printDashLine();
+            } else if (line.split(" ")[0].equals("delete")) {
+                int index = Integer.parseInt(line.split(" ")[1]);
+                printDashLine();
+                printSpecificTask(index, commands, "Noted. I've removed this task:");
+                commands.remove(index - 1);
+                printLenghtOfTaskList(commands);
+                printDashLine();
+
             } else {
                 printDashLine();
                 System.out.println("\t OOPS!!! I'm sorry, but I don't know what that means :-(");
