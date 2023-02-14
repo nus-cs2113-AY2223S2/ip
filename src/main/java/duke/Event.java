@@ -8,11 +8,11 @@ public class Event extends Todo {
         this.by = by;
         this.end = end;
     }
-
+@Override
     public String getBy() {
         return by;
     }
-
+@Override
     public String getEnd() {
         return end;
     }

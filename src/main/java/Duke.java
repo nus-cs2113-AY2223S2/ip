@@ -3,12 +3,11 @@ import duke.Event;
 import duke.Todo;
 
 import java.util.ArrayList;
+import java.io.*;
 import java.util.Scanner;
-import java.io.File;
-
 
 public class Duke {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -129,7 +128,15 @@ public class Duke {
         System.out.println("    Bye. Hope to see you again soon!");
         System.out.println("    _________________________________________");
         System.out.println("     ");
+
+        PrintWriter fw = new PrintWriter("C:\\Users\\Manoj\\OneDrive - National University of Singapore\\Documents\\Module Files\\Y2S2\\CS2113\\iP\\src\\main\\java\\duke\\list.txt");
+        for (int i = 0; i < counter; i++) {
+            fw.println(tasks.get(i).getClass() + " | " + tasks.get(i).getDescription() + " | " + tasks.get(i).isDone + " | " + tasks.get(i).getBy() + " | " + tasks.get(i).getEnd());
+        }
+        fw.close();
+
     }
+
 
     private static String getInputString() {
         Scanner in;
