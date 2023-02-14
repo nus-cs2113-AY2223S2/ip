@@ -14,9 +14,9 @@ public class Ui {
         System.out.println("Bye. Hope to see you again soon!");
     }
     //method that prints the list of tasks
-    public static void printTaskList(ArrayList<Task> tasks, int taskCount){
+    public static void printTaskList(ArrayList<Task> tasks){
         System.out.println("Here are the tasks in your list:");
-        for(int i=0;i<taskCount;i++){
+        for(int i=0;i<tasks.size();i++){
             System.out.println((i+1) + "." + tasks.get(i));
         }
     }

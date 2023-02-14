@@ -6,43 +6,43 @@ public class Duke {
     //define the file path
     public static final String FILE_PATH = "data/duke.txt";
 
-    //Initialize the storage, tasklist and ui
-    private Storage storage;
-    private TaskList tasks;
-    private Ui ui;
+    // //Initialize the storage, tasklist and ui
+    // private Storage storage;
+    // private Tasks tasks;
+    // private Ui ui;
 
-    public Duke(String filePath) {
-        ui = new Ui();
-        storage = new Storage(filePath);
-        try {
-            tasks = new TaskList(storage.load());
-        } catch (DukeException e) {
-            ui.showLoadingError();
-            tasks = new TaskList();
-        }
-    }
+    // public Duke(String filePath) {
+    //     ui = new Ui();
+    //     storage = new Storage(filePath);
+    //     try {
+    //         tasks = storage.readFile(filePath);
+    //     } catch (DukeException e) {
+    //         ui.showLoadingError();
+    //         tasks = new TaskList();
+    //     }
+    // }
 
-    public void run() {
-        ui.showWelcome();
-        boolean isExit = false;
-        while (!isExit) {
-            try {
-                String fullCommand = ui.readCommand();
-                ui.showLine();
-                Command c = Parser.parse(fullCommand);
-                c.execute(tasks, ui, storage);
-                isExit = c.isExit();
-            } catch (DukeException e) {
-                ui.showError(e.getMessage());
-            } finally {
-                ui.showLine();
-            }
-        }
-    }
+    // public void run() {
+    //     ui.showWelcome();
+    //     boolean isExit = false;
+    //     while (!isExit) {
+    //         try {
+    //             String fullCommand = ui.readCommand();
+    //             ui.showLine();
+    //             Command c = Parser.parse(fullCommand);
+    //             c.execute(tasks, ui, storage);
+    //             isExit = c.isExit();
+    //         } catch (DukeException e) {
+    //             ui.showError(e.getMessage());
+    //         } finally {
+    //             ui.showLine();
+    //         }
+    //     }
+    // }
 
-    public static void main(String[] args) {
-        new Duke(FILE_PATH).run();
-    }
+    // public static void main(String[] args) {
+    //     new Duke(FILE_PATH).run();
+    // }
 
 
 
@@ -50,13 +50,12 @@ public class Duke {
     public static ArrayList<Task> tasks = new ArrayList<Task>();
 
 
-    public static int taskCount = 0;
+    
 
     public static void main(String[] args) {
 
         //read the file
-        tasks = Storage.readFile();
-        taskCount = tasks.size();
+        tasks = Storage.readFile(FILE_PATH);
 
         //Print the welcome message
         Ui.printWelcomeMessage();
@@ -73,10 +72,7 @@ public class Duke {
                 //If userInput is "list" print all tasks
                 if(Check.isList(userInput)){
                     //Print out the list of tasks
-                    System.out.println("Here are the tasks in your list:");
-                    for(int i=0;i<taskCount;i++){
-                        System.out.println((i+1) + ". " + tasks.get(i));
-                    }
+                    Ui.printTaskList(tasks);
                     //Get user input again
                     userInput = userScan.nextLine();  
                 }
@@ -86,7 +82,7 @@ public class Duke {
                     //get the task number
                     int taskNumber = Integer.parseInt(userInput.substring(7));
                     //if the task number is greater than the task count throw an exception
-                    if(taskNumber>taskCount){
+                    if(taskNumber>tasks.size()){
                         throw new IllegalArgumentException("The task number is greater than the number of tasks.");
                     }
                     //if the task number is less than 1 throw an exception
@@ -104,8 +100,7 @@ public class Duke {
                     //mark the task as done
                     tasks.get(taskNumber-1).markAsNotDone();
                     //print out the task that was marked as done
-                    System.out.println("OK, I've marked this task as not done yet:");
-                    System.out.println(tasks.get(taskNumber-1));
+                    Ui.printUndoneTask(tasks.get(taskNumber-1));
                     //Get user input again
                     userInput = userScan.nextLine();          
                 }
@@ -115,7 +110,7 @@ public class Duke {
                     //get the task number
                     int taskNumber = Integer.parseInt(userInput.substring(5));
                     //if the task number is greater than the task count throw an exception
-                    if(taskNumber>taskCount){
+                    if(taskNumber>tasks.size()){
                         throw new IllegalArgumentException("The task number is greater than the number of tasks.");
                     }
                     //if the task number is less than 1 throw an exception
@@ -133,8 +128,7 @@ public class Duke {
                     //mark the task as done
                     tasks.get(taskNumber-1).markAsDone();
                     //print out the task that was marked as done
-                    System.out.println("Nice! I've marked this task as done:");
-                    System.out.println(tasks.get(taskNumber-1));
+                    Ui.printDoneTask(tasks.get(taskNumber-1));
                     //Get user input again
                     userInput = userScan.nextLine();              
                 }
@@ -149,12 +143,8 @@ public class Duke {
                     }
                     //create a todo task
                     tasks.add(new Todo(taskName));
-                    //increment the task count
-                    taskCount++;
                     //print out the task that was added
-                    System.out.println("Got it. I've added this task:");
-                    System.out.println(tasks.get(taskCount-1));
-                    System.out.println("Now you have " + taskCount + " tasks in the list.");
+                    Ui.printAddedTask(tasks.get(tasks.size()-1), tasks.size());
                     //Get user input again
                     userInput = userScan.nextLine();  
                 }
@@ -175,12 +165,8 @@ public class Duke {
                     }
                     //create a deadline task
                     tasks.add(new Deadline(taskName,deadline));
-                    //increment the task count
-                    taskCount++;
                     //print out the task that was added
-                    System.out.println("Got it. I've added this task:");
-                    System.out.println(tasks.get(taskCount-1));
-                    System.out.println("Now you have " + taskCount + " tasks in the list.");
+                    Ui.printAddedTask(tasks.get(tasks.size()-1), tasks.size());
                     //Get user input again
                     userInput = userScan.nextLine();  
                 }
@@ -202,12 +188,8 @@ public class Duke {
                     }
                     //create an event task
                     tasks.add(new Event(taskName,eventTime));
-                    //increment the task count
-                    taskCount++;
                     //print out the task that was added
-                    System.out.println("Got it. I've added this task:");
-                    System.out.println(tasks.get(taskCount-1));
-                    System.out.println("Now you have " + taskCount + " tasks in the list.");
+                    Ui.printAddedTask(tasks.get(tasks.size()-1), tasks.size());
                     //Get user input again
                     userInput = userScan.nextLine();  
                 }
@@ -217,7 +199,7 @@ public class Duke {
                     //get the task number
                     int taskNumber = Integer.parseInt(userInput.substring(7));
                     //if the task number is greater than the task count throw an exception
-                    if(taskNumber>taskCount){
+                    if(taskNumber>tasks.size()){
                         throw new IllegalArgumentException("The task number is greater than the number of tasks.");
                     }
                     //if the task number is less than 1 throw an exception
@@ -230,12 +212,8 @@ public class Duke {
                     }
                     //delete the task
                     tasks.remove(taskNumber-1);
-                    //decrement the task count
-                    taskCount--;
                     //print out the task that was deleted
-                    System.out.println("Noted. I've removed this task:");
-                    System.out.println(tasks.get(taskNumber-1));
-                    System.out.println("Now you have " + taskCount + " tasks in the list.");
+                    Ui.printDeletedTask(tasks.get(taskNumber-1), tasks.size());
                     //Get user input again
                     userInput = userScan.nextLine();  
                 }
@@ -275,10 +253,7 @@ public class Duke {
 
         //Write the tasks to the file using the writeToFile method
 
-        Storage.writeFile(tasks, taskCount);
-
-        
-        
+        Storage.writeFile(tasks, FILE_PATH);
 
     }
 
