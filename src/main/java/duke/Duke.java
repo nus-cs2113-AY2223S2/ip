@@ -1,5 +1,11 @@
+package duke;
+
+import duke.task.Deadline;
+import duke.task.Event;
+import duke.task.Task;
+import duke.task.Todo;
+
 import java.util.Scanner;
-import java.util.Arrays;
 
 public class Duke {
     protected static Task[] list = new Task[100];
@@ -162,12 +168,12 @@ public class Duke {
             // Check if list item number exists in list
             if (numToMark >= 0 && numToMark < item) {
                 // Check if it is already done/not done in list
-                if (list[numToMark].isDone != status) {
+                if (list[numToMark].getIsDone() != status) {
                     // Update IsDone status
-                    list[numToMark].isDone = status;
+                    list[numToMark].setIsDone(status);
 
                     System.out.println(HORIZONTAL + "\n\t" + msg);
-                    System.out.println("\n\t\t" + "[" + list[numToMark].getStatusIcon() + "] " + list[numToMark].description + "\n");
+                    System.out.println("\n\t\t" + "[" + list[numToMark].getStatusIcon() + "] " + list[numToMark].getDescription() + "\n");
                     System.out.println(HORIZONTAL);
                 } else {
                     System.out.println("No change, task was already as is");
