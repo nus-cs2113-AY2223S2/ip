@@ -2,7 +2,8 @@ package duke;
 
 import java.io.*;
 import java.util.Scanner;
-
+import java.nio.file.Files;
+import java.nio.file.Paths;
 public class Duke {
     static String FILEPATH = "data/duke.txt";
     public static final int MAX_TASKS = 100;
@@ -21,10 +22,21 @@ public class Duke {
     }
 
     public static void greet() {
+        String logo = " ____        _        \n"
+                + "|  _ \\ _   _| | _____ \n"
+                + "| | | | | | | |/ / _ \\\n"
+                + "| |_| | |_| |   <  __/\n"
+                + "|____/ \\__,_|_|\\_\\___|\n";
+        System.out.println("Hello from\n" + logo);
         try {
             printFileContents(FILEPATH);
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
+            try {
+                new File(FILEPATH).createNewFile();
+            } catch (IOException ioe) {
+                throw new RuntimeException("Creation of file is failed.", ioe);
+            }
         }
         printLine();
         System.out.println("Hello! I'm Duke  U ´ᴥ` U\n" + "What can I do for you?");
@@ -304,12 +316,6 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);
         greet();
         String s = inputCommand();
         while (!s.equals("bye")) {
