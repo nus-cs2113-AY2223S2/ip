@@ -2,19 +2,22 @@ package parser;
 
 import exception.DukeException;
 
+import java.util.ArrayList;
+
 public class Parser {
-    public static String[] parse(String input) throws DukeException {
-        String[] commands = new String[10];
+    public static ArrayList<String> parse(String input) throws DukeException {
+        ArrayList<String> commands = new ArrayList<>();
         input = input.trim();
         String[] inputs = input.split(" ");
-        commands[0] = inputs[0];
-        switch (commands[0]) {
+        commands.add(inputs[0]);
+        switch (commands.get(0)) {
         case "list":
             break;
         case "mark":
         case "unmark":
+        case "delete":
             try {
-                commands[1] = inputs[1];
+                commands.add(inputs[1]);
             } catch (ArrayIndexOutOfBoundsException e) {
                 throw new DukeException("Missing task number!");
             }
@@ -22,7 +25,7 @@ public class Parser {
         case "todo":
             try {
                 String description = input.split("todo ")[1];
-                commands[1] = description;
+                commands.add(description);
             } catch (ArrayIndexOutOfBoundsException e) {
                 throw new DukeException("OOPS!!! The description of a todo cannot be empty.");
             }
@@ -33,8 +36,8 @@ public class Parser {
                 String[] splitString = removedKeyword.split(" /by ");
                 String description = splitString[0];
                 String due = splitString[1];
-                commands[1] = description;
-                commands[2] = due;
+                commands.add(description);
+                commands.add(due);
             } catch (ArrayIndexOutOfBoundsException e) {
                 throw new DukeException("Missing details for deadline!");
             }
@@ -47,9 +50,9 @@ public class Parser {
                 splitString = splitString[1].split(" /to ");
                 String start = splitString[0];
                 String end = splitString[1];
-                commands[1] = description;
-                commands[2] = start;
-                commands[3] = end;
+                commands.add(description);
+                commands.add(start);
+                commands.add(end);
             } catch (ArrayIndexOutOfBoundsException e) {
                 throw new DukeException("Missing details for event!");
             }
