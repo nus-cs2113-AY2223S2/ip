@@ -1,15 +1,15 @@
 package duke;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 public class Duke {
-    private static final int LIST_SIZE = 100;
     private static int taskNum = 0;
     public static void main(String[] args) {
         showGreetings();
 
         String command = "";
         Scanner in = new Scanner(System.in);
-        Task[] storedTasks = new Task[LIST_SIZE];         // array of stored tasks
+        ArrayList<Task> storedTasks = new ArrayList<>();
 
         while (!command.equals("bye")) {
             printLineBreak();
@@ -24,7 +24,7 @@ public class Duke {
 
     }
 
-    private static void doCommand(Task[] storedTasks, String[] commandLine) {
+    private static void doCommand(ArrayList<Task> storedTasks, String[] commandLine) {
         switch (commandLine[0]) {
         case "todo":
             addTodoTask(storedTasks, commandLine);
@@ -44,6 +44,9 @@ public class Duke {
         case "list":
             listTasks(storedTasks);
             break;
+        case "delete":
+            deleteTask(storedTasks, commandLine);
+            break;
         case "bye":
             System.out.println("Bye. Hope to see you again soon!");
             break;
@@ -60,35 +63,45 @@ public class Duke {
         throw new IllegalDukeArgumentException();
     }
 
-    private static void listTasks(Task[] storedTasks) {
+    private static void listTasks(ArrayList<Task> storedTasks) {
         listMessage();
-        for (int i = 0; i < taskNum; i++) {
-            System.out.println((i + 1) + ". " + storedTasks[i].getTypeIcon() +
-                    storedTasks[i].getStatusIcon() + " " + storedTasks[i].getDescription());
+        int count = 0;
+        for (Task i : storedTasks) {
+            System.out.println((count + 1) + ". " + i.getTypeIcon() +
+                    i.getStatusIcon() + " " + i.getDescription());
+            count++;
         }
     }
 
-    private static void unmarkTask(Task[] storedTasks, String[] commandLine) {
+    private static void deleteTask(ArrayList<Task> storedTasks, String[] commandLine) {
+        int delIndex = Integer.parseInt((commandLine[1])) - 1;
+        System.out.println("Noted. I've removed this task:");
+        System.out.println(storedTasks.get(delIndex).getTypeIcon() + storedTasks.get(delIndex).getStatusIcon()
+                + " " + storedTasks.get(delIndex).getDescription());
+        storedTasks.remove(delIndex);
+    }
+
+    private static void unmarkTask(ArrayList<Task> storedTasks, String[] commandLine) {
         int unmarkIndex = Integer.parseInt(commandLine[1]) - 1;
-        storedTasks[unmarkIndex].setDone(false);
+        storedTasks.get(unmarkIndex).setDone(false);
         System.out.println("OK, I've marked this task as not done yet.");
-        System.out.println(storedTasks[unmarkIndex].getTypeIcon() +
-                storedTasks[unmarkIndex].getStatusIcon() + " " + storedTasks[unmarkIndex].getDescription());
+        System.out.println(storedTasks.get(unmarkIndex).getTypeIcon() +
+                storedTasks.get(unmarkIndex).getStatusIcon() + " " + storedTasks.get(unmarkIndex).getDescription());
     }
 
-    private static void markTask(Task[] storedTasks, String[] commandLine) {
+    private static void markTask(ArrayList<Task> storedTasks, String[] commandLine) {
         int taskIndex = Integer.parseInt(commandLine[1]) - 1;
-        storedTasks[taskIndex].setDone(true);
+        storedTasks.get(taskIndex).setDone(true);
         System.out.println("Nice! I've marked this task as done.");
-        System.out.println(storedTasks[taskIndex].getTypeIcon() +
-                storedTasks[taskIndex].getStatusIcon() + " " + storedTasks[taskIndex].getDescription());
+        System.out.println(storedTasks.get(taskIndex).getTypeIcon() +
+                storedTasks.get(taskIndex).getStatusIcon() + " " + storedTasks.get(taskIndex).getDescription());
     }
 
-    private static void addEventTask(Task[] storedTasks, String[] commandLine) {
+    private static void addEventTask(ArrayList<Task> storedTasks, String[] commandLine) {
         String[] eventString = commandLine[1].split("/from");
         String[] eventStartEnd = eventString[1].split("/to");
         Event ev = new Event(eventString[0], eventStartEnd[0], eventStartEnd[1]);
-        storedTasks[taskNum] = ev;
+        storedTasks.add(ev);
         addTaskMessage();
         System.out.println("  " + ev.getTypeIcon() +
                 ev.getStatusIcon() + " " + ev.getDescription() + "(from: " + ev.getStart() + " to: " + ev.getEnd() +")");
@@ -96,7 +109,7 @@ public class Duke {
         displayTasksNum();
     }
 
-    private static void addTodoTask(Task[] storedTasks, String[] commandLine) {
+    private static void addTodoTask(ArrayList<Task> storedTasks, String[] commandLine) {
         try {
             validateTodo(commandLine);
         } catch (IllegalDukeArgumentException e) {
@@ -104,7 +117,7 @@ public class Duke {
             return;
         }
         Todo td = new Todo(commandLine[1]);
-        storedTasks[taskNum] = td;
+        storedTasks.add(td);
         addTaskMessage();
         System.out.println("  " + td.getTypeIcon() + td.getStatusIcon() + " " + td.getDescription());
         taskNum++;
@@ -117,12 +130,12 @@ public class Duke {
         }
     }
 
-    private static void addDeadlineTask(Task[] storedTasks, String[] commandLine) {
+    private static void addDeadlineTask(ArrayList<Task> storedTasks, String[] commandLine) {
         String[] deadlineString = commandLine[1].split("/by");
         Deadline dl = new Deadline(deadlineString[0], deadlineString[1]);
-        storedTasks[taskNum] = dl;
+        storedTasks.add(dl);
         addTaskMessage();
-        System.out.println("  " + storedTasks[taskNum].getTypeIcon() +
+        System.out.println("  " + dl.getTypeIcon() +
                 dl.getStatusIcon() + " " + dl.getDescription() + "(by: " + dl.getBy() + ")");
         taskNum++;
         displayTasksNum();
@@ -148,7 +161,6 @@ public class Duke {
     private static void listMessage() {
         System.out.println("Here are the tasks in your list:");
     }
-
     private static void displayTasksNum() {
         System.out.println("Now you have " + taskNum + " task(s) in the list.");
     }
