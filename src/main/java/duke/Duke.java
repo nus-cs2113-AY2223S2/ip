@@ -9,8 +9,8 @@ import java.util.Scanner;
 
 public class Duke {
     static final String TASK_ADDED_PREFIX = "Got it. I've added this task:" + System.lineSeparator() + "\t";
-    static DataAccess dataAccess = new DataAccess("data/duke.txt");
     static final String TASK_REMOVED_PREFIX = "Noted! I've removed this task" + System.lineSeparator() + "\t";
+    static DataAccess dataAccess = new DataAccess("data/duke.txt");
     static ArrayList<Task> tasks = new ArrayList<Task>();
 
     public static void main(String[] args) {
@@ -60,7 +60,7 @@ public class Duke {
             System.out.println("\t____________________________________________________________");
             System.out.println("\t" + outputMessage);
             System.out.println("\t____________________________________________________________");
-            dataAccess.writeToFile(Task.getTasksList(tasks));
+            dataAccess.writeToFile(getTasksList());
         }
 
     }
