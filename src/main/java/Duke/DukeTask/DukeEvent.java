@@ -18,4 +18,9 @@ public class DukeEvent extends DukeTask {
         System.out.println("[E] [" + this.getStatusIcon() + "] "
                 + this.taskName + " (from: " + this.eventFrom + " to: " + this.eventTo + ")");
     }
+    @Override
+    public String saveTask() {
+        return "E | " + (this.isDone ? "1" : "0") + " | " + this.taskName + " | "
+                + this.eventFrom + " | " + this.eventTo + '\n';
+    }
 }

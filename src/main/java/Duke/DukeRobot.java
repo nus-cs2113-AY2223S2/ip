@@ -9,6 +9,7 @@ import Duke.DukeTask.DukeEvent;
 import Duke.DukeTask.DukeTask;
 
 import java.util.Scanner;
+
 public class DukeRobot {
     private static DukeCommandLineInput processCommandLine(String commandLine) {
         commandLine = commandLine.trim();
@@ -54,6 +55,7 @@ public class DukeRobot {
     }
     public static void main(String[] args) {
         DukePrinter.printGreeting();
+        DukeList.loadTask();
         Scanner in = new Scanner(System.in);
         while (true) {
             String commandLine = in.nextLine();
@@ -117,6 +119,9 @@ public class DukeRobot {
                 } catch (DukeTaskInputException e) {
                     DukePrinter.printErrorln(e.getMessage());
                 }
+                break;
+            case "save":
+                DukeList.saveTask();
                 break;
             default:
                 DukePrinter.printErrorln("Sorry, I don't know what that means :-( ("
