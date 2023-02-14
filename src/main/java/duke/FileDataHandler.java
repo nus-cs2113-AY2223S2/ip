@@ -4,13 +4,19 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FileDataHandler {
-    public static boolean createFile (String filePath, String directoryName) throws IOException {
-        File dataFile = new File(filePath);
-        File dataDirectory = new File (directoryName);
+    protected String filePath;
+    protected String directoryName;
+
+    public FileDataHandler(String filePath, String directoryName){
+        this.filePath = filePath;
+        this.directoryName = directoryName;
+    }
+    public boolean createFile () throws IOException {
+        File dataFile = new File(this.filePath);
+        File dataDirectory = new File (this.directoryName);
         boolean isDirectoryCreated;
         boolean isFileCreated = dataFile.exists();
         if (dataDirectory.exists()) {
@@ -24,7 +30,7 @@ public class FileDataHandler {
         return isFileCreated;
     }
 
-    public static void loadFile(String filePath, ArrayList<Task> taskList) throws FileNotFoundException {
+    public void loadFile(TaskList taskList) throws FileNotFoundException {
         File dataFile = new File(filePath);
         Scanner input = new Scanner(dataFile);
         while (input.hasNextLine()) {
@@ -41,19 +47,19 @@ public class FileDataHandler {
         }
     }
 
-    public static void saveFile (String filePath, ArrayList<Task> taskList) throws IOException {
+    public void saveFile (TaskList taskList) throws IOException {
         FileWriter fileWriter = new FileWriter(filePath);
-        for (int i = 0; i < taskList.size(); i++) {
-            if (taskList.get(i) instanceof Todo) {
-                saveTodoTask((Todo) taskList.get(i), fileWriter);
+        for (int i = 0; i < taskList.getSize(); i++) {
+            if (taskList.getTask(i) instanceof Todo) {
+                saveTodoTask((Todo) taskList.getTask(i), fileWriter);
             }
-            if (taskList.get(i) instanceof Deadline) {
-                saveDeadlineTask((Deadline) taskList.get(i), fileWriter);
+            if (taskList.getTask(i) instanceof Deadline) {
+                saveDeadlineTask((Deadline) taskList.getTask(i), fileWriter);
             }
-            if (taskList.get(i) instanceof Event) {
-                saveEventTask((Event) taskList.get(i), fileWriter);
+            if (taskList.getTask(i) instanceof Event) {
+                saveEventTask((Event) taskList.getTask(i), fileWriter);
             }
-            if (i == taskList.size() - 1) {
+            if (i == taskList.getSize() - 1) {
                 break;
             }
             fileWriter.write(System.lineSeparator());
@@ -61,17 +67,17 @@ public class FileDataHandler {
         fileWriter.close();
     }
 
-    public static void loadTodoTask (String description, ArrayList<Task> taskList) {
+    public void loadTodoTask (String description, TaskList taskList) {
         String[] inputs = description.split(" \\| ");
         String details = inputs[1];
         Todo savedTodoTask = new Todo(details);
         if (inputs[0].equals("1")) {
             savedTodoTask.markAsDone();
         }
-        taskList.add(savedTodoTask);
+        taskList.addTask(savedTodoTask);
     }
 
-    public static void loadDeadlineTask (String description, ArrayList<Task> taskList) {
+    public static void loadDeadlineTask (String description, TaskList taskList) {
         String[] inputs = description.split(" \\| ");
         String details = inputs[1];
         String by = inputs[2];
@@ -79,10 +85,10 @@ public class FileDataHandler {
         if (inputs[0].equals("1")) {
             savedDeadlineTask.markAsDone();
         }
-        taskList.add(savedDeadlineTask);
+        taskList.addTask(savedDeadlineTask);
     }
 
-    public static void loadEventTask (String description, ArrayList<Task> taskList) {
+    public static void loadEventTask (String description, TaskList taskList) {
         String[] inputs = description.split(" \\| ");
         String details = inputs[1];
         String range = inputs[2];
@@ -93,7 +99,7 @@ public class FileDataHandler {
         if (inputs[0].equals("1")) {
             savedEventTask.markAsDone();
         }
-        taskList.add(savedEventTask);
+        taskList.addTask(savedEventTask);
     }
 
     public static void saveTodoTask (Todo newTodoTask, FileWriter todoWriter) throws IOException {
