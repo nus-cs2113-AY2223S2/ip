@@ -9,7 +9,6 @@ import Entities.Event;
 import Entities.Deadline;
 import Entities.Todo;
 import FileUtils.TaskReader;
-import FileUtils.TaskWriter;
 import Exceptions.*;
 
 public class Duke {
@@ -184,14 +183,6 @@ public class Duke {
 
             input = sc.nextLine();
         };
-
-        try {
-            TaskWriter.writeTasksToFile(filePath, tasks);
-        } catch (IOException e) {
-            System.out.println("Oops! Something went wrong when writing to database!");
-            System.out.println("Error: " + e.getMessage());
-            System.out.println("Aborting...");
-        }
 
         Greetings.goodbye();
     }
