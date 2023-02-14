@@ -5,9 +5,6 @@ import java.util.Scanner;
 import Handlers.TaskManager;
 import Handlers.Parser;
 import Handlers.StorageManager;
-import Tasks.Task;
-import java.util.ArrayList;
-
 public class DukeRunner {
 
     public static void main(String[] args) {

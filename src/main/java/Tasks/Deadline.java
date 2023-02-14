@@ -1,4 +1,5 @@
 package Tasks;
+
 public class Deadline extends Task {
     protected String dueDate;
 
@@ -17,5 +18,3 @@ public class Deadline extends Task {
         return "D | " + (isDone ? "1" : "0") + " | " + description + " | " + dueDate;
     }
 }
-    
-

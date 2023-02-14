@@ -6,7 +6,6 @@ import Tasks.Todo;
 import Tasks.Deadline;
 import Tasks.Event;
 
-
 public class Parser {
 
     public static String getFirstWord(String s) {
@@ -93,5 +92,5 @@ public class Parser {
             System.out.println("description for event cannot be empty.");
         }
     }
-    
+
 }
