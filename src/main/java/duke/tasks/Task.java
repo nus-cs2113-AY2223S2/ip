@@ -1,6 +1,8 @@
 package duke.tasks;
 
-public abstract class Task {
+
+public abstract class Task implements java.io.Serializable {
+
     private boolean isComplete;
     private String taskName;
 
@@ -30,6 +32,7 @@ public abstract class Task {
         return isComplete;
     }
 
+
     public abstract String listTask();
 
     public abstract String taskTypeBoxFormat();
@@ -39,6 +42,8 @@ public abstract class Task {
             return "[X]";
         }
         return "[ ]";
+
+
     }
 
 

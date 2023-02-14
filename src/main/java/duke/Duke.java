@@ -1,14 +1,24 @@
 package duke;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
+
 public class Duke {
+
+    public static final String FILEPATH = "data/savedlist.txt";
 
     public static void printSeperator() {
         System.out.println("____________________________________________________________");
     }
 
-    public static void greet() {
+    private static void greet() {
         printSeperator();
         System.out.println(" Hello! I'm Duke\n" + " What can I do for you?");
         printSeperator();
@@ -16,7 +26,7 @@ public class Duke {
     }
 
 
-    public static void farewell() {
+    private static void farewell() {
         printSeperator();
         System.out.println(" Bye. Hope to see you again soon!");
         printSeperator();
@@ -49,10 +59,70 @@ public class Duke {
         }
     }
 
+    private static String readFileContents(File f) throws FileNotFoundException {
+        Scanner s = new Scanner(f);
+        return s.nextLine();
+
+    }
+
+    public static void listSave(List list) {
+        // serialisation https://www.geeksforgeeks.org/serialization-in-java/
+        try {
+
+            // Saving of object in a file
+            FileOutputStream file = new FileOutputStream(FILEPATH);
+            ObjectOutputStream out = new ObjectOutputStream(file);
+
+            // Method for serialisation of object
+            out.writeObject(list);
+            out.close();
+            file.close();
+            System.out.println("File successfully saved to: " + FILEPATH);
+
+        } catch (IOException ex) {
+            System.out.println("IOException caught");
+        }
+    }
+
+    public static List listLoad() throws IOException, ClassNotFoundException {
+        //deserialisation
+        FileInputStream file = new FileInputStream(FILEPATH);
+        ObjectInputStream in = new ObjectInputStream(file);
+
+        // Method for deserialisation of object
+        List list = (List) in.readObject();
+
+        in.close();
+        file.close();
+
+        return list;
+        // System.out.println("z = " + object1.z);
+    }
+
     public static void main(String[] args) {
 
         greet();
-        List list = new List();
+        File f = new File(FILEPATH);
+        List list;
+        if (f.exists()) {
+            System.out.println("Save file detected.");
+
+            try {
+                list = listLoad();
+            } catch (IOException ex) {
+                System.out.println("IOException caught");
+                return;
+            } catch (ClassNotFoundException ex) {
+                System.out.println("ClassNotFoundException caught");
+                return;
+            }
+
+
+        } else {
+            System.out.println("Save file not detected. Starting with empty list.");
+            list = new List();
+        }
+
 
         Scanner in = new Scanner(System.in);
         String response = in.nextLine();
@@ -62,6 +132,7 @@ public class Duke {
             response = in.nextLine();
         }
         // response is bye.
+        listSave(list);
         farewell();
 
     }

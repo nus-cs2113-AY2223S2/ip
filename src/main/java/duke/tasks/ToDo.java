@@ -1,6 +1,6 @@
 package duke.tasks;
 
-public class ToDo extends Task {
+public class ToDo extends Task implements java.io.Serializable {
     // provide the details relating to this toDo Task.
     public ToDo(String taskName) {
         super(taskName); // invoke superclass constructor

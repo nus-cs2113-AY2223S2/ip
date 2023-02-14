@@ -7,9 +7,11 @@ import duke.tasks.Event;
 import duke.tasks.Task;
 import duke.tasks.ToDo;
 
+
 import java.util.ArrayList;
 
-public class List {
+
+public class List implements java.io.Serializable {
 
     private ArrayList<Task> taskList;
 
@@ -174,4 +176,6 @@ public class List {
             System.out.println("Given index is invalid!");
         }
     }
+
+
 }
