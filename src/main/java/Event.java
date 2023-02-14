@@ -21,6 +21,7 @@ public class Event extends Task {
     public void setTo(String to) {
         this.to = to;
     }
+
     // Solution below adapted from referring to the getDescription() method by:
     // https://github.com/nichyjt/ip/blob/master/src/main/java/max/task/Event.java
     @Override
