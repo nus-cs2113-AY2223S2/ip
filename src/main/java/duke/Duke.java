@@ -1,5 +1,8 @@
 package duke;
 
+import duke.command.Deadline;
+import duke.command.Event;
+import duke.command.Todo;
 import duke.task.Task;
 
 import java.util.Scanner;
