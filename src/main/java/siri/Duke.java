@@ -8,11 +8,13 @@ import siri.task.Event;
 import siri.task.Task;
 import siri.task.ToDo;
 
+import java.lang.reflect.Array;
 import java.util.Scanner;
-
+import java.util.ArrayList;
 public class Duke {
 
-    private static Task[] tasks = new Task[100];
+    private static ArrayList<Task> tasks = new ArrayList<>();
+    //private static Task[] tasks = new Task[100];
     private static int indexOfTask = 0;
 
     public static void drawLine() {
@@ -48,7 +50,7 @@ public class Duke {
     public static void printTaskList() {
         System.out.println("Below is your task list");
         for (int i = 0; i < indexOfTask; ++i) {
-            System.out.println((i + 1) + ". " + tasks[i].toString());
+            System.out.println((i + 1) + ". " + tasks.get(i).toString());
         }
     }
 
@@ -57,14 +59,14 @@ public class Duke {
 
         if (marker.equals("mark")) {
             //mark task as done
-            tasks[taskNumber - 1].setDone(true);
+            tasks.get(taskNumber - 1).setDone(true);
             System.out.println("Nice! I've marked this task as done: ");
-            System.out.println(tasks[taskNumber - 1].toString());
+            System.out.println(tasks.get(taskNumber - 1).toString());
         } else {
             //mark task as undone
-            tasks[taskNumber - 1].setDone(false);
+            tasks.get(taskNumber - 1).setDone(false);
             System.out.println("Ok! I've marked this task as not done yet: ");
-            System.out.println(tasks[taskNumber - 1].toString());
+            System.out.println(tasks.get(taskNumber - 1).toString());
         }
 
         //Null Pointer Exception (taskNumber > indexOfTask)
@@ -74,26 +76,40 @@ public class Duke {
     public static void addTask(String taskCommand, String taskD) {
         switch (taskCommand) {
         case "todo":
-            tasks[indexOfTask] = new ToDo(taskD.trim());
+            tasks.add(new ToDo(taskD.trim()));
             break;
         case "deadline":
             String[] deadlineTaskD = taskD.split("/by ", 2);
-            tasks[indexOfTask] = new Deadline(deadlineTaskD[0].trim(), deadlineTaskD[1].trim());
+            tasks.add(new Deadline(deadlineTaskD[0].trim(), deadlineTaskD[1].trim()));
             break;
         case "event":
             String[] eventName = taskD.split("/from ", 2);
             String[] eventDate = eventName[1].split("/to ", 2);
-            tasks[indexOfTask] = new Event(eventName[0].trim(), eventDate[0].trim(), eventDate[1].trim());
+            tasks.add(new Event(eventName[0].trim(), eventDate[0].trim(), eventDate[1].trim()));
             break;
         }
     }
 
-    public static void printThisTask() {
+    public static void deleteTask(String taskNumberString){
+        int taskNumber = Integer.parseInt(taskNumberString);
+        printDeletedTask(taskNumber);
+        tasks.remove(taskNumber-1);
+        indexOfTask--;
+
+        //IndexOutOfBoundsException
+    }
+
+    public static void printNewTask() {
         System.out.println("Got it. I've added this task:");
-        System.out.println("  " + tasks[indexOfTask].toString());
+        System.out.println("  " + tasks.get(indexOfTask).toString());
         System.out.println("Now you have " + (indexOfTask + 1) + " tasks in the list.");
     }
 
+    public static void printDeletedTask(int taskNumber) {
+        System.out.println("Noted! I've deleted this task:");
+        System.out.println("  " + tasks.get(taskNumber-1).toString());
+        System.out.println("Now you have " + (indexOfTask-1) + " tasks in the list.");
+    }
     public static void readUserInput(String input) throws MarkerArrayIndexOutOfBoundsException, AddTaskIndexOutOfBounds, UnknownCommandException {
 
         String[] command = input.split(" ", 2);
@@ -109,6 +125,9 @@ public class Duke {
             }
             markTask(command[0], command[1]);
             break;
+        case "delete":
+            deleteTask(command[1]);
+            break;
         case "todo":
         case "deadline":
         case "event":
@@ -116,7 +135,7 @@ public class Duke {
                 throw new AddTaskIndexOutOfBounds(command[0]);
             }
             addTask(command[0], command[1]);
-            printThisTask();
+            printNewTask();
             indexOfTask++;
             break;
         default:
@@ -134,30 +153,21 @@ public class Duke {
                 + " |______|   |__|   |__|          |__|\n";
 
         System.out.println("Hello from \n" + logo);
-
-        //greet and ask name and greet again
         greet();
-
-        //user input what he or she wants the chatbot to do
         createUserChatBox();
         Scanner in = new Scanner(System.in);
         String input = in.nextLine().trim();
 
-        //according to the input, chatbot reply accordingly
-        //exit while loop only when userinput is "bye"
+
         while (!input.equals("bye")) {
             drawLine();
             createSiriChatBox();
-
             try {
                 readUserInput(input);
             } catch (UnknownCommandException e) {
                 System.out.println("T^T OPPS!!! I'm sorry, but I don't know what that means");
             } catch (AddTaskIndexOutOfBounds e) {
                 e.printError();
-            } catch (NullPointerException e) {
-                System.out.println("T^T OPPS!!! You have only " + indexOfTask + " tasks.");
-                System.out.println("Please only mark / unmark the tasks available.");
             } catch (MarkerArrayIndexOutOfBoundsException e) {
                 System.out.println("Please enter the task number that you would like to mark / unmark, in the following format:");
                 System.out.println("For example if you want to mark / unmark task 2 as done / undone: mark 2 / unmark 2");
@@ -169,14 +179,15 @@ public class Duke {
                 System.out.println("Todo task format: todo task_name");
                 System.out.println("Deadline task format: deadline deadline_name /by deadline_date");
                 System.out.println("Event task format: event event_name /from event_from_timing /to event_to_timing");
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Please only mark / unmark / delete task that is available in your task list.");
+                System.out.println("You have up to " + indexOfTask + " number of tasks.");
             }
 
             drawLine();
             createUserChatBox();
-
             input = in.nextLine().trim();
         }
-
         sayGoodbye();
     }
 }
