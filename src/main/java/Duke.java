@@ -67,6 +67,14 @@ public class Duke {
                     items.add(newTask);
                 }
             }
+            else if(input.equals("delete")){
+                order = Input.scanTaskIndex(items.size());
+                if (order > -1) {
+                    Task.setTotal(Task.getTotal() - 1);
+                    Output.printDeleteTaskMessage(items.get(order));
+                    items.remove(items.get(order));
+                }
+            }
             else{
                 throw new InvalidArgumentException();
             }
