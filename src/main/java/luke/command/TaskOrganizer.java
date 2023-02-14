@@ -5,8 +5,6 @@ import luke.task.Deadline;
 import luke.task.Event;
 import luke.task.Task;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -198,6 +196,11 @@ public class TaskOrganizer {
         return copy;
     }
 
+    /**
+     * Serialize tasks into a JSON string and write it to the data file.
+     *
+     * @throws IOException If there is an error writing the file.
+     */
     private void serializeTasks() throws IOException {
         // Buckets to store each data type
         HashMap<Integer, ToDo> toDos = new HashMap<>();
@@ -222,43 +225,63 @@ public class TaskOrganizer {
 
         // Serialize toDos
         String toDosJson = new Gson().toJson(toDos);
-        FileWriter saveToDos = new FileWriter("C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data/toDos.txt");
+        FileWriter saveToDos = new FileWriter("./data/toDos.txt");
         saveToDos.write(toDosJson);
         saveToDos.close();
 
         // Serialize deadlines
         String deadlinesJson = new Gson().toJson(deadlines);
-        FileWriter saveDeadlines = new FileWriter("C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data/deadlines.txt");
+        FileWriter saveDeadlines = new FileWriter("./data/deadlines.txt");
         saveDeadlines.write(deadlinesJson);
         saveDeadlines.close();
 
         // Serialize events
         String eventsJson = new Gson().toJson(events);
-        FileWriter saveEvents = new FileWriter("C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data/events.txt");
+        FileWriter saveEvents = new FileWriter("./data/events.txt");
         saveEvents.write(eventsJson);
         saveEvents.close();
     }
 
+    /**
+     * Serialize serialNumbers into a JSON string and write it to the data file.
+     *
+     * @throws IOException If there is an error writing the file.
+     */
     private void serialzeSerialNumbers() throws IOException {
         String serialNumbersJson = new Gson().toJson(serialNumbers);
-        FileWriter saveSerialNumbers = new FileWriter("C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data/serialNumbers.txt");
+        FileWriter saveSerialNumbers = new FileWriter("./data/serialNumbers.txt");
         saveSerialNumbers.write(serialNumbersJson);
         saveSerialNumbers.close();
     }
 
+    /**
+     * Serialize taskID into a JSON string and write it to the data file.
+     *
+     * @throws IOException If there is an error writing the file.
+     */
     private void serializeTaskID() throws IOException {
-        FileWriter saveTaskID = new FileWriter("C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data/id.txt");
+        FileWriter saveTaskID = new FileWriter("./data/id.txt");
         saveTaskID.write(Integer.toString(newTaskID));
         saveTaskID.close();
     }
 
+    /**
+     * Serialize taskOrders into a JSON string and write it to the data file.
+     *
+     * @throws IOException If there is an error writing the file.
+     */
     private void serializeTaskOrders() throws IOException {
         String taskOrdersJson = new Gson().toJson(tasks);
-        FileWriter saveTaskOrders = new FileWriter("C:/Users/USER/Desktop/NUS/Year_2_Sem_2/CS2113/Individual_Project/data/taskList.txt");
+        FileWriter saveTaskOrders = new FileWriter("./data/taskList.txt");
         saveTaskOrders.write(taskOrdersJson);
         saveTaskOrders.close();
     }
 
+    /**
+     * Serialize all data structures in TaskOrganizer into JSON strings and write them to their respective JSON file.
+     *
+     * @throws IOException If there is an error writing the file.
+     */
     public void serializeTaskOrganizer() throws IOException{
         serializeTasks();
         serializeTaskOrders();
