@@ -29,7 +29,8 @@ public class DataAccess {
             bufferedWriter.write("");
             bufferedWriter.close();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Cannot empty the file: " + filePath);
+            ;
         }
     }
 
