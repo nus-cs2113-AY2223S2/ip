@@ -12,7 +12,7 @@ public class GootExceptionHandler {
 
 
     public static void validateInput (String[] inputArray)throws GootExceptions{
-        if (inputArray.length<2){
+        if (inputArray.length<2 && !inputArray[0].equals("list")){
             throw new GootExceptions();
         }
     }

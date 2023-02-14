@@ -62,6 +62,9 @@ public class Goot {
         else if (input.equals("list")) {
             Task.printList();
         }
+        else if (inputSplitBySpace[0].equals("delete")&&inputSplitBySpace.length==2){
+            Task.deleteFromTaskArray(Integer.parseInt(inputSplitBySpace[1]));
+        }
     }
 }
 
