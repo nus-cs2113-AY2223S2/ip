@@ -15,9 +15,7 @@ public class Todo extends Task {
 
     @Override
     public String getFileWriteFormat() {
-        // 1 if done, 0 if not done
-        String done = isDone ? "1" : "0";
-        String output = String.format("T | ");
+        String output = "T " + super.getFileWriteFormat();
         return output;
     }
 }

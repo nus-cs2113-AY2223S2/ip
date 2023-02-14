@@ -34,12 +34,15 @@ public class TaskList {
         case "T":
             Todo newTodo = new Todo(input[2], getNextTaskNumber());
             addTask(newTodo); //problem cos tasks is not instantiated/static.
+            break;
         case "D":
             Deadline newDeadline = new Deadline(input[2], getNextTaskNumber(), input[3]);
             addTask(newDeadline);
+            break;
         case "E":
             Event newEvent = new Event(input[2], getNextTaskNumber(), input[3], input[4]);
             addTask(newEvent);
+            break;
         }
 
         // mark as done
@@ -85,5 +88,15 @@ public class TaskList {
     // A bit unoptimised, but this is to get the next number for numbering purposes.
     public static int getNextTaskNumber() {
         return numberOfTasks + 1;
+    }
+
+    public static void writeAllToFile() {
+        String output = "";
+        for (Task task : tasks) {
+            if (task != null) {
+                output += task.getFileWriteFormat() + '\n';
+            }
+        }
+        IO.writeToFile(output);
     }
 }

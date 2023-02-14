@@ -1,5 +1,7 @@
 package task;
 
+import io.IO;
+
 public class Deadline extends Task {
     protected String by;
 
@@ -18,5 +20,12 @@ public class Deadline extends Task {
     public String toString() {
         String byWhen = " (by: " + this.by + ")";
         return "[D]" + super.toString() + byWhen;
+    }
+
+    @Override
+    public String getFileWriteFormat() {
+        String output = "D " + super.getFileWriteFormat()
+                + String.format(" %s %s", IO.FILE_DELIMITER, by);
+        return output;
     }
 }

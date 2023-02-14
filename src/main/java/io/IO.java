@@ -170,7 +170,7 @@ public final class IO {
     }
 
     private static final String DIRECTORY_PATH = "data";
-    private static final String FILE_PATH = "data/sample_papatask.txt";
+    private static final String FILE_PATH = "data/papatask.txt";
     // Using this in Task.java, hence public. Consider possibility of only using in IO?
     public static final String FILE_DELIMITER = "|";
 
@@ -215,7 +215,8 @@ public final class IO {
     public static void writeToFile(String textToAdd) {
         try {
             // 2nd argument true: indicates to append instead of overwrite.
-            FileWriter writer = new FileWriter(FILE_PATH, true);
+            // I want to overwrite.
+            FileWriter writer = new FileWriter(FILE_PATH);
             writer.write(textToAdd);
             // Add newline
             writer.write(System.lineSeparator());
@@ -246,18 +247,15 @@ public final class IO {
      * @param line String line in the text file.
      */
     private static void readLineAsTask(String line) {
+        if (line.isBlank()) {
+            return;
+        }
         // Delimiter and any amount of whitespace on left/right. Note, need to escape regex \\.
         String[] linesSplit = line.split("\\s+" + "\\" + FILE_DELIMITER + "\\s+");
 
-        for (String s : linesSplit) {
-            System.out.println(s);
-        }
+
         switch (linesSplit[0]) {
         case "T":
-            // Shit man, do I want to do this in TaskList instead?
-            // Todo task = new Todo(linesSplit[1]);
-            // TaskList.addTask(task);
-
             // Has to contain T, isdone, and Description
             if (linesSplit.length == 3) {
                 TaskList.addTaskFromFile(linesSplit);
@@ -267,14 +265,14 @@ public final class IO {
         case "D":
             // Has to contain D, isdone, description, by
             if (linesSplit.length == 4) {
-                //TaskList.addTaskFromFile(linesSplit);
+                TaskList.addTaskFromFile(linesSplit);
                 break;
             }
             // FALLTHROUGH
         case "E":
             // Has to contain E, isdone, description, from, to
             if (linesSplit.length == 5) {
-                //TaskList.addTaskFromFile(linesSplit);
+                TaskList.addTaskFromFile(linesSplit);
                 break;
             }
             // FALLTHROUGH

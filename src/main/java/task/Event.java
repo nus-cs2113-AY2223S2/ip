@@ -1,5 +1,7 @@
 package task;
 
+import io.IO;
+
 public class Event extends Task {
 
     protected String timeStart;
@@ -23,5 +25,13 @@ public class Event extends Task {
     public String toString() {
         String eventTime = String.format(" from %s to %s", this.timeStart, this.timeEnd);
         return "[E]" + super.toString() + eventTime;
+    }
+
+    @Override
+    public String getFileWriteFormat() {
+        String output = "E " + super.getFileWriteFormat()
+                + String.format(" %s %s %s %s", IO.FILE_DELIMITER, timeStart,
+                IO.FILE_DELIMITER, timeEnd);
+        return output;
     }
 }

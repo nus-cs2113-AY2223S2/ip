@@ -63,6 +63,7 @@ public class Duke {
             return handleAddTaskEvent(commandArgs);
         case IO.COMMAND_BYE:
             IO.printExitMessage();
+            TaskList.writeAllToFile();
             System.exit(0);
             // Fallthrough (If somehow cannot exit? LOL)
         default:
