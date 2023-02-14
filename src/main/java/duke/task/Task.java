@@ -1,9 +1,8 @@
 package duke.task;
 
-public class Task {
+public abstract class Task {
     protected String description;
     protected boolean isDone;
-    private static int counter = 0;
 
     public Task(String description) {
         this.description = description;
@@ -16,14 +15,6 @@ public class Task {
 
     public String getDescription() {
         return description;
-    }
-
-    public static int getCounter() {
-        return counter;
-    }
-
-    public void increaseCounter() {
-        counter++;
     }
 
     public boolean isDone() {

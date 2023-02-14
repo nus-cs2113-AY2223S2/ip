@@ -9,7 +9,6 @@ public class Event extends Task {
         super(description);
         this.from = from;
         this.to = to;
-        increaseCounter();
     }
 
     public String getType() {

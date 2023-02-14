@@ -2,6 +2,10 @@ package duke;
 
 import duke.task.Task;
 
+import java.util.ArrayList;
+
+import static duke.Duke.allTasks;
+
 public class Output {
     public static final String DIVIDER = "____________________________________________________________\n";
     public static final String INVALID_DEADLINE =
@@ -33,6 +37,7 @@ public class Output {
                 " Enter \"event [task] /from [date] /to [date]\" to add an event\n" +
                 " Enter \"mark [idx]\" to mark task as done\n" +
                 " Enter \"unmark [idx]\" to mark task as not done\n" +
+                " Enter \"delete [idx]\" to remove task from list\n" +
                 " Enter \"bye\" to exit the program\n" +
                 DIVIDER);
     }
@@ -42,11 +47,11 @@ public class Output {
                 "  " + newTask + "\n" + DIVIDER);
     }
 
-    public static void printList(Task[] allTasks) {
+    public static void printList(ArrayList<Task> allTasks) {
         System.out.println(DIVIDER +
                 "Here are the tasks in your list:");
-        for (int i = 0; i < Task.getCounter(); i++) {
-            System.out.println(i+1 + "." + allTasks[i]);
+        for (int i = 0; i < allTasks.size(); i++) {
+            System.out.println(i+1 + "." + allTasks.get(i));
         }
         System.out.println(DIVIDER);
     }
@@ -54,33 +59,38 @@ public class Output {
     public static void printMarkDone(Task doneTask) {
         System.out.println(DIVIDER +
                 "Nice!, I've marked this task as done:\n" +
-                doneTask + "\n" + DIVIDER);
+                "  " + doneTask + "\n" + DIVIDER);
     }
 
     public static void printMarkNotDone(Task notDoneTask) {
         System.out.println(DIVIDER +
                 "OK, I've marked this task as not done yet:\n" +
-                notDoneTask + "\n" + DIVIDER);
+                "  " + notDoneTask + "\n" + DIVIDER);
+    }
+
+    public static void printDeleted(Task deletedTask) {
+        System.out.println(DIVIDER +
+                "Noted, I've removed this task:\n" +
+                "  " + deletedTask + "\n" +
+                "Now you have " + (allTasks.size()-1) + " tasks in the list\n" +
+                DIVIDER);
     }
 
     public static void printExitMessage() {
         System.out.println(DIVIDER +
                 "Bye. Hope to see you again soon!\n" +
                 DIVIDER);
-        return;
     }
 
     // error messages
-    public static void printErrorForStorage() {
-        System.out.println(DIVIDER +
-                "Maximum number of tasks reached.\n" +
-                DIVIDER);
-    }
-
     public static void printErrorForIdx() {
-        System.out.println(DIVIDER +
-                "Please enter [idx] in the form of an integer from 1 to " + Task.getCounter() + ".\n" +
-                DIVIDER);
+        if (allTasks.size() != 0) {
+            System.out.println(DIVIDER +
+                    "Please enter [idx] in the form of an integer from 1 to " + allTasks.size() + ".\n" +
+                    DIVIDER);
+        } else {
+            System.out.println(DIVIDER + "There are no tasks in your list!\n" + DIVIDER);
+        }
     }
 
     public static void printInvalidDeadline() {
