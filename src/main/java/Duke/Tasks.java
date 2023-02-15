@@ -1,8 +1,6 @@
 package Duke;
 
-import java.io.FileWriter;
 import java.util.LinkedList;
-import java.io.IOException;
 
 
 public class Tasks {
@@ -40,6 +38,7 @@ public class Tasks {
                 int index = Integer.parseInt(commandByWord[1]) - 1;
                 Task removedTask = taskList.get(index);
                 taskList.remove(index);
+                TaskUpdater.deleteTask(removedTask);
                 return "Noted. I've removed this task:\n    " +
                         removedTask.toString() + "\n  " +
                         "Now you have " + taskList.size() + " tasks in the list.";

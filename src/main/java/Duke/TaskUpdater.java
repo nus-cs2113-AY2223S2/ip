@@ -16,7 +16,7 @@ public class TaskUpdater {
     static void setUpReadWrite() {
         try {
             File f = new File("data/duke.txt");
-            FW = new FileWriter("data/duke.txt", true);
+            FW = new FileWriter("data/duke.txt");
             SC = new Scanner(f);
         } catch (IOException e) {
             File f = new File("data/duke.txt");
