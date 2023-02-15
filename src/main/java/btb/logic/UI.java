@@ -2,6 +2,7 @@ package btb.logic;
 
 import btb.constants.Constant;
 import btb.exceptions.DukeException;
+import btb.help.Help;
 import btb.tasks.TaskManager;
 
 import java.io.FileNotFoundException;
@@ -47,6 +48,9 @@ public abstract class UI {
         TaskManager tasks = new TaskManager();
         try {
             FileManager.createFile(tasks);
+            if (!Help.printHelpMessage(false)) {
+                System.out.println(Constant.DOTTED_LINE);
+            }
         } catch (FileNotFoundException | DukeException e) {
             System.out.println(e.getMessage());
             System.exit(-1);
@@ -67,7 +71,7 @@ public abstract class UI {
                 Logic.runCommand(tasks, userInput);
                 System.out.println(Constant.DOTTED_LINE);
             } catch (NoSuchElementException e) {
-                System.out.println("\t Invalid input ┻ ︵ヽ(`Д´)ﾉ︵ ┻. Please try again!");
+                System.out.println("\t Invalid input. Please try again!");
                 break;
             }
         } while (isRepeat);

@@ -8,7 +8,7 @@ public class TaskNumberOutOfBoundException extends DukeException {
 
     @Override
     public String getMessage() {
-        return "\t Task " + taskNumber + " does not exists (►__◄).\n" +
+        return "\t Task " + taskNumber + " does not exists (>__<).\n" +
                 "\t Please try again!";
     }
 }

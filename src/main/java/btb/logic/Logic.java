@@ -1,6 +1,7 @@
 package btb.logic;
 
 import btb.exceptions.DukeException;
+import btb.help.Help;
 import btb.tasks.Deadline;
 import btb.tasks.Event;
 import btb.tasks.Task;
@@ -68,11 +69,22 @@ public class Logic {
                 tasks.saveList(filePath);
                 System.out.println("\t tasks saved.");
                 break;
+            case "help":
+                Help.printHelpMessage(true);
+                break;
+            case "disableHelp":
+                Help.setDisabled(true);
+                System.out.println("\t You have disabled help messages from showing every time application boots.");
+                break;
+            case "enableHelp":
+                Help.setDisabled(false);
+                System.out.println("\t You have enabled help messages from showing every time application boots.");
+                break;
             case "":
                 System.out.println("\t Please enter some commands");
                 break;
             default:
-                System.out.println("\t ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+                System.out.println("\t OOPS!!! I'm sorry, but I don't know what that means :-(");
                 break;
             }
         } catch (DukeException | IOException e) {

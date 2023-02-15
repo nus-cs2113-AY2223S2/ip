@@ -18,9 +18,14 @@ public class FileManager {
     private static final String FILE_DIRECTORY = "./data";
     private static final String FILE_NAME = "tasks.txt";
     private static final String FILE_PATH = "./data/tasks.txt";
+    private static final String HELP_PATH = "./data/help.txt";
 
     public static String getFilePath() {
         return FILE_PATH;
+    }
+
+    public static String getHelpPath() {
+        return HELP_PATH;
     }
 
     public static void createFile(TaskManager tasks) throws
@@ -40,6 +45,18 @@ public class FileManager {
             if (fileCreated) {
                 System.out.println("\t " + FILE_NAME + " does not exists.");
                 System.out.println("\t The file " + FILE_NAME + " has been created.");
+                System.out.println(Constant.DOTTED_LINE);
+            } else {
+                System.out.println("\t " + FILE_NAME + " is found.");
+                System.out.println("\t loading data...");
+                System.out.println(Constant.DOTTED_LINE);
+            }
+
+            File help = new File(HELP_PATH);
+            fileCreated = help.createNewFile();
+            if (fileCreated) {
+                System.out.println("\t help.txt does not exists.");
+                System.out.println("\t The file help.txt has been created.");
                 System.out.println(Constant.DOTTED_LINE);
             }
 
