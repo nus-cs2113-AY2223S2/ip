@@ -73,12 +73,6 @@ public class Duke {
             case "deadline":
                 insertDeadline(input, false);
                 break;
-            case "event":
-                insertEvent(input);
-                break;
-            case "deadline":
-                insertDeadline(input);
-                break;
             case "list":
                 listOut(userInputs, tasks);
                 break;
