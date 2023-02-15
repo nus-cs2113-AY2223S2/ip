@@ -1,18 +1,19 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class Duke {
-    public static void printList(List<Task> l1) {
+    public static void printList(Task[] l1, int currListIndex) {
         int index;
-        if (l1.isEmpty()) {
+        if (l1[0] == null) {
             System.out.println("List is empty!");
             return;
         }
-        for (int i = 0; i < l1.size(); i += 1) {
+        for (int i = 0; i < currListIndex; i += 1) {
             index = i + 1;
-            System.out.println(index + ". [" + l1.get(i).getStatusIcon() + "] " + l1.get(i).getDescription());
+            System.out.println(index + ". " + l1[i].toString());
         }
         System.out.println();
     }
@@ -34,14 +35,16 @@ public class Duke {
         }
     }
 
-    public static void printAdded(String line) {
-        System.out.println('\n' + "added: " + line + " to the task list!" + '\n');
+    public static void printAdded(Task task, int taskSize) {
+        System.out.println("Got it. I've added this task:");
+        System.out.println("  " + task.toString());
+        System.out.println("Now you have " + taskSize + " tasks in the list.");
     }
 
     public static String[] parseCommands(String line) {
         String[] lineSpaced = line.split(" ");
         for (int i = 2; i < lineSpaced.length; i++) {
-            lineSpaced[1].concat(lineSpaced[i]);
+            lineSpaced[1] = lineSpaced[1].concat(" " + lineSpaced[i]);
         }
         return lineSpaced;
     }
@@ -61,45 +64,52 @@ public class Duke {
         System.out.println("Hello from\n" + logo);*/
         System.out.println("Hello! I'm a Robot");
         System.out.println("What can I do for you?\n");
-        List<Task> list = new ArrayList<>();
+        Task[] tasksList = new Task[100];
         Scanner in = new Scanner(System.in);
         String line, commandWord, description;
-        int listIndex;
+        int taskListIndex, currTaskNumber;
         String[] lineSpaced;
         boolean isChanged = false;
 
         line = in.nextLine();
         lineSpaced = parseCommands(line);
+        currTaskNumber = 0;
         while(!lineSpaced[0].equals("bye")) {
             commandWord = lineSpaced[0];
             switch (commandWord) {
             case "list":
-                printList(list);
+                printList(tasksList, currTaskNumber);
                 break;
             case "mark":
                 description = lineSpaced[1];
-                listIndex = Integer.parseInt(description) - 1;
+                taskListIndex = Integer.parseInt(description) - 1;
                 isChanged = false;
-                if (!list.get(listIndex).getIsDone()) {
-                    list.get(listIndex).markAsDone();
+                if (!tasksList[taskListIndex].getIsDone()) {
+                    tasksList[taskListIndex].markAsDone();
                     isChanged = true;
                 }
-                printMarked(isChanged, list.get(listIndex).getStatusIcon(), list.get(listIndex).getDescription());
+                printMarked(isChanged, tasksList[taskListIndex].getStatusIcon(), tasksList[taskListIndex].getDescription());
                 break;
             case "unmark":
                 description = lineSpaced[1];
-                listIndex = Integer.parseInt(description) - 1;
+                taskListIndex = Integer.parseInt(description) - 1;
                 isChanged = false;
-                if (list.get(listIndex).getIsDone()) {
-                    list.get(listIndex).markAsUndone();
+                if (tasksList[taskListIndex].getIsDone()) {
+                    tasksList[taskListIndex].markAsUndone();
                     isChanged = true;
                 }
-                printUnmarked(isChanged, list.get(listIndex).getStatusIcon(), list.get(listIndex).getDescription());
+                printUnmarked(isChanged, tasksList[taskListIndex].getStatusIcon(), tasksList[taskListIndex].getDescription());
+                break;
+            case "Todo":
+                description = lineSpaced[1];
+                tasksList[currTaskNumber] = new ToDo (description);
+                printAdded(tasksList[currTaskNumber], currTaskNumber+1);
+                currTaskNumber++;
                 break;
             default:
-                printAdded(line);
+                /*printAdded(line);
                 Task temp_task = new Task(line);
-                list.add(temp_task);
+                 */
             }
             line = in.nextLine();
             lineSpaced = parseCommands(line);
