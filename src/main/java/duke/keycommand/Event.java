@@ -1,3 +1,7 @@
+package duke.keycommand;
+
+import duke.Task;
+
 public class Event extends Task {
 
     private String beginDate;

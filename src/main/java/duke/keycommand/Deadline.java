@@ -1,4 +1,8 @@
-public class Deadline extends Task{
+package duke.keycommand;
+
+import duke.Task;
+
+public class Deadline extends Task {
 
     private String date;
 
