@@ -3,17 +3,17 @@ package dev.joulev.archduke.tasks;
 import java.util.ArrayList;
 
 import dev.joulev.archduke.exceptions.ArchdukeException;
-import dev.joulev.archduke.io.Out;
+import dev.joulev.archduke.io.Output;
 import dev.joulev.archduke.storage.Storage;
 
 /**
  * This class represents the store of tasks, aka a list of tasks. It also
  * handles reading and saving tasks to the file system.
  */
-public class Store {
+public class TaskStore {
     private ArrayList<Task> tasks;
 
-    public Store() {
+    public TaskStore() {
         this.tasks = Storage.readSavedTasks();
     }
 
@@ -62,9 +62,9 @@ public class Store {
      */
     public void listTasks() throws ArchdukeException {
         for (Task task : tasks) {
-            Out.printf("  %s", task.toString());
+            Output.printf("  %s", task.toString());
         }
-        Out.printf("You have %d task(s) in the list.", getTaskCount());
+        Output.printf("You have %d task(s) in the list.", getTaskCount());
     }
 
     /**
@@ -77,7 +77,7 @@ public class Store {
     public void queryTasks(String query) throws ArchdukeException {
         for (Task task : tasks) {
             if (task.getDescription().contains(query)) {
-                Out.printf("  %s", task.toString());
+                Output.printf("  %s", task.toString());
             }
         }
     }

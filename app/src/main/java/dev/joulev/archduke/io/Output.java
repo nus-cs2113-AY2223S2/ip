@@ -2,13 +2,13 @@ package dev.joulev.archduke.io;
 
 import dev.joulev.archduke.exceptions.ArchdukeException;
 import dev.joulev.archduke.exceptions.UnknownException;
-import dev.joulev.archduke.tasks.Store;
+import dev.joulev.archduke.tasks.TaskStore;
 import dev.joulev.archduke.tasks.Task;
 
 /**
  * This class handles (prettified) output to the terminal.
  */
-public class Out {
+public class Output {
     /**
      * The width of the box to be printed to the terminal, inclusive of border and
      * margin.
@@ -175,29 +175,30 @@ public class Out {
     /**
      * Prints the tasks currently present.
      * 
-     * @param store The {@link Store} to get the tasks from.
+     * @param taskStore The {@link TaskStore} to get the tasks from.
      * @throws ArchdukeException If string format fails. This should not happen, if
      *                           it happens it's a bug.
      */
-    public static void printTasks(Store store) throws ArchdukeException {
+    public static void printTasks(TaskStore taskStore) throws ArchdukeException {
         printBoxTopBorder();
         printf("Here are your tasks:");
-        store.listTasks();
+        taskStore.listTasks();
         printBoxBottomBorder();
     }
 
     /**
      * Prints the tasks that match a query string.
      * 
-     * @param store The {@link Store} to get the tasks from.
-     * @param query The query string.
+     * @param taskStore The {@link TaskStore} to get the tasks from.
+     * @param query     The query string.
      * @throws ArchdukeException If string format fails. This should not happen, if
      *                           it happens it's a bug.
      */
-    public static void printQueriedTasks(Store store, String query) throws ArchdukeException {
+    public static void printQueriedTasks(TaskStore taskStore, String query)
+            throws ArchdukeException {
         printBoxTopBorder();
         printf("Here are the tasks I found:");
-        store.queryTasks(query);
+        taskStore.queryTasks(query);
         printBoxBottomBorder();
     }
 
@@ -205,7 +206,7 @@ public class Out {
      * Prints the acknowledgement message on task addition.
      * 
      * @param task      The {@link Task} that was added.
-     * @param storeSize The size of the {@link Store} after the addition.
+     * @param storeSize The size of the {@link TaskStore} after the addition.
      * @throws ArchdukeException If string format fails. This should not happen, if
      *                           it happens it's a bug.
      */
@@ -220,13 +221,14 @@ public class Out {
     /**
      * Prints the acknowledgement message on toggle of a task's completion status.
      * 
-     * @param store The {@link Store} to get the tasks from.
-     * @param index The index of the task to be toggled.
+     * @param taskStore The {@link TaskStore} to get the tasks from.
+     * @param index     The index of the task to be toggled.
      * @throws ArchdukeException If string format fails. This should not happen, if
      *                           it happens it's a bug.
      */
-    public static void printTaskCompleteness(Store store, int index) throws ArchdukeException {
-        Task task = store.getTask(index);
+    public static void printTaskCompleteness(TaskStore taskStore, int index)
+            throws ArchdukeException {
+        Task task = taskStore.getTask(index);
         printBoxTopBorder();
         printf("The following task has been marked as %s", task.isCompleted() ? "done" : "undone");
         printf("  %s", task.toString());
@@ -237,7 +239,7 @@ public class Out {
      * Prints the acknowledgement message on task deletion.
      * 
      * @param task      The {@link Task} that was deleted.
-     * @param storeSize The size of the {@link Store} after the deletion.
+     * @param storeSize The size of the {@link TaskStore} after the deletion.
      * @throws ArchdukeException If string format fails. This should not happen, if
      *                           it happens it's a bug.
      */

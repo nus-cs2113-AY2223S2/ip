@@ -5,13 +5,13 @@ import java.util.Scanner;
 /**
  * This class handles all input from the user.
  */
-public class In {
+public class Input {
     private Scanner scanner;
 
     /**
      * Initializes the input handler.
      */
-    public In() {
+    public Input() {
         this.scanner = new Scanner(System.in);
     }
 
