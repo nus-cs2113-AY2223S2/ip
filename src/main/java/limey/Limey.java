@@ -50,11 +50,14 @@ public class Limey {
     }
 
     private static void exitLimey(ArrayList<Task> tasks) {
-        try {
-            String filePath = "C:\\Users\\sunil\\desktop\\NUS\\CS2113\\Indiv Project\\src\\main\\SavedList";
-            FileHandler.writeToFile(filePath, tasks);
-        }catch (IOException e) {
-            Speech.invalidMessage("File not found");
+        if(Task.numTasks>0) {
+            try {
+                String filePath = "C:\\Users\\sunil\\desktop\\NUS\\CS2113\\Indiv Project\\src\\main\\SavedList";
+                FileHandler.writeToFile(filePath, tasks);
+
+            } catch (IOException e) {
+                Speech.invalidMessage("File not found");
+            }
         }
         Speech.sayBye();
     }
