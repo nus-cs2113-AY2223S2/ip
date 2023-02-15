@@ -3,7 +3,6 @@ package data;
 import java.util.ArrayList;
 
 import duke.Task;
-import ui.Display;
 
 public class tasksList {
     public static ArrayList<Task> userTasksList = new ArrayList<>();
@@ -18,7 +17,6 @@ public class tasksList {
 
     public static void addTask(Task taskToAdd) {
         userTasksList.add(taskToAdd);
-        Display.notifyUser("Added the following task:\n" + userTasksList.get(userTaskCount));
     }
 
     public static void deleteTask(int index) {

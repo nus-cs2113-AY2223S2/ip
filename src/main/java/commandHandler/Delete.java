@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import data.ProcessStorageTasks;
 import data.tasksList;
 import duke.Task;
 import ui.Display;
@@ -31,7 +32,7 @@ public class Delete {
         int newTaskIndex = 0;
         /* Add all tasks to ArrayList except task to be deleted */
         try {
-            File file = new File("tasks.txt");
+            File file = new File(ProcessStorageTasks.FILE_PATH);
             Scanner s = new Scanner(file);
             while (s.hasNextLine()) {
                 String line = s.nextLine();
@@ -49,7 +50,7 @@ public class Delete {
         }
         /* rewrite tasks into tasks.txt */
         try {
-            FileWriter writer = new FileWriter("tasks.txt");
+            FileWriter writer = new FileWriter(ProcessStorageTasks.FILE_PATH);
             for (String task : savedTasksList) {
                 writer.write(task + "\n");
             }

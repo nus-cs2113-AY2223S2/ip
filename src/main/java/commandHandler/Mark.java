@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import data.ProcessStorageTasks;
 import data.tasksList;
 import duke.Task;
 import ui.Display;
@@ -26,29 +27,34 @@ public class Mark {
                     return;
                 }
                 task.markAsDone();
-            } else {
                 Display.notifyUser("The following task has been marked done: [X] " + task.description);
+            } else {
+                if (!task.getDoneStatus()) {
+                    Display.warnUser("Task is already unmarked!");
+                    return;
+                }
+                task.markAsUndone();
+                Display.notifyUser("The following task has been unmarked: [ ] " + task.description);
             }
-            // // Edit tasks.txt to reflect marked
-            // markStorageTask(taskIndex, markStorageTask.MARK);
+            markStorageTask(taskIndex, action);
         } catch (Exception e) {
             Display.warnUser("Please enter a valid numerical index of the task!");
             return;
         }
     }
 
-    public static void markSavedTask(int index, Parser.markType action) {
+    public static void markStorageTask(int index, Parser.markType action) {
         String indexToRemove = Integer.toString(index);
         ArrayList<String> savedTasksList = new ArrayList<>();
         /* copy all saved tasks into ArrayList */
         try {
-            savedTasksList.addAll(Files.readAllLines(Paths.get("tasks.txt")));
+            savedTasksList.addAll(Files.readAllLines(Paths.get(ProcessStorageTasks.FILE_PATH)));
         } catch (IOException e) {
             Display.warnUser(e.getMessage());
         }
         /* edit the selected task */
         try {
-            File file = new File("tasks.txt");
+            File file = new File(ProcessStorageTasks.FILE_PATH);
             Scanner s = new Scanner(file);
             while (s.hasNextLine()) {
                 String line = s.nextLine();
@@ -66,9 +72,9 @@ public class Mark {
         } catch (IOException e) {
             Display.warnUser(e.getMessage());
         }
-        // rewrite tasks into tasks.txt
+        /* rewrite tasks into tasks.txt */
         try {
-            FileWriter writer = new FileWriter("tasks.txt");
+            FileWriter writer = new FileWriter(ProcessStorageTasks.FILE_PATH);
             for (String task : savedTasksList) {
                 writer.write(task + "\n");
             }

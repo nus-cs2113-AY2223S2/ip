@@ -1,5 +1,5 @@
 import java.util.Scanner;
-import data.ProcessSavedTasks;
+import data.ProcessStorageTasks;
 import ui.Display;
 import userInputParser.Parser;
 
@@ -9,10 +9,10 @@ public class Duke {
 
     public static void main(String[] args) {
         Display.greetUser();
-        ProcessSavedTasks.processFile();
+        ProcessStorageTasks.processFile();
         while (scan.hasNextLine()) {
             userInput = scan.nextLine();
-            Parser.parseUserInput(userInput);
+            Parser.parseUserInput(userInput.trim());
         }
         scan.close();
         Display.goodbyeUser();

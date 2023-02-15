@@ -3,6 +3,7 @@ package commandHandler;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import data.ProcessStorageTasks;
 import data.tasksList;
 import duke.Deadline;
 import duke.Event;
@@ -15,7 +16,6 @@ public class Add {
     private static final String COMMAND_EVENT = "/event";
     private static final String COMMAND_TODO = "/todo";
     private static final String COMMAND_DEADLINE = "/deadline";
-    private static final String FILE_PATH = "savedTasks.txt";
 
     public static void addTask(String userInput) throws MissingCommandException {
         String[] userInputArray = userInput.split(" ");
@@ -49,7 +49,7 @@ public class Add {
 
     public static void addTaskToStorage(Task newTask, int taskCount) {
         try {
-            FileWriter fw = new FileWriter(FILE_PATH, true);
+            FileWriter fw = new FileWriter(ProcessStorageTasks.FILE_PATH, true);
             fw.write(Integer.toString(taskCount) + ":" + newTask.formattedString() + "\n");
             fw.close();
         } catch (IOException e) {
@@ -74,15 +74,17 @@ public class Add {
     public static void addSavedTask(String arguments) {
         Task newTask;
         String[] taskStringArray = arguments.split(":");
-        String command = taskStringArray[0];
-        if (command.equals(COMMAND_TODO)) {
+        String command = taskStringArray[1];
+        if (command.equals("Todo")) {
             String inputFormat = "/todo " + taskStringArray[3];
             newTask = new Todo(inputFormat);
-        } else if (taskStringArray[1].equals("Deadline")) {
-            String inputFormat = "/deadline " + taskStringArray[3] + " /by " + taskStringArray[4];
+        } else if (command.equals("Deadline")) {
+            String inputFormat = "/deadline " + taskStringArray[3] + " /by " +
+                    taskStringArray[4];
             newTask = new Deadline(inputFormat);
         } else {
-            String inputFormat = "/event " + taskStringArray[3] + " /start " + taskStringArray[4] + " /end "
+            String inputFormat = "/event " + taskStringArray[3] + " /start " +
+                    taskStringArray[4] + " /end "
                     + taskStringArray[5];
             newTask = new Event(inputFormat);
         }

@@ -7,8 +7,8 @@ import java.util.Scanner;
 import commandHandler.Add;
 import ui.Display;
 
-public class ProcessSavedTasks {
-    public static final String FILE_PATH = "savedTasks.txt";
+public class ProcessStorageTasks {
+    public static final String FILE_PATH = "data/savedTasks.txt";
 
     public static void processFile() {
         try {

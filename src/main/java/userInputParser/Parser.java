@@ -3,6 +3,7 @@ package userInputParser;
 import ui.exceptions.MissingCommandException;
 import ui.Display;
 import commandHandler.*;
+import data.tasksList;
 
 public class Parser {
     private static final String COMMAND_BYE = "/bye";
@@ -37,6 +38,8 @@ public class Parser {
             if (command.equals(COMMAND_TODO) || command.equals(COMMAND_EVENT) || command.equals(COMMAND_DEADLINE)) {
                 try {
                     Add.addTask(userInput);
+                    Display.notifyUser(
+                            "Added the following task:\n" + tasksList.userTasksList.get(tasksList.userTaskCount - 1));
                 } catch (MissingCommandException e) {
                     Display.warnUser(e.getMessage());
                 }
@@ -45,8 +48,11 @@ public class Parser {
             } else if (command.equals(COMMAND_UNMARK)) {
                 Mark.markTask(userInputArray, markType.UNMARK);
             } else if (command.equals(COMMAND_DELETE)) {
-                Delete.deleteTask(Integer.parseInt(userInputArray[1]));
-
+                try {
+                    Delete.deleteTask(Integer.parseInt(userInputArray[1]));
+                } catch (Exception e) {
+                    Display.warnUser("Please enter a valid numerical index of the task!");
+                }
             } else {
                 /** Handle non-command inputs **/
                 Display.warnUser("Please enter a valid command!");
