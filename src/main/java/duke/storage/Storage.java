@@ -16,8 +16,8 @@ import java.util.Scanner;
 
 public class Storage {
 
-    private static final String dirPath = "src/main/java/duke/storage";
-    private static final String filePath = "src/main/java/duke/storage/duke.txt";
+    private static final String dirPath = "src/main/java/duke/data";
+    private static final String filePath = "src/main/java/duke/data/duke.txt";
 
     public static List<Task> convertToList() throws FileNotFoundException {
         List<Task> taskList = new ArrayList<>();
