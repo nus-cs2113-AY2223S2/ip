@@ -30,12 +30,12 @@ public class Alex {
                 printLine();
             }
 
-            }
+        }
 
     }
     public static void echoResponse(Task task, int number) {
         System.out.println("Got it. I've added this task:" + "\n " + task + "\n" +
-                    "Now you have " + number + " tasks in the list" );
+                "Now you have " + number + " tasks in the list" );
         printLine();
     }
     public static void printLine() {
@@ -66,9 +66,10 @@ public class Alex {
             throw new IndexOutOfBoundsException(command);
         }
         if(command.equals("list")) {
-            for(int i = 1; i <= taskManager.getNumberOfTasks(); i++) {
-                System.out.print(i);
-                System.out.println(". " + taskManager.getAllTasks()[i-1]);
+            int taskNo = 1;
+            for(Task t : taskManager.getAllTasks()) {
+                System.out.println(taskNo + "." + t);
+                taskNo += 1;
             }
             printLine();
 
@@ -81,8 +82,8 @@ public class Alex {
             printLine();
             System.out.println("Good job! I have marked this task as completed:");
             int number = Integer.parseInt(words[1]);
-            taskManager.getAllTasks()[number - 1].markAsDone();
-            System.out.println(taskManager.getAllTasks()[number - 1]);
+            taskManager.getAllTasks().get(number - 1).markAsDone();
+            System.out.println(taskManager.getAllTasks().get(number - 1));
             printLine();
 
         }
@@ -90,12 +91,13 @@ public class Alex {
             printLine();
             System.out.println("Got it! I have marked this task as not yet completed:");
             int number = Integer.parseInt(words[1]);
-            taskManager.getAllTasks()[number - 1].unmark();
-            System.out.println("[" + taskManager.getAllTasks()[number - 1].getStatusIcon() + "]" + " " + taskManager.getAllTasks()[number - 1].getDescription());
+            taskManager.getAllTasks().get(number - 1).unmark();
+            System.out.println(taskManager.getAllTasks().get(number - 1));
             printLine();
 
 
         }
+
         else {
             String activity = "";
             for (int i = 1; i < words.length; i++) {
