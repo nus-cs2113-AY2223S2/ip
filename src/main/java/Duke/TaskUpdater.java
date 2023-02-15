@@ -16,7 +16,7 @@ public class TaskUpdater {
     static void setUpReadWrite() {
         try {
             File f = new File("data/duke.txt");
-            FW = new FileWriter("data/duke.txt");
+            FW = new FileWriter("data/duke.txt", true);
             SC = new Scanner(f);
         } catch (IOException e) {
             File f = new File("data/duke.txt");
@@ -40,7 +40,8 @@ public class TaskUpdater {
     static void addTask(Task newTask) {
         try {
             String command = convertTaskToCommandString(newTask);
-            FW.append(command);
+            FW = new FileWriter("data/duke.txt", true);
+            FW.append(command + '\n');
             FW.close();
         } catch (IOException e) {
             System.out.println("Error Occurred");
@@ -49,7 +50,7 @@ public class TaskUpdater {
     }
 
     static void deleteTask(Task delTask) {
-        try {
+        try { // should change from stream to list, the go by index
             String task = convertTaskToCommandString(delTask);
             File file = new File("data/duke.txt");
             List<String> lines = Files.lines(file.toPath())
