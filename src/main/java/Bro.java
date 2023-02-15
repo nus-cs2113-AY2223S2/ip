@@ -12,14 +12,14 @@ public class Bro {
     public static final String HORIZONTAL_LINE = "\n───────────────────────────────────────────────────────────────\n";
     public static final String GREETING = " Sup bro. I'm Bro.\n" + " What do you want?";
     public static final String TASK_DOES_NOT_EXIST = " Bro that task number does not exist...";
+    public static ArrayList<Task> taskList = Save.getSavedTasks(new ArrayList<>());
     public static void main(String[] args) {
         System.out.println(HORIZONTAL_LINE + GREETING + HORIZONTAL_LINE);
 
         // User Input
         String line;
-        StringBuilder reply = new StringBuilder();  // Use StringBuilder as we concatenate Strings in a loop later on
+        StringBuilder reply;  // Use StringBuilder as we concatenate Strings in a loop later on
         Scanner in = new Scanner(System.in);
-        ArrayList<Task> tasks = new ArrayList<>();  // Dynamic array to store text entered by user
         boolean haveInput = true;
         while (haveInput) {
             line = in.nextLine();
@@ -31,8 +31,8 @@ public class Bro {
                 break;
             case "list":
                 reply = new StringBuilder(" Your tasks:\n");
-                for (int i = 0; i < tasks.size(); ++i) {
-                    Task currentTask = tasks.get(i);
+                for (int i = 0; i < taskList.size(); ++i) {
+                    Task currentTask = taskList.get(i);
                     String mark = currentTask.mark();
                     reply.append(" ").append(i + 1).append(".[").append(currentTask.getType()).append("]").append("[")
                             .append(mark).append("] ").append(currentTask).append("\n");
@@ -42,26 +42,29 @@ public class Bro {
             case "unmark":
                 boolean markAsComplete = arrayOfInputs[0].equals("mark");   // this boolean decides if the following `markComplete()` marks the task as Completed or Uncompleted
                 try {
-                    reply = markComplete(markAsComplete, tasks, arrayOfInputs);
+                    reply = markComplete(markAsComplete, taskList, arrayOfInputs);
                 } catch (invalidInputFormat e) {
                     reply = new StringBuilder(e.toString());
                 } catch (invalidTaskIndexException e) {
                     reply = new StringBuilder(TASK_DOES_NOT_EXIST);
                 }
+                Save.saveToFile();
                 break;
             case "todo":
                 try {
-                    reply = createToDo(tasks, arrayOfInputs);
+                    reply = createToDo(taskList, arrayOfInputs);
                 } catch (invalidInputFormat e) {
                     reply = new StringBuilder(e.toString());
                 }
+                Save.saveToFile();
                 break;
             case "deadline":
                 try {
-                    reply = createDeadline(tasks, arrayOfInputs);
+                    reply = createDeadline(taskList, arrayOfInputs);
                 } catch (invalidInputFormat e) {
                     reply = new StringBuilder(e.toString());
                 }
+                Save.saveToFile();
                 break;
             case "event":
                 StringBuilder eventName = new StringBuilder();
@@ -79,8 +82,9 @@ public class Bro {
                     endTime.append(" ").append(arrayOfInputs[i]);
                 }
                 Task event = new Event(eventName.toString().trim(), startTime.toString().trim(), endTime.toString().trim());
-                tasks.add(event);
+                taskList.add(event);
                 reply = new StringBuilder(" added: " + event);
+                Save.saveToFile();
                 break;
             default:
                 reply = new StringBuilder(" Not a valid command bro...");
@@ -167,4 +171,5 @@ public class Bro {
             return new StringBuilder(" Marked " + tasks.get(taskIndex) + " as not done.");
         }
     }
+
 }
