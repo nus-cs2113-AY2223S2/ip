@@ -41,6 +41,10 @@ public class BunnySession {
         return this.taskList.get(index);
     }
 
+    public void deleteTask(int index) {
+        this.taskList.remove(index);
+    }
+
     public int numTasks() {
         return this.taskList.size();
     }

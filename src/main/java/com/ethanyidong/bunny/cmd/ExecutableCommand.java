@@ -22,6 +22,8 @@ public abstract class ExecutableCommand {
             return new AddDeadlineCommand();
         case "event":
             return new AddEventCommand();
+        case "delete":
+            return new DeleteTaskCommand();
         default:
             return null;
         }
