@@ -1,16 +1,11 @@
 public class Task {
 
-    private int id;
     private String taskInfo;
     private boolean isDone;
     private String taskType = " ";
 
-    private static int numberOfTasks = 0;
-
     public Task(String taskInfo, String taskType) {
         setTaskInfo(taskInfo);
-        numberOfTasks++;
-        setId(numberOfTasks);
         this.isDone = false;
         setTaskType(taskType);
     }
@@ -42,11 +37,6 @@ public class Task {
         return "[ ]";
     }
 
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getTaskInfo() {
         return taskInfo;
     }
@@ -62,9 +52,4 @@ public class Task {
     public String getTaskType() {
         return String.format("[%s]", taskType);
     }
-
-    public static int getNumberOfTasks() {
-        return numberOfTasks;
-    }
-
 }
