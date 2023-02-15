@@ -1,4 +1,5 @@
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.File;
@@ -9,7 +10,8 @@ public class Duke {
     private static ArrayList<Task> inputList = new ArrayList<>();
     private static int numTasks = 0;
 
-    private static File f = new File("data/duke.txt");
+    private static FileReading f;
+    private static String filePath = "data/duke.txt";
 
     public static void printAddTask(Task t) {
         //print to show Task added to list
@@ -126,6 +128,12 @@ public class Duke {
                 }
             }
             userInput = in.nextLine();
+            f.main(inputList);
+        }
+        try {
+            f.getFileContents(filePath);
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found :^(");
         }
         in.close();
     }
@@ -144,18 +152,40 @@ public class Duke {
         return;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 //        String logo = " ____        _        \n"
 //                + "|  _ \\ _   _| | _____ \n"
 //                + "| | | | | | | |/ / _ \\\n"
 //                + "| |_| | |_| |   <  __/\n"
 //                + "|____/ \\__,_|_|\\_\\___|\n";
 //        System.out.println("Hello from\n" + logo);
-        try {
-            Scanner s = new Scanner(f);
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found");
-        }
+//        try {
+//            f.main(inputList);
+//        } catch (FileNotFoundException e) {
+//            System.out.println("File not Found");
+//        }
+// System.out.println(fileName.exists() + " that file exists now");
+//
+//        Working code which creates data/duke.txt
+//        try {
+//            File newFolder = new File("data");
+//            if (newFolder.createNewFile()) {
+//                System.out.println("File deleted: " + newFolder.getName());
+//            } else {
+//                newFolder.delete();
+//                newFolder.mkdirs();
+//                System.out.println("File already exists.");
+//            }
+//            File myObj = new File("data/duke.txt");
+//            if (myObj.createNewFile()) {
+//                System.out.println("File created: " + myObj.getName());
+//            } else {
+//                System.out.println("File already exists.");
+//            }
+//        } catch (IOException e) {
+//            System.out.println("An error occurred.");
+//            e.printStackTrace();
+//        }
         greet();
         getCommand();
         bye();
