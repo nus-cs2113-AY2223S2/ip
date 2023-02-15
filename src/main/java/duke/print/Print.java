@@ -134,10 +134,10 @@ public class Print {
     /**
      * Prints the details of a newly added task
      *
-     * @param taskList  The list of tasks, to print the size (i.e. how many tasks in the list)
-     * @param taskToAdd The task to print the details of.
+     * @param taskToAdd The newly added task to print the details of.
+     * @param taskList  The list of tasks where the newly added task is found
      */
-    public static void printAddingOneTask(ArrayList<Task> taskList, Task taskToAdd) {
+    public static void printAddingOneTask(Task taskToAdd, ArrayList<Task> taskList) {
         printOneLine();
         println("     Got it. I've added this task:");
         printTypeAndStatus(taskToAdd);
@@ -159,6 +159,30 @@ public class Print {
         println("");
 
         println("     Now you have " + taskList.size() + " tasks in the list");
+
+        printOneLine();
+    }
+
+    /**
+     * Prints a task when it has been marked on unmarked as DONE.
+     * @param selectedTask The task that has been marked or unmarked.
+     */
+    public static void printMarkingOrUnmarkingOneTask(Task selectedTask) {
+        printTypeAndStatus(selectedTask);
+        print(selectedTask.getDescription());
+
+        switch (selectedTask.getTypeIcon()) {
+            case "D":
+                println(" (by:" + selectedTask.getBy() + ")");
+                break;
+
+            case "E":
+                println("(from: " + selectedTask.getFrom() + " to:" + selectedTask.getTo() + ")");
+                break;
+
+            default:
+                println("");
+        }
 
         printOneLine();
     }
