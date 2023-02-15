@@ -1,10 +1,15 @@
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileWriter;
 
 public class Duke {
     private static String line = "__________________________________________________________";
     private static ArrayList<Task> inputList = new ArrayList<>();
     private static int numTasks = 0;
+
+    private static File f = new File("data/duke.txt");
 
     public static void printAddTask(Task t) {
         //print to show Task added to list
@@ -146,6 +151,11 @@ public class Duke {
 //                + "| |_| | |_| |   <  __/\n"
 //                + "|____/ \\__,_|_|\\_\\___|\n";
 //        System.out.println("Hello from\n" + logo);
+        try {
+            Scanner s = new Scanner(f);
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        }
         greet();
         getCommand();
         bye();
