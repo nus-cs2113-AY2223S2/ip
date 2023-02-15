@@ -1,7 +1,15 @@
 package duke.classes;
 
+import java.nio.file.Path;
 import java.util.Objects;
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 public class Duke {
     private static void checkError(String input) throws DukeException {
         if (Objects.equals(input, "event") || Objects.equals(input, "todo") || Objects.equals(input, "deadline")) {
@@ -12,6 +20,37 @@ public class Duke {
             throw new DukeException("I'm sorry, but i don't know what that means. Please enter a proper input.");
         }
     }
+
+    public static void printFile(String filePath) throws FileNotFoundException {
+        File file = new File(filePath);
+        Scanner scan = new Scanner(file);
+        while (scan.hasNext()) {
+            System.out.println(scan.nextLine());
+        }
+    }
+
+    public static void writeFile(String filePath, String textAdd) throws IOException {
+        FileWriter writer = new FileWriter(filePath);
+        writer.write(textAdd);
+        writer.close();
+    }
+
+    public static void appendFile(String filepath, String textAppend) throws IOException {
+        FileWriter writer = new FileWriter(filepath, true);
+        writer.write(textAppend);
+        writer.close();
+    }
+
+    public static void rewriteCurrentList(String[] list, int line, String newText) {
+        list[line] = newText;
+    }
+
+    public static void combineCurrentList(String[] list, String tempList) {
+        for(int i = 0; i < list.length; i++) {
+            tempList += list[i];
+        }
+    }
+
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -23,6 +62,14 @@ public class Duke {
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you\n");
 
+        File file = new File("src/duke_list.txt");
+
+        try {
+            System.out.println("This is the current content of the duke_list file, if any:");
+            printFile("src/duke_list.txt");
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        }
         Scanner scan = new Scanner(System.in);
         String input = scan.nextLine();
 
@@ -42,20 +89,22 @@ public class Duke {
                 break;
 
             } else if (Objects.equals(input, "list")) {
-                System.out.println("Here are the tasks in your list:");
-                for (int i = 0; i < count; i++) {
+                    System.out.println("Here are the tasks in your list:");
+                    for (int i = 0; i < count; i++) {
                     System.out.println(number + "." + inputs[i]);
                     number++;
-                }
-                number = 1;
+                    }
+                    number = 1;
 
             } else if (input.length() > 5 && (input.substring(0,5)).equals("mark ") && input.substring(5, input.length()).matches("[0-9]+")) {
                     Integer order = Integer.valueOf(input.substring(5, input.length()));
+                    String oldText = inputs[order - 1].toString() + System.lineSeparator();
                     inputs[order - 1].markDone();
                     System.out.println("Nice! I've marked this task as done:\n" + inputs[order - 1]);
 
             } else if (input.length() > 7 && (input.substring(0,7)).equals("unmark ") && input.substring(7, input.length()).matches("[0-9]+")) {
                     Integer order = Integer.valueOf(input.substring(7, input.length()));
+                    String oldText = inputs[order - 1].toString() + System.lineSeparator();
                     inputs[order - 1].markUndone();
                     System.out.println("OK, I've marked this task as not done yet:\n" + inputs[order - 1]);
 
@@ -71,6 +120,13 @@ public class Duke {
                     inputs[count] = new Todo(info);
                     inputs[count].isDone = false;
                     System.out.println("Got it. I've added this task: \n" + inputs[count] + "\nNow you have " + (count + 1) + " tasks in your list." );
+                    String filePath = "src/duke_list.txt";
+                    String text = inputs[count].toString() + System.lineSeparator();
+                    try {
+                        appendFile(filePath, text);
+                    } catch (IOException e) {
+                        System.out.println("Something went wrong: " + e.getMessage());
+                    }
                     count++;
                 } else if (input.length() > 7 && input.substring(0,8).equals("deadline")) {
                     String info = input.substring(9,input.indexOf("/"));
@@ -78,6 +134,13 @@ public class Duke {
                     inputs[count] = new Deadline(info, timeBy);
                     inputs[count].isDone = false;
                     System.out.println("Got it. I've added this task: \n" + inputs[count] + "\nNow you have " + (count + 1) + " tasks in your list." );
+                    String filePath = "src/duke_list.txt";
+                    String text = inputs[count].toString() + System.lineSeparator();
+                    try {
+                        appendFile(filePath, text);
+                    } catch (IOException e) {
+                        System.out.println("Something went wrong: " + e.getMessage());
+                    }
                     count++;
                 } else if (input.length() > 4 && input.substring(0,5).equals("event")) {
                     String info = input.substring(6,input.indexOf("/"));
@@ -85,6 +148,13 @@ public class Duke {
                     String timeBy = input.substring(input.lastIndexOf("/")+1, input.length());
                     inputs[count] = new Event(info, timeFrom, timeBy);
                     inputs[count].isDone = false;
+                    String filePath = "src/duke_list.txt";
+                    String text = inputs[count].toString() + System.lineSeparator();
+                    try {
+                        appendFile(filePath, text);
+                    } catch (IOException e) {
+                        System.out.println("Something went wrong: " + e.getMessage());
+                    }
                     System.out.println("Got it. I've added this task: \n" + inputs[count] + "\nNow you have " + (count + 1) + " tasks in your list." );
                     count++;
                 } else {
