@@ -47,6 +47,7 @@ public class Task{
         }
         System.out.println(DASH + "\n");
     }
+
     //file I/O
     public String createEntry(){
         return Integer.toString(this.taskNumber)+(".")+this.type+"."+this.getDoneString()+"."+(this.taskName)+"\n";
@@ -78,6 +79,18 @@ public class Task{
         }
     }
 
+    public static void deleteFromTaskArray(int indexToDelete){
+        System.out.println(DASH+"\n Bye Bye task! It was nice meeting you :)\n"+taskArray[indexToDelete-1].description);
+
+        for(int index = indexToDelete-1;index<lastIndex-1;index++){
+            taskArray[index] = taskArray[index+1];
+            taskArray[index].taskNumber -=1;
+        }
+        lastIndex--;
+        taskArray[lastIndex]=null;
+
+        System.out.println(" Now you have "+Integer.toString(lastIndex)+" tasks in the list.\n"+DASH);
+    }
     public void acknowledgeTaskAdded(){
         String totalNumberOfTasks=Integer.toString(Task.lastIndex);
         System.out.println(DASH+"\nGot it. I've added this task:\n"+this.description+"\nNow you have "+

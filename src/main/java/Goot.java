@@ -85,13 +85,11 @@ public class Goot {
                 e.printStackTrace();
             }
         }
+        else if (inputSplitBySpace[0].equals("delete")&&inputSplitBySpace.length==2){
+            Task.deleteFromTaskArray(Integer.parseInt(inputSplitBySpace[1]));
+        }
         else{
-            try{
-                GootExceptionHandler.validateInput(inputSplitBySpace);
-            }
-            catch (GootExceptions e){
-                GootExceptionHandler.unidentifiedKeyword();
-            }
+            GootExceptionHandler.unidentifiedKeyword();
         }
     }
 }
