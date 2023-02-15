@@ -4,13 +4,15 @@ import duke.task.Task;
 import duke.task.ToDo;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 //TODO: specify error: empty description vs event/ddl timing not found
 
 public class Duke {
     public static String line = "____________________________________________________________\n";
-    public static int countTask = 0;
-    public static Task[] tasks = new Task[100];
+    //    public static int countTask = 0;
+//    public static Task[] tasks = new Task[100];
+    public static ArrayList<Task> tasks = new ArrayList<>();
 
     public static void main(String[] args) {
 
@@ -67,6 +69,8 @@ public class Duke {
                     } catch (IndexOutOfBoundsException e) {
                         System.out.println("Insufficient input for event. Adding event failed.\n" + line);
                     }
+                } else if (userInput.startsWith("delete")) {
+                    deleteTask(userInput);
                 } else {
                     throw new TaskTypeException();
                 }
@@ -84,19 +88,19 @@ public class Duke {
 
     public static void printTaskList() {
         System.out.println(line + "Here are the tasks in your list:");
-        for (int i = 0; i < countTask; i++) {
+        for (int i = 0; i < tasks.size(); i++) {
             int taskIndex = i + 1;
-            System.out.print(taskIndex + ". " + tasks[i].printTask());
+            System.out.print(taskIndex + ". " + tasks.get(i).printTask());
         }
         System.out.println(line);
     }
 
     public static void markTask(String input) throws NumberFormatException {
         int taskIndex = Integer.parseInt(input.substring(4).trim());
-        if (taskIndex >= 1 && taskIndex <= countTask) {
-            tasks[taskIndex - 1].markAsDone();
+        if (taskIndex >= 1 && taskIndex <= tasks.size()) {
+            tasks.get(taskIndex - 1).markAsDone();
             System.out.println(line + "Task " + taskIndex + " marked as done:\n" +
-                    tasks[taskIndex - 1].printTask() + line);
+                    tasks.get(taskIndex - 1).printTask() + line);
         } else {
             System.out.println("Task " + taskIndex + " not found. Please try again.\n" + line);
         }
@@ -104,10 +108,10 @@ public class Duke {
 
     public static void unmarkTask(String input) throws NumberFormatException {
         int taskIndex = Integer.parseInt(input.substring(6).trim());
-        if (taskIndex >= 1 && taskIndex <= countTask) {
-            tasks[taskIndex - 1].markAsUndone();
+        if (taskIndex >= 1 && taskIndex <= tasks.size()) {
+            tasks.get(taskIndex - 1).markAsUndone();
             System.out.println(line + "Task " + taskIndex + " marked as not done yet:\n" +
-                    tasks[taskIndex - 1].printTask() + line);
+                    tasks.get(taskIndex - 1).printTask() + line);
         } else {
             System.out.println("Task " + taskIndex + " not found. Please try again.\n" + line);
         }
@@ -115,10 +119,9 @@ public class Duke {
 
     public static void createTodo(String input) throws IndexOutOfBoundsException {
         ToDo todoTask = new ToDo(input.substring(5));
-        tasks[countTask] = todoTask;
-        countTask++;
+        tasks.add(todoTask);
         System.out.println(line + "Great! I've added this task:\n" + "   " + todoTask.printTask());
-        System.out.println("Now you have " + countTask + " task(s) in the list.\n" + line);
+        System.out.println("Now you have " + tasks.size() + " task(s) in the list.\n" + line);
     }
 
     public static void createDeadline(String input) throws IndexOutOfBoundsException {
@@ -126,10 +129,9 @@ public class Duke {
             throw new StringIndexOutOfBoundsException();
         }
         Deadline deadlineTask = new Deadline(input.substring(9));
-        tasks[countTask] = deadlineTask;
-        countTask++;
+        tasks.add(deadlineTask);
         System.out.println(line + "Great! I've added this task:\n" + "   " + deadlineTask.printTask());
-        System.out.println("Now you have " + countTask + " task(s) in the list.\n" + line);
+        System.out.println("Now you have " + tasks.size() + " task(s) in the list.\n" + line);
     }
 
     public static void createEvent(String input) throws IndexOutOfBoundsException, EventTimingException {
@@ -140,10 +142,20 @@ public class Duke {
             throw new EventTimingException();
         }
         Event eventTask = new Event(input.substring(6));
-        tasks[countTask] = eventTask;
-        countTask++;
+        tasks.add(eventTask);
         System.out.println(line + "Great! I've added this task:\n" + "   " + eventTask.printTask());
-        System.out.println("Now you have " + countTask + " task(s) in the list.\n" + line);
+        System.out.println("Now you have " + tasks.size() + " task(s) in the list.\n" + line);
+    }
+
+    public static void deleteTask(String input) throws IndexOutOfBoundsException {
+        int index = Integer.parseInt(input.substring(6).trim());
+        if (index >= 1 && index <= tasks.size()) {
+            System.out.println( line + "I've removed task " + index + ":\n" + "   " + tasks.get(index - 1).printTask());
+            tasks.remove(index - 1); // change to 0-base indexing
+            System.out.println("Now you have " + tasks.size() + " task(s) in the list.\n" + line);
+        } else {
+            System.out.println("Task " + index + " not found. Please try again.\n" + line);
+        }
     }
 }
 
