@@ -1,17 +1,21 @@
 package duke.task;
 
+import java.time.LocalDateTime;
+
+import duke.utils.Output;
+
 public class Deadline extends Task {
 
-    private String by;
+    private LocalDateTime by;
 
-    public Deadline(String description, String by) {
+    public Deadline(String description, LocalDateTime by) {
         super(description);
         this.by = by;
     }
 
     @Override
     public String toString() {
-        return "[" + getTaskType() + "]" + super.toString() + " (by: " + by + ")";
+        return "[" + getTaskType() + "]" + super.toString() + " (by: " + Output.dateFormatter(by) + ")";
     }
 
     @Override
@@ -19,7 +23,7 @@ public class Deadline extends Task {
         return "D";
     }
 
-    public String getEndTime() {
+    public LocalDateTime getEndTime() {
         return by;
     }
 }
