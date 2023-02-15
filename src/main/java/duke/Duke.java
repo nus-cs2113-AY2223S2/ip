@@ -2,7 +2,6 @@ package duke;
 
 import duke.exception.IllegalDeadlineException;
 import duke.exception.IllegalEventException;
-import duke.exception.IllegalTaskException;
 import duke.exception.IllegalTodoException;
 import duke.task.Deadline;
 import duke.task.Event;
@@ -17,8 +16,8 @@ import java.util.Scanner;
 
 public class Duke {
 
-    private static String SAVEPATH = "data/savedata.txt";
-    private static String SAVEFOLDER = "data";
+    private static final String SAVEPATH = "data/savedata.txt";
+    private static final String SAVEFOLDER = "data";
 
     /**
      * Returns boolean value of true if input String is an integer,
@@ -42,11 +41,7 @@ public class Duke {
         greetingMessage();
 
         ArrayList<Task> tasks = new ArrayList<>();
-        try {
-            load(tasks);
-        } catch (IOException e) {
-            System.out.println("Error loading save file.");
-        }
+        tryLoad(tasks);
 
         String line;
         Scanner in = new Scanner(System.in);
@@ -54,64 +49,42 @@ public class Duke {
 
         while (!line.equals("bye")) { // Exits the program if input is "bye"
             String[] words = line.split(" ");
-            if (line.equals("list")) {
+            if (line.isBlank()) {
+                emptyCommandMessage();
+            } else if (line.equals("list")) {
                 // List out all the tasks added
                 list(tasks);
             } else if (words[0].equals("unmark") && (words.length == 2) && (isNumeric(words[1]))) {
                 // Mark a task as not done
                 unmarkTask(tasks, words);
-                try {
-                    save(tasks);
-                } catch (IOException e) {
-                    System.out.println("Saving error.");
-                }
+                trySave(tasks);
             } else if (words[0].equals("mark") && (words.length == 2) && (isNumeric(words[1]))) {
                 // Mark a task as done
                 markTask(tasks, words);
-                try {
-                    save(tasks);
-                } catch (IOException e) {
-                    System.out.println("Saving error.");
-                }
+                trySave(tasks);
             } else if (words[0].equals("delete") && (words.length == 2) && (isNumeric(words[1]))) {
                 // Delete a task
                 deleteTask(tasks, words);
-                try {
-                    save(tasks);
-                } catch (IOException e) {
-                    System.out.println("Saving error.");
-                }
+                trySave(tasks);
             } else {
                 // Adding a task to the list
-                try {
-                    addTask(line, tasks);
-                    Task.incrementCount();
-                } catch (IllegalTaskException e) {
-                    // Ignoring empty command inputs
-                }
-
-                try {
-                    save(tasks);
-                } catch (IOException e) {
-                    System.out.println("Saving error.");
-                }
+                addTask(line, tasks);
+                Task.incrementCount();
+                trySave(tasks);
             }
-
             line = in.nextLine();
         }
-
         // Exiting the program
         exitMessage();
     }
 
-    private static void addTask(String line, ArrayList<Task> tasks) throws IllegalTaskException {
+    private static void addTask(String line, ArrayList<Task> tasks) {
         if (line.contains("/by")) {
             // Adding a Deadline
             try {
                 addDeadline(line, tasks);
             } catch (IllegalDeadlineException e) {
                 deadlineErrorMessage();
-                throw new IllegalTaskException();
             }
         } else if (line.contains("/from") || line.contains("/to")) {
             // Adding an Event
@@ -119,21 +92,16 @@ public class Duke {
                 addEvent(line, tasks);
             } catch (IllegalEventException e) {
                 eventErrorMessage();
-                throw new IllegalTaskException();
             } catch (IndexOutOfBoundsException e) {
                 eventErrorMessage();
-                throw new IllegalTaskException();
             }
-        } else if (!line.isBlank()){
+        } else {
             // Adding a _Todo_
             try {
                 addTodo(line, tasks);
             } catch (IllegalTodoException e) {
                 todoErrorMessage();
-                throw new IllegalTaskException();
             }
-        } else {
-            throw new IllegalTaskException();
         }
     }
 
@@ -229,27 +197,6 @@ public class Duke {
         }
     }
 
-    private static void addedTaskMessage(Task currentTask) {
-        borderLine();
-        System.out.println("\t Alright, I have added this task: \n\t\t" + currentTask);
-        System.out.println("\t You now have " + (Task.getTaskCount() + 1) + " tasks in your list.");
-        borderLine();
-    }
-
-    private static void deleteTaskMessage(Task taskToDelete) {
-        borderLine();
-        System.out.println("\t Understood. I have removed this task:");
-        System.out.println("\t\t" + taskToDelete);
-        System.out.println("\t You now have " + Task.getTaskCount() + " tasks in your list.");
-        borderLine();
-    }
-
-    private static void exceedTaskNumberMessage(int taskNumber) {
-        borderLine();
-        System.out.println("\t Task " + taskNumber + " does not exist.");
-        borderLine();
-    }
-
     private static void loadTask(String line, ArrayList<Task> tasks) {
         if (line.contains("/by")) {
             loadDeadline(line, tasks);
@@ -258,24 +205,6 @@ public class Duke {
         } else {
             loadTodo(line, tasks);
         }
-    }
-
-    private static void todoErrorMessage() {
-        borderLine();
-        System.out.println("\t Error. Please enter a valid description.");
-        borderLine();
-    }
-
-    private static void eventErrorMessage() {
-        borderLine();
-        System.out.println("\t Error. Please enter a valid description, start time and end time");
-        borderLine();
-    }
-
-    private static void deadlineErrorMessage() {
-        borderLine();
-        System.out.println("\t Error. Please enter a valid description and deadline.");
-        borderLine();
     }
 
     private static void loadTodo(String line, ArrayList<Task> tasks) {
@@ -321,6 +250,14 @@ public class Duke {
         fw.close();
     }
 
+    private static void trySave(ArrayList<Task> tasks) {
+        try {
+            save(tasks);
+        } catch (IOException e) {
+            System.out.println("Saving error.");
+        }
+    }
+
     private static void load(ArrayList<Task> tasks) throws IOException {
         File folder = new File(SAVEFOLDER);
         if (!folder.exists()) {
@@ -348,8 +285,61 @@ public class Duke {
         }
     }
 
+    private static void tryLoad(ArrayList<Task> tasks) {
+        try {
+            load(tasks);
+        } catch (IOException e) {
+            System.out.println("Error loading save file.");
+        }
+    }
+
     private static void borderLine() {
         System.out.println("\t____________________________________________________________");
+    }
+
+    private static void emptyCommandMessage() {
+        borderLine();
+        System.out.println("\t Please enter a non-empty command.");
+        borderLine();
+    }
+
+    private static void addedTaskMessage(Task currentTask) {
+        borderLine();
+        System.out.println("\t Alright, I have added this task: \n\t\t" + currentTask);
+        System.out.println("\t You now have " + (Task.getTaskCount() + 1) + " tasks in your list.");
+        borderLine();
+    }
+
+    private static void deleteTaskMessage(Task taskToDelete) {
+        borderLine();
+        System.out.println("\t Understood. I have removed this task:");
+        System.out.println("\t\t" + taskToDelete);
+        System.out.println("\t You now have " + Task.getTaskCount() + " tasks in your list.");
+        borderLine();
+    }
+
+    private static void exceedTaskNumberMessage(int taskNumber) {
+        borderLine();
+        System.out.println("\t Task " + taskNumber + " does not exist.");
+        borderLine();
+    }
+
+    private static void todoErrorMessage() {
+        borderLine();
+        System.out.println("\t Error. Please enter a valid description.");
+        borderLine();
+    }
+
+    private static void eventErrorMessage() {
+        borderLine();
+        System.out.println("\t Error. Please enter a valid description, start time and end time");
+        borderLine();
+    }
+
+    private static void deadlineErrorMessage() {
+        borderLine();
+        System.out.println("\t Error. Please enter a valid description and deadline.");
+        borderLine();
     }
 
     private static void exitMessage() {
