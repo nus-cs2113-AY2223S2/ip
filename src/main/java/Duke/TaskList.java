@@ -5,9 +5,17 @@ import Duke.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ *
+ * Contains the methods that change the tasks in the task list
+ */
 public class TaskList {
     public static ArrayList<Task> tasks = Duke.tasks;
 
+    /**
+     * Deletes a specific task from the list
+     * @param command Task number to delete from the list
+     */
     public static void deleteTask(String command) {
         try {
             int val = Integer.parseInt(command.substring(7));
@@ -21,6 +29,11 @@ public class TaskList {
         }
 
     }
+
+    /**
+     *  Prints a list of tasks that have a name that includes a user-specified keyword
+     * @param command user input that includes keyword to search for that are in the name of currents tasks
+     */
 
     public static void findTask(String command) {
         String keyword = command.substring(5);
@@ -46,6 +59,10 @@ public class TaskList {
     }
 
 
+    /**
+     * Creates a todo task of name determined by user input
+     * @param command user input that contains the name of task to create
+     */
     public static void createTodo(String command) {
         command = command.substring(5);
         Task task = new Todo(command);
@@ -55,6 +72,10 @@ public class TaskList {
         tasks.add(task);
     }
 
+    /**
+     * Creates an event task of name, start time and end time determined by user-input
+     * @param command user input that contains name, start and end time of event task
+     */
     public static void createEvent(String command) {
         String content = command.substring(5);
         String[] contents = content.split("/");
@@ -69,6 +90,10 @@ public class TaskList {
         newEvent.newEventResponse();
     }
 
+    /**
+     * Creates a deadline task of name and end time determined by user-input
+     * @param command user input that contains task name and end time
+     */
     public static void createDeadline(String command) {
         String content = command.substring(8);
         String[] contents = content.split("/");
@@ -81,6 +106,11 @@ public class TaskList {
         newDeadline.newDeadlineResponse();
     }
 
+    /**
+     * Changes the completed status of task to not completed
+     * @param command name of task to change completed status of
+     * @param numberOfTasks number of tasks in the list
+     */
     public static void unmarkTask(String command, int numberOfTasks) {
         String[] result = command.split(" ");
         int taskNum = Integer.parseInt(result[1]);
@@ -93,7 +123,11 @@ public class TaskList {
             System.out.println(target.getStatusIcon() + "   " + target.taskName);
         }
     }
-
+    /**
+     * Changes the completed status of task to completed
+     * @param command name of task to change completed status of
+     * @param numberOfTasks number of tasks in the list
+     */
     public static void markTask(String command, int numberOfTasks) {
         String[] result = command.split(" ");
         int taskNum = Integer.parseInt(result[1]);
@@ -107,6 +141,10 @@ public class TaskList {
         }
     }
 
+    /**
+     *
+     * Prints all the details of all tasks in the list
+     */
     public static void printTaskList() {
         int i = 1;
         for (Task a : Duke.tasks) {
@@ -118,6 +156,10 @@ public class TaskList {
         }
     }
 
+    /**
+     * Reads the input from user
+     * @return user input
+     */
     public static String readTask() {
         String line;
         Scanner in = new Scanner(System.in);
@@ -126,6 +168,10 @@ public class TaskList {
 
     }
 
+    /**
+     * Prompts the user for additional commands
+     * @return user input
+     */
     public static String checkForAdditionalTask() {
 
         System.out.println("Do you have any other task for me?  ");

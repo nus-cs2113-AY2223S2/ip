@@ -3,7 +3,16 @@ import Duke.Constants.Constants;
 
 import java.util.Objects;
 
+/**
+ * Includes  methods that check if the user input format is valid and will not throw exceptions
+ */
+
 public class InputChecking {
+    /**
+     * Check if Deadline input format is valid
+     * @param command input from user
+     * @return validity of command format
+     */
     public static boolean checkDeadlineInput(String command) {
         command = command.toLowerCase();
         String[] words = command.split(" ");
@@ -44,7 +53,11 @@ public class InputChecking {
 
 
     }
-
+    /**
+     * Check if Todo input format is valid
+     * @param command input from user
+     * @return validity of command format
+     */
     public static boolean checkTodoInput(String command) {
         command = command.toLowerCase();
         String[] words = command.split(" ");
@@ -66,7 +79,11 @@ public class InputChecking {
 
 
     }
-
+    /**
+     * Check if Event input format is valid
+     * @param command input from user
+     * @return validity of command format
+     */
     public static boolean checkEventInput(String command) {
         command = command.toLowerCase();
         String keyword = command.substring(0, 5);
@@ -100,6 +117,12 @@ public class InputChecking {
 
     }
 
+    /**
+     * Check if delete input format is valid
+     * @param command user input
+     * @param numberOfTasks number of tasks in the task list
+     * @return validity of delete input format
+     */
     public static boolean checkDeleteInput(String command, int numberOfTasks){
         command = command.toLowerCase();
         String[] words = command.split(" ");
@@ -129,6 +152,11 @@ public class InputChecking {
 
     }
 
+    /**
+     * Check format validity of input that searches for tasks with names that include a certain keyword
+     * @param input user input
+     * @return validity of user input format
+     */
     public static boolean checkFindInput(String input){
         try {
             input = input.toLowerCase();
@@ -146,7 +174,12 @@ public class InputChecking {
         return true;
     }
 
-
+    /**
+     * Check format validity of user command that sets the completion status of a task to not completed
+     * @param command user input
+     * @param numberOfTasks number of tasks in the task list
+     * @return validity of user input format
+     */
     public static boolean checkUnmarkInput(String command, int numberOfTasks) {
         command = command.toLowerCase();
         String[] words = command.split(" ");
@@ -177,7 +210,12 @@ public class InputChecking {
 
 
     }
-
+    /**
+     * Check format validity of user command that sets the completion status of a task to completed
+     * @param command user input
+     * @param numberOfTasks number of tasks in the task list
+     * @return validity of user input format
+     */
     public static boolean checkMarkInput(String command, int numberOfTasks) {
         command = command.toLowerCase();
         String[] words = command.split(" ");
@@ -209,7 +247,9 @@ public class InputChecking {
 
     }
 
-
+    /**
+     * Prints to user interface that there is an error where there are multiple keywords detected in the user input
+     */
     private static void printDuplicateKeywordErrorMessage() {
         System.out.println("ERROR! Multiple keywords have been detected!");
         System.out.println("The keywords are:");
@@ -219,6 +259,13 @@ public class InputChecking {
     }
 
 
+    /**
+     * Checks if the user input is valid
+     * The user input is valid if the first word of the input is a keyword
+     * and does not contain more than one keyword
+     * @param input user command
+     * @return validity of the user input
+     */
     public static boolean checkForValidInput(String input) {
         input = input.toLowerCase();
         String[] contents = input.split(" ");
@@ -248,6 +295,12 @@ public class InputChecking {
         return true;
     }
 
+    /**
+     * Checks if the first word of user input is a recognised keyword
+     * @param content user input
+     * @return validity of input
+     */
+
     private static boolean checkFirstKeyword(String content) {
         String[] keywords = Constants.listOfKeywords;
         int len = keywords.length;
@@ -262,6 +315,9 @@ public class InputChecking {
 
     }
 
+    /**
+     * Prints all keywords recognised by Duke
+     */
     private static void printAllKeywords() {
         String[] keywords = Constants.listOfKeywords;
         int len = keywords.length;

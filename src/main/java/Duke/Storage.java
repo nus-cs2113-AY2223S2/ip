@@ -10,6 +10,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
+/**
+ *
+ * Storage class to manage the saving of task data when the user exits, and creates a starting array with tasks from the
+ * previous instance
+ */
 public class Storage {
 
     static String filePath = "data/tasklist.txt";
@@ -18,6 +23,11 @@ public class Storage {
         Storage.filePath = filePath;
     }
 
+    /**
+     * Writes the current data in the task list to an external text file
+     * @param filePath Path of text file to write to
+     * @param list  Array list of type Task to read from to write to the text file
+     */
     public static void writeFile(String filePath, ArrayList<Task> list) {
 
 
@@ -45,8 +55,13 @@ public class Storage {
         }
     }
 
-
-    public static void readFile(String filePath, ArrayList<Task> list) throws FileNotFoundException, ArrayIndexOutOfBoundsException {
+    /**
+     * Reads from an external text file to generate a task list that the user starts with
+     * @param filePath Path of file to read from
+     * @param list Array list of tasks for the user to start with
+     * @throws FileNotFoundException If text file is not found or is not in the required format
+     */
+    public static void readFile(String filePath, ArrayList<Task> list) throws FileNotFoundException {
 
 
         File savedFile = new File(filePath);

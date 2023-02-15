@@ -5,9 +5,17 @@ import static Duke.Ui.invalidInputReponse;
 import static Duke.InputCheckingPackage.InputChecking.*;
 import static Duke.InputCheckingPackage.InputChecking.checkTodoInput;
 
+/**
+ * Parser parses the input from the user to determine what method to run next if input is valid
+ */
 public class Parser {
 
     public static String command;
+
+    /**
+     * To determine the next method to run based on the user input
+     * @param command User input command that determines what function Duke will run
+     */
 
     public static void respondToInput(String command) {
         if (command.contains("list")) {

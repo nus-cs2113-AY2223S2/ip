@@ -18,7 +18,7 @@ public class Duke {
 
     public Duke(String filePath) {
         ui = new Ui();
-        //Storage storage = new Storage(filePath);
+        
         try {
             Storage.readFile(filePath, tasks);
         } catch (java.io.FileNotFoundException e) {
