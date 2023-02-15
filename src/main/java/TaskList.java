@@ -1,5 +1,7 @@
+import java.util.ArrayList;
+
 public class TaskList {
-    private Task[] taskArray = new Task[100];
+    private ArrayList<Task> taskArray = new ArrayList<>();
     private int totalTaskNum = 0;
 
     public boolean addTask(String userInput){
@@ -21,7 +23,8 @@ public class TaskList {
         try{
             String contents = userInputSplited[0].replace("todo ", "");
             Todo newTodo = new Todo(contents);
-            taskArray[totalTaskNum++] = newTodo;
+            taskArray.add(newTodo);
+            totalTaskNum++;
             return true;
         } catch(Exception e) {
             System.out.println("☹ OOPS!!! The description of a todo cannot be empty.");
@@ -34,7 +37,8 @@ public class TaskList {
             String contents = userInputSplited[0].replace("deadline ", "");
             String end = userInputSplited[1].replace("/by ", "");
             Deadline newDeadline = new Deadline (contents, end);
-            taskArray[totalTaskNum++] = newDeadline;
+            taskArray.add(newDeadline);
+            totalTaskNum++;
             return true;
         } catch(Exception e){
             System.out.println("☹ OOPS!!! The description of a deadline cannot be empty.");
@@ -48,10 +52,23 @@ public class TaskList {
             String start = userInputSplited[1].replace("/from ", "");
             String end = userInputSplited[2].replace("/to ", "");
             Event newEvent = new Event(contents, start, end);
-            taskArray[totalTaskNum++] = newEvent;
+            taskArray.add(newEvent);
+            totalTaskNum++;
             return true;
         } catch(Exception e){
             System.out.println("☹ OOPS!!! The description of an event cannot be empty.");
+            return false;
+        }
+    }
+
+    public boolean delete(int taskNumInt){
+        try{
+            taskArray.remove(taskNumInt-1);
+            totalTaskNum--;
+            return true;
+
+        } catch(Exception e){
+            System.out.println("☹ OOPS!!! I cannot remove the task. Try again.");
             return false;
         }
     }
@@ -61,12 +78,12 @@ public class TaskList {
     public String toString(){
         String str = "";
         for(int i=1; i<totalTaskNum+1; i++){
-            str = str.concat(i + "." + taskArray[i-1] + "\n");
+            str = str.concat(i + "." + taskArray.get(i-1) + "\n");
         }
         return str;
     }
 
-    public Task[] getTaskArray(){
+    public ArrayList<Task> getTaskArray(){
         return taskArray;
     }
 

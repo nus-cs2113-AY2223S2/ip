@@ -6,6 +6,7 @@ public class Duke {
     public static final String COMMAND_LIST = "list";
     public static final String COMMAND_MARK = "mark";
     public static final String COMMAND_UNMARK = "unmark";
+    public static final String COMMAND_DELETE = "delete";
 
     private static TaskList TASKLIST = new TaskList();
 
@@ -40,6 +41,7 @@ public class Duke {
         System.out.println("* |List tasks| ex) list");
         System.out.println("* |Mark a task as Done| ex) mark 2");
         System.out.println("* |Unmark a task as Undone| ex) unmark 2");
+        System.out.println("* |Delete| ex) delete 3");
         System.out.println("* |Exit| ex) bye");
     }
 
@@ -67,6 +69,8 @@ public class Duke {
                 mark(commandsSplited[1]); break;
             case COMMAND_UNMARK:
                 unmark(commandsSplited[1]); break;
+            case COMMAND_DELETE:
+                delete(commandsSplited[1]); break;
             default:
                 add(command);
         }
@@ -98,28 +102,55 @@ public class Duke {
 
     public static void mark(String taskNum){
         int taskNumInt = Integer.parseInt(taskNum);
-        TASKLIST.getTaskArray()[taskNumInt-1].mark();
+        TASKLIST.getTaskArray().get(taskNumInt-1).mark();
         //Duke's Comment
         System.out.println(HORIZONTAL_LINE);
         System.out.println("[DUKE] Good job! I marked this task as done: ");
-        System.out.println(TASKLIST.getTaskArray()[taskNumInt-1]);
+        System.out.println(TASKLIST.getTaskArray().get(taskNumInt-1));
         System.out.println(HORIZONTAL_LINE);
     }
 
     public static void unmark(String taskNum) {
         int taskNumInt = Integer.parseInt(taskNum);
-        TASKLIST.getTaskArray()[taskNumInt-1].unmark();
+        TASKLIST.getTaskArray().get(taskNumInt-1).unmark();
         //Duke's Comment
         System.out.println(HORIZONTAL_LINE);
         System.out.println("[DUKE] OK, I've marked this task as not done yet: ");
-        System.out.println(TASKLIST.getTaskArray()[taskNumInt-1]);
+        System.out.println(TASKLIST.getTaskArray().get(taskNumInt-1));
         System.out.println(HORIZONTAL_LINE);
+    }
+
+    public static void delete(String taskNum){
+        int taskNumInt = Integer.parseInt(taskNum);
+        if(taskNumInt > TASKLIST.getTotalTaskNum() || taskNumInt <= 0){
+            System.out.println("☹ OOPS!!! I cannot find the task");
+            showAvailableInput();
+            System.out.println(HORIZONTAL_LINE);
+            return;
+        }
+
+        Task targetTask = TASKLIST.getTaskArray().get(taskNumInt-1);
+        if(TASKLIST.delete(taskNumInt)) {
+            printDeleteComment(targetTask);
+        } else{
+            System.out.println("[DUKE] Uh oh! Cannot Understand you. Here's what you can do.");
+            showAvailableInput();
+            System.out.println(HORIZONTAL_LINE);
+        }
     }
 
     public static void printAddComment(){
         System.out.println(HORIZONTAL_LINE);
         System.out.println("[DUKE] Okay:) You've got one more task added: ");
-        System.out.println("        "+ TASKLIST.getTaskArray()[TASKLIST.getTotalTaskNum()-1]);
+        System.out.println("       "+ TASKLIST.getTaskArray().get(TASKLIST.getTotalTaskNum()-1));
+        System.out.println("[DUKE] Now you have <" + TASKLIST.getTotalTaskNum() + "> tasks in the list.");
+        System.out.println(HORIZONTAL_LINE);
+    }
+
+    public static void printDeleteComment(Task targetTask){
+        System.out.println(HORIZONTAL_LINE);
+        System.out.println("[DUKE] OK, I removed this task from the list: ");
+        System.out.println("       "+ targetTask);
         System.out.println("[DUKE] Now you have <" + TASKLIST.getTotalTaskNum() + "> tasks in the list.");
         System.out.println(HORIZONTAL_LINE);
     }
