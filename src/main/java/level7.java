@@ -15,11 +15,35 @@ public class level7 {
         fw.close();
     }
 
-    private static void printFileContents(String filePath) throws FileNotFoundException {
+    private static void readFileContents(String filePath, int i, ArrayList<String> tasks, ArrayList<String> done, ArrayList<String> type) throws FileNotFoundException, DukeException {
         File f = new File(filePath);
         Scanner s = new Scanner(f);
+        String line = s.nextLine();
+        String line2;
+        int j = i;
         while (s.hasNext()) {
-            System.out.println(s.nextLine());
+            line = s.nextLine();
+            if (line.charAt(3) == 'T') {
+                line2 = "todo " + line.substring(9);
+                todo(j, line2, tasks, done, type);
+            }
+            else if (line.charAt(3) == 'D') {
+                int bracket = line.indexOf('(');
+                line2 = "deadline " + line.substring(9, bracket) + "/by " + line.substring(bracket+5, line.length()-1);
+                deadline(j, line2, tasks, done, type);
+            }
+            else {
+                int bracket = line.indexOf('(');
+                int colon = line.indexOf(':');
+                line2 = "event " + line.substring(9, bracket) + "/from "
+                        + line.substring(bracket+6, colon-2) + "/to " + line.substring(colon+2, line.length()-1);
+                event(j, line2, tasks, done, type);
+            }
+            if (line.charAt(6) == 'X') {
+                done.remove(j);
+                done.add(j, "[X]");
+            }
+            j++;
         }
     }
 
@@ -63,9 +87,6 @@ public class level7 {
         }
         tasks.add(line.substring(4));
         type.add("[T]");
-        System.out.println("Got it. I've added this task:");
-        System.out.println("  " + type.get(i) + "[ ]" + tasks.get(i));
-        System.out.println("Now you have " + (i + 1) + " tasks in the list.");
         done.add("[ ]");
     }
 
@@ -75,9 +96,6 @@ public class level7 {
         String by = line.substring(slash+4);
         tasks.add(description + " (by: " + by + ")");
         type.add("[D]");
-        System.out.println("Got it. I've added this task:");
-        System.out.println("  " + type.get(i) + "[ ]" + tasks.get(i));
-        System.out.println("Now you have " + (i + 1) + " tasks in the list.");
         done.add("[ ]");
     }
 
@@ -89,9 +107,6 @@ public class level7 {
         String to = line.substring(slash2+4);
         tasks.add(description + " (from " + from + " to: " + to + ")");
         type.add("[E]");
-        System.out.println("Got it. I've added this task:");
-        System.out.println("  " + type.get(i) + "[ ]" + tasks.get(i));
-        System.out.println("Now you have " + (i + 1) + " tasks in the list.");
         done.add("[ ]");
     }
     public static void main(String[] args){
@@ -103,6 +118,12 @@ public class level7 {
         ArrayList<String> done = new ArrayList<>();
         ArrayList<String> type = new ArrayList<>();
         int i = 0;
+        try {
+            readFileContents(filePath, i, tasks, done, type);
+            i = tasks.size();
+        } catch (FileNotFoundException | DukeException e) {
+            i = 0;
+        }
         while (true) {
             Scanner in = new Scanner(System.in);
             line = in.nextLine();
@@ -155,6 +176,9 @@ public class level7 {
             else if (line.startsWith("todo")) {
                 try {
                     todo(i, line, tasks, done, type);
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println("  " + type.get(i) + "[ ]" + tasks.get(i));
+                    System.out.println("Now you have " + (i + 1) + " tasks in the list.");
                     i++;
                 } catch (DukeException e) {
                     System.out.println("Oops! The description of a todo cannot be left empty.");
@@ -163,6 +187,9 @@ public class level7 {
             else if (line.startsWith("deadline")) {
                 try {
                     deadline(i, line, tasks, done, type);
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println("  " + type.get(i) + "[ ]" + tasks.get(i));
+                    System.out.println("Now you have " + (i + 1) + " tasks in the list.");
                     i++;
                 } catch (IndexOutOfBoundsException e) {
                     System.out.println("Oops! Did you forget the slash?");
@@ -173,6 +200,9 @@ public class level7 {
             else if (line.startsWith("event")) {
                 try {
                     event(i, line, tasks, done, type);
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println("  " + type.get(i) + "[ ]" + tasks.get(i));
+                    System.out.println("Now you have " + (i + 1) + " tasks in the list.");
                     i++;
                 } catch (IndexOutOfBoundsException e) {
                     System.out.println("Oops! Did you forget the slash?");
@@ -191,22 +221,14 @@ public class level7 {
                             "smaller than 1 or larger than " + i + ".");
                 }
             }
-            else if (line.startsWith("history")) {
-                try {
-                    printFileContents(filePath);
-                } catch (FileNotFoundException e) {
-                    System.out.println("File not found");
-                }
-            }
             else {
                 if (!line.startsWith("bye")) {
-                    System.out.print("Oops! I'm sorry, I don't understand that command. Try one of these instead:");
+                    System.out.println("Oops! I'm sorry, I don't understand that command. Try one of these instead:");
                     System.out.println("list   mark   unmark   todo   deadline   event");
                 }
             }
         }
         System.out.println("Bye. Hope to see you again soon!");
-        System.out.println("change");
     }
 }
 
