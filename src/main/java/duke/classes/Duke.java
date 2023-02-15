@@ -65,8 +65,9 @@ public class Duke {
                 }
                 addTask(task);
             } else if (type.equals("D")) {
-                String info = temp.substring(7,temp.length());
-                Todo task = new Todo(info);
+                String info = temp.substring(7, temp.indexOf("("));
+                String timeBy = temp.substring(temp.indexOf("(")+1, temp.length() - 1);
+                Deadline task = new Deadline(info, timeBy);
                 if (status.equals("X")) {
                     markTask(task);
                 } else {
@@ -74,8 +75,10 @@ public class Duke {
                 }
                 addTask(task);
             } else if (type.equals("E")) {
-                String info = temp.substring(7,temp.length());
-                Todo task = new Todo(info);
+                String info = temp.substring(7,temp.indexOf("("));
+                String timeFrom = temp.substring(temp.indexOf("(")+1, temp.lastIndexOf(","));
+                String timeBy = temp.substring(temp.lastIndexOf(",")+1, temp.length() - 1);
+                Event task = new Event(info, timeFrom, timeBy);
                 if (status.equals("X")) {
                     markTask(task);
                 } else {
