@@ -2,6 +2,10 @@ package duke;
 
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
+import java.io.FileWriter;
+
 
 public class Duke {
 
@@ -106,7 +110,22 @@ public class Duke {
         printTask(newTask);
     }
 
-    public static void handleInput(String inputLine) throws DukeException {
+    public static void saveTask() throws java.io.IOException {
+        File f = new File("data/duke.txt");
+        FileWriter fw = new FileWriter("data/duke.txt");
+        if (!f.exists()) {
+            System.out.println("File does not exist, creating a new file ./duke/data.txt");
+            f.createNewFile();
+        }
+
+        for (Task t: taskList) {
+            fw.write(t.toString() + System.lineSeparator());
+        }
+
+        fw.close();
+    }
+
+    public static void handleInput(String inputLine) throws DukeException, java.io.IOException {
 
         //splits input based on one or more whitespaces into two words
         String[] inputWords = inputLine.split("\\s+", 2);
@@ -127,6 +146,7 @@ public class Duke {
             } else {
                 int indexToMark = Integer.parseInt(inputWords[1]) - 1; //turn it into 0-based
                 markTaskAndPrint(indexToMark);
+                saveTask();
             }
         }
         else if (command.equals(UNMARK_STRING)) {
@@ -135,6 +155,7 @@ public class Duke {
             } else {
                 int indexToUnmark = Integer.parseInt(inputWords[1]) - 1;
                 unmarkTaskAndPrint(indexToUnmark);
+                saveTask();
             }
         }
         else if(command.equals(DELETE_STRING)) {
@@ -143,6 +164,7 @@ public class Duke {
             } else {
                 int indexToDelete = Integer.parseInt(inputWords[1])-1;
                 deleteTaskAndPrint(indexToDelete);
+                saveTask();
             }
         }
         //check if command string matches either of the string
@@ -151,6 +173,7 @@ public class Duke {
                 throw new DukeException("Please specify the description to the task that you wish to add");
             }
             handleAddTask(command, inputWords[1]);
+            saveTask();
         } else {
             throw new DukeException("fsgfsuygu I don't know what that means :(");
         }
@@ -168,6 +191,8 @@ public class Duke {
                 handleInput(inputLine);
             } catch (DukeException ex) {
                 System.out.println("Exception occured: " + ex);
+            } catch (java.io.IOException IOE) {
+                System.out.println("IO Exception occured " + IOE);
             }
 
         }
