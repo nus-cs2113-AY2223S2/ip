@@ -124,6 +124,7 @@ public class TaskManager {
         String taskType = taskList.get(taskIndex).getTaskType();
         String task = taskList.get(taskIndex).getTaskStatus();
         taskList.remove(taskIndex);
+        taskWriter.writeToJson(taskList);
         System.out.println("Noted sir, I have removed \n"
                 + task);
         System.out.println("Now you have " + taskList.size() + " task(s) in the list.");
