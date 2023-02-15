@@ -21,4 +21,8 @@ public class Event extends Todo{
     public String getEnd() {
         return end;
     }
+    @Override
+    public String getInfo() {
+        return start + "," + end;
+    }
 }

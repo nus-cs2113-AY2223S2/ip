@@ -13,7 +13,9 @@ public class Todo extends Task{
     public String getTypeIcon() {
         return ("[T]"); // mark done task with X
     }
-
+    public String getInfo() {
+        return "";
+    }
     public void setDone(boolean d) {
         this.isDone = d;
     }

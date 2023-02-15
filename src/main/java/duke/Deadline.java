@@ -20,4 +20,8 @@ public class Deadline extends Todo {
     public void setBy(String s) {
         this.by = s;
     }
+    @Override
+    public String getInfo() {
+        return by;
+    }
 }
