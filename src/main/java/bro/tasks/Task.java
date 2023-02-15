@@ -9,6 +9,11 @@ public class Task {
         this.type = null;
         this.completed = false;
     }
+    public Task(String name, boolean completed) {
+        this.name = name;
+        this.type = null;
+        this.completed = completed;
+    }
     public String getName() {
         return name;
     }
