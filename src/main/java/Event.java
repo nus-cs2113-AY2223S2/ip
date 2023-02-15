@@ -1,13 +1,16 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 
 public class Event extends Task{
     private String from=new String();
     private String to=new String();
-    public Event(String taskName,int taskNumber,String from,String to){
+    public Event(String taskName,int taskNumber,String from,String to,String type){
         super(taskName,taskNumber);
         this.from=from;
         this.to=to;
         description = "  [E]"+this.getDoneString()+" "+this.taskName+" (from: "+this.from +" to: "+this.to+")";
+        this.type = type;
 
     }
 
@@ -34,5 +37,17 @@ public class Event extends Task{
     @Override
     public void updateTaskDescription(){
         this.description = "  [E]"+this.getDoneString()+" "+this.taskName+" (from: "+this.from +" to: "+this.to+")";
+    }
+
+    public String createEntry(){
+//        try{
+//            fw.append(Integer.toString(this.taskNumber)+"."+this.type+"."+this.getDoneString()+"."+
+//                    this.taskName+"."+this.from+"."+this.to+"\n");
+//        }
+//        catch (IOException e){
+//            e.printStackTrace();
+//        }
+        return Integer.toString(this.taskNumber)+"."+this.type+"."+this.getDoneString()+
+                "."+ this.taskName+"."+this.from+"."+this.to+"\n";
     }
 }

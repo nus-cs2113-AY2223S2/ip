@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 //import java.util.Arrays;
@@ -23,14 +24,14 @@ public class Goot {
         String[] inputSplitBySpace = input.split(" ");
 
         if(inputSplitBySpace[0].equals("todo")){
-            ToDo todo = new ToDo(input.substring(5), Task.lastIndex+1);
+            ToDo todo = new ToDo(input.substring(5), Task.lastIndex+1,"T");
             Task.addToTaskArrayList(todo);
             todo.acknowledgeTaskAdded();
         }
         else if(inputSplitBySpace[0].equals("deadline")){
             try{
                 GootExceptionHandler.validateDeadline(input.split("/"));
-                Deadline deadline = new Deadline(Deadline.readName(input),Task.lastIndex+1,Deadline.readBy(input));
+                Deadline deadline = new Deadline(Deadline.readName(input),Task.lastIndex+1,Deadline.readBy(input),"D");
                 Task.addToTaskArrayList(deadline);
                 deadline.acknowledgeTaskAdded();
             }
@@ -44,7 +45,7 @@ public class Goot {
                 GootExceptionHandler.validateEvent(input.split("/"));
                 String fromString = Event.readFromTo(input)[0];
                 String toString = Event.readFromTo(input)[1];
-                Event event = new Event(Event.readName(input),Task.lastIndex+1,fromString,toString);
+                Event event = new Event(Event.readName(input),Task.lastIndex+1,fromString,toString,"E");
                 Task.addToTaskArrayList(event);
                 event.acknowledgeTaskAdded();
             }
@@ -66,7 +67,23 @@ public class Goot {
             Task.printList();
         }
         else if (input.equals("save")){
-            Task.save();
+            try{
+                if(!f.exists()){
+                    f.createNewFile();
+                }
+                if(Task.lastIndex>0){     //possible to use continue here instead?
+                    FileWriter fw = new FileWriter(f);
+                    for(int index=0;index<Task.lastIndex;index++){
+                        fw.append((Task.get(index)).createEntry());
+                    }
+                    fw.close();
+                }
+                System.out.println("Saved!");
+
+            }
+            catch (IOException e){
+                e.printStackTrace();
+            }
         }
         else{
             try{
