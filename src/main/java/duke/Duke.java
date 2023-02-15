@@ -1,6 +1,7 @@
 package duke;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Duke {
     public static String DIVIDER_LINE = "______________________________\n";
@@ -21,7 +22,7 @@ public class Duke {
         System.out.println(greet);
         Scanner in = new Scanner(System.in);
         String action;
-        Task[] tasks = new Task[100];
+        ArrayList<Task> tasks = new ArrayList<>();
         while (shouldContinue) {
             action = in.nextLine();
             try {
@@ -34,7 +35,7 @@ public class Duke {
         }
     }
 
-    public static Task[] handleAction(Task[] tasks, String action) throws DukeException, DukeException.TaskEmpty{
+    public static ArrayList<Task> handleAction(ArrayList<Task> tasks, String action) throws DukeException, DukeException.TaskEmpty{
         if (action.equals("bye")) {
             System.out.println(DIVIDER_LINE + "Bye. Hope to see you again soon!\n" + DIVIDER_LINE);
             shouldContinue = false;
