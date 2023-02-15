@@ -56,7 +56,7 @@ public class Alex {
     /** Method that utilises a taskManager to handle different user inputs accordingly */
     public static void handleInput(String userInput, TaskManager taskManager) throws DukeException {
         String[] words = userInput.split(" ");
-        String[] allCommands = new String[]{"todo" , "bye", "event", "list" , "unmark" , "mark", "deadline"};
+        String[] allCommands = new String[]{"todo" , "bye", "event", "list" , "unmark" , "mark", "deadline", "delete"};
         List<String> commandList = new ArrayList<>(Arrays.asList(allCommands));
         String command = words[0].toLowerCase();
         if(!commandList.contains(command)) {
@@ -94,8 +94,17 @@ public class Alex {
             taskManager.getAllTasks().get(number - 1).unmark();
             System.out.println(taskManager.getAllTasks().get(number - 1));
             printLine();
+        }
 
-
+        else if(command.equals("delete")) {
+            printLine();
+            System.out.println("Noted. I've removed this task:");
+            int number = Integer.parseInt(words[1]);
+            Task t =  taskManager.getAllTasks().get(number - 1);
+            taskManager.deleteTask(number - 1);
+            System.out.println(t);
+            System.out.println("Now you have " + taskManager.getNumberOfTasks() + " tasks in the list.");
+            printLine();
         }
 
         else {
