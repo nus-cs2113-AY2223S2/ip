@@ -1,6 +1,14 @@
+<<<<<<< HEAD
 import java.util.ArrayList;
+=======
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+>>>>>>> branch-Level-7
 
 public class Psyduck {
+    private static Storage storage = new Storage();
+    private static String filepath = "save.txt";
     private static boolean shouldExit = false;
 
     private static ArrayList<Task> tasks = new ArrayList<>();
@@ -72,11 +80,24 @@ public class Psyduck {
         Command.linePrint();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)  {
         greet();
+        try {
+            storage.readFile(filepath);
+        } catch (FileNotFoundException e) {
+            Command.linePrint();
+            System.out.println("No past file record is made, will create a " +
+                    "new save file after terminating the program.");
+            Command.linePrint();
+        }
         do {
             Command.processCommands();
         } while (!shouldExit);
         sayBye();
+        try {
+            storage.writeToFile(filepath);
+        } catch (IOException e) {
+            System.out.println("Error occurred when saving file. Aborting.");
+        }
     }
 }
