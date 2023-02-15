@@ -1,8 +1,8 @@
 package duke;
 
 public class Event extends Task{
-    private String start;
-    private String end;
+    protected String start;
+    protected String end;
     public Event(String description, String start, String end) {
         super(description);
         this.start = start;
@@ -11,6 +11,11 @@ public class Event extends Task{
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + start + "to: " + end + ")";
+        return "[E]" + super.toString() + " (from: " + start + " to: " + end + ")";
+    }
+
+    @Override
+    public String getSymbol() {
+        return "E";
     }
 }
