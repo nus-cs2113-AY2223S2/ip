@@ -7,7 +7,6 @@ import duke.tasks.Event;
 import duke.tasks.Task;
 import duke.tasks.Todo;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 public class Duke {
 
@@ -35,37 +34,34 @@ public class Duke {
 
 
     //add a new to do
-    public static void addTodo(ArrayList<Task> tasks, int listCount, String name) throws EmptyTaskException {
+    public static void addTodo(Task[] tasks, int listCount, String name) throws EmptyTaskException {
         if(name.equals(" ")){
             throw new EmptyTaskException();
         }
-        tasks.add(new Todo(name));
-//        tasks[listCount] = new Todo(name);
+        tasks[listCount] = new Todo(name);
         printBorder();
         System.out.println("added: " + name + "\n");
         printBorder();
     }
 
     //add a new deadline task
-    public static void addDeadline(ArrayList<Task> tasks, int listCount, String name, String deadline){
-//        tasks[listCount] = new Deadline(name, deadline);
-        tasks.add(new Deadline(name, deadline));
+    public static void addDeadline(Task[] tasks, int listCount, String name, String deadline){
+        tasks[listCount] = new Deadline(name, deadline);
         printBorder();
         System.out.println("added: " + name + "\n");
         printBorder();
     }
 
     //add a new event
-    public static void addEvent(ArrayList<Task> tasks, int listCount, String name, String start, String end){
-//        tasks[listCount] = new Event(name, start, end);
-        tasks.add(new Event(name, start, end));
+    public static void addEvent(Task[] tasks, int listCount, String name, String start, String end){
+        tasks[listCount] = new Event(name, start, end);
         printBorder();
         System.out.println("added: " + name + "\n");
         printBorder();
     }
 
     //print list of duke.tasks
-    public static void printList(ArrayList<Task> tasks){
+    public static void printList(Task[] tasks){
         printBorder();
 
         int counter = 1;
@@ -78,43 +74,28 @@ public class Duke {
             }
 
         }
-
-        System.out.println("You have " + tasks.size() + " tasks in your list.");
         printBorder();
     }
 
     //mark task as done
-    public static void markTask(ArrayList<Task> tasks, int taskIndex){
-//        tasks[taskIndex].setStatus("mark");
-        tasks.get(taskIndex).setStatus("mark");
+    public static void markTask(Task[] tasks, int taskIndex){
+        tasks[taskIndex].setStatus("mark");
         System.out.println("Nice! I've marked this task as done: \n");
-        System.out.println(tasks.get(taskIndex) + "\n");
+        System.out.println(tasks[taskIndex] + "\n");
         printBorder();
     }
 
     //mark task as undone
-    public static void unmarkTask(ArrayList<Task> tasks, int taskIndex){
-//        tasks[taskIndex].setStatus("unmark");
-        tasks.get(taskIndex).setStatus("unmark");
+    public static void unmarkTask(Task[] tasks, int taskIndex){
+        tasks[taskIndex].setStatus("unmark");
         System.out.println("OK, I've marked this task as not done yet: \n");
-        System.out.println(tasks.get(taskIndex) + "\n");
-        printBorder();
-    }
-
-//    delete task
-    public static void deleteTask(ArrayList<Task> tasks, int taskIndex){
-        Task temp = tasks.get(taskIndex);
-        tasks.remove(taskIndex);
-        System.out.println("Noted. I've removed this task: \n");
-        System.out.println(temp);
-        System.out.println("Now you have " + tasks.size() + " tasks in the list." );
+        System.out.println(tasks[taskIndex] + "\n");
         printBorder();
     }
 
     public static void main(String[] args) {
 
-//        Task[] tasks = new Task[100];
-        ArrayList<Task> tasks = new ArrayList<>();
+        Task[] tasks = new Task[100];
         Integer listCount = 0;
 
 
@@ -202,18 +183,6 @@ public class Duke {
                         listCount++;
                         entry = input.nextLine();
                         break;
-
-                    case "delete":
-                        Integer index_dl = Integer.parseInt(userInput[1]);
-                        try {
-                            deleteTask(tasks, index_dl - 1);
-                        } catch(IndexOutOfBoundsException e){
-                            System.out.println("Error! Specify a valid task index!");
-                            printBorder();
-                        }
-                        entry = input.nextLine();
-                        break;
-
 
                     default:
                         throw new InvalidCommandException();
