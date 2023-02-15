@@ -1,12 +1,16 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Duke {
     private final static ArrayList<Task> list = new ArrayList<>();
     static String lineBreak = "-----------------";
 
     public static void main(String[] args) {
-
+        read();
         System.out.println(lineBreak + '\n' + "Hello! I'm Duke" + '\n'
                 + "What can I do for you?" + '\n' + lineBreak);
         String instruction;
@@ -23,6 +27,7 @@ public class Duke {
             } else if (instruction.equalsIgnoreCase("bye")) {
                 System.out.println(lineBreak + '\n'
                         + "Bye. Hope to see you again soon!" + '\n' + lineBreak);
+                save();
                 break;
             } else if (instruction.toLowerCase().contains("mark")) {
                 try {
@@ -93,5 +98,50 @@ public class Duke {
         System.out.println('\t' + list.get(t).toString());
         list.remove(t);
         System.out.println("Now you have " + list.size() + " tasks in the list." + '\n' + lineBreak);
+    }
+    public static void read(){
+        try {
+            File myObj = new File("duke.txt");
+            Scanner myReader = new Scanner(myObj);
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                Task t=null;
+                String type=data.substring(1,2);
+                String mark=data.substring(4,5);
+                if(type.equals("T")){
+                    String context=data.substring(7);
+                    t=new Todo(context);
+                } else if (type.equals("D")) {
+                    String context=data.substring(7,data.indexOf("(")-1);
+                    String by=data.substring(data.indexOf("by")+3,data.indexOf(")"));
+                    t=new Deadline(context,by);
+                } else if (type.equals("E")) {
+                    String context=data.substring(7,data.indexOf("(")-1);
+                    String from=data.substring(data.indexOf("from")+5,data.indexOf("to"));
+                    String to=data.substring(data.indexOf("to")+3,data.indexOf(")"));
+                    t=new Event(context,from,to);
+                }
+                if(mark.equals("X")){
+                    t.markAsDone();
+                }
+                list.add(t);
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void save() {
+        try {
+            FileWriter writer = new FileWriter("duke.txt", false);
+            for (int i = 0; i < list.size(); i++) {
+                writer.write(list.get(i).toString());
+                writer.write("\r\n");
+            }
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
