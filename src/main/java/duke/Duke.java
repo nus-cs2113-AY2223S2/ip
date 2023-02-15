@@ -1,3 +1,10 @@
+package duke;
+
+import duke.exception.EmptyDescription;
+import duke.keycommand.Deadline;
+import duke.keycommand.Event;
+import duke.keycommand.ToDo;
+
 import java.util.List;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -35,10 +42,10 @@ public class Duke {
     public static final String INVALID_INPUT = "This is an invalid input, please follow this input format\n";
     public static final String DEADLINE_INVALID_INPUT = INVALID_INPUT + DEADLINE_FORMAT;
     public static final String EVENT_INVALID_INPUT = INVALID_INPUT + EVENT_FORMAT;
-    public static final ArrayList<String> KEYWORDS = new ArrayList<String>(
+    public static final ArrayList<String> KEYWORDS = new ArrayList<>(
             List.of("todo","deadline","event","list","bye","mark","unmark","help")
     );
-    public static final String MEANINGLESS_SENTENCE_AFTER_KEYWORD = "Opps! The sentence after keyword has no meaning";
+    public static final String MEANINGLESS_SENTENCE_AFTER_KEYWORD = "OPPS!!! The sentence after keyword has no meaning";
 
     public static void main(String[] args) {
         showWelcomeMessage();
@@ -64,17 +71,25 @@ public class Duke {
             } else if (userInput.equals("list")) {
                 printItems(tasks);
             } else if (keyword.equals("todo")) {
-                if (doesExceptionOccur(separatedKeyWordAndContent,1, EMPTY_TODO_DESCRIPTION)) {
+                if (doesIndexOutOfBoundsOccur(separatedKeyWordAndContent,1, EMPTY_TODO_DESCRIPTION)) {
                     continue;
                 }
-                addTodoTask(separatedKeyWordAndContent[1], tasks);
+                try {
+                    addTodoTask(separatedKeyWordAndContent[1], tasks);
+                } catch(EmptyDescription e) {
+                    System.out.println("OOPS!!! your task can not be empty");
+                }
             } else if (keyword.equals("deadline")) {
-                if (doesExceptionOccur(separatedKeyWordAndContent,1, EMPTY_DEADLINE_DESCRIPTION)) {
+                if (doesIndexOutOfBoundsOccur(separatedKeyWordAndContent,1, EMPTY_DEADLINE_DESCRIPTION)) {
                     continue;
                 }
-                addDeadlineTask(separatedKeyWordAndContent[1], tasks);
+                try {
+                    addDeadlineTask(separatedKeyWordAndContent[1], tasks);
+                } catch(EmptyDescription e) {
+                    System.out.println("OOPS!!! the deadline can not be empty");
+                }
             } else if (keyword.equals("event")) {
-                if (doesExceptionOccur(separatedKeyWordAndContent,1, EMPTY_EVENT_DESCRIPTION)) {
+                if (doesIndexOutOfBoundsOccur(separatedKeyWordAndContent,1, EMPTY_EVENT_DESCRIPTION)) {
                     continue;
                 }
                 addEventTask(separatedKeyWordAndContent[1], tasks);
@@ -129,7 +144,7 @@ public class Duke {
         System.out.println(EVENT_FORMAT);
     }
 
-    private static boolean doesExceptionOccur(String[] stringArray, int index, String outputMessage) {
+    private static boolean doesIndexOutOfBoundsOccur(String[] stringArray, int index, String outputMessage) {
         try {
             String test = stringArray[index];
             return false;
@@ -139,7 +154,10 @@ public class Duke {
         }
     }
 
-    private static void addTodoTask(String content, ArrayList<Task> tasks) {
+    private static void addTodoTask(String content, ArrayList<Task> tasks) throws EmptyDescription {
+        if (content.trim().isEmpty()) {
+            throw new EmptyDescription();
+        }
         Task task = new ToDo(content);
         tasks.add(task);
         System.out.println(ADDING_TASK);
@@ -147,13 +165,16 @@ public class Duke {
         System.out.println("Now you have " + tasks.size() + " tasks in the list.");
     }
 
-    private static void addDeadlineTask(String content, ArrayList<Task> tasks) {
+    private static void addDeadlineTask(String content, ArrayList<Task> tasks) throws EmptyDescription{
         String[] seperatedWordsInContent = content.split(" /");
-        if (doesExceptionOccur(seperatedWordsInContent, 1, DEADLINE_INVALID_INPUT)) {
+        if (doesIndexOutOfBoundsOccur(seperatedWordsInContent, 1, DEADLINE_INVALID_INPUT)) {
             return;
         }
         if (seperatedWordsInContent[1].startsWith("by ")) {
             String date = seperatedWordsInContent[1].split(" ", 2)[1];
+            if (date.trim().isEmpty()) {
+                throw new EmptyDescription();
+            }
             String taskName = seperatedWordsInContent[0];
             Task task = new Deadline(taskName,date);
             tasks.add(task);
@@ -165,13 +186,16 @@ public class Duke {
         }
     }
 
-    private static void addEventTask(String content, ArrayList<Task> tasks) {
+    private static void addEventTask(String content, ArrayList<Task> tasks)  {
         String[] seperatedWordsInContent = content.split(" /");
-        if (doesExceptionOccur(seperatedWordsInContent,2,EVENT_INVALID_INPUT)) {
+        if (doesIndexOutOfBoundsOccur(seperatedWordsInContent,2,EVENT_INVALID_INPUT)) {
+            return;
+        }
+        if (doesIndexOutOfBoundsOccur(seperatedWordsInContent[1].split(" ", 2),1,EVENT_INVALID_INPUT)) {
             return;
         }
         String beginDate = seperatedWordsInContent[1].split(" ", 2)[1];
-        if (doesExceptionOccur(seperatedWordsInContent[2].split(" ", 2),1,EVENT_INVALID_INPUT)) {
+        if (doesIndexOutOfBoundsOccur(seperatedWordsInContent[2].split(" ", 2),1,EVENT_INVALID_INPUT)) {
             return;
         }
         String endDate = seperatedWordsInContent[2].split(" ", 2)[1];

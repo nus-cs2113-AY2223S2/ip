@@ -1,6 +1,8 @@
-import java.util.ArrayList;
+package duke.keycommand;
 
-public class ToDo extends Task{
+import duke.Task;
+
+public class ToDo extends Task {
     public ToDo(String content) {
         super(content);
     }
