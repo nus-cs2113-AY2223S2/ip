@@ -1,8 +1,15 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import commands.Event;
+import commands.Task;
+import commands.Deadline;
+import commands.Todo;
+import Exceptions.DukeException;
 
 public class Duke {
     private static String LINE = "____________________________________________________________";
+    private static String errorMessage = "☹ OOPS!!! I'm sorry, but I don't know what that means :-(";
+    private static String todoError = "☹ OOPS!!! The description of a todo cannot be empty.";
     private static ArrayList<Task> list = new ArrayList<Task>();
 
     public static void greet() {
@@ -23,8 +30,7 @@ public class Duke {
         if (numTask == 0) {
             System.out.println("No task added yet");
             System.out.println(LINE);
-        }
-        else {
+        } else {
             System.out.println("Here are the tasks in your list:");
             for (int i = 0; i < list.size(); i++) {
                 System.out.println((i+1) + "." + list.get(i).toString());
@@ -39,6 +45,7 @@ public class Duke {
         System.out.println("Awesome! I've mark this task as done:");
         System.out.println("[" + list.get(index).getStatusIcon() + "] " + list.get(index).description);
     }
+
     public static void unmarkTask(int index) {
         System.out.println(LINE);
         list.get(index).markUndone();
@@ -46,13 +53,21 @@ public class Duke {
         System.out.println("[" + list.get(index).getStatusIcon() + "] " + list.get(index).description);
     }
 
-    public static void addTodo(String input) {
-        Todo task = new Todo(input);
-        list.add(task);
-        System.out.println(LINE);
-        System.out.println("Roger! The Todo task has been added: \n    " + task.toString());
-        System.out.println("Now you have " + list.size() + " in the list");
-        System.out.println(LINE);
+    public static void addTodo(String input) throws DukeException {
+        try {
+            Todo task = new Todo(input);
+            list.add(task);
+            if (task.description.split(" ").length < 2) {
+                throw new DukeException(todoError);
+            } else {
+                System.out.println(LINE);
+                System.out.println("Roger! The Todo task has been added: \n    " + task.toString());
+                System.out.println("Now you have " + list.size() + " in the list");
+                System.out.println(LINE);
+            }
+        } catch (DukeException e) {
+            printError(e);
+        }
     }
 
     public static void addDeadline(String input) {
@@ -73,7 +88,29 @@ public class Duke {
         System.out.println(LINE);
     }
 
+    private static void runCommand(String input, String command) throws DukeException {
+        if (command.equalsIgnoreCase("todo")) {
+            addTodo(input);
+        } else if (command.equalsIgnoreCase("deadline")) {
+            addDeadline(input);
+        } else if (command.equalsIgnoreCase("event")) {
+            addEvent(input);
+        } else if (command.equalsIgnoreCase("list")) {
+            printList();
+        } else if (command.equalsIgnoreCase("mark")) {
+            int taskIdx = Integer.parseInt(input.split(" ")[1]) - 1;
+            markTask(taskIdx);
+        } else if (command.equalsIgnoreCase("unmark")) {
+            int taskIdx = Integer.parseInt(input.split(" ")[1]) - 1;
+            unmarkTask(taskIdx);
+        } else {
+            throw new DukeException(errorMessage);
+        }
+    }
 
+    private static void printError(DukeException e) {
+        System.out.println(LINE + "\n" + e.getMessage() + LINE);
+    }
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -92,26 +129,12 @@ public class Duke {
                 bye();
                 break;
             }
-            else if (command.equalsIgnoreCase("todo")) {
-                addTodo(input);
+            try {
+                runCommand(input, command);
+            } catch (DukeException e) {
+                printError(e);
             }
-            else if (command.equalsIgnoreCase("deadline")) {
-                addDeadline(input);
-            }
-            else if (command.equalsIgnoreCase("event")) {
-                addEvent(input);
-            }
-            else if (command.equalsIgnoreCase("list")) {
-                printList();
-            }
-            else if (command.equalsIgnoreCase("mark")) {
-                int taskIdx = Integer.parseInt(input.split(" ")[1]) - 1;
-                markTask(taskIdx);
-            }
-            else if (command.equalsIgnoreCase("unmark")) {
-                int taskIdx = Integer.parseInt(input.split(" ")[1]) - 1;
-                unmarkTask(taskIdx);
-            }
+
         }
     }
 }
