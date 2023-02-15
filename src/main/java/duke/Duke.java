@@ -6,12 +6,11 @@ import duke.task.Task;
 import duke.task.ToDo;
 
 import java.util.Scanner;
-
+import java.util.ArrayList;
 public class Duke {
-    public static final int MAX_NUMBER_OF_TASKS = 100;
-    public static int tasksIndex = 0;
+    private static ArrayList<Task> tasks = new ArrayList<>();
     public static boolean isInUse = true;
-    public static Task[] tasks;
+
     public static Scanner inputReader;
 
     public static void main(String[] args) {
@@ -25,7 +24,6 @@ public class Duke {
     }
 
     public static void initDuke() {
-        tasks = new Task[MAX_NUMBER_OF_TASKS];
         inputReader = new Scanner(System.in);
     }
 
@@ -40,7 +38,7 @@ public class Duke {
 
     private static String[] processUserInput(String userInput) throws IndexOutOfBoundsException {
         String[] informationNeededForPerformingUserRequest = {"", "", "", ""};
-        String taskInformation = "";
+        String taskInformation;
 
         // for all tasks: info...[0] is the command
         String command = userInput.split(" ", 2)[0];
@@ -55,6 +53,11 @@ public class Duke {
             taskInformation = userInput.split(" ", 2)[1];
             informationNeededForPerformingUserRequest[0] = command;
             // For "mark", "unmark": info...[1] is the task number (1-indexed).
+            informationNeededForPerformingUserRequest[1] = taskInformation;
+        case "delete":
+            taskInformation = userInput.split(" ", 2)[1];
+            informationNeededForPerformingUserRequest[0] = command;
+            // For "delete": info...[1] is the task number (1-indexed).
             informationNeededForPerformingUserRequest[1] = taskInformation;
         case "todo":
             try {
@@ -94,7 +97,7 @@ public class Duke {
     }
 
 
-    public static void performUserRequest(Task[] tasks, String[] informationNeededForPerformingUserRequest) {
+    public static void performUserRequest(ArrayList<Task> tasks, String[] informationNeededForPerformingUserRequest) {
         switch (informationNeededForPerformingUserRequest[0]) {
         case "bye":
             isInUse = false;
@@ -106,30 +109,32 @@ public class Duke {
             break;
         case "mark":
             int indexToBeMarked = Integer.parseInt(informationNeededForPerformingUserRequest[1]) - 1; // 0-indexed
-            tasks[indexToBeMarked].setDone(true);
-            printNotification(tasks[indexToBeMarked], "mark", tasksIndex + 1);
+            tasks.get(indexToBeMarked).setDone(true);
+            printNotification(tasks.get(indexToBeMarked), "mark", tasks.size());
             break;
         case "unmark":
             int indexToBeUnmarked = Integer.parseInt(informationNeededForPerformingUserRequest[1]) - 1; // 0-indexed
-            tasks[indexToBeUnmarked].setDone(false);
-            printNotification(tasks[indexToBeUnmarked], "unmark", tasksIndex + 1);
+            tasks.get(indexToBeUnmarked).setDone(false);
+            printNotification(tasks.get(indexToBeUnmarked), "unmark", tasks.size());
+            break;
+        case "delete": // new functionality to delete tasks
+            int indexToRemove = Integer.parseInt(informationNeededForPerformingUserRequest[1]) - 1; // 0-indexed
+            printNotification(tasks.get(indexToRemove), "delete", tasks.size() - 1);
+            tasks.remove(indexToRemove);
             break;
         case "todo":
-            tasks[tasksIndex] = new ToDo(informationNeededForPerformingUserRequest[1]);
-            printNotification(tasks[tasksIndex], "todo", tasksIndex + 1);
-            tasksIndex++;
+            tasks.add(new ToDo(informationNeededForPerformingUserRequest[1]));
+            printNotification(tasks.get(tasks.size() - 1), "todo", tasks.size());
             break;
         case "deadline":
-            tasks[tasksIndex] = new Deadline(informationNeededForPerformingUserRequest[1],informationNeededForPerformingUserRequest[2]);
-            printNotification(tasks[tasksIndex], "deadline", tasksIndex + 1);
-            tasksIndex++;
+            tasks.add(new Deadline(informationNeededForPerformingUserRequest[1],informationNeededForPerformingUserRequest[2]));
+            printNotification(tasks.get(tasks.size() - 1), "deadline", tasks.size());
             break;
         case "event":
-            tasks[tasksIndex] = new Event(informationNeededForPerformingUserRequest[1],informationNeededForPerformingUserRequest[2],informationNeededForPerformingUserRequest[3]);
-            printNotification(tasks[tasksIndex], "event", tasksIndex + 1);
-            tasksIndex++;
+            tasks.add(new Event(informationNeededForPerformingUserRequest[1],informationNeededForPerformingUserRequest[2],informationNeededForPerformingUserRequest[3]));
+            printNotification(tasks.get(tasks.size() - 1), "event", tasks.size());
             break;
-        case "Invalid command": // earlier on we detected that such a command doesnt exist
+        case "Invalid command": // earlier on we detected that such a command doesn't exist
             System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
             break;
         default: // earlier on we detected correct command but invalid taskInformation
@@ -148,6 +153,11 @@ public class Duke {
             System.out.println("Nice! I've marked this task as done:");
             task.printTask();
             break;
+        case "delete":
+            System.out.println("Noted. I've removed this task:");
+            task.printTask();
+            System.out.println("Now you have " + numberOfTasks + " task(s) in the list.");
+            break;
         case "deadline":
             // Fallthrough
         case "todo":
@@ -155,7 +165,7 @@ public class Duke {
         case "event":
             System.out.print("Got it. I've added this task:\n" + "  ");
             task.printTask();
-            System.out.println("Now you have " + numberOfTasks + " tasks in the list.");
+            System.out.println("Now you have " + numberOfTasks + " task(s) in the list.");
             break;
         }
     }
@@ -164,12 +174,12 @@ public class Duke {
         System.out.println("Bye. Hope to see you again soon!");
     }
 
-    private static void listTasks(Task[] tasks) {
+    private static void listTasks(ArrayList<Task> tasks) {
         System.out.println("Here are the tasks in your list:");
-        for (int i = 0; i < tasksIndex; i++) {
+        for (int i = 0; i < tasks.size(); i++) {
             System.out.print(i + 1);
             System.out.print(".");
-            tasks[i].printTask();
+            tasks.get(i).printTask();
         }
     }
 }
