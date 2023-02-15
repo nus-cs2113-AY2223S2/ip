@@ -1,10 +1,8 @@
 package Arsdorint.task;
 
 public class Event extends Task {
-    public static final String TYPE_EVENT = "E";
-    public static final String TYPE_EVENT_BOX = "[E}";
     public String date;
-    public Event(String description, String Date) {
+    public Event(String description, String date) {
         super(description);
         this.date = date;
         this.taskType = "[E]";

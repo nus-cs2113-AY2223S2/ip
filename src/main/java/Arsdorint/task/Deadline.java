@@ -9,7 +9,7 @@ public class Deadline extends Task {
     }
     public void printTask() {
         System.out.println(this.taskType + this.getStatus()
-        + " " + this.description + "\t(" + this.date + ")");
+        + " " + this.description + "(" + this.date + ")");
     }
 
 }

@@ -12,7 +12,7 @@ public class Arsdorint {
     private static final int MAX_NUM_OF_TASKS = 100;
     private static final String EXIT_MESSAGE = " Bye. Hope to see you again soon!\n";
     private static final String HELLO_MESSAGE =
-            " Hello! I'm Arsdorint, a member of Arsdorint Team.\n" +
+            " Hello! I'm TaskList, a member of TaskList Team.\n" +
             " Please Type The Command As Follow:\n";
     private static final String COMMAND_LIST_MESSAGE =
             "> Type \"list\" to list all the tasks. \n" +
@@ -31,14 +31,18 @@ public class Arsdorint {
     private static final String ERROR_MESSAGE_BYE = " ";
     private static final String ERROR_MESSAGE_LIST = " ";
     private static final String ERROR_MESSAGE_MARK =
-            "Syntax for mark\n\t>>> mark <item index number> \nNote: item index must exist in the current list";
+            "=( OOPS!!! The description of a mark cannot be empty.\n" + "Syntax for mark\n\t" +
+                    ">>> mark <item index number> \n" + "Note: item index must exist in the current list";
     private static final String ERROR_MESSAGE_UNMARK =
-            "Syntax for unmark\n\t" +
-                    ">>> unmark <item index number> \nNote: item index must exist in the current list";
-    private static final String ERROR_MESSAGE_TODO = "Syntax for todo\n\t>>> todo <task>";
+            "=( OOPS!!! The description of an unmark cannot be empty.\n" + "Syntax for unmark\n\t" +
+                    ">>> unmark <item index number> \n" + "Note: item index must exist in the current list";
+    private static final String ERROR_MESSAGE_TODO =
+            "=( OOPS!!! The description of a todo cannot be empty.\n" + "Syntax for todo\n\t>>> todo <task>";
     private static final String ERROR_MESSAGE_DEADLINE =
+            "=( OOPS!!! The description of a deadline cannot be empty.\n" +
             "Syntax for deadline\n\t>>> deadline <task> /<date of deadline";
     private static final String ERROR_MESSAGE_EVENT =
+            "=( OOPS!!! The description of an event cannot be empty.\n" +
             "Syntax for event\n\t>>> event <task> /<date of event";
     static Scanner input = new Scanner(System.in);
     static String logo = "    ___                         _                                 _\n"
@@ -55,7 +59,7 @@ public class Arsdorint {
     }
 
     private static void wrongCommandMessage() {
-        System.out.println(":) OOPS!!! I'm sorry, but I don't know what that means :-(");
+        System.out.println("=( OOPS!!! I'm sorry, but I don't know what that means :-(\n" + MESSAGE_DIVIDER);
     }
 
     private static void list() {
@@ -163,8 +167,7 @@ public class Arsdorint {
     public static void addToDo(String[] taskDescription) {
         try {
             if (taskDescription[0].trim().isEmpty()) {
-                throw new ArsdorintException("=( OOPS!!! The description of a todo cannot be empty.\n"
-                        + MESSAGE_DIVIDER);
+                throw new ArsdorintException("Error: Empty Todo.");
             }
             toDoList[Task.numOfTasks] = new Todo(taskDescription[0]);
             addTaskMessage();
@@ -179,14 +182,12 @@ public class Arsdorint {
     public static void addDeadline(String[] taskDescription) {
         try {
             if (taskDescription[0].trim().isEmpty()) {
-                throw new ArsdorintException("=( OOPS!!! The description of a deadline cannot be empty.\n"
-                        + MESSAGE_DIVIDER);
+                throw new ArsdorintException("Error: Empty Deadline Description.");
             }
             toDoList[Task.numOfTasks] = new Deadline(taskDescription[0], taskDescription[1].trim());
             addTaskMessage();
         } catch (ArrayIndexOutOfBoundsException err) {
             commandErrorHandler("deadline");
-
         } catch (ArsdorintException err) {
             commandErrorHandler("deadline");
         }
@@ -195,14 +196,12 @@ public class Arsdorint {
     public static void addEvent(String[] taskDescription) {
         try {
             if (taskDescription[0].trim().isEmpty()) {
-                throw new ArsdorintException("=( OOPS!!! The description of a event cannot be empty.\n"
-                        + MESSAGE_DIVIDER);
+                throw new ArsdorintException("Error: Empty Event Description.");
             }
             toDoList[Task.numOfTasks] = new Event(taskDescription[0], taskDescription[1].trim());
             addTaskMessage();
         } catch (ArrayIndexOutOfBoundsException err) {
             commandErrorHandler("event");
-
         } catch (ArsdorintException err) {
             commandErrorHandler("event");
         }
@@ -239,7 +238,7 @@ public class Arsdorint {
         else if (lowerCaseLine.equalsIgnoreCase("todo") ||
                 lowerCaseLine.equalsIgnoreCase("deadline") ||
                 lowerCaseLine.equalsIgnoreCase("event")) add(command);
-            //add Arsdorint.command when user don't type the instruction's Arsdorint.command
+            //add command when user don't type the instruction's TaskList.command
         else wrongCommandMessage();
     }
     public static void main(String[] args) {
