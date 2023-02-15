@@ -31,4 +31,9 @@ public class Event extends Task {
     public String toString() {
         return "[E]" + super.toString() + "(" + this.start + "- " + this.end + ")";
     }
+
+    @Override
+    public String getType() {
+        return "event";
+    }
 }

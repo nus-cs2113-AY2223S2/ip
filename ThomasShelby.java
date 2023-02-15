@@ -7,7 +7,6 @@ public class ThomasShelby {
     static final int MAX_TASKS = 100;
 
     static Task[] taskManager = new Task[MAX_TASKS];
-//    ArrayList<Task> listOfTasks = new ArrayList<>(Arrays.asList(taskManager));
     static int taskCount = 0;
 
     private static void listTasks() {
@@ -78,6 +77,7 @@ public class ThomasShelby {
                 int whichTask = 0; // variable holding mark/unmark task num
                 switch (cmdSplit[0]) {
                 case "bye":
+                    // save data here
                     System.out.println("Cheers.");
                     return;
                 case "list":

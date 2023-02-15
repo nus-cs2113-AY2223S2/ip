@@ -28,8 +28,11 @@ public class Task {
         return isDone;
     }
 
-    @Override
     public String toString() {
         return this.getStatusIcon() + this.description;
+    }
+
+    public String getType() {
+        return null;
     }
 }
