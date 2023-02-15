@@ -98,7 +98,7 @@ public class Duke {
 
     public static void mark(String taskNum){
         int taskNumInt = Integer.parseInt(taskNum);
-        TASKLIST.getTaskArray()[taskNumInt-1].mark();
+        TASKLIST.markTask(taskNumInt);
         //Duke's Comment
         System.out.println(HORIZONTAL_LINE);
         System.out.println("[DUKE] Good job! I marked this task as done: ");
@@ -108,7 +108,7 @@ public class Duke {
 
     public static void unmark(String taskNum) {
         int taskNumInt = Integer.parseInt(taskNum);
-        TASKLIST.getTaskArray()[taskNumInt-1].unmark();
+        TASKLIST.unmarkTask(taskNumInt);
         //Duke's Comment
         System.out.println(HORIZONTAL_LINE);
         System.out.println("[DUKE] OK, I've marked this task as not done yet: ");
