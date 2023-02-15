@@ -1,10 +1,24 @@
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.FileNotFoundException;
 
 public class Duke {
     public static final int ARRAY_LENGTH = 100;
 
     public static void main(String[] args) {
         greeting();
+        System.out.println("Retrieving your files...");
+        try {
+            printFileContents("test11.txt");
+        } catch (FileNotFoundException e) {
+            //System.out.println("File not found");
+            //System.out.println("Creating new file...");
+            File f = new File("C:\\Users\\Kishore\\Desktop\\Code\\codeCS2113_ip\\ip\\src\\main\\java\\DukeTasks.txt");
+            //System.out.println("Current path: " + f.isDirectory());
+        }
+
         Task[] tasks = new Task[ARRAY_LENGTH];
         Scanner in = new Scanner(System.in);
 
@@ -174,4 +188,14 @@ public class Duke {
     public static void horizontalLine() {
         System.out.println("________________________________________");
     }
+
+    private static void printFileContents(String filePath) throws FileNotFoundException {
+        File f = new File(filePath); // create a File for the given file path
+        Scanner s = new Scanner(f); // create a Scanner using the File as the source
+        while (s.hasNext()) {
+            System.out.println(s.nextLine());
+        }
+    }
+
+
 }
