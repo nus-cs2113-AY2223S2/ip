@@ -25,7 +25,9 @@ public class Message {
     }
 
     public static void bye() {
+        Message.line();
         System.out.println("Bye. Hope to see you again soon!");
+        Message.line();
     }
 
     public static void echo(String userInput) {

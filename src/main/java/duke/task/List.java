@@ -48,6 +48,18 @@ public class List {
         Message.line();
     }
 
+    public static void removeTask(int index) {
+        if (index > tasks.size()) {
+            throw new ArrayIndexOutOfBoundsException();
+        }
+        Message.line();
+        System.out.println("OK, the following task has been removed:");
+        System.out.println(tasks.get(index - 1));
+        tasks.remove(index - 1);
+        System.out.println("You currently have " + tasks.size() + " tasks.");
+        Message.line();
+    }
+
     public static void printList() {
         if (tasks.size() > 0) {
             Message.line();

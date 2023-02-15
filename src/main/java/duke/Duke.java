@@ -7,8 +7,12 @@ import duke.task.TaskType;
 
 public class Duke {
     public static void main(String[] args) {
-
         Message.hello();
+        runDuke();
+        Message.bye();
+    }
+
+    private static void runDuke() {
         String userCommand, userInputDetails;
 
         do {
@@ -63,12 +67,25 @@ public class Duke {
                 userInputDetails = Parser.getUserInputDetails();
                 List.addTask(userInputDetails, TaskType.EVENT);
                 break;
+            case "delete":
+                userInputDetails = Parser.getUserInputDetails();
+                try {
+                    List.removeTask(Integer.parseInt(userInputDetails.trim()));
+                } catch (NumberFormatException e) {
+                    Message.line();
+                    System.out.println("Please input a list index to delete!");
+                    Message.line();
+                } catch (IndexOutOfBoundsException e) {
+                    Message.line();
+                    System.out.println("The list index you have input is not in the list!");
+                    Message.line();
+                }
+                break;
+            case "bye":
+                break;
             default:
                 Message.unknownCommandHandler();
             }
         } while (!(userCommand.equals("bye")));
-
-        Message.bye();
-        Message.line();
     }
 }
