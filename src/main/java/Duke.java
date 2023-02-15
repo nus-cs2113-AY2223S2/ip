@@ -7,9 +7,9 @@ import commands.Todo;
 import Exceptions.DukeException;
 
 public class Duke {
-    private static String LINE = "____________________________________________________________";
-    private static String errorMessage = "☹ OOPS!!! I'm sorry, but I don't know what that means :-(";
-    private static String todoError = "☹ OOPS!!! The description of a todo cannot be empty.";
+    private static final String LINE = "____________________________________________________________";
+    private static final String errorMessage = "☹ OOPS!!! I'm sorry, but I don't know what that means :-(";
+    private static final String todoError = "☹ OOPS!!! The description of a todo cannot be empty.";
     private static ArrayList<Task> list = new ArrayList<Task>();
 
     public static void greet() {
@@ -51,6 +51,15 @@ public class Duke {
         list.get(index).markUndone();
         System.out.println("What!?!? OK, I've marked this task as not done yet:");
         System.out.println("[" + list.get(index).getStatusIcon() + "] " + list.get(index).description);
+    }
+
+    public static void deleteTask(int index) {
+        System.out.println(LINE);
+        System.out.println("Noted. I've removed this task:");
+        System.out.println("  " + list.get(index).toString());
+        list.remove(index);
+        int size = list.size();
+        System.out.println("Now you have " + size + " tasks in the list");
     }
 
     public static void addTodo(String input) throws DukeException {
@@ -103,6 +112,10 @@ public class Duke {
         } else if (command.equalsIgnoreCase("unmark")) {
             int taskIdx = Integer.parseInt(input.split(" ")[1]) - 1;
             unmarkTask(taskIdx);
+        }
+        else if (command.equalsIgnoreCase("delete")) {
+            int taskIdx = Integer.parseInt(input.split(" ")[1]) - 1;
+            deleteTask(taskIdx);
         } else {
             throw new DukeException(errorMessage);
         }
