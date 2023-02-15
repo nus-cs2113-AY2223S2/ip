@@ -1,7 +1,9 @@
+package duke.tasks;
+
 public class Task {
     protected String description;
     protected boolean isDone;
-    protected static int numberOfTasks;
+    public static int numberOfTasks;
 
     public Task(String description) {
         this.description = description;

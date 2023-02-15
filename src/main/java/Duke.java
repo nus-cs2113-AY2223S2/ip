@@ -1,3 +1,11 @@
+import duke.tasks.Task;
+import duke.tasks.Deadline;
+import duke.tasks.Event;
+import duke.tasks.Todo;
+import duke.exceptions.EmptyDescriptionException;
+import duke.exceptions.TaskToMarkDoesNotExistException;
+import duke.exceptions.UnknownCommandException;
+
 import java.util.Scanner;
 
 public class Duke {
