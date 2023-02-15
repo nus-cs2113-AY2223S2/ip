@@ -112,28 +112,27 @@ public class Output {
                 + "\t OOPS!!! I'm sorry, but I don't know what that means :-(\r\n"
                 + "\t____________________________________________________________\r\n");
     }
+    
+    public static String dateFormatter(LocalDateTime from) {
+      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy hh:mm a");
+      String formattedDate = from.format(formatter);
+      return formattedDate;
+    }
 
-	public static String dateFormatter(LocalDateTime from) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy hh:mm a");
-		String formattedDate = from.format(formatter);
-		return formattedDate;
-	}
-
-	public static void printWrongDateFormatError() {
-		System.out.println("\t____________________________________________________________\r\n"
-                + "\t OOPS!!! Please enter the correct date format (dd-mm-yyyy hh:mm)\r\n"
-                + "\t____________________________________________________________\r\n");
-		
-	}
-
-	public static void printTaskByDate(ArrayList<Task> tasks, LocalDateTime date) {
-		System.out.println("\t____________________________________________________________\r\n"
-                + "\t Here are the tasks in your list:");
-        if (tasks.size() == 0) {
-            System.out.println("\t No tasks is currently available!");
-        } else {
-            for (int i = 0; i < tasks.size(); i++) {
-            	switch(tasks.get(i).getTaskType()) {
+    public static void printWrongDateFormatError() {
+      System.out.println("\t____________________________________________________________\r\n"
+                  + "\t OOPS!!! Please enter the correct date format (dd-mm-yyyy hh:mm)\r\n"
+                  + "\t____________________________________________________________\r\n");
+    }
+    
+    public static void printTaskByDate(ArrayList<Task> tasks, LocalDateTime date) {
+      System.out.println("\t____________________________________________________________\r\n"
+                  + "\t Here are the matching tasks in your list:");
+      if (tasks.size() == 0) {
+              System.out.println("\t No tasks is currently available!");
+     } else {
+        for (int i = 0; i < tasks.size(); i++) {
+          switch(tasks.get(i).getTaskType()) {
             	case "D":
             		if(((Deadline)tasks.get(i)).getEndTime().toLocalDate().equals(date.toLocalDate())) {
             			System.out.println("\t " + (i + 1) + ". " + tasks.get(i).toString());
@@ -147,10 +146,24 @@ public class Output {
             	}
             }
         }
+        
         System.out.println("\n\t____________________________________________________________\r\n");
-		
-	}
-
+                
+    public static void printMatchingTask(ArrayList<Task> tasks, String keyword) {
+      System.out.println("\t____________________________________________________________\r\n"
+                  + "\t Here are the matching tasks in your list:");
+       if (tasks.size() == 0) {
+          System.out.println("\t No tasks is currently available!");
+       } else {
+          for (int i = 0; i < tasks.size(); i++) {
+            if(tasks.get(i).getTaskDescription().contains(keyword)) {
+                    System.out.println("\t " + (i + 1) + ". " + tasks.get(i).toString());
+                  }         	
+              }
+          }
+          
+        System.out.println("\n\t____________________________________________________________\r\n");
+        
 	public static void printWrongDateInputError() {
 		System.out.println("\t____________________________________________________________\r\n"
                 + "\t OOPS!!! Please enter the correct date format (dd-mm-yyyy)\r\n"

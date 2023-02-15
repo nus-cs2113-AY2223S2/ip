@@ -115,6 +115,11 @@ public class Duke {
                 	}               	
                     break;
 
+                case "find":
+                	String keyword;
+                	keyword = Input.scanLine().trim();
+                	Output.printMatchingTask(tasks, keyword);
+                  
                 case "bye":
                     break;
 

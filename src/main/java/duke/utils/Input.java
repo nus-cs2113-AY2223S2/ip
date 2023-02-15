@@ -41,8 +41,8 @@ public class Input {
     public static String scanPrompt(String taskType) throws PromptCannotBeEmptyException {
         String prompt = "";
         try {
-            prompt = sc.nextLine();
-            if (prompt == "") {
+            prompt = sc.nextLine().trim();
+            if (prompt.equals("")) {
                 throw new PromptCannotBeEmptyException();
             } else {
                 return prompt;
