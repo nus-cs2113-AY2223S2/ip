@@ -1,6 +1,10 @@
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class TaskList {
+    public final static String FILEPATH = "duke.txt";
     private ArrayList<Task> taskArray = new ArrayList<>();
     private int totalTaskNum = 0;
 
@@ -25,11 +29,12 @@ public class TaskList {
             Todo newTodo = new Todo(contents);
             taskArray.add(newTodo);
             totalTaskNum++;
-            return true;
         } catch(Exception e) {
             System.out.println("☹ OOPS!!! The description of a todo cannot be empty.");
             return false;
         }
+        writeToFile(FILEPATH, this.toString());
+        return true;
     }
 
     public boolean addDeadline(String[] userInputSplited){
@@ -39,11 +44,12 @@ public class TaskList {
             Deadline newDeadline = new Deadline (contents, end);
             taskArray.add(newDeadline);
             totalTaskNum++;
-            return true;
         } catch(Exception e){
             System.out.println("☹ OOPS!!! The description of a deadline cannot be empty.");
             return false;
         }
+        writeToFile(FILEPATH, this.toString());
+        return true;
     }
 
     public boolean addEvent(String[] userInputSplited){
@@ -54,10 +60,38 @@ public class TaskList {
             Event newEvent = new Event(contents, start, end);
             taskArray.add(newEvent);
             totalTaskNum++;
-            return true;
         } catch(Exception e){
             System.out.println("☹ OOPS!!! The description of an event cannot be empty.");
             return false;
+        }
+        writeToFile(FILEPATH, this.toString());
+        return true;
+    }
+
+    public boolean markTask(int taskNumInt){
+        taskArray.get(taskNumInt-1).mark();
+        writeToFile(FILEPATH, this.toString());
+        return true;
+    }
+
+    public boolean unmarkTask(int taskNumInt){
+        taskArray.get(taskNumInt-1).unmark();
+        writeToFile(FILEPATH, this.toString());
+        return true;
+    }
+
+    public static void writeToFile(String filePath, String textAdded){
+        try {
+            File file = new File(filePath);
+            if (file.createNewFile()) {
+                System.out.println("File created: " + file.getName());
+            }
+            FileWriter fw = new FileWriter(file);
+            fw.write(textAdded);
+            fw.close();
+        } catch (IOException e){
+            System.out.println("☹ OOPS!!! Something went wrong while saving.");
+            System.out.println(e.getMessage());
         }
     }
 
