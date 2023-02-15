@@ -65,7 +65,7 @@ public class DukeNUS {
      * @param userInputWords The complete sentence the user inputted, often consisting of the command as the first word
      *                       and its arguments as its subsequent words.
      */
-    private static void interpret_command(String[] userInputWords) {
+    private static void interpretCommand(String[] userInputWords) {
         switch (userInputWords[0]) {
         case "list":
             if (taskCount == 0) {
@@ -135,7 +135,7 @@ public class DukeNUS {
         String[] userInputWords = userInput.split(" ", 2); //Contains 2 strings from the user delimited by spaces. The first word is the command and the subsequent words are arguments.
         //Continue reading the first word until "bye" is said.
         while (!Objects.equals(userInput, "bye")) {
-            interpret_command(userInputWords);
+            interpretCommand(userInputWords);
             userInput = scanner.nextLine();
             userInputWords = userInput.split(" ", 2);
         }
