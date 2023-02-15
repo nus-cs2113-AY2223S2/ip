@@ -3,12 +3,24 @@ import duke.Deadline;
 import duke.Todo;
 import duke.Event;
 import duke.DukeException;
-
+import java.io.*;
 import java.util.Scanner;
 
 public class Duke {
+    private static void appendToFile(String filePath, String textToAppend) throws IOException {
+        FileWriter fw = new FileWriter(filePath, true); // create a FileWriter in append mode
+        fw.write(textToAppend);
+        fw.close();
+    }
 
-    public static void main(String[] args) {
+    private static void writeToFile(String filePath, String textToAdd) throws IOException {
+        FileWriter fw = new FileWriter(filePath);
+        fw.write(textToAdd);
+        fw.close();
+    }
+
+
+    public static void main(String[] args) throws Exception {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -26,7 +38,7 @@ public class Duke {
         Scanner in = new Scanner(System.in);
         String[] list = new String[100];
         Task[] tasks = new Task[100];
-
+        File f =new File("Duke.txt");
 
         int index_for_mark = 1;
         int i = 0;
@@ -45,8 +57,9 @@ public class Duke {
 
             //Task description
             String desc;
-            desc=line;
+            desc = line;
             Task t = new Task(desc);
+
 
             if (line.toLowerCase().contains("unmark")) {
                 index_for_mark = Integer.parseInt(find_index[1]);
@@ -56,6 +69,24 @@ public class Duke {
                         + "OK, I've marked this task as not done yet:\n"
                         + "[" + tasks[index_for_mark - 1].getStatusIcon() + "] " + list[index_for_mark - 1] + "\n"
                         + "____________________________________________________________\n");
+                String new_string="";
+                String filePath = "Duke.txt";
+
+                for (int m = 0; m < i; m += 1) {
+                    int index = m + 1;
+                    if (tasks[m] == null) {
+                        new_string += (index + "." + "[" + t.getStatusIcon() + "] " + list[m] + "\n");
+                    } else {
+                        //the [X] or []
+                        new_string += (index + "." + tasks[m] + "\n");
+                    }
+                }
+                try {
+                    writeToFile("Duke.txt", new_string);
+                } catch (IOException e) {
+                    System.out.println("Something went wrong\n"
+                            + "____________________________________________________________");
+                }
 
             } else if (line.toLowerCase().contains("mark")) {
                 index_for_mark = Integer.parseInt(find_index[1]);
@@ -65,26 +96,40 @@ public class Duke {
                         "[" + tasks[index_for_mark - 1].getStatusIcon() + "] " + list[index_for_mark - 1] + "\n"
                         + "____________________________________________________________\n");
 
+                String filePath = "Duke.txt";
+                String new_string="";
+                for (int m = 0; m < i; m += 1) {
+                    int index = m + 1;
+                    if (tasks[m] == null) {
+                        new_string += (index + "." + "[" + t.getStatusIcon() + "] " + list[m] + "\n");
+                    } else {
+                        //the [X] or []
+                        new_string += (index + "." + tasks[m] + "\n");
+                    }
+                }
+                    try {
+                    writeToFile("Duke.txt", new_string);
+                } catch (IOException e) {
+                    System.out.println("Something went wrong\n"
+                            + "____________________________________________________________");
+                }
+
             } else if (line.toLowerCase().contains("todo") || line.toLowerCase().contains("deadline") || line.toLowerCase().contains("event")) {
                 boolean empty;
-                empty=false;
+                empty = false;
 
                 if (line.toLowerCase().contains("todo")) {
-
-                    String[] ToSplitTodo=line.split(" ");
-
+                    String[] ToSplitTodo = line.split(" ");
                     try {
-                      // description.toLowerCase().substring(5, description.length());
-                      //list[i] = TodoTask;
-                      String TodoTask = line.toLowerCase().replaceAll("todo","");
-                      tasks[i] = new Todo(TodoTask,ToSplitTodo.length);
+                        String TodoTask = line.toLowerCase().replaceAll("todo", "");
+                        tasks[i] = new Todo(TodoTask, ToSplitTodo.length);
 
                     } catch (DukeException ex) {
-                      empty=true;
-                      System.out.println("____________________________________________________________\n"
-                              +"OOPS!!! The description of a todo cannot be empty.\n"
-                              + "____________________________________________________________\n");
-                  }
+                        empty = true;
+                        System.out.println("____________________________________________________________\n"
+                                + "OOPS!!! The description of a todo cannot be empty.\n"
+                                + "____________________________________________________________\n");
+                    }
 
                     //sample : deadline return book /by Sunday
                 } else if (line.toLowerCase().contains("deadline")) {
@@ -102,14 +147,20 @@ public class Duke {
 
                 }
 
-                if(!empty) {
+                if (!empty) {
                     System.out.println("____________________________________________________________\n"
-                    +"Got it. I've added this task:\n" +
+                            + "Got it. I've added this task:\n" +
                             "  " + tasks[i] + "\n" +
                             "Now you have " + (i + 1) + " tasks in the list.\n"
-                    +"____________________________________________________________\n");
+                            + "____________________________________________________________\n");
                     i += 1;
 
+                    try {
+                        appendToFile("Duke.txt", tasks[i - 1].toString() + "\n");
+                    } catch (IOException e) {
+                        System.out.println("Something went wrong\n"
+                                + "____________________________________________________________");
+                    }
                 }
 
             } else if (line.equalsIgnoreCase("list")) {
@@ -125,19 +176,16 @@ public class Duke {
                         //the [X] or []
                         System.out.println(index + "." + tasks[m]);
                     }
-
                 }
                 System.out.println("____________________________________________________________");
 
             } else {
                 System.out.println("____________________________________________________________\n"
-                        +"OOPS!!! The description of a todo cannot be empty.\n"
-                +"____________________________________________________________\n");
+                        + "OOPS!!! The description of a todo cannot be empty.\n"
+                        + "____________________________________________________________\n");
             }
 
-            }
-
-
+        }
 
 
         System.out.println("____________________________________________________________\n"
@@ -147,3 +195,5 @@ public class Duke {
 
     }
 }
+
+

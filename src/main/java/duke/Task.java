@@ -23,5 +23,9 @@ public class Task {
             return "["+ getStatusIcon() +"] " + description;
         }
 
+        public String File() {
+            return description;
+        }
+
 }
 
