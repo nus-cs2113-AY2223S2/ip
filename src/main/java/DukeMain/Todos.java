@@ -7,7 +7,7 @@ public class Todos {
 
     public String type;
 
-    Todos(String name, boolean isMarked, String type) {
+    public Todos(String name, boolean isMarked, String type) {
         this.item = name;
         this.isMarked = isMarked;
         this.type = type;

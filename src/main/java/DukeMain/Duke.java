@@ -1,5 +1,9 @@
 package DukeMain;
 
+import FileIO.DukeFile;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -16,8 +20,9 @@ public class Duke {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Scanner myObj = new Scanner(System.in);
+        boolean justStarted = true;
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -25,9 +30,19 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
         System.out.println("what can i do for you");
-
         String input = myObj.nextLine();
-        ArrayList<Todos> todoItems = new ArrayList<Todos>();
+
+
+        //File management segment
+        File file = new File("Data.txt");
+        ArrayList<Todos> todoItems;
+        if (file.exists()) {
+            todoItems = DukeFile.loadListFromFile("Data.txt");
+        } else {
+            todoItems = new ArrayList<>();
+        }
+        //end of file management segment
+
         int new_tasks = 0;
         while (!input.equalsIgnoreCase("bye")) {
             if (!ErrorHandler.isInputValid(input)) {
@@ -50,11 +65,13 @@ public class Duke {
                 todoItems.get(i - 1).setMark();
                 System.out.println("Item has been marked");
                 System.out.println(i + ". " + "[" + todoItems.get(i - 1).type + "]" + "[X] " + todoItems.get(i-1).item);
+                DukeFile.WriteToFile(todoItems);
             } else if (input.startsWith("unmark")) {
                 int i = Integer.parseInt(input.substring(7));
                 todoItems.get(i - 1).unMark();
                 System.out.println("Item has been unmarked");
                 System.out.println(i + ". " + "[" + todoItems.get(i - 1).type + "]" + "[ ] " + todoItems.get(i - 1).item);
+                DukeFile.WriteToFile(todoItems);
             } else if (input.startsWith("event")) {
                 int count = new_tasks + 1;
                 input = parseEventString(input);
@@ -63,6 +80,7 @@ public class Duke {
                 System.out.println("now you have: " + count + " tasks in this list.");
                 Event x = new Event(input, false, "E");
                 todoItems.add(x);
+                DukeFile.WriteToFile(todoItems);
                 new_tasks++;
             } else if (input.startsWith("deadline")) {
                 int count = new_tasks + 1;
@@ -73,6 +91,7 @@ public class Duke {
                 System.out.println("now you have: " + count + " tasks in this list.");
                 Deadline x = new Deadline(input, false, "D");
                 todoItems.add(x);
+                DukeFile.WriteToFile(todoItems);
                 new_tasks++;
             } else if (input.startsWith("todo")) {
                 Todos x = new Todos(input.substring(input.indexOf((" "))), false, "T");
@@ -81,6 +100,7 @@ public class Duke {
                 System.out.println("Added: " + "[" + todoItems.get(new_tasks).type + "]" + "[ ]" + input.substring(input.indexOf((" "))));
                 int count = new_tasks + 1;
                 System.out.println("now you have: " + count + " tasks in this list.");
+                DukeFile.WriteToFile(todoItems);
                 new_tasks++;
             } else if(input.startsWith("delete")) {
                 System.out.println("i have deleted the task:" + todoItems.get(Integer.parseInt(input.substring(7))-1).item);
