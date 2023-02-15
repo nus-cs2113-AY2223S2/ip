@@ -14,6 +14,7 @@ public class Sage {
         Display ui = new Display();
         Scanner input = new Scanner(System.in);
         ui.printWelcomeUser();
+        fm.recoverData(taskList);
         while (input.hasNextLine()) {
             Command command = new Command(input.nextLine());
             switch (command.getTaskType()) {
@@ -33,13 +34,13 @@ public class Sage {
                 taskList.deleteTask(command.getTaskDescription());
                 break;
             case "todo":
-                taskList.addTask(command.getTaskDescription());
+                taskList.addTask(command.getTaskDescription(), false, false);
                 break;
             case "deadline":
-                taskList.addTask(command.getTaskDescription(), command.getBy());
+                taskList.addTask(command.getTaskDescription(), command.getBy(), false, false);
                 break;
             case "event":
-                taskList.addTask(command.getTaskDescription(), command.getFrom(), command.getTo());
+                taskList.addTask(command.getTaskDescription(), command.getFrom(), command.getTo(), false, false);
                 break;
             case "write":
                 taskList.update(fm);

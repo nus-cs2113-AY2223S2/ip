@@ -33,6 +33,10 @@ public class Display {
         System.out.println("Bye. Hope to see you again soon!");
     }
 
+    public void printResumeSession() {
+        System.out.println("Info: Data from previous session is resumed");
+    }
+
     /**
      * This method prints a message to the console indicating the addition of a TODO task to the task list and its details.
      *

@@ -27,15 +27,18 @@ public class TaskList {
      *
      * @param taskName The name of the TODO task to be added
      **/
-    public void addTask(String taskName) {
+    public void addTask(String taskName, boolean isCompleted, boolean silentmode) {
         try {
             if (taskName == null) {
                 throw new MissingParameterException();
             } else {
                 Todo t = new Todo(taskName);
                 list.add(t);
-                UI.printAddedTask(t, list.size());
-                fm.updateFile(list);
+                t.setCompleted(isCompleted);
+                if (!silentmode) {
+                    UI.printAddedTask(t, list.size());
+                    fm.updateFile(list);
+                }
             }
         } catch (MissingParameterException e) {
             e.missingParamDesc();
@@ -48,15 +51,18 @@ public class TaskList {
      * @param taskName a string that represents the name of the Deadline task to add.
      * @param byWhen   a string that represents the deadline of the Deadline task.
      **/
-    public void addTask(String taskName, String byWhen) {
+    public void addTask(String taskName, String byWhen, boolean isCompleted, boolean silentMode) {
         try {
             if (taskName == null || byWhen == null) {
                 throw new MissingParameterException();
             } else {
                 Deadline d = new Deadline(taskName, byWhen);
                 list.add(d);
-                fm.updateFile(list);
-                UI.printAddedTask(d, list.size());
+                d.setCompleted(isCompleted);
+                if (!silentMode) {
+                    fm.updateFile(list);
+                    UI.printAddedTask(d, list.size());
+                }
             }
         } catch (MissingParameterException e) {
             if (taskName == null) {
@@ -74,15 +80,18 @@ public class TaskList {
      * @param startWhen a string that represents the start date and time of the Event task.
      * @param endWhen   a string that represents the end date and time of the Event task.
      */
-    public void addTask(String taskName, String startWhen, String endWhen) {
+    public void addTask(String taskName, String startWhen, String endWhen, boolean isCompleted, boolean silentmode) {
         try {
             if (taskName == null || startWhen == null || endWhen == null) {
                 throw new MissingParameterException();
             } else {
                 Event e = new Event(taskName, startWhen, endWhen);
                 list.add(e);
-                fm.updateFile(list);
-                UI.printAddedTask(e, list.size());
+                e.setCompleted(isCompleted);
+                if (!silentmode) {
+                    fm.updateFile(list);
+                    UI.printAddedTask(e, list.size());
+                }
             }
         } catch (MissingParameterException e) {
             if (taskName == null) {
@@ -110,6 +119,7 @@ public class TaskList {
                 throw new OutOfBoundException();
             } else {
                 UI.printDeletedTask(list, taskNumber);
+                fm.updateFile(list);
                 list.remove(taskNumber - 1);
             }
         } catch (OutOfBoundException e) {
