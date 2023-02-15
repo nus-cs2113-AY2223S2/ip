@@ -1,9 +1,11 @@
 import java.util.Scanner;
-import java.util.ArrayList;
+import java.io.FileWriter;
+import java.io.IOException;
 
 
 
 public class Duke {
+    
     public enum TaskType {
         TODO, DEADLINE, EVENT
     }
@@ -53,6 +55,10 @@ public class Duke {
                 else if (input.startsWith("delete ")) {
                     
                     task.delete(input);
+                }
+                else if (input.equalsIgnoreCase("save")) {
+                    
+                    task.save();
                 }
                 else {
                     throw new InvalidInputException();

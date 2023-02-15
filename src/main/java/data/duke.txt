@@ -1,0 +1,4 @@
+TODO | 0 | yes
+TODO | 1 | no
+TODO | 0 | yope
+TODO | 0 | gay
