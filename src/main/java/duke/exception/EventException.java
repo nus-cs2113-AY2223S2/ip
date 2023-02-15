@@ -10,8 +10,8 @@ public class EventException extends Exception{
         println("    Please do so in the following manner:");
         println("");
         println("    event [description] /from [when] /to [when]");
-        println("    THANKS!");
         println("");
+        println("    THANKS!");
         printOneLine();
     }
 }

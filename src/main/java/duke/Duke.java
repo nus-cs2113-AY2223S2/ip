@@ -1,11 +1,18 @@
 package duke;
 
-import duke.command.*;
-import duke.exception.*;
+import duke.command.Deadline;
+import duke.command.Event;
+import duke.command.Todo;
+
+import duke.exception.DeadlineException;
+import duke.exception.EventException;
+import duke.exception.KeywordException;
+import duke.exception.TodoException;
 import duke.task.Task;
 
 import static duke.print.Print.*;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -15,8 +22,7 @@ public class Duke {
     public static void main(String[] args) {
         showWelcomeMessage();
 
-        Task[] taskList = new Task[100];
-        int taskIndex = 0;
+        ArrayList<Task> taskList = new ArrayList<>();
 
         Scanner input = new Scanner(System.in);
 
@@ -47,10 +53,24 @@ public class Duke {
                     unmarkSelectedTask(taskList, taskNumberToUnmark);
                     break;
 
-                case "deadline":
-                    addDeadline(taskList, taskIndex, userInput);
+                case "delete":
+                    String taskNumber = userInput[1];
 
-                    taskIndex += 1;
+                    deleteOneTask(taskList, taskNumber);
+
+                    break;
+
+                case "deadline":
+                    try {
+                        if (userInput.length != USER_INPUT_EXPECTED_SIZE) {
+                            throw new DeadlineException();
+                        } else {
+                            addDeadline(taskList, userInput);
+                        }
+                    } catch (DeadlineException e) {
+                        continue;
+                    }
+
                     break;
 
                 case "event":
@@ -58,9 +78,7 @@ public class Duke {
                         if (userInput.length != USER_INPUT_EXPECTED_SIZE) {
                             throw new EventException();
                         } else {
-                            addEvent(taskList, taskIndex, userInput);
-
-                            taskIndex += 1;
+                            addEvent(taskList, userInput);
                         }
                     } catch (EventException e) {
                         continue;
@@ -73,9 +91,7 @@ public class Duke {
                         if (userInput.length != USER_INPUT_EXPECTED_SIZE) {
                             throw new TodoException();
                         } else {
-                            addTodo(taskList, taskIndex, userInput);
-
-                            taskIndex += 1;
+                            addTodo(taskList, userInput);
                         }
                     } catch (TodoException e) {
                         continue;
@@ -94,55 +110,62 @@ public class Duke {
         showExitMessage();
     }
 
+    private static void deleteOneTask(ArrayList<Task> taskList, String taskNumber) {
+        int taskNumberToDelete = Integer.parseInt(taskNumber);
+        taskNumberToDelete -= 1;
+
+        Task selectedTask = taskList.get(taskNumberToDelete);
+        taskList.remove(taskNumberToDelete);
+
+        printDeletingOneTask(taskList, selectedTask);
+    }
+
     /**
      * Creates a new task, classified as a todo task
      *
      * @param taskList  The list to insert the task into
-     * @param taskIndex The current index to insert the task in the list
      * @param userInput The details of the task to be added
      */
-    private static void addTodo(Task[] taskList, int taskIndex, String[] userInput) throws TodoException {
+    private static void addTodo(ArrayList<Task> taskList, String[] userInput) {
         Todo new_todo = new Todo(userInput[1]);
-        taskList[taskIndex] = new_todo;
+        taskList.add(new_todo);
 
-        printAddingOneTask(new_todo, taskIndex);
+        printAddingOneTask(taskList, new_todo);
     }
 
     /**
      * Creates a new task, classified as an event task
      *
      * @param taskList  The list to insert the task into
-     * @param taskIndex The current index to insert the task in the list
      * @param userInput The details of the task to be added
      */
-    private static void addEvent(Task[] taskList, int taskIndex, String[] userInput) {
+    private static void addEvent(ArrayList<Task> taskList, String[] userInput) {
         String[] eventDetails = userInput[1].split("/from | /to");
 
-        Event event = new Event(eventDetails[0], eventDetails[1], eventDetails[2]);
+        Event new_event = new Event(eventDetails[0], eventDetails[1], eventDetails[2]);
 
-        taskList[taskIndex] = event;
+        taskList.add(new_event);
 
-        printAddingOneTask(event, taskIndex);
+        printAddingOneTask(taskList, new_event);
     }
 
     /**
      * Creates a new task, classified as a deadline task
      *
      * @param taskList  The list to insert the task into
-     * @param taskIndex The current index to insert the task in the list
      * @param userInput The details of the task to be added
      */
-    private static void addDeadline(Task[] taskList, int taskIndex, String[] userInput) {
+    private static void addDeadline(ArrayList<Task> taskList, String[] userInput) {
         String[] taskDetails = userInput[1].split(" /by", 2);
 
         String taskName = taskDetails[0];
         String taskDueDate = taskDetails[1];
 
-        Deadline deadline = new Deadline(taskName, taskDueDate);
+        Deadline new_deadline = new Deadline(taskName, taskDueDate);
 
-        taskList[taskIndex] = deadline;
+        taskList.add(new_deadline);
 
-        printAddingOneTask(deadline, taskIndex);
+        printAddingOneTask(taskList, new_deadline);
     }
 
     /**
@@ -151,12 +174,12 @@ public class Duke {
      * @param taskList   The list of tasks that contains the task that needs to be marked as not done
      * @param taskNumber The number of the task to mark as not done
      */
-    private static void unmarkSelectedTask(Task[] taskList, String taskNumber) {
+    private static void unmarkSelectedTask(ArrayList<Task> taskList, String taskNumber) {
 
         int taskNumberToUnmark = Integer.parseInt(taskNumber);
         taskNumberToUnmark -= 1;
 
-        Task selectedTask = taskList[taskNumberToUnmark];
+        Task selectedTask = taskList.get(taskNumberToUnmark);
         selectedTask.markNotDone();
 
         printOneLine();
@@ -187,11 +210,11 @@ public class Duke {
      * @param taskList   The list of tasks that contains the task that needs to be marked as done
      * @param taskNumber The number of the task to mark as done
      */
-    private static void markSelectedTask(Task[] taskList, String taskNumber) {
+    private static void markSelectedTask(ArrayList<Task> taskList, String taskNumber) {
         int taskNumberToMark = Integer.parseInt(taskNumber);
         taskNumberToMark -= 1;
 
-        Task selectedTask = taskList[taskNumberToMark];
+        Task selectedTask = taskList.get(taskNumberToMark);
         selectedTask.markDone();
 
         printOneLine();
