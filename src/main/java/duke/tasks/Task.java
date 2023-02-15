@@ -5,9 +5,9 @@ public class Task {
 	protected String description;
 	protected boolean isCompleted;
 
-	public Task(String description) {
+	public Task(String description, boolean isCompleted) {
 		this.description = description;
-		this.isCompleted = false;
+		this.isCompleted = isCompleted;
 	}
 
 	public String getDescription() {
@@ -19,6 +19,16 @@ public class Task {
 
 	public String showTask(){
 		return getDescription();
+	}
+
+	public String writeTask(){
+		String taskStatus;
+		if (isCompleted == false) {
+			taskStatus= "0";
+		} else {
+			taskStatus = "1";
+		}
+		return "T | " + taskStatus + " | " + getDescription() + "\n";
 	}
 }
 

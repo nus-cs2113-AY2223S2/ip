@@ -5,8 +5,8 @@ public class Event extends Task {
 	private String to;
 
 
-	public Event(String description, String startTime, String endTime) {
-		super(description);
+	public Event(String description, String startTime, String endTime, boolean isCompleted) {
+		super(description,isCompleted);
 		this.from = startTime;
 		this.to = endTime;
 	}
@@ -30,12 +30,22 @@ public class Event extends Task {
 	// Prints task
 	public String showTask() {
 		String taskStatus;
-		if (isCompleted) {
+		if (isCompleted == true) {
 			taskStatus = "[E][√] ";
 		} else {
 			taskStatus = "[E][ ] ";
 		}
 		String time = "from: " + getStartTime() + " to: " + getEndTime();
 		return taskStatus + getDescription() + " " + time;
+	}
+	public String writeTask(){
+		String taskStatus;
+		if (isCompleted == false) {
+			taskStatus= "0";
+		} else {
+			taskStatus = "1";
+		}
+		return "E | " + taskStatus + " | " + getDescription() + " | " + "from: " +
+				getStartTime() + " to: " + getEndTime() + "\n";
 	}
 }

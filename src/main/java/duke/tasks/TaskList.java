@@ -55,18 +55,18 @@ public class TaskList {
 		return tasks.get(taskIndex-1);
 	}
 
-	public String addTodo(String description) {
-		tasks.add(new Todo(description));
+	public String addTodo(String description, boolean isCompleted) {
+		tasks.add(new Todo(description,isCompleted));
 		return showAcknowledgement(TASK_ADDED, tasks.size() - 1);
 	}
 
-	public String addDeadline(String description, String by) {
-		tasks.add(new Deadline(description, by));
+	public String addDeadline(String description, String by, boolean isCompleted) {
+		tasks.add(new Deadline(description, by, isCompleted));
 		return showAcknowledgement(TASK_ADDED, tasks.size() - 1);
 	}
 
-	public String addEvent(String description, String from, String to) {
-		tasks.add(new Event(description, from, to));
+	public String addEvent(String description, String from, String to, boolean isCompleted) {
+		tasks.add(new Event(description, from, to,isCompleted));
 		return showAcknowledgement(TASK_ADDED, tasks.size() - 1);
 	}
 
@@ -91,9 +91,17 @@ public class TaskList {
 	public void markAsUndone(int taskIndex) throws TaskException, TaskUndoneException {
 		if (taskIndex > tasks.size()) {
 			throw new TaskException();
-		} else if (tasks.get(taskIndex-1).isCompleted == true) {
+		} else if (tasks.get(taskIndex-1).isCompleted == false) {
 			throw new TaskUndoneException();
 		}
-		tasks.get(taskIndex-1).isCompleted = true;
+		tasks.get(taskIndex-1).isCompleted = false;
+	}
+
+	public String writeTaskList(){
+		String tasksToBeAdded = "";
+		for (Task task : tasks){
+			tasksToBeAdded =  tasksToBeAdded + task.writeTask();
+		}
+		return tasksToBeAdded;
 	}
 }
