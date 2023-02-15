@@ -14,7 +14,16 @@ public class TaskStore {
     private ArrayList<Task> tasks;
 
     public TaskStore() {
-        this.tasks = Storage.readSavedTasks();
+        try {
+            this.tasks = Storage.readSavedTasks();
+        } catch (Exception e) {
+            // Should never happen
+            System.out.println("Something very wrong happened. What you just found is not a normal "
+                    + "bug, but a miraculously crazy one. Please inform @joulev on GitHub on what "
+                    + "black magic you used to pull this off, as it is generally considered by "
+                    + "contemporary science and academic literature to be impossible.");
+            System.exit(1);
+        }
     }
 
     private void onMutation() throws ArchdukeException {

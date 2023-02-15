@@ -11,6 +11,7 @@ import com.google.gson.GsonBuilder;
 
 import dev.joulev.archduke.exceptions.ArchdukeException;
 import dev.joulev.archduke.exceptions.OtherException;
+import dev.joulev.archduke.io.Output;
 import dev.joulev.archduke.tasks.Task;
 
 /**
@@ -45,7 +46,7 @@ public class Storage {
      * 
      * @return The list of saved tasks, already converted to {@link Task} objects.
      */
-    public static ArrayList<Task> readSavedTasks() {
+    public static ArrayList<Task> readSavedTasks() throws ArchdukeException {
         try {
             ArrayList<Task> tasks = new ArrayList<>();
             String savedTaskJson = readFromFile(FILE);
@@ -58,6 +59,9 @@ public class Storage {
         } catch (Exception e) {
             // Whether the file is not found, is corrupted or for whatsoever reason, we
             // consider it as non-existent and return an empty list.
+            Output.printError(
+                    "Stored file (%s) is corrupted. If you continue, it will be wiped. If you want to keep the data, please modify that file manually using an editor of your choice, or rename it to something else.",
+                    FILE);
             return new ArrayList<>();
         }
     }
