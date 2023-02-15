@@ -70,7 +70,15 @@ public class Duke {
             case "list":
                 command.printOutput();
                 break;
+            case "delete":
+                Tasks toDelete = Tasks.getTaskList().get(Integer.parseInt(userInput[1]) - 1);
+                command.setKey("delete");
+                command.printOutput(toDelete);
+                Tasks.deleteFromList(Integer.parseInt(userInput[1]) - 1);
 
+
+
+                break;
             default:
                 throw new NoKeyException("Come on, give me something that I can work with!");
             }

@@ -63,6 +63,11 @@ public class CommandManager {
             System.out.println("\t Now you have " + Tasks.getNumberOfTasks() + " in your list.\n"
                     + DIVIDER);
             break;
+        case "delete":
+            System.out.println(DIVIDER + "\n\t Got it. I've deleted this task:\n\t  "
+                    + task);
+            System.out.println("\t Now you have " + (Tasks.getNumberOfTasks() - 1) + " in your list.\n"
+                    + DIVIDER);
         }
     }
 

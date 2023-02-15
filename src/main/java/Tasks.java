@@ -17,6 +17,10 @@ public class Tasks {
 
         taskList.add(task);
     }
+    public static void deleteFromList(int pos){
+        taskList.remove(pos);
+        numberOfTasks--;
+    }
 
     public static ArrayList<Tasks> getTaskList() {
 
