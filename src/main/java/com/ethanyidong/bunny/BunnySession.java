@@ -13,9 +13,12 @@ public class BunnySession {
     private final ArrayList<Task> taskList;
     private boolean isQuit;
 
+    private boolean isSuppressed;
+
     public BunnySession() {
         this.taskList = new ArrayList<>();
         this.isQuit = false;
+        this.isSuppressed = false;
     }
 
     public void printMessage(String message) {
@@ -23,14 +26,16 @@ public class BunnySession {
     }
 
     public void printMessage(Iterable<String> messageLines) {
-        String output = "";
-        output += GLOBAL_INDENTATION + DIVIDER + "\n";
-        for (String line : messageLines) {
-            output += GLOBAL_INDENTATION + MESSAGE_INDENTATION + line + "\n";
-        }
-        output += GLOBAL_INDENTATION + DIVIDER + "\n";
+        if (!this.isSuppressed) {
+            String output = "";
+            output += GLOBAL_INDENTATION + DIVIDER + "\n";
+            for (String line : messageLines) {
+                output += GLOBAL_INDENTATION + MESSAGE_INDENTATION + line + "\n";
+            }
+            output += GLOBAL_INDENTATION + DIVIDER + "\n";
 
-        System.out.print(output);
+            System.out.print(output);
+        }
     }
 
     public void addTask(Task task) {
@@ -50,6 +55,10 @@ public class BunnySession {
     }
 
     public void quit() {
-        this.isQuit = true;
+        this.isQuit = !this.isSuppressed;
+    }
+
+    public void setIsSuppressed(boolean isSuppressed) {
+        this.isSuppressed = isSuppressed;
     }
 }
