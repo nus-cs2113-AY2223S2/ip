@@ -22,8 +22,8 @@ public class Deadline extends Task{
         //["deadline return book","by Sunday"]
         String[] splitByForwardSlash = input.split("/");
         //["by","Sunday"]
-        String[] splitBySpace = splitByForwardSlash[1].split(" ");
-        return splitBySpace[1];
+//        String[] splitBySpace = splitByForwardSlash[1].split(" ");
+        return (splitByForwardSlash[1]).substring(3);
     }
 
     @Override
