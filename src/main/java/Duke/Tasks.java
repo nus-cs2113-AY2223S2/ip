@@ -2,30 +2,22 @@ package Duke;
 
 import java.io.FileWriter;
 import java.util.LinkedList;
+import java.io.IOException;
+
 
 public class Tasks {
     private final LinkedList<Task> taskList;
 
     Tasks() {
-        this.taskList = new LinkedList<Task>();
+        this.taskList = TaskUpdater.loadTasks();
     }
 
-    String addTask(String type, String[] commandByWord) {
+    String addTask(String[] commandByWord) {
+        String type = commandByWord[0];
         try {
-            Task task = new Task("");
-
-            switch(type) {
-            case "todo":
-                task = ToDo.createToDo(commandByWord);
-                break;
-            case "deadline":
-                task = Deadline.createDeadline(commandByWord);
-                break;
-            case "event":
-                task = Event.createEvent(commandByWord);
-                break;
-            }
+            Task task = TaskCreator.createNewTask(commandByWord);
             taskList.add(task);
+            TaskUpdater.addTask(task);
             return "Got it. I've added this task:\n    " +
                     task + "\n" +
                     "  Now you have " + taskList.size() + " tasks in the list.";

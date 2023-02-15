@@ -1,6 +1,6 @@
 package Duke;
 
-public class Task {
+public abstract class Task {
     private String content;
     private boolean isCompleted;
 
@@ -9,13 +9,21 @@ public class Task {
         this.isCompleted = false;
     }
 
+    boolean isCompleted() {
+        return isCompleted;
+    }
+
     void markAsComplete() {
         this.isCompleted = true;
+        TaskUpdater.updateTask(this);
     }
 
     void markAsIncomplete() {
         this.isCompleted = false;
+        TaskUpdater.updateTask(this);
     }
+
+    abstract String getType();
 
     public String toString() {
         return (this.isCompleted ? "[X] " : "[ ] ") + this.content;

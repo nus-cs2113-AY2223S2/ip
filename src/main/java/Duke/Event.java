@@ -3,6 +3,7 @@ package Duke;
 public class Event extends Task {
     private String startDate;
     private String endDate;
+    static String TYPE = "event";
 
     public Event(String content, String startDate, String endDate) {
         super(content);
@@ -52,6 +53,10 @@ public class Event extends Task {
         }
 
         return new Event(taskToDo, startDate, endDate);
+    }
+
+    String getType() {
+        return "event";
     }
 
     @Override

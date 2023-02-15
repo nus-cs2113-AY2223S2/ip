@@ -4,6 +4,7 @@ public class ToDo extends Task {
     private ToDo(String content) {
         super(content);
     }
+    static String TYPE = "todo";
 
     static ToDo createToDo(String[] commandByWord) throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
         String task = "";
@@ -19,6 +20,10 @@ public class ToDo extends Task {
             task += commandByWord[i];
         }
         return new ToDo(task);
+    }
+
+    String getType() {
+        return "todo";
     }
 
     @Override
