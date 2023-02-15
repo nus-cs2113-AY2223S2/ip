@@ -85,6 +85,8 @@ public class Duke {
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
         }
+        System.out.println("----------------------End of file----------------------");
+        System.out.println("Please input your commands here: ");
         Scanner scan = new Scanner(System.in);
         String input = scan.nextLine();
 
