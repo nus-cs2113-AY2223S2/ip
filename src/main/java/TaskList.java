@@ -20,11 +20,11 @@ public class TaskList{
         tasks.remove(taskNumber - 1);
     }
     //method that marks a task as done
-    public void markAsDone(int taskNumber){
+    public void markTask(int taskNumber){
         tasks.get(taskNumber - 1).markAsDone();
     }
     //method that marks a task as undone
-    public void markTaskAsUndone(int taskNumber){
+    public void unmarkTask(int taskNumber){
         tasks.get(taskNumber - 1).markAsNotDone();
     }
     //method that returns the arraylist of tasks
