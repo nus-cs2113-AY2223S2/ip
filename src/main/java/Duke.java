@@ -3,7 +3,14 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 //TODO: specify error: empty description vs event/ddl timing not found
 
@@ -11,6 +18,78 @@ public class Duke {
     public static String line = "____________________________________________________________\n";
     public static int countTask = 0;
     public static Task[] tasks = new Task[100];
+
+    // reading file from hard disc
+    public static String filePath = "./task_list.txt";
+
+    public static void createFile(String filePath) {
+        try {
+            File f = new File(filePath);
+            if (f.createNewFile()) {
+                System.out.println("File created: " + f.getName());
+            } else {
+                System.out.println("File already exists");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+
+    public static void readTasksFromFile(File f) throws FileNotFoundException {
+        Scanner s = new Scanner(f);
+        while (s.hasNext()) {
+            String task = s.nextLine();
+            String[] taskElements = task.split("\\|");
+            switch (taskElements[0]) {
+            case "T" :
+                tasks[countTask] = new ToDo(taskElements[1]);
+                countTask++;
+                break;
+            case "D" :
+                tasks[countTask] = new Deadline(taskElements[1], taskElements[2]);
+                countTask++;
+                break;
+            case "E" :
+                tasks[countTask] = new Deadline(taskElements[1], taskElements[2], taskElements[3]);
+                countTask++;
+                break;
+            default:
+            }
+        }
+    }
+
+    /*
+     T | X | description
+     D |   | description | time
+     E |   | description | start time | end time
+     */
+
+    public static void saveTasksToFile(String filePath, ArrayList<Task> tasks) throws IOException {
+        FileWriter fw = new FileWriter(filePath, true);
+        for (Task t : tasks) {
+            String completeTaskDescription = t.printTask();
+            String taskType = completeTaskDescription.substring(1, 2);
+            switch (taskType) {
+            case "T":
+                fw.write(taskType + " | " + t.getStatusIcon() + " | " + t.getDescription() +
+                        System.lineSeparator());
+                fw.close();
+                break;
+            case "D":
+                fw.write(taskType + " | " + t.getStatusIcon() + " | " + t.getDescription() + " | " +
+                        ((Deadline) t).getDeadline() + System.lineSeparator());
+                fw.close();
+                break;
+            case "E":
+                fw.write(taskType + " | " + t.getStatusIcon() + " | " + t.getDescription() + " | " +
+                        ((Event) t).getStartTime() + " | " + ((Event) t).getEndTime() + System.lineSeparator());
+                fw.close();
+                break;
+            default:
+            }
+        }
+    }
 
     public static void main(String[] args) {
 
@@ -121,6 +200,8 @@ public class Duke {
         System.out.println("Now you have " + countTask + " task(s) in the list.\n" + line);
     }
 
+    //TODO create Deadline by taking in description and date as 2 separate function parameters
+    //TODO parse here instead of in the class
     public static void createDeadline(String input) throws IndexOutOfBoundsException {
         if (!input.contains("/by") || input.indexOf("/by") + 4 > input.length()) {
             throw new StringIndexOutOfBoundsException();
@@ -145,5 +226,6 @@ public class Duke {
         System.out.println(line + "Great! I've added this task:\n" + "   " + eventTask.printTask());
         System.out.println("Now you have " + countTask + " task(s) in the list.\n" + line);
     }
+
 }
 
