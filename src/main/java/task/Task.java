@@ -2,6 +2,16 @@ package task;
 
 public class Task {
     protected String task;
+    protected String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     protected boolean isDone;
     public Task(String task) {
         this.task = task;

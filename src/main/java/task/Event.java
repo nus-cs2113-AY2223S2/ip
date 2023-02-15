@@ -10,9 +10,15 @@ public class Event extends Task {
     }
 
     public String formatDate(String from, String to) {
-        String dateFrom = from.split("\\s+", 2)[1];
-        String dateTo = to.substring(to.lastIndexOf("to") + 2);
-        return "(" + "from: " + dateFrom + "to " + dateTo + ")";
+        return "(" + "from: " + from + "to " + to + ")";
+    }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public String getTo() {
+        return to;
     }
 
     @Override

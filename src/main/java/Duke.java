@@ -4,8 +4,11 @@ import task.DukeException;
 import task.Event;
 import task.Task;
 
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileWriter;
 
 public class Duke {
     public static final String WRONG_INPUTS_GIVEN = "Wrong inputs given";
@@ -13,8 +16,12 @@ public class Duke {
     private static final String UNRECOGNISED_INPUT = "☹ OOPS!!! I'm sorry, but I don't know what that means :-(";
     public static final String UNRECOGNISED_ITEM_INDEX = "☹ OOPS!!! unrecognised item index!";
     public static final String EMPTY_DESCRIPTION = "☹ OOPS!!! The description cannot be empty.";
+    public static final String FILE_PATH = "data.txt";
+    public static final String FILE_ACCESS_ERROR = "File access failed!";
+    public static final String FILE_UPDATING_ERROR = "File update failed!";
     private static ArrayList<Task> list = new ArrayList<Task>();
     public static void main(String[] args) {
+        populateSavedTasks();
         greet();
         boolean isProgramRunning = true;
         while (isProgramRunning) {
@@ -27,12 +34,15 @@ public class Duke {
             try {
                 processInput(input);
             } catch (Exception e) {
-                System.out.println(LINE);
-                System.out.println(e.getMessage());
-                System.out.println(LINE);
+                processError(e);
             }
-
         }
+    }
+
+    private static void processError(Exception e) {
+        System.out.println(LINE);
+        System.out.println(e.getMessage());
+        System.out.println(LINE);
     }
 
     public static void greet() {
@@ -48,10 +58,56 @@ public class Duke {
         System.out.println(LINE);
     }
 
+    public static void populateSavedTasks() {
+        try {
+            File savedFile = new File(FILE_PATH);
+            if(savedFile.createNewFile()) {
+                return;
+            }
+            Scanner data = new Scanner(savedFile);
+            int itemIndex = 0;
+            while(data.hasNext()) {
+                String input = data.nextLine();
+                String[] tokens = input.split("-");
+                String typeOfTask = tokens[0];
+                String status = tokens[1];
+                String task = tokens[2];
+                switch(typeOfTask) {
+                case "T":
+                    ToDo existingTodo = new ToDo(task);
+                    existingTodo.setType("T");
+                    list.add(existingTodo);
+                    break;
+                case "D":
+                    String deadline = tokens[3];
+                    Deadline existingDeadline = new Deadline(task, deadline);
+                    existingDeadline.setType("D");
+                    list.add(existingDeadline);
+                    break;
+                case "E":
+                    String from = tokens[3];
+                    String to = tokens[4];
+                    Event existingEvent = new Event(task, from, to);
+                    existingEvent.setType("E");
+                    list.add(existingEvent);
+                    break;
+                }
+                if(status.equals("X")) {
+                    list.get(itemIndex).markDone();
+                }
+                itemIndex++;
+            }
+        } catch (IOException e) {
+            System.out.println(FILE_ACCESS_ERROR);
+        }
+
+    }
+
     public static void processInput(String input) throws Exception {
         String inst = input.split("\\s+")[0];
         if (input.equalsIgnoreCase("list")) {
             printList();
+            return;
         } else if (inst.equalsIgnoreCase("mark")) {
             markTask(input);
         } else if (inst.equalsIgnoreCase("unmark")) {
@@ -65,6 +121,7 @@ public class Duke {
         } else {
             throw new DukeException(UNRECOGNISED_INPUT);
         }
+        updateFileData();
     }
 
     private static void printList() {
@@ -122,6 +179,7 @@ public class Duke {
         }
         String task = tokens[1];
         ToDo newTodoTask = new ToDo(task);
+        newTodoTask.setType("T");
         list.add(newTodoTask);
         printConfirmation(newTodoTask);
     }
@@ -138,6 +196,7 @@ public class Duke {
         String task = instruction[0];
         String deadline = instruction[1];
         Deadline newDeadline = new Deadline(task, deadline);
+        newDeadline.setType("D");
         list.add(newDeadline);
         printConfirmation(newDeadline);
     }
@@ -152,11 +211,49 @@ public class Duke {
             throw new DukeException(WRONG_INPUTS_GIVEN);
         }
         String task = instruction[0];
-        String dateFrom = instruction[1];
-        String dateTo = instruction[2];
+        String from = instruction[1];
+        String to = instruction[2];
+        String dateFrom = from.split("\\s+", 2)[1];
+        String dateTo = to.substring(to.lastIndexOf("to") + 2);
         Event newEvent = new Event(task, dateFrom, dateTo);
+        newEvent.setType("E");
         list.add(newEvent);
         printConfirmation(newEvent);
+    }
+
+    private static void updateFileData() {
+        try {
+            FileWriter fw = new FileWriter(FILE_PATH);
+            for (Task t : list) {
+                String typeOfTask = t.getType();
+                String status = t.getStatus();
+                String task = t.getTask();
+                String taskDescription;
+                switch (typeOfTask) {
+                case "T":
+                    taskDescription = String.format("%s-%s-%s", typeOfTask, status, task);
+                    break;
+                case "D":
+                    Deadline deadlineTask = (Deadline) t;
+                    String deadline = deadlineTask.getDeadline();
+                    taskDescription = String.format("%s-%s-%s-%s", typeOfTask, status, task, deadline);
+                    break;
+                case "E":
+                    Event eventTask = (Event) t;
+                    String from = eventTask.getFrom();
+                    String to = eventTask.getTo();
+                    taskDescription = String.format("%s-%s-%s-from %s-to%s", typeOfTask, status, task, from, to);
+                    break;
+                default:
+                    taskDescription = "";
+                    System.out.println(FILE_UPDATING_ERROR);
+                }
+                fw.write(taskDescription + System.lineSeparator());
+            }
+            fw.close();
+        } catch (Exception e) {
+            System.out.println(FILE_UPDATING_ERROR);
+        }
     }
 
     private static void printConfirmation(Task newTask) {
