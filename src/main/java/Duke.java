@@ -267,22 +267,23 @@ public class Duke {
     }
 
     private static void writeToFile(String textToAdd) throws IOException {
-        FileWriter fw = new FileWriter("data/duke.txt", true);
+        FileWriter fw = new FileWriter("duke.txt", true);
         fw.write(textToAdd+System.lineSeparator());
         fw.close();
     }
 
     private static void clearFile() throws IOException {
-        FileWriter fw = new FileWriter("data/duke.txt");
+        FileWriter fw = new FileWriter("duke.txt");
         fw.write("");
         fw.close();
     }
 
     public static void main (String[]args){
         try {
-            readFileContents("data/duke.txt");
+            readFileContents("duke.txt");
         } catch (FileNotFoundException e) {
-            System.out.println("File not found");
+            System.out.println("No Past Data Found. Will create a new data file after ending the Bot...");
+            Greeting.printSeperator();
         }
 
         Greeting.printLogo();
