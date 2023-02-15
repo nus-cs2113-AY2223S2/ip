@@ -1,26 +1,21 @@
 package Duke;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.util.LinkedList;
 
 public class Tasks {
-    private ArrayList<Task> taskList;
+    private LinkedList<Task> taskList;
 
     Tasks() {
-        this.taskList = new ArrayList<Task>();
+        this.taskList = TaskUpdater.loadTasks();
     }
 
-    String addTask(String type, String[] commandByWord) {
+    String addTask(String[] commandByWord) {
+        String type = commandByWord[0];
         try {
-            Task task = new Task("");
-
-            if (type == "todo") {
-                task = ToDo.createToDo(commandByWord);
-            } else if (type == "deadline") {
-                task = Deadline.createDeadline(commandByWord);
-            } else if (type == "event") {
-                task = Event.createEvent(commandByWord);
-            }
+            Task task = TaskCreator.createNewTask(commandByWord);
             taskList.add(task);
+            TaskUpdater.addTask(task);
             return "Got it. I've added this task:\n    " +
                     task.toString() + "\n" +
                     "  Now you have " + taskList.size() + " tasks in the list.";
@@ -31,7 +26,6 @@ public class Tasks {
                     "\n  Use the command /by for deadlines, and /from, /to for events!" +
                     "\n  Please try again.";
         }
-
     }
 
     String mark(int index) {

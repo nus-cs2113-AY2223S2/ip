@@ -27,11 +27,11 @@ public class Duke {
             } else if (commandByWord[0].equals("unmark")) {
                 speak(tasks.unmark(Integer.parseInt(commandByWord[1])));
             } else if (commandByWord[0].equals("deadline")) {
-                speak(tasks.addTask("deadline", commandByWord));
+                speak(tasks.addTask(commandByWord));
             } else if (commandByWord[0].equals("event")) {
-                speak(tasks.addTask("event", commandByWord));
+                speak(tasks.addTask(commandByWord));
             } else if (commandByWord[0].equals("todo")) {
-                speak(tasks.addTask("todo", commandByWord));
+                speak(tasks.addTask(commandByWord));
             } else {
                 speak(ERR_MESSAGE);
             }

@@ -39,6 +39,10 @@ public class Deadline extends Task {
         return new Deadline(taskToDo, dueDate);
     }
 
+    String getType() {
+        return "deadline";
+    }
+
     @Override
     public String toString() {
         return "[D]" + super.toString() + " (by: " + this.dueDate + ")";
