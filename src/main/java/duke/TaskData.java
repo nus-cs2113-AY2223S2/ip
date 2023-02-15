@@ -48,7 +48,7 @@ public class TaskData {
     }
 
     public static Task decodeTask(String encodedTask) throws Exception{
-        String[] taskParameters = encodedTask.split(" ");
+        String[] taskParameters = encodedTask.split("`");
         String taskType = taskParameters[0];
         boolean isDone = taskParameters[1].equals("1");
         String taskName = taskParameters[2];
@@ -78,9 +78,9 @@ public class TaskData {
     private static String encodeTaskNameAndStatus(Task task, String taskTypeAsString){
         String encodedOutput = taskTypeAsString;
         if(task.isDone()) {
-            encodedOutput = encodedOutput.concat(" 1 ");
+            encodedOutput = encodedOutput.concat("`1`");
         }else{
-            encodedOutput = encodedOutput.concat(" 0 ");
+            encodedOutput = encodedOutput.concat("`0`");
         }
         encodedOutput = encodedOutput.concat(task.getTaskName());
         return encodedOutput;
@@ -88,13 +88,13 @@ public class TaskData {
 
     private static String encodeDeadlineData(Deadline deadlineTask){
         String encodedTask = encodeTaskNameAndStatus(deadlineTask, CommandInputs.ADD_DEADLINE_COMMAND_INPUT);
-        encodedTask = encodedTask.concat(" " + deadlineTask.getDoBy());
+        encodedTask = encodedTask.concat("`" + deadlineTask.getDoBy());
         return encodedTask;
     }
 
     private static String encodeEventData(Event eventTask){
         String encodedTask = encodeTaskNameAndStatus(eventTask, CommandInputs.ADD_EVENT_COMMAND_INPUT);
-        encodedTask = encodedTask.concat(" "+ eventTask.getFrom() + " " + eventTask.getTo());
+        encodedTask = encodedTask.concat("`"+ eventTask.getFrom() + "`" + eventTask.getTo());
         return encodedTask;
     }
 }
