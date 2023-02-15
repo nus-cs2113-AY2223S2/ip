@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
 import tasks.Task;
@@ -19,12 +20,6 @@ public class Duke {
     public static String MARK = "For mark and unmark, please type the index\n" + "of the task that you wish to mark or unmark!\n";
     public static String ERROR = "Task must begin with 'todo', 'deadline' or 'event'!\n" + SPACE;
     public static void main(String[] args) {
-        //String logo = " ____        _        \n"
-        //        + "|  _ \\ _   _| | _____ \n"
-        //        + "| | | | | | | |/ / _ \\\n"
-        //        + "| |_| | |_| |   <  __/\n"
-        //        + "|____/ \\__,_|_|\\_\\___|\n";
-        //System.out.println("Hello from\n" + logo);
         String line;
         ArrayList<Task> storage = new ArrayList<>();
         int words; int x; int taskCounter = 0;
@@ -32,6 +27,8 @@ public class Duke {
 
         //greet
         System.out.println(GREET);
+
+        
 
         //echo
         boolean hi = true;
@@ -56,12 +53,14 @@ public class Duke {
                     case "mark":
                         x = Integer.parseInt(line.substring(5));
                         storage.get(x - 1).markAsDone();
+                        Files.writeToFile("data/duke.txt", storage);
                         System.out.println(DONE);
                         System.out.println(storage.get(x - 1).toString() + '\n' + SPACE);
                         break;
                     case "unmark":
                         x = Integer.parseInt(line.substring(7));
                         storage.get(x - 1).undo();
+                        Files.writeToFile("data/duke.txt", storage);
                         System.out.println(UNDONE);
                         System.out.println(storage.get(x - 1).toString() + '\n' + SPACE);
                         break;
@@ -70,10 +69,13 @@ public class Duke {
                             Deadline dl = new Deadline(line);
                             storage.add(dl);
                             taskCounter++;
+                            Files.appendToFile("data/duke.txt", taskCounter + ". " + storage.get(taskCounter - 1) + '\n');
                             System.out.println(ROGER + dl);
                             System.out.println("Now you have " + taskCounter + " tasks in the list.\n" + SPACE);
                         } catch (IndexOutOfBoundsException e){
                             System.out.println("OOPS! Deadline must have a task and a timing separated by a '/'!\n" + SPACE);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
                         }
                         break;
                     case "todo":
@@ -81,10 +83,13 @@ public class Duke {
                             Todo todo = new Todo(line);
                             storage.add(todo);
                             taskCounter++;
+                            Files.appendToFile("data/duke.txt", taskCounter + ". " + storage.get(taskCounter - 1) + '\n');
                             System.out.println(ROGER + todo);
                             System.out.println("Now you have " + taskCounter + " tasks in the list.\n" + SPACE);
                         } catch (IndexOutOfBoundsException e){
                             System.out.println("OOPS! Task to do cannot be left empty!\n" + SPACE);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
                         }
                         break;
                     case "event" :
@@ -92,10 +97,13 @@ public class Duke {
                             Event event = new Event(line);
                             storage.add(event);
                             taskCounter++;
+                            Files.appendToFile("data/duke.txt", taskCounter + ". " + storage.get(taskCounter - 1) + '\n');
                             System.out.println(ROGER + event);
                             System.out.println("Now you have " + taskCounter + " tasks in the list.\n" + SPACE);
                         } catch (IndexOutOfBoundsException e){
                             System.out.println("OOPS! Event cannot be left empty!\n" + SPACE);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
                         }
                         break;
                     case "delete" :
@@ -114,6 +122,8 @@ public class Duke {
                 System.out.println("OOPS! could you try that again?\n" + SPACE);
             } catch (NumberFormatException e){
                 System.out.println(MARK + SPACE);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
         //exit
