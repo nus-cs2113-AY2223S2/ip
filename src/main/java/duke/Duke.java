@@ -32,9 +32,9 @@ public class Duke {
             // mark work as unfinished
             int index;
             try {                        
-                index = Integer.parseInt(line.substring(cmdIdx+1, line.length())) - 1;
+                index = Integer.parseInt(cmdContent) - 1;
             } catch (NumberFormatException e) {
-                throw new DukeException("Wrong number format: " + line.substring(cmdIdx+1, line.length()));
+                throw new DukeException("Wrong number format: " + cmdContent);
             }
             todoList.markItem(index, false);
         }else if(command.equals("todo")){
@@ -46,6 +46,17 @@ public class Duke {
         }else if(command.equals("event")){
             Event event = Event.toEvent(cmdContent);
             todoList.addItem(event);
+        }else if(command.equals("delete")){
+            try {                        
+                int index = Integer.parseInt(cmdContent);
+                if(index > 0){
+                    todoList.deleteItem(--index);
+                }else{
+                    throw new DukeException("Wrong number format: " + cmdContent);
+                }
+            } catch (NumberFormatException e) {
+                throw new DukeException("Wrong number format: " + cmdContent);
+            }
         }else{
             // invalid command
             throw new DukeException("I'm sorry, but I don't know what that means :-(");
