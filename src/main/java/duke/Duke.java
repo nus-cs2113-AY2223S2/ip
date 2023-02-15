@@ -23,6 +23,7 @@ public class Duke {
             "     Enter \"event 'task-name' /from 'start-date' /to 'end-date'\" to add a task with start and end dates.\n" +
             "     Enter \"mark 'task-index'\" to mark a task as done.\n" +
             "     Enter \"unmark 'task-index'\" to mark a task as not done yet.\n" +
+            "     Enter \"delete 'task-index'\" to delete a task from the list.\n" +
             "     Enter \"list\" to obtain a list of all your tasks!.\n";
     public static final String BYE = "     Bye. Hope to see you again soon!\n";
     public static final String NOT_DONE = "    OK :(, I've marked this task as not done yet: \n    ";
@@ -161,6 +162,12 @@ public class Duke {
                 }
             }
             line = in.nextLine();
+            try {
+                writeToFile();
+                System.out.println("list updated");
+            } catch (IOException e) {
+                System.out.println("Something went wrong: " + e.getMessage());
+            }
         }
     }
 
@@ -231,11 +238,6 @@ public class Duke {
             System.out.println(LINE + "Data File Missing! Check if you have accidentally deleted it.\n" + LINE);
         }
         readInputs();
-        try {
-            writeToFile();
-        } catch (IOException e) {
-            System.out.println("Something went wrong: " + e.getMessage());
-        }
         System.out.print(LINE + BYE + LINE);
     }
 }
