@@ -54,7 +54,7 @@ public class Parser {
         } else if (command.contains("todo")) {
             boolean isValidTodoInput = checkTodoInput(command);
             if (isValidTodoInput) {
-                TaskList.createTask(command);
+                TaskList.createTodo(command);
             }
 
 

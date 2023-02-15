@@ -15,11 +15,13 @@ public class Duke {
     private static String filePath = "data/tasklist.txt";
     private Ui ui;
 
+
+
     public Duke(String filePath) {
         ui = new Ui();
-        Storage storage = new Storage(filePath);
+        //Storage storage = new Storage(filePath);
         try {
-            storage.readFile(filePath, tasks);
+            Storage.readFile(filePath, tasks);
         } catch (java.io.FileNotFoundException e) {
             ui.showLoadingError();
         }
@@ -27,14 +29,18 @@ public class Duke {
 
     public static void run() {
         Storage storage = new Storage(filePath);
+
         String command;
         String latestResponse = "";
         boolean hasAdditionalTask = false;
         greetUser();
         boolean isRunning = true;
 
+
+
         while (true) {
             command = latestResponse;
+
 
             if (!hasAdditionalTask) {
                 System.out.println("What can I do for your today?");
@@ -57,7 +63,7 @@ public class Duke {
             }
 
         }
-        storage.writeFile(filePath, tasks);
+        Storage.writeFile(filePath, tasks);
         sayBye();
 
     }

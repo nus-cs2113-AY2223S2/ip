@@ -5,8 +5,8 @@ public class Task {
     protected String taskName;
     protected boolean isCompleted;
 
-    protected int taskNumber;
     protected String taskType;
+
 
 
 
@@ -48,9 +48,9 @@ public class Task {
 
     public void printTask() {
         if (this.isCompleted) {
-            System.out.println(".[T][X] " + this.taskName);
+            System.out.println(".[" + getTaskType(this) + "][ ] " + this.taskName);
         } else {
-            System.out.println(".[T][ ] " + this.taskName);
+            System.out.println(".[" + getTaskType(this) + "][ ] " + this.taskName);
         }
 
     }

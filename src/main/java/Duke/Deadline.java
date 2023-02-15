@@ -27,9 +27,9 @@ public class Deadline extends Task {
     @Override
     public void printTask() {
         if (this.isCompleted) {
-            System.out.println(".[D][X]" + this.taskName + " (by: " + this.getEndTime() + ")");
+            System.out.println(".[" + getTaskType(this) + "][X]" + this.taskName + " (by: " + this.getEndTime() + ")");
         } else {
-            System.out.println(".[D][ ]" + this.taskName + " (by: " + this.getEndTime() + ")");
+            System.out.println(".[" + getTaskType(this) + "][ ]" + this.taskName + " (by: " + this.getEndTime() + ")");
         }
 
     }

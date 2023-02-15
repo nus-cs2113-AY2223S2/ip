@@ -18,9 +18,9 @@ public class TaskList {
     }
 
 
-    public static void createTask(String command) {
+    public static void createTodo(String command) {
         command = command.substring(5);
-        Task task = new Task(command);
+        Task task = new Todo(command);
         task.isCompleted = false;
         task.taskName = command;
         System.out.println("added:  " + task.taskName);

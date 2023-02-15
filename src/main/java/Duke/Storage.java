@@ -1,4 +1,5 @@
 package Duke;
+
 import java.io.*;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -18,18 +19,20 @@ public class Storage {
     }
 
     public static void writeFile(String filePath, ArrayList<Task> list) {
+
+
+
         try {
             File savedFile = new File(filePath);
             FileWriter writeFile = new FileWriter(savedFile);
             for (Task task : list) {
 
 
-
                 if (Objects.equals(task.taskType, "D")) {
-                    Deadline newDeadline = (Deadline)task;
+                    Deadline newDeadline = (Deadline) task;
                     writeFile.write(newDeadline.taskType + "|" + newDeadline.isCompleted + "|" + newDeadline.taskName + "|" + newDeadline.endTime + System.lineSeparator());
                 } else if (Objects.equals(task.taskType, "E")) {
-                    Event newEvent = (Event)task;
+                    Event newEvent = (Event) task;
                     writeFile.write(newEvent.taskType + "|" + newEvent.isCompleted + "|" + newEvent.taskName + "|" + newEvent.startTime + "|" + newEvent.endTime + System.lineSeparator());
                 } else if (Objects.equals(task.taskType, "T")) {
                     writeFile.write(task.taskType + "|" + task.isCompleted + "|" + task.taskName + System.lineSeparator());
@@ -44,6 +47,8 @@ public class Storage {
 
 
     public static void readFile(String filePath, ArrayList<Task> list) throws FileNotFoundException, ArrayIndexOutOfBoundsException {
+
+
         File savedFile = new File(filePath);
         if (!savedFile.getParentFile().exists()) {
             savedFile.getParentFile().mkdirs();
@@ -67,21 +72,23 @@ public class Storage {
             }
 
 
-            if (Objects.equals(fileType, "T")) {
-                Task newTask = new Task(inputCommands[2]);
-                newTask.setTaskProgress(isCompleted);
-                list.add(newTask);
-            } else if (Objects.equals(fileType, "D")) {
+            if (Objects.equals(fileType, "D")) {
                 Deadline newDeadline = new Deadline(inputCommands[2]);
+                newDeadline.setAsDeadline();
                 newDeadline.setTaskProgress(isCompleted);
                 newDeadline.setEndTime(inputCommands[3]);
                 list.add(newDeadline);
             } else if (Objects.equals(fileType, "E")) {
                 Event newEvent = new Event(inputCommands[2]);
+                newEvent.setAsEvent();
                 newEvent.setTaskProgress(isCompleted);
                 newEvent.setStartTime(inputCommands[3]);
                 newEvent.setEndTime(inputCommands[4]);
                 list.add(newEvent);
+            } else if (Objects.equals(fileType, "T")) {
+                Task newTask = new Task(inputCommands[2]);
+                newTask.setTaskProgress(isCompleted);
+                list.add(newTask);
             } else
                 throw new FileNotFoundException();
         }

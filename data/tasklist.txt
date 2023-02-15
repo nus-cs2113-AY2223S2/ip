@@ -1,5 +1,2 @@
-T|true|that
-T|false| d2 
-T|true| d3 
-T|false| d5 
-T|false| d6 
+D|false| d1 |b
+E|false| e1 |t |f
