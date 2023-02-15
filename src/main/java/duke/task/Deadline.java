@@ -16,6 +16,13 @@ public class Deadline extends Task {
 
     @Override
     public String saveText() {
+<<<<<<< HEAD
         return "D | " + (super.isDone ? 1 : 0) + " | " + super.description + " | " + by;
     }
 }
+=======
+        return "D | " + (super.isDone ? 1 : 0) + " | " +
+                super.description + " | " + by;
+    }
+}
+>>>>>>> branch-Level-7
