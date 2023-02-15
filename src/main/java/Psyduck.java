@@ -1,10 +1,8 @@
-<<<<<<< HEAD
+
 import java.util.ArrayList;
-=======
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
->>>>>>> branch-Level-7
 
 public class Psyduck {
     private static Storage storage = new Storage();
@@ -20,7 +18,7 @@ public class Psyduck {
     }
 
     public static Task getTask(int taskNum) {
-        return tasks.get(taskNum-1); //array is 0-indexed, taskNum is 1-indexed
+        return tasks.get(taskNum - 1); //array is 0-indexed, taskNum is 1-indexed
     }
 
     public static Task getNewestTask() {
@@ -51,10 +49,11 @@ public class Psyduck {
     }
 
     public static void removeTask(int taskNum) {
-        tasks.remove(taskNum-1);
+        tasks.remove(taskNum - 1);
         taskCount--;
 
     }
+
     public static void listTasks() {
         Command.linePrint();
         if (taskCount == 0) { //list is empty
@@ -80,7 +79,7 @@ public class Psyduck {
         Command.linePrint();
     }
 
-    public static void main(String[] args)  {
+    public static void main(String[] args) {
         greet();
         try {
             storage.readFile(filepath);
