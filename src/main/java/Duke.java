@@ -4,7 +4,7 @@ import commands.Event;
 import commands.Task;
 import commands.Deadline;
 import commands.Todo;
-import Exceptions.DukeException;
+import exceptions.DukeException;
 
 public class Duke {
     private static final String LINE = "____________________________________________________________";
