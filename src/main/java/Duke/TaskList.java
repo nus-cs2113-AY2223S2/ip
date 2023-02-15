@@ -1,4 +1,5 @@
 package Duke;
+
 import Duke.*;
 
 import java.util.ArrayList;
@@ -11,36 +12,35 @@ public class TaskList {
         try {
             int val = Integer.parseInt(command.substring(7));
             System.out.println("Noted. I've removed this task:");
-            Task task = tasks.get(val-1);
+            Task task = tasks.get(val - 1);
             System.out.print(val);
             task.printTask();
-            tasks.remove(val-1);
-        } catch (NumberFormatException e){
+            tasks.remove(val - 1);
+        } catch (NumberFormatException e) {
             System.out.println("ERROR The task number is invalid!");
         }
 
     }
 
-    public static void findTask(String command){
+    public static void findTask(String command) {
         String keyword = command.substring(5);
-        System.out.println(keyword);
+
         ArrayList<Task> refinedTasks = new ArrayList<>();
-        for (Task task : tasks){
-            if ((task.getTaskName()).contains(keyword) ){
+        for (Task task : tasks) {
+            if ((task.getTaskName()).contains(keyword)) {
                 refinedTasks.add(task);
             }
         }
         int numberOfFoundTasks = refinedTasks.size();
         int i = 1;
         System.out.println("There are " + numberOfFoundTasks + " matching tasks in your list");
-        for (Task foundTask : refinedTasks){
+        for (Task foundTask : refinedTasks) {
             if (foundTask != null) {
                 System.out.print(i);
                 foundTask.printTask();
             }
             i++;
         }
-
 
 
     }
@@ -132,8 +132,6 @@ public class TaskList {
         return readTask();
 
     }
-
-
 
 
 }

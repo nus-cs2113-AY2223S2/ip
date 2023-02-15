@@ -128,6 +128,25 @@ public class InputChecking {
         return true;
 
     }
+
+    public static boolean checkFindInput(String input){
+        try {
+            input = input.toLowerCase();
+            String keyword = input.substring(5);
+            keyword = keyword.replace(" ","");
+
+            if (keyword.length() == 0 || keyword.equals(" ")) {
+                System.out.println("The keyword is missing!");
+                return false;
+            }
+        } catch (StringIndexOutOfBoundsException e){
+            System.out.println("The keyword is missing!");
+            return false;
+        }
+        return true;
+    }
+
+
     public static boolean checkUnmarkInput(String command, int numberOfTasks) {
         command = command.toLowerCase();
         String[] words = command.split(" ");
@@ -198,7 +217,6 @@ public class InputChecking {
         System.out.println("Make sure your input only contains 1 keyword!");
 
     }
-
 
 
     public static boolean checkForValidInput(String input) {

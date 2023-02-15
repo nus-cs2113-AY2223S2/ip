@@ -55,8 +55,10 @@ public class Parser {
 
 
         } else if (command.contains("find")){
-            //boolean isValidFindInput =
-            TaskList.findTask(command);
+            boolean isValidFindInput = checkFindInput(command);
+            if (isValidFindInput) {
+                TaskList.findTask(command);
+            }
 
         }else {
             invalidInputReponse();
