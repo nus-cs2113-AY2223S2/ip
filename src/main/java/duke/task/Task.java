@@ -1,10 +1,14 @@
 package duke.task;
 
 public class Task {
-    /** The description or name of the task added. */
+    /**
+     * The description or name of the task added.
+     */
     protected String description;
 
-    /** Records whether tasking is marked as done or not done. */
+    /**
+     * Records whether tasking is marked as done or not done.
+     */
     protected boolean isDone;
 
     /**
@@ -32,7 +36,7 @@ public class Task {
      *
      * @return Name/Description of the task.
      */
-    public String getDescription(){
+    public String getDescription() {
         return this.description;
     }
 
@@ -48,5 +52,18 @@ public class Task {
      */
     public void unmarkDone() {
         this.isDone = false;
+    }
+
+    /**
+     * Retrieves the true/false value of the completion status of the task in question.
+     *
+     * @return The boolean value (1 or 0) of the completion status. Returns 0 if false/uncompleted,
+     * 1 if task is completed/true.
+     */
+    public int getBooleanValueOfStatus() {
+        if (isDone) {
+            return 1;
+        }
+        return 0;
     }
 }

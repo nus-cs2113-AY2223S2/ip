@@ -26,4 +26,13 @@ public class Deadline extends Task {
     public String toString() {
         return "[D][" + super.getStatusIcon() + "] " + super.getDescription() + " (by: " + by + ")";
     }
+
+    /**
+     * Retrieves the due date of the "deadline" task type.
+     *
+     * @return The ending date of the "deadline" task type in question.
+     */
+    public String getBy() {
+        return by;
+    }
 }

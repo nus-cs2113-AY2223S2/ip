@@ -5,10 +5,18 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import java.io.File;
+import java.io.FileWriter;
+
+
 public class Duke {
+    /**Constant to store location of the file used for writing/storing of data.*/
+    public static final String FILE_LOCATION = "duke.txt";
+
     /**
      * Executes the "Duke" program.
      *
@@ -19,11 +27,37 @@ public class Duke {
         String line = "start";
         ArrayList<Task> list = new ArrayList<>();
         int listSize = 0;
-        Scanner input = new Scanner(System.in);
-        System.out.println("Hello! I'm Duke");
-        System.out.println("What can I do for you?");
+        try {
+            listSize = readFileData(list);
+        } catch (IOException ie) {
+            System.out.println("Failed to find or create a file.");
+        }
 
-        //Get commands while user input is not "bye".
+        Scanner input = new Scanner(System.in);
+        greetUser();
+
+        //Get commands while user input is not "bye", handles errors due to user input.
+        obtainUserInputs(line, list, listSize, input);
+
+        //Transfer final ArrayList back into text file.
+        try {
+            writeFileData(list);
+        } catch (IOException ie) {
+            System.out.println("Unable to save tasks into database. Did you create a .txt file?");
+        }
+    }
+
+    /**
+     * Obtains user inputs and push them into another function to process what the user has typed.
+     * Stores or deletes tasks that are stores in the ArrayList "list", according to what the user
+     * has typed.
+     *
+     * @param line The single line of string inputted by the user.
+     * @param list The ArrayList containing all information about existing tasks and their completion status.
+     * @param listSize The current number of tasks populating the "list" array.
+     * @param input The user input typed in through the command prompt.
+     */
+    private static void obtainUserInputs(String line, ArrayList<Task> list, int listSize, Scanner input) {
         while (!line.equals("bye")) {
             line = input.nextLine();
             try {
@@ -32,6 +66,144 @@ public class Duke {
                 handleException(line);
             }
         }
+    }
+
+    /**
+     * Writes information stored on the ArrayList "list" into the .txt file, effectively saving the information
+     * contained in the "list" for future use.
+     *
+     * @param list The ArrayList containing all information about existing tasks and their completion status.
+     * @throws IOException Exception that is generated due to errors in input or output.
+     */
+    private static void writeFileData(ArrayList<Task> list) throws IOException{
+        FileWriter fileRewriter = new FileWriter(FILE_LOCATION);
+        for (Task task : list) {
+            String taskType = getTaskType(task);
+            fileRewriter.write(taskType + "/" + task.getBooleanValueOfStatus() + "/" + task.getDescription());
+            if (taskType.equals("D")) {
+                fileRewriter.write("/" + ((Deadline) task).getBy());
+            } else if (taskType.equals("E")) {
+                fileRewriter.write("/" + ((Event) task).getFrom() + "/" + ((Event) task).getTo());
+            }
+            fileRewriter.write(System.lineSeparator());
+        }
+        fileRewriter.close();
+    }
+
+    /**
+     * Retrieves the class of the object (ToDo, Event, Deadline etc.)
+     * Generates a single-letter string to be used for writing to the .txt file.
+     *
+     * @param task A specific task found in the ArrayList "list".
+     * @return A single-letter string representing the different class types (e.g. T,D,E)
+     */
+    private static String getTaskType(Task task) {
+        if (task.getClass().toString().equals("class duke.task.ToDo")) {
+            return "T";
+        }
+        if (task.getClass().toString().equals("class duke.task.Deadline")) {
+            return "D";
+        }
+        return "E";
+    }
+
+    /**
+     * Reads the strings that are stored in the .txt file and converts them into editable data
+     * within the program by storing them on an ArrayList.
+     * @param list The ArrayList used to store all the information found in the .txt file.
+     * @return Returns the final size of the ArrayList "list" after populating the ArrayList.
+     * @throws IOException Exception related to all input and output errors.
+     */
+    private static int readFileData(ArrayList<Task> list) throws IOException {
+        File database = new File(FILE_LOCATION);
+        if (database.exists()) {
+            Scanner fileReader = new Scanner(database);
+            while (fileReader.hasNext()) {
+                String fileLine = fileReader.nextLine();
+                String[] fileData = fileLine.split("/");
+                uploadDataToArrayList(fileData, list);
+            }
+            lineSeparator();
+            System.out.println("File found! Loading file from: " + database.getAbsolutePath());
+            System.out.println("You currently have " + list.size() + " tasks in your database.");
+            lineSeparator();
+        } else {
+            printMissingFileError();
+            File newFile = new File("docs");
+            newFile.mkdirs();
+            database.createNewFile();
+        }
+        return list.size();
+    }
+
+    /**
+     * Processes what is written in the first string of each line of the .txt file and decides
+     * what is to be written into the ArrayList for storage.
+     *
+     * @param fileData An array of strings that have been split into different indexes for arraylist
+     *                 initialization.
+     * @param list The ArrayList to be populated with data coming from the .txt file.
+     */
+    private static void uploadDataToArrayList(String[] fileData, ArrayList<Task> list) {
+        switch (fileData[0]) {
+        case "T":
+            transferToDo(fileData, list);
+            break;
+        case "D":
+            transferDeadline(fileData, list);
+            break;
+        case "E":
+            transferEvent(fileData, list);
+            break;
+        }
+    }
+
+    /**
+     * If line found in .txt file is determined to be a task of type "Event", this method
+     * will be executed to populate the ArrayList "list".
+     *
+     * @param fileData An array of strings that have been split into different indexes for arraylist
+     *                 initialization.
+     * @param list The ArrayList to be populated with data coming from the .txt file.
+     */
+    private static void transferEvent(String[] fileData, ArrayList<Task> list) {
+        Event newEventTask = new Event(fileData[2], fileData[3], fileData[4]);
+        if (fileData[1].equals("1")) {
+            newEventTask.markDone();
+        }
+        list.add(newEventTask);
+    }
+
+    /**
+     * If line found in .txt file is determined to be a task of type "Deadline", this method
+     * will be executed to populate the ArrayList "list".
+     *
+     * @param fileData An array of strings that have been split into different indexes for arraylist
+     *                 initialization.
+     * @param list The ArrayList to be populated with data coming from the .txt file.
+     */
+    private static void transferDeadline(String[] fileData, ArrayList<Task> list) {
+        Deadline newDeadlineTask = new Deadline (fileData[2], fileData[3]);
+        if (fileData[1].equals("1")) {
+            newDeadlineTask.markDone();
+        }
+        list.add(newDeadlineTask);
+    }
+
+    /**
+     * If line found in .txt file is determined to be a task of type "ToDo", this method
+     * will be executed to populate the ArrayList "list".
+     *
+     * @param fileData An array of strings that have been split into different indexes for arraylist
+     *                 initialization.
+     * @param list The ArrayList to be populated with data coming from the .txt file.
+     */
+    private static void transferToDo(String[] fileData, ArrayList<Task> list) {
+         ToDo newToDo = new ToDo(fileData[2]);
+         if (fileData[1].equals("1")) {
+             newToDo.markDone();
+         }
+         list.add(newToDo);
     }
 
     /**
@@ -344,6 +516,26 @@ public class Duke {
     private static void printInvalidInputError() {
         lineSeparator();
         System.out.println("OOPS!!! Please key in a valid task number!");
+        lineSeparator();
+    }
+
+    /**
+     * Prints a string to inform the user that file used to retrieve and store data does not
+     * exist, and that the program will attempt to create a file for this exact purpose.
+     */
+    private static void printMissingFileError() {
+        lineSeparator();
+        System.out.println("File cannot be found! Creating new file for data storage...");
+        lineSeparator();
+    }
+
+    /**
+     * Generates strings to greet the user and welcome them to the program.
+     */
+    private static void greetUser() {
+        lineSeparator();
+        System.out.println("Hello! I'm Duke");
+        System.out.println("What can I do for you?");
         lineSeparator();
     }
 

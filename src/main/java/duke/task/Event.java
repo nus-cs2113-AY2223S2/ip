@@ -30,4 +30,22 @@ public class Event extends Task {
     public String toString() {
         return "[E][" + super.getStatusIcon() + "]" + super.getDescription() + " (from: " + from + " to: " + to + ")";
     }
+
+    /**
+     * Retrieves the start date of the task of type "Event".
+     *
+     * @return The starting date of the "event" task type.
+     */
+    public String getFrom() {
+        return from;
+    }
+
+    /**
+     * Retrieves the end date of the task of type "Event".
+     *
+     * @return The ending date of the "event" task type.
+     */
+    public String getTo() {
+        return to;
+    }
 }
