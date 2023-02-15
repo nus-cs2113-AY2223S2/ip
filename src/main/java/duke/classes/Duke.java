@@ -40,7 +40,7 @@ public class Duke {
         writer.write(textAppend);
         writer.close();
     }
-    
+
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -53,6 +53,8 @@ public class Duke {
         System.out.println("What can I do for you\n");
 
         File file = new File("src/duke_list.txt");
+        String[] unsavedList = new String[100];
+        String filePath = "src/duke_list.txt";
 
         try {
             System.out.println("This is the current content of the duke_list file, if any:");
@@ -76,6 +78,15 @@ public class Duke {
 
             if (Objects.equals(input, "bye")) {
                 isBye = true;
+                String newList = "";
+                for (int i = 0; i < count; i++) {
+                    newList += unsavedList[i].toString();
+                }
+                try {
+                    appendFile(filePath, newList);
+                } catch (IOException e) {
+                    System.out.println("Something went wrong: " + e.getMessage());
+                }
                 break;
 
             } else if (Objects.equals(input, "list")) {
@@ -88,14 +99,16 @@ public class Duke {
 
             } else if (input.length() > 5 && (input.substring(0,5)).equals("mark ") && input.substring(5, input.length()).matches("[0-9]+")) {
                     Integer order = Integer.valueOf(input.substring(5, input.length()));
-                    String oldText = inputs[order - 1].toString() + System.lineSeparator();
                     inputs[order - 1].markDone();
+                    String newText = inputs[order - 1].toString() + System.lineSeparator();
+                    unsavedList[order - 1] = newText;
                     System.out.println("Nice! I've marked this task as done:\n" + inputs[order - 1]);
 
             } else if (input.length() > 7 && (input.substring(0,7)).equals("unmark ") && input.substring(7, input.length()).matches("[0-9]+")) {
                     Integer order = Integer.valueOf(input.substring(7, input.length()));
-                    String oldText = inputs[order - 1].toString() + System.lineSeparator();
                     inputs[order - 1].markUndone();
+                    String newText = inputs[order - 1].toString() + System.lineSeparator();
+                    unsavedList[order - 1] = newText;
                     System.out.println("OK, I've marked this task as not done yet:\n" + inputs[order - 1]);
 
             } else if (Objects.equals(input, "event") || Objects.equals(input, "todo") || Objects.equals(input, "deadline")) {
@@ -110,13 +123,8 @@ public class Duke {
                     inputs[count] = new Todo(info);
                     inputs[count].isDone = false;
                     System.out.println("Got it. I've added this task: \n" + inputs[count] + "\nNow you have " + (count + 1) + " tasks in your list." );
-                    String filePath = "src/duke_list.txt";
                     String text = inputs[count].toString() + System.lineSeparator();
-                    try {
-                        appendFile(filePath, text);
-                    } catch (IOException e) {
-                        System.out.println("Something went wrong: " + e.getMessage());
-                    }
+                    unsavedList[count] = text;
                     count++;
                 } else if (input.length() > 7 && input.substring(0,8).equals("deadline")) {
                     String info = input.substring(9,input.indexOf("/"));
@@ -124,13 +132,8 @@ public class Duke {
                     inputs[count] = new Deadline(info, timeBy);
                     inputs[count].isDone = false;
                     System.out.println("Got it. I've added this task: \n" + inputs[count] + "\nNow you have " + (count + 1) + " tasks in your list." );
-                    String filePath = "src/duke_list.txt";
                     String text = inputs[count].toString() + System.lineSeparator();
-                    try {
-                        appendFile(filePath, text);
-                    } catch (IOException e) {
-                        System.out.println("Something went wrong: " + e.getMessage());
-                    }
+                    unsavedList[count] = text;
                     count++;
                 } else if (input.length() > 4 && input.substring(0,5).equals("event")) {
                     String info = input.substring(6,input.indexOf("/"));
@@ -138,13 +141,8 @@ public class Duke {
                     String timeBy = input.substring(input.lastIndexOf("/")+1, input.length());
                     inputs[count] = new Event(info, timeFrom, timeBy);
                     inputs[count].isDone = false;
-                    String filePath = "src/duke_list.txt";
                     String text = inputs[count].toString() + System.lineSeparator();
-                    try {
-                        appendFile(filePath, text);
-                    } catch (IOException e) {
-                        System.out.println("Something went wrong: " + e.getMessage());
-                    }
+                    unsavedList[count] = text;
                     System.out.println("Got it. I've added this task: \n" + inputs[count] + "\nNow you have " + (count + 1) + " tasks in your list." );
                     count++;
                 } else {
