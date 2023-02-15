@@ -8,12 +8,17 @@ public class TaskList {
     public static ArrayList<Task> tasks = Duke.tasks;
 
     public static void deleteTask(String command) {
-        int val = Integer.parseInt(command.substring(7));
-        System.out.println("Noted. I've removed this task:");
-        Task task = tasks.get(val-1);
-        System.out.print(val);
-        task.printTask();
-        tasks.remove(val-1);
+        try {
+            int val = Integer.parseInt(command.substring(7));
+            System.out.println("Noted. I've removed this task:");
+            Task task = tasks.get(val-1);
+            System.out.print(val);
+            task.printTask();
+            tasks.remove(val-1);
+        } catch (NumberFormatException e){
+            System.out.println("ERROR The task number is invalid!");
+        }
+
     }
 
     public static void findTask(String command){
