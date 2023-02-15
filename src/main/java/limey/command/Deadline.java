@@ -1,6 +1,10 @@
 package limey.command;
 import limey.exception.invalidDateException;
 public class Deadline extends Task{
+    public void setDueDate(String dueDate) {
+        this.dueDate = dueDate;
+    }
+
     private String dueDate;
     public Deadline(String inLine) throws invalidDateException{
         super(inLine);
@@ -9,7 +13,7 @@ public class Deadline extends Task{
         }
         int indexOfBy = inLine.indexOf("/by");
         dueDate = inLine.substring(indexOfBy + 3);
-        setTaskName(super.getTaskName() + "(by: " + getDueDate() +")");
+        setTaskName(super.getTaskName() + " (by: " + getDueDate() +")");
     }
     @Override
     public String getTaskIdentity() {

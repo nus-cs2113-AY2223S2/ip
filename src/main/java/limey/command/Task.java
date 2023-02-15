@@ -5,12 +5,12 @@ public class Task {
     private boolean isDone = false;
     public static int numTasks = 0;
     public Task(String inLine) {
-        int firstSpace = inLine.indexOf(" ");
+        //int firstSpace = inLine.indexOf(" ");
         if (inLine.contains("/")){
             int firstSlash = inLine.indexOf("/");
-            this.taskName = inLine.substring(firstSpace + 1, firstSlash);
+            this.taskName = inLine.substring(0, firstSlash).trim();
         } else {
-            this.taskName = inLine.substring(firstSpace + 1);
+            this.taskName = inLine;
         }
     }
     public String getTaskName() {
@@ -39,6 +39,18 @@ public class Task {
 
     public void setDone(boolean isDone) {
         this.isDone = isDone;
+    }
+
+    public String getDueDate() {
+        return "";
+    }
+
+    public String getFromDate() {
+        return "";
+    }
+
+    public String getToDate() {
+        return "";
     }
 }
 
