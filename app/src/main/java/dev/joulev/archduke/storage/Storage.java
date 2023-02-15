@@ -20,7 +20,7 @@ import dev.joulev.archduke.tasks.Task;
 public class Storage {
     /** The path to the JSON file storing the task list. */
     private static final String FILE = ".archduke/tasks.json";
-    private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     /**
      * Helper method to read the content of a file as string.
@@ -49,7 +49,7 @@ public class Storage {
         try {
             ArrayList<Task> tasks = new ArrayList<>();
             String savedTaskJson = readFromFile(FILE);
-            SavedTask[] savedTasks = gson.fromJson(savedTaskJson, SavedTask[].class);
+            SavedTask[] savedTasks = GSON.fromJson(savedTaskJson, SavedTask[].class);
             for (SavedTask savedTask : savedTasks) {
                 Task task = savedTask.convertToTask();
                 tasks.add(task);
@@ -73,7 +73,7 @@ public class Storage {
         for (int i = 0; i < tasks.size(); i++) {
             savedTasks[i] = tasks.get(i).toSavedTask();
         }
-        String savedTaskJson = gson.toJson(savedTasks);
+        String savedTaskJson = GSON.toJson(savedTasks);
         try {
             writeToFile(FILE, savedTaskJson);
         } catch (Exception e) {
