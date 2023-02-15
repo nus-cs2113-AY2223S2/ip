@@ -160,7 +160,6 @@ public class Duke {
 
             } else if (input.length() > 5 && (input.substring(0,5)).equals("mark ") && input.substring(5, input.length()).matches("[0-9]+")) {
                     Integer order = Integer.valueOf(input.substring(5, input.length()));
-                    System.out.println("the order is: " + order);
                     if(order - 1 >= count) {
                         System.out.println("You cannot mark a task that hasn't been made");
                     } else {
@@ -183,11 +182,16 @@ public class Duke {
                     }
             } else if (input.length() > 7 && input.substring(0,7).equals("delete ") && input.substring(7, input.length()).matches("[0-9]+")) {
                 Integer order = Integer.valueOf(input.substring(7, input.length()));
-                System.out.println("Noted, I've removed this task\n" + listOfTask.get(order - 1));
-                listOfTask.remove(order - 1);
-                updateFile(filePath, listOfTask);
-                count--;
-                System.out.println("Now you have " + count + " tasks in the list");
+                if(order - 1 >= count) {
+                    System.out.println("You cannot delete a task that hasn't been made");
+                }
+                else {
+                    System.out.println("Noted, I've removed this task\n" + listOfTask.get(order - 1));
+                    listOfTask.remove(order - 1);
+                    updateFile(filePath, listOfTask);
+                    count--;
+                    System.out.println("Now you have " + count + " tasks in the list");
+                }
             } else {
                 if (input.length() > 3 && input.substring(0,4).equals("todo")) {
                     String info = input.substring(5,input.length());
