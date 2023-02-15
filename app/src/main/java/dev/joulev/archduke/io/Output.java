@@ -14,10 +14,15 @@ public class Output {
      * margin.
      */
     private static final int BOX_WIDTH = 80;
+    private static final String HORIZONTAL_BASE_PADDING = " ";
+    private static final String LEFT_BORDER_PADDING = BoxDrawingCharacter.VERTICAL_LINE
+            + HORIZONTAL_BASE_PADDING;
+    private static final String RIGHT_BORDER_PADDING = HORIZONTAL_BASE_PADDING
+            + BoxDrawingCharacter.VERTICAL_LINE;
 
-    private static void printLineWithDelim(char leftDelim, char rightDelim) {
+    private static void printLineWithDelim(String leftDelim, String rightDelim) {
         System.out.print(leftDelim);
-        for (int i = 0; i < BOX_WIDTH - 2; i++) {
+        for (int i = 0; i < BOX_WIDTH - leftDelim.length() - rightDelim.length(); i++) {
             System.out.print(BoxDrawingCharacter.HORIZONTAL_LINE);
         }
         System.out.println(rightDelim);
@@ -31,21 +36,21 @@ public class Output {
     private static void printBoxBottomBorder() {
         printLineWithDelim(BoxDrawingCharacter.BOTTOM_LEFT_CORNER,
                 BoxDrawingCharacter.BOTTOM_RIGHT_CORNER);
-        System.out.println("");
+        System.out.println();
     }
 
     private static void printBoxBottomBorder(boolean withBottomMargin) {
         printLineWithDelim(BoxDrawingCharacter.BOTTOM_LEFT_CORNER,
                 BoxDrawingCharacter.BOTTOM_RIGHT_CORNER);
         if (withBottomMargin) {
-            System.out.println("");
+            System.out.println();
         }
     }
 
     private static void printBoxRightBorder(int unusedSpace) {
         // '<=' not '<' since we also have one space as padding
         for (int i = 0; i <= unusedSpace; i++) {
-            System.out.print(' ');
+            System.out.print(HORIZONTAL_BASE_PADDING);
         }
         System.out.println(BoxDrawingCharacter.VERTICAL_LINE);
     }
@@ -56,8 +61,7 @@ public class Output {
      * @see {@link https://patorjk.com/software/taag/#p=display&f=Slant&t=archduke}
      */
     private static void printLogo() {
-        String left = BoxDrawingCharacter.VERTICAL_LINE + " ";
-        String right = " " + BoxDrawingCharacter.VERTICAL_LINE + "\n";
+
         String[] lines = { "                   __        __      __      ",
                 "  ____ ___________/ /_  ____/ /_  __/ /_____ ",
                 " / __ `/ ___/ ___/ __ \\/ __  / / / / //_/ _ \\",
@@ -65,20 +69,21 @@ public class Output {
                 "\\__,_/_/   \\___/_/ /_/\\__,_/\\__,_/_/|_|\\___/ ",
                 "                                             " };
         int lineLength = lines[0].length();
-        int availableSpace = BOX_WIDTH - lineLength - 4;
+        int availableSpace = BOX_WIDTH - lineLength - LEFT_BORDER_PADDING.length()
+                - RIGHT_BORDER_PADDING.length();
         int leftPadding = availableSpace / 2;
         int rightPadding = availableSpace - leftPadding;
 
         for (String line : lines) {
-            System.out.print(left);
+            System.out.print(LEFT_BORDER_PADDING);
             for (int j = 0; j < leftPadding; j++) {
-                System.out.print(' ');
+                System.out.print(HORIZONTAL_BASE_PADDING);
             }
             System.out.print(line);
             for (int j = 0; j < rightPadding; j++) {
-                System.out.print(' ');
+                System.out.print(HORIZONTAL_BASE_PADDING);
             }
-            System.out.print(right);
+            System.out.println(RIGHT_BORDER_PADDING);
         }
     }
 
@@ -95,8 +100,11 @@ public class Output {
      * @throws ArchdukeException If there is an error in formatting the string.
      */
     public static void printf(String format, Object... args) throws ArchdukeException {
-        // Two chars for the borders, two chars for the padding, hence four chars gone.
-        int maxStringWidth = BOX_WIDTH - 4;
+        final String SPACE = " ";
+        final String ELLIPSIS = "...";
+
+        int maxStringWidth = BOX_WIDTH - LEFT_BORDER_PADDING.length()
+                - RIGHT_BORDER_PADDING.length();
 
         String input;
         try {
@@ -104,20 +112,20 @@ public class Output {
         } catch (Exception e) {
             throw new UnknownException("Out.printf; code = formatInput");
         }
-        String[] words = input.split(" ");
+        String[] words = input.split(SPACE);
         int currentLineLength = 0;
 
-        System.out.print(BoxDrawingCharacter.VERTICAL_LINE + " ");
+        System.out.print(LEFT_BORDER_PADDING);
         for (String word : words) {
             if (word.length() > maxStringWidth) {
-                word = word.substring(0, maxStringWidth - 3) + "...";
+                word = word.substring(0, maxStringWidth - ELLIPSIS.length()) + ELLIPSIS;
             }
             if (currentLineLength + word.length() > maxStringWidth) {
                 printBoxRightBorder(maxStringWidth - currentLineLength);
-                System.out.print(BoxDrawingCharacter.VERTICAL_LINE + " ");
+                System.out.print(LEFT_BORDER_PADDING);
                 currentLineLength = 0;
             }
-            System.out.print(word + ' ');
+            System.out.print(word + SPACE);
             currentLineLength += word.length() + 1;
         }
         printBoxRightBorder(maxStringWidth - currentLineLength);

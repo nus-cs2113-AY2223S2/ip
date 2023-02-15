@@ -6,6 +6,8 @@ import java.util.Scanner;
  * This class handles all input from the user.
  */
 public class Input {
+    private static final String TESTING_ENV_NAME = "TESTING";
+    private static final String PROMPT = "> ";
     private Scanner scanner;
 
     /**
@@ -24,8 +26,8 @@ public class Input {
      * @return The user input as a string, not including the newline character.
      */
     public String readUserInput() {
-        if (System.getenv("TESTING") == null) {
-            System.out.print("> ");
+        if (System.getenv(TESTING_ENV_NAME) == null) {
+            System.out.print(PROMPT);
         }
         return scanner.nextLine();
     }

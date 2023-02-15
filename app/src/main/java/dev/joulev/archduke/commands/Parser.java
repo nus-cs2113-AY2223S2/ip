@@ -12,6 +12,10 @@ import dev.joulev.archduke.exceptions.ParserException.ParserExceptionCode;
  * understand.
  */
 public class Parser {
+    private static final String OPTION_INDICATOR = "/";
+    private static final String OPTION_SEPARATOR = " " + OPTION_INDICATOR;
+    private static final String BODY_SEPARATOR = " ";
+
     private static Command prepareCommand(String commandType, String body, String from, String to,
             String by) throws ArchdukeException {
         if (commandType != null) {
@@ -43,7 +47,7 @@ public class Parser {
         String by = null;
 
         for (String rawOption : options) {
-            String[] option = rawOption.split(" ", 2);
+            String[] option = rawOption.split(BODY_SEPARATOR, 2);
             String optionName = option[0];
             String optionValue = option.length > 1 ? option[1] : null;
 
@@ -78,8 +82,8 @@ public class Parser {
      *                           or otherwise cannot be parsed.
      */
     public static Command parse(String input) throws ArchdukeException {
-        String[] parts = input.split(" /");
-        String[] components = parts[0].split(" ", 2);
+        String[] parts = input.split(OPTION_SEPARATOR);
+        String[] components = parts[0].split(BODY_SEPARATOR, 2);
         String[] options = Arrays.copyOfRange(parts, 1, parts.length);
         return getCommandFromComponents(components, options);
     }

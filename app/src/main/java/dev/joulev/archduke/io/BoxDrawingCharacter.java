@@ -9,10 +9,10 @@ public class BoxDrawingCharacter {
     // ╭─╮
     // │ │
     // ╰─╯
-    public static final char HORIZONTAL_LINE = '─';
-    public static final char VERTICAL_LINE = '│';
-    public static final char TOP_LEFT_CORNER = '╭';
-    public static final char TOP_RIGHT_CORNER = '╮';
-    public static final char BOTTOM_LEFT_CORNER = '╰';
-    public static final char BOTTOM_RIGHT_CORNER = '╯';
+    public static final String HORIZONTAL_LINE = "─";
+    public static final String VERTICAL_LINE = "│";
+    public static final String TOP_LEFT_CORNER = "╭";
+    public static final String TOP_RIGHT_CORNER = "╮";
+    public static final String BOTTOM_LEFT_CORNER = "╰";
+    public static final String BOTTOM_RIGHT_CORNER = "╯";
 }
