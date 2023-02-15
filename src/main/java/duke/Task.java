@@ -28,3 +28,4 @@ public class Task {
       return "[T][" + this.getStatusIcon()+ "] " + description;
     }
 }
+
