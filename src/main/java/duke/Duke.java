@@ -1,5 +1,6 @@
 package duke;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -12,7 +13,7 @@ import dukeException.DukeException;
 import dukeException.DukeIOBException;
 
 public class Duke {
-
+    static ArrayList<Task> tasks = new ArrayList<>();
     public Duke() {
 
     }
@@ -23,7 +24,6 @@ public class Duke {
     public static void main(String[] args) {
 
         ArrayList<String> userInputs = new ArrayList<>();
-        ArrayList<Task> tasks = new ArrayList<>();
         Scanner scan = new Scanner(System.in);
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -35,64 +35,72 @@ public class Duke {
         greetUser();
 
         while (true) {
-            Task tsk = null;
             String input = scan.nextLine();
             String[] splitInput = input.split(" ");
-
             switch (splitInput[0]) {
             case "bye":
                 exit();
                 return;
             case "todo":
-                try {                
-                    tsk = new Todo(splitInput[1], false);
-                    addToList(input, userInputs);
-                    tasks.add(tsk);
-                    addTaskPrint(tasks, tsk);
-                } catch (IndexOutOfBoundsException de) {
-                    printExceptionMsg("todo", "description of a todo cannot be empty.");
-                } catch (DukeException de) {
-
-                }
-                
-
-                break;               
+                insertTodo(input);
+                break;
             case "event":
-                tsk = parseEvent(input);
-                addToList(input, userInputs);
-                tasks.add(tsk);
-                addTaskPrint(tasks, tsk);
+                insertEvent(input);
                 break;
-            case "deadline": 
-                tsk = parseDeadline(input);
-                addToList(input, userInputs);
-                tasks.add(tsk);
-                addTaskPrint(tasks, tsk);
+            case "deadline":
+                insertDeadline(input);
                 break;
-            case "list": 
+            case "list":
                 listOut(userInputs, tasks);
                 break;
             case "mark":
-                tasks.get(Integer.parseInt(splitInput[1]) - 1).mark();
-                System.out.println("\t____________________________________________________________");
-                System.out.println("\tNice! I've marked this task as done:");
-                System.out.println("\t  " + tasks.get(Integer.parseInt(splitInput[1]) - 1));
-                System.out.println("\t____________________________________________________________"); 
+                markTask(splitInput);
                 break;
-            case "unmark":                
-                tasks.get(Integer.parseInt(splitInput[1]) - 1).unMark();
-                System.out.println("\t____________________________________________________________");
-                System.out.println("\tOK, I've marked this task as not done yet:");
-                System.out.println("\t  " + tasks.get(Integer.parseInt(splitInput[1]) - 1));
-                System.out.println("\t____________________________________________________________");
+            case "unmark":
+                unMarkTask(splitInput);
+                break;
+            case "delete":
+                deleteTask(splitInput);
                 break;
             default:
                 System.out.println("\t____________________________________________________________");
                 System.out.println(" ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");;
                 System.out.println("\t____________________________________________________________");
-
                 break;
-            }                            
+            }
+
+        }
+    }
+    public static void deleteTask(String[] splitInput) {
+        String tmpTask = tasks.get(Integer.parseInt(splitInput[1]) - 1).toString();
+        tasks.remove(tasks.get(Integer.parseInt(splitInput[1]) - 1));
+        System.out.println("\tNoted. I've removed this task:");
+        System.out.println("\t  " + tmpTask);
+        System.out.println("\tNow you have " + tasks.size() + " tasks in the list.");
+    }
+    public static void unMarkTask(String[] splitInput) {
+        tasks.get(Integer.parseInt(splitInput[1]) - 1).unMark();
+        System.out.println("\t____________________________________________________________");
+        System.out.println("\tOK, I've marked this task as not done yet:");
+        System.out.println("\t  " + tasks.get(Integer.parseInt(splitInput[1]) - 1));
+        System.out.println("\t____________________________________________________________");
+    }
+    public static void markTask(String[] splitInput) {
+        tasks.get(Integer.parseInt(splitInput[1]) - 1).mark();
+        System.out.println("\t____________________________________________________________");
+        System.out.println("\tNice! I've marked this task as done:");
+        System.out.println("\t  " + tasks.get(Integer.parseInt(splitInput[1]) - 1));
+        System.out.println("\t____________________________________________________________");
+    }
+    public static void insertTodo(String input) {
+        try {
+            Task tsk = new Todo(input.substring(5), false);
+            tasks.add(tsk);
+            addTaskPrint(tasks, tsk);
+        } catch (IndexOutOfBoundsException de) {
+            printExceptionMsg("todo", "description of a todo cannot be empty.");
+        } catch (DukeException de) {
+
         }
     }
     public static void printExceptionMsg(String task, String err) {
@@ -110,34 +118,36 @@ public class Duke {
     /*
     This Returns the input as a Deadline object
      */
-    public static Deadline parseDeadline(String input) {
+    public static void insertDeadline(String input) {
         int idx = input.indexOf("/by");
         String desc = input.substring(8, idx);
         String by = input.substring(idx + 3);
         Deadline tsk = null;
         try {
             tsk = new Deadline(desc, false, by);
+            addTaskPrint(tasks, tsk);
         } catch (DukeException de) {
 
         }
-        return tsk;
+        tasks.add(tsk);
     }
     /*
     This Returns the input as a Event object
      */
-    public static Event parseEvent(String input) {
+    public static void insertEvent(String input) {
         int idx = input.indexOf("/from");
         int idx1 = input.indexOf("/to");
         String desc = input.substring(5, idx);
         String start = input.substring(idx + 5, idx1);
-        String end = input.substring(idx1 + 3, input.length());
+        String end = input.substring(idx1 + 3);
         Event tsk = null;
         try {
             tsk = new Event(desc, false, start, end);
+            addTaskPrint(tasks, tsk);
         } catch (DukeException de) {
 
         }
-        return tsk;
+        tasks.add(tsk);
     }
     /*
     This Adds the input to an input array for the ability to keep track of
