@@ -65,4 +65,13 @@ public class ErrorMessages {
         return "Pikapi is unable to find that command, please type in a correct command";
     }
 
+    public String provideMarkNoNumberText(){
+        return "No number provided please provide a number";
+    }
+
+    public String provideMarkStringAsNumber(){
+        return "You input a String as a number >:<";
+    }
+
+
 }
