@@ -1,4 +1,6 @@
-package duke;
+import duke.Deadline;
+import duke.Event;
+import duke.Todo;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -105,7 +107,7 @@ public class FileDataHandler {
     public static void saveTodoTask (Todo newTodoTask, FileWriter todoWriter) throws IOException {
         String details = newTodoTask.getDetails();
         String mark = "0";
-        if (newTodoTask.isDone) {
+        if (newTodoTask.getIsDone()) {
             mark = "1";
         }
         String combined = "T | " + mark + " | " + details;
@@ -115,7 +117,7 @@ public class FileDataHandler {
     public static void saveDeadlineTask (Deadline newDeadlineTask, FileWriter deadlineWriter) throws IOException {
         String details = newDeadlineTask.getDetails();
         String mark = "0";
-        if (newDeadlineTask.isDone) {
+        if (newDeadlineTask.getIsDone()) {
             mark = "1";
         }
         String by = newDeadlineTask.getBy();
@@ -126,7 +128,7 @@ public class FileDataHandler {
     public static void saveEventTask (Event newEventTask, FileWriter eventWriter) throws IOException {
         String details = newEventTask.getDetails();
         String mark = "0";
-        if (newEventTask.isDone) {
+        if (newEventTask.getIsDone()) {
             mark = "1";
         }
         String from = newEventTask.getFrom();

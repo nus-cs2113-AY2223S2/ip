@@ -20,6 +20,10 @@ public class Task {
         return " ";
     }
 
+    public boolean getIsDone() {
+        return this.isDone;
+    }
+
     public void markAsDone() {
         this.isDone = true;
     }

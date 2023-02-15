@@ -1,4 +1,4 @@
-package duke;
+import duke.DukeException;
 
 import java.io.IOException;
 
@@ -6,9 +6,9 @@ public class Parser {
     protected TaskList taskList;
     protected FileDataHandler fileDataHandler;
     //protected Ui ui;
-    public Parser (TaskList taskList, FileDataHandler fileDataHandler) {
-        this.taskList = taskList;
-        this.fileDataHandler = fileDataHandler;
+    public Parser (Duke duke) {
+        this.taskList = duke.taskList;
+        this.fileDataHandler = duke.fileDataHandler;
     }
 
     public boolean parse (String[] inputs) throws IOException, DukeException {

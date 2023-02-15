@@ -1,10 +1,14 @@
-package duke;
+import duke.Deadline;
+import duke.DukeException;
+import duke.Event;
+import duke.Task;
+import duke.Todo;
 
 import java.util.ArrayList;
 
 public class TaskList {
     protected ArrayList<Task> tasks;
-    //private Ui ui = new Ui();
+    //protected Ui ui = new Ui();
     public TaskList() {
         tasks = new ArrayList<>();
     }
