@@ -6,9 +6,10 @@ public class Todo extends Task {
 
     public Todo(String description) {
         super(description);
+        this.type = 'T';
     }
 
     public String toString() {
-        return num + ".[T]" + super.toString();
+        return ".[T]" + super.toString();
     }
 }

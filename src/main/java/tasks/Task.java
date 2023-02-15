@@ -2,17 +2,20 @@ package tasks;
 
 public class Task {
     protected String description;
-    protected static int num = 0;
     protected boolean isDone;
+
+    protected char type;
 
     public Task(String description) {
         this.description = description;
         this.isDone = false;
-        num++;
     }
 
-    public static int getNum(){
-        return num;
+    public char getType(){
+        return type;
+    }
+    public String getDescription() {
+        return description;
     }
 
     public void setIsDone(boolean isDone) {

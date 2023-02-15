@@ -9,9 +9,11 @@ public class Event extends Task {
         super(description);
         this.from = from;
         this.to = to;
+        this.type = 'E';
+
     }
 
     public String toString() {
-        return num + ".[E]" + super.toString() + "(from: " + from + " to: " + to + ")";
+        return ".[E]" + super.toString() + "(from: " + from + " to: " + to + ")";
     }
 }

@@ -5,9 +5,11 @@ import exceptions.InvalidTaskException;
 import tasks.Deadline;
 import tasks.Task;
 
-public class AddDeadline extends Command {
+import java.util.ArrayList;
 
-    public static void addDeadlineTask(Task[] list, String ins) {
+public class AddDeadline {
+
+    public static void addDeadlineTask(ArrayList<Task> list, String ins) {
         try {
             System.out.println(constant.HORIZONTAL_LINE + "\n");
 
@@ -23,8 +25,8 @@ public class AddDeadline extends Command {
             if (by.equals("")) {
                 throw new InvalidTaskException();
             }
-
-            list[Task.getNum()] = new Deadline(description, by);
+            Deadline newTask = new Deadline(description, by);
+            list.add(newTask);
             System.out.println("Added: " + ins);
             System.out.println(constant.HORIZONTAL_LINE + "\n");
         } catch (InvalidTaskException e) {

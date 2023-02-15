@@ -4,27 +4,27 @@ import constants.constant;
 import exceptions.InvalidTaskException;
 import tasks.Task;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
-
-public class HandleUserCommand extends Command {
-    public static void handleCommand(String userCommand, Task[] list, int counter) throws InvalidTaskException {
+public class HandleUserCommand {
+    public static void handleCommand(String userCommand, ArrayList<Task> list) throws InvalidTaskException {
         Scanner in = new Scanner(System.in);
         while (!userCommand.equals("bye")) {
             userCommand = in.nextLine();
             Parser newCommand = new Parser();
             switch (newCommand.parseCommand(userCommand)) {
                 case "todo":
-                    AddTodo.addTodoTask(list, counter, userCommand);
+                    AddTodo.addTodoTask(list, userCommand);
                     break;
                 case "deadline":
                     AddDeadline.addDeadlineTask(list, userCommand);
                     break;
                 case "event":
-                    AddEvent.addEventTask(list, counter, userCommand);
+                    AddEvent.addEventTask(list, userCommand);
                     break;
                 case "list":
-                    if (Task.getNum() == 0) {
+                    if (list.size() == 0) {
                         System.out.println(constant.HORIZONTAL_LINE + "\n");
                         System.out.println("Your day is clear!");
                         System.out.println(constant.HORIZONTAL_LINE + "\n");
@@ -38,9 +38,12 @@ public class HandleUserCommand extends Command {
                 case "unmark":
                     unmarkTask(list, userCommand);
                     break;
+                case "delete":
+                    Deletetask.deleteTask(list,userCommand);
+                    break;
                 case "bye":
-                    Bye ins = new Bye();
-                    ins.bye();
+                    Bye.bye();
+                    Exit.saveFile(list);
                     break;
                 default:
                     System.out.println(new InvalidTaskException().call());
@@ -51,9 +54,9 @@ public class HandleUserCommand extends Command {
         }
     }
 
-    public static void markTask(Task[] list, String ins) {
+    public static void markTask(ArrayList<Task> list, String ins) {
         try {
-            if (Task.getNum() == 0) {
+            if (list.size() == 0) {
                 System.out.println(constant.HORIZONTAL_LINE + "\n");
                 System.out.println("Your day is clear! there is no task");
                 System.out.println(constant.HORIZONTAL_LINE + "\n");
@@ -70,12 +73,13 @@ public class HandleUserCommand extends Command {
                     System.out.println("Please specify the task you want to mark :) ");
                 } else {
                     int taskNum = Integer.parseInt(subStr);
-                    boolean isNumWithinCounter = (taskNum <= Task.getNum()) && (taskNum > 0);
+                    boolean isNumWithinCounter = (taskNum <= list.size()) && (taskNum > 0);
                     if (!isNumWithinCounter) {
                         throw new InvalidTaskException();
                     }
                     System.out.println("Nice! You have done Task " + taskNum);
-                    list[taskNum - 1].setIsDone(true);
+                    System.out.println(constant.HORIZONTAL_LINE + "\n");
+                    list.get(taskNum - 1).setIsDone(true);
                 }
             }
         } catch (InvalidTaskException e) {
@@ -84,9 +88,9 @@ public class HandleUserCommand extends Command {
         }
     }
 
-    public static void unmarkTask(Task[] list, String ins) {
+    public static void unmarkTask(ArrayList<Task> list, String ins) {
         try {
-            if (Task.getNum() == 0) {
+            if (list.size() == 0) {
                 System.out.println(constant.HORIZONTAL_LINE + "\n");
                 System.out.println("Your day is clear! there is no task");
                 System.out.println(constant.HORIZONTAL_LINE + "\n");
@@ -103,14 +107,15 @@ public class HandleUserCommand extends Command {
                     System.out.println("Please specify the task you want to mark :) ");
                 } else {
                     int taskNum = Integer.parseInt(subStr);
-                    boolean isNumWithinCounter = (taskNum <= Task.getNum()) && (taskNum > 0);
+                    boolean isNumWithinCounter = (taskNum <= list.size()) && (taskNum > 0);
 
                     if (!isNumWithinCounter) {
                         throw new InvalidTaskException();
                     }
 
                     System.out.println("Okay, I have unmarked Task " + taskNum);
-                    list[taskNum - 1].setIsDone(false);
+                    System.out.println(constant.HORIZONTAL_LINE + "\n");
+                    list.get(taskNum - 1).setIsDone(false);
                 }
             }
         } catch (InvalidTaskException e) {

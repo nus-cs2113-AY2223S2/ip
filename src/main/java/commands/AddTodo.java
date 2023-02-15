@@ -5,20 +5,23 @@ import exceptions.InvalidTaskException;
 import tasks.Task;
 import tasks.Todo;
 
-public class AddTodo extends Command {
+import java.util.ArrayList;
 
-    public static void addTodoTask(Task[] list, int counter, String ins) throws InvalidTaskException {
+public class AddTodo {
+
+    public static void addTodoTask(ArrayList<Task> list, String ins) {
         try {
             System.out.println(constant.HORIZONTAL_LINE + "\n");
-            if (!ins.contains(" ")){
+            if (!ins.contains(" ")) {
                 throw new InvalidTaskException();
             }
             String[] arrOfStr = ins.split("todo", 2);
             String description = arrOfStr[1];
-            list[Task.getNum()] = new Todo(description);
+            Todo newTask = new Todo(description);
+            list.add(newTask);
             System.out.println("Added: " + ins);
             System.out.println(constant.HORIZONTAL_LINE + "\n");
-        }catch (InvalidTaskException e){
+        } catch (InvalidTaskException e) {
             System.out.println(e.call());
             System.out.println(constant.HORIZONTAL_LINE + "\n");
         }
