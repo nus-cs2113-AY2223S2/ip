@@ -5,10 +5,11 @@ import java.io.IOException;
 public class Parser {
     protected TaskList taskList;
     protected FileDataHandler fileDataHandler;
-    //protected Ui ui;
+    protected Ui ui;
     public Parser (Duke duke) {
         this.taskList = duke.taskList;
         this.fileDataHandler = duke.fileDataHandler;
+        ui = new Ui();
     }
 
     public boolean parse (String[] inputs) throws IOException, DukeException {
@@ -20,42 +21,34 @@ public class Parser {
             return false;
         }
         if (inputs[0].equals("list")) { //want to print out the task list
-            taskList.printTaskList();
+            ui.printTaskList(taskList);
             return false;
         }
         if (inputs[0].equals("mark")) {
             int taskNumber = Integer.parseInt(inputs[1]);
-            taskList.getTask(taskNumber - 1).markAsDone();
-            taskList.printMarkedTask(taskNumber - 1);
-            fileDataHandler.saveFile(taskList);
+            taskList.markTask(taskNumber);
             return false;
         }
         if (inputs[0].equals("unmark")) {
             int taskNumber = Integer.parseInt(inputs[1]);
-            taskList.getTask(taskNumber - 1).markAsNotDone();
-            taskList.printUnmarkedTask(taskNumber - 1);
-            fileDataHandler.saveFile(taskList);
+            taskList.unmarkTask(taskNumber);
             return false;
         }
         if (inputs[0].equals("todo")) {
             taskList.addTodoTask(inputs[1]);
-            fileDataHandler.saveFile(taskList);
             return false;
         }
         if (inputs[0].equals("deadline")) {
             taskList.addDeadlineTask(inputs[1]);
-            fileDataHandler.saveFile(taskList);
             return false;
         }
         if (inputs[0].equals("event")) {
             taskList.addEventTask(inputs[1]);
-            fileDataHandler.saveFile(taskList);
             return false;
         }
         if (inputs[0].equals("delete")) {
             int taskNumber = Integer.parseInt(inputs[1]);
             taskList.deleteTask(taskNumber);
-            fileDataHandler.saveFile(taskList);
             return false;
         }
         throw new DukeException("     ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
