@@ -1,218 +1,227 @@
 package duke;
 
+import duke.storage.Storage;
 import duke.exception.DukeException;
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Todo;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import duke.UI;
+
+import static javax.swing.text.html.CSS.Attribute.MARGIN;
+
 
 public class Duke {
     // Definition lists and methods here:
 
-    //Fixed strings for easier index access for different task categories
-    static final String BY = "/by";
-    static final String FROM = "/from";
-    static final String TO = "/to";
-
-    public static void printMargin(){
-        String MARGIN = "*----------------------------*";
-        System.out.println(MARGIN);
-    }
-    // Storage of tasks
-    public static Task[] tasksArray = new Task[100];
+    public static ArrayList<Task> tasksArray = new ArrayList<>(100);
     public static int taskCount = 0;
-    // Begin Program
-    public static void welcomeMessage(){
-        String logo = "┊┊┊┊┊╭╭╭╮╮╮┊┊┊┊ \n" +
-                "┊┊┊┊┊╰╰╲╱╯╯┊┊┊┊ \n" +
-                "┊┏╮╭┓╭━━━━━━╮┊┊ \n" +
-                "┊╰╮╭╯┃┈┈┈┈┈┈┃┊┊ \n" +
-                "┊┊┃╰━╯┈┈╰╯┈┈┃┊┊ \n" +
-                "┊┊┃┈┈┈┈┈┈┈╰━┫┊┊ \n" +
-                "╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲\n" ;
-        printMargin();
-        System.out.println(logo);
-        System.out.println("Hello! I'm Duke!");
-        System.out.println("What can I do for you?");
-        printMargin();
-    }
-    // Terminate program
-    public static void endProgram(){
-        printMargin();
-        System.out.println("Bye. Hope to see you again soon!");
-        printMargin();
-    }
-    // For 'list' command
-    public static void accessList(){
-        printMargin();
-        System.out.println("Here are the tasks in your list:");
-        for (int i = 0; i < taskCount; i++) {
-            System.out.println((i + 1) + ". " + tasksArray[i].toString());
-        }
-        printMargin();
-    }
-    // Marking task as done
-    public static void markTask(int taskIdx){
-        tasksArray[taskIdx-1].setDone(true);
-        printMargin();
-        System.out.println("Nice! I've marked this task as done:");
-        System.out.println("  " +  tasksArray[taskIdx-1].getStatusIcon() +
-                tasksArray[taskIdx-1].description);
-        printMargin();
-    }
-    // Unmarking task
-    public static void unmarkTask(int taskIdx){
-        tasksArray[taskIdx-1].setDone(false);
-        printMargin();
-        System.out.println("OK, I've marked this task as not done yet:");
-        System.out.println("  " +  tasksArray[taskIdx-1].getStatusIcon()  +
-                tasksArray[taskIdx-1].description);
-        printMargin();
-    }
 
-    // Update task addition sections[todo, event , deadline]:
-    public static void taskAdded(int taskCount){
-        printMargin();
-        System.out.println("Got it. I've added this task:");
-        System.out.println("  "+ tasksArray[taskCount].toString());
-        taskCount++ ;
-        System.out.println("Now you have "+ taskCount + " tasks in the list.");
-        printMargin();
-    }
-
-
-    // How the program runs based on user's input commands
-    public static void enterCommand() {
-        String userCommand;
-        boolean hasProgramEnded = false;
-        int taskIdx;
-        while(!hasProgramEnded) {
-            Scanner input = new Scanner(System.in);
-            userCommand = input.nextLine();
-            // Split user's input into individual words for easier index access
-            String[] wordSeparator = userCommand.split(" ");
-
-            // Identify first word in the user's input and execute corresponding command
-            String KEYWORD = wordSeparator[0];
-
-            // Place remaining words into another string
-            String details = " ";
-            for (int i = 1; i < wordSeparator.length; i++) {
-                details = details + wordSeparator[i];
-            }
-
-
-            switch (KEYWORD) {
-            case "bye":
-                hasProgramEnded = true;
-                break;
-
-            case "list":
-                accessList();
-                break;
-
-            case "mark":
-                try {
-                    taskIdx = Integer.parseInt(wordSeparator[1]);
-                    markTask(taskIdx);
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    printMargin();
-                    System.out.println("Please key in a number to mark!");
-                    printMargin();
-
-                } catch (NullPointerException e) {
-                    printMargin();
-                    System.out.println("This task does not exist!");
-                    printMargin();
-                }
-                break;
-
-            case "unmark":
-                try {
-                    taskIdx = Integer.parseInt(wordSeparator[1]);
-                    unmarkTask(taskIdx);
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    printMargin();
-                    System.out.println("Please key in a number to unmark!");
-                    printMargin();
-
-                } catch (NullPointerException e) {
-                    printMargin();
-                    System.out.println("This task does not exist!");
-                    printMargin();
-                }
-                break;
-
-            case "todo":
-                try {
-                    if (wordSeparator.length == 1) {
-                        throw new DukeException();
-                    }
-                    tasksArray[taskCount] = new Todo(details);
-                    taskAdded(taskCount);
-                    taskCount++;
-                } catch (DukeException e) {
-                    e.todoError();
-                }
-                break;
-
-
-            case "deadline":
-                try {
-                    if (wordSeparator.length == 1) {
-                        throw new DukeException();
-                    }
-                    String[] deadlineTaskSeparator = details.split(BY);
-                    // Get task from user's input
-                    String deadlineTask = deadlineTaskSeparator[0];
-                    // Get due date from user's input
-                    String dueBy = deadlineTaskSeparator[1];
-                    tasksArray[taskCount] = new Deadline(deadlineTask, dueBy);
-                    taskAdded(taskCount);
-                    taskCount++;
-                } catch (DukeException e) {
-                    e.deadlineError();
-                }
-                break;
-
-
-            case "event":
-                try {
-                    if (wordSeparator.length == 1) {
-                        throw new DukeException();
-                    }
-                    String[] eventTaskSeparator = userCommand.split(FROM);
-                    // Get task from user's input
-                    String eveTask = eventTaskSeparator[0];
-                    String eventPeriod = eventTaskSeparator[1];
-                    //Further split the event duration to get start and end times
-                    String[] eventPeriodSeparator = eventPeriod.split(TO);
-                    // Get event start time
-                    String startTime = eventPeriodSeparator[0];
-                    // Get event end time
-                    String endTime = eventPeriodSeparator[1];
-                    tasksArray[taskCount] = new Event(eveTask, startTime, endTime);
-                    taskAdded(taskCount);
-                    taskCount++;
-                } catch (DukeException e) {
-                    e.eventError();
-                }
-                break;
-
-            default:
-                printMargin();
-                System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
-                printMargin();
-                break;
-            }
-        }
+    // Execute error if missing file
+    public static void errorReport(String errorDescription) {
+        System.out.println(MARGIN);
+        System.out.println("ERROR: " + errorDescription);
+        System.out.println(MARGIN);
     }
 
     // Run program here:
     public static void main(String[] args) {
-        welcomeMessage();
-        enterCommand();
-        endProgram();
+        try {
+            Storage.checkFileAccess();
+            List<Task> listOfTasks = Storage.textFileToProgram();
+            tasksArray.addAll(listOfTasks);
+        } catch (FileNotFoundException e) {
+            errorReport("File not found.");
+        } catch (IOException e) {
+            errorReport("Something went wrong: " + e.getMessage());
+        }
+
+        String userInput;
+        Scanner in = new Scanner(System.in);
+        UI.welcomeMessage();
+        do {
+            userInput = in.nextLine();
+            enterCommand(userInput);
+        } while (!userInput.equals("bye"));
     }
+
+    // How the program runs based on user's input commands
+    public static void enterCommand(String userInput) {
+        String[] inputArray = userInput.split(" ");
+        String KEYWORD = inputArray[0];
+        switch (KEYWORD) {
+        case "bye":
+            UI.endProgram();
+            updateFile();
+            break;
+
+        case "list":
+            accessList();
+            break;
+
+        case "mark":
+            try {
+                taskIdx = Integer.parseInt(inputArray[1]);
+                markTask(taskIdx);
+                System.out.println(MARGIN);
+                System.out.println("Nice! I've marked this task as done:");
+                System.out.println("  " + tasksArray.get(taskIdx - 1).toString());
+                System.out.println(MARGIN);
+                break;
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println(MARGIN);
+                System.out.println("Please key in a number to mark!");
+                System.out.println(MARGIN);
+
+            } catch (NullPointerException e) {
+                System.out.println(MARGIN);
+                System.out.println("This task does not exist!");
+                System.out.println(MARGIN);
+            }
+
+
+        case "unmark":
+            try {
+                taskIdx = Integer.parseInt(inputArray[1]);
+                unmarkTask(taskIdx);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println(MARGIN);
+                System.out.println("Please key in a number to unmark!");
+                System.out.println(MARGIN);
+
+            } catch (NullPointerException e) {
+                System.out.println(MARGIN);
+                System.out.println("This task does not exist!");
+                System.out.println(MARGIN);
+            }
+            break;
+
+        case "todo":
+            try {
+                if (inputArray.length == 1) {
+                    throw new DukeException();
+                }
+                tasksArray.add(taskCount, new Todo(details));
+                taskAdded(taskCount);
+                taskCount++;
+            } catch (DukeException e) {
+                e.todoError();
+            }
+            break;
+
+
+        case "deadline":
+            try {
+                if (inputArray.length == 1) {
+                    throw new DukeException();
+                }
+                int separatorIdx = details.indexOf(BY);
+                // Get task from user's input
+                String deadlineTask = details.substring(0, separatorIdx - 1);
+                // Get due date from user's input
+                String dueBy = details.substring(separatorIdx);
+                tasksArray.add(taskCount, new Deadline(deadlineTask, dueBy));
+                taskAdded(taskCount);
+                taskCount++;
+            } catch (DukeException e) {
+                e.deadlineError();
+            }
+            break;
+
+        case "event":
+            try {
+                if (inputArray.length == 1) {
+                    throw new DukeException();
+                }
+                int fromIdx = details.indexOf(FROM);
+                String eveTask = details.substring(0, fromIdx - 1);
+                String eventPeriod = details.substring(fromIdx);
+                //Further split the event duration to get start and end times
+                int toIdx = details.indexOf(TO);
+                // Get event start time
+                String startTime = eventPeriod.substring(fromIdx, toIdx - 1);
+                // Get event end time
+                String endTime = eventPeriod.substring(toIdx);
+                tasksArray.add(taskCount, new Event(eveTask, startTime, endTime));
+                taskAdded(taskCount);
+                taskCount++;
+            } catch (DukeException e) {
+                e.eventError();
+            }
+            break;
+        case "delete":
+            taskCount = Integer.parseInt(inputArray[1]) - 1;
+            System.out.println("Noted. I've removed this task:");
+            System.out.println("  " + tasksArray.get(taskNum).toString());
+            tasksList.remove(taskNum);
+            UI.printTaskList(tasksList.size());
+            updateFile();
+            break;
+
+        default:
+            System.out.println(MARGIN);
+            System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+            System.out.println(MARGIN);
+            break;
+        }
+    }
+    // For 'list' command
+    public static void accessList() {
+        if (tasksArray.isEmpty()) {
+            System.out.println("Your current list is empty. Why not add some tasks in?");
+        }
+        else {
+            System.out.println(MARGIN);
+            System.out.println("Here are the tasks in your list:");
+            for (int i = 0; i < taskCount; i++) {
+                System.out.println((i + 1) + ". " + tasksArray.get(i).toString());
+            }
+            System.out.println(MARGIN);
+        }
+    }
+
+    // Marking task as done
+    public static void markTask(int taskIdx) {
+        tasksArray.get(taskIdx - 1).setDone(true);
+    }
+
+    // Unmarking task
+    public static void unmarkTask(int taskIdx) {
+        tasksArray.get(taskIdx - 1).setDone(false);
+        System.out.println(MARGIN);
+        System.out.println("OK, I've marked this task as not done yet:");
+        System.out.println("  " + tasksArray.get(taskIdx - 1).toString());
+        System.out.println(MARGIN);
+    }
+
+    // Update task addition sections[in-program]
+    public static void taskAdded(int taskCount) {
+        System.out.println(MARGIN);
+        System.out.println("Got it. I've added this task:");
+        System.out.println("  " + tasksArray.get(taskCount).toString());
+        taskCount++;
+        System.out.println("Now you have " + taskCount + " tasks in the list.");
+        System.out.println(MARGIN);
+    }
+    private static void updateFile() {
+        try {
+            Storage.writeToFile("");
+            for (Task task : tasksArray) {
+                Storage.appendTextToFile(task.saveText() + System.lineSeparator());
+            }
+        } catch (IOException err) {
+            System.out.println("Something went wrong: " + err.getMessage());
+        }
+    }
+
 }
+
+
+
+
