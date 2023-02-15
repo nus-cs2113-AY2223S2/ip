@@ -37,13 +37,13 @@ public class Duke {
             String line = in.nextLine();
             System.out.println("____________________________________________________________");
             if ("bye".equalsIgnoreCase(line)) {
-                printByeMessage();
+                printByeMessage(f, tasks);
                 break;
             }
             try {
-                executeDukeCommands(f, line, tasks);
+                executeDukeCommands(line, tasks);
             } catch (DukeException e) {
-                System.out.println("☹ ERROR! Sorry, this is not a recognized Duke command!");
+                System.out.println("ERROR! Sorry, this is not a recognized Duke command!");
             }
             System.out.println("____________________________________________________________");
         }
@@ -124,7 +124,8 @@ public class Duke {
     }
 
     private static void printFileContents(File f) throws FileNotFoundException {
-        Scanner s = new Scanner(f); // create a Scanner using the File as the source
+        // create a Scanner using the File as the source
+        Scanner s = new Scanner(f);
         while (s.hasNext()) {
             System.out.println(s.nextLine());
         }
@@ -145,50 +146,49 @@ public class Duke {
     /**
      * Executes duke commands: list, mark, unmark, todo, deadline, and event with exception handling.
      *
-     * @param f       The DukeData file holding the data.
      * @param command The user inputted command.
      * @param tasks   An ArrayList holding the task objects.
      * @throws DukeException if input is not any of the supported duke commands.
      */
 
-    private static void executeDukeCommands(File f, String command, ArrayList<Task> tasks) throws DukeException {
+    private static void executeDukeCommands(String command, ArrayList<Task> tasks) throws DukeException {
         if (command.trim().equalsIgnoreCase("list")) {
-            printAllTasks(f, tasks);
+            printAllTasks(tasks);
         } else if (command.toLowerCase().startsWith("mark")) {
             try {
                 markTaskAsComplete(command, tasks);
             } catch (IndexOutOfBoundsException e) {
-                System.out.println("☹ ERROR! this task to mark is not recognized.");
+                System.out.println("ERROR! this task to mark is not recognized.");
             }
         } else if (command.toLowerCase().startsWith("unmark")) {
             try {
                 markTaskAsNotComplete(command, tasks);
             } catch (IndexOutOfBoundsException e) {
-                System.out.println("☹ ERROR! this task to unmark is not recognized.");
+                System.out.println("ERROR! this task to unmark is not recognized.");
             }
         } else if (command.toLowerCase().startsWith("todo")) {
             try {
                 addTodo(command, tasks);
             } catch (StringIndexOutOfBoundsException e) {
-                System.out.println("☹ OOPS!! todo description cannot be empty!");
+                System.out.println("OOPS!! todo description cannot be empty!");
             }
         } else if (command.toLowerCase().startsWith("deadline")) {
             try {
                 addDeadline(command, tasks);
             } catch (StringIndexOutOfBoundsException e) {
-                System.out.println("☹ Sorry! your deadline description is invalid!");
+                System.out.println("Sorry! your deadline description is invalid!");
             }
         } else if (command.toLowerCase().startsWith("event")) {
             try {
                 addEvent(command, tasks);
             } catch (StringIndexOutOfBoundsException e) {
-                System.out.println("☹ Sorry! your event description is invalid!");
+                System.out.println("Sorry! your event description is invalid!");
             }
         } else if (command.toLowerCase().startsWith("delete")) {
             try {
                 deleteTask(tasks, command);
             } catch (IndexOutOfBoundsException e) {
-                System.out.println("☹ ERROR! this task to delete is not recognized.");
+                System.out.println("ERROR! this task to delete is not recognized.");
             }
         } else {
             throw new DukeException();
@@ -280,26 +280,14 @@ public class Duke {
     /**
      * Prints all tasks in the ArrayList.
      *
-     * @param f     The DukeData file holding the data.
      * @param tasks An ArrayList holding the task objects.
      */
 
-    private static void printAllTasks(File f, ArrayList<Task> tasks) {
+    private static void printAllTasks(ArrayList<Task> tasks) {
         System.out.println(" Here are the tasks in your list:");
         int index = 1;
-        try {
-            clearFileContents(f);
-        } catch (IOException e) {
-            System.out.println("Something went wrong: " + e.getMessage());
-        }
         for (Task userTask : tasks) {
-            //print Task Description
             System.out.println("  " + index + "." + userTask.toString());
-            try {
-                appendToFile(f, userTask + System.lineSeparator());
-            } catch (IOException e) {
-                System.out.println("Something went wrong: " + e.getMessage());
-            }
             index++;
         }
     }
@@ -315,7 +303,6 @@ public class Duke {
         int index = Integer.parseInt(line.trim().substring(7));
         tasks.get(index - 1).setTaskStatus(false);
         System.out.println(" Okay, I've marked this task as not done yet:");
-        //print Task Description
         System.out.println(tasks.get(index - 1).toString());
     }
 
@@ -330,7 +317,6 @@ public class Duke {
         int index = Integer.parseInt(line.trim().substring(5));
         tasks.get(index - 1).setTaskStatus(true);
         System.out.println(" Nice! I've marked this task as done:");
-        //print Task Description
         System.out.println(tasks.get(index - 1).toString());
     }
 
@@ -342,7 +328,6 @@ public class Duke {
      */
     private static void printTaskAddedDescription(ArrayList<Task> tasks, int taskIndex) {
         System.out.println(" Got it. I've added this task:");
-        //print Task Description
         System.out.println(tasks.get(taskIndex).toString());
         System.out.println(" Now you have " + tasks.size() + " tasks in your list.");
     }
@@ -355,13 +340,24 @@ public class Duke {
      */
     private static void printTaskDeletedDescription(ArrayList<Task> tasks, String description) {
         System.out.println(" Noted. I've deleted this task:");
-        //print Task Description
         System.out.println(description);
         int items = tasks.size() - 1;
         System.out.println(" Now you have " + items + " tasks in your list.");
     }
 
-    private static void printByeMessage() {
+    private static void printByeMessage(File f, ArrayList<Task> tasks) {
+        try {
+            clearFileContents(f);
+        } catch (IOException e) {
+            System.out.println("Something went wrong: " + e.getMessage());
+        }
+        for (Task userTask : tasks) {
+            try {
+                appendToFile(f, userTask + System.lineSeparator());
+            } catch (IOException e) {
+                System.out.println("Something went wrong: " + e.getMessage());
+            }
+        }
         System.out.println(" Bye. Hope to see you again soon!");
         System.out.println("____________________________________________________________");
     }
