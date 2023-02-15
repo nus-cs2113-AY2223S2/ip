@@ -2,6 +2,8 @@ package duke.classes;
 
 import java.util.Objects;
 import java.util.Scanner;
+import java.util.ArrayList;
+
 public class Duke {
     private static void checkError(String input) throws DukeException {
         if (Objects.equals(input, "event") || Objects.equals(input, "todo") || Objects.equals(input, "deadline")) {
@@ -12,6 +14,28 @@ public class Duke {
             throw new DukeException("I'm sorry, but i don't know what that means. Please enter a proper input.");
         }
     }
+
+    private static ArrayList<Task> list_of_tasks = new ArrayList<Task>();
+
+    private static void addTask(Task task) {
+        list_of_tasks.add(task);
+    }
+
+    private static void markTask(Task task) {
+        task.isDone = true;
+    }
+
+    private static void unmarkTask(Task task) {
+        task.isDone = false;
+    }
+    private static void printTasks() {
+        int order = 1;
+        for(int i = 0; i < list_of_tasks.size(); i++) {
+            System.out.println(order + "." + list_of_tasks.get(i));
+            order++;
+        }
+    }
+
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -27,14 +51,7 @@ public class Duke {
         String input = scan.nextLine();
 
         boolean isBye = false;
-        Task[] inputs = new Task[100];
-        for (int k = 0; k < 100; k++) {
-            inputs[k] = new Task("");
-        }
-
         int count = 0;
-        int number = 1;
-
         while (!isBye) {
 
             if (Objects.equals(input, "bye")) {
@@ -43,21 +60,26 @@ public class Duke {
 
             } else if (Objects.equals(input, "list")) {
                 System.out.println("Here are the tasks in your list:");
-                for (int i = 0; i < count; i++) {
-                    System.out.println(number + "." + inputs[i]);
-                    number++;
-                }
-                number = 1;
+                printTasks();
 
             } else if (input.length() > 5 && (input.substring(0,5)).equals("mark ") && input.substring(5, input.length()).matches("[0-9]+")) {
                     Integer order = Integer.valueOf(input.substring(5, input.length()));
-                    inputs[order - 1].markDone();
-                    System.out.println("Nice! I've marked this task as done:\n" + inputs[order - 1]);
+                    Task task = list_of_tasks.get(order - 1);
+                    markTask(task);
+                    System.out.println("Nice! I've marked this task as done:\n" + task);
 
             } else if (input.length() > 7 && (input.substring(0,7)).equals("unmark ") && input.substring(7, input.length()).matches("[0-9]+")) {
                     Integer order = Integer.valueOf(input.substring(7, input.length()));
-                    inputs[order - 1].markUndone();
-                    System.out.println("OK, I've marked this task as not done yet:\n" + inputs[order - 1]);
+                    Task task = list_of_tasks.get(order - 1);
+                    unmarkTask(task);
+                System.out.println("OK, I've marked this task as not done yet:\n" + task);
+
+            } else if (input.length() > 7 && input.substring(0,7).equals("delete ") && input.substring(7, input.length()).matches("[0-9]+")) {
+                Integer order = Integer.valueOf(input.substring(7, input.length()));
+                System.out.println("Noted, I've removed this task\n" + list_of_tasks.get(order - 1));
+                list_of_tasks.remove(order - 1);
+                count--;
+                System.out.println("Now you have " + count + " tasks in the list");
 
             } else if (Objects.equals(input, "event") || Objects.equals(input, "todo") || Objects.equals(input, "deadline")) {
                 try {
@@ -68,24 +90,27 @@ public class Duke {
             } else {
                 if (input.length() > 3 && input.substring(0,4).equals("todo")) {
                     String info = input.substring(5,input.length());
-                    inputs[count] = new Todo(info);
-                    inputs[count].isDone = false;
-                    System.out.println("Got it. I've added this task: \n" + inputs[count] + "\nNow you have " + (count + 1) + " tasks in your list." );
+                    Todo task = new Todo(info);
+                    task.isDone = false;
+                    addTask(task);
+                    System.out.println("Got it. I've added this task: \n" + task + "\nNow you have " + (count + 1) + " tasks in your list." );
                     count++;
                 } else if (input.length() > 7 && input.substring(0,8).equals("deadline")) {
                     String info = input.substring(9,input.indexOf("/"));
                     String timeBy = input.substring(input.indexOf("/")+1, input.length());
-                    inputs[count] = new Deadline(info, timeBy);
-                    inputs[count].isDone = false;
-                    System.out.println("Got it. I've added this task: \n" + inputs[count] + "\nNow you have " + (count + 1) + " tasks in your list." );
+                    Deadline task = new Deadline(info, timeBy);
+                    task.isDone = false;
+                    addTask(task);
+                    System.out.println("Got it. I've added this task: \n" + task + "\nNow you have " + (count + 1) + " tasks in your list." );
                     count++;
                 } else if (input.length() > 4 && input.substring(0,5).equals("event")) {
                     String info = input.substring(6,input.indexOf("/"));
                     String timeFrom = input.substring(input.indexOf("/")+1, input.lastIndexOf("/") - 1);
                     String timeBy = input.substring(input.lastIndexOf("/")+1, input.length());
-                    inputs[count] = new Event(info, timeFrom, timeBy);
-                    inputs[count].isDone = false;
-                    System.out.println("Got it. I've added this task: \n" + inputs[count] + "\nNow you have " + (count + 1) + " tasks in your list." );
+                    Event task = new Event(info, timeFrom, timeBy);
+                    task.isDone = false;
+                    addTask(task);
+                    System.out.println("Got it. I've added this task: \n" + task + "\nNow you have " + (count + 1) + " tasks in your list." );
                     count++;
                 } else {
                     try {

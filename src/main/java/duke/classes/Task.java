@@ -15,17 +15,14 @@ public class Task {
     }
 
     public void markDone() {
-
         this.isDone = true;
     }
 
     public void markUndone() {
-
         this.isDone = false;
     }
 
     public String toString() {
-
         return this.description;
     }
 }
