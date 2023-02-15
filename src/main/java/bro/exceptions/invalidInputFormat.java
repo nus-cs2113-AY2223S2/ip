@@ -1,25 +1,44 @@
 package bro.exceptions;
 
+import bro.tasks.Type;
+
 public class invalidInputFormat extends Exception {
-    private String type;
-    public invalidInputFormat(String type) {
-        this.type = type;
+    private Type queryType;
+    public invalidInputFormat(Type queryType) {
+        this.queryType = queryType;
     }
     @Override
     public String toString() {
-        if (type.equals("m")){
-            return " Bro please follow this format:\n" +
+        String result = "";
+        switch (queryType) {
+        case MARK:
+            result = " Bro please follow this format:\n" +
                     " \"mark/unmark {index of task according to list}\"\n" +
                     " e.g. Finish homework /by Monday 2pm";
-        } else if (type.equals("t")) {
-            return " Bro please follow this format:\n" +
+            break;
+        case TODO:
+            result = " Bro please follow this format:\n" +
                     " \"todo {Name of Todo}\"\n" +
                     " e.g. todo Maths homework";
-        } else if (type.equals("d")) {
-            return " Bro please follow this format:\n" +
+            break;
+        case DEADLINE:
+            result = " Bro please follow this format:\n" +
                     " \"deadline {Name of Deadline} /by {Deadline}\"\n" +
                     " e.g. mark 3";
+            break;
+        case EVENT:
+            result = " Bro please follow this format:\n" +
+                    " \"event {Name of Event} /from {Start Date/Time} /to {End Date/Time}\"\n" +
+                    " e.g. event project meeting /from Mon 2pm /to 4pm";
+            break;
+        case DELETE:
+            result = " Bro please follow this format:\n" +
+                    " \"delete {Index of Task in the list}\"\n" +
+                    " e.g. delete 2";
+            break;
+        default:
+            break;
         }
-        return "";
+        return result;
     }
 }
