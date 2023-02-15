@@ -1,5 +1,11 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
+
 
 public class Task{
     //class level attributes
@@ -12,6 +18,7 @@ public class Task{
     protected String taskName = new String();
     protected int taskNumber;
     protected String description = new String();
+    protected String type = new String();
 
     public Task(String taskName,int taskNumber){
         this.taskName = taskName;
@@ -29,12 +36,46 @@ public class Task{
         System.out.println(DASH+"\nNice! I've marked this task as done:\n"+taskArray[taskIndex-1].description+"\n"+DASH);
     }
 
+    public static Task get(int index){
+        return taskArray[index];
+    }
+
     public static void printList(){
         System.out.println(DASH+"\nHere are the tasks in your list:");
         for(int index = 0;index<Task.lastIndex;index++){
-            System.out.println(Integer.toString(index+1)+"."+taskArray[index].description);
+            System.out.println(Integer.toString(index+1)+"."+(taskArray[index].description).trim());
         }
         System.out.println(DASH + "\n");
+    }
+    //file I/O
+    public String createEntry(){
+        return Integer.toString(this.taskNumber)+(".")+this.type+"."+this.getDoneString()+"."+(this.taskName)+"\n";
+    }
+
+    //format of file = number.type.done.name.from.to
+    public static void loadFileContentsToTaskArray(File f) throws FileNotFoundException{
+        Scanner s = new Scanner(f); // create a Scanner using the File as the source
+        while (s.hasNext()) {
+            String[] taskDetails = (s.nextLine()).split("\\.");
+            if(taskDetails[1].equals("T")){
+                ToDo todo= new ToDo(taskDetails[3],Integer.parseInt(taskDetails[0]),taskDetails[1]);
+                todo.isDone = taskDetails[2].equals("[X]");
+                todo.updateTaskDescription();
+                Task.addToTaskArrayList(todo);
+            }
+            else if(taskDetails[1].equals("E")){
+                Event event = new Event(taskDetails[3],Integer.parseInt(taskDetails[0]),taskDetails[4],taskDetails[5],taskDetails[1]);
+                event.isDone = taskDetails[2].equals("[X]");
+                event.updateTaskDescription();
+                Task.addToTaskArrayList(event);
+            }
+            else if(taskDetails[1].equals("D")){
+                Deadline deadline = new Deadline(taskDetails[3],Integer.parseInt(taskDetails[0]),taskDetails[4],taskDetails[1]);
+                deadline.isDone = taskDetails[2].equals("[X]");
+                deadline.updateTaskDescription();
+                Task.addToTaskArrayList(deadline);
+            }
+        }
     }
 
     public void acknowledgeTaskAdded(){
@@ -51,4 +92,6 @@ public class Task{
     //to be overridden by subclasses
     public void updateTaskDescription(){
     }
+
+
 }

@@ -1,3 +1,6 @@
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 //import java.util.Arrays;
 //import java.util.ArrayList;
@@ -6,28 +9,29 @@ public class Goot {
     String DASH = "__________________________________";
     String greet = DASH + "\nI'm Goot :3\nWhat's up?\n" + DASH;
     System.out.println(greet);
+    File f = new File("data.txt");
+    try{
+        Task.loadFileContentsToTaskArray(f);
+    }
+    catch (IOException e){
+        e.printStackTrace();
+    }
 
 
     while (true) {
         Scanner scan = new Scanner(System.in);
         String input = scan.nextLine();
         String[] inputSplitBySpace = input.split(" ");
-        try{
-            GootExceptionHandler.validateInput(inputSplitBySpace);
-        }
-        catch (GootExceptions e){
-            GootExceptionHandler.unidentifiedKeyword();
-        }
 
         if(inputSplitBySpace[0].equals("todo")){
-            ToDo todo = new ToDo(input.substring(5), Task.lastIndex+1);
+            ToDo todo = new ToDo(input.substring(5), Task.lastIndex+1,"T");
             Task.addToTaskArrayList(todo);
             todo.acknowledgeTaskAdded();
         }
         else if(inputSplitBySpace[0].equals("deadline")){
             try{
                 GootExceptionHandler.validateDeadline(input.split("/"));
-                Deadline deadline = new Deadline(Deadline.readName(input),Task.lastIndex+1,Deadline.readBy(input));
+                Deadline deadline = new Deadline(Deadline.readName(input),Task.lastIndex+1,Deadline.readBy(input),"D");
                 Task.addToTaskArrayList(deadline);
                 deadline.acknowledgeTaskAdded();
             }
@@ -41,7 +45,7 @@ public class Goot {
                 GootExceptionHandler.validateEvent(input.split("/"));
                 String fromString = Event.readFromTo(input)[0];
                 String toString = Event.readFromTo(input)[1];
-                Event event = new Event(Event.readName(input),Task.lastIndex+1,fromString,toString);
+                Event event = new Event(Event.readName(input),Task.lastIndex+1,fromString,toString,"E");
                 Task.addToTaskArrayList(event);
                 event.acknowledgeTaskAdded();
             }
@@ -61,6 +65,33 @@ public class Goot {
         }
         else if (input.equals("list")) {
             Task.printList();
+        }
+        else if (input.equals("save")){
+            try{
+                if(!f.exists()){
+                    f.createNewFile();
+                }
+                if(Task.lastIndex>0){     //possible to use continue here instead?
+                    FileWriter fw = new FileWriter(f);
+                    for(int index=0;index<Task.lastIndex;index++){
+                        fw.append((Task.get(index)).createEntry());
+                    }
+                    fw.close();
+                }
+                System.out.println("Saved!");
+
+            }
+            catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+        else{
+            try{
+                GootExceptionHandler.validateInput(inputSplitBySpace);
+            }
+            catch (GootExceptions e){
+                GootExceptionHandler.unidentifiedKeyword();
+            }
         }
     }
 }
