@@ -46,8 +46,10 @@ public class Duke {
     public static void listTasks(){
         printLine();
         System.out.println("Here are the tasks in your list:");
-        for (int i = 1; i <= Task.taskCount; i++) {
-            System.out.println(i + "." + Task.tasks[i - 1]);
+        int i = 1;
+        for (Task t : Task.tasks) {
+            System.out.println(i + "." + t);
+            i++;
         }
         printLine();
     }
@@ -56,20 +58,24 @@ public class Duke {
     public static void markTask(String[] input){
         try {
             int index = Integer.parseInt(input[1]);
-            Task t = duke.Task.tasks[index-1];
+            if (index < 1 || index > Task.taskCount) {
+                throw new DukeException();
+            }
+            Task t = duke.Task.tasks.get(index - 1);
             t.markAsDone();
             printLine();
             System.out.println("Nice! I've marked this task as done:");
             System.out.println(t);
             printLine();
-        } catch (NullPointerException e) {
-            System.out.println("☹ OOPS!!! There's not that many tasks in here. Please try again.");
-            printLine();
         } catch (NumberFormatException e) {
-            System.out.println("☹ OOPS!!! You entered an invalid task number. Please try again.");
+            System.out.println("☹ OOPS!!! Task number is blank. Please try again.");
             printLine();
         } catch (IndexOutOfBoundsException e) {
             System.out.println("☹ OOPS!!! Task number is missing. Please try again. ");
+            printLine();
+        } catch (DukeException e) {
+            System.out.println("☹ OOPS!!! You entered an invalid task number. Please try again.");
+            printLine();
         }
     }
 
@@ -77,20 +83,51 @@ public class Duke {
     public static void unmarkTask(String[] input){
         try {
             int index = Integer.parseInt(input[1]);
-            Task t = Task.tasks[index-1];
+            if (index < 1 || index > Task.taskCount) {
+                throw new DukeException();
+            }
+            Task t = duke.Task.tasks.get(index - 1);
             t.markNotDone();
             printLine();
             System.out.println("OK, I've marked this task as not done yet:");
             System.out.println(t);
             printLine();
-        } catch (NullPointerException e) {
-            System.out.println("☹ OOPS!!! There's not that many tasks in here. Please try again.");
-            printLine();
         } catch (NumberFormatException e) {
-            System.out.println("☹ OOPS!!! You entered an invalid task number. Please try again.");
+            System.out.println("☹ OOPS!!! Task number is blank. Please try again.");
             printLine();
         } catch (IndexOutOfBoundsException e) {
             System.out.println("☹ OOPS!!! Task number is missing. Please try again. ");
+            printLine();
+        } catch (DukeException e) {
+            System.out.println("☹ OOPS!!! You entered an invalid task number. Please try again.");
+            printLine();
+        }
+    }
+
+    //delete task
+    public static void deleteTask(String[] input){
+        try {
+            int index = Integer.parseInt(input[1]);
+            if (index < 1 || index > Task.taskCount) {
+                throw new DukeException();
+            }
+            Task t = duke.Task.tasks.get(index - 1);
+            Task.tasks.remove(index - 1);
+            Task.taskCount--;
+            printLine();
+            System.out.println("Noted. I've removed this task:");
+            System.out.println(t);
+            System.out.println("Now you have " + Task.taskCount + " tasks in the list.");
+            printLine();
+        } catch (NumberFormatException e) {
+            System.out.println("☹ OOPS!!! Task number is blank. Please try again.");
+            printLine();
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("☹ OOPS!!! Task number is missing. Please try again. ");
+            printLine();
+        } catch (DukeException e) {
+            System.out.println("☹ OOPS!!! You entered an invalid task number. Please try again.");
+            printLine();
         }
     }
 
@@ -101,7 +138,7 @@ public class Duke {
                 throw new DukeException();
             }
             Task t = new Todo(input[1]);
-            Task.tasks[Task.taskCount] = t;
+            Task.tasks.add(Task.taskCount, t);
             Task.taskCount++;
             printLine();
             System.out.println("Got it. I've added this task:");
@@ -129,7 +166,7 @@ public class Duke {
             }
             String[] doBy = input[1].split("/by ", 2);
             Task t = new Deadline(doBy[0], doBy[1]);
-            Task.tasks[Task.taskCount] = t;
+            Task.tasks.add(Task.taskCount, t);
             Task.taskCount++;
             printLine();
             System.out.println("Got it. I've added this task:");
@@ -158,7 +195,7 @@ public class Duke {
             String[] start = input[1].split("/from ", 2);
             String[] end = start[1].split("/to ", 2);
             Task t = new Event(start[0], end[0], end[1] );
-            Task.tasks[Task.taskCount] = t;
+            Task.tasks.add(Task.taskCount, t);
             Task.taskCount++;
             printLine();
             System.out.println("Got it. I've added this task:");
@@ -198,6 +235,10 @@ public class Duke {
                     //un-mark task
                     case "unmark":
                         unmarkTask(input);
+                        break;
+                    //delete task
+                    case "delete":
+                        deleteTask(input);
                         break;
                     //to-do
                     case "todo":
