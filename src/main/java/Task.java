@@ -1,4 +1,8 @@
 public class Task {
+
+    protected String description;
+    protected boolean isDone;
+
     public String getDescription() {
         return description;
     }
@@ -7,8 +11,6 @@ public class Task {
         return isDone;
     }
 
-    protected String description;
-    protected boolean isDone;
 
     // class initialization
     public Task(String description) {
