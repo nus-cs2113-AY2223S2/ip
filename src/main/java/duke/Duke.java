@@ -31,6 +31,8 @@ public class Duke {
         printGreetings();
         Scanner in = new Scanner(System.in);
         database = new Database();
+        taskList = database.taskList;
+        listCount = taskList.size();
         while (!userInput.equals("bye")) {
             userInput = in.nextLine();
             if (!userInput.equals("bye")) {
@@ -85,6 +87,11 @@ public class Duke {
         System.out.println("Noted. I've removed this task:");
         System.out.println("  " + taskList.get(index).toString());
         taskList.remove(index);
+        try {
+            database.updateDatabase();
+        } catch (IOException e){
+            System.out.println("Failed to update database");
+        }
         --listCount;
         System.out.println("Now you have " + Integer.toString(listCount) + " tasks in the list.");
     }
@@ -123,9 +130,9 @@ public class Duke {
         String input = cases[1];
         Task currTask = new Todo(input);
         taskList.add(currTask);
+        addToDatabase(currTask);
         ++listCount;
         printAddedTaskCommand();
-        addToDatabase(currTask);
     }
 
     private static void createDeadline(String[] cases) throws EmptyCommandException {
@@ -138,9 +145,9 @@ public class Duke {
         String by = splitInput[1].substring(3);
         Task currTask = new Deadline(task, by);
         taskList.add(currTask);
+        addToDatabase(currTask);
         ++listCount;
         printAddedTaskCommand();
-        addToDatabase(currTask);
     }
 
     private static void createEvent(String[] cases) throws EmptyCommandException {
@@ -154,9 +161,9 @@ public class Duke {
         String to = splitInput[2].substring(3);
         Task currTask = new Event(task, from, to);
         taskList.add(currTask);
+        addToDatabase(currTask);
         ++listCount;
         printAddedTaskCommand();
-        addToDatabase(currTask);
     }
 
     private static void markTask(String input) throws InvalidIndexException {

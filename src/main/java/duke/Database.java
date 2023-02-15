@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 public class Database {
 
-    private ArrayList<Task> taskList;
+    public ArrayList<Task> taskList;
     private String databaseDirectory;
     private String filePath;
 
