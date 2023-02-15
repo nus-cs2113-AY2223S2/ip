@@ -1,8 +1,7 @@
-package InputCheckingPackage;
-import Constants.Constants;
+package Duke.InputCheckingPackage;
+import Duke.Constants.Constants;
 
 import java.util.Objects;
-import java.util.StringJoiner;
 
 public class InputChecking {
     public static boolean checkDeadlineInput(String command) {

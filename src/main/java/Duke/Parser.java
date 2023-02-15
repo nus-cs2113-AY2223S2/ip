@@ -1,13 +1,9 @@
 package Duke;
 
-import Duke.*;
-
-import java.util.Objects;
-
 import static Duke.TaskList.tasks;
 import static Duke.Ui.invalidInputReponse;
-import static InputCheckingPackage.InputChecking.*;
-import static InputCheckingPackage.InputChecking.checkTodoInput;
+import static Duke.InputCheckingPackage.InputChecking.*;
+import static Duke.InputCheckingPackage.InputChecking.checkTodoInput;
 
 public class Parser {
 
@@ -34,7 +30,7 @@ public class Parser {
             boolean isValidDeleteInput = checkDeleteInput(command, tasks.size());
 
             if (isValidDeleteInput) {
-                TaskList.DeleteTask(command);
+                TaskList.deleteTask(command);
             }
 
         } else if (command.contains("deadline")) {
@@ -58,7 +54,11 @@ public class Parser {
             }
 
 
-        } else {
+        } else if (command.contains("find")){
+            //boolean isValidFindInput =
+            TaskList.findTask(command);
+
+        }else {
             invalidInputReponse();
         }
 

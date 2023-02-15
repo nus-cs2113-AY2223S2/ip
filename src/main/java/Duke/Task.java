@@ -48,9 +48,9 @@ public class Task {
 
     public void printTask() {
         if (this.isCompleted) {
-            System.out.println(".[" + getTaskType(this) + "][ ] " + this.taskName);
+            System.out.println(".[" + getTaskType(this) + "]"+ this.getStatusIcon()  + this.taskName);
         } else {
-            System.out.println(".[" + getTaskType(this) + "][ ] " + this.taskName);
+            System.out.println(".[" + getTaskType(this) + "]"+ this.getStatusIcon() +  this.taskName);
         }
 
     }

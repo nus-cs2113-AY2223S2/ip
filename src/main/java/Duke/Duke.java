@@ -1,12 +1,11 @@
 package Duke;
 
-import java.io.FileNotFoundException;
 import java.util.Objects;
 import java.util.ArrayList;
 
 import static Duke.TaskList.*;
 import static Duke.Ui.*;
-import static InputCheckingPackage.InputChecking.*;
+import static Duke.InputCheckingPackage.InputChecking.*;
 
 
 public class Duke {
