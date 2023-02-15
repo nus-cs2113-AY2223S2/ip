@@ -1,0 +1,10 @@
+event cs2113 tutorial /from wed 3pm /to 4pm
+todo attend cs2113 lecture
+deadline cs2113 ip increment /by fri 4pm
+list
+mark 1
+mark 2
+list
+unmark 1
+list
+bye
