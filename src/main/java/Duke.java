@@ -30,6 +30,14 @@ public class Duke {
                     System.out.println("Please indicate the task number to be marked.");
                 }
                 break;
+            case "delete":
+                try {
+                    deleteTask(tasks, command[1]);
+
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println("Please indicate the task number to be deleted.");
+                }
+                break;
             case "unmark":
                 try {
                     markTaskNotDone(tasks, command[1]);
@@ -102,6 +110,23 @@ public class Duke {
         } catch (DukeException e) {
             System.out.println("The task is already marked as not done.");
         }
+    }
+
+    public static void deleteTask(ArrayList<Task> tasks, String command) {
+        try {
+            int taskNumber = Integer.parseInt(command);
+            Task task = tasks.get(taskNumber - 1);
+            printDeleteTask();
+            printTask(task);
+            tasks.remove(taskNumber - 1);
+
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("The given task number does not exist. ):");
+        } catch (NumberFormatException e) {
+            System.out.println("The task index must be numeric.");
+        }
+
+
     }
     public static void addTodo(ArrayList<Task> tasks, String description) {
         printAddTask();
@@ -179,6 +204,10 @@ public class Duke {
     }
     public static void printMarkNotDone() {
         System.out.println("OK, I've marked this task as not done yet:");
+    }
+
+    public static void printDeleteTask() {
+        System.out.println("Noted. I've removed this task:");
     }
     public static void printNoOfTasks(int size) {
         System.out.println("Now you have " + size + " tasks in the list");
