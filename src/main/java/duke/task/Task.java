@@ -1,9 +1,9 @@
 package duke.task;
 
 public abstract class Task {
+    private static int numTask;
     private String desciption;
     private boolean isDone;
-    private static int numTask;
 
     public Task(String desciption) {
         this.desciption = desciption;
@@ -11,12 +11,12 @@ public abstract class Task {
         numTask++;
     }
 
-    public static void setNumTask(int number) {
-        numTask = number;
-    }
-
     public static int getNumTask() {
         return numTask;
+    }
+
+    public static void setNumTask(int number) {
+        numTask = number;
     }
 
     public String getTaskDescription() {

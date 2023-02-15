@@ -55,11 +55,11 @@ public class Duke {
                         if (parsedString != null) {
                             description = parsedString[0];
                             by = Input.parseDate(parsedString[1]);
-                            if(by!=null) {
-                            	newTask = new Deadline(description, by);
+                            if (by != null) {
+                                newTask = new Deadline(description, by);
                                 tasks.add(newTask);
                                 Output.printNewTaskMessage(newTask);
-                            }                           
+                            }
                         }
 
                     }
@@ -74,11 +74,11 @@ public class Duke {
                             description = parsedString[0];
                             from = Input.parseDate(parsedString[1]);
                             to = Input.parseDate(parsedString[2]);
-                            if(from!=null && to!=null) {
-                            	newTask = new Event(description, from, to);
+                            if (from != null && to != null) {
+                                newTask = new Event(description, from, to);
                                 tasks.add(newTask);
                                 Output.printNewTaskMessage(newTask);
-                            } 
+                            }
                         }
                     }
                     break;
@@ -107,19 +107,19 @@ public class Duke {
                         tasks.remove(tasks.get(indexTask));
                     }
                     break;
-                    
+
                 case "find-date":
-                	LocalDateTime date = Input.scanDate();
-                	if(date!=null) {
-                		Output.printTaskByDate(tasks, date);
-                	}               	
+                    LocalDateTime date = Input.scanDate();
+                    if (date != null) {
+                        Output.printTaskByDate(tasks, date);
+                    }
                     break;
 
                 case "find":
-                	String keyword;
-                	keyword = Input.scanLine().trim();
-                	Output.printMatchingTask(tasks, keyword);
-                  
+                    String keyword;
+                    keyword = Input.scanLine().trim();
+                    Output.printMatchingTask(tasks, keyword);
+
                 case "bye":
                     break;
 

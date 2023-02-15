@@ -25,18 +25,18 @@ public class Input {
         String line = sc.nextLine();
         return line;
     }
-    
+
     public static LocalDateTime scanDate() {
-    	String string = scanLine().trim();
-    	try {
-    		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-			LocalDateTime date = LocalDate.parse(string, formatter).atStartOfDay();
-			return date;
-		}catch(DateTimeParseException e){
-			Output.printWrongDateInputError();
-			return null;
-		}
-	}
+        String string = scanLine().trim();
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            LocalDateTime date = LocalDate.parse(string, formatter).atStartOfDay();
+            return date;
+        } catch (DateTimeParseException e) {
+            Output.printWrongDateInputError();
+            return null;
+        }
+    }
 
     public static String scanPrompt(String taskType) throws PromptCannotBeEmptyException {
         String prompt = "";
@@ -173,17 +173,17 @@ public class Input {
         return readTask;
     }
 
-	public static LocalDateTime parseDate(String string) {
-		try {
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-			LocalDateTime date = LocalDateTime.parse(string, formatter);
-			return date;
-		}catch(DateTimeParseException e){
-			Output.printWrongDateFormatError();
-			return null;
-		}
-		
-	}
+    public static LocalDateTime parseDate(String string) {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+            LocalDateTime date = LocalDateTime.parse(string, formatter);
+            return date;
+        } catch (DateTimeParseException e) {
+            Output.printWrongDateFormatError();
+            return null;
+        }
 
-	
+    }
+
+
 }
