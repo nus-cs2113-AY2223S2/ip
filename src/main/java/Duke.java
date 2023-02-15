@@ -4,12 +4,24 @@ import duke.Todo;
 import duke.Event;
 import duke.DukeException;
 import java.util.ArrayList;
-
+import java.io.*;
 import java.util.Scanner;
 
 public class Duke {
+    private static void appendToFile(String filePath, String textToAppend) throws IOException {
+        FileWriter fw = new FileWriter(filePath, true); // create a FileWriter in append mode
+        fw.write(textToAppend);
+        fw.close();
+    }
 
-    public static void main(String[] args) {
+    private static void writeToFile(String filePath, String textToAdd) throws IOException {
+        FileWriter fw = new FileWriter(filePath);
+        fw.write(textToAdd);
+        fw.close();
+    }
+
+
+    public static void main(String[] args) throws Exception {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -25,6 +37,7 @@ public class Duke {
 
         System.out.println(greeting);
         Scanner in = new Scanner(System.in);
+
         ArrayList<Task> tasks = new ArrayList<>();
 
 
@@ -42,57 +55,79 @@ public class Duke {
             //getting index for mark and delete
             String[] find_index = line.split(" ");
 
-            if (line.toLowerCase().contains("unmark")) {
-                index_for_mark = Integer.parseInt(find_index[1]);
-                tasks.get(index_for_mark - 1).markAsUnDone();
+            //Task description
+            String desc;
+            desc = line;
+            Task t = new Task(desc);
 
-                System.out.println("____________________________________________________________\n"
-                        + "OK, I've marked this task as not done yet:\n"
-                        + tasks.get(index_for_mark - 1) + "\n"
-                        + "____________________________________________________________\n");
+            if (line.toLowerCase().contains("unmark") || (line.toLowerCase().contains("mark")) || line.toLowerCase().contains("delete"))
+            {
+                if (line.toLowerCase().contains("unmark")) {
+                    index_for_mark = Integer.parseInt(find_index[1]);
+                    tasks.get(index_for_mark - 1).markAsUnDone();
 
-            } else if (line.toLowerCase().contains("mark")) {
-                index_for_mark = Integer.parseInt(find_index[1]);
-                tasks.get(index_for_mark - 1).markAsDone();
-                System.out.println("____________________________________________________________\n"
-                        + "Nice! I've marked this task as done:\n"
-                        + tasks.get(index_for_mark - 1) + "\n"
-                        + "____________________________________________________________\n");
+                    System.out.println("____________________________________________________________\n"
+                            + "OK, I've marked this task as not done yet:\n"
+                            + tasks.get(index_for_mark - 1) + "\n"
+                            + "____________________________________________________________\n");
 
-            } else if(line.toLowerCase().contains("delete")) {
-                int index_for_delete=Integer.parseInt(find_index[1]);
-                System.out.println("____________________________________________________________\n"
-                        +" Noted. I've removed this task:\n" +
-                        "  " + tasks.get(index_for_delete-1) + "\n" +
-                        "Now you have " + (i-1) + " tasks in the list.\n"
-                        +"____________________________________________________________\n");
-                i -= 1;
-                tasks.remove(tasks.get(index_for_delete-1));
 
+                } else if (line.toLowerCase().contains("mark")) {
+                    index_for_mark = Integer.parseInt(find_index[1]);
+                    tasks.get(index_for_mark - 1).markAsDone();
+                    System.out.println("____________________________________________________________\n"
+                            + "Nice! I've marked this task as done:\n"
+                            + tasks.get(index_for_mark - 1) + "\n"
+                            + "____________________________________________________________\n");
+
+
+                } else if (line.toLowerCase().contains("delete")) {
+                    int index_for_delete = Integer.parseInt(find_index[1]);
+                    System.out.println("____________________________________________________________\n"
+                            + " Noted. I've removed this task:\n" +
+                            "  " + tasks.get(index_for_delete - 1) + "\n" +
+                            "Now you have " + (i - 1) + " tasks in the list.\n"
+                            + "____________________________________________________________\n");
+                    i -= 1;
+                    tasks.remove(tasks.get(index_for_delete - 1));
+
+                }
+                String newString = "";
+                String filePath = "Duke.txt";
+
+                for (int m = 0; m < i; m += 1) {
+                    int index = m + 1;
+                    newString += (index + "." + tasks.get(m) + "\n");
+                }
+
+
+                try {
+                    writeToFile("Duke.txt", newString);
+                } catch (IOException e) {
+                    System.out.println("Something went wrong\n"
+                            + "____________________________________________________________");
+                }
             }
 
-
-
-
             else if (line.toLowerCase().contains("todo") || line.toLowerCase().contains("deadline") || line.toLowerCase().contains("event")) {
+
                 boolean empty;
-                empty=false;
+                empty = false;
 
                 if (line.toLowerCase().contains("todo")) {
-
-                    String[] ToSplitTodo=line.split(" ");
-
+                    String[] ToSplitTodo = line.split(" ");
                     try {
 
-                      String TodoTask = line.toLowerCase().replaceAll("todo","");
-                      tasks.add(new Todo(TodoTask,ToSplitTodo.length));
+                        String TodoTask = line.toLowerCase().replaceAll("todo","");
+                        tasks.add(new Todo(TodoTask,ToSplitTodo.length));
+
 
                     } catch (DukeException ex) {
-                      empty=true;
-                      System.out.println("____________________________________________________________\n"
-                              +"OOPS!!! The description of a todo cannot be empty.\n"
-                              + "____________________________________________________________\n");
-                  }
+                        empty = true;
+                        System.out.println("____________________________________________________________\n"
+                                + "OOPS!!! The description of a todo cannot be empty.\n"
+                                + "____________________________________________________________\n");
+                    }
 
                     //sample : deadline return book /by Sunday
                 } else if (line.toLowerCase().contains("deadline")) {
@@ -108,15 +143,20 @@ public class Duke {
 
                 }
 
-
                 if(!empty) {
                     System.out.println("____________________________________________________________\n"
-                    +"Got it. I've added this task:\n" +
+                            +"Got it. I've added this task:\n" +
                             "  " + tasks.get(i) + "\n" +
                             "Now you have " + (i + 1) + " tasks in the list.\n"
-                    +"____________________________________________________________\n");
+                            + "____________________________________________________________\n");
                     i += 1;
 
+                    try {
+                        appendToFile("Duke.txt", tasks.get(i - 1).toString() + "\n");
+                    } catch (IOException e) {
+                        System.out.println("Something went wrong\n"
+                                + "____________________________________________________________");
+                    }
                 }
 
             } else if (line.equalsIgnoreCase("list")) {
@@ -126,6 +166,7 @@ public class Duke {
 
                 for (int m = 0; m < i; m += 1) {
                     int index = m + 1;
+
                     System.out.println(index + "." + tasks.get(m));
 
                 }
@@ -133,13 +174,11 @@ public class Duke {
 
             } else {
                 System.out.println("____________________________________________________________\n"
-                        +"OOPS!!! The description of a todo cannot be empty.\n"
-                +"____________________________________________________________\n");
+                        + "OOPS!!! The description of a todo cannot be empty.\n"
+                        + "____________________________________________________________\n");
             }
 
-            }
-
-
+        }
 
 
         System.out.println("____________________________________________________________\n"
@@ -149,3 +188,5 @@ public class Duke {
 
     }
 }
+
+
