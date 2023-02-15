@@ -1,8 +1,10 @@
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
+
 public class Duke {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         Scanner reader = new Scanner(System.in);
         ArrayList<Task> tasks = new ArrayList<>();
@@ -29,31 +31,37 @@ public class Duke {
                 switch (taskType) {
                 case "delete":
                     deleteTask(taskDescription, tasks);
+                    FileAccess.main(tasks);
                     word = reader.nextLine();
                     break;
 
                 case "mark":
                     markTask(taskDescription, tasks);
+                    FileAccess.main(tasks);
                     word = reader.nextLine();
                     break;
 
                 case "unmark":
                     unmarkTask(taskDescription, tasks);
+                    FileAccess.main(tasks);
                     word = reader.nextLine();
                     break;
 
                 case "todo":
                     createTodo(tasks, taskDescription);
+                    FileAccess.main(tasks);
                     word = reader.nextLine();
                     break;
 
                 case "deadline":
                     createDeadline(tasks, taskDescription);
+                    FileAccess.main(tasks);
                     word = reader.nextLine();
                     break;
 
                 case "event":
                     createEvent(tasks, taskDescription);
+                    FileAccess.main(tasks);
                     word = reader.nextLine();
                     break;
 
@@ -103,16 +111,16 @@ public class Duke {
 
             switch (taskType) {
             case "todo":
-                System.out.print("[T][" + tasks.get(i).getStatusIcon() + "] " + tasks.get(i).description + "\n");
+                System.out.print(".[T][" + tasks.get(i).getStatusIcon() + "] " + tasks.get(i).description + "\n");
                 break;
 
             case "deadline":
-                System.out.print("[D][" + tasks.get(i).getStatusIcon() + "] " + tasks.get(i).description);
+                System.out.print(".[D][" + tasks.get(i).getStatusIcon() + "] " + tasks.get(i).description);
                 System.out.print(" (by: " + tasks.get(i).getTimings() + ")\n");
                 break;
 
             case "event":
-                System.out.print("[E][" + tasks.get(i).getStatusIcon() + "] " + tasks.get(i).description);
+                System.out.print(".[E][" + tasks.get(i).getStatusIcon() + "] " + tasks.get(i).description);
                 String[] timings = tasks.get(i).getTimings().split("/");
                 System.out.print(" (from: " + timings[0] + " to: " + timings[1] + ")\n");
                 break;
@@ -143,16 +151,16 @@ public class Duke {
             String taskType = tasks.get(taskNo).getType();
             switch (taskType) {
             case "todo":
-                System.out.print(".[T][" + tasks.get(taskNo).getStatusIcon() + "] " + tasks.get(taskNo).description + "\n");
+                System.out.print("[T][" + tasks.get(taskNo).getStatusIcon() + "] " + tasks.get(taskNo).description + "\n");
                 break;
 
             case "deadline":
-                System.out.print(".[D][" + tasks.get(taskNo).getStatusIcon() + "] " + tasks.get(taskNo).description);
+                System.out.print("[D][" + tasks.get(taskNo).getStatusIcon() + "] " + tasks.get(taskNo).description);
                 System.out.print(" (by: " + tasks.get(taskNo).getTimings() + ")\n");
                 break;
 
             case "event":
-                System.out.print(".[E][" + tasks.get(taskNo).getStatusIcon() + "] " + tasks.get(taskNo).description);
+                System.out.print("[E][" + tasks.get(taskNo).getStatusIcon() + "] " + tasks.get(taskNo).description);
                 String[] timings = tasks.get(taskNo).getTimings().split("/");
                 System.out.print(" (from: " + timings[0] + " to: " + timings[1] + ")\n");
                 break;
@@ -164,4 +172,6 @@ public class Duke {
             System.out.println("There are no tasks in the list to remove!");
         }
     }
+
 }
+
