@@ -12,11 +12,12 @@ public class Duke {
         Scanner in = new Scanner(System.in);
         int tasksSize = 100;
         ArrayList<Task> tasks = new ArrayList<>();
-        int currentIndex = 0;
+        int currentIndex;
         int maxIndex = tasksSize - 1;
         Save.filePath = "./taskSave.txt";
         Save.createSaveFile();
         Save.loadSaveFile(tasks);
+        currentIndex = tasks.size();
         printHelloStatement();
         while (true) {
             String input;

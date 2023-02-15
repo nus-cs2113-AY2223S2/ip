@@ -57,23 +57,23 @@ public class Save {
 
     public static void updateSaveFile(ArrayList<Task> tasks) throws IOException {
         FileWriter fw = new FileWriter(filePath);
-        for (int i = 0; i < tasks.size() - 1; i++) {
+        for (int i = 0; i < tasks.size(); i++) {
             Task currentTask = tasks.get(i);
             String type;
             String description = currentTask.getDescription();
             String done = currentTask.isDone() ? "X" : " ";
             if (currentTask instanceof ToDo) {
                 type = "T";
-                fw.write(type + "|" + done + "|" + description);
+                fw.write(type + "|" + done + "|" + description + "\n");
             } else if (currentTask instanceof Deadline) {
                 type = "D";
                 String by = ((Deadline) currentTask).getBy();
-                fw.write(type + "|" + done + "|" + description + "|" + by);
+                fw.write(type + "|" + done + "|" + description + "|" + by + "\n");
             } else {
                 type = "E";
                 String from = ((Event) currentTask).getFrom();
                 String to = ((Event) currentTask).getTo();
-                fw.write(type + "|" + done + "|" + description + "|" + from + "|" + to);
+                fw.write(type + "|" + done + "|" + description + "|" + from + "|" + to + "\n");
             }
         }
         fw.close();
