@@ -7,19 +7,85 @@ import duke.exceptions.TaskUndoneException;
 import duke.ui.Greetings;
 import duke.tasks.TaskList;
 
-
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
+
 
 public class Duke {
 
-	public static void startDuke() {
+	public static final String DUKE_PATH = "data/duke.txt";
+	public static TaskList taskList = new TaskList();
+	public static File file = new File(DUKE_PATH);
 
+	public static void createFile() throws IOException {
+		//file.getParentFile().mkdirs();
+		Path path = Paths.get(DUKE_PATH);
+		Files.createDirectories(path.getParent());
+		file.createNewFile();
+	}
+
+	public static void loadFile() throws FileNotFoundException {
+
+		Scanner sc = new Scanner(file);
+		while (sc.hasNext()) {
+			String taskString = sc.nextLine();
+			String divider = "\\s\\|\\s";
+			String[] taskDetails = taskString.split(divider);
+
+			String taskType = taskDetails[0];
+			String description = taskDetails[2];
+			boolean isCompleted = taskDetails[1].equals("1");
+
+
+			if (taskType.equals("T")) {
+				taskList.addTodo(description, isCompleted);
+			} else if (taskType.equals("D")) {
+				String by = taskDetails[3];
+				taskList.addDeadline(description, by, isCompleted);
+			} else {
+				String[] fromAndTo = taskDetails[3].split(" to: ");
+				String from = fromAndTo[0].replace("from: ","");
+				String to = fromAndTo[1];
+				taskList.addEvent(description,from,to,isCompleted);
+			}
+		}
+	}
+
+	public static void writeToFile(TaskList tasksList) throws IOException{
+		FileWriter writer = new FileWriter(DUKE_PATH);
+		writer.write(tasksList.writeTaskList());
+		writer.close();
+	}
+
+	public static void loadTask(){
+		try {
+			loadFile();
+		} catch (FileNotFoundException e){
+			System.out.println("File not found");
+			try {
+				createFile();
+			} catch (IOException error){
+				System.out.println("Failed to create file");
+			}
+			System.out.println("New file created");
+		} finally {
+			System.out.println("File found");
+		}
+	}
+
+
+	public static void startDuke() {
 
 		Greetings dukeGreeting = new Greetings();
 		dukeGreeting.printGreetings();
 		dukeGreeting.printOpeningLine();
 		Scanner sc = new Scanner(System.in);
-		TaskList taskList = new TaskList();
 
 		String userMessage;
 
@@ -34,7 +100,7 @@ public class Duke {
 
 				String message = userMessage.substring(5);
 				dukeGreeting.printDivider();
-				System.out.println(taskList.addTodo(message));
+				System.out.println(taskList.addTodo(message, false));
 				dukeGreeting.printDivider();
 
 			} else if (userMessage.startsWith("deadline")) {
@@ -43,7 +109,7 @@ public class Duke {
 
 				String[] messages = userMessage.split(" /by ");
 				dukeGreeting.printDivider();
-				System.out.println(taskList.addDeadline(messages[0], messages[1]));
+				System.out.println(taskList.addDeadline(messages[0], messages[1], false));
 				dukeGreeting.printDivider();
 
 			} else if (userMessage.startsWith("event")) {
@@ -53,7 +119,7 @@ public class Duke {
 				String from = dates[0];
 				String to = dates[1];
 				dukeGreeting.printDivider();
-				System.out.println(taskList.addEvent(description, from, to));
+				System.out.println(taskList.addEvent(description, from, to, false));
 				dukeGreeting.printDivider();
 			} else if (userMessage.startsWith("mark")) {
 				dukeGreeting.printDivider();
@@ -61,7 +127,6 @@ public class Duke {
 				int taskNumber = Integer.parseInt(messages[1]);
 
 				try {
-
 					taskList.markAsDone(taskNumber);
 					System.out.println("Niceeee!!I've marked this task as done: ");
 					System.out.println(taskList.findTask(taskNumber).showTask());
@@ -114,6 +179,11 @@ public class Duke {
 			} else if (userMessage.equalsIgnoreCase("help")) {
 				dukeGreeting.printHelp();
 			} else if (userMessage.equalsIgnoreCase("exit")) {
+				try {
+					writeToFile(taskList);
+				} catch (IOException e){
+					System.out.println("Unable to write to file");
+				}
 				shouldExit = true;
 				dukeGreeting.printExitLine();
 			} else {
@@ -123,6 +193,8 @@ public class Duke {
 	}
 
 	public static void main(String[] args) {
+
+		loadTask();
 		startDuke();
 	}
 }

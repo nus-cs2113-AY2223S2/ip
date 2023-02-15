@@ -3,10 +3,9 @@ package duke.tasks;
 public class Deadline extends Task {
 	private String by;
 
-	public Deadline(String description, String by) {
-		super(description);
+	public Deadline(String description, String by, boolean isComplete) {
+		super(description,isComplete);
 		this.by = by;
-		this.isCompleted = false;
 	}
 
 	public String getBy() {
@@ -19,11 +18,20 @@ public class Deadline extends Task {
 
 	public String showTask() {
 		String taskStatus;
-		if (isCompleted) {
+		if (isCompleted == true) {
 			taskStatus = "[D][√] ";
 		} else {
 			taskStatus = "[D][ ] ";
 		}
 		return taskStatus + getDescription() + " " + getBy();
+	}
+	public String writeTask(){
+		String taskStatus;
+		if (isCompleted == false) {
+			taskStatus= "0";
+		} else {
+			taskStatus = "1";
+		}
+		return "D | " + taskStatus + " | " + getDescription() + " | " + getBy() + "\n";
 	}
 }
