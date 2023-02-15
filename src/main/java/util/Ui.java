@@ -57,4 +57,13 @@ public class Ui {
     public void printLenghtOfTaskList(ArrayList<Task> commands) {
         System.out.println("\t Now you have " + commands.size() + " tasks in the list.");
     }
+
+    public void printSearchResult(ArrayList<Integer> relatedIndexes,ArrayList<Task> commands){
+        printDashLine();
+        System.out.println("\t Here are the matching tasks in your list:");
+        for (int i:relatedIndexes){
+            printSpecificTask(i+1, commands, "");
+        }
+        printDashLine();
+    }
 }
