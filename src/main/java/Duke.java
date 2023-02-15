@@ -4,7 +4,9 @@ import java.util.Scanner;
 public class Duke {
 
 
-    public static void main(String[] args) throws NoKeyException{
+
+    public static void main(String[] args) throws NoKeyException {
+
         Scanner in = new Scanner(System.in);
         CommandManager.sayHi();
         CommandManager command = new CommandManager();
@@ -24,7 +26,6 @@ public class Duke {
                             " after mark. EXAMPLE: mark 2");
                 }
                 break;
-
             case "unmark":
                 try {
                     Tasks unMarkTask = Tasks.getTaskList().get(Integer.parseInt(userInput[1]) - 1);

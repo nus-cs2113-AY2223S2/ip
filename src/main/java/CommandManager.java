@@ -76,7 +76,7 @@ public class CommandManager {
         System.out.println(DIVIDER + "\n\t Here are the tasks in your list:");
         for (int num = 1; num <= totalNumberOfTasks; ++num) {
             Tasks thisTask = Tasks.getTaskList().get(num - 1);
-            System.out.println("\t  " + thisTask);
+            System.out.println("\t  " + num + ". " + thisTask);
         }
         System.out.println(DIVIDER);
     }
