@@ -3,56 +3,77 @@ import java.util.Arrays;
 public class Duke {
 
     private static Scanner in = new Scanner(System.in);
-
-    public static String getStatus(int itemNumber, Boolean[] isDone) {
-        if (isDone[itemNumber] == true) {
-            return "[X]";
-        } else {
-            return "[ ]";
-        }
-    }
+    private static final Task[] tasks = new Task[100];
 
     public static void command(String line) {
         String exitCommand = "bye";
         String toDo = "list";
-        String checkOff = "mark";
+        String checkAsDone = "mark";
+        int numberOfTasks = 0;
 
-        String[] toDoList = new String[100];
-        Boolean[] isDone = new Boolean[100];
-        int numberOfItems = 0;
-
-        String[] tokens = line.split(" ", 0);
+        String[] tokens = line.split(" ", 2);
         String command = tokens[0];
+        String task = tokens[1];
 
         while (!command.equals(exitCommand)) {
             if (tokens[0].equals(toDo)) {
                 System.out.println("Here are your list of tasks to complete!");
-                for (int i = 0; i < numberOfItems; ++i) {
+                for (int i = 0; i < numberOfTasks; ++i) {
                     System.out.format("%d. ", (i + 1));
-                    String status = getStatus(i, isDone);
-                    System.out.println(status + " " + toDoList[i]);
+                    String status = tasks[i].getStatus();
+                    System.out.println(status + " " + tasks[i]);
                 }
                 line = in.nextLine();
                 tokens = line.split(" ", 0);
                 command = tokens[0];
-            } else if (command.equals(checkOff)){
-                int checkDone = Integer.parseInt(tokens[1]) - 1;
-                isDone[checkDone] = true;
+            } else if (command.equals(checkAsDone)){
+                int finishedTask = Integer.parseInt(tokens[1]) - 1;
+                tasks[finishedTask].markAsDone();
                 System.out.println("Alright! I have marked the task as complete!");
 
-                for (int i = 0; i < numberOfItems; ++i) {
+                for (int i = 0; i < numberOfTasks; ++i) {
                     System.out.format("%d. ", (i + 1));
-                    String status = getStatus(i, isDone);
-                    System.out.println(status + " " + toDoList[i]);
+                    String status = tasks[i].getStatus();
+                    System.out.println(status + " " + tasks[i]);
                 }
 
                 line = in.nextLine();
                 tokens = line.split(" ", 0);
                 command = tokens[0];
             } else {
-                toDoList[numberOfItems] = line;
-                isDone[numberOfItems] = false;
-                ++numberOfItems;
+                switch(command) {
+                case "todo":
+                    Task t = new ToDo(task);
+                    tasks[numberOfTasks] = t;
+                    tasks[numberOfTasks].isDone = false;
+                    ++numberOfTasks;
+                case "deadline":
+                    String[] taskDeadline = task.split("/", 2);
+                    String taskDescription = taskDeadline[0];
+                    String dueBy = taskDeadline[1];
+
+                    Task d = new Deadline(taskDescription, dueBy);
+                    tasks[numberOfTasks] = d;
+                    tasks[numberOfTasks].isDone = false;
+                    ++numberOfTasks;
+                case "event":
+                    String[] taskEvent = task.split("/", 3);
+                    String eventDescription = taskEvent[0];
+                    String start = taskEvent[1];
+                    String end = taskEvent[2];
+
+                    Task e = new Event(eventDescription, start, end);
+                    tasks[numberOfTasks] = e;
+                    tasks[numberOfTasks].isDone = false;
+                    ++numberOfTasks;
+                default:
+                    System.out.println("Sorry! There seems to be an error:( Please try again.");
+                }
+
+                Task t = new Task(line);
+                tasks[numberOfTasks] = t;
+                tasks[numberOfTasks].isDone = false;
+                ++numberOfTasks;
 
                 System.out.println("added: " + line);
                 line = in.nextLine();
