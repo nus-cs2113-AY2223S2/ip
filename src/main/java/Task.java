@@ -11,24 +11,24 @@ public class Task {
         return (isDone ? "X" : " "); // mark done task with X
     }
 
-    public String markAsDone() throws DukeException {
+    public void markAsDone() throws DukeException {
 
         if (this.isDone == true) {
             //throw new DukeException("Task is already marked as done.");
             throw new DukeException();
         }
         this.isDone = true;
-        return "X";
+        //return "X";
     }
 
-    public String unmarkAsDone() throws DukeException {
+    public void unmarkAsDone() throws DukeException {
         if (this.isDone == false) {
             throw new DukeException();
 
         }
 
         this.isDone = false;
-        return " ";
+       // return " ";
     }
 
     public String toString() {
