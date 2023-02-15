@@ -101,7 +101,7 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-        ArrayList<Task> tasks = new ArrayList<>();
+        ArrayList<Task> tasks;
         final File taskDataDirectory = new File("data");
         final File taskDataFile = new File("data/task-data.txt");
         if(!taskDataDirectory.exists()){
@@ -111,6 +111,12 @@ public class Duke {
                 System.out.println("An error occurred while creating the data directory: " + e.getMessage());
                 return;
             }
+        }
+        try{
+            tasks = TaskData.retrieveTaskData(taskDataFile);
+        }catch (Exception e){
+            System.out.println("An error occurred while retrieving task data: " + e.getMessage());
+            return;
         }
         Scanner in = new Scanner(System.in);
         printGreeting();
@@ -156,10 +162,10 @@ public class Duke {
                 System.out.println(e.getMessage());
             }
         }
-/*        try {
+        try {
             TaskData.storeTaskData(taskDataFile, tasks);
         }catch(IOException e){
-            System.out.println("An error occured while storing your task data: " + e.getMessage());
-        }*/
+            System.out.println("An error occurred while storing your task data: " + e.getMessage());
+        }
     }
 }

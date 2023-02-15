@@ -34,7 +34,7 @@ public class TaskData {
         fileWriter.close();
     }
 
-    public static ArrayList<Task> RetrieveTaskData(File taskDataFile) throws Exception{
+    public static ArrayList<Task> retrieveTaskData(File taskDataFile) throws Exception{
         if(!taskDataFile.exists()){
             taskDataFile.createNewFile();
         }
@@ -50,20 +50,24 @@ public class TaskData {
     public static Task decodeTask(String encodedTask) throws Exception{
         String[] taskParameters = encodedTask.split(" ");
         String taskType = taskParameters[0];
-        String taskName = taskParameters[1];
+        boolean isDone = taskParameters[1].equals("1");
+        String taskName = taskParameters[2];
         Task decodedTask;
         switch(taskType){
         case CommandInputs.ADD_TODO_COMMAND_INPUT:
             decodedTask = new ToDo(taskName);
+            decodedTask.setDone(isDone);
             break;
         case CommandInputs.ADD_DEADLINE_COMMAND_INPUT:
-            String by = taskParameters[2];
+            String by = taskParameters[3];
             decodedTask = new Deadline(taskName, by);
+            decodedTask.setDone(isDone);
             break;
         case CommandInputs.ADD_EVENT_COMMAND_INPUT:
-            String from = taskParameters[2];
-            String to = taskParameters[3];
+            String from = taskParameters[3];
+            String to = taskParameters[4];
             decodedTask = new Event(taskName, from, to);
+            decodedTask.setDone(isDone);
             break;
         default:
             throw new Exception("Task type unidentifiable");
