@@ -47,15 +47,20 @@ public class Logic {
                 tasks.addTask(task, command);
                 break;
             case "mark":
-                int taskNumber = Parser.handleMark(tasks, description);
+                int taskNumber = Parser.handleIntegerConversion(tasks, description);
                 tasks.markTask(taskNumber);
                 break;
             case "unmark":
-                taskNumber = Parser.handleMark(tasks, description);
+                taskNumber = Parser.handleIntegerConversion(tasks, description);
                 tasks.unmarkTask(taskNumber);
                 break;
             case "list":
                 tasks.listTasks();
+                break;
+            case "delete":
+//                taskNumber = Integer.parseInt(description);
+                taskNumber = Parser.handleIntegerConversion(tasks, description);
+                tasks.deleteTask(taskNumber);
                 break;
             case "":
                 System.out.println("\t Please enter some commands");
@@ -67,7 +72,5 @@ public class Logic {
         } catch (DukeException e) {
             System.out.println(e.getMessage());
         }
-//        catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {
-//            System.out.println("\t Please enter a valid command (╬▔皿▔)╯.");
     }
 }

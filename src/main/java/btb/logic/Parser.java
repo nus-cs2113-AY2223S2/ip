@@ -1,6 +1,11 @@
 package btb.logic;
 
-import btb.exceptions.*;
+import btb.exceptions.EmptyTaskDescriptionException;
+import btb.exceptions.EmptyTaskNumberException;
+import btb.exceptions.InvalidDeadlineCommandException;
+import btb.exceptions.InvalidEventCommandException;
+import btb.exceptions.NotIntegerTaskNumberException;
+import btb.exceptions.TaskNumberOutOfBoundException;
 import btb.tasks.TaskManager;
 
 public class Parser {
@@ -63,7 +68,7 @@ public class Parser {
         return splitStrings;
     }
 
-    public static int handleMark(TaskManager tasks, String description) throws
+    public static int handleIntegerConversion(TaskManager tasks, String description) throws
             TaskNumberOutOfBoundException, NotIntegerTaskNumberException, EmptyTaskNumberException {
         int taskNumber = 0;
 
