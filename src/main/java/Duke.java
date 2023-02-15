@@ -1,5 +1,6 @@
+import exceptions.*;
+
 import java.util.Scanner;
-import java.util.logging.Handler;
 
 /**
  * Incorrect Tags have been resolved, all commits have been tagged appropriately
@@ -183,7 +184,7 @@ public class Duke {
     public static int currentIndex = 0;
     public static Scanner in = new Scanner(System.in);
     public static String userInput;
-    //public static DukeException exceptionHandler;
+    //public static exceptions.DukeException exceptionHandler;
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
