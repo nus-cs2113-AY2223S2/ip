@@ -6,17 +6,17 @@ import limey.command.Task;
 import limey.command.Todo;
 import limey.exception.commandNotFoundException;
 import limey.exception.invalidDateException;
+import limey.exception.taskListEmpty;
 import limey.iohandler.Parser;
 import limey.iohandler.Speech;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Limey {
-    public static final int MAX_NUM_TASKS = 100;
 
     public static void main(String[] args) {
-        //initialise variables
-        Task[] tasks = new Task[MAX_NUM_TASKS];
+        ArrayList<Task> tasks = new ArrayList<>();
         String inLine;
         String firstWord;
         String[] wordList;
@@ -35,7 +35,7 @@ public class Limey {
     }
 
 
-    private static void makeNewTask (Task[] tasks, String inLine, String firstWord) throws commandNotFoundException {
+    private static void makeNewTask (ArrayList<Task> tasks, String inLine, String firstWord) throws commandNotFoundException {
         Task taskIn;
         switch (firstWord) {
         case "deadline":
@@ -60,23 +60,30 @@ public class Limey {
         default:
             throw new commandNotFoundException();
         }
-        tasks[Task.numTasks] = taskIn;
+        tasks.add(taskIn);
         Task.numTasks++;
         Speech.printAdded(taskIn, Task.numTasks);
     }
 
-    private static void initialiseLimey(String firstWord, Task[] tasks, String[] wordList, String inLine,  Scanner in) {
+    private static void initialiseLimey(String firstWord, ArrayList<Task> tasks, String[] wordList, String inLine,  Scanner in) {
         while (!firstWord.equals("bye")) {
             //switch case to decide what to do
             switch (firstWord) {
             case "list":
-                Speech.printTaskList(tasks, Task.numTasks);
-                break;
+                try {
+                    Speech.printTaskList(tasks, Task.numTasks);
+                } catch (IndexOutOfBoundsException e){
+                    Speech.invalidMessage("Invalid Index");
+                }
+                    break;
             case "mark":
                 printMarkTask(tasks, wordList);
                 break;
             case "unmark":
                 printUnmarkTask(tasks, wordList);
+                break;
+            case "delete":
+                printDeleteTask(tasks, wordList);
                 break;
             default:
                 try{
@@ -92,42 +99,60 @@ public class Limey {
         }
     }
 
-    private static void printUnmarkTask(Task[] tasks, String[] wordList) {
+    private static void printUnmarkTask(ArrayList<Task> tasks, String[] wordList) {
         try {
             unmarkTask(tasks, wordList);
-        } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
+        } catch (NullPointerException | IndexOutOfBoundsException e) {
             Speech.invalidMessage("Index out of bounds.");
         } catch (NumberFormatException e) {
             Speech.invalidMessage("Index given is not a number.");
         }
     }
 
-    private static void unmarkTask(Task[] tasks, String[] wordList) {
+    private static void unmarkTask(ArrayList<Task> tasks, String[] wordList) {
         String inLine;
         int taskIndex;
         inLine = wordList[1];
         taskIndex = Integer.parseInt(inLine) - 1;
-        tasks[taskIndex].setDone(false);
-        Speech.printUnmarked(tasks[taskIndex]);
+        tasks.get(taskIndex).setDone(false);
+        Speech.printUnmarked(tasks.get(taskIndex));
     }
 
-    private static void printMarkTask(Task[] tasks, String[] wordList) {
+    private static void printMarkTask(ArrayList<Task> tasks, String[] wordList) {
         try {
             markTask(tasks, wordList);
-        } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
+        } catch (NullPointerException | IndexOutOfBoundsException e) {
             Speech.invalidMessage("Index out of bounds.");
         } catch (NumberFormatException e) {
             Speech.invalidMessage("Index given is not a number.");
         }
     }
 
-    private static void markTask(Task[] tasks, String[] wordList) {
+    private static void printDeleteTask(ArrayList<Task> tasks,String[] wordList) {
+        try {
+            deleteTask(tasks, wordList);
+        } catch (NullPointerException | IndexOutOfBoundsException e) {
+            Speech.invalidMessage("Index out of bounds.");
+        } catch (NumberFormatException e) {
+            Speech.invalidMessage("Index given is not a number.");
+        }
+    }
+    private static void deleteTask(ArrayList<Task> tasks,String[] wordList) {
+        String inLine;
+        int taskIndex;
+        inLine = wordList[1];
+        taskIndex = Integer.parseInt(inLine) - 1;
+        Speech.printDeleteTask(tasks.get(taskIndex));
+        tasks.remove(taskIndex);
+        Task.numTasks--;
+    }
+    private static void markTask(ArrayList<Task> tasks, String[] wordList) {
         int taskIndex;
         String inLine;
         inLine = wordList[1];
         taskIndex = Integer.parseInt(inLine) - 1;
-        tasks[taskIndex].setDone(true);
-        Speech.printMarked(tasks[taskIndex]);
+        tasks.get(taskIndex).setDone(true);
+        Speech.printMarked(tasks.get(taskIndex));
     }
 }
 
