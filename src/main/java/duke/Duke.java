@@ -10,6 +10,7 @@ import duke.exception.EmptyCommandException;
 import duke.exception.InvalidCommandException;
 import duke.exception.InvalidIndexException;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Duke {
@@ -21,9 +22,12 @@ public class Duke {
     private static Task[] taskList = new Task[MAX_ARRAY_SIZE];
     private static int listCount = 0;
 
+    private static Database database;
+
     public static void main(String[] args) {
         printGreetings();
         Scanner in = new Scanner(System.in);
+        database = new Database();
         while (!userInput.equals("bye")) {
             userInput = in.nextLine();
             if (!userInput.equals("bye")) {
@@ -100,7 +104,9 @@ public class Duke {
             throw new EmptyCommandException();
         }
         String input = cases[1];
-        taskList[listCount] = new Todo(input);
+        Task currTask = new Todo(input);
+        taskList[listCount] = currTask;
+        addToDatabase(currTask);
         printAddedTaskCommand(taskList, listCount);
         listCount++;
     }
@@ -113,7 +119,9 @@ public class Duke {
         String[] splitInput = input.split("/", 2);
         String task = splitInput[0].trim();
         String by = splitInput[1].substring(3);
-        taskList[listCount] = new Deadline(task, by);
+        Task currTask = new Deadline(task, by);
+        taskList[listCount] = currTask;
+        addToDatabase(currTask);
         printAddedTaskCommand(taskList, listCount);
         listCount++;
     }
@@ -127,7 +135,9 @@ public class Duke {
         String task = splitInput[0].trim();
         String from = splitInput[1].substring(5).trim();
         String to = splitInput[2].substring(3);
-        taskList[listCount] = new Event(task, from, to);
+        Task currTask = new Event(task, from, to);
+        taskList[listCount] = currTask;
+        addToDatabase(currTask);
         printAddedTaskCommand(taskList, listCount);
         listCount++;
     }
@@ -150,6 +160,14 @@ public class Duke {
         taskList[index].setDone(false);
         System.out.println("OK, I've marked this task as not done yet:");
         System.out.println(taskList[index].toString());
+    }
+
+    public static void addToDatabase(Task currTask){
+        try {
+            database.appendSaveTasks(currTask.taskInformation());
+        } catch (IOException e){
+            System.out.println("Failed to append task to database");
+        }
     }
 
     public static void printInvalidMessage() {
