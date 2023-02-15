@@ -1,9 +1,12 @@
 package duke;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -16,7 +19,7 @@ import dukeException.DukeException;
 import dukeException.DukeIOBException;
 
 public class Duke {
-
+    static ArrayList<Task> tasks = new ArrayList<>();
     public Duke() {
 
     }
@@ -27,7 +30,6 @@ public class Duke {
     public static void main(String[] args) {
 
         ArrayList<String> userInputs = new ArrayList<>();
-        ArrayList<Task> tasks = new ArrayList<>();
         Scanner scan = new Scanner(System.in);
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -43,9 +45,7 @@ public class Duke {
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
             } else {
-                ArrayList<String> tmpStrTasks = new ArrayList<>();
-                tmpStrTasks = (ArrayList<String>) Files.readAllLines(Paths.get("./data/duke.txt"), StandardCharsets.UTF_8);
-
+                readDukeText();
             }
         } catch (IOException e) {
             System.out.println("An error occurred.");
@@ -55,92 +55,121 @@ public class Duke {
         greetUser();
 
         while (true) {
-            Task tsk = null;
             String input = scan.nextLine();
             String[] splitInput = input.split(" ");
-
+            int taskSize = tasks.size();
             switch (splitInput[0]) {
             case "bye":
                 exit();
                 return;
             case "todo":
-                try {                
-                    tsk = new Todo(splitInput[1], false);
-                    addToList(input, userInputs);
-                    tasks.add(tsk);
-                    addTaskPrint(tasks, tsk);
-                } catch (IndexOutOfBoundsException de) {
-                    printExceptionMsg("todo", "description of a todo cannot be empty.");
-                } catch (DukeException de) {
-
-                }
-                
-
-                break;               
+                insertTodo(input, false);
+                break;
             case "event":
-                tsk = parseEvent(input);
-                addToList(input, userInputs);
-                tasks.add(tsk);
-                addTaskPrint(tasks, tsk);
+                insertEvent(input, false);
                 break;
-            case "deadline": 
-                tsk = parseDeadline(input);
-                addToList(input, userInputs);
-                tasks.add(tsk);
-                addTaskPrint(tasks, tsk);
+            case "deadline":
+                insertDeadline(input, false);
                 break;
-            case "list": 
+            case "list":
                 listOut(userInputs, tasks);
                 break;
             case "mark":
-                tasks.get(Integer.parseInt(splitInput[1]) - 1).mark();
-                System.out.println("\t____________________________________________________________");
-                System.out.println("\tNice! I've marked this task as done:");
-                System.out.println("\t  " + tasks.get(Integer.parseInt(splitInput[1]) - 1));
-                System.out.println("\t____________________________________________________________"); 
+                markTask(splitInput);
                 break;
-            case "unmark":                
-                tasks.get(Integer.parseInt(splitInput[1]) - 1).unMark();
-                System.out.println("\t____________________________________________________________");
-                System.out.println("\tOK, I've marked this task as not done yet:");
-                System.out.println("\t  " + tasks.get(Integer.parseInt(splitInput[1]) - 1));
-                System.out.println("\t____________________________________________________________");
+            case "unmark":
+                unMarkTask(splitInput);
+                break;
+            case "delete":
+                deleteTask(splitInput);
                 break;
             default:
                 System.out.println("\t____________________________________________________________");
                 System.out.println(" ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");;
                 System.out.println("\t____________________________________________________________");
-
                 break;
-            }                            
+            }
+            if (taskSize != tasks.size()) {
+                saveTasks();
+            }
+
+        }
+    }
+    public static void saveTasks() {
+        try {
+            FileWriter myWriter = new FileWriter("./data/duke.txt");
+            myWriter.flush();
+            for (Task task : tasks) {
+                myWriter.write(task.toString() + "\n");
+            }
+            myWriter.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
         }
     }
     public static void readDukeText() {
-        File f = new File("./data/duke.txt");
+
         try {
-            Scanner s = new Scanner(f);
-            while (s.hasNext()) {
-                String line = s.nextLine();
-                String[] text = line.split("\\|");
-                if (line.startsWith("T")) {
-                    Todo todo = new Todo(text[2]);
-                    todo.setDone(!text[1].equals(" "));
-                    tasks.add(todo);
-                } else if (line.startsWith("D")) {
-                    Deadline deadline = new Deadline(text[2], text[3]);
-                    deadline.setDone(!text[1].equals(" "));
-                    tasks.add(deadline);
-                } else if (line.startsWith("E")) {
-                    Event event = new Event(text[2], text[3], text[4]);
-                    event.setDone(!text[1].equals(" "));
-                    tasks.add(event);
-                }
+            ArrayList<String> tmpStrTasks = new ArrayList<>();
+            tmpStrTasks = (ArrayList<String>) Files.readAllLines(Paths.get("./data/duke.txt"), StandardCharsets.UTF_8);
+            for (int i = 0; i < tmpStrTasks.size(); i++) {
+                System.out.println(tmpStrTasks.get(i).substring(7));
             }
-        } catch (FileNotFoundException e) {
-            System.out.println("Something went wrong: " + e.getMessage());
-            throw new RuntimeException(e);
-        } catch (NoSuchElementException e) {
-            System.out.println("Sorry no line found. ");
+            for (int i = 0; i < tmpStrTasks.size(); i++) {
+                String newTask = tmpStrTasks.get(i);
+                Task tsk = null;
+                boolean isMark = newTask.charAt(4) == 'X';
+                switch (newTask.charAt(1)) {
+                case 'T':
+                    insertTodo("todo " + newTask.substring(7), isMark);
+                    break;
+                case 'D':
+                    insertDeadline("deadline " + newTask.substring(7), isMark);
+                    break;
+                case 'E':
+                    insertEvent("event " + newTask.substring(7), isMark);
+                    break;
+                }
+                System.out.println(newTask);
+            }
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+    }
+
+    public static void deleteTask(String[] splitInput) {
+        String tmpTask = tasks.get(Integer.parseInt(splitInput[1]) - 1).toString();
+        tasks.remove(tasks.get(Integer.parseInt(splitInput[1]) - 1));
+        System.out.println("\tNoted. I've removed this task:");
+        System.out.println("\t  " + tmpTask);
+        System.out.println("\tNow you have " + tasks.size() + " tasks in the list.");
+    }
+    public static void unMarkTask(String[] splitInput) {
+        tasks.get(Integer.parseInt(splitInput[1]) - 1).unMark();
+        System.out.println("\t____________________________________________________________");
+        System.out.println("\tOK, I've marked this task as not done yet:");
+        System.out.println("\t  " + tasks.get(Integer.parseInt(splitInput[1]) - 1));
+        System.out.println("\t____________________________________________________________");
+    }
+    public static void markTask(String[] splitInput) {
+        tasks.get(Integer.parseInt(splitInput[1]) - 1).mark();
+        System.out.println("\t____________________________________________________________");
+        System.out.println("\tNice! I've marked this task as done:");
+        System.out.println("\t  " + tasks.get(Integer.parseInt(splitInput[1]) - 1));
+        System.out.println("\t____________________________________________________________");
+    }
+    public static void insertTodo(String input, boolean isMark) {
+
+        try {
+            Task tsk = new Todo(input.substring(5), isMark);
+            tasks.add(tsk);
+            addTaskPrint(tasks, tsk);
+        } catch (IndexOutOfBoundsException de) {
+            printExceptionMsg("todo", "description of a todo cannot be empty.");
+        } catch (DukeException de) {
+
         }
     }
     public static void printExceptionMsg(String task, String err) {
@@ -158,34 +187,36 @@ public class Duke {
     /*
     This Returns the input as a Deadline object
      */
-    public static Deadline parseDeadline(String input) {
+    public static void insertDeadline(String input, boolean isMark) {
         int idx = input.indexOf("/by");
         String desc = input.substring(8, idx);
         String by = input.substring(idx + 3);
         Deadline tsk = null;
         try {
             tsk = new Deadline(desc, false, by);
+            addTaskPrint(tasks, tsk);
         } catch (DukeException de) {
 
         }
-        return tsk;
+        tasks.add(tsk);
     }
     /*
     This Returns the input as a Event object
      */
-    public static Event parseEvent(String input) {
+    public static void insertEvent(String input, boolean isMark) {
         int idx = input.indexOf("/from");
         int idx1 = input.indexOf("/to");
         String desc = input.substring(5, idx);
         String start = input.substring(idx + 5, idx1);
-        String end = input.substring(idx1 + 3, input.length());
+        String end = input.substring(idx1 + 3);
         Event tsk = null;
         try {
             tsk = new Event(desc, false, start, end);
+            addTaskPrint(tasks, tsk);
         } catch (DukeException de) {
 
         }
-        return tsk;
+        tasks.add(tsk);
     }
     /*
     This Adds the input to an input array for the ability to keep track of
