@@ -5,6 +5,16 @@ package tasks;
  */
 public class Task {
     private String description;
+
+    public String getFormattedDescription() {
+        return formattedDescription;
+    }
+
+    public void setFormattedDescription(String formattedDescription) {
+        this.formattedDescription = formattedDescription;
+    }
+
+    private String formattedDescription;
     private boolean isDone;
 
     public String getDescription() {
@@ -26,9 +36,9 @@ public class Task {
     /**
      * @param description The description of the task.
      */
-    public Task(String description) {
+    public Task(String description, boolean isDone) {
         setDescription(description);
-        setDone(false);
+        setDone(isDone);
     }
 
     private String getStatusIcon() {
@@ -45,7 +55,7 @@ public class Task {
      * undone or done task respectively. Followed by the description of the task.
      */
     public String getTaskString() {
-        return '[' + this.getClass().getSimpleName().substring(0, 1) + "][" + getStatusIcon() + "] " + getDescription();
+        return '[' + this.getClass().getSimpleName().substring(0, 1) + "][" + getStatusIcon() + "] " + getFormattedDescription();
     }
 }
 

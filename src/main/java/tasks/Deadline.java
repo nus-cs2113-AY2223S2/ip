@@ -12,15 +12,15 @@ public class Deadline extends Task{
 
     public void setBy(String by) {
         this.by = by;
-        setDescription(getDescription() + '(' + by + ')');
     }
 
     /** Upon creating the Deadline, the by date will be concatenated into the displayed description.
      * @param description The description of this task.
      * @param by The date this task has to be done.
      */
-    public Deadline(String description, String by) {
-        super(description);
+    public Deadline(String description, String by, boolean isDone) {
+        super(description, isDone);
         setBy(by);
+        setFormattedDescription(description + '(' + by + ')');
     }
 }

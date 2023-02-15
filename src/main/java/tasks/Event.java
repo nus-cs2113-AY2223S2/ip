@@ -10,7 +10,6 @@ public class Event extends Task {
 
     public void setFrom(String from) {
         this.from = from;
-        setDescription(getDescription() + '(' + from);
     }
 
     public String getTo() {
@@ -19,7 +18,6 @@ public class Event extends Task {
 
     public void setTo(String to) {
         this.to = to;
-        setDescription(getDescription() + to + ')');
     }
 
     /** Upon creating the event, the from and to dates will be concatenated to the displayed description.
@@ -27,9 +25,10 @@ public class Event extends Task {
      * @param from The date this event begins.
      * @param to The date this event ends.
      */
-    public Event(String description, String from, String to) {
-        super(description);
+    public Event(String description, String from, String to, boolean isDone) {
+        super(description, isDone);
         setFrom(from);
         setTo(to);
+        setFormattedDescription(description + '(' + from + to + ')');
     }
 }

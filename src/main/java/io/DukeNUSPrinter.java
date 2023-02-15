@@ -36,13 +36,12 @@ public class DukeNUSPrinter {
      * Prints a message to the console whenever a task is added to the tasks array.
      *
      * @param taskDisplayDescription The formatted description of the task with indications of its isDone and Task object type.
-     * @param taskCount              The total number of tasks in the tasks array that is not null.
      */
-    public static void printAddedTask(String taskDisplayDescription, int taskCount) {
+    public static void printAddedTask(String taskDisplayDescription, int totalTaskCount) {
         printHorizontalLine();
         System.out.println(INDENT + "Got it. I've added this task:");
         System.out.println(INDENT + taskDisplayDescription);
-        System.out.println(INDENT + "You now have " + taskCount + " tasks in the list.");
+        System.out.println(INDENT + "You now have " + totalTaskCount + " tasks in the list.");
         printHorizontalLine();
     }
 
@@ -84,12 +83,11 @@ public class DukeNUSPrinter {
      * Prints all tasks in the tasks array that is not null.
      *
      * @param tasks     The array of tasks. The array used in practice is of fixed size 100.
-     * @param taskCount The number of non-null tasks already pushed into the array.
      */
-    public static void printTasks(ArrayList<Task> tasks, int taskCount) {
+    public static void printTasks(ArrayList<Task> tasks) {
         printHorizontalLine();
         System.out.println(INDENT + "Here are the tasks in your list:");
-        for (int i = 0; i < taskCount; i += 1) {
+        for (int i = 0; i < tasks.size(); i += 1) {
             System.out.println(INDENT + (i + 1) + '.' + tasks.get(i).getTaskString());
         }
         printHorizontalLine();

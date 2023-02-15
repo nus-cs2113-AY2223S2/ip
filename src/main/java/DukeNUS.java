@@ -1,25 +1,29 @@
 import io.DukeNUSPrinter;
+import io.TasksDataRead;
+import io.TasksDataWrite;
 import tasks.Deadline;
 import tasks.Event;
 import tasks.Task;
 import tasks.Todo;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Scanner;
 import static java.lang.Integer.parseInt;
 
 public class DukeNUS {
+    private static final String FILEPATH = "data/dukeNUS.txt";
     private static ArrayList<Task> tasks = new ArrayList<Task>();
-    private static int taskCount = 0; //The count of the valid objects in the tasks array that is incremented on pushing into it.
 
     /**
      * @param todo A newly constructed todo object as a child of Task that has a user-defined description.
      */
     public static void addTodo(Todo todo) {
         tasks.add(todo);
-        taskCount += 1;
-        DukeNUSPrinter.printAddedTask(todo.getTaskString(), taskCount);
+        DukeNUSPrinter.printAddedTask(todo.getTaskString(), tasks.size());
     }
 
     /**
@@ -28,8 +32,7 @@ public class DukeNUS {
      */
     public static void addDeadline(Deadline deadline) {
         tasks.add(deadline);
-        taskCount += 1;
-        DukeNUSPrinter.printAddedTask(deadline.getTaskString(), taskCount);
+        DukeNUSPrinter.printAddedTask(deadline.getTaskString(), tasks.size());
     }
 
     /**
@@ -38,8 +41,7 @@ public class DukeNUS {
      */
     public static void addEvent(Event event) {
         tasks.add(event);
-        taskCount += 1;
-        DukeNUSPrinter.printAddedTask(event.getTaskString(), taskCount);
+        DukeNUSPrinter.printAddedTask(event.getTaskString(), tasks.size());
     }
 
     /**
@@ -48,7 +50,6 @@ public class DukeNUS {
     private static void deleteTask(int taskIndex) {
         DukeNUSPrinter.printDeletedTask(tasks.get(taskIndex - 1).getTaskString());
         tasks.remove(taskIndex - 1);
-        taskCount -= 1;
     }
     /**
      * @param taskIndex The 1-based index of the task the user is referring to. Will cause the isDone property of the
@@ -77,10 +78,10 @@ public class DukeNUS {
     private static void interpretCommand(String[] userInputWords) {
         switch (userInputWords[0]) {
         case "list":
-            if (taskCount == 0) {
+            if (tasks.isEmpty()) {
                 DukeNUSPrinter.printMessage("You have no tasks. ¯\\_(ツ)_/¯");
             } else {
-                DukeNUSPrinter.printTasks(tasks, taskCount);
+                DukeNUSPrinter.printTasks(tasks);
             }
             break;
         case "delete":
@@ -118,7 +119,7 @@ public class DukeNUS {
             break;
         case "todo":
             try {
-                addTodo(new Todo(userInputWords[1]));
+                addTodo(new Todo(userInputWords[1], false));
             } catch (ArrayIndexOutOfBoundsException exception) {
                 DukeNUSPrinter.printMessage("☹ Error: please specify the description of the todo.");
             }
@@ -126,7 +127,7 @@ public class DukeNUS {
         case "deadline":
             try {
                 String[] deadlineInput = userInputWords[1].split("/", 2);
-                addDeadline(new Deadline(deadlineInput[0], deadlineInput[1]));
+                addDeadline(new Deadline(deadlineInput[0], deadlineInput[1], false));
             } catch (ArrayIndexOutOfBoundsException exception) {
                 DukeNUSPrinter.printMessage("☹ Error: incorrect syntax. Correct usage: " +
                         "`deadline [description] /by [deadline]`.");
@@ -135,7 +136,7 @@ public class DukeNUS {
         case "event":
             try {
                 String[] eventInput = userInputWords[1].split("/", 3);
-                addEvent(new Event(eventInput[0], eventInput[1], eventInput[2]));
+                addEvent(new Event(eventInput[0], eventInput[1], eventInput[2], false));
             } catch (ArrayIndexOutOfBoundsException exception) {
                 DukeNUSPrinter.printMessage("☹ Error: incorrect syntax. Correct usage: " +
                         "`event [description] /from [start_date] /to [end_date]`.");
@@ -147,10 +148,12 @@ public class DukeNUS {
         }
     }
 
-
-
-
     public static void main(String[] args) {
+        try {
+            tasks = TasksDataRead.readSavedTasks(FILEPATH);
+        } catch (FileNotFoundException | NoSuchElementException exception) {
+            //There is no data to read. Continue.
+        }
         Scanner scanner = new Scanner(System.in);
         DukeNUSPrinter.printWelcomeMessage();
         String userInput = scanner.nextLine();
@@ -162,6 +165,11 @@ public class DukeNUS {
             userInputWords = userInput.split(" ", 2);
         }
         DukeNUSPrinter.printFarewellMessage();
+        try {
+            TasksDataWrite.writeSavedTasks(FILEPATH, tasks);
+        } catch (IOException e) {
+            DukeNUSPrinter.printMessage("☹ Error: Something went wrong when saving your tasks to " + FILEPATH);
+        }
     }
 }
 
