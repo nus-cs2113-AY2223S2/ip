@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.logging.Handler;
 
 /**
  * Incorrect Tags have been resolved, all commits have been tagged appropriately
@@ -54,7 +55,12 @@ public class Duke {
         }
     }
 
-    public static void printTodo(String userInput) {
+    public static void printTodo(String userInput) throws EmptyTodo {
+        String[] holder = userInput.split(" ");
+        if(holder.length<2)
+        {
+            throw new EmptyTodo();
+        }
         printLine();
         String input = userInput.replace("todo ", "");
         taskList[currentIndex] = new Todos(input);
@@ -62,18 +68,38 @@ public class Duke {
         printNoTasks(currentIndex);
         printLine();
     }
-    public static void printDeadline(String userInput) {
+    public static void printDeadline(String userInput) throws EmptyDeadline, DeadlineMissingPhrase, DeadlineIsBlank {
         printLine();
-        String [] deadlineAndDescription = getDeadline(userInput);
+        String[] deadlineAndDescription = getDeadline(userInput);
+        if(!userInput.contains("/by ") && userInput.split(" ").length>1) {
+            throw new DeadlineMissingPhrase();
+        } else if(deadlineAndDescription.length==1) {
+            throw new EmptyDeadline();
+        } else if(deadlineAndDescription[1].isBlank()) {
+            throw new DeadlineIsBlank();
+        }
         taskList[currentIndex] = new Deadlines(deadlineAndDescription[0], deadlineAndDescription[1]);
         currentIndex+=1;
         printNoTasks(currentIndex);
         printLine();
     }
 
-    public static void printEvent(String userInput) {
+    public static void printEvent(String userInput) throws EmptyEvent, EventMissingBothPhrases, EventMissingToPhrase, EventMissingFromPhrase, EventFromIsBlank, EventToIsBlank {
         printLine();
         String [] eventDescription = getEvent(userInput);
+        if(!userInput.contains("/from") && userInput.split(" ").length>1) {
+            throw new EventMissingFromPhrase();
+        } else if(!userInput.contains("/to") && userInput.split(" ").length>1) {
+            throw new EventMissingToPhrase();
+        } else if(!(userInput.contains("/from") || userInput.contains("/to")) && userInput.split(" ").length>1) {
+            throw new EventMissingFromPhrase();
+        } else if (eventDescription.length==1) {
+            throw new EmptyEvent();
+        }else if(eventDescription[1].isBlank()) {
+            throw new EventFromIsBlank();
+        } else if(eventDescription[2].isBlank()) {
+            throw new EventToIsBlank();
+        }
         taskList[currentIndex] = new Events(eventDescription[0], eventDescription[1], eventDescription[2]);
         currentIndex+=1;
         printNoTasks(currentIndex);
@@ -92,11 +118,72 @@ public class Duke {
         printLine();
     }
 
+    public static void deadlineExceptionHandler() {
+        try {
+            printDeadline(userInput);
+        } catch (EmptyDeadline e) {
+            printLine();
+            System.out.println("\tPlease ensure that the deadline isn't empty!");
+            printLine();
+        } catch (DeadlineMissingPhrase e) {
+            printLine();
+            System.out.println("\tPlease ensure that you include the '/by' phrase to indicate the deadline!");
+            printLine();
+        } catch (DeadlineIsBlank e) {
+            printLine();
+            System.out.println("\tPlease ensure that the deadline is not composed of solely white spaces!");
+            printLine();
+        }
+    }
+
+    public static void eventExceptionHandler() {
+        try {
+            printEvent(userInput);
+        } catch (EmptyEvent e) {
+            printLine();
+            System.out.println("\tPlease ensure that the event isn't empty!");
+            printLine();
+        } catch (EventMissingFromPhrase e) {
+            printLine();
+            System.out.println("\tPlease ensure that you include the '/from' phrase to indicate the start of the event!");
+            printLine();
+        } catch (EventMissingToPhrase e) {
+            printLine();
+            System.out.println("\tPlease ensure that you include the '/to' phrase to indicate the end of the event!");
+            printLine();
+        } catch (EventMissingBothPhrases e) {
+            printLine();
+            System.out.println("\tPlease ensure that you include the '/from' and '/to' phrase to indicate the start and end of the event!");
+            printLine();
+        } catch (EventFromIsBlank e) {
+            printLine();
+            System.out.println("\tPlease ensure that the event has a valid start time period");
+            printLine();
+        } catch (EventToIsBlank e) {
+            printLine();
+            System.out.println("\tPlease ensure that the event has a valid end time period");
+            printLine();
+        }
+    }
+
+    public static void todoExceptionHandler() {
+        try {
+            printTodo(userInput);
+        }
+        catch (EmptyTodo e) {
+            printLine();
+            System.out.println("\tPlease ensure that the todo has a description!");
+            printLine();
+        }
+    }
 
 
     final static int MAXTASKS = 100;
     public static Task[] taskList = new Task[MAXTASKS];
     public static int currentIndex = 0;
+    public static Scanner in = new Scanner(System.in);
+    public static String userInput;
+    //public static DukeException exceptionHandler;
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -108,10 +195,14 @@ public class Duke {
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
         System.out.println("---------------------------------------------------------------------------------");
-        Scanner in = new Scanner(System.in);
-        String userInput;
+        userInput = in.nextLine();
         while (true) { // ensure that the loop can stay on forever if needed.
-            userInput = in.nextLine();
+            while(userInput.equals("") || userInput.equals(" ")) {
+                printLine();
+                System.out.println("\tSorry please enter a valid input ");
+                printLine();
+                userInput = in.nextLine();
+            }
             if(userInput.equals("bye")) { // exit command
                 break;
             } else if(userInput.equals("list")) { //displays the list if needed
@@ -140,16 +231,17 @@ public class Duke {
                 printUnmarkedTask(userInput, taskList);
                 printLine();
             } else if(isTheSame(userInput, "todo")) {
-                printTodo(userInput);
+                todoExceptionHandler();
                 //leave this for the final refactoring
             } else if(isTheSame(userInput, "deadline")) {
-               printDeadline(userInput);
+                deadlineExceptionHandler();
             } else if(isTheSame(userInput, "event")) {
-                printEvent(userInput);
+                eventExceptionHandler();
             }
             else { // tells the user that we have added the task in
-                printTask(userInput);
+                printTask(userInput); // could remove this and esnure that only specific tasks can be entered!
             }
+            userInput = in.nextLine();
         }
        sayBye();
     }
