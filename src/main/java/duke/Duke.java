@@ -43,6 +43,7 @@ public class Duke {
             } else if (command.equals("list")) {
                 // list out the tasks and status
                 if (tasks.isEmpty()) {
+                    // empty list -> print help
                     printException("There is nothing in your list right now.");
                 } else {
                     System.out.println(LINE_BREAK);
@@ -112,7 +113,7 @@ public class Duke {
                 tasks.add(addEvent);
                 System.out.println(LINE_BREAK);
                 printlnWithIndentation("Got it. I've added this task: ");
-                System.out.println(INDENTATION + "  " + addEvent.toString());
+                System.out.println(INDENTATION + "  " + addEvent);
                 printTaskCount(tasks);
             } else {
                 throw new IllegalCommandException(action);
@@ -125,6 +126,7 @@ public class Duke {
     }
 
     private static void printTaskCount(ArrayList<Task> tasks) {
+        // print out the number of task user has
         System.out.println(INDENTATION + "Now you have " + tasks.size() + " tasks in the list. \n" + LINE_BREAK);
     }
 
@@ -141,7 +143,7 @@ public class Duke {
                 tasks.add(addDeadline);
                 System.out.println(LINE_BREAK);
                 printlnWithIndentation("Got it. I've added this task: ");
-                System.out.println(INDENTATION + "  " + addDeadline.toString());
+                System.out.println(INDENTATION + "  " + addDeadline);
                 printTaskCount(tasks);
             } else {
                 throw new IllegalCommandException(action);
@@ -161,7 +163,7 @@ public class Duke {
             tasks.add(addTodo);
             System.out.println(LINE_BREAK);
             printlnWithIndentation("Got it. I've added this task: ");
-            System.out.println(INDENTATION + "  " + addTodo.toString());
+            System.out.println(INDENTATION + "  " + addTodo);
             printTaskCount(tasks);
         } catch (ArrayIndexOutOfBoundsException e) {
             printException("todo cannot be empty");
