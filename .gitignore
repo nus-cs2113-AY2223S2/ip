@@ -18,4 +18,7 @@ text-ui-test/EXPECTED-UNIX.TXT
 
 src/main/java/duke/*.class
 src/main/java/*.class
-src/main/java/tasks.txt
+src/main/java/commandHandler/*.class
+src/main/java/data/*.class
+src/main/java/ui/*.class
+src/main/java/userInputParser/*.class
