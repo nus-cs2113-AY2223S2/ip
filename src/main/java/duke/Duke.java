@@ -8,6 +8,12 @@ import duke.tasks.Task;
 import duke.tasks.Todo;
 
 import java.util.Scanner;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 public class Duke {
 
     public static void printBorder() {
@@ -93,6 +99,66 @@ public class Duke {
         printBorder();
     }
 
+    //write to file
+    public static final String filePath = "duke.txt";
+    public static void writeToFile(Task[] tasks){
+        try {
+            FileWriter fw = new FileWriter(filePath);
+            for (Task task : tasks) {
+                fw.write(String.valueOf(task));
+                fw.write('\n');
+            }
+            fw.close();
+        } catch (IOException e) {
+            System.out.println("Something went wrong: " + e.getMessage());
+        }
+    }
+
+    public static void readFileData(Task[] tasks){
+        try {
+            File f = new File(filePath); // create a File for the given file path
+            Scanner s = new Scanner(f); // create a Scanner using the File as the source
+            String data;
+            Integer listCount = 0;
+            while (s.hasNext()) {
+                data = s.nextLine();
+                String[] inputData = data.split("]");
+                addFileDataToList(tasks, listCount, inputData);
+                listCount ++;
+            }
+        }catch (FileNotFoundException e){
+            System.out.println("File not found");
+        }
+
+    }
+
+    public static void addFileDataToList(Task[] tasks, Integer listCount, String[] inputData){
+//        System.out.println(inputData[0]);
+//        System.out.println(inputData[1]);
+//        System.out.println(inputData[2]);
+//        System.out.println("end + next /n");
+
+        String eventType = inputData[0];
+        Task loadedTask = null;
+        switch (eventType){
+            case "[T":
+                loadedTask = new Todo(inputData[2]);
+                break;
+
+            case "[D":
+                String[] deadlineDetails = inputData[2].split("by");
+                loadedTask = new Deadline(deadlineDetails[0], deadlineDetails[1]);
+                break;
+
+            case "[E":
+                String[] eventDetails = inputData[2].split("from");
+                String[] eventDuration = eventDetails[1].split("to");
+                loadedTask = new Event(eventDetails[0], eventDuration[0], eventDuration[1]);
+        }
+        tasks[listCount] = loadedTask;
+
+    }
+
     public static void main(String[] args) {
 
         Task[] tasks = new Task[100];
@@ -101,6 +167,8 @@ public class Duke {
 
         printGreeting();
         printBorder();
+
+        readFileData(tasks);
 
 
         Scanner input = new Scanner(System.in);
@@ -195,6 +263,7 @@ public class Duke {
             }
         }while(!entry.equals("bye"));
 
+        writeToFile(tasks);
 
         printBorder();
         printExit();
