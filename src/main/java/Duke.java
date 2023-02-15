@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
-    private final static ArrayList<Task> taskList = new ArrayList<>();
+    private final static ArrayList<Task> list = new ArrayList<>();
     static String lineBreak = "-----------------";
 
     public static void main(String[] args) {
@@ -16,8 +16,8 @@ public class Duke {
             if (instruction.equalsIgnoreCase("list")) {
                 System.out.println(lineBreak + '\n'
                         + "Here are the tasks in your list:");
-                for (int i = 0; i < taskList.size(); i++) {
-                    System.out.println(i + 1 + "." + taskList.get(i).toString());
+                for (int i = 0; i < list.size(); i++) {
+                    System.out.println(i + 1 + "." + list.get(i).toString());
                 }
                 System.out.println(lineBreak);
             } else if (instruction.equalsIgnoreCase("bye")) {
@@ -29,20 +29,20 @@ public class Duke {
                     String[] split = instruction.split("\\s+");
                     int toMark = Integer.parseInt(split[1]);
                     if (split[0].equalsIgnoreCase("mark")) {
-                        taskList.get(toMark - 1).markAsDone();
+                        list.get(toMark - 1).markAsDone();
                         System.out.println("Nice! I've marked this task as done: ");
                     } else {
-                        taskList.get(toMark - 1).markAsUnDone();
+                        list.get(toMark - 1).markAsUnDone();
                         System.out.println("OK, I've marked this task as not done yet: ");
                     }
-                    System.out.println(taskList.get(toMark - 1).toString() + '\n' + lineBreak);
+                    System.out.println(list.get(toMark - 1).toString() + '\n' + lineBreak);
                 } catch (NullPointerException e) {
                     System.out.println("Item is not in list!");
                 }
             } else if (instruction.toLowerCase().contains("delete")) {
                 String[] split = instruction.split("\\s+");
                 int toDelete = Integer.parseInt(split[1]);
-                taskListDelete(toDelete-1);
+                taskListDelete(toDelete - 1);
             } else {
                 Task t;
                 if (instruction.toLowerCase().contains("deadline")) {
@@ -82,15 +82,16 @@ public class Duke {
     }
 
     public static void taskListAdd(Task t) {
-        taskList.add(t);
+        list.add(t);
         System.out.println(lineBreak + '\n' + "Got it. I've added this task:");
         System.out.println('\t' + t.toString());
-        System.out.println("Now you have " + taskList.size() + " tasks in the list." + '\n' + lineBreak);
+        System.out.println("Now you have " + list.size() + " tasks in the list." + '\n' + lineBreak);
     }
+
     public static void taskListDelete(int t) {
         System.out.println(lineBreak + '\n' + "Noted. I've removed this task:");
-        System.out.println('\t' + taskList.get(t).toString());
-        taskList.remove(t);
-        System.out.println("Now you have " + taskList.size() + " tasks in the list." + '\n' + lineBreak);
+        System.out.println('\t' + list.get(t).toString());
+        list.remove(t);
+        System.out.println("Now you have " + list.size() + " tasks in the list." + '\n' + lineBreak);
     }
 }
