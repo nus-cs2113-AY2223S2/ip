@@ -62,6 +62,8 @@ public class Duke {
             deadlineTask(input);
         } else if(inst.equalsIgnoreCase("event")) {
             eventTask(input);
+        } else if(inst.equalsIgnoreCase("delete")) {
+            deleteTask(input);
         } else {
             throw new DukeException(UNRECOGNISED_INPUT);
         }
@@ -123,7 +125,7 @@ public class Duke {
         String task = tokens[1];
         ToDo newTodoTask = new ToDo(task);
         list.add(newTodoTask);
-        printConfirmation(newTodoTask);
+        printConfirmation(newTodoTask, "add");
     }
 
     private static void deadlineTask(String input) throws DukeException {
@@ -139,7 +141,7 @@ public class Duke {
         String deadline = instruction[1];
         Deadline newDeadline = new Deadline(task, deadline);
         list.add(newDeadline);
-        printConfirmation(newDeadline);
+        printConfirmation(newDeadline, "add");
     }
 
     private static void eventTask(String input) throws DukeException {
@@ -156,13 +158,37 @@ public class Duke {
         String dateTo = instruction[2];
         Event newEvent = new Event(task, dateFrom, dateTo);
         list.add(newEvent);
-        printConfirmation(newEvent);
+        printConfirmation(newEvent, "add");
     }
 
-    private static void printConfirmation(Task newTask) {
+    private static void deleteTask(String input) throws Exception {
+        String[] tokens = input.split("\\s+", 2);
+        if(tokens.length < 2) {
+            throw new DukeException(WRONG_INPUTS_GIVEN);
+        }
+        try {
+            int index = Integer.parseInt(tokens[1]) - 1;
+            Task taskToRemove = list.get(index);
+            list.remove(index);
+            printConfirmation(taskToRemove, "delete");
+        } catch (Exception e) {
+            throw new Exception(UNRECOGNISED_ITEM_INDEX);
+        }
+    }
+
+    private static void printConfirmation(Task newTask, String action) {
         System.out.println(LINE);
-        System.out.println("Got it. I've added this task:");
-        System.out.println(newTask);
+        switch(action) {
+        case "add":
+            System.out.println("Got it. I've added this task:");
+            System.out.println(newTask);
+            break;
+
+        case "delete":
+            System.out.println("Noted. I've removed this task:");
+            System.out.println(newTask);
+            break;
+        }
         System.out.println("Now you have " + list.size() + " tasks in the list");
         System.out.println(LINE);
     }
