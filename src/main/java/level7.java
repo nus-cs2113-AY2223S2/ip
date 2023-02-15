@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class level7 {
 
@@ -95,7 +97,7 @@ public class level7 {
     public static void main(String[] args){
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
-        String filePath = "C:\\Users\\User\\ip\\Duke.txt";
+        String filePath = "Duke.txt";
         String line;
         ArrayList<String> tasks = new ArrayList<>();
         ArrayList<String> done = new ArrayList<>();
