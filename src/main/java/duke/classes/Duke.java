@@ -119,7 +119,7 @@ public class Duke {
 
         try {
             File file = new File("src/duke_list.txt");
-            if(file.createNewFile()) {
+            if (file.createNewFile()) {
                 System.out.println("the file has been created");
             } else {
                 System.out.println("the file already exists");
@@ -131,10 +131,9 @@ public class Duke {
         String filePath = "src/duke_list.txt";
         foundationList(filePath, listOfTask);
 
-        for(int i = 0; i < listOfTask.size(); i++) {
+        for (int i = 0; i < listOfTask.size(); i++) {
             count++;
         }
-        System.out.println("current count value: " + count);
 
         try {
             System.out.println("This is the current content of the duke_list file, if any:");
