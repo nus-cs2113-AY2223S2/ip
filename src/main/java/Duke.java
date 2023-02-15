@@ -34,11 +34,22 @@ public class Duke {
                 printAddedDeadlineMessage(input, listOfTasks);
             } else if (isValidEvent(words)) {
                 printAddedEventMessage(input, listOfTasks);
+            } else if (IsValidDelete(input, words)) {
+                int number = Integer.parseInt(words[1]);
+                if (number <= 0 || number >= MAX_TASKS || listOfTasks[number] == null || words.length == 1 || !isInt(words[1])) {
+                    System.out.println("Please delete only valid tasks! List out your tasks if you are unsure!!");
+                } else {
+                    listOfTasks[number].deleteTask();
+                }
             } else {
                 printAddedTaskMessage(input, listOfTasks);
             }
             input = sc.nextLine();
         }
+    }
+
+    private static boolean IsValidDelete(String input, String[] words) {
+        return input.startsWith("delete") && words.length == 2 && isInt(words[1]);
     }
 
     private static boolean isValidMark(String input, String[] words) {

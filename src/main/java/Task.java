@@ -49,4 +49,10 @@ public class Task {
     public String addedMessage() {
         return "added: " + description;
     }
+
+    public void deleteTask() {
+        --taskCount;
+        System.out.println("Noted. I've removed this task: \n" + "  " + statusMessage() + "\n" +
+                "Now you have " + taskCount + " tasks in the list.");
+    }
 }
