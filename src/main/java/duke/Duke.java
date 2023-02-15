@@ -5,6 +5,9 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
 
+import duke.Pair;
+
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Duke {
@@ -14,24 +17,30 @@ public class Duke {
     public static Task[] tasks;
     public static Scanner inputReader;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         initDuke();
+        Pair tasksAndIndex = Storage.loadData(tasks,"./data.txt", tasksIndex);
+        tasks = tasksAndIndex.tasks;
+        tasksIndex = tasksAndIndex.tasksIndex;
         greetUser();
         while (isInUse) {
             String userInput = getUserInput(inputReader);
             String[] informationNeededForPerformingUserRequest = processUserInput(userInput);
             performUserRequest(tasks, informationNeededForPerformingUserRequest);
+            Storage.saveData("./data.txt", tasks, tasksIndex);
         }
     }
 
     public static void initDuke() {
         tasks = new Task[MAX_NUMBER_OF_TASKS];
         inputReader = new Scanner(System.in);
+
     }
 
     private static void greetUser() {
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
+        listTasks(tasks);
     }
 
     private static String getUserInput(Scanner in) {
@@ -40,7 +49,7 @@ public class Duke {
 
     private static String[] processUserInput(String userInput) throws IndexOutOfBoundsException {
         String[] informationNeededForPerformingUserRequest = {"", "", "", ""};
-        String taskInformation = "";
+        String taskInformation;
 
         // for all tasks: info...[0] is the command
         String command = userInput.split(" ", 2)[0];
@@ -129,7 +138,7 @@ public class Duke {
             printNotification(tasks[tasksIndex], "event", tasksIndex + 1);
             tasksIndex++;
             break;
-        case "Invalid command": // earlier on we detected that such a command doesnt exist
+        case "Invalid command": // earlier on we detected that such a command doesn't exist
             System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
             break;
         default: // earlier on we detected correct command but invalid taskInformation
