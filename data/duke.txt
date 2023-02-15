@@ -3,5 +3,6 @@ D |   | return book | June 6th
 E | X | CS2113 project meeting | Feb 13th 1-3pm
 T |   | join sports club
 D | X | complete tP UG | Wednesday
-E |   | CS2023 Tutorial | Feb 15th 1pm-2pm
+E |   | CS2113 Tutorial | Feb 15th 1pm-2pm
+T |   | CS2113 Add Increment A_Jar
 D |   | complete iP | Friday

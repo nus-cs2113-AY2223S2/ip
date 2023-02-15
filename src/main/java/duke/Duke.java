@@ -2,6 +2,7 @@ package duke;
 
 import duke.command.Command;
 import duke.exception.CommandNotRecognisedException;
+import duke.exception.IllegalCharacterException;
 import duke.exception.InvalidTaskNumberException;
 import duke.task.Deadline;
 import duke.task.Event;
@@ -40,6 +41,9 @@ public class Duke {
                 processCommand(input);
             } catch (CommandNotRecognisedException e) {
                 System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+                printDivider();
+            } catch (IllegalCharacterException e) {
+                System.out.println("☹ OOPS!!! Input should not contain '|' or '-'.");
                 printDivider();
             }
         } while (!input.equals(Command.COMMAND_BYE));
@@ -94,7 +98,6 @@ public class Duke {
                     System.out.println("Failed to create file");
                 }
             }
-
         }
     }
 
@@ -154,7 +157,11 @@ public class Duke {
         printDivider();
     }
 
-    public static void processCommand (String input) throws CommandNotRecognisedException {
+    public static void processCommand (String input) throws CommandNotRecognisedException, IllegalCharacterException {
+        if (input.contains("|") || input.contains("-")) {
+            throw new IllegalCharacterException();
+        }
+
         String action = input.split(" ")[0];
         String[] taskDesc;
 
@@ -256,7 +263,6 @@ public class Duke {
 
 
     private static void markTaskDone(Integer taskIndex) throws InvalidTaskNumberException {
-        //TODO: Check size() or  size()-1
         if (taskIndex < 0 || taskIndex > tasks.size()) {
             throw new InvalidTaskNumberException();
         } else {
@@ -297,9 +303,8 @@ public class Duke {
             throw new InvalidTaskNumberException();
         } else {
             System.out.println("Noted. I've removed this task:\n " + tasks.get(taskIndex)
-                    + "\nNow you have " + tasks.size() + "tasks in the list.");
+                    + "\nNow you have " + (tasks.size()-1) + " tasks in the list.");
             tasks.remove(tasks.get(taskIndex));
         }
     }
-
 }
