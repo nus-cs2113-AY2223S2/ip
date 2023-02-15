@@ -13,6 +13,10 @@ public class Task {
         numberOfTasks++;
     }
 
+    public static void decrementNumberOfTasks() {
+        numberOfTasks--;
+    }
+
     public static String printTasksList(ArrayList<Task> tasks) {
         String tasksList = new String();
         int count = 1;
