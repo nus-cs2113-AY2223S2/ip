@@ -6,9 +6,13 @@ import limey.command.Task;
 import limey.command.Todo;
 import limey.exception.commandNotFoundException;
 import limey.exception.invalidDateException;
+import limey.iohandler.FileHandler;
 import limey.iohandler.Parser;
 import limey.iohandler.Speech;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Limey {
@@ -17,10 +21,14 @@ public class Limey {
     public static void main(String[] args) {
         //initialise variables
         Task[] tasks = new Task[MAX_NUM_TASKS];
+        String filePath = "C:\\Users\\sunil\\desktop\\NUS\\CS2113\\Indiv Project\\src\\main\\SavedList";
+        File f = new File(filePath);
+        if(f.exists() && !f.isDirectory()){
+            retrieveSavedList(tasks);
+        }
         String inLine;
         String firstWord;
         String[] wordList;
-
         //start user interface
         Speech.sayHi();
         Scanner in = new Scanner(System.in);
@@ -30,13 +38,32 @@ public class Limey {
 
         initialiseLimey(firstWord, tasks, wordList, inLine, in);
 
-        //loop until input 'bye'
+        exitLimey(tasks);
+    }
+
+    private static void retrieveSavedList(Task[] tasks) {
+        try {
+            String filePath = "C:\\Users\\sunil\\desktop\\NUS\\CS2113\\Indiv Project\\src\\main\\SavedList";
+            FileHandler.readFileToTasks(filePath, tasks);
+        } catch (FileNotFoundException e) {
+            Speech.invalidMessage("File not found");
+        }
+    }
+
+    private static void exitLimey(Task[] tasks) {
+        try {
+            String filePath = "C:\\Users\\sunil\\desktop\\NUS\\CS2113\\Indiv Project\\src\\main\\SavedList";
+            FileHandler.writeToFile(filePath, tasks);
+        }catch (IOException e) {
+            Speech.invalidMessage("File not found");
+        }
         Speech.sayBye();
     }
 
 
     private static void makeNewTask (Task[] tasks, String inLine, String firstWord) throws commandNotFoundException {
         Task taskIn;
+        inLine = inLine.substring(inLine.indexOf(" ") +1);
         switch (firstWord) {
         case "deadline":
             try {
@@ -66,9 +93,8 @@ public class Limey {
     }
 
     private static void initialiseLimey(String firstWord, Task[] tasks, String[] wordList, String inLine,  Scanner in) {
-        while (!firstWord.equals("bye")) {
-            //switch case to decide what to do
-            switch (firstWord) {
+        while (!firstWord.equals("bye")) { //loop until input 'bye'
+            switch (firstWord) { //switch case to decide what to do
             case "list":
                 Speech.printTaskList(tasks, Task.numTasks);
                 break;
@@ -80,9 +106,11 @@ public class Limey {
                 break;
             default:
                 try{
-                    makeNewTask(tasks, inLine, firstWord);
+                    makeNewTask(tasks, inLine.trim(), firstWord);
                 } catch (commandNotFoundException e){
                     Speech.invalidMessage("Invalid Command");
+                } catch (StringIndexOutOfBoundsException e){
+                    Speech.invalidMessage("String Index out of bounds");
                 }
                 break;
             }
