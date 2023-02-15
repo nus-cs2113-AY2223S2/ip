@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+
 public class Duke {
     public static void main(String[] args) {
         greeting();
@@ -21,6 +22,8 @@ public class Duke {
                 } else if (messageFromUser.equals("bye")) {
                     exitGreeting();
                     isExit = true;
+                } else if (messageFromUser.startsWith("delete")) {
+                    deleteFromList(messageFromUser, tasks);
                 } else {
                     throw new DukeException();
                 }
@@ -62,10 +65,25 @@ public class Duke {
         horizontalLine();
     }
 
+    public static void deleteFromList(String messageFromUser, ArrayList<Task> tasks) {
+        horizontalLine();
+        // messageFromUser is in the format delete INDEX
+        String[] splitMessage = messageFromUser.split(" ");
+        int indexToDelete = Integer.parseInt(splitMessage[1]);
+        // Decrement 1 as ArrayList is index 0 based
+        indexToDelete--;
+        Task taskToDelete = tasks.get(indexToDelete);
+        tasks.remove(indexToDelete);
+        System.out.println("Alright, I have removed this task: ");
+        displayTask(taskToDelete);
+        printNumberOfTasks(tasks.size());
+        horizontalLine();
+    }
+
     public static void changeTaskStatus(String sentence, ArrayList<Task> tasks) {
         String[] words = sentence.split(" ");
         int taskNumber = Integer.parseInt(words[1]);
-        // ArrayList is index 0 so decrement by 1
+        // Decrement 1 as ArrayList is index 0 based
         taskNumber--;
         Task currentTask = tasks.get(taskNumber);
         if (words[0].trim().equals("mark")) {
@@ -82,7 +100,7 @@ public class Duke {
             System.out.println("Here are the tasks in your list: ");
             for (int index = 0; index < totalNumberOfTasks; index += 1) {
                 Task currentTask = tasks.get(index);
-                System.out.print(index+1 + ". ");
+                System.out.print(index + 1 + ". ");
                 displayTask(currentTask);
             }
         } else {
@@ -122,7 +140,7 @@ public class Duke {
 
     public static void printNumberOfTasks(int currentIndex) {
         if (currentIndex == 1) {
-            System.out.println("Your first task!");
+            System.out.println("You have 1 task!");
         } else {
             System.out.println("You currently have " + currentIndex + " tasks in the list.");
         }
