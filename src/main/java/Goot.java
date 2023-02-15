@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 //import java.util.Arrays;
 //import java.util.ArrayList;
@@ -6,18 +8,19 @@ public class Goot {
     String DASH = "__________________________________";
     String greet = DASH + "\nI'm Goot :3\nWhat's up?\n" + DASH;
     System.out.println(greet);
+    File f = new File("data.txt");
+    try{
+        Task.loadFileContentsToTaskArray(f);
+    }
+    catch (IOException e){
+        e.printStackTrace();
+    }
 
 
     while (true) {
         Scanner scan = new Scanner(System.in);
         String input = scan.nextLine();
         String[] inputSplitBySpace = input.split(" ");
-        try{
-            GootExceptionHandler.validateInput(inputSplitBySpace);
-        }
-        catch (GootExceptions e){
-            GootExceptionHandler.unidentifiedKeyword();
-        }
 
         if(inputSplitBySpace[0].equals("todo")){
             ToDo todo = new ToDo(input.substring(5), Task.lastIndex+1);
@@ -61,6 +64,17 @@ public class Goot {
         }
         else if (input.equals("list")) {
             Task.printList();
+        }
+        else if (input.equals("save")){
+            Task.save();
+        }
+        else{
+            try{
+                GootExceptionHandler.validateInput(inputSplitBySpace);
+            }
+            catch (GootExceptions e){
+                GootExceptionHandler.unidentifiedKeyword();
+            }
         }
     }
 }

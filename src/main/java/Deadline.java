@@ -27,4 +27,8 @@ public class Deadline extends Task{
     public void updateTaskDescription(){
         this.description = "  [D]"+this.getDoneString()+" "+this.taskName+" (by: "+this.dueDate+")";
     }
+
+    public void loadFileContentsToTaskArray(String input){
+        String[] splitByOpenSquareBrackets = input.split("\\[");
+    }
 }
