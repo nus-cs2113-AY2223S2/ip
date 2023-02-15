@@ -17,7 +17,7 @@ public class Duke {
         System.out.println("Hello from\n" + logo);
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?\n");
-        ArrayList<Task> tasks = new ArrayList<Task>();
+        ArrayList<Task> tasks = new ArrayList<Task>();// using ArrayList to store tasks instead of array
         try (Scanner scan = new Scanner(System.in)) {
             String input = scan.nextLine();
             String output = new String();
