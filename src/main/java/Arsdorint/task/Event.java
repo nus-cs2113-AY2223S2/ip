@@ -1,4 +1,8 @@
+package Arsdorint.task;
+
 public class Event extends Task {
+    public static final String TYPE_EVENT = "E";
+    public static final String TYPE_EVENT_BOX = "[E}";
     public String date;
     public Event(String description, String Date) {
         super(description);
