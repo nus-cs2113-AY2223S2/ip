@@ -3,6 +3,7 @@ package duke;
 import duke.task.*;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 public class Duke {
     public static void printGreeting(){
         System.out.println("Hello! I'm Duke");
@@ -13,10 +14,7 @@ public class Duke {
         System.out.println("Bye. Hope to see you again soon!");
     }
 
-    public static void addNewTask(Task[] tasks, String[] taskParameters, TaskType taskType) {
-        if (Task.totalTasks >= tasks.length) {
-            System.out.println("Storage is full, cannot store new task");
-        }
+    public static void addNewTask(ArrayList<Task> tasks, String[] taskParameters, TaskType taskType) {
         Task newTask;
         switch (taskType) {
         case TODO:
@@ -34,57 +32,73 @@ public class Duke {
             System.out.println("Error in addNewTask method, no task type specified");
             return;
         }
-        tasks[Task.totalTasks - 1] = newTask;
+        tasks.add(newTask);
         System.out.println("Got it. I've added this task:");
         System.out.println("  " + newTask);
-        System.out.println("Now you have " + Task.totalTasks + " tasks in the list.");
+        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
     }
 
-    public static void printTasks(Task[] tasks){
+    public static void printTasks(ArrayList<Task> tasks){
         System.out.println("Here are the tasks in your list:");
-        for(int i = 0; i < Task.totalTasks; ++i) {
+        for(int i = 0; i < tasks.size(); ++i) {
             System.out.print(i + 1 + ".");
-            System.out.println(tasks[i].toString());
+            System.out.println(tasks.get(i).toString());
         }
     }
-    public static void changeTaskStatus(Task[] tasks, String[] taskNumbers, boolean isDone) throws DukeException{
-        // From parser, taskNumbers.length is always equal to 1
+
+    public static int getTaskIndex(String[] taskNumbers, int totalTasks) throws DukeException{
+        // From parser, in the current implementation, taskNumbers.length is always equal to 1
         int taskIndex;
         try {
             taskIndex = Integer.parseInt(taskNumbers[0]);
         } catch (Exception e){
             throw new TaskNumberException();
         }
-        if(taskIndex <= 0 || taskIndex > Task.totalTasks){
+        if(taskIndex <= 0 || taskIndex > totalTasks){
             throw new TaskNumberException();
         }
 
-        // Minus one to taskIndex since user input is using 1-based indexing
+        // Minus one from task index since the array tasks is 0-based
         taskIndex -= 1;
+        return taskIndex;
+    }
+    public static void changeTaskStatus(ArrayList<Task> tasks, String[] taskNumbers, boolean isDone) throws DukeException{
+        // From parser, taskNumbers.length is always equal to 1
+        int taskIndex = getTaskIndex(taskNumbers, tasks.size());
+
         if(isDone){
-            if(tasks[taskIndex].isDone()){
+            if(tasks.get(taskIndex).isDone()){
                 System.out.println("This task is already marked done:");
-                System.out.println(tasks[taskIndex].toString());
+                System.out.println(tasks.get(taskIndex).toString());
             } else{
-                tasks[taskIndex].setDone(true);
+                tasks.get(taskIndex).setDone(true);
                 System.out.println("Nice! I've marked this task as done:");
-                System.out.println(tasks[taskIndex].toString());
+                System.out.println(tasks.get(taskIndex).toString());
             }
         }else{
-            if(!tasks[taskIndex].isDone()){
+            if(!tasks.get(taskIndex).isDone()){
                 System.out.println("This task is already marked as not done:");
-                System.out.println(tasks[taskIndex].toString());
+                System.out.println(tasks.get(taskIndex).toString());
             } else{
-                tasks[taskIndex].setDone(false);
+                tasks.get(taskIndex).setDone(false);
                 System.out.println("OK, I've marked this task as not done yet:");
-                System.out.println(tasks[taskIndex].toString());
+                System.out.println(tasks.get(taskIndex).toString());
             }
         }
     }
 
+    public static void deleteTask(ArrayList<Task> tasks, String[] taskNumbers) throws DukeException{
+        int taskIndex = getTaskIndex(taskNumbers, tasks.size());
+
+        Task taskToRemove = tasks.get(taskIndex);
+        tasks.remove(taskIndex);
+        System.out.println("Noted. I've removed this task:");
+        System.out.println("  " + taskToRemove);
+        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+    }
+
     public static void main(String[] args) {
-        final int MAX_TASKS = 100;
-        Task[] tasks = new Task[MAX_TASKS];
+        ArrayList<Task> tasks = new ArrayList<>();
         Scanner in = new Scanner(System.in);
         printGreeting();
         boolean isProgramRunning = true;
@@ -112,6 +126,9 @@ public class Duke {
                     break;
                 case UNMARK_TASK_COMMAND:
                     changeTaskStatus(tasks, command.getAdditionalParameters(), false);
+                    break;
+                case DELETE_TASK_COMMAND:
+                    deleteTask(tasks, command.getAdditionalParameters());
                     break;
                 case END_PROGRAM_COMMAND:
                     printFarewell();

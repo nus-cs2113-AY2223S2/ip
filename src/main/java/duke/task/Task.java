@@ -5,12 +5,10 @@ public class Task {
     private String name;
     private TaskType taskType;
 
-    public static int totalTasks = 0;
     Task(String name, TaskType taskType) {
         this.name = name;
         this.taskType = taskType;
         isDone = false;
-        ++totalTasks;
     }
 
     public void setDone(boolean isDone){

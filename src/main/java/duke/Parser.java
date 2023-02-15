@@ -24,16 +24,14 @@ public class Parser {
         case CommandInputs.MARK_COMMAND_INPUT:
             commandType = CommandType.MARK_TASK_COMMAND;
             additionalParameters = getTaskNumbers(userInput);
-            if (additionalParameters == null) {
-                commandType = CommandType.UNKNOWN_COMMAND;
-            }
             break;
         case CommandInputs.UNMARK_COMMAND_INPUT:
             commandType = CommandType.UNMARK_TASK_COMMAND;
             additionalParameters = getTaskNumbers(userInput);
-            if (additionalParameters == null) {
-                commandType = CommandType.UNKNOWN_COMMAND;
-            }
+            break;
+        case CommandInputs.DELETE_COMMAND_INPUT:
+            commandType = CommandType.DELETE_TASK_COMMAND;
+            additionalParameters = getTaskNumbers(userInput);
             break;
         case CommandInputs.END_PROGRAM_COMMAND_INPUT:
             commandType = CommandType.END_PROGRAM_COMMAND;
