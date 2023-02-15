@@ -6,9 +6,9 @@ public class Task {
     public Boolean status;
 
 
-    public Task(String name){
+    public Task(String name, Boolean status){
         this.name = name;
-        this.status = false;
+        this.status = status;
     }
 
 
@@ -29,5 +29,9 @@ public class Task {
         }
 
         return  checkbox + " " + name;
+    }
+
+    public String toTextFileFormat(){
+        return name + status;
     }
 }

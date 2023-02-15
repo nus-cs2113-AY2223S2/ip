@@ -3,8 +3,8 @@ package duke.tasks;
 public class Event extends Task {
     public String start;
     public String end;
-    public Event(String name, String start, String end) {
-        super(name);
+    public Event(String name, String start, String end, Boolean status) {
+        super(name, status);
         this.start = start;
         this.end = end;
     }
@@ -15,6 +15,11 @@ public class Event extends Task {
         if(status){
             checkbox = "[X]";
         }
-        return "[E]" + checkbox + " " + name + "(" + start  + end + ")";
+        return "[E]" + checkbox + " " + name + "(from: " + start  + ", to: " + end + ")";
+    }
+
+    @Override
+    public String toTextFileFormat(){
+        return "event/" + name + "/" + status + "/" + start + "/" + end;
     }
 }

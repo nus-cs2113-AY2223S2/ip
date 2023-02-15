@@ -41,30 +41,27 @@ public class Duke {
 
 
     //add a new to do
-    public static void addTodo(ArrayList<Task> tasks, int listCount, String name) throws EmptyTaskException {
+    public static void addTodo(ArrayList<Task> tasks, String name) throws EmptyTaskException {
         if(name.equals(" ")){
             throw new EmptyTaskException();
         }
-        tasks.add(new Todo(name));
-//        tasks[listCount] = new Todo(name);
+        tasks.add(new Todo(name, false));
         printBorder();
         System.out.println("added: " + name + "\n");
         printBorder();
     }
 
     //add a new deadline task
-    public static void addDeadline(ArrayList<Task> tasks, int listCount, String name, String deadline){
-//        tasks[listCount] = new Deadline(name, deadline);
-        tasks.add(new Deadline(name, deadline));
+    public static void addDeadline(ArrayList<Task> tasks, String name, String deadline){
+        tasks.add(new Deadline(name, deadline, false));
         printBorder();
         System.out.println("added: " + name + "\n");
         printBorder();
     }
 
     //add a new event
-    public static void addEvent(ArrayList<Task> tasks, int listCount, String name, String start, String end){
-//        tasks[listCount] = new Event(name, start, end);
-        tasks.add(new Event(name, start, end));
+    public static void addEvent(ArrayList<Task> tasks, String name, String start, String end){
+        tasks.add(new Event(name, start, end, false));
         printBorder();
         System.out.println("added: " + name + "\n");
         printBorder();
@@ -82,16 +79,13 @@ public class Duke {
                 System.out.println(counter + ". " + t);
                 counter++;
             }
-
         }
-
         System.out.println("You have " + tasks.size() + " tasks in your list.");
         printBorder();
     }
 
     //mark task as done
     public static void markTask(ArrayList<Task> tasks, int taskIndex){
-//        tasks[taskIndex].setStatus("mark");
         tasks.get(taskIndex).setStatus("mark");
         System.out.println("Nice! I've marked this task as done: \n");
         System.out.println(tasks.get(taskIndex) + "\n");
@@ -100,7 +94,6 @@ public class Duke {
 
     //mark task as undone
     public static void unmarkTask(ArrayList<Task> tasks, int taskIndex){
-//        tasks[taskIndex].setStatus("unmark");
         tasks.get(taskIndex).setStatus("unmark");
         System.out.println("OK, I've marked this task as not done yet: \n");
         System.out.println(tasks.get(taskIndex) + "\n");
@@ -119,11 +112,11 @@ public class Duke {
 
     //write to file
     public static final String filePath = "duke.txt";
-    public static void writeToFile(Task[] tasks){
+    public static void writeToFile(ArrayList<Task> tasks){
         try {
             FileWriter fw = new FileWriter(filePath);
             for (Task task : tasks) {
-                fw.write(String.valueOf(task));
+                fw.write(task.toTextFileFormat());
                 fw.write('\n');
             }
             fw.close();
@@ -132,57 +125,41 @@ public class Duke {
         }
     }
 
-    public static void readFileData(Task[] tasks){
+    public static void readFileData(ArrayList<Task> tasks){
         try {
             File f = new File(filePath); // create a File for the given file path
             Scanner s = new Scanner(f); // create a Scanner using the File as the source
             String data;
-            Integer listCount = 0;
             while (s.hasNext()) {
                 data = s.nextLine();
-                String[] inputData = data.split("]");
-                addFileDataToList(tasks, listCount, inputData);
-                listCount ++;
+                addFileDataToList(tasks, data);
             }
         }catch (FileNotFoundException e){
             System.out.println("File not found");
         }
-
     }
 
-    public static void addFileDataToList(Task[] tasks, Integer listCount, String[] inputData){
-//        System.out.println(inputData[0]);
-//        System.out.println(inputData[1]);
-//        System.out.println(inputData[2]);
-//        System.out.println("end + next /n");
-
-        String eventType = inputData[0];
+    public static void addFileDataToList(ArrayList<Task> tasks, String data){
+        String[] inputData = data.split("/");
+        String taskType = inputData[0];
         Task loadedTask = null;
-        switch (eventType){
-            case "[T":
-                loadedTask = new Todo(inputData[2]);
+        switch (taskType){
+            case "todo":
+                loadedTask = new Todo(inputData[1], Boolean.parseBoolean(inputData[2]));
                 break;
 
-            case "[D":
-                String[] deadlineDetails = inputData[2].split("by");
-                loadedTask = new Deadline(deadlineDetails[0], deadlineDetails[1]);
+            case "deadline":
+                loadedTask = new Deadline(inputData[1], inputData[3], Boolean.parseBoolean(inputData[2]));
                 break;
 
-            case "[E":
-                String[] eventDetails = inputData[2].split("from");
-                String[] eventDuration = eventDetails[1].split("to");
-                loadedTask = new Event(eventDetails[0], eventDuration[0], eventDuration[1]);
+            case "event":
+                loadedTask = new Event(inputData[1], inputData[3], inputData[4], Boolean.parseBoolean(inputData[2]));
         }
-        tasks[listCount] = loadedTask;
-
+        tasks.add(loadedTask);
     }
 
     public static void main(String[] args) {
-
-//        Task[] tasks = new Task[100];
         ArrayList<Task> tasks = new ArrayList<>();
-        Integer listCount = 0;
-
 
         printGreeting();
         printBorder();
@@ -235,19 +212,18 @@ public class Duke {
                     case "deadline":
                         try {
                             String[] info = userInput[1].split("/by", 2);
-                            addDeadline(tasks, listCount, info[0], info[1]);
+                            addDeadline(tasks, info[0], info[1]);
                         } catch (ArrayIndexOutOfBoundsException e) {
                             System.out.println("OOPS! The description of task cannot be empty");
                             printBorder();
                         }
-                        listCount++;
                         entry = input.nextLine();
                         break;
 
 
                     case "todo":
                         try {
-                            addTodo(tasks, listCount, userInput[1]);
+                            addTodo(tasks, userInput[1]);
                         } catch (ArrayIndexOutOfBoundsException e) {
                             System.out.println("OOPS! The description of task cannot be empty");
                             printBorder();
@@ -255,19 +231,17 @@ public class Duke {
                             e.printErrorMessage();
                             printBorder();
                         }
-                        listCount++;
                         entry = input.nextLine();
                         break;
 
                     case "event":
                         try {
-                            String[] info_e = userInput[1].split("/", 3);
-                            addEvent(tasks, listCount, info_e[0], info_e[1], info_e[2]);
+                            String[] info_e = userInput[1].split("/from|/to", 3);
+                            addEvent(tasks, info_e[0], info_e[1], info_e[2]);
                         } catch (ArrayIndexOutOfBoundsException e) {
                             System.out.println("OOPS! The description of task cannot be empty");
                             printBorder();
                         }
-                        listCount++;
                         entry = input.nextLine();
                         break;
 

@@ -1,8 +1,9 @@
 package duke.tasks;
 
 public class Todo extends Task {
-    public Todo(String name) {
-        super(name);
+    public Todo(String name, Boolean status) {
+
+        super(name, status);
     }
 
     @Override
@@ -13,5 +14,10 @@ public class Todo extends Task {
             checkbox = "[X]";
         }
         return "[T]" + checkbox + " " + name;
+    }
+
+    @Override
+    public String toTextFileFormat(){
+        return "todo/" + name + "/" + status;
     }
 }
