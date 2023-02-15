@@ -5,3 +5,40 @@ Hello from
 | |_| | |_| |   <  __/
 |____/ \__,_|_|\_\___|
 
+____________________________________________________________
+Hello! I'm duke.main.Duke
+What can I do for you?
+____________________________________________________________
+
+____________________________________________________________
+Got it. I've added this task:
+[T][ ] todo assignment 1
+Now you have 1 tasks in the list.
+____________________________________________________________
+
+____________________________________________________________
+Got it. I've added this task:
+[D][ ] deadline assignment 2 (by: by monday)
+Now you have 2 tasks in the list.
+____________________________________________________________
+
+____________________________________________________________
+Got it. I've added this task:
+[E][ ] event assignment 3 (from: tuesday to: thursday)
+Now you have 3 tasks in the list.
+____________________________________________________________
+
+____________________________________________________________
+Here are the tasks in your list:
+1. [T][ ] todo assignment 1
+2. [D][ ] deadline assignment 2 (by: by monday)
+3. [E][ ] event assignment 3 (from: tuesday to: thursday)
+____________________________________________________________
+
+____________________________________________________________
+Here are the tasks in your list:
+1. [T][ ] todo assignment 1
+2. [D][ ] deadline assignment 2 (by: by monday)
+3. [E][X] event assignment 3 (from: tuesday to: thursday)
+____________________________________________________________
+
