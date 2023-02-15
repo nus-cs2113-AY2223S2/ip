@@ -194,7 +194,6 @@ public class Duke {
             } catch (java.io.IOException IOE) {
                 System.out.println("IO Exception occured " + IOE);
             }
-
         }
     }
 }
