@@ -79,6 +79,7 @@ public class Archduke {
                     Output.printQueriedTasks(taskStore, command.getBody());
                     continue;
                 case "mark":
+                    // Fallthrough
                 case "unmark":
                     toggleTaskCompleteness(command.getBody());
                     continue;
