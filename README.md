@@ -1,24 +1,26 @@
-# Duke project template
+# Duke Individual Project
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+This is an organiser to help you keep track of your tasks. 
 
-## Setting up in Intellij
+## Using Duke
 
 Prerequisites: JDK 11, update Intellij to the most recent version.
 
-1. Open Intellij (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project first)
-1. Open the project into Intellij as follows:
-   1. Click `Open`.
-   1. Select the project directory, and click `OK`.
-   1. If there are any further prompts, accept the defaults.
-1. Configure the project to use **JDK 11** (not other versions) as explained in [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).<br>
-   In the same dialog, set the **Project language level** field to the `SDK default` option.
-3. After that, locate the `src/main/java/Duke.java` file, right-click it, and choose `Run Duke.main()` (if the code editor is showing compile errors, try restarting the IDE). If the setup is correct, you should see something like the below as the output:
-   ```
-   Hello from
-    ____        _        
-   |  _ \ _   _| | _____ 
-   | | | | | | | |/ / _ \
-   | |_| | |_| |   <  __/
-   |____/ \__,_|_|\_\___|
-   ```
+On opening, Duke should greet you with this
+```
+Hello from
+ ____        _        
+|  _ \ _   _| | _____ 
+| | | | | | | |/ / _ \
+| |_| | |_| |   <  __/
+|____/ \__,_|_|\_\___|
+```
+- Enter ```help``` to see a list of commands that are available in Duke
+- Enter ```list``` to see the complete list of all tasks
+- Enter ```todo [task]``` to add a task to the list
+- Enter ```deadline [task] /by [date]``` to add a task that need to be done before a specific date/time
+- Enter ```event [task] /from [date] /to [date]``` to add a task that starts and ends at a specific date/time
+- Enter ```mark [idx]``` based on the task's index in the list to mark it as done 
+- Enter ```unmark [idx]``` based on the task's index in the list to mark it as not done 
+- Enter ```delete [idx]``` based on the task's index in the list to remove the task from your list
+- Enter ```bye``` to exit the program 
