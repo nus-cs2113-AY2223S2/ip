@@ -165,6 +165,7 @@ public class TaskListener {
                     System.lineSeparator() +
                     "Now you have " + tasksList.getTasksCount() + tasksWord + "in the list.";
 
+            tasksLoader.writeToFile(tasksList);
            printLines(successMessage);
         } catch (IndexOutOfBoundsException e) {
             printLines("No task at such index!");
