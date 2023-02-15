@@ -10,5 +10,6 @@ public class CommandInputs {
     public static final String LIST_TASKS_COMMAND_INPUT = "list";
     public static final String MARK_COMMAND_INPUT = "mark";
     public static final String UNMARK_COMMAND_INPUT = "unmark";
+    public static final String DELETE_COMMAND_INPUT = "delete";
     public static final String END_PROGRAM_COMMAND_INPUT = "bye";
 }
