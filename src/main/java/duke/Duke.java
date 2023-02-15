@@ -2,8 +2,11 @@ package duke;
 
 import duke.task.*;
 
-import java.util.Scanner;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
+import java.io.File;
 public class Duke {
     public static void printGreeting(){
         System.out.println("Hello! I'm Duke");
@@ -99,6 +102,16 @@ public class Duke {
 
     public static void main(String[] args) {
         ArrayList<Task> tasks = new ArrayList<>();
+        final File taskDataDirectory = new File("data");
+        final File taskDataFile = new File("data/task-data.txt");
+        if(!taskDataDirectory.exists()){
+            try{
+                taskDataDirectory.mkdir();
+            }catch (SecurityException e){
+                System.out.println("An error occurred while creating the data directory: " + e.getMessage());
+                return;
+            }
+        }
         Scanner in = new Scanner(System.in);
         printGreeting();
         boolean isProgramRunning = true;
@@ -143,5 +156,10 @@ public class Duke {
                 System.out.println(e.getMessage());
             }
         }
+/*        try {
+            TaskData.storeTaskData(taskDataFile, tasks);
+        }catch(IOException e){
+            System.out.println("An error occured while storing your task data: " + e.getMessage());
+        }*/
     }
 }

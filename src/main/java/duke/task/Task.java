@@ -19,6 +19,13 @@ public class Task {
         return isDone;
     }
 
+    public TaskType getTaskType(){
+        return taskType;
+    }
+
+    public String getTaskName(){
+        return name;
+    }
     public String getTaskPrefixWithName(){
         String isDoneCheck;
         if(isDone){
