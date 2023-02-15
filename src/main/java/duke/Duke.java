@@ -74,13 +74,15 @@ public class Duke {
                 insertDeadline(input, false);
                 break;
             case "list":
-                listOut(userInputs, tasks);
+                listOut();
                 break;
             case "mark":
                 markTask(splitInput);
+                saveTasks();
                 break;
             case "unmark":
                 unMarkTask(splitInput);
+                saveTasks();
                 break;
             case "delete":
                 deleteTask(splitInput);
@@ -231,7 +233,7 @@ public class Duke {
     /*
     This method lists out the tasks in order
     */
-    public static void listOut(ArrayList<String> userInputs, ArrayList<Task> tasks) {
+    public static void listOut() {
         System.out.println("\t____________________________________________________________");
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < tasks.size(); i++) {
