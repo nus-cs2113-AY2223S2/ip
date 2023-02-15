@@ -37,15 +37,16 @@ public class Task{
         System.out.println(DASH + "\n");
     }
     public static void deleteFromTaskArray(int indexToDelete){
-        System.out.println(DASH+"\n Noted. I've removed this task:\n"+taskArray[indexToDelete-1].description);
+        System.out.println(DASH+"\n Bye Bye task! It was nice meeting you :)\n"+taskArray[indexToDelete-1].description);
 
-        for(int index = indexToDelete-1;index<lastIndex-2;index++){
+        for(int index = indexToDelete-1;index<lastIndex-1;index++){
             taskArray[index] = taskArray[index+1];
+            taskArray[index].taskNumber -=1;
         }
         lastIndex--;
         taskArray[lastIndex]=null;
 
-        System.out.println("\n Now you have "+Integer.toString(lastIndex)+" tasks in the list.\n"+DASH);
+        System.out.println(" Now you have "+Integer.toString(lastIndex)+" tasks in the list.\n"+DASH);
     }
     public void acknowledgeTaskAdded(){
         String totalNumberOfTasks=Integer.toString(Task.lastIndex);

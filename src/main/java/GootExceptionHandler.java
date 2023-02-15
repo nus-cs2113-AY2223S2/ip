@@ -11,11 +11,6 @@ public class GootExceptionHandler {
     }
 
 
-    public static void validateInput (String[] inputArray)throws GootExceptions{
-        if (inputArray.length<2 && !inputArray[0].equals("list")){
-            throw new GootExceptions();
-        }
-    }
     public static void validateDeadline (String[] inputArray)throws GootExceptions{
         if (inputArray.length!=2 || !(inputArray[1].contains("by"))){
             throw new GootExceptions();

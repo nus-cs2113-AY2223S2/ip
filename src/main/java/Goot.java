@@ -12,12 +12,6 @@ public class Goot {
         Scanner scan = new Scanner(System.in);
         String input = scan.nextLine();
         String[] inputSplitBySpace = input.split(" ");
-        try{
-            GootExceptionHandler.validateInput(inputSplitBySpace);
-        }
-        catch (GootExceptions e){
-            GootExceptionHandler.unidentifiedKeyword();
-        }
 
         if(inputSplitBySpace[0].equals("todo")){
             ToDo todo = new ToDo(input.substring(5), Task.lastIndex+1);
@@ -64,6 +58,9 @@ public class Goot {
         }
         else if (inputSplitBySpace[0].equals("delete")&&inputSplitBySpace.length==2){
             Task.deleteFromTaskArray(Integer.parseInt(inputSplitBySpace[1]));
+        }
+        else{
+            GootExceptionHandler.unidentifiedKeyword();
         }
     }
 }
