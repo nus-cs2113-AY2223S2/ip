@@ -1,29 +1,35 @@
 package Duke;
 
-import java.util.ArrayList;
+import java.io.FileWriter;
+import java.util.LinkedList;
 
 public class Tasks {
-    private ArrayList<Task> taskList;
+    private final LinkedList<Task> taskList;
 
     Tasks() {
-        this.taskList = new ArrayList<Task>();
+        this.taskList = new LinkedList<Task>();
     }
 
     String addTask(String type, String[] commandByWord) {
         try {
             Task task = new Task("");
 
-            if (type == "todo") {
+            switch(type) {
+            case "todo":
                 task = ToDo.createToDo(commandByWord);
-            } else if (type == "deadline") {
+                break;
+            case "deadline":
                 task = Deadline.createDeadline(commandByWord);
-            } else if (type == "event") {
+                break;
+            case "event":
                 task = Event.createEvent(commandByWord);
+                break;
             }
             taskList.add(task);
             return "Got it. I've added this task:\n    " +
-                    task.toString() + "\n" +
+                    task + "\n" +
                     "  Now you have " + taskList.size() + " tasks in the list.";
+
         } catch (IllegalArgumentException e) {
             return "☹ OOPS!!! The description of a " + type + " cannot be empty.";
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -31,7 +37,26 @@ public class Tasks {
                     "\n  Use the command /by for deadlines, and /from, /to for events!" +
                     "\n  Please try again.";
         }
+    }
 
+    String deleteTask(String[] commandByWord) {
+        try {
+            if (commandByWord.length != 2) {
+                return "☹ OOPS!!! The delete command is invalid\n" +
+                        "  Please use the format \"delete {task number}\"";
+            } else {
+                int index = Integer.parseInt(commandByWord[1]) - 1;
+                Task removedTask = taskList.get(index);
+                taskList.remove(index);
+                return "Noted. I've removed this task:\n    " +
+                        removedTask.toString() + "\n  " +
+                        "Now you have " + taskList.size() + " tasks in the list.";
+            }
+
+        } catch(IndexOutOfBoundsException | NumberFormatException e) {
+            return "☹ OOPS!!! The task number is invalid!" +
+                    "\n  Please try again.";
+        }
     }
 
     String mark(int index) {

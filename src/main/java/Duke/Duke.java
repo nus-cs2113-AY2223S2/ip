@@ -32,6 +32,8 @@ public class Duke {
                 speak(tasks.addTask("event", commandByWord));
             } else if (commandByWord[0].equals("todo")) {
                 speak(tasks.addTask("todo", commandByWord));
+            } else if (commandByWord[0].equals("delete")) {
+                speak(tasks.deleteTask(commandByWord));
             } else {
                 speak(ERR_MESSAGE);
             }
