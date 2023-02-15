@@ -3,6 +3,8 @@ package btb.tasks;
 import btb.exceptions.EmptyTaskDescriptionException;
 import btb.exceptions.EmptyTaskListException;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -35,6 +37,10 @@ public class TaskManager {
             printAcknowledgeCommand(task, command);
             printNumberOfTasks();
         }
+    }
+
+    public void add(Task task) {
+        tasks.add(task);
     }
 
     /**
@@ -104,5 +110,15 @@ public class TaskManager {
         task.setDone(false);
         tasks.set(taskNumber - 1, task);
         printAcknowledgeCommand(task, "unmark");
+    }
+
+    public void saveList(String filePath) throws IOException {
+        try (FileWriter fw = new FileWriter(filePath)) {
+            fw.write("Here are the tasks in your list:\n");
+
+            for (int i = 0; i < tasks.size(); i++) {
+                fw.write(String.format("\t%d.%s\n", i+1, tasks.get(i)));
+            }
+        }
     }
 }

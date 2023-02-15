@@ -7,6 +7,8 @@ import btb.tasks.Task;
 import btb.tasks.TaskManager;
 import btb.tasks.Todo;
 
+import java.io.IOException;
+
 public class Logic {
 
     /**
@@ -57,6 +59,11 @@ public class Logic {
             case "list":
                 tasks.listTasks();
                 break;
+            case "save":
+                String filePath = FileManager.getFilePath();
+                tasks.saveList(filePath);
+                System.out.println("\t tasks saved.");
+                break;
             case "":
                 System.out.println("\t Please enter some commands");
                 break;
@@ -64,10 +71,8 @@ public class Logic {
                 System.out.println("\t ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
                 break;
             }
-        } catch (DukeException e) {
+        } catch (DukeException | IOException e) {
             System.out.println(e.getMessage());
         }
-//        catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {
-//            System.out.println("\t Please enter a valid command (╬▔皿▔)╯.");
     }
 }

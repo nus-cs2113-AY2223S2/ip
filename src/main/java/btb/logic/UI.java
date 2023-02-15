@@ -1,8 +1,10 @@
 package btb.logic;
 
 import btb.constants.Constant;
+import btb.exceptions.DukeException;
 import btb.tasks.TaskManager;
 
+import java.io.FileNotFoundException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -19,7 +21,7 @@ public abstract class UI {
      */
     public static void greetUser() {
         System.out.println("\t Hello! I'm Bob the Bot, aka BtB.");
-        System.out.println("\t Please enter some tasks in the todo list.");
+        System.out.println("\t Please enter some tasks to the todo list.");
     }
 
     /**
@@ -43,6 +45,12 @@ public abstract class UI {
     public static void run() {
         Scanner scanner = new Scanner(System.in);
         TaskManager tasks = new TaskManager();
+        try {
+            FileManager.createFile(tasks);
+        } catch (FileNotFoundException | DukeException e) {
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
         String userInput;
         boolean isRepeat = true;
 
