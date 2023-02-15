@@ -35,7 +35,7 @@ public class Parser {
         }
 
         String[] splitStrings;
-        splitStrings = description.split("/", 2);
+        splitStrings = description.split(" /", 2);
         splitStrings[1] = splitStrings[1].substring(3);
 
         if (splitStrings[0].trim().equals("")) {
@@ -57,7 +57,7 @@ public class Parser {
         if (!description.contains(" /from ") || !description.contains(" /to ")) {
             throw new InvalidEventCommandException();
         }
-        String[] splitStrings = description.split("/", 3);
+        String[] splitStrings = description.split(" /", 3);
         splitStrings[1] = splitStrings[1].substring(5);
         splitStrings[2] = splitStrings[2].substring(3);
 
@@ -70,7 +70,7 @@ public class Parser {
 
     public static int handleIntegerConversion(TaskManager tasks, String description) throws
             TaskNumberOutOfBoundException, NotIntegerTaskNumberException, EmptyTaskNumberException {
-        int taskNumber = 0;
+        int taskNumber;
 
         if (description.equals("")) {
             throw new EmptyTaskNumberException();
@@ -104,5 +104,47 @@ public class Parser {
             throw new NotIntegerTaskNumberException(string);
         }
         return number;
+    }
+
+    public static String[] handleTextInputs(String description) {
+        String[] taskDescriptions = description.split("] ");
+        String[] output = new String[3];
+        output[1] = taskDescriptions[1];
+
+        if (taskDescriptions[0].contains("✔")) {
+            output[2] = "done";
+        } else {
+            output[2] = "undone";
+        }
+
+        if (taskDescriptions[0].contains("[T]")) {
+            output[0] = "todo";
+
+        } else if (taskDescriptions[0].contains("[D]")) {
+            output[0] = "deadline";
+        } else if (taskDescriptions[0].contains("E")){
+            output[0] = "event";
+        } else {
+            output[0] = "wrongFormat";
+        }
+
+        return output;
+    }
+
+    public static String[] handleTextDeadlineInputs(String description) {
+        String[] taskDescription = description.split("by: ");
+        taskDescription[0] = taskDescription[0].substring(0, taskDescription[0].length() - 2);
+        taskDescription[1] = taskDescription[1].substring(0, taskDescription[1].indexOf(")"));
+
+        return taskDescription;
+    }
+
+    public static String[] handleTextEventInputs(String description) {
+        String[] taskDescription = description.split(": ");
+        taskDescription[0] = taskDescription[0].substring(0, taskDescription[0].indexOf(" (from"));
+        taskDescription[1] = taskDescription[1].substring(0, taskDescription[1].indexOf(" to"));
+        taskDescription[2] = taskDescription[2].substring(0, taskDescription[2].indexOf(")"));
+
+        return taskDescription;
     }
 }

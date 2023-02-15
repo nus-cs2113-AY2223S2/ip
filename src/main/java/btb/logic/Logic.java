@@ -7,6 +7,8 @@ import btb.tasks.Task;
 import btb.tasks.TaskManager;
 import btb.tasks.Todo;
 
+import java.io.IOException;
+
 public class Logic {
 
     /**
@@ -61,6 +63,10 @@ public class Logic {
 //                taskNumber = Integer.parseInt(description);
                 taskNumber = Parser.handleIntegerConversion(tasks, description);
                 tasks.deleteTask(taskNumber);
+            case "save":
+                String filePath = FileManager.getFilePath();
+                tasks.saveList(filePath);
+                System.out.println("\t tasks saved.");
                 break;
             case "":
                 System.out.println("\t Please enter some commands");
@@ -69,7 +75,7 @@ public class Logic {
                 System.out.println("\t ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
                 break;
             }
-        } catch (DukeException e) {
+        } catch (DukeException | IOException e) {
             System.out.println(e.getMessage());
         }
     }
