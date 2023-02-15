@@ -18,15 +18,13 @@ public class Duke {
 
     public static void main(String[] args) throws FileNotFoundException {
         initDuke();
-        Pair tasksAndIndex = Storage.loadData(tasks,"./data.txt", tasksIndex);
-        tasks = tasksAndIndex.tasks;
-        tasksIndex = tasksAndIndex.tasksIndex;
+        Storage.loadData(tasks,"./data.txt");
         greetUser();
         while (isInUse) {
             String userInput = getUserInput(inputReader);
             String[] informationNeededForPerformingUserRequest = processUserInput(userInput);
             performUserRequest(tasks, informationNeededForPerformingUserRequest);
-            Storage.saveData("./data.txt", tasks, tasksIndex);
+            Storage.saveData("./data.txt", tasks);
         }
     }
 

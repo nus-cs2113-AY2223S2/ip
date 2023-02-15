@@ -4,7 +4,6 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
 import duke.DukeException;
-import duke.Pair;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,9 +11,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.StringJoiner;
+import java.util.ArrayList;
 
 public class Storage {
-    public static Pair loadData(Task[] tasks, String filepath, int tasksIndex) {
+    public static void loadData(ArrayList<Task> tasks, String filepath) {
         try {
             File f = new File(filepath);
             Scanner s = new Scanner(f);
@@ -39,14 +39,12 @@ public class Storage {
                 case "[T][ ]":
                     // example for reference: return book
                     taskName = taskInStringFormat.substring(7);
-                    tasks[tasksIndex] = new ToDo(taskName);
-                    tasksIndex++;
+                    tasks.add(new ToDo(taskName));
                     break;
                 case "[T][X]":
                     taskName = taskInStringFormat.substring(7);
-                    tasks[tasksIndex] = new ToDo(taskName);
-                    tasks[tasksIndex].setDone(true);
-                    tasksIndex++;
+                    tasks.add(new ToDo(taskName));
+                    tasks.get(tasks.size()-1).setDone(true);
                     break;
                 case "[D][ ]":
                     // example for reference: return book (by: June 6th)
@@ -54,16 +52,14 @@ public class Storage {
                     taskInformation = taskInStringFormat.substring(7);
                     taskName = taskInformation.split(" \\(", 2)[0];
                     deadlineBy = taskInformation.split(": ", 2)[1].replace(")","");
-                    tasks[tasksIndex] = new Deadline(taskName, deadlineBy);
-                    tasksIndex++;
+                    tasks.add(new Deadline(taskName, deadlineBy));
                     break;
                 case "[D][X]":
                     taskInformation = taskInStringFormat.substring(7);
                     taskName = taskInformation.split(" \\(", 2)[0];
                     deadlineBy = taskInformation.split(": ", 2)[1].replace(")","");
-                    tasks[tasksIndex] = new Deadline(taskName, deadlineBy);
-                    tasks[tasksIndex].setDone(true);
-                    tasksIndex++;
+                    tasks.add(new Deadline(taskName, deadlineBy));
+                    tasks.get(tasks.size()-1).setDone(true);
                     break;
                 case "[E][ ]":
                     // for reference: project meeting (from: Aug 6th 2pm to: 4pm)
@@ -72,8 +68,7 @@ public class Storage {
                     taskInformation = taskInformation.split("from: ",2)[1];
                     eventStart = taskInformation.split(" to:",2)[0];
                     eventEnd = taskInformation.split("to: ",2)[1].replace(")", "");
-                    tasks[tasksIndex] = new Event(taskName, eventStart, eventEnd);
-                    tasksIndex++;
+                    tasks.add(new Event(taskName, eventStart, eventEnd));
                     break;
                 case "[E][X]":
                     taskInformation = taskInStringFormat.substring(7);
@@ -81,9 +76,8 @@ public class Storage {
                     taskInformation = taskInformation.split("from: ",2)[1];
                     eventStart = taskInformation.split(" to:",2)[0];
                     eventEnd = taskInformation.split("to: ",2)[1].replace(")", "");
-                    tasks[tasksIndex] = new Event(taskName, eventStart, eventEnd);
-                    tasks[tasksIndex].setDone(true);
-                    tasksIndex++;
+                    tasks.add(new Event(taskName, eventStart, eventEnd));
+                    tasks.get(tasks.size()-1).setDone(true);
                     break;
                 default:
                     System.out.println("OOPS! Something went wrong while converting task data!");
@@ -92,14 +86,12 @@ public class Storage {
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
         }
-        Pair pair = new Pair(tasks, tasksIndex);
-        return pair;
     }
 
 
-    public static void saveData(String filepath, Task[] tasks, int tasksIndex) {
+    public static void saveData(String filepath, ArrayList<Task> tasks) {
         try {
-            String tasksDataInStringFormat = tasksDataToString(tasks, tasksIndex);
+            String tasksDataInStringFormat = tasksDataToString(tasks);
             Storage.writeToFile(filepath, tasksDataInStringFormat);
         } catch (IOException e) {
             System.out.println("OOPS! Something went wrong with saving your data!");
@@ -108,11 +100,11 @@ public class Storage {
         }
     }
 
-    public static String tasksDataToString (Task[] tasks, int tasksIndex) throws DukeException {
+    public static String tasksDataToString (ArrayList<Task> tasks) throws DukeException {
         StringJoiner joiner = new StringJoiner("\n");
         try {
-            for (int i = 0; i < tasksIndex; i++) {
-                String taskInformation = tasks[i].toString();
+            for (int i = 0; i < tasks.size(); i++) {
+                String taskInformation = tasks.get(i).toString();
                 joiner.add(taskInformation);
             }
         } catch (NullPointerException e) {
