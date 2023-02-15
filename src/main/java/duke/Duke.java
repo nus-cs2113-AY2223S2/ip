@@ -1,6 +1,7 @@
 package duke;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import duke.exception.ArgumentNotValidException;
@@ -23,9 +24,9 @@ public class Duke {
         String taskName = "";
         String description;
         String prompt;
-        String by;
-        String from;
-        String to;
+        LocalDateTime by;
+        LocalDateTime from;
+        LocalDateTime to;
 
         Output.printIntroduction();
 
@@ -53,10 +54,12 @@ public class Duke {
                         parsedString = Input.parseDeadline(prompt);
                         if (parsedString != null) {
                             description = parsedString[0];
-                            by = parsedString[1];
-                            newTask = new Deadline(description, by);
-                            tasks.add(newTask);
-                            Output.printNewTaskMessage(newTask);
+                            by = Input.parseDate(parsedString[1]);
+                            if(by!=null) {
+                            	newTask = new Deadline(description, by);
+                                tasks.add(newTask);
+                                Output.printNewTaskMessage(newTask);
+                            }                           
                         }
 
                     }
@@ -69,11 +72,13 @@ public class Duke {
                         parsedString = Input.parseEvent(prompt);
                         if (parsedString != null) {
                             description = parsedString[0];
-                            from = parsedString[1];
-                            to = parsedString[2];
-                            newTask = new Event(description, from, to);
-                            tasks.add(newTask);
-                            Output.printNewTaskMessage(newTask);
+                            from = Input.parseDate(parsedString[1]);
+                            to = Input.parseDate(parsedString[2]);
+                            if(from!=null && to!=null) {
+                            	newTask = new Event(description, from, to);
+                                tasks.add(newTask);
+                                Output.printNewTaskMessage(newTask);
+                            } 
                         }
                     }
                     break;
@@ -101,6 +106,13 @@ public class Duke {
                         Output.printDeleteTaskMessage(tasks.get(indexTask));
                         tasks.remove(tasks.get(indexTask));
                     }
+                    break;
+                    
+                case "find-date":
+                	LocalDateTime date = Input.scanDate();
+                	if(date!=null) {
+                		Output.printTaskByDate(tasks, date);
+                	}               	
                     break;
 
                 case "bye":

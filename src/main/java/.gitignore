@@ -6,3 +6,4 @@
 /ArgumentCannotBeNullException.class
 /PromptCannotBeEmptyException.class
 /data.txt
+.settings/

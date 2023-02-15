@@ -1,10 +1,14 @@
 package duke.task;
 
-public class Event extends Task {
-    private String from;
-    private String to;
+import java.time.LocalDateTime;
 
-    public Event(String desciption, String from, String to) {
+import duke.utils.Output;
+
+public class Event extends Task {
+    private LocalDateTime from;
+    private LocalDateTime to;
+
+    public Event(String desciption, LocalDateTime from, LocalDateTime to) {
         super(desciption);
         this.from = from;
         this.to = to;
@@ -12,7 +16,7 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return "[" + getTaskType() + "]" + super.toString() + " (from: " + from + " to: " + to + ")";
+        return "[" + getTaskType() + "]" + super.toString() + " (from: " + Output.dateFormatter(from) + " to: " + Output.dateFormatter(to) + ")";
     }
 
     @Override
@@ -20,11 +24,11 @@ public class Event extends Task {
         return "E";
     }
 
-    public String getStartTime() {
+    public LocalDateTime getStartTime() {
         return from;
     }
 
-    public String getEndTime() {
+    public LocalDateTime getEndTime() {
         return to;
     }
 }

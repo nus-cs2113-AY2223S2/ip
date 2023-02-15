@@ -1,5 +1,9 @@
 package duke.utils;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -21,6 +25,18 @@ public class Input {
         String line = sc.nextLine();
         return line;
     }
+    
+    public static LocalDateTime scanDate() {
+    	String string = scanLine().trim();
+    	try {
+    		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			LocalDateTime date = LocalDate.parse(string, formatter).atStartOfDay();
+			return date;
+		}catch(DateTimeParseException e){
+			Output.printWrongDateInputError();
+			return null;
+		}
+	}
 
     public static String scanPrompt(String taskType) throws PromptCannotBeEmptyException {
         String prompt = "";
@@ -88,8 +104,8 @@ public class Input {
         String taskType = task.getTaskType();
         String encodedBooleanIsDone;
         String description = task.getTaskDescription();
-        String startTime;
-        String endTime;
+        LocalDateTime startTime;
+        LocalDateTime endTime;
         String parseResult = null;
 
         if (isDone) {
@@ -125,8 +141,8 @@ public class Input {
         String taskType = arrOfStr[0].trim();
         String doneString = arrOfStr[1].trim();
         String description = arrOfStr[2].trim();
-        String startTime;
-        String endTime;
+        LocalDateTime startTime;
+        LocalDateTime endTime;
 
         if (doneString.equals("1")) {
             isDone = true;
@@ -140,13 +156,13 @@ public class Input {
             readTask.setStatus(isDone);
             break;
         case "D":
-            endTime = arrOfStr[3].trim();
+            endTime = LocalDateTime.parse(arrOfStr[3].trim());
             readTask = new Deadline(description, endTime);
             readTask.setStatus(isDone);
             break;
         case "E":
-            startTime = arrOfStr[3].trim();
-            endTime = arrOfStr[4].trim();
+            startTime = LocalDateTime.parse(arrOfStr[3].trim());
+            endTime = LocalDateTime.parse(arrOfStr[4].trim());
             readTask = new Event(description, startTime, endTime);
             readTask.setStatus(isDone);
             break;
@@ -156,4 +172,18 @@ public class Input {
 
         return readTask;
     }
+
+	public static LocalDateTime parseDate(String string) {
+		try {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+			LocalDateTime date = LocalDateTime.parse(string, formatter);
+			return date;
+		}catch(DateTimeParseException e){
+			Output.printWrongDateFormatError();
+			return null;
+		}
+		
+	}
+
+	
 }
