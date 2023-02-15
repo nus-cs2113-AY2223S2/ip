@@ -1,5 +1,9 @@
 package duke;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -31,6 +35,22 @@ public class Duke {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
+
+        try {
+            Files.createDirectories(Path.of("./data"));
+
+            File myObj = new File("./data/duke.txt");
+            if (myObj.createNewFile()) {
+                System.out.println("File created: " + myObj.getName());
+            } else {
+                ArrayList<String> tmpStrTasks = new ArrayList<>();
+                tmpStrTasks = (ArrayList<String>) Files.readAllLines(Paths.get("./data/duke.txt"), StandardCharsets.UTF_8);
+
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
 
         greetUser();
 
@@ -93,6 +113,34 @@ public class Duke {
 
                 break;
             }                            
+        }
+    }
+    public static void readDukeText() {
+        File f = new File("./data/duke.txt");
+        try {
+            Scanner s = new Scanner(f);
+            while (s.hasNext()) {
+                String line = s.nextLine();
+                String[] text = line.split("\\|");
+                if (line.startsWith("T")) {
+                    Todo todo = new Todo(text[2]);
+                    todo.setDone(!text[1].equals(" "));
+                    tasks.add(todo);
+                } else if (line.startsWith("D")) {
+                    Deadline deadline = new Deadline(text[2], text[3]);
+                    deadline.setDone(!text[1].equals(" "));
+                    tasks.add(deadline);
+                } else if (line.startsWith("E")) {
+                    Event event = new Event(text[2], text[3], text[4]);
+                    event.setDone(!text[1].equals(" "));
+                    tasks.add(event);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Something went wrong: " + e.getMessage());
+            throw new RuntimeException(e);
+        } catch (NoSuchElementException e) {
+            System.out.println("Sorry no line found. ");
         }
     }
     public static void printExceptionMsg(String task, String err) {
