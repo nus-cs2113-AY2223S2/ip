@@ -34,7 +34,7 @@ public class Task {
 	}
 
 	public String toFile () {
-		return getType () + " | " + (getIsDone () ? 1 : 0) + " | " + description;
+		return getType () + " | " + (getIsDone () ? "1" : "0") + " | " + description;
 	}
 
 	public String getStatusIcon () {

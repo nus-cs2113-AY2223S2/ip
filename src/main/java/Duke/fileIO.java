@@ -37,13 +37,20 @@ public class fileIO {
 					String[] arrEvent = arrData[3].split ("-");
 					tasks.add (new Event (arrData[2], arrEvent[0], arrEvent[1]));
 				}
-				tasks.get (count).setIsDone ("1".equals (arrData[1]));
+				tasks.get (count).setIsDone (arrData[1].equals (" 1 "));
 				count++;
 				data = reader.readLine ();
 			}
 			reader.close ();
 		} catch (FileNotFoundException e) {
-			System.out.println ("File not found.");
+			File fold = new File ("data");
+			fold.mkdir ();
+			File data = new File ("data/duke.txt");
+			try {
+				data.createNewFile ();
+			} catch (IOException i) {
+				System.out.println ("Failed to create file");
+			}
 		} catch (IOException e) {
 			System.out.println ("Failed to read file.");
 		}
