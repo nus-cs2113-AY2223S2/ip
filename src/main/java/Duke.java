@@ -152,7 +152,7 @@ public class Duke {
                     i += 1;
 
                     try {
-                        appendToFile("Duke.txt", tasks.get(i - 1).toString() + "\n");
+                        appendToFile("Duke.txt", (i + 1)+". "+ tasks.get(i - 1).toString() + "\n");
                     } catch (IOException e) {
                         System.out.println("Something went wrong\n"
                                 + "____________________________________________________________");
