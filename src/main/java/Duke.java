@@ -13,18 +13,16 @@ public class Duke {
 
         String[] tokens = line.split(" ", 2);
         String command = tokens[0];
-        String task = tokens[1];
 
         while (!command.equals(exitCommand)) {
             if (tokens[0].equals(toDo)) {
                 System.out.println("Here are your list of tasks to complete!");
                 for (int i = 0; i < numberOfTasks; ++i) {
                     System.out.format("%d. ", (i + 1));
-                    String status = tasks[i].getStatus();
-                    System.out.println(status + " " + tasks[i]);
+                    System.out.println(tasks[i]);
                 }
                 line = in.nextLine();
-                tokens = line.split(" ", 0);
+                tokens = line.split(" ", 2);
                 command = tokens[0];
             } else if (command.equals(checkAsDone)){
                 int finishedTask = Integer.parseInt(tokens[1]) - 1;
@@ -33,20 +31,21 @@ public class Duke {
 
                 for (int i = 0; i < numberOfTasks; ++i) {
                     System.out.format("%d. ", (i + 1));
-                    String status = tasks[i].getStatus();
-                    System.out.println(status + " " + tasks[i]);
+                    System.out.println(tasks[i]);
                 }
 
                 line = in.nextLine();
                 tokens = line.split(" ", 0);
                 command = tokens[0];
             } else {
+                String task = tokens[1];
                 switch(command) {
                 case "todo":
                     Task t = new ToDo(task);
                     tasks[numberOfTasks] = t;
                     tasks[numberOfTasks].isDone = false;
                     ++numberOfTasks;
+                    break;
                 case "deadline":
                     String[] taskDeadline = task.split("/", 2);
                     String taskDescription = taskDeadline[0];
@@ -56,6 +55,7 @@ public class Duke {
                     tasks[numberOfTasks] = d;
                     tasks[numberOfTasks].isDone = false;
                     ++numberOfTasks;
+                    break;
                 case "event":
                     String[] taskEvent = task.split("/", 3);
                     String eventDescription = taskEvent[0];
@@ -66,15 +66,11 @@ public class Duke {
                     tasks[numberOfTasks] = e;
                     tasks[numberOfTasks].isDone = false;
                     ++numberOfTasks;
+                    break;
                 default:
                     System.out.println("Sorry! There seems to be an error:( Please try again.");
+                    break;
                 }
-
-                Task t = new Task(line);
-                tasks[numberOfTasks] = t;
-                tasks[numberOfTasks].isDone = false;
-                ++numberOfTasks;
-
                 System.out.println("added: " + line);
                 line = in.nextLine();
                 tokens = line.split(" ", 0);
