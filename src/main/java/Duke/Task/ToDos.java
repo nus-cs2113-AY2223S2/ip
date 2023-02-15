@@ -13,6 +13,7 @@ public class ToDos extends Task {
             throw new EmptyToDoException();
         }
     }
+
     @Override
     public String toString() {
         return this.taskLabel + this.mark + " " + this.description;
