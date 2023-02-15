@@ -27,7 +27,7 @@ public class Parser {
 
         // Separating the main command from the parameters aka the body
         String[] components = options[0].split(" ", 2);
-        String type = components[0];
+        String commandType = components[0];
         String body = components.length > 1 ? components[1] : null;
 
         String from = null;
@@ -54,8 +54,8 @@ public class Parser {
             }
         }
 
-        if (type != null) {
-            type = type.trim();
+        if (commandType != null) {
+            commandType = commandType.trim();
         }
         if (body != null) {
             body = body.trim();
@@ -70,6 +70,6 @@ public class Parser {
             by = by.trim();
         }
 
-        return new Command(type, body, from, to, by);
+        return new Command(commandType, body, from, to, by);
     }
 }
