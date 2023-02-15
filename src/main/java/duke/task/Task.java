@@ -3,6 +3,7 @@ package duke.task;
 public class Task {
     private String description;
     private boolean isDone;
+    private static int taskCount = 0;
 
 
     public Task(String description) {
@@ -32,6 +33,18 @@ public class Task {
             return "X";
         }
         return " ";
+    }
+
+    public static void incrementCount() {
+        taskCount++;
+    }
+
+    public static void decrementCount() {
+        taskCount--;
+    }
+
+    public static int getTaskCount() {
+        return taskCount;
     }
 
     @Override
