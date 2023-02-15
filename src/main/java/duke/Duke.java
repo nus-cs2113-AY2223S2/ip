@@ -9,10 +9,16 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.Todo;
 
-import java.util.Scanner;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Duke {
+
+    private static String SAVEPATH = "data/savedata.txt";
+    private static String SAVEFOLDER = "data";
 
     /**
      * Returns boolean value of true if input String is an integer,
@@ -35,10 +41,16 @@ public class Duke {
     public static void main(String[] args) {
         greetingMessage();
 
+        ArrayList<Task> tasks = new ArrayList<>();
+        try {
+            load(tasks);
+        } catch (IOException e) {
+            System.out.println("Error loading save file.");
+        }
+
         String line;
         Scanner in = new Scanner(System.in);
         line = in.nextLine();
-        ArrayList<Task> tasks = new ArrayList<>();
 
         while (!line.equals("bye")) { // Exits the program if input is "bye"
             String[] words = line.split(" ");
@@ -48,12 +60,27 @@ public class Duke {
             } else if (words[0].equals("unmark") && (words.length == 2) && (isNumeric(words[1]))) {
                 // Mark a task as not done
                 unmarkTask(tasks, words);
+                try {
+                    save(tasks);
+                } catch (IOException e) {
+                    System.out.println("Saving error.");
+                }
             } else if (words[0].equals("mark") && (words.length == 2) && (isNumeric(words[1]))) {
                 // Mark a task as done
                 markTask(tasks, words);
+                try {
+                    save(tasks);
+                } catch (IOException e) {
+                    System.out.println("Saving error.");
+                }
             } else if (words[0].equals("delete") && (words.length == 2) && (isNumeric(words[1]))) {
                 // Delete a task
                 deleteTask(tasks, words);
+                try {
+                    save(tasks);
+                } catch (IOException e) {
+                    System.out.println("Saving error.");
+                }
             } else {
                 // Adding a task to the list
                 try {
@@ -62,7 +89,14 @@ public class Duke {
                 } catch (IllegalTaskException e) {
                     // Ignoring empty command inputs
                 }
+
+                try {
+                    save(tasks);
+                } catch (IOException e) {
+                    System.out.println("Saving error.");
+                }
             }
+
             line = in.nextLine();
         }
 
@@ -195,16 +229,6 @@ public class Duke {
         }
     }
 
-    private static void borderLine() {
-        System.out.println("\t____________________________________________________________");
-    }
-
-    private static void exitMessage() {
-        borderLine();
-        System.out.println("\t Bye. Hope to see you again soon!");
-        borderLine();
-    }
-
     private static void addedTaskMessage(Task currentTask) {
         borderLine();
         System.out.println("\t Alright, I have added this task: \n\t\t" + currentTask);
@@ -226,6 +250,16 @@ public class Duke {
         borderLine();
     }
 
+    private static void loadTask(String line, ArrayList<Task> tasks) {
+        if (line.contains("/by")) {
+            loadDeadline(line, tasks);
+        } else if (line.contains("/from") || line.contains("/to")) {
+            loadEvent(line, tasks);
+        } else {
+            loadTodo(line, tasks);
+        }
+    }
+
     private static void todoErrorMessage() {
         borderLine();
         System.out.println("\t Error. Please enter a valid description.");
@@ -241,6 +275,86 @@ public class Duke {
     private static void deadlineErrorMessage() {
         borderLine();
         System.out.println("\t Error. Please enter a valid description and deadline.");
+        borderLine();
+    }
+
+    private static void loadTodo(String line, ArrayList<Task> tasks) {
+        Todo currTodo = new Todo(line);
+        tasks.add(currTodo);
+    }
+
+    private static void loadEvent(String line, ArrayList<Task> tasks) {
+        String description = line.substring(0, line.indexOf("/from")).trim();
+        String start = line.substring(line.indexOf("/from") + 5, line.indexOf("/to")).trim();
+        String end = line.substring(line.indexOf("/to") + 3).trim();
+        Event currEvent = new Event(description, start, end);
+        tasks.add(currEvent);
+    }
+
+    private static void loadDeadline(String line, ArrayList<Task> tasks) {
+        String description = line.substring(0, line.indexOf("/by")).trim();
+        String deadline = line.substring(line.indexOf("/by") + 3).trim();
+        Deadline currDeadline = new Deadline(description, deadline);
+        tasks.add(currDeadline);
+    }
+
+    private static void loadTaskStatus(ArrayList<Task> tasks, String doneStatus) {
+        int taskNumber = Task.getTaskCount();
+        if (doneStatus.equals("1")) {
+            tasks.get(taskNumber).markAsDone();
+        } else {
+            tasks.get(taskNumber).markAsNotDone();
+        }
+    }
+
+    private static void save(ArrayList<Task> tasks) throws IOException {
+        File f = new File(SAVEPATH);
+        if (f.exists()) {
+            f.delete();
+        }
+        f.createNewFile();
+
+        FileWriter fw = new FileWriter(SAVEPATH);
+        for (Task currTask : tasks) {
+            fw.write(currTask.toSaveString());
+        }
+        fw.close();
+    }
+
+    private static void load(ArrayList<Task> tasks) throws IOException {
+        File folder = new File(SAVEFOLDER);
+        if (!folder.exists()) {
+            new File(SAVEFOLDER).mkdir();
+        }
+
+        File f = new File(SAVEPATH);
+        if (!f.exists()) {
+            f.createNewFile();
+        }
+
+        Scanner s = new Scanner(f);
+        while (s.hasNext()) {
+            String line = s.nextLine();
+            String[] formattedInput = line.split(" ");
+            String doneStatus = formattedInput[0];
+            String command = "";
+            for (int i = 1; i < formattedInput.length; i++) {
+                command += formattedInput[i];
+                command += " ";
+            }
+            loadTask(command, tasks);
+            loadTaskStatus(tasks, doneStatus);
+            Task.incrementCount();
+        }
+    }
+
+    private static void borderLine() {
+        System.out.println("\t____________________________________________________________");
+    }
+
+    private static void exitMessage() {
+        borderLine();
+        System.out.println("\t Bye. Hope to see you again soon!");
         borderLine();
     }
 

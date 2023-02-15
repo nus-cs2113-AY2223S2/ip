@@ -47,6 +47,17 @@ public class Task {
         return taskCount;
     }
 
+    public String getDoneConditionString() {
+        if (isDone) {
+            return "1";
+        }
+        return "0";
+    }
+
+    public String toSaveString() {
+        return getDoneConditionString() + " " + getDescription();
+    }
+
     @Override
     public String toString() {
         return "[" + getStatusIcon() + "] " + getDescription();
