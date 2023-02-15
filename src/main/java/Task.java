@@ -12,6 +12,10 @@ public class Task {
         return isDone;
     }
 
+    public void setDone(boolean done) {
+        isDone = done;
+    }
+
     public String getDescription() {
         return description;
     }

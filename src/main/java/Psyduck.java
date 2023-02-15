@@ -1,5 +1,10 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class Psyduck {
+    private static Storage storage = new Storage();
+    private static String filepath = "save.txt";
     private static boolean shouldExit = false;
 
     private static Task[] tasks = new Task[100];
@@ -62,11 +67,20 @@ public class Psyduck {
         Command.linePrint();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         greet();
+        try {
+            storage.readFile(filepath);
+        } catch (FileNotFoundException e) {
+            Command.linePrint();
+            System.out.println("No past file record is made, will create a " +
+                    "new save file after terminating the program.");
+            Command.linePrint();
+        }
         do {
             Command.processCommands();
         } while (!shouldExit);
         sayBye();
+        storage.writeToFile(filepath);
     }
 }
