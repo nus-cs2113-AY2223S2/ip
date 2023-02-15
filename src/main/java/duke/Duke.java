@@ -8,8 +8,11 @@ import duke.task.TaskType;
 public class Duke {
     public static void main(String[] args) {
 
+        Message.line();
         Message.hello();
         String userCommand, userInputDetails;
+        Data.loadData();
+        Message.line();
 
         do {
             Parser.getUserInput();
@@ -63,11 +66,16 @@ public class Duke {
                 userInputDetails = Parser.getUserInputDetails();
                 List.addTask(userInputDetails, TaskType.EVENT);
                 break;
+            case "bye":
+                break;
             default:
                 Message.unknownCommandHandler();
             }
+            Data.writeFile();
         } while (!(userCommand.equals("bye")));
 
+        Message.line();
+        Data.writeFile();
         Message.bye();
         Message.line();
     }

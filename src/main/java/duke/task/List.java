@@ -8,6 +8,45 @@ import java.util.ArrayList;
 public class List {
     private static ArrayList<Task> tasks = new ArrayList<Task>();
 
+    public static void loadTask(String isDone, String item, TaskType taskType) {
+        switch (taskType) {
+        case TODO:
+            Task task = new Task(item);
+            if (isDone.equals("M")) {
+                task.setIsDone(true);
+            }
+            tasks.add(task);
+            break;
+        case DEADLINE:
+            task = new Deadline(item);
+            if (isDone.equals("M")) {
+                task.setIsDone(true);
+            }
+            tasks.add(task);
+            break;
+        case EVENT:
+            task = new Event(item);
+            if (isDone.equals("M")) {
+                task.setIsDone(true);
+            }
+            tasks.add(task);
+            break;
+        }
+    }
+
+    public static String writeTask() {
+        StringBuilder data = new StringBuilder();
+        if (tasks.size() > 0) {
+            for (Task task : tasks) {
+                String taskTypeIndicator = task.getType();
+                String markIndicator = task.isDone ? "M" : "U";
+                String taskDescription = task.description;
+                data.append(taskTypeIndicator).append(" & ").append(markIndicator).append(" & ").append(taskDescription).append("\n");
+            }
+        }
+        return data.toString();
+    }
+
     public static void addTask(String item, TaskType taskType) {
         String taskString;
         Task task = new Task(item);
@@ -26,7 +65,6 @@ public class List {
                 taskString = task.toString();
                 break;
             case TODO:
-                task = new Task(item);
                 taskString = task.toString();
             }
         } catch (ArrayIndexOutOfBoundsException e) {
