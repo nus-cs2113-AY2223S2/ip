@@ -1,6 +1,6 @@
 package tusky.io;
 
-public enum Message {
+public enum Messages {
     LINE("____________________________________________________________"),
     WELCOME(" Hello! I'm Tusky the Walrus\n     What can I do for you?"),
     GOODBYE(" Bye. Hope to see you again soon!"),
@@ -9,6 +9,7 @@ public enum Message {
     TASK_LIST(" Here are the tasks in your list:"),
     TASK_MARKED(" Nice! I've marked this task as done:"),
     TASK_UNMARKED(" OK, I've marked this task as not done yet:"),
+    TASK_DELETED(" Noted. I've removed this task:"),
 
     // Errors
     ERR_MAX_TASKS_EXCEEDED(" Too many tasks!"),
@@ -23,7 +24,7 @@ public enum Message {
 
     private final String text;
 
-    Message(String text) {
+    Messages (String text) {
         this.text = text;
     }
 

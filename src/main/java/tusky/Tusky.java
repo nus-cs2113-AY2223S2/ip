@@ -1,7 +1,7 @@
 package tusky;
 
 import tusky.io.KeyNotFoundException;
-import tusky.io.Message;
+import tusky.io.Messages;
 import tusky.io.Parser;
 
 import tusky.tasks.ToDo;
@@ -12,61 +12,65 @@ import tusky.tasks.Deadline;
 import tusky.tasks.EmptyDescriptionException;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Tusky {
-
-    static final int MAX_TASKS = 100;
-
-    static Task[] tasks = new Task[MAX_TASKS];
-    static int taskCount = 0;
+    static ArrayList<Task> tasks = new ArrayList<>();
 
     public static void addTask (Task task) {
-        if (taskCount < MAX_TASKS) {
-            tasks[taskCount] = task;
-            taskCount++;
-            println(Message.LINE.toString());
-            printf(Message.TASK_ADDED.toString());
-            printf("   %s\n", task.getDetailedString());
-            printf(Message.TASK_COUNT.toString(), taskCount);
-            println(Message.LINE.toString());
-        } else {
-            println(Message.LINE.toString());
-            println(Message.ERR_MAX_TASKS_EXCEEDED.toString());
-            println(Message.LINE.toString());
-        }
+        tasks.add(task);
+        println(Messages.LINE.toString());
+        printf(Messages.TASK_ADDED.toString());
+        printf("   %s\n", task.getDetailedString());
+        printf(Messages.TASK_COUNT.toString(), tasks.size());
+        println(Messages.LINE.toString());
     }
 
     public static void listTasks () {
-        println(Message.LINE.toString());
-        println(Message.TASK_LIST.toString());
-        for (int i = 1; i <= taskCount; i++) {
-            printf(" %d.%s\n", i, tasks[i - 1].getDetailedString());
+        println(Messages.LINE.toString());
+        println(Messages.TASK_LIST.toString());
+        for (int i = 1; i <= tasks.size(); i++) {
+            printf(" %d.%s\n", i, tasks.get(i-1).getDetailedString());
         }
-        println(Message.LINE.toString());
+        println(Messages.LINE.toString());
     }
 
     public static void markTask (int index) {
-        println(Message.LINE.toString());
-        if (index >= taskCount || index < 0) {
-            println(Message.ERR_INVALID_INDEX.toString());
+        println(Messages.LINE.toString());
+        if (index >= tasks.size() || index < 0) {
+            println(Messages.ERR_INVALID_INDEX.toString());
         } else {
-            tasks[index].setDone(true);
-            println(Message.TASK_MARKED.toString());
-            printf("   %s\n", tasks[index].getDetailedString());
+            tasks.get(index).setDone(true);
+            println(Messages.TASK_MARKED.toString());
+            printf("   %s\n", tasks.get(index).getDetailedString());
         }
-        println(Message.LINE.toString());
+        println(Messages.LINE.toString());
     }
 
     public static void unmarkTask (int index) {
-        println(Message.LINE.toString());
-        if (index >= taskCount || index < 0) {
-            println(Message.ERR_INVALID_INDEX.toString());
+        println(Messages.LINE.toString());
+        if (index >= tasks.size() || index < 0) {
+            println(Messages.ERR_INVALID_INDEX.toString());
         } else {
-            tasks[index].setDone(false);
-            println(Message.TASK_UNMARKED.toString());
-            printf("   %s\n", tasks[index].getDetailedString());
+            tasks.get(index).setDone(false);
+            println(Messages.TASK_UNMARKED.toString());
+            printf("   %s\n", tasks.get(index).getDetailedString());
         }
-        println(Message.LINE.toString());
+        println(Messages.LINE.toString());
+    }
+
+    public static void deleteTask (int index) {
+        println(Messages.LINE.toString());
+        if (index >= tasks.size() || index < 0) {
+            println(Messages.ERR_INVALID_INDEX.toString());
+        } else {
+            Task t = tasks.get(index);
+            tasks.remove(index);
+            println(Messages.TASK_DELETED.toString());
+            printf("   %s\n", t.getDetailedString());
+            printf(Messages.TASK_COUNT.toString(), tasks.size());
+        }
+        println(Messages.LINE.toString());
     }
 
     public static void beginInputLoop () {
@@ -78,9 +82,9 @@ public class Tusky {
                 try{
                     parser.parse(input);
                 } catch (ArrayIndexOutOfBoundsException e){
-                    println(Message.LINE.toString());
-                    printf(Message.ERR_INVALID_PARAMETERS.toString());
-                    println(Message.LINE.toString());
+                    println(Messages.LINE.toString());
+                    printf(Messages.ERR_INVALID_PARAMETERS.toString());
+                    println(Messages.LINE.toString());
                     continue;
                 }
 
@@ -104,43 +108,47 @@ public class Tusky {
                     try{
                         addTask(new ToDo(parser.getBody()));
                     } catch (EmptyDescriptionException e){
-                        println(Message.LINE.toString());
-                        printf(Message.ERR_EMPTY_TASK_DESCRIPTION.toString(), TaskType.TODO);
-                        println(Message.LINE.toString());
+                        println(Messages.LINE.toString());
+                        printf(Messages.ERR_EMPTY_TASK_DESCRIPTION.toString(), TaskType.TODO);
+                        println(Messages.LINE.toString());
                     }
                     break;
                 case "event":
                     try{
                         addTask(new Event(parser.getBody(), parser.get("from"), parser.get("to")));
                     } catch (EmptyDescriptionException e){
-                        println(Message.LINE.toString());
-                        printf(Message.ERR_EMPTY_TASK_DESCRIPTION.toString(), TaskType.EVENT);
-                        println(Message.LINE.toString());
+                        println(Messages.LINE.toString());
+                        printf(Messages.ERR_EMPTY_TASK_DESCRIPTION.toString(), TaskType.EVENT);
+                        println(Messages.LINE.toString());
                     }
                     break;
                 case "deadline":
                     try{
                         addTask(new Deadline(parser.getBody(), parser.get("by")));
                     } catch (EmptyDescriptionException e){
-                        println(Message.LINE.toString());
-                        printf(Message.ERR_EMPTY_TASK_DESCRIPTION.toString(), TaskType.DEADLINE);
-                        println(Message.LINE.toString());
+                        println(Messages.LINE.toString());
+                        printf(Messages.ERR_EMPTY_TASK_DESCRIPTION.toString(), TaskType.DEADLINE);
+                        println(Messages.LINE.toString());
                     }
                     break;
+                case "delete":
+                    index = Integer.parseInt(parser.getBody()) - 1;
+                    deleteTask(index);
+                    break;
                 default:
-                    println(Message.LINE.toString());
-                    println(Message.ERR_UNKNOWN_COMMAND.toString());
-                    println(Message.LINE.toString());
+                    println(Messages.LINE.toString());
+                    println(Messages.ERR_UNKNOWN_COMMAND.toString());
+                    println(Messages.LINE.toString());
                     break;
                 }
             } catch (KeyNotFoundException e){
-                println(Message.LINE.toString());
+                println(Messages.LINE.toString());
                 println(e.getMessage());
-                println(Message.LINE.toString());
+                println(Messages.LINE.toString());
             } catch (Exception e) {
-                println(Message.LINE.toString());
-                println(Message.ERR_UNKNOWN_EXCEPTION.toString() + e);
-                println(Message.LINE.toString());
+                println(Messages.LINE.toString());
+                println(Messages.ERR_UNKNOWN_EXCEPTION.toString() + e);
+                println(Messages.LINE.toString());
                 throw e;
             }
 
@@ -162,14 +170,14 @@ public class Tusky {
 
     public static void main (String[] args) {
 
-        println(Message.LINE.toString());
-        println(Message.WELCOME.toString());
-        println(Message.LINE.toString());
+        println(Messages.LINE.toString());
+        println(Messages.WELCOME.toString());
+        println(Messages.LINE.toString());
 
         beginInputLoop();
 
-        println(Message.LINE.toString());
-        println(Message.GOODBYE.toString());
-        println(Message.LINE.toString());
+        println(Messages.LINE.toString());
+        println(Messages.GOODBYE.toString());
+        println(Messages.LINE.toString());
     }
 }
