@@ -25,4 +25,8 @@ public class Task {
     public String toString() {
         return "[" + this.getStatusIcon() + "] " + description;
     }
+
+    public String getSymbol() {
+        return "T";
+    }
 }
