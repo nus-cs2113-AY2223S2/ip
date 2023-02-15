@@ -13,7 +13,9 @@ public abstract class Task {
     }
     public abstract String getTypeIcon();
     public abstract void setDone(boolean b);
+    public abstract String getInfo();
     public String getDescription () {
         return this.description;
     }
+
 }
