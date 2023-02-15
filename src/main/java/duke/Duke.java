@@ -5,8 +5,6 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
 
-import duke.Pair;
-
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
