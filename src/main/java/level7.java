@@ -206,6 +206,7 @@ public class level7 {
             }
         }
         System.out.println("Bye. Hope to see you again soon!");
+        System.out.println("change");
     }
 }
 
