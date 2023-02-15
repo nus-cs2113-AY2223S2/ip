@@ -21,4 +21,6 @@ deadline without by
 deadline with empty /by
 event without to /from today
 todo
+delete 1
+list
 bye
