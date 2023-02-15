@@ -1,12 +1,13 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Duke {
     private static String line = "__________________________________________________________";
-    private static Task[] inputList = new Task[101];
+    private static ArrayList<Task> inputList = new ArrayList<>();
     private static int numTasks = 0;
 
     public static void printAddTask(Task t) {
-        //print to show added to list
+        //print to show Task added to list
         System.out.println(line);
         System.out.println("Got it. I've added this task: \n" + t);
         System.out.println("Now you have " + numTasks + " tasks in the list.");
@@ -23,10 +24,10 @@ public class Duke {
     public static void validTask(String userInput) throws DukeException {
         String taskNum = userInput.substring(userInput.length()-1);
         int x = Integer.parseInt(taskNum);
-        if (inputList[x] == null) {
+        if (inputList.get(x-1) == null || inputList.size() == 0) {
             throw new DukeException();
         }
-        inputList[x].markAsDone(userInput);
+        inputList.get(x-1).markAsDone(userInput);
     }
 
     public static void addTask(String userInput) throws DukeException {
@@ -48,18 +49,31 @@ public class Duke {
         } else {
             throw new IndexOutOfBoundsException();
         }
-        inputList[numTasks+1] = t; //1-index
-        numTasks++;
+        inputList.add(t);
+        numTasks = inputList.size();
         printAddTask(t);
     }
 
-    public static void printList(Task[] input) {
+    public static void deleteTask(String userInput) throws DukeException {
+        String taskNum = userInput.substring(userInput.length()-1);
+        int x = Integer.parseInt(taskNum);
+        if (inputList.get(x-1) == null || inputList.size() == 0) {
+            throw new DukeException();
+        }
+        System.out.println(line + '\n' + "Ok, I have now removed this task: "
+                + inputList.get(x-1) + '\n' + line);
+        inputList.remove(x-1);
+    }
+
+    public static void printList(ArrayList<Task> input) {
         System.out.println(line + "\nHere are the tasks in your list: ");
-        for (int i = 1; i < input.length; i++) {
-            if (input[i] == null) {
+        input.trimToSize();
+        for (int i = 0; i < input.size(); i++) {
+            if (input.get(i) == null) {
                 break;
+            } else {
+                System.out.println((i+1) + ". " + input.get(i));
             }
-            System.out.println(i + ". " + input[i]);
         }
         System.out.println(line);
     }
@@ -77,15 +91,33 @@ public class Duke {
                 try {
                     validTask(userInput);
                 } catch (DukeException e) {
+                    System.out.println(line);
                     System.out.println("OOPS... task does not exist");
+                    System.out.println(line);
+                }
+            } else if (userInput.startsWith("delete")) {
+                try {
+                    deleteTask(userInput);
+                } catch (DukeException e) {
+                    System.out.println(line);
+                    //System.out.println("OOPS... The description of a " + userInput + " cannot be empty.");
+                    System.out.println(line);
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println(line);
+                    System.out.println("OOPS... I'm sorry, but I don't know what that means :^(");
+                    System.out.println(line);
                 }
             } else {
                 try {
                     addTask(userInput);
                 } catch (DukeException e) {
+                    System.out.println(line);
                     System.out.println("OOPS... The description of a " + userInput + " cannot be empty.");
+                    System.out.println(line);
                 } catch (IndexOutOfBoundsException e) {
+                    System.out.println(line);
                     System.out.println("OOPS... I'm sorry, but I don't know what that means :^(");
+                    System.out.println(line);
                 }
             }
             userInput = in.nextLine();
@@ -94,7 +126,6 @@ public class Duke {
     }
 
     public static void greet() {
-        String line = "__________________________________________________________";
         System.out.println(line);
         System.out.println("Hello! i'm Duke");
         System.out.println("What can I do for you?");
