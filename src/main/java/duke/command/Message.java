@@ -18,16 +18,12 @@ public class Message {
     }
 
     public static void hello() {
-        Message.line();
         Message.logo();
         System.out.println("Hello! I'm Duke\nWhat can I do for you?");
-        Message.line();
     }
 
     public static void bye() {
-        Message.line();
         System.out.println("Bye. Hope to see you again soon!");
-        Message.line();
     }
 
     public static void echo(String userInput) {

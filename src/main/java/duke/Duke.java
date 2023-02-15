@@ -7,9 +7,23 @@ import duke.task.TaskType;
 
 public class Duke {
     public static void main(String[] args) {
-        Message.hello();
+        startDuke();
         runDuke();
+        closeDuke();
+    }
+
+    private static void closeDuke() {
+        Message.line();
+        Data.writeFile();
         Message.bye();
+        Message.line();
+    }
+
+    private static void startDuke() {
+        Message.line();
+        Message.hello();
+        Data.loadData();
+        Message.line();
     }
 
     private static void runDuke() {
@@ -86,6 +100,7 @@ public class Duke {
             default:
                 Message.unknownCommandHandler();
             }
+            Data.writeFile();
         } while (!(userCommand.equals("bye")));
     }
 }
