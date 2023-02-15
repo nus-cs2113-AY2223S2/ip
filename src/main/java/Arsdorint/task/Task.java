@@ -1,3 +1,5 @@
+package Arsdorint.task;
+
 public class Task {
     // initial number of task must be set to 0
     public static int numOfTasks = 0;
