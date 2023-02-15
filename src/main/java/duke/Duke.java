@@ -1,6 +1,5 @@
 package duke;
 
-<<<<<<< HEAD
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -8,9 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-=======
 import java.lang.reflect.Array;
->>>>>>> branch-Level-6
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -23,7 +20,7 @@ import dukeException.DukeException;
 import dukeException.DukeIOBException;
 
 public class Duke {
-
+    static ArrayList<Task> tasks = new ArrayList<Task>();
     public Duke() {
 
     }
@@ -62,16 +59,12 @@ public class Duke {
         while (true) {
             String input = scan.nextLine();
             String[] splitInput = input.split(" ");
-<<<<<<< HEAD
             int taskSize = tasks.size();
-=======
->>>>>>> branch-Level-6
             switch (splitInput[0]) {
             case "bye":
                 exit();
                 return;
             case "todo":
-<<<<<<< HEAD
                 insertTodo(input, false);
                 break;
             case "event":
@@ -79,15 +72,12 @@ public class Duke {
                 break;
             case "deadline":
                 insertDeadline(input, false);
-=======
-                insertTodo(input);
                 break;
             case "event":
                 insertEvent(input);
                 break;
             case "deadline":
                 insertDeadline(input);
->>>>>>> branch-Level-6
                 break;
             case "list":
                 listOut(userInputs, tasks);
@@ -107,7 +97,6 @@ public class Duke {
                 System.out.println("\t____________________________________________________________");
                 break;
             }
-<<<<<<< HEAD
             if (taskSize != tasks.size()) {
                 saveTasks();
             }
@@ -158,11 +147,7 @@ public class Duke {
         }
     }
 
-=======
 
-        }
-    }
->>>>>>> branch-Level-6
     public static void deleteTask(String[] splitInput) {
         String tmpTask = tasks.get(Integer.parseInt(splitInput[1]) - 1).toString();
         tasks.remove(tasks.get(Integer.parseInt(splitInput[1]) - 1));
@@ -184,16 +169,10 @@ public class Duke {
         System.out.println("\t  " + tasks.get(Integer.parseInt(splitInput[1]) - 1));
         System.out.println("\t____________________________________________________________");
     }
-<<<<<<< HEAD
     public static void insertTodo(String input, boolean isMark) {
 
         try {
             Task tsk = new Todo(input.substring(5), isMark);
-=======
-    public static void insertTodo(String input) {
-        try {
-            Task tsk = new Todo(input.substring(5), false);
->>>>>>> branch-Level-6
             tasks.add(tsk);
             addTaskPrint(tasks, tsk);
         } catch (IndexOutOfBoundsException de) {
@@ -217,17 +196,13 @@ public class Duke {
     /*
     This Returns the input as a Deadline object
      */
-<<<<<<< HEAD
     public static void insertDeadline(String input, boolean isMark) {
-=======
-    public static void insertDeadline(String input) {
->>>>>>> branch-Level-6
         int idx = input.indexOf("/by");
         String desc = input.substring(8, idx);
         String by = input.substring(idx + 3);
         Deadline tsk = null;
         try {
-            tsk = new Deadline(desc, false, by);
+            tsk = new Deadline(desc, isMark, by);
             addTaskPrint(tasks, tsk);
         } catch (DukeException de) {
 
@@ -237,11 +212,7 @@ public class Duke {
     /*
     This Returns the input as a Event object
      */
-<<<<<<< HEAD
     public static void insertEvent(String input, boolean isMark) {
-=======
-    public static void insertEvent(String input) {
->>>>>>> branch-Level-6
         int idx = input.indexOf("/from");
         int idx1 = input.indexOf("/to");
         String desc = input.substring(5, idx);
@@ -249,7 +220,7 @@ public class Duke {
         String end = input.substring(idx1 + 3);
         Event tsk = null;
         try {
-            tsk = new Event(desc, false, start, end);
+            tsk = new Event(desc, isMark, start, end);
             addTaskPrint(tasks, tsk);
         } catch (DukeException de) {
 
