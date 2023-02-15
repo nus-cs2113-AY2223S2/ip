@@ -6,6 +6,7 @@ import duke.command.Todo;
 import duke.exception.IllegalCommandException;
 import duke.task.Task;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
@@ -17,8 +18,8 @@ public class Duke {
             "    deadline: add a new task and '/by' date to add a task with deadline\n" +
             "    event: add a new event with '/from' and '/to' duration\n" +
             "    list: list out all tasks stored\n" +
-            "    help: no :D\n    Please enter command:\n" +
-            "    bye: end the program";
+            "    help: no :D\n    bye: end the program\n    Please enter command:\n";
+
 
     public static void main(String[] args) {
         System.out.println(LINE_BREAK);
@@ -27,8 +28,7 @@ public class Duke {
         System.out.println(LINE_BREAK);
         Scanner in = new Scanner(System.in);
         String userInput;
-        Task[] tasks = new Task[100];
-        int taskIndex = 0;
+        ArrayList<Task> tasks = new ArrayList<>();
         while (true) {
             userInput = in.nextLine();
             String[] inputLine = userInput.split(" ", 2);
@@ -42,34 +42,41 @@ public class Duke {
                 break;
             } else if (command.equals("list")) {
                 // list out the tasks and status
-                System.out.println(LINE_BREAK);
-                printlnWithIndentation("Here are the tasks in your list: ");
-                for (int i = 0; i < taskIndex; ++i) {
-                    int taskNumber = i + 1;
-                    System.out.println(INDENTATION + taskNumber + "." +
-                            tasks[i].toString());
+                if (tasks.isEmpty()) {
+                    printException("There is nothing in your list right now.");
+                } else {
+                    System.out.println(LINE_BREAK);
+                    printlnWithIndentation("Here are the tasks in your list: ");
+                    for (int i = 0; i < tasks.size(); ++i) {
+                        int taskNumber = i + 1;
+                        System.out.println(INDENTATION + taskNumber + "." +
+                                tasks.get(i).toString());
+                    }
+                    System.out.println(LINE_BREAK);
                 }
-                System.out.println(LINE_BREAK);
                 continue;
             }
 
             try {
                 switch (command) {
+                case "delete":
+                    deleteTask(tasks, inputLine);
+                    break;
                 case "mark":
-                    commandMark(tasks, inputLine);
+                    markTask(tasks, inputLine);
                     break;
                 case "unmark":
-                    commandUnmark(tasks, inputLine);
+                    unmarkTask(tasks, inputLine);
                     break;
                 case "todo":
                     // command todo
-                    taskIndex = commandTodo(tasks, taskIndex, inputLine);
+                    makeTodo(tasks, inputLine);
                     break;
                 case "deadline":
-                    taskIndex = commandDeadline(tasks, taskIndex, inputLine);
+                    makeDeadline(tasks, inputLine);
                     break;
                 case "event":
-                    taskIndex = commandEvent(tasks, taskIndex, inputLine);
+                    makeEvent(tasks, inputLine);
                     break;
                 case "help":
                     System.out.println(HELP_PAGE);
@@ -78,14 +85,18 @@ public class Duke {
                     throw new IllegalCommandException(command);
                 }
             } catch (IllegalCommandException e) {
-                System.out.println(LINE_BREAK);
-                printlnWithIndentation("INVALID COMMAND!");
-                System.out.println(HELP_PAGE + LINE_BREAK);
+                printException("INVALID COMMAND!");
             }
         }
     }
 
-    private static int commandEvent(Task[] tasks, int taskIndex, String[] inputLine) {
+    private static void printException(String string) {
+        System.out.println(LINE_BREAK);
+        printlnWithIndentation(string);
+        System.out.println(HELP_PAGE + LINE_BREAK);
+    }
+
+    private static void makeEvent(ArrayList<Task> tasks, String[] inputLine) {
         try {
             String action = inputLine[1];
             if (action.contains("/from") & action.contains("/to")) {
@@ -98,28 +109,26 @@ public class Duke {
                 fromTime = fromTime.trim();
                 toTime = toTime.trim();
                 Event addEvent = new Event(toAddEvent, fromTime, toTime);
-                tasks[taskIndex] = addEvent;
-                taskIndex++;
+                tasks.add(addEvent);
                 System.out.println(LINE_BREAK);
                 printlnWithIndentation("Got it. I've added this task: ");
                 System.out.println(INDENTATION + "  " + addEvent.toString());
-                System.out.println(INDENTATION + "Now you have " + taskIndex + " tasks in the list. \n" + LINE_BREAK);
+                printTaskCount(tasks);
             } else {
                 throw new IllegalCommandException(action);
             }
         } catch (IllegalCommandException e) {
-            System.out.println(LINE_BREAK);
-            printlnWithIndentation("INVALID COMMAND! Missing '/from' or '/to'");
-            System.out.println(HELP_PAGE + LINE_BREAK);
+            printException("INVALID COMMAND! Missing '/from' or '/to'");
         } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println(LINE_BREAK);
-            System.out.println(INDENTATION + "event cannot be empty");
-            System.out.println(LINE_BREAK);
+            printException("event cannot be empty");
         }
-        return taskIndex;
     }
 
-    private static int commandDeadline(Task[] tasks, int taskIndex, String[] inputLine) {
+    private static void printTaskCount(ArrayList<Task> tasks) {
+        System.out.println(INDENTATION + "Now you have " + tasks.size() + " tasks in the list. \n" + LINE_BREAK);
+    }
+
+    private static void makeDeadline(ArrayList<Task> tasks, String[] inputLine) {
         try {
             String action = inputLine[1];
             if (action.contains("/by")) {
@@ -129,82 +138,86 @@ public class Duke {
                 toAddDeadline = toAddDeadline.trim();
                 by = by.trim();
                 Deadline addDeadline = new Deadline(toAddDeadline, by);
-                tasks[taskIndex] = addDeadline;
-                taskIndex++;
+                tasks.add(addDeadline);
                 System.out.println(LINE_BREAK);
                 printlnWithIndentation("Got it. I've added this task: ");
                 System.out.println(INDENTATION + "  " + addDeadline.toString());
-                System.out.println(INDENTATION + "Now you have " + taskIndex + " tasks in the list. \n" + LINE_BREAK);
+                printTaskCount(tasks);
             } else {
                 throw new IllegalCommandException(action);
             }
         } catch (IllegalCommandException e) {
-            System.out.println(LINE_BREAK);
-            printlnWithIndentation("INVALID COMMAND! Missing '/by'");
-            System.out.println(HELP_PAGE + LINE_BREAK);
+            printException("INVALID COMMAND! Missing '/by'");
         } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println(LINE_BREAK);
-            printlnWithIndentation("deadline cannot be empty");
-            System.out.println(LINE_BREAK);
+            printException("deadline cannot be empty");
         }
-        return taskIndex;
     }
 
-    private static int commandTodo(Task[] tasks, int taskIndex, String[] inputLine) {
+    private static void makeTodo(ArrayList<Task> tasks, String[] inputLine) {
         try {
             String action = inputLine[1];
             action = action.trim();
             Todo addTodo = new Todo(action);
-            tasks[taskIndex] = addTodo;
-            taskIndex++;
+            tasks.add(addTodo);
             System.out.println(LINE_BREAK);
             printlnWithIndentation("Got it. I've added this task: ");
             System.out.println(INDENTATION + "  " + addTodo.toString());
-            System.out.println(INDENTATION + "Now you have " +
-                    taskIndex + " tasks in the list. \n" + LINE_BREAK);
+            printTaskCount(tasks);
         } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println(LINE_BREAK);
-            printlnWithIndentation("todo cannot be empty");
-            System.out.println(LINE_BREAK);
+            printException("todo cannot be empty");
         }
-        return taskIndex;
     }
 
-    private static void commandUnmark(Task[] tasks, String[] inputLine) {
+    private static void unmarkTask(ArrayList<Task> tasks, String[] inputLine) {
         try {
             String action = inputLine[1];
             action = action.trim();
             int indexToMark = Integer.parseInt(action) - 1;
-            tasks[indexToMark].setDone(false);
+            tasks.get(indexToMark).setDone(false);
             printlnWithIndentation("OK, I've marked this task as not done yet: ");
-            System.out.println(INDENTATION + "  [ ] " + tasks[indexToMark].getTaskDescription() + '\n' + LINE_BREAK);
+            System.out.println(INDENTATION + "  [ ] " + tasks.get(indexToMark).getTaskDescription() + '\n' + LINE_BREAK);
         } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println(LINE_BREAK);
-            printlnWithIndentation("unmark cannot be empty");
-            System.out.println(LINE_BREAK);
-        } catch (NullPointerException e) {
-            System.out.println(LINE_BREAK);
-            printlnWithIndentation("Invalid task number");
-            System.out.println(LINE_BREAK);
+            printException("unmark cannot be empty");
+        } catch (IndexOutOfBoundsException e) {
+            printException("Invalid task number! Task number does not exist!");
+        } catch (NumberFormatException e) {
+            printException("Please input numeric number to unmark task!");
         }
     }
 
-    private static void commandMark(Task[] tasks, String[] inputLine) {
+    private static void markTask(ArrayList<Task> tasks, String[] inputLine) {
         try {
             String action = inputLine[1];
             action = action.trim();
             int indexToMark = Integer.parseInt(action) - 1;
-            tasks[indexToMark].setDone(true);
+            tasks.get(indexToMark).setDone(true);
             printlnWithIndentation("Nice! I've marked this task as done:");
-            System.out.println(INDENTATION + "  [X] " + tasks[indexToMark].getTaskDescription() + '\n' + LINE_BREAK);
+            System.out.println(INDENTATION + "  [X] " + tasks.get(indexToMark).getTaskDescription() + '\n' + LINE_BREAK);
         } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println(LINE_BREAK);
-            printlnWithIndentation("mark cannot be empty");
-            System.out.println(LINE_BREAK);
-        } catch (NullPointerException e) {
-            System.out.println(LINE_BREAK);
-            printlnWithIndentation("Invalid task number");
-            System.out.println(LINE_BREAK);
+            printException("mark cannot be empty");
+        } catch (IndexOutOfBoundsException e) {
+            printException("Invalid task number! Task number does not exist!");
+        } catch (NumberFormatException e) {
+            printException("Please input numeric number to mark task!");
+        }
+    }
+
+    private static void deleteTask(ArrayList<Task> tasks, String[] inputLine) {
+        try {
+            String action = inputLine[1];
+            action = action.trim();
+            int indexToDelete = Integer.parseInt(action) - 1;
+            printlnWithIndentation("Nice! I've deleted this task:");
+            System.out.println(INDENTATION + tasks.get(indexToDelete).toString() +
+                    '\n' + LINE_BREAK);
+            tasks.remove(indexToDelete);
+            printTaskCount(tasks);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            printException("delete cannot be empty");
+        } catch (IndexOutOfBoundsException e) {
+            printException("Invalid task number! Task number does not exist!");
+        } catch (NumberFormatException e) {
+            printException("Please input numeric number to delete task!");
         }
     }
 
