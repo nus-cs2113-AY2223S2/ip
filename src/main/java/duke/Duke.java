@@ -2,7 +2,11 @@ package duke;
 
 import duke.task.*;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.File;
 public class Duke {
     public static void printGreeting(){
         System.out.println("Hello! I'm Duke");
@@ -82,7 +86,32 @@ public class Duke {
         }
     }
 
+    public static void getTaskData(File taskDataFile, ArrayList<Task> tasks) throws IOException {
+        if(!taskDataFile.createNewFile()){
+            // A file at that path already exists, load the task data
+
+        }
+    }
+
+    public static void storeTaskData(File taskDataFile, ArrayList<Task> tasks) throws IOException {
+        // Create a new file if it does not exist, new file is not created if file already exists
+        taskDataFile.createNewFile();
+        FileWriter fileWriter = new FileWriter(taskDataFile);
+        fileWriter.write("Hello this is a test again \n");
+        fileWriter.write("This shouldn't overwrite the top");
+        fileWriter.close();
+    }
     public static void main(String[] args) {
+        final File taskDataDirectory = new File("data");
+        final File taskDataFile = new File("data/task-data.txt");
+        if(!taskDataDirectory.exists()){
+            try{
+                taskDataDirectory.mkdir();
+            }catch (SecurityException e){
+                System.out.println("An error occurred while creating the data directory: " + e.getMessage());
+                return;
+            }
+        }
         final int MAX_TASKS = 100;
         Task[] tasks = new Task[MAX_TASKS];
         Scanner in = new Scanner(System.in);
@@ -126,5 +155,10 @@ public class Duke {
                 System.out.println(e.getMessage());
             }
         }
+/*        try {
+            TaskData.storeTaskData(taskDataFile, tasks);
+        }catch(IOException e){
+            System.out.println("An error occured while storing your task data: " + e.getMessage());
+        }*/
     }
 }
