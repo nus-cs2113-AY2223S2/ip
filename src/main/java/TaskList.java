@@ -24,7 +24,7 @@ public class TaskList {
             taskArray[totalTaskNum++] = newTodo;
             return true;
         } catch(Exception e) {
-            System.out.println("Failed to add: Invalid Todo format");
+            System.out.println("☹ OOPS!!! The description of a todo cannot be empty.");
             return false;
         }
     }
@@ -37,7 +37,7 @@ public class TaskList {
             taskArray[totalTaskNum++] = newDeadline;
             return true;
         } catch(Exception e){
-            System.out.println("Failed to add: Invalid Deadline format");
+            System.out.println("☹ OOPS!!! The description of a deadline cannot be empty.");
             return false;
         }
     }
@@ -51,7 +51,7 @@ public class TaskList {
             taskArray[totalTaskNum++] = newEvent;
             return true;
         } catch(Exception e){
-            System.out.println("Failed to add: Invalid Event format");
+            System.out.println("☹ OOPS!!! The description of an event cannot be empty.");
             return false;
         }
     }
@@ -72,96 +72,6 @@ public class TaskList {
 
     public int getTotalTaskNum(){
         return totalTaskNum;
-    }
-}
-
-class Task{
-    private String contents;
-    private Boolean isDone = false;
-
-    Task(String userInput){
-        contents = userInput;
-    }
-
-
-    @Override
-    public String toString(){
-        if(isDone) {
-            return "[O] " + contents;
-        }
-        return "[ ] " + contents;
-    }
-
-    public String getContents(){
-        return contents;
-    }
-
-    public Boolean getIsDone(){
-        return isDone;
-    }
-
-    public void mark(){
-        isDone = true;
-    }
-
-    public void unmark(){
-        isDone = false;
-    }
-}
-
-class Todo extends Task{
-    Todo(String userInput) {
-        super(userInput);
-    }
-
-    @Override
-    public String toString(){
-        if(getIsDone()) {
-            return "[T][O] " + getContents();
-        }
-        return "[T][ ] " + getContents();
-    }
-}
-
-class Event extends Task{
-    String from;
-    String to;
-    Event(String content, String start, String end){
-        super(content);
-        this.from = start; //start format: Date+time
-        this.to = end; //end format: (Date+)time
-    }
-
-    @Override
-    public String toString(){
-        String returnStr = "[E]";
-        if(getIsDone()) {
-            returnStr = returnStr.concat("[O]");
-        } else{
-            returnStr = returnStr.concat("[ ]");
-        }
-
-        return returnStr+getContents()+"(from: "+from+" | to: "+ to +")";
-    }
-}
-
-class Deadline extends Task{
-    String by;
-    Deadline(String content, String end){
-        super(content);
-        this.by = end;
-    }
-
-    @Override
-    public String toString(){
-        String returnStr = "[D]";
-        if(getIsDone()) {
-            returnStr = returnStr.concat("[O]");
-        } else{
-            returnStr = returnStr.concat("[ ]");
-        }
-
-        return returnStr+getContents()+"(by: "+ by +")";
     }
 }
 
