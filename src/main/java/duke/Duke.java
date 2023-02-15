@@ -10,7 +10,11 @@ import duke.exception.EmptyCommandException;
 import duke.exception.InvalidCommandException;
 import duke.exception.InvalidIndexException;
 
+
 import java.util.ArrayList;
+
+import java.io.IOException;
+
 import java.util.Scanner;
 
 public class Duke {
@@ -21,9 +25,12 @@ public class Duke {
     private static ArrayList<Task> taskList = new ArrayList<>();
     private static int listCount = 0;
 
+    private static Database database;
+
     public static void main(String[] args) {
         printGreetings();
         Scanner in = new Scanner(System.in);
+        database = new Database();
         while (!userInput.equals("bye")) {
             userInput = in.nextLine();
             if (!userInput.equals("bye")) {
@@ -114,9 +121,11 @@ public class Duke {
             throw new EmptyCommandException();
         }
         String input = cases[1];
-        taskList.add(new Todo(input));
+        Task currTask = new Todo(input);
+        taskList.add(currTask);
         ++listCount;
         printAddedTaskCommand();
+        addToDatabase(currTask);
     }
 
     private static void createDeadline(String[] cases) throws EmptyCommandException {
@@ -127,9 +136,11 @@ public class Duke {
         String[] splitInput = input.split("/", 2);
         String task = splitInput[0].trim();
         String by = splitInput[1].substring(3);
-        taskList.add(new Deadline(task, by));
+        Task currTask = new Deadline(task, by);
+        taskList.add(currTask);
         ++listCount;
         printAddedTaskCommand();
+        addToDatabase(currTask);
     }
 
     private static void createEvent(String[] cases) throws EmptyCommandException {
@@ -141,9 +152,11 @@ public class Duke {
         String task = splitInput[0].trim();
         String from = splitInput[1].substring(5).trim();
         String to = splitInput[2].substring(3);
-        taskList.add(new Event(task, from, to));
+        Task currTask = new Event(task, from, to);
+        taskList.add(currTask);
         ++listCount;
         printAddedTaskCommand();
+        addToDatabase(currTask);
     }
 
     private static void markTask(String input) throws InvalidIndexException {
@@ -164,6 +177,14 @@ public class Duke {
         taskList.get(index).setDone(false);
         System.out.println("OK, I've marked this task as not done yet:");
         System.out.println(taskList.get(index).toString());
+    }
+
+    public static void addToDatabase(Task currTask){
+        try {
+            database.appendSaveTasks(currTask.taskInformation());
+        } catch (IOException e){
+            System.out.println("Failed to append task to database");
+        }
     }
 
     public static void printInvalidMessage() {

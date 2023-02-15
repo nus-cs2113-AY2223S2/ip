@@ -33,4 +33,8 @@ public class Task {
     public String toString() {
         return "[" + this.getStatusIcon() + "] " + this.description;
     }
+
+    public String taskInformation() {
+        return String.format("%s , %s", this.isDone, this.description);
+    }
 }
