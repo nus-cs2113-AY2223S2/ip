@@ -111,7 +111,7 @@ public class Parser {
         String[] output = new String[3];
         output[1] = taskDescriptions[1];
 
-        if (taskDescriptions[0].contains("✔")) {
+        if (taskDescriptions[0].contains("X")) {
             output[2] = "done";
         } else {
             output[2] = "undone";

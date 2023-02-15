@@ -33,6 +33,6 @@ public abstract class Task {
      */
     @Override
     public String toString() {
-        return (isDone ? "[✔] " : "[ ] ") + description;
+        return (isDone ? "[X] " : "[ ] ") + description;
     }
 }
