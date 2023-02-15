@@ -39,6 +39,10 @@ public class Duke {
                 } catch (NullPointerException e) {
                     System.out.println("Item is not in list!");
                 }
+            } else if (instruction.toLowerCase().contains("delete")) {
+                String[] split = instruction.split("\\s+");
+                int toDelete = Integer.parseInt(split[1]);
+                taskListDelete(toDelete-1);
             } else {
                 Task t;
                 if (instruction.toLowerCase().contains("deadline")) {
@@ -81,6 +85,12 @@ public class Duke {
         taskList.add(t);
         System.out.println(lineBreak + '\n' + "Got it. I've added this task:");
         System.out.println('\t' + t.toString());
+        System.out.println("Now you have " + taskList.size() + " tasks in the list." + '\n' + lineBreak);
+    }
+    public static void taskListDelete(int t) {
+        System.out.println(lineBreak + '\n' + "Noted. I've removed this task:");
+        System.out.println('\t' + taskList.get(t).toString());
+        taskList.remove(t);
         System.out.println("Now you have " + taskList.size() + " tasks in the list." + '\n' + lineBreak);
     }
 }
