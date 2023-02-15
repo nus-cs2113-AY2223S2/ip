@@ -79,6 +79,26 @@ public class Task{
         }
     }
 
+    public static void save(File f){
+        try{
+            if(!f.exists()){
+                f.createNewFile();
+            }
+            if(Task.lastIndex>0){     //possible to use continue here instead?
+                FileWriter fw = new FileWriter(f);
+                for(int index=0;index<Task.lastIndex;index++){
+                    fw.append((Task.get(index)).createEntry());
+                }
+                fw.close();
+            }
+            System.out.println(DASH+"\nSaved!\n"+DASH);
+
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
     public static void deleteFromTaskArray(int indexToDelete){
         System.out.println(DASH+"\n Bye Bye task! It was nice meeting you :)\n"+taskArray[indexToDelete-1].description);
 

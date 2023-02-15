@@ -27,6 +27,7 @@ public class Goot {
             ToDo todo = new ToDo(input.substring(5), Task.lastIndex+1,"T");
             Task.addToTaskArrayList(todo);
             todo.acknowledgeTaskAdded();
+            Task.save(f);
         }
         else if(inputSplitBySpace[0].equals("deadline")){
             try{
@@ -34,6 +35,7 @@ public class Goot {
                 Deadline deadline = new Deadline(Deadline.readName(input),Task.lastIndex+1,Deadline.readBy(input),"D");
                 Task.addToTaskArrayList(deadline);
                 deadline.acknowledgeTaskAdded();
+                Task.save(f);
             }
             catch(GootExceptions e){
                 GootExceptionHandler.wrongNumberOfSlashesDeadline();
@@ -48,6 +50,7 @@ public class Goot {
                 Event event = new Event(Event.readName(input),Task.lastIndex+1,fromString,toString,"E");
                 Task.addToTaskArrayList(event);
                 event.acknowledgeTaskAdded();
+                Task.save(f);
             }
             catch(GootExceptions e){
                 GootExceptionHandler.wrongNumberOfSlashesEvent();
@@ -66,27 +69,9 @@ public class Goot {
         else if (input.equals("list")) {
             Task.printList();
         }
-        else if (input.equals("save")){
-            try{
-                if(!f.exists()){
-                    f.createNewFile();
-                }
-                if(Task.lastIndex>0){     //possible to use continue here instead?
-                    FileWriter fw = new FileWriter(f);
-                    for(int index=0;index<Task.lastIndex;index++){
-                        fw.append((Task.get(index)).createEntry());
-                    }
-                    fw.close();
-                }
-                System.out.println("Saved!");
-
-            }
-            catch (IOException e){
-                e.printStackTrace();
-            }
-        }
         else if (inputSplitBySpace[0].equals("delete")&&inputSplitBySpace.length==2){
             Task.deleteFromTaskArray(Integer.parseInt(inputSplitBySpace[1]));
+            Task.save(f);
         }
         else{
             GootExceptionHandler.unidentifiedKeyword();
