@@ -1,11 +1,15 @@
 import java.io.*;
 import java.util.Scanner;
 import java.util.ArrayList;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 
 public class Duke implements Serializable {
     private static ArrayList<Task>tasks = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
+
         printWelcome();
         //saveData();
         start();
@@ -80,9 +84,11 @@ public class Duke implements Serializable {
         }
     }
 
+
+    //adapted from https://www.tutorialspoint.com/how-to-add-insert-additional-property-to-json-string-using-gson-in-java#:~:text=We%20can%20use%20the%20toJsonTree,get%20the%20element%20as%20JsonObject.
     public static void saveData() throws IOException {
-        //System.out.println("Entered save data");
-        File file = new File("data/list.txt");
+        System.out.println("Entered save data");
+        File file = new File("data/list.json");
 
         if (file.exists()) {
             file.delete();
@@ -91,51 +97,92 @@ public class Duke implements Serializable {
         file.createNewFile();
 
         FileWriter input = new FileWriter(file);
+        Gson gson = new Gson();
+        JsonArray jsonArray = new JsonArray();
 
         for (Task task : tasks) {
-            input.write(task.toString()); //issue
-           // input.write(task);
+            JsonElement jsonElement = gson.toJsonTree(task);
+            jsonElement.getAsJsonObject().addProperty("type", task.getClass().getSimpleName());
+            jsonArray.add(jsonElement);
+
         }
 
+        gson.toJson(jsonArray, input);
+
+        /*for (Task task : tasks) {
+            gson.toJson(task, input);
+        }
+        */
+
+        //gson.toJson(tasks, input);
+
+       /* for (Task task : tasks) {
+            input.write(task.toString()); //issue
+           // input.write(task);
+
+        }
+*/
         input.close();
 
 
     }
 
     public static void loadData() throws IOException {
+
         File directory = new File("data");
 
         if (!(directory.isDirectory() && directory.exists())) {
+            System.out.println("!(directory.isDirectory() && directory.exists())");
             new File("data").mkdirs();
-        } else {
-            File file = new File("data/list.txt");
+        }
 
+
+        File file = new File("data/list.json");
+        System.out.println("new directory data");
             if (!file.exists()) {
+                System.out.println("createNewFile");
                 file.createNewFile();
             }
+
+        System.out.println("hello");
+        Scanner scanner = new Scanner(file);
+        FileReader fileReader = new FileReader("data/list.json");
+        Gson gson = new Gson();
+        JsonArray tempList = gson.fromJson(fileReader, JsonArray.class);
+
+        try {
+            for (JsonElement element : tempList) {
+                String type = element.getAsJsonObject().get("type").getAsString();
+                Task taskToAdd = gson.fromJson(element, Task.class);
+                switch (type) {
+                case "Todo":
+                    taskToAdd = gson.fromJson(element, Todo.class);
+                    break;
+                case "Deadline":
+                    taskToAdd = gson.fromJson(element, Deadline.class);
+                    break;
+                case "Event":
+                    taskToAdd = gson.fromJson(element, Event.class);
+                    break;
+                default:
+                    printInvalidFileRead();
+                }
+                tasks.add(taskToAdd);
+            }
+        } catch (NullPointerException e) {
+            System.out.println("No tasks to load");
         }
-
-        Scanner line = new Scanner(directory);
-
-        while (line.hasNext()) {
-            //tasks.add(line.nextLine());
-        }
-
     }
-
-
-
 
     public static void start() {
         try {
             loadData();
 
         } catch (IOException e) {
-           // System.out.println("Unable to load");
+            System.out.println("Unable to load");
         }
     }
     public static void markTaskDone(String command) /*throws DukeException*/ {
-
         try {
             int taskNumber = Integer.parseInt(command);
             Task task = tasks.get(taskNumber - 1);
@@ -270,7 +317,6 @@ public class Duke implements Serializable {
             System.out.println("Unable to save.");
         }
 
-
     }
     public static void printAllTasks() {
         if (tasks.isEmpty()) {
@@ -307,6 +353,11 @@ public class Duke implements Serializable {
     public static void printInvalidMessage() {
         System.out.println("I don't know what that means :-(");
     }
+
+    public static void printInvalidFileRead() {
+        System.out.println("Unable to read from file");
+    }
+    
     public static void printBye() {
         System.out.println("Bye. Hope to see you again soon!");
     }
