@@ -27,6 +27,11 @@ public class Event extends Task {
     }
 
     @Override
+    public String toSaveString() {
+        return super.toSaveString() + " /from " + getStart() + " /to " + getEnd() + System.lineSeparator();
+    }
+
+    @Override
     public String toString() {
         return "[E]" + super.toString() + " (from: " + start
                 + " to: " + end + ")";
