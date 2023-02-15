@@ -29,7 +29,7 @@ public class Duke {
     public static final String NOT_DONE = "    OK :(, I've marked this task as not done yet: \n    ";
     public static final String DONE = "    Nice! I've marked this task as done: \n    ";
     public static final String ERROR = "    Invalid command! :( Check your input and try again! \n";
-    public static final String FILEPATH = "data/duke.txt";
+    public static final String FILEPATH = "duke.txt";
 
     private static void addEvent(ArrayList<Task> tasks, String[] words) throws MissingDescriptionException {
         if (words.length != 2) {
@@ -164,7 +164,6 @@ public class Duke {
             line = in.nextLine();
             try {
                 writeToFile();
-                System.out.println("list updated");
             } catch (IOException e) {
                 System.out.println("Something went wrong: " + e.getMessage());
             }

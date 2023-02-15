@@ -2,3 +2,4 @@
 [D][ ] return book by: June 6th
 [E][ ] project meeting from: Aug 6th 2pm to: 4pm
 [T][X] join sports club
+[E][ ] huiqi attend CS2113 lecture from: Friday 17 Feb 2023 4pm to: 6pm
