@@ -1,9 +1,6 @@
 
 import java.util.Scanner;
-
 public class Duke {
-
-
     public static void main(String[] args) throws NoKeyException{
         Scanner in = new Scanner(System.in);
         CommandManager.sayHi();
@@ -24,7 +21,6 @@ public class Duke {
                             " after mark. EXAMPLE: mark 2");
                 }
                 break;
-
             case "unmark":
                 try {
                     Tasks unMarkTask = Tasks.getTaskList().get(Integer.parseInt(userInput[1]) - 1);
@@ -36,7 +32,6 @@ public class Duke {
                             "CORRECT UNMARK FORMAT: unmark 2");
                 }
                 break;
-
             case "todo":
 
                 try {
@@ -48,7 +43,6 @@ public class Duke {
                     System.out.println("There is NO description!!!");
                 }
                 break;
-
             case "deadline":
                 try {
                     String[] taskSlashDate = userInput[1].split("/", 2);
@@ -70,7 +64,6 @@ public class Duke {
             case "list":
                 command.printOutput();
                 break;
-
             default:
                 throw new NoKeyException("Come on, give me something that I can work with!");
             }

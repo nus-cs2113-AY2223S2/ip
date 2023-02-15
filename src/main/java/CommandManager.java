@@ -4,9 +4,7 @@ public class CommandManager {
     //get user input
     private String userInput;
     private String key;
-
     public static final String DIVIDER = "\t____________________________________________________________";
-
     public static void sayHi() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -17,31 +15,23 @@ public class CommandManager {
         System.out.print(DIVIDER + '\n'
                 + " \t Hello! I'm Duke\n\t What can I do for you?\n" + DIVIDER + "\n\n");
     }
-
     public static void sayBye() {
             System.out.println(DIVIDER + "\n\t Bye. Hope to see you again soon!\n" + DIVIDER);
     }
-
     public CommandManager() {
         userInput = null;
         key = null;
     }
-
     public String getUserInput() {
-
         return userInput;
     }
-
     public void setUserInput(String input) {
             this.userInput = input;
     }
 
     public void setKey(String key) {
-
         this.key = key;
     }
-
-
     public void printOutput(Tasks task) {
         //    String taskLine = printList.get(task.getID());
         switch (key) {
@@ -65,7 +55,6 @@ public class CommandManager {
             break;
         }
     }
-
     public void printOutput() {
         int totalNumberOfTasks = Tasks.getNumberOfTasks();
         System.out.println(DIVIDER + "\n\t Here are the tasks in your list:");
