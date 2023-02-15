@@ -1,3 +1,7 @@
+package duke.exceptions;
+
+import duke.tasks.Task;
+
 public class TaskToMarkDoesNotExistException extends Exception {
     protected String command;
 

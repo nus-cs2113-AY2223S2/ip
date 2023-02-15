@@ -1,3 +1,5 @@
+package duke.exceptions;
+
 public class EmptyDescriptionException extends Exception {
     protected String typeOfTask;
 
@@ -8,7 +10,7 @@ public class EmptyDescriptionException extends Exception {
         if (typeOfTask.equals("marked") || typeOfTask.equals("unmarked")) {
             System.out.println("OOPS!! Task to be " + typeOfTask + " was not specified!");
         } else {
-            System.out.println("OOPS!! The description of a " + typeOfTask + " cannot be empty!");
+            System.out.println("OOPS!! The description of " + typeOfTask + " cannot be empty!");
         }
     }
 }
