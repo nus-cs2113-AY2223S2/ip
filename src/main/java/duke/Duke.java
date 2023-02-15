@@ -1,3 +1,8 @@
+package duke;
+
+import duke.exceptions.IncorrectDeadlineException;
+import duke.exceptions.IncorrectEventException;
+
 import java.util.Scanner;
 
 public class Duke {
