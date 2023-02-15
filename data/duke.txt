@@ -1,2 +1,1 @@
-T | 0 | test1
-T | 1 | test2
+E | 0 | Koh Ming En attend CS2113 lecture  | Friday 17 Feb 2023 4pm | Friday 17 Feb 2023 6pm
