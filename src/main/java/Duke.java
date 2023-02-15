@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class Duke {
     private static void displayList(Task[] tasks) {
+        System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < Task.numberOfTasks; i += 1) {
             System.out.print(i + 1 + ". ");
             tasks[i].printTask();
@@ -56,35 +57,74 @@ public class Duke {
         String text = input.nextLine(); // input the whole sentence into text
         return text.split(" ", 2);
     }
-    public static void main(String[] args) {
-        System.out.println("Hello! I'm Duke");
-        System.out.println("What can I do for you?");
+
+    private static void editList() throws UnknownCommandException, EmptyDescriptionException, TaskToMarkDoesNotExistException {
         String[] splitText = getInput();
         Task[] tasks = new Task[100];
         Task.numberOfTasks = 0;
         while (!splitText[0].equals("bye")) {
             switch (splitText[0]) {
             case "mark":
-                markTask(tasks, splitText[1]);
+                try {
+                    markTask(tasks, splitText[1]);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    throw new EmptyDescriptionException("marked");
+                } catch (NullPointerException e) {
+                    throw new TaskToMarkDoesNotExistException("mark");
+                }
                 break;
             case "unmark":
-                unmarkTask(tasks, splitText[1]);
+                try {
+                    unmarkTask(tasks, splitText[1]);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    throw new EmptyDescriptionException("unmarked");
+                } catch (NullPointerException e) {
+                    throw new TaskToMarkDoesNotExistException("unmark");
+                }
                 break;
             case "list":
                 displayList(tasks);
                 break;
             case "todo":
-                createTodo(tasks, splitText[1]);
+                try {
+                    createTodo(tasks, splitText[1]);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    throw new EmptyDescriptionException("todo");
+                }
                 break;
             case "deadline":
-                createDeadline(tasks, splitText[1]);
+                try {
+                    createDeadline(tasks, splitText[1]);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    throw new EmptyDescriptionException("deadline");
+                }
                 break;
             case "event":
-                createEvent(tasks, splitText[1]);
+                try {
+                    createEvent(tasks, splitText[1]);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    throw new EmptyDescriptionException("deadline");
+                }
                 break;
+            default:
+                throw new UnknownCommandException();
             }
             splitText = getInput();
         }
         System.out.println("Bye! Hope to see you again soon!");
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Hello! I'm Duke");
+        System.out.println("What can I do for you?");
+        try {
+            editList();
+        } catch (UnknownCommandException e) {
+            System.out.println("OOPS!! I'm sorry but I don't know what that means :-(");
+        } catch (EmptyDescriptionException e) {
+            e.printErrorMessage();
+        } catch (TaskToMarkDoesNotExistException e) {
+            e.printErrorMessage();
+        }
     }
 }
