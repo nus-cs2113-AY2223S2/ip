@@ -68,7 +68,7 @@ public class Duke {
         int currentNumber = 0; // Current number of tasks
 
         try {
-            currentNumber = LoadFile.loadFileContents("C:\\Users\\aviel\\OneDrive - National University of Singapore\\Documents\\NUS\\Y2\\SEM 4\\CS2113\\ip\\data\\duke.txt",taskArrayList,currentNumber);
+            currentNumber = LoadFile.loadFileContents("data\\duke.txt",taskArrayList,currentNumber);
         }catch(FileNotFoundException e){
             System.out.println("File Not Found");
         }
@@ -123,7 +123,7 @@ public class Duke {
             }
             try {
                 if(listEditableCommands.contains(type)){
-                    WriteFile.writeToFile("C:\\Users\\aviel\\OneDrive - National University of Singapore\\Documents\\NUS\\Y2\\SEM 4\\CS2113\\ip\\data\\duke.txt",taskArrayList);
+                    WriteFile.writeToFile("data\\duke.txt",taskArrayList);
                 }
                 else{
                     continue;
