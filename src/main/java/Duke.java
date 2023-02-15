@@ -12,12 +12,10 @@ public class Duke {
         Scanner in = new Scanner(System.in);
         int tasksSize = 100;
         ArrayList<Task> tasks = new ArrayList<>();
-        int currentIndex;
         int maxIndex = tasksSize - 1;
         Save.filePath = "./taskSave.txt";
         Save.createSaveFile();
         Save.loadSaveFile(tasks);
-        currentIndex = tasks.size();
         printHelloStatement();
         while (true) {
             String input;
@@ -75,9 +73,9 @@ public class Duke {
                 try {
                     String[] temp = input.split(" ", 2);
                     int taskIndex = Integer.parseInt(temp[1]);
-                    currentIndex--;
-                    printTaskDeletedStatement(currentIndex, tasks.get(taskIndex-1));
+                    printTaskDeletedStatement(tasks, tasks.get(taskIndex-1));
                     tasks.remove(taskIndex-1);
+                    Save.updateSaveFile(tasks);
                 } catch (ArrayIndexOutOfBoundsException exception) {
                     printDottedLine();
                     System.out.println("☹ OOPS!!! The description of a delete cannot be empty");
@@ -91,15 +89,14 @@ public class Duke {
                     System.out.println("☹ OOPS!!! The description of a delete must be a number");
                     printDottedLine();
                 }
-            } else if (input.startsWith("todo") & (currentIndex <= maxIndex)) {
+            } else if (input.startsWith("todo") & (tasks.size() <= maxIndex)) {
                 try {
                     String[] temp = input.split("todo "); //separates todo description
                     String description = temp[1];
                     ToDo todo = new ToDo(description);
                     tasks.add(todo);
-                    currentIndex++;
                     Save.updateSaveFile(tasks);
-                    printTaskAddedStatement(currentIndex, todo);
+                    printTaskAddedStatement(tasks, todo);
                 } catch (IndexOutOfBoundsException exception) {
                     printDottedLine();
                     System.out.println("☹ OOPS!!! The description of a todo cannot be empty");
@@ -107,16 +104,15 @@ public class Duke {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-            } else if (input.startsWith("deadline") & (currentIndex <= maxIndex)) {
+            } else if (input.startsWith("deadline") & (tasks.size() <= maxIndex)) {
                 try {
                     String[] temp = input.split("deadline | /by "); //separates deadline description and time
                     String description = temp[1];
                     String by = temp[2];
                     Deadline deadline = new Deadline(description, by);
                     tasks.add(deadline);
-                    currentIndex++;
                     Save.updateSaveFile(tasks);
-                    printTaskAddedStatement(currentIndex, deadline);
+                    printTaskAddedStatement(tasks, deadline);
                 } catch (IndexOutOfBoundsException exception) {
                     printDottedLine();
                     System.out.println("☹ OOPS!!! The description of a deadline cannot be empty");
@@ -124,7 +120,7 @@ public class Duke {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-            } else if (input.startsWith("event") & (currentIndex <= maxIndex)) {
+            } else if (input.startsWith("event") & (tasks.size() <= maxIndex)) {
                 try {
                     String[] temp = input.split(("event | /from | /to ")); //separates event description and times
                     String description = temp[1];
@@ -132,9 +128,8 @@ public class Duke {
                     String to = temp[3];
                     Event event = new Event(description, from, to);
                     tasks.add(event);
-                    currentIndex++;
                     Save.updateSaveFile(tasks);
-                    printTaskAddedStatement(currentIndex, event);
+                    printTaskAddedStatement(tasks, event);
                 } catch (IndexOutOfBoundsException exception) {
                     printDottedLine();
                     System.out.println("☹ OOPS!!! The description of a event cannot be empty");
@@ -143,7 +138,7 @@ public class Duke {
                     throw new RuntimeException(e);
                 }
             } else if ((input.startsWith("todo") | input.startsWith("deadline") | input.startsWith("event"))
-                    & (currentIndex > maxIndex)) {
+                    & (tasks.size() > maxIndex)) {
                 printDottedLine();
                 System.out.println("☹ OOPS!!! The tasks list is currently full");
                 printDottedLine();
@@ -194,26 +189,26 @@ public class Duke {
         printDottedLine();
     }
 
-    private static void printTaskAddedStatement(int currentIndex, Task task) {
+    private static void printTaskAddedStatement(ArrayList<Task> tasks, Task task) {
         printDottedLine();
         System.out.println("Got it. I've added this task:");
         System.out.println(" " + task);
-        if (currentIndex == 1) {
-            System.out.println("Now you have " + currentIndex + " task in the list.");
+        if (tasks.size() == 1) {
+            System.out.println("Now you have " + tasks.size() + " task in the list.");
         } else {
-            System.out.println("Now you have " + currentIndex + " tasks in the list.");
+            System.out.println("Now you have " + tasks.size() + " tasks in the list.");
         }
         printDottedLine();
     }
 
-    private static void printTaskDeletedStatement(int currentIndex, Task task) {
+    private static void printTaskDeletedStatement(ArrayList<Task> tasks, Task task) {
         printDottedLine();
         System.out.println("Noted. I've removed this task:");
         System.out.println(" " + task);
-        if (currentIndex == 1) {
-            System.out.println("Now you have " + currentIndex + " task in the list.");
+        if (tasks.size() == 2) {
+            System.out.println("Now you have " + (tasks.size() - 1) + " task in the list.");
         } else {
-            System.out.println("Now you have " + currentIndex + " tasks in the list.");
+            System.out.println("Now you have " + (tasks.size() - 1) + " tasks in the list.");
         }
         printDottedLine();
     }
