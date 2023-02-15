@@ -1,13 +1,18 @@
+import java.io.*;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-public class Duke {
-    public static void main(String[] args) throws DukeException {
+public class Duke implements Serializable {
+    private static ArrayList<Task>tasks = new ArrayList<>();
+
+    public static void main(String[] args) throws IOException {
         printWelcome();
+        //saveData();
+        start();
 
         String input;
         Scanner in = new Scanner(System.in);
-        ArrayList<Task> tasks = new ArrayList<>();
+       // ArrayList<Task> tasks = new ArrayList<>();
 
         boolean isRunning = true;
 
@@ -21,25 +26,25 @@ public class Duke {
                 isRunning = false;
                 break;
             case "list":
-                printAllTasks(tasks);
+                printAllTasks();
                 break;
             case "mark":
                 try {
-                    markTaskDone(tasks, command[1]);
+                    markTaskDone(command[1]);
                 } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println("Please indicate the task number to be marked.");
                 }
                 break;
             case "unmark":
                 try {
-                    markTaskNotDone(tasks, command[1]);
+                    markTaskNotDone(command[1]);
                 } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println("Please indicate the task number to be unmarked.");
                 }
                 break;
             case "todo":
                 try {
-                    addTodo(tasks, command[1]);
+                    addTodo(command[1]);
                 } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println("OOPS!!! The description of a todo cannot be empty.");
                     //throw new DukeException("OOPS!!! The description of a todo cannot be empty.");
@@ -47,7 +52,7 @@ public class Duke {
                 break;
             case "deadline":
                 try {
-                    addDeadline(tasks, command[1]);
+                    addDeadline(command[1]);
                 } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println("OOPS!!! The description of a deadline cannot be empty.");
                     //throw new DukeException("OOPS!!! The description of a todo cannot be empty.");
@@ -55,18 +60,73 @@ public class Duke {
                 break;
             case "event":
                 try {
-                    addEvent(tasks, command[1]);
+                    addEvent(command[1]);
                 } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println("OOPS!!! The description of an event cannot be empty.");
                 }
                 break;
             default:
-                System.out.println("I don't know what that means :(");
+                printInvalidMessage();
 
             }
         }
     }
-    public static void markTaskDone(ArrayList<Task> tasks, String command) /*throws DukeException*/ {
+
+    public static void saveData() throws IOException {
+        //System.out.println("Entered save data");
+        File file = new File("data/list.txt");
+
+        if (file.exists()) {
+            file.delete();
+        }
+
+        file.createNewFile();
+
+        FileWriter input = new FileWriter(file);
+
+        for (Task task : tasks) {
+            input.write(task.toString()); //issue
+           // input.write(task);
+        }
+
+        input.close();
+
+
+    }
+
+    public static void loadData() throws IOException {
+        File directory = new File("data");
+
+        if (!(directory.isDirectory() && directory.exists())) {
+            new File("data").mkdirs();
+        } else {
+            File file = new File("data/list.txt");
+
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+        }
+
+        Scanner line = new Scanner(directory);
+
+        while (line.hasNext()) {
+            //tasks.add(line.nextLine());
+        }
+
+    }
+
+
+
+
+    public static void start() {
+        try {
+            loadData();
+
+        } catch (IOException e) {
+           // System.out.println("Unable to load");
+        }
+    }
+    public static void markTaskDone(String command) /*throws DukeException*/ {
 
         try {
             int taskNumber = Integer.parseInt(command);
@@ -83,9 +143,15 @@ public class Duke {
             System.out.println("The task is already marked as done.");
         }
 
+        try {
+            saveData();
+        } catch (IOException e) {
+            System.out.println("Unable to save.");
+        }
+
     }
 
-    public static void markTaskNotDone(ArrayList<Task> tasks, String command)  {
+    public static void markTaskNotDone(String command)  {
 
         try {
             int taskNumber = Integer.parseInt(command);
@@ -102,8 +168,14 @@ public class Duke {
         } catch (DukeException e) {
             System.out.println("The task is already marked as not done.");
         }
+
+        try {
+            saveData();
+        } catch (IOException e) {
+            System.out.println("Unable to save.");
+        }
     }
-    public static void addTodo(ArrayList<Task> tasks, String description) {
+    public static void addTodo(String description) {
         printAddTask();
 
         Task task = new Todo(description);
@@ -111,9 +183,15 @@ public class Duke {
 
         printTask(task);
         printNoOfTasks(tasks.size());
+
+        try {
+            saveData();
+        } catch (IOException e) {
+            System.out.println("Unable to save.");
+        }
     }
 
-    public static void addDeadline(ArrayList<Task> tasks, String command) /*throws DukeException*/ {
+    public static void addDeadline(String command) /*throws DukeException*/ {
 
         if (command.contains("/by")) {
             String[] components = command.split(" /by");
@@ -130,11 +208,16 @@ public class Duke {
 
         } else {
             System.out.println("Invalid format. Remember to use '/by' to indicate the time.");
-            //throw new DukeException();
+        }
+
+        try {
+            saveData();
+        } catch (IOException e) {
+            System.out.println("Unable to save.");
         }
     }
 
-    public static void addEvent(ArrayList<Task> tasks, String command) {
+    public static void addEvent(String command) {
 
         if (command.matches("(.*)" + "/from" + "(.*)" + "/to" + "(.*)")) {
 
@@ -153,9 +236,15 @@ public class Duke {
             System.out.println("Incorrect format. Specify events in the format 'event A /from B to /C'");
         }
 
+        try {
+            saveData();
+        } catch (IOException e) {
+            System.out.println("Unable to save.");
+        }
+
 
     }
-    public static void printAllTasks(ArrayList<Task> tasks) {
+    public static void printAllTasks() {
         if (tasks.isEmpty()) {
             System.out.println("No tasks in the list.");
             return;
