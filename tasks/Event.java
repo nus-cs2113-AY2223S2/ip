@@ -34,6 +34,6 @@ public class Event extends Task {
 
     @Override
     public String getType() {
-        return "event";
+        return "E";
     }
 }

@@ -9,6 +9,8 @@ public class ThomasShelby {
     static Task[] taskManager = new Task[MAX_TASKS];
     static int taskCount = 0;
 
+    Data.loadData();
+
     private static void listTasks() {
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < taskCount; i++) {
@@ -77,7 +79,7 @@ public class ThomasShelby {
                 int whichTask = 0; // variable holding mark/unmark task num
                 switch (cmdSplit[0]) {
                 case "bye":
-                    // save data here
+                    Data.saveData();
                     System.out.println("Cheers.");
                     return;
                 case "list":

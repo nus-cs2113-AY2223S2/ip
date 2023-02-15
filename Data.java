@@ -21,23 +21,44 @@ public class Data {
         }
     }
 
-    public static void writeToFile(String textToAdd) throws IOException {
+    public static void saveData(String textToAdd) throws IOException {
         try {
-            FileWriter fw = new FileWriter("data/data.txt");
-            fw.write(textToAdd);
-            fw.close();
+            File obj = new File("data.txt");
+            if (obj.createNewFile()) {
+                System.out.println("File created: " + obj.getName());
+            } else {
+                System.out.println("File already exists mate.");
+            }
         } catch (IOException e) {
             System.out.println("An error occurred.");
-            e.printStackTrace();
+        }
+
+        try {
+            FileWriter myWriter = new FileWriter("data.txt");
+            for (Task task : ThomasShelby.tasks) {
+                if (task.getType() == "T") {
+                    myWriter.write(task.getType() + "|" + task.getStatusIcon() + "|" + task.description + '\n');
+                } else if (task.getType() == "D") {
+                    Deadline obj = (Deadline) task;
+                    myWriter.write(task.getType() + "|" + task.getStatusIcon() + "|" + task.description + "|" + obj.by + '\n');
+                } else if (task.getType() == "E") {
+                    Event obj = (Event) task;
+                    myWriter.write(task.getType() + "|" + task.getStatusIcon() + "|" + task.description + "|" + obj.start + "|" + obj.end + '\n');
+                }
+            }
+            myWriter.close();
+            System.out.println("Successful.");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
         }
     }
 
     public static void loadData() throws IOException {
         try {
-            File myObj = new File("filename.txt");
-            Scanner myReader = new Scanner(myObj);
-            while (myReader.hasNextLine()) {
-                String[] str = myReader.nextLine().split("|", 3);
+            File myData = new File("data.txt");
+            Scanner sc = new Scanner(myData);
+            while (sc.hasNextLine()) {
+                String[] str = sc.nextLine().split("|", 3);
                 switch (str[0]) {
                 case "T":
                     Todo obj = new Todo(str[2]);
@@ -46,6 +67,7 @@ public class Data {
                     } else {
                         obj.setIsDone(false);
                     }
+                    ThomasShelby.tasks.add(obj);
                 case "D":
                     Deadline obj = new Deadline(str[2]);
                     if (str[1].equals("[X]")) {
@@ -53,6 +75,7 @@ public class Data {
                     } else {
                         obj.setIsDone(false);
                     }
+                    ThomasShelby.tasks.add(obj);
                 case "E":
                     Event obj = new Deadline(str[2]);
                     if (str[1].equals("[X]")) {
@@ -60,8 +83,10 @@ public class Data {
                     } else {
                         obj.setIsDone(false);
                     }
+                    ThomasShelby.tasks.add(obj);
                 }
             }
+            sc.close();
         } catch (FileNotFoundExecption e) {
             System.out.println("No such file there eh!");
             createFile();
