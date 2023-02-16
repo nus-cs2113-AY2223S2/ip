@@ -1,3 +1,10 @@
+package duke;
+
+import duke.instructions.Deadline;
+import duke.instructions.Event;
+import duke.instructions.Task;
+import duke.instructions.Todo;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 

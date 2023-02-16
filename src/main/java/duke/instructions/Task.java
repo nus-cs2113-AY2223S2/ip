@@ -1,4 +1,4 @@
-package duke;
+package duke.instructions;
 
 import java.util.ArrayList;
 

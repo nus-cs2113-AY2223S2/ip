@@ -1,4 +1,4 @@
-package duke;
+package duke.instructions;
 
 public class Deadline extends Task{
     String input;
