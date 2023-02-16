@@ -15,8 +15,8 @@ public class TaskManager {
     }
 
     public static void deleteTask(int index) {
-        taskList.remove(index - 1);
         System.out.println("Noted. I've removed this task:\n" + taskList.get(index - 1).describeTask() + "\n");
+        taskList.remove(index - 1);
     }
 
     public static int getTaskCount() {
