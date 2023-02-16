@@ -59,7 +59,7 @@ class DukeManager {
             } catch (IncorrectParameterException k) {
                 System.out.println("OOPS!!! " + k.getMessage());
             }
-            System.out.println("");
+            System.out.println("___________________________________________");
             inputt = io.nextLine();
         }
     }
