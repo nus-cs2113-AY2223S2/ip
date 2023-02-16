@@ -1,17 +1,33 @@
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class Duke {
     final static int ZERO_INDEX = 0;
     final static int ONE_INDEX = 1;
     final static int OFFSET_ONE_FOR_ZERO_INDEXING = 1;
     final static int ERROR_NEGATIVE_ONE_RETURNED = -1;
+    final static String FILE_PATH = "data/duk.txt";
+    final static String DIRECTORY_PATH = "data";
     public static void main(String[] args) {
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
         String userInput;
         Scanner in = new Scanner(System.in);
         Task[] userTasks = new Task[ZERO_INDEX];
+        try {
+            userTasks = retrieveExistingTasksFromFile(FILE_PATH);
+            System.out.println("File Found and successfully read");
+            userCommandList(userTasks);
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        }
         Boolean isContinue = true;
         while (isContinue) {
             userInput = in.nextLine();
@@ -24,7 +40,7 @@ public class Duke {
                     userCommandList(userTasks);
                     break;
                 case "bye":
-                    userCommandBye();
+                    userCommandBye(userTasks);
                     isContinue = false;
                     break;
                 case "mark":
@@ -48,6 +64,9 @@ public class Duke {
                 }
             } catch (DukeException e) {
                 ;
+            } catch (IOException e) {
+                System.out.println("IO EXCEPTION!! CANNOT SAVE FILE ")
+                ; // nothing for now need to add
             }
         }
     }
@@ -129,8 +148,9 @@ public class Duke {
         }
     }
     
-    private static void userCommandBye() {
+    private static void userCommandBye(Task[] userTasks) throws IOException {
         System.out.println("Bye. Hope to see you again soon!");
+        saveData(DIRECTORY_PATH,FILE_PATH,userTasks);
     }
 
     private static void userCommandDefault() throws DukeException {
@@ -157,6 +177,7 @@ public class Duke {
             System.out.println("Task needs to have a name!!!");
             throw new DukeException();
         }
+        taskName = taskName.trim();
         return taskName;
     }
 
@@ -171,6 +192,7 @@ public class Duke {
             System.out.println("Task needs to have a name!!!");
             throw new DukeException();
         }
+        taskName = taskName.trim();
         return taskName;
     }
     private static String getEventFromDate(String taskString) throws DukeException {
@@ -220,8 +242,102 @@ public class Duke {
         }
         return userInput.substring(userCommand.length() + 1);
     }
-}
 
+    private static void saveExistingTasksToFile(Task[] userTasks) throws IOException {
+        String saveFilePath = FILE_PATH;
+        for (int i = 0; i < userTasks.length; i++) {
+            Task currentTask = userTasks[i];
+            Boolean isAppendMode = true;
+            if (i == 0) {
+                isAppendMode = false;
+            }
+            if (currentTask instanceof Todo) {
+                writeToFile(saveFilePath, "T , " + currentTask.getTaskName() + " , " + currentTask.getisDone() + System.lineSeparator(), isAppendMode);
+            } else if (currentTask instanceof Deadline) {
+                writeToFile(saveFilePath, "D , " + currentTask.getTaskName() + " , " + currentTask.getisDone() + " , " + ((Deadline) currentTask).deadline +
+                        System.lineSeparator(), isAppendMode);
+            } else { // current task is instance of event
+                writeToFile(saveFilePath, "E , " + currentTask.getTaskName() + " , " + currentTask.getisDone() + " , " + ((Event) currentTask).startTime +
+                        " , " + ((Event) currentTask).endTime + System.lineSeparator(), isAppendMode);
+            }
+        }
+    }
+
+    private static void writeToFile(String filePath, String textToAdd, Boolean isAppendMode) throws IOException {
+        FileWriter fileWriter = new FileWriter(filePath, isAppendMode);
+        fileWriter.write(textToAdd);
+        fileWriter.close();
+    }
+
+    private static Task[] retrieveExistingTasksFromFile(String filePath) throws FileNotFoundException {
+        File file = new File(filePath);
+        Scanner scanner = new Scanner(file);
+        Task[] userTasks = new Task[ZERO_INDEX];
+        while (scanner.hasNext()) {
+            String Line = scanner.nextLine();
+            String[] taskInformationWords = Line.split(",");
+            String taskType = taskInformationWords[ZERO_INDEX].trim();
+            if (taskType.equals("T")) {
+                String taskName = taskInformationWords[ONE_INDEX].trim();
+                Boolean isDone = false;
+                if (taskInformationWords[2].trim().equals("true")) {
+                    isDone = true;
+                }
+                Todo newTodoTask = new Todo(taskName);
+                newTodoTask.setisDone(isDone);
+                userTasks = addUserTask(userTasks, newTodoTask);
+            } else if (taskType.equals("D")) {
+                String taskName = taskInformationWords[ONE_INDEX].trim();
+                Boolean isDone = false;
+                if (taskInformationWords[2].trim().equals("true")) {
+                    isDone = true;
+                }
+                String taskDeadline = taskInformationWords[3].trim();
+                Deadline newDeadlineTask = new Deadline(taskName, taskDeadline);
+                newDeadlineTask.setisDone(isDone);
+                userTasks = addUserTask(userTasks, newDeadlineTask);
+            } else if (taskType.equals("E")) {
+                String taskName = taskInformationWords[ONE_INDEX].trim();
+                Boolean isDone = false;
+                if (taskInformationWords[2].trim().equals("true")) {
+                    isDone = true;
+                }
+                String taskEventStartTime = taskInformationWords[3].trim();
+                String taskEventEndTime = taskInformationWords[4].trim();
+                Event newEventTask = new Event(taskName, taskEventStartTime, taskEventEndTime);
+                newEventTask.setisDone(isDone);
+                userTasks = addUserTask(userTasks, newEventTask);
+            }
+
+        }
+        return userTasks;
+    }
+
+    private static boolean isSaveDirectoryPresent(String DIRECTORY_PATH) {
+        Path directoryPath = Paths.get(DIRECTORY_PATH);
+        if (Files.exists(directoryPath) && Files.isDirectory(directoryPath)) {
+            return true;
+        }
+        return false;
+    }
+
+    private static void createSaveFileDirectory(String DIRECTORY_PATH) {
+        File file = new File(DIRECTORY_PATH);
+        if (file.mkdir() == true) {
+            System.out.println("Directory created at " + DIRECTORY_PATH);
+
+        } else {
+            System.out.println("Failed to create directory");
+        }
+    }
+
+    private static void saveData(String DIRECTORY_PATH, String FILE_PATH, Task[] userTasks) throws IOException {
+        if (isSaveDirectoryPresent(DIRECTORY_PATH) == false) {
+            createSaveFileDirectory(DIRECTORY_PATH);
+        }
+        saveExistingTasksToFile(userTasks);
+    }
+}
 
 
 
