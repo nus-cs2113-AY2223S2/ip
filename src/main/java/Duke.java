@@ -73,6 +73,16 @@ public class Duke {
                 System.out.println("Incomplete description or date of the event\n" + "Please input in the following format: event <description> /from <when> /to <when>");
             }
             printDivider();
+        } else if (input.startsWith("delete")) {
+            printDivider();
+            try {
+                deleteTask(input);
+            } catch (NumberFormatException e) {
+                System.out.println("Task to be deleted is not a number.");
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Task number to be deleted is not within the list");
+            }
+            printDivider();
         } else {
             throw new CommandNotFoundException();
         }
@@ -108,7 +118,7 @@ public class Duke {
     public static void createTodo(String input) {
         tasks.add(new Todo(input.substring(4).trim()));
         System.out.println("Got it. I've added this tasks:\n" + tasks.get(tasks.size() - 1));
-        System.out.println("Now you have " + (tasks.size()) + " tasks in the list.");
+        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
     }
 
     public static void createDeadline(String input) throws InvalidInputException {
@@ -120,7 +130,7 @@ public class Duke {
         }
         tasks.add(new Deadline(description, deadline));
         System.out.println("Got it. I've added this tasks:\n" + tasks.get(tasks.size() - 1));
-        System.out.println("Now you have " + (tasks.size()) + " tasks in the list.");
+        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
     }
 
     public static void createEvent(String input) throws IllegalFormatException, InvalidInputException {
@@ -136,9 +146,15 @@ public class Duke {
         }
         tasks.add(new Event(description, eventStart, eventEnd));
         System.out.println("Got it. I've added this tasks:\n" + tasks.get(tasks.size() - 1));
-        System.out.println("Now you have " + (tasks.size()) + " tasks in the list.");
+        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
     }
 
+    public static void deleteTask(String input) {
+        int deleteIndex = Integer.parseInt(input.substring(6).trim());
+        System.out.println("Noted. I've removed this task:\n" + tasks.get(deleteIndex - 1));
+        tasks.remove(tasks.get(deleteIndex - 1));
+        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+    }
 
     public static void main(String[] args) {
         String LOGO = " ____        _        \n"
