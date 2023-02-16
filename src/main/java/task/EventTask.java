@@ -8,6 +8,10 @@ public class EventTask extends Task {
     // For serialization
     private static final long serialVersionUID = (1 << 5) + 2;
 
+    public static final String START_DELIMITER = "/from";
+    public static final String END_DELIMITER = "/to";
+    private static final String EVENT_REGEX = "(" + START_DELIMITER + "|" + END_DELIMITER + ")";
+
     protected String start;
     protected String end;
 
@@ -20,7 +24,7 @@ public class EventTask extends Task {
 
     public static EventTask createFromInput(String[] splitInput) throws InvalidSyntaxException {
         try {
-            String[] params = splitInput[1].split("(/from|/to)");
+            String[] params = splitInput[1].split(EVENT_REGEX);
             return new EventTask(params[0].trim(), params[1].trim(), params[2].trim());
         } catch (IndexOutOfBoundsException ex) {
             throw new InvalidSyntaxException(Command.EVENT.expectedSyntax);

@@ -8,6 +8,8 @@ public class DeadlineTask extends Task {
     // For serialization
     private static final long serialVersionUID = (1 << 5) + 1;
 
+    public static final String BY_DELIMITER = "/by";
+
     protected String deadline;
 
     public DeadlineTask(String description, String deadline) {
@@ -18,7 +20,7 @@ public class DeadlineTask extends Task {
 
     public static DeadlineTask createFromInput(String[] splitInput) throws InvalidSyntaxException {
         try {
-            String[] params = splitInput[1].split("/by");
+            String[] params = splitInput[1].split(BY_DELIMITER);
             return new DeadlineTask(params[0].trim(), params[1].trim());
         } catch (IndexOutOfBoundsException ex) {
             throw new InvalidSyntaxException(Command.DEADLINE.expectedSyntax);

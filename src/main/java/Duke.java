@@ -35,6 +35,16 @@ public class Duke {
         System.out.println("Now you have " + userTasks.size() + " task(s) in the list.");
     }
 
+    private static void printAddedUserTask() {
+        System.out.println("Got it. I've added this task:");
+        System.out.println(userTasks.get(userTasks.size() - 1));
+    }
+
+    private static void printRemovedUserTask(Task removedTask) {
+        System.out.println("Alrighty, I've removed this task:");
+        System.out.println(removedTask);
+    }
+
     private static void setUserTaskState(int index, boolean isDone) {
         userTasks.get(index).setIsDone(isDone);
 
@@ -59,8 +69,7 @@ public class Duke {
 
         userTasks.add(task);
 
-        System.out.println("Got it. I've added this task:");
-        System.out.println(userTasks.get(userTasks.size() - 1));
+        printAddedUserTask();
         printUserTasksCount();
 
         taskStorageManager.saveTasks(userTasks);
@@ -79,8 +88,7 @@ public class Duke {
             } else if (cmd.equals(Command.DELETE.label)) {
                 Task removedTask = userTasks.remove(index);
 
-                System.out.println("Alrighty, I've removed this task:");
-                System.out.println(removedTask);
+                printRemovedUserTask(removedTask);
                 printUserTasksCount();
             }
 
@@ -122,9 +130,18 @@ public class Duke {
         }
     }
 
-    public static void main(String[] args) {
+    private static void printGreeting() {
         printDivider();
         System.out.println("Hello! I'm Duke\nWhat can I do for you?");
+    }
+
+    private static void printGoodbye() {
+        printDivider();
+        System.out.println("Bye. Hope to see you again soon!");
+    }
+
+    public static void main(String[] args) {
+        printGreeting();
 
         // Initializations
         isRunning = true;
@@ -144,7 +161,6 @@ public class Duke {
             }
         }
 
-        printDivider();
-        System.out.println("Bye. Hope to see you again soon!");
+        printGoodbye();
     }
 }

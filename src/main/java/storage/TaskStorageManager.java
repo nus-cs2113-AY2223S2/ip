@@ -43,7 +43,8 @@ public class TaskStorageManager {
         }
 
         // Serialize and write to file
-        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(filePath.toString()))) {
+        try (FileOutputStream fileOutputStream = new FileOutputStream(filePath.toString());
+            ObjectOutputStream outputStream = new ObjectOutputStream(fileOutputStream)) {
             outputStream.writeObject(tasks);
         } catch (IOException ex) {
             System.out.println("Something went wrong! I couldn't save your tasks :(");
@@ -58,7 +59,8 @@ public class TaskStorageManager {
         }
 
         // Read from file and deserialize
-        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(filePath.toString()))) {
+        try (FileInputStream fileInputStream = new FileInputStream(filePath.toString());
+            ObjectInputStream inputStream = new ObjectInputStream(fileInputStream)) {
             return (ArrayList<Task>) inputStream.readObject();
         } catch (IOException | ClassNotFoundException ex) {
             System.out.println("Something went wrong! I couldn't read your tasks :(");
