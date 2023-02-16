@@ -3,6 +3,9 @@ import tasks.Deadline;
 import tasks.Event;
 import tasks.Task;
 import tasks.Todo;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -10,16 +13,24 @@ import java.util.Scanner;
 public class Rolex {
 
     static List<Task> task =  new ArrayList<>();
+
     public static void printLines(){
         System.out.println("--------------------------------------------------");
     }
 
-    public static void rolexGreetsUser(){
+    public static void rolexGreetsUser() throws IOException {
         System.out.println("Hello! I'm ROLEX");
         System.out.println("What can I do for you?\n");
+        File fileName = new File("rolex.txt");
+        if(fileName.exists()){
+            task = Task.fileAccess(fileName);
+        } else{
+            task = new ArrayList<>();
+        }
     }
 
-    public static void inputIsBye(){
+    public static void inputIsBye() throws IOException {
+        Task.fileWrite((ArrayList<Task>) task);
         printLines();
         System.out.println("Bye. Hope to see you again soon!\n");
         printLines();
@@ -120,7 +131,7 @@ public class Rolex {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         System.out.println("HELLO WORLD");
         rolexGreetsUser();
