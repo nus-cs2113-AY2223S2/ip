@@ -1,5 +1,6 @@
 package Arsdorint;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import Arsdorint.command.ArsdorintException;
@@ -27,6 +28,7 @@ public class Arsdorint {
             "____________________________________________________________";
     private static final String MESSAGE_DIVIDER_LIST =
             "____________________________LIST____________________________";
+    private static final String MESSAGE_DELETE = "Noted. I've removed this task:";
 
     private static final String ERROR_MESSAGE_BYE = " ";
     private static final String ERROR_MESSAGE_LIST = " ";
@@ -44,6 +46,8 @@ public class Arsdorint {
     private static final String ERROR_MESSAGE_EVENT =
             "=( OOPS!!! The description of an event cannot be empty.\n" +
             "Syntax for event\n\t>>> event <task> /<date of event";
+    private static final String ERROR_MESSAGE_DELETE = "Syntax for delete item \n\t>>> delete <item index number> \n" +
+            "Note: item index must exist in the current list";
     static Scanner input = new Scanner(System.in);
     static String logo = "    ___                         _                                 _\n"
             + "   / _ \\     _____   _____  ___| |   ___    _____   _   _____   _| |_\n"
@@ -51,7 +55,7 @@ public class Arsdorint {
             + " / _____ \\  | /    __\\ \\   | |_| | | |_| | | /     | | | | | |   | |\n"
             + "/_/     \\_\\ |_|   /____/   \\_____|  \\___/  |_|     |_| |_| |_|   |_|\n";
 
-    static Task[] toDoList = new Task[MAX_NUM_OF_TASKS];
+    static ArrayList<Task> toDoList = new ArrayList<>(MAX_NUM_OF_TASKS);
     static boolean isRunning = true;
     public static void exit() {
         isRunning = false;
@@ -66,7 +70,7 @@ public class Arsdorint {
         showToUser(MESSAGE_DIVIDER_LIST);
         for (int i = 0; i < Task.numOfTasks; i++) {
             System.out.print((i + 1) + ".");
-            toDoList[i].printTask();
+            toDoList.get(i).printTask();
         }
         showToUser(MESSAGE_DIVIDER);
     }
@@ -112,6 +116,9 @@ public class Arsdorint {
             case "event":
                 showToUser(MESSAGE_DIVIDER, ERROR_MESSAGE_EVENT, MESSAGE_DIVIDER);
                 break;
+            case "delete":
+                showToUser(MESSAGE_DIVIDER, ERROR_MESSAGE_DELETE, MESSAGE_DIVIDER);
+                break;
             default:
                 showToUser(MESSAGE_DIVIDER, errorMessage, MESSAGE_DIVIDER);
                 break;
@@ -121,60 +128,72 @@ public class Arsdorint {
     private static void addTaskMessage() {
         showToUser(MESSAGE_DIVIDER);
         System.out.println("\nGot it. I've added this task:\n" + "\t");
-        toDoList[Task.numOfTasks - 1].printTask();
+        toDoList.get(toDoList.size() - 1).printTask();
         System.out.println("\t" + "Now you have " + Integer.toString(Task.numOfTasks) + " tasks in the list.");
         showToUser(MESSAGE_DIVIDER);
     }
 
     public static void mark(String[] command) {
         try {
-            int idx = Integer.parseInt(command[1]);
+            int idx = Integer.parseInt(command[1]) - 1;
             if (command[0].equalsIgnoreCase("mark")) {
-                toDoList[idx - 1].isDone = true;
+                toDoList.get(idx).isDone = true;
                 System.out.println("Nice! I've marked this task as done: \n");
-            }
-            else toDoList[idx - 1].isDone = false;
+            } else toDoList.get(idx).isDone = false;
             list();
-        } catch (NumberFormatException err) {
-            commandErrorHandler("mark");
-        } catch (ArrayIndexOutOfBoundsException err) {
-            commandErrorHandler("mark");
-        } catch (NullPointerException err) {
+        } catch (NumberFormatException | IndexOutOfBoundsException | NullPointerException err) {
             commandErrorHandler("mark");
         }
     }
 
     public static void unmark(String[] command) {
         try {
-            int idx = Integer.parseInt(command[1]);
+            int idx = Integer.parseInt(command[1]) - 1;
             if (command[0].equalsIgnoreCase("unmark")) {
                 System.out.println("OK, I've marked this task as not done yet: \n");
-                toDoList[idx - 1].isDone = true;
+                toDoList.get(idx).isDone = true;
             }
             else {
-                toDoList[idx - 1].isDone = false;
+                toDoList.get(idx).isDone = false;
             }
             list();
-        } catch (NumberFormatException err) {
+        } catch (NumberFormatException | IndexOutOfBoundsException | NullPointerException err) {
             commandErrorHandler("unmark");
-        } catch (ArrayIndexOutOfBoundsException err) {
-            commandErrorHandler("unmark");
-        } catch (NullPointerException err) {
-            commandErrorHandler("unmark");
+        }
+    }
+
+
+    public static void removeTaskMessage(int idx) {
+        //showToUser(MESSAGE_DIVIDER);
+        System.out.println("\t");
+        toDoList.get(idx).printTask();
+        System.out.println("\t" + "Now you have " + --Task.numOfTasks + " tasks in the list.");
+        showToUser(MESSAGE_DIVIDER);
+    }
+
+    public static void delete(String[] command) {
+        try {
+            int idx = Integer.parseInt(command[1]) - 1;
+            if (command[0].equalsIgnoreCase("delete")) {
+                toDoList.get(idx).isDone = true;
+                System.out.println(MESSAGE_DELETE);
+            } else toDoList.get(idx).isDone = false;
+            removeTaskMessage(idx);
+            toDoList.remove(idx);
+        }
+        catch (NumberFormatException | IndexOutOfBoundsException | NullPointerException err) {
+            commandErrorHandler("delete");
         }
     }
 
     public static void addToDo(String[] taskDescription) {
         try {
             if (taskDescription[0].trim().isEmpty()) {
-                throw new ArsdorintException("Error: Empty Todo.");
+                throw new ArsdorintException("Error: Empty Todo Description.");
             }
-            toDoList[Task.numOfTasks] = new Todo(taskDescription[0]);
+            toDoList.add(new Todo(taskDescription[0]));
             addTaskMessage();
-        } catch (ArrayIndexOutOfBoundsException err) {
-            commandErrorHandler("todo");
-
-        } catch (ArsdorintException err) {
+        } catch (ArrayIndexOutOfBoundsException | ArsdorintException err) {
             commandErrorHandler("todo");
         }
     }
@@ -184,11 +203,9 @@ public class Arsdorint {
             if (taskDescription[0].trim().isEmpty()) {
                 throw new ArsdorintException("Error: Empty Deadline Description.");
             }
-            toDoList[Task.numOfTasks] = new Deadline(taskDescription[0], taskDescription[1].trim());
+            toDoList.add(new Deadline(taskDescription[0], taskDescription[1].trim()));
             addTaskMessage();
-        } catch (ArrayIndexOutOfBoundsException err) {
-            commandErrorHandler("deadline");
-        } catch (ArsdorintException err) {
+        } catch (ArrayIndexOutOfBoundsException | ArsdorintException err) {
             commandErrorHandler("deadline");
         }
     }
@@ -198,15 +215,12 @@ public class Arsdorint {
             if (taskDescription[0].trim().isEmpty()) {
                 throw new ArsdorintException("Error: Empty Event Description.");
             }
-            toDoList[Task.numOfTasks] = new Event(taskDescription[0], taskDescription[1].trim());
+            toDoList.add(new Event(taskDescription[0], taskDescription[1].trim()));
             addTaskMessage();
-        } catch (ArrayIndexOutOfBoundsException err) {
-            commandErrorHandler("event");
-        } catch (ArsdorintException err) {
+        } catch (ArrayIndexOutOfBoundsException | ArsdorintException err){
             commandErrorHandler("event");
         }
     }
-
 
     private static void exitMessage() {
         showToUser(MESSAGE_DIVIDER, EXIT_MESSAGE, MESSAGE_DIVIDER);
@@ -239,6 +253,9 @@ public class Arsdorint {
                 lowerCaseLine.equalsIgnoreCase("deadline") ||
                 lowerCaseLine.equalsIgnoreCase("event")) add(command);
             //add command when user don't type the instruction's TaskList.command
+        else if (lowerCaseLine.equalsIgnoreCase("delete")) {
+            delete(splitLine);
+        }
         else wrongCommandMessage();
     }
     public static void main(String[] args) {

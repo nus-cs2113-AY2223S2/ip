@@ -15,7 +15,7 @@ public class Task {
 
     //status is marked or not
     public String getStatus() {
-        return (isDone) ? "[X}" : "[ ]";
+        return (isDone) ? "[X]" : "[ ]";
     }
     public void printTask() {
         System.out.println(this.taskType +
