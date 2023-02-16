@@ -78,6 +78,6 @@ public class CommandParser {
                 }
             }
         }
-        throw new InvalidCommandException();
+        throw new InvalidCommandException(String.format("I'm sorry, but I don't know what [%s] that means :(", input));
     }
 }
