@@ -13,6 +13,11 @@ public class Deadline extends Task {
     public String printTask(){
         return "[D] " + super.printTask() + " (by: "+ by + ")";
     }
+
+    public String encode(){
+        String encodedString = "deadline" + "/" + super.encode() + "/" + by;  
+        return encodedString;
+    }
 }
 
 

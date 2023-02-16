@@ -1,9 +1,12 @@
 package duke;
 import java.util.Scanner;
+import file.FileManager;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import exceptions.InvalidAddTaskException;
 import exceptions.InvalidCommandException;
-import exceptions.TaskListOutofBoundsException;
+import exceptions.TaskListOutofBoundsException; 
 import tasks.Task;
 import userInterface.Print;
 import commands.Command;
@@ -13,6 +16,11 @@ public class Duke {
     public static ArrayList<Task> tasksList = new ArrayList<Task>();
 
     public static void main(String[] args){
+        try{
+            FileManager.readIntoList();
+        } catch (FileNotFoundException e){
+            System.out.println("File Not Found");
+        }
         Print.printWelcome();
         Scanner in = new Scanner(System.in);
         while (true){
@@ -24,6 +32,7 @@ public class Duke {
             switch (command){
             case "bye": 
                 Print.printGoodbye();
+                FileManager.saveFile();
                 return;
             case "list":
                 Command.displayTaskList();
@@ -58,7 +67,9 @@ public class Duke {
             System.out.println("Please input a valid command!");
         } catch (InvalidAddTaskException e){
             System.out.println("Please the input correct task parameters!");
+        } catch (IOException e){
+            System.out.println("File Write Error");
         }
-        }
+    }
     }
 }

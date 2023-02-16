@@ -10,4 +10,9 @@ public class Todo extends Task{
    public String printTask(){
        return "[T] " + super.printTask();
    }
+
+   public String encode(){
+       String encodedString = "todo" + "/" + super.encode();
+       return encodedString;
+   }
 }

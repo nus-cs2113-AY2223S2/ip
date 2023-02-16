@@ -25,4 +25,13 @@ public class Task {
     public String printTask(){
         return description;
     }
+
+    public String encode(){
+        String markStatus = "0";
+        if (this.isDone){
+            markStatus = "1";
+    }
+        String encodedString = markStatus + "/" + description;
+        return encodedString;
+    }
 }
