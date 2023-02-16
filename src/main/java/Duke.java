@@ -79,17 +79,34 @@ public class Duke {
                     } catch (IndexOutOfBoundsException e) {
                         throw new DukeException();
                     }
-                } else {
-                    throw new DukeException();
+                } else if (response.startsWith("delete")) {
+                    try {
+                        int tasknumber = Integer.parseInt(response.split(" ")[1]);
+                        if (tasknumber > 0 && tasknumber <= list.size()) {
+                            list.remove(tasknumber - 1).markAsDone();
+                            System.out.println("Deleting.....Done!!");
+                            System.out.println(list.get(tasknumber - 1).toString());
+                            continue;
+                        } else {
+                            System.out.println("I cannot find which task you have selected. Please choose another one");
+                            continue;
+                        }
+                    } catch (IndexOutOfBoundsException e) {
+                        throw new DukeException();
+                    }
+
+
+                }else{
+                        throw new DukeException();
+                    }
+                    int size = list.size();
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println(list.get(size - 1).toString());
+                    System.out.println("Now you have " + size + " tasks in the list");
+                }  catch(DukeException e){
+                    System.out.println("Illegal Command");
                 }
-                int size = list.size();
-                System.out.println("Got it. I've added this task:");
-                System.out.println(list.get(size - 1).toString());
-                System.out.println("Now you have " + size + " tasks in the list");
-            }  catch (DukeException e) {
-                System.out.println("Illegal Command");
             }
         }
-        }
-}
+    }
 
