@@ -14,7 +14,7 @@ public class Todo extends Task {
     @Override
     public String saveTaskString() {
         String saveString = new String();
-        saveString += "T" + COMMA + isDone + COMMA + description;
+        saveString += "T" + COMMA_TASK_SEPARATOR + isDone + COMMA_TASK_SEPARATOR + description;
         return saveString;
     }
 }

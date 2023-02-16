@@ -5,7 +5,7 @@ public abstract class Task {
     protected boolean isDone;
 
     protected String taskString;
-    public static final String COMMA = " , ";
+    public static final String COMMA_TASK_SEPARATOR = " , ";
 
     public Task(String description) {
         this.description = description;

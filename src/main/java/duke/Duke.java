@@ -62,7 +62,7 @@ public class Duke {
         }
     }
 
-    private static void deleteTask(String command) throws IllegalCommandException, IndexOutOfBoundsException {
+    private static void deleteTask(String command) throws IllegalCommandException {
         String[] words = command.trim().split(" ");
         if (isInvalidString(words)) {
             throw new IllegalCommandException();

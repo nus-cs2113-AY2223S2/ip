@@ -18,7 +18,8 @@ public class Deadline extends Task {
     @Override
     public String saveTaskString() {
         String saveString = new String();
-        saveString += "D" + COMMA + isDone + COMMA + description + COMMA + deadline;
+        saveString += "D" + COMMA_TASK_SEPARATOR + isDone + COMMA_TASK_SEPARATOR + description + COMMA_TASK_SEPARATOR
+                + deadline;
         return saveString;
     }
 }

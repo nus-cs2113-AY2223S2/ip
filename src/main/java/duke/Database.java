@@ -14,10 +14,19 @@ import java.util.Scanner;
 
 public class Database {
 
+    public static final int COMMAND_INDEX = 0;
+    public static final int TASK_DESCRIPTION_INDEX = 2;
+    public static final int TASK_DEADLINE_INDEX = 3;
+    public static final int TASK_FROM_INDEX = 3;
+    public static final int TASK_TO_INDEX = 4;
+    public static final int TASK_MARK_INDEX = 1;
+    public static final String DIRECTORY_NAME = "data";
+    public static final String FILE_PATH = "data/duke.txt";
+
     protected ArrayList<Task> tasks;
 
     protected ArrayList<String> databaseString;
-    public static final String FILE_PATH = "data/duke.txt";
+
 
     public Database() {
         this.tasks = new ArrayList<>();
@@ -57,7 +66,7 @@ public class Database {
             }
             dataConversion();
         } else {
-            File directory = new File("data");
+            File directory = new File(DIRECTORY_NAME);
             directory.mkdirs();
             savedData.createNewFile();
         }
@@ -65,31 +74,34 @@ public class Database {
 
     private void dataConversion() {
         for (String data : databaseString) {
-            String[] information = data.split(" , ");
+            String[] SplitTaskConstituents = data.split(Task.COMMA_TASK_SEPARATOR);
             Task task = null;
             boolean isCorrupted = false;
-            switch (information[0]) {
+            switch (SplitTaskConstituents[COMMAND_INDEX]) {
             case "T":
-                task = new Todo(information[2]);
+                task = new Todo(SplitTaskConstituents[TASK_DESCRIPTION_INDEX]);
                 break;
             case "D":
-                task = new Deadline(information[2], information[3]);
+                task = new Deadline(SplitTaskConstituents[TASK_DESCRIPTION_INDEX],
+                        SplitTaskConstituents[TASK_DEADLINE_INDEX]);
                 break;
             case "E":
-                task = new Event(information[2], information[3], information[4]);
+                task = new Event(SplitTaskConstituents[TASK_DESCRIPTION_INDEX], SplitTaskConstituents[TASK_FROM_INDEX],
+                        SplitTaskConstituents[TASK_TO_INDEX]);
                 break;
             default:
                 isCorrupted = true;
+                break;
             }
-            updateMarkings(information, task, isCorrupted);
+            updateMarkings(SplitTaskConstituents, task, !isCorrupted);
         }
     }
 
-    private void updateMarkings(String[] information, Task task, boolean isCorrupted) {
-        if (!isCorrupted) {
-            if (information[1].equals("true")) {
+    private void updateMarkings(String[] information, Task task, boolean isNotCorrupted) {
+        if (isNotCorrupted) {
+            if (information[TASK_MARK_INDEX].equals("true")) {
                 task.setDone("mark");
-            } else if (information[1].equals("false")) {
+            } else if (information[TASK_MARK_INDEX].equals("false")) {
                 task.setDone("unmark");
             }
             tasks.add(task);

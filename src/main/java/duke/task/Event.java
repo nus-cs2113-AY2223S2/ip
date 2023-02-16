@@ -20,7 +20,8 @@ public class Event extends Task {
     @Override
     public String saveTaskString() {
         String saveString = new String();
-        saveString += "E" + COMMA + isDone + COMMA + description + COMMA + eventFrom + COMMA + eventTo;
+        saveString += "E" + COMMA_TASK_SEPARATOR + isDone + COMMA_TASK_SEPARATOR + description + COMMA_TASK_SEPARATOR
+                + eventFrom + COMMA_TASK_SEPARATOR + eventTo;
         return saveString;
     }
 }
