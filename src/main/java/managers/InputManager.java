@@ -1,10 +1,10 @@
 package managers;
 
 import enums.DialogueTypes;
-import tasks.Deadlines;
-import tasks.Events;
+import tasks.Deadline;
+import tasks.Event;
 import tasks.Task;
-import tasks.ToDos;
+import tasks.ToDo;
 import errors.InvalidDeadlineException;
 import errors.InvalidEventException;
 import errors.TaskNumberOutOfRangeException;
@@ -12,7 +12,7 @@ import errors.TaskNumberOutOfRangeException;
 import java.util.ArrayList;
 
 public class InputManager {
-    private static final ArrayList<Task> todoList = SaveManager.initialiseData();
+    private static final ArrayList<Task> tasksList = SaveManager.initialiseData();
     public static final int TODO_BEGIN_INDEX = 5;
     public static final int DEADLINE_BEGIN_INDEX = 9;
     public static final int EVENT_BEGIN_INDEX = 6;
@@ -27,7 +27,7 @@ public class InputManager {
             String[] words = line.split(" ");
             try {
                 processComplicatedCommands(line, words);
-                SaveManager.saveCurrentState(todoList);
+                SaveManager.saveCurrentState(tasksList);
             } catch (NumberFormatException e) {
                 OutputDialogueManager.printErrorDialogue(DialogueTypes.INVALID_TASK_NUMBER);
                 listAllItems();
@@ -49,33 +49,26 @@ public class InputManager {
             throws InvalidDeadlineException, InvalidEventException, TaskNumberOutOfRangeException {
         switch (words[0]) {
         case "mark":
-            markTaskAsState(words, true);
+            changeStateOfTask(words, true);
             break;
-
         case "unmark":
-            markTaskAsState(words, false);
+            changeStateOfTask(words, false);
             break;
-
         case "todo":
             addNewTodoTask(line);
             break;
-
         case "deadline":
             addNewDeadlineTask(line);
             break;
-
         case "event":
             addNewEventTask(line);
             break;
-
         case "help":
             displayHelpMenu();
             break;
-
         case "delete":
             deleteItem(words);
             break;
-
         default:
             processErrorInput();
             break;
@@ -92,49 +85,49 @@ public class InputManager {
     }
 
     private static void addNewEventTask(String line) throws InvalidEventException {
-        Task newTask = new Events(line.substring(EVENT_BEGIN_INDEX));
-        todoList.add(newTask);
+        Task newTask = new Event(line.substring(EVENT_BEGIN_INDEX));
+        tasksList.add(newTask);
         OutputDialogueManager.printInteraction(DialogueTypes.ADD_TASK);
         newTask.printTaskWithoutId();
     }
 
     private static void addNewDeadlineTask(String line) throws InvalidDeadlineException {
-        Task newTask = new Deadlines(line.substring(DEADLINE_BEGIN_INDEX));
-        todoList.add(newTask);
+        Task newTask = new Deadline(line.substring(DEADLINE_BEGIN_INDEX));
+        tasksList.add(newTask);
         OutputDialogueManager.printInteraction(DialogueTypes.ADD_TASK);
         newTask.printTaskWithoutId();
     }
 
     private static void addNewTodoTask(String line) {
-        Task newTask = new ToDos(line.substring(TODO_BEGIN_INDEX));
-        todoList.add(newTask);
+        Task newTask = new ToDo(line.substring(TODO_BEGIN_INDEX));
+        tasksList.add(newTask);
         OutputDialogueManager.printInteraction(DialogueTypes.ADD_TASK);
         newTask.printTaskWithoutId();
     }
 
-    private static void markTaskAsState(String[] words, boolean state)
-            throws TaskNumberOutOfRangeException {
+    private static void changeStateOfTask(String[] words, boolean isDone)
+            throws TaskNumberOutOfRangeException, NumberFormatException {
         int indexToMark = Integer.parseInt(words[1]) - 1;
         if (indexToMark >= Task.getItemCount() || indexToMark < 0) {
             throw new TaskNumberOutOfRangeException();
         }
-        todoList.get(indexToMark).markAsState(state);
-        if (state) {
+        tasksList.get(indexToMark).markAsState(isDone);
+        if (isDone) {
             OutputDialogueManager.printInteraction(DialogueTypes.MARK_TASK);
         } else {
             OutputDialogueManager.printInteraction(DialogueTypes.UNMARK_TASK);
         }
         System.out.print(indexToMark + 1);
-        todoList.get(indexToMark).printTask();
+        tasksList.get(indexToMark).printTask();
     }
-    private static void listAllItems(){
+    private static void listAllItems() {
         if (Task.getItemCount() < 1) {
             OutputDialogueManager.printErrorDialogue(DialogueTypes.NO_TASK_IN_LIST);
             return;
         }
         OutputDialogueManager.printInteraction(DialogueTypes.LIST_TASKS);
         int taskCount = 1;
-        for (Task item: todoList) {
+        for (Task item: tasksList) {
             System.out.print(taskCount);
             item.printTask();
             taskCount++;
@@ -146,9 +139,9 @@ public class InputManager {
         if (indexToDelete >= Task.getItemCount() || indexToDelete < 0) {
             throw new TaskNumberOutOfRangeException();
         }
-        Task toBeDeleted = todoList.get(indexToDelete);
+        Task toBeDeleted = tasksList.get(indexToDelete);
         OutputDialogueManager.printInteraction(DialogueTypes.DELETE_TASK);
-        todoList.remove(indexToDelete);
+        tasksList.remove(indexToDelete);
         Task.decreaseItemCount();
         toBeDeleted.printTaskWithoutId();
     }

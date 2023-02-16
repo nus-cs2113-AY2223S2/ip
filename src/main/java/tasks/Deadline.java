@@ -3,14 +3,18 @@ import enums.DialogueTypes;
 import errors.InvalidDeadlineException;
 import managers.OutputDialogueManager;
 
-public class Deadlines extends Task{
+public class Deadline extends Task {
     public static final int DEADLINE_DIVIDER_LENGTH = 4;
+    public static final String DEADLINE_SEPARATOR = "/by";
+    public static final String DONE_DEADLINE_INDICATOR = "[D] [X]";
+    public static final String NOT_DONE_DEADLINE_INDICATOR = "[D] [ ]";
+    public static final String DEADLINE_CLASS = "D";
     private String itemName;
     private String deadline;
 
-    public Deadlines(String itemName) throws InvalidDeadlineException {
+    public Deadline(String itemName) throws InvalidDeadlineException {
         super(itemName);
-        int indexOfDivider = itemName.indexOf("/by");
+        int indexOfDivider = itemName.indexOf(DEADLINE_SEPARATOR);
         if (indexOfDivider == -1 ||
                 itemName.substring(indexOfDivider + DEADLINE_DIVIDER_LENGTH).isEmpty()) {
             throw new InvalidDeadlineException();
@@ -24,9 +28,9 @@ public class Deadlines extends Task{
     public void printTask() {
         String status;
         if (super.isDone()) {
-            status = "[D] [X]";
+            status = DONE_DEADLINE_INDICATOR;
         } else {
-            status = "[D] [ ]";
+            status = NOT_DONE_DEADLINE_INDICATOR;
         }
         System.out.println( "." + status + " " + this.itemName + " (by: " + deadline + ")");
     }
@@ -40,7 +44,7 @@ public class Deadlines extends Task{
 
     @Override
     public String getClassType() {
-        return "D";
+        return DEADLINE_CLASS;
     }
 
     @Override

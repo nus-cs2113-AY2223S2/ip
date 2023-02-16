@@ -2,10 +2,10 @@ package managers;
 
 import errors.InvalidDeadlineException;
 import errors.InvalidEventException;
-import tasks.Deadlines;
-import tasks.Events;
+import tasks.Deadline;
+import tasks.Event;
 import tasks.Task;
-import tasks.ToDos;
+import tasks.ToDo;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,14 +14,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static tasks.Deadline.DEADLINE_CLASS;
+import static tasks.Event.EVENT_CLASS;
+import static tasks.ToDo.TODO_CLASS;
+
 public class SaveManager {
 
     public static final String PATHNAME = "data.txt";
+    public static final int SAVED_DATA_BEGIN_INDEX = 3;
 
-    //Storing format:
-    //T0 name
-    //D0 name /by time
-    //E0 name /from time /to time
+    // Storing format:
+    // T0 name
+    // D0 name /by time
+    // E0 name /from time /to time
     public static ArrayList<Task> initialiseData() {
         File f = new File(PATHNAME);
         ArrayList<Task> storedTasks = new ArrayList<>();
@@ -47,31 +52,21 @@ public class SaveManager {
         return storedTasks;
     }
 
-    public static void saveCurrentState (ArrayList<Task> todoList) {
+    public static void saveCurrentState (ArrayList<Task> tasksList) {
         try {
             FileWriter fileWriter = new FileWriter(PATHNAME, true);
             FileWriter fileClearer = new FileWriter(PATHNAME);
             fileClearer.write("");
             fileClearer.close();
             String taskState = "";
-            for (Task item: todoList) {
+            for (Task taskItem: tasksList) {
                 String toWrite = "";
-                if (item.isDone()) {
+                if (taskItem.isDone()) {
                     taskState = "1";
                 } else {
                     taskState = "0";
                 }
-                switch (item.getClassType()) {
-                case "T":
-                    toWrite = "T" + taskState + item.getToStore();
-                    break;
-                case "D" :
-                    toWrite = "D" + taskState + item.getToStore();
-                    break;
-                case "E":
-                    toWrite = "E" + taskState + item.getToStore();
-                    break;
-                }
+                toWrite = taskItem.getClassType() + taskState + taskItem.getToStore();
                 fileWriter.write(toWrite + System.lineSeparator());
             }
             fileWriter.close();
@@ -81,18 +76,18 @@ public class SaveManager {
     }
     private static void processStoredTask(ArrayList<Task> storedTasks, String line) throws InvalidDeadlineException, InvalidEventException {
         switch (line.substring(0,1)) {
-        case "T":
-            ToDos toDo = new ToDos(line.substring(3));
+        case TODO_CLASS:
+            ToDo toDo = new ToDo(line.substring(SAVED_DATA_BEGIN_INDEX));
             setMarkState(line, toDo);
             storedTasks.add(toDo);
             break;
-        case "D":
-            Deadlines deadline = new Deadlines(line.substring(3));
+        case DEADLINE_CLASS:
+            Deadline deadline = new Deadline(line.substring(SAVED_DATA_BEGIN_INDEX));
             setMarkState(line, deadline);
             storedTasks.add(deadline);
             break;
-        case "E":
-            Events event = new Events(line.substring(3));
+        case EVENT_CLASS:
+            Event event = new Event(line.substring(SAVED_DATA_BEGIN_INDEX));
             setMarkState(line, event);
             storedTasks.add(event);
             break;

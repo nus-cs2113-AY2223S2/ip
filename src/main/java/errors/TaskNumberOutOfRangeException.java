@@ -1,4 +1,4 @@
 package errors;
 
-public class TaskNumberOutOfRangeException extends Exception{
+public class TaskNumberOutOfRangeException extends Exception {
 }

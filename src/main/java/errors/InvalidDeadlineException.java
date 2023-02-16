@@ -1,4 +1,4 @@
 package errors;
 
-public class InvalidDeadlineException extends Exception{
+public class InvalidDeadlineException extends Exception {
 }

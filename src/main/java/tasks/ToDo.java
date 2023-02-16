@@ -2,8 +2,13 @@ package tasks;
 
 import enums.DialogueTypes;
 import managers.OutputDialogueManager;
-public class ToDos extends Task{
-    public ToDos(String itemName) {
+public class ToDo extends Task {
+
+    public static final String TODO_CLASS = "T";
+    public static final String DONE_TODO_INDICATOR = "[T] [X]";
+    public static final String NOT_DONE_TODO_INDICATOR = "[T] [ ]";
+
+    public ToDo(String itemName) {
         super(itemName);
         incrementItemCount();
     }
@@ -12,9 +17,9 @@ public class ToDos extends Task{
     public void printTask() {
         String status;
         if (super.isDone()) {
-            status = "[T] [X]";
+            status = DONE_TODO_INDICATOR;
         } else {
-            status = "[T] [ ]";
+            status = NOT_DONE_TODO_INDICATOR;
         }
         System.out.println("." + status + " " + this.getItemName());
     }
@@ -28,7 +33,7 @@ public class ToDos extends Task{
 
     @Override
     public String getClassType () {
-        return "T";
+        return TODO_CLASS;
     }
 
     @Override

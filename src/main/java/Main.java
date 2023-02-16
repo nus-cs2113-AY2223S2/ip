@@ -15,8 +15,10 @@ public class Main {
         String line;
         Scanner in = new Scanner(System.in);
         line = in.nextLine();
-        while (!InputManager.processInput(line)) {
+        boolean isDone = InputManager.processInput(line);
+        while (!isDone) {
             line = in.nextLine();
+            isDone = InputManager.processInput(line);
         }
     }
 }
