@@ -3,6 +3,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.io.File;
+import java.util.Scanner;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 
 public class Task {
     public void appendToFile(String filePath, String textToAppend) throws IOException {
@@ -23,7 +27,44 @@ public class Task {
     public static ArrayList<TaskType> tasks = new ArrayList<TaskType>();
     
     public Task() {
-
+    }
+    public void readFile(String filePath) throws FileNotFoundException{
+        try {
+                FileReader fr = new FileReader(filePath);
+                String saved_text = "";
+            
+            int i;
+            while ((i = fr.read()) != -1) {
+                System.out.println(saved_text);
+                if ((char) i == '\n') {
+                    String[] strArray = saved_text.split(" \\| ");
+                    if (strArray[0].equals("TODO")) {
+                        tasks.add(TaskType.TODO);
+                    }
+                    else if (strArray[0].equals("DEADLINE")) {
+                        tasks.add(TaskType.DEADLINE);
+                    }
+                    else if (strArray[0].equals("EVENT")) {
+                        tasks.add(TaskType.EVENT);
+                    }
+                    if (strArray[1].equals("1")) {
+                        marked.add(true);
+                    }
+                    else if (strArray[1].equals("0")) {
+                        marked.add(false);
+                    }
+                    items.add(strArray[2]);
+                    saved_text = "";
+                }
+                else {
+                    saved_text += (char) i;
+                }
+            } 
+            fr.close();
+        }
+        catch (IOException | NumberFormatException e) {
+            System.out.println("Something went wrong: " + e.getMessage());
+        }
     }
 
     public void setDone(String input) {

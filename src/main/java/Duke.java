@@ -22,6 +22,12 @@ public class Duke {
         String input;
 
         Task task = new Task();
+        try {
+            task.readFile("data/duke.txt");
+        }
+        catch(Exception e) {
+            System.out.println("Something went wrong: " + e.getMessage());
+        }
         
         while((input = in.nextLine()) != "") {
             try {
