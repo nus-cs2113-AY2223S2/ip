@@ -5,10 +5,11 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.Todo;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
-    protected static Task[] list = new Task[100];
+    protected static ArrayList<Task> list = new ArrayList<Task>();
     public static final String OPENING_MSG = "Hello! I'm Dukebot\n\tWhat can I do for you?";
     public static final String CLOSING_MSG = "Goodbye! Hope to see you again soon ^^!";
     public static final String HORIZONTAL = "---------------------------------";
@@ -90,9 +91,9 @@ public class Duke {
             int descriptionIndex = line.indexOf("event");
             String description = line.substring(descriptionIndex + 6, fromIndex);
 
-            list[item] = new Event(description, fromDate, toDate);
-
-            displayTaskAddedMessage(list[item]);
+            Event newEvent = new Event(description, fromDate, toDate);
+            list.add(newEvent);
+            displayTaskAddedMessage(newEvent);
             displayNumItemsInList(item);
             System.out.println(HORIZONTAL);
 
@@ -113,9 +114,10 @@ public class Duke {
             int descriptionIndex = line.indexOf("deadline");
             String description = line.substring(descriptionIndex + 9, byIndex);
 
-            list[item] = new Deadline(description, byDate);
+            Deadline newDeadline = new Deadline(description, byDate);
+            list.add(newDeadline);
 
-            displayTaskAddedMessage(list[item]);
+            displayTaskAddedMessage(newDeadline);
             displayNumItemsInList(item);
             System.out.println(HORIZONTAL);
 
@@ -133,9 +135,11 @@ public class Duke {
         try {
             int descriptionIndex = line.indexOf("todo");
             String description = line.substring(descriptionIndex + 5);
-            list[item] = new Todo(description);
 
-            displayTaskAddedMessage(list[item]);
+            Todo newTodo = new Todo(description);
+            list.add(newTodo);
+
+            displayTaskAddedMessage(newTodo);
             displayNumItemsInList(item);
             System.out.println(HORIZONTAL);
 
@@ -154,7 +158,7 @@ public class Duke {
     public static void displayList(int item) {
         System.out.println(HORIZONTAL + "\n\tHere are the tasks in your list:");
         for (int i = 0; i < item; i++) {
-            System.out.println("\n\t" + (i + 1) + ". " + list[i].getDescription() + "\n");
+            System.out.println("\n\t" + (i + 1) + ". " + list.get(i).getDescription() + "\n");
         }
         System.out.println(HORIZONTAL);
     }
@@ -168,12 +172,12 @@ public class Duke {
             // Check if list item number exists in list
             if (numToMark >= 0 && numToMark < item) {
                 // Check if it is already done/not done in list
-                if (list[numToMark].getIsDone() != status) {
+                if (list.get(numToMark).getIsDone() != status) {
                     // Update IsDone status
-                    list[numToMark].setIsDone(status);
+                    list.get(numToMark).setIsDone(status);
 
                     System.out.println(HORIZONTAL + "\n\t" + msg);
-                    System.out.println("\n\t\t" + "[" + list[numToMark].getStatusIcon() + "] " + list[numToMark].getDescription() + "\n");
+                    System.out.println("\n\t\t" + list.get(numToMark).getDescription() + "\n");
                     System.out.println(HORIZONTAL);
                 } else {
                     System.out.println("No change, task was already as is");
