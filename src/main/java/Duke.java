@@ -18,7 +18,7 @@ public class Duke {
     }
     public static void printList(int taskCounter) {
         System.out.println("Your current tasks are as follows: ");
-        for (int index = 0; index < taskCounter; index += 1) {
+        for (int index = 0; index < tasks.size(); index += 1) {
             System.out.println((index + 1) + "." + tasks.get(index));
         }
     }
@@ -59,13 +59,13 @@ public class Duke {
 
         int taskCounter = 0;
 
+
         while (!input.equals("bye")) {
+
 
             String[] inputs = input.split(" ");
             String command  = inputs[0];
-            if (inputs.length < 2) {
-                throw new EmptyInputException();
-            }
+
             printLine();
 
             switch (command) {
@@ -74,12 +74,14 @@ public class Duke {
                 break;
             case "mark":
                 int taskIndex = Integer.parseInt(inputs[1]);
+                if (taskIndex > tasks.size() || taskIndex <= 0) throw  new IllegalInputException();
                 tasks.get(taskIndex-1).markAsDone();
                 System.out.println("I have marked this task as done");
                 printList(taskCounter);
                 break;
             case "unmark":
                 taskIndex = Integer.parseInt(inputs[1]);
+                if (taskIndex > tasks.size() || taskIndex <= 0) throw  new IllegalInputException();
                 tasks.get(taskIndex-1).markAsNotDone();
                 System.out.println("I have unmarked this task");
                 printList(taskCounter);
@@ -105,6 +107,7 @@ public class Duke {
                         deadlineInput += " ";
                     }
                 }
+                if (!isDeadline) throw new IllegalInputException();
                 Deadline deadline = new Deadline(deadlineInput, deadlineDeadline);
                 tasks.add(deadline); taskCounter += 1;
                 printAddDeadline(deadline, taskCounter);
@@ -135,12 +138,12 @@ public class Duke {
                         eventInput += " ";
                     }
                 }
+                if (! (isTo && isFrom)) throw new IllegalInputException();
                 Event event = new Event(eventInput,eventFrom, eventTo);
                 tasks.add(event); taskCounter += 1;
                 printAddEvent(event, taskCounter);
                 break;
             case "delete":
-
                 System.out.print("I have removed");
                 printList(taskCounter);
                 break;
