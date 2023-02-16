@@ -1,6 +1,66 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
+
+    public static ArrayList<Task>tasks = new ArrayList<>();
+    public static void printExit() {
+        System.out.println("Bye. Hope to see you again soon!");
+    }
+
+    public static void printDivider() {
+        String DIVIDER = "____________________________________________________";
+        System.out.println(DIVIDER);
+    }
+
+    public static void markTask(String input) {
+        int taskNumber = Integer.parseInt(input.substring(5)) - 1;
+        tasks.get(taskNumber).markDone();
+    }
+
+    public static void unmarkTask(String input) {
+        int taskNumber = Integer.parseInt(input.substring(7)) - 1;
+        tasks.get(taskNumber).umarkDone();
+    }
+
+    public static void printList() {
+        printDivider();
+        System.out.println("Here are the tasks in your list:");
+        int count = 1;
+        for (Task output : tasks) {
+            System.out.println(count + "." + output);
+            count++;
+        }
+        printDivider();
+    }
+
+    public static void createTodo(String input) {
+        tasks.add(new Todo(input.substring(5)));
+        printDivider();
+        System.out.println("Got it. I've added this tasks:\n" + tasks.get(tasks.size() - 1));
+        System.out.println("Now you have " + (tasks.size() - 1) + " tasks in the list.");
+        printDivider();
+    }
+
+    public static void createDeadline(String input) {
+        int byIndex = input.indexOf("/by");
+        tasks.add(new Deadline(input.substring(9, byIndex), input.substring(byIndex + 4)));
+        printDivider();
+        System.out.println("Got it. I've added this tasks:\n" + tasks.get(tasks.size() - 1));
+        System.out.println("Now you have " + (tasks.size() - 1) + " tasks in the list.");
+        printDivider();
+    }
+
+    public static void createEvent(String input) {
+        int fromIndex = input.indexOf("/from");
+        int toIndex = input.indexOf("/to");
+        tasks.add(new Event(input.substring(6, fromIndex), input.substring(fromIndex + 6, toIndex), input.substring(toIndex + 4)));
+        printDivider();
+        System.out.println("Got it. I've added this tasks:\n" + tasks.get(tasks.size() - 1));
+        System.out.println("Now you have " + (tasks.size() - 1) + " tasks in the list.");
+        printDivider();
+    }
+
     public static void main(String[] args) {
         String LOGO = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -8,56 +68,34 @@ public class Duke {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
 
-        String DIVIDER = "____________________________________________________\n";
         System.out.println("Hello from\n" + LOGO);
-        System.out.print(DIVIDER + "Hello! I'm Duke\n" + "What can I do for you?\n" + DIVIDER);
-        Task[] tasks = new Task[100];
-        int taskCount = 0;
-        int errorCount = 0;
+        printDivider();
+        System.out.println("Hello! I'm Duke\n" + "What can I do for you?\n");
+        printDivider();
+
         while(true) {
             Scanner userInput = new Scanner(System.in);
             String input = userInput.nextLine();
             if (input.equals("bye")) {
-                System.out.print(DIVIDER + "Bye. Hope to see you again soon!\n" + DIVIDER);
+                printExit();
+                printDivider();
                 break;
             } else if (input.startsWith("mark")) {
-                int mark = Integer.parseInt(input.substring(5));
-                tasks[mark - 1].markDone();
-                System.out.print(DIVIDER);
+                markTask(input);
+                printDivider();
             } else if (input.startsWith("unmark")) {
-                int unmark = Integer.parseInt(input.substring(7));
-                tasks[unmark - 1].umarkDone();
-                System.out.print(DIVIDER);
+                unmarkTask(input);
+                printDivider();
             } else if (input.equals("list")) {
-                System.out.print(DIVIDER + "Here are the tasks in your list:\n");
-                for (int i = 0; i < taskCount; i++) {
-                    System.out.println(i + 1 + "." + tasks[i]);
-                }
-                System.out.print(DIVIDER);
+                printList();
             } else if (input.startsWith("todo")) {
-                tasks[taskCount] = new Todo(input.substring(5));
-                taskCount++;
-                System.out.println(DIVIDER + "Got it. I've added this tasks:\n" + tasks[taskCount - 1]);
-                System.out.print("Now you have " + taskCount + " tasks in the list.\n" + DIVIDER);
+                createTodo(input);
             } else if (input.startsWith("deadline")) {
-                int byIndex = input.indexOf("/by");
-                tasks[taskCount] = new Deadline(input.substring(9, byIndex), input.substring(byIndex + 4));
-                taskCount++;
-                System.out.println(DIVIDER + "Got it. I've added this tasks:\n" + tasks[taskCount - 1]);
-                System.out.print("Now you have " + taskCount + " tasks in the list.\n" + DIVIDER);
+                createDeadline(input);
             } else if (input.startsWith("event")) {
-                int fromIndex = input.indexOf("/from");
-                int toIndex = input.indexOf("/to");
-                tasks[taskCount] = new Event(input.substring(6, fromIndex), input.substring(fromIndex + 6, toIndex), input.substring(toIndex + 4));
-                taskCount++;
-                System.out.println(DIVIDER + "Got it. I've added this tasks:\n" + tasks[taskCount - 1]);
-                System.out.print("Now you have " + taskCount + " tasks in the list.\n" + DIVIDER);
-            } else if (errorCount == 10) {
-                System.out.print(DIVIDER +"Maybe you can try in another language. Goodbye!\n" + DIVIDER);
-                break;
+                createEvent(input);
             } else {
-                System.out.print(DIVIDER + "Sorry, could you please repeat what you just said\n" + DIVIDER);
-                errorCount++;
+                System.out.print("Sorry, could you please repeat what you just said\n" );
             }
         }
     }
