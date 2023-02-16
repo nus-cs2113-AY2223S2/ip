@@ -78,6 +78,18 @@ public class Duke {
                     System.out.println("Ok, I've marked this task as not done yet:");
                     System.out.println(tasks.get(toUnmark));
                     System.out.println(line);
+                } else if (splitIntoArgs[0].equals("delete")) {
+                    if (splitIntoArgs.length < 2) {
+                        throw new InsufficientParametersException();
+                    }
+                    int toDelete = Integer.parseInt(splitIntoArgs[1]) - 1;
+                    System.out.println(line);
+                    System.out.println("Noted. I've removed this task:");
+                    System.out.println(tasks.get(toDelete));
+                    System.out.println(line);
+                    // remove after printing so that we can still retrieve info about the deleted
+                    // task
+                    tasks.remove(toDelete);
                 } else if (splitIntoArgs[0].equals("todo")) {
                     if (splitIntoArgs.length < 2) {
                         throw new InsufficientParametersException();
