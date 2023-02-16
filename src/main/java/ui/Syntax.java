@@ -8,6 +8,7 @@ public enum Syntax {
 
     EXIT("bye"),
     LIST("list"),
+    FIND("find", "find <description to be found>"),
     MARK("mark", "mark <task #>"),
     UNMARK("unmark", "unmark <task #>"),
     DELETE("delete", "delete <task #>"),

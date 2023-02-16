@@ -48,11 +48,11 @@ public class Duke {
             try {
                 Command cmd = parser.parse(userInput);
                 cmd.execute(tasks, storage, ui);
-            } catch (UnrecognizedInputException x) {
+            } catch (UnrecognizedInputException ex) {
                 ui.printUnrecognizedCommand();
             } catch (InvalidSyntaxException ex) {
                 ui.printInvalidSyntax(ex);
-            } catch (IndexOutOfBoundsException e) {
+            } catch (IndexOutOfBoundsException ex) {
                 ui.printUnknownTask();
             }
         }

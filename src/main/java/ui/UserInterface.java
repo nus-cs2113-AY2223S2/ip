@@ -29,8 +29,14 @@ public class UserInterface {
      */
 
     public void printTasks(TaskList tasks) {
-        for (int index = 1; index <= tasks.getTaskCount(); index++) {
-            System.out.println(index + ". " + tasks.getTask(index - 1));
+        int taskCount = tasks.getTaskCount();
+
+        if (taskCount == 0) {
+            System.out.println("No tasks!");
+        } else {
+            for (int index = 1; index <= taskCount; index++) {
+                System.out.println(index + ". " + tasks.getTask(index - 1));
+            }
         }
     }
 
