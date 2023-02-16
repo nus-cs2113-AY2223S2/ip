@@ -3,6 +3,7 @@ package tusky;
 import tusky.io.KeyNotFoundException;
 import tusky.io.Message;
 import tusky.io.Parser;
+import tusky.repository.FileManager;
 
 import tusky.tasks.ToDo;
 import tusky.tasks.Task;
@@ -11,7 +12,10 @@ import tusky.tasks.Event;
 import tusky.tasks.Deadline;
 import tusky.tasks.EmptyDescriptionException;
 
+import java.nio.file.NoSuchFileException;
 import java.util.Scanner;
+
+import java.io.FileNotFoundException;
 
 public class Tusky {
 
@@ -29,6 +33,7 @@ public class Tusky {
             printf("   %s\n", task.getDetailedString());
             printf(Message.TASK_COUNT.toString(), taskCount);
             println(Message.LINE.toString());
+            FileManager.writeFile(tasks);
         } else {
             println(Message.LINE.toString());
             println(Message.ERR_MAX_TASKS_EXCEEDED.toString());
@@ -53,6 +58,7 @@ public class Tusky {
             tasks[index].setDone(true);
             println(Message.TASK_MARKED.toString());
             printf("   %s\n", tasks[index].getDetailedString());
+            FileManager.writeFile(tasks);
         }
         println(Message.LINE.toString());
     }
@@ -65,6 +71,7 @@ public class Tusky {
             tasks[index].setDone(false);
             println(Message.TASK_UNMARKED.toString());
             printf("   %s\n", tasks[index].getDetailedString());
+            FileManager.writeFile(tasks);
         }
         println(Message.LINE.toString());
     }
@@ -102,7 +109,7 @@ public class Tusky {
                     break;
                 case "todo":
                     try{
-                        addTask(new ToDo(parser.getBody()));
+                        addTask(new ToDo("false",parser.getBody()));
                     } catch (EmptyDescriptionException e){
                         println(Message.LINE.toString());
                         printf(Message.ERR_EMPTY_TASK_DESCRIPTION.toString(), TaskType.TODO);
@@ -111,7 +118,7 @@ public class Tusky {
                     break;
                 case "event":
                     try{
-                        addTask(new Event(parser.getBody(), parser.get("from"), parser.get("to")));
+                        addTask(new Event("false",parser.getBody(), parser.get("from"), parser.get("to")));
                     } catch (EmptyDescriptionException e){
                         println(Message.LINE.toString());
                         printf(Message.ERR_EMPTY_TASK_DESCRIPTION.toString(), TaskType.EVENT);
@@ -120,7 +127,7 @@ public class Tusky {
                     break;
                 case "deadline":
                     try{
-                        addTask(new Deadline(parser.getBody(), parser.get("by")));
+                        addTask(new Deadline("false",parser.getBody(), parser.get("by")));
                     } catch (EmptyDescriptionException e){
                         println(Message.LINE.toString());
                         printf(Message.ERR_EMPTY_TASK_DESCRIPTION.toString(), TaskType.DEADLINE);
@@ -164,6 +171,28 @@ public class Tusky {
 
         println(Message.LINE.toString());
         println(Message.WELCOME.toString());
+
+        try{
+            tasks = FileManager.readFile();
+            if(tasks != null){
+                for(Task task: tasks){
+                    if(task == null){
+                        break;
+                    }
+                    taskCount++;
+                }
+                println(Message.FILE_LOADED.toString());
+            } else {
+                println(Message.FILE_CREATED.toString());
+                tasks = new Task[MAX_TASKS];
+                FileManager.writeFile(tasks);
+            }
+        } catch (FileNotFoundException | NoSuchFileException e){
+            println(Message.FILE_CREATED.toString());
+            tasks = new Task[MAX_TASKS];
+            FileManager.writeFile(tasks);
+
+        }
         println(Message.LINE.toString());
 
         beginInputLoop();

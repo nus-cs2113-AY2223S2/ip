@@ -2,13 +2,17 @@ package tusky.io;
 
 public enum Message {
     LINE("____________________________________________________________"),
-    WELCOME(" Hello! I'm Tusky the Walrus\n     What can I do for you?"),
+    WELCOME(" Hello! I'm Tusky the Walrus"),
     GOODBYE(" Bye. Hope to see you again soon!"),
     TASK_ADDED(" Got it. I've added this task:\n"),
     TASK_COUNT(" Now you have %d tasks in the list.\n"),
     TASK_LIST(" Here are the tasks in your list:"),
     TASK_MARKED(" Nice! I've marked this task as done:"),
     TASK_UNMARKED(" OK, I've marked this task as not done yet:"),
+
+    // File related
+    FILE_LOADED(" Welcome back, I have found your previous tasks"),
+    FILE_CREATED(" A new customer, what can I do for you?"),
 
     // Errors
     ERR_MAX_TASKS_EXCEEDED(" Too many tasks!"),

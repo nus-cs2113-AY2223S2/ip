@@ -8,11 +8,11 @@ public class Task {
     protected boolean isDone;
     protected String description;
 
-    public Task(String description) throws EmptyDescriptionException{
+    public Task(String isDone, String description) throws EmptyDescriptionException{
         if(description.isBlank()){
             throw new EmptyDescriptionException("description of task is empty");
         }
-        this.isDone = false;
+        this.isDone = Boolean.parseBoolean(isDone);
         this.description = description;
     }
 
