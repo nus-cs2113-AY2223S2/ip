@@ -1,6 +1,6 @@
 package duke.task;
 
-import duke.output.Symbols;
+import duke.ui.Symbols;
 
 public class Deadline extends Task {
     // tasks that need to be done before a specific date/time
@@ -20,14 +20,13 @@ public class Deadline extends Task {
 
     public String getSavedData() {
         String taskStatus;
-        if (getStatusIcon().equals(Symbols.PROGRAM_MARK.SYMBOL)) {
-            taskStatus = Symbols.DATA_MARK.SYMBOL;
+        if (getStatusIcon().equals(Symbols.PROGRAM_MARK)) {
+            taskStatus = Symbols.DATA_MARK;
         } else {
-            taskStatus = Symbols.DATA_UNMARK.SYMBOL;
+            taskStatus = Symbols.DATA_UNMARK;
         }
-        String fullDetails = String.join(Symbols.DATA_DELIMITER.SYMBOL,
-                Symbols.DEADLINE.SYMBOL, taskStatus, taskName, deadline);
-        return fullDetails;
+        return String.join(Symbols.DATA_DELIMITER, Symbols.DEADLINE, taskStatus, taskName, deadline);
+        // returns full details of task
     }
 
 }

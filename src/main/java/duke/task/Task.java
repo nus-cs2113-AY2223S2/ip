@@ -1,6 +1,6 @@
 package duke.task;
 
-import duke.output.Symbols;
+import duke.ui.Symbols;
 
 public abstract class Task {
     public String taskName;
@@ -22,9 +22,9 @@ public abstract class Task {
 
     public String getStatusIcon() {
         if (isDone) {
-            return Symbols.PROGRAM_MARK.SYMBOL;
+            return Symbols.PROGRAM_MARK;
         }
-        return Symbols.PROGRAM_UNMARK.SYMBOL;
+        return Symbols.PROGRAM_UNMARK;
     }
 
     public String getFullTaskDetail() {
