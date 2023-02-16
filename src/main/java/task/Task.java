@@ -2,7 +2,7 @@ package task;
 
 import exceptions.InvalidSyntaxException;
 import java.io.Serializable;
-import ui.Command;
+import ui.Syntax;
 
 public class Task implements Serializable {
 
@@ -21,7 +21,7 @@ public class Task implements Serializable {
         try {
             return new Task(splitInput[1]);
         } catch (IndexOutOfBoundsException ex) {
-            throw new InvalidSyntaxException(Command.TODO.expectedSyntax);
+            throw new InvalidSyntaxException(Syntax.TODO.expectedSyntax);
         }
     }
 

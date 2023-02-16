@@ -1,7 +1,7 @@
 package task;
 
 import exceptions.InvalidSyntaxException;
-import ui.Command;
+import ui.Syntax;
 
 public class DeadlineTask extends Task {
 
@@ -23,7 +23,7 @@ public class DeadlineTask extends Task {
             String[] params = splitInput[1].split(BY_DELIMITER);
             return new DeadlineTask(params[0].trim(), params[1].trim());
         } catch (IndexOutOfBoundsException ex) {
-            throw new InvalidSyntaxException(Command.DEADLINE.expectedSyntax);
+            throw new InvalidSyntaxException(Syntax.DEADLINE.expectedSyntax);
         }
     }
 
