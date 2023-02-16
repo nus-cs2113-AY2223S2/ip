@@ -24,6 +24,7 @@ public class Duke {
     final static int TASK_DEADLINE_INDEX = 3;
     final static int TASK_EVENT_START_TIME_INDEX = 3;
     final static int TASK_EVENT_END_TIME_INDEX = 4;
+    final static int EMPTY_FILE = 0;
 
     public static void main(String[] args) {
         System.out.println("Hello! I'm Duke");
@@ -293,6 +294,9 @@ public class Duke {
 
     private static void saveExistingTasksToFile(ArrayList<Task> userTasks) throws IOException {
         String saveFilePath = FILE_PATH;
+        if (userTasks.size() == EMPTY_FILE) { // fixs the bug that the last task in the file cannot be deleted
+            writeToFile(saveFilePath, "", false);
+        }
         for (int i = 0; i < userTasks.size(); i++) {
             Task currentTask = userTasks.get(i);
             Boolean isAppendMode = true;
