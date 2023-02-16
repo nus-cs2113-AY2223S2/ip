@@ -5,9 +5,25 @@ public class Duke {
     private static Scanner in = new Scanner(System.in);
     private static final Task[] tasks = new Task[100];
 
-    public static void command(String line) {
+    public static void whatToDo(String line) {
+        try {
+            command(line);
+        }
+        catch (InvalidCommand error) {
+            System.out.println("Try using one of following commands: todo, deadline, event.");
+            line = in.nextLine();
+            whatToDo(line);
+        }
+        catch (IndexOutOfBoundsException error) {
+            System.out.println("Oops! You need to provide a description/time for your task");
+            line = in.nextLine();
+            whatToDo(line);
+        }
+    }
+
+    public static void command(String line) throws InvalidCommand {
         String exitCommand = "bye";
-        String toDo = "list";
+        String taskList = "list";
         String checkAsDone = "mark";
         int numberOfTasks = 0;
 
@@ -15,7 +31,7 @@ public class Duke {
         String command = tokens[0];
 
         while (!command.equals(exitCommand)) {
-            if (tokens[0].equals(toDo)) {
+            if (tokens[0].equals(taskList)) {
                 System.out.println("Here are your list of tasks to complete!");
                 for (int i = 0; i < numberOfTasks; ++i) {
                     System.out.format("%d. ", (i + 1));
@@ -68,8 +84,8 @@ public class Duke {
                     ++numberOfTasks;
                     break;
                 default:
-                    System.out.println("Sorry! There seems to be an error:( Please try again.");
-                    break;
+                    System.out.println("Sorry! I couldn't understand your command:( Please try again.");
+                    throw new InvalidCommand();
                 }
                 System.out.println("added: " + line);
                 line = in.nextLine();
@@ -91,6 +107,6 @@ public class Duke {
 
         String line;
         line = in.nextLine();
-        command(line);
+        whatToDo(line);
     }
 }
