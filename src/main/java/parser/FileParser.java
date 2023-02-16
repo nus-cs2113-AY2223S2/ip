@@ -5,7 +5,6 @@ import model.storage.JsonStorage;
 import controller.TaskController;
 
 import java.io.*;
-import java.util.Scanner;
 
 public class FileParser {
 
