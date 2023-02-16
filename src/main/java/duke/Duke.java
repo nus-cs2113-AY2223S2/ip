@@ -8,12 +8,11 @@ import duke.keycommand.ToDo;
 import java.util.List;
 import java.util.Scanner;
 import java.util.ArrayList;
-// still accept "todo "
-// already handle all the invalid input, A-exceptions may be used later
+
 public class Duke {
 
     private static final String BYE_MESSAGE = "Bye. Hope to see you again soon!";
-    private static final String MARK_INSTRUCTION = "Please give your command in the following format";
+    private static final String INSTRUCTION = "Please give your command in the following format";
     private static final String HorizontalLine = "____________________________________________________________";
     private static final String HELLO_IM_DUKE = "Hello! I'm Duke";
     private static final String KEYWORD_TO_SEE_THE_INSTRUCTIONS = "Please type 'help' if you want to see the instructions";
@@ -30,8 +29,10 @@ public class Duke {
     private static final String DEADLINE_FORMAT = "Format: deadline {your task} /by {deadline date}\n";
     private static final String EVENT_USAGE = "event: to add an event task in your list";
     private static final String EVENT_FORMAT = "Format: event {your task} /from {begin date} /to {end date}\n";
+    private static final String DELETE_USAGE = "delete: to delete a task";
+    private static final String DELETE_FORMAT = "Format: delete {Number}\n";
     private static final String ADDING_TASK = "Got it. I've added this task:";
-    private static final String BIG_MARK_NUMBER = "The task number is bigger than the number of tasks";
+    private static final String BIG_NUMBER = "The task number is bigger than the number of tasks";
     private static final String FINISH_UNMARKING_MESSAGE = "Ok! I've marked this task as not done yet:";
     private static final String FINISH_MARKING_MESSAGE = "Nice! I've marked this task as done:";
     private static final String ASKING_MESSAGE = "What can I do for you?";
@@ -43,9 +44,10 @@ public class Duke {
     public static final String DEADLINE_INVALID_INPUT = INVALID_INPUT + DEADLINE_FORMAT;
     public static final String EVENT_INVALID_INPUT = INVALID_INPUT + EVENT_FORMAT;
     public static final ArrayList<String> KEYWORDS = new ArrayList<>(
-            List.of("todo","deadline","event","list","bye","mark","unmark","help")
+            List.of("todo","deadline","event","list","bye","mark","unmark","help","delete")
     );
     public static final String MEANINGLESS_SENTENCE_AFTER_KEYWORD = "OPPS!!! The sentence after keyword has no meaning";
+    public static final String REMOVE_MESSAGE = "Noted. I've removed this task:";
 
     public static void main(String[] args) {
         showWelcomeMessage();
@@ -70,6 +72,13 @@ public class Duke {
                 showHelpMessage();
             } else if (userInput.equals("list")) {
                 printItems(tasks);
+            } else if (keyword.equals("delete")) {
+                if (userInput.split(" ").length != 2) {
+                    System.out.println(INSTRUCTION + "\n"
+                            + keyword + ": Number");
+                } else {
+                    deleteTask(tasks, separatedKeyWordAndContent);
+                }
             } else if (keyword.equals("todo")) {
                 if (doesIndexOutOfBoundsOccur(separatedKeyWordAndContent,1, EMPTY_TODO_DESCRIPTION)) {
                     continue;
@@ -95,7 +104,7 @@ public class Duke {
                 addEventTask(separatedKeyWordAndContent[1], tasks);
             } else if (keyword.equals("mark") || keyword.equals("unmark")) {
                 if (userInput.split(" ").length != 2) {
-                    System.out.println(MARK_INSTRUCTION + "\n"
+                    System.out.println(INSTRUCTION + "\n"
                             + keyword + ": Number");
                 } else {
                     changeTaskStatus(tasks, separatedKeyWordAndContent);
@@ -142,6 +151,8 @@ public class Duke {
         System.out.println(DEADLINE_FORMAT);
         System.out.println(EVENT_USAGE);
         System.out.println(EVENT_FORMAT);
+        System.out.println(DELETE_USAGE);
+        System.out.println(DELETE_FORMAT);
     }
 
     private static boolean doesIndexOutOfBoundsOccur(String[] stringArray, int index, String outputMessage) {
@@ -216,7 +227,7 @@ public class Duke {
         try {
             int lastWordInInteger = Integer.parseInt(seperatedWords[1]);
             if (lastWordInInteger > tasks.size()) {
-                System.out.println(BIG_MARK_NUMBER);
+                System.out.println(BIG_NUMBER);
             } else {
                 boolean doesCommandContainsUnmark = seperatedWords[0].equals("unmark");
                 if (doesCommandContainsUnmark) {
@@ -230,10 +241,34 @@ public class Duke {
                         + " " + tasks.get(lastWordInInteger - 1).getContent());
             }
         } catch (Exception error) {
-            System.out.println(MARK_INSTRUCTION + "\n" + seperatedWords[0] + ": Number");
+            System.out.println(INSTRUCTION + "\n" + seperatedWords[0] + ": Number");
         }
     }
-
+    
+    private static void deleteTask(ArrayList<Task> tasks, String[] seperatedWords) {
+        try {
+            int taskNumber = Integer.parseInt(seperatedWords[1]);
+            if (taskNumber > tasks.size()) {
+                System.out.println(BIG_NUMBER);
+            } else {
+                Task item = tasks.get(taskNumber - 1);
+                System.out.println(REMOVE_MESSAGE);
+                if (item.getClassSymbol().equals("[T]")) {
+                    System.out.println(item.getClassSymbol() + item.getMarkingStatus() + " " + item.getContent());
+                } else if (item.getClassSymbol().equals("[D]")) {
+                    System.out.println(item.getClassSymbol() + item.getMarkingStatus() + " " + item.getContent()
+                            + "(by: " + item.getDate() + ")");
+                } else if (item.getClassSymbol().equals("[E]")) {
+                    System.out.println(item.getClassSymbol() + item.getMarkingStatus() + " " + item.getContent()
+                            + "(from: " + item.getBeginDate() + " to: " + item.getEndDate() + ")");
+                }
+                tasks.remove(taskNumber - 1);
+                System.out.println("Now you have " + tasks.size() + " in the list");
+            }
+        } catch (Exception error) {
+            System.out.println(INSTRUCTION + "\n" + seperatedWords[0] + ": Number");
+        }
+    }
     private static void printItems(ArrayList<Task> container) {
         for (int i = 0; i < container.size(); ++i) {
             Task item = container.get(i);
