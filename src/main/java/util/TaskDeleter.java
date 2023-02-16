@@ -11,6 +11,9 @@ public class TaskDeleter extends ErrorMessages{
     public void handleDeleteAction(ArrayList<Task> listOfTasks, String input){
         String[] deleteActions = (input.split(BLANK, 2));
         try {
+            if (listOfTasks.size() <= 0){
+                throw new DeleteTaskError(provideEmptyListText());
+            }
             if (deleteActions.length != 2){
                 throw new DeleteTaskError(provideNoNumberText());
             }
