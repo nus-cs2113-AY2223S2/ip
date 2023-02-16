@@ -19,7 +19,7 @@ public class FileParser {
      */
     protected static void createFileIfNotExist() {
         try {
-            File db = new File("mongo.txt");
+            File db = new File("index.html");
             db.createNewFile();
         } catch (IOException e) {
             System.out.println("An IO Exception occured");
