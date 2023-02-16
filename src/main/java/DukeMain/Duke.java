@@ -105,6 +105,7 @@ public class Duke {
             } else if(input.startsWith("delete")) {
                 System.out.println("i have deleted the task:" + todoItems.get(Integer.parseInt(input.substring(7))-1).item);
                 todoItems.remove(Integer.parseInt(input.substring(7))-1);
+                DukeFile.WriteToFile(todoItems);
             }else {
                 System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
             }
