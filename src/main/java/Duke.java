@@ -39,6 +39,9 @@ public class Duke {
 			"\t  You have entered an invalid command.\n" +
 			"\t  Please type \"help\" to see the available list of commands and the relevant formats\n" +
 			LINE_PARTITION;
+	private static final String EMPRTY_LIST_ERROR_MSG = LINE_PARTITION +
+			"\t  Your list is empty. Please add items first." + ERROR_FACE + "\n" +
+			LINE_PARTITION;
 
 
 	//HELP MESSAGE
@@ -70,10 +73,10 @@ public class Duke {
 			String line;
 			while (reader.hasNext()) {
 				line = reader.nextLine();
-				String[] parts = line.split(" ", 3);
+				String[] parts = line.split(" ", 2);
 				String taskType = parts[0];
-				boolean status = parts[1].equals("[X]");
-				String taskDesc = parts[2];
+				boolean status = parts[1].charAt(1) == 'X';
+				String taskDesc = parts[1].substring(4);
 				switch (taskType) {
 				case ("[D]"):
 					deadlineAdd(taskDesc);
@@ -159,17 +162,24 @@ public class Duke {
 	}
 
 	private static void saveTaskListToFile() {
-		try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(FILE_PATH))) {
-			outputStream.writeObject(taskList);
+		try {
+			writeToFile();
 		} catch (IOException e) {
-			System.out.println("Error writing to file: " + FILE_PATH);
+			System.out.println("Something went wrong: " + e.getMessage());
 		}
+	}
+
+	private static void writeToFile() throws IOException {
+		FileWriter fw = new FileWriter(FILE_PATH);
+		for (int i = 0; i < taskList.size(); i++) {
+			fw.write(taskList.get(i) + "\n");
+		}
+		fw.close();
 	}
 
 	private static void executeMark(String args, boolean hasCompleted) {
 		try {
 			markInitiate(args, hasCompleted);
-
 		} catch (NumberFormatException e) {
 			// non-convertable / no input
 			invalidMarkArgs();
@@ -257,9 +267,7 @@ public class Duke {
 	}
 
 	private static void emptyListError() {
-		System.out.print(LINE_PARTITION +
-				"\t  Your list is empty. Please add items before marking them." + ERROR_FACE + "\n" +
-				LINE_PARTITION);
+		System.out.print(EMPRTY_LIST_ERROR_MSG);
 	}
 
 	private static void cmdFormatError() {
