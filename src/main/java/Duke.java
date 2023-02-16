@@ -11,6 +11,10 @@ public class Duke {
 
     private static File f = new File("data/duke.txt");
 
+    public enum CommandType {
+        TODO, DEADLINE, EVENT, LIST, BYE, MARK, UNMARK, DELETE
+    }
+
     public static void printAddTask(Task t) {
         //print to show Task added to list
         System.out.println(line);
@@ -70,19 +74,6 @@ public class Duke {
         inputList.remove(x-1);
     }
 
-    public static void printList(ArrayList<Task> input) {
-        System.out.println(line + "\nHere are the tasks in your list: ");
-        input.trimToSize();
-        for (int i = 0; i < input.size(); i++) {
-            if (input.get(i) == null) {
-                break;
-            } else {
-                System.out.println((i+1) + ". " + input.get(i));
-            }
-        }
-        System.out.println(line);
-    }
-
     public static void getCommand() {
         Scanner in = new Scanner(System.in);
         String userInput = in.nextLine();
@@ -130,6 +121,19 @@ public class Duke {
         in.close();
     }
 
+    public static void printList(ArrayList<Task> input) {
+        System.out.println(line + "\nHere are the tasks in your list: ");
+        input.trimToSize();
+        for (int i = 0; i < input.size(); i++) {
+            if (input.get(i) == null) {
+                break;
+            } else {
+                System.out.println((i+1) + ". " + input.get(i));
+            }
+        }
+        System.out.println(line);
+    }
+
     public static void greet() {
         System.out.println(line);
         System.out.println("Hello! i'm Duke");
@@ -151,11 +155,11 @@ public class Duke {
 //                + "| |_| | |_| |   <  __/\n"
 //                + "|____/ \\__,_|_|\\_\\___|\n";
 //        System.out.println("Hello from\n" + logo);
-        try {
-            Scanner s = new Scanner(f);
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found");
-        }
+//        try {
+//            Scanner s = new Scanner(f);
+//        } catch (FileNotFoundException e) {
+//            System.out.println("File not found");
+//        }
         greet();
         getCommand();
         bye();
