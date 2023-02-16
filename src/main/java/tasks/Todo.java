@@ -7,7 +7,7 @@ public class Todo extends Task {
     }
 
     public String toString() {
-        return taskSign + super.toString();
+        return super.toString();
     }
 
 }//tasks.todo class ends here

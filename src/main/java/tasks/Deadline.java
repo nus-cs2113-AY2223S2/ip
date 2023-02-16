@@ -4,12 +4,12 @@ public class Deadline extends Task {
 
     protected String by;
     public Deadline(String taskName, String by) {
-        super(taskName, false, "[D]");
+        super(taskName+" (by:" + by + ")", false, "[D]");
         this.by = by;
     }
 
     public String toString(){
-        return taskSign + super.toString() + " (by:" + by + ")";
+        return super.toString();
     }
 
 } // tasks.Deadline class ends here

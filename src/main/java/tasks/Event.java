@@ -6,13 +6,13 @@ public class Event extends Task {
     protected String endTime;
 
     public Event(String taskName, String startTime, String endTime){
-        super(taskName, false, "[E]");
+        super(taskName+ " (from: " + startTime + " to: " + endTime + ")", false, "[E]");
         this.startTime = startTime;
         this.endTime = endTime;
     }
 
     public String toString(){
-        return taskSign + super.toString()+ " (from: " + startTime + " to: " + endTime + ")";
+        return super.toString();
     }
 
 } // tasks.Event class ends here
