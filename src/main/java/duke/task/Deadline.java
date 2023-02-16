@@ -1,17 +1,25 @@
 package duke.task;
 
 public class Deadline extends Task {
-    public Deadline(String description) {
+    public String deadlineDate;
+
+    public Deadline(String description, String deadlineDate) {
         super(description);
+        this.deadlineDate = deadlineDate;
     }
 
-    public String getDeadline() throws StringIndexOutOfBoundsException {
-        return description.substring(description.indexOf("/by") + 4);
+    public Deadline(String description, boolean isDone, String deadlineDate) {
+        super(description, isDone);
+        this.deadlineDate = deadlineDate;
+    }
+
+    public String getDeadline() {
+        return this.deadlineDate;
     }
 
     @Override
     public String printTask() {
-        return "[D]" + super.printTask().substring(0, super.printTask().indexOf("/by")) + "(by: " + getDeadline() + ")\n";
+        return "[D]" + super.printTask() + "(by: " + getDeadline() + ")";
     }
 
 }

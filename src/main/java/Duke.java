@@ -3,10 +3,15 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
 
-import java.util.Scanner;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 //TODO: specify error: empty description vs event/ddl timing not found
+//TODO: check print new line for printtask
 
 public class Duke {
     public static String line = "____________________________________________________________\n";
@@ -14,7 +19,90 @@ public class Duke {
 //    public static Task[] tasks = new Task[100];
     public static ArrayList<Task> tasks = new ArrayList<>();
 
+    // reading file from hard disc
+    public static String home = System.getProperty("user.home");
+    //    public static Path filePath = java.nio.file.Paths.get(home, "ip", "task_list.txt");
+    public static String filePath = "./task_list.txt";
+
+    public static void createFile(String filePath) {
+        try {
+            File f = new File(filePath);
+            if (f.createNewFile()) {
+                System.out.println("File created: " + f.getName());
+            } else {
+                System.out.println("File already exists");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred while creating file.");
+            e.printStackTrace();
+        }
+    }
+
+    public static void readTasksFromFile(File f) throws FileNotFoundException {
+        Scanner s = new Scanner(f);
+        while (s.hasNext()) {
+            String task = s.nextLine();
+            String[] taskElements = task.trim().split("\\|");
+            String taskType = taskElements[0].trim();
+            boolean taskStatus = taskElements[1].trim().equals("X");
+            String taskDescription = taskElements[2].trim();
+            switch (taskType) {
+            case "T":
+                tasks.add(new ToDo(taskDescription, taskStatus));
+                break;
+            case "D":
+                String deadlineDate = taskElements[3].trim();
+                tasks.add(new Deadline(taskDescription, taskStatus, deadlineDate));
+                break;
+            case "E":
+                String startDate = taskElements[3].trim();
+                String endDate = taskElements[4].trim();
+                tasks.add(new Event(taskDescription, taskStatus, startDate, endDate));
+                break;
+            default:
+            }
+        }
+    }
+
+    /*
+     T | X | description
+     D |   | description | time
+     E |   | description | start time | end time
+     */
+
+    public static void saveTasksToFile(String filePath) throws IOException {
+        FileWriter fw = new FileWriter(filePath, false);
+        for (Task t : tasks) {
+            String completeTaskDescription = t.printTask();
+            String taskType = completeTaskDescription.substring(1, 2);
+            switch (taskType) {
+            case "T":
+                fw.write(taskType + " | " + t.getStatusIcon() + " | " + t.getDescription() +
+                        System.lineSeparator());
+                break;
+            case "D":
+                fw.write(taskType + " | " + t.getStatusIcon() + " | " + t.getDescription() + " | " +
+                        ((Deadline) t).getDeadline() + System.lineSeparator());
+                break;
+            case "E":
+                fw.write(taskType + " | " + t.getStatusIcon() + " | " + t.getDescription() + " | " +
+                        ((Event) t).getStartTime() + " | " + ((Event) t).getEndTime() + System.lineSeparator());
+                break;
+            default:
+            }
+        }
+        fw.close();
+    }
+
     public static void main(String[] args) {
+
+        File f = new File(filePath);
+        createFile(filePath);
+        try {
+            readTasksFromFile(f);
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found.");
+        }
 
         String greet = line +
                 "Hello! I'm Duke.\n" +
@@ -83,7 +171,15 @@ public class Duke {
                 System.out.println("Starting and ending time for event are in the wrong order. " +
                         "Please try again.\n" + line);
             }
+            try {
+                saveTasksToFile(filePath);
+            } catch (IOException e) {
+                System.out.println("Error saving file.");
+            } catch (NullPointerException e) {
+                System.out.println("No task found.");
+            }
         }
+
     }
 
     public static void printTaskList() {
@@ -128,7 +224,8 @@ public class Duke {
         if (!input.contains("/by") || input.indexOf("/by") + 4 > input.length()) {
             throw new StringIndexOutOfBoundsException();
         }
-        Deadline deadlineTask = new Deadline(input.substring(9));
+        String deadlineDate = input.substring(input.indexOf("/by") + 4);
+        Deadline deadlineTask = new Deadline(input.substring(9, input.indexOf("/by")), deadlineDate);
         tasks.add(deadlineTask);
         System.out.println(line + "Great! I've added this task:\n" + "   " + deadlineTask.printTask());
         System.out.println("Now you have " + tasks.size() + " task(s) in the list.\n" + line);
@@ -141,7 +238,9 @@ public class Duke {
         } else if (input.indexOf("/from") > input.indexOf("/to")) {
             throw new EventTimingException();
         }
-        Event eventTask = new Event(input.substring(6));
+        String startTime = input.substring(input.indexOf("/from") + 6, input.indexOf("/to")).trim();
+        String endTime = input.substring(input.indexOf("/to") + 4);
+        Event eventTask = new Event(input.substring(6, input.indexOf("/from")), startTime, endTime);
         tasks.add(eventTask);
         System.out.println(line + "Great! I've added this task:\n" + "   " + eventTask.printTask());
         System.out.println("Now you have " + tasks.size() + " task(s) in the list.\n" + line);
@@ -150,12 +249,13 @@ public class Duke {
     public static void deleteTask(String input) throws IndexOutOfBoundsException {
         int index = Integer.parseInt(input.substring(6).trim());
         if (index >= 1 && index <= tasks.size()) {
-            System.out.println( line + "I've removed task " + index + ":\n" + "   " + tasks.get(index - 1).printTask());
+            System.out.println(line + "I've removed task " + index + ":\n" + "   " + tasks.get(index - 1).printTask());
             tasks.remove(index - 1); // change to 0-base indexing
             System.out.println("Now you have " + tasks.size() + " task(s) in the list.\n" + line);
         } else {
             System.out.println("Task " + index + " not found. Please try again.\n" + line);
         }
     }
+
 }
 
