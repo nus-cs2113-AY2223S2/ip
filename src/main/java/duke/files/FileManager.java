@@ -85,6 +85,10 @@ public class FileManager {
     // Parse all tasks from list to file
     public static void populateFile() throws IOException {
         ArrayList<Task> taskList = Task.getTasksArray();
+        if (taskList.size() == 0) {
+            writeToFile(filePath, "");
+            return;
+        }
         for(int i = 0; i<taskList.size(); i++) {
             if (i == 0) {
                 writeToFile(filePath, taskList.get(i).printTask()+"\n");
