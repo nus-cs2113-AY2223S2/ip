@@ -36,8 +36,8 @@ public class FileParser {
         try {
             createFileIfNotExist();
             BufferedReader br = new BufferedReader(new FileReader(FILE_NAME));
-            Task[] tasks = gson.fromJson(br, Task[].class);
-            System.out.println(tasks.toString());
+//            Task[] tasks = gson.fromJson(br, Task[].class);
+//            System.out.println(tasks.toString());
         } catch (FileNotFoundException e) {
             System.out.println("A file not found exception occured");
             System.out.println(e.getMessage());
