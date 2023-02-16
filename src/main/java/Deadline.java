@@ -18,5 +18,9 @@ public class Deadline extends Task{
         super(description);
         by = doneBy;
     }
+    @Override
+    public String toString() {
+        return '[' + type + "]" + super.toString() + "(by:" + by + ')';
+    }
 
 }
