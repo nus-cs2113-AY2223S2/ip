@@ -28,12 +28,12 @@ public class Event extends Task {
     }
 
     @Override
-    public String toString() {
-        return "[E]" + super.toString() + "(" + this.start + "- " + this.end + ")";
+    public String getType() {
+        return "E";
     }
 
     @Override
-    public String getType() {
-        return "E";
+    public String toString() {
+        return "[" + this.getType() + "]" + super.toString() + "(" + this.start + "- " + this.end + ")";
     }
 }

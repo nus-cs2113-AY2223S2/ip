@@ -7,12 +7,12 @@ public class ToDo extends Task {
     }
 
     @Override
-    public String toString() {
-        return "[T]" + super.toString();
+    public String getType() {
+        return "T";
     }
 
     @Override
-    public String getType() {
-        return "T";
+    public String toString() {
+        return "[" + this.getType() + "]" + super.toString();
     }
 }
