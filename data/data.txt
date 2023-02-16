@@ -1,0 +1,3 @@
+T%[X]%do this
+T%[ ]%do that
+D%[ ]%do everyhting %sun
