@@ -1,29 +1,134 @@
 # User Guide
+Thank you for using Duke. Duke is a command-line interface, personal assistant bot which you can use to help track your various tasks and duties throughout the day.
 
-## Features 
+# Table of contents
+1. [Installation](#installation)
+2. [Quick Note about Formatting and Inputs](#quick-notes-about-formatting-and-inputs)
+3. [Features](#features)
+   1. [Tasks](#tasks)
+      1. [Deadline](#deadline)
+      2. [Event](#event)
+      3. [Todo](#todo)
+   2. [List](#list)
+   3. [Marking Tasks](#marking-tasks)
+      1. [Mark Tasks](#mark-tasks)
+      2. [Unmark Tasks](#unmark-tasks) 
+   4. [Delete](#delete)
+   5. [Search](#search)
+      1. [By Time](#by-time)
+      2. [By Description](#by-description)
+   6. [Saving Files](#saving-files)
+4. [Command Summary](#command-summary)
 
-### Feature-ABC
+# Installation
+1. Before installing and using Duke, do note that Java 11 is required. If you do not already have it installed, you can do so [here](https://www.oracle.com/sg/java/technologies/downloads/#java11). 
+2. After installing Java 11, please download the .jar file [here](https://github.com/natashatanyt/ip/releases/) and place it in a folder. Doing so ensures that the save-file will not be lost, allowing you to use data that you have previously entered.
+3. Open the command terminal and navigate to the folder where the jar file is.
+4. Right-click the file and select the "Copy as path" option. 
+5. Open a command terminal by entering `cmd` in your start menu.
+6. In the terminal, navigate to the location of the folder by doing `cd FILE_PATH`
+7. Use the command `java -jar ip.jar` to launch Duke.
+8. When you are done using the app, enter `bye` to shut the application down. This ensures that Duke will save your data.
 
-Description of the feature.
+# Quick Notes about Formatting and Inputs
+1. All words in `UPPER_CASE` are parameters, and all words in `this formatting` are instructions that you can copy directly.
+2. There are **no optional parameters**, so each parameter must have an input
+3. All command words, such as `deadline` or `unmark`, are case-insensitive: any combination of capitalized and non-capitalized characters will still call the correct command, as long as it is spelt correctly. However,
 
-### Feature-XYZ
+# Features 
+The following sections will show you the features of Duke and how to use Duke effectively. It is broken up into a few sections to help you find what you need better. These sections are: [tasks](#tasks), [marking tasks](#marking-tasks), [delete](#delete), [search](#search), and [saving files](#saving-files).
 
-Description of the feature.
+## Tasks
+Duke has 3 classifications of tasks: [deadlines](#deadline), [events](#event) and [todos](#todo). More details on each task can be found in their individual sections.
 
-## Usage
+Note: For all tasks, the parameters can consist of multiple words, which will be shown in each subsection. 
 
-### `Keyword` - Describe action
+### Deadline
+Deadlines consist of a description and a date by which the task has to be completed. 
 
-Describe the action and its outcome.
+The command usage is `deadline TASK \by DATE`, ie. `deadline return book \by tomorrow 5pm` or `deadline assignment \by sunday`.
 
-Example of usage: 
+If the input method is correct, you will see something like this:
 
-`keyword (optional arguments)`
+Otherwise, Duke will inform you that you had an error and will show your input:
 
-Expected outcome:
+### Event
+Events consist of a description, and two times, indicating the start and end of the event.
 
-Description of the outcome.
+The command usage is `event TASK \from DATE \to DATE`, ie. `event project meeting \from saturday 2pm \to saturday 4pm`.
 
-```
-expected output
-```
+If the input method is correct, you will see something like this:
+
+Otherwise, Duke will inform you that you had an error and will show your input:
+
+### Todo
+Todos are the most basic form of tasks, consisting of only a description. 
+
+The command usage is `todo TASK`, ie. `todo written assignment`.
+
+If the input method is correct, you will see something like this:
+
+Otherwise, Duke will inform you that you had an error and will show your input:
+
+## List
+If you want to see all the tasks that Duke has helped you store, you can do so with the command `list`. This is a single word command which has no additional parameters.
+
+Your tasks will be printed out by Duke in the same order that you input them, with its index. There are three main sections when your tasks are printed, as shown below:
+
+//image
+
+The first section shows the type of task, with 'T' for todo, 'D' for deadline, and 'E' for event. The next shows the completion status of the task, with an 'X' to show the task is complete and a blank space, ' ', to show that the tasks is incomplete. The last section is the description of the task. 
+
+## Marking Tasks
+Duke comes with an in-built task tracker, allowing you to mark tasks as completed and uncompleted. By default, tasks are added to the list as incomplete.
+
+To obtain figure out the index of your code, you can use the command [`list`](#list).
+
+### Mark Tasks
+After you have completed a task, you can use the command `mark INDEX`, ie. `mark 1`. 
+
+If the input method is correct, you will see something like this:
+
+Otherwise, Duke will inform you that you had an error and will show your input:
+
+### Unmark Tasks
+If you wish to unmark a task, you can use the command `unmark INDEX`, ie. `unmark 1`.
+
+If the input method is correct, you will see something like this:
+
+Otherwise, Duke will inform you that you had an error and will show your input:
+
+## Delete
+Currently, there Duke does not have the ability to edit tasks. If you make a mistake, or want to delete a task, you can do so with this feature. 
+
+The command usage is `delete INDEX`, ie. `delete 1`.
+
+If the input method is correct, you will see something like this:
+
+Otherwise, Duke will inform you that you had an error and will show your input:
+
+## Search
+### By Time
+### By Description
+
+## Saving Files
+On the first creation of Duke, the file will be created in the same folder as the .jar file. Note that putting the file in a different folder will cause Duke to be unable to read the file.
+
+After entering the exit command, `bye`, Duke will save the contents into a text file (Duke.txt). The file will save each task on a new line, with the order of task type, completion status, and description. Each section is segmented by a vertical pipe (|). 
+
+If you want to edit the save file, you may do so, but note that improper edits may cause Duke to crash. If Duke fails to read the file, you can delete the file and restart the application. 
+
+# Command Summary
+This section will give the full list of features that Duke has. If you want to see more details, you can refer to the [Table of Contents](#table-of-contents) to navigate to the section you want.
+
+| Name of Command       | General Format                   | Examples                                                    |
+|-----------------------|----------------------------------|-------------------------------------------------------------|
+| Creating Deadline     | `deadline TASK \by DATE`         | `deadline return book \by Sunday`                           |
+| Creating Event        | `event TASK \from DATE \to DATE` | `event project meeting \from Saturday 2pm \to Saturday 4pm` |
+| Creating Todo         | `todo TASK`                      | `todo written assignment`                                   |
+| List                  | `list`                           | `list`                                                      |
+| Mark Tasks            | `mark INDEX`                     | `mark 1`                                                    |
+| Unmark Tasks          | `unmark INDEX`                   | `unmark 1`                                                  |
+| Delete                | `delete INDEX`                   | `delete 1`                                                  |
+| Search by Time        |                                  |                                                             |
+| Search by Description |                                  |                                                             |
