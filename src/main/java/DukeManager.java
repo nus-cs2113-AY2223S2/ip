@@ -27,7 +27,11 @@ class DukeManager {
                     //if mark / unmark is detected
                     isValidInput = true;
                     markTask(inputt, this.taskList);
-                } else {
+                } else if (inputt.contains("delete")) {
+                    isValidInput = true;
+                    deleteTask(inputt, this.taskList);
+                }
+                else {
                     //else add task to array; create task based on input by user
                     if (inputt.contains("todo")) {
                         isValidInput = true;
@@ -58,6 +62,7 @@ class DukeManager {
             }
             inputt = io.nextLine();
         }
+        Backend.updateDatabase(this.taskList);
     }
 
     public void printTasklist() {
@@ -85,6 +90,24 @@ class DukeManager {
         }
     }
 
+    public void deleteTask(String inputt, ArrayList<Task> taskList) throws MissingFieldException {
+        String[] inputtArray = inputt.split(" ");
+        if (inputtArray.length == 1) {
+            throw new MissingFieldException("There are missing fields in your input!");
+        } else {
+            try {
+                int index = Integer.parseInt(inputtArray[1] ) - 1;
+                Task removedTask = taskList.get(index);
+                taskList.remove(index);
+
+                System.out.println("Noted. I've removed this task:");
+                System.out.println("  " + removedTask.toString());
+                System.out.println("Now you have " + taskList.size() + " tasks in the list.");
+            } catch (IndexOutOfBoundsException a) {
+                throw new MissingFieldException("The index provided is invalid!");
+            }
+        }
+    }
     public void createToDo(String inputt, ArrayList<Task> taskList) throws MissingFieldException {
         String description = inputt.substring(TODO, inputt.length());
         if (description.length() < 1) {
