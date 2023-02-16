@@ -1,13 +1,13 @@
 package database;
 
 import model.task.Task;
-import parser.FileParser;
+//import parser.FileParser;
 
 public class Database {
 
   protected final int MAX_TASK = 100;
 
-  protected final FileParser parser = FileParser.getInstance();
+//  protected final FileParser parser = FileParser.getInstance();
 
   protected final Task[] tasks = new Task[MAX_TASK];
 

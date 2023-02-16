@@ -1,25 +1,25 @@
 package parser;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import com.google.gson.Gson;
+import model.task.Task;
+
+import java.io.*;
 import java.util.Scanner;
 
 public class FileParser {
 
     protected static FileParser instance = null;
+    protected static final String FILE_NAME = "data.json";
+    protected static final Gson gson = new Gson();
+    protected static File db = new File(FILE_NAME);
 
     /**
      * This function is used to create a file if it does not exist. This helps
      * the user to reduce the trouble of having to create his own file and
      * creating it in the incorrect location.
-     *
-     * @throws IOException If an I/O exception occurs
      */
     protected static void createFileIfNotExist() {
         try {
-            File db = new File("index.html");
             db.createNewFile();
         } catch (IOException e) {
             System.out.println("An IO Exception occured");
@@ -32,19 +32,15 @@ public class FileParser {
      * the possibility of file does not exist, I will forcefully create a new
      * file prior to reading.
      */
-    protected static void readFromFile() {
+    public static void readFromFile() {
         try {
             createFileIfNotExist();
-            File db = new File("mongo.txt");
-            Scanner reader = new Scanner(db);
-            while (reader.hasNextLine()) {
-                // TODO: Replace the printing with other logic
-                System.out.println(reader.nextLine());
-            }
-            reader.close();
+            BufferedReader br = new BufferedReader(new FileReader(FILE_NAME));
+            Task[] tasks = gson.fromJson(br, Task[].class);
+            System.out.println(tasks.toString());
         } catch (FileNotFoundException e) {
             System.out.println("A file not found exception occured");
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -56,7 +52,7 @@ public class FileParser {
     public void writeToFile(String text) {
         try {
             createFileIfNotExist();
-            FileWriter writer = new FileWriter("mongo.txt", true);
+            FileWriter writer = new FileWriter(FILE_NAME, true);
             writer.append(text + System.lineSeparator());
             writer.close();
         } catch (IOException e) {
