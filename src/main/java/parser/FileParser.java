@@ -49,9 +49,9 @@ public class FileParser {
     }
 
     /**
-     * This function is used to update the file
+     * This function is used to write a line to the file.
      *
-     * @param text
+     * @param text The text data to be written into a file
      */
     public void writeToFile(String text) {
         try {
