@@ -14,7 +14,7 @@ public class TodoList {
     static final String FROM_COMMAND = " /from ";
     static final String TO_COMMAND = " /to ";
     private int numberOfTasks;
-    private ArrayList<Todo> todos;
+    private final ArrayList<Todo> todos;
 
     public TodoList(){
         numberOfTasks = 0;
@@ -92,6 +92,12 @@ public class TodoList {
         this.todos.get(num - 1).isDone = false;
         System.out.println(LINE_BREAK + UNMARKED_TASK + num + IN_LIST + this.todos.get(num - 1).getStatusIcon()
                 + ' ' + this.todos.get(num - 1).description + "\n" + LINE_BREAK);
+    }
+
+    public void deleteTask(int num) {
+        this.todos.remove(num - 1);
+        numberOfTasks -= 1;
+        System.out.println(LINE_BREAK + "I have deleted Task " + num + IN_LIST + LINE_BREAK);
     }
 
     public String[] listWriter() {

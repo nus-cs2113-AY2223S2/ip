@@ -74,9 +74,18 @@ public class Shizuka {
                     break;
                 }
                 break;
+            case "delete":
+                try {
+                    taskNum = parseNumber(command[1]);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    Printer.noArgsError();
+                    break;
+                }
+                list0.deleteTask(taskNum);
+                break;
             case "save":
                 try {
-                    WriteToFile.save(FILE_PATH, list0.listWriter());
+                    FileManager.save(FILE_PATH, list0.listWriter());
                     Printer.saveSuccess();
                     break;
                 } catch (IOException e) {
