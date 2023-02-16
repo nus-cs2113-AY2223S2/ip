@@ -8,6 +8,10 @@ public class Deadline extends Task {
         this.endDate = endDate;
     }
 
+    public String getEndDate() {
+        return endDate;
+    }
+
     @Override
     public String getDescriptionText() {
         String symbol = super.isDone() ? "X" : " ";

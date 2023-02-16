@@ -9,14 +9,13 @@ import storage.Database;
 import validator.Validator;
 import view.TaskView;
 
+
 public class TaskController {
 
   protected TaskView view = new TaskView();
   protected Validator validator = new Validator();
   protected Database db = Database.getInstance();
   static int counter = 0;
-
-  // We connect our controller to the instance of the database
 
   private void printDescription(Task model) {
     System.out.println(Message.TASK_ADDED.message);
@@ -78,12 +77,8 @@ public class TaskController {
    * @param taskDescription The task description
    * @throws Exception An exception if the task is invalid
    */
-  public void addDeadlineTask(String taskDescription) throws Exception {
-    int index = taskDescription.indexOf("/by");
-    validator.validateDeadlineTask(index);
-    String description = taskDescription.substring(0, index);
-    String endDuration = taskDescription.substring(index + "/by ".length());
-    Deadline model = new Deadline(description, endDuration);
+  public void addDeadlineTask(String description, String deadline) throws Exception {
+    Deadline model = new Deadline(description, deadline);
     counter += 1;
     db.create(model);
     printDescription(model);
@@ -96,19 +91,15 @@ public class TaskController {
    * @param taskDescription A string after removing the
    *                        command
    */
-  public void addEventTask(String taskDescription) throws Exception {
-    int indexOfFrom = taskDescription.indexOf("/from");
-    int indexOfTo = taskDescription.indexOf("/to");
-    validator.validateEventTask(indexOfFrom, indexOfTo);
-    String description = taskDescription.substring(0, indexOfFrom);
-    String from = taskDescription.substring(
-      indexOfFrom + "/from ".length(),
-      indexOfTo
-    );
-    String to = taskDescription.substring(indexOfTo + "/to ".length());
+  public void addEventTask(String taskDescription, String start, String end) throws Exception {
     counter += 1;
-    Event model = new Event(description, from, to);
+    Event model = new Event(taskDescription, start, end);
     db.create(model);
     printDescription(model);
+  }
+
+  public void manuallyAdd(Task model) {
+    counter += 1;
+    db.create(model);
   }
 }

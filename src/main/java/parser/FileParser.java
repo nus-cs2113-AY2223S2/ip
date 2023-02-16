@@ -1,74 +1,131 @@
 package parser;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Scanner;
+import com.google.gson.Gson;
+import controller.TaskController;
+import model.storage.JsonStorage;
+import model.task.Deadline;
+import model.task.Event;
+import model.task.Task;
+import model.task.Todo;
+
+import java.io.*;
+import java.util.ArrayList;
 
 public class FileParser {
 
-    protected static FileParser instance = null;
+  protected static FileParser instance = null;
+  protected static final String FILE_NAME = "./data/data.json";
+  protected static final TaskController taskController = new TaskController();
+  protected static final Gson gson = new Gson();
+  protected static File file = new File(FILE_NAME);
 
-    /**
-     * This function is used to create a file if it does not exist. This helps
-     * the user to reduce the trouble of having to create his own file and
-     * creating it in the incorrect location.
-     *
-     * @throws IOException If an I/O exception occurs
-     */
-    protected static void createFileIfNotExist() {
-        try {
-            File db = new File("mongo.txt");
-            db.createNewFile();
-        } catch (IOException e) {
-            System.out.println("An IO Exception occured");
-            e.printStackTrace();
+  /**
+   * This function is used to create a file if it does not exist. This helps
+   * the user to reduce the trouble of having to create his own file and
+   * creating it in the incorrect location.
+   */
+  protected static void createFileIfNotExist() {
+    try {
+      file.createNewFile();
+    } catch (IOException e) {
+      System.out.println("An IO Exception occured");
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * This function is used to read from an existing file. In order to reduce
+   * the possibility of file does not exist, I will forcefully create a new
+   * file prior to reading.
+   */
+  public void readFromFile() {
+    try {
+      createFileIfNotExist();
+      BufferedReader br = new BufferedReader(new FileReader(FILE_NAME));
+      JsonStorage[] x = gson.fromJson(br, JsonStorage[].class);
+      boolean isMarked = false;
+
+      for (JsonStorage item : x) {
+        String type = item.getType();
+        switch (type) {
+        case "todo":
+          Todo todo = new Todo(item.getDescription());
+          isMarked = item.isMarked();
+          todo.setDone(isMarked);
+          taskController.manuallyAdd(todo);
+          break;
+        case "event":
+          Event event = new Event(item.getDescription(), item.getStart(), item.getEnd());
+          isMarked = item.isMarked();
+          event.setDone(isMarked);
+          taskController.manuallyAdd(event);
+          break;
+        default:
+          Deadline deadline = new Deadline(item.getDescription(), item.getEnd());
+          isMarked = item.isMarked();
+          deadline.setDone(isMarked);
+          taskController.manuallyAdd(deadline);
+          break;
         }
+      }
+    } catch (FileNotFoundException e) {
+      System.out.println("A file not found exception occured");
+      System.out.println(e.getMessage());
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+  }
+
+  public void updateFile(ArrayList<Task> tasks) {
+    ArrayList<JsonStorage> items = new ArrayList<JsonStorage>();
+    for (Task task : tasks) {
+      String end = "";
+      String type = "";
+      String start = "";
+      if (task instanceof Todo) {
+        start = null;
+        end = null;
+        type = "todo";
+      } else if (task instanceof Deadline) {
+        Deadline deadlineTask = (Deadline) task;
+        start = null;
+        end = deadlineTask.getEndDate();
+        type = "deadline";
+      } else if (task instanceof Event) {
+        Event eventTask = (Event) task;
+        start = eventTask.getFrom();
+        end = eventTask.getTo();
+        type = "event";
+      }
+      JsonStorage item = new JsonStorage(
+              task.getTaskName(),
+              task.isDone(),
+              end,
+              type,
+              start
+      );
+      items.add(item);
+    }
+    String json = gson.toJson(items);
+
+    try {
+      FileWriter writer = new FileWriter(FILE_NAME);
+      writer.write(json);
+      writer.close();
+    } catch (IOException e) {
+      System.out.println("Something went wrong");
+    }
+  }
+
+  protected FileParser() {
+  }
+
+  public static FileParser getInstance() {
+    if (instance == null) {
+      instance = new FileParser();
     }
 
-    /**
-     * This function is used to read from an existing file. In order to reduce
-     * the possibility of file does not exist, I will forcefully create a new
-     * file prior to reading.
-     */
-    protected static void readFromFile() {
-        try {
-            createFileIfNotExist();
-            File db = new File("mongo.txt");
-            Scanner reader = new Scanner(db);
-            while (reader.hasNextLine()) {
-                // TODO: Replace the printing with other logic
-                System.out.println(reader.nextLine());
-            }
-            reader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("A file not found exception occured");
-            e.printStackTrace();
-        }
-    }
-
-    public void writeToFile(String text) {
-        try {
-            createFileIfNotExist();
-            FileWriter writer = new FileWriter("mongo.txt");
-            writer.write(text);
-            writer.close();
-        } catch (IOException e) {
-            System.out.println("Oops, something went wrong");
-            e.printStackTrace();
-        }
-    }
-
-    protected FileParser() {
-    }
-
-    public static FileParser getInstance() {
-        if (instance == null) {
-            instance = new FileParser();
-        }
-
-        createFileIfNotExist();
-        return instance;
-    }
+    createFileIfNotExist();
+    return instance;
+  }
 }
