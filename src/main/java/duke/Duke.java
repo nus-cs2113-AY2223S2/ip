@@ -1,10 +1,11 @@
 package duke;
 
+import duke.command.MainFunctions;
 import duke.exception.BlankDescException;
 import duke.exception.DukeException;
-import duke.command.MainFunctions;
 import duke.task.Task;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
@@ -18,7 +19,9 @@ public class Duke {
 
         String userCommand = scanner.nextLine();
 
-        Task[] storedUserTasks = new Task[100];
+
+        ArrayList<Task> storedUserTasks = new ArrayList<>();
+        // Task[] storedUserTasks = new Task[100];
         boolean isExit = false;
 
         while(!isExit){
@@ -34,6 +37,9 @@ public class Duke {
                 break;
             case "unmark":
                 MainFunctions.unmarkTask(userCommand, storedUserTasks);
+                break;
+            case "delete":
+                MainFunctions.deleteTask(userCommand, storedUserTasks);
                 break;
             case "todo":
                 try {
