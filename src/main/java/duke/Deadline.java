@@ -11,7 +11,7 @@ public class Deadline extends Task {
 
     @Override
     /**
-     * Overrides string representation for deadlines, with a [D] to 
+     * Overrides string representation for deadlines, with a [D] to
      * indicate deadline class and including by field.
      *
      * @return String Representation.
