@@ -1,15 +1,14 @@
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.io.File;
-import java.io.FileWriter;
 
 public class Duke {
     private static String line = "__________________________________________________________";
     private static ArrayList<Task> inputList = new ArrayList<>();
     private static int numTasks = 0;
 
-    private static File f = new File("data/duke.txt");
+    private static FileReading f;
+    private static String filePath = "data/duke.txt";
 
     public enum CommandType {
         TODO, DEADLINE, EVENT, LIST, BYE, MARK, UNMARK, DELETE
@@ -116,8 +115,10 @@ public class Duke {
                     System.out.println(line);
                 }
             }
+            f.main(inputList);
             userInput = in.nextLine();
         }
+        //f.main(inputList);
         in.close();
     }
 
@@ -148,18 +149,14 @@ public class Duke {
         return;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 //        String logo = " ____        _        \n"
 //                + "|  _ \\ _   _| | _____ \n"
 //                + "| | | | | | | |/ / _ \\\n"
 //                + "| |_| | |_| |   <  __/\n"
 //                + "|____/ \\__,_|_|\\_\\___|\n";
 //        System.out.println("Hello from\n" + logo);
-//        try {
-//            Scanner s = new Scanner(f);
-//        } catch (FileNotFoundException e) {
-//            System.out.println("File not found");
-//        }
+
         greet();
         getCommand();
         bye();
