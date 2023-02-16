@@ -1,29 +1,37 @@
 package duke.command;
 
+import duke.task.Deadline;
 import duke.task.Task;
+import duke.task.Todo;
+import duke.task.Event;
 import duke.*;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
+import java.io.FileWriter;
 
 public class TodoList {
     
     private static final int MAXLISTNUM = 100;
     private static final String SPLITTER = "    ____________________________________________________________";
-    // private Task[] tasks = new Task[MAXLISTNUM];
-    private ArrayList<Task> tasks2 = new ArrayList<>();
+    private static final String DATA_PATH = "duke/data/duke.txt";
+    private ArrayList<Task> tasks = new ArrayList<>();
     private int listnum;
 
-    public TodoList(){
+    public TodoList() throws IOException, DukeException{
         listnum = 0;
+        this.loadList();
     }
 
     public int getListnum(){
         return listnum;
     }
 
-    public int addItem(Task task){
+    public int addItem(Task task) throws DukeException{
         if(listnum < MAXLISTNUM){
             // tasks[listnum++] = task;
-            tasks2.add(task);
+            tasks.add(task);
             listnum++;
             System.out.println(SPLITTER);
             System.out.println("    " + "Got it. I've added this task:");
@@ -31,22 +39,38 @@ public class TodoList {
             System.out.println("    " + "Now you have " + listnum + " task" + ((listnum>1) ? "s" : "") + " in the list.");
             System.out.println(SPLITTER);
             System.out.println();
+            
+            // save to file
+            try {
+                this.saveList();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return 0;
+            }
             return 1;
         }else{
-            Duke.printError("List overflow");
-            return 0;
+            throw new DukeException("This task does not exist!");
         }
     }
 
-    public void deleteItem(int num) throws DukeException{
-        if(tasks2.size() > num){
+    public int deleteItem(int num) throws DukeException{
+        if(tasks.size() > num){
             System.out.println(SPLITTER);
             System.out.println("    " + "Noted. I've removed this task:");
-            System.out.println("      " + tasks2.get(num));
+            System.out.println("      " + tasks.get(num));
             System.out.println("    " + "Now you have " + --listnum + " task" + ((listnum>1) ? "s" : "") + " in the list.");
             System.out.println(SPLITTER);
             System.out.println();
-            tasks2.remove(num);
+            tasks.remove(num);
+
+            // save to file
+            try {
+                this.saveList();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return 0;
+            }
+            return 1;
         }else{
             throw new DukeException("This task does not exist!");
         }
@@ -54,9 +78,7 @@ public class TodoList {
 
     public int markItem(int num, boolean mark) throws DukeException{
         if(num < listnum && num >= 0){
-            // marks[num] = mark;
-            // tasks[num].mark(mark);
-            tasks2.get(num).mark(mark);
+            tasks.get(num).mark(mark);
             if(mark){
                 System.out.println(SPLITTER);
                 System.out.println("    Nice! I've marked this task as done:");
@@ -65,10 +87,17 @@ public class TodoList {
                 System.out.println("    OK, I've marked this task as not done yet:");
             }
             System.out.print("      ");
-            // System.out.println(tasks[num].getDescription());
-            System.out.println(tasks2.get(num));
+            System.out.println(tasks.get(num));
             System.out.println(SPLITTER);
             System.out.println();
+
+            // save to file
+            try {
+                this.saveList();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return 0;
+            }
             return 1;
         }else{
             throw new DukeException("Index out of bound!");
@@ -78,9 +107,83 @@ public class TodoList {
     public void showList(){
         System.out.println(SPLITTER);
         for(int i = 0; i < listnum; i++){
-            System.out.println("    " + (i + 1) + ". " + tasks2.get(i));
+            System.out.println("    " + (i + 1) + ". " + tasks.get(i));
         }
         System.out.println(SPLITTER);
         System.out.println();
+    }
+
+    public void saveList() throws IOException{
+        File listFile = new File("duke/data/duke.txt");
+
+        // create file(if it does not exist)
+        if(!listFile.exists()){
+            listFile.createNewFile();
+        }
+
+        FileWriter saver = new FileWriter(listFile);
+        for(Task task : tasks){
+            // construct one line in file
+            String line = task.getTypeIcon() + " | " 
+                        + (task.getStatusIcon().equals("X") ? "1" : "0") + " | " 
+                        + task.getDescription();
+            if(task.getTypeIcon() == 'D' || task.getTypeIcon() == 'E'){
+                line += " | " + task.getTimeBound();
+            }
+
+            saver.append(line + System.lineSeparator());
+        }
+        saver.close();
+    }
+
+    public void loadList() throws IOException, DukeException{
+        File listFile = new File("duke/data/duke.txt");
+
+        // create file(if it does not exist)
+        if(!listFile.exists()){
+            listFile.createNewFile();
+        }
+
+        Scanner in = new Scanner(listFile);
+        while(in.hasNext()){
+            String line = in.nextLine();
+            Task task;
+
+            int typeIdx = line.indexOf(" | ");
+            String type = line.substring(0, typeIdx);
+
+            int doneIdx = line.indexOf(" | ", typeIdx + " | ".length());
+            // int doneIdx = line.substring(typeIdx + " | ".length()).indexOf(" | ");
+            String done = line.substring(typeIdx + " | ".length(), doneIdx);
+
+            if(type.equals("T")){
+                String desc = line.substring(doneIdx + " | ".length());
+                task = new Todo(desc);
+            }else if(type.equals("D")){
+                int descIdx = line.indexOf(" | ", doneIdx + " | ".length());
+                String desc = line.substring(doneIdx + " | ".length(), descIdx);
+                
+                String by = line.substring(descIdx + " | ".length());
+                task = new Deadline(desc, by);
+            }else if(type.equals("E")){
+                int descIdx = line.indexOf(" | ", doneIdx + " | ".length());
+                String desc = line.substring(doneIdx + " | ".length(), descIdx);
+
+                int fromIdx = line.indexOf("-", descIdx + " | ".length());
+                String from = line.substring(descIdx + " | ".length(), fromIdx);
+
+                String to = line.substring(fromIdx + "-".length());
+                task = new Event(desc, from, to);
+            }else{
+                in.close();
+                throw new DukeException("Unknown task type!");
+            }
+
+            task.setIsDone(done.equals("1") ? true : false);
+            tasks.add(task);
+            listnum++;
+            // this.addItem(task);
+        }
+        in.close();
     }
 }

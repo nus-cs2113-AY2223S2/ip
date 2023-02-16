@@ -6,7 +6,7 @@ import duke.task.*;
 
 public class Duke {
 
-    private static TodoList todoList = new TodoList();
+    private static TodoList todoList;
 
     public static void printError(String errMsg){
         String printContent = "    ____________________________________________________________\n"
@@ -64,6 +64,13 @@ public class Duke {
     }
 
     public static void main(String[] args) {
+        try {
+            todoList = new TodoList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+
         Scanner in = new Scanner(System.in);
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"

@@ -15,4 +15,9 @@ public class Todo extends Task {
     public Todo(String description){
         super(description, 'T');
     }
+
+    @Override
+    public String getTimeBound(){
+        return "";
+    }
 }
