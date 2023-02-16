@@ -7,14 +7,24 @@ import Alex.task.Event;
 import Alex.task.Task;
 import Alex.task.Todo;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class Alex {
+    int a;
     public static void main(String[] args) {
         TaskManager taskManager = new TaskManager();
+        try {
+            readData(taskManager);
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found" + e.getMessage());
+        }
         Scanner myObj = new Scanner(System.in);
         greeting();
         /** Constantly asks for user input until bye is received */
@@ -22,6 +32,11 @@ public class Alex {
             String userInput = myObj.nextLine();
             try {
                 handleInput(userInput, taskManager);
+                try {
+                    saveData(taskManager);
+                } catch (IOException e) {
+                    System.out.println("Error... aborting save" + e.getMessage());
+                }
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("☹ OOPS!!! The description of a " + e.getMessage() + " cannot be empty.");
                 printLine();
@@ -30,6 +45,8 @@ public class Alex {
                 printLine();
             }
 
+
+
         }
 
     }
@@ -37,6 +54,65 @@ public class Alex {
         System.out.println("Got it. I've added this task:" + "\n " + task + "\n" +
                 "Now you have " + number + " tasks in the list" );
         printLine();
+    }
+    public static void readData(TaskManager tm) throws FileNotFoundException {
+        String dir = System.getProperty("user.dir");
+        Path filePath = Paths.get(dir, "data", "duke.txt");
+        File f = new File(filePath.toString());
+        Scanner s = new Scanner(f);
+        while (s.hasNext()) {
+            String[] info = s.nextLine().split(" ");
+            if(info[0] == "T")
+            {
+                Task t = new Todo(info[2] , "T");
+                if(info[1] == "true") {
+                    t.markAsDone();
+                }
+                tm.setTask(t);
+            }
+            else if(info[0] == "D")
+            {
+                Task t = new Deadline(info[2], "D", info[3]);
+                if(info[1] == "true") {
+                    t.markAsDone();
+                }
+                tm.setTask(t);
+            }
+            else if(info[0] == "E")
+            {
+                Task t = new Event(info[2], "E",info[3] ,info[4]);
+                if(info[1] == "true") {
+                    t.markAsDone();
+                }
+                tm.setTask(t);
+            }
+
+        }
+    }
+    public static void saveData(TaskManager tm) throws IOException {
+        String toSave = "";
+        String dir = System.getProperty("user.dir");
+        Path filePath = Paths.get(dir, "data", "duke.txt");
+        File file = new File(filePath.toString());
+        file.getParentFile().mkdirs();
+        FileWriter fw = new FileWriter(file);
+        for(Task t : tm.getAllTasks()) {
+            if(t.getType().equals("T")) {
+                Todo td = (Todo)t;
+                toSave += "T " + td.getStatusIcon() + td.getDescription();
+            }
+            else if (t.getType().equals("D")) {
+                Deadline d = (Deadline)t;
+                toSave += "D " + d.getStatusIcon() + " " + d.getDescription() + " " + d.getBy();
+            }
+            else if (t.getType().equals("E")) {
+                Event e = (Event)t;
+                toSave += "E " + e.getStatusIcon() + " " + e.getDescription() + " " + e.getFrom() + " " + e.getTo();
+            }
+            toSave += System.lineSeparator();
+        }
+        fw.write(toSave);
+        fw.close();
     }
     public static void printLine() {
         String horizontalLine = "____________________________________________________________";
@@ -110,7 +186,7 @@ public class Alex {
 
             }
             if(command.equals("todo")) {
-                Task t = new Todo(activity);
+                Task t = new Todo(activity, command.substring(0,1).toUpperCase());
                 taskManager.setTask(t);
                 printLine();
                 echoResponse(t, taskManager.getNumberOfTasks());
@@ -127,7 +203,7 @@ public class Alex {
                     by += " " + words[i];
                 }
 
-                Task deadline = new Deadline(activity, by);
+                Task deadline = new Deadline(activity,command.substring(0,1).toUpperCase(),by);
                 taskManager.setTask(deadline);
                 printLine();
                 echoResponse(deadline, taskManager.getNumberOfTasks());
@@ -151,13 +227,14 @@ public class Alex {
                 for(int i = toIndex + 1; i < words.length; i++) {
                     to += " " + words[i];
                 }
-                Task event = new Event(activity, from, to);
+                Task event = new Event(activity, command.substring(0,1).toUpperCase(), from, to);
                 taskManager.setTask(event);
                 printLine();
                 echoResponse(event, taskManager.getNumberOfTasks());
             }
 
         }
+
 
     }
 }
