@@ -1,10 +1,10 @@
 package tusky.tasks;
 
 public class ToDo extends Task {
-    protected TaskType taskType = TaskType.TODO;
 
-    public ToDo(String description) throws EmptyDescriptionException {
-        super(description);
+    public ToDo(String isDone, String description) throws EmptyDescriptionException {
+        super(isDone, description);
+        this.taskType = TaskType.TODO;
     }
 
     @Override
