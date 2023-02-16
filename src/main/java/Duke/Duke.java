@@ -55,7 +55,7 @@ public class Duke {
             int taskNum = Integer.parseInt(line.substring((7))) - 1;
             System.out.println(dividingLine + "Noted. I've removed this task:");
             System.out.println(tasks.get(taskNum));
-            System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+            System.out.println("Now you have " + (tasks.size() - 1) + " tasks in the list.");
             System.out.println(dividingLine);
             tasks.remove(taskNum);
         } else if (line.contains("unmark")) {
