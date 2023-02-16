@@ -7,6 +7,7 @@ public class Print {
     public static final String mark = "\t Nice! I've marked this task as done:";
     public static final String unmark = "\t OK, I've marked this task as not done yet:";
     public static final String list = "\t Here are the tasks in your list:";
+    public static final String delete = "\t Noted. I've removed this task:";
 
 
     public static void printUnderline(){
@@ -31,6 +32,10 @@ public class Print {
     public static void printUnmark(){
         printUnderline();
         System.out.println(unmark);
+    }
+    public static void printDelete(){
+        printUnderline();
+        System.out.println(delete);
     }
     public static void printGreet(){
         printUnderline();

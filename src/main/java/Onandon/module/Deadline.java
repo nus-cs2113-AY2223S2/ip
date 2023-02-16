@@ -1,4 +1,4 @@
-package Onandon.function;
+package Onandon.module;
 
 public class Deadline extends Task {
 
