@@ -4,6 +4,8 @@ import duke.Event;
 import duke.Task;
 import duke.Todo;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class TaskList {
@@ -34,6 +36,16 @@ public class TaskList {
         ui.printAddedTask(newTodoTask, tasks.size());
     }
 
+    public String formatDate(String dateString) {
+        int firstHyphenIndex = dateString.indexOf("-");
+        int dateStartIndex = firstHyphenIndex - 4;
+        int dataEndIndex = firstHyphenIndex + 6;
+        String extractedDate = dateString.substring(dateStartIndex, dataEndIndex);
+        LocalDate date = LocalDate.parse(extractedDate);
+        String formattedDate =  date.format(DateTimeFormatter.ofPattern("d MMM yyyy"));
+        return dateString.replace(extractedDate, formattedDate);
+    }
+
     public void addDeadlineTask(String description) throws DukeException {
         if (description.isBlank()) {
             //for the case where user keys in a space after the command
@@ -44,6 +56,9 @@ public class TaskList {
         String details = description.substring(0, detailsEndIndex);
         int byStartIndex = firstSlashIndex + 4;
         String by = description.substring(byStartIndex);
+        if (by.contains("-")) { //case where user keys in a date
+            by = formatDate(by);
+        }
         Deadline newDeadlineTask = new Deadline(details, by);
         tasks.add(newDeadlineTask);
         ui.printAddedTask(newDeadlineTask, tasks.size());
