@@ -61,19 +61,19 @@ public class Data {
                 case "T":
                     ToDo newToDo = new ToDo(description);
                     newToDo.setIsDone(isDone);
-                    taskManager.set(taskCount, newToDo);
+                    taskManager.add(newToDo);
                     taskCount++;
                     break;
                 case "D":
                     Deadline newDeadline = new Deadline(description, str[3]);
                     newDeadline.setIsDone(isDone);
-                    taskManager.set(taskCount, newDeadline);
+                    taskManager.add(newDeadline);
                     taskCount++;
                     break;
                 case "E":
                     Event newEvent = new Event(description, str[3], str[4]);
                     newEvent.setIsDone(isDone);
-                    taskManager.set(taskCount, newEvent);
+                    taskManager.add(newEvent);
                     taskCount++;
                     break;
                 default:
@@ -82,7 +82,6 @@ public class Data {
             }
             sc.close();
         } catch (FileNotFoundException e) {
-            System.out.println("No such file there eh!");
             createFile();
         }
     }
