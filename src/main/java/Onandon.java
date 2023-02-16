@@ -1,13 +1,19 @@
 
-import Onandon.function.*;
+import Onandon.module.*;
 import Onandon.print.Print;
 import Onandon.exception.OnandonEmptyException;
 import Onandon.exception.OnandonUnknownException;
 import Onandon.exception.OnandonNotaskException;
+import Onandon.checkpoint.Checkpoint;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Onandon {
+    static Task[] tasks = new Task[100];
+
     public static int printTodoAction(String inputText, Task[] tasks, int cnt){
         String description;
         description = inputText.replaceAll("todo ", "");
@@ -90,6 +96,21 @@ public class Onandon {
         Print.printUnderline();
     }
 
+    public static int printDeleteOfTasks(String inputText, Task[] tasks, int cnt){
+        int index;
+
+        Print.printDelete();
+        index = Integer.parseInt(inputText.split(" ")[1])-1;
+        System.out.println("\t\t" + tasks[index].toString());
+        ArrayList<Task> result = new ArrayList<Task>(Arrays.asList(tasks));
+        result.remove(index);
+        tasks = result.toArray(new Task[0]);
+        cnt -= 1;
+        System.out.println("\t Now you have " + cnt + " tasks in the list.");
+        Print.printUnderline();
+        return cnt;
+    }
+
     public static void checkException(String inputText) throws OnandonEmptyException, OnandonUnknownException, OnandonNotaskException {
         String[] split = inputText.split(" ");
         String tgt = inputText.split(" ")[0];
@@ -99,10 +120,11 @@ public class Onandon {
         Boolean isNotMark = !tgt.equals("mark");
         Boolean isNotUnmark = !tgt.equals("unmark");
         Boolean isNotList = !tgt.equals("list");
+        Boolean isNotDelete = !tgt.equals("delete");
 
         if(inputText.length() == 0){
             throw new OnandonEmptyException();
-        } else if(isNotTodo && isNotDeadline && isNotEvent && isNotMark && isNotUnmark && isNotList){
+        } else if(isNotTodo && isNotDeadline && isNotEvent && isNotMark && isNotUnmark && isNotList && isNotDelete){
             throw new OnandonUnknownException();
         } else if(split.length <= 1 && isNotList){
             throw new OnandonNotaskException();
@@ -133,11 +155,12 @@ public class Onandon {
     }
 
     public static void main(String[] args) {
-        Task[] tasks = new Task[100];
         Print.printGreet();
+        List<Object> checkpointOutput = Checkpoint.recallCheckpoint();
+        int cnt = (int) checkpointOutput.get(1);
+        tasks = (Task[]) checkpointOutput.get(0);
 
         Scanner in = new Scanner(System.in);
-        int cnt = 0;
         String inputText;
         String tgt;
 
@@ -171,8 +194,13 @@ public class Onandon {
             case "list":
                 printListOfTasks(tasks, cnt);
                 break;
+            case "delete":
+                cnt = printDeleteOfTasks(inputText, tasks, cnt);
+                break;
             }
         }
+
+        Checkpoint.storeCheckpoint(tasks, cnt);
         in.close();
         Print.printBye();
     }
