@@ -9,6 +9,7 @@ public class Task {
         this.isDone = false;
     }
 
+<<<<<<< HEAD
     public String getStatusIcon() {
         return (isDone ? "X" : " "); // mark done task with X
     }
@@ -21,6 +22,15 @@ public class Task {
     public void markAsUnDone() {
         isDone = false;
     }
+=======
+    public String getStatusIcon() { return (isDone ? "X" : " "); } // mark done task with X
+    public String getDescription() { return description; }
+    public void markAsDone() { isDone = true; }
+    public void markAsUnDone() { isDone = false; }
+    public String getBy() { return ""; }
+    public String getTo() { return ""; }
+    public String getFrom() { return ""; }
+>>>>>>> branch-Level-7
     @Override
     public String toString() {
         return "[" + getStatusIcon() + "]";

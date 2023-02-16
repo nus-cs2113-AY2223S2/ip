@@ -4,9 +4,14 @@ import Onandon.print.Print;
 import Onandon.exception.OnandonEmptyException;
 import Onandon.exception.OnandonUnknownException;
 import Onandon.exception.OnandonNotaskException;
+import Onandon.checkpoint.Checkpoint;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+<<<<<<< HEAD
+=======
+import java.util.List;
+>>>>>>> branch-Level-7
 import java.util.Scanner;
 
 public class Onandon {
@@ -154,9 +159,11 @@ public class Onandon {
 
     public static void main(String[] args) {
         Print.printGreet();
+        List<Object> checkpointOutput = Checkpoint.recallCheckpoint();
+        int cnt = (int) checkpointOutput.get(1);
+        tasks = (Task[]) checkpointOutput.get(0);
 
         Scanner in = new Scanner(System.in);
-        int cnt = 0;
         String inputText;
         String tgt;
 
@@ -195,6 +202,8 @@ public class Onandon {
                 break;
             }
         }
+
+        Checkpoint.storeCheckpoint(tasks, cnt);
         in.close();
         Print.printBye();
     }
