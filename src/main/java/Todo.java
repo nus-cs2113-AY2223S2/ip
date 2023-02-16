@@ -7,4 +7,9 @@ public class Todo extends Task {
     public String getTypeIcon() {
         return "[T]";
     }
+
+    @Override
+    public String toSaveString(String... taskParameters) {
+        return super.toSaveString("T", isDone ? "1" : "0", description);
+    }
 }
