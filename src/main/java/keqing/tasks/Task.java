@@ -32,6 +32,10 @@ public class Task {
         return taskCount;
     }
 
+    public static void setTaskCount(int count) {
+        taskCount = count;
+    }
+
     public String toString() {
         if(isDone){
             return "[X] " +  description;
