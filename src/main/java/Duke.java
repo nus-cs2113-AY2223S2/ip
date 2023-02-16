@@ -17,6 +17,7 @@ public class Duke {
         } catch (IOException e) {
             System.out.println("The file is not exist, try again: " + e.getMessage());
             tasks = new TaskList();
+            storage.makeDirectory();
         }
     }
 

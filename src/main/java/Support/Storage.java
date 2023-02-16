@@ -60,4 +60,13 @@ public class Storage {
         }
     }
 
+    public static void makeDirectory() {
+        File data = new File("data");
+        boolean created = data.mkdir();
+        // System.out.println(data.getPath());
+        if(!created) {
+            System.out.println("Failed to create repository");
+        }
+    }
+
 }
