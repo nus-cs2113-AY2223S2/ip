@@ -6,6 +6,11 @@ class Deadline extends Task {
         this.deadline = d;
     }
 
+    Deadline(String[] parameters) {
+        this(parameters[1].equals("true") ? true : false,
+                parameters[2], parameters[3]);
+    }
+
     public Task mark() {
         return new Deadline(true, super.taskDescription, this.deadline);
     }
@@ -18,5 +23,9 @@ class Deadline extends Task {
     public String toString() {
         String formattedDeadline = "(by: " + this.deadline + ")";
         return super.toString() + formattedDeadline;
+    }
+
+    public String toStringForDatabase() {
+        return super.CommonFieldsFor_toStringForDatabase() + "," + this.deadline;
     }
 }

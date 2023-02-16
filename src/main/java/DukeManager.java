@@ -6,7 +6,7 @@ class DukeManager {
     private static final int DEADLINE = 9;
     private static final int BY = 3;
     private static final int EVENT = 6;
-    private static final int FROM = 5
+    private static final int FROM = 5;
     private static final int TO = 3;
     private final ArrayList<Task>taskList;
 
@@ -62,6 +62,7 @@ class DukeManager {
             System.out.println("___________________________________________");
             inputt = io.nextLine();
         }
+        Backend.updateDatabase(this.taskList);
     }
 
     public void printTasklist() {

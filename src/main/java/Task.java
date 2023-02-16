@@ -16,11 +16,16 @@ abstract class Task {
     @Override
     public String toString() {
         String formattedLabel = "[" + this.label + "]";
-        String checkbox = "[X] ";
+        String checkbox = "[X]";
         if (!isDone) {
-            checkbox = "[ ] ";
+            checkbox = "[ ]";
         }
         return formattedLabel + checkbox + this.taskDescription;
     }
+
+    public String CommonFieldsFor_toStringForDatabase() {
+        return this.label + "," + this.isDone + "," + this.taskDescription;
+    }
+    public abstract String toStringForDatabase();
 
 }

@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 public class Duke {
     public static void main(String[] args) {
-        ArrayList<Task> taskList = new ArrayList<Task>();
+        ArrayList<Task> taskList = Backend.initialisation();
         DukeManager dukeManager = new DukeManager(taskList);
 
         //Duke starts here

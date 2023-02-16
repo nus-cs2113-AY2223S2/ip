@@ -8,6 +8,11 @@ class Event extends Task {
         this.endDateAndTime = ednt;
     }
 
+    Event(String[] parameters) {
+        this(parameters[1].equals("true") ? true : false, parameters[2],
+                parameters[3], parameters[4]);
+    }
+
     public Task mark() {
         return new Event(true, super.taskDescription,
                 this.startDateAndTime, this.endDateAndTime);
@@ -19,8 +24,13 @@ class Event extends Task {
     }
     public String toString() {
         String formattedEventDetails = "(from: " + this.startDateAndTime +
-            "to: " + this.endDateAndTime + ")";
+                "to: " + this.endDateAndTime + ")";
         return super.toString() + formattedEventDetails;
+    }
+
+    public String toStringForDatabase() {
+        return super.CommonFieldsFor_toStringForDatabase() + "," + this.startDateAndTime +
+                "," + this.endDateAndTime;
     }
 
 
