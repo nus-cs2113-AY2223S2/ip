@@ -103,7 +103,7 @@ public class TodoList {
     public String[] listWriter() {
         String[] list = new String[numberOfTasks];
         for (int i = 0; i < numberOfTasks; i += 1) {
-            list[i] = this.todos.get(i).printTask();
+            list[i] = this.todos.get(i).saveTask();
         }
         return list;
     }
