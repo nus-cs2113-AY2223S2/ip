@@ -3,7 +3,7 @@ package tasks;
 public class Todo extends Task {
 
     public Todo(String taskName) {
-        super(taskName, "[T]");
+        super(taskName, false, "[T]");
     }
 
     public String toString() {

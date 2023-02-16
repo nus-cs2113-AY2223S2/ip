@@ -6,7 +6,7 @@ public class Event extends Task {
     protected String endTime;
 
     public Event(String taskName, String startTime, String endTime){
-        super(taskName, "[E]");
+        super(taskName, false, "[E]");
         this.startTime = startTime;
         this.endTime = endTime;
     }

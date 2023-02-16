@@ -11,10 +11,10 @@ public class Task {
         System.out.println("--------------------------------------------------");
     }
 
-    public Task(String taskName, String taskSign){
+    public Task(String taskName, boolean test, String taskSign){
         this.taskName = taskName;
         this.taskSign = taskSign;
-        this.isDone = false;
+        this.isDone = test;
     }
 
     public void MarkTask(){
