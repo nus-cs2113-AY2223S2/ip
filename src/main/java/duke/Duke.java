@@ -1,6 +1,7 @@
 package duke;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Duke {
 
@@ -8,35 +9,35 @@ public class Duke {
      * Encapsulates print statements for whenever a task is added
      * (as either a todo, deadline, or event).
      * 
-     * @param task Reference to task that is added.
+     * @param task     Reference to task that is added.
      * @param numTasks Total number of tasks in the list.
      *
      */
     private static void printAddTaskConfirmation(Task task, int numTasks) {
         String line = "____________________________________________________________";
         System.out.println(line);
-        System.out.println("Got it. I've added this task:\n" + task + "\nNow you have " + numTasks + " tasks in the list.");
+        System.out.println(
+                "Got it. I've added this task:\n" + task + "\nNow you have " + numTasks + " tasks in the list.");
         System.out.println(line);
     }
+
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
-        //System.out.println("Hello from\n" + logo);
+        // System.out.println("Hello from\n" + logo);
         Scanner in = new Scanner(System.in);
-        
+
         String line = "____________________________________________________________";
 
         System.out.println(line);
         System.out.println("Hello! I'm Duke\nWhat can I do for you?");
         System.out.println(line);
-        
-        Task[] tasks = new Task[100];
-        int numTasks = 0;
 
-        
+        ArrayList<Task> tasks = new ArrayList<>();
+
         while (true) {
             try {
                 System.out.println();
@@ -53,8 +54,8 @@ public class Duke {
                 } else if (cmd.equals("list")) {
                     System.out.println(line);
                     System.out.println("Here are the tasks in your list:");
-                    for (int i = 0; i < numTasks; i++) {
-                        System.out.println(Integer.toString(i+1) + "." + tasks[i]);
+                    for (int i = 0; i < tasks.size(); i++) {
+                        System.out.println(Integer.toString(i + 1) + "." + tasks.get(i));
                     }
                     System.out.println(line);
                 } else if (splitIntoArgs[0].equals("mark")) {
@@ -62,20 +63,20 @@ public class Duke {
                         throw new InsufficientParametersException();
                     }
                     int toMark = Integer.parseInt(splitIntoArgs[1]) - 1;
-                    tasks[toMark].markDone();
+                    tasks.get(toMark).markDone();
                     System.out.println(line);
                     System.out.println("Nice! I've marked this task as done:");
-                    System.out.println(tasks[toMark]);
+                    System.out.println(tasks.get(toMark));
                     System.out.println(line);
                 } else if (splitIntoArgs[0].equals("unmark")) {
                     if (splitIntoArgs.length < 2) {
                         throw new InsufficientParametersException();
                     }
                     int toUnmark = Integer.parseInt(splitIntoArgs[1]) - 1;
-                    tasks[toUnmark].unMarkDone();
+                    tasks.get(toUnmark).unMarkDone();
                     System.out.println(line);
                     System.out.println("Ok, I've marked this task as not done yet:");
-                    System.out.println(tasks[toUnmark]);
+                    System.out.println(tasks.get(toUnmark));
                     System.out.println(line);
                 } else if (splitIntoArgs[0].equals("todo")) {
                     if (splitIntoArgs.length < 2) {
@@ -83,11 +84,10 @@ public class Duke {
                     }
                     String description = splitIntoArgs[1];
                     Todo todo = new Todo(description);
-                    tasks[numTasks] = todo;
-                    numTasks++;
-                    printAddTaskConfirmation(todo, numTasks);
+                    tasks.add(todo);
+                    printAddTaskConfirmation(todo, tasks.size());
                 } else if (splitIntoArgs[0].equals("deadline")) {
-                    //Uses regex to split into arguments for description and by field
+                    // Uses regex to split into arguments for description and by field
                     if (splitIntoArgs.length < 2) {
                         throw new InsufficientParametersException();
                     }
@@ -96,11 +96,10 @@ public class Duke {
                         throw new InsufficientParametersException();
                     }
                     Deadline deadline = new Deadline(argsList[0], argsList[1]);
-                    tasks[numTasks] = deadline;
-                    numTasks++;
-                    printAddTaskConfirmation(deadline, numTasks);
+                    tasks.add(deadline);
+                    printAddTaskConfirmation(deadline, tasks.size());
                 } else if (splitIntoArgs[0].equals("event")) {
-                    //Uses regex to split into arguments for description, from field, and to field.
+                    // Uses regex to split into arguments for description, from field, and to field.
                     if (splitIntoArgs.length < 2) {
                         throw new InsufficientParametersException();
                     }
@@ -109,27 +108,25 @@ public class Duke {
                         throw new InsufficientParametersException();
                     }
                     Event event = new Event(argsList[0], argsList[1], argsList[2]);
-                    tasks[numTasks] = event;
-                    numTasks++;
-                    printAddTaskConfirmation(event, numTasks);
-                }
-                else {
+                    tasks.add(event);
+                    printAddTaskConfirmation(event, tasks.size());
+                } else {
                     throw new UnknownCommandException();
                 }
-             
-                
+
             } catch (UnknownCommandException e) {
                 System.out.println(line);
                 System.out.println("Command not found. Please enter a valid command!");
                 System.out.println(line);
             } catch (InsufficientParametersException e) {
                 System.out.println(line);
-                System.out.println("You have not provided enough parameters for this command. Please recheck your syntax!");
+                System.out.println(
+                        "You have not provided enough parameters for this command. Please recheck your syntax!");
                 System.out.println(line);
-            } 
+            }
         }
 
-        in.close();    
+        in.close();
 
     }
 }
