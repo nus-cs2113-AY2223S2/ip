@@ -1,25 +1,27 @@
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Duke {
     final static int ZERO_INDEX = 0;
     final static int ONE_INDEX = 1;
     final static int OFFSET_ONE_FOR_ZERO_INDEXING = 1;
     final static int ERROR_NEGATIVE_ONE_RETURNED = -1;
+    final static String DOUBLE_SPACING = "  ";
     public static void main(String[] args) {
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
         String userInput;
         Scanner in = new Scanner(System.in);
-        Task[] userTasks = new Task[ZERO_INDEX];
+        ArrayList<Task> userTasks = new ArrayList<>();
         Boolean isContinue = true;
         while (isContinue) {
             userInput = in.nextLine();
             userInput = userInput.trim();
-            String[] userCommands = userInput.split(" ");
-            String userCommand = userCommands[ZERO_INDEX];
+            String[] userInputWords = userInput.split(" ");
+            String userCommandKeyword = userInputWords[ZERO_INDEX];
             try {
-                switch (userCommand) {
+                switch (userCommandKeyword) {
                 case "list":
                     userCommandList(userTasks);
                     break;
@@ -28,19 +30,22 @@ public class Duke {
                     isContinue = false;
                     break;
                 case "mark":
-                    userCommandMark(userTasks, userCommands);
+                    userCommandMark(userTasks, userInputWords);
                     break;
                 case "unmark":
-                    userCommandUnmark(userTasks, userCommands);
+                    userCommandUnmark(userTasks, userInputWords);
                     break;
                 case "todo":
-                    userTasks = userCommandTodo(userTasks, userCommand, userInput);
+                    userTasks = userCommandTodo(userTasks, userCommandKeyword, userInput);
                     break;
                 case "deadline":
-                    userTasks = userCommandDeadline(userTasks, userCommand, userInput);
+                    userTasks = userCommandDeadline(userTasks, userCommandKeyword, userInput);
                     break;
                 case "event":
-                    userTasks = userCommandEvent(userTasks, userCommand, userInput);
+                    userTasks = userCommandEvent(userTasks, userCommandKeyword, userInput);
+                    break;
+                case "delete":
+                    userTasks = userCommandDelete(userTasks, userInputWords);
                     break;
                 default:
                     userCommandDefault();
@@ -61,17 +66,17 @@ public class Duke {
         return newEventTask;
     }
 
-    private static Task[] userCommandEvent(Task[] userTasks, String userCommand, String userInput) throws DukeException {
+    private static ArrayList<Task> userCommandEvent(ArrayList<Task> userTasks, String userCommand, String userInput) throws DukeException {
         Event newEventTask = getNewEventTask(userInput, userCommand);
-        userTasks = addUserTask(userTasks, newEventTask);
+        addUserTask(userTasks, newEventTask);
         printAddedNewTask(userTasks);
         return userTasks;
     }
 
-    private static void printAddedNewTask(Task[] userTasks) {
+    private static void printAddedNewTask(ArrayList<Task> userTasks) {
         System.out.println("Got it. I've added this task:"); // shift this line below with the another print statement later
-        System.out.println(userTasks[userTasks.length- OFFSET_ONE_FOR_ZERO_INDEXING ]);
-        System.out.println("Now you have " + userTasks.length + " in the list.");
+        System.out.println(userTasks.get(userTasks.size() - OFFSET_ONE_FOR_ZERO_INDEXING));
+        System.out.println("Now you have " + userTasks.size() + " in the list.");
     }
 
     private static Deadline getNewDeadlineTask(String userInput, String userCommand) throws DukeException {
@@ -82,9 +87,9 @@ public class Duke {
         return newDeadlineTask;
     }
 
-    private static Task[] userCommandDeadline(Task[] userTasks, String userCommand, String userInput) throws DukeException {
+    private static ArrayList<Task> userCommandDeadline(ArrayList<Task> userTasks, String userCommand, String userInput) throws DukeException {
         Deadline newDeadlineTask = getNewDeadlineTask(userInput, userCommand);
-        userTasks = addUserTask(userTasks, newDeadlineTask);
+        addUserTask(userTasks, newDeadlineTask);
         printAddedNewTask(userTasks);
         return userTasks;
     }
@@ -96,35 +101,51 @@ public class Duke {
         return newTodoTask;
     }
 
-    private static Task[] userCommandTodo(Task[] userTasks, String userCommand, String userInput) throws DukeException {
+    private static ArrayList<Task> userCommandTodo(ArrayList<Task> userTasks, String userCommand, String userInput) throws DukeException {
         Todo newToDoTask = getNewTodoTask(userInput, userCommand);
-        userTasks = addUserTask(userTasks, newToDoTask);
+        addUserTask(userTasks, newToDoTask);
         printAddedNewTask(userTasks);
         return userTasks;
     }
 
-    private static void userCommandUnmark(Task[] userTasks, String[] userCommands) {
+    private static void userCommandUnmark(ArrayList<Task> userTasks, String[] userInputWords) throws DukeException {
         int taskIndex;
-        taskIndex = Integer.parseInt(userCommands[ONE_INDEX]) - OFFSET_ONE_FOR_ZERO_INDEXING;
-        userTasks[taskIndex].setisDone(false);
-        System.out.println(userTasks[taskIndex]);
+        taskIndex = Integer.parseInt(userInputWords[ONE_INDEX]) - OFFSET_ONE_FOR_ZERO_INDEXING;
+        if (taskIndex + OFFSET_ONE_FOR_ZERO_INDEXING > userTasks.size()) {
+            System.out.println("There is no task that is indexed: " + taskIndex);
+            throw new DukeException();
+        }
+        if (taskIndex < ZERO_INDEX) {
+            System.out.println("task number given cannot be less than 1");
+            throw new DukeException();
+        }
+        userTasks.get(taskIndex).setisDone(false);
+        System.out.println(userTasks.get(taskIndex));
         System.out.println("OK, I've marked this task as not done yet:");
     }
 
-    private static void userCommandMark(Task[] userTasks, String[] userCommands) {
+    private static void userCommandMark(ArrayList<Task> userTasks, String[] userInputWords) throws DukeException {
         int taskIndex;
-        taskIndex = Integer.parseInt(userCommands[ONE_INDEX]) - OFFSET_ONE_FOR_ZERO_INDEXING;
-        userTasks[taskIndex].setisDone(true);
+        taskIndex = Integer.parseInt(userInputWords[ONE_INDEX]) - OFFSET_ONE_FOR_ZERO_INDEXING;
+        if (taskIndex + OFFSET_ONE_FOR_ZERO_INDEXING > userTasks.size()) {
+            System.out.println("There is no task that is indexed: " + taskIndex);
+            throw new DukeException();
+        }
+        if (taskIndex < ZERO_INDEX) {
+            System.out.println("task number given cannot be less than 1");
+            throw new DukeException();
+        }
+        userTasks.get(taskIndex).setisDone(true);
         System.out.println("Nice! I've marked this task as done:");
-        System.out.println(userTasks[taskIndex]);
+        System.out.println(userTasks.get(taskIndex));
     }
 
-    private static void userCommandList(Task[] userTasks) {
-        for(int i = 0; i < userTasks.length; i++) {
-            if (userTasks[i].getisDone()) {
-                System.out.println((i + 1) + ". " + userTasks[i]);
+    private static void userCommandList(ArrayList<Task> userTasks) {
+        for(int i = 0; i < userTasks.size(); i++) {
+            if (userTasks.get(i).getisDone()) {
+                System.out.println((i + 1) + ". " + userTasks.get(i));
             } else {
-                System.out.println((i + 1) + ". " + userTasks[i]);
+                System.out.println((i + 1) + ". " + userTasks.get(i));
             }
         }
     }
@@ -137,10 +158,26 @@ public class Duke {
         System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
         throw new DukeException();
     }
-    private static Task[] addUserTask(Task[] userTasks, Task newTask) {
-        userTasks = Arrays.copyOf(userTasks, userTasks.length + 1);
-        userTasks[userTasks.length-OFFSET_ONE_FOR_ZERO_INDEXING] = newTask;
+
+    private static ArrayList<Task> userCommandDelete(ArrayList<Task> userTasks, String[] userInputWords) throws DukeException {
+        int taskIndex;
+        taskIndex = Integer.parseInt(userInputWords[ONE_INDEX]) - OFFSET_ONE_FOR_ZERO_INDEXING;
+        if (taskIndex + OFFSET_ONE_FOR_ZERO_INDEXING > userTasks.size()) {
+            System.out.println("There is no task that is indexed: " + taskIndex);
+            throw new DukeException();
+        }
+        if (taskIndex < ZERO_INDEX) {
+            System.out.println("task number given cannot be less than 1");
+            throw new DukeException();
+        }
+        System.out.println("Noted. I've removed this task: ");
+        System.out.println(DOUBLE_SPACING + userTasks.get(taskIndex));
+        userTasks.remove(taskIndex);
+        System.out.println("Now you have " + userTasks.size() + " in the list.");
         return userTasks;
+    }
+    private static void addUserTask(ArrayList<Task> userTasks, Task newTask) {
+        userTasks.add(newTask);
     }
 
     private static String getTodoTaskName(String taskString) {
