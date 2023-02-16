@@ -1,5 +1,6 @@
 package Arsdorint;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import Arsdorint.command.ArsdorintException;
@@ -44,6 +45,8 @@ public class Arsdorint {
     private static final String ERROR_MESSAGE_EVENT =
             "=( OOPS!!! The description of an event cannot be empty.\n" +
             "Syntax for event\n\t>>> event <task> /<date of event";
+    private static final String ERROR_MESSAGE_DELETE = "Syntax for delete item \n\t>>> delete <item index number> \n" +
+            "Note: item index must exist in the current list";
     static Scanner input = new Scanner(System.in);
     static String logo = "    ___                         _                                 _\n"
             + "   / _ \\     _____   _____  ___| |   ___    _____   _   _____   _| |_\n"
@@ -51,7 +54,7 @@ public class Arsdorint {
             + " / _____ \\  | /    __\\ \\   | |_| | | |_| | | /     | | | | | |   | |\n"
             + "/_/     \\_\\ |_|   /____/   \\_____|  \\___/  |_|     |_| |_| |_|   |_|\n";
 
-    static Task[] toDoList = new Task[MAX_NUM_OF_TASKS];
+    static ArrayList<Task> toDoList = new ArrayList<>(MAX_NUM_OF_TASKS);
     static boolean isRunning = true;
     public static void exit() {
         isRunning = false;
@@ -66,7 +69,7 @@ public class Arsdorint {
         showToUser(MESSAGE_DIVIDER_LIST);
         for (int i = 0; i < Task.numOfTasks; i++) {
             System.out.print((i + 1) + ".");
-            toDoList[i].printTask();
+            toDoList.get(i).printTask();
         }
         showToUser(MESSAGE_DIVIDER);
     }
@@ -112,6 +115,8 @@ public class Arsdorint {
             case "event":
                 showToUser(MESSAGE_DIVIDER, ERROR_MESSAGE_EVENT, MESSAGE_DIVIDER);
                 break;
+            case "delete":
+                showToUser(MESSAGE_DIVIDER, ERROR_MESSAGE_DELETE, MESSAGE_DIVIDER);
             default:
                 showToUser(MESSAGE_DIVIDER, errorMessage, MESSAGE_DIVIDER);
                 break;
@@ -169,7 +174,7 @@ public class Arsdorint {
             if (taskDescription[0].trim().isEmpty()) {
                 throw new ArsdorintException("Error: Empty Todo.");
             }
-            toDoList[Task.numOfTasks] = new Todo(taskDescription[0]);
+            toDoList.add(new Todo(taskDescription[0]));
             addTaskMessage();
         } catch (ArrayIndexOutOfBoundsException err) {
             commandErrorHandler("todo");
@@ -239,6 +244,9 @@ public class Arsdorint {
                 lowerCaseLine.equalsIgnoreCase("deadline") ||
                 lowerCaseLine.equalsIgnoreCase("event")) add(command);
             //add command when user don't type the instruction's TaskList.command
+        else if (lowerCaseLine.equalsIgnoreCase("delete")) {
+            delete(splitLine);
+        }
         else wrongCommandMessage();
     }
     public static void main(String[] args) {
