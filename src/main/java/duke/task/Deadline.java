@@ -19,7 +19,7 @@ public class Deadline extends Task {
 
     @Override
     public String printTask() {
-        return "[D]" + super.printTask() + "(by: " + getDeadline() + ")";
+        return "[D]" + super.printTask() + " (by: " + getDeadline() + ")";
     }
 
 }

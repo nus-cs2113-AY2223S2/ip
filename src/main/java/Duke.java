@@ -186,7 +186,7 @@ public class Duke {
         System.out.println(line + "Here are the tasks in your list:");
         for (int i = 0; i < tasks.size(); i++) {
             int taskIndex = i + 1;
-            System.out.print(taskIndex + ". " + tasks.get(i).printTask());
+            System.out.println(taskIndex + ". " + tasks.get(i).printTask());
         }
         System.out.println(line);
     }
@@ -196,7 +196,7 @@ public class Duke {
         if (taskIndex >= 1 && taskIndex <= tasks.size()) {
             tasks.get(taskIndex - 1).markAsDone();
             System.out.println(line + "Task " + taskIndex + " marked as done:\n" +
-                    tasks.get(taskIndex - 1).printTask() + line);
+                    tasks.get(taskIndex - 1).printTask() + '\n' + line);
         } else {
             System.out.println("Task " + taskIndex + " not found. Please try again.\n" + line);
         }
@@ -207,7 +207,7 @@ public class Duke {
         if (taskIndex >= 1 && taskIndex <= tasks.size()) {
             tasks.get(taskIndex - 1).markAsUndone();
             System.out.println(line + "Task " + taskIndex + " marked as not done yet:\n" +
-                    tasks.get(taskIndex - 1).printTask() + line);
+                    tasks.get(taskIndex - 1).printTask() + '\n' + line);
         } else {
             System.out.println("Task " + taskIndex + " not found. Please try again.\n" + line);
         }

@@ -1,4 +1,3 @@
-T | X | lkdfj
-T | X | sdlkjf
 T |   | running
-D |   | honepk  | jlkdf
+T |   | A todo
+T |   | buying
