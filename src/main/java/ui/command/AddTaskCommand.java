@@ -12,7 +12,7 @@ public class AddTaskCommand extends SaveTaskCommand {
     public AddTaskCommand(Task task) {
         this.task = task;
     }
-
+    
     @Override
     public void execute(TaskList tasks, TaskStorageManager storage, UserInterface ui) {
         tasks.addTask(task);

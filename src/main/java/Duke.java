@@ -39,6 +39,11 @@ public class Duke {
         tasks = loadedTasks;
     }
 
+    /**
+     * Event-loop of program. Is tied to the lifecycle of the instance's parse
+     *
+     * @see Parser#isRunning()
+     */
     public void run() {
         ui.printGreeting();
 
@@ -59,7 +64,6 @@ public class Duke {
 
         ui.printGoodbye();
     }
-
 
     public static void main(String[] args) {
         Duke duke = new Duke(DEFAULT_FILE_PATH);

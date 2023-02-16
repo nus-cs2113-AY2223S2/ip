@@ -3,6 +3,9 @@ package task;
 import exceptions.InvalidSyntaxException;
 import ui.Syntax;
 
+/**
+ * Represents a deadline
+ */
 public class DeadlineTask extends Task {
 
     // For serialization
@@ -18,6 +21,13 @@ public class DeadlineTask extends Task {
         this.deadline = deadline;
     }
 
+    /**
+     * Creates a {@link DeadlineTask} from user input
+     *
+     * @param splitInput Tokenized user input
+     * @return Parsed DeadlineTask
+     * @throws InvalidSyntaxException If user input does not match expected syntax
+     */
     public static DeadlineTask createFromInput(String[] splitInput) throws InvalidSyntaxException {
         try {
             String[] params = splitInput[1].split(BY_DELIMITER);

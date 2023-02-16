@@ -9,14 +9,28 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import task.TaskList;
 
+/**
+ * Handles the persistent saving and loading of a {@link TaskList}
+ */
 public class TaskStorageManager {
 
     private final Path filePath;
 
+    /**
+     * Constructor
+     *
+     * @param filePath Path to file for storing to / loading from
+     */
     public TaskStorageManager(Path filePath) {
         this.filePath = filePath;
     }
 
+    /**
+     * Saves tasks to file
+     *
+     * @param tasks {@link TaskList} to save to. If file is not found / writable, will fail and throw an exception
+     * @throws IOException If parent directories / file cannot be created or written to
+     */
     public void saveTasks(TaskList tasks) throws IOException {
         // Check for file existence
         if (!Files.isRegularFile(filePath)) {
@@ -31,6 +45,13 @@ public class TaskStorageManager {
         }
     }
 
+    /**
+     * Loads tasks from file
+     *
+     * @return Loaded tasks; will be empty if no previously saved tasks exist
+     * @throws IOException            If file cannot be read from
+     * @throws ClassNotFoundException If the saved {@link TaskList} is not compatible with the current class definition
+     */
     public TaskList loadTasks() throws IOException, ClassNotFoundException {
         // Check for file existence
         if (!Files.isRegularFile(filePath)) {

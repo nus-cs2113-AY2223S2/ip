@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Represents a list of {@link Task}
+ */
 public class TaskList implements Serializable {
 
     // For serialization
@@ -36,6 +39,12 @@ public class TaskList implements Serializable {
         return tasks.size();
     }
 
+    /**
+     * Filters the current tasks based on whether each task description contains the keyword
+     *
+     * @param keyword Case-sensitive keyword to find
+     * @return Filtered list
+     */
     public TaskList findDescription(String keyword) {
         List<Task> filteredTasks = tasks
                 .stream()
