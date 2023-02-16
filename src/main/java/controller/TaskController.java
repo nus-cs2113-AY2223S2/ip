@@ -96,4 +96,9 @@ public class TaskController {
     db.create(model);
     printDescription(model);
   }
+
+  public void manuallyAdd(Task model) {
+    counter += 1;
+    db.create(model);
+  }
 }

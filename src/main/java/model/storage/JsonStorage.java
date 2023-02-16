@@ -22,6 +22,10 @@ public class JsonStorage {
     return type;
   }
 
+  public boolean isMarked() {
+    return marked;
+  }
+
   protected String description;
 
   protected int index;

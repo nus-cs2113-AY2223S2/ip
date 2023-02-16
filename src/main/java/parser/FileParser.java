@@ -2,9 +2,11 @@ package parser;
 
 import com.google.gson.Gson;
 import model.storage.JsonStorage;
+import model.task.Todo;
 import controller.TaskController;
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class FileParser {
 
@@ -42,6 +44,10 @@ public class FileParser {
                 String type = item.getType();
                 switch (type) {
                 case "todo":
+                    Todo todo = new Todo(item.getDescription());
+                    boolean isMarked = item.isMarked();
+                    todo.setDone(isMarked);
+                    taskController.manuallyAdd(todo);
                 case "event":
                 case "deadline":
                 default:
@@ -53,23 +59,6 @@ public class FileParser {
             System.out.println(e.getMessage());
         } catch (Exception e) {
             System.out.println(e.getMessage());
-        }
-    }
-
-    /**
-     * This function is used to write a line to the file.
-     *
-     * @param text The text data to be written into a file
-     */
-    public void writeToFile(String text) {
-        try {
-            createFileIfNotExist();
-            FileWriter writer = new FileWriter(FILE_NAME, true);
-            writer.append(text + System.lineSeparator());
-            writer.close();
-        } catch (IOException e) {
-            System.out.println("Oops, something went wrong");
-            e.printStackTrace();
         }
     }
 
