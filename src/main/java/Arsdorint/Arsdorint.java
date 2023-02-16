@@ -28,6 +28,7 @@ public class Arsdorint {
             "____________________________________________________________";
     private static final String MESSAGE_DIVIDER_LIST =
             "____________________________LIST____________________________";
+    private static final String MESSAGE_DELETE = "Noted. I've removed this task:";
 
     private static final String ERROR_MESSAGE_BYE = " ";
     private static final String ERROR_MESSAGE_LIST = " ";
@@ -117,6 +118,7 @@ public class Arsdorint {
                 break;
             case "delete":
                 showToUser(MESSAGE_DIVIDER, ERROR_MESSAGE_DELETE, MESSAGE_DIVIDER);
+                break;
             default:
                 showToUser(MESSAGE_DIVIDER, errorMessage, MESSAGE_DIVIDER);
                 break;
@@ -126,60 +128,72 @@ public class Arsdorint {
     private static void addTaskMessage() {
         showToUser(MESSAGE_DIVIDER);
         System.out.println("\nGot it. I've added this task:\n" + "\t");
-        toDoList[Task.numOfTasks - 1].printTask();
+        toDoList.get(toDoList.size() - 1).printTask();
         System.out.println("\t" + "Now you have " + Integer.toString(Task.numOfTasks) + " tasks in the list.");
         showToUser(MESSAGE_DIVIDER);
     }
 
     public static void mark(String[] command) {
         try {
-            int idx = Integer.parseInt(command[1]);
+            int idx = Integer.parseInt(command[1]) - 1;
             if (command[0].equalsIgnoreCase("mark")) {
-                toDoList[idx - 1].isDone = true;
+                toDoList.get(idx).isDone = true;
                 System.out.println("Nice! I've marked this task as done: \n");
-            }
-            else toDoList[idx - 1].isDone = false;
+            } else toDoList.get(idx).isDone = false;
             list();
-        } catch (NumberFormatException err) {
-            commandErrorHandler("mark");
-        } catch (ArrayIndexOutOfBoundsException err) {
-            commandErrorHandler("mark");
-        } catch (NullPointerException err) {
+        } catch (NumberFormatException | IndexOutOfBoundsException | NullPointerException err) {
             commandErrorHandler("mark");
         }
     }
 
     public static void unmark(String[] command) {
         try {
-            int idx = Integer.parseInt(command[1]);
+            int idx = Integer.parseInt(command[1]) - 1;
             if (command[0].equalsIgnoreCase("unmark")) {
                 System.out.println("OK, I've marked this task as not done yet: \n");
-                toDoList[idx - 1].isDone = true;
+                toDoList.get(idx).isDone = true;
             }
             else {
-                toDoList[idx - 1].isDone = false;
+                toDoList.get(idx).isDone = false;
             }
             list();
-        } catch (NumberFormatException err) {
+        } catch (NumberFormatException | IndexOutOfBoundsException | NullPointerException err) {
             commandErrorHandler("unmark");
-        } catch (ArrayIndexOutOfBoundsException err) {
-            commandErrorHandler("unmark");
-        } catch (NullPointerException err) {
-            commandErrorHandler("unmark");
+        }
+    }
+
+
+    public static void removeTaskMessage(int idx) {
+        //showToUser(MESSAGE_DIVIDER);
+        System.out.println("\t");
+        toDoList.get(idx).printTask();
+        System.out.println("\t" + "Now you have " + --Task.numOfTasks + " tasks in the list.");
+        showToUser(MESSAGE_DIVIDER);
+    }
+
+    public static void delete(String[] command) {
+        try {
+            int idx = Integer.parseInt(command[1]) - 1;
+            if (command[0].equalsIgnoreCase("delete")) {
+                toDoList.get(idx).isDone = true;
+                System.out.println(MESSAGE_DELETE);
+            } else toDoList.get(idx).isDone = false;
+            removeTaskMessage(idx);
+            toDoList.remove(idx);
+        }
+        catch (NumberFormatException | IndexOutOfBoundsException | NullPointerException err) {
+            commandErrorHandler("delete");
         }
     }
 
     public static void addToDo(String[] taskDescription) {
         try {
             if (taskDescription[0].trim().isEmpty()) {
-                throw new ArsdorintException("Error: Empty Todo.");
+                throw new ArsdorintException("Error: Empty Todo Description.");
             }
             toDoList.add(new Todo(taskDescription[0]));
             addTaskMessage();
-        } catch (ArrayIndexOutOfBoundsException err) {
-            commandErrorHandler("todo");
-
-        } catch (ArsdorintException err) {
+        } catch (ArrayIndexOutOfBoundsException | ArsdorintException err) {
             commandErrorHandler("todo");
         }
     }
@@ -189,11 +203,9 @@ public class Arsdorint {
             if (taskDescription[0].trim().isEmpty()) {
                 throw new ArsdorintException("Error: Empty Deadline Description.");
             }
-            toDoList[Task.numOfTasks] = new Deadline(taskDescription[0], taskDescription[1].trim());
+            toDoList.add(new Deadline(taskDescription[0], taskDescription[1].trim()));
             addTaskMessage();
-        } catch (ArrayIndexOutOfBoundsException err) {
-            commandErrorHandler("deadline");
-        } catch (ArsdorintException err) {
+        } catch (ArrayIndexOutOfBoundsException | ArsdorintException err) {
             commandErrorHandler("deadline");
         }
     }
@@ -203,15 +215,12 @@ public class Arsdorint {
             if (taskDescription[0].trim().isEmpty()) {
                 throw new ArsdorintException("Error: Empty Event Description.");
             }
-            toDoList[Task.numOfTasks] = new Event(taskDescription[0], taskDescription[1].trim());
+            toDoList.add(new Event(taskDescription[0], taskDescription[1].trim()));
             addTaskMessage();
-        } catch (ArrayIndexOutOfBoundsException err) {
-            commandErrorHandler("event");
-        } catch (ArsdorintException err) {
+        } catch (ArrayIndexOutOfBoundsException | ArsdorintException err){
             commandErrorHandler("event");
         }
     }
-
 
     private static void exitMessage() {
         showToUser(MESSAGE_DIVIDER, EXIT_MESSAGE, MESSAGE_DIVIDER);
