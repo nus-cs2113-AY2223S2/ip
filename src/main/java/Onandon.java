@@ -96,21 +96,6 @@ public class Onandon {
         Print.printUnderline();
     }
 
-    public static int printDeleteOfTasks(String inputText, Task[] tasks, int cnt){
-        int index;
-
-        Print.printDelete();
-        index = Integer.parseInt(inputText.split(" ")[1])-1;
-        System.out.println("\t\t" + tasks[index].toString());
-        ArrayList<Task> result = new ArrayList<Task>(Arrays.asList(tasks));
-        result.remove(index);
-        tasks = result.toArray(new Task[0]);
-        cnt -= 1;
-        System.out.println("\t Now you have " + cnt + " tasks in the list.");
-        Print.printUnderline();
-        return cnt;
-    }
-
     public static void checkException(String inputText) throws OnandonEmptyException, OnandonUnknownException, OnandonNotaskException {
         String[] split = inputText.split(" ");
         String tgt = inputText.split(" ")[0];
@@ -193,9 +178,6 @@ public class Onandon {
                 break;
             case "list":
                 printListOfTasks(tasks, cnt);
-                break;
-            case "delete":
-                cnt = printDeleteOfTasks(inputText, tasks, cnt);
                 break;
             }
         }
