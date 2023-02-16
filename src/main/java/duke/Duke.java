@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Duke {
 
     public static final ArrayList<Task> TASKS = new ArrayList<Task>();
-    public static int tasksI = 1;
+    public static int tasksI = 0;
     public static final String DEADLINE = "deadline";
     public static final String TODO = "todo";
     public static final String EVENT = "event";
@@ -45,19 +45,19 @@ public class Duke {
 
     public static void listTasks() {
         System.out.println("Here are the tasks in your list: ");
-        for (int i = 1; i < tasksI; i++) {
+        for (int i = 1; i <= tasksI; i++) {
             Task currTask = TASKS.get(i);
             System.out.println(i + ". " + currTask.toString());
         }
     }
 
-    public static void markTask(String word, Task task) {
+    public static void markTask(Task task) {
         task.mark();
         System.out.println("Nice! I've marked this task as done: ");
         System.out.println(task.toString());
     }
 
-    public static void unmarkTask(String word, Task task) {
+    public static void unmarkTask(Task task) {
         task.unmark();
         System.out.println("OK, I've marked this task as not done yet: ");
         System.out.println(task.toString());
@@ -110,9 +110,17 @@ public class Duke {
             addEvent(descript);
         }
         if (!exceptionPresent) {
-            System.out.println("Now you have " + tasksI + " tasks in the list.");
             tasksI++;
+            System.out.println("Now you have " + tasksI + " tasks in the list.");
         }
+    }
+
+    public static void deleteTask(Task task) {
+        TASKS.remove(task);
+        System.out.println("Noted. I've removed this task:");
+        System.out.println(task.toString());
+        tasksI--;
+        System.out.println("Now you have " + tasksI + " tasks in the list.");
     }
 
     public static void run() {
@@ -125,18 +133,19 @@ public class Duke {
                     listTasks();
                 // mark a task
                 } else if (input[0].equals(MARK)) {
-                    Task taskNum = TASKS.get(Integer.parseInt(input[1]));
-                    markTask(input[0], taskNum);
+                    Task taskToMark = TASKS.get(Integer.parseInt(input[1]));
+                    markTask(taskToMark);
                 // unmark a task
                 } else if (input[0].equals(UNMARK)) {
-                    Task taskNum = TASKS.get(Integer.parseInt(input[1]));
-                    unmarkTask(input[0], taskNum);
+                    Task taskToUnmark = TASKS.get(Integer.parseInt(input[1]));
+                    unmarkTask(taskToUnmark);
                 // a task
                 } else if (input[0].equals(DEADLINE) || input[0].equals(TODO) || input[0].equals(EVENT)) {
                     createTask(input[0], input);
                 // delete a task
                 } else if (input[0].equals(DELETE)) {
-
+                    Task taskToDelete = TASKS.get(Integer.parseInt(input[1]));
+                    deleteTask(taskToDelete);
                 } else {
                     throw new DukeException();
                 }

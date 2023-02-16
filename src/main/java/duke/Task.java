@@ -25,7 +25,7 @@ public class Task {
     public String getDescription() {
         return this.description;
     }
-
+    
     public String toString() {
         String[] command =  description.split("/");
         return "[" + getStatusIcon() + "]"  + command[0];
