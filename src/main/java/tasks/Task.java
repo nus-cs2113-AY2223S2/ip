@@ -1,6 +1,6 @@
 package tasks;
 
-public class Task {
+public abstract class Task {
     protected String description;
     protected boolean isDone;
 
@@ -10,7 +10,7 @@ public class Task {
     }
 
     public String getStatusIcon() {
-        return (isDone ? "[X] " : "[ ] "); // tick if done, cross if undone
+        return (isDone ? "[X]" : "[ ]"); // tick if done, cross if undone
     }
 
     public void setDescription(String description) {
@@ -28,11 +28,11 @@ public class Task {
         return isDone;
     }
 
-    public String toString() {
-        return this.getStatusIcon() + this.description;
-    }
-
     public String getType() {
         return null;
+    }
+
+    public String toString() {
+        return this.getStatusIcon() + " " + this.description;
     }
 }

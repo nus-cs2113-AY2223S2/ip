@@ -1,6 +1,8 @@
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.io.File;
 import tasks.*;
 
 public class ThomasShelby {
@@ -8,8 +10,6 @@ public class ThomasShelby {
 
     static Task[] taskManager = new Task[MAX_TASKS];
     static int taskCount = 0;
-
-    Data.loadData();
 
     private static void listTasks() {
         System.out.println("Here are the tasks in your list:");
@@ -64,22 +64,23 @@ public class ThomasShelby {
     private static void deleteTask(String[] cmdSplit) {
         int whichTask;
         whichTask = Integer.parseInt(cmdSplit[1]) - 1; // shift back index
-        taskManager[whichTask].setIsDone(false);
-        System.out.println("You've gotten lazy.");
+        taskManager[whichTask] = null;
+        System.out.println("Noted, deleted this task.");
         System.out.println(taskManager[whichTask]);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         System.out.print("Good day, I'm Thomas Shelby.\nTo what do I owe the pleasure?\n");
+        File data = new File("/data/data.txt");
+        Data.loadData(data, taskManager, taskCount);
         Scanner in = new Scanner(System.in);
         while (true) {
             try {
                 String cmd = in.nextLine();
                 String[] cmdSplit = cmd.split(" ", 2); // user input split into individual words
-                int whichTask = 0; // variable holding mark/unmark task num
                 switch (cmdSplit[0]) {
                 case "bye":
-                    Data.saveData();
+                    Data.saveData(taskManager, taskCount);
                     System.out.println("Cheers.");
                     return;
                 case "list":
