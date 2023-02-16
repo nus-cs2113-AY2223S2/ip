@@ -15,8 +15,8 @@ import tasks.Event;
 public class Storage {
     private static final Boolean LOAD_FROM_SAVE_DATA = true;
     private static final String MARK = "mark ";
-    private static final String directoryLocation = "src/main/java/data";
-    private static final String fileLocation = "src/main/java/data/listData.txt";
+    private static final String directoryLocation = "/";
+    private static final String fileLocation = "listData.txt";
 
     public void loadData(ArrayList<Task> taskList) {
         File data = new File(directoryLocation);
