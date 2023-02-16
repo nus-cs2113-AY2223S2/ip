@@ -2,12 +2,8 @@ package duke.task;
 import duke.Task;
 
 public class Todo extends Task {
-<<<<<<< HEAD
 
-    public Todo(String description, String taskType){
-=======
     public Todo(String description, String taskType) {
->>>>>>> branch-Level-7
         super(description, taskType);
     }
 
@@ -21,10 +17,6 @@ public class Todo extends Task {
         return "T | " + (super.isDone ? 1 : 0) + " | " + super.description;
     }
 
-    @Override
-    public String saveText() {
-        return "T | " + (super.isDone ? 1 : 0) + " | " + super.description;
-    }
 }
 
 
