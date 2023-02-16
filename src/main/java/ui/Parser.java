@@ -11,6 +11,7 @@ import ui.command.DeleteTaskCommand;
 import ui.command.FindCommand;
 import ui.command.ListCommand;
 import ui.command.MarkTaskCommand;
+import ui.command.NoOpCommand;
 
 public class Parser {
 
@@ -36,6 +37,7 @@ public class Parser {
 
         if (cmdType.equals(Syntax.EXIT.root)) {
             isRunning = false;
+            return new NoOpCommand();
         } else if (cmdType.equals(Syntax.LIST.root)) {
             return new ListCommand();
         } else if (cmdType.equals(Syntax.FIND.root)) {
