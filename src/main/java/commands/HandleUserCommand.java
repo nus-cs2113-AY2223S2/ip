@@ -26,7 +26,6 @@ public class HandleUserCommand {
                     break;
                 case "list":
                     if (list.size() == 0) {
-                        System.out.println(constant.HORIZONTAL_LINE + "\n");
                         System.out.println("Your day is clear!");
                         System.out.println(constant.HORIZONTAL_LINE + "\n");
                     } else {
