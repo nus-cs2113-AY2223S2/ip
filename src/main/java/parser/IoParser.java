@@ -7,8 +7,6 @@ import validator.error.InvalidTaskError;
 import java.util.HashMap;
 import java.util.regex.PatternSyntaxException;
 
-import javax.xml.stream.events.EndDocument;
-
 public class IoParser {
 
     protected final String COMMAND = "command";
@@ -87,11 +85,13 @@ public class IoParser {
 
         for (int i = 0; i < 3; ++i) {
             if (words[i].startsWith("to ")) {
+                words[i] = words[i].substring("to ".length(), words[i].length()).trim();
                 end = words[i];
             } else if (words[i].startsWith("from ")) {
+                words[i] = words[i].substring("from ".length(), words[i].length()).trim();
                 start = words[i];
             } else {
-                description = words[i];
+                description = words[i].trim();
             }
         }
 
@@ -119,6 +119,8 @@ public class IoParser {
                 return handleMark(words[1], command);
             case Command.DEADLINE:
                 return handleDeadline(words[1]);
+            case Command.EVENT:
+                return handleEvent(words[1]);
             }
         } catch (IndexOutOfBoundsException e) {
             System.out.println(ErrorMessage.NO_DESCRIPTION.message);

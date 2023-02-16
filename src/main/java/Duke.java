@@ -37,7 +37,7 @@ public class Duke {
       case Command.MARK:
       case Command.UNMARK:
         String index = dictionary.get("index");
-        int position = Integer.parseInt(index);
+        int position = Integer.parseInt(index) - 1;
         boolean isMark = command.equals(Command.MARK);
         controller.toggleMark(isMark, position);
         break;
@@ -50,7 +50,7 @@ public class Duke {
         description = dictionary.get("description");
         String start = dictionary.get("start");
         String end = dictionary.get("end");
-        controller.addEventTask(description);
+        controller.addEventTask(description, start, end);
         break;
       default:
         throw new InvalidTaskError(ErrorMessage.INVALID_COMMAND.message);
