@@ -1,7 +1,5 @@
 package duke.instructions;
 
-import java.util.ArrayList;
-
 public class Task {
     protected String description;
     protected boolean isDone;
@@ -37,11 +35,9 @@ public class Task {
                + System.lineSeparator();
     }
     public String numberOfTask(int length){
-        return "     Now you have " + length + " tasks in the list.";
+        return "     Now you have "
+                + length + " tasks in the list.";
 
-    }
-    public static void printLine(){
-        System.out.println("    ____________________________________________________________");
     }
 
 }

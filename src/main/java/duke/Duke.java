@@ -30,10 +30,10 @@ public class Duke {
             listMain(input);
             break;
         case "mark":
-            markMain(input, command);
+            markMain(command);
             break;
         case "ummark":
-            unMarkMain(input, command);
+            unMarkMain(command);
             break;
         case "todo":
             toDoMain(input);
@@ -41,16 +41,16 @@ public class Duke {
         case "deadline":
             deadlineMain(input);
             break;
-
         case "event":
             eventMain(input);
+            break;
+        case "delete":
+            deleteMain(input, command);
             break;
         default:
             throw new DukeException(UNRECOGNISED_INPUT);
 
         }
-
-
     }
 
     public static void listMain(String input) {
@@ -65,7 +65,7 @@ public class Duke {
 
     }
 
-    public static void markMain(String input, String[] command) {
+    public static void markMain(String[] command) {
         int indexTask = Integer.parseInt(command[1]);
         System.out.println(LINE);
         taskNameList.get(indexTask - 1).mark();
@@ -75,7 +75,7 @@ public class Duke {
         System.out.println(LINE);
     }
 
-    public static void unMarkMain(String input, String[] command) {
+    public static void unMarkMain(String[] command) {
         int indexOfTask = Integer.parseInt(command[1]);
         System.out.println(LINE);
         taskNameList.get(indexOfTask - 1).unMark();
@@ -127,6 +127,17 @@ public class Duke {
         System.out.println(LINE);
 
     }
+    public static void deleteMain(String input, String[] command){
+        int indexTask = Integer.parseInt(command[1]);
+        Task task = new Task(input);
+        System.out.println(LINE);
+        System.out.print("     Noted. I've removed this task:"
+                + System.lineSeparator()
+                + taskNameList.get(indexTask - 1).getState());
+        taskNameList.remove(indexTask - 1);
+        System.out.println(task.numberOfTask(taskNameList.size()));
+        System.out.println(LINE);
+    }
 
     public static void main(String[] args) {
         greeting();
@@ -144,8 +155,6 @@ public class Duke {
                 System.out.println(e.getMessage());
                 System.out.println(LINE);
             }
-
         }
     }
 }
-

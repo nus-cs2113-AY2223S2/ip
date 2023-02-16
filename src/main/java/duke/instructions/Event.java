@@ -9,14 +9,6 @@ public class Event extends Task{
         this.input = input;
     }
 
-    public void handleErrors(){
-            printLine();
-            System.out.println("     ☹ OOPS!!! The description of a event cannot be empty.");
-            printLine();
-
-
-    }
-
     @Override
     public String getState(){
         String wholeArrayOfEvent = this.description.substring(description.indexOf(" ") + 1);
