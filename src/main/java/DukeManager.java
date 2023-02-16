@@ -84,7 +84,7 @@ class DukeManager {
             taskList.set(index, updatedTask);
             System.out.println(updatedTask.toString());
         } catch (IndexOutOfBoundsException a) {
-            throw new IncorrectParameterException("The index provided does not exist!");
+            throw new IncorrectParameterException("The index provided does not exist! ");
         }
     }
 
