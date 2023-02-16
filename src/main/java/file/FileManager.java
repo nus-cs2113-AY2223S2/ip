@@ -11,9 +11,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class FileManager {
-    public static File f = new File("src/main/java/file/duke.txt");
+    public static File f = new File("duke.txt");
 
-    public static void readIntoList()throws FileNotFoundException {
+    public static void readIntoList()throws FileNotFoundException, IOException {
+        if (!f.exists()){
+            f.createNewFile();
+        }
         Scanner s = new Scanner(f);
         while(s.hasNext()){
             String[] currentLineArray = s.nextLine().split("/");
