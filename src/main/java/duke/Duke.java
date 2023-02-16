@@ -32,21 +32,27 @@ public class Duke {
         int item = 0;
 
         while (!line.equals("bye")) {
-            if (!(line.startsWith("event") || line.startsWith("deadline") || line.startsWith("todo") || line.equals("list") || line.startsWith("mark") || line.startsWith("unmark"))) {
+            if (!(line.toLowerCase().startsWith("event") || line.toLowerCase().startsWith("delete") ||line.toLowerCase().startsWith("deadline") || line.toLowerCase().startsWith("todo") || line.equals("list") || line.toLowerCase().startsWith("mark") || line.toLowerCase().startsWith("unmark"))) {
                 System.out.println(UNRECOGNISED_WORD);
 
             } else {
                 // Add event
                 if (line.toLowerCase().startsWith("event")) {
                     item = addEvent(line, item);
+                    displayNumItemsInList(item);
+                    System.out.println(HORIZONTAL);
                 }
                 // Add deadline
                 if (line.toLowerCase().startsWith("deadline")) {
                     item = addDeadline(line, item);
+                    displayNumItemsInList(item);
+                    System.out.println(HORIZONTAL);
                 }
                 // Add todo
                 if (line.toLowerCase().startsWith("todo")) {
                     item = addToDo(line, item);
+                    displayNumItemsInList(item);
+                    System.out.println(HORIZONTAL);
                 }
 
                 // Display list
@@ -62,6 +68,11 @@ public class Duke {
                 if (line.toLowerCase().startsWith("unmark")) {
                     toggleDoneStatus(line, item, UNMARK_MSG, false);
                 }
+
+                // Delete item
+                if (line.toLowerCase().startsWith("delete")) {
+                    item = deleteTask(line, item);
+                }
             }
             // Read next line
             line = in.nextLine();
@@ -70,15 +81,18 @@ public class Duke {
 
     }
 
-    public static void displayTaskAddedMessage(Task item) {
-        System.out.println(HORIZONTAL + "\n\tGot it! Added this task: " + "\n\t\t" + item.getDescription());
+    public static void displayTaskAddedMessage(Task task) {
+        System.out.println(HORIZONTAL + "\n\tGot it! Added this task: " + "\n\t\t" + task.getDescription());
+    }
+    public static void displayTaskDeletedMessage(Task task) {
+        System.out.println(HORIZONTAL + "\n\tNoted! I have deleted this task: " + "\n\t\t" + task.getDescription());
     }
 
     public static void displayNumItemsInList(int item) {
-        if (item > 0) {
-            System.out.println("\tNow you have " + (item + 1) + " tasks in the list");
+        if (item > 1) {
+            System.out.println("\tNow you have " + (item) + " tasks in the list");
         } else {
-            System.out.println("\tNow you have " + (item + 1) + " task in the list");
+            System.out.println("\tNow you have " + (item) + " task in the list");
         }
     }
 
@@ -93,11 +107,8 @@ public class Duke {
 
             Event newEvent = new Event(description, fromDate, toDate);
             list.add(newEvent);
-            displayTaskAddedMessage(newEvent);
-            displayNumItemsInList(item);
-            System.out.println(HORIZONTAL);
-
             item++;
+            displayTaskAddedMessage(newEvent);
         } catch (StringIndexOutOfBoundsException e) {
             System.out.println(EMPTY_EVENT);
 
@@ -117,11 +128,9 @@ public class Duke {
             Deadline newDeadline = new Deadline(description, byDate);
             list.add(newDeadline);
 
-            displayTaskAddedMessage(newDeadline);
-            displayNumItemsInList(item);
-            System.out.println(HORIZONTAL);
-
             item++;
+            displayTaskAddedMessage(newDeadline);
+
         } catch (StringIndexOutOfBoundsException e) {
             System.out.println(EMPTY_DEADLINE);
 
@@ -138,12 +147,8 @@ public class Duke {
 
             Todo newTodo = new Todo(description);
             list.add(newTodo);
-
-            displayTaskAddedMessage(newTodo);
-            displayNumItemsInList(item);
-            System.out.println(HORIZONTAL);
-
             item++;
+            displayTaskAddedMessage(newTodo);
 
         } catch (StringIndexOutOfBoundsException e) {
             System.out.println(EMPTY_TODO);
@@ -153,6 +158,30 @@ public class Duke {
 
         }
 
+    }
+
+    public static int deleteTask(String line, int item) {
+        try {
+            String inputMessageArray[] = new String[2];
+            inputMessageArray = line.split(" ");
+            int numToDelete = Integer.parseInt(inputMessageArray[1]) - 1;
+
+            // Check if list item number exists in list
+            if (numToDelete >= 0 && numToDelete < item) {
+                // Delete item from list
+                Task deletedTask = list.remove(numToDelete);
+                item--;
+                displayTaskDeletedMessage(deletedTask);
+                displayNumItemsInList(item);
+                System.out.println(HORIZONTAL);
+
+            } else {
+                System.out.println("Item number " + (numToDelete + 1) + " does not exist in list");
+            }
+        } catch(ArrayIndexOutOfBoundsException e){
+            System.out.println(EMPTY_LISTNUM);
+        }
+        return item;
     }
 
     public static void displayList(int item) {
@@ -183,7 +212,7 @@ public class Duke {
                     System.out.println("No change, task was already as is");
                 }
             } else {
-                System.out.println("Item number " + (numToMark + 1) + " does not exist yet");
+                System.out.println("Item number " + (numToMark + 1) + " does not exist in list");
             }
 
         } catch (ArrayIndexOutOfBoundsException e) {
