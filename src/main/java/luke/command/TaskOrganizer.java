@@ -25,7 +25,7 @@ public class TaskOrganizer {
     private HashMap<Integer, Integer> serialNumbers;
 
     /** A list containing all valid task types */
-    private ArrayList<String> taskTypes = new ArrayList<String>(
+    private static final ArrayList<String> TASK_TYPES = new ArrayList<String>(
             Arrays.asList("todo", "event", "deadline")
     );
     ;
@@ -69,7 +69,7 @@ public class TaskOrganizer {
      * @return True if type is a valid task type, False if type is not a valid task type.
      */
     public boolean isTaskType(String type) {
-        return taskTypes.contains(type);
+        return TASK_TYPES.contains(type);
     }
 
     /**
@@ -225,19 +225,19 @@ public class TaskOrganizer {
 
         // Serialize toDos
         String toDosJson = new Gson().toJson(toDos);
-        FileWriter saveToDos = new FileWriter("./data/toDos.txt");
+        FileWriter saveToDos = new FileWriter("data/toDos.txt");
         saveToDos.write(toDosJson);
         saveToDos.close();
 
         // Serialize deadlines
         String deadlinesJson = new Gson().toJson(deadlines);
-        FileWriter saveDeadlines = new FileWriter("./data/deadlines.txt");
+        FileWriter saveDeadlines = new FileWriter("data/deadlines.txt");
         saveDeadlines.write(deadlinesJson);
         saveDeadlines.close();
 
         // Serialize events
         String eventsJson = new Gson().toJson(events);
-        FileWriter saveEvents = new FileWriter("./data/events.txt");
+        FileWriter saveEvents = new FileWriter("data/events.txt");
         saveEvents.write(eventsJson);
         saveEvents.close();
     }
@@ -249,7 +249,7 @@ public class TaskOrganizer {
      */
     private void serialzeSerialNumbers() throws IOException {
         String serialNumbersJson = new Gson().toJson(serialNumbers);
-        FileWriter saveSerialNumbers = new FileWriter("./data/serialNumbers.txt");
+        FileWriter saveSerialNumbers = new FileWriter("data/serialNumbers.txt");
         saveSerialNumbers.write(serialNumbersJson);
         saveSerialNumbers.close();
     }
@@ -260,7 +260,7 @@ public class TaskOrganizer {
      * @throws IOException If there is an error writing the file.
      */
     private void serializeTaskID() throws IOException {
-        FileWriter saveTaskID = new FileWriter("./data/id.txt");
+        FileWriter saveTaskID = new FileWriter("data/id.txt");
         saveTaskID.write(Integer.toString(newTaskID));
         saveTaskID.close();
     }
@@ -272,7 +272,7 @@ public class TaskOrganizer {
      */
     private void serializeTaskOrders() throws IOException {
         String taskOrdersJson = new Gson().toJson(tasks);
-        FileWriter saveTaskOrders = new FileWriter("./data/taskList.txt");
+        FileWriter saveTaskOrders = new FileWriter("data/taskList.txt");
         saveTaskOrders.write(taskOrdersJson);
         saveTaskOrders.close();
     }

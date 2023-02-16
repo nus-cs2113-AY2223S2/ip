@@ -20,7 +20,7 @@ import java.util.HashMap;
 /** Inspiration for Storage class taken from https://github.com/Magmanat/ip */
 public class Storage {
     /** File names */
-    private static final String FOLDER_NAME = "./data";
+    private static final String FOLDER_NAME = "data";
     private static final String ID_FILENAME = "id.txt";
     private static final String TASK_ORDER_FILENAME = "taskList.txt";
     private static final String SERIAL_NUMBERS_FILENAME = "serialNumbers.txt";
@@ -298,18 +298,22 @@ public class Storage {
      * @return A TaskOrganizer object to be used in LUKE.
      */
     public TaskOrganizer loadData() {
-        try {
-            boolean isOkToRead = isFolderPresent() && isFilesPresent() && !isEmpty();
-            if (!isOkToRead) {
-                return loadNewData();
+        boolean isOkToRead = isFolderPresent() && isFilesPresent() && !isEmpty();
+        TaskOrganizer loadedData = null;
+        if (!isOkToRead) {
+            try {
+                loadedData = loadNewData();
+            } catch (CreateFileException e) {
+                handleFileCreationError();
             }
-            return loadPreviousData();
-        } catch (LoadDataException e) {
-            handleFileLoadingError();
-        } catch (CreateFileException e) {
-            handleFileCreationError();
+        } else {
+            try {
+                loadedData = loadPreviousData();
+            } catch (LoadDataException e) {
+                handleFileLoadingError();
+            }
         }
-        return new TaskOrganizer();
+        return loadedData;
     }
 
     /** Informs the user that there was an error creating a file then exits the program. */

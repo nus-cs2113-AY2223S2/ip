@@ -149,6 +149,12 @@ public class Luke {
             return;
         }
 
+        try {
+            taskOrganizer.serializeTaskOrganizer();
+        } catch (IOException e) {
+            storage.handleSaveError();
+        }
+
         response.printAddTask(taskName);
     }
 
@@ -179,10 +185,13 @@ public class Luke {
             }
             taskOrganizer.markTask(serialNumber);
             response.printMarkTask(taskOrganizer.getTaskBySerialNumber(serialNumber));
+            taskOrganizer.serializeTaskOrganizer();
         } catch (NumberFormatException e) {
             handleInvalidCommand();
         } catch (InvalidIndexException e) {
             handleOutOfBounds();
+        } catch (IOException e) {
+            storage.handleSaveError();
         }
     }
 
@@ -203,10 +212,13 @@ public class Luke {
             }
             taskOrganizer.unmarkTask(serialNumber);
             response.printUnmarkTask(taskOrganizer.getTaskBySerialNumber(serialNumber));
+            taskOrganizer.serializeTaskOrganizer();
         } catch (NumberFormatException e) {
             handleInvalidCommand();
         } catch (InvalidIndexException e) {
             handleOutOfBounds();
+        } catch (IOException e) {
+            storage.handleSaveError();
         }
     }
 
@@ -227,10 +239,13 @@ public class Luke {
             }
             response.printDeleteTask(taskOrganizer.getTaskBySerialNumber(serialNumber));
             taskOrganizer.deleteTask(serialNumber);
+            taskOrganizer.serializeTaskOrganizer();
         } catch (NumberFormatException e) {
             handleInvalidCommand();
         } catch (InvalidIndexException e) {
             handleOutOfBounds();
+        } catch (IOException e) {
+            storage.handleSaveError();
         }
     }
 
