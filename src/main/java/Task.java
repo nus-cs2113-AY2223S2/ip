@@ -23,6 +23,10 @@ public class Task {
         System.out.println(this.toString());
     }
 
+    public String fileFormat() {
+        return (String.format(" |%b|%s", this.isDone, this.description));
+    }
+
     @Override
     public String toString() {
         return String.format("[%s] %s", this.getStatusIcon(), this.description);

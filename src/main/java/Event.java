@@ -11,6 +11,11 @@ public class Event extends Task {
     }
 
     @Override
+    public String fileFormat() {
+        return (String.format("E|%b|%s /from %s /to %s", super.isDone, this.eventName, this.startTime, this.endTime));
+    }
+
+    @Override
     public String toString() {
         return ("[E][" + super.getStatusIcon() + "] " + this.eventName) +
                 " (from: " + this.startTime + " to: " + this.endTime + ")";

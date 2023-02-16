@@ -32,10 +32,13 @@ public class Main {
                     Duke.addTodo(phrase);
                 } else if (command.equals("deadline")) {
                     Duke.addDeadline(phrase);
+                } else if (command.equals("delete")) {
+                    Duke.delete(Integer.parseInt(phrase));
                 } else {
                     System.out.println("Invalid command");
                 }
             }
+            Duke.saveToFile();
             System.out.println("------------------------------------");
         }
         userInput.close();
