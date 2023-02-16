@@ -5,70 +5,80 @@ import Duke.Exception.MarkIndexException;
 import Duke.Exception.NoTaskException;
 import Duke.Exception.TaskInfoException;
 
+import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.File;
+import java.io.IOException;
 
 public class Duke {
-    private static int taskCount = 0;
-    private static Task[] tasks = new Task[100];
+    //    private static int taskCount = 0;
+    private static ArrayList<Task> tasks = new ArrayList<>();
     private static final String dividingLine = "\n————————————————————————————————————————————————————————\n";
 
     public static void printList() {
         System.out.println(dividingLine + "Here are the tasks in your list:");
-        for (int i = 0; i < taskCount; i++) {
-            System.out.println((i + 1) + ". " + tasks[i].toString());
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println((i + 1) + ". " + (tasks.get(i)).toString());
         }
-        System.out.println("Now you have " + taskCount + " tasks in the list." + dividingLine);
+        System.out.println("Now you have " + tasks.size() + " tasks in the list." + dividingLine);
     }
 
     public static void addTask(Task task) {
-        tasks[taskCount] = task;
+        tasks.add(task);
         System.out.println(dividingLine);
         System.out.println("Got it. I've added this task:");
-        System.out.println(tasks[taskCount]);
-        System.out.println("Now you have " + (taskCount + 1) + " tasks in the list.");
+        System.out.println(task);
+        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
         System.out.println(dividingLine);
-        taskCount++;
     }
 
     public static void processTask(String line) throws DukeException, TaskInfoException, MarkIndexException, NoTaskException {
         if (line.equals("list")) {
             printList();
         } else if (line.contains("mark") && !line.contains("unmark")) {
-            if(taskCount == 0){
+            if (tasks.size() == 0) {
                 throw new NoTaskException();
             }
-            if(line.length() == 4){
+            if (line.length() == 4) {
                 throw new MarkIndexException();
             }
             int taskNum = Integer.parseInt(line.substring(5)) - 1;
-            tasks[taskNum].markAsDone();
+            tasks.get(taskNum).markAsDone();
             System.out.println(dividingLine + "Nice! I've marked this task as done:");
-            System.out.println("[" + tasks[taskNum].getStatusIcon() + "] " + tasks[taskNum].description
+            System.out.println("[" + tasks.get(taskNum).getStatusIcon() + "] " + tasks.get(taskNum).description
                     + dividingLine);
+        } else if (line.contains("delete")) {
+            int taskNum = Integer.parseInt(line.substring((7))) - 1;
+            System.out.println(dividingLine + "Noted. I've removed this task:");
+            System.out.println(tasks.get(taskNum));
+            System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+            System.out.println(dividingLine);
+            tasks.remove(taskNum);
         } else if (line.contains("unmark")) {
-            if(taskCount == 0){
+            if (tasks.size() == 0) {
                 throw new NoTaskException();
             }
-            if(line.length() == 6){
+            if (line.length() == 6) {
                 throw new MarkIndexException();
             }
             int unmarkNum = Integer.parseInt(line.substring(7)) - 1;
-            tasks[unmarkNum].unmarkAsDone();
+            tasks.get(unmarkNum).unmarkAsDone();
             System.out.println(dividingLine + "OK, I've marked this task as not done yet:");
-            System.out.println("[" + tasks[unmarkNum].getStatusIcon() + "] " + tasks[unmarkNum].description
+            System.out.println("[" + tasks.get(unmarkNum).getStatusIcon() + "] " + tasks.get(unmarkNum).description
                     + dividingLine);
         } else if (line.contains("todo")) {
             addTask(new Todo(line.substring(5)));
         } else if (line.contains("deadline")) {
             line = line.replace("deadline ", "");
-            if(line.substring(line.indexOf("/by ") + 4).length() == 0){
+            if (line.substring(line.indexOf("/by ") + 4).length() == 0) {
                 throw new TaskInfoException();
             }
             addTask(new Deadline(line.substring(0, line.indexOf(" /")),
                     line.substring(line.indexOf("/by ") + 4)));
         } else if (line.contains("event")) {
             line = line.replace("event ", "");
-            if(line.substring(line.indexOf("/to ") + 4).length() == 0){
+            if (line.substring(line.indexOf("/to ") + 4).length() == 0) {
                 throw new TaskInfoException();
             }
             addTask(new Event(line.substring(0, line.indexOf(" /")),
@@ -81,25 +91,58 @@ public class Duke {
         }
     }
 
-    public static void printTask(String line) {
+    public static void printTask(String line, String path) {
+//        File fl = new File("data/tasks.txt");
         try {
             processTask(line);
+            WriteToFile(tasks, path);
         } catch (IndexOutOfBoundsException e2) {
             System.out.println(dividingLine + "☹ OOPS!!! The description of a " + line + " cannot be empty."
                     + dividingLine);
-        } catch (TaskInfoException e){
+        } catch (TaskInfoException e) {
             System.out.println(dividingLine + "☹ OOPS!!! Missing information." + dividingLine);
         } catch (DukeException e) {
             System.out.println(dividingLine + "☹ OOPS!!! I'm sorry, but I don't know what that means :-("
                     + dividingLine);
-        } catch (MarkIndexException e4){
+        } catch (MarkIndexException e4) {
             System.out.println(dividingLine + "☹ OOPS!!! Task index is unspecified." + dividingLine);
-        } catch (NoTaskException e){
+        } catch (NoTaskException e) {
             System.out.println(dividingLine + "☹ OOPS!!! No task in the list." + dividingLine);
+        } catch (IOException e) {
+            System.out.println("Something went wrong: " + e.getMessage());
+        }
+    }
+
+    private static void WriteToFile(ArrayList<Task> tasks, String path) throws IOException {
+        FileWriter fl = new FileWriter(path);
+        for (Task task : tasks) {
+            fl.write(task.toString());
+            fl.write(System.lineSeparator());
+        }
+        fl.close();
+    }
+
+    private static void createFile(File file){
+        if (!file.exists()) {
+            System.out.println("File not exists, create it ...");
+            //getParentFile() 获取上级目录（包含文件名时无法直接创建目录的）
+            if (!file.getParentFile().exists()) {
+                System.out.println("Directory not exists, create it ...");
+                //创建上级目录
+                file.getParentFile().mkdirs();
+            }
+            try {
+                //在上级目录里创建文件
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public static void main(String[] args) {
+        String path = "data/tasks.txt";
+        createFile(new File(path));
 
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -113,9 +156,10 @@ public class Duke {
         Scanner in = new Scanner(System.in);
         line = in.nextLine();
         while (!line.equals("bye")) {
-            printTask(line);
+            printTask(line, path);
             line = in.nextLine();
         }
         System.out.println(dividingLine + "Bye. Hope to see you again soon!" + dividingLine);
     }
 }
+
