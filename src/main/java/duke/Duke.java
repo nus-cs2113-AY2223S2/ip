@@ -241,7 +241,7 @@ public class Duke {
 
     private static void appendTaskToDataFile(FileClass dataFile, String inputToDataFile) {
         try {
-            dataFile.appendToFile("src/main/data.txt", inputToDataFile);
+            dataFile.appendToFile(FILE_PATH, inputToDataFile);
         } catch (IOException e) {
             System.out.println(WRITEFILE_EXCEPTION_MESSAGE);
         }
@@ -296,7 +296,7 @@ public class Duke {
                 tasks.remove(taskNumber - 1);
                 System.out.println("Now you have " + tasks.size() + " tasks in the list");
                 try {
-                    dataFile.deleteTask("src/main/data.txt", taskNumber);
+                    dataFile.deleteTask(FILE_PATH, taskNumber);
                 } catch (IOException error) {
                     System.out.println(WRITEFILE_EXCEPTION_MESSAGE);
                 }

@@ -11,10 +11,13 @@ import duke.keycommand.Deadline;
 import duke.keycommand.Event;
 import duke.keycommand.ToDo;
 public class FileClass {
+    public File directory;
     public File file;
     public ArrayList<Task> tasks;
     public FileClass(String filePath, ArrayList<Task> tasks) {
-        file = new File(filePath);
+        directory = new File("data");
+        directory.mkdirs();
+        file = new File(directory, filePath);
         this.tasks = tasks;
     }
 
@@ -72,7 +75,7 @@ public class FileClass {
     }
 
     public void appendToFile(String filePath, String textToAppend) throws IOException {
-        FileWriter fileWriter = new FileWriter(filePath, true);
+        FileWriter fileWriter = new FileWriter(directory + "/" + filePath, true);
         fileWriter.write(textToAppend);
         fileWriter.close();
     }
@@ -93,7 +96,7 @@ public class FileClass {
         for (String line : extractedTasks) {
             newFileContent += (line + "\n");
         }
-        FileWriter fileWriter = new FileWriter(filePath);
+        FileWriter fileWriter = new FileWriter(directory + "/" + filePath);
         fileWriter.write(newFileContent);
         fileWriter.close();
     }
