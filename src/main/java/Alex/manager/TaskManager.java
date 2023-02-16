@@ -29,4 +29,9 @@ public class TaskManager {
         return allTasks.size();
     }
 
+    public void deleteTask(int taskNo) {
+        allTasks.remove(taskNo);
+    }
+
+
 }
