@@ -2,9 +2,9 @@
     {
         "description": "CG2023 Exam",
         "index": 1,
-        "from": "4pm",
+        "start": "4pm",
         "marked": true,
-        "to": "6pm",
-        "type": "event"
+        "end": "6pm",
+        "type": "todo"
     }
 ]

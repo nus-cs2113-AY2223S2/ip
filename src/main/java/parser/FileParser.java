@@ -1,7 +1,8 @@
 package parser;
 
 import com.google.gson.Gson;
-import model.task.Task;
+import model.storage.JsonStorage;
+import controller.TaskController;
 
 import java.io.*;
 import java.util.Scanner;
@@ -10,8 +11,9 @@ public class FileParser {
 
     protected static FileParser instance = null;
     protected static final String FILE_NAME = "data.json";
+    protected static final TaskController taskController = new TaskController();
     protected static final Gson gson = new Gson();
-    protected static File db = new File(FILE_NAME);
+    protected static File file = new File(FILE_NAME);
 
     /**
      * This function is used to create a file if it does not exist. This helps
@@ -20,7 +22,7 @@ public class FileParser {
      */
     protected static void createFileIfNotExist() {
         try {
-            db.createNewFile();
+            file.createNewFile();
         } catch (IOException e) {
             System.out.println("An IO Exception occured");
             e.printStackTrace();
@@ -36,10 +38,21 @@ public class FileParser {
         try {
             createFileIfNotExist();
             BufferedReader br = new BufferedReader(new FileReader(FILE_NAME));
-//            Task[] tasks = gson.fromJson(br, Task[].class);
-//            System.out.println(tasks.toString());
+            JsonStorage[] x = gson.fromJson(br, JsonStorage[].class);
+            for (JsonStorage item: x) {
+                String type = item.getType();
+                switch (type) {
+                case "todo":
+                case "event":
+                case "deadline":
+                default:
+                break;
+                }
+            }
         } catch (FileNotFoundException e) {
             System.out.println("A file not found exception occured");
+            System.out.println(e.getMessage());
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }

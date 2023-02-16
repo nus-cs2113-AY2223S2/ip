@@ -51,7 +51,6 @@ public class TaskController {
     Todo model = new Todo(taskDescription);
     counter += 1;
     db.create(model);
-//    parser.writeToFile(model.getDescriptionText());
     printDescription(model);
   }
 
