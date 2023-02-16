@@ -1,16 +1,22 @@
+import duke.data.DataManager;
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
 import duke.task.Todos;
 import duke.utils.DukeException;
-
+import duke.data.DataManager;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
+
 public class Duke {
     public static Scanner input = new Scanner(System.in);
-    public static Task[] list= new Task[100];
+    public static ArrayList<Task> list= new ArrayList<>();
     public static String[] words = new String[10];
     public static String[] phrases = new String[10];
     public static int currentTaskNum = 0;
+    public static String FILE_LOCATION = "./data/duke.txt";
     public static String LINE = "────────────────────────────────────────────────────────────────────────\n";
     public static String GENERAL_ERROR_MESSAGE = LINE + "Invalid input. Please try again! (=ಠᆽಠ=)\n" + LINE;
     public static String INVALID_NUM_ERROR_MESSAGE = LINE + "The duke.task number is out of bound. Please try again! (=ಠᆽಠ=)\n" + LINE;
@@ -112,6 +118,7 @@ public class Duke {
                 + System.lineSeparator());
     }
 
+
     public void handleRequest(String userInput) throws DukeException {
         if (userInput.startsWith("mark")) {
             int posOfMark = getMarkPosition(userInput);
@@ -149,7 +156,7 @@ public class Duke {
         }
     }
     
-    public static void main(String[] args) throws DukeException {
+    public static void main(String[] args) throws DukeException, IOException {
         Duke obj = new Duke();
         System.out.println("Hello from\n" + LOGO);
         System.out.println(GREETING);
@@ -157,5 +164,7 @@ public class Duke {
             String userInput = input.nextLine();
             obj.handleRequest(userInput);
         }
+        DataManager dataManager= new DataManager(FILE_LOCATION, list);
+        dataManager.writeToFileWithErrorHandler();
     }
 }
