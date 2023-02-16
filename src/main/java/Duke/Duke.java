@@ -49,6 +49,9 @@ public class Duke {
             System.out.println("[" + tasks.get(taskNum).getStatusIcon() + "] " + tasks.get(taskNum).description
                     + dividingLine);
         } else if (line.contains("delete")) {
+            if(line.length() == 6){
+                throw new MarkIndexException();
+            }
             int taskNum = Integer.parseInt(line.substring((7))) - 1;
             System.out.println(dividingLine + "Noted. I've removed this task:");
             System.out.println(tasks.get(taskNum));
