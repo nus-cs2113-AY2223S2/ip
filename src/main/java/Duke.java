@@ -41,6 +41,17 @@ public class Duke {
         boolean isMark = command.equals(Command.MARK);
         controller.toggleMark(isMark, position);
         break;
+      case Command.DEADLINE:
+        description = dictionary.get("description");
+        String deadline = dictionary.get("deadline");
+        controller.addDeadlineTask(description, deadline);
+        break;
+      case Command.EVENT:
+        description = dictionary.get("description");
+        String start = dictionary.get("start");
+        String end = dictionary.get("end");
+        controller.addEventTask(description);
+        break;
       default:
         throw new InvalidTaskError(ErrorMessage.INVALID_COMMAND.message);
       }
@@ -49,22 +60,6 @@ public class Duke {
     } catch (Exception e) {
       System.out.println("Oops, an unexpected error occured!");
     }
-
-
-    // switch (command) {
-    //   case Command.TODO:
-    //     dictionary = parser.handleTodo(words[1]);
-    //     taskDescription = dictionary.get("description");
-    //     controller.addTodoTask(taskDescription);
-    //     break;
-    //   case Command.EVENT:
-    //     taskDescription = words[1];
-    //     controller.addEventTask(taskDescription);
-    //     break;
-    //     break;
-    //   default:
-    //     throw new InvalidTaskError(ErrorMessage.INVALID_COMMAND.message);
-    // }
   }
 
   public void run() {

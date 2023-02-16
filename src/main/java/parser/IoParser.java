@@ -7,6 +7,8 @@ import validator.error.InvalidTaskError;
 import java.util.HashMap;
 import java.util.regex.PatternSyntaxException;
 
+import javax.xml.stream.events.EndDocument;
+
 public class IoParser {
 
     protected final String COMMAND = "command";
@@ -40,8 +42,9 @@ public class IoParser {
         }
     }
 
-    protected HashMap<String, String> handleMark(String text) {
+    protected HashMap<String, String> handleMark(String text, String command) {
         HashMap<String, String> dictionary = new HashMap<String, String>();
+        dictionary.put(COMMAND, command);
         dictionary.put("index", text);
         return dictionary;
     }
@@ -49,6 +52,52 @@ public class IoParser {
     protected HashMap<String, String> handleOthers(String command) {
         HashMap<String, String> dictionary = new HashMap<String, String>();
         dictionary.put(COMMAND, command);
+        return dictionary;
+    }
+
+    protected HashMap<String, String> handleEvent(String text) throws InvalidTaskError {
+        HashMap<String, String> dictionary = new HashMap<String, String>();
+        dictionary.put(COMMAND, Command.EVENT);
+        String[] words = text.split("/");
+        if (words.length != 3) {
+            throw new InvalidTaskError("Invalid input");
+        }
+
+        String start = "";
+        String end = "";
+        String description = "";
+
+        int numOfStart = 0;
+        int numOfEnd = 0;
+        for (String word: words) {
+            if (word.startsWith("to ")) {
+                numOfEnd++;
+            } else if (word.startsWith("from ")) {
+                numOfStart++;
+            }
+        }
+
+        if (numOfEnd == 0 && numOfStart == 0) {
+            throw new InvalidTaskError("No start or end provided");
+        }
+
+        if (numOfEnd > 1 || numOfStart > 1) {
+            throw new InvalidTaskError("You did not provide a description");
+        }
+
+        for (int i = 0; i < 3; ++i) {
+            if (words[i].startsWith("to ")) {
+                end = words[i];
+            } else if (words[i].startsWith("from ")) {
+                start = words[i];
+            } else {
+                description = words[i];
+            }
+        }
+
+        dictionary.put("start", start);
+        dictionary.put("end", end);
+        dictionary.put("description", description);
         return dictionary;
     }
 
@@ -67,7 +116,9 @@ public class IoParser {
                 return handleTodo(words[1]);
             case Command.MARK:
             case Command.UNMARK:
-                return handleMark(words[1]);
+                return handleMark(words[1], command);
+            case Command.DEADLINE:
+                return handleDeadline(words[1]);
             }
         } catch (IndexOutOfBoundsException e) {
             System.out.println(ErrorMessage.NO_DESCRIPTION.message);

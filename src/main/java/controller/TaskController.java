@@ -61,12 +61,8 @@ public class TaskController {
    * @throws Exception An exception if the task is invalid
    */
   public void toggleMark(boolean isMark, int index) throws Exception {
-    Task model = db.read(index);
-    String previousMessage = model.getDescriptionText();
-
     db.update(index, isMark);
-    model = db.read(index);
-    String newMessage = model.getDescriptionText();
+    Task model = db.read(index);
     System.out.printf(
       "%s\n",
       isMark ? Message.MARKED.message : Message.UNMARKED.message
@@ -94,18 +90,9 @@ public class TaskController {
    * @param taskDescription A string after removing the
    *                        command
    */
-  public void addEventTask(String taskDescription) throws Exception {
-    int indexOfFrom = taskDescription.indexOf("/from");
-    int indexOfTo = taskDescription.indexOf("/to");
-    validator.validateEventTask(indexOfFrom, indexOfTo);
-    String description = taskDescription.substring(0, indexOfFrom);
-    String from = taskDescription.substring(
-      indexOfFrom + "/from ".length(),
-      indexOfTo
-    );
-    String to = taskDescription.substring(indexOfTo + "/to ".length());
+  public void addEventTask(String taskDescription, String start, String end) throws Exception {
     counter += 1;
-    Event model = new Event(description, from, to);
+    Event model = new Event(taskDescription, start, end);
     db.create(model);
     printDescription(model);
   }
