@@ -1,4 +1,4 @@
-package Onandon.function;
+package Onandon.module;
 
 public class Event extends Task {
 
@@ -10,6 +10,12 @@ public class Event extends Task {
         this.to = to;
         this.from = from;
     }
+
+    @Override
+    public String getTo() { return to; }
+
+    @Override
+    public String getFrom() { return from; }
 
     @Override
     public String toString() {
