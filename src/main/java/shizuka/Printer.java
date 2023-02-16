@@ -16,10 +16,11 @@ public class Printer {
     final static String SAVE_SUCCESS = "I have saved your todo list.\n";
     static final String HAVE_ADDED = "I have added ";
     static final String TO_LIST = " to your todo list.\n";
-    static final String FILE_EXISTS = "Save file found\n";
-    static final String FILE_CREATED = "Save file created\n";
-    static final String FILE_LOADED = "Save file loaded\n";
-    static final String FILE_SAVED = "File saved\n";
+    static final String FILE_EXISTS = "Save file found.\n";
+    static final String FILE_CREATED = "Save file created.\n";
+    static final String FILE_LOADED = "Save file loaded.\n";
+
+    public static final String FILE_NOT_FOUND = "Save file not found. No data was loaded.\n";
 
     public static void intro() {
         System.out.println(LINE_BREAK + LOGO + LINE_BREAK + GREETING + LINE_BREAK);
@@ -65,7 +66,7 @@ public class Printer {
         System.out.println(LINE_BREAK + FILE_LOADED + LINE_BREAK);
     }
 
-    public static void fileSaved() {
-        System.out.println(LINE_BREAK + FILE_SAVED + LINE_BREAK);
+    public static void fileNotFound() {
+        System.out.println(LINE_BREAK + FILE_NOT_FOUND + LINE_BREAK);
     }
 }

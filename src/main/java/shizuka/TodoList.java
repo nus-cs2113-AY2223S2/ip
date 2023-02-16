@@ -16,7 +16,7 @@ public class TodoList {
     private int numberOfTasks;
     private final ArrayList<Todo> todos;
 
-    public TodoList(){
+    public TodoList() {
         numberOfTasks = 0;
         this.todos = new ArrayList<>();
     }
@@ -56,7 +56,7 @@ public class TodoList {
             Printer.formatError();
             return;
         }
-        this.todos.add(new Deadline(vars));
+        this.todos.add(new Deadline(vars[0], vars[1]));
         numberOfTasks += 1;
         Printer.addToList(vars[0]);
     }
@@ -69,7 +69,7 @@ public class TodoList {
             Printer.formatError();
             return;
         }
-        this.todos.add(new Event(vars));
+        this.todos.add(new Event(vars[0], vars[1], vars[2]));
         numberOfTasks += 1;
         Printer.addToList(vars[0]);
     }
@@ -106,5 +106,20 @@ public class TodoList {
             list[i] = this.todos.get(i).saveTask();
         }
         return list;
+    }
+
+    public void addTodoFromFile(String[] args) {
+        this.todos.add(new Todo(args));
+        numberOfTasks += 1;
+    }
+
+    public void addDeadlineFromFile(String[] args) {
+        this.todos.add(new Deadline(args));
+        numberOfTasks += 1;
+    }
+
+    public void addEventFromFile(String[] args) {
+        this.todos.add(new Event(args));
+        numberOfTasks += 1;
     }
 }

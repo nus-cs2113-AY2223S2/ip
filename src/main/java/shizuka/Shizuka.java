@@ -20,6 +20,12 @@ public class Shizuka {
         Scanner in = new Scanner(System.in);
         String line, lineTrimmed;
         TodoList list0 = new TodoList();
+        try {
+            FileManager.load(FILE_PATH, list0);
+            Printer.fileLoaded();
+        } catch (IOException e) {
+            Printer.fileNotFound();
+        }
 
         do {
             line = in.nextLine();
