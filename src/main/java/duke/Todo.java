@@ -1,9 +1,14 @@
 package duke;
 
 public class Todo extends Task {
-    
-    public Todo (String description) {
+
+    public Todo(String description) {
         super(description);
+    }
+
+    @Override
+    public String storeString() {
+        return super.storeString() + "|T|" + description + "\n";
     }
 
     @Override

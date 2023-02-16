@@ -11,9 +11,14 @@ public class Event extends Task {
         this.to = to;
     }
 
+    public String storeString() {
+        return super.storeString() + "|E|" + description + "|" + from + "|" + to + "\n";
+    }
+
     @Override
     /**
-     * Overrides string representation for todos, with a [E] to indicate event class and 
+     * Overrides string representation for todos, with a [E] to indicate event class
+     * and
      * conveying information about time.
      *
      * @return String Representation.

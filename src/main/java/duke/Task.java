@@ -43,6 +43,10 @@ public class Task {
         return this.description;
     }
 
+    public String storeString() {
+        return (isDone ? "1" : "0");
+    }
+
     @Override
     /**
      * Returns string representation of the task, with status icon and description.
