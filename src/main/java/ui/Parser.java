@@ -8,9 +8,9 @@ import task.Task;
 import ui.command.AddTaskCommand;
 import ui.command.Command;
 import ui.command.DeleteTaskCommand;
+import ui.command.FindCommand;
 import ui.command.ListCommand;
 import ui.command.MarkTaskCommand;
-import ui.command.NoOpCommand;
 
 public class Parser {
 
@@ -30,16 +30,20 @@ public class Parser {
             isRunning = false;
         } else if (cmdType.equals(Syntax.LIST.label)) {
             return new ListCommand();
+        } else if (cmdType.equals(Syntax.FIND.label)) {
+            if (splitInput.length < 2) {
+                throw new InvalidSyntaxException(Syntax.FIND.expectedSyntax);
+            }
+
+            String keyword = splitInput[1].trim();
+            return new FindCommand(keyword);
         } else if (Syntax.MODIFY_TASK_COMMANDS.contains(cmdType)) {
             return handleModifyUserTask(cmdType, splitInput);
         } else if (Syntax.ADD_TASK_COMMANDS.contains(cmdType)) {
             return handleAddUserTask(cmdType, splitInput);
-        } else {
-            throw new UnrecognizedInputException();
         }
 
-        // Dummy command
-        return new NoOpCommand();
+        throw new UnrecognizedInputException();
     }
 
     private Command handleAddUserTask(String cmd, String[] splitInput) throws InvalidSyntaxException {
@@ -58,6 +62,20 @@ public class Parser {
     private Command handleModifyUserTask(String cmd, String[] splitInput)
             throws InvalidSyntaxException, IndexOutOfBoundsException {
         try {
+            Syntax matchedSyntax;
+            if (cmd.equals(Syntax.MARK.label)) {
+                matchedSyntax = Syntax.MARK;
+            } else if (cmd.equals(Syntax.UNMARK.label)) {
+                matchedSyntax = Syntax.UNMARK;
+            } else {
+                matchedSyntax = Syntax.DELETE;
+            }
+
+            // Check for valid length of command
+            if (splitInput.length < 2) {
+                throw new InvalidSyntaxException(matchedSyntax.expectedSyntax);
+            }
+
             // Tasks are 0-indexed, user index is 1-indexed
             int userIndex = Integer.parseInt(splitInput[1]);
             int index = userIndex - 1;
@@ -66,20 +84,19 @@ public class Parser {
                 return new MarkTaskCommand(index, true);
             } else if (cmd.equals(Syntax.UNMARK.label)) {
                 return new MarkTaskCommand(index, false);
-            } else if (cmd.equals(Syntax.DELETE.label)) {
+            } else {
                 return new DeleteTaskCommand(index);
             }
+
         } catch (NumberFormatException ex) {
             if (cmd.equals(Syntax.MARK.label)) {
                 throw new InvalidSyntaxException(Syntax.MARK.expectedSyntax);
             } else if (cmd.equals(Syntax.UNMARK.label)) {
                 throw new InvalidSyntaxException(Syntax.UNMARK.expectedSyntax);
-            } else if (cmd.equals(Syntax.DELETE.label)) {
+            } else {
                 throw new InvalidSyntaxException(Syntax.DELETE.expectedSyntax);
             }
         }
-
-        return new NoOpCommand();
     }
 
     public boolean isRunning() {
