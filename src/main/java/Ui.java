@@ -1,7 +1,8 @@
 import duke.Task;
 
-import java.util.ArrayList;
-
+/**
+ * Represents messages that Duke is able to print out to display to the user.
+ */
 public class Ui {
     public static final String LOGO = " ____        _        \n"
                                     + "|  _ \\ _   _| | _____ \n"

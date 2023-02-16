@@ -1,4 +1,8 @@
 package duke;
+
+/**
+ * Represents a Deadline type of task that has a due date, which is keyed in by the user
+ */
 public class Deadline extends Task {
     protected String by;
 

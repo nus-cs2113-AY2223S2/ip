@@ -8,6 +8,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * Represents a file data handler that is able to have features such as saving the current task list
+ * and loading the saved task list from the previous session.
+ */
 public class FileDataHandler {
     protected String filePath;
     protected String directoryName;

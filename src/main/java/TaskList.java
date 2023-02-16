@@ -8,6 +8,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+/**
+ * Represents an underlying ArrayList<Task> that stores the task list.
+ * Contains methods to mark, unmark, add, delete, find different types of tasks.
+ */
 public class TaskList {
     protected ArrayList<Task> tasks;
     protected Ui ui;

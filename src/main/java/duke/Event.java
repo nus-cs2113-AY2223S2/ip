@@ -1,4 +1,9 @@
 package duke;
+
+/**
+ * Represents an Event type of task that has a timeframe, from a certain date/time
+ * to a certain date/time, which is keyed in by the user.
+ */
 public class Event extends Task {
 
     protected String from;

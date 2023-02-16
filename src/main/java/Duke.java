@@ -3,7 +3,11 @@ import duke.DukeException;
 import java.io.IOException;
 import java.util.Scanner;
 
-
+/**
+ * Represents the attributes of the chatbot Duke. Every instantiation of a new Duke object
+ * allows features such as adding, deleting, listing, loading, saving, marking and unmarking of
+ * different types of tasks into a task list.
+ */
 public class Duke {
     protected TaskList taskList;
     protected FileDataHandler fileDataHandler;

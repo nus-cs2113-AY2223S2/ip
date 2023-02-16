@@ -2,6 +2,10 @@ import duke.DukeException;
 
 import java.io.IOException;
 
+/**
+ * Represents a parser that is able to identify user input and pass on commands to the program to
+ * execute different methods to modify/search the task list.
+ */
 public class Parser {
     protected TaskList taskList;
     protected FileDataHandler fileDataHandler;

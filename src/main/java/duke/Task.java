@@ -1,5 +1,9 @@
 package duke;
 
+/**
+ * Represents a Task that contains attributes such as the details of the task and
+ * whether the task has been completed.
+ */
 public class Task {
     protected String details;
     protected boolean isDone;
