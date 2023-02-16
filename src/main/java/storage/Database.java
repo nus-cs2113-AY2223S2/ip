@@ -2,6 +2,7 @@ package storage;
 
 import java.util.ArrayList;
 import model.task.Task;
+import parser.FileParser;
 
 /**
  * Database is a class that is used to mock a real life database. It contains
@@ -13,6 +14,8 @@ public class Database {
   protected static Database instance = null;
 
   protected final ArrayList<Task> tasks = new ArrayList<Task>();
+
+  protected final static FileParser parser = FileParser.getInstance();
 
   protected Database() {}
 
@@ -31,6 +34,7 @@ public class Database {
    */
   public void create(Task model) {
     tasks.add(model);
+    parser.updateFile(tasks);
   }
 
   /**
@@ -65,6 +69,7 @@ public class Database {
     Task model = tasks.get(index);
     model.setDone(value);
     tasks.set(index, model);
+    parser.updateFile(tasks);
   }
 
   /**

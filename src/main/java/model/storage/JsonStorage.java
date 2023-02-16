@@ -2,10 +2,10 @@ package model.storage;
 
 public class JsonStorage {
 
-  public JsonStorage(String description, int index, boolean marked, String end, String type, String start) {
-    this.index = index;
+  public JsonStorage(String description, boolean marked, String end, String type, String start) {
     this.description = description;
     this.marked = marked;
+    this.type = type;
     this.start = start;
     this.end = end;
   }
@@ -26,9 +26,15 @@ public class JsonStorage {
     return marked;
   }
 
-  protected String description;
+  public String getStart() {
+    return start;
+  }
 
-  protected int index;
+  public String getEnd() {
+    return end;
+  }
+
+  protected String description;
 
   protected String start;
 

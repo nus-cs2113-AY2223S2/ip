@@ -4,6 +4,14 @@ public class Event extends Task {
     protected String from;
     protected String to;
 
+    public String getTo() {
+        return to;
+    }
+
+    public String getFrom() {
+        return from;
+    }
+
     public Event(String taskName, String from, String to) {
         super(taskName);
         this.from = from;
