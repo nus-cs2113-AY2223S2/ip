@@ -3,20 +3,21 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.Todos;
 import duke.utils.DukeException;
-
+import java.util.ArrayList;
 import java.util.Scanner;
 public class Duke {
     public static Scanner input = new Scanner(System.in);
-    public static Task[] list= new Task[100];
+    public static ArrayList<Task> list = new ArrayList<>();
+    //public static Task[] list= new Task[100];
     public static String[] words = new String[10];
     public static String[] phrases = new String[10];
     public static int currentTaskNum = 0;
     public static String LINE = "────────────────────────────────────────────────────────────────────────\n";
     public static String GENERAL_ERROR_MESSAGE = LINE + "Invalid input. Please try again! (=ಠᆽಠ=)\n" + LINE;
-    public static String INVALID_NUM_ERROR_MESSAGE = LINE + "The duke.task number is out of bound. Please try again! (=ಠᆽಠ=)\n" + LINE;
+    public static String INVALID_NUM_ERROR_MESSAGE = LINE + "The task number is out of bound. Please try again! (=ಠᆽಠ=)\n" + LINE;
     public static String EVENT_TIME_ERROR_MESSAGE = LINE + "There is no start and end time for the event. " +
             "Please try again by using the keywords /from and /to! (=ಠᆽಠ=)\n" + LINE;
-    public static String DEADLINE_TIME_ERROR_MESSAGE = LINE + "There is deadline for this duke.task. " +
+    public static String DEADLINE_TIME_ERROR_MESSAGE = LINE + "There is no deadline for this task. " +
             "Please try again by using the keywords /by! (=ಠᆽಠ=)\n" + LINE;
     public static String LOGO = " ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" +
             "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⣿⡷⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n" +
@@ -57,10 +58,10 @@ public class Duke {
         int placeHolder = currentTaskNum;
         System.out.println(LINE);
         if (placeHolder == 0) {
-            System.out.println("No duke.task.Task! 〲⚆ﻌ⚆〉");
+            System.out.println("No Task! 〲⚆ﻌ⚆〉");
         } else {
             while (placeHolder > 0) {
-                System.out.println(currentPrintedTask + 1 + ". " + list[currentPrintedTask].toString());
+                System.out.println(currentPrintedTask + 1 + ". " + list.get(currentPrintedTask).toString());
                 currentPrintedTask++;
                 placeHolder--;
             }
@@ -74,7 +75,7 @@ public class Duke {
 
     public void printTotalTasks(int currentTaskNum) {
         if (currentTaskNum == 1) {
-            System.out.println("Now you have " + currentTaskNum + " duke.task in the list.");
+            System.out.println("Now you have " + currentTaskNum + " task in the list.");
         } else {
             System.out.println("Now you have " + currentTaskNum + " tasks in the list.");
         }
@@ -91,9 +92,9 @@ public class Duke {
             throw new DukeException();
         } else {
             if (shouldMarkAsDone) {
-                list[posOfMark].markAsDone();
+                list.get(posOfMark).markAsDone();
             } else {
-                list[posOfMark].markAsUndone();
+                list.get(posOfMark).markAsUndone();
             }
         }
     }
@@ -106,9 +107,16 @@ public class Duke {
     }
 
     private static void printAddTaskMessage() {
-        System.out.println(LINE + "Got it. I've added this duke.task:\n"
+        System.out.println(LINE + "Got it. I've added this task:\n"
                 + "  "
-                + list[currentTaskNum].toString()
+                + list.get(currentTaskNum).toString()
+                + System.lineSeparator());
+    }
+
+    private static void printDeleteTaskMessage(int taskNum) {
+        System.out.println(LINE + "Got it. I've deleted this task:\n"
+                + "  "
+                + list.get(taskNum).toString()
                 + System.lineSeparator());
     }
 
@@ -126,14 +134,14 @@ public class Duke {
             System.out.println(FAREWELL_MESSAGE);
             setShouldExit();
         } else if (userInput.startsWith("todo")) {
-            list[currentTaskNum] = new Todos(userInput.replace("mark ", ""));
+            list.add(new Todos(userInput.replace("mark ", "")));
             processAddTaskRequest();
         } else if (userInput.startsWith("deadline")) {
             phrases = userInput.split("/by ");
             if (phrases.length < 2) {
                 printErrorMessage(DEADLINE_TIME_ERROR_MESSAGE);
             } else {
-                list[currentTaskNum] = new Deadline(phrases[0].replace("deadline ", ""), phrases[1]);
+                list.add(new Deadline(phrases[0].replace("deadline ", ""), phrases[1]));
                 processAddTaskRequest();
             }
         } else if (userInput.startsWith("event")) {
@@ -141,9 +149,13 @@ public class Duke {
             if (phrases.length < 3) {
                 printErrorMessage(EVENT_TIME_ERROR_MESSAGE);
             } else {
-                list[currentTaskNum] = new Event(phrases[0].replace("event ", ""), phrases[1], phrases[2]);
+                list.add(new Event(phrases[0].replace("event ", ""), phrases[1], phrases[2]));
                 processAddTaskRequest();
             }
+        } else if (userInput.startsWith("delete")){
+                printDeleteTaskMessage(getMarkPosition(userInput));
+                list.remove(getMarkPosition(userInput));
+                currentTaskNum--;
         } else {
             printErrorMessage(GENERAL_ERROR_MESSAGE);
         }
