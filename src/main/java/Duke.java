@@ -58,36 +58,40 @@ public class Duke {
 	//MAIN CODE
 	public static void main(String[] args) {
 		System.out.print(GREET);
+		loadListFromFile();
 		while (true) {
 			takeUserInput();
+			saveTaskListToFile();
 		}
 	}
 
-	private void loadListFromFile() {
-		try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+	private static void loadListFromFile() {
+		try (Scanner reader = new Scanner(new File(FILE_PATH))) {
 			String line;
-			while ((line = reader.readLine()) != null) {
-				String[] parts = line.split(" || ", 4);
+			while (reader.hasNext()) {
+				line = reader.nextLine();
+				String[] parts = line.split(" ", 3);
 				String taskType = parts[0];
-				boolean status = parts[1] == "[X]" ? true : false;
+				boolean status = parts[1].equals("[X]");
 				String taskDesc = parts[2];
 				switch (taskType) {
-				case ("deadline"):
+				case ("[D]"):
+					deadlineAdd(taskDesc);
 					break;
-				case ("event"):
+				case ("[E]"):
+					eventAdd(taskDesc);
 					break;
-				case ("todo"):
+				case ("[T]"):
+					todoAdd(taskDesc);
 					break;
 				default:
 				}
-
+				Task task = taskList.get(taskList.size() - 1);
+				task.setDone(status);
 			}
 			System.out.println("List loaded from file.");
 		} catch (FileNotFoundException e) {
 			System.out.println("List file not found. Starting with an empty list.");
-			taskList = new ArrayList<>();
-		} catch (IOException e) {
-			System.out.println("Error loading the list from file. Starting with an empty list.");
 			taskList = new ArrayList<>();
 		}
 	}
@@ -154,6 +158,14 @@ public class Duke {
 		System.out.print(LINE_PARTITION);
 	}
 
+	private static void saveTaskListToFile() {
+		try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(FILE_PATH))) {
+			outputStream.writeObject(taskList);
+		} catch (IOException e) {
+			System.out.println("Error writing to file: " + FILE_PATH);
+		}
+	}
+
 	private static void executeMark(String args, boolean hasCompleted) {
 		try {
 			markInitiate(args, hasCompleted);
@@ -210,6 +222,7 @@ public class Duke {
 				break;
 			default:
 			}
+			printTaskAdd(taskList.get(taskList.size() - 1));
 		} catch (ArrayIndexOutOfBoundsException e) {
 			cmdFormatError();
 		}
@@ -219,7 +232,6 @@ public class Duke {
 		String[] taskArgs = args.trim().split(" /by ", 2);
 		Deadline task = new Deadline(taskArgs[0], taskArgs[1]);
 		taskList.add(task);
-		printTaskAdd(task);
 	}
 
 	private static void eventAdd(String args) {
@@ -227,13 +239,11 @@ public class Duke {
 		String[] taskDates = taskArgs[1].split(" /to ", 2);
 		Event task = new Event(taskArgs[0], taskDates[0], taskDates[1]);
 		taskList.add(task);
-		printTaskAdd(task);
 	}
 
 	private static void todoAdd(String args) {
 		Todo task = new Todo(args);
 		taskList.add(task);
-		printTaskAdd(task);
 	}
 	private static void OutOfBoundArgs() {
 		System.out.print(String.format(LINE_PARTITION +
