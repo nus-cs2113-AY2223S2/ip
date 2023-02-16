@@ -10,6 +10,11 @@ public class Deadline extends Task {
     }
 
     @Override
+    public String storeString() {
+        return super.storeString() + "|D|" + description + "|" + by + "\n";
+    }
+
+    @Override
     /**
      * Overrides string representation for deadlines, with a [D] to
      * indicate deadline class and including by field.

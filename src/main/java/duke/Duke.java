@@ -2,6 +2,10 @@ package duke;
 
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
+import java.io.FileWriter;
+import java.util.Scanner;
 
 public class Duke {
 
@@ -21,7 +25,7 @@ public class Duke {
         System.out.println(line);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -36,7 +40,39 @@ public class Duke {
         System.out.println("Hello! I'm Duke\nWhat can I do for you?");
         System.out.println(line);
 
+        File f = new File("duke.txt");
+
+        f.createNewFile();
+        Scanner s = new Scanner(f);
+        FileWriter fw;
+
         ArrayList<Task> tasks = new ArrayList<>();
+
+        // load array from file
+        while (s.hasNext()) {
+            String task = s.nextLine();
+            String[] taskSplit = task.split("\\|");
+            switch (taskSplit[1]) {
+                case "T":
+                    Todo todo = new Todo(taskSplit[2]);
+                    tasks.add(todo);
+                    break;
+                case "D":
+                    Deadline deadline = new Deadline(taskSplit[2], taskSplit[3]);
+                    tasks.add(deadline);
+                    break;
+                case "E":
+                    Event event = new Event(taskSplit[2], taskSplit[3], taskSplit[4]);
+                    tasks.add(event);
+                    break;
+                default:
+                    break;
+            }
+            if (taskSplit[0].equals("1")) {
+                tasks.get(tasks.size() - 1).markDone();
+            }
+        }
+        s.close();
 
         while (true) {
             try {
@@ -124,8 +160,13 @@ public class Duke {
                         "You have not provided enough parameters for this command. Please recheck your syntax!");
                 System.out.println(line);
             }
+            new FileWriter("duke.txt").close(); // reset output file
+            fw = new FileWriter("duke.txt", true);
+            for (Task task : tasks) {
+                fw.write(task.storeString());
+            }
+            fw.close();
         }
-
         in.close();
 
     }
