@@ -95,7 +95,6 @@ public class Duke {
     }
 
     public static void printTask(String line, String path) {
-//        File fl = new File("data/tasks.txt");
         try {
             processTask(line);
             WriteToFile(tasks, path);
