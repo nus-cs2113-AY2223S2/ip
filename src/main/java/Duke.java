@@ -1,5 +1,6 @@
 import exceptions.InvalidSyntaxException;
 import exceptions.UnrecognizedInputException;
+import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import storage.TaskStorageManager;
@@ -24,10 +25,18 @@ public class Duke {
     private boolean isRunning;
 
     public Duke(Path filePath) {
-        storage = new TaskStorageManager(filePath);
-        tasks = storage.loadTasks();
         ui = new UserInterface();
+        storage = new TaskStorageManager(filePath);
 
+        TaskList loadedTasks;
+        try {
+            loadedTasks = storage.loadTasks();
+        } catch (IOException | ClassNotFoundException ex) {
+            ui.printLoadFailure(ex);
+            loadedTasks = new TaskList();
+        }
+
+        tasks = loadedTasks;
         isRunning = true;
     }
 
@@ -41,9 +50,9 @@ public class Duke {
             try {
                 handleUserInput(userInput);
             } catch (UnrecognizedInputException ex) {
-                System.out.println("Sorry, I don't recognize that command...");
+                ui.printUnrecognizedCommand();
             } catch (InvalidSyntaxException ex) {
-                System.out.println("That doesn't look quite right, try: " + ex.getExpectedSyntax());
+                ui.printInvalidSyntax(ex);
             }
         }
 
@@ -51,14 +60,13 @@ public class Duke {
     }
 
     private void setUserTaskState(int index, boolean isDone) {
-        tasks.getTask(index).setIsDone(isDone);
+        Task task = tasks.getTask(index);
+        task.setIsDone(isDone);
 
         if (isDone) {
-            System.out.println("Nice! I've marked this task as done");
-            System.out.println(tasks.getTask(index));
+            ui.printMarkedTask(task);
         } else {
-            System.out.println("Ok, I've marked this task as not done yet:");
-            System.out.println(tasks.getTask(index));
+            ui.printUnmarkedTask(task);
         }
     }
 
@@ -77,7 +85,11 @@ public class Duke {
         ui.printAddedTask(task);
         ui.printTaskCount(tasks);
 
-        storage.saveTasks(tasks);
+        try {
+            storage.saveTasks(tasks);
+        } catch (IOException ex) {
+            ui.printSaveFailure(ex);
+        }
     }
 
     private void handleModifyUserTask(String cmd, String[] splitInput) throws InvalidSyntaxException {
@@ -97,7 +109,11 @@ public class Duke {
                 ui.printTaskCount(tasks);
             }
 
-            storage.saveTasks(tasks);
+            try {
+                storage.saveTasks(tasks);
+            } catch (IOException ex) {
+                ui.printSaveFailure(ex);
+            }
 
         } catch (NumberFormatException ex) {
             if (cmd.equals(Command.MARK.label)) {
@@ -108,10 +124,9 @@ public class Duke {
                 throw new InvalidSyntaxException(Command.DELETE.expectedSyntax);
             }
         } catch (IndexOutOfBoundsException ex) {
-            System.out.println("Oops, not quite sure what task you're referring to...");
+            ui.printUnknownTask();
         }
     }
-
 
     private void handleUserInput(String userInput) throws UnrecognizedInputException, InvalidSyntaxException {
         String[] splitInput = userInput.split("\\s+", 2);

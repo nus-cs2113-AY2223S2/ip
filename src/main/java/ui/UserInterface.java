@@ -1,5 +1,7 @@
 package ui;
 
+import exceptions.InvalidSyntaxException;
+import java.io.IOException;
 import java.util.Scanner;
 import task.Task;
 import task.TaskList;
@@ -22,6 +24,10 @@ public class UserInterface {
         return scanner.nextLine();
     }
 
+    /*
+     *  Task-related UI
+     */
+
     public void printTasks(TaskList tasks) {
         for (int index = 1; index <= tasks.getTaskCount(); index++) {
             System.out.println(index + ". " + tasks.getTask(index - 1));
@@ -41,6 +47,48 @@ public class UserInterface {
         System.out.println("Alrighty, I've removed this task:");
         System.out.println(removedTask);
     }
+
+    public void printMarkedTask(Task markedTask) {
+        System.out.println("Nice! I've marked this task as done");
+        System.out.println(markedTask);
+    }
+
+    public void printUnmarkedTask(Task unmarkedTask) {
+        System.out.println("Ok, I've marked this task as not done yet:");
+        System.out.println(unmarkedTask);
+    }
+
+    /*
+     *  Exception-handling UI
+     */
+
+    public void printUnrecognizedCommand() {
+        System.out.println("Sorry, I don't recognize that command...");
+    }
+
+    public void printInvalidSyntax(InvalidSyntaxException ex) {
+        System.out.println("That doesn't look quite right, try: " + ex.getExpectedSyntax());
+    }
+
+    public void printUnknownTask() {
+        System.out.println("Oops, not quite sure what task you're referring to...");
+    }
+
+    public void printSaveFailure(IOException ex) {
+        System.out.println("Couldn't save your files!");
+        ex.printStackTrace();
+        printDivider();
+    }
+
+    public void printLoadFailure(Exception ex) {
+        System.out.println("Something went wrong! I couldn't load your tasks :(");
+        ex.printStackTrace();
+        printDivider();
+    }
+
+    /*
+     *  Miscellaneous UI
+     */
 
     public void printDivider() {
         System.out.println("_".repeat(DIVIDER_WIDTH));

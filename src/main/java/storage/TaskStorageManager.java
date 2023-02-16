@@ -17,30 +17,21 @@ public class TaskStorageManager {
         this.filePath = filePath;
     }
 
-    public void saveTasks(TaskList tasks) {
+    public void saveTasks(TaskList tasks) throws IOException {
         // Check for file existence
         if (!Files.isRegularFile(filePath)) {
-            try {
-                Files.createDirectories(filePath.getParent());
-                Files.createFile(filePath);
-            } catch (IOException ex) {
-                System.out.println("Couldn't save your files to: " + filePath + "!");
-                ex.printStackTrace();
-                return;
-            }
+            Files.createDirectories(filePath.getParent());
+            Files.createFile(filePath);
         }
 
         // Serialize and write to file
         try (FileOutputStream fileOutputStream = new FileOutputStream(filePath.toString());
                 ObjectOutputStream outputStream = new ObjectOutputStream(fileOutputStream)) {
             outputStream.writeObject(tasks);
-        } catch (IOException ex) {
-            System.out.println("Something went wrong! I couldn't save your tasks :(");
-            ex.printStackTrace();
         }
     }
 
-    public TaskList loadTasks() {
+    public TaskList loadTasks() throws IOException, ClassNotFoundException {
         // Check for file existence
         if (!Files.isRegularFile(filePath)) {
             return new TaskList();
@@ -50,12 +41,7 @@ public class TaskStorageManager {
         try (FileInputStream fileInputStream = new FileInputStream(filePath.toString());
                 ObjectInputStream inputStream = new ObjectInputStream(fileInputStream)) {
             return (TaskList) inputStream.readObject();
-        } catch (IOException | ClassNotFoundException ex) {
-            System.out.println("Something went wrong! I couldn't read your tasks :(");
-            ex.printStackTrace();
         }
-
-        return new TaskList();
     }
 
 }
