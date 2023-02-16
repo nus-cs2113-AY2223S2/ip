@@ -13,7 +13,7 @@ public class Event extends Task{
     }
 
     public Event(String description, String startDate, String endDate) {
-        super(description);
+        super(description, "Event");
         this.startDate = startDate;
         this.endDate = endDate;
     }

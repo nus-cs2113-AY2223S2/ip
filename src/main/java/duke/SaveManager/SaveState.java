@@ -3,22 +3,31 @@ package duke.SaveManager;
 import com.google.gson.JsonArray;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import duke.command.TaskManager;
+import duke.task.Deadline;
+import duke.task.Event;
 import duke.task.Task;
+import duke.task.ToDo;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
 
 public class SaveState{
     private static final String saveLocation = System.getProperty("user.dir")+"/save.json";
-    GsonBuilder builder = new GsonBuilder().setPrettyPrinting();
+    final TypeToken<ArrayList<Task>> listOfTasks = new TypeToken<ArrayList<Task>>(){};
+    RuntimeTypeAdapterFactory<Task> adapter = RuntimeTypeAdapterFactory.of(Task.class,"type")
+            .registerSubtype(ToDo.class, "ToDo")
+            .registerSubtype(Deadline.class, "Deadline")
+            .registerSubtype(Event.class, "Event");
+    GsonBuilder builder = new GsonBuilder().setPrettyPrinting().registerTypeAdapterFactory(adapter);
     Gson gson = builder.create();
-    public void saveToFile(Task[] taskList){
+    public void saveToFile(ArrayList<Task> taskList){
         File saveFile = new File(saveLocation);
         String gsonData = gson.toJson(taskList);
-        System.out.println(saveLocation);
         if (!saveFile.exists()){
             try {
                 saveFile.createNewFile();

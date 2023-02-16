@@ -1,14 +1,17 @@
 package duke.task;
 
 public abstract class Task {
+    public String type = "";
     protected String description;
     protected boolean isDone;
     protected static int taskNumber = -1;
 
-    public Task(String description) {
+
+    public Task(String description, String type) {
         this.description = description;
         this.isDone = false;
         Task.taskNumber += 1;
+        this.type = type;
     }
 
     public String getStatusIcon() {

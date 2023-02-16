@@ -1,6 +1,7 @@
 import duke.exception.IllegalCommandException;
 import duke.command.TaskManager;
 
+
 import java.util.Scanner;
 
 public class Duke {
@@ -32,7 +33,7 @@ public class Duke {
         printGreeting();
         boolean byeFlag = false;
         Scanner line = new Scanner(System.in);
-        TaskManager dukeManager = new TaskManager(100);
+        TaskManager dukeManager = new TaskManager();
         //TaskItems.Task[] userList = new TaskItems.Task[100]; //no more than 100 tasks
         while (!byeFlag) {
             String userInput = line.nextLine();

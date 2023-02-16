@@ -6,20 +6,27 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
 import duke.exception.IllegalCommandException;
+
 import duke.SaveManager.SaveState;
+import duke.SaveManager.LoadState;
+
+import java.util.ArrayList;
+
 
 public class TaskManager {
-    protected Task[] taskList;
+    //protected Task[] taskList;
+    protected ArrayList<Task> taskList;
     protected int taskCount;
 
     private SaveState saveState = new SaveState();
-    public TaskManager(int taskCount){
-        this.taskCount = 0;
-        taskList = new Task[100];
+    private LoadState loadState = new LoadState();
+    public TaskManager(){
+        this.taskList = loadState.loadTasks();
     }
     public void addTask(Task upcomingTask){
-        taskList[taskCount] = upcomingTask;
-        taskCount += 1;
+        taskList.add(upcomingTask);
+        //taskList[taskCount] = upcomingTask;
+
     }
 
     public void markTaskAsDone(String taskIndex){
@@ -30,9 +37,11 @@ public class TaskManager {
             System.out.println("Enter a valid number");
         }
         try {
-            taskList[arrayIndex].markAsDone();
+            taskList.get(arrayIndex).markAsDone();
+            //taskList[arrayIndex].markAsDone();
             System.out.println("Nice! I've marked this task as done: ");
-            System.out.println(taskList[arrayIndex].toString());
+            //System.out.println(taskList[arrayIndex].toString());
+            System.out.println(taskList.get(arrayIndex).toString());
         } catch (IndexOutOfBoundsException e){
             System.out.println("No task at specified index");
         } catch (NullPointerException e){
@@ -48,9 +57,11 @@ public class TaskManager {
             System.out.println("Enter a valid number");
         }
         try {
-            taskList[arrayIndex].markAsUndone(); //catch exception here too.
+            taskList.get(arrayIndex).markAsUndone(); //catch exception here too.
+            //taskList[arrayIndex].markAsUndone(); //catch exception here too.
             System.out.println("OK, I've marked this task as not done yet: ");
-            System.out.println(taskList[arrayIndex].toString());
+            System.out.println(taskList.get(arrayIndex).toString());
+            //System.out.println(taskList[arrayIndex].toString());
         } catch (IndexOutOfBoundsException e){
             System.out.println("Not a valid ID");
         } catch (NullPointerException e){
@@ -58,10 +69,32 @@ public class TaskManager {
         }
     }
     public void listTasks(){
-        for (int i = 0; i < taskCount; i++){
+        for (int i = 0; i < taskList.size(); i++){
             System.out.print((i+1)+ ".");
-            System.out.println(taskList[i].toString());
+            System.out.println(taskList.get(i).toString());
         }
+    }
+
+    public void deleteTask(String taskIndex){
+        int arrayIndex = 10001;
+        try{
+            arrayIndex = Integer.parseInt(taskIndex) - 1;
+        } catch (NumberFormatException e){
+            System.out.println("Enter a valid number");
+        }
+        try {
+            Task temp = taskList.get(arrayIndex);
+            taskList.remove(arrayIndex);
+
+            System.out.println("Noted. I've removed this task: ");
+            System.out.println("    " + temp.toString());
+            System.out.println("Now you have " + this.taskList.size() + " tasks in the list");
+        } catch (IndexOutOfBoundsException e){
+            System.out.println("Not a valid ID");
+        } catch (NullPointerException e){
+            System.out.println("Not a valid ID");
+        }
+
     }
 
     public void handleCommand(String input) throws IllegalCommandException {
@@ -109,6 +142,10 @@ public class TaskManager {
             break;
         case "help":
             printHelp();
+            break;
+        case "delete":
+            deleteTask(commandLine[1]);
+            saveState.saveToFile(this.taskList);
             break;
         default:
             throw new IllegalCommandException();
