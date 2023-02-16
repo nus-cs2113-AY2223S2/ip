@@ -21,7 +21,7 @@ public class FileIO {
         if (isFileExist) {
             ReadFile.readFile(f, list);
         } else {
-            CreateFile.createFile(f,parentPath);
+            CreateFile.createFile(f, parentPath);
         }
     }
 
