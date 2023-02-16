@@ -10,7 +10,7 @@ public class Event extends Task {
     }
 
     public String formatDate(String from, String to) {
-        return "(" + "from: " + from + "to " + to + ")";
+        return "(" + "from: " + from + "to:" + to + ")";
     }
 
     public String getFrom() {

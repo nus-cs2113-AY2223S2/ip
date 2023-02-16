@@ -85,8 +85,20 @@ public class Duke {
                     list.add(existingDeadline);
                     break;
                 case "E":
-                    String from = tokens[3];
-                    String to = tokens[4];
+                    String from;
+                    String to;
+                    if(tokens[3].contains(" ")) {
+                        from = tokens[3].split("\\s+", 2)[1];
+                    } else {
+                        int idxFrom = tokens[3].indexOf("from") + 4;
+                        from = tokens[3].substring(idxFrom);
+                    }
+                    if(tokens[4].contains(" ")) {
+                        to = tokens[4].split("\\s+", 2)[1];
+                    } else {
+                        int idxTo = tokens[4].indexOf("to") + 2;
+                        to = tokens[4].substring(idxTo);
+                    }
                     Event existingEvent = new Event(task, from, to);
                     existingEvent.setType("E");
                     list.add(existingEvent);

@@ -9,7 +9,7 @@ public class Deadline extends Task {
 
     public String getDeadline() {
         String[] dates = deadline.split("\\s+", 2);
-        return "(" + dates[0] + ": " + dates[1] + ")";
+        return "(" + dates[0] + ":" + dates[1] + ")";
     }
 
     @Override
