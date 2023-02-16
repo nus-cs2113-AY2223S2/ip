@@ -16,7 +16,7 @@ public class IoParser {
     public HashMap<String, String> handleTodo(String text) {
         HashMap<String, String> dictionary = new HashMap<String, String>();
         dictionary.put(COMMAND, Command.TODO);
-        dictionary.put(DESCRIPTION, text);
+        dictionary.put(DESCRIPTION, text.trim());
         return dictionary;
     }
 
@@ -37,5 +37,11 @@ public class IoParser {
             System.out.println("No deadline provided");
             return null;
         }
+    }
+
+    public HashMap<String, String> handleOthers(String command) {
+        HashMap<String, String> dictionary = new HashMap<String, String>();
+        dictionary.put(COMMAND, command);
+        return dictionary;
     }
 }
