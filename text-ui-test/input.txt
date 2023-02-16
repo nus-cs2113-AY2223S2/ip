@@ -14,4 +14,8 @@ todo
 event
 list
 blah
+delete 1
+mark 2
+unmark 1
+list
 bye
