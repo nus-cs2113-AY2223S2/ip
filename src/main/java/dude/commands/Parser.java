@@ -10,20 +10,20 @@ import exception.*;
 import java.util.List;
 
 public class Parser {
-    public static void parseInput(String input) throws EmptyInputException {
+    public static void parseInput(String input,Boolean isSilent) throws EmptyInputException {
         String[] commands = input.split(" ", 2);
         String nextCommand = formatNextInput(commands);
         try {
             switch (commands[0]) {
 
             case "todo":
-                ListManager.addNewTask(nextCommand, "todo");
+                ListManager.addNewTask(nextCommand, "todo",isSilent);
                 break;
             case "deadline":
-                ListManager.addNewTask(nextCommand, "deadline");
+                ListManager.addNewTask(nextCommand, "deadline",isSilent);
                 break;
             case "event":
-                ListManager.addNewTask(nextCommand, "event");
+                ListManager.addNewTask(nextCommand, "event",isSilent);
                 break;
             case "list":
                 ListManager.printList();

@@ -1,6 +1,5 @@
 package dude.task;
 
-import dude.Dude;
 import dude.commands.Interface;
 import dude.commands.Parser;
 import exception.*;
@@ -14,7 +13,9 @@ public class ListManager {
     public static Task getTask(int index){
         return list.get(index) ;
     }
-
+    public static ArrayList<Task> getList(){
+        return list;
+    }
     public static void printList() {
         System.out.println(Interface.LINE);
         if(list.size() == 0){
@@ -63,7 +64,7 @@ public class ListManager {
     }
 
 
-    public static void addNewTask(String input, String taskType) throws DudeException {
+    public static void addNewTask(String input, String taskType, Boolean isSilent) throws DudeException {
         Task newTask;
         switch (taskType) {
         case "todo":
@@ -80,7 +81,9 @@ public class ListManager {
             break;
         }
         list.add(newTask);
-        Interface.addedMessage(index);
+        if(!isSilent){
+            Interface.addedMessage(index);
+        }
         index++;
     }
 

@@ -78,7 +78,7 @@ public abstract class Interface {
                 break;
             }
             try {
-                Parser.parseInput(userInput);
+                Parser.parseInput(userInput,false);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
