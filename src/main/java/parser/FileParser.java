@@ -82,7 +82,7 @@ public class FileParser {
             // changed, copy it over to the temp file. If the current 
             // line is to be changed, add in the newMessage instead.
             while (reader.hasNextLine()) {
-                String information = reader.nextLine();
+                String information = reader.nextLine().trim();
                 if (information != messageToChange) {
                     writer.write(information);
                 } else {
