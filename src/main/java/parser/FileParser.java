@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class FileParser {
 
   protected static FileParser instance = null;
-  protected static final String FILE_NAME = "data.json";
+  protected static final String FILE_NAME = "./data/data.json";
   protected static final TaskController taskController = new TaskController();
   protected static final Gson gson = new Gson();
   protected static File file = new File(FILE_NAME);
