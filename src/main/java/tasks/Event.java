@@ -11,8 +11,14 @@ public class Event extends Task {
         this.endTime = endTime;
     }
     
+    @Override
+    public String printTask(){
+        return "[E] " + super.printTask() + " (from: " + startTime + " to: " + endTime + ")";
+   }
+
    @Override
-   public String printTask(){
-       return "[E] " + super.printTask() + " (from: " + startTime + " to: " + endTime + ")";
+    public String encode(){
+        String encodedString = "event" + "/" + super.encode() + "/" + startTime + "/" + endTime;  
+        return encodedString;
    }
 }
