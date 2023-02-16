@@ -51,6 +51,10 @@ public class Parser {
             taskList.deleteTask(taskNumber);
             return false;
         }
+        if (inputs[0].equals("find")) {
+            taskList.findTask(inputs[1]);
+            return false;
+        }
         throw new DukeException("     ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
     }
 }

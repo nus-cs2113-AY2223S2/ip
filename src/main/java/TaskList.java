@@ -90,6 +90,18 @@ public class TaskList {
         ui.printDeletedTask(deletedTask, tasks.size());
     }
 
+    public void findTask(String keyword) {
+        TaskList taskList = new TaskList();
+        for (int i = 0; i < tasks.size(); i++) {
+            Task currentTask = tasks.get(i);
+            String details = tasks.get(i).getDetails();
+            if (details.contains(keyword)) {
+                taskList.tasks.add(currentTask);
+            }
+        }
+        ui.printFoundTask(taskList);
+    }
+
     public Task getTask(int taskNumber) {
         return tasks.get(taskNumber);
     }
@@ -101,5 +113,6 @@ public class TaskList {
     public int getSize() {
         return tasks.size();
     }
+
 
 }
