@@ -6,67 +6,61 @@ import java.io.File;
 import tasks.*;
 
 public class ThomasShelby {
-    static final int MAX_TASKS = 100;
-
-    static Task[] taskManager = new Task[MAX_TASKS];
+    static ArrayList<Task> taskManager = new ArrayList<>();
     static int taskCount = 0;
 
     private static void listTasks() {
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < taskCount; i++) {
             System.out.println((i + 1) + ". "
-                    + taskManager[i]);
+                    + taskManager.get(i));
         }
     }
 
     private static void addToDo(String[] cmdSplit) {
         ToDo newToDo = new ToDo(cmdSplit[1]);
-        taskManager[taskCount] = newToDo;
+        taskManager.add(newToDo);
         taskCount++;
-        System.out.println("Don't sleep on it.");
-        System.out.println("added: " + newToDo);
+        System.out.println("Don't sleep on it.\n" + "added: " + newToDo);
     }
 
     private static void addDeadline(String[] cmdSplit) {
         String[] taskAndDeadline = cmdSplit[1].split("/", 2);
         Deadline newDeadline = new Deadline(taskAndDeadline[0], taskAndDeadline[1]);
-        taskManager[taskCount] = newDeadline;
+        taskManager.add(newDeadline);
         taskCount++;
-        System.out.println("Time is money, chop chop!");
-        System.out.println("added: " + newDeadline);
+        System.out.println("Time is money, chop chop!\n" + "added: " + newDeadline);
     }
 
     private static void addEvent(String[] cmdSplit) {
         String[] taskAndDuration = cmdSplit[1].split("/");
         Event newEvent = new Event(taskAndDuration[0], taskAndDuration[1], taskAndDuration[2]);
-        taskManager[taskCount] = newEvent;
+        taskManager.add(newEvent);
         taskCount++;
-        System.out.println("I'll see you there.");
-        System.out.println("added: " + newEvent);
+        System.out.println("I'll see you there.\n" + "added: " + newEvent);
     }
 
     private static void markTask(String[] cmdSplit) {
         int whichTask;
         whichTask = Integer.parseInt(cmdSplit[1]) - 1; // shift back index
-        taskManager[whichTask].setIsDone(true);
-        System.out.println("That was long due, well done.");
-        System.out.println(taskManager[whichTask]);
+        taskManager.get(whichTask).setIsDone(true);
+        System.out.println("That was long due, well done.\n" + taskManager.get(whichTask));
     }
 
     private static void unmarkTask(String[] cmdSplit) {
         int whichTask;
         whichTask = Integer.parseInt(cmdSplit[1]) - 1; // shift back index
-        taskManager[whichTask].setIsDone(false);
+        taskManager.get(whichTask).setIsDone(false);
         System.out.println("You've gotten lazy.");
-        System.out.println(taskManager[whichTask]);
+        System.out.println(taskManager.get(whichTask));
     }
 
     private static void deleteTask(String[] cmdSplit) {
-        int whichTask;
-        whichTask = Integer.parseInt(cmdSplit[1]) - 1; // shift back index
-        taskManager[whichTask] = null;
-        System.out.println("Noted, deleted this task.");
-        System.out.println(taskManager[whichTask]);
+        int whichTask = Integer.parseInt(cmdSplit[1]) - 1; // shift back index
+        Task taskToDelete = taskManager.get(whichTask);
+        taskManager.remove(whichTask);
+        System.out.println("That's off the list: \n" + taskToDelete);
+        System.out.println("You're left with " + taskManager.size() + " tasks.");
     }
 
     public static void main(String[] args) throws IOException {

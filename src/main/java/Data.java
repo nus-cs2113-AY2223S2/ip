@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.ArrayList;
 import java.io.IOException;
 import tasks.*;
 
@@ -19,7 +20,7 @@ public class Data {
         }
     }
 
-    public static void saveData(Task[] tasks, int taskCount) throws IOException {
+    public static void saveData(ArrayList<Task> taskManager, int taskCount) throws IOException {
         try {
             createFile();
         } catch (IOException e) {
@@ -29,7 +30,7 @@ public class Data {
         try {
             FileWriter myWriter = new FileWriter("data/data.txt");
             for (int i = 0; i < taskCount; i++) {
-                Task task = tasks[i];
+                Task task = taskManager.get(i);
                 if (task.getType().equals("T")) {
                     myWriter.write(task.getType() + "%" + task.getStatusIcon() + "%" + task.getDescription() + '\n');
                 } else if (task.getType().equals("D")) {
@@ -48,7 +49,7 @@ public class Data {
         }
     }
 
-    public static void loadData(File filename, Task[] taskManager, int taskCount) throws IOException {
+    public static void loadData(File filename, ArrayList<Task> taskManager, int taskCount) throws IOException {
         try {
             Scanner sc = new Scanner(filename);
             while (sc.hasNextLine()) {
@@ -60,19 +61,19 @@ public class Data {
                 case "T":
                     ToDo newToDo = new ToDo(description);
                     newToDo.setIsDone(isDone);
-                    taskManager[taskCount] = newToDo;
+                    taskManager.set(taskCount, newToDo);
                     taskCount++;
                     break;
                 case "D":
                     Deadline newDeadline = new Deadline(description, str[3]);
                     newDeadline.setIsDone(isDone);
-                    taskManager[taskCount] = newDeadline;
+                    taskManager.set(taskCount, newDeadline);
                     taskCount++;
                     break;
                 case "E":
                     Event newEvent = new Event(description, str[3], str[4]);
                     newEvent.setIsDone(isDone);
-                    taskManager[taskCount] = newEvent;
+                    taskManager.set(taskCount, newEvent);
                     taskCount++;
                     break;
                 default:
