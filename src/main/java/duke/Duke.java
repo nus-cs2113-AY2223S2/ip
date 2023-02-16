@@ -4,6 +4,9 @@ import duke.tasks.Deadline;
 import duke.tasks.Event;
 import duke.tasks.ToDo;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class Duke {
@@ -15,6 +18,7 @@ public class Duke {
         Scanner scanner = new Scanner(System.in);
         Task[] taskArray = new Task[100];
         int taskIndex = 0;
+
         while (true) {
             String command = scanner.nextLine(); //reads in input
             //if command is bye, end program
@@ -131,6 +135,33 @@ public class Duke {
                     System.out.println("Error: Understand, I do not.");
                 }
             }
+        }
+        try {
+            File file = new File("duke.txt");
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            PrintWriter printWriter = new PrintWriter(file);
+            if (taskIndex == 0) {
+                printWriter.println("Empty, list is.");
+            } else {
+                printWriter.println("As shown, list is:");
+                for (int j = 0; j < taskIndex; ++j) {
+                    if (taskArray[j] instanceof ToDo) {
+                        printWriter.println(j + ". " + ((ToDo) taskArray[j]).getToDo() + " " + taskArray[j].getDoneStatus() + " " + taskArray[j].getDescription());
+                    }
+                    if (taskArray[j] instanceof Deadline) {
+                        printWriter.println(j + ". " + ((Deadline) taskArray[j]).getDeadline() + " " + taskArray[j].getDoneStatus() + " " + taskArray[j].getDescription() + " (" + ((Deadline) taskArray[j]).getDate() + ")");
+                    }
+                    if (taskArray[j] instanceof Event) {
+                        printWriter.println(j + ". " + ((Event) taskArray[j]).getEvent() + " " + taskArray[j].getDoneStatus() + " " + taskArray[j].getDescription() + " (" + ((Event) taskArray[j]).getStartAndEnd() + ")");
+                    }
+                }
+            }
+            printWriter.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
