@@ -1,11 +1,11 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 import exception.RolexException;
 import tasks.Deadline;
 import tasks.Event;
 import tasks.Task;
 import tasks.Todo;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 public class Rolex {
 
