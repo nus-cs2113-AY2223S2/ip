@@ -3,6 +3,7 @@ import Onandon.function.*;
 import Onandon.print.Print;
 import Onandon.exception.OnandonEmptyException;
 import Onandon.exception.OnandonUnknownException;
+import Onandon.exception.OnandonNotaskException;
 
 import java.util.Scanner;
 
@@ -89,33 +90,46 @@ public class Onandon {
         Print.printUnderline();
     }
 
-    public static void checkException(String inputText) throws OnandonEmptyException, OnandonUnknownException {
+    public static void checkException(String inputText) throws OnandonEmptyException, OnandonUnknownException, OnandonNotaskException {
+        String[] split = inputText.split(" ");
         String tgt = inputText.split(" ")[0];
         Boolean isNotTodo = !tgt.equals("todo");
         Boolean isNotDeadline = !tgt.equals("deadline");
         Boolean isNotEvent = !tgt.equals("event");
         Boolean isNotMark = !tgt.equals("mark");
         Boolean isNotUnmark = !tgt.equals("unmark");
+        Boolean isNotList = !tgt.equals("list");
 
         if(inputText.length() == 0){
             throw new OnandonEmptyException();
-        } else if(isNotTodo && isNotDeadline && isNotEvent && isNotMark && isNotUnmark){
+        } else if(isNotTodo && isNotDeadline && isNotEvent && isNotMark && isNotUnmark && isNotList){
             throw new OnandonUnknownException();
+        } else if(split.length <= 1 && isNotList){
+            throw new OnandonNotaskException();
         }
     }
 
-    public static void printException(String inputText){
+    public static Boolean printException(String inputText){
         try{
            checkException(inputText);
         } catch (OnandonEmptyException e){
             Print.printUnderline();
             System.out.println("\t ☹ OOPS!!! The description of a todo cannot be empty.");
             Print.printUnderline();
+            return true;
         } catch (OnandonUnknownException e){
             Print.printUnderline();
             System.out.println("\t ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
             Print.printUnderline();
+            return true;
+        } catch (OnandonNotaskException e){
+            Print.printUnderline();
+            System.out.println("\t ☹ OOPS!!! There is no task on input!");
+            Print.printUnderline();
+            return true;
         }
+
+        return false;
     }
 
     public static void main(String[] args) {
@@ -132,7 +146,10 @@ public class Onandon {
             if(inputText.equals("exit"))
                 break;
 
-            printException(inputText);
+            if(printException(inputText)){
+                continue;
+            }
+
             tgt = inputText.split(" ")[0];
 
             switch(tgt){
