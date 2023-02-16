@@ -5,7 +5,6 @@ import model.task.Deadline;
 import model.task.Event;
 import model.task.Task;
 import model.task.Todo;
-//import parser.FileParser;
 import storage.Database;
 import validator.Validator;
 import view.TaskView;
@@ -14,7 +13,6 @@ public class TaskController {
 
   protected TaskView view = new TaskView();
   protected Validator validator = new Validator();
-//  protected FileParser parser = FileParser.getInstance();
   protected Database db = Database.getInstance();
   static int counter = 0;
 
@@ -69,8 +67,6 @@ public class TaskController {
     db.update(index, isMark);
     model = db.read(index);
     String newMessage = model.getDescriptionText();
-
-//    parser.updateFile(previousMessage, newMessage);
     System.out.printf(
       "%s\n",
       isMark ? Message.MARKED.message : Message.UNMARKED.message
@@ -84,14 +80,9 @@ public class TaskController {
    * @param taskDescription The task description
    * @throws Exception An exception if the task is invalid
    */
-  public void addDeadlineTask(String taskDescription) throws Exception {
-    int index = taskDescription.indexOf("/by");
-    validator.validateDeadlineTask(index);
-    String description = taskDescription.substring(0, index);
-    String endDuration = taskDescription.substring(index + "/by ".length());
-    Deadline model = new Deadline(description, endDuration);
+  public void addDeadlineTask(String description, String deadline) throws Exception {
+    Deadline model = new Deadline(description, deadline);
     counter += 1;
-//    parser.writeToFile(model.getDescriptionText());
     db.create(model);
     printDescription(model);
   }

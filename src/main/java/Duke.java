@@ -4,10 +4,13 @@ import constants.Message;
 import controller.TaskController;
 import java.util.Scanner;
 import validator.error.InvalidTaskError;
+import parser.IoParser;
+import java.util.HashMap;
 
 public class Duke {
 
   private static final TaskController controller = new TaskController();
+  private static final IoParser parser = new IoParser();
   private static boolean isRunning = true;
 
   private static void terminate() {
@@ -17,6 +20,7 @@ public class Duke {
   private static void process(String[] words) {
     try {
       String command = words[0];
+      HashMap<String, String> dictionary;
       String taskDescription;
 
       switch (command) {
@@ -24,8 +28,10 @@ public class Duke {
           controller.listTasks();
           break;
         case Command.DEADLINE:
-          taskDescription = words[1];
-          controller.addDeadlineTask(taskDescription);
+          dictionary = parser.handleDeadline(words[1]);
+          taskDescription = dictionary.get("description");
+          String deadline = dictionary.get("deadline");
+          controller.addDeadlineTask(taskDescription, deadline);
           break;
         case Command.TODO:
           taskDescription = words[1];
