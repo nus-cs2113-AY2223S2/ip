@@ -16,6 +16,9 @@ public class Add {
     private static final String COMMAND_EVENT = "/event";
     private static final String COMMAND_TODO = "/todo";
     private static final String COMMAND_DEADLINE = "/deadline";
+    private static final String COMMAND_BY = "/by";
+    private static final String COMMAND_START = "/start";
+    private static final String COMMAND_END = "/end";
 
     public static void addTask(String userInput) throws MissingCommandException {
         String[] userInputArray = userInput.split(" ");
@@ -29,12 +32,12 @@ public class Add {
         if (command.equals(COMMAND_TODO)) {
             newTask = new Todo(userInput);
         } else if (command.equals(COMMAND_DEADLINE)) {
-            if (!userInput.contains("/by")) {
+            if (!userInput.contains(COMMAND_BY)) {
                 throw new MissingCommandException("Please specify a deadline via the /by command!");
             }
             newTask = new Deadline(userInput);
         } else if (command.equals(COMMAND_EVENT)) {
-            if (!userInput.contains("/start") || !userInput.contains("/end")) {
+            if (!userInput.contains(COMMAND_START) || !userInput.contains(COMMAND_END)) {
                 throw new MissingCommandException(
                         "Please specify both start and end dates/times via the /start and /end commands!");
             }
