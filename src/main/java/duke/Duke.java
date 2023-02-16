@@ -5,6 +5,8 @@ import duke.keycommand.Deadline;
 import duke.keycommand.Event;
 import duke.keycommand.ToDo;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -42,17 +44,25 @@ public class Duke {
     public static final String INVALID_INPUT = "This is an invalid input, please follow this input format\n";
     public static final String DEADLINE_INVALID_INPUT = INVALID_INPUT + DEADLINE_FORMAT;
     public static final String EVENT_INVALID_INPUT = INVALID_INPUT + EVENT_FORMAT;
+    public static final String MEANINGLESS_SENTENCE_AFTER_KEYWORD = "OPPS!!! The sentence after keyword has no meaning";
     public static final ArrayList<String> KEYWORDS = new ArrayList<>(
             List.of("todo","deadline","event","list","bye","mark","unmark","help")
     );
-    public static final String MEANINGLESS_SENTENCE_AFTER_KEYWORD = "OPPS!!! The sentence after keyword has no meaning";
+    public static final String WRITEFILE_EXCEPTION_MESSAGE = "OPPS!!! Something went wrong when you write to data file";
 
     public static void main(String[] args) {
+        ArrayList<Task> tasks = new ArrayList<>();
+        FileClass dataFile = new FileClass("src/main/data.txt", tasks);
+        try {
+            dataFile.addTasks();
+        } catch (FileNotFoundException e) {
+            System.out.println("Please give a correct data file path");
+            return;
+        }
         showWelcomeMessage();
 
         String userInput;
         Scanner in = new Scanner(System.in);
-        ArrayList<Task> tasks = new ArrayList<>();
 
         while (true) {
             userInput = getInput(in);
@@ -75,7 +85,7 @@ public class Duke {
                     continue;
                 }
                 try {
-                    addTodoTask(separatedKeyWordAndContent[1], tasks);
+                    addTodoTask(separatedKeyWordAndContent[1], tasks, dataFile);
                 } catch(EmptyDescription e) {
                     System.out.println("OOPS!!! your task can not be empty");
                 }
@@ -84,7 +94,7 @@ public class Duke {
                     continue;
                 }
                 try {
-                    addDeadlineTask(separatedKeyWordAndContent[1], tasks);
+                    addDeadlineTask(separatedKeyWordAndContent[1], tasks, dataFile);
                 } catch(EmptyDescription e) {
                     System.out.println("OOPS!!! the deadline can not be empty");
                 }
@@ -92,7 +102,7 @@ public class Duke {
                 if (doesIndexOutOfBoundsOccur(separatedKeyWordAndContent,1, EMPTY_EVENT_DESCRIPTION)) {
                     continue;
                 }
-                addEventTask(separatedKeyWordAndContent[1], tasks);
+                addEventTask(separatedKeyWordAndContent[1], tasks, dataFile);
             } else if (keyword.equals("mark") || keyword.equals("unmark")) {
                 if (userInput.split(" ").length != 2) {
                     System.out.println(MARK_INSTRUCTION + "\n"
@@ -154,7 +164,7 @@ public class Duke {
         }
     }
 
-    private static void addTodoTask(String content, ArrayList<Task> tasks) throws EmptyDescription {
+    private static void addTodoTask(String content, ArrayList<Task> tasks, FileClass dataFile) throws EmptyDescription {
         if (content.trim().isEmpty()) {
             throw new EmptyDescription();
         }
@@ -163,9 +173,11 @@ public class Duke {
         System.out.println(ADDING_TASK);
         System.out.println("[T][] " + content);
         System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+        String inputToDataFile = "\nT | " + convertMarkingStatusToNumber(task) + " | " + task.getContent();
+        appendTaskToDataFile(dataFile, inputToDataFile);
     }
 
-    private static void addDeadlineTask(String content, ArrayList<Task> tasks) throws EmptyDescription{
+    private static void addDeadlineTask(String content, ArrayList<Task> tasks, FileClass dataFile) throws EmptyDescription{
         String[] seperatedWordsInContent = content.split(" /");
         if (doesIndexOutOfBoundsOccur(seperatedWordsInContent, 1, DEADLINE_INVALID_INPUT)) {
             return;
@@ -181,12 +193,15 @@ public class Duke {
             System.out.println(ADDING_TASK);
             System.out.println("[D][] " + taskName + " (by: " + date + ")");
             System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+            String inputToDataFile = "\nD | " + convertMarkingStatusToNumber(task) + " | " + task.getContent()
+                    + " | " + task.getDate();
+            appendTaskToDataFile(dataFile, inputToDataFile);
         } else {
             System.out.println(DEADLINE_INVALID_INPUT);
         }
     }
 
-    private static void addEventTask(String content, ArrayList<Task> tasks)  {
+    private static void addEventTask(String content, ArrayList<Task> tasks, FileClass dataFile)  {
         String[] seperatedWordsInContent = content.split(" /");
         if (doesIndexOutOfBoundsOccur(seperatedWordsInContent,2,EVENT_INVALID_INPUT)) {
             return;
@@ -207,11 +222,29 @@ public class Duke {
             System.out.println(ADDING_TASK);
             System.out.println("[E][] " + taskName + " (from: " + beginDate + " to: " + endDate + ")");
             System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+            String inputToDataFile = "\nE | " + convertMarkingStatusToNumber(task) + " | " + task.getContent()
+                    + " | " + task.getBeginDate() + " | " + task.getEndDate();
+            appendTaskToDataFile(dataFile, inputToDataFile);
         } else {
             System.out.println(EVENT_INVALID_INPUT);
         }
     }
 
+    private static void appendTaskToDataFile(FileClass dataFile, String inputToDataFile) {
+        try {
+            dataFile.appendToFile("src/main/data.txt", inputToDataFile);
+        } catch (IOException e) {
+            System.out.println(WRITEFILE_EXCEPTION_MESSAGE);
+        }
+    }
+
+    private static String convertMarkingStatusToNumber(Task task) {
+        if (task.getMarkingStatus().equals("[ ]")) {
+            return "0";
+        } else {
+            return "1";
+        }
+    }
     private static void changeTaskStatus(ArrayList<Task> tasks, String[] seperatedWords) {
         try {
             int lastWordInInteger = Integer.parseInt(seperatedWords[1]);

@@ -1,0 +1,72 @@
+package duke;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.regex.Pattern;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import duke.keycommand.Deadline;
+import duke.keycommand.Event;
+import duke.keycommand.ToDo;
+public class FileClass {
+    public File file;
+    public ArrayList<Task> tasks;
+    public FileClass(String filePath, ArrayList<Task> tasks) {
+        file = new File(filePath);
+        this.tasks = tasks;
+    }
+
+    public void addTasks() throws FileNotFoundException {
+        Scanner s = new Scanner(file); // create a Scanner using the File as the source
+        while (s.hasNext()) {
+            String line = s.nextLine();
+            addToTaskList(line);
+        }
+    }
+
+    public void addToTaskList(String line) {
+        String[] elements = line.split(Pattern.quote(" | "));
+        if (elements[0].equals("T")) {
+            addTodoToTaskList(elements);
+        } else if (elements[0].equals("D")) {
+            addDeadlineToTaskList(elements);
+        } else {
+            addEventToTaskList(elements);
+        }
+    }
+
+    private void addTodoToTaskList(String[] elements) {
+        ToDo task = new ToDo(elements[2]);
+        setTaskStatus(elements[1],task);
+        tasks.add(task);
+    }
+
+    private void addDeadlineToTaskList(String[] elements) {
+        Deadline task = new Deadline(elements[2], elements[3]);
+        setTaskStatus(elements[1],task);
+        tasks.add(task);
+    }
+
+    private void addEventToTaskList(String[] elements) {
+        Event task = new Event(elements[2], elements[3], elements[4]);
+        setTaskStatus(elements[1],task);
+        tasks.add(task);
+    }
+
+    private void setTaskStatus(String taskStatus, Task task) {
+        if (taskStatus.equals("1")) {
+            task.mark();
+        } else {
+            task.unMark();
+        }
+    }
+
+    public void appendToFile(String filePath, String textToAppend) throws IOException {
+        FileWriter fileWriter = new FileWriter(filePath, true);
+        fileWriter.write(textToAppend);
+        fileWriter.close();
+    }
+
+}
