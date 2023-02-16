@@ -5,26 +5,27 @@ import Onandon.exception.OnandonEmptyException;
 import Onandon.exception.OnandonUnknownException;
 import Onandon.exception.OnandonNotaskException;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class Onandon {
-    static Task[] tasks = new Task[100];
+    static ArrayList<Task> tasks = new ArrayList<Task>(100);
 
-    public static int printTodoAction(String inputText, Task[] tasks, int cnt){
+    public static int printTodoAction(String inputText, ArrayList<Task> tasks, int cnt){
         String description;
         description = inputText.replaceAll("todo ", "");
 
         Print.printFormAbove();
-        tasks[cnt] = new Todo(description);
-        System.out.println("\t\t" + tasks[cnt].toString());
+        tasks.add(new Todo(description));
+        System.out.println("\t\t" + tasks.get(cnt).toString());
         cnt++;
         Print.printCnt(cnt);
         return cnt;
     }
 
-    public static int printDeadlineAction(String inputText, Task[] tasks, int cnt){
+    public static int printDeadlineAction(String inputText, ArrayList<Task> tasks, int cnt){
         String description;
         String by;
         int indexBy;
@@ -34,15 +35,15 @@ public class Onandon {
         by = inputText.substring(indexBy + 4);
 
         Print.printFormAbove();
-        tasks[cnt] = new Deadline(description, by);
-        System.out.println("\t\t" + tasks[cnt].toString());
+        tasks.add(new Deadline(description, by));
+        System.out.println("\t\t" + tasks.get(cnt).toString());
         cnt += 1;
         Print.printCnt(cnt);
 
         return cnt;
     }
 
-    public static int printEventAction(String inputText, Task[] tasks, int cnt){
+    public static int printEventAction(String inputText, ArrayList<Task> tasks, int cnt){
         String description;
         String from;
         String to;
@@ -56,53 +57,51 @@ public class Onandon {
         to = inputText.substring(indexTo+4);
 
         Print.printFormAbove();
-        tasks[cnt] = new Event(description, from, to);
-        System.out.println("\t\t" + tasks[cnt].toString());
+        tasks.add(new Event(description, from, to));
+        System.out.println("\t\t" + tasks.get(cnt).toString());
         cnt += 1;
         Print.printCnt(cnt);
 
         return cnt;
     }
 
-    public static void printMarkAction(String inputText, Task[] tasks){
+    public static void printMarkAction(String inputText, ArrayList<Task> tasks){
         int index;
 
         Print.printMark();
         index = Integer.parseInt(inputText.split(" ")[1])-1;
-        tasks[index].markAsDone();
-        System.out.println("\t\t[" + tasks[index].getStatusIcon() + "] " +
-                tasks[index].getDescription());
+        tasks.get(index).markAsDone();
+        System.out.println("\t\t[" + tasks.get(index).getStatusIcon() + "] " +
+                tasks.get(index).getDescription());
         Print.printUnderline();
     }
 
-    public static void printUnmarkAction(String inputText, Task[] tasks){
+    public static void printUnmarkAction(String inputText, ArrayList<Task> tasks){
         int index;
 
         Print.printUnmark();
         index = Integer.parseInt(inputText.split(" ")[1])-1;
-        tasks[index].markAsUnDone();
-        System.out.println("\t\t[" + tasks[index].getStatusIcon() + "] " +
-                tasks[index].getDescription());
+        tasks.get(index).markAsUnDone();
+        System.out.println("\t\t[" + tasks.get(index).getStatusIcon() + "] " +
+                tasks.get(index).getDescription());
         Print.printUnderline();
     }
 
-    public static void printListOfTasks(Task[] tasks, int cnt){
+    public static void printListOfTasks(ArrayList<Task> tasks, int cnt){
         Print.printList();
         for(int i=0; i<cnt; i++){
-            System.out.println("\t " + (i+1) + ". " + tasks[i].toString());
+            System.out.println("\t " + (i+1) + ". " + tasks.get(i).toString());
         }
         Print.printUnderline();
     }
 
-    public static int printDeleteOfTasks(String inputText, Task[] tasks, int cnt){
+    public static int printDeleteOfTasks(String inputText, ArrayList<Task> tasks, int cnt){
         int index;
 
         Print.printDelete();
         index = Integer.parseInt(inputText.split(" ")[1])-1;
-        System.out.println("\t\t" + tasks[index].toString());
-        ArrayList<Task> result = new ArrayList<Task>(Arrays.asList(tasks));
-        result.remove(index);
-        tasks = result.toArray(new Task[0]);
+        System.out.println("\t\t" + tasks.get(index).toString());
+        tasks.remove(index);
         cnt -= 1;
         System.out.println("\t Now you have " + cnt + " tasks in the list.");
         Print.printUnderline();
