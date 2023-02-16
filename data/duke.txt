@@ -1,4 +1,0 @@
-todo:1:homework
-event:0:attend lecture on friday for cs2113:4pm Friday:6pm Friday
-todo:1:homework for 2023
-todo:0:homework for 2271
