@@ -1,11 +1,11 @@
-import com.sun.source.tree.WhileLoopTree;
-
 public class Event extends Task{
     String input;
+
     public Event(String input) {
         super(input);
         this.input = input;
     }
+
     @Override
     public String getState(){
         String wholeArrayOfEvent = this.description.substring(description.indexOf(" ") + 1);
