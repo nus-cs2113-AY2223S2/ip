@@ -8,6 +8,7 @@ import duke.*;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Scanner;
 import java.io.FileWriter;
 
@@ -15,7 +16,7 @@ public class TodoList {
     
     private static final int MAXLISTNUM = 100;
     private static final String SPLITTER = "    ____________________________________________________________";
-    private static final String DATA_PATH = "duke/data/duke.txt";
+    private static final String DATA_PATH = "data/duke.txt";
     private ArrayList<Task> tasks = new ArrayList<>();
     private int listnum;
 
@@ -30,7 +31,6 @@ public class TodoList {
 
     public int addItem(Task task) throws DukeException{
         if(listnum < MAXLISTNUM){
-            // tasks[listnum++] = task;
             tasks.add(task);
             listnum++;
             System.out.println(SPLITTER);
@@ -114,12 +114,15 @@ public class TodoList {
     }
 
     public void saveList() throws IOException{
-        File listFile = new File("duke/data/duke.txt");
+        File listFile = new File(DATA_PATH);
 
         // create file(if it does not exist)
-        if(!listFile.exists()){
-            listFile.createNewFile();
-        }
+            if(!listFile.exists()){
+                if(!listFile.getParentFile().exists()){
+                    listFile.getParentFile().mkdirs();
+                }
+                listFile.createNewFile();
+            }
 
         FileWriter saver = new FileWriter(listFile);
         for(Task task : tasks){
@@ -137,10 +140,13 @@ public class TodoList {
     }
 
     public void loadList() throws IOException, DukeException{
-        File listFile = new File("duke/data/duke.txt");
+        File listFile = new File(DATA_PATH);
 
         // create file(if it does not exist)
         if(!listFile.exists()){
+            if(!listFile.getParentFile().exists()){
+                listFile.getParentFile().mkdirs();
+            }
             listFile.createNewFile();
         }
 
