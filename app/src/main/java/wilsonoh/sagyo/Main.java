@@ -33,9 +33,7 @@ public class Main {
         CommandParser cmdParser = new CommandParser(tasks);
         boolean isRunning = true;
         ui.printLinesInfo(GREETING);
-        // try-with-resources to close the scanner automatically, preventing resource leaks
         try (Scanner sc = new Scanner(System.in)) {
-            // Loop will break on execution of the ByeCommand
             while (isRunning) {
                 System.out.print(PROMPT);
                 String line = sc.nextLine();

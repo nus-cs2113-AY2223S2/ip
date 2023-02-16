@@ -21,8 +21,10 @@ import com.google.gson.JsonSyntaxException;
 public class Storage {
 
     private Path taskListPath;
+    private final Gson gson;
 
     public Storage() {
+        this.gson = new GsonBuilder().setPrettyPrinting().create();
         Path xdgConfigHome;
         String os = System.getProperty("os.name").toLowerCase();
         if (os.contains("win")) {
@@ -39,10 +41,17 @@ public class Storage {
             }
         }
         taskListPath = sagyoHome.resolve("tasks.json");
+        if (!Files.exists(taskListPath)) {
+            try {
+                Files.createFile(taskListPath);
+                Files.writeString(taskListPath, gson.toJson(new JsonArray()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void writeTasksToJSON(TaskList tasks) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         JsonArray jsonArray = new JsonArray();
         for (Task task : tasks) {
             JsonElement element = gson.toJsonTree(task);
@@ -57,7 +66,6 @@ public class Storage {
     }
 
     public ArrayList<Task> getTaskListFromJSON() throws InvalidTaskException {
-        Gson gson = new Gson();
         ArrayList<Task> ret = new ArrayList<>();
         try {
             JsonArray arr = gson.fromJson(Files.readString(taskListPath), JsonArray.class);

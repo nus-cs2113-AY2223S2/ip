@@ -47,8 +47,6 @@ public class TextFormatter {
         clearScreen();
         System.out.println(colorCode.getAnsiCode());
         String indentation = " ".repeat(numIndent);
-        // Stream and map the lines into their respectives lengths, and then get the max length
-        // while making sure it does not exceed the maxWidth set
         int textWidth = Math.min(Arrays.stream(lines).mapToInt(String::length).max().orElse(0), maxWidth);
         StringBuilder toPrint = new StringBuilder();
         toPrint.append(String.format("┌%s┐\n", "─".repeat((numIndent * 2) + textWidth)));
