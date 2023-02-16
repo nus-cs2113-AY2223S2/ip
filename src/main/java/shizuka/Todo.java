@@ -25,6 +25,7 @@ public class Todo {
     }
 
     public String saveTask(){
-        return this.taskType + ITEM_SEPARATOR + (this.isDone ? "1" : "0") + ITEM_SEPARATOR + this.description;
+        return this.taskType + ITEM_SEPARATOR + (this.isDone ? "1" : "0") + ITEM_SEPARATOR
+                + this.description + System.lineSeparator();
     }
 }

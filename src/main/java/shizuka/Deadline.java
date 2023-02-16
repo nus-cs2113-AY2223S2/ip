@@ -16,6 +16,6 @@ public class Deadline extends Todo {
 
     public String saveTask() {
         return this.taskType + ITEM_SEPARATOR + (this.isDone ? "1" : "0") + ITEM_SEPARATOR + this.description
-                + ITEM_SEPARATOR + this.deadline;
+                + ITEM_SEPARATOR + this.deadline + System.lineSeparator();
     }
 }
