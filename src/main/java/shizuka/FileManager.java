@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class WriteToFile {
+public class FileManager {
 
     static void save(String filePath, String[] text) throws IOException {
         File f = new File(filePath);

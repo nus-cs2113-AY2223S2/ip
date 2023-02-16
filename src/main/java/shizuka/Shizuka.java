@@ -85,7 +85,7 @@ public class Shizuka {
                 break;
             case "save":
                 try {
-                    WriteToFile.save(FILE_PATH, list0.listWriter());
+                    FileManager.save(FILE_PATH, list0.listWriter());
                     Printer.saveSuccess();
                     break;
                 } catch (IOException e) {
