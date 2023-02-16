@@ -99,6 +99,12 @@ public class Command {
         Print.printLine();
     }
 
+    public static void deleteTask(int index){
+        Task currentTask = Duke.tasksList.get(index-1); 
+        System.out.println("\t" + "Noted. I have removed this task: " + currentTask.getStatusIcon() + currentTask.printTask());
+        Duke.tasksList.remove(currentTask);
+    }
+
     public static void markTask(int index){
         Task currentTask = Duke.tasksList.get(index-1); 
         currentTask.markAsDone();
