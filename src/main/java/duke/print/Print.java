@@ -75,6 +75,7 @@ public class Print {
         println("    mark [task number]                               --> to mark a task as done");
         println("    unmark [task number]                             --> to unmark a task (i.e. not done)");
         println("    list                                             --> to show the lists of tasks");
+        println("    delete [task number]                             --> to delete a task");
         println("    bye                                              --> to exit the program");
 
         println("");

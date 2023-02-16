@@ -21,14 +21,14 @@ import java.util.Scanner;
 
 public class Duke {
     static final int USER_INPUT_EXPECTED_SIZE = 2;
-    static final String FILE_PATH = "src/main/java/duke.txt";
+    static final String FILE_PATH = "./duke.txt";
 
     public static void main(String[] args) {
         showWelcomeMessage();
 
         File F = new File(FILE_PATH);
         if (!F.exists()) {
-            new File("duke.txt");
+            F = new File("./duke.txt");
         }
 
         ArrayList<Task> taskList = new ArrayList<>();
