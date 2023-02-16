@@ -4,22 +4,85 @@ import java.util.Scanner;
 public class Duke {
 
     public static ArrayList<Task>tasks = new ArrayList<>();
-    public static void printExit() {
-        System.out.println("Bye. Hope to see you again soon!");
-    }
+
+    public static boolean proceedToNextCommand = true;
 
     public static void printDivider() {
         String DIVIDER = "____________________________________________________";
         System.out.println(DIVIDER);
     }
 
-    public static void markTask(String input) {
-        int taskNumber = Integer.parseInt(input.substring(5)) - 1;
+    public static void executeCommand(String input) throws CommandNotFoundException {
+        if (input.equals("bye")) {
+            printExit();
+            proceedToNextCommand = false;
+            System.exit(0);
+        } else if (input.startsWith("mark")) {
+            printDivider();
+            try {
+                markTask(input);
+            } catch (NumberFormatException e) {
+                System.out.println("Task to be marked is not a number.");
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Task number to be marked is not within the list");
+            }
+            printDivider();
+        } else if (input.startsWith("unmark")) {
+            printDivider();
+            try {
+                unmarkTask(input);
+            } catch (NumberFormatException e) {
+                System.out.println("Task to be unmarked is not a number.");
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Task number to be unmarked is not within the list");
+            }
+            printDivider();
+        } else if (input.equals("list")) {
+            printList();
+        } else if (input.startsWith("todo")) {
+            printDivider();
+            try {
+                createTodo(input);
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("The description of a todo cannot be empty.");
+            }
+            printDivider();
+        } else if (input.startsWith("deadline")) {
+            printDivider();
+            try {
+                createDeadline(input);
+            } catch (IndexOutOfBoundsException | InvalidInputException e) {
+                System.out.println("Incomplete description or date of the deadline\n" + "Please input in the following format: deadline <description> /by <when>");
+            }
+            printDivider();
+        } else if (input.startsWith("event")) {
+            printDivider();
+            try {
+                createEvent(input);
+            } catch (IllegalFormatException e) {
+                System.out.println("The /from cannot go after /to\n" + "Please input in the following format: event <description> /from <when> /to <when>");
+            } catch (IndexOutOfBoundsException | InvalidInputException e) {
+                System.out.println("Incomplete description or date of the event\n" + "Please input in the following format: event <description> /from <when> /to <when>");
+            }
+            printDivider();
+        } else {
+            throw new CommandNotFoundException();
+        }
+    }
+
+    public static void printExit() {
+        printDivider();
+        System.out.println("Bye. Hope to see you again soon!");
+        printDivider();
+    }
+
+    public static void markTask(String input)  {
+        int taskNumber = Integer.parseInt(input.substring(4).trim()) - 1;
         tasks.get(taskNumber).markDone();
     }
 
-    public static void unmarkTask(String input) {
-        int taskNumber = Integer.parseInt(input.substring(7)) - 1;
+    public static void unmarkTask(String input)  {
+        int taskNumber = Integer.parseInt(input.substring(6).trim()) - 1;
         tasks.get(taskNumber).umarkDone();
     }
 
@@ -35,31 +98,39 @@ public class Duke {
     }
 
     public static void createTodo(String input) {
-        tasks.add(new Todo(input.substring(5)));
-        printDivider();
+        tasks.add(new Todo(input.substring(4).trim()));
         System.out.println("Got it. I've added this tasks:\n" + tasks.get(tasks.size() - 1));
-        System.out.println("Now you have " + (tasks.size() - 1) + " tasks in the list.");
-        printDivider();
+        System.out.println("Now you have " + (tasks.size()) + " tasks in the list.");
     }
 
-    public static void createDeadline(String input) {
+    public static void createDeadline(String input) throws InvalidInputException {
         int byIndex = input.indexOf("/by");
-        tasks.add(new Deadline(input.substring(9, byIndex), input.substring(byIndex + 4)));
-        printDivider();
+        String description = input.substring(8, byIndex).trim();
+        String deadline = input.substring(byIndex + 3).trim();
+        if (description.length() < 1 | deadline.length() < 1) {
+            throw new InvalidInputException();
+        }
+        tasks.add(new Deadline(description, deadline));
         System.out.println("Got it. I've added this tasks:\n" + tasks.get(tasks.size() - 1));
-        System.out.println("Now you have " + (tasks.size() - 1) + " tasks in the list.");
-        printDivider();
+        System.out.println("Now you have " + (tasks.size()) + " tasks in the list.");
     }
 
-    public static void createEvent(String input) {
+    public static void createEvent(String input) throws IllegalFormatException, InvalidInputException {
         int fromIndex = input.indexOf("/from");
         int toIndex = input.indexOf("/to");
-        tasks.add(new Event(input.substring(6, fromIndex), input.substring(fromIndex + 6, toIndex), input.substring(toIndex + 4)));
-        printDivider();
+        String description = input.substring(5, fromIndex).trim();
+        String eventStart = input.substring(fromIndex + 5, toIndex).trim();
+        String eventEnd = input.substring(toIndex + 3).trim();
+        if (description.length() < 1 | eventStart.length() < 1 | eventEnd.length() < 1) {
+            throw new InvalidInputException();
+        } else if (fromIndex > toIndex) {
+            throw new IllegalFormatException();
+        }
+        tasks.add(new Event(description, eventStart, eventEnd));
         System.out.println("Got it. I've added this tasks:\n" + tasks.get(tasks.size() - 1));
-        System.out.println("Now you have " + (tasks.size() - 1) + " tasks in the list.");
-        printDivider();
+        System.out.println("Now you have " + (tasks.size()) + " tasks in the list.");
     }
+
 
     public static void main(String[] args) {
         String LOGO = " ____        _        \n"
@@ -73,29 +144,15 @@ public class Duke {
         System.out.println("Hello! I'm Duke\n" + "What can I do for you?\n");
         printDivider();
 
-        while(true) {
+        while(proceedToNextCommand) {
             Scanner userInput = new Scanner(System.in);
             String input = userInput.nextLine();
-            if (input.equals("bye")) {
-                printExit();
+            try {
+                executeCommand(input);
+            } catch (CommandNotFoundException e) {
                 printDivider();
-                break;
-            } else if (input.startsWith("mark")) {
-                markTask(input);
+                System.out.println("I'm sorry, but I don't know what that means =(");
                 printDivider();
-            } else if (input.startsWith("unmark")) {
-                unmarkTask(input);
-                printDivider();
-            } else if (input.equals("list")) {
-                printList();
-            } else if (input.startsWith("todo")) {
-                createTodo(input);
-            } else if (input.startsWith("deadline")) {
-                createDeadline(input);
-            } else if (input.startsWith("event")) {
-                createEvent(input);
-            } else {
-                System.out.print("Sorry, could you please repeat what you just said\n" );
             }
         }
     }
