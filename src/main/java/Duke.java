@@ -4,6 +4,7 @@ import duke.Task;
 import duke.Todo;
 
 import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.File;
@@ -31,6 +32,8 @@ public class Duke {
     public static final String TASK_REMOVED_MESSAGE_ONE = "Task removed:";
     public static final String TASK_REMOVED_MESSAGE_TWO = "Total tasks left: ";
     //Error Strings
+    public static final String ERROR_NO_TASKS_IN_LIST = "Behold the fields of which I keep your tasks. " +
+            "Lay thine eyes upon it, and see that it is barren";
     public static final String ERROR_UNKNOWN_INSTRUCTION = "What are you talking about?";
     public static final String ERROR_NON_INTEGER_INDEX = "Invalid Input. Give Just an Integer!";
     public static final String ERROR_NON_EXISTENT_TASK = "That task doesn't exist...";
@@ -94,7 +97,7 @@ public class Duke {
             "⠀⠀⠀⣼⣃⣴⣿⡿⠟⣋⣥⣶⣿⡿⠟⣋⣥⣶⣿⣷⣝⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠁⠀⠀⠀⠀⠃⡜⠀⠀⠀⠀⠀⣠⣶⣿⣿⣿⣿⣿⣿⣿⡦⠂⠀⠀⠀⠀⠀⠀⣠⣿⣿⣿⣿⣿⣿⣿⣿⣼⣿⣿⡟\n" +
             "⠀⠀⣼⣿⡿⣛⣭⣶⣿⡿⢟⣫⣵⣶⣿⣿⣿⣿⣿⣿⣿⣷⣌⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⡰⠁⠀⠀⢀⣤⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⡰⠙⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀\n" +
             "⠀⣼⡿⣻⣾⣿⡿⢛⣥⣾⣿⣿⣿⣿⣿⠿⣋⣴⡙⣿⣿⣿⣿⣷⣍⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⠀⠀⠀⠀⠘⠁⠀⣤⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀⠀⠀⠀⠀⠰⠁⠀⠹⣿⣿⣿⣿⣿⣧⣽⣿⢸⠀\n" +
-            "You must think you're funny, Ningen";
+            "You must think you're funny, Ningen D:<";
 
     public static String[] processInputMessage(Scanner in) {
         String input = in.nextLine();
@@ -285,6 +288,9 @@ public class Duke {
     private static void listAllTasks(ArrayList<Task> todoList) {
         Task currentTodo;
         int sizeOfTodoList = todoList.size();
+        if(sizeOfTodoList == 0) {
+            System.out.println(ERROR_NO_TASKS_IN_LIST);
+        }
         for (int i = 0; i < sizeOfTodoList; i += 1) {
             currentTodo = todoList.get(i);
             String printedMessage = String.format("%d.%s", i + 1, currentTodo);
@@ -345,11 +351,13 @@ public class Duke {
             case ACTION_LIST:
                 listAllTasks(todoList);
                 inputMessage = processInputMessage(in);
+                madeAValidInstruction = true;
                 break;
             case ACTION_DELETE:
                 int taskIndex = checkActionInputValidity(inputMessage, todoList.size());
                 if (taskIndex >= 0) {
                     DeleteATask(todoList, taskIndex);
+                    updateData(todoList);
                     madeAValidInstruction = true;
                 }
                 inputMessage = processInputMessage(in);
