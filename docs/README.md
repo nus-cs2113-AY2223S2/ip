@@ -114,7 +114,7 @@ Otherwise, Duke will inform you that you had an error and will show your input:
 ## Saving Files
 On the first creation of Duke, the file will be created in the same folder as the .jar file. Note that putting the file in a different folder will cause Duke to be unable to read the file.
 
-After entering the exit command, `bye`, Duke will save the contents into a text file (Duke.txt). The file will save each task on a new line, with the order of task type, completion status, and description. Each section is segmented by a vertical pipe (|). 
+After entering the exit command, `bye`, Duke will save the contents into a text file (Duke.txt). The file will save each task on a new line, with the order of task type, completion status, and description. Each section is segmented by a vertical pipe (`|`). 
 
 If you want to edit the save file, you may do so, but note that improper edits may cause Duke to crash. If Duke fails to read the file, you can delete the file and restart the application. 
 
