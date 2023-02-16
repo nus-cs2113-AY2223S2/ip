@@ -3,10 +3,14 @@ package commands;
 import tasks.Task;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class FileIO {
-    static File f = new File("/Users/sherlock/ip/src/userData.txt");
+    static String parentDir = "data";
+    static Path parentPath = Paths.get(parentDir);
+    static File f = new File("data/userData.txt");
 
     public static boolean isExist() {
         return f.exists();
@@ -17,7 +21,7 @@ public class FileIO {
         if (isFileExist) {
             ReadFile.readFile(f, list);
         } else {
-            CreateFile.createFile(f);
+            CreateFile.createFile(f,parentPath);
         }
     }
 
