@@ -1,5 +1,9 @@
 package Arsdorint;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -13,7 +17,7 @@ public class Arsdorint {
     private static final int MAX_NUM_OF_TASKS = 100;
     private static final String EXIT_MESSAGE = " Bye. Hope to see you again soon!\n";
     private static final String HELLO_MESSAGE =
-            " Hello! I'm TaskList, a member of TaskList Team.\n" +
+            " Hello! I'm Arsdorint, a member of Arsdorint Team.\n" +
             " Please Type The Command As Follow:\n";
     private static final String COMMAND_LIST_MESSAGE =
             "> Type \"list\" to list all the tasks. \n" +
@@ -24,6 +28,14 @@ public class Arsdorint {
             "> Type \"event x /y\" with x is the event, y is the time or date of that event. \n" +
             "> Type \"bye\" to exit. \n";
     private static final String QUESTION = " What can I do for you?";
+
+    private static final String STORAGE_DIRECTORY = "./storage";
+    private static final String STORAGE_FILE_NAME = "./storage/arsdorintTask.txt";
+    private static final String MESSAGE_NEW_FILE = "File created";
+    private static final String MESSAGE_OVERWRITE_FILE = "File overwritten";
+    private static final String MESSAGE_LOAD_FILE = "File loaded";
+    private static final String MESSAGE_NO_FILE = "There is no existing file";
+    private static final String MESSAGE_WRONG_FILE = "The storage files entry is invalid. Please save to overwrite";
     private static final String MESSAGE_DIVIDER =
             "____________________________________________________________";
     private static final String MESSAGE_DIVIDER_LIST =
@@ -48,6 +60,7 @@ public class Arsdorint {
             "Syntax for event\n\t>>> event <task> /<date of event";
     private static final String ERROR_MESSAGE_DELETE = "Syntax for delete item \n\t>>> delete <item index number> \n" +
             "Note: item index must exist in the current list";
+
     static Scanner input = new Scanner(System.in);
     static String logo = "    ___                         _                                 _\n"
             + "   / _ \\     _____   _____  ___| |   ___    _____   _   _____   _| |_\n"
@@ -151,10 +164,10 @@ public class Arsdorint {
             int idx = Integer.parseInt(command[1]) - 1;
             if (command[0].equalsIgnoreCase("unmark")) {
                 System.out.println("OK, I've marked this task as not done yet: \n");
-                toDoList.get(idx).isDone = true;
+                toDoList.get(idx).isDone = false;
             }
             else {
-                toDoList.get(idx).isDone = false;
+                toDoList.get(idx).isDone = true;
             }
             list();
         } catch (NumberFormatException | IndexOutOfBoundsException | NullPointerException err) {
@@ -221,6 +234,58 @@ public class Arsdorint {
             commandErrorHandler("event");
         }
     }
+    private static void save() {
+        try {
+            FileWriter fileWriter = new FileWriter(STORAGE_FILE_NAME);
+            for (int i = 0; i < Task.numOfTasks; i++) {
+                fileWriter.write(toDoList.get(i).toSave());
+            }
+            fileWriter.close();
+        } catch (IOException err) {
+            File newFile = new File(STORAGE_DIRECTORY);
+            newFile.mkdir();
+            showToUser(MESSAGE_NEW_FILE);
+            save();
+        } finally {
+            showToUser(MESSAGE_OVERWRITE_FILE);
+        }
+    }
+    private static void load() {
+        try {
+            File file = new File(STORAGE_FILE_NAME);
+            Scanner fileRead = new Scanner(file);
+            showToUser(MESSAGE_LOAD_FILE);
+            while (fileRead.hasNext()) {
+                fileParser(fileRead.nextLine());
+            }
+            fileRead.close();
+        } catch (FileNotFoundException err) {
+            showToUser(MESSAGE_NO_FILE);
+        } catch (ArrayIndexOutOfBoundsException err) {
+            showToUser(MESSAGE_WRONG_FILE);
+        }
+    }
+
+    private static void fileParser(String newLine) {
+        String[] parsedLine = newLine.split("");
+        switch (parsedLine[0]) {
+            case Todo.typeToDo:
+                toDoList.add(new Todo(parsedLine[2]));
+                toDoList.get(Task.numOfTasks - 1).isDone = Boolean.valueOf(parsedLine[1]);
+                addTaskMessage();
+                break;
+            case Deadline.typeDeadline:
+                toDoList.add(new Deadline(parsedLine[2], parsedLine[3]));
+                toDoList.get(Task.numOfTasks - 1).isDone = Boolean.valueOf(parsedLine[1]);
+                addTaskMessage();
+                break;
+            case Event.typeEvent:
+                toDoList.add(new Event(parsedLine[2], parsedLine[3]));
+                toDoList.get(Task.numOfTasks - 1).isDone = Boolean.valueOf(parsedLine[1]);
+                addTaskMessage();
+                break;
+        }
+    }
 
     private static void exitMessage() {
         showToUser(MESSAGE_DIVIDER, EXIT_MESSAGE, MESSAGE_DIVIDER);
@@ -256,10 +321,14 @@ public class Arsdorint {
         else if (lowerCaseLine.equalsIgnoreCase("delete")) {
             delete(splitLine);
         }
+        else if (lowerCaseLine.equalsIgnoreCase("save")) {
+            save();
+        }
         else wrongCommandMessage();
     }
     public static void main(String[] args) {
         helloMessage();
+        load();
         while (isRunning) {
             command();
         }
