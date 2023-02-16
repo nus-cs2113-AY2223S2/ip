@@ -1,3 +1,5 @@
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
@@ -17,7 +19,8 @@ public class Duke {
     private static void readAndRespond() throws DukeException {
         Scanner sc = new Scanner(System.in);
         String input = sc.nextLine();
-        Task[] listOfTasks = new Task[MAX_TASKS]; // 1-base indexing
+       // Task[] listOfTasks = new Task[MAX_TASKS]; // 1-base indexing
+        ArrayList<Task> listOfTasks = new ArrayList<>();
         while (!input.equals("bye")) {
             String[] words = input.split(" ");
             if (input.equals("list")) {
@@ -35,16 +38,21 @@ public class Duke {
             } else if (isValidEvent(words)) {
                 printAddedEventMessage(input, listOfTasks);
             } else if (IsValidDelete(input, words)) {
-                int number = Integer.parseInt(words[1]);
-                if (number <= 0 || number >= MAX_TASKS || listOfTasks[number] == null || words.length == 1 || !isInt(words[1])) {
-                    System.out.println("Please delete only valid tasks! List out your tasks if you are unsure!!");
-                } else {
-                    listOfTasks[number].deleteTask();
-                }
+                removeTask(listOfTasks, words);
             } else {
                 printAddedTaskMessage(input, listOfTasks);
             }
             input = sc.nextLine();
+        }
+    }
+
+    private static void removeTask(ArrayList<Task> listOfTasks, String[] words) {
+        int number = Integer.parseInt(words[1]);
+        if (number <= 0 || number >= MAX_TASKS || words.length == 1 || !isInt(words[1])) {
+            System.out.println("Please delete only valid tasks! List out your tasks if you are unsure!!");
+        } else {
+            listOfTasks.get(number - 1).deleteTask();
+            listOfTasks.remove(number - 1);
         }
     }
 
@@ -81,31 +89,31 @@ public class Duke {
         System.out.println("Bye. Hope to see you again soon!");
     }
 
-    private static void printAddedTaskMessage(String input, Task[] listOfTasks) {
+    private static void printAddedTaskMessage(String input, ArrayList<Task> listOfTasks) {
         Task newTask = new Task(input);
-        listOfTasks[Task.taskCount] = newTask;
+        listOfTasks.add(newTask);
         System.out.println(newTask.addedMessage());
     }
 
-    private static void printAddedEventMessage(String input, Task[] listOfTasks) {
+    private static void printAddedEventMessage(String input, ArrayList<Task> listOfTasks) {
         int idxOfSlash = input.indexOf('/');
         Event newEvent = new Event(input.substring(6, idxOfSlash),
                 input.substring(idxOfSlash + 6, input.indexOf('/', idxOfSlash + 1)),
                 input.substring(input.indexOf('/', idxOfSlash + 1) + 4));
-        listOfTasks[Task.taskCount] = newEvent;
+        listOfTasks.add(newEvent);
         System.out.println(newEvent.addedMessage());
     }
 
-    private static void printAddedDeadlineMessage(String input, Task[] listOfTasks) {
+    private static void printAddedDeadlineMessage(String input, ArrayList<Task> listOfTasks) {
         int idxOfSlash = input.indexOf('/');
         Deadline newDeadline = new Deadline(input.substring(9, idxOfSlash), input.substring(idxOfSlash + 4));
-        listOfTasks[Task.taskCount] = newDeadline;
+        listOfTasks.add(newDeadline);
         System.out.println(newDeadline.addedMessage());
     }
 
-    private static void printAddedTodoMessage(String input, Task[] listOfTasks) {
+    private static void printAddedTodoMessage(String input, ArrayList<Task> listOfTasks) {
         ToDo newTodo = new ToDo(input.substring(5));
-        listOfTasks[Task.taskCount] = newTodo;
+        listOfTasks.add(newTodo);
         System.out.println(newTodo.addedMessage());
     }
 
@@ -125,37 +133,34 @@ public class Duke {
         }
     }
 
-    private static void markTask(Task[] listOfTasks, String[] words) {
+    private static void markTask(ArrayList<Task> listOfTasks, String[] words) {
         int number = Integer.parseInt(words[1]);
-        if (number <= 0 || number >= MAX_TASKS || listOfTasks[number] == null) {
+        if (number <= 0 || number >= MAX_TASKS || listOfTasks.get(number) == null) {
             System.out.println("Please mark only valid tasks! List out your tasks if you are unsure!!");
         } else {
-            listOfTasks[number].markAsDone();
-            System.out.println("  " + listOfTasks[number].getStatusIcon() + " " + listOfTasks[number].description);
+            listOfTasks.get(number).markAsDone();
+            System.out.println("  " + listOfTasks.get(number).getStatusIcon() + " " + listOfTasks.get(number).description);
         }
     }
 
-    private static void unmarkTask(Task[] listOfTasks, String[] words) throws DukeException {
+    private static void unmarkTask(ArrayList<Task> listOfTasks, String[] words) throws DukeException {
         int number = Integer.parseInt(words[1]);
-        if (number <= 0 || number >= MAX_TASKS || listOfTasks[number] == null || words.length == 1 || !isInt(words[1])) {
+        if (number <= 0 || number >= MAX_TASKS || listOfTasks.get(number) == null || words.length == 1 || !isInt(words[1])) {
             System.out.println("Please unmark only valid tasks! List out your tasks if you are unsure!!");
         } else {
-            listOfTasks[number].unmarkDone();
-            System.out.println(" " + listOfTasks[number].getStatusIcon() + " " + listOfTasks[number].description);
+            listOfTasks.get(number).unmarkDone();
+            System.out.println(" " + listOfTasks.get(number).getStatusIcon() + " " + listOfTasks.get(number).description);
         }
     }
 
-    public static void printList(Task[] listOfTasks) {
+    public static void printList(ArrayList<Task> listOfTasks) {
         System.out.println(" Here are the tasks in your list");
         if (Task.taskCount == 0) {
             System.out.println(" Oops! It looks like your list is empty!!");
             return;
         }
-        for (int i = 1; i < MAX_TASKS; ++i) {
-            if (listOfTasks[i] == null) {
-                break;
-            }
-            System.out.println(" " + i + "." + listOfTasks[i].statusMessage());
+        for (int i = 0; i < listOfTasks.size(); ++i) {
+            System.out.println(" " + (i + 1) + "." + listOfTasks.get(i).statusMessage());
         }
     }
 
