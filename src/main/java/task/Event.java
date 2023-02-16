@@ -5,6 +5,7 @@ import serialiser.SerialiseException;
 
 public class Event extends Deadline {
     protected String startDate;
+    private static final String EVENT_MESSAGE = "E | %d | %s | %s | %s";
     public Event(String description, String startDate, String endDate) throws EmptyDescriptionException {
         super(description,endDate);
         setStartDate(startDate);
@@ -25,17 +26,23 @@ public class Event extends Deadline {
     }
     @Override
     public void parseArgument(String arguments) throws InvalidCommandException, EmptyDescriptionException {
-        int from = arguments.indexOf("/from");
-        int to = arguments.indexOf("/to");
-        if (from == -1 || arguments.charAt(from-1)!=' ' || arguments.charAt(from+5)!=' ') {
+        int fromExist = arguments.indexOf("/from");
+        int toExist = arguments.indexOf("/to");
+
+        boolean charBeforeFromIsSpace = arguments.charAt(fromExist-1) != ' ';
+        boolean noKeywordAfterFrom = arguments.charAt(fromExist+5) != ' ';
+        if (fromExist == -1 || charBeforeFromIsSpace || noKeywordAfterFrom) {
             throw new InvalidCommandException("Command at /from is invalid", new IllegalArgumentException());
         }
-        if (to == -1 || arguments.charAt(to-1)!=' ' || arguments.charAt(to+3)!=' ') {
+
+        boolean charBeforeToIsSpace = arguments.charAt(toExist-1)!=' ';
+        boolean noKeywordAfterTo = arguments.charAt(toExist+3)!=' ';
+        if (toExist == -1 || charBeforeToIsSpace || noKeywordAfterTo) {
             throw new InvalidCommandException("Command at /to is invalid", new IllegalArgumentException());
         }
-        setDescription(arguments.substring(0,from - 1));
-        setEndDate(arguments.substring(to + 4));
-        setStartDate(arguments.substring(from + 6, to -1));
+        setDescription(arguments.substring(0,fromExist - 1));
+        setEndDate(arguments.substring(toExist + 4));
+        setStartDate(arguments.substring(fromExist + 6, toExist -1));
     }
     @Override
     public String[] fromString(String taskString) throws SerialiseException{
@@ -49,6 +56,6 @@ public class Event extends Deadline {
     }
     @Override
     public String toStorageString() {
-        return String.format("E | %d | %s | %s | %s", isMark()?1:0 , description, startDate, endDate);
+        return String.format(EVENT_MESSAGE, isMark()?1:0 , description, startDate, endDate);
     }
 }

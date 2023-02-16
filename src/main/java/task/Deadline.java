@@ -5,7 +5,7 @@ import serialiser.SerialiseException;
 
 public class Deadline extends ToDo {
     protected String endDate;
-
+    private static final String DEADLINE_MESSAGE = "D | %d | %s | %s";
 	public Deadline(String description, String endDate) throws EmptyDescriptionException {
         super(description);
         setEndDate(endDate);
@@ -50,6 +50,6 @@ public class Deadline extends ToDo {
     }
     @Override
     public String toStorageString() {
-        return String.format("D | %d | %s | %s", isMark()?1:0 , description, endDate);
+        return String.format(DEADLINE_MESSAGE, isMark()?1:0 , description, endDate);
     }
 }

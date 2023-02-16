@@ -6,30 +6,30 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class TaskController implements ITaskController  {
-    ArrayList<Task> TaskList = new ArrayList<Task>();
+    ArrayList<Task> taskList = new ArrayList<Task>();
     public String addTask(Task newTask) {
-        TaskList.add(newTask);
+        taskList.add(newTask);
 
         return "Got it. I've added this task:\n " + 
                 newTask.toString() +
-                String.format("\nNow you have %d tasks in the list.", TaskList.size());
+                String.format("\nNow you have %d tasks in the list.", taskList.size());
     }
     public ArrayList<Task> getTasks() throws EmptyTaskListException {
-        if (TaskList.isEmpty()) {
+        if (taskList.isEmpty()) {
             throw new EmptyTaskListException("*** Empty List", new NoSuchElementException());
         }
-        return TaskList;
+        return taskList;
     }
 
     public String toString() {
-        String Text = IntStream.range(0, TaskList.size())
-                                .mapToObj(index -> String.format("%d. %s\n", index+1, TaskList.get(index)))
-                                .collect(Collectors.joining("\n"));
+        String Text = IntStream.range(0, taskList.size())
+                               .mapToObj(index -> String.format("%d. %s\n", index+1, taskList.get(index)))
+                               .collect(Collectors.joining("\n"));
         return Text;
     }
     @Override
     public int getCount() {
-        return TaskList.size();
+        return taskList.size();
     }
 
     @Override
@@ -54,7 +54,7 @@ public class TaskController implements ITaskController  {
      * @throws TaskMarkException
      */
     private String handleTaskMark(boolean isMark, int taskIndex) throws TaskIndexOutOfRangeException, TaskMarkException {
-        if (taskIndex <= 0 || taskIndex > TaskList.size()) {
+        if (taskIndex <= 0 || taskIndex > taskList.size()) {
             // Bad index input by user
             throw new TaskIndexOutOfRangeException("Invalid index given to mark!", new IllegalArgumentException());
         }
@@ -62,16 +62,16 @@ public class TaskController implements ITaskController  {
             final String USER_VIEW_MESSAGE;
 
             if (isMark) {
-                TaskList.get(taskIndex - 1).setMark(true);
+                taskList.get(taskIndex - 1).setMark(true);
                 USER_VIEW_MESSAGE = "Nice! I've marked this task as done:";
             } else {
-                TaskList.get(taskIndex - 1).setMark(false);
+                taskList.get(taskIndex - 1).setMark(false);
                 USER_VIEW_MESSAGE = "OK, I've marked this task as not done yet:";
             }
 
             return String.format("%s\n %s",
-                    USER_VIEW_MESSAGE,
-                    TaskList.get(taskIndex - 1).toString());
+                                 USER_VIEW_MESSAGE,
+                                 taskList.get(taskIndex - 1).toString());
         } catch (TaskMarkException e) {
             throw e;
         }
@@ -81,11 +81,11 @@ public class TaskController implements ITaskController  {
         try {
             // Note that the indexing is always +1 greater than the computer indexing
             // Need to decremnet by 1 here
-            Task deletedTarget = TaskList.remove(taskIndex-1);
+            Task deletedTarget = taskList.remove(taskIndex-1);
             final String USER_VIEW_MESSAGE =
                 String.format("Noted I've removed this task:\n%s\nNow you have %d tasks in the list.",
                               deletedTarget.toString(),
-                              TaskList.size());
+                              taskList.size());
             return USER_VIEW_MESSAGE;
         } catch (IndexOutOfBoundsException e) {
             throw new TaskIndexOutOfRangeException("Task to be deleted is out of range!", e);
@@ -93,10 +93,10 @@ public class TaskController implements ITaskController  {
     }
     @Override
     public boolean isEmpty() {
-        return TaskList.size() == 0;
+        return taskList.size() == 0;
     }
     @Override
     public Task removeTaskForStorage() {
-        return TaskList.remove(0);
+        return taskList.remove(0);
     }
 }

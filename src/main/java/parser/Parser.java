@@ -45,8 +45,8 @@ public class Parser implements IParser {
     private TaskTypeEnum typeOfTask() throws InvalidCommandException {
         String task = message.split(" ")[0].toUpperCase();
         Optional<TaskTypeEnum> answer = Arrays.stream(TaskTypeEnum.values())
-                                        .filter(x -> x.toString().equals(task))
-                                        .findFirst();
+                                            .filter(x -> x.toString().equals(task))
+                                            .findFirst();
         if (answer.isPresent()) {
             return answer.get();
         }
@@ -126,6 +126,8 @@ public class Parser implements IParser {
             case TODO:
                 task = new ToDo();
                 break;
+            default:
+                throw new InvalidCommandException("Invalid task specified", new IllegalArgumentException());
             }
             task.parseArgument(arguments);
             return task;

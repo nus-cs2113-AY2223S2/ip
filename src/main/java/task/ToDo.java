@@ -4,6 +4,7 @@ import parser.InvalidCommandException;
 import serialiser.SerialiseException;
 
 public class ToDo extends Task {
+    private static final String TODO_MESSAGE = "T | %d | %s";
     public ToDo(String description) throws EmptyDescriptionException {
         super(description);
     }
@@ -33,6 +34,6 @@ public class ToDo extends Task {
     }
     @Override
     public String toStorageString() {
-        return String.format("T | %d | %s", isMark()?1:0 , description);
+        return String.format(TODO_MESSAGE, isMark()?1:0 , description);
     }
 }
