@@ -1,4 +1,5 @@
 import java.nio.file.Path;
+import java.sql.Array;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.io.File;
@@ -7,20 +8,28 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class Duke {
     final static int ZERO_INDEX = 0;
     final static int ONE_INDEX = 1;
     final static int OFFSET_ONE_FOR_ZERO_INDEXING = 1;
     final static int ERROR_NEGATIVE_ONE_RETURNED = -1;
-    final static String FILE_PATH = "data/duk.txt";
+    final static String FILE_PATH = "data/duke.txt";
     final static String DIRECTORY_PATH = "data";
+    final static int TASK_TYPE_INDEX = 0;
+    final static int TASK_NAME_INDEX = 1;
+    final static int TASK_IS_DONE_INDEX = 2;
+    final static int TASK_DEADLINE_INDEX = 3;
+    final static int TASK_EVENT_START_TIME_INDEX = 3;
+    final static int TASK_EVENT_END_TIME_INDEX = 4;
     public static void main(String[] args) {
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
         String userInput;
         Scanner in = new Scanner(System.in);
-        Task[] userTasks = new Task[ZERO_INDEX];
+        //Task[] userTasks = new Task[ZERO_INDEX];
+        ArrayList<Task> userTasks = new ArrayList<>();
         try {
             userTasks = retrieveExistingTasksFromFile(FILE_PATH);
             System.out.println("File Found and successfully read");
@@ -65,7 +74,7 @@ public class Duke {
             } catch (DukeException e) {
                 ;
             } catch (IOException e) {
-                System.out.println("IO EXCEPTION!! CANNOT SAVE FILE ")
+                System.out.println("IO EXCEPTION, Data might be lost")
                 ; // nothing for now need to add
             }
         }
@@ -80,17 +89,17 @@ public class Duke {
         return newEventTask;
     }
 
-    private static Task[] userCommandEvent(Task[] userTasks, String userCommand, String userInput) throws DukeException {
+    private static ArrayList<Task> userCommandEvent(ArrayList<Task> userTasks, String userCommand, String userInput) throws DukeException {
         Event newEventTask = getNewEventTask(userInput, userCommand);
-        userTasks = addUserTask(userTasks, newEventTask);
+        addUserTask(userTasks, newEventTask);
         printAddedNewTask(userTasks);
         return userTasks;
     }
 
-    private static void printAddedNewTask(Task[] userTasks) {
+    private static void printAddedNewTask(ArrayList<Task> userTasks) {
         System.out.println("Got it. I've added this task:"); // shift this line below with the another print statement later
-        System.out.println(userTasks[userTasks.length- OFFSET_ONE_FOR_ZERO_INDEXING ]);
-        System.out.println("Now you have " + userTasks.length + " in the list.");
+        System.out.println(userTasks.get(userTasks.size() - OFFSET_ONE_FOR_ZERO_INDEXING));
+        System.out.println("Now you have " + userTasks.size() + " in the list.");
     }
 
     private static Deadline getNewDeadlineTask(String userInput, String userCommand) throws DukeException {
@@ -101,9 +110,9 @@ public class Duke {
         return newDeadlineTask;
     }
 
-    private static Task[] userCommandDeadline(Task[] userTasks, String userCommand, String userInput) throws DukeException {
+    private static ArrayList<Task> userCommandDeadline(ArrayList<Task> userTasks, String userCommand, String userInput) throws DukeException {
         Deadline newDeadlineTask = getNewDeadlineTask(userInput, userCommand);
-        userTasks = addUserTask(userTasks, newDeadlineTask);
+        addUserTask(userTasks, newDeadlineTask);
         printAddedNewTask(userTasks);
         return userTasks;
     }
@@ -115,40 +124,56 @@ public class Duke {
         return newTodoTask;
     }
 
-    private static Task[] userCommandTodo(Task[] userTasks, String userCommand, String userInput) throws DukeException {
+    private static ArrayList<Task> userCommandTodo(ArrayList<Task> userTasks, String userCommand, String userInput) throws DukeException {
         Todo newToDoTask = getNewTodoTask(userInput, userCommand);
-        userTasks = addUserTask(userTasks, newToDoTask);
+        addUserTask(userTasks, newToDoTask);
         printAddedNewTask(userTasks);
         return userTasks;
     }
 
-    private static void userCommandUnmark(Task[] userTasks, String[] userCommands) {
+    private static void userCommandUnmark(ArrayList<Task> userTasks, String[] userInputWords) throws DukeException {
         int taskIndex;
-        taskIndex = Integer.parseInt(userCommands[ONE_INDEX]) - OFFSET_ONE_FOR_ZERO_INDEXING;
-        userTasks[taskIndex].setisDone(false);
-        System.out.println(userTasks[taskIndex]);
+        taskIndex = Integer.parseInt(userInputWords[ONE_INDEX]) - OFFSET_ONE_FOR_ZERO_INDEXING;
+        if (taskIndex + OFFSET_ONE_FOR_ZERO_INDEXING > userTasks.size()) {
+            System.out.println("There is no task that is indexed: " + taskIndex);
+            throw new DukeException();
+        }
+        if (taskIndex < ZERO_INDEX) {
+            System.out.println("task number given cannot be less than 1");
+            throw new DukeException();
+        }
+        userTasks.get(taskIndex).setisDone(false);
+        System.out.println(userTasks.get(taskIndex));
         System.out.println("OK, I've marked this task as not done yet:");
     }
 
-    private static void userCommandMark(Task[] userTasks, String[] userCommands) {
+    private static void userCommandMark(ArrayList<Task> userTasks, String[] userInputWords) throws DukeException {
         int taskIndex;
-        taskIndex = Integer.parseInt(userCommands[ONE_INDEX]) - OFFSET_ONE_FOR_ZERO_INDEXING;
-        userTasks[taskIndex].setisDone(true);
+        taskIndex = Integer.parseInt(userInputWords[ONE_INDEX]) - OFFSET_ONE_FOR_ZERO_INDEXING;
+        if (taskIndex + OFFSET_ONE_FOR_ZERO_INDEXING > userTasks.size()) {
+            System.out.println("There is no task that is indexed: " + taskIndex);
+            throw new DukeException();
+        }
+        if (taskIndex < ZERO_INDEX) {
+            System.out.println("task number given cannot be less than 1");
+            throw new DukeException();
+        }
+        userTasks.get(taskIndex).setisDone(true);
         System.out.println("Nice! I've marked this task as done:");
-        System.out.println(userTasks[taskIndex]);
+        System.out.println(userTasks.get(taskIndex));
     }
 
-    private static void userCommandList(Task[] userTasks) {
-        for(int i = 0; i < userTasks.length; i++) {
-            if (userTasks[i].getisDone()) {
-                System.out.println((i + 1) + ". " + userTasks[i]);
+    private static void userCommandList(ArrayList<Task> userTasks) {
+        for(int i = 0; i < userTasks.size(); i++) {
+            if (userTasks.get(i).getisDone()) {
+                System.out.println((i + 1) + ". " + userTasks.get(i));
             } else {
-                System.out.println((i + 1) + ". " + userTasks[i]);
+                System.out.println((i + 1) + ". " + userTasks.get(i));
             }
         }
     }
     
-    private static void userCommandBye(Task[] userTasks) throws IOException {
+    private static void userCommandBye(ArrayList<Task> userTasks) throws IOException {
         System.out.println("Bye. Hope to see you again soon!");
         saveData(DIRECTORY_PATH,FILE_PATH,userTasks);
     }
@@ -157,10 +182,9 @@ public class Duke {
         System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
         throw new DukeException();
     }
-    private static Task[] addUserTask(Task[] userTasks, Task newTask) {
-        userTasks = Arrays.copyOf(userTasks, userTasks.length + 1);
-        userTasks[userTasks.length-OFFSET_ONE_FOR_ZERO_INDEXING] = newTask;
-        return userTasks;
+
+    private static void addUserTask(ArrayList<Task> userTasks, Task newTask) {
+        userTasks.add(newTask);
     }
 
     private static String getTodoTaskName(String taskString) {
@@ -243,10 +267,10 @@ public class Duke {
         return userInput.substring(userCommand.length() + 1);
     }
 
-    private static void saveExistingTasksToFile(Task[] userTasks) throws IOException {
+    private static void saveExistingTasksToFile(ArrayList<Task> userTasks) throws IOException {
         String saveFilePath = FILE_PATH;
-        for (int i = 0; i < userTasks.length; i++) {
-            Task currentTask = userTasks[i];
+        for (int i = 0; i < userTasks.size(); i++) {
+            Task currentTask = userTasks.get(i);
             Boolean isAppendMode = true;
             if (i == 0) {
                 isAppendMode = false;
@@ -269,48 +293,60 @@ public class Duke {
         fileWriter.close();
     }
 
-    private static Task[] retrieveExistingTasksFromFile(String filePath) throws FileNotFoundException {
+    private static ArrayList<Task> retrieveExistingTasksFromFile(String filePath) throws FileNotFoundException {
         File file = new File(filePath);
         Scanner scanner = new Scanner(file);
-        Task[] userTasks = new Task[ZERO_INDEX];
+        //Task[] userTasks = new Task[ZERO_INDEX];
+        ArrayList<Task> userTasks = new ArrayList<>();
         while (scanner.hasNext()) {
             String Line = scanner.nextLine();
             String[] taskInformationWords = Line.split(",");
-            String taskType = taskInformationWords[ZERO_INDEX].trim();
+            String taskType = taskInformationWords[TASK_TYPE_INDEX].trim();
             if (taskType.equals("T")) {
-                String taskName = taskInformationWords[ONE_INDEX].trim();
-                Boolean isDone = false;
-                if (taskInformationWords[2].trim().equals("true")) {
-                    isDone = true;
-                }
-                Todo newTodoTask = new Todo(taskName);
-                newTodoTask.setisDone(isDone);
-                userTasks = addUserTask(userTasks, newTodoTask);
+                saveTodoTaskIntoSaveFile(userTasks, taskInformationWords);
             } else if (taskType.equals("D")) {
-                String taskName = taskInformationWords[ONE_INDEX].trim();
-                Boolean isDone = false;
-                if (taskInformationWords[2].trim().equals("true")) {
-                    isDone = true;
-                }
-                String taskDeadline = taskInformationWords[3].trim();
-                Deadline newDeadlineTask = new Deadline(taskName, taskDeadline);
-                newDeadlineTask.setisDone(isDone);
-                userTasks = addUserTask(userTasks, newDeadlineTask);
+                saveDeadlineTaskIntoSaveFile(userTasks, taskInformationWords);
             } else if (taskType.equals("E")) {
-                String taskName = taskInformationWords[ONE_INDEX].trim();
-                Boolean isDone = false;
-                if (taskInformationWords[2].trim().equals("true")) {
-                    isDone = true;
-                }
-                String taskEventStartTime = taskInformationWords[3].trim();
-                String taskEventEndTime = taskInformationWords[4].trim();
-                Event newEventTask = new Event(taskName, taskEventStartTime, taskEventEndTime);
-                newEventTask.setisDone(isDone);
-                userTasks = addUserTask(userTasks, newEventTask);
+                saveEventTaskIntoSaveFile(userTasks, taskInformationWords);
             }
-
         }
         return userTasks;
+    }
+
+    private static void saveEventTaskIntoSaveFile(ArrayList<Task> userTasks, String[] taskInformationWords) {
+        String taskName = taskInformationWords[TASK_NAME_INDEX].trim();
+        Boolean isDone = false;
+        if (taskInformationWords[TASK_IS_DONE_INDEX].trim().equals("true")) {
+            isDone = true;
+        }
+        String taskEventStartTime = taskInformationWords[TASK_EVENT_START_TIME_INDEX].trim();
+        String taskEventEndTime = taskInformationWords[TASK_EVENT_END_TIME_INDEX].trim();
+        Event newEventTask = new Event(taskName, taskEventStartTime, taskEventEndTime);
+        newEventTask.setisDone(isDone);
+        addUserTask(userTasks, newEventTask);
+    }
+
+    private static void saveDeadlineTaskIntoSaveFile(ArrayList<Task> userTasks, String[] taskInformationWords) {
+        String taskName = taskInformationWords[TASK_NAME_INDEX].trim();
+        Boolean isDone = false;
+        if (taskInformationWords[TASK_IS_DONE_INDEX].trim().equals("true")) {
+            isDone = true;
+        }
+        String taskDeadline = taskInformationWords[TASK_DEADLINE_INDEX].trim();
+        Deadline newDeadlineTask = new Deadline(taskName, taskDeadline);
+        newDeadlineTask.setisDone(isDone);
+        addUserTask(userTasks, newDeadlineTask);
+    }
+
+    private static void saveTodoTaskIntoSaveFile(ArrayList<Task> userTasks, String[] taskInformationWords) {
+        String taskName = taskInformationWords[TASK_NAME_INDEX].trim();
+        Boolean isDone = false;
+        if (taskInformationWords[TASK_IS_DONE_INDEX].trim().equals("true")) {
+            isDone = true;
+        }
+        Todo newTodoTask = new Todo(taskName);
+        newTodoTask.setisDone(isDone);
+        addUserTask(userTasks, newTodoTask);
     }
 
     private static boolean isSaveDirectoryPresent(String DIRECTORY_PATH) {
@@ -324,16 +360,19 @@ public class Duke {
     private static void createSaveFileDirectory(String DIRECTORY_PATH) {
         File file = new File(DIRECTORY_PATH);
         if (file.mkdir() == true) {
-            System.out.println("Directory created at " + DIRECTORY_PATH);
+            System.out.println("Directory successfully created at [project_root]/" + DIRECTORY_PATH);
 
         } else {
-            System.out.println("Failed to create directory");
+            System.out.println("Failed to create directory, data might be lost");
         }
     }
 
-    private static void saveData(String DIRECTORY_PATH, String FILE_PATH, Task[] userTasks) throws IOException {
+    private static void saveData(String DIRECTORY_PATH, String FILE_PATH, ArrayList<Task> userTasks) throws IOException {
         if (isSaveDirectoryPresent(DIRECTORY_PATH) == false) {
             createSaveFileDirectory(DIRECTORY_PATH);
+            if (isSaveDirectoryPresent(DIRECTORY_PATH) == false) {
+                throw new IOException();
+            }
         }
         saveExistingTasksToFile(userTasks);
     }
