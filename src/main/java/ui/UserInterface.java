@@ -6,6 +6,9 @@ import java.util.Scanner;
 import task.Task;
 import task.TaskList;
 
+/**
+ * Handles the CLI I/O between the program and user.
+ */
 public class UserInterface {
 
     private static final String USER_PROMPT = "> ";
@@ -17,6 +20,11 @@ public class UserInterface {
         scanner = new Scanner(System.in);
     }
 
+    /**
+     * Prompts user for next command
+     *
+     * @return User input
+     */
     public String getUserCommand() {
         printDivider();
         System.out.print(USER_PROMPT);
@@ -28,6 +36,11 @@ public class UserInterface {
      *  Task-related UI
      */
 
+    /**
+     * Print a numbered list of tasks
+     *
+     * @param tasks List of tasks
+     */
     public void printTasks(TaskList tasks) {
         int taskCount = tasks.getTaskCount();
 

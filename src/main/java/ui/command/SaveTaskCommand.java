@@ -5,6 +5,9 @@ import storage.TaskStorageManager;
 import task.TaskList;
 import ui.UserInterface;
 
+/**
+ * Represents a command that modifies the {@link TaskList} and should save changes to file
+ */
 public class SaveTaskCommand implements Command {
 
     @Override

@@ -3,6 +3,9 @@ package task;
 import exceptions.InvalidSyntaxException;
 import ui.Syntax;
 
+/**
+ * Represents an event
+ */
 public class EventTask extends Task {
 
     // For serialization
@@ -22,6 +25,13 @@ public class EventTask extends Task {
         this.end = end;
     }
 
+    /**
+     * Creates a {@link EventTask} from user input
+     *
+     * @param splitInput Tokenized user input
+     * @return Parsed EventTask
+     * @throws InvalidSyntaxException If user input does not match expected syntax
+     */
     public static EventTask createFromInput(String[] splitInput) throws InvalidSyntaxException {
         try {
             String[] params = splitInput[1].split(EVENT_REGEX);

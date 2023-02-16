@@ -4,6 +4,9 @@ import java.util.Set;
 import task.DeadlineTask;
 import task.EventTask;
 
+/**
+ * Holds the root command and expected syntax of all commands
+ */
 public enum Syntax {
 
     EXIT("bye"),
@@ -18,21 +21,21 @@ public enum Syntax {
             "event <description> " + EventTask.START_DELIMITER + " <start> " + EventTask.END_DELIMITER + " <end>");
 
     // All command syntax that create a new task
-    public static final Set<String> ADD_TASK_COMMANDS = Set.of(TODO.label, DEADLINE.label, EVENT.label);
+    public static final Set<String> ADD_TASK_COMMANDS = Set.of(TODO.root, DEADLINE.root, EVENT.root);
 
     // All command syntax that modify an existing task
-    public static final Set<String> MODIFY_TASK_COMMANDS = Set.of(MARK.label, UNMARK.label, DELETE.label);
+    public static final Set<String> MODIFY_TASK_COMMANDS = Set.of(MARK.root, UNMARK.root, DELETE.root);
 
-    public final String label;
+    public final String root;
     public final String expectedSyntax;
 
     Syntax(String label, String expectedSyntax) {
-        this.label = label;
+        this.root = label;
         this.expectedSyntax = expectedSyntax;
     }
 
     Syntax(String label) {
-        this.label = label;
+        this.root = label;
         this.expectedSyntax = "";
     }
 
