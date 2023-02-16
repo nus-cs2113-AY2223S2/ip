@@ -48,7 +48,6 @@ public class FileManager {
         char type = parsedTask.charAt(1); // Type will be at index 1 based on how data is saved
         char status = parsedTask.charAt(4); // Status will be at index 4
         String description = parsedTask.substring(7); // Description starts at index 7
-        System.out.println("Description: " + description);
         Task temp;
         if (type == 'T') { // Adding a todo
             temp = new Todo("todo " + description);
