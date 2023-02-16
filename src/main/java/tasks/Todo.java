@@ -4,8 +4,8 @@ import tasks.Task;
 
 public class Todo extends Task {
 
-    public Todo(String description) {
-        super(description);
+    public Todo(String userInput, String description) {
+        super(userInput, description);
         this.type = 'T';
     }
 

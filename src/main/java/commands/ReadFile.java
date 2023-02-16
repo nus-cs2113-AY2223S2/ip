@@ -17,12 +17,9 @@ public class ReadFile {
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 SaveToCurrentOperation.save(data, list);
-                System.out.println(data);
             }
         } catch (FileNotFoundException e) {
             System.out.println("File not Found");
-        } catch (InvalidTaskException e) {
-            System.out.println(e.call());
         }
 
     }

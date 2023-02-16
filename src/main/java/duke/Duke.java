@@ -11,10 +11,9 @@ import java.util.ArrayList;
 
 public class Duke {
     public static void main(String[] args) throws InvalidTaskException {
-        Greeting.greeting();
         ArrayList<Task> list = new ArrayList<>();
         FileIO.runFileIO(list);
-        String userCommand = "";
-        HandleUserCommand.handleCommand(userCommand, list);
+        Greeting.greeting();
+        HandleUserCommand.handleCommand(list);
     }
 }

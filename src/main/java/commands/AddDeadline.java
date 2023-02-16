@@ -11,7 +11,6 @@ public class AddDeadline {
 
     public static void addDeadlineTask(ArrayList<Task> list, String ins) {
         try {
-            System.out.println(constant.HORIZONTAL_LINE + "\n");
 
             if (!ins.contains("/by")) {
                 throw new InvalidTaskException();
@@ -25,7 +24,7 @@ public class AddDeadline {
             if (by.equals("")) {
                 throw new InvalidTaskException();
             }
-            Deadline newTask = new Deadline(description, by);
+            Deadline newTask = new Deadline(ins, description, by);
             list.add(newTask);
             System.out.println("Added: " + ins);
             System.out.println(constant.HORIZONTAL_LINE + "\n");

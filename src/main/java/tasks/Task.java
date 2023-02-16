@@ -1,21 +1,26 @@
 package tasks;
 
 public class Task {
+
     protected String description;
+
+    protected String userInput;
     protected boolean isDone;
 
     protected char type;
 
-    public Task(String description) {
+    public Task(String userInput, String description) {
         this.description = description;
+        this.userInput = userInput;
         this.isDone = false;
     }
 
-    public char getType(){
-        return type;
+    public String getUserInput() {
+        return userInput;
     }
-    public String getDescription() {
-        return description;
+
+    public boolean getIsDone() {
+        return isDone;
     }
 
     public void setIsDone(boolean isDone) {

@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class HandleUserCommand {
-    public static void handleCommand(String userCommand, ArrayList<Task> list) throws InvalidTaskException {
+    public static void handleCommand(ArrayList<Task> list) throws InvalidTaskException {
+        String userCommand = "start here";
         Scanner in = new Scanner(System.in);
         while (!userCommand.equals("bye")) {
             userCommand = in.nextLine();
@@ -39,7 +40,7 @@ public class HandleUserCommand {
                     unmarkTask(list, userCommand);
                     break;
                 case "delete":
-                    Deletetask.deleteTask(list,userCommand);
+                    DeleteTask.deleteTask(list, userCommand);
                     break;
                 case "bye":
                     Bye.bye();
@@ -57,11 +58,9 @@ public class HandleUserCommand {
     public static void markTask(ArrayList<Task> list, String ins) {
         try {
             if (list.size() == 0) {
-                System.out.println(constant.HORIZONTAL_LINE + "\n");
                 System.out.println("Your day is clear! there is no task");
                 System.out.println(constant.HORIZONTAL_LINE + "\n");
             } else {
-                System.out.println(constant.HORIZONTAL_LINE + "\n");
                 if (ins.length() < 6) {
                     System.out.println("Please specify the task you want to mark :) ");
                     System.out.println(constant.HORIZONTAL_LINE + "\n");
@@ -91,11 +90,9 @@ public class HandleUserCommand {
     public static void unmarkTask(ArrayList<Task> list, String ins) {
         try {
             if (list.size() == 0) {
-                System.out.println(constant.HORIZONTAL_LINE + "\n");
                 System.out.println("Your day is clear! there is no task");
                 System.out.println(constant.HORIZONTAL_LINE + "\n");
             } else {
-                System.out.println(constant.HORIZONTAL_LINE + "\n");
                 if (ins.length() < 6) {
                     System.out.println("Please specify the task you want to mark :) ");
                     System.out.println(constant.HORIZONTAL_LINE + "\n");

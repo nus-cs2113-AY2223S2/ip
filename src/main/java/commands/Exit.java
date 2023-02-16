@@ -8,15 +8,16 @@ import java.io.IOException;
 
 
 public class Exit {
-    public static void saveFile(ArrayList<Task> list){
+    public static void saveFile(ArrayList<Task> list) {
         try {
-            FileWriter fw = new FileWriter("/Users/sherlock/ip/data/userData.txt");
+            FileWriter fw = new FileWriter("/Users/sherlock/ip/src/userData.txt");
             for (int i = 0; i < list.size(); i++) {
                 Task task = list.get(i);
-                fw.write("Type:" + task.getType() + " /Description:" + task.getDescription() + " /toString():" + task + System.lineSeparator());
+                int isDone = task.getIsDone() ? 1 : 0;
+                fw.write(isDone + " " + task.getUserInput() + System.lineSeparator());
             }
             fw.close();
-        } catch (IOException e){
+        } catch (IOException e) {
             System.out.println("Cannot write to file. Something went wrong");
         }
     }

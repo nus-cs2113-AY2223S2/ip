@@ -4,13 +4,13 @@ import java.io.File;
 import java.io.IOException;
 
 public class CreateFile {
-    public static void createFile(File f){
+    public static void createFile(File f) {
         try {
-            if (f.createNewFile()){
-                System.out.println("File created");
+            if(f.createNewFile()) {
+                System.out.println("File Created");
             }
         } catch (IOException e) {
-            System.out.println("File already exists.");
+            System.out.println("Error occurs");
         }
     }
 }

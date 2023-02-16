@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 public class ListOfTask {
     public static void printListOfTasks(ArrayList<Task> list) {
-        System.out.println(constant.HORIZONTAL_LINE + "\n");
         for (int i = 0; i < list.size(); i++) {
             System.out.println((i + 1) + list.get(i).toString());
         }

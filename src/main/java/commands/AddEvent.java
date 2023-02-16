@@ -21,7 +21,7 @@ public class AddEvent {
             if (from.isEmpty() || to.isEmpty()) {
                 throw new InvalidTaskException();
             }
-            Event newTask = new Event(description, from, to);
+            Event newTask = new Event(ins, description, from, to);
             list.add(newTask);
             System.out.println("Added: " + ins);
             System.out.println(constant.HORIZONTAL_LINE + "\n");

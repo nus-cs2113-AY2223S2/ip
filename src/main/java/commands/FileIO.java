@@ -6,11 +6,10 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class FileIO {
-    static File f = new File("/Users/sherlock/ip/data/userData.txt");
+    static File f = new File("/Users/sherlock/ip/src/userData.txt");
 
     public static boolean isExist() {
-        boolean exists = f.exists();
-        return exists;
+        return f.exists();
     }
 
     public static void runFileIO(ArrayList<Task> list) {
@@ -19,7 +18,6 @@ public class FileIO {
             ReadFile.readFile(f, list);
         } else {
             CreateFile.createFile(f);
-            System.out.println("File Created");
         }
     }
 
