@@ -1,3 +1,5 @@
+package duke.instructions;
+
 public class Todo extends Task{
     public Todo(String description) {
         super(description);

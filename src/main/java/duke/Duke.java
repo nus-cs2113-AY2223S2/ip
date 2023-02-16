@@ -1,3 +1,10 @@
+package duke;
+
+import duke.instructions.Deadline;
+import duke.instructions.Event;
+import duke.instructions.Task;
+import duke.instructions.Todo;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -23,10 +30,10 @@ public class Duke {
             listMain(input);
             break;
         case "mark":
-            markMain(command);
+            markMain(input, command);
             break;
         case "ummark":
-            unMarkMain(command);
+            unMarkMain(input, command);
             break;
         case "todo":
             toDoMain(input);
@@ -37,9 +44,6 @@ public class Duke {
 
         case "event":
             eventMain(input);
-            break;
-        case "delete":
-            deleteMain(input, command);
             break;
         default:
             throw new DukeException(UNRECOGNISED_INPUT);
@@ -61,7 +65,7 @@ public class Duke {
 
     }
 
-    public static void markMain(String[] command) {
+    public static void markMain(String input, String[] command) {
         int indexTask = Integer.parseInt(command[1]);
         System.out.println(LINE);
         taskNameList.get(indexTask - 1).mark();
@@ -71,7 +75,7 @@ public class Duke {
         System.out.println(LINE);
     }
 
-    public static void unMarkMain(String[] command) {
+    public static void unMarkMain(String input, String[] command) {
         int indexOfTask = Integer.parseInt(command[1]);
         System.out.println(LINE);
         taskNameList.get(indexOfTask - 1).unMark();
@@ -123,16 +127,6 @@ public class Duke {
         System.out.println(LINE);
 
     }
-    public static void deleteMain(String input, String[] command){
-        int indexTask = Integer.parseInt(command[1]);
-        System.out.println(LINE);
-        taskNameList.get(indexTask - 1).mark();
-        System.out.print("     Noted. I've removed this task:"
-                + System.lineSeparator()
-                + taskNameList.get(indexTask - 1).getState());
-        System.out.println(LINE);
-    }
-
 
     public static void main(String[] args) {
         greeting();

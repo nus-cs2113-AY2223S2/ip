@@ -1,3 +1,5 @@
+package duke.instructions;
+
 public class Deadline extends Task{
     String input;
     public Deadline(String input) {
