@@ -33,6 +33,6 @@ public class Task {
 
     @Override
     public String toString() {
-        return "[" + status() + "]" + getDescription();
+        return "[" + status() + "] " + getDescription();
     }
 }
