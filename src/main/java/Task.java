@@ -35,7 +35,6 @@ public class Task {
             
             int i;
             while ((i = fr.read()) != -1) {
-                System.out.println(saved_text);
                 if ((char) i == '\n') {
                     String[] strArray = saved_text.split(" \\| ");
                     if (strArray[0].equals("TODO")) {
