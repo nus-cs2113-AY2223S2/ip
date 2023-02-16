@@ -51,16 +51,14 @@ public class Duke {
     public static final ArrayList<String> KEYWORDS = new ArrayList<>(
             List.of("todo","deadline","event","list","bye","mark","unmark","help","delete")
     );
+    public static final String FILE_PATH = "data.txt";
+    public static final String EMPTY_DEADLINE_TASK = "OOPS!!! the deadline can not be empty";
+    public static final String EMPTY_TODO_TASK = "OOPS!!! your task can not be empty";
 
     public static void main(String[] args) {
         ArrayList<Task> tasks = new ArrayList<>();
-        FileClass dataFile = new FileClass("src/main/data.txt", tasks);
-        try {
-            dataFile.addTasks();
-        } catch (FileNotFoundException e) {
-            System.out.println("Please give a correct data file path");
-            return;
-        }
+        FileClass dataFile = new FileClass(FILE_PATH, tasks);
+        dataFile.moveDataToArrayList();
         showWelcomeMessage();
 
         String userInput;
@@ -96,7 +94,7 @@ public class Duke {
                 try {
                     addTodoTask(separatedKeyWordAndContent[1], tasks, dataFile);
                 } catch(EmptyDescription e) {
-                    System.out.println("OOPS!!! your task can not be empty");
+                    System.out.println(EMPTY_TODO_TASK);
                 }
             } else if (keyword.equals("deadline")) {
                 if (doesIndexOutOfBoundsOccur(separatedKeyWordAndContent,1, EMPTY_DEADLINE_DESCRIPTION)) {
@@ -105,7 +103,7 @@ public class Duke {
                 try {
                     addDeadlineTask(separatedKeyWordAndContent[1], tasks, dataFile);
                 } catch(EmptyDescription e) {
-                    System.out.println("OOPS!!! the deadline can not be empty");
+                    System.out.println(EMPTY_DEADLINE_TASK);
                 }
             } else if (keyword.equals("event")) {
                 if (doesIndexOutOfBoundsOccur(separatedKeyWordAndContent,1, EMPTY_EVENT_DESCRIPTION)) {
@@ -277,7 +275,7 @@ public class Duke {
             System.out.println(INSTRUCTION + "\n" + seperatedWords[0] + ": Number");
         }
     }
-    
+
     private static void deleteTask(ArrayList<Task> tasks, String[] seperatedWords, FileClass dataFile) {
         try {
             int taskNumber = Integer.parseInt(seperatedWords[1]);

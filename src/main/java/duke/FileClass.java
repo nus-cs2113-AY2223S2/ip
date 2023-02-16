@@ -18,8 +18,16 @@ public class FileClass {
         this.tasks = tasks;
     }
 
+    public void moveDataToArrayList() {
+        try {
+            file.createNewFile();
+            this.addTasks();
+        } catch (Exception error) {
+            // no code needed here
+        }
+    }
     public void addTasks() throws FileNotFoundException {
-        Scanner s = new Scanner(file); // create a Scanner using the File as the source
+        Scanner s = new Scanner(file); // create a Scanner using the file as the source
         while (s.hasNext()) {
             String line = s.nextLine();
             addToTaskList(line);
