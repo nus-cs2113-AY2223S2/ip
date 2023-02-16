@@ -56,4 +56,8 @@ public class Task {
     public String toString() {
         return todoMark() + getTaskName();
     }
+
+    public static void deleteTask() {
+        taskCount -= 1;
+    }
 }

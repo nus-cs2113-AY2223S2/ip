@@ -74,6 +74,9 @@ public class Nano {
         case "add":
             addTask(userInputs);
             break;
+        case "delete":
+            deleteTask(userInputs[TASK_NAME_INDEX]);
+            break;
         case "mark":
             markTask(userInputs[TASK_NAME_INDEX]);
             break;
@@ -92,6 +95,17 @@ public class Nano {
         printHorizontalLine();
     }
 
+    private static void deleteTask(String taskName) {
+        int taskIndex = getTaskIndex(taskName);
+        if (taskIndex == TASK_INDEX_ERROR) {
+            System.out.println(MESSAGE_TASK_NOT_FOUND);
+            return;
+        }
+
+        tasks.remove(taskIndex);
+        Task.deleteTask();
+        System.out.println("Deleted " + taskName);
+    }
     private static void unmarkTask(String taskName) {
         int taskIndex = getTaskIndex(taskName);
         if (taskIndex == TASK_INDEX_ERROR) {
@@ -236,8 +250,8 @@ public class Nano {
     private static void displayTaskList() {
         System.out.println("You have completed " + Task.getCompletedTaskCount() + " tasks. " +
                 Task.getUncompletedTaskCount() + " more to go!");
-        for (int i = 1; i <= Task.getTaskCount(); i += 1) {
-            System.out.println(tasks.get(i).toString());
+        for (Task t : tasks) {
+            System.out.println(t.toString());
         }
     }
 
