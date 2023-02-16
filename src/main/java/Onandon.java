@@ -8,10 +8,7 @@ import Onandon.checkpoint.Checkpoint;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-<<<<<<< HEAD
-=======
 import java.util.List;
->>>>>>> branch-Level-7
 import java.util.Scanner;
 
 public class Onandon {
