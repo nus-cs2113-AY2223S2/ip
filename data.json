@@ -1,0 +1,10 @@
+[
+    {
+        "description": "CG2023 Exam",
+        "index": 1,
+        "from": "4pm",
+        "marked": true,
+        "to": "6pm",
+        "type": "event"
+    }
+]
