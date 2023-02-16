@@ -40,6 +40,12 @@ public class IoParser {
         }
     }
 
+    protected HashMap<String, String> handleMark(String text) {
+        HashMap<String, String> dictionary = new HashMap<String, String>();
+        dictionary.put("index", text);
+        return dictionary;
+    }
+
     protected HashMap<String, String> handleOthers(String command) {
         HashMap<String, String> dictionary = new HashMap<String, String>();
         dictionary.put(COMMAND, command);
@@ -59,6 +65,9 @@ public class IoParser {
                 return handleOthers(command);
             case Command.TODO:
                 return handleTodo(words[1]);
+            case Command.MARK:
+            case Command.UNMARK:
+                return handleMark(words[1]);
             }
         } catch (IndexOutOfBoundsException e) {
             System.out.println(ErrorMessage.NO_DESCRIPTION.message);

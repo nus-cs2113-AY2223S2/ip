@@ -1,7 +1,9 @@
 import constants.Command;
+import constants.ErrorMessage;
 import constants.Message;
 import controller.TaskController;
 import parser.IoParser;
+import validator.error.InvalidTaskError;
 
 import java.util.HashMap;
 import java.util.Scanner;
@@ -32,7 +34,18 @@ public class Duke {
         description = dictionary.get("description");
         controller.addTodoTask(description);
         break;
+      case Command.MARK:
+      case Command.UNMARK:
+        String index = dictionary.get("index");
+        int position = Integer.parseInt(index);
+        boolean isMark = command.equals(Command.MARK);
+        controller.toggleMark(isMark, position);
+        break;
+      default:
+        throw new InvalidTaskError(ErrorMessage.INVALID_COMMAND.message);
       }
+    } catch (NumberFormatException e) {
+      System.out.println("You have attempted to mark a non-number index");
     } catch (Exception e) {
       System.out.println("Oops, an unexpected error occured!");
     }
@@ -48,14 +61,6 @@ public class Duke {
     //     taskDescription = words[1];
     //     controller.addEventTask(taskDescription);
     //     break;
-    //   case Command.MARK:
-    //   case Command.UNMARK:
-    //     int index = Integer.parseInt(words[1]) - 1;
-    //     boolean isMark = words[0].equals(Command.MARK);
-    //     controller.toggleMark(isMark, index);
-    //     break;
-    //   case Command.BYE:
-    //     terminate();
     //     break;
     //   default:
     //     throw new InvalidTaskError(ErrorMessage.INVALID_COMMAND.message);

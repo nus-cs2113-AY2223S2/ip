@@ -106,7 +106,6 @@ public class TaskController {
     String to = taskDescription.substring(indexOfTo + "/to ".length());
     counter += 1;
     Event model = new Event(description, from, to);
-//    parser.writeToFile(model.getDescriptionText());
     db.create(model);
     printDescription(model);
   }
