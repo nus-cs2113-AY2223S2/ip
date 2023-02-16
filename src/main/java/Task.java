@@ -1,3 +1,5 @@
+import java.util.StringJoiner;
+
 public class Task {
     public static final String LINE_BREAK = "---------------------------------------------";
     protected String description;
@@ -9,7 +11,7 @@ public class Task {
     }
 
     public String getStatusIcon() {
-        return (isDone ? "[X]" : "[ ]"); // mark done task with X
+        return (isDone ? "[X] " : "[ ] "); // mark done task with X
     }
 
     public String getTypeIcon() {
@@ -33,5 +35,13 @@ public class Task {
         System.out.println("Ok, I've marked this task as not done yet:");
         System.out.println(this.getStatusIcon() + this.description);
         System.out.println(LINE_BREAK);
+    }
+
+    public String toSaveString(String... taskParameters) {
+        StringJoiner saveString = new StringJoiner("|");
+        for (String string : taskParameters) {
+            saveString.add(string);
+        }
+        return saveString.toString();
     }
 }

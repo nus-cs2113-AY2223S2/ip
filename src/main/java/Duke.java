@@ -1,53 +1,12 @@
+import java.io.FileNotFoundException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Duke {
+    public static final String FILE_DIRECTORY = "data";
+    public static final String FILE_NAME = "duke.txt";
     public static final String LINE_BREAK = "---------------------------------------------";
-
-    public static void registerTodo (ArrayList<Task> lists, String line) throws IndexOutOfBoundsException {
-        try {
-            String[] inputLine = line.split(" ", 2);
-            Task item = new Todo(inputLine[1]);
-            lists.add(item);
-            int index = lists.size();
-            printAddTask(item, index);
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("Your task must be of the following format: task (task name)");
-        }
-    }
-
-    public static void registerDeadline (ArrayList<Task> lists, String line) throws IndexOutOfBoundsException {
-        try {
-            String[] inputLines = line.split(" ", 2);
-            inputLines = inputLines[1].split("/by ");
-            String description = inputLines[0];
-            String deadline = inputLines[1];
-            Task item = new Deadline(description, deadline);
-            lists.add(item);
-            int index = lists.size();
-            printAddTask(item, index);
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("Your deadline must be of the following format: deadline (deadline name) /by (date)");
-        }
-    }
-
-    public static void registerEvent (ArrayList<Task> lists, String line) throws IndexOutOfBoundsException {
-        try {
-            String[] inputLines = line.split(" ", 2);
-            inputLines = inputLines[1].split("/from ");
-            String description = inputLines[0];
-            inputLines = inputLines[1].split("/to ");
-            String start = inputLines[0];
-            String end = inputLines[1];
-            Task item = new Event(description, start, end);
-            lists.add(item);
-            int index = lists.size();
-            printAddTask(item, index);
-        } catch (IndexOutOfBoundsException e) {
-        System.out.println("Your event must be of the following format: event (event name) /from (date) /to (date)");
-        }
-    }
 
     public static void DeleteTask (ArrayList<Task> lists, int itemNumber) {
         int index = itemNumber - 1;
@@ -59,10 +18,52 @@ public class Duke {
         System.out.println(LINE_BREAK);
     }
 
-    public static void printAddTask (Task item, int index) {
+
+    public static void registerTodo (ArrayList<Task> lists, String line) throws IndexOutOfBoundsException {
+        try {
+            String[] inputLine = line.split(" ", 2);
+            Task item = new Todo(inputLine[1]);
+            lists.add(item);
+            printAddTask(item, lists.size());
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Your deadline must be of the following format: deadline (deadline name) /by (date)");
+        }
+    }
+
+    public static void registerDeadline (ArrayList<Task> lists, String line) throws IndexOutOfBoundsException {
+        try {
+            String[] inputLines = line.split(" ", 2);
+            inputLines = inputLines[1].split(" /by ");
+            String description = inputLines[0];
+            String deadline = inputLines[1];
+            Task item = new Deadline(description, deadline);
+            lists.add(item);
+            printAddTask(item, lists.size());
+        } catch (IndexOutOfBoundsException e) {
+        System.out.println("Your deadline must be of the following format: deadline (deadline name) /by (date)");
+    }
+    }
+
+    public static void registerEvent (ArrayList<Task> lists, String line) throws IndexOutOfBoundsException {
+        try {
+            String[] inputLines = line.split(" ", 2);
+            inputLines = inputLines[1].split(" /from ");
+            String description = inputLines[0];
+            inputLines = inputLines[1].split(" /to ");
+            String start = inputLines[0];
+            String end = inputLines[1];
+            Task item = new Event(description, start, end);
+            lists.add(item);
+            printAddTask(item, lists.size());
+        } catch (IndexOutOfBoundsException e) {
+        System.out.println("Your deadline must be of the following format: deadline (deadline name) /by (date)");
+        }
+    }
+
+    public static void printAddTask (Task item, int size) {
         System.out.println("Got it. I've added this task: " + item.getTypeIcon()
                 + item.getStatusIcon() + item.description);
-        System.out.println("Now you have " + index + " tasks in the list.");
+        System.out.println("Now you have " + size + " tasks in the list.");
         System.out.println(LINE_BREAK);
     }
 
@@ -110,8 +111,9 @@ public class Duke {
         }
     }
 
-    public static void main(String[] args) throws DukeException, IndexOutOfBoundsException {
+    public static void main (String[] args) throws DukeException, FileNotFoundException {
         ArrayList<Task> lists = new ArrayList<>();
+        Storage.readDukeFile(lists, FILE_DIRECTORY, FILE_NAME);
         printIntro();
         while (true) {
             String line = getInput();
@@ -121,6 +123,9 @@ public class Duke {
                 System.out.println("Here are the tasks in your list:");
                 int itemNumber = 1;
                 for (Task item : lists) {
+                    if ((itemNumber - 1) == lists.size()) {
+                        break;
+                    }
                     item.printTask(itemNumber);
                     itemNumber++;
                 }
@@ -130,12 +135,13 @@ public class Duke {
                     int itemNumber = Integer.parseInt(words[1]);
                     if (line.startsWith("mark")) {
                         lists.get(itemNumber - 1).markAsDone();
-                    } else if (line.startsWith("unmark")){
+                    } else if (line.startsWith("unmark")) {
                         lists.get(itemNumber - 1).markAsUndone();
                     } else {
                         DeleteTask(lists, itemNumber);
                     }
-                } catch (IndexOutOfBoundsException e){
+                    Storage.saveDataFromInput(FILE_DIRECTORY, FILE_NAME, lists);
+                } catch (IndexOutOfBoundsException e) {
                     printError();
                 }
             }
@@ -144,6 +150,7 @@ public class Duke {
             }
             else {
                 identifyInput(line, lists);
+                Storage.saveDataFromInput(FILE_DIRECTORY, FILE_NAME, lists);
             }
         }
         printExiting();
