@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,7 @@ public class Duke {
         String response;
 
         List<Task> list = new ArrayList<>();
+        //loadData(list);
         while (true) {
             response = in.nextLine();
             if (response.equals("bye")) {
@@ -83,30 +86,56 @@ public class Duke {
                     try {
                         int tasknumber = Integer.parseInt(response.split(" ")[1]);
                         if (tasknumber > 0 && tasknumber <= list.size()) {
-                            list.remove(tasknumber - 1).markAsDone();
                             System.out.println("Deleting.....Done!!");
                             System.out.println(list.get(tasknumber - 1).toString());
-                            continue;
+                            list.remove(tasknumber - 1).markAsDone();
                         } else {
                             System.out.println("I cannot find which task you have selected. Please choose another one");
                             continue;
                         }
+                        continue;
                     } catch (IndexOutOfBoundsException e) {
                         throw new DukeException();
                     }
 
 
-                }else{
-                        throw new DukeException();
-                    }
-                    int size = list.size();
-                    System.out.println("Got it. I've added this task:");
-                    System.out.println(list.get(size - 1).toString());
-                    System.out.println("Now you have " + size + " tasks in the list");
-                }  catch(DukeException e){
-                    System.out.println("Illegal Command");
+                } else {
+                    throw new DukeException();
                 }
+                int size = list.size();
+                System.out.println("Got it. I've added this task:");
+                System.out.println(list.get(size - 1).toString());
+                System.out.println("Now you have " + size + " tasks in the list");
+            } catch (DukeException e) {
+                System.out.println("Illegal Command");
             }
         }
     }
+
+//    private static void loadData(List<Task> list) {
+//        try {
+//            File data = new File("data/duke.txt");
+//            Scanner dataEntry = new Scanner(data);
+//            while (dataEntry.hasNext()) {
+//                String[] parsedData = dataEntry.nextLine().split(";", 4);
+//                String type = parsedData[0];
+//                String status = parsedData[1];
+//                String description = parsedData[2];
+//                if (type.equalsIgnoreCase("todo")) {
+//                    list.add(new Todo(description));
+//                } else if (type.equalsIgnoreCase("deadline")) {
+//                    String date = parsedData[3];
+//                    list.add(new Deadline(description, date));
+//                } else if (type.equalsIgnoreCase("event")) {
+//                    String date = parsedData[3];
+//                    list.add(new Deadline(description, date));
+//                } else {
+//                    System.out.println("Format Error!");
+//                }
+//            }
+//        } catch (FileNotFoundException e) {
+//            System.out.println("File not found");
+//        }
+//    }
+}
 
