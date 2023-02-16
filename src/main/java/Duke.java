@@ -6,6 +6,7 @@ import duke.task.ToDo;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -13,6 +14,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 //TODO: specify error: empty description vs event/ddl timing not found
+//TODO: check print new line for printtask
 
 public class Duke {
     public static String line = "____________________________________________________________\n";
@@ -20,6 +22,8 @@ public class Duke {
     public static Task[] tasks = new Task[100];
 
     // reading file from hard disc
+    public static String home = System.getProperty("user.home");
+//    public static Path filePath = java.nio.file.Paths.get(home, "ip", "task_list.txt");
     public static String filePath = "./task_list.txt";
 
     public static void createFile(String filePath) {
@@ -31,7 +35,7 @@ public class Duke {
                 System.out.println("File already exists");
             }
         } catch (IOException e) {
-            System.out.println("An error occurred.");
+            System.out.println("An error occurred while creating file.");
             e.printStackTrace();
         }
     }
@@ -40,18 +44,27 @@ public class Duke {
         Scanner s = new Scanner(f);
         while (s.hasNext()) {
             String task = s.nextLine();
-            String[] taskElements = task.split("\\|");
-            switch (taskElements[0]) {
-            case "T" :
-                tasks[countTask] = new ToDo(taskElements[1]);
+            String[] taskElements = task.trim().split("\\|");
+            switch (taskElements[0].trim()) {
+            case "T":
+                tasks[countTask] = new ToDo(taskElements[2].trim());
+                if (taskElements[1].trim().equals("X")) {
+                    tasks[countTask].markAsDone();
+                }
                 countTask++;
                 break;
-            case "D" :
-                tasks[countTask] = new Deadline(taskElements[1], taskElements[2]);
+            case "D":
+                tasks[countTask] = new Deadline(taskElements[2].trim(), taskElements[3].trim());
+                if (taskElements[1].trim().equals("X")) {
+                    tasks[countTask].markAsDone();
+                }
                 countTask++;
                 break;
-            case "E" :
-                tasks[countTask] = new Deadline(taskElements[1], taskElements[2], taskElements[3]);
+            case "E":
+                tasks[countTask] = new Event(taskElements[2].trim(), taskElements[3].trim(), taskElements[4].trim());
+                if (taskElements[1].trim().equals("X")) {
+                    tasks[countTask].markAsDone();
+                }
                 countTask++;
                 break;
             default:
@@ -65,33 +78,39 @@ public class Duke {
      E |   | description | start time | end time
      */
 
-    public static void saveTasksToFile(String filePath, ArrayList<Task> tasks) throws IOException {
-        FileWriter fw = new FileWriter(filePath, true);
-        for (Task t : tasks) {
-            String completeTaskDescription = t.printTask();
+    public static void saveTasksToFile(String filePath) throws IOException {
+        FileWriter fw = new FileWriter(filePath, false);
+        for (int i = 0; i < countTask; i++) {
+            String completeTaskDescription = tasks[i].printTask();
             String taskType = completeTaskDescription.substring(1, 2);
             switch (taskType) {
             case "T":
-                fw.write(taskType + " | " + t.getStatusIcon() + " | " + t.getDescription() +
+                fw.write(taskType + " | " + tasks[i].getStatusIcon() + " | " + tasks[i].getDescription() +
                         System.lineSeparator());
-                fw.close();
                 break;
             case "D":
-                fw.write(taskType + " | " + t.getStatusIcon() + " | " + t.getDescription() + " | " +
-                        ((Deadline) t).getDeadline() + System.lineSeparator());
-                fw.close();
+                fw.write(taskType + " | " + tasks[i].getStatusIcon() + " | " + tasks[i].getDescription() + " | " +
+                        ((Deadline) tasks[i]).getDeadline() + System.lineSeparator());
                 break;
             case "E":
-                fw.write(taskType + " | " + t.getStatusIcon() + " | " + t.getDescription() + " | " +
-                        ((Event) t).getStartTime() + " | " + ((Event) t).getEndTime() + System.lineSeparator());
-                fw.close();
+                fw.write(taskType + " | " + tasks[i].getStatusIcon() + " | " + tasks[i].getDescription() + " | " +
+                        ((Event) tasks[i]).getStartTime() + " | " + ((Event) tasks[i]).getEndTime() + System.lineSeparator());
                 break;
             default:
             }
         }
+        fw.close();
     }
 
     public static void main(String[] args) {
+
+        File f = new File(filePath);
+        createFile(filePath);
+        try {
+            readTasksFromFile(f);
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found.");
+        }
 
         String greet = line +
                 "Hello! I'm Duke.\n" +
@@ -158,14 +177,22 @@ public class Duke {
                 System.out.println("Starting and ending time for event are in the wrong order. " +
                         "Please try again.\n" + line);
             }
+            try {
+                saveTasksToFile(filePath);
+            } catch (IOException e) {
+                System.out.println("Error saving file.");
+            } catch (NullPointerException e) {
+                System.out.println("No task found.");
+            }
         }
+
     }
 
     public static void printTaskList() {
         System.out.println(line + "Here are the tasks in your list:");
         for (int i = 0; i < countTask; i++) {
             int taskIndex = i + 1;
-            System.out.print(taskIndex + ". " + tasks[i].printTask());
+            System.out.print(taskIndex + ". " + tasks[i].printTask() + '\n');
         }
         System.out.println(line);
     }
@@ -175,7 +202,7 @@ public class Duke {
         if (taskIndex >= 1 && taskIndex <= countTask) {
             tasks[taskIndex - 1].markAsDone();
             System.out.println(line + "Task " + taskIndex + " marked as done:\n" +
-                    tasks[taskIndex - 1].printTask() + line);
+                    tasks[taskIndex - 1].printTask() + '\n' + line);
         } else {
             System.out.println("Task " + taskIndex + " not found. Please try again.\n" + line);
         }
@@ -186,7 +213,7 @@ public class Duke {
         if (taskIndex >= 1 && taskIndex <= countTask) {
             tasks[taskIndex - 1].markAsUndone();
             System.out.println(line + "Task " + taskIndex + " marked as not done yet:\n" +
-                    tasks[taskIndex - 1].printTask() + line);
+                    tasks[taskIndex - 1].printTask() + '\n' + line);
         } else {
             System.out.println("Task " + taskIndex + " not found. Please try again.\n" + line);
         }
@@ -200,13 +227,12 @@ public class Duke {
         System.out.println("Now you have " + countTask + " task(s) in the list.\n" + line);
     }
 
-    //TODO create Deadline by taking in description and date as 2 separate function parameters
-    //TODO parse here instead of in the class
     public static void createDeadline(String input) throws IndexOutOfBoundsException {
         if (!input.contains("/by") || input.indexOf("/by") + 4 > input.length()) {
             throw new StringIndexOutOfBoundsException();
         }
-        Deadline deadlineTask = new Deadline(input.substring(9));
+        String deadlineDate = input.substring(input.indexOf("/by") + 4);
+        Deadline deadlineTask = new Deadline(input.substring(9, input.indexOf("/by")), deadlineDate);
         tasks[countTask] = deadlineTask;
         countTask++;
         System.out.println(line + "Great! I've added this task:\n" + "   " + deadlineTask.printTask());
@@ -220,7 +246,9 @@ public class Duke {
         } else if (input.indexOf("/from") > input.indexOf("/to")) {
             throw new EventTimingException();
         }
-        Event eventTask = new Event(input.substring(6));
+        String startTime = input.substring(input.indexOf("/from") + 6, input.indexOf("/to")).trim();
+        String endTime = input.substring(input.indexOf("/to") + 4);
+        Event eventTask = new Event(input.substring(6, input.indexOf("/from")), startTime, endTime);
         tasks[countTask] = eventTask;
         countTask++;
         System.out.println(line + "Great! I've added this task:\n" + "   " + eventTask.printTask());
