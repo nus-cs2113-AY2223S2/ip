@@ -4,7 +4,7 @@ import Tasks.Event;
 import Tasks.Task;
 import Tasks.Todo;
 
-
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -12,7 +12,6 @@ public class Duke {
 
 	private static final Scanner in = new Scanner(System.in);
 
-	// max no. of tasks in taskList
 	private static ArrayList<Task> taskList = new ArrayList<>();
 
 
@@ -24,6 +23,8 @@ public class Duke {
 			"\t  Hello! I'm kimo\n" +
 			"\t  What can I do for you?\n" +
 			LINE_PARTITION;
+
+	private static final String FILE_PATH = "taskList.txt";
 
 
 	//ERROR MESSAGE FINAL STRINGS
@@ -39,6 +40,9 @@ public class Duke {
 	private static final String INVALID_CMD = LINE_PARTITION +
 			"\t  You have entered an invalid command.\n" +
 			"\t  Please type \"help\" to see the available list of commands and the relevant formats\n" +
+			LINE_PARTITION;
+	private static final String EMPRTY_LIST_ERROR_MSG = LINE_PARTITION +
+			"\t  Your list is empty. Please add items first." + ERROR_FACE + "\n" +
 			LINE_PARTITION;
 
 
@@ -59,8 +63,41 @@ public class Duke {
 	//MAIN CODE
 	public static void main(String[] args) {
 		System.out.print(GREET);
+		loadListFromFile();
 		while (true) {
 			takeUserInput();
+			saveTaskListToFile();
+		}
+	}
+
+	private static void loadListFromFile() {
+		try (Scanner reader = new Scanner(new File(FILE_PATH))) {
+			String line;
+			while (reader.hasNext()) {
+				line = reader.nextLine();
+				String[] parts = line.split(" ", 2);
+				String taskType = parts[0];
+				boolean status = parts[1].charAt(1) == 'X';
+				String taskDesc = parts[1].substring(4);
+				switch (taskType) {
+				case ("[D]"):
+					deadlineAdd(taskDesc);
+					break;
+				case ("[E]"):
+					eventAdd(taskDesc);
+					break;
+				case ("[T]"):
+					todoAdd(taskDesc);
+					break;
+				default:
+				}
+				Task task = taskList.get(taskList.size() - 1);
+				task.setDone(status);
+			}
+			System.out.println("List loaded from file.");
+		} catch (FileNotFoundException e) {
+			System.out.println("List file not found. Starting with an empty list.");
+			taskList = new ArrayList<>();
 		}
 	}
 
@@ -123,16 +160,32 @@ public class Duke {
 		}
 		System.out.println(LINE_PARTITION +
 				"\t  These are the tasks in your list: ");
-		for (int i = 1; i < taskList.size() + 1; i++){
+
+		for (int i = 1; i < taskList.size() + 1; i++) {
 			System.out.println(String.format("\t  %d.%s", i, taskList.get(i - 1)));
 		}
 		System.out.print(LINE_PARTITION);
 	}
 
+	private static void saveTaskListToFile() {
+		try {
+			writeToFile();
+		} catch (IOException e) {
+			System.out.println("Something went wrong: " + e.getMessage());
+		}
+	}
+
+	private static void writeToFile() throws IOException {
+		FileWriter fw = new FileWriter(FILE_PATH);
+		for (int i = 0; i < taskList.size(); i++) {
+			fw.write(taskList.get(i) + "\n");
+		}
+		fw.close();
+	}
+
 	private static void executeMark(String args, boolean hasCompleted) {
 		try {
-			taskInitiate(args, hasCompleted);
-
+			markInitiate(args, hasCompleted);
 		} catch (NumberFormatException e) {
 			// non-convertable / no input
 			invalidMarkArgs();
@@ -145,7 +198,10 @@ public class Duke {
 			emptyListError();
 		}
 	}
-	private static void taskInitiate(String args, boolean hasCompleted) throws BlankListException {
+
+
+	private static void markInitiate(String args, boolean hasCompleted) throws BlankListException {
+
 		if (taskList.size() == 0) {
 			throw new BlankListException();
 		}
@@ -185,6 +241,7 @@ public class Duke {
 				break;
 			default:
 			}
+			printTaskAdd();
 		} catch (ArrayIndexOutOfBoundsException e) {
 			cmdFormatError();
 		}
@@ -210,6 +267,20 @@ public class Duke {
 		taskList.add(task);
 		printTaskAdd();
 	}
+	private static void OutOfBoundArgs() {
+		System.out.print(String.format(LINE_PARTITION +
+				"\t  There are %d items in your list.\n", taskList.size()) +
+				"\t  Please enter a number in the appropriate range." + ERROR_FACE + "\n" +
+				LINE_PARTITION);
+	}
+
+	private static void invalidMarkArgs() {
+		System.out.print(INVALID_ARGS_MSG);
+	}
+
+	private static void emptyListError() {
+		System.out.print(EMPRTY_LIST_ERROR_MSG);
+	}
 
 	private static void tryDelete(String args) {
 		try {
@@ -231,22 +302,7 @@ public class Duke {
 				"\t  Okies, I have removed this task: \n\t  " + task + "\n" +
 				LINE_PARTITION);
 	}
-	private static void OutOfBoundArgs() {
-		System.out.print(String.format(LINE_PARTITION +
-				"\t  There are %d items in your list.\n", taskList.size()) +
-				"\t  Please enter a number in the appropriate range." + ERROR_FACE + "\n" +
-				LINE_PARTITION);
-	}
 
-	private static void invalidMarkArgs() {
-		System.out.print(INVALID_ARGS_MSG);
-	}
-
-	private static void emptyListError() {
-		System.out.print(LINE_PARTITION +
-				"\t  Your list is empty. Please add items before marking them." + ERROR_FACE + "\n" +
-				LINE_PARTITION);
-	}
 	private static void executeBye() {
 		System.out.println(FAREWELL);
 		System.exit(0);
