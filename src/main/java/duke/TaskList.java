@@ -52,7 +52,7 @@ public class TaskList {
         this.tasks = new ArrayList<>();
         this.noOfTasks = 0;
         while (s.hasNextLine()) {
-            noOfTasks ++;
+            noOfTasks++;
             String line = s.nextLine();
             String[] args = line.split("\\|");
             parseTasks(args);
@@ -119,7 +119,7 @@ public class TaskList {
         if (hasBlankArgument(name, "Name")) {
             return;
         }
-        indexOfBy+=3;
+        indexOfBy += 3;
         String by = args.substring(indexOfBy);
         by = by.trim();
         if (hasBlankArgument(by, "by")) {

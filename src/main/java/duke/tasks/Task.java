@@ -28,7 +28,7 @@ public abstract class Task {
     }
 
     public String toString() {
-        String completionStatusString = completionStatus?"[X]":"[ ]";
+        String completionStatusString = completionStatus ? "[X]" : "[ ]";
         String taskTypeString = '[' + taskType + ']';
         return taskTypeString + completionStatusString + ' ' + name;
     }
