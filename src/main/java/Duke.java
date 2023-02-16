@@ -127,14 +127,10 @@ public class Duke {
                     System.out.println(line);
                 }
             }
-            userInput = in.nextLine();
             f.main(inputList);
+            userInput = in.nextLine();
         }
-        try {
-            f.getFileContents(filePath);
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found :^(");
-        }
+        //f.main(inputList);
         in.close();
     }
 

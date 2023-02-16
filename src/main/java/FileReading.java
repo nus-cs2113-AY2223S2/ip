@@ -9,47 +9,56 @@ public class FileReading {
     private static String filePath = "data/Duke.txt";
 
     public static void createFile(String filePath) throws IOException {
-        try {
-            File newFolder = new File("data");
-            if (newFolder.createNewFile()) {
-                System.out.println("File created: " + newFolder.getName());
-            } else {
-                //newFolder.delete();
-                newFolder.mkdirs();
-                System.out.println("File already exists.");
-            }
-            File myObj = new File("data/duke.txt");
-            if (myObj.createNewFile()) {
-                System.out.println("File created: " + myObj.getName());
-            } else {
-                System.out.println("File already exists.");
-            }
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+        File newFolder = new File("data");
+        if (newFolder.createNewFile()) {
+            System.out.println("File created: " + newFolder.getName());
+            newFolder.mkdirs();
+        } else {
+            //newFolder.delete();
+            //newFolder.mkdirs();
+            System.out.println(newFolder + "file already exists.");
+        }
+        File file = new File("data/duke.txt");
+        if (file.createNewFile()) {
+            System.out.println("File created: " + file.getName());
+        } else {
+            System.out.println(file + "file already exists.");
         }
     }
 
-    public static void getFileContents(String filePath) throws FileNotFoundException {
+    public static void getFileContents(String filePath, ArrayList<Task> tasksList) throws FileNotFoundException {
         File f = new File(filePath);
         if (f.exists()) {
             Scanner s = new Scanner(f);
             while(s.hasNext()) {
-                System.out.println(s.nextLine());
+                //System.out.println(s.nextLine());
             }
         }
     }
 
-    public static void writeToFile(String filePath, ArrayList<Task> Tasks) throws IOException {
-        FileWriter fw = new FileWriter(filePath, true);
+    public static void deleteFileContents(String filePath) throws IOException {
+        File f = new File(filePath);
+        f.delete();
+        try {
+            createFile(filePath);
+        } catch (IOException e) {
+            System.out.println("An error has occurred :( ");
+        //e.printStackTrace();
+        }
+    }
+
+    public static void writeToFile(String filePath, ArrayList<Task> tasksList) throws IOException {
+        FileWriter fw = new FileWriter(filePath);
         //write to file the arraylist?
-        fw.write(Tasks.toString());
+        deleteFileContents(filePath);
+        fw.write(tasksList.toString());
         fw.close();
     }
 
     public static void main(ArrayList<Task> Tasks) {
         try {
-            createFile(filePath);
+            writeToFile(filePath, Tasks);
+            System.out.println("File edited");
         } catch (IOException e) {
             System.out.println("File not found");
         }
