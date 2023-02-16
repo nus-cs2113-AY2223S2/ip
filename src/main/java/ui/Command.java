@@ -12,8 +12,9 @@ public enum Command {
     UNMARK("unmark", "unmark <task #>"),
     DELETE("delete", "delete <task #>"),
     TODO("todo", "todo <description>"),
-    DEADLINE("deadline", "deadline <description> " + DeadlineTask.BY_DELIMITER  + " <deadline>"),
-    EVENT("event", "event <description> " + EventTask.START_DELIMITER + " <start> " + EventTask.END_DELIMITER+ " <end>");
+    DEADLINE("deadline", "deadline <description> " + DeadlineTask.BY_DELIMITER + " <deadline>"),
+    EVENT("event",
+            "event <description> " + EventTask.START_DELIMITER + " <start> " + EventTask.END_DELIMITER + " <end>");
 
     // All commands that create a new task
     public static final Set<String> ADD_TASK_COMMANDS = Set.of(TODO.label, DEADLINE.label, EVENT.label);

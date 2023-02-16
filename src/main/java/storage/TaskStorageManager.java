@@ -16,8 +16,8 @@ public class TaskStorageManager {
 
     private static final Path PATH_SEP = Path.of(FileSystems.getDefault().getSeparator());
     // Stores to: TEMP/ip/task-storage
-    public static final Path DEFAULT_FILE_PATH =
-        Path.of(System.getProperty("java.io.tmpdir") + PATH_SEP + "ip" + PATH_SEP + "task-storage.dat");
+    public static final Path DEFAULT_FILE_PATH = Path.of(
+            System.getProperty("java.io.tmpdir") + PATH_SEP + "ip" + PATH_SEP + "task-storage.dat");
 
     private final Path filePath;
 
@@ -44,7 +44,7 @@ public class TaskStorageManager {
 
         // Serialize and write to file
         try (FileOutputStream fileOutputStream = new FileOutputStream(filePath.toString());
-            ObjectOutputStream outputStream = new ObjectOutputStream(fileOutputStream)) {
+                ObjectOutputStream outputStream = new ObjectOutputStream(fileOutputStream)) {
             outputStream.writeObject(tasks);
         } catch (IOException ex) {
             System.out.println("Something went wrong! I couldn't save your tasks :(");
@@ -60,7 +60,7 @@ public class TaskStorageManager {
 
         // Read from file and deserialize
         try (FileInputStream fileInputStream = new FileInputStream(filePath.toString());
-            ObjectInputStream inputStream = new ObjectInputStream(fileInputStream)) {
+                ObjectInputStream inputStream = new ObjectInputStream(fileInputStream)) {
             return (ArrayList<Task>) inputStream.readObject();
         } catch (IOException | ClassNotFoundException ex) {
             System.out.println("Something went wrong! I couldn't read your tasks :(");
