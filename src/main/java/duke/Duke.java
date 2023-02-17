@@ -4,11 +4,7 @@ import duke.exceptions.InvalidCommandException;
 import duke.exceptions.InvalidInputIDException;
 import duke.exceptions.InvalidTaskFormatException;
 import duke.exceptions.NoTaskException;
-import duke.tasks.Deadline;
-import duke.tasks.Event;
-import duke.tasks.Task;
-import duke.tasks.TaskEnum;
-import duke.tasks.ToDo;
+import duke.tasks.*;
 
 import duke.storage.Storage;
 import duke.ui.UI;
@@ -33,17 +29,13 @@ public class Duke {
     private static final String COMMAND_SAVE = "save";
 
     // messages
-    private static final String MESSAGE_TASKS_AVAILABLE = "Here are the tasks in your list:";
-    private static final String MESSAGE_TASKS_MARKED = "Nice! I've marked this task as done:";
-    private static final String MESSAGE_TASKS_NONE = "There are no tasks available.";
-    private static final String MESSAGE_TASKS_UNMARKED = "OK, I've marked this task as not done yet:";
 
-    private static final UI ui = new UI();
-    // data
-    private static ArrayList<Task> tasks = new ArrayList<>();
+    private static UI ui;
+    private static TaskList tasks;
 
     public static void main(String[] args) {
-        tasks = Storage.getTasks();
+        ui = new UI();
+        tasks = new TaskList(Storage.read());
         Scanner scan = new Scanner(System.in);
         ui.printLogo();
         ui.greet();
@@ -100,7 +92,7 @@ public class Duke {
                 throw new InvalidCommandException();
             }
             // update saved tasks
-            Storage.writeTasks(tasks);
+            Storage.save(tasks.toJson());
         } catch (IOException e) {
             ui.printSaveStatus(false);
         } catch (Exception e) {
@@ -109,31 +101,10 @@ public class Duke {
         }
     }
 
-
     private static void addTask(Task taskObj) {
         tasks.add(taskObj);
         ui.printTaskAdded(taskObj.describe(), tasks.size());
     }
-
-    private static void setTaskStatus(int id, boolean isCompleted) throws Exception {
-        try {
-            if (id >= tasks.size() || id < 0) {
-                throw new IndexOutOfBoundsException();
-            }
-            tasks.get(id).setIsCompleted(isCompleted);
-            String output = isCompleted
-                    ? MESSAGE_TASKS_MARKED + "\n"
-                    : MESSAGE_TASKS_UNMARKED + "\n";
-            output += tasks.get(id).describe();
-            ui.print(output);
-            ui.printLine();
-        } catch (IndexOutOfBoundsException e) {
-            throw (tasks.size() == 0)
-                    ? new NoTaskException()
-                    : new InvalidInputIDException();
-        }
-    }
-
 
     private static String getTaskDetails(Scanner input) {
         // validate input
@@ -151,15 +122,7 @@ public class Duke {
     }
 
     private static void handleCommandList() {
-        String output = tasks.size() == 0
-                ? MESSAGE_TASKS_NONE
-                : MESSAGE_TASKS_AVAILABLE + "\n";
-        // adds tasks to output, if any
-        // combine details of tasks into a single string
-        for (int i = 0; i < tasks.size(); ++i) {
-            output += (i + 1) + "." // number
-                    + tasks.get(i).describe() + "\n";
-        }
+        String output = tasks.listAll();
         ui.print(output);
         ui.printLine();
     }
@@ -169,7 +132,7 @@ public class Duke {
             throw new InvalidInputIDException();
         }
         int taskNumber = input.nextInt();
-        setTaskStatus(taskNumber - 1, true);
+        ui.print(tasks.setStatus(taskNumber - 1, true));
     }
 
     private static void handleCommandUnmark(Scanner input) throws Exception {
@@ -177,7 +140,7 @@ public class Duke {
             throw new InvalidInputIDException();
         }
         int taskNumber = input.nextInt();
-        setTaskStatus(taskNumber - 1, false);
+        ui.print(tasks.setStatus(taskNumber - 1, false));
     }
 
     private static void handleCommandTodo(Scanner input) throws InvalidTaskFormatException {
@@ -226,13 +189,12 @@ public class Duke {
             throw new InvalidInputIDException();
         }
 
-        Task toDelete = tasks.get(id - 1);
-        tasks.remove(id - 1);
+        Task toDelete = tasks.delete(id);
         ui.printTaskDeleted(toDelete.describe(), tasks.size());
     }
 
     private static void handleCommandSave() throws IOException {
-        Storage.writeTasks(tasks);
+        Storage.save(tasks.toJson());
         ui.printSaveStatus(true);
     }
 }
