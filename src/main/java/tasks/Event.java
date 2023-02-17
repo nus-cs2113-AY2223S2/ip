@@ -2,21 +2,21 @@ package tasks;
 
 public class Event extends Task {
 
-  private String to;
-  private String from;
+  private String toDate;
+  private String fromDate;
 
-  public Event(String description, String from, String to) {
+  public Event(String description, String fromDate, String toDate) {
     super(description);
-    this.to = to;
-    this.from = from;
+    this.toDate = toDate;
+    this.fromDate = fromDate;
   }
 
   public String getTo() {
-    return this.to;
+    return this.toDate;
   }
 
   public String getFrom() {
-    return this.from;
+    return this.fromDate;
   }
 
   @Override
@@ -25,8 +25,8 @@ public class Event extends Task {
       "[E][%s] %s (from: %s to: %s)\n",
       super.isDone ? "X" : " ",
       super.description,
-      from,
-      to
+      fromDate,
+      toDate
     );
   }
 }

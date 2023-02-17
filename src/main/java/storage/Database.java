@@ -68,15 +68,21 @@ public class Database {
         String[] rowArray = row.split(Constants.DELIMITER);
         switch (rowArray[0]) {
           case "todo":
-            Todo todo = new Todo(rowArray[1]);
+            String description = rowArray[1];
+            Todo todo = new Todo(description);
             taskManager.addTask(todo);
             break;
           case "deadline":
-            Deadline deadline = new Deadline(rowArray[1], rowArray[3]);
+            description = rowArray[1];
+            String byDate = rowArray[3];
+            Deadline deadline = new Deadline(description, byDate);
             taskManager.addTask(deadline);
             break;
           case "event":
-            Event event = new Event(rowArray[1], rowArray[4], rowArray[3]);
+            description = rowArray[1];
+            String fromDate = rowArray[4];
+            String toDate = rowArray[3];
+            Event event = new Event(rowArray[1], fromDate, toDate);
             taskManager.addTask(event);
         }
         if (rowArray[2] == "true") {
