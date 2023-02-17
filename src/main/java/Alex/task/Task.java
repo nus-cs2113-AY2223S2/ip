@@ -28,9 +28,13 @@ public class Task {
         return type;
     };
 
+    public boolean getDone() {
+        return isDone;
+    }
+
     @Override
     public String toString() {
-        return "[" + getStatusIcon() + "]" + getDescription();
+        return "[" + getStatusIcon() + "] " + getDescription();
     }
 
 }

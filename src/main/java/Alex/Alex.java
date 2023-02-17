@@ -32,11 +32,6 @@ public class Alex {
             String userInput = myObj.nextLine();
             try {
                 handleInput(userInput, taskManager);
-                try {
-                    saveData(taskManager);
-                } catch (IOException e) {
-                    System.out.println("Error... aborting save" + e.getMessage());
-                }
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("☹ OOPS!!! The description of a " + e.getMessage() + " cannot be empty.");
                 printLine();
@@ -60,28 +55,31 @@ public class Alex {
         Path filePath = Paths.get(dir, "data", "duke.txt");
         File f = new File(filePath.toString());
         Scanner s = new Scanner(f);
-        while (s.hasNext()) {
-            String[] info = s.nextLine().split(" ");
-            if(info[0] == "T")
+        while (s.hasNextLine()) {
+            String[] info = s.nextLine().trim().split(" ");
+            for(String part :info) {
+                System.out.println(part);
+            }
+            if(info[0].equals("T"))
             {
                 Task t = new Todo(info[2] , "T");
-                if(info[1] == "true") {
+                if(info[1].equals("1")) {
                     t.markAsDone();
                 }
                 tm.setTask(t);
             }
-            else if(info[0] == "D")
+            else if(info[0].equals("D"))
             {
                 Task t = new Deadline(info[2], "D", info[3]);
-                if(info[1] == "true") {
+                if(info[1].equals("1")) {
                     t.markAsDone();
                 }
                 tm.setTask(t);
             }
-            else if(info[0] == "E")
+            else if(info[0].equals("E"))
             {
                 Task t = new Event(info[2], "E",info[3] ,info[4]);
-                if(info[1] == "true") {
+                if(info[1].equals("1")) {
                     t.markAsDone();
                 }
                 tm.setTask(t);
@@ -99,15 +97,18 @@ public class Alex {
         for(Task t : tm.getAllTasks()) {
             if(t.getType().equals("T")) {
                 Todo td = (Todo)t;
-                toSave += "T " + td.getStatusIcon() + td.getDescription();
+                int done = td.getDone() ? 1 : 0;
+                toSave += "T" + " " + done  + " " + td.getDescription();
             }
             else if (t.getType().equals("D")) {
                 Deadline d = (Deadline)t;
-                toSave += "D " + d.getStatusIcon() + " " + d.getDescription() + " " + d.getBy();
+                int done = d.getDone() ? 1 : 0;
+                toSave += "D" + " " + done + " " + d.getDescription() + " " + d.getBy();
             }
             else if (t.getType().equals("E")) {
                 Event e = (Event)t;
-                toSave += "E " + e.getStatusIcon() + " " + e.getDescription() + " " + e.getFrom() + " " + e.getTo();
+                int done = e.getDone() ? 1 : 0;
+                toSave += "E" + " "+ done + " " + e.getDescription() + " " + e.getFrom() + " " + e.getTo();
             }
             toSave += System.lineSeparator();
         }
@@ -161,6 +162,11 @@ public class Alex {
             taskManager.getAllTasks().get(number - 1).markAsDone();
             System.out.println(taskManager.getAllTasks().get(number - 1));
             printLine();
+            try {
+                saveData(taskManager);
+            } catch (IOException e) {
+                System.out.println("Error... aborting save" + e.getMessage());
+            }
 
         }
         else if(command.equals("unmark")) {
@@ -170,6 +176,11 @@ public class Alex {
             taskManager.getAllTasks().get(number - 1).unmark();
             System.out.println(taskManager.getAllTasks().get(number - 1));
             printLine();
+            try {
+                saveData(taskManager);
+            } catch (IOException e) {
+                System.out.println("Error... aborting save" + e.getMessage());
+            }
         }
 
         else if(command.equals("delete")) {
@@ -181,6 +192,11 @@ public class Alex {
             System.out.println(t);
             System.out.println("Now you have " + taskManager.getNumberOfTasks() + " tasks in the list.");
             printLine();
+            try {
+                saveData(taskManager);
+            } catch (IOException e) {
+                System.out.println("Error... aborting save" + e.getMessage());
+            }
         }
 
         else {
@@ -190,7 +206,7 @@ public class Alex {
                     break;
                 }
                 else {
-                    activity += " " + words[i];
+                    activity += words[i] + " ";
                 }
 
             }
@@ -209,7 +225,7 @@ public class Alex {
                     }
                 }
                 for(int i = byIndex + 1; i < words.length; i++) {
-                    by += " " + words[i];
+                    by += words[i] += " ";
                 }
 
                 Task deadline = new Deadline(activity,command.substring(0,1).toUpperCase(),by);
@@ -231,15 +247,20 @@ public class Alex {
                     }
                 }
                 for(int i = fromIndex + 1; i < toIndex; i++) {
-                    from += " " + words[i];
+                    from += words[i] + " ";
                 }
                 for(int i = toIndex + 1; i < words.length; i++) {
-                    to += " " + words[i];
+                    to += words[i] + " ";
                 }
                 Task event = new Event(activity, command.substring(0,1).toUpperCase(), from, to);
                 taskManager.setTask(event);
                 printLine();
                 echoResponse(event, taskManager.getNumberOfTasks());
+            }
+            try {
+                saveData(taskManager);
+            } catch (IOException e) {
+                System.out.println("Error... aborting save" + e.getMessage());
             }
 
         }
