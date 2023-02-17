@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 public class Duke {
     private static final String LINE = "____________________________________________________________";
     private static final String BLANK = "    ";
@@ -7,40 +8,47 @@ public class Duke {
         printWelcome();
         Scanner in = new Scanner(System.in);
         String inputString;
-        Task[] tasks = new Task[100];
+        ArrayList<Task> taskList = new ArrayList<>();
         int numberOfTasks = 0;
 
         while (true) {
             try {
                 inputString = in.nextLine();
                 String[] command = inputString.split(" ", 2);
-                //list command
+
                 switch (command[0]) {
                 case "list":
-                    doList(tasks, numberOfTasks);
+                    doList(taskList, numberOfTasks);
                     break;
-                //bye command
+
                 case "bye":
                     doExit();
                     return;
+
+                case "delete":
+                    deleteTask(taskList, Integer.parseInt(command[1]) - 1, numberOfTasks);
+                    numberOfTasks -= 1;
+                    break;
+
                 //mark/unmark command
                 case "mark":
                 case "unmark":
-                    doMarkOrUnmarked(tasks, numberOfTasks, command);
+                    doMarkOrUnmarked(taskList, numberOfTasks, command);
                     break;
+
                 //add task to list
                 case "todo":
-                    addTodo(tasks, numberOfTasks, command);
+                    addTodo(taskList, numberOfTasks, command);
                     numberOfTasks += 1;
                     break;
 
                 case "deadline":
-                    addDeadline(tasks, numberOfTasks, command);
+                    addDeadline(taskList, numberOfTasks, command);
                     numberOfTasks += 1;
                     break;
 
                 case "event":
-                    addEvent(tasks, numberOfTasks, command);
+                    addEvent(taskList, numberOfTasks, command);
                     numberOfTasks += 1;
                     break;
 
@@ -49,7 +57,10 @@ public class Duke {
                 }
             }
             catch (IndexOutOfBoundsException e) {
-                System.out.println("Missing arguments");
+                System.out.println("Wrong index");
+            }
+            catch (NumberFormatException e) {
+                System.out.println("Number only for argument");
             }
             catch (DukeException e) {
             }
@@ -57,33 +68,33 @@ public class Duke {
     }
 
 
-    private static void addTodo(Task[] tasks, int numberOfTasks, String[] command) {
-            tasks[numberOfTasks] = new Todo(command[1], numberOfTasks + 1);
-            tasks[numberOfTasks].printAddTask();
+    private static void addTodo(ArrayList<Task> tasks, int numberOfTasks, String[] command) {
+            tasks.add(new Todo(command[1]));
+            tasks.get(numberOfTasks).printAddTask(numberOfTasks);
 
     }
 
-    private static void addDeadline (Task[] tasks, int numberOfTasks, String[] command) throws DukeException {
+    private static void addDeadline (ArrayList<Task> tasks, int numberOfTasks, String[] command) throws DukeException {
             if (!command[1].contains("/by")) {
                 System.out.println("Error: Use /by");
                 throw new DukeException();
             }
             String[] deadLineInputs = command[1].split("/by", 2);
-            tasks[numberOfTasks] = new Deadline(deadLineInputs[0], numberOfTasks + 1, deadLineInputs[1]);
-            tasks[numberOfTasks].printAddTask();
+            tasks.add(new Deadline(deadLineInputs[0],deadLineInputs[1]));
+            tasks.get(numberOfTasks).printAddTask(numberOfTasks);
     }
 
-    private static void addEvent(Task[] tasks, int numberOfTasks, String[] command) throws DukeException {
+    private static void addEvent(ArrayList<Task> tasks, int numberOfTasks, String[] command) throws DukeException {
         if (!(command[1].contains("/from") && command[1].contains("/to"))) {
             System.out.println("Error: Use /from and /to");
             throw new DukeException();
         }
             String[] eventInputs = command[1].split("/from|/to");
-            tasks[numberOfTasks] = new Event(eventInputs[0], numberOfTasks + 1, eventInputs[1], eventInputs[2]);
-            tasks[numberOfTasks].printAddTask();
+            tasks.add(new Event(eventInputs[0], eventInputs[1], eventInputs[2]));
+            tasks.get(numberOfTasks).printAddTask(numberOfTasks);
     }
 
-    private static void doMarkOrUnmarked (Task[] tasks, int numberOfTasks, String[] command) throws DukeException{
+    private static void doMarkOrUnmarked (ArrayList<Task> tasks, int numberOfTasks, String[] command) throws DukeException{
         int indexToChange = Integer.parseInt(command[1]) - 1;
         //Check for error
         if (indexToChange >= numberOfTasks || indexToChange < 0) {
@@ -91,11 +102,11 @@ public class Duke {
             throw new DukeException();
         }
         if (command[0].equals("mark")) {
-            tasks[indexToChange].setDone();
-            tasks[indexToChange].printMarkedTask();
+            tasks.get(indexToChange).setDone();
+            tasks.get(indexToChange).printMarkedTask();
         } else {
-            tasks[indexToChange].setNotDone();
-            tasks[indexToChange].printUnmarkedTask();
+            tasks.get(indexToChange).setNotDone();
+            tasks.get(indexToChange).printUnmarkedTask();
         }
     }
 
@@ -107,11 +118,11 @@ public class Duke {
         System.out.println("\n" + logo);
     }
 
-    private static void doList(Task[] tasks, int numberOfTasks) {
+    private static void doList(ArrayList<Task> tasks, int numberOfTasks) {
         System.out.println(BLANK + LINE);
         for (int i = 0; i < numberOfTasks; i += 1) {
             System.out.print(BLANK + (i + 1) + ".");
-            tasks[i].printTask();
+            tasks.get(i).printTask();
         }
         System.out.println(BLANK + LINE);
     }
@@ -119,5 +130,9 @@ public class Duke {
         System.out.println(BLANK + LINE);
         System.out.println(BLANK + "Bye. Hope to see you again soon!");
         System.out.println(BLANK + LINE);
+    }
+    private static void deleteTask(ArrayList<Task> tasks, int indexToDelete, int numberOfTasks) {
+        tasks.get(indexToDelete).printDeleteTask(numberOfTasks);
+        tasks.remove(indexToDelete);
     }
 }

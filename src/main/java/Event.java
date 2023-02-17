@@ -1,8 +1,8 @@
 public class Event extends Task {
     protected String startDate;
     protected String endDate;
-    Event(String taskName, int taskNumber, String startDate, String endDate) {
-        super(taskName, taskNumber);
+    Event(String taskName, String startDate, String endDate) {
+        super(taskName);
         this.startDate = startDate;
         this.endDate = endDate;
     }

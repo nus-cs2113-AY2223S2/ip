@@ -1,8 +1,8 @@
 public class Deadline extends Task {
 
     protected String dueDate;
-    Deadline(String taskName, int taskNumber, String dueDate) {
-        super(taskName, taskNumber);
+    Deadline(String taskName, String dueDate) {
+        super(taskName);
         this.dueDate = dueDate;
     }
     @Override

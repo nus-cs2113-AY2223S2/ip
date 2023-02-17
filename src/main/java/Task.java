@@ -5,12 +5,10 @@ public class Task {
     private static final String BLANK = "    ";
     protected String taskName;
     protected boolean isDone;
-    protected int taskNumber;
 
-    public Task(String taskName, int taskNumber) {
+    public Task(String taskName) {
         this.taskName = taskName;
         this.isDone = false;
-        this.taskNumber = taskNumber;
     }
     public void setDone() {
         isDone = true;
@@ -36,12 +34,20 @@ public class Task {
         }
         System.out.println("] " + this.getTaskName());
     }
-    public void printAddTask() {
+    public void printAddTask(int taskNumber) {
         System.out.println(BLANK + LINE);
         System.out.println(BLANK + "Added to list:");
         System.out.print(BLANK);
         printTask();
-        System.out.println(BLANK + "Number of tasks: " + taskNumber);
+        System.out.println(BLANK + "Number of tasks: " + (taskNumber + 1));
+        System.out.println(BLANK + LINE);
+    }
+    public void printDeleteTask(int numberOfTask) {
+        System.out.println(BLANK + LINE);
+        System.out.println(BLANK + "Deleting from list:");
+        System.out.print(BLANK);
+        printTask();
+        System.out.println(BLANK + "Number of tasks: " + (numberOfTask - 1));
         System.out.println(BLANK + LINE);
     }
     public void printMarkedTask() {
