@@ -1,9 +1,11 @@
 public class Deadline extends Task {
     protected String byDate;
+    protected String type;
 
     public Deadline(String description, String byDate) {
         super(description);
         this.byDate = byDate;
+        this.type = "D";
     }
 
     public String addedMessage() {

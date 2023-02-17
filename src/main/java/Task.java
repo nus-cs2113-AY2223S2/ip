@@ -3,7 +3,6 @@ public class Task {
     protected boolean isDone;
 
     protected static int taskCount = 0;
-
     /**
      * Initialization of the object
      *
@@ -17,6 +16,12 @@ public class Task {
 
     public static void printMessage() {
         System.out.println("error in printing");
+    }
+
+    public void deleteTask() {
+        --taskCount;
+        System.out.println("Noted. I've removed this task: \n" + "  " + statusMessage() + "\n" +
+                "Now you have " + taskCount + " tasks in the list.");
     }
 
     /**
@@ -50,9 +55,4 @@ public class Task {
         return "added: " + description;
     }
 
-    public void deleteTask() {
-        --taskCount;
-        System.out.println("Noted. I've removed this task: \n" + "  " + statusMessage() + "\n" +
-                "Now you have " + taskCount + " tasks in the list.");
-    }
 }

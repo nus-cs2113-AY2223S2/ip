@@ -1,46 +1,67 @@
-import java.lang.reflect.Array;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
 
     public static final int MAX_TASKS = 101;
+    private static Database database = null;
 
     public static void main(String[] args) {
         greetingMessage();
         try {
-            readAndRespond();
+            database = new Database();
+            readAndRespond(database);
         } catch (DukeException e) {
             System.out.println("--FATAL ERROR--");
+        } catch (IOException e) {
+            System.out.println("Unable to create/find database!");
         }
         exitMessage();
     }
 
-    private static void readAndRespond() throws DukeException {
+    private static void readAndRespond(Database database) throws DukeException {
         Scanner sc = new Scanner(System.in);
         String input = sc.nextLine();
-       // Task[] listOfTasks = new Task[MAX_TASKS]; // 1-base indexing
-        ArrayList<Task> listOfTasks = new ArrayList<>();
         while (!input.equals("bye")) {
             String[] words = input.split(" ");
             if (input.equals("list")) {
-                printList(listOfTasks);
+                printList(database.listOfTasks);
             } else if (input.isBlank()) {
                 throw new DukeException();
             } else if (isValidUnmark(input, words)) {
-                unmarkTask(listOfTasks, words);
+                unmarkTask(database.listOfTasks, words);
             } else if (isValidMark(input, words)) {
-                markTask(listOfTasks, words);
+                markTask(database.listOfTasks, words);
             } else if (isValidTodo(words)) {
-                printAddedTodoMessage(input, listOfTasks);
+                printAddedTodoMessage(input, database.listOfTasks);
+                try {
+                    database.appendToFile(input.substring(5) +  " --- T |[ ]| " + "\n");
+                    System.out.println("Successfully appended ToDo!");
+                } catch (IOException e) {
+                    System.out.println("Unable to add ToDo!!");
+                }
             } else if (isValidDeadline(words)) {
-                printAddedDeadlineMessage(input, listOfTasks);
+                printAddedDeadlineMessage(input, database.listOfTasks);
+                try {
+                    database.appendToFile(input.substring(9) +  " --- D |[ ]| " + "\n");
+                    System.out.println("Successfully appended deadline!");
+                } catch (IOException e) {
+                    System.out.println("Unable to add deadline!!");
+                }
             } else if (isValidEvent(words)) {
-                printAddedEventMessage(input, listOfTasks);
+                printAddedEventMessage(input, database.listOfTasks);
+                try {
+                    database.appendToFile(input.substring(6) +  " --- E |[ ]| " + "\n");
+                    System.out.println("Successfully appended event!");
+                } catch (IOException e) {
+                    System.out.println("Unable to add event!!");
+                }
             } else if (IsValidDelete(input, words)) {
-                removeTask(listOfTasks, words);
+                removeTask(database.listOfTasks, words);
             } else {
-                printAddedTaskMessage(input, listOfTasks);
+                printAddedTaskMessage(input, database.listOfTasks);
             }
             input = sc.nextLine();
         }
@@ -48,14 +69,33 @@ public class Duke {
 
     private static void removeTask(ArrayList<Task> listOfTasks, String[] words) {
         int number = Integer.parseInt(words[1]);
-        if (number <= 0 || number >= MAX_TASKS || words.length == 1 || !isInt(words[1])) {
+        if (number <= 0 || number >= MAX_TASKS || words.length == 1 || !isInt(words[1]) || listOfTasks.size() < number) {
             System.out.println("Please delete only valid tasks! List out your tasks if you are unsure!!");
         } else {
             listOfTasks.get(number - 1).deleteTask();
             listOfTasks.remove(number - 1);
+            --Task.taskCount;
+            String addedString = "";
+            for (Task curr : listOfTasks) {
+                String type = null;
+                if (curr instanceof ToDo) {
+                    type = "T";
+                } else if (curr instanceof Event) {
+                    type = "E";
+                } else if (curr instanceof Deadline) {
+                    type = "D";
+                }
+                String currStr = curr.description + " --- " + type + " |" + curr.getStatusIcon() + "|\n";
+                addedString += currStr;
+            }
+            try {
+                System.out.println("Strings to be added: \n" + addedString);
+                Database.writeToFile(addedString);
+            } catch (IOException e) {
+                System.out.println("Unable to delete properly!");;
+            }
         }
     }
-
     private static boolean IsValidDelete(String input, String[] words) {
         return input.startsWith("delete") && words.length == 2 && isInt(words[1]);
     }
@@ -135,32 +175,80 @@ public class Duke {
 
     private static void markTask(ArrayList<Task> listOfTasks, String[] words) {
         int number = Integer.parseInt(words[1]);
-        if (number <= 0 || number >= MAX_TASKS || listOfTasks.get(number) == null) {
+        if (number <= 0 || number >= MAX_TASKS || listOfTasks.size() < number) {
             System.out.println("Please mark only valid tasks! List out your tasks if you are unsure!!");
         } else {
-            listOfTasks.get(number).markAsDone();
-            System.out.println("  " + listOfTasks.get(number).getStatusIcon() + " " + listOfTasks.get(number).description);
+            listOfTasks.get(number - 1).markAsDone();
+            System.out.println("  " + listOfTasks.get(number - 1).getStatusIcon() + " " + listOfTasks.get(number - 1).description);
+            String addedString = "";
+            for (Task curr : listOfTasks) {
+                String type = null;
+                if (curr instanceof ToDo) {
+                    type = "T";
+                } else if (curr instanceof Event) {
+                    type = "E";
+                } else if (curr instanceof Deadline) {
+                    type = "D";
+                }
+                String currStr = curr.description + " --- " + type + " |" + curr.getStatusIcon() + "|\n";
+                addedString += currStr;
+            }
+            try {
+                Database.writeToFile(addedString);
+            } catch (IOException e) {
+                System.out.println("Unable to delete properly!");;
+            }
         }
     }
 
     private static void unmarkTask(ArrayList<Task> listOfTasks, String[] words) throws DukeException {
         int number = Integer.parseInt(words[1]);
-        if (number <= 0 || number >= MAX_TASKS || listOfTasks.get(number) == null || words.length == 1 || !isInt(words[1])) {
+        if (number <= 0 || number >= MAX_TASKS  || words.length == 1 || !isInt(words[1]) || listOfTasks.size() < number) {
             System.out.println("Please unmark only valid tasks! List out your tasks if you are unsure!!");
         } else {
-            listOfTasks.get(number).unmarkDone();
-            System.out.println(" " + listOfTasks.get(number).getStatusIcon() + " " + listOfTasks.get(number).description);
+            listOfTasks.get(number - 1).unmarkDone();
+            System.out.println(" " + listOfTasks.get(number - 1).getStatusIcon() + " " + listOfTasks.get(number - 1).description);
+            String addedString = "";
+            for (Task curr : listOfTasks) {
+                String type = null;
+                if (curr instanceof ToDo) {
+                    type = "T";
+                } else if (curr instanceof Event) {
+                    type = "E";
+                } else if (curr instanceof Deadline) {
+                    type = "D";
+                }
+                String currStr = curr.description + " --- " + type + " |" + curr.getStatusIcon() + "|\n";
+                addedString += currStr;
+            }
+            try {
+                Database.writeToFile(addedString);
+            } catch (IOException e) {
+                System.out.println("Unable to delete properly!");;
+            }
         }
     }
 
     public static void printList(ArrayList<Task> listOfTasks) {
         System.out.println(" Here are the tasks in your list");
-        if (Task.taskCount == 0) {
+        if (listOfTasks.size() == 0) {
             System.out.println(" Oops! It looks like your list is empty!!");
             return;
         }
-        for (int i = 0; i < listOfTasks.size(); ++i) {
-            System.out.println(" " + (i + 1) + "." + listOfTasks.get(i).statusMessage());
+        int index = 0;
+        for (Task x : listOfTasks) {
+            String type = null;
+            if (x instanceof ToDo) {
+                type = "T";
+            } else if (x instanceof Event) {
+                type = "E";
+            } else if (x instanceof Deadline) {
+                type = "D";
+            }
+            // first prints are correct with status message
+            // but after stopping and re-running then the problem comes in
+            System.out.println(" " + (index + 1) + "." + x.statusMessage());
+            ++index;
         }
     }
 
