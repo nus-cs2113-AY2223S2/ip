@@ -22,6 +22,47 @@ public class Duke {
 
 
     public static void main(String[] args) throws Exception {
+
+        ArrayList<Task> tasks = new ArrayList<>();
+        //scan for duke.txt file and add as input first
+        int i = 0;
+
+        File duke=new File("Duke.txt");
+        if(duke.exists())
+        {
+            Scanner s = new Scanner(duke); // create a Scanner using the File as the source
+            while (s.hasNextLine()) {
+                String currentLine=s.nextLine();
+                Character taskLetter= currentLine.charAt(1);
+                Character tick=currentLine.charAt(4);
+
+
+                if(taskLetter=='T') {
+                    String taskToDo=currentLine.substring(7,currentLine.length());
+                    tasks.add(new Todo(taskToDo,2));
+                } else if (taskLetter=='D') {
+                    String[] ToSplitDeadline = currentLine.split("by:");
+
+                    String DeadlineTask = ToSplitDeadline[0].substring(7,ToSplitDeadline[0].length()-1);
+                    String date =ToSplitDeadline[1].substring(0,ToSplitDeadline[1].length()-1);
+                    tasks.add(new Deadline(DeadlineTask, date));
+
+                } else if(taskLetter=='E') {
+                    String[] ToSplitEvent = currentLine.split("from:");
+                    String EventTask = ToSplitEvent[0].substring(7,ToSplitEvent[0].length()-1);
+                    String[] date= ToSplitEvent[1].split("to:");
+                    tasks.add(new Event(EventTask,date[0], date[1]));
+                }
+                i+=1;
+
+                if(tick=='X') {
+                    tasks.get(i-1).markAsDone();
+                }
+
+
+            }
+        }
+
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -37,12 +78,7 @@ public class Duke {
 
         System.out.println(greeting);
         Scanner in = new Scanner(System.in);
-
-        ArrayList<Task> tasks = new ArrayList<>();
-
-
-        int index_for_mark = 1;
-        int i = 0;
+        int index_for_mark= 1;
 
         while (true) {
 
@@ -97,7 +133,7 @@ public class Duke {
 
                 for (int m = 0; m < i; m += 1) {
                     int index = m + 1;
-                    newString += (index + "." + tasks.get(m) + "\n");
+                    newString += (tasks.get(m) + "\n");
                 }
 
 
@@ -152,7 +188,7 @@ public class Duke {
                     i += 1;
 
                     try {
-                        appendToFile("Duke.txt", (i + 1)+". "+ tasks.get(i - 1).toString() + "\n");
+                        appendToFile("Duke.txt",  tasks.get(i - 1).toString() + "\n");
                     } catch (IOException e) {
                         System.out.println("Something went wrong\n"
                                 + "____________________________________________________________");
