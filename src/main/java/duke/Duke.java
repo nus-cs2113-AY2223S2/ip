@@ -1,5 +1,6 @@
 package duke;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -121,6 +122,10 @@ public class Duke {
     }
 
     private static void autoSave() throws IOException {
+        File f = new File("./data/duke.txt");
+        if (!f.getParentFile().exists()) {
+            f.getParentFile().mkdirs();
+        }
         FileWriter fw = new FileWriter("./data/duke.txt");
         fw.write(changeTaskDescription());
         fw.close();

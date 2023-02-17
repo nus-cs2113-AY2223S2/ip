@@ -35,6 +35,10 @@ public class Task {
         this.isDone = false;
     }
 
+    public String getDue(){
+        return "";
+    }
+
     public String toString() {
         return "[" + getTaskStatus() + "] " + this.taskDiscription;
     }
