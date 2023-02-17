@@ -1,4 +1,3 @@
-./src/main/java/Duke.java
 ./src/main/java/exceptions/DukeException.java
 ./src/main/java/exceptions/EmptyDescriptorException.java
 ./src/main/java/exceptions/InvalidCommandException.java
@@ -7,7 +6,8 @@
 ./src/main/java/exceptions/NoToFromException.java
 ./src/main/java/exceptions/TaskException.java
 ./src/main/java/misc/Constants.java
-./src/main/java/misc/PrintUtil.java
+./src/main/java/misc/UI.java
+./src/main/java/Obama.java
 ./src/main/java/storage/Database.java
 ./src/main/java/tasks/Deadline.java
 ./src/main/java/tasks/Event.java

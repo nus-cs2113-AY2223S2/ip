@@ -1,12 +1,12 @@
 package tasks;
 
 import exceptions.*;
-import misc.PrintUtil;
+import misc.UI;
 
 public class ModifyTaskUtil {
 
   public static void confirmAddTask(TaskManager taskManager, Task task) {
-    PrintUtil.printText(
+    UI.printText(
       "Got it. I've added this task:\n\t" +
       task +
       String.format(
@@ -17,7 +17,7 @@ public class ModifyTaskUtil {
   }
 
   public static void confirmRemoveTask(TaskManager taskManager, Task task) {
-    PrintUtil.printText(
+    UI.printText(
       "Noted. I've removed this task:\n\t" +
       task +
       String.format(
@@ -32,7 +32,7 @@ public class ModifyTaskUtil {
     try {
       int index = Integer.parseInt(userInput.split(" ")[1]) - 1;
       taskManager.markDone(index);
-      PrintUtil.printText(
+      UI.printText(
         "Nice! I've marked this task as done:\n\t" + taskManager.getTask(index)
       );
     } catch (IndexOutOfBoundsException e) {
@@ -47,7 +47,7 @@ public class ModifyTaskUtil {
     try {
       int index = Integer.parseInt(userInput.split(" ")[1]) - 1;
       taskManager.markUndone(index);
-      PrintUtil.printText(
+      UI.printText(
         "OK, I've marked this task as not done yet:\n\t" +
         taskManager.getTask(index)
       );
