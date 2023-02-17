@@ -7,6 +7,10 @@ import static Duke.TaskList.*;
 import static Duke.Ui.*;
 import static Duke.InputCheckingPackage.InputChecking.*;
 
+/**
+ * Duke is a Command Line Application that helps user keep track of things to do,
+ * and deadlines ar events they might have
+ */
 
 public class Duke {
 
@@ -14,7 +18,11 @@ public class Duke {
     private static String filePath = "data/tasklist.txt";
     private Ui ui;
 
-
+    /**
+     * Initialises Duke application and reads for exsiting tasks that
+     * are saved in a text file
+     * @param filePath path of the text file that contains previous task information
+     */
 
     public Duke(String filePath) {
         ui = new Ui();
@@ -26,6 +34,10 @@ public class Duke {
         }
     }
 
+    /**
+     * Runs the application and reads the user input and carries out the related
+     * commands until the user chooses to exit the application
+     */
     public static void run() {
         Storage storage = new Storage(filePath);
 
@@ -67,6 +79,10 @@ public class Duke {
 
     }
 
+    /**
+     * Function to run the application
+     * @param args
+     */
 
     public static void main(String[] args) {
         new Duke(filePath).run();
