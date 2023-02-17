@@ -7,7 +7,7 @@ public class Duke {
 
         String command = "";
         Scanner in = new Scanner(System.in);
-        Task[] storedTasks = new Task[LIST_SIZE];         // array of stored tasks
+        Task[] storedTasks = new Task[LIST_SIZE];
 
         while (!command.equals("bye")) {
             printLineBreak();
@@ -15,13 +15,8 @@ public class Duke {
             String[] commandLine = command.split(" ", 2);
             printLineBreak();
             doCommand(storedTasks, commandLine);
-
         }
-
-
-
     }
-
     private static void doCommand(Task[] storedTasks, String[] commandLine) {
         switch (commandLine[0]) {
         case "todo":
