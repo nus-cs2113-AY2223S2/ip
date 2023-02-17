@@ -10,7 +10,6 @@ public class Data {
     public static void createFile() throws IOException {
         try {
             if (new File("data").mkdirs()) {
-                System.out.println("Good job making that directory, you'll need it.");
                 File data = new File("data/data.txt");
                 data.createNewFile();
             }
@@ -20,7 +19,7 @@ public class Data {
         }
     }
 
-    public static void saveData(ArrayList<Task> taskManager, int taskCount) throws IOException {
+    public static void saveData(ArrayList<Task> taskManager) throws IOException {
         try {
             createFile();
         } catch (IOException e) {
@@ -29,8 +28,7 @@ public class Data {
 
         try {
             FileWriter myWriter = new FileWriter("data/data.txt");
-            for (int i = 0; i < taskCount; i++) {
-                Task task = taskManager.get(i);
+            for (Task task : taskManager) {
                 if (task.getType().equals("T")) {
                     myWriter.write(task.getType() + "%" + task.getStatusIcon() + "%" + task.getDescription() + '\n');
                 } else if (task.getType().equals("D")) {
@@ -49,9 +47,10 @@ public class Data {
         }
     }
 
-    public static void loadData(File filename, ArrayList<Task> taskManager, int taskCount) throws IOException {
+    public static void loadData(ArrayList<Task> taskManager) throws IOException {
         try {
-            Scanner sc = new Scanner(filename);
+            File data = new File("data/data.txt");
+            Scanner sc = new Scanner(data);
             while (sc.hasNextLine()) {
                 String[] str = sc.nextLine().split("%");
                 String taskType = str[0];
@@ -62,19 +61,16 @@ public class Data {
                     ToDo newToDo = new ToDo(description);
                     newToDo.setIsDone(isDone);
                     taskManager.add(newToDo);
-                    taskCount++;
                     break;
                 case "D":
                     Deadline newDeadline = new Deadline(description, str[3]);
                     newDeadline.setIsDone(isDone);
                     taskManager.add(newDeadline);
-                    taskCount++;
                     break;
                 case "E":
                     Event newEvent = new Event(description, str[3], str[4]);
                     newEvent.setIsDone(isDone);
                     taskManager.add(newEvent);
-                    taskCount++;
                     break;
                 default:
                     System.out.println("Invalid task.");
