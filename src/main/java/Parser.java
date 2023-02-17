@@ -2,10 +2,10 @@ import duke.DukeException;
 import java.util.Scanner;
 
 public class Parser {
-    private TaskList tasks;
+    //private TaskList tasks;
 
     public Parser() {
-        tasks = new TaskList();
+        //tasks = new TaskList();
     }
     public static void printLine() {
         System.out.println("____________________________________________________________");
@@ -22,6 +22,10 @@ public class Parser {
                     //list tasks
                     case "list" :
                         TaskList.listTasks();
+                        break;
+                    //find task
+                    case "find" :
+                        TaskList.findTask(input);
                         break;
                     //mark task
                     case "mark":

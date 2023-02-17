@@ -2,6 +2,7 @@ public class Ui {
     public static void printLine() {
         System.out.println("____________________________________________________________");
     }
+
     public static void greetUser() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -20,5 +21,8 @@ public class Ui {
         printLine();
         System.out.println("Bye. Hope to see you again soon! :)");
         printLine();
+    }
+
+    public static void printErrorMessage() {
     }
 }

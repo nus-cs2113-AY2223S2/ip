@@ -2,12 +2,10 @@ import duke.Deadline;
 import duke.Event;
 import duke.Task;
 import duke.Todo;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
-
 import static duke.FileOperations.*;
 
 public class Storage {
@@ -26,7 +24,7 @@ public class Storage {
             convertFromData(str);
         }
         System.out.println("Saved data has been loaded!");
-        printLine();
+        TaskList.listTasks();
     }
 
     public static void load() {
