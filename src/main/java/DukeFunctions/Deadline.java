@@ -32,6 +32,6 @@ public class Deadline extends Todo {
 
     @Override
     public String toString() {
-        return deliverable + System.lineSeparator() + "(by: " + by + ")";
+        return deliverable + " (by: " + by + ")";
     }
 }

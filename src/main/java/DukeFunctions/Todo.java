@@ -45,7 +45,7 @@ public class Todo {
 
     @Override
     public String toString() {
-        return "description: " + description;
+        return description;
     }
 
 

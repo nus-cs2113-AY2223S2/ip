@@ -35,7 +35,7 @@ public class Event extends Todo {
 
     @Override
     public String toString() {
-        return deliverable + " (from: " + from + "to: " + to + ")";
+        return deliverable + " (from: " + from + " to: " + to + ")";
     }
 
 }
