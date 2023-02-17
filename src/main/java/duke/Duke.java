@@ -19,7 +19,7 @@ public class Duke {
 
     static ArrayList<Task> tasks = FileOperations.loadArrayListFromFile();
 
-    public static void runProgram() {
+    private static void runProgram() {
 
         // Variables needed
         Scanner scanner = new Scanner(System.in);
@@ -71,7 +71,7 @@ public class Duke {
 
     }
 
-    public static void manageInput(String userInput, String command)
+    private static void manageInput(String userInput, String command)
             throws DukeIllegalCharacterException, DukeTaskDoesNotExistException,
             DukeAlreadyMarkedException, DukeIllegalSyntaxException,
             DukeIllegalCommandException, IOException {
@@ -90,59 +90,12 @@ public class Duke {
         // Handle mark, unmark, and delete cases
         else if (userInput.startsWith("mark") || userInput.startsWith("unmark")
                 || userInput.startsWith("delete")) {
-
-            int taskIndex = Integer.parseInt(userInput.substring(userInput.length() - 1)) - 1;
-
-            // If task does not exist, throw exception
-            if ((taskIndex + 1) > tasks.size() || taskIndex < 0) {
-                throw new DukeTaskDoesNotExistException();
-            }
-
-            // Mark as done
-            if (userInput.startsWith("mark") && userInput.charAt(4) == ' ') {
-                tasks.get(taskIndex).markAsDone();
-            }
-
-            // Mark as undone
-            else if (userInput.startsWith("unmark") && userInput.charAt(6) == ' ') {
-                tasks.get(taskIndex).markAsNotDone();
-            }
-
-            // Delete task from array
-            else if (userInput.startsWith("delete")) {
-                PrintOperations.taskRemoved(taskIndex, tasks);
-                tasks.remove(taskIndex);
-                PrintOperations.numberOfTasks(tasks);
-            }
-
+            handleMarkAndDelete(userInput);
         }
+
         // Add other tasks into list
         else {
-
-            Task newTask;
-
-            // Depending on the type of command, the input gets parsed into the different handlers
-            switch (command) {
-            case "deadline":
-                String[] deadlineArgs = Deadline.handler(userInput);
-                newTask = new Deadline(deadlineArgs[0], deadlineArgs[1]);
-                break;
-            case "event":
-                String[] eventArgs = Event.handler(userInput);
-                newTask = new Event(eventArgs[0], eventArgs[1], eventArgs[2]);
-                break;
-            case "todo":
-                String todoCommand = Todo.handler(userInput);
-                newTask = new Todo(todoCommand);
-                break;
-            default:
-                throw new DukeIllegalCommandException();
-            }
-
-            tasks.add(newTask);
-            PrintOperations.addTask(newTask);
-            PrintOperations.numberOfTasks(tasks);
-
+            addNewTask(userInput, command);
         }
 
         // Save task ArrayList information into tasks.txt
@@ -150,7 +103,62 @@ public class Duke {
 
     }
 
-    public static void exit() {
+    private static void handleMarkAndDelete(String userInput)
+            throws DukeTaskDoesNotExistException, DukeAlreadyMarkedException {
+        int taskIndex = Integer.parseInt(userInput.substring(userInput.length() - 1)) - 1;
+
+        // If task does not exist, throw exception
+        if ((taskIndex + 1) > tasks.size() || taskIndex < 0) {
+            throw new DukeTaskDoesNotExistException();
+        }
+
+        // Mark as done
+        if (userInput.startsWith("mark") && userInput.charAt(4) == ' ') {
+            tasks.get(taskIndex).markAsDone();
+        }
+
+        // Mark as undone
+        else if (userInput.startsWith("unmark") && userInput.charAt(6) == ' ') {
+            tasks.get(taskIndex).markAsNotDone();
+        }
+
+        // Delete task from array
+        else if (userInput.startsWith("delete")) {
+            PrintOperations.taskRemoved(taskIndex, tasks);
+            tasks.remove(taskIndex);
+            PrintOperations.numberOfTasks(tasks);
+        }
+    }
+
+    private static void addNewTask(String userInput, String command)
+            throws DukeIllegalSyntaxException, DukeIllegalCommandException {
+
+        Task newTask;
+
+        // Depending on the type of command, the input gets parsed into the different handlers
+        switch (command) {
+        case "deadline":
+            String[] deadlineArgs = Deadline.handler(userInput);
+            newTask = new Deadline(deadlineArgs[0], deadlineArgs[1]);
+            break;
+        case "event":
+            String[] eventArgs = Event.handler(userInput);
+            newTask = new Event(eventArgs[0], eventArgs[1], eventArgs[2]);
+            break;
+        case "todo":
+            String todoCommand = Todo.handler(userInput);
+            newTask = new Todo(todoCommand);
+            break;
+        default:
+            throw new DukeIllegalCommandException();
+        }
+
+        tasks.add(newTask);
+        PrintOperations.addTask(newTask);
+        PrintOperations.numberOfTasks(tasks);
+    }
+
+    private static void exit() {
         PrintOperations.bye();
         System.exit(0);
     }
