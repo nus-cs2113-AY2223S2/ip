@@ -4,12 +4,12 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Duke {
-    private static String line = "__________________________________________________________";
+    private static final String line = "__________________________________________________________";
     private static ArrayList<Task> inputList = new ArrayList<>();
     private static int numTasks = 0;
 
     private static FileReading f;
-    private static String filePath = "data/duke.txt";
+    private static final String filePath = "data/duke.txt";
 
     public enum CommandType {
         TODO, DEADLINE, EVENT, LIST, BYE, MARK, UNMARK, DELETE
@@ -137,7 +137,12 @@ public class Duke {
     }
 
     public static void greet() {
-        System.out.println(line);
+        String logo = " ____        _        \n"
+                + "|  _ \\ _   _| | _____ \n"
+                + "| | | | | | | |/ / _ \\\n"
+                + "| |_| | |_| |   <  __/\n"
+                + "|____/ \\__,_|_|\\_\\___|\n";
+        System.out.println(line + '\n' + logo);
         System.out.println("Hello! i'm Duke");
         System.out.println("What can I do for you?");
         System.out.println(line);
@@ -151,12 +156,6 @@ public class Duke {
     }
 
     public static void main(String[] args) throws IOException {
-//        String logo = " ____        _        \n"
-//                + "|  _ \\ _   _| | _____ \n"
-//                + "| | | | | | | |/ / _ \\\n"
-//                + "| |_| | |_| |   <  __/\n"
-//                + "|____/ \\__,_|_|\\_\\___|\n";
-//        System.out.println("Hello from\n" + logo);
         try {
             //f.createFile();
             f.getFileContents(filePath, inputList);
@@ -168,6 +167,7 @@ public class Duke {
         } catch (NullPointerException e) {
             System.out.println("null pointer :(");
         }
+
         greet();
         getCommand();
         bye();
