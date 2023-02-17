@@ -40,7 +40,7 @@ Hello from
 
 ## Features 
 
-### Add a to-do task: `todo`
+### Add a To-Do task: `todo`
 
 Adds a to-do task to the task list.
 
@@ -62,7 +62,7 @@ Adds a to-do task to the task list.
     ____________________________________________________________
 ```
 
-### Add a deadline task: `deadline`
+### Add a Deadline task: `deadline`
 
 Adds a deadline task to the task list with a due date.
 
@@ -102,7 +102,7 @@ Adds a deadline task to the task list with a due date.
     ____________________________________________________________
 ```
 
-### Add an event task: `event`
+### Add an Event task: `event`
 
 Adds an event task to the task list.
 
@@ -263,7 +263,7 @@ Exits the Duke chatbot.
 ## Command Summary
   
 Command | Usage | Example
-| ------------ | ------------- | ------------- |
+| ------------ | ------------ | ------------ |
 todo | `todo <description>` | `todo borrow book` 
 deadline | `deadline <description> /by <due date>` | `deadline submit assignment /by 2023-08-08 at 6pm`
 event | `event <description> /from <start date/time> /to <end date/time>` | `event project meeting /from 9 Aug 2pm /to 4pm`
