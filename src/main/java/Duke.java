@@ -25,6 +25,7 @@ public class Duke {
         while (!(cmd.equals("bye"))) {
             if (cmd.equals("list")) {
                 System.out.println("____________________________________________________________");
+                System.out.println("Here are the tasks in your list:");
 
                 // store in list
                 for (int i = 1; num >= i; i += 1) {
@@ -35,6 +36,37 @@ public class Duke {
                 // read next command
                 cmd = in.nextLine();
             } else {
+                String arr[] = cmd.split(" ",2);
+
+                // marking test as done
+                if (arr[0].equals("unmark")) {
+                    int x;
+                    x = Integer.parseInt(arr[1]);
+                    String val[] = list[x-1].split("] ");
+                    list[x-1] = "[ ] " + val[1];
+
+                    System.out.println("____________________________________________________________");
+                    System.out.println("Ok! Marking this task as not done yet");
+                    System.out.println(list[x-1]);
+                    System.out.println("____________________________________________________________");
+
+
+
+                } else if (arr[0].equals("mark")) {
+                    int x;
+                    x = Integer.parseInt(arr[1]);
+
+                    String val[] = list[x-1].split("] ");
+                    list[x-1] = "[X] " + val[1];
+                    System.out.println("____________________________________________________________");
+                    System.out.println("Ok! Marking this task as done");
+                    System.out.println(list[x-1]);
+                    System.out.println("____________________________________________________________");
+
+
+
+
+                }
                 System.out.println("____________________________________________________________");
                 System.out.println("added: " + cmd);
                 System.out.println("____________________________________________________________");
