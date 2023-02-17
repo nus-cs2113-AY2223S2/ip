@@ -26,6 +26,10 @@ public class Database {
     return instance;
   }
 
+  public int getSize() {
+    return tasks.size();
+  }
+
   /**
    * A simple function to mimic the database CREATE functionality. The user
    * would just need to pass in the task and it will be saved into the database
@@ -85,5 +89,6 @@ public class Database {
       throw new Exception("Invalid index provided.");
     }
     tasks.remove(index);
+    parser.updateFile(tasks);
   }
 }

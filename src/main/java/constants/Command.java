@@ -3,6 +3,7 @@ package constants;
 // Use of interface here as I am not creating any object
 public interface Command {
 
+  String DELETE = "delete";
   String DEADLINE = "deadline";
   String LIST = "list";
   String TODO = "todo";

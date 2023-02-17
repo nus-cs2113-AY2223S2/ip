@@ -40,7 +40,7 @@ public class IoParser {
         }
     }
 
-    protected HashMap<String, String> handleMark(String text, String command) {
+    protected HashMap<String, String> handleMarkAndDelete(String text, String command) {
         HashMap<String, String> dictionary = new HashMap<String, String>();
         dictionary.put(COMMAND, command);
         dictionary.put("index", text);
@@ -116,7 +116,8 @@ public class IoParser {
                 return handleTodo(words[1]);
             case Command.MARK:
             case Command.UNMARK:
-                return handleMark(words[1], command);
+            case Command.DELETE:
+                return handleMarkAndDelete(words[1], command);
             case Command.DEADLINE:
                 return handleDeadline(words[1]);
             case Command.EVENT:

@@ -22,8 +22,15 @@ public class Duke {
     HashMap<String, String> dictionary = parser.parse(words);
     String command = dictionary.get("command");
     String description;
+    String index;
+    int position;
     try {
       switch (command) {
+      case Command.DELETE:
+        index = dictionary.get("index");
+        position = Integer.parseInt(index) - 1;
+        controller.deleteTask(position);
+        break;
       case Command.LIST:
         controller.listTasks();
         break;
@@ -36,8 +43,8 @@ public class Duke {
         break;
       case Command.MARK:
       case Command.UNMARK:
-        String index = dictionary.get("index");
-        int position = Integer.parseInt(index) - 1;
+        index = dictionary.get("index");
+        position = Integer.parseInt(index) - 1;
         boolean isMark = command.equals(Command.MARK);
         controller.toggleMark(isMark, position);
         break;

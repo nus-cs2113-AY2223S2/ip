@@ -1,14 +1,22 @@
 package database;
 
 import model.task.Task;
+import java.util.ArrayList;
 
 public class Database {
 
-  protected final int MAX_TASK = 100;
+  protected static Database instance = null;
 
-  protected final Task[] tasks = new Task[MAX_TASK];
+  protected final ArrayList<Task> tasks = new ArrayList<Task>();
 
-  protected static int counter = 0;
+  protected Database() {}
+
+  public static Database getInstance() {
+    if (instance == null) {
+      instance = new Database();
+    }
+    return instance;
+  }
 
     /**
      * A simple function to mimic the database CREATE functionality.
@@ -17,12 +25,8 @@ public class Database {
      *             available index if there is still space.
      * @throws Exception An exception if the database is already full.
      */
-    public void create(Task task) throws Exception {
-        if (counter >= MAX_TASK) {
-            throw new Exception("The database is full. Don't ask me how");
-        }
-        tasks[counter] = task;
-        counter += 1;
+    public void create(Task model) {
+      tasks.add(model);
     }
 
   /**
@@ -33,10 +37,11 @@ public class Database {
    * @throws Exception An exception if an invalid index is provided.
    */
   public Task read(int index) throws Exception {
-    if (index >= counter || index < 0) {
+    int size = tasks.size();
+    if (index >= size || index < 0) {
       throw new Exception("Invalid index provided.");
     }
-    return tasks[index];
+    return tasks.get(index);
   }
 
   /**
@@ -47,9 +52,20 @@ public class Database {
    * @throws Exception An exception if the index is invalid.
    */
   public void update(int index, boolean value) throws Exception {
-    if (index >= counter || index < 0) {
+    int size = tasks.size();
+    if (index >= size || index < 0) {
       throw new Exception("Invalid index provided.");
     }
-    tasks[index].setDone(value);
+    Task model = tasks.get(index);
+    model.setDone(value);
+    tasks.set(index, model);
+  }
+
+  public void delete(int index) throws Exception {
+    int size = tasks.size();
+    if (index >= size || index < 0) {
+      throw new Exception("Invalid index provided.");
+    }
+    tasks.remove(index);
   }
 }

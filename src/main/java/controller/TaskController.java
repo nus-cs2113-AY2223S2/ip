@@ -31,7 +31,7 @@ public class TaskController {
    */
   public void listTasks() throws Exception {
     System.out.println(Message.LIST_TASKS.message);
-    int numberOfEntries = counter;
+    int numberOfEntries = db.getSize();
     for (int i = 0; i < numberOfEntries; i += 1) {
       Task model = db.read(i);
       System.out.printf("%d. ", (i + 1));
@@ -101,5 +101,10 @@ public class TaskController {
   public void manuallyAdd(Task model) {
     counter += 1;
     db.create(model);
+  }
+
+  public void deleteTask(int index) throws Exception {
+    System.out.println("Task successfully deleted");
+    db.delete(index);
   }
 }
