@@ -1,3 +1,4 @@
-T// //1
-D// //2 //2
-E//X//loll //lol //;lo
+T// //2023 assignment
+D// //ee2211 assignment //17 feb
+D// //cg2111a midterm practice //15 feb
+D// //cs2113 tutorial //15 feb

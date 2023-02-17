@@ -12,7 +12,7 @@ import inu.parser.Parser;
 
 public class StorageFile {
 
-    public static final String DEFAULT_STORAGE_FILEPATH = "./src/inu.txt";
+    public static final String DEFAULT_STORAGE_FILEPATH = System.getProperty("user.dir") + "/inu.txt";
 
     private static File f = new File(DEFAULT_STORAGE_FILEPATH);
 
