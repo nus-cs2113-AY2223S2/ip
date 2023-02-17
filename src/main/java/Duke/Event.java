@@ -1,3 +1,5 @@
+package Duke;
+
 public class Event extends Task {
     protected String startDate;
     protected String endDate;
@@ -7,13 +9,13 @@ public class Event extends Task {
         this.endDate = endDate;
     }
     @Override
-    public void printTaskType() {
-        System.out.print("E");
+    public String getTaskType() {
+        return "E";
     }
     @Override
     public void printTask() {
         System.out.print("[");
-        printTaskType();
+        System.out.print(getTaskType());
         System.out.print("][");
         if (super.isDone) {
             System.out.print("X");
@@ -22,4 +24,14 @@ public class Event extends Task {
         }
         System.out.println("] " + this.getTaskName() + "(from:" + startDate + " to:" + endDate + ")");
     }
+
+    @Override
+    public String saveInfo () {
+        return getTaskType() + "t/" +
+                (isDone ? "X" : "Y") + "m/" +
+                taskName + "n/" +
+                startDate + "s/" +
+                endDate + "\n";
+    }
+
 }

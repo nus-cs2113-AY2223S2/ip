@@ -1,3 +1,5 @@
+package Duke;
+
 public class Task {
     //Instantiate
 
@@ -20,12 +22,13 @@ public class Task {
         return taskName;
     }
 
-    public void printTaskType() {
-
+    public String getTaskType() {
+        return "error with print task type override";
     };
+
     public void printTask() {
         System.out.print("[");
-        printTaskType();
+        System.out.print(getTaskType());
         System.out.print("][");
         if (this.isDone) {
             System.out.print("X");
@@ -34,6 +37,7 @@ public class Task {
         }
         System.out.println("] " + this.getTaskName());
     }
+
     public void printAddTask(int taskNumber) {
         System.out.println(BLANK + LINE);
         System.out.println(BLANK + "Added to list:");
@@ -42,6 +46,7 @@ public class Task {
         System.out.println(BLANK + "Number of tasks: " + (taskNumber + 1));
         System.out.println(BLANK + LINE);
     }
+
     public void printDeleteTask(int numberOfTask) {
         System.out.println(BLANK + LINE);
         System.out.println(BLANK + "Deleting from list:");
@@ -50,6 +55,7 @@ public class Task {
         System.out.println(BLANK + "Number of tasks: " + (numberOfTask - 1));
         System.out.println(BLANK + LINE);
     }
+
     public void printMarkedTask() {
         System.out.println(BLANK + LINE);
         System.out.println(BLANK + "Nice! I've marked this task as done:");
@@ -57,6 +63,7 @@ public class Task {
         printTask();
         System.out.println(BLANK + LINE);
     }
+
     public void printUnmarkedTask() {
         System.out.println(BLANK + LINE);
         System.out.print(BLANK);
@@ -64,5 +71,9 @@ public class Task {
         System.out.print(BLANK);
         printTask();
         System.out.println(BLANK + LINE);
+    }
+
+    public String saveInfo () {
+        return "error with save info override" + "\n";
     }
 }

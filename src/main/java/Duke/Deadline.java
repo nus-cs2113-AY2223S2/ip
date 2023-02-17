@@ -1,3 +1,5 @@
+package Duke;
+
 public class Deadline extends Task {
 
     protected String dueDate;
@@ -6,13 +8,13 @@ public class Deadline extends Task {
         this.dueDate = dueDate;
     }
     @Override
-    public void printTaskType() {
-        System.out.print("D");
+    public String getTaskType() {
+        return "D";
     }
     @Override
     public void printTask() {
         System.out.print("[");
-        printTaskType();
+        System.out.print(getTaskType());
         System.out.print("][");
         if (super.isDone) {
             System.out.print("X");
@@ -20,5 +22,12 @@ public class Deadline extends Task {
             System.out.print(" ");
         }
         System.out.println("] " + this.getTaskName() + "(by:" + dueDate + ")");
+    }
+    @Override
+    public String saveInfo () {
+        return  getTaskType() + "t/" +
+                (isDone ? "X" : "Y") + "m/" +
+                taskName + "n/" +
+                dueDate + "\n";
     }
 }
