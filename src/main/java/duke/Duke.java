@@ -1,5 +1,8 @@
 package duke;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -104,6 +107,30 @@ public class Duke {
                 + System.lineSeparator() + LINE);
     }
 
+    private static String changeTaskDescription() {
+        String content = "";
+        for (int i = 0; i < taskList.size(); i++) {
+            Task curtask = taskList.get(i);
+            content += (Integer.toString(i) + " | ");
+            content += ((curtask.getTaskStatus().equals("X") ? "1" : "0") + " | " + curtask.getTaskDiscription());
+            if (!curtask.getClass().getName().equals("commands.Todo")) {
+                content += ("| " + taskList.get(i).getDue());
+            }
+            content += System.lineSeparator();
+        }
+        return content;
+    }
+
+    private static void autoSave() throws IOException {
+        File f = new File("./data/duke.txt");
+        if (!f.getParentFile().exists()) {
+            f.getParentFile().mkdirs();
+        }
+        FileWriter fw = new FileWriter("./data/duke.txt");
+        fw.write(changeTaskDescription());
+        fw.close();
+    }
+
     public static void main(String[] args) {
         init();
         Scanner in = new Scanner(System.in);
@@ -127,6 +154,11 @@ public class Duke {
                 } catch (NumberFormatException e) {
                     System.out.println("   > Please enter a valid NUMBER!");
                 }
+                try {
+                    autoSave();
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             case "unmark":
                 try {
@@ -137,6 +169,11 @@ public class Duke {
                     System.out.println("   > Please enter a valid NUMBER!");
                 } catch (NumberFormatException e) {
                     System.out.println("   > Please enter a valid NUMBER!");
+                }
+                try {
+                    autoSave();
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
                 }
                 break;
             case "bye":
@@ -150,6 +187,11 @@ public class Duke {
                 } catch (LackOfTaskDetail e) {
                     System.out.println("   > lack of task detail");
                 }
+                try {
+                    autoSave();
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             case "deadline":
                 try {
@@ -161,6 +203,11 @@ public class Duke {
                     System.out.println("   > Please enter a task and a deadline behind the task seperated by \"/by\" ");
                 } catch (LackOfTaskDetail e) {
                     System.out.println("   > lack of task detail!");
+                }
+                try {
+                    autoSave();
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
                 }
                 break;
             case "event":
@@ -174,14 +221,26 @@ public class Duke {
                 } catch (LackOfTaskDetail e) {
                     System.out.println("   > lack of task detail!");
                 }
+                try {
+                    autoSave();
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             case "delete":
                 try {
                     deleteThisTask(splittedCommand[1]);
                 } catch (TaskNumberOutOfRange e) {
                     System.out.println("   > Please enter a valid NUMBER!");
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println("   > Please enter a valid NUMBER!");
                 } catch (NumberFormatException e) {
                     System.out.println("   > Please enter a valid NUMBER!");
+                }
+                try {
+                    autoSave();
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
                 }
                 break;
             default:
