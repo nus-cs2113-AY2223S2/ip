@@ -1,6 +1,8 @@
 package tasks;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
+import misc.UI;
 
 public class TaskManager {
 
@@ -36,6 +38,25 @@ public class TaskManager {
 
   public void removeTask(int index) {
     tasks.remove(index);
+  }
+
+  public void printTasksFromFind(String findText) {
+    ArrayList<Task> filteredTasks = new ArrayList<Task>(
+      this.tasks.stream()
+        .filter(t ->
+          t.getDescription().toLowerCase().contains(findText.toLowerCase())
+        )
+        .collect(Collectors.toList())
+    );
+    String toPrint = "";
+    if (filteredTasks.size() == 0) {
+      UI.printText("There are no matching tasks found.");
+      return;
+    }
+    for (int i = 0; i < filteredTasks.size(); i++) {
+      toPrint += String.format("%d. %s\t", i + 1, tasks.get(i));
+    }
+    UI.printText(toPrint);
   }
 
   @Override

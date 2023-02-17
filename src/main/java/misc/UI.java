@@ -66,6 +66,9 @@ public class UI {
           case "remove":
             ModifyTaskUtil.removeTask(taskManager, userInput);
             break;
+          case "find":
+            ModifyTaskUtil.findTask(taskManager, userInput);
+            break;
           default:
             UI.printText(
               "☹ OOPS!!! I'm sorry, but I don't know what that means :-("

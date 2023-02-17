@@ -117,4 +117,9 @@ public class ModifyTaskUtil {
       throw new InvalidTaskException();
     }
   }
+
+  public static void findTask(TaskManager taskManager, String userInput) {
+    String findString = userInput.split(" ")[1].trim();
+    taskManager.printTasksFromFind(findString);
+  }
 }
