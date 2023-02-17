@@ -42,7 +42,7 @@ public class MainFunctions {
         System.out.println(DIVIDER);
     }
 
-    public static void readData(Task[] storedUserTasks) throws FileNotFoundException {
+    public static void readData(ArrayList<Task> storedUserTasks) throws FileNotFoundException {
         String originalString, description, by, from, to;
         int indexOfBy, indexOfFrom, indexOfTo;
         boolean isDone;
@@ -56,7 +56,7 @@ public class MainFunctions {
             switch (originalString.charAt(1)) {
             case 'T':
                 description = originalString.substring(7);
-                storedUserTasks[Duke.userTextCount] = new Todo(description);
+                storedUserTasks.add(new Todo(description));
                 break;
             case 'D':
                 originalString = originalString.substring(7).replace("(by:", "/by");
@@ -64,7 +64,7 @@ public class MainFunctions {
                 indexOfBy = originalString.indexOf("/by");
                 description = originalString.substring( 0, indexOfBy-1);
                 by = originalString.substring(indexOfBy+4);
-                storedUserTasks[Duke.userTextCount] = new Deadline(description,by);
+                storedUserTasks.add(new Deadline(description,by));
                 break;
             case 'E':
                 originalString = originalString.substring(7).replace("(from:", "/from");
@@ -75,18 +75,18 @@ public class MainFunctions {
                 description = originalString.substring(0,indexOfFrom-1);
                 from = originalString.substring(indexOfFrom+6,indexOfTo-1);
                 to = originalString.substring(indexOfTo+4);
-                storedUserTasks[Duke.userTextCount] = new Event(description,from,to);
+                storedUserTasks.add(new Event(description,from,to));
                 break;
             }
-            storedUserTasks[Duke.userTextCount].isDone = isDone;
+            storedUserTasks.get(Duke.userTextCount).isDone = isDone;
             Duke.userTextCount++;
         }
     }
 
-    public static void writeData(Task[] storedUserTasks) throws IOException {
+    public static void writeData(ArrayList<Task> storedUserTasks) throws IOException {
         FileWriter fw = new FileWriter(FILEPATH);
         for(int i=0; i<Duke.userTextCount; i++) {
-            fw.write(storedUserTasks[i].toString()+'\n');
+            fw.write(storedUserTasks.get(i).toString()+'\n');
         }
         fw.close();
     }

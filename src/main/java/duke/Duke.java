@@ -5,6 +5,9 @@ import duke.exception.BlankDescException;
 import duke.exception.DukeException;
 import duke.task.Task;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -19,9 +22,14 @@ public class Duke {
 
         String userCommand = scanner.nextLine();
 
-
         ArrayList<Task> storedUserTasks = new ArrayList<>();
-        // Task[] storedUserTasks = new Task[100];
+
+        try {
+            MainFunctions.readData(storedUserTasks);
+        } catch (FileNotFoundException e) {
+            File f = new File("data/tasklist.txt");
+        }
+
         boolean isExit = false;
 
         while(!isExit){
