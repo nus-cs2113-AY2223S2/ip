@@ -2,8 +2,13 @@ package userInputParser;
 
 import ui.exceptions.MissingCommandException;
 import ui.Display;
+
+import java.util.Arrays;
+import java.util.HashSet;
+
 import commandHandler.Add;
 import commandHandler.Delete;
+import commandHandler.Find;
 import commandHandler.List;
 import commandHandler.Mark;
 import data.tasksList;
@@ -17,6 +22,7 @@ public class Parser {
     private static final String COMMAND_TODO = "/todo";
     private static final String COMMAND_DEADLINE = "/deadline";
     private static final String COMMAND_DELETE = "/delete";
+    private static final String COMMAND_FIND = "/find";
 
     public enum MarkType {
         MARK, UNMARK
@@ -32,13 +38,19 @@ public class Parser {
             List.listTasks();
         } else {
             /** Handle multi-word input commands with required arguments **/
-            String[] userInputArray = userInput.split(" ");
+            String[] userInputArray = userInput.split(" ", 2);
             String command = userInputArray[0];
             if (command.equals(COMMAND_TODO) || command.equals(COMMAND_EVENT) || command.equals(COMMAND_DEADLINE)) {
                 try {
                     Add.addTask(userInput);
                     Display.notifyUser(
                             "Added the following task:\n" + tasksList.userTasksList.get(tasksList.userTaskCount - 1));
+                } catch (MissingCommandException e) {
+                    Display.warnUser(e.getMessage());
+                }
+            } else if (command.equals(COMMAND_FIND)) {
+                try {
+                    new Find(userInput);
                 } catch (MissingCommandException e) {
                     Display.warnUser(e.getMessage());
                 }
