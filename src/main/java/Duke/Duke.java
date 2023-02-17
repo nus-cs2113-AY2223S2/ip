@@ -10,8 +10,12 @@ import Duke.Task.Task;
 import Duke.Task.ToDos;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
+import java.io.File;
+import java.io.IOException;
+import java.io.FileWriter;
+import java.io.FileNotFoundException;
+
 
 public class Duke {
     public static void main(String[] args) {
@@ -21,6 +25,11 @@ public class Duke {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
+        try {
+            printFileContents("dukeData.txt");
+        } catch (FileNotFoundException e){
+            System.out.println("File not found");
+        }
         greetLine();
         addList();
         exitLine();
@@ -31,7 +40,7 @@ public class Duke {
     private static final int DELETE_INDEX = 7;
 
     public static void greetLine() {
-        System.out.println("How may I be of service?");
+        System.out.println("How may I be of service today?");
     }
 
     public static void echo() {
@@ -58,10 +67,13 @@ public class Duke {
                 printCurrentList(list);
             } else if (line.startsWith("mark")) {
                 mark(line, list);
+                dukeDataStorage(arraylistToStringConverter(list));
             } else if (line.startsWith("unmark")) {
                 unmark(line, list);
+                dukeDataStorage(arraylistToStringConverter(list));
             } else if (line.startsWith("delete")) {
                 delete(line, list);
+                dukeDataStorage(arraylistToStringConverter(list));
             } else {// new tasks keyed in by user
                 try {
                     Task newTask = new Task(line);
@@ -77,6 +89,7 @@ public class Duke {
                     } else {
                         throw new NullCommandException();
                     }
+                    dukeDataStorage(arraylistToStringConverter(list));
                 } catch (EmptyToDoException e) {
                     System.out.println("Sire, you have yet to tell me what is it you want to do.");
                 } catch (EmptyDeadlineException e) {
@@ -122,5 +135,43 @@ public class Duke {
         System.out.println(list.get(Integer.parseInt(indexOfTask) - 1));
         list.remove(Integer.parseInt(indexOfTask) - 1);
         System.out.println("You now have " + list.size() + " items left");
+    }
+
+    public static void dukeDataStorage(String taskToBeStored) {
+        File f = new File("dukeData.txt");
+        try {
+            if (!f.exists()) {
+                f.createNewFile();
+            }
+            writeToFile("dukeData.txt", taskToBeStored);
+        } catch (IOException e) {
+            System.out.println("File creation of writing invalid");
+        }
+    }
+
+    private static void writeToFile(String filePath, String textToAdd) throws IOException {
+        FileWriter fw = new FileWriter(filePath);
+        fw.write(textToAdd);
+        fw.close();
+    }
+
+    private static void printFileContents(String filePath) throws FileNotFoundException {
+        File f = new File(filePath); // create a File for the given file path
+        if (!f.exists()) { // for first log in, there is no file
+            return;
+        }
+        System.out.println("Good day sire, I have listed down your current plan below for you:");
+        Scanner s = new Scanner(f); // create a Scanner using the File as the source
+        while (s.hasNext()) {
+            System.out.println(s.nextLine());
+        }
+    }
+
+    private static String arraylistToStringConverter(ArrayList<Task> list) {
+        String output = "";
+        for (Task t : list) {
+            output = output + t + System.lineSeparator();
+        }
+        return output;
     }
 }
