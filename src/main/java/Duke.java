@@ -65,6 +65,17 @@ public class Duke {
                     //index++;
                     // }
                     break;
+                case "delete":
+                    int deleteTarget = Integer.parseInt(words[1]) - 1;
+                    if (deleteTarget >= 0 && deleteTarget < TodoList.size()) {
+                        System.out.println("deleted this task: ");
+                        System.out.println(TodoList.get(deleteTarget).toString());
+                        TodoList.remove(deleteTarget);
+
+                    } else {
+                        System.out.println("バカにさせないで。その目標は実在しません。");
+                    }
+                    break;
 
 //                default:
 //                    if (index < 100) {
