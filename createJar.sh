@@ -1,1 +1,1 @@
-jar cfve Duke.jar Duke -C bin .
+jar cfve Obama.jar Obama -C bin .

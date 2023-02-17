@@ -3,6 +3,7 @@ package tasks;
 import exceptions.EmptyDescriptorException;
 import exceptions.InvalidTaskException;
 import exceptions.NoDueDateException;
+import exceptions.NoFindTermException;
 import exceptions.NoToFromException;
 import java.util.ArrayList;
 import misc.UI;
@@ -191,19 +192,27 @@ public class ModifyTaskUtil {
    * This method is used to find a task from the list of tasks.
    * @param taskManager The task manager instance that is being used.
    * @param userInput The text that the user has entered.
+   * @exception InvalidTaskException On an invalid number being entered or an
+   * invalid index being provided.
+   * @see InvalidTaskException
    */
-  public static void findTask(TaskManager taskManager, String userInput) {
-    String findString = userInput.split(" ")[1].trim();
-    ArrayList<Task> tasks = taskManager.getTasksFromFind(findString);
+  public static void findTask(TaskManager taskManager, String userInput)
+    throws NoFindTermException {
+    try {
+      String findString = userInput.split(" ")[1].trim();
+      ArrayList<Task> tasks = taskManager.getTasksFromFind(findString);
 
-    String toPrint = "";
-    if (tasks.size() == 0) {
-      UI.printText("There are no matching tasks found.");
-      return;
+      String toPrint = "";
+      if (tasks.size() == 0) {
+        UI.printText("There are no matching tasks found.");
+        return;
+      }
+      for (int i = 0; i < tasks.size(); i++) {
+        toPrint += String.format("%d. %s\t", i + 1, tasks.get(i));
+      }
+      UI.printText(toPrint);
+    } catch (IndexOutOfBoundsException e) {
+      throw new NoFindTermException();
     }
-    for (int i = 0; i < tasks.size(); i++) {
-      toPrint += String.format("%d. %s\t", i + 1, tasks.get(i));
-    }
-    UI.printText(toPrint);
   }
 }

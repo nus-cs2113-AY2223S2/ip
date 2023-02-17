@@ -3,6 +3,7 @@ package misc;
 import exceptions.EmptyDescriptorException;
 import exceptions.InvalidTaskException;
 import exceptions.NoDueDateException;
+import exceptions.NoFindTermException;
 import exceptions.NoToFromException;
 import java.util.Scanner;
 import storage.Database;
@@ -99,6 +100,13 @@ public class UI {
         UI.printText(
           String.format(
             "☹ OOPS!!! The to and from fields of a %s cannot be empty.",
+            userInput.split(" ")[0]
+          )
+        );
+      } catch (NoFindTermException e) {
+        UI.printText(
+          String.format(
+            "☹ OOPS!!! There is no find term provided.",
             userInput.split(" ")[0]
           )
         );
