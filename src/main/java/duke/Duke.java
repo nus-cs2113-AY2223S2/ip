@@ -40,7 +40,9 @@ public class Duke {
     private static final String EMPTY_MARK_NO_ERR = " WHOOPS! Task number cannot be empty.";
     private static final String WRONG_MARK_NO_FORMAT_ERR = " WHOOPS! Task number must be an integer.";
     private static final String MARK_NO_OUT_OF_RANGE_ERR = " WHOOPS! There is no such task number.";
-    
+    private static final String COMMAND_DELETE_TASK = "delete";
+    private static final String DELETE_TASK_ITEM_DESC = " Roger. I've removed this task:\n  ";
+
     private static ArrayList<Task> taskItems = new ArrayList<>();
 
     public static void printAddTaskItems() {
@@ -62,6 +64,17 @@ public class Duke {
     public static void addTodoTaskItems(String taskName) {
         taskItems.add(new Todo(taskName));
         printAddTaskItems();
+    }
+
+    public static void printDeleteTaskItems(int taskItemNo) {
+        String printDeleteItem = TOP_DIVIDER + DELETE_TASK_ITEM_DESC + taskItems.get(taskItemNo)
+                + CUR_NO_OF_TASK_START_DESC + (taskItems.size() - 1) + CUR_NO_OF_TASK_END_DESC + BOTTOM_DIVIDER;
+        System.out.print(printDeleteItem);
+    }
+
+    public static void deleteTaskItems(int taskItemNo) {
+        printDeleteTaskItems(taskItemNo);
+        taskItems.remove(taskItems.get(taskItemNo));
     }
 
     public static void markTaskItems(int taskItemNo, String command) {
@@ -165,6 +178,10 @@ public class Duke {
             } catch (NumberFormatException e) {
                 printWrongMarkNoFormatErr();
             }
+            break;
+        case COMMAND_DELETE_TASK:
+            int taskItemNo = Integer.parseInt(words[1]) - 1;
+            deleteTaskItems(taskItemNo);
             break;
         case COMMAND_ADD_DEADLINE:
             try {
