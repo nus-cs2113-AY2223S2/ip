@@ -6,6 +6,9 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.Todo;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -40,7 +43,8 @@ public class Duke {
     private static final String EMPTY_MARK_NO_ERR = " WHOOPS! Task number cannot be empty.";
     private static final String WRONG_MARK_NO_FORMAT_ERR = " WHOOPS! Task number must be an integer.";
     private static final String MARK_NO_OUT_OF_RANGE_ERR = " WHOOPS! There is no such task number.";
-    
+    private static final String FILE_PATH = "./duke.txt";
+
     private static ArrayList<Task> taskItems = new ArrayList<>();
 
     public static void printAddTaskItems() {
@@ -52,16 +56,19 @@ public class Duke {
     public static void addDeadlineTaskItems(String taskName, String by) {
         taskItems.add(new Deadline(taskName, by));
         printAddTaskItems();
+        saveTaskListToFile();
     }
 
     public static void addEventTaskItems(String taskName, String from, String to) {
         taskItems.add(new Event(taskName, from, to));
         printAddTaskItems();
+        saveTaskListToFile();
     }
 
     public static void addTodoTaskItems(String taskName) {
         taskItems.add(new Todo(taskName));
         printAddTaskItems();
+        saveTaskListToFile();
     }
 
     public static void markTaskItems(int taskItemNo, String command) {
@@ -69,10 +76,12 @@ public class Duke {
             taskItems.get(taskItemNo).setCompleted();
             String printTaskCompleted = TOP_DIVIDER + MARK_TASK_DESC + taskItems.get(taskItemNo) + BOTTOM_DIVIDER;
             System.out.print(printTaskCompleted);
+            saveTaskListToFile();
         } else {
             taskItems.get(taskItemNo).setIncomplete();
             String printTaskIncomplete = TOP_DIVIDER + UNMARK_TASK_DESC + taskItems.get(taskItemNo) + BOTTOM_DIVIDER;
             System.out.print(printTaskIncomplete);
+            saveTaskListToFile();
         }
     }
 
@@ -201,6 +210,25 @@ public class Duke {
         }
     }
 
+    public static void writeToFile(String filePath) throws IOException {
+        FileWriter fw = new FileWriter(filePath);
+
+        for (Task taskItem : taskItems) {
+            String textToAdd = taskItem.toFile() + "\n";
+            fw.write(textToAdd);
+        }
+
+        fw.close();
+    }
+
+    public static void saveTaskListToFile() {
+        try {
+            writeToFile(FILE_PATH);
+        } catch (IOException e) {
+            System.out.println("Error in writing to file: " + e.getMessage());
+        }
+    }
+
     public static void main(String[] args) {
         printWelcomeMessage();
         Scanner in = new Scanner(System.in);
@@ -216,4 +244,5 @@ public class Duke {
             }
         }
     }
+
 }

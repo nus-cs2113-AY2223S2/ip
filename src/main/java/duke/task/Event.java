@@ -23,4 +23,9 @@ public class Event extends Task {
                 + from + TO_DESC + to + CLOSE_CURVE_BRACKET;
     }
 
+    @Override
+    public String toFile() {
+        return EVENT_ICON + " " + super.toFile() + " | " + from + " | " + to;
+    }
+
 }

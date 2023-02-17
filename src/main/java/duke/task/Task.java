@@ -24,6 +24,13 @@ public class Task {
         return " ";
     }
 
+    public String getTaskStatusForFile() {
+        if (isCompleted) {
+            return "1";
+        }
+        return "0";
+    }
+
     public void setCompleted() {
         isCompleted = true;
     }
@@ -36,5 +43,10 @@ public class Task {
     public String toString() {
         return OPEN_SQUARE_BRACKET + getTaskStatus() + CLOSE_SQUARE_BRACKET
                 + WHITESPACE + getTaskName();
+    }
+
+    public String toFile() {
+        return "| " + getTaskStatusForFile() + " | " + getTaskName();
+
     }
 }
