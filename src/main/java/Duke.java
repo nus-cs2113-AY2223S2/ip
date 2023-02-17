@@ -3,18 +3,17 @@ import DukeFunctions.Todo;
 import DukeFunctions.Deadline;
 import Exceptions.MissingInputException;
 
+
 import java.io.IOException;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
-import java.io.File;
-
 import java.util.Scanner;
 
 public class Duke {
 
-    static int index = 0;
-    static Todo[] TodoList = new Todo[100];
+    // static Todo[] TodoList = new Todo[100];
+    static ArrayList<Todo> TodoList = new ArrayList<>();
 
     public static void parseCommand(String input, String[] words, String command) {
         String inputContents = input.substring(command.length()).trim(); //
@@ -22,53 +21,55 @@ public class Duke {
         try {
             switch (command) {
                 case "list":
-                    if (index == 0) {
-                        System.out.println("何もいない。。。頭のように。。。 (list is empty)");
+
+                    if (TodoList.size() == 0) {
+                        System.out.println("何もいない。。。頭のように。。。(list is empty)");
                     } else {
-                        for (int i = 0; i < index; i++) {
-                            System.out.println(i + 1 + ". [" + TodoList[i].getType() + "]" + "[" + TodoList[i].getIsDone() + "] " + TodoList[i].toString());
+                        for (int i = 0; i < TodoList.size(); i++) {
+                            System.out.println(i + 1 + ". [" + TodoList.get(i).getType() + "]" + "[" + TodoList.get(i).getIsDone() + "] " + TodoList.get(i).toString());
                         }
                     }
                     break;
                 case "mark":
                     int markTarget = Integer.parseInt(words[1]) - 1;
-                    if (markTarget >= 0 && markTarget < index) {
-                        TodoList[markTarget].mark();
+                    if (markTarget >= 0 && markTarget < TodoList.size()) {
+                        TodoList.get(markTarget).mark();
                     } else {
                         System.out.println("バカにさせないで。その目標は実在しません。(that task does not exist)");
                     }
                     break;
                 case "unmark":
                     int target = Integer.parseInt(words[1]) - 1;
-                    if (target >= 0 && target < index) {
-                        TodoList[target].unMark();
+                    if (target >= 0 && target < TodoList.size()) {
+                        TodoList.get(target).unMark();
                     } else {
                         System.out.println("バカにさせないで。その目標は実在しません。(that task does not exist)");
                     }
                     break;
                 case "todo":
-                    if (index < 100) {
-                        Todo newTodo = new Todo(inputContents);
-                        TodoList[index] = newTodo;
-                        System.out.println("覚えましたよ～ (todo recorded)" + newTodo.toString());
-                        index++;
-                    }
+
+                    // if (index < 100) {
+                    Todo newTodo = new Todo(inputContents);
+                    TodoList.add(newTodo);
+                    System.out.println("覚えましたよ～ (todo recorded) " + newTodo.toString());
+                    // index++;
+                    // }
                     break;
                 case "deadline":
-                    if (index < 100) {
-                        Deadline newDeadline = new Deadline(inputContents);
-                        TodoList[index] = newDeadline;
-                        System.out.println("覚えましたよ～ (deadline recorded)" + newDeadline.toString());
-                        index++;
-                    }
+                    // if (index < 100) {
+                    Deadline newDeadline = new Deadline(inputContents);
+                    TodoList.add(newDeadline);
+                    System.out.println("覚えましたよ～ (deadline recorded) " + newDeadline.toString());
+                    // index++;
+                    //  }
                     break;
                 case "event":
-                    if (index < 100) {
-                        Event newEvent = new Event(inputContents);
-                        TodoList[index] = newEvent;
-                        System.out.println("覚えましたよ～ (event recorded)" + newEvent.toString());
-                        index++;
-                    }
+                    // if (index < 100) {
+                    Event newEvent = new Event(inputContents);
+                    TodoList.add(newEvent);
+                    System.out.println("覚えましたよ～ (event recorded) " + newEvent.toString());
+                    //index++;
+                    // }
                     break;
 
                 default:
@@ -95,11 +96,11 @@ public class Duke {
         try {
             //update file
             StringBuilder output = new StringBuilder();
-            for (int i = 0; i < index; i++) {
+            for (int i = 0; i < TodoList.size(); i++) {
                 output.append(i + 1).append(". [")
-                        .append(TodoList[i].getType()).append("][")
-                        .append(TodoList[i].getIsDone()).append("] ")
-                        .append(TodoList[i].toString()).append("\n");
+                        .append(TodoList.get(i).getType()).append("][")
+                        .append(TodoList.get(i).getIsDone()).append("] ")
+                        .append(TodoList.get(i).toString()).append("\n");
             }
             String fileText = output.toString();
 
@@ -138,8 +139,8 @@ public class Duke {
                     if (type.equals("T")) {
                         description = line.substring(line.indexOf("]") + 5);
                         Todo newTodo = new Todo(description);
-                        TodoList[index] = newTodo;
-                        index++;
+                        TodoList.add(newTodo);
+
                     } else {
                         int start = line.indexOf("]") + 5;
                         int end = line.indexOf("(") - 1;
@@ -154,8 +155,8 @@ public class Duke {
                         by = line.substring(start, end);
                         String deadlineInput = description + "/by" + by;
                         Deadline newDeadline = new Deadline(deadlineInput);
-                        TodoList[index] = newDeadline;
-                        index++;
+                        TodoList.add(newDeadline);
+
 
                     } else if (type.equals("E")) {
                         int fromIndex = line.indexOf("from:");
@@ -165,8 +166,8 @@ public class Duke {
 
                         String eventInput = description + "/from" + from + "/to" + to;
                         Event newEvent = new Event(eventInput);
-                        TodoList[index] = newEvent;
-                        index++;
+                        TodoList.add(newEvent);
+
 
                     }
 
