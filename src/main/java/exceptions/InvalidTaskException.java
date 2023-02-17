@@ -1,3 +1,6 @@
 package exceptions;
 
-public class InvalidTaskException extends DukeException {}
+/**
+ * Represents an exception that is thrown when an invalid task is being queried.
+ */
+public class InvalidTaskException extends ObamaException {}

@@ -1,3 +1,7 @@
 package exceptions;
 
-public class TaskException extends DukeException {}
+/**
+ * Represents an exception that is thrown when there is something wrong with
+ * a task.
+ */
+public class TaskException extends ObamaException {}
