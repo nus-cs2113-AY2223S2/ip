@@ -77,6 +77,12 @@ public class Duke {
             }
         }
 
+        try {
+            MainFunctions.writeData(storedUserTasks);
+        } catch (IOException e) {
+            System.out.println("Failed to save data!");
+        }
+
         MainFunctions.printGoodbye();
 
     }

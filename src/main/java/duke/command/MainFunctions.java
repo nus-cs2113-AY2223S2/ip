@@ -1,12 +1,18 @@
 package duke.command;
 
-import duke.task.Deadline;
 import duke.Duke;
+import duke.exception.BlankDescException;
+import duke.exception.DukeException;
+import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
 import duke.task.Todo;
-import duke.exception.BlankDescException;
-import duke.exception.DukeException;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
 
 import java.util.ArrayList;
 
@@ -20,6 +26,8 @@ public class MainFunctions {
     public static final String DIVIDER = "\t____________________________________________________________";
     public static final String SPACER = "\t";
 
+    public static final String FILEPATH = "data/tasklist.txt";
+
     public static void printWelcome() {
         System.out.println(DIVIDER);
         System.out.println(LOGO);
@@ -32,6 +40,55 @@ public class MainFunctions {
         System.out.println(DIVIDER);
         System.out.println(SPACER+"Bye. Hope to see you again soon!");
         System.out.println(DIVIDER);
+    }
+
+    public static void readData(Task[] storedUserTasks) throws FileNotFoundException {
+        String originalString, description, by, from, to;
+        int indexOfBy, indexOfFrom, indexOfTo;
+        boolean isDone;
+
+        File f = new File(FILEPATH);
+        Scanner s = new Scanner(f);
+
+        while (s.hasNext()) {
+            originalString = s.nextLine();
+            isDone = originalString.charAt(4) == 'X';
+            switch (originalString.charAt(1)) {
+            case 'T':
+                description = originalString.substring(7);
+                storedUserTasks[Duke.userTextCount] = new Todo(description);
+                break;
+            case 'D':
+                originalString = originalString.substring(7).replace("(by:", "/by");
+                originalString = originalString.substring(0, originalString.length() - 1);
+                indexOfBy = originalString.indexOf("/by");
+                description = originalString.substring( 0, indexOfBy-1);
+                by = originalString.substring(indexOfBy+4);
+                storedUserTasks[Duke.userTextCount] = new Deadline(description,by);
+                break;
+            case 'E':
+                originalString = originalString.substring(7).replace("(from:", "/from");
+                originalString = originalString.replace("to:", "/to");
+                originalString = originalString.substring(0, originalString.length() - 1);
+                indexOfFrom = originalString.indexOf("/from");
+                indexOfTo = originalString.indexOf("/to");
+                description = originalString.substring(0,indexOfFrom-1);
+                from = originalString.substring(indexOfFrom+6,indexOfTo-1);
+                to = originalString.substring(indexOfTo+4);
+                storedUserTasks[Duke.userTextCount] = new Event(description,from,to);
+                break;
+            }
+            storedUserTasks[Duke.userTextCount].isDone = isDone;
+            Duke.userTextCount++;
+        }
+    }
+
+    public static void writeData(Task[] storedUserTasks) throws IOException {
+        FileWriter fw = new FileWriter(FILEPATH);
+        for(int i=0; i<Duke.userTextCount; i++) {
+            fw.write(storedUserTasks[i].toString()+'\n');
+        }
+        fw.close();
     }
 
     public static void invalidInput() {
