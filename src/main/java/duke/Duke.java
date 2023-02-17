@@ -123,7 +123,8 @@ public class Duke {
             updateFile(storedTasks);
         } catch (IOException e) {
             System.out.println("Oops! Something broke: " + e);
-        }    }
+        }
+    }
 
     private static void unmarkTask(ArrayList<Task> storedTasks, String[] commandLine) {
         int unmarkIndex = Integer.parseInt(commandLine[1]) - 1;
