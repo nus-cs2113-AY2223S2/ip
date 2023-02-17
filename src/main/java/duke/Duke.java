@@ -7,6 +7,7 @@ import duke.task.Task;
 import duke.task.Todo;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -225,11 +226,61 @@ public class Duke {
         try {
             writeToFile(FILE_PATH);
         } catch (IOException e) {
-            System.out.println("Error in writing to file: " + e.getMessage());
+            System.out.println("Error writing to file: " + e.getMessage());
+        }
+    }
+
+    public static void processFileContents(String content) {
+        String[] words = content.split(" \\| ", 2);
+        String taskType = words[0];
+        words = words[1].split(" \\| ", 2);
+        String taskStatus = words[0];
+
+        switch (taskType) {
+        case "T":
+            String toDoTaskName = words[1];
+            taskItems.add(new Todo(toDoTaskName));
+            break;
+        case "D":
+            words = words[1].split(" \\| ", 2);
+            String deadlineTaskName = words[0];
+            String by = words[1];
+            taskItems.add(new Deadline(deadlineTaskName, by));
+            break;
+        case "E":
+            words = words[1].split(" \\| ", 2);
+            String eventTaskName = words[0];
+            words = words[1].split(" \\| ", 2);
+            String from = words[0];
+            String to = words[1];
+            taskItems.add(new Event(eventTaskName, from, to));
+        default:
+            break;
+        }
+
+        if (taskStatus.startsWith("1")) {
+            taskItems.get(taskItems.size() - 1).setCompleted();
+        }
+    }
+
+    public static void readFileContents(String filePath) throws FileNotFoundException {
+        File f = new File(filePath);
+        Scanner s = new Scanner(f);
+        while (s.hasNext()) {
+            processFileContents(s.nextLine());
+        }
+    }
+
+    public static void loadTaskListFromFile() {
+        try {
+            readFileContents(FILE_PATH);
+        } catch (FileNotFoundException e) {
+            System.out.println("File Not Found");
         }
     }
 
     public static void main(String[] args) {
+        loadTaskListFromFile();
         printWelcomeMessage();
         Scanner in = new Scanner(System.in);
 
