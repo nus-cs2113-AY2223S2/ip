@@ -9,6 +9,7 @@ import duke.tasks.TaskEnum;
 import duke.tasks.ToDo;
 
 import duke.storage.Storage;
+import duke.ui.UI;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,13 +17,6 @@ import java.util.Scanner;
 
 
 public class Duke {
-    private static final String INDENT = "    ";
-    private static final String LINE = "____________________________________________________________";
-    private static final String LOGO = " ____        _        \n"
-            + "|  _ \\ _   _| | _____ \n"
-            + "| | | | | | | |/ / _ \\\n"
-            + "| |_| | |_| |   <  __/\n"
-            + "|____/ \\__,_|_|\\_\\___|\n";
     private static final String CHAR_SPACE = " ";
 
     // commands
@@ -38,35 +32,33 @@ public class Duke {
 
     // messages
     private static final String MESSAGE_COMMAND_UNRECOGNISED = "Unrecognised command, try again.";
-    private static final String MESSAGE_EXIT = "Bye. Hope to see you again soon!";
-    private static final String MESSAGE_GREET = "Hello! I'm Duke\nWhat can I do for you?";
-    private static final String MESSAGE_LOGO = "Hello from";
     private static final String MESSAGE_TASKS_AVAILABLE = "Here are the tasks in your list:";
     private static final String MESSAGE_TASKS_INVALID_ID = "Invalid task ID entered.";
     private static final String MESSAGE_TASKS_MARKED = "Nice! I've marked this task as done:";
     private static final String MESSAGE_TASKS_NONE = "There are no tasks available.";
     private static final String MESSAGE_TASKS_UNMARKED = "OK, I've marked this task as not done yet:";
 
+    private static final UI ui = new UI();
     // data
     private static ArrayList<Task> tasks = new ArrayList<>();
 
     public static void main(String[] args) {
         tasks = Storage.getTasks();
         Scanner scan = new Scanner(System.in);
-        printLogo();
-        greet();
+        ui.printLogo();
+        ui.greet();
 
         String input;
         do {
             input = scan.nextLine();
             boolean isExit = input.split(CHAR_SPACE)[0].equals(COMMAND_EXIT);
             if (isExit) {
-                printLine();
+                ui.printLine();
                 handleStateExit();
                 break;
             }
             if (!input.isEmpty()) {
-                printLine();
+                ui.printLine();
                 executeInputCommand(input);
             }
         } while (true);
@@ -100,6 +92,7 @@ public class Duke {
                 break;
             case COMMAND_DELETE:
                 handleCommandDelete(input);
+                break;
             case COMMAND_SAVE:
                 handleCommandSave();
                 break;
@@ -109,42 +102,18 @@ public class Duke {
             // update saved tasks
             Storage.writeTasks(tasks);
         } catch (IOException e) {
-            printWithIndentation("Failed to update save data. Type \"save\" to try again");
+            ui.printSaveStatus(false);
         } catch (Exception e) {
-            printWithIndentation(e.getMessage());
-            printLine();
+            ui.print(e.getMessage());
+            ui.printLine();
         }
     }
 
-    private static void printWithIndentation(String s) {
-        Scanner scan = new Scanner(s);
-        while (scan.hasNextLine()) {
-            System.out.println(INDENT + scan.nextLine());
-        }
-        scan.close();
-    }
 
-    private static void printLine() {
-        printWithIndentation(LINE + "\n");
-    }
-
-    private static void printLogo() {
-        printWithIndentation(MESSAGE_LOGO + "\n" + LOGO);
-        printLine();
-    }
-
-    private static void greet() {
-        printWithIndentation(MESSAGE_GREET);
-        printLine();
-    }
 
     private static void addTask(Task taskObj) {
         tasks.add(taskObj);
-        String output = "Got it. I've added this task:\n"
-                + INDENT + taskObj.describe() + "\n"
-                + "Now you have " + tasks.size() + " tasks in the list";
-        printWithIndentation(output);
-        printLine();
+        ui.printTaskAdded(taskObj.describe(), tasks.size());
     }
 
     private static void setTaskStatus(int id, boolean isCompleted) throws InvalidInputException {
@@ -157,8 +126,8 @@ public class Duke {
                             ? MESSAGE_TASKS_MARKED + "\n"
                             : MESSAGE_TASKS_UNMARKED + "\n";
             output += tasks.get(id).describe();
-            printWithIndentation(output);
-            printLine();
+            ui.print(output);
+            ui.printLine();
         } catch (IndexOutOfBoundsException e) {
             throw new InvalidInputException(tasks.size() == 0
                                             ? MESSAGE_TASKS_NONE
@@ -179,8 +148,7 @@ public class Duke {
     }
 
     private static void handleStateExit() {
-        printWithIndentation(MESSAGE_EXIT);
-        printLine();
+        ui.printExit();
     }
 
     private static void handleCommandList() {
@@ -193,8 +161,8 @@ public class Duke {
             output += (i + 1) + "." // number
                     + tasks.get(i).describe() + "\n";
         }
-        printWithIndentation(output);
-        printLine();
+        ui.print(output);
+        ui.printLine();
     }
 
     private static void handleCommandMark(Scanner input) throws InvalidInputException {
@@ -261,14 +229,11 @@ public class Duke {
 
         Task toDelete = tasks.get(id - 1);
         tasks.remove(id - 1);
-        printWithIndentation("Noted. I have removed this task:\n"
-                                     + INDENT + toDelete.describe() + "\n"
-                                     + "Now you have " + tasks.size() + " tasks in the list.");
+        ui.printTaskDeleted(toDelete.describe(), tasks.size());
     }
 
     private static void handleCommandSave() throws IOException {
         Storage.writeTasks(tasks);
-        printWithIndentation("Saved tasks successfully.");
-        printLine();
+        ui.printSaveStatus(true);
     }
 }
