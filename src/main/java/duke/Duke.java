@@ -6,10 +6,10 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.Todo;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
-    private static final int MAX_ITEMS = 100;
     private static final String TOP_DIVIDER = "============================================================\n";
     private static final String BOTTOM_DIVIDER = "\n============================================================\n\n";
     private static final String ADD_TASK_ITEM_DESC = " Roger. I've added this task:\n  ";
@@ -40,42 +40,38 @@ public class Duke {
     private static final String EMPTY_MARK_NO_ERR = " WHOOPS! Task number cannot be empty.";
     private static final String WRONG_MARK_NO_FORMAT_ERR = " WHOOPS! Task number must be an integer.";
     private static final String MARK_NO_OUT_OF_RANGE_ERR = " WHOOPS! There is no such task number.";
-
-    private static Task[] taskItems = new Task[MAX_ITEMS];
-    private static int taskItemCount = 0;
+    
+    private static ArrayList<Task> taskItems = new ArrayList<>();
 
     public static void printAddTaskItems() {
-        String printAddItem = TOP_DIVIDER + ADD_TASK_ITEM_DESC + taskItems[taskItemCount]
-                + CUR_NO_OF_TASK_START_DESC + (taskItemCount + 1) + CUR_NO_OF_TASK_END_DESC + BOTTOM_DIVIDER;
+        String printAddItem = TOP_DIVIDER + ADD_TASK_ITEM_DESC + taskItems.get(taskItems.size() - 1)
+                + CUR_NO_OF_TASK_START_DESC + taskItems.size() + CUR_NO_OF_TASK_END_DESC + BOTTOM_DIVIDER;
         System.out.print(printAddItem);
     }
 
     public static void addDeadlineTaskItems(String taskName, String by) {
-        taskItems[taskItemCount] = new Deadline(taskName, by);
+        taskItems.add(new Deadline(taskName, by));
         printAddTaskItems();
-        taskItemCount++;
     }
 
     public static void addEventTaskItems(String taskName, String from, String to) {
-        taskItems[taskItemCount] = new Event(taskName, from, to);
+        taskItems.add(new Event(taskName, from, to));
         printAddTaskItems();
-        taskItemCount++;
     }
 
     public static void addTodoTaskItems(String taskName) {
-        taskItems[taskItemCount] = new Todo(taskName);
+        taskItems.add(new Todo(taskName));
         printAddTaskItems();
-        taskItemCount++;
     }
 
     public static void markTaskItems(int taskItemNo, String command) {
         if (command.equals(COMMAND_MARK_TASK)) {
-            taskItems[taskItemNo].setCompleted();
-            String printTaskCompleted = TOP_DIVIDER + MARK_TASK_DESC + taskItems[taskItemNo] + BOTTOM_DIVIDER;
+            taskItems.get(taskItemNo).setCompleted();
+            String printTaskCompleted = TOP_DIVIDER + MARK_TASK_DESC + taskItems.get(taskItemNo) + BOTTOM_DIVIDER;
             System.out.print(printTaskCompleted);
         } else {
-            taskItems[taskItemNo].setIncomplete();
-            String printTaskIncomplete = TOP_DIVIDER + UNMARK_TASK_DESC + taskItems[taskItemNo] + BOTTOM_DIVIDER;
+            taskItems.get(taskItemNo).setIncomplete();
+            String printTaskIncomplete = TOP_DIVIDER + UNMARK_TASK_DESC + taskItems.get(taskItemNo) + BOTTOM_DIVIDER;
             System.out.print(printTaskIncomplete);
         }
     }
@@ -83,8 +79,8 @@ public class Duke {
     public static void listTaskItems() {
         System.out.print(TOP_DIVIDER + LIST_TASK_ITEM_DESC);
 
-        for (int itemNo = 0; itemNo < taskItemCount; itemNo++) {
-            String printItem = WHITESPACE + (itemNo + 1) + DOT + taskItems[itemNo] + System.lineSeparator();
+        for (int itemNo = 0; itemNo < taskItems.size(); itemNo++) {
+            String printItem = WHITESPACE + (itemNo + 1) + DOT + taskItems.get(itemNo) + System.lineSeparator();
             System.out.print(printItem);
         }
 
