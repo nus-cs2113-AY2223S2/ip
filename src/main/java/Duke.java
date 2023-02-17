@@ -1,14 +1,11 @@
-import duke.task.Task;
-import duke.task.ToDo;
-import duke.task.Event;
-import duke.task.Deadline;
 import duke.database.Storage;
-
-import duke.exceptions.DukeException;
 import duke.exceptions.EmptyInputException;
 import duke.exceptions.IllegalInputException;
+import duke.task.Deadline;
+import duke.task.Event;
+import duke.task.Task;
+import duke.task.ToDo;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,17 +49,6 @@ public class Duke {
         System.out.println(BYE_MESSAGE);
     }
 
-    /**
-     * Prints an added message
-     *
-     * @param myList
-     */
-    public static void printAddedTaskMessage(ArrayList<Task> myList) {
-        System.out.println(LINE + "added: "
-                + myList.get(myList.size() - 1).getDescription()
-                + "\n" + LINE);
-    }
-
     public static void printIllegalInputMessage() {
         System.out.println(LINE
                 + "☹ OOPS!!! I'm sorry, but I don't know what that means :-(\n"
@@ -73,17 +59,6 @@ public class Duke {
         System.out.println(LINE
                 + "☹ OOPS!!! The description of " + task + " cannot be empty.\n"
                 + LINE);
-    }
-
-    /**
-     * Adds the input text into the list
-     *
-     * @param s
-     * @param myList
-     */
-    public static void addList(String s, ArrayList<Task> myList) {
-        Task t = new Task(s);
-        myList.add(t);
     }
 
     /**
@@ -101,45 +76,14 @@ public class Duke {
 
     public static void printDeletedMessage(ArrayList<Task> myList, int index) {
         System.out.println(LINE + "Noted. I've removed this task:\n" + myList.get(index)
-                + "\nNow you have " + (myList.size()-1) + " task(s) in the list\n" + LINE);
+                + "\nNow you have " + (myList.size() - 1) + " task(s) in the list\n" + LINE);
     }
 
-    /**
-     * Marks the given item in the list with an "X"
-     *
-     * @param s
-     * @param myList
-     */
-    public static void markDone(String s, ArrayList<Task> myList) {
-        String taskToMarkString = s.substring(s.length() - 1);
-        int taskToMark = Integer.parseInt(taskToMarkString) - 1;
-        myList.get(taskToMark).setDone();
-        System.out.println(LINE
-                + "Nice! I've marked this duke.task as done:\n"
-                + myList.get(taskToMark) + "\n"
-                + LINE);
-    }
-
-    /**
-     * Unmarks the given item in the list
-     *
-     * @param s
-     * @param myList
-     */
-    public static void markUndone(String s, ArrayList<Task> myList) {
-        String taskToUnmarkString = s.substring(s.length() - 1);
-        int taskToUnmark = Integer.parseInt(taskToUnmarkString) - 1;
-        myList.get(taskToUnmark).setUndone();
-        System.out.println(LINE
-                + "OK, I've marked this duke.task as not done yet:\n"
-                + myList.get(taskToUnmark) + "\n"
-                + LINE);
-    }
-
-    public static void markDoneOrUndone(String s, ArrayList<Task> myList) {
-        String[] words = s.split(" ");
+    /** Marks task as done or undone and updates database */
+    public static void markDoneOrUndone(String currTask, ArrayList<Task> myList) {
+        String[] words = currTask.split(" ");
         String firstWord = words[0];
-        String taskToMarkOrUnmarkString = s.substring(s.length() - 1);
+        String taskToMarkOrUnmarkString = currTask.substring(currTask.length() - 1);
         int taskToMarkOrUnmark = Integer.parseInt(taskToMarkOrUnmarkString) - 1;
         if (firstWord.equals("mark")) {
             myList.get(taskToMarkOrUnmark).setDone();
@@ -155,8 +99,8 @@ public class Duke {
                     + LINE);
         }
         String stringToAdd = "";
-        for (Task currTask : myList) {
-            stringToAdd += stringToWrite(currTask).toString() + System.lineSeparator();
+        for (Task task : myList) {
+            stringToAdd += stringToWrite(task).toString() + System.lineSeparator();
         }
         try {
             database.writeToFile(stringToAdd);
@@ -166,13 +110,13 @@ public class Duke {
     }
 
     /**
-     * Adds the input text and marks the duke.task as a To-Do
+     * Adds the input text and makes the task as a todo type and updates database
      *
-     * @param s
+     * @param currTask
      * @param myList
      */
-    public static void makeToDoFunction(String s, ArrayList<Task> myList) throws EmptyInputException {
-        String[] newTask = s.split(" ", 2);
+    public static void makeToDoFunction(String currTask, ArrayList<Task> myList) throws EmptyInputException {
+        String[] newTask = currTask.split(" ", 2);
         if (newTask[1].isBlank()) {
             throw new EmptyInputException();
         }
@@ -183,15 +127,15 @@ public class Duke {
     }
 
     /**
-     * Adds the input text and marks the duke.task as a Deadline
+     * Adds the input text and makes the task as a Deadline type and updates database
      *
-     * @param s
+     * @param currTask
      * @param myList
      */
-    public static void makeDeadlinesFunction(String s, ArrayList<Task> myList)
+    public static void makeDeadlinesFunction(String currTask, ArrayList<Task> myList)
             throws EmptyInputException, IllegalInputException {
-        if (s.contains("/by")) {
-            String[] newTask = s.split(" ", 2);
+        if (currTask.contains("/by")) {
+            String[] newTask = currTask.split(" ", 2);
             if (newTask[1].isBlank()) {
                 throw new EmptyInputException();
             }
@@ -209,15 +153,15 @@ public class Duke {
     }
 
     /**
-     * Adds the input text and marks the duke.task as an Event
+     * Adds the input text and makes task as an Event type and updates database
      *
-     * @param s
+     * @param currTask
      * @param myList
      */
-    public static void makeEventFunction(String s, ArrayList<Task> myList)
+    public static void makeEventFunction(String currTask, ArrayList<Task> myList)
             throws EmptyInputException, IllegalInputException {
-        if (s.contains("/from") && s.contains("/to")) {
-            String[] newTask = s.split(" ", 2);
+        if (currTask.contains("/from") && currTask.contains("/to")) {
+            String[] newTask = currTask.split(" ", 2);
             if (newTask[1].isBlank()) {
                 throw new EmptyInputException();
             }
@@ -233,49 +177,49 @@ public class Duke {
         }
     }
 
-    public static void handleMarkUnmark(String s, ArrayList<Task> myList) {
+    public static void handleMarkUnmark(String currTask, ArrayList<Task> myList) {
         try {
-            checkMarkUnmark(s);
-            markDoneOrUndone(s, myList);
+            checkMarkUnmark(currTask);
+            markDoneOrUndone(currTask, myList);
         } catch (EmptyInputException e) {
-            printEmptyInputMessage(s);
+            printEmptyInputMessage(currTask);
         } catch (NumberFormatException e) {
             printIllegalInputMessage();
         }
     }
 
-    public static void handleToDo(String s, ArrayList<Task> myList) {
+    public static void handleToDo(String currTask, ArrayList<Task> myList) {
         try {
-            makeToDoFunction(s, myList);
+            makeToDoFunction(currTask, myList);
         } catch (ArrayIndexOutOfBoundsException e) {
-            printEmptyInputMessage(s);
+            printEmptyInputMessage(currTask);
         } catch (EmptyInputException e) {
-            printEmptyInputMessage(s.trim());
+            printEmptyInputMessage(currTask.trim());
         }
     }
 
-    public static void handleDeadline(String s, ArrayList<Task> myList) {
+    public static void handleDeadline(String currTask, ArrayList<Task> myList) {
         try {
-            makeDeadlinesFunction(s, myList);
+            makeDeadlinesFunction(currTask, myList);
         } catch (EmptyInputException e) {
-            printEmptyInputMessage(s.trim());
+            printEmptyInputMessage(currTask.trim());
         } catch (IllegalInputException e) {
             printIllegalInputMessage();
         }
     }
 
-    public static void handleEvent(String s, ArrayList<Task> myList) {
+    public static void handleEvent(String currTask, ArrayList<Task> myList) {
         try {
-            makeEventFunction(s, myList);
+            makeEventFunction(currTask, myList);
         } catch (EmptyInputException e) {
-            printEmptyInputMessage(s.trim());
+            printEmptyInputMessage(currTask.trim());
         } catch (IllegalInputException e) {
             printIllegalInputMessage();
         }
     }
 
-    public static void checkMarkUnmark(String s) throws EmptyInputException {
-        String[] list = s.split(" ");
+    public static void checkMarkUnmark(String currTask) throws EmptyInputException {
+        String[] list = currTask.split(" ");
         if (list.length < 2) {
             if (list[0].equals("mark") || list[0].equals("unmark")) {
                 throw new EmptyInputException();
@@ -283,8 +227,8 @@ public class Duke {
         }
     }
 
-
-    public static void addTaskToDatabase(Task taskToAdd){ //updating an individual task
+    /** Updates an individual task */
+    public static void addTaskToDatabase(Task taskToAdd) {
         try {
             FileWriter f = new FileWriter(FILE_PATH, true);
             String taskInDatabaseFormat = stringToWrite(taskToAdd).toString();
@@ -295,6 +239,7 @@ public class Duke {
         }
     }
 
+    /** Converts Task to StringBuilder to be passed as string */
     public static StringBuilder stringToWrite(Task taskToAddToDatabaseList) {
         StringBuilder sb = new StringBuilder();
 
@@ -318,9 +263,9 @@ public class Duke {
         return sb;
     }
 
-
-    public static void deleteTask(String s, ArrayList<Task> myList) throws IllegalInputException {
-        String[] list = s.split(" ");
+    /** Deletes the specific task by index */
+    public static void deleteTask(String currTask, ArrayList<Task> myList) throws IllegalInputException {
+        String[] list = currTask.split(" ");
         if (isNumeric(list[1]) && list.length == 2) {
             int indexToRemove = Integer.parseInt(list[1]) - 1;
             printDeletedMessage(myList, indexToRemove);
@@ -330,20 +275,20 @@ public class Duke {
         }
 
         String stringToAdd = "";
-        for (Task currTask : myList) {
-            stringToAdd += stringToWrite(currTask).toString() + System.lineSeparator();
+        for (Task task : myList) {
+            stringToAdd += stringToWrite(task).toString() + System.lineSeparator();
         }
         try {
             database.writeToFile(stringToAdd);
         } catch (IOException e) {
-            System.out.println("Unable to Delete xd");
+            System.out.println("Error encountered when deleting task in memory");
         }
-
     }
 
-    public static void handleDeleteTask(String s, ArrayList<Task> myList) {
+    /** Initialises delete task */
+    public static void handleDeleteTask(String currTask, ArrayList<Task> myList) {
         try {
-            deleteTask(s, myList);
+            deleteTask(currTask, myList);
         } catch (IllegalInputException e) {
             printIllegalInputMessage();
         } catch (IndexOutOfBoundsException e) {
@@ -351,6 +296,7 @@ public class Duke {
         }
     }
 
+    /** Checks if given string is a number */
     public static boolean isNumeric(String s) {
         try {
             Double.parseDouble(s);
@@ -362,12 +308,12 @@ public class Duke {
 
     public static void main(String[] args) {
         printGreetMessage();
-        //ArrayList<Task> myList = new ArrayList<Task>();
         try {
             database = new Storage();
         } catch (IOException e) {
-            System.out.println("Fk this shit");
+            System.out.println("Unable to initialise database");
         }
+
         ArrayList<Task> myList = database.taskList;
         while (!canExit) {
             Scanner in = new Scanner(System.in);
@@ -388,8 +334,6 @@ public class Duke {
             } else if (s.toLowerCase().startsWith("delete")) {
                 handleDeleteTask(s, myList);
             } else {
-                //addList(s, myList);
-                //printAddedTaskMessage(myList);
                 printIllegalInputMessage();
             }
         }
