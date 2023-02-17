@@ -261,6 +261,7 @@ Exits the Duke chatbot.
 + Upon starting the Duke chatbot, saved data from the previous session will be loaded automatically.
 
 ## Command Summary
+  
 Command | Usage | Example
 | ------------ | ------------- | ------------- |
 todo | `todo <description>` | `todo borrow book` 
