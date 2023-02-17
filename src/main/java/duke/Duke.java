@@ -130,24 +130,30 @@ public class Duke {
                 switch(command.getCommandType()){
                 case ADD_TODO_COMMAND:
                     addNewTask(tasks, command.getAdditionalParameters(), TaskType.TODO);
+                    TaskData.storeTaskData(taskDataFile, tasks);
                     break;
                 case ADD_DEADLINE_COMMAND:
                     addNewTask(tasks, command.getAdditionalParameters(), TaskType.DEADLINE);
+                    TaskData.storeTaskData(taskDataFile, tasks);
                     break;
                 case ADD_EVENT_COMMAND:
                     addNewTask(tasks, command.getAdditionalParameters(), TaskType.EVENT);
+                    TaskData.storeTaskData(taskDataFile, tasks);
                     break;
                 case LIST_TASKS_COMMAND:
                     printTasks(tasks);
                     break;
                 case MARK_TASK_COMMAND:
                     changeTaskStatus(tasks, command.getAdditionalParameters(), true);
+                    TaskData.storeTaskData(taskDataFile, tasks);
                     break;
                 case UNMARK_TASK_COMMAND:
                     changeTaskStatus(tasks, command.getAdditionalParameters(), false);
+                    TaskData.storeTaskData(taskDataFile, tasks);
                     break;
                 case DELETE_TASK_COMMAND:
                     deleteTask(tasks, command.getAdditionalParameters());
+                    TaskData.storeTaskData(taskDataFile, tasks);
                     break;
                 case END_PROGRAM_COMMAND:
                     printFarewell();
@@ -160,12 +166,10 @@ public class Duke {
                 }
             }catch (DukeException e){
                 System.out.println(e.getMessage());
+            }catch (IOException e){
+                System.out.println("An error occurred while storing your task data: " + e.getMessage());
+                System.out.println("Your data will not be saved");
             }
-        }
-        try {
-            TaskData.storeTaskData(taskDataFile, tasks);
-        }catch(IOException e){
-            System.out.println("An error occurred while storing your task data: " + e.getMessage());
         }
     }
 }
