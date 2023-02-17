@@ -2,7 +2,10 @@ package userInputParser;
 
 import ui.exceptions.MissingCommandException;
 import ui.Display;
-import commandHandler.*;
+import commandHandler.Add;
+import commandHandler.Delete;
+import commandHandler.List;
+import commandHandler.Mark;
 import data.tasksList;
 
 public class Parser {
@@ -15,11 +18,7 @@ public class Parser {
     private static final String COMMAND_DEADLINE = "/deadline";
     private static final String COMMAND_DELETE = "/delete";
 
-    public enum taskType {
-        TODO, DEADLINE, EVENT
-    }
-
-    public enum markType {
+    public enum MarkType {
         MARK, UNMARK
     }
 
@@ -44,9 +43,9 @@ public class Parser {
                     Display.warnUser(e.getMessage());
                 }
             } else if (command.equals(COMMAND_MARK)) {
-                Mark.markTask(userInputArray, markType.MARK);
+                Mark.markTask(userInputArray, MarkType.MARK);
             } else if (command.equals(COMMAND_UNMARK)) {
-                Mark.markTask(userInputArray, markType.UNMARK);
+                Mark.markTask(userInputArray, MarkType.UNMARK);
             } else if (command.equals(COMMAND_DELETE)) {
                 try {
                     Delete.deleteTask(Integer.parseInt(userInputArray[1]));

@@ -11,7 +11,7 @@ import ui.Display;
 
 public class ProcessStorageTasks {
     public static final String HOME = System.getProperty("user.dir");
-    public static final Path FILE = Paths.get(HOME, "storage","savedTasks.txt");
+    public static final Path FILE = Paths.get(HOME, "..", "..", "..", "storage", "savedTasks.txt");
     public static final String FILE_PATH = FILE.toString();
 
     public static void processFile() {

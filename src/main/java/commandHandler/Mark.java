@@ -16,12 +16,12 @@ import duke.Task;
 import ui.Display;
 
 public class Mark {
-    public static void markTask(String[] userInputArray, Parser.markType action) {
+    public static void markTask(String[] userInputArray, Parser.MarkType action) {
         try {
             int taskIndex = Integer.parseInt(userInputArray[1]);
             taskIndex--;
             Task task = tasksList.getTaskArrayList().get(taskIndex);
-            if (action.equals(Parser.markType.MARK)) {
+            if (action.equals(Parser.MarkType.MARK)) {
                 if (task.getDoneStatus()) {
                     Display.warnUser("Task is already marked!");
                     return;
@@ -43,7 +43,7 @@ public class Mark {
         }
     }
 
-    public static void markStorageTask(int index, Parser.markType action) {
+    public static void markStorageTask(int index, Parser.MarkType action) {
         String indexToRemove = Integer.toString(index);
         ArrayList<String> savedTasksList = new ArrayList<>();
         /* copy all saved tasks into ArrayList */
@@ -59,11 +59,13 @@ public class Mark {
             while (s.hasNextLine()) {
                 String line = s.nextLine();
                 String[] lineArray = line.split(":");
-                if (lineArray[0].equals(indexToRemove)) {
-                    if (action == Parser.markType.MARK) {
-                        lineArray[2] = "true";
+                String storageTaskIndex = lineArray[0];
+                if (storageTaskIndex.equals(indexToRemove)) {
+                    String storageTaskMarkIndication = lineArray[2];
+                    if (action == Parser.MarkType.MARK) {
+                        storageTaskMarkIndication = "true";
                     } else {
-                        lineArray[2] = "false";
+                        storageTaskMarkIndication = "false";
                     }
                     savedTasksList.set(Integer.parseInt(indexToRemove), String.join(":", lineArray));
                 }

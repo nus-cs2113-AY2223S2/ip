@@ -19,6 +19,9 @@ public class Add {
     private static final String COMMAND_BY = "/by";
     private static final String COMMAND_START = "/start";
     private static final String COMMAND_END = "/end";
+    private static final String COMMAND_STORAGE_EVENT = "Event";
+    private static final String COMMAND_STORAGE_TODO = "Todo";
+    private static final String COMMAND_STORAGE_DEADLINE = "Deadline";
 
     public static void addTask(String userInput) throws MissingCommandException {
         String[] userInputArray = userInput.split(" ");
@@ -29,21 +32,25 @@ public class Add {
             throw new MissingCommandException("Please enter a description for your task!");
         }
         /** Handle different task types **/
-        if (command.equals(COMMAND_TODO)) {
-            newTask = new Todo(userInput);
-        } else if (command.equals(COMMAND_DEADLINE)) {
-            if (!userInput.contains(COMMAND_BY)) {
-                throw new MissingCommandException("Please specify a deadline via the /by command!");
-            }
-            newTask = new Deadline(userInput);
-        } else if (command.equals(COMMAND_EVENT)) {
-            if (!userInput.contains(COMMAND_START) || !userInput.contains(COMMAND_END)) {
-                throw new MissingCommandException(
-                        "Please specify both start and end dates/times via the /start and /end commands!");
-            }
-            newTask = new Event(userInput);
-        } else {
-            return;
+        switch (command) {
+            case COMMAND_TODO:
+                newTask = new Todo(userInput);
+                break;
+            case COMMAND_DEADLINE:
+                if (!userInput.contains(COMMAND_BY)) {
+                    throw new MissingCommandException("Please specify a deadline via the /by command!");
+                }
+                newTask = new Deadline(userInput);
+                break;
+            case COMMAND_EVENT:
+                if (!userInput.contains(COMMAND_START) || !userInput.contains(COMMAND_END)) {
+                    throw new MissingCommandException(
+                            "Please specify both start and end dates/times via the /start and /end commands!");
+                }
+                newTask = new Event(userInput);
+                break;
+            default:
+                return;
         }
         tasksList.addTask(newTask);
         addTaskToStorage(newTask, tasksList.userTaskCount);
@@ -61,37 +68,39 @@ public class Add {
     }
 
     /*
-     * arr[0] -> index
-     * arr[1] -> task type
-     * arr[2] -> isDone
-     * arr[3] -> task description
+     * taskStringArray[0] -> index
+     * taskStringArray[1] -> command
+     * taskStringArray[2] -> isDone
+     * taskStringArray[3] -> task description
      * 
      * For event:
-     * arr[4] -> start
-     * arr[5] -> end
+     * taskStringArray[4] -> start
+     * taskStringArray[5] -> end
      * 
      * For deadline:
-     * arr[4] -> cutoff
+     * taskStringArray[4] -> cutoff
      */
 
     public static void addSavedTask(String arguments) {
         Task newTask;
         String[] taskStringArray = arguments.split(":");
         String command = taskStringArray[1];
-        if (command.equals("Todo")) {
+        if (command.equals(COMMAND_STORAGE_TODO)) {
             String inputFormat = "/todo " + taskStringArray[3];
             newTask = new Todo(inputFormat);
-        } else if (command.equals("Deadline")) {
+        } else if (command.equals(COMMAND_STORAGE_DEADLINE)) {
             String inputFormat = "/deadline " + taskStringArray[3] + " /by " +
                     taskStringArray[4];
             newTask = new Deadline(inputFormat);
-        } else {
+        } else if (command.equals(COMMAND_STORAGE_EVENT)) {
             String inputFormat = "/event " + taskStringArray[3] + " /start " +
                     taskStringArray[4] + " /end "
                     + taskStringArray[5];
             newTask = new Event(inputFormat);
+        } else {
+            return;
         }
-        if (taskStringArray[2].equals("true")) {
+        if (taskStringArray[2].equals(String.valueOf(true))) {
             newTask.markAsDone();
         }
         tasksList.addTask(newTask);
