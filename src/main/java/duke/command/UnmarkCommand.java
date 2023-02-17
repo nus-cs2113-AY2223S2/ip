@@ -2,10 +2,8 @@ package duke.command;
 
 import duke.error.DukeException;
 import duke.parser.Parser;
+import duke.task.TaskList;
 import duke.ui.Ui;
-import duke.task.Task;
-
-import java.util.ArrayList;
 
 public class UnmarkCommand extends Command {
     public static final String COMMAND_WORD = "unmark";
@@ -14,9 +12,9 @@ public class UnmarkCommand extends Command {
             + Ui.NEW_LINE + "  Parameters: task number"
             + Ui.NEW_LINE + "  Example: " + COMMAND_WORD + " 1";
 
-    public static void unmarkTask(ArrayList<Task> tasks, String[] arrayOfInput) throws DukeException {
+    public static void unmarkTask(TaskList taskList, String[] arrayOfInput) throws DukeException {
         int taskNumber = Integer.parseInt(Parser.parseCommand(arrayOfInput, COMMAND_WORD)) - 1;
-        tasks.get(taskNumber).markAsNotDone();
-        Ui.markOrUnmark(tasks, taskNumber);
+        taskList.markTaskNotDone(taskNumber);
+        Ui.showTaskStatus(taskList, taskNumber);
     }
 }

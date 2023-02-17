@@ -1,37 +1,46 @@
 package duke;
 
 import duke.command.ExitCommand;
-import duke.task.Task;
-import duke.data.FileActions;
-import duke.data.DataActions;
+import duke.data.Storage;
 import duke.command.Command;
+import duke.task.TaskList;
 import duke.ui.Ui;
 
 import java.util.Scanner;
-import java.util.ArrayList;
 import java.io.File;
 
 public class Duke {
-    private static ArrayList<Task> startUp() {
-        Ui.greeting();
-        ArrayList<Task> tasks = new ArrayList<>();
+    private Ui ui; // todo improve
+    private Storage storage; // todo improve
+    private TaskList taskList;
 
-        FileActions.makeDirectory(); // make dir if it does not exist
-        File dataFile = FileActions.openDataFile(); // make file if it does not exist
-        DataActions.importData(dataFile, tasks); // import the data from file to program
-        return tasks;
+    private void startUp() {
+        try {
+            this.ui = new Ui();
+            this.storage = new Storage();
+            storage.makeDirectory(); // make dir if it does not exist
+            File dataFile = storage.openDataFile(); // make file if it does not exist
+            this.taskList = new TaskList(storage.importData(dataFile)); // import the data from file to program
+            Ui.showGreeting();
+        } catch (Exception e) {
+            // todo print saying not able to start, failure in storage management
+            System.exit(1);
+        }
+
     }
-    public static void main(String[] args) {
-        ArrayList<Task> tasks = startUp();
 
+    public void run() {
+        startUp();
         // user to input update
         Scanner in = new Scanner(System.in);
         String input = in.nextLine();
         while (!input.equals(ExitCommand.COMMAND_WORD)) {
-            Command.evaluate(input, tasks);
+            Command.evaluate(input, this.taskList);
             input = in.nextLine();
         }
-
-        ExitCommand.exit(tasks);
+        ExitCommand.exit(this.taskList);
+    }
+    public static void main(String[] args) {
+        new Duke().run();
     }
 }

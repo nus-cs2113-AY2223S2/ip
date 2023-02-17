@@ -13,6 +13,7 @@ public enum ErrorMessages {
     INVALID_EVENT_FORMAT_MESSAGE(" Invalid input! Valid input format: \"event <task name> /from <date> /to <date>\""),
     INSUFFICIENT_EVENT_FIELD_MESSAGE(" Invalid input! Please provide enough arguments! "
             + Ui.NEW_LINE + " Valid input format: \"event <task name> /from <date> /to <date>\""),
+    UNABLE_TO_CREATE_DIRS(" Failure in creating necessary directories, exiting"), // todo
     CREATE_NEW_FILE_EXCEPTION_MESSAGE(" Exception received from creating file"),
     FILE_NOT_FOUND_EXCEPTION_MESSAGE(" File not found exception from trying to read data from file"),
     IO_EXCEPTION_MESSAGE(" IO exception received from trying to update data");

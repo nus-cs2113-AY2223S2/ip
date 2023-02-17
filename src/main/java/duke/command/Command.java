@@ -3,40 +3,38 @@ package duke.command;
 import duke.error.DukeException;
 import duke.error.ErrorTypes;
 import duke.error.Error;
+import duke.task.TaskList;
 import duke.ui.Ui;
 import duke.parser.Parser;
-import duke.task.Task;
-
-import java.util.ArrayList;
 
 public class Command {
-    public static void evaluate(String input, ArrayList<Task> tasks) {
+    public static void evaluate(String input, TaskList taskList) {
         try {
             String[] arrayOfInput = Parser.parse(input);
             switch (arrayOfInput[0]) {
             case (ListCommand.COMMAND_WORD):
-                Ui.listTasks(tasks);
+                Ui.showTaskList(taskList);
                 break;
             case (HelpCommand.COMMAND_WORD):
                 Ui.help();
                 break;
             case (MarkCommand.COMMAND_WORD): // if command is "mark <int>"
-                MarkCommand.markTask(tasks, arrayOfInput);
+                MarkCommand.markTask(taskList, arrayOfInput);
                 break;
             case (UnmarkCommand.COMMAND_WORD): // if command is "unmark <int>"
-                UnmarkCommand.unmarkTask(tasks, arrayOfInput);
+                UnmarkCommand.unmarkTask(taskList, arrayOfInput);
                 break;
             case (DeleteCommand.COMMAND_WORD): // if command is "delete <int>"
-                DeleteCommand.deleteTask(tasks, arrayOfInput);
+                DeleteCommand.deleteTask(taskList, arrayOfInput);
                 break;
             case (AddCommand.COMMAND_TODO):
-                AddCommand.manageTodoInput(input, tasks);
+                AddCommand.manageTodoInput(input, taskList);
                 break;
             case (AddCommand.COMMAND_DEADLINE):
-                AddCommand.manageDeadlineInput(input, tasks);
+                AddCommand.manageDeadlineInput(input, taskList);
                 break;
             case (AddCommand.COMMAND_EVENT):
-                AddCommand.manageEventInput(input, tasks);
+                AddCommand.manageEventInput(input, taskList);
                 break;
             default:
                 // invalid command

@@ -60,7 +60,7 @@ public class InputValidity {
         }
     }
 
-    public static boolean isValid(String[] input, String command) throws DukeException {
+    public static void isValid(String[] input, String command) throws DukeException {
         boolean isTwoWordInput = (input.length == VALID_LENGTH_TWO);
         if (!isTwoWordInput || !isStringOfInteger(input[1])) {
             switch (command) {
@@ -79,6 +79,5 @@ public class InputValidity {
             }
         }
         checkWithinCount(Integer.parseInt(input[1].trim()));
-        return true;
     }
 }

@@ -2,10 +2,9 @@ package duke.command;
 
 import duke.error.DukeException;
 import duke.parser.Parser;
+import duke.task.TaskList;
 import duke.ui.Ui;
 import duke.task.Task;
-
-import java.util.ArrayList;
 
 public class DeleteCommand extends Command {
     public static final String COMMAND_WORD = "delete";
@@ -16,10 +15,10 @@ public class DeleteCommand extends Command {
             + Ui.NEW_LINE + "  Parameters: task number"
             + Ui.NEW_LINE + "  Example: " + COMMAND_WORD + " 1";
 
-    public static void deleteTask(ArrayList<Task> tasks, String[] arrayOfInput) throws DukeException {
+    public static void deleteTask(TaskList taskList, String[] arrayOfInput) throws DukeException {
         int taskNumber = Integer.parseInt(Parser.parseCommand(arrayOfInput, COMMAND_WORD)) - 1;
-        Ui.deleteTask(tasks, taskNumber);
-        tasks.remove(tasks.get(taskNumber));
+        Ui.showDeleteTask(taskList, taskNumber);
+        taskList.deleteTask(taskNumber);
         Task.totalTasks -= 1;
     }
 }

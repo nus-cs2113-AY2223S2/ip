@@ -2,13 +2,12 @@ package duke.command;
 
 import duke.error.DukeException;
 import duke.parser.Parser;
-import duke.ui.Ui;
-import duke.task.Deadline;
-import duke.task.Event;
+import duke.task.TaskList;
 import duke.task.Task;
 import duke.task.Todo;
-
-import java.util.ArrayList;
+import duke.task.Deadline;
+import duke.task.Event;
+import duke.ui.Ui;
 
 public class AddCommand extends Command {
     public static final String COMMAND_TODO = "todo";
@@ -27,24 +26,24 @@ public class AddCommand extends Command {
             + Ui.NEW_LINE + "  Parameters: task name, start date, end date"
             + Ui.NEW_LINE + "  Example: " + COMMAND_EVENT + " make bread /from today 3pm /to 5pm";
 
-    public static void manageTodoInput(String input, ArrayList<Task> tasks) throws DukeException {
+    public static void manageTodoInput(String input, TaskList taskList) throws DukeException {
         String taskName = Parser.parseTodoCommand(input);
-        tasks.add(Task.totalTasks, new Todo(taskName));
-        Ui.echoAddTasks(tasks);
+        taskList.addTask(new Todo(taskName));
+        Ui.showAddTask(taskList);
         Task.incrementTotalTasks();
     }
 
-    public static void manageDeadlineInput(String input, ArrayList<Task> tasks) throws DukeException {
+    public static void manageDeadlineInput(String input, TaskList taskList) throws DukeException {
         String[] taskDetails = Parser.parseDeadlineCommand(input);
-        tasks.add(Task.totalTasks, new Deadline(taskDetails[0], taskDetails[1]));
-        Ui.echoAddTasks(tasks);
+        taskList.addTask(new Deadline(taskDetails[0], taskDetails[1]));
+        Ui.showAddTask(taskList);
         Task.incrementTotalTasks();
     }
 
-    public static void manageEventInput(String input, ArrayList<Task> tasks) throws DukeException {
+    public static void manageEventInput(String input, TaskList taskList) throws DukeException {
         String[] taskDetails = Parser.parseEventCommand(input);
-        tasks.add(Task.totalTasks, new Event(taskDetails[0], taskDetails[1], taskDetails[2]));
-        Ui.echoAddTasks(tasks);
+        taskList.addTask(new Event(taskDetails[0], taskDetails[1], taskDetails[2]));
+        Ui.showAddTask(taskList);
         Task.incrementTotalTasks();
     }
 }

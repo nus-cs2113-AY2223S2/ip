@@ -6,34 +6,34 @@ public class Error {
     public static void throwError(ErrorTypes e) throws DukeException {
         switch (e) {
         case INVALID_MARK_COMMAND:
-            Ui.invalidMarkCommand();
+            Ui.showInvalidMark();
             break;
         case INVALID_UNMARK_COMMAND:
-            Ui.invalidUnmarkCommand();
+            Ui.showInvalidUnmark();
             break;
         case NOT_WITHIN_TASK_COUNT:
-            Ui.exceedTaskCount();
+            Ui.showExceedTask();
             break;
         case INVALID_TODO:
-            Ui.invalidTodo();
+            Ui.showInvalidTodo();
             break;
         case INVALID_DEADLINE_COMMAND:
-            Ui.invalidDeadline();
+            Ui.showInvalidDeadline();
             break;
         case INSUFFICIENT_DEADLINE_ARGUMENT:
-            Ui.insufficientDeadline();
+            Ui.showInsufficientDeadline();
             break;
         case INVALID_EVENT_COMMAND:
-            Ui.invalidEvent();
+            Ui.showInvalidEvent();
             break;
         case INSUFFICIENT_EVENT_ARGUMENT:
-            Ui.insufficientEvent();
+            Ui.showInsufficientEvent();
             break;
         case INVALID_DELETE_COMMAND:
-            Ui.invalidDeleteCommand();
+            Ui.showInvalidDelete();
             break;
         default:
-            Ui.invalidInput();
+            Ui.showInvalidInput();
             break;
         }
         throw new DukeException();

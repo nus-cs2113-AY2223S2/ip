@@ -2,10 +2,30 @@ package duke.ui;
 
 import duke.command.*;
 import duke.task.Task;
+import duke.task.TaskList;
 
-import java.util.ArrayList;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.util.Scanner;
 
 public class Ui { // deals with interactions with the user
+    private final Scanner in;
+    private final PrintStream out;
+
+    public Ui() {
+        this(System.in, System.out);
+    }
+
+    public Ui(InputStream in, PrintStream out){
+        this.in = new Scanner(in);
+        this.out = out;
+    }
+
+    public String getUserCommand() { // todo
+        String input = in.nextLine();
+        return input;
+    }
+
     private static final String SEGMENT_LINE = "_".repeat(80);
     public static final String NEW_LINE = System.lineSeparator();
     private static final String START_MESSAGE = " Hello! I'm Duke" + NEW_LINE + " What can I do for you?";
@@ -13,19 +33,19 @@ public class Ui { // deals with interactions with the user
         System.out.println(SEGMENT_LINE + NEW_LINE);
     }
 
-    public static void greeting() {
+    public static void showGreeting() {
         System.out.println(SEGMENT_LINE);
         System.out.println(START_MESSAGE);
         endLine();
     }
 
-    public static void bye() {
+    public static void showBye() {
         System.out.println(SEGMENT_LINE);
         System.out.println(ExitCommand.BYE_MESSAGE);
         endLine();
     }
 
-    public static void listTasks(ArrayList<Task> tasks) {
+    public static void showTaskList(TaskList taskList) {
         System.out.println(SEGMENT_LINE);
         boolean isTaskCountZero = (Task.totalTasks == 0);
         if (isTaskCountZero) {
@@ -33,86 +53,86 @@ public class Ui { // deals with interactions with the user
         } else {
             System.out.println(ListCommand.MESSAGE);
             for (int i = 0; i < Task.totalTasks; i += 1) {
-                System.out.println(" " + (i + 1) + "." + tasks.get(i).getFullTaskDetail());
+                System.out.println(" " + (i + 1) + "." + taskList.getTaskFullDetails(i));
             }
         }
         endLine();
     }
 
-    public static void invalidMarkCommand() {
+    public static void showInvalidMark() {
         System.out.println(SEGMENT_LINE);
         System.out.println(ErrorMessages.INVALID_MARK_MESSAGE.STANDARD_OUTPUT);
     }
 
-    public static void exceedTaskCount() {
+    public static void showExceedTask() {
         System.out.println(SEGMENT_LINE);
         System.out.printf(ErrorMessages.OVER_TASK_COUNT_MESSAGE.STANDARD_OUTPUT, Task.getTotalTasks()
                 + NEW_LINE);
     }
 
-    public static void invalidUnmarkCommand() {
+    public static void showInvalidUnmark() {
         System.out.println(SEGMENT_LINE);
         System.out.println(ErrorMessages.INVALID_UNMARK_MESSAGE.STANDARD_OUTPUT);
     }
 
-    public static void invalidInput() {
+    public static void showInvalidInput() {
         System.out.println(SEGMENT_LINE);
         System.out.println(ErrorMessages.INVALID_INPUT_MESSAGE.STANDARD_OUTPUT);
     }
 
-    public static void invalidTodo() {
+    public static void showInvalidTodo() {
         System.out.println(SEGMENT_LINE);
         System.out.println(ErrorMessages.INVALID_TODO_MESSAGE.STANDARD_OUTPUT);
     }
 
-    public static void invalidDeadline() {
+    public static void showInvalidDeadline() {
         System.out.println(SEGMENT_LINE);
         System.out.println(ErrorMessages.MISSING_DEADLINE_KEYWORD_MESSAGE.STANDARD_OUTPUT);
     }
 
-    public static void insufficientDeadline() {
+    public static void showInsufficientDeadline() {
         System.out.println(SEGMENT_LINE);
         System.out.println(ErrorMessages.INSUFFICIENT_DEADLINE_FIELD_MESSAGE.STANDARD_OUTPUT);
     }
 
-    public static void invalidEvent() {
+    public static void showInvalidEvent() {
         System.out.println(SEGMENT_LINE);
         System.out.println(ErrorMessages.INVALID_EVENT_FORMAT_MESSAGE.STANDARD_OUTPUT);
     }
 
-    public static void insufficientEvent() {
+    public static void showInsufficientEvent() {
         System.out.println(SEGMENT_LINE);
         System.out.println(ErrorMessages.INSUFFICIENT_EVENT_FIELD_MESSAGE.STANDARD_OUTPUT);
     }
 
-    public static void invalidDeleteCommand() {
+    public static void showInvalidDelete() {
         System.out.println(SEGMENT_LINE);
         System.out.println(DeleteCommand.INVALID_COMMAND_MESSAGE);
     }
 
-    public static void markOrUnmark(ArrayList<Task> tasks, int taskIndex) {
+    public static void showTaskStatus(TaskList taskList, int taskIndex) {
         System.out.println(SEGMENT_LINE);
-        if (tasks.get(taskIndex).isDone) {
+        if (taskList.getIsDone(taskIndex)) {
             System.out.println(MarkCommand.MESSAGE);
         } else {
             System.out.println(UnmarkCommand.MESSAGE);
         }
-        System.out.println("   " + tasks.get(taskIndex).getFullTaskDetail());
+        System.out.println("   " + taskList.getTaskFullDetails(taskIndex));
         endLine();
     }
 
-    public static void echoAddTasks(ArrayList<Task> tasks) {
+    public static void showAddTask(TaskList taskList) {
         int numberOfTasks = Task.totalTasks + 1;
         System.out.println(SEGMENT_LINE);
-        System.out.printf(AddCommand.ADD_MESSAGE, tasks.get(Task.totalTasks).getFullTaskDetail(), numberOfTasks);
+        System.out.printf(AddCommand.ADD_MESSAGE, taskList.getTaskFullDetails(Task.totalTasks), numberOfTasks);
         endLine();
     }
 
-    public static void deleteTask(ArrayList<Task> tasks, int taskIndex) {
+    public static void showDeleteTask(TaskList taskList, int taskIndex) {
         int numberOfTasks = Task.totalTasks - 1;
         System.out.println(SEGMENT_LINE);
         System.out.println(DeleteCommand.OUTPUT_MESSAGE);
-        System.out.println("   " + tasks.get(taskIndex).getFullTaskDetail());
+        System.out.println("   " + taskList.getTaskFullDetails(taskIndex));
         System.out.printf(DeleteCommand.REMAINING_TASK_COUNT, numberOfTasks);
         endLine();
     }
