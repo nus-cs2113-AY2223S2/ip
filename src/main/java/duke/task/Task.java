@@ -21,6 +21,14 @@ public class Task {
         isDone = false;
     }
 
+    public String getMarking() {
+        if (isDone) {
+            return "X";
+        } else {
+            return " ";
+        }
+    }
+
     @Override
     public String toString() {
         if (isDone) {

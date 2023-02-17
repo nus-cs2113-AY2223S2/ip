@@ -2,17 +2,26 @@ import duke.task.Task;
 import duke.task.ToDo;
 import duke.task.Event;
 import duke.task.Deadline;
+import duke.database.Storage;
+
 import duke.exceptions.DukeException;
 import duke.exceptions.EmptyInputException;
 import duke.exceptions.IllegalInputException;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
     public static final String LINE = "____________________________________________________________\n";
     public static final String BYE_MESSAGE = "Bye. Hope to see you again soon!\n";
+    public static final String BORDER = "//";
+
     public static boolean canExit = false;
+    public static final String FILE_PATH = "data/duke.txt";
+    private static Storage database = null;
 
     /**
      * Prints message after adding To-Do/Deadline/Event duke.task
@@ -145,6 +154,15 @@ public class Duke {
                     + myList.get(taskToMarkOrUnmark) + "\n"
                     + LINE);
         }
+        String stringToAdd = "";
+        for (Task currTask : myList) {
+            stringToAdd += stringToWrite(currTask).toString() + System.lineSeparator();
+        }
+        try {
+            database.writeToFile(stringToAdd);
+        } catch (IOException e) {
+            System.out.println("Unable to Add xd");
+        }
     }
 
     /**
@@ -161,6 +179,7 @@ public class Duke {
         Task toDoTask = new ToDo(newTask[1]);
         myList.add(toDoTask);
         printTaskMessage(myList);
+        addTaskToDatabase(toDoTask);
     }
 
     /**
@@ -183,6 +202,7 @@ public class Duke {
             Task deadlineTask = new Deadline(split[0], split[1]);
             myList.add(deadlineTask);
             printTaskMessage(myList);
+            addTaskToDatabase(deadlineTask);
         } else {
             throw new IllegalInputException();
         }
@@ -207,6 +227,7 @@ public class Duke {
             Task eventTask = new Event(split[0], timeFrom, timeTo);
             myList.add(eventTask);
             printTaskMessage(myList);
+            addTaskToDatabase(eventTask);
         } else {
             throw new IllegalInputException();
         }
@@ -262,6 +283,42 @@ public class Duke {
         }
     }
 
+
+    public static void addTaskToDatabase(Task taskToAdd){ //updating an individual task
+        try {
+            FileWriter f = new FileWriter(FILE_PATH, true);
+            String taskInDatabaseFormat = stringToWrite(taskToAdd).toString();
+            f.write(taskInDatabaseFormat + System.lineSeparator());
+            f.close();
+        } catch (IOException e) {
+            System.out.println("Unable to add task to database :(");
+        }
+    }
+
+    public static StringBuilder stringToWrite(Task taskToAddToDatabaseList) {
+        StringBuilder sb = new StringBuilder();
+
+        // Format of task in database is: X|description|type of task
+        sb.append(taskToAddToDatabaseList.getMarking() + BORDER
+                + taskToAddToDatabaseList.getDescription() + BORDER);
+
+        // X|description|T
+        if (taskToAddToDatabaseList instanceof ToDo) {
+            sb.append("T");
+        }
+        // X|description|D|by
+        else if (taskToAddToDatabaseList instanceof Deadline) {
+            sb.append("D" + BORDER + ((Deadline) taskToAddToDatabaseList).getBy());
+        }
+        // X|description|E|from|to
+        else {
+            sb.append("E" + BORDER + ((Event) taskToAddToDatabaseList).getFrom()
+                    + BORDER + ((Event) taskToAddToDatabaseList).getTo());
+        }
+        return sb;
+    }
+
+
     public static void deleteTask(String s, ArrayList<Task> myList) throws IllegalInputException {
         String[] list = s.split(" ");
         if (isNumeric(list[1]) && list.length == 2) {
@@ -271,6 +328,17 @@ public class Duke {
         } else {
             throw new IllegalInputException();
         }
+
+        String stringToAdd = "";
+        for (Task currTask : myList) {
+            stringToAdd += stringToWrite(currTask).toString() + System.lineSeparator();
+        }
+        try {
+            database.writeToFile(stringToAdd);
+        } catch (IOException e) {
+            System.out.println("Unable to Delete xd");
+        }
+
     }
 
     public static void handleDeleteTask(String s, ArrayList<Task> myList) {
@@ -294,8 +362,13 @@ public class Duke {
 
     public static void main(String[] args) {
         printGreetMessage();
-        ArrayList<Task> myList = new ArrayList<Task>();
-
+        //ArrayList<Task> myList = new ArrayList<Task>();
+        try {
+            database = new Storage();
+        } catch (IOException e) {
+            System.out.println("Fk this shit");
+        }
+        ArrayList<Task> myList = database.taskList;
         while (!canExit) {
             Scanner in = new Scanner(System.in);
             String s = in.nextLine();
