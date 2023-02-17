@@ -4,7 +4,7 @@ public class Task {
     protected String description;
     protected boolean isDone;
 
-    public Task(String description) {
+    protected Task(String description) {
         this.isDone = false;
         this.description = description;
     }
@@ -18,11 +18,11 @@ public class Task {
         isDone = false;
         System.out.println("OK, I've marked this task as not done yet:\n" + this);
     }
-    public String getDescription() {
+    protected String getDescription() {
         return description;
     }
 
-    public String status(){
+    protected String status(){
         if(isDone) {
             return "X";
         }

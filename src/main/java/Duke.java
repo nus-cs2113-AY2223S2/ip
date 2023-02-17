@@ -11,16 +11,16 @@ import java.util.Scanner;
 
 public class Duke {
 
-    public static ArrayList<Task>tasks = new ArrayList<>();
+    protected static ArrayList<Task>tasks = new ArrayList<>();
 
-    public static boolean proceedToNextCommand = true;
+    protected static boolean proceedToNextCommand = true;
 
-    public static void printDivider() {
+    protected static void printDivider() {
         String DIVIDER = "____________________________________________________";
         System.out.println(DIVIDER);
     }
 
-    public static void executeCommand(String input) throws CommandNotFoundException {
+    protected static void executeCommand(String input) throws CommandNotFoundException {
         if (input.equals("bye")) {
             printExit();
             proceedToNextCommand = false;
@@ -88,23 +88,23 @@ public class Duke {
         }
     }
 
-    public static void printExit() {
+    protected static void printExit() {
         printDivider();
         System.out.println("Bye. Hope to see you again soon!");
         printDivider();
     }
 
-    public static void markTask(String input)  {
+    protected static void markTask(String input)  {
         int taskNumber = Integer.parseInt(input.substring(4).trim()) - 1;
         tasks.get(taskNumber).markDone();
     }
 
-    public static void unmarkTask(String input)  {
+    protected static void unmarkTask(String input)  {
         int taskNumber = Integer.parseInt(input.substring(6).trim()) - 1;
         tasks.get(taskNumber).umarkDone();
     }
 
-    public static void printList() {
+    protected static void printList() {
         printDivider();
         System.out.println("Here are the tasks in your list:");
         int count = 1;
@@ -115,13 +115,13 @@ public class Duke {
         printDivider();
     }
 
-    public static void createTodo(String input) {
+    protected static void createTodo(String input) {
         tasks.add(new Todo(input.substring(4).trim()));
         System.out.println("Got it. I've added this tasks:\n" + tasks.get(tasks.size() - 1));
         System.out.println("Now you have " + tasks.size() + " tasks in the list.");
     }
 
-    public static void createDeadline(String input) throws InvalidInputException {
+    protected static void createDeadline(String input) throws InvalidInputException {
         int byIndex = input.indexOf("/by");
         String description = input.substring(8, byIndex).trim();
         String deadline = input.substring(byIndex + 3).trim();
@@ -133,7 +133,7 @@ public class Duke {
         System.out.println("Now you have " + tasks.size() + " tasks in the list.");
     }
 
-    public static void createEvent(String input) throws IllegalFormatException, InvalidInputException {
+    protected static void createEvent(String input) throws IllegalFormatException, InvalidInputException {
         int fromIndex = input.indexOf("/from");
         int toIndex = input.indexOf("/to");
         String description = input.substring(5, fromIndex).trim();
@@ -149,7 +149,7 @@ public class Duke {
         System.out.println("Now you have " + tasks.size() + " tasks in the list.");
     }
 
-    public static void deleteTask(String input) {
+    protected static void deleteTask(String input) {
         int deleteIndex = Integer.parseInt(input.substring(6).trim());
         System.out.println("Noted. I've removed this task:\n" + tasks.get(deleteIndex - 1));
         tasks.remove(tasks.get(deleteIndex - 1));
