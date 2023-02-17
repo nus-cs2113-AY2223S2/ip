@@ -52,15 +52,15 @@ public class Duke {
 
     private static void listTasks() {
         System.out.println(LINE);
-        for (int i = 0; i < taskNum; i++) {
+        for (int i = 0; i < taskList.size(); i++) {
             System.out.println("   > " + Integer.toString(i + 1) + "." + taskList.get(i).toString());
         }
         System.out.println(LINE);
     }
 
-    private static void showMarkThisTask(String command) throws TaskNumberOutOfRange {
+    private static void markThisTask(String command) throws TaskNumberOutOfRange {
         int idx = Integer.parseInt(command) - 1;
-        if (idx >= taskNum || idx < 0) {
+        if (idx >= taskList.size() || idx < 0) {
             throw new TaskNumberOutOfRange("   > task number out of range!!");
         } else {
             taskList.get(idx).markAsDone();
@@ -71,9 +71,9 @@ public class Duke {
         }
     }
 
-    private static void showUnmarkThisTask(String command) throws TaskNumberOutOfRange {
+    private static void unmarkThisTask(String command) throws TaskNumberOutOfRange {
         int idx = Integer.parseInt(command) - 1;
-        if (idx >= taskNum || idx < 0) {
+        if (idx >= taskList.size() || idx < 0) {
             throw new TaskNumberOutOfRange("task number out of range!!");
         } else {
             taskList.get(idx).unmark();
@@ -84,11 +84,24 @@ public class Duke {
         }
     }
 
+    private static void deleteThisTask(String command) throws TaskNumberOutOfRange {
+        int idx = Integer.parseInt(command) - 1;
+        if (idx >= taskList.size() || idx < 0) {
+            throw new TaskNumberOutOfRange("   > task number out of range!!");
+        }
+        Task taskDiscription = taskList.get(idx);
+        taskList.remove(idx);
+        System.out.println(LINE + System.lineSeparator() + "Noted. I've removed this task:");
+        System.out.println("   > " + taskDiscription.toString());
+        System.out.println("Now you have " + Integer.toString(taskList.size()) + " tasks in the list."
+                + System.lineSeparator() + LINE);
+    }
+
     private static void showAddTask(Task taskDiscription) {
         System.out.println(LINE + System.lineSeparator() + "Got it. I've added this task:");
         System.out.println("   > " + taskDiscription.toString());
-        System.out.println(
-                "Now you have " + Integer.toString(taskNum) + " tasks in the list." + System.lineSeparator() + LINE);
+        System.out.println("Now you have " + Integer.toString(taskList.size()) + " tasks in the list."
+                + System.lineSeparator() + LINE);
     }
 
     public static void main(String[] args) {
@@ -106,7 +119,7 @@ public class Duke {
                 break;
             case "mark":
                 try {
-                    showMarkThisTask(splittedCommand[1]);
+                    markThisTask(splittedCommand[1]);
                 } catch (TaskNumberOutOfRange e) {
                     System.out.println("   > Please enter a valid NUMBER!");
                 } catch (ArrayIndexOutOfBoundsException e) {
@@ -117,7 +130,7 @@ public class Duke {
                 break;
             case "unmark":
                 try {
-                    showUnmarkThisTask(splittedCommand[1]);
+                    unmarkThisTask(splittedCommand[1]);
                 } catch (TaskNumberOutOfRange e) {
                     System.out.println("   > Please enter a valid NUMBER!");
                 } catch (ArrayIndexOutOfBoundsException e) {
@@ -134,7 +147,6 @@ public class Duke {
                     Todo newtodo = new Todo(splittedCommand[1]);
                     taskList.add(newtodo);
                     showAddTask(newtodo);
-                    taskNum++;
                 } catch (LackOfTaskDetail e) {
                     System.out.println("   > lack of task detail");
                 }
@@ -145,7 +157,6 @@ public class Duke {
                     Deadline newddl = new Deadline(splittedDiscription[0], splittedDiscription[1]);
                     taskList.add(newddl);
                     showAddTask(newddl);
-                    taskNum++;
                 } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println("   > Please enter a task and a deadline behind the task seperated by \"/by\" ");
                 } catch (LackOfTaskDetail e) {
@@ -158,11 +169,19 @@ public class Duke {
                     Event newevent = new Event(splittedDiscription[0], splittedDiscription[1]);
                     taskList.add(newevent);
                     showAddTask(newevent);
-                    taskNum++;
                 } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println("   > Please enter a task and a time behind the task seperated by \"/at\" ");
                 } catch (LackOfTaskDetail e) {
                     System.out.println("   > lack of task detail!");
+                }
+                break;
+            case "delete":
+                try {
+                    deleteThisTask(splittedCommand[1]);
+                } catch (TaskNumberOutOfRange e) {
+                    System.out.println("   > Please enter a valid NUMBER!");
+                } catch (NumberFormatException e) {
+                    System.out.println("   > Please enter a valid NUMBER!");
                 }
                 break;
             default:
