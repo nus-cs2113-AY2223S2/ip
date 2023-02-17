@@ -33,6 +33,15 @@ public class FileManager {
         fw.close();
     }
 
+    public static void writeTask(String path, Task task) throws IOException {
+        FileWriter fw = new FileWriter(path, true);
+        String t = task.checkType();
+        char done = task.checkDone().charAt(1);
+        String w = t.charAt(1) + " % " + done + " % " + task.getTask() + "\n";
+        fw.write(w);
+        fw.close();
+    }
+
     public static void createFile(String path) {
         try {
             Path dir = Paths.get("data");
@@ -53,16 +62,16 @@ public class FileManager {
             String[] temp = str.split("%",5);
             switch (temp[0].trim()) {
             case ("T"):
-                dm.handleTodo(temp[2].trim());
+                dm.handleTodo(temp[2].trim(), false);
                 if (temp[1].trim().equals("X")) {
-                    dm.handleMark("task", temp[2].trim());
+                    dm.handleMark("task", temp[2].trim(), false);
                 }
                 break;
             case ("D"):
                 try {
-                    dm.handleDeadline(temp[2].trim() + "/by" + temp[3]);
+                    dm.handleDeadline(temp[2].trim() + "/by" + temp[3], false);
                     if (temp[1].trim().equals("X")) {
-                        dm.handleMark("task", temp[2].trim());
+                        dm.handleMark("task", temp[2].trim(), false);
                     }
                 } catch (DukeException e) {
                     throw new DukeException();
@@ -70,9 +79,9 @@ public class FileManager {
                 break;
             case ("E"):
                 try {
-                    dm.handleEvent(temp[2].trim() + "/from" + temp[3] + "/to" + temp[4]);
+                    dm.handleEvent(temp[2].trim() + "/from" + temp[3] + "/to" + temp[4], false);
                     if (temp[1].trim().equals("X")) {
-                        dm.handleMark("task", temp[2].trim());
+                        dm.handleMark("task", temp[2].trim(), false);
                     }
                 } catch (DukeException e) {
                     throw new DukeException();

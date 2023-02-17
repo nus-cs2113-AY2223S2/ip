@@ -22,11 +22,12 @@ public class DataManager {
         setPath(path);
     }
 
-    public void close(String path) {
+    public void rewriteFile(String path) throws DukeException {
         try {
             FileManager.writeFile(path, tasks);
         } catch (IOException e) {
             DukeMessages.printWriteFileError();
+            throw new DukeException();
         }
     }
 
@@ -71,9 +72,14 @@ public class DataManager {
 
     public void echo() {
         System.out.println(tasks.get(taskCount));
+        try {
+            FileManager.writeTask(path, tasks.get(taskCount));
+        } catch (IOException e) {
+            DukeMessages.printWriteFileError();
+        }
     }
 
-    public void handleMark(String checkCmd, String next) throws DukeException {
+    public void handleMark(String checkCmd, String next, boolean isFromCommand) throws DukeException {
         int num;
         try {
             num = convertString(next.trim());
@@ -81,12 +87,19 @@ public class DataManager {
         } catch (DukeException e) {
             throw new DukeException();
         }
-        DukeMessages.printMark();
         tasks.get(num - 1).setDone(true);
-        System.out.println(tasks.get(num - 1));
+        if (isFromCommand) {
+            DukeMessages.printMark();
+            System.out.println(tasks.get(num - 1));
+            try {
+                rewriteFile(path);
+            } catch (DukeException e) {
+                throw new DukeException();
+            }
+        }
     }
 
-    public void handleUnmark (String checkCmd, String next) throws DukeException {
+    public void handleUnmark (String checkCmd, String next, boolean isFromCommand) throws DukeException {
         int num;
         try {
             num = convertString(next.trim());
@@ -94,19 +107,28 @@ public class DataManager {
         } catch (DukeException e) {
             throw new DukeException();
         }
-        DukeMessages.printUnmark();
         tasks.get(num - 1).setDone(false);
-        System.out.println(tasks.get(num - 1));
+        if (isFromCommand) {
+            DukeMessages.printUnmark();
+            System.out.println(tasks.get(num - 1));
+            try {
+                rewriteFile(path);
+            } catch (DukeException e) {
+                throw new DukeException();
+            }
+        }
     }
 
-    public void handleTodo(String next) {
-        DukeMessages.printTodo();
+    public void handleTodo(String next, boolean isFromCommand) {
         tasks.add(new ToDo(next.stripLeading(), false));
-        echo();
+        if (isFromCommand) {
+            DukeMessages.printTodo();
+            echo();
+        }
         ++taskCount;
     }
 
-    public void handleDeadline(String next) throws DukeException {
+    public void handleDeadline(String next, boolean isFromCommand) throws DukeException {
         try {
             String[] deadline = next.split("/by", 2);
             tasks.add(new Deadline(deadline[0].trim(), false,
@@ -115,12 +137,14 @@ public class DataManager {
             DukeMessages.printError();
             throw new DukeException();
         }
-        DukeMessages.printDeadline();
-        echo();
+        if (isFromCommand) {
+            DukeMessages.printDeadline();
+            echo();
+        }
         ++taskCount;
     }
 
-    public void handleEvent(String next) throws DukeException {
+    public void handleEvent(String next, boolean isFromCommand) throws DukeException {
         try {
             String[] eventName = next.split("/from", 2);
             String[] eventTime = eventName[1].split("/to", 2);
@@ -130,25 +154,35 @@ public class DataManager {
             DukeMessages.printError();
             throw new DukeException();
         }
-        DukeMessages.printEvent();
-        echo();
+        if (isFromCommand) {
+            DukeMessages.printEvent();
+            echo();
+        }
         ++taskCount;
     }
 
-    public void handleDelete(String next) throws DukeException {
+    public void handleDelete(String next, boolean isFromCommand) throws DukeException {
         int num;
         try {
             num = convertString(next.trim());
         } catch (DukeException e) {
             throw new DukeException();
         }
-        System.out.println("Roger!" + tasks.get(num - 1) + " removed!");
+        if (isFromCommand) {
+            System.out.println("Roger!" + tasks.get(num - 1) + " removed!");
+            try {
+                rewriteFile(path);
+            } catch (DukeException e) {
+                throw new DukeException();
+            }
+        }
         tasks.remove(tasks.get(num - 1));
         --taskCount;
     }
 
     public void command() {
         Scanner in = new Scanner(System.in);
+        boolean isFromCommand = true;
         do {
             DukeMessages.printPrompt();
             String cmd = in.next();
@@ -169,7 +203,7 @@ public class DataManager {
             case "mark":
                 String next = in.nextLine();
                 try {
-                    handleMark(checkCmd, next);
+                    handleMark(checkCmd, next, isFromCommand);
                 } catch (DukeException e) {
                     break;
                 }
@@ -177,19 +211,19 @@ public class DataManager {
             case "unmark":
                 next = in.nextLine();
                 try {
-                    handleUnmark(checkCmd, next);
+                    handleUnmark(checkCmd, next, isFromCommand);
                 } catch (DukeException e) {
                     break;
                 }
                 break;
             case "todo":
                 next = in.nextLine();
-                handleTodo(next);
+                handleTodo(next, isFromCommand);
                 break;
             case "deadline":
                 next = in.nextLine();
                 try {
-                    handleDeadline(next);
+                    handleDeadline(next, isFromCommand);
                 } catch (DukeException e) {
                     break;
                 }
@@ -197,7 +231,7 @@ public class DataManager {
             case "event":
                 next = in.nextLine();
                 try {
-                    handleEvent(next);
+                    handleEvent(next, isFromCommand);
                 } catch (DukeException e) {
                     break;
                 }
@@ -205,7 +239,7 @@ public class DataManager {
             case "delete":
                 next = in.nextLine();
                 try {
-                    handleDelete(next);
+                    handleDelete(next, isFromCommand);
                 } catch (DukeException e) {
                     break;
                 }
@@ -235,7 +269,6 @@ public class DataManager {
         DukeMessages.printQuery();
         DukeMessages.printDiv();
         command();
-        close(path);
         DukeMessages.printBye();
     }
 }
