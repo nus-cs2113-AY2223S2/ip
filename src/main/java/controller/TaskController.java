@@ -15,12 +15,11 @@ public class TaskController {
   protected TaskView view = new TaskView();
   protected Validator validator = new Validator();
   protected Database db = Database.getInstance();
-  static int counter = 0;
 
   private void printDescription(Task model) {
     System.out.println(Message.TASK_ADDED.message);
     view.printTaskDescriptionText(model);
-    System.out.printf(Message.LIST_NUMBER.message, counter);
+    System.out.printf(Message.LIST_NUMBER.message, db.getSize());
   }
 
   /**
@@ -48,7 +47,6 @@ public class TaskController {
    */
   public void addTodoTask(String taskDescription) throws Exception {
     Todo model = new Todo(taskDescription);
-    counter += 1;
     db.create(model);
     printDescription(model);
   }
@@ -79,7 +77,6 @@ public class TaskController {
    */
   public void addDeadlineTask(String description, String deadline) throws Exception {
     Deadline model = new Deadline(description, deadline);
-    counter += 1;
     db.create(model);
     printDescription(model);
   }
@@ -92,14 +89,12 @@ public class TaskController {
    *                        command
    */
   public void addEventTask(String taskDescription, String start, String end) throws Exception {
-    counter += 1;
     Event model = new Event(taskDescription, start, end);
     db.create(model);
     printDescription(model);
   }
 
   public void manuallyAdd(Task model) {
-    counter += 1;
     db.create(model);
   }
 
