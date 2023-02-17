@@ -1,4 +1,6 @@
 import exceptions.*;
+
+import java.io.IOException;
 import java.util.ArrayList;
 // branch level-5 update as merge was not successful
 import java.util.Arrays;
@@ -130,6 +132,11 @@ public class Duke {
         printLine();
     }
     public static void sayBye() {
+        try {
+            fileObject.clearFile();
+        } catch (IOException e) {
+            System.out.println("Oh No unable to leave");
+        }
         printLine();
         System.out.println("\tBye. Hope to see you again soon!");
         printLine();
@@ -138,6 +145,7 @@ public class Duke {
     public static void deadlineExceptionHandler() {
         try {
             printDeadline(userInput);
+            fileObject.addToFile(currentIndex +"." + taskList.get(taskList.size()-1).getStatusAndDescription() + System.lineSeparator());
         } catch (EmptyDeadline e) {
             printLine();
             System.out.println("\tPlease ensure that the deadline isn't empty!");
@@ -150,12 +158,15 @@ public class Duke {
             printLine();
             System.out.println("\tPlease ensure that the deadline is not composed of solely white spaces!");
             printLine();
+        } catch (IOException e) {
+            System.out.println("unable to write");
         }
     }
 
     public static void eventExceptionHandler() {
         try {
             printEvent(userInput);
+            fileObject.addToFile(currentIndex +"." + taskList.get(taskList.size()-1).getStatusAndDescription() + System.lineSeparator());
         } catch (EmptyEvent e) {
             printLine();
             System.out.println("\tPlease ensure that the event isn't empty!");
@@ -180,6 +191,8 @@ public class Duke {
             printLine();
             System.out.println("\tPlease ensure that the event has a valid end time period");
             printLine();
+        } catch (IOException e) {
+            System.out.println("unable to write");
         }
     }
 
@@ -191,6 +204,11 @@ public class Duke {
             printLine();
             System.out.println("\tPlease ensure that the todo has a description!");
             printLine();
+        }
+        try {
+            fileObject.addToFile(currentIndex +"." + taskList.get(taskList.size()-1).getStatusAndDescription() + System.lineSeparator());
+        } catch (IOException e) {
+            System.out.println("unable to write");
         }
     }
 
@@ -209,6 +227,7 @@ public class Duke {
     public static Scanner in = new Scanner(System.in);
     public static String userInput;
     //public static exceptions.DukeException exceptionHandler;
+    public static FileHandler fileObject = new FileHandler("src/main/java/dukeData.txt");
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -220,6 +239,11 @@ public class Duke {
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
         System.out.println("---------------------------------------------------------------------------------");
+        try {
+            fileObject.createFile();
+        } catch (IOException e) {
+            System.out.println("Unable to write to file");
+        }
         userInput = in.nextLine();
         while (true) { // ensure that the loop can stay on forever if needed.
             while(userInput.equals("") || userInput.equals(" ")) {
@@ -267,6 +291,12 @@ public class Duke {
             }  else { // tells the user that we have added the task in
                 printTask(userInput); // could remove this and ensure that only specific tasks can be entered!
             }
+            /*
+            either way, the process to add to the file could be this way.
+            Essentially create file manip:
+                1. At the end of this while loop, take the final input
+                2. could add at the end of each of the exception handlers, this should work fine
+             */
             userInput = in.nextLine();
         }
        sayBye();
