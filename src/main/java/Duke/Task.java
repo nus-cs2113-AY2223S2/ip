@@ -58,15 +58,6 @@ public class Task {
     }
 
     /**
-     * Returns the completion status of task
-     * @return status of completion of task
-     */
-
-    public boolean getTaskProgress() {
-        return this.isCompleted;
-    }
-
-    /**
      * prints all information about the task
      */
 
