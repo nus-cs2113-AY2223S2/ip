@@ -194,9 +194,7 @@ public class Duke {
         }
     }
 
-    public static void deleteExceptionHandler() {
-        deleteTask();
-    }
+
 
 
 //    final static int MAXTASKS = 100;
@@ -260,10 +258,7 @@ public class Duke {
                 deadlineExceptionHandler();
             } else if(isTheSame(userInput, "event")) {
                 eventExceptionHandler();
-            } else if(isTheSame(userInput, "delete")) {
-                deleteExceptionHandler();
-            }
-            else { // tells the user that we have added the task in
+            }  else { // tells the user that we have added the task in
                 printTask(userInput); // could remove this and esnure that only specific tasks can be entered!
             }
             userInput = in.nextLine();
