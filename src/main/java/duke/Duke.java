@@ -1,10 +1,12 @@
 package duke;
 
+import duke.command.MainFunctions;
 import duke.exception.BlankDescException;
 import duke.exception.DukeException;
-import duke.command.MainFunctions;
 import duke.task.Task;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Duke {
@@ -19,6 +21,13 @@ public class Duke {
         String userCommand = scanner.nextLine();
 
         Task[] storedUserTasks = new Task[100];
+
+        try {
+            MainFunctions.readData(storedUserTasks);
+        } catch (FileNotFoundException e) {
+           File f = new File("data/tasklist.txt");
+        }
+
         boolean isExit = false;
 
         while(!isExit){
