@@ -1,7 +1,9 @@
 package duke;
 
-import duke.exceptions.InvalidInputException;
+import duke.exceptions.InvalidCommandException;
+import duke.exceptions.InvalidInputIDException;
 import duke.exceptions.InvalidTaskFormatException;
+import duke.exceptions.NoTaskException;
 import duke.tasks.Deadline;
 import duke.tasks.Event;
 import duke.tasks.Task;
@@ -31,9 +33,7 @@ public class Duke {
     private static final String COMMAND_SAVE = "save";
 
     // messages
-    private static final String MESSAGE_COMMAND_UNRECOGNISED = "Unrecognised command, try again.";
     private static final String MESSAGE_TASKS_AVAILABLE = "Here are the tasks in your list:";
-    private static final String MESSAGE_TASKS_INVALID_ID = "Invalid task ID entered.";
     private static final String MESSAGE_TASKS_MARKED = "Nice! I've marked this task as done:";
     private static final String MESSAGE_TASKS_NONE = "There are no tasks available.";
     private static final String MESSAGE_TASKS_UNMARKED = "OK, I've marked this task as not done yet:";
@@ -97,7 +97,7 @@ public class Duke {
                 handleCommandSave();
                 break;
             default:
-                throw new InvalidInputException(MESSAGE_COMMAND_UNRECOGNISED);
+                throw new InvalidCommandException();
             }
             // update saved tasks
             Storage.writeTasks(tasks);
@@ -110,28 +110,27 @@ public class Duke {
     }
 
 
-
     private static void addTask(Task taskObj) {
         tasks.add(taskObj);
         ui.printTaskAdded(taskObj.describe(), tasks.size());
     }
 
-    private static void setTaskStatus(int id, boolean isCompleted) throws InvalidInputException {
+    private static void setTaskStatus(int id, boolean isCompleted) throws Exception {
         try {
             if (id >= tasks.size() || id < 0) {
                 throw new IndexOutOfBoundsException();
             }
             tasks.get(id).setIsCompleted(isCompleted);
             String output = isCompleted
-                            ? MESSAGE_TASKS_MARKED + "\n"
-                            : MESSAGE_TASKS_UNMARKED + "\n";
+                    ? MESSAGE_TASKS_MARKED + "\n"
+                    : MESSAGE_TASKS_UNMARKED + "\n";
             output += tasks.get(id).describe();
             ui.print(output);
             ui.printLine();
         } catch (IndexOutOfBoundsException e) {
-            throw new InvalidInputException(tasks.size() == 0
-                                            ? MESSAGE_TASKS_NONE
-                                            : MESSAGE_TASKS_INVALID_ID);
+            throw (tasks.size() == 0)
+                    ? new NoTaskException()
+                    : new InvalidInputIDException();
         }
     }
 
@@ -143,8 +142,8 @@ public class Duke {
         }
         String taskDetails = input.nextLine().trim();
         return ToDo.isValidInput(taskDetails)
-               ? taskDetails
-               : "";
+                ? taskDetails
+                : "";
     }
 
     private static void handleStateExit() {
@@ -153,8 +152,8 @@ public class Duke {
 
     private static void handleCommandList() {
         String output = tasks.size() == 0
-                        ? MESSAGE_TASKS_NONE
-                        : MESSAGE_TASKS_AVAILABLE + "\n";
+                ? MESSAGE_TASKS_NONE
+                : MESSAGE_TASKS_AVAILABLE + "\n";
         // adds tasks to output, if any
         // combine details of tasks into a single string
         for (int i = 0; i < tasks.size(); ++i) {
@@ -165,17 +164,17 @@ public class Duke {
         ui.printLine();
     }
 
-    private static void handleCommandMark(Scanner input) throws InvalidInputException {
+    private static void handleCommandMark(Scanner input) throws Exception {
         if (!input.hasNextInt()) {
-            throw new InvalidInputException(MESSAGE_TASKS_INVALID_ID);
+            throw new InvalidInputIDException();
         }
         int taskNumber = input.nextInt();
         setTaskStatus(taskNumber - 1, true);
     }
 
-    private static void handleCommandUnmark(Scanner input) throws InvalidInputException {
+    private static void handleCommandUnmark(Scanner input) throws Exception {
         if (!input.hasNextInt()) {
-            throw new InvalidInputException(MESSAGE_TASKS_INVALID_ID);
+            throw new InvalidInputIDException();
         }
         int taskNumber = input.nextInt();
         setTaskStatus(taskNumber - 1, false);
@@ -217,14 +216,14 @@ public class Duke {
         addTask(new Event(detailsArr));
     }
 
-    private static void handleCommandDelete(Scanner input) throws InvalidInputException {
+    private static void handleCommandDelete(Scanner input) throws InvalidInputIDException {
         // check for valid task input
         if (!input.hasNextInt()) {
-            throw new InvalidInputException(MESSAGE_TASKS_INVALID_ID);
+            throw new InvalidInputIDException();
         }
         int id = input.nextInt();
         if (id < 1 || id > tasks.size()) {
-            throw new InvalidInputException(MESSAGE_TASKS_INVALID_ID);
+            throw new InvalidInputIDException();
         }
 
         Task toDelete = tasks.get(id - 1);

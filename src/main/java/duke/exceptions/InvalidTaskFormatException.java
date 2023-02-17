@@ -3,7 +3,6 @@ package duke.exceptions;
 import duke.tasks.TaskEnum;
 
 public class InvalidTaskFormatException extends Exception {
-
     private static final String MESSAGE_HEADER = "Invalid input format!\n"
             + "Use the following format to create a new task:\n";
     private static final String FORMAT_TODO = "Todo - todo <task details>\n";
