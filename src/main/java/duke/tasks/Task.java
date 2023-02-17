@@ -68,11 +68,6 @@ public class Task {
         return taskName;
     }
 
-    @Override
-    public String toString(){
-        return "";
-    }
-
     /**
      * Outputs a checkmark if task is done, and a blank space if task is not done.
      *

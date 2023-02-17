@@ -14,7 +14,7 @@ import static duke.constants.Constants.LINEBREAK;
 public class MarkCommand extends Command {
 
     @Override
-    public void handleCommand(String line, TaskList tasks, Storage storage){
+    public void handleCommand(String line, TaskList tasks, Storage storage) {
         int indexCount = Task.getIndexCount();
         int indexSelect;
         try {

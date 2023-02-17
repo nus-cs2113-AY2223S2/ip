@@ -19,10 +19,20 @@ public class Event extends ToDo {
         this.end = end;
     }
 
+    /**
+     * Getter for start field.
+     *
+     * @return the start time of the event.
+     */
     public String getStart(){
         return this.start;
     }
 
+    /**
+     * Getter for end field.
+     *
+     * @return the end time of the event.
+     */
     public String getEnd(){
         return this.end;
     }

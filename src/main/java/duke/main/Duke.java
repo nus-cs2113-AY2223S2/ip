@@ -32,8 +32,6 @@ public class Duke {
         ui.greet();
         ui.run(tasks, storage);
         ui.sayBye();
-
-
     }
 
     public static void main(String[] args) {

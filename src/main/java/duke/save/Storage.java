@@ -6,7 +6,11 @@ import duke.tasks.Deadline;
 import duke.tasks.Event;
 import duke.tasks.ToDo;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Storage {
 
@@ -58,7 +62,7 @@ public class Storage {
             reader.close();
         } catch (IOException e) {
             System.out.println("Oops, something went wrong!");
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Your file is corrupted! Please delete the file");
         }
     }
@@ -74,7 +78,8 @@ public class Storage {
                 overwriteFile.write(type + "," + done + "," + temp.getTaskName() + "\n");
             } else if (type.equals("[D]")){
                 Deadline newTemp = (Deadline) temp;
-                overwriteFile.write(type + "," + done + "," + newTemp.getTaskName() + "," + newTemp.getDeadline() + "\n");
+                overwriteFile.write(type + "," + done + "," + newTemp.getTaskName()
+                        + "," + newTemp.getDeadline() + "\n");
             } else {
                 Event newTemp = (Event) temp;
                 overwriteFile.write(type + "," + done + "," + newTemp.getTaskName() + "," + newTemp.getStart() +

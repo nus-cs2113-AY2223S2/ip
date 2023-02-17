@@ -13,7 +13,7 @@ import java.io.IOException;
 public class EventCommand extends Command {
 
     @Override
-    public void handleCommand(String line, TaskList taskList, Storage storage){
+    public void handleCommand(String line, TaskList taskList, Storage storage) {
         int markIndex;
         int markIndex1;
         int indexCount = Task.getIndexCount();

@@ -17,7 +17,7 @@ public class Parser {
      *
      * @param line User input represented as a String.
      */
-    public void updateLine(String line){
+    public void updateLine(String line) {
         this.line = line;
     }
 
@@ -26,7 +26,7 @@ public class Parser {
      *
      * @return String containing the command.
      */
-    private String parseCommand(){
+    private String parseCommand() {
         return line.contains(" ") ? line.split(" ")[0] : line;
     }
 
@@ -35,7 +35,7 @@ public class Parser {
      *
      * @return true if the user input is "bye", false otherwise.
      */
-    public boolean isExit(){
+    public boolean isExit() {
         return line.equals("bye");
     }
 

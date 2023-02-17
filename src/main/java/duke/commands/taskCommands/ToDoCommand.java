@@ -11,9 +11,8 @@ import java.io.IOException;
 
 public class ToDoCommand extends Command {
 
-
     @Override
-    public void handleCommand(String line, TaskList taskList, Storage storage){
+    public void handleCommand(String line, TaskList taskList, Storage storage) {
         int markIndex;
         int indexCount = Task.getIndexCount();
         String description;

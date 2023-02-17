@@ -12,7 +12,7 @@ import java.io.IOException;
 public class DeadlineCommand extends Command {
 
     @Override
-    public void handleCommand(String line, TaskList taskList, Storage storage){
+    public void handleCommand(String line, TaskList taskList, Storage storage) {
         int markIndex;
         String description;
         String deadline;
@@ -35,7 +35,7 @@ public class DeadlineCommand extends Command {
             storage.updateFile(taskList);
         } catch (InvalidTaskException e) {
             System.out.println(e.getMessage());
-        } catch (IOException e){
+        } catch (IOException e) {
             System.out.println("Something went wrong!");
         }
     }

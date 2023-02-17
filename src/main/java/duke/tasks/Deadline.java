@@ -16,6 +16,11 @@ public class Deadline extends ToDo {
         this.deadline = deadline;
     }
 
+    /**
+     * Getter for deadline field.
+     *
+     * @return the deadline of the task.
+     */
     public String getDeadline(){
         return this.deadline;
     }

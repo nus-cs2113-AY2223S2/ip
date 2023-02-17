@@ -46,6 +46,7 @@ public class UnmarkCommand extends Command {
         } catch (NumberFormatException e) {
             System.out.println("Invalid command. Please try again.");
             System.out.println(LINEBREAK);
+
         } catch (IOException e) {
             System.out.println("Something went wrong!");
         }

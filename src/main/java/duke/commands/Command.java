@@ -11,7 +11,7 @@ public abstract class Command {
      * @param line User input into the system
      * @return Number of words in the user input.
      */
-    protected int getArgumentNumber(String line){
+    protected int getArgumentNumber(String line) {
         if (line == null || line.isEmpty()){
             return 0;
         }
