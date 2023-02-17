@@ -19,4 +19,9 @@ public class Deadline extends Task {
                 + super.toString() + OPEN_CURVE_BRACKET + BY_DESC + by
                 + CLOSE_CURVE_BRACKET;
     }
+
+    @Override
+    public String toFile() {
+        return DEADLINE_ICON + " " + super.toFile() + " | " + by;
+    }
 }
