@@ -1,5 +1,3 @@
 todo 1 /done done
-todo 1 /done done
-todo 1 /done done
-todo 2 /done notdone
-event a /from 1 /to b /done done
+todo 2 /done done
+todo 2 /done done

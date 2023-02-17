@@ -4,25 +4,34 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class TaskUpdater {
+    static File txtFile = new File("data/duke.txt");
     static FileWriter FW;
     static Scanner SC;
 
     static void setUpReadWrite() {
         try {
-            File f = new File("data/duke.txt");
-            FW = new FileWriter("data/duke.txt", true);
-            SC = new Scanner(f);
+            if (!txtFile.exists()) createDirectory();
+            txtFile = new File("data/duke.txt");
+            FW = new FileWriter(txtFile, true);
+            SC = new Scanner(txtFile);
         } catch (IOException e) {
-            File f = new File("data/duke.txt");
             System.out.println("Error Occurred");
             e.printStackTrace();
-            setUpReadWrite();
+        }
+    }
+
+    static void createDirectory() {
+        try {
+            Files.createDirectories(Paths.get("data"));
+        } catch (IOException e){
+            e.printStackTrace();
         }
     }
 
@@ -50,13 +59,14 @@ public class TaskUpdater {
     }
 
     static void deleteTask(Task delTask) {
-        try { // should change from stream to list, the go by index
+        // should change from stream to list, the go by index
+        try {
             String task = convertTaskToCommandString(delTask);
-            File file = new File("data/duke.txt");
-            List<String> lines = Files.lines(file.toPath())
-                    .filter(line -> line.contains(task))
+            String taskWithoutCompletionStatus = removeCompletionStatusFromStr(task);
+            List<String> lines = Files.lines(txtFile.toPath())
+                    .filter(line -> !line.contains(taskWithoutCompletionStatus))
                     .collect(Collectors.toList());
-            Files.write(file.toPath(), lines);
+            Files.write(txtFile.toPath(), lines);
         } catch (IOException e) {
             System.out.println("Error occurred");
             e.printStackTrace();
@@ -66,22 +76,16 @@ public class TaskUpdater {
     static void updateTask(Task newTask) {
         try {
             String task = convertTaskToCommandString(newTask);
-            int charAtEnd = newTask.isCompleted() ? 14 : 11;
-            String taskWithoutCompletionStatus = task.substring(0,
-                    task.length() - (charAtEnd == 14 ? 11 : 14));
+            String taskWithoutCompletionStatus = removeCompletionStatusFromStr(task);
 
             File file = new File("data/duke.txt");
             List<String> lines = Files.lines(file.toPath())
                     .map(line ->
-                            line.substring(0, line.length() - charAtEnd)
-                                    .equals(taskWithoutCompletionStatus) ?
+                            line.contains(taskWithoutCompletionStatus) ?
                                     task :
                                     line
                             )
                     .collect(Collectors.toList());
-//            for (String line : lines) {
-//                System.out.println(line.substring(0, line.length() - charAtEnd));
-//            }
             Files.write(file.toPath(), lines);
         } catch (IOException e) {
             System.out.println("Error occurred");
@@ -113,5 +117,13 @@ public class TaskUpdater {
         }
         command += "/done " + (task.isCompleted() ? "done" : "notdone");
         return command;
+    }
+
+    static String removeCompletionStatusFromStr(String taskInStr) {
+        int counter = taskInStr.length() - 1;
+        while (taskInStr.charAt(counter) != '/') {
+            counter--;
+        }
+        return taskInStr.substring(0, counter - 1);
     }
 }
