@@ -1,6 +1,6 @@
-import duke.Deadline;
-import duke.Event;
-import duke.Todo;
+import task.Deadline;
+import task.Event;
+import task.Todo;
 
 import java.io.File;
 import java.io.FileNotFoundException;

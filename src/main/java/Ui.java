@@ -1,4 +1,4 @@
-import duke.Task;
+import task.Task;
 
 /**
  * Represents messages that Duke is able to print out to display to the user.

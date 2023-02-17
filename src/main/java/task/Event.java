@@ -1,4 +1,4 @@
-package duke;
+package task;
 
 /**
  * Represents an Event type of task that has a timeframe, from a certain date/time

@@ -1,8 +1,8 @@
-import duke.Deadline;
-import duke.DukeException;
-import duke.Event;
-import duke.Task;
-import duke.Todo;
+import task.Deadline;
+import exception.DukeException;
+import task.Event;
+import task.Task;
+import task.Todo;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -45,7 +45,7 @@ public class TaskList {
      * If addition succeeds, proceeds to print the Todo task that is added to the task list.
      *
      * @param description the details of the Todo task to be added.
-     * @throws duke.DukeException if the description of the Todo task is empty.
+     * @throws exception.DukeException if the description of the Todo task is empty.
      */
     public void addTodoTask(String description) throws DukeException {
         if (description.isBlank()) {

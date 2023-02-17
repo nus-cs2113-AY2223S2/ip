@@ -1,4 +1,4 @@
-package duke;
+package task;
 
 /**
  * Represents an Todo type of task that only has details keyed in by the user.

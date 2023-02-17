@@ -1,4 +1,4 @@
-package duke;
+package task;
 
 /**
  * Represents a Task that contains attributes such as the details of the task and

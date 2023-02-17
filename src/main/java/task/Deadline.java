@@ -1,4 +1,4 @@
-package duke;
+package task;
 
 /**
  * Represents a Deadline type of task that has a due date, which is keyed in by the user
