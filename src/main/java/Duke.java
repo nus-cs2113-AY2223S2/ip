@@ -2,6 +2,9 @@ import java.util.Scanner;
 
 public class Duke {
 
+    private static Tasks[] list_of_tasks = new Tasks[101];
+    private static int counter = 0;
+
     public static void greet_user() {
         System.out.println("Hello! I'm Duke \n");
         String logo = " ____        _        \n"
@@ -13,63 +16,89 @@ public class Duke {
         System.out.println("How can i help u? \n");
     }
 
-    public static void echo() {
-        Scanner scan = new Scanner(System.in);
+    public static void print_action() {
+        System.out.println("\n");
+        System.out.println("I have added this task: ");
+        System.out.println(list_of_tasks[counter - 1].toString());
 
-        String input = scan.next();
-        if ("bye".equals(input)) {
-            System.out.println("Goodbye. Hope to see u again :) \n");
-        } else {
-            System.out.println(input);
-            echo();
+        System.out.println("You now have " + counter + " tasks in the list.");
+    }
+
+    public static void Todo(String description) {
+        Tasks t = new ToDo(description);
+        list_of_tasks[counter] = t;
+        counter++;
+        print_action();
+    }
+
+    public static void Deadline(String description, String by) {
+        Deadline d = new Deadline(description, by);
+        list_of_tasks[counter] = d;
+        counter++;
+        print_action();
+    }
+
+    public static void Event(String description, String start, String end) {
+        Event E = new Event(description, start, end);
+        list_of_tasks[counter] = E;
+        counter++;
+        print_action();
+    }
+
+    public static void List() {
+        System.out.println("Here are all of your " + counter + " tasks: ");
+        for (int i = 0; i < counter; i++) {
+            System.out.println(i + 1 + "." + list_of_tasks[i].toString());
         }
-
-        scan.close();
-
     }
 
     public static void main(String[] args) {
         greet_user();
-        int counter = 0;
-
-        Tasks[] list_of_tasks = new Tasks[101]; // Following the assumption that there will be no more than 100 tasks
-        for (int k = 0; k < 101; k++) {
-            list_of_tasks[k] = new Tasks("");
-        }
 
         Scanner scan = new Scanner(System.in);
         String input = scan.nextLine();
+        String[] command = input.split(" ", 2);
 
         while (!"bye".equals(input)) {
-            if ("list".equals(input)) {
-                System.out.println("Here are the tasks in your list: ");
-                for (int i = 0; i < counter; i++) {
-                    System.out.println(
-                            i + 1 + "." + " " + list_of_tasks[i].getStatusIcon() + " " + list_of_tasks[i].description);
-                }
-            } else if (input.length() >= 4 && input.substring(0, 4).equals("mark")) {
-                Integer index = Integer.valueOf(input.substring(5, input.length()));
-                list_of_tasks[index - 1].markAsDone();
-                System.out.println("Nice! This task is completed");
-                System.out
-                        .println(list_of_tasks[index - 1].getStatusIcon() + " " + list_of_tasks[index - 1].description);
-            } else if (input.length() >= 6 && input.substring(0, 6).equals("unmark")) {
-                Integer index = Integer.valueOf(input.substring(7, input.length()));
-                list_of_tasks[index - 1].markAsUnDone();
-                System.out.println("Ok, This task is still not complete");
-                System.out
-                        .println(list_of_tasks[index - 1].getStatusIcon() + " " + list_of_tasks[index - 1].description);
-            } else {
-                System.out.println("added: " + input);
-                list_of_tasks[counter].description = input;
-                list_of_tasks[counter].isDone = false;
-                counter++;
+            switch (command[0]) {
+                case "todo":
+                    Todo(command[1]);
+                    break;
+                case "deadline":
+                    String[] d = command[1].split("/by", 2);
+                    String d_description = d[0];
+                    String d_by = d[1];
+                    Deadline(d_description, d_by);
+                    break;
+                case "event":
+                    String[] e = command[1].split("/", 3);
+                    String e_description = e[0];
+                    String e_start = e[1];
+                    String e_end = e[2];
+                    Event(e_description, e_start, e_end);
+                    break;
+                case "list":
+                    List();
+                    break;
+                case "mark":
+                    Integer m_index = Integer.valueOf(command[1]);
+                    list_of_tasks[m_index - 1].markAsDone();
+                    System.out.println("Nice! This task is completed");
+                    System.out.println(list_of_tasks[m_index - 1].toString());
+                    break;
+                case "unmark":
+                    Integer u_index = Integer.valueOf(command[1]);
+                    list_of_tasks[u_index - 1].markAsUnDone();
+                    System.out.println("Nice! This task is completed");
+                    System.out.println(list_of_tasks[u_index - 1].toString());
+                    break;
+                default:
+                    System.out.println("There was an error. Please try again");
+                    break;
             }
-            scan = new Scanner(System.in);
             input = scan.nextLine();
-
+            command = input.split(" ", 2);
         }
-
         System.out.println("Goodbye. Hope to see u again :) \n");
         scan.close();
     }
