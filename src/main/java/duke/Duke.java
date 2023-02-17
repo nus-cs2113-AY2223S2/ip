@@ -39,6 +39,7 @@ public class Duke {
             int counter = 0;
             while (READ_FILE.hasNext()) {
                 String[] savedTask = READ_FILE.nextLine().split(" / ");
+
                 switch (savedTask[0]) {
                     case "T": {
                         String temp = savedTask[2];
@@ -52,9 +53,9 @@ public class Duke {
                     }
 
                     case "D": {
-                        String[] deadlineDescription = savedTask[2].split(" ");
-                        String by = deadlineDescription[2].substring(0, deadlineDescription[2].length() - 1);
-                        Deadline deadline = new Deadline(deadlineDescription[0], by);
+                        String[] deadlineBreakdown = savedTask[2].split(" \\(By: ");
+                        String by = deadlineBreakdown[1].substring(0, deadlineBreakdown[1].length() - 1);
+                        Deadline deadline = new Deadline(deadlineBreakdown[0], by);
                         tasks.add(deadline);
 
                         if (savedTask[1].equals("X")) {
@@ -64,9 +65,13 @@ public class Duke {
                     }
 
                     case "E": {
-                        String[] eventDescription = savedTask[2].split(" ");
-                        String to = eventDescription[4].substring(0, eventDescription[4].length() - 1);
-                        Event event = new Event (eventDescription[0], eventDescription[2], to);
+                        String[] eventBreakdown = savedTask[2].split(" \\(From: ");
+                        String eventDescription = eventBreakdown[0];
+                        String[] timeBreakdown = eventBreakdown[1].split(" To: ");
+                        String from = timeBreakdown[0];
+                        String to = timeBreakdown[1].substring(0, timeBreakdown[1].length() - 1);
+
+                        Event event = new Event (eventDescription, from, to);
                         tasks.add(event);
 
                         if (savedTask[1].equals("X")) {
