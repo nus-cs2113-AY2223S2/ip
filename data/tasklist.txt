@@ -1,6 +1,6 @@
 [T][X] borrow book
-[D][X] return book (by: Sunday)
+[D][ ] return book (by: Sunday)
 [E][X] project meeting (from: Mon 2pm to: 4pm)
-[T][X] homework
+[T][ ] homework
 [D][X] ip (by: Friday night)
-[T][X] this project
+[T][ ] r&b all night

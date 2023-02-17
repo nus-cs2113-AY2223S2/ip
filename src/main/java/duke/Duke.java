@@ -1,6 +1,9 @@
 package duke;
 
-import duke.command.MainFunctions;
+import duke.command.CreateTask;
+import duke.command.Display;
+import duke.command.IOFile;
+import duke.command.ModifyTask;
 import duke.exception.BlankDescException;
 import duke.exception.DukeException;
 import duke.task.Task;
@@ -18,14 +21,14 @@ public class Duke {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        MainFunctions.printWelcome();
+        Display.printWelcome();
 
         String userCommand = scanner.nextLine();
 
         ArrayList<Task> storedUserTasks = new ArrayList<>();
 
         try {
-            MainFunctions.readData(storedUserTasks);
+            IOFile.readData(storedUserTasks);
         } catch (FileNotFoundException e) {
             File f = new File("data/tasklist.txt");
         }
@@ -35,23 +38,23 @@ public class Duke {
         while(!isExit){
             switch (userCommand.split(" ")[0]) {
             case "list":
-                MainFunctions.listTasks(userTextCount, storedUserTasks);
+                Display.listTasks(userTextCount, storedUserTasks);
                 break;
             case "bye":
                 isExit = true;
                 break;
             case "mark":
-                MainFunctions.markTask(userCommand, storedUserTasks);
+                ModifyTask.markTask(userCommand, storedUserTasks);
                 break;
             case "unmark":
-                MainFunctions.unmarkTask(userCommand, storedUserTasks);
+                ModifyTask.unmarkTask(userCommand, storedUserTasks);
                 break;
             case "delete":
-                MainFunctions.deleteTask(userCommand, storedUserTasks);
+                ModifyTask.deleteTask(userCommand, storedUserTasks);
                 break;
             case "todo":
                 try {
-                    MainFunctions.createTodo(userCommand, storedUserTasks);
+                    CreateTask.createTodo(userCommand, storedUserTasks);
                 } catch (BlankDescException e) {
                     BlankDescException.errorMessage("todo");
                 } catch (DukeException e) {
@@ -60,7 +63,7 @@ public class Duke {
                 break;
             case "deadline":
                 try {
-                    MainFunctions.createDeadline(userCommand, storedUserTasks);
+                    CreateTask.createDeadline(userCommand, storedUserTasks);
                 } catch (BlankDescException e) {
                     BlankDescException.errorMessage("deadline");
                 } catch (DukeException e) {
@@ -69,7 +72,7 @@ public class Duke {
                 break;
             case "event":
                 try {
-                    MainFunctions.createEvent(userCommand, storedUserTasks);
+                    CreateTask.createEvent(userCommand, storedUserTasks);
                 } catch (BlankDescException e) {
                     BlankDescException.errorMessage("event");
                 } catch (DukeException e) {
@@ -77,7 +80,7 @@ public class Duke {
                 }
                 break;
             default:
-                MainFunctions.invalidInput();
+                Display.printInvalidInput();
                 break;
             }
             if(!isExit) {
@@ -86,12 +89,12 @@ public class Duke {
         }
 
         try {
-            MainFunctions.writeData(storedUserTasks);
+            IOFile.writeData(storedUserTasks);
         } catch (IOException e) {
             System.out.println("Failed to save data!");
         }
 
-        MainFunctions.printGoodbye();
+        Display.printGoodbye();
 
     }
 }
