@@ -37,13 +37,13 @@ public class UI {
 
   public static void chat(TaskManager taskManager) {
     Scanner scanner = new Scanner(System.in);
-    int flag = 1;
-    while (flag == 1) {
+    int toContinueFlag = 1;
+    while (toContinueFlag == 1) {
       String userInput = scanner.nextLine().trim();
       try {
         switch (userInput.split(" ")[0]) {
           case "bye":
-            flag = 0;
+            toContinueFlag = 0;
             break;
           case "list":
             UI.printText(taskManager.toString());

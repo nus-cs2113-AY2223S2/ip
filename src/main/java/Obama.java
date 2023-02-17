@@ -1,6 +1,6 @@
 import misc.UI;
 import storage.Database;
-import tasks.*;
+import tasks.TaskManager;
 
 public class Obama {
 
