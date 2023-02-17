@@ -1,3 +1,4 @@
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -156,7 +157,17 @@ public class Duke {
 //                + "| |_| | |_| |   <  __/\n"
 //                + "|____/ \\__,_|_|\\_\\___|\n";
 //        System.out.println("Hello from\n" + logo);
-
+        try {
+            //f.createFile();
+            f.getFileContents(filePath, inputList);
+        } catch (FileNotFoundException e) {
+            System.out.println("No such file is found. Creating a new one for you :^)");
+            f.createFile();
+        } catch (IOException e) {
+            System.out.println("An error has occurred :^^( ");
+        } catch (NullPointerException e) {
+            System.out.println("null pointer :(");
+        }
         greet();
         getCommand();
         bye();

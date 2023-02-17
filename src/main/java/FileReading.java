@@ -8,31 +8,44 @@ import java.util.Scanner;
 public class FileReading {
     private static String filePath = "data/Duke.txt";
 
-    public static void createFile(String filePath) throws IOException {
+    public static void createFile() throws IOException {
         File newFolder = new File("data");
-        if (newFolder.createNewFile()) {
-            System.out.println("File created: " + newFolder.getName());
-            newFolder.mkdirs();
-        } else {
-            //newFolder.delete();
+        if (!newFolder.exists()) { //if file does not exist
+            //System.out.println("File created: " + newFolder.getName());
             //newFolder.mkdirs();
-            System.out.println(newFolder + "file already exists.");
-        }
-        File file = new File("data/duke.txt");
-        if (file.createNewFile()) {
-            System.out.println("File created: " + file.getName());
+            newFolder.createNewFile();
         } else {
-            System.out.println(file + "file already exists.");
+            newFolder.delete();
+            newFolder.createNewFile();
+//            newFolder.mkdirs();
+            //System.out.println(newFolder + " file already exists.");
+        }
+        newFolder.mkdirs();
+        //System.out.println("make data a directory?" + newFolder.mkdirs());
+        File file = new File("data/duke.txt");
+        if (!file.exists()) {
+            //System.out.println("File created: " + file.getName());
+            file.createNewFile();
+        } else {
+            file.delete();
+            file.createNewFile();
+            //System.out.println(file + " file already exists.");
         }
     }
 
     public static void getFileContents(String filePath, ArrayList<Task> tasksList) throws FileNotFoundException {
         File f = new File(filePath);
-        if (f.exists()) {
-            Scanner s = new Scanner(f);
-            while(s.hasNext()) {
-                //System.out.println(s.nextLine());
-            }
+        if (!f.exists()) {
+            throw new FileNotFoundException();
+
+        }
+        Scanner s = new Scanner(f);
+        while(s.hasNext()) {
+            //System.out.println(s.nextLine());
+            Task t = null;
+            t.readTask(s.nextLine());
+            tasksList.add(t);
+            System.out.println(t.toString() + " has been added to tasks list.");
         }
     }
 
@@ -40,7 +53,7 @@ public class FileReading {
         File f = new File(filePath);
         f.delete();
         try {
-            createFile(filePath);
+            createFile();
         } catch (IOException e) {
             System.out.println("An error has occurred :( ");
         //e.printStackTrace();
@@ -51,7 +64,9 @@ public class FileReading {
         FileWriter fw = new FileWriter(filePath);
         //write to file the arraylist?
         deleteFileContents(filePath);
-        fw.write(tasksList.toString());
+        for (Task t: tasksList) {
+            fw.write(t.toString());
+        }
         fw.close();
     }
 

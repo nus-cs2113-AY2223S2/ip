@@ -36,5 +36,10 @@ public class Task {
         System.out.println(line);
     }
 
+    public void readTask(String text) {
+        this.type = text.substring(1, 2); //2nd char in string
+        this.isDone = (text.substring(4,5).equals("X")) ? true : false; //4th char in string
+        this.description = text.substring(7, text.length());
+    }
 }
 
