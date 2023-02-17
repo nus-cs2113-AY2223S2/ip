@@ -53,16 +53,19 @@ public class Duke {
                 + myList.get(myList.size() - 1).getDescription()
                 + "\n" + LINE);
     }
+
     public static void printIllegalInputMessage() {
         System.out.println(LINE
-                +  "☹ OOPS!!! I'm sorry, but I don't know what that means :-(\n"
+                + "☹ OOPS!!! I'm sorry, but I don't know what that means :-(\n"
                 + LINE);
     }
+
     public static void printEmptyInputMessage(String task) {
         System.out.println(LINE
                 + "☹ OOPS!!! The description of " + task + " cannot be empty.\n"
                 + LINE);
     }
+
     /**
      * Adds the input text into the list
      *
@@ -85,6 +88,11 @@ public class Duke {
             System.out.println(i + 1 + ". " + myList.get(i));
         }
         System.out.println(LINE);
+    }
+
+    public static void printDeletedMessage(ArrayList<Task> myList, int index) {
+        System.out.println(LINE + "Noted. I've removed this task:\n" + myList.get(index)
+                + "\nNow you have " + (myList.size()-1) + " task(s) in the list\n" + LINE);
     }
 
     /**
@@ -234,6 +242,7 @@ public class Duke {
             printIllegalInputMessage();
         }
     }
+
     public static void handleEvent(String s, ArrayList<Task> myList) {
         try {
             makeEventFunction(s, myList);
@@ -243,12 +252,43 @@ public class Duke {
             printIllegalInputMessage();
         }
     }
+
     public static void checkMarkUnmark(String s) throws EmptyInputException {
         String[] list = s.split(" ");
         if (list.length < 2) {
             if (list[0].equals("mark") || list[0].equals("unmark")) {
                 throw new EmptyInputException();
             }
+        }
+    }
+
+    public static void deleteTask(String s, ArrayList<Task> myList) throws IllegalInputException {
+        String[] list = s.split(" ");
+        if (isNumeric(list[1]) && list.length == 2) {
+            int indexToRemove = Integer.parseInt(list[1]) - 1;
+            printDeletedMessage(myList, indexToRemove);
+            myList.remove(indexToRemove);
+        } else {
+            throw new IllegalInputException();
+        }
+    }
+
+    public static void handleDeleteTask(String s, ArrayList<Task> myList) {
+        try {
+            deleteTask(s, myList);
+        } catch (IllegalInputException e) {
+            printIllegalInputMessage();
+        } catch (IndexOutOfBoundsException e) {
+            printIllegalInputMessage();
+        }
+    }
+
+    public static boolean isNumeric(String s) {
+        try {
+            Double.parseDouble(s);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
         }
     }
 
@@ -272,6 +312,8 @@ public class Duke {
                 handleDeadline(s, myList);
             } else if (s.toLowerCase().startsWith("event")) {
                 handleEvent(s, myList);
+            } else if (s.toLowerCase().startsWith("delete")) {
+                handleDeleteTask(s, myList);
             } else {
                 //addList(s, myList);
                 //printAddedTaskMessage(myList);
