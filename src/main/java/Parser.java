@@ -1,7 +1,5 @@
 import duke.DukeException;
 
-import java.io.IOException;
-
 /**
  * Represents a parser that is able to identify user input and pass on commands to the program to
  * execute different methods to modify/search the task list.
@@ -16,7 +14,15 @@ public class Parser {
         ui = new Ui();
     }
 
-    public boolean parse (String[] inputs) throws IOException, DukeException {
+    /**
+     * Method that parses the input given by the user.
+     * If the input is a valid command, proceeds to execute the command given.
+     *
+     * @param inputs the String array containing the first word and the remaining of the string keyed in by the user.
+     * @return a boolean is set to true if the command is "bye", to signal the exit of the chatbot, else set to false.
+     * @throws DukeException when the command is invalid.
+     */
+    public boolean parse (String[] inputs) throws DukeException {
 
         if (inputs[0].equals("bye")) {
             return true;

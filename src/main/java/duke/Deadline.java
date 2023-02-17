@@ -11,14 +11,20 @@ public class Deadline extends Task {
         this.by = by;
     }
 
+    /**
+     * Getter method that gets the 'by' attribute of the Deadline object.
+     *
+     * @return a string that contains the description of the 'by' attribute.
+     */
     public String getBy() {
         return this.by;
     }
 
-    public void setBy(String by) {
-        this.by = by;
-    }
-
+    /**
+     * Method to print Deadline objects in a certain manner.
+     *
+     * @return a string that represents the Deadline object.
+     */
     @Override
     public String toString() {
         return "[D]" + super.toString() +   " (by: " + this.by + ")";

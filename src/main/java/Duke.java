@@ -1,5 +1,6 @@
 import duke.DukeException;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -21,11 +22,18 @@ public class Duke {
             if(!fileDataHandler.createFile()) {
                 fileDataHandler.loadFile(taskList);
             }
+        } catch (FileNotFoundException exception) {
+            ui.printErrorMessage("     ☹ OOPS!!! The save file could not be loaded as it does not exist.");
         } catch (IOException exception) {
             ui.printErrorMessage("     ☹ OOPS!!! As an error has occurred, the current task list will not be saved in a file!");
         }
     }
 
+    /**
+     * Starts the Duke chatbot, begins to wait for inputs by the user to pass to the Parser class to
+     * execute the commands. The loop finishes upon user keying in command "bye" and triggers an exit.
+     * This also catches exceptions thrown by the Parser class during execution.
+     */
     public void run() {
         ui.welcomeMessage();
         Scanner input = new Scanner(System.in);
@@ -50,6 +58,14 @@ public class Duke {
         }
         ui.farewellMessage();
     }
+
+    /**
+     * Instantiates a new Duke object that takes in a relative filepath of data/duke.txt and a directoryName to load
+     * and store the task list into duke.txt.
+     * Calls the run() method to begin a session with the Duke chatbot.
+     *
+     * @param args String array that takes in arguments from the command line when the application is running.
+     */
     public static void main(String[] args) {
         new Duke("data/duke.txt", "data").run();
     }

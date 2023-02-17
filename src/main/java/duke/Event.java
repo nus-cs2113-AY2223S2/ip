@@ -15,22 +15,29 @@ public class Event extends Task {
         this.to = to;
     }
 
+    /**
+     * Getter method that gets the 'from' attribute of the Event object.
+     *
+     * @return a string that contains the description of the 'from' attribute.
+     */
     public String getFrom() {
         return this.from;
     }
 
+    /**
+     * Getter method that gets the 'to' attribute of the Event object.
+     *
+     * @return a string that contains the description of the 'to' attribute.
+     */
     public String getTo() {
         return this.to;
     }
 
-    public void setFrom(String from) {
-        this.from = from;
-    }
-
-    public void setTo(String to) {
-        this.to = to;
-    }
-
+    /**
+     * Method to print Event objects in a certain manner.
+     *
+     * @return a string that represents the Event object.
+     */
     @Override
     public String toString() {
         return "[E]" + super.toString() +   " (from: " + this.from + " to: " + this.to + ")";

@@ -20,6 +20,13 @@ public class FileDataHandler {
         this.filePath = filePath;
         this.directoryName = directoryName;
     }
+
+    /**
+     * Checks if the needed directory and save file already exists, else creates a new file and directory for the user.
+     *
+     * @return boolean that states if the file has been successfully created, or already exists.
+     * @throws IOException if there is an error in creation of file or directory for the user.
+     */
     public boolean createFile () throws IOException {
         File dataFile = new File(this.filePath);
         File dataDirectory = new File (this.directoryName);
@@ -36,6 +43,14 @@ public class FileDataHandler {
         return isFileCreated;
     }
 
+    /**
+     * Attempts to load the save file from the path "data/duke.txt".
+     * If successful and file exists, read the file and calls the respective methods to add the different types of Tasks
+     * into the arraylist initialized for the current session of Duke chatbot.
+     *
+     * @param taskList the arraylist that is to be populated with Task objects.
+     * @throws FileNotFoundException if the save file cannot be found.
+     */
     public void loadFile(TaskList taskList) throws FileNotFoundException {
         File dataFile = new File(filePath);
         Scanner input = new Scanner(dataFile);
@@ -53,6 +68,13 @@ public class FileDataHandler {
         }
     }
 
+    /**
+     * Attempts to save the current contents of the arraylist into a save file called duke.txt by writing into the file.
+     * Saves task according to their respective task type by calling their corresponding methods.
+     *
+     * @param taskList the arraylist that is now populated with Task objects to be written to the save file.
+     * @throws IOException if writing to the save file fails.
+     */
     public void saveFile (TaskList taskList) throws IOException {
         FileWriter fileWriter = new FileWriter(filePath);
         for (int i = 0; i < taskList.getSize(); i++) {
@@ -73,6 +95,12 @@ public class FileDataHandler {
         fileWriter.close();
     }
 
+    /**
+     * Adds a task of the Todo type into the arraylist after converting from the save file format.
+     *
+     * @param description the details of the Todo task that is to be added to the arraylist.
+     * @param taskList the arraylist that contains the Task objects.
+     */
     public void loadTodoTask (String description, TaskList taskList) {
         String[] inputs = description.split(" \\| ");
         String details = inputs[1];
@@ -83,6 +111,12 @@ public class FileDataHandler {
         taskList.addTask(savedTodoTask);
     }
 
+    /**
+     * Adds a task of the Deadline type into the arraylist after converting from the save file format.
+     *
+     * @param description the details of the Deadline task that is to be added to the arraylist.
+     * @param taskList the arraylist that contains the Task objects.
+     */
     public static void loadDeadlineTask (String description, TaskList taskList) {
         String[] inputs = description.split(" \\| ");
         String details = inputs[1];
@@ -94,6 +128,12 @@ public class FileDataHandler {
         taskList.addTask(savedDeadlineTask);
     }
 
+    /**
+     * Adds a task of the Event type into the arraylist after converting from the save file format.
+     *
+     * @param description the details of the Event task that is to be added to the arraylist.
+     * @param taskList the arraylist that contains the Task objects.
+     */
     public static void loadEventTask (String description, TaskList taskList) {
         String[] inputs = description.split(" \\| ");
         String details = inputs[1];
@@ -108,6 +148,14 @@ public class FileDataHandler {
         taskList.addTask(savedEventTask);
     }
 
+    /**
+     * Saves a task of the Todo type into the save file duke.txt by writing to the file
+     * with reference from the arraylist.
+     * Writes in specific format for the save file.
+     * @param newTodoTask the Todo task to be written to the save file.
+     * @param todoWriter the FileWriter object that refers to the original FileWriter object created during saveFile().
+     * @throws IOException if writing to the save file fails.
+     */
     public static void saveTodoTask (Todo newTodoTask, FileWriter todoWriter) throws IOException {
         String details = newTodoTask.getDetails();
         String mark = "0";
@@ -118,6 +166,14 @@ public class FileDataHandler {
         todoWriter.write(combined);
     }
 
+    /**
+     * Saves a task of the Deadline type into the save file duke.txt by writing to the file
+     * with reference from the arraylist.
+     * Writes in specific format for the save file.
+     * @param newDeadlineTask the Deadline task to be written to the save file.
+     * @param deadlineWriter the FileWriter object that refers to the original FileWriter object created during saveFile().
+     * @throws IOException if writing to the save file fails.
+     */
     public static void saveDeadlineTask (Deadline newDeadlineTask, FileWriter deadlineWriter) throws IOException {
         String details = newDeadlineTask.getDetails();
         String mark = "0";
@@ -129,6 +185,14 @@ public class FileDataHandler {
         deadlineWriter.write(combined);
     }
 
+    /**
+     * Saves a task of the Event type into the save file duke.txt by writing to the file
+     * with reference from the arraylist.
+     * Writes in specific format for the save file.
+     * @param newEventTask the Event task to be written to the save file.
+     * @param eventWriter the FileWriter object that refers to the original FileWriter object created during saveFile().
+     * @throws IOException if writing to the save file fails.
+     */
     public static void saveEventTask (Event newEventTask, FileWriter eventWriter) throws IOException {
         String details = newEventTask.getDetails();
         String mark = "0";
