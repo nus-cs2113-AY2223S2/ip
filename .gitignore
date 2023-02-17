@@ -67,3 +67,5 @@ fabric.properties
 !/data/save.example.txt
 !/text-ui-test/data/save.example.txt
 
+# Maven
+/target
