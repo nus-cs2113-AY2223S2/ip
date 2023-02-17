@@ -7,6 +7,7 @@ import duke.task.Task;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Duke {
@@ -78,6 +79,12 @@ public class Duke {
             if(!isExit) {
                 userCommand = scanner.nextLine();
             }
+        }
+
+        try {
+            MainFunctions.writeData(storedUserTasks);
+        } catch (IOException e) {
+            System.out.println("Failed to save data!");
         }
 
         MainFunctions.printGoodbye();

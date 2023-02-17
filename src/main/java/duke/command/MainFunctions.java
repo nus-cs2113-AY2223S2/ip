@@ -50,11 +50,7 @@ public class MainFunctions {
 
         while (s.hasNext()) {
             originalString = s.nextLine();
-            if(originalString.charAt(4)=='X') {
-                isDone = true;
-            } else {
-                isDone = false;
-            }
+            isDone = originalString.charAt(4) == 'X';
             switch (originalString.charAt(1)) {
             case 'T':
                 description = originalString.substring(7);
@@ -85,9 +81,11 @@ public class MainFunctions {
         }
     }
 
-    public static void appendData(String textToAppend) throws IOException {
-        FileWriter fw = new FileWriter(FILEPATH, true);
-        fw.write(textToAppend);
+    public static void writeData(Task[] storedUserTasks) throws IOException {
+        FileWriter fw = new FileWriter(FILEPATH);
+        for(int i=0; i<Duke.userTextCount; i++) {
+            fw.write(storedUserTasks[i].toString()+'\n');
+        }
         fw.close();
     }
 
@@ -133,12 +131,6 @@ public class MainFunctions {
         System.out.println(DIVIDER);
         System.out.println(SPACER+"Got it. I've added this task:");
         System.out.println(SPACER+SPACER+storedUserTasks[Duke.userTextCount].toString());
-        try {
-            appendData('\n'+storedUserTasks[Duke.userTextCount].toString());
-        }
-        catch (IOException e) {
-            System.out.println("Something went wrong: " + e.getMessage());
-        }
         Duke.userTextCount++;
         System.out.println(SPACER+"Now you have " + Duke.userTextCount + " tasks in the list.");
         System.out.println(DIVIDER);
@@ -155,12 +147,6 @@ public class MainFunctions {
         System.out.println(DIVIDER);
         System.out.println(SPACER+"Got it. I've added this task:");
         System.out.println(SPACER+SPACER+storedUserTasks[Duke.userTextCount].toString());
-        try {
-            appendData('\n'+storedUserTasks[Duke.userTextCount].toString());
-        }
-        catch (IOException e) {
-            System.out.println("Something went wrong: " + e.getMessage());
-        }
         Duke.userTextCount++;
         System.out.println(SPACER+"Now you have " + Duke.userTextCount + " tasks in the list.");
         System.out.println(DIVIDER);
@@ -179,12 +165,6 @@ public class MainFunctions {
         System.out.println(DIVIDER);
         System.out.println(SPACER+"Got it. I've added this task:");
         System.out.println(SPACER+storedUserTasks[Duke.userTextCount].toString());
-        try {
-            appendData('\n'+storedUserTasks[Duke.userTextCount].toString());
-        }
-        catch (IOException e) {
-            System.out.println("Something went wrong: " + e.getMessage());
-        }
         Duke.userTextCount++;
         System.out.println(SPACER+"Now you have " + Duke.userTextCount + " tasks in the list.");
         System.out.println(DIVIDER);
