@@ -2,6 +2,9 @@ import misc.UI;
 import storage.Database;
 import tasks.TaskManager;
 
+/**
+ * Main Class function
+ */
 public class Obama {
 
   private static TaskManager taskManager = Database.loadDatabase();

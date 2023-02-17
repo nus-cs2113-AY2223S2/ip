@@ -9,32 +9,31 @@ import storage.Database;
 import tasks.ModifyTaskUtil;
 import tasks.TaskManager;
 
+/**
+ * Handles the main UI functionalities like printing, greeting and chatting.
+ */
 public class UI {
 
+  /**
+   * This method is used just to print the logo and entrance speech.
+   */
   public static void greet() {
-    String LOGO =
-      """
- .----------------.  .----------------.  .----------------.  .----------------.  .----------------. 
-| .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |
-| |     ____     | || |   ______     | || |      __      | || | ____    ____ | || |      __      | |
-| |   .'    `.   | || |  |_   _ \\    | || |     /  \\     | || ||_   \\  /   _|| || |     /  \\     | |
-| |  /  .--.  \\  | || |    | |_) |   | || |    / /\\ \\    | || |  |   \\/   |  | || |    / /\\ \\    | |
-| |  | |    | |  | || |    |  __'.   | || |   / ____ \\   | || |  | |\\  /| |  | || |   / ____ \\   | |
-| |  \\  `--'  /  | || |   _| |__) |  | || | _/ /    \\ \\_ | || | _| |_\\/_| |_ | || | _/ /    \\ \\_ | |
-| |   `.____.'   | || |  |_______/   | || ||____|  |____|| || ||_____||_____|| || ||____|  |____|| |
-| |              | || |              | || |              | || |              | || |              | |
-| '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |
- '----------------'  '----------------'  '----------------'  '----------------'  '----------------' 
-                                                          
-      """;
-    System.out.println("Hello from\n" + LOGO);
+    System.out.println("Hello from\n" + Constants.LOGO);
     UI.printText("Hello! I'm Obama\n" + "\tWhat can I do for you?");
   }
 
+  /**
+   * This method is used just to print exit speech.
+   */
   public static void exit() {
     UI.printText("Bye. Hope to see you again soon!");
   }
 
+  /**
+   * This method is the main function that the user uses to interact with Obama.
+   * @param taskManager This is the taskManager instance that stores all the
+   * tasks.
+   */
   public static void chat(TaskManager taskManager) {
     Scanner scanner = new Scanner(System.in);
     int toContinueFlag = 1;
@@ -110,6 +109,10 @@ public class UI {
     }
   }
 
+  /**
+   * This method is used to print the text with the fancy lines.
+   * @param text The text to be printed.
+   */
   public static void printText(String text) {
     System.out.printf(
       "\n\t____________________________________________________________\n\t" +

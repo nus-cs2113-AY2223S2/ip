@@ -13,9 +13,18 @@ import tasks.Task;
 import tasks.TaskManager;
 import tasks.Todo;
 
+/**
+ * Represents a database class that is able to read from or write to a CSV file.
+ */
 public class Database {
 
   // Format is type, description, marked, to/deadline, from.
+
+  /**
+   * This method is used to write to a CSV file based on what is in the
+   * task manager at the time.
+   * @param taskManager The task manager instance that is being used.
+   */
   public static void writeToDatabase(TaskManager taskManager) {
     ArrayList<Task> tasks = taskManager.getAllTasks();
     try {
@@ -56,6 +65,12 @@ public class Database {
     }
   }
 
+  /**
+   * This method is used to read fo a database and pipe the output into a
+   * TaskManager instance.
+   * @returns TaskManager The TaskManager instance that is being initiated
+   * from the CSV file.
+   */
   public static TaskManager loadDatabase() {
     TaskManager taskManager = new TaskManager();
     try {
