@@ -9,13 +9,13 @@ import Duke.Task.Events;
 import Duke.Task.Task;
 import Duke.Task.ToDos;
 
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
 import java.io.IOException;
 import java.io.FileWriter;
 import java.io.FileNotFoundException;
-
 
 public class Duke {
     public static void main(String[] args) {
@@ -25,19 +25,25 @@ public class Duke {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
+        ArrayList<Task> list = new ArrayList<>();
         try {
-            printFileContents("dukeData.txt");
-        } catch (FileNotFoundException e){
+            list = stringToArraylistConverter(printFileContents("dukeData.txt"));
+        } catch (FileNotFoundException e) {
             System.out.println("File not found");
         }
         greetLine();
-        addList();
+        addList(list);
         exitLine();
     }
 
     private static final int MARK_INDEX = 5;
     private static final int UNMARK_INDEX = 7;
     private static final int DELETE_INDEX = 7;
+    private static final int BRACKETSKIP_INDEX = 7;
+    private static final int FIRSTBRACKET_FRONT = 0;
+    private static final int FIRSTBRACKET_BACK = 3;
+    private static final int SECONDBRACKET_FRONT = 3;
+    private static final int SECONDBRACKET_BACK = 6;
 
     public static void greetLine() {
         System.out.println("How may I be of service today?");
@@ -57,8 +63,7 @@ public class Duke {
         System.out.println("Glad I could be of help!");
     }
 
-    public static void addList() {
-        ArrayList<Task> list = new ArrayList<>();
+    public static void addList(ArrayList<Task> list) {
         String line;
         Scanner in = new Scanner(System.in);
         line = in.nextLine();
@@ -155,23 +160,65 @@ public class Duke {
         fw.close();
     }
 
-    private static void printFileContents(String filePath) throws FileNotFoundException {
+    private static String printFileContents(String filePath) throws FileNotFoundException {
         File f = new File(filePath); // create a File for the given file path
+        String fileContent = "";
         if (!f.exists()) { // for first log in, there is no file
-            return;
+            return "";
         }
         System.out.println("Good day sire, I have listed down your current plan below for you:");
         Scanner s = new Scanner(f); // create a Scanner using the File as the source
         while (s.hasNext()) {
-            System.out.println(s.nextLine());
+            String taskStored = s.nextLine();
+            System.out.println(taskStored);
+            fileContent = fileContent + taskStored + System.lineSeparator();
         }
+        return fileContent;
     }
 
     private static String arraylistToStringConverter(ArrayList<Task> list) {
         String output = "";
         for (Task t : list) {
-            output = output + t + System.lineSeparator();
+            output = output + t.toString() + System.lineSeparator();
         }
         return output;
+    }
+
+    private static ArrayList<Task> stringToArraylistConverter(String fileContent) {
+        ArrayList<Task> list = new ArrayList<>();
+        if (fileContent.equals("")) {
+            return list;
+        }
+        String[] bufferArray = fileContent.split(System.lineSeparator());
+        for (String t : bufferArray) {
+            Task task = new Task(t);
+            try {
+                if (t.substring(FIRSTBRACKET_FRONT, FIRSTBRACKET_BACK).equals("[T]")) {
+                    String todoDetail = "todo " + t.substring(BRACKETSKIP_INDEX);
+                    task = new ToDos(todoDetail);
+                    task.setMark(t.substring(SECONDBRACKET_FRONT, SECONDBRACKET_BACK));
+                } else if (t.substring(FIRSTBRACKET_FRONT, FIRSTBRACKET_BACK).equals("[D]")) {
+                    String deadlineDetail = "deadline " + t.substring(BRACKETSKIP_INDEX, t.indexOf("(")) + "/" +
+                            t.substring(t.indexOf("(") + 1, t.indexOf(")"));
+                    task = new Deadlines(deadlineDetail);
+                    task.setMark(t.substring(SECONDBRACKET_FRONT, SECONDBRACKET_BACK));
+                } else {
+                    String eventDetail = "event " + t.substring(BRACKETSKIP_INDEX, t.indexOf("(")) + "/" +
+                            t.substring(t.indexOf("(") + 1, t.indexOf("to")) + "/" +
+                            t.substring(t.indexOf("to"), t.indexOf(")"));
+                    eventDetail = eventDetail.replace(":", "");
+                    task = new Events(eventDetail);
+                    task.setMark(t.substring(SECONDBRACKET_FRONT, SECONDBRACKET_BACK));
+                }
+            } catch (EmptyToDoException e) {
+                System.out.println("Corrupt todo detected, it is empty");
+            } catch (EmptyDeadlineException e) {
+                System.out.println("Corrupt Deadline detected, it is empty");
+            } catch (EmptyEventsException e) {
+                System.out.println("Corrupt Events detected, it is empty");
+            }
+            list.add(task);
+        }
+        return list;
     }
 }
