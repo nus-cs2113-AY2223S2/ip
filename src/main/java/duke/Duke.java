@@ -37,9 +37,9 @@ public class Duke {
             " WHOOPS! The description/date/time of a deadline cannot be \n empty.";
     private static final String EMPTY_EVENT_DESC_ERR =
             " WHOOPS! The description/dates/times of an event cannot be \n empty.";
-    private static final String EMPTY_MARK_NO_ERR = " WHOOPS! Task number cannot be empty.";
-    private static final String WRONG_MARK_NO_FORMAT_ERR = " WHOOPS! Task number must be an integer.";
-    private static final String MARK_NO_OUT_OF_RANGE_ERR = " WHOOPS! There is no such task number.";
+    private static final String EMPTY_MARK_DEL_NO_ERR = " WHOOPS! Task number cannot be empty.";
+    private static final String WRONG_MARK_DEL_NO_FORMAT_ERR = " WHOOPS! Task number must be an integer.";
+    private static final String MARK_DEL_NO_OUT_OF_RANGE_ERR = " WHOOPS! There is no such task number.";
     private static final String COMMAND_DELETE_TASK = "delete";
     private static final String DELETE_TASK_ITEM_DESC = " Roger. I've removed this task:\n  ";
 
@@ -131,17 +131,32 @@ public class Duke {
     }
 
     public static void printEmptyMarkNoErr() {
-        String printErrMsg = TOP_DIVIDER + EMPTY_MARK_NO_ERR + BOTTOM_DIVIDER;
+        String printErrMsg = TOP_DIVIDER + EMPTY_MARK_DEL_NO_ERR + BOTTOM_DIVIDER;
         System.out.println(printErrMsg);
     }
 
     public static void printWrongMarkNoFormatErr() {
-        String printErrMsg = TOP_DIVIDER + WRONG_MARK_NO_FORMAT_ERR + BOTTOM_DIVIDER;
+        String printErrMsg = TOP_DIVIDER + WRONG_MARK_DEL_NO_FORMAT_ERR + BOTTOM_DIVIDER;
         System.out.println(printErrMsg);
     }
 
     public static void printMarkNoOutOfRangeErr() {
-        String printErrMsg = TOP_DIVIDER + MARK_NO_OUT_OF_RANGE_ERR + BOTTOM_DIVIDER;
+        String printErrMsg = TOP_DIVIDER + MARK_DEL_NO_OUT_OF_RANGE_ERR + BOTTOM_DIVIDER;
+        System.out.println(printErrMsg);
+    }
+
+    public static void printEmptyDelNoErr() {
+        String printErrMsg = TOP_DIVIDER + EMPTY_MARK_DEL_NO_ERR + BOTTOM_DIVIDER;
+        System.out.println(printErrMsg);
+    }
+
+    public static void printWrongDelNoFormatErr() {
+        String printErrMsg = TOP_DIVIDER + WRONG_MARK_DEL_NO_FORMAT_ERR + BOTTOM_DIVIDER;
+        System.out.println(printErrMsg);
+    }
+
+    public static void printDelNoOutOfRangeErr() {
+        String printErrMsg = TOP_DIVIDER + MARK_DEL_NO_OUT_OF_RANGE_ERR + BOTTOM_DIVIDER;
         System.out.println(printErrMsg);
     }
 
@@ -180,8 +195,16 @@ public class Duke {
             }
             break;
         case COMMAND_DELETE_TASK:
-            int taskItemNo = Integer.parseInt(words[1]) - 1;
-            deleteTaskItems(taskItemNo);
+            try {
+                int taskItemNo = Integer.parseInt(words[1]) - 1;
+                deleteTaskItems(taskItemNo);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                printEmptyDelNoErr();
+            } catch (IndexOutOfBoundsException e) {
+                printDelNoOutOfRangeErr();
+            } catch (NumberFormatException e) {
+                printWrongDelNoFormatErr();
+            }
             break;
         case COMMAND_ADD_DEADLINE:
             try {
