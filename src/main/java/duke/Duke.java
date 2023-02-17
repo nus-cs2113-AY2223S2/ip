@@ -186,9 +186,9 @@ public class Duke {
             try {
                 int taskItemNo = Integer.parseInt(words[1]) - 1;
                 markTaskItems(taskItemNo, command);
-            } catch (IndexOutOfBoundsException e) {
+            } catch (ArrayIndexOutOfBoundsException e) {
                 printEmptyMarkNoErr();
-            } catch (NullPointerException e) {
+            } catch (IndexOutOfBoundsException e) {
                 printMarkNoOutOfRangeErr();
             } catch (NumberFormatException e) {
                 printWrongMarkNoFormatErr();
