@@ -104,7 +104,12 @@ public class Buddy {
                     Event eventBeingAdded = new Event(taskDescription, from, to);
                     listOfThings[currentPosition] = eventBeingAdded;
                     System.out.println(eventBeingAdded);
-                }
+                } //else if (command.startsWith("delete")){
+                   // int indexOfTaskNumber = 7;
+                    //int taskNumberToBeDeleted = listOfThings[indexOfTaskNumber];
+
+
+                //}
 
                 currentPosition++;
                 System.out.print("You currently have " + currentPosition);
