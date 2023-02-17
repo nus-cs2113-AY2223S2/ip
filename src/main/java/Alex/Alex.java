@@ -56,7 +56,7 @@ public class Alex {
         File f = new File(filePath.toString());
         Scanner s = new Scanner(f);
         while (s.hasNextLine()) {
-            String[] info = s.nextLine().trim().split(" ");
+            String[] info = s.nextLine().trim().split(",");
             for(String part :info) {
                 System.out.println(part);
             }
@@ -98,17 +98,17 @@ public class Alex {
             if(t.getType().equals("T")) {
                 Todo td = (Todo)t;
                 int done = td.getDone() ? 1 : 0;
-                toSave += "T" + " " + done  + " " + td.getDescription();
+                toSave += "T" + "," + done  + "," + td.getDescription();
             }
             else if (t.getType().equals("D")) {
                 Deadline d = (Deadline)t;
                 int done = d.getDone() ? 1 : 0;
-                toSave += "D" + " " + done + " " + d.getDescription() + " " + d.getBy();
+                toSave += "D" + "," + done + "," + d.getDescription() + "," + d.getBy();
             }
             else if (t.getType().equals("E")) {
                 Event e = (Event)t;
                 int done = e.getDone() ? 1 : 0;
-                toSave += "E" + " "+ done + " " + e.getDescription() + " " + e.getFrom() + " " + e.getTo();
+                toSave += "E" + ","+ done + "," + e.getDescription() + "," + e.getFrom() + "," + e.getTo();
             }
             toSave += System.lineSeparator();
         }
