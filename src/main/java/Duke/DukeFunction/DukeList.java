@@ -79,7 +79,7 @@ public class DukeList {
                 fileWriter.write(taskList.get(i).saveTask());
             }
             fileWriter.close();
-            DukePrinter.printStringln("Saved successfully!");
+//            DukePrinter.printStringln("Saved successfully!");
         } catch (IOException e) {
             DukePrinter.printErrorln("[IOException] Sorry, I can't save the file, " + e.getMessage());
         }

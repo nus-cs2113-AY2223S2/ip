@@ -120,14 +120,12 @@ public class DukeRobot {
                     DukePrinter.printErrorln(e.getMessage());
                 }
                 break;
-            case "save":
-                DukeList.saveTask();
-                break;
             default:
                 DukePrinter.printErrorln("Sorry, I don't know what that means :-( ("
                         + command.getCommandType() + ")");
                 break;
             }
+            DukeList.saveTask();
         }
     }
 }
