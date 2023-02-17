@@ -21,7 +21,6 @@ import static tasks.ToDo.TODO_CLASS;
 public class SaveManager {
 
     public static final String PATHNAME = "data.txt";
-    public static final int SAVED_DATA_BEGIN_INDEX = 3;
 
     // Storing format:
     // T0 name
@@ -77,17 +76,17 @@ public class SaveManager {
     private static void processStoredTask(ArrayList<Task> storedTasks, String line) throws InvalidDeadlineException, InvalidEventException {
         switch (line.substring(0,1)) {
         case TODO_CLASS:
-            ToDo toDo = new ToDo(line.substring(SAVED_DATA_BEGIN_INDEX));
+            ToDo toDo = new ToDo(line.substring(line.indexOf(" ") + 1));
             setMarkState(line, toDo);
             storedTasks.add(toDo);
             break;
         case DEADLINE_CLASS:
-            Deadline deadline = new Deadline(line.substring(SAVED_DATA_BEGIN_INDEX));
+            Deadline deadline = new Deadline(line.substring(line.indexOf(" ") + 1));
             setMarkState(line, deadline);
             storedTasks.add(deadline);
             break;
         case EVENT_CLASS:
-            Event event = new Event(line.substring(SAVED_DATA_BEGIN_INDEX));
+            Event event = new Event(line.substring(line.indexOf(" ") + 1));
             setMarkState(line, event);
             storedTasks.add(event);
             break;
