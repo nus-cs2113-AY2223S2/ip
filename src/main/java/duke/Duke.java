@@ -8,7 +8,7 @@ import duke.tasks.Task;
 import duke.tasks.TaskEnum;
 import duke.tasks.ToDo;
 
-import data.Data;
+import duke.storage.Storage;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ public class Duke {
     private static ArrayList<Task> tasks = new ArrayList<>();
 
     public static void main(String[] args) {
-        tasks = Data.getTasks();
+        tasks = Storage.getTasks();
         Scanner scan = new Scanner(System.in);
         printLogo();
         greet();
@@ -107,7 +107,7 @@ public class Duke {
                 throw new InvalidInputException(MESSAGE_COMMAND_UNRECOGNISED);
             }
             // update saved tasks
-            Data.writeTasks(tasks);
+            Storage.writeTasks(tasks);
         } catch (IOException e) {
             printWithIndentation("Failed to update save data. Type \"save\" to try again");
         } catch (Exception e) {
@@ -267,7 +267,7 @@ public class Duke {
     }
 
     private static void handleCommandSave() throws IOException {
-        Data.writeTasks(tasks);
+        Storage.writeTasks(tasks);
         printWithIndentation("Saved tasks successfully.");
         printLine();
     }

@@ -1,4 +1,4 @@
-package data;
+package duke.storage;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -17,7 +17,7 @@ import duke.tasks.Event;
 import duke.tasks.Task;
 import duke.tasks.ToDo;
 
-public class Data {
+public class Storage {
     private static final String home = System.getProperty("user.dir");
     private static final Path SAVE_DIR = Paths.get(home, "data");
     private static final Path SAVE_FILE = Paths.get(SAVE_DIR.toString(), "save.txt");
