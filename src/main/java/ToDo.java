@@ -1,6 +1,9 @@
 public class ToDo extends Task {
+    protected String type;
+
     public ToDo(String description) {
         super(description);
+        this.type = "T";
     }
 
     public String addedMessage() {
