@@ -1,5 +1,7 @@
 import exceptions.*;
-
+import java.util.ArrayList;
+// branch level-5 update as merge was not successful
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -10,9 +12,9 @@ public class Duke {
     public static void printLine() {
         System.out.println("\t---------------------------------------------------------------------------------");
     }
-    public static void listTasks(int currentIndex, Task[] taskList) {
+    public static void listTasks(int currentIndex, ArrayList<Task> taskList) {
         for(int i = 0; i<currentIndex;i+=1) {
-            System.out.println('\t' + Integer.toString(i+1) + "." + taskList[i].getStatusAndDescription());
+            System.out.println('\t' + Integer.toString(i+1) + "." + taskList.get(i).getStatusAndDescription());
             // can be further optimized.
         }
     }
@@ -26,16 +28,26 @@ public class Duke {
         return (Integer.parseInt(userInput.split(" ")[1])>0 && Integer.parseInt(userInput.split(" ")[1])<currentIndex+1);
     }
 
-    public static void printMarkedTask(String userInput, Task[] taskList) {
+    public static void printMarkedTask(String userInput, ArrayList<Task> taskList) {
         System.out.println("\tNice! I've marked this task as done:");
-        taskList[Integer.parseInt(userInput.split(" ")[1])-1].markTask();
-        System.out.println("\t\t" + taskList[Integer.parseInt(userInput.split(" ")[1])-1].getStatusAndDescription());
+        taskList.get(Integer.parseInt(userInput.split(" ")[1]) - 1).markTask();
+        System.out.println("\t\t" + taskList.get(Integer.parseInt(userInput.split(" ")[1]) - 1).getStatusAndDescription());
     }
 
-    public static void printUnmarkedTask(String userInput, Task[] taskList) {
+    public static void deleteTask() {
+        printLine();
+        System.out.println("\tNoted! I've removed this task!");
+        System.out.println("\t\t" + taskList.get(Integer.parseInt(userInput.split(" ")[1]) - 1).getStatusAndDescription());
+        taskList.remove(Integer.parseInt(userInput.split(" ")[1]) - 1);
+        currentIndex-=1;
+        printNoTasks(currentIndex);
+        printLine();
+    }
+
+    public static void printUnmarkedTask(String userInput, ArrayList<Task> taskList) {
         System.out.println("\tNice! I've marked this task as not done:");
-        taskList[Integer.parseInt(userInput.split(" ")[1])-1].unMarkTask();
-        System.out.println("\t\t" + taskList[Integer.parseInt(userInput.split(" ")[1])-1].getStatusAndDescription());
+        taskList.get(Integer.parseInt(userInput.split(" ")[1]) - 1).unMarkTask();
+        System.out.println("\t\t" + taskList.get(Integer.parseInt(userInput.split(" ")[1]) - 1).getStatusAndDescription());
     }
     public static String[] getDeadline(String userInput) {
         String intermediateStage = userInput.replace("deadline ", "");
@@ -64,7 +76,8 @@ public class Duke {
         }
         printLine();
         String input = userInput.replace("todo ", "");
-        taskList[currentIndex] = new Todos(input);
+        Todos temp = new Todos(input);
+        taskList.add(temp);
         currentIndex+=1;
         printNoTasks(currentIndex);
         printLine();
@@ -79,7 +92,8 @@ public class Duke {
         } else if(deadlineAndDescription[1].isBlank()) {
             throw new DeadlineIsBlank();
         }
-        taskList[currentIndex] = new Deadlines(deadlineAndDescription[0], deadlineAndDescription[1]);
+        Deadlines temp = new Deadlines(deadlineAndDescription[0], deadlineAndDescription[1]);
+        taskList.add(temp);
         currentIndex+=1;
         printNoTasks(currentIndex);
         printLine();
@@ -101,14 +115,16 @@ public class Duke {
         } else if(eventDescription[2].isBlank()) {
             throw new EventToIsBlank();
         }
-        taskList[currentIndex] = new Events(eventDescription[0], eventDescription[1], eventDescription[2]);
+        Events temp = new Events(eventDescription[0], eventDescription[1], eventDescription[2]);
+        taskList.add(temp);
         currentIndex+=1;
         printNoTasks(currentIndex);
         printLine();
     }
     public static void printTask(String userInput) {
         printLine();
-        taskList[currentIndex] = new Task(userInput); // set the description
+        Task temp = new Task(userInput); // set the description
+        taskList.add(temp);
         currentIndex+=1;
         System.out.println("\tadded: " + userInput);
         printLine();
@@ -178,9 +194,15 @@ public class Duke {
         }
     }
 
+    public static void deleteExceptionHandler() {
+        deleteTask();
+    }
 
-    final static int MAXTASKS = 100;
-    public static Task[] taskList = new Task[MAXTASKS];
+
+//    final static int MAXTASKS = 100;
+//    public static Task[] taskList = new Task[MAXTASKS];
+    public static  ArrayList<Task> taskList = new ArrayList<>();
+
     public static int currentIndex = 0;
     public static Scanner in = new Scanner(System.in);
     public static String userInput;
@@ -238,6 +260,8 @@ public class Duke {
                 deadlineExceptionHandler();
             } else if(isTheSame(userInput, "event")) {
                 eventExceptionHandler();
+            } else if(isTheSame(userInput, "delete")) {
+                deleteExceptionHandler();
             }
             else { // tells the user that we have added the task in
                 printTask(userInput); // could remove this and esnure that only specific tasks can be entered!
