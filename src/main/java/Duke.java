@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
-
-    // static Todo[] TodoList = new Todo[100];
     static ArrayList<Todo> TodoList = new ArrayList<>();
 
     public static void parseCommand(String input, String[] words, String command) {
@@ -82,18 +80,16 @@ public class Duke {
                         System.out.println("バカにさせないで。その目標は実在しません。");
                     }
                     break;
+                case "clearlist":
+                    TodoList.clear();
+                    System.out.println("EVERYTHING IS GONE");
+                    break;
 
                 default:
                     System.out.println("i dont recognize that command");
-//                    if (index < 100) {
+
 //                        Todo newTodo = new Todo(input);
-//                        TodoList[index] = newTodo;
-//
-//                        System.out.println("覚えましたよ～ " + input);
-//                        index++;
-//                    } else {
-//                        System.out.println("もういっぱい～！");
-//                    }
+
                     break;
 
 
