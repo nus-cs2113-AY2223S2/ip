@@ -3,12 +3,13 @@ import DukeFunctions.Todo;
 import DukeFunctions.Deadline;
 import Exceptions.MissingInputException;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
 
-    static int index = 0;
-    static Todo[] TodoList = new Todo[100];
+    // static Todo[] TodoList = new Todo[100];
+    static ArrayList<Todo> TodoList = new ArrayList<>();
 
     public static void parseCommand(String input, String[] words, String command) {
         String inputContents = input.substring(command.length()).trim(); //
@@ -16,53 +17,53 @@ public class Duke {
         try {
             switch (command) {
                 case "list":
-                    if (index == 0) {
+                    if (TodoList.size() == 0) {
                         System.out.println("何もいない。。。頭のように。。。");
                     } else {
-                        for (int i = 0; i < index; i++) {
-                            System.out.println(i + 1 + ". [" + TodoList[i].getType() + "]" + "[" + TodoList[i].getIsDone() + "] " + TodoList[i].toString());
+                        for (int i = 0; i < TodoList.size(); i++) {
+                            System.out.println(i + 1 + ". [" + TodoList.get(i).getType() + "]" + "[" + TodoList.get(i).getIsDone() + "] " + TodoList.get(i).toString());
                         }
                     }
                     break;
                 case "mark":
                     int markTarget = Integer.parseInt(words[1]) - 1;
-                    if (markTarget >= 0 && markTarget < index) {
-                        TodoList[markTarget].mark();
+                    if (markTarget >= 0 && markTarget < TodoList.size()) {
+                        TodoList.get(markTarget).mark();
                     } else {
                         System.out.println("バカにさせないで。その目標は実在しません。");
                     }
                     break;
                 case "unmark":
                     int target = Integer.parseInt(words[1]) - 1;
-                    if (target >= 0 && target < index) {
-                        TodoList[target].unMark();
+                    if (target >= 0 && target < TodoList.size()) {
+                        TodoList.get(target).unMark();
                     } else {
                         System.out.println("バカにさせないで。その目標は実在しません。");
                     }
                     break;
                 case "todo":
-                    if (index < 100) {
-                        Todo newTodo = new Todo(inputContents);
-                        TodoList[index] = newTodo;
-                        System.out.println("覚えましたよ～ " + newTodo.toString());
-                        index++;
-                    }
+                    // if (index < 100) {
+                    Todo newTodo = new Todo(inputContents);
+                    TodoList.add(newTodo);
+                    System.out.println("覚えましたよ～ " + newTodo.toString());
+                    // index++;
+                    // }
                     break;
                 case "deadline":
-                    if (index < 100) {
-                        Deadline newDeadline = new Deadline(inputContents);
-                        TodoList[index] = newDeadline;
-                        System.out.println("覚えましたよ～ " + newDeadline.toString());
-                        index++;
-                    }
+                    // if (index < 100) {
+                    Deadline newDeadline = new Deadline(inputContents);
+                    TodoList.add(newDeadline);
+                    System.out.println("覚えましたよ～ " + newDeadline.toString());
+                    // index++;
+                    //  }
                     break;
                 case "event":
-                    if (index < 100) {
-                        Event newEvent = new Event(inputContents);
-                        TodoList[index] = newEvent;
-                        System.out.println("覚えましたよ～ " + newEvent.toString());
-                        index++;
-                    }
+                    // if (index < 100) {
+                    Event newEvent = new Event(inputContents);
+                    TodoList.add(newEvent);
+                    System.out.println("覚えましたよ～ " + newEvent.toString());
+                    //index++;
+                    // }
                     break;
 
 //                default:
