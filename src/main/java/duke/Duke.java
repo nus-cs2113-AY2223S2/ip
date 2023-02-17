@@ -1,11 +1,35 @@
 package duke;
-
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.File;
 
 public class Duke {
-    public static void main(String[] args) {
+
+
+    private static void printFileContents(String filePath) throws FileNotFoundException {
+        File f = new File(filePath); // create a File for the given file path
+        Scanner s = new Scanner(f); // create a Scanner using the File as the source
+        while (s.hasNext()) {
+            System.out.println(s.nextLine());
+        }
+    }
+
+    private static void writeToFile(String filePath, String textToAdd) throws IOException, IOException {
+        FileWriter fw = new FileWriter(filePath);
+        fw.write(textToAdd);
+        fw.close();
+    }
+
+    private static void appendToFile(String filePath, String textToAppend) throws IOException {
+        FileWriter fw = new FileWriter(filePath, true); // create a FileWriter in append mode
+        fw.write(textToAppend + "\n");
+        fw.close();
+    }
+    public static void main(String[] args) throws IOException{
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -16,6 +40,15 @@ public class Duke {
                 " Hello! I'm Duke\n" +
                 " What can I do for you?\n" +
                 "____________________________________________________________\n");
+
+
+        File f = new File("/Users/navya/Documents/Navya/NUS/data/Duke.txt");
+        boolean isPresent = f.exists();
+        if (!isPresent) {
+            f.getParentFile().mkdir();
+            f.createNewFile();
+        }
+
         String line;
         List<Task> tasks = new ArrayList<Task>();
         Scanner in = new Scanner(System.in);
@@ -26,13 +59,14 @@ public class Duke {
 
             if (line.equals("list") && !tasks.isEmpty()) {
                 System.out.println("Here are the tasks in your list: \n ");
-                for (int i = 0; i < tasks.size(); i++) {
+                /*for (int i = 0; i < tasks.size(); i++) {
                     Task todoList = tasks.get(i);
                     System.out.println("\t" + (i + 1) + ". " + todoList.toString());
                 }
+                 */
+                printFileContents(f.getAbsolutePath());
                 System.out.println("____________________________________________________________\n");
             }
-            //helo
 
             else if (line.contains("unmark")) {
                 int index = line.indexOf(" ");
@@ -77,6 +111,7 @@ public class Duke {
                     System.out.println("Added: " + "\n" + toDo.toString() + "\n");
                     System.out.println("You have " + tasks.size() + " number of tasks in you list.");
                     System.out.println("____________________________________________________________\n");
+                    appendToFile(f.getAbsolutePath(), toDo.toString() + "\n");
                 }
                 else {
                     System.out.println("🤪Drink coffee and enter a valid todo command");
@@ -95,6 +130,7 @@ public class Duke {
                     System.out.println("Added: " + "\n" + deadline.toString() + "\n");
                     System.out.println("You have " + tasks.size() + " number of tasks in you list.");
                     System.out.println("____________________________________________________________\n");
+                    appendToFile(f.getAbsolutePath(), deadline.toString() + "\n");
                 }
                 else{
                     System.out.println("🤪Drink coffee and enter a valid deadline command");
@@ -113,6 +149,7 @@ public class Duke {
                     System.out.println("Added: " + "\n" + event.toString() + "\n");
                     System.out.println("You have " + tasks.size() + " number of tasks in you list.");
                     System.out.println("____________________________________________________________\n");
+                    appendToFile(f.getAbsolutePath(), event.toString() + "\n");
                 }
                 else{
                     System.out.println("🤪Drink coffee and enter a valid event command");
