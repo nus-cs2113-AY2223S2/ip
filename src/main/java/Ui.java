@@ -107,6 +107,18 @@ public class Ui {
         System.out.println("\tTasks were saved successfully.");
     }
 
+    public void showEmptyList() {
+        System.out.println("\tThere are no tasks in your list currently!");
+    }
+
+    public void showNoMatches() {
+        System.out.println("\tNo task in your list matches the keyword.");
+    }
+
+    public void showFindError() {
+        System.out.println("\tKeyword for find cannot be empty.");
+    }
+    
     /**
      * Prints an error message due to empty description of Todo task in user command
      */

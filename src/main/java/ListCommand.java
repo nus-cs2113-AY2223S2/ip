@@ -16,7 +16,7 @@ public class ListCommand extends Command {
     public void execute(TaskList taskList, Ui ui, Storage storage) {
         // There are no tasks in the list
         if (taskList.numOfTasks == 0) {
-            System.out.println("\tThere are no tasks in your list currently!");
+            ui.showEmptyList();
             return;
         }
 
