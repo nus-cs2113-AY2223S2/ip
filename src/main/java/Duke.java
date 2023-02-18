@@ -7,37 +7,66 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * Represents the main Duke programme that users will interact with
+ */
 
 public class Duke {
     public static final List<String> taskTypes = Arrays.asList("todo", "deadline", "event");
-    public static final List<String> listEditableCommands = Arrays.asList("todo", "deadline", "event", "mark", "unmark", "delete");
-    public static final List<String> commands = Arrays.asList("todo", "deadline", "event", "mark", "unmark", "list", "find", "delete", "bye");
+    public static final List<String> listEditableCommands =
+            Arrays.asList("todo", "deadline", "event", "mark", "unmark", "delete");
+    public static final List<String> commands =
+            Arrays.asList("todo", "deadline", "event", "mark", "unmark", "list", "find", "delete", "bye");
 
     public static void printHorizontalLine() {
         System.out.print("    ____________________________________________________________\n");
     }
 
+    /**
+     * Prints entries that contains the keyword(s).
+     *
+     * @param listOfTasks ArrayList of tasks.
+     * @param currentNumberIndex Number of tasks present in the list.
+     * @param keyWord keyword to search for in each entry
+     */
     public static void findEntry(ArrayList<Task> listOfTasks, int currentNumberIndex, String keyWord) {
         System.out.println("     Here are the matching tasks in your list:");
         int counter = 0;
         for (int i = 0; i < currentNumberIndex; ++i) {
             if (listOfTasks.get(i).taskLabel.contains(keyWord) || listOfTasks.get(i).description.contains(keyWord)) {
                 counter++;
-                System.out.print("     " + counter + "." + listOfTasks.get(i).taskLabel + listOfTasks.get(i).getStatusIcon() + " ");
+                System.out.print("     " + counter + "." + listOfTasks.get(i).taskLabel
+                        + listOfTasks.get(i).getStatusIcon() + " ");
                 System.out.println(listOfTasks.get(i).description);
             }
         }
     }
 
+    /**
+     * Prints all the entries in the list.
+     *
+     * @param listOfTasks ArrayList of tasks.
+     * @param currentNumberIndex Number of tasks present in the list.
+     */
     public static void listing(ArrayList<Task> listOfTasks, int currentNumberIndex) {
         System.out.println("     Here are the tasks in your list:");
         for (int i = 0; i < currentNumberIndex; ++i) {
             int counter = i + 1;
-            System.out.print("     " + counter + "." + listOfTasks.get(i).taskLabel + listOfTasks.get(i).getStatusIcon() + " ");
+            System.out.print("     " + counter + "." + listOfTasks.get(i).taskLabel +
+                    listOfTasks.get(i).getStatusIcon() + " ");
             System.out.println(listOfTasks.get(i).description);
         }
     }
 
+    /**
+     * Removes entry at an index
+     * and returns the number of tasks in the list after removal.
+     *
+     * @param listOfTasks ArrayList of tasks.
+     * @param currentNumberIndex Number of tasks present in the list.
+     * @param toDelete index of entry to delete.
+     * @return Number of tasks in the list after removal.
+     */
     public static int deleting(ArrayList<Task> listOfTasks, int currentNumberIndex, int toDelete) {
         System.out.println("     Noted. I've removed this task:");
         currentNumberIndex -= 1;
@@ -46,6 +75,11 @@ public class Duke {
         return currentNumberIndex;
     }
 
+    /**
+     * Exception handler that throws exception if command is invalid.
+     *
+     * @throws InvalidCommand if isNotValidCommand is true.
+     */
     public static void checkIfValid(String[] lineComponents) throws InvalidCommand {
         boolean isNotValidCommand = !commands.contains(lineComponents[0]);
         if (isNotValidCommand) {
@@ -53,6 +87,11 @@ public class Duke {
         }
     }
 
+    /**
+     * Exception handler that throws exception if command is empty after the instruction word.
+     *
+     * @throws InvalidCommand if isEmptyCommand is true.
+     */
     public static void checkIfEmpty(String[] lineComponents) throws InvalidCommand {
         boolean isEmptyCommand = (taskTypes.contains(lineComponents[0]) && lineComponents.length == 1);
         if (isEmptyCommand) {
@@ -130,7 +169,8 @@ public class Duke {
                         }
                     }
                 } catch (InvalidCommand e) {
-                    System.out.println("     ☹ OOPS!!! The description of a " + lineComponents[0] + " cannot be empty.");
+                    System.out.println("     ☹ OOPS!!! The description of a " +
+                            "" + lineComponents[0] + " cannot be empty.");
                 } finally {
                     printHorizontalLine();
                 }

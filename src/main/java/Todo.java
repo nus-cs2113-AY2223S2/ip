@@ -1,5 +1,9 @@
 import java.util.ArrayList;
 
+/**
+ * Represents a Todo task.
+ */
+
 public class Todo extends Task {
     public Todo(String description) {
         super(description);
@@ -13,7 +17,8 @@ public class Todo extends Task {
     public static int add(String line, ArrayList<Task> list, int currentNumber) {
         System.out.println("     Got it. I've added this task:");
         Todo newTask = new Todo(line);
-        System.out.println("       " + newTask.taskLabel + newTask.getStatusIcon() + " " + newTask.description);
+        System.out.println("       " + newTask.taskLabel + newTask.getStatusIcon()
+                + " " + newTask.description);
         list.add(newTask);
         ++currentNumber;
         System.out.println("     Now you have " + currentNumber + " tasks in the list.");

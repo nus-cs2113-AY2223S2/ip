@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 
+/**
+ * Represents an Event task.
+ */
 public class Event extends Task {
 
     protected String start;

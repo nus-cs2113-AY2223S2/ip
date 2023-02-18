@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 
+/**
+ * Represents a Deadline task.
+ */
 public class Deadline extends Task {
 
     protected String whenDue;

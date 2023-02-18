@@ -3,10 +3,16 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
 public class LoadFile {
     private static String targetFilePath = "data";
     private static String file = "data/duke.txt";
 
+    /**
+     * Creates new file if file is not found.
+     *
+     * @throws IOException if there are IO errors.
+     */
     public static void initFile() throws IOException{
         File directory = new File(targetFilePath);
         if(!directory.exists()){
@@ -17,7 +23,8 @@ public class LoadFile {
             textFile.createNewFile();
         }
     }
-    public static int loadFileContents(String filePath, ArrayList<Task> taskArrayList, int currentNumber) throws FileNotFoundException {
+    public static int loadFileContents(String filePath, ArrayList<Task> taskArrayList, int currentNumber)
+            throws FileNotFoundException {
         String line;
         String type;
         File f = new File(filePath); // create a File for the given file path
@@ -51,7 +58,8 @@ public class LoadFile {
                 String[] splitPeriod = lineComponents[3].split(" - ");
                 newEvent.start = splitPeriod[0];
                 newEvent.end = splitPeriod[1];
-                newEvent.description = newEvent.description + " (from: " + newEvent.start + " to: " + newEvent.end + ")";
+                newEvent.description = newEvent.description
+                        + " (from: " + newEvent.start + " to: " + newEvent.end + ")";
                 taskArrayList.add(newEvent);
                 break;
             }

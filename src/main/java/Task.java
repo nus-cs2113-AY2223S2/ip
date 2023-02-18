@@ -1,5 +1,9 @@
 import java.util.ArrayList;
 
+/**
+ * An abstract class that represents a task in general.
+ */
+
 public abstract class Task {
     protected String description;
     protected boolean isDone;
@@ -43,8 +47,11 @@ public abstract class Task {
     }
 
     /**
-     * executeNonAdd method executes all instructions
-     * except the instructions to add tasks to the list
+     * Check if the command is to mark or unmark an entry to then run appropriate method.
+     *
+     * @param command instruction that could be "mark" or "unmark
+     * @param listOfTasks listOfTasks ArrayList of tasks.
+     * @param currentNumber Number of tasks present in the list.
      */
     public static void markOrUnmark(String command, ArrayList<Task> listOfTasks, int currentNumber) {
         if (command.matches("mark \\d")) {
@@ -63,7 +70,8 @@ public abstract class Task {
         int number = Integer.parseInt(seperated[1]) - TASK_NUMBER_OFFSET;
         listOfTasks.get(number).setDone(false);
         System.out.println("     OK, I've marked this task as not done yet:");
-        System.out.println("     " + listOfTasks.get(number).taskLabel + listOfTasks.get(number).getStatusIcon() + " " + listOfTasks.get(number).description);
+        System.out.println("     " + listOfTasks.get(number).taskLabel +
+                listOfTasks.get(number).getStatusIcon() + " " + listOfTasks.get(number).description);
     }
 
     protected static void mark(String command, ArrayList<Task>  listOfTasks) {
@@ -71,7 +79,8 @@ public abstract class Task {
         int number = Integer.parseInt(seperated[1]) - TASK_NUMBER_OFFSET;
         listOfTasks.get(number).setDone(true);
         System.out.println("     Nice! I've marked this task as done:");
-        System.out.println("     " + listOfTasks.get(number).taskLabel + listOfTasks.get(number).getStatusIcon() + " " + listOfTasks.get(number).description);
+        System.out.println("     " + listOfTasks.get(number).taskLabel +
+                listOfTasks.get(number).getStatusIcon() + " " + listOfTasks.get(number).description);
     }
 
 
