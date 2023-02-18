@@ -38,7 +38,7 @@ public class TaskList {
             ui.printLine();
             tasks.get(taskNumber - 1).markDone();
             System.out.println("Great! I have marked this task as done:");
-            System.out.print("\t  ");
+            System.out.print("\t");
             System.out.println(tasks.get(taskNumber - 1));
             ui.printLine();
             Storage.saveTask(tasks);
@@ -62,7 +62,7 @@ public class TaskList {
             ui.printLine();
             tasks.get(taskNumber - 1).markUndone();
             System.out.println("OK, I've marked this task as not done yet:");
-            System.out.print("\t  ");
+            System.out.print("\t");
             System.out.println(tasks.get(taskNumber - 1));
             ui.printLine();
             Storage.saveTask(tasks);
@@ -87,7 +87,7 @@ public class TaskList {
             Task deletedTask = tasks.get(taskNumber - 1);
             tasks.remove(taskNumber - 1);
             System.out.println("Noted. I've removed this task:");
-            System.out.print("\t  ");
+            System.out.print("\t");
             System.out.println(deletedTask);
             System.out.println("Now you have " + tasks.size() + " tasks in your list.");
             ui.printLine();
@@ -129,7 +129,7 @@ public class TaskList {
             tasks.add(todo);
             ui.printLine();
             System.out.println("Got it. I've added this task:");
-            System.out.print("\t  ");
+            System.out.print("\t");
             System.out.println(todo);
             System.out.println("Now you have " + tasks.size() + " tasks in the list.");
             ui.printLine();
@@ -154,7 +154,7 @@ public class TaskList {
             tasks.add(deadline);
             ui.printLine();
             System.out.println("Got it. I've added this task:");
-            System.out.print("\t  ");
+            System.out.print("\t");
             System.out.println(deadline);
             System.out.println("Now you have " + tasks.size() + " tasks in the list.");
             ui.printLine();
@@ -179,7 +179,7 @@ public class TaskList {
             tasks.add(event);
             ui.printLine();
             System.out.println("Got it. I've added this task:");
-            System.out.print("\t  ");
+            System.out.print("\t");
             System.out.println(event);
             System.out.println("Now you have " + tasks.size() + " tasks in the list.");
             ui.printLine();
