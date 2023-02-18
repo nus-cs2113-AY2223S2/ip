@@ -141,7 +141,8 @@ Expected outcome:
 ### `Find` - Find specific tasks.
 
 This command allows the user to find certain tasks with specified keywords. At least 1 keyword is **_required_**.
-**Note: specified keywords are _non case-sensitive_**
+
+<sub>**Note: specified keywords are _non case-sensitive_**</sub>
 
 Example of usage:
 
