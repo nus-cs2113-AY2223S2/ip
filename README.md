@@ -38,15 +38,3 @@ Prerequisites: JDK 11, update Intellij to the most recent version.
     --------------------------------------------
 
    ```
-
-## User Guide
-
-Now that you have set up the Duke program. Here are some ways that you can start creating your own tasks!
-
-In Duke, you may choose from _3_ different types of tasks that you would like to create. These are the following currently supported task types:
-
-### Todo
-
-### Event
-
-### Deadline
