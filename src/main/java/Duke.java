@@ -53,6 +53,15 @@ public class Duke {
         }
     }
 
+    public static void Delete(int index) {
+        System.out.println("\n");
+        System.out.println("Noted. I have deleted this task");
+        System.out.println(listOfTasks.get(index - 1).toString());
+        listOfTasks.remove(index - 1);
+        counter--;
+        System.out.println("You now have " + counter + " tasks in the list.");
+    }
+
     public static void main(String[] args) {
         greet_user();
 
@@ -113,6 +122,15 @@ public class Duke {
                         System.out.println(":( There is an error (Index is out of bounds/negative)");
                     }
                     break;
+                case "delete":
+                    try {
+                        Integer d_index = Integer.valueOf(command[1]);
+                        Delete(d_index);
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        System.out.println(":( There is an error (Index is out of bounds/negative)");
+                    }
+                    break;
+
                 default:
                     System.out.println("There was an error. Please try again");
                     break;
