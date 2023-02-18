@@ -88,7 +88,7 @@ public class AddCommand extends Command implements InputParser {
             startDateIdx = input.indexOf("/from ");
             endDateIdx = input.indexOf("/to ");
             if (startDateIdx == -1 || endDateIdx == -1) {
-                throw new InsufficientArgumentsException(command, "event [task] /from [startDate] /to [startDate]");
+                throw new InsufficientArgumentsException(command, "event [task] /from [startDate] /to [endDate]");
             }
 
             taskDescription = input.substring(command.length() + 1, startDateIdx - 1);

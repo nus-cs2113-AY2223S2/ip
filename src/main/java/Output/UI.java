@@ -62,6 +62,21 @@ public class UI {
         System.out.printf(output);
     }
 
+    public void printUpcomingTasks(TaskList tasks) throws DukeException {
+        String output = "";
+
+        if (tasks.getTasksCount() == 0) {
+            output += "\t No tasks found!\n";
+        } else {
+            output += "\t Please be reminded that these tasks are due soon:\n";
+            for (int i = 0; i < tasks.getTasksCount(); i++) {
+                output += "\t" + (i + 1) + "." + tasks.getTask(i).toString() + "\n";
+            }
+        }
+
+        System.out.printf(output);
+    }
+
     public void taskDeletedMessage(Task t, int numTasks) {
         System.out.println(
                 "\tNoted. I've removed this task:\n" + 
