@@ -22,57 +22,26 @@ public class Duke {
     private static Scanner sc = new Scanner(System.in);
     private static IParser parser = new Parser(sc);
     private static ITaskController taskController = new TaskController();
-    private static IUi ui = new Ui();
-    private static ISerialiser serialiser = null;
+    private static IUi ui = Ui.getInstance();
+    private static ISerialiser serialiser = new Serialiser();
+    
     /**
      * Main program that runs the Duke program.
      * Greets users and exits.
      * @param args
      */
     public static void main(String[] args) {
-        loadDataFile();
-        ui.greet();
-        boolean isExit = false;
-        do {
-            isExit = executeProgram();
-        } while(!isExit);
-        saveDataFile();
-        ui.bye();
-    }
-    private static void loadDataFile(){
-        while (serialiser == null) {
-            try {
-                serialiser = new Serialiser();
-            } catch (IOException e) {
-                checkDataDirectory();
-            }
-        }
-        serialiser.deserialiseFile(taskController);
-    }
-    private static void saveDataFile() {
-        serialiser.serialiseFile(taskController);
-    }
-    private static void checkDataDirectory() {
-        File directory = new File("data");
-        if (!directory.isDirectory()) {
-            // Then directory does not exist and need to create one
-            ui.printSystemErrorMessage("The data directory does not exist yet!!\nProceeding to create one now...");
-            directory.mkdir();
-            checkDataFile();
-            ui.printSystemMessage("Directory creation success");
-        }
-    }
-    private static void checkDataFile() {
         try {
-            File file = new File("data/duke.txt");
-            if (!file.isFile()) {
-                // Then directory does not exist and need to create one
-                ui.printSystemErrorMessage("The data file does not exist yet!!\nProceeding to create one now...");
-                file.createNewFile();
-                ui.printSystemMessage("file creation success");
-            }
-        } catch (IOException e) {
-            // TODO: handle exception
+            serialiser.loadDataFile(taskController);
+            ui.greet();
+            boolean isExit = false;
+            do {
+                isExit = executeProgram();
+            } while(!isExit);
+            serialiser.saveDataFile(taskController);
+            ui.bye();
+        } catch (DukeException e) {
+            System.out.println(e.getMessage());
         }
     }
     /**

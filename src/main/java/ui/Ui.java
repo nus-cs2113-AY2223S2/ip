@@ -10,6 +10,7 @@ import static com.diogonunes.jcolor.Attribute.RED_TEXT;
 import static com.diogonunes.jcolor.Attribute.GREEN_TEXT;
 
 public class Ui implements IUi {
+    private static final Ui instance = new Ui();
     final static String LINEBREAK = "________________________________________\n";
     final static String COMMAND_TAB_STRING = "     ";
     final static String LINE_TAB_STRING = "    ";
@@ -22,8 +23,10 @@ public class Ui implements IUi {
                              + "| | | | | | | |/ / _ \\\n"
                              + "| |_| | |_| |   <  __/\n"
                              + "|____/ \\__,_|_|\\_\\___|\n";
-
-                             
+    
+    public static Ui getInstance() {
+        return instance;
+    }
     /**
      * Streams message and prints each line of message based
      * on new line feed.
