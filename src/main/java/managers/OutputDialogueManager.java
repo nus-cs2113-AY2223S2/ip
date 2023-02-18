@@ -1,6 +1,7 @@
 package managers;
 
 import enums.DialogueTypes;
+import enums.ErrorDialogueTypes;
 
 public class OutputDialogueManager {
     public void printInteraction(DialogueTypes interactionType) {
@@ -40,6 +41,9 @@ public class OutputDialogueManager {
         case COUNT_OF_TASKS:
             System.out.print("_(#o#)_| Currently, the number of task I remembered is: ");
             break;
+        case FIND_TASK:
+            System.out.println("|(*v*)| Here are all the matching tasks I found:");
+            break;
         case GOODBYE:
             System.out.println("/(0A0)/ Bye. See you next time!");
             break;
@@ -52,7 +56,7 @@ public class OutputDialogueManager {
         }
     }
 
-    public void printErrorDialogue(DialogueTypes errorMessage) {
+    public void printErrorDialogue(ErrorDialogueTypes errorMessage) {
         switch (errorMessage) {
         case EMPTY_TASK_NAME:
             System.out.println("|(@A@)| The description seems to be empty or incomplete, please remember to fill it");
@@ -84,6 +88,12 @@ public class OutputDialogueManager {
             break;
         case ERROR_WHEN_SAVING:
             System.out.println("/(TAT)/  There seems to be some error when saving data...");
+            break;
+        case NO_MATCHING_TASK:
+            System.out.println("|(@A@)| I don't see any task that contain the word you are searching.");
+            break;
+        default:
+            System.out.println("|(TAT)| Some error that I do not understand have happened.");
             break;
         }
     }

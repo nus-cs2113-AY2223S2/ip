@@ -2,7 +2,7 @@ package managers;
 
 import commands.Command;
 import commands.ExitCommand;
-import enums.DialogueTypes;
+import enums.ErrorDialogueTypes;
 import translators.Parser;
 import errors.InvalidDeadlineException;
 import errors.InvalidEventException;
@@ -23,11 +23,11 @@ public class InputManager {
         try {
             this.tasks = new TaskManager(storage.initialiseData());
         } catch (IOException e) {
-            display.printErrorDialogue(DialogueTypes.ERROR_WHEN_SAVING);
+            display.printErrorDialogue(ErrorDialogueTypes.ERROR_WHEN_SAVING);
         } catch (InvalidDeadlineException e) {
-            display.printErrorDialogue(DialogueTypes.DEADLINE_WRONG_FORMAT);
+            display.printErrorDialogue(ErrorDialogueTypes.DEADLINE_WRONG_FORMAT);
         } catch (InvalidEventException e) {
-            display.printErrorDialogue(DialogueTypes.EVENT_WRONG_FORMAT);
+            display.printErrorDialogue(ErrorDialogueTypes.EVENT_WRONG_FORMAT);
         }
     }
     public boolean processOneInput() {
@@ -38,10 +38,10 @@ public class InputManager {
             command.execute(tasks, storage, display);
             canStop = ExitCommand.isDone(command);
         } catch (NumberFormatException e) {
-            display.printErrorDialogue(DialogueTypes.INVALID_TASK_NUMBER);
+            display.printErrorDialogue(ErrorDialogueTypes.INVALID_TASK_NUMBER);
             tasks.listAllItems(display);
         } catch (IndexOutOfBoundsException e) {
-            display.printErrorDialogue(DialogueTypes.EMPTY_TASK_NAME);
+            display.printErrorDialogue(ErrorDialogueTypes.EMPTY_TASK_NAME);
         }
         return canStop;
     }

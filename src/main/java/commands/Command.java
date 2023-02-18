@@ -1,6 +1,7 @@
 package commands;
 
 import enums.DialogueTypes;
+import enums.ErrorDialogueTypes;
 import managers.InputManager;
 import managers.OutputDialogueManager;
 import managers.SaveManager;
@@ -17,7 +18,7 @@ public abstract class Command {
         try {
             storage.saveCurrentState(taskList);
         } catch (IOException e) {
-            display.printErrorDialogue(DialogueTypes.ERROR_WHEN_SAVING);
+            display.printErrorDialogue(ErrorDialogueTypes.ERROR_WHEN_SAVING);
         }
     }
 
@@ -25,7 +26,7 @@ public abstract class Command {
         try {
             storage.saveNewTask(newTask);
         } catch (IOException e) {
-            display.printErrorDialogue(DialogueTypes.ERROR_WHEN_SAVING);
+            display.printErrorDialogue(ErrorDialogueTypes.ERROR_WHEN_SAVING);
         }
     }
 }

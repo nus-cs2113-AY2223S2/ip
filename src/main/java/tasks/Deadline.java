@@ -22,7 +22,7 @@ public class Deadline extends Task {
                 itemName.substring(indexOfDivider + DEADLINE_DIVIDER_LENGTH).isEmpty()) {
             throw new InvalidDeadlineException();
         }
-        this.itemName = super.getItemName().substring(0,indexOfDivider);
+        this.itemName = super.getItemName().substring(0,indexOfDivider).trim();
         this.deadline = itemName.substring(indexOfDivider + DEADLINE_DIVIDER_LENGTH);
         if (SpecialInputTimeTranslator.isInSpecialFormat(deadline)) {
             this.deadlineDate = SpecialInputTimeTranslator.convertToDateObject(deadline);

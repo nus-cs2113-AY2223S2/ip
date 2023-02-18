@@ -4,6 +4,7 @@ import commands.AddCommand;
 import commands.Command;
 import commands.DeleteCommand;
 import commands.ExitCommand;
+import commands.FindCommand;
 import commands.HelpCommand;
 import commands.ListCommand;
 import commands.MarkCommand;
@@ -37,6 +38,9 @@ public class Parser {
         case "delete":
             int indexToDelete = Integer.parseInt(words[1]) - 1;
             return new DeleteCommand(indexToDelete);
+        case "find":
+            String toFind = fullCommand.replace(words[0],"" ).trim();
+            return new FindCommand(toFind.toLowerCase());
         default:
             return new UnknownCommand();
         }

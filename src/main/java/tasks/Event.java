@@ -24,7 +24,7 @@ public class Event extends Task {
         if (indexOfEndTime == -1 || indexOfStartTime == -1) {
             throw new InvalidEventException();
         }
-        this.itemName = super.getItemName().substring(0, indexOfStartTime);
+        this.itemName = super.getItemName().substring(0, indexOfStartTime).trim();
         this.startTime = itemName.substring(indexOfStartTime + EVENT_TIME_START_DIVIDER_LENGTH, indexOfEndTime);
         this.endTime = itemName.substring(indexOfEndTime + EVENT_TIME_END_DIVIDER_LENGTH);
         if (SpecialInputTimeTranslator.isInSpecialFormat(startTime)) {

@@ -1,6 +1,7 @@
 package commands;
 
 import enums.DialogueTypes;
+import enums.ErrorDialogueTypes;
 import errors.InvalidDeadlineException;
 import errors.InvalidEventException;
 import managers.OutputDialogueManager;
@@ -24,9 +25,9 @@ public class AddCommand extends Command{
             printNewlyAddedTask(display, newTask);
             super.saveOneTasks(newTask, storage, display);
         } catch (InvalidDeadlineException e) {
-            display.printErrorDialogue(DialogueTypes.DEADLINE_WRONG_FORMAT);
+            display.printErrorDialogue(ErrorDialogueTypes.DEADLINE_WRONG_FORMAT);
         } catch (InvalidEventException e) {
-            display.printErrorDialogue(DialogueTypes.EVENT_WRONG_FORMAT);
+            display.printErrorDialogue(ErrorDialogueTypes.EVENT_WRONG_FORMAT);
         }
     }
 

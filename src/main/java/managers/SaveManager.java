@@ -34,21 +34,11 @@ public class SaveManager {
             if (f.createNewFile()) {
                 return storedTasks;
             }
-//        } catch (IOException e) {
-//            System.out.println("Error occurred when creating new file.");
-//        }
-//        try {
             Scanner scanner = new Scanner(f);
             while (scanner.hasNext()) {
                 String line = scanner.nextLine();
                 processStoredTask(storedTasks, line);
             }
-//        } catch (FileNotFoundException e) {
-//            return storedTasks;
-//        } catch (InvalidDeadlineException | InvalidEventException e) {
-//            System.out.println("Stored data is corrupted.");
-//        }
-
         return storedTasks;
     }
 
