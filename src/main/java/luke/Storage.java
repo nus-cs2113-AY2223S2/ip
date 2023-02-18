@@ -1,4 +1,4 @@
-package luke.command;
+package luke;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -36,10 +36,10 @@ public class Storage {
     private HashMap<Integer, Event> savedEvents;
     private HashMap<Integer, Integer> savedSerialNumbers;
 
-    private Response response;
+    private Ui ui;
 
     public Storage() {
-       response = new Response();
+       ui = new Ui();
     }
 
     /**
@@ -260,26 +260,26 @@ public class Storage {
 
     /**
      * Loads all data from the data files.
-     * @return TaskOrganizer object containing all the data that have been saved.
+     * @return TaskList object containing all the data that have been saved.
      * @throws LoadDataException If the function fails to load any of the files.
      */
-    private TaskOrganizer loadPreviousData() throws LoadDataException {
+    private TaskList loadPreviousData() throws LoadDataException {
         loadID();
         loadSerialNumbers();
         loadTaskOrders();
         loadToDos();
         loadDeadlines();
         loadEvents();
-        return new TaskOrganizer(savedID, savedTaskOrder, savedToDos, savedDeadlines, savedEvents,
+        return new TaskList(savedID, savedTaskOrder, savedToDos, savedDeadlines, savedEvents,
                 savedSerialNumbers);
     }
 
     /**
      * Creates folder and required files to store the data.
-     * @return An empty TaskOrganizer object.
+     * @return An empty TaskList object.
      * @throws CreateFileException If the function fails to create any of the files.
      */
-    private TaskOrganizer loadNewData() throws CreateFileException {
+    private TaskList loadNewData() throws CreateFileException {
         makeFolder();
         makeIDFile();
         makeSerialNumbersFile();
@@ -287,19 +287,19 @@ public class Storage {
         makeToDosFile();
         makeDeadlinesFile();
         makeEventsFile();
-        return new TaskOrganizer();
+        return new TaskList();
     }
 
     /**
      * Checks if there are any previous data saved. If there are previous data it loads the saved data into a
-     * TaskOrganizer object. If there are not previous data, it creates a new empty file and returns and empty
-     * TaskOrganizer object.
+     * TaskList object. If there are not previous data, it creates a new empty file and returns and empty
+     * TaskList object.
      *
-     * @return A TaskOrganizer object to be used in LUKE.
+     * @return A TaskList object to be used in LUKE.
      */
-    public TaskOrganizer loadData() {
+    public TaskList loadData() {
         boolean isOkToRead = isFolderPresent() && isFilesPresent() && !isEmpty();
-        TaskOrganizer loadedData = null;
+        TaskList loadedData = null;
         if (!isOkToRead) {
             try {
                 loadedData = loadNewData();
@@ -318,19 +318,19 @@ public class Storage {
 
     /** Informs the user that there was an error creating a file then exits the program. */
     private void handleFileCreationError() {
-        response.printFileCreationError();
+        ui.printFileCreationError();
         System.exit(-1);
     }
 
     /** Informs the user that there was an error loading a file then exits the program. */
     private void handleFileLoadingError() {
-        response.printFileLoadingError();
+        ui.printFileLoadingError();
         System.exit(-1);
     }
 
     /** Informs the user that there was an error saving a file then exits the program. */
     public void handleSaveError() {
-        response.printFileLoadingError();
+        ui.printFileLoadingError();
         System.exit(-1);
     }
 

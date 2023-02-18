@@ -1,4 +1,4 @@
-package luke.command;
+package luke;
 
 import luke.task.ToDo;
 import luke.task.Deadline;
@@ -14,7 +14,7 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 
-public class TaskOrganizer {
+public class TaskList {
     /** Unique ID to be given to each new task for identification */
     private int newTaskID;
 
@@ -30,15 +30,15 @@ public class TaskOrganizer {
     );
     ;
 
-    public TaskOrganizer() {
+    public TaskList() {
         this.newTaskID = 1;
         this.tasks = new HashMap<Integer, Task>();
         this.serialNumbers = new HashMap<Integer, Integer>();
     }
 
-    public TaskOrganizer(int newTaskID, HashMap<Integer, Task> savedTaskOrders, HashMap<Integer, ToDo> savedToDos,
-                         HashMap<Integer, Deadline> savedDeadlines,HashMap<Integer, Event> savedEvents,
-                         HashMap<Integer, Integer> savedSerialNumbers) {
+    public TaskList(int newTaskID, HashMap<Integer, Task> savedTaskOrders, HashMap<Integer, ToDo> savedToDos,
+                    HashMap<Integer, Deadline> savedDeadlines, HashMap<Integer, Event> savedEvents,
+                    HashMap<Integer, Integer> savedSerialNumbers) {
         this.newTaskID = newTaskID;
         this.serialNumbers = savedSerialNumbers;
         this.tasks = new HashMap<Integer, Task>();
@@ -278,7 +278,7 @@ public class TaskOrganizer {
     }
 
     /**
-     * Serialize all data structures in TaskOrganizer into JSON strings and write them to their respective JSON file.
+     * Serialize all data structures in TaskList into JSON strings and write them to their respective JSON file.
      *
      * @throws IOException If there is an error writing the file.
      */

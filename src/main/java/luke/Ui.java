@@ -1,22 +1,39 @@
-package luke.command;
+package luke;
 
 import luke.icon.LukeLogo;
-import luke.task.Deadline;
-import luke.task.Event;
 import luke.task.Task;
-import luke.task.ToDo;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
-public class Response {
+public class Ui {
+    private static final String LINE = "____________________________________________________________";
+    private static final String SIGNATURE = "[Luke]: ";
+
+    /** A scanner object to read in user input */
+    private Scanner scanner;
+
+    public Ui() {
+        scanner = new Scanner(System.in);
+    }
+
+    public void closeScanner() {
+        this.scanner.close();
+    }
+
+    public String readUserInput() {
+        String userInput = scanner.nextLine();
+        return userInput;
+    }
+
     /** Prints a line to indicate the start and end of a message */
     private void printLine() {
-        System.out.println("____________________________________________________________");
+        System.out.println(LINE);
     }
 
     /** Prints a string indicating that the messages are coming from LUKE */
     private void printSignature() {
-        System.out.print("[Luke]: ");
+        System.out.print(SIGNATURE);
     }
 
     /** Prints a hello message to the user */
@@ -50,9 +67,9 @@ public class Response {
     }
 
     /**
-     * Prints a confirmation to the user that a task have been successfully added to the TaskOrganizer.
+     * Prints a confirmation to the user that a task have been successfully added to the TaskList.
      *
-     * @param taskName The name of the task that has been added to the TaskOrganizer.
+     * @param taskName The name of the task that has been added to the TaskList.
      */
     public void printAddTask(String taskName) {
         printLine();
@@ -98,9 +115,9 @@ public class Response {
     }
 
     /**
-     * Prints a list of all the task in the TaskOrganizer.
+     * Prints a list of all the task in the TaskList.
      *
-     * @param tasks The list of all the tasks in the TaskOrganizer.
+     * @param tasks The list of all the tasks in the TaskList.
      */
     public void printTaskList(ArrayList<Task> tasks) {
         printLine();
