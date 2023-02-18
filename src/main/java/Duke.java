@@ -5,6 +5,13 @@ public class Duke {
     private TaskList tasks;
     private Ui ui;
 
+    /**
+     * Attempts to create a TaskList object which contains tasks that are previously
+     * saved in the tasks.txt file. If the tasks.txt file cannot be read, create a
+     * new TaskList object.
+     *
+     * @param filePath File path to tasks.txt which contains saved tasks
+     */
     public Duke(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -16,6 +23,10 @@ public class Duke {
         }
     }
 
+    /**
+     * Starts the Duke ChatBot and continuously prompts the user for
+     * commands until the user gives a "bye" command
+     */
     public void run() {
         ui.showGreetings();
         boolean shouldExitChat = false;

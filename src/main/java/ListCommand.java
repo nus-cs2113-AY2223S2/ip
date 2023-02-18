@@ -1,8 +1,17 @@
+/**
+ * Represents a command to view the whole list of currently tracked tasks.
+ */
 public class ListCommand extends Command {
     public ListCommand(String firstWord, String restOfCommand) {
         super(firstWord, restOfCommand);
     }
 
+    /**
+     * Prints the whole list of tasks which are currently tracked
+     * @param taskList TaskList object containing the array of tracked tasks
+     * @param ui Ui object containing methods for user interaction
+     * @param storage Storage object for dealing with saving tasks to file
+     */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) {
         // There are no tasks in the list

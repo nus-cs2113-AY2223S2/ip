@@ -1,5 +1,9 @@
 import java.util.ArrayList;
 
+/**
+ * Represents a list of tracked tasks which can also perform operations on these
+ * tracked tasks.
+ */
 public class TaskList {
     protected static final int TASK_TYPE_INDEX = 0;
     protected static final int IS_DONE_INDEX = 1;
@@ -11,14 +15,21 @@ public class TaskList {
     protected ArrayList<Task> tasks;
     protected int numOfTasks = 0;
 
+    /**
+     * Initialise tasks variable to an empty ArrayList<Task>
+     */
     public TaskList() {
         this.tasks = new ArrayList<>();
     }
 
+    /**
+     * Initialise tasks variable to an array containing previously saved tasks
+     * @param savedTasks Array of previously saved tasks, each tasks represented as strings
+     */
     public TaskList(ArrayList<String> savedTasks) {
         this.tasks = new ArrayList<>();
         for (String line : savedTasks) {
-            addOldTasks(line);
+            addOldTask(line);
         }
     }
 
@@ -46,7 +57,11 @@ public class TaskList {
         tasks.get(taskIndex).setTaskStatus(false);
     }
 
-    public void addOldTasks(String line) {
+    /**
+     * Determine which type of previously saved task needs to be added
+     * @param line A string representation of a saved task that needs to be added
+     */
+    public void addOldTask(String line) {
         // Retrieve task type from text file
         String[] taskData = line.split("\\|");
 
@@ -64,7 +79,10 @@ public class TaskList {
         }
     }
 
-    // Add a saved Todo task to ArrayList
+    /**
+     * Take the previously saved Todo task and add it to the ArrayList<Task> tasks
+     * @param taskData A string array of different parts of info regarding the Todo task
+     */
     public void addOldTodo(String[] taskData) {
         addTask(new Todo(taskData[DESCRIPTION_INDEX]));
 
@@ -77,7 +95,10 @@ public class TaskList {
         incrementNumOfTasks();
     }
 
-    // Add a saved Deadline task to ArrayList
+    /**
+     * Take the previously saved Deadline task and add it to the ArrayList<Task> tasks
+     * @param taskData A string array of different parts of info regarding the Deadline task
+     */
     public void addOldDeadline(String[] taskData) {
         String description = taskData[DESCRIPTION_INDEX];
         String by = taskData[BY_INDEX];
@@ -92,7 +113,10 @@ public class TaskList {
         incrementNumOfTasks();
     }
 
-    // Add a saved Event task to ArrayList
+    /**
+     * Take the previously saved Event task and add it to the ArrayList<Task> tasks
+     * @param taskData A string array of different parts of info regarding the Event task
+     */
     public void addOldEvent(String[] taskData) {
         String description = taskData[DESCRIPTION_INDEX];
         String from = taskData[FROM_INDEX];
@@ -107,7 +131,4 @@ public class TaskList {
         }
         incrementNumOfTasks();
     }
-
-    // Add past saved tasks to ArrayList
-
 }
