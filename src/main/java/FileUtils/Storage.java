@@ -17,15 +17,28 @@ import EntityUtils.DateParser;
 import Exceptions.DukeException;
 
 
+/**
+ * Class that handles reading and writing tasks to database
+ */
 public class Storage {
     private static final String readDelimiter = " \\| ";
     private static final String writeDelimiter = " | ";
     private File taskFile;
 
+    /**
+     * Constructor for Storage Class
+     * Initialises File instance
+     * @param filePath path to the database
+     */
     public Storage(String filePath) {
         this.taskFile = new File(filePath);
     }
 
+    /**
+     * Loads the database into an array
+     * @return Array of Task (empty if file does not exist)
+     * @throws DukeException
+     */
     public ArrayList<Task> load() throws DukeException {
         try {
             Scanner s = new Scanner(taskFile);
@@ -46,6 +59,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Updates database with tasks
+     * @param tasks currently added tasks
+     * @throws DukeException
+     */
     public void write(TaskList tasks) throws DukeException {
         FileWriter fw;
         String taskString;
@@ -67,6 +85,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Parses line in database and converts it to the corresponding task
+     * @param line line in database
+     * @return task instance
+     * @throws DukeException
+     */
     private static Task parseLine(String line) throws DukeException {
         String[] taskInformation = line.split(readDelimiter);
         Task task = null;
@@ -75,26 +99,28 @@ public class Storage {
         String taskDescription = taskInformation[2];
         LocalDateTime startDate, endDate;
 
-        switch (taskType) {
-            case "T":
+        if (taskType == TaskTypes.TODO.toString()) {
                 task = new Todo(taskDescription, isDone);
-                break;
-            case "D":
+        } else if (taskType == TaskTypes.DEADLINE.toString()) {
                 endDate = DateParser.stringToDate(taskInformation[3]);
                 task = new Deadline(taskDescription, isDone, endDate);
-                break;
-            case "E":
-                startDate = DateParser.stringToDate(taskInformation[3]);
-                endDate = DateParser.stringToDate(taskInformation[4]);
-                task = new Event(taskDescription, isDone, startDate, endDate);
-                break;
-            default:
-                throw new DukeException("Error parsing file!");
+        } else if (taskType == TaskTypes.EVENT.toString()) {
+            startDate = DateParser.stringToDate(taskInformation[3]);
+            endDate = DateParser.stringToDate(taskInformation[4]);
+            task = new Event(taskDescription, isDone, startDate, endDate);
+        } else {
+            throw new DukeException("Error parsing file!");
         }
 
         return task;
     }
 
+    /**
+     * Converts task to a string for storing into database
+     * @param t Task
+     * @return String representation of Task
+     * @throws DukeException
+     */
     private static String stringfyTask(Task t) throws DukeException {
         String taskString;
         String taskType, startDate, endDate;

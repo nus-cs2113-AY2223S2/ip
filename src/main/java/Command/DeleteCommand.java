@@ -9,13 +9,29 @@ import Exceptions.NonPositiveNumberException;
 import FileUtils.Storage;
 import Output.UI;
 
+/**
+ * Command to delete task from tasklist
+ */
 public class DeleteCommand extends Command implements ParseInput {
     private int taskIndex;
 
+    /**
+     * Constructor for DeleteCommand class
+     * @param command delete command
+     * @param input user input
+     * @throws DukeException
+     */
     public DeleteCommand(String command, String input) throws DukeException {
         parseInput(command, input);
     }
 
+    /**
+     * Executes the deletion of task from tasklist
+     * @param tasks Handles removal of task from task list
+     * @param ui Responsible for printing deletion status
+     * @param storage Handles the removal of task from database
+     * @throws DukeException
+     */
     @Override
     public void execute(TaskList tasks, UI ui, Storage storage) throws DukeException {
         Task removedTask = tasks.deleteTask(taskIndex);
@@ -23,6 +39,12 @@ public class DeleteCommand extends Command implements ParseInput {
         storage.write(tasks);
     }
 
+    /**
+     * Parses user input to get index of task to be deleted
+     * @param command delete command
+     * @param input user input
+     * @throws DukeException
+     */
     public void parseInput(String command, String input) throws DukeException {
         if (input.length() == command.length()) {
             throw new NoDescriptionException(command);

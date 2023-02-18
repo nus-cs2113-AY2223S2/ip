@@ -10,7 +10,16 @@ import Command.UnmarkCommand;
 import Exceptions.DukeException;
 import Exceptions.UnknownInputException;
 
+/**
+ * Class that handles parsing of user inputs
+ */
 public class Parser {
+    /**
+     * Parses input and returns a command which matchs it
+     * @param input user input
+     * @return corresponding command
+     * @throws DukeException
+     */
     public static Command parse(String input) throws DukeException {
         String[] inputArray = input.split(" ");
         String command = inputArray[0].toLowerCase();

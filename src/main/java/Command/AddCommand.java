@@ -19,13 +19,29 @@ import Exceptions.UnknownInputException;
 import FileUtils.Storage;
 import Output.UI;
 
+/**
+ * The AddCommand class parses command to create a new task and creates the task in the constructor
+ * Updates storage when execute method is called
+ */
 public class AddCommand extends Command implements ParseInput {
     private Task addedTask;
 
+    /**
+     * Constructor of AddCommand
+     * Calls parseInput method to create the task
+     * @param command type of task
+     * @param input input of user
+     * @throws DukeException
+     */
     public AddCommand(String command, String input) throws DukeException {
         parseInput(command, input);
     }
 
+    /**
+     * Adds new task to tasklist
+     * Outputs task added message
+     * Writes task to storage
+     */
     @Override
     public void execute(TaskList tasks, UI ui, Storage storage) throws DukeException {
         tasks.addTask(addedTask);
@@ -33,6 +49,13 @@ public class AddCommand extends Command implements ParseInput {
         storage.write(tasks);
     }
 
+    /**
+     * Helper function to parse input string
+     * Creates a Deadline, Event or Todo task based on command string
+     * @param command type of task
+     * @param input input of user
+     * @throws DukeException
+     */
     public void parseInput(String command, String input) throws DukeException {
         String taskDescription, startDateString, endDateString;
         int startDateIdx, endDateIdx;
