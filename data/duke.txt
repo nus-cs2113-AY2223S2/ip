@@ -1,3 +1,0 @@
-E | 0 | Koh Ming En attend CS2113 lecture  | Oct 13 2023 16:00 | Oct 13 2023 18:00
-D | 0 | task1  | Feb 10 2023 23:59
-E | 0 | submit Planning Poster | Feb 11 2023 14:00 | Feb 11 2023 15:00
