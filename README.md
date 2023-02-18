@@ -6,7 +6,7 @@ _Duke_ is a Personal Assistant Chatbot that helps a person to keep track of vari
 * [Duke Project User Guide](#duke-project-user-guide)
   * [Quick Start](#quick-start)
   * [Features](#features)
-    * [ADDING AN ENTRY:](#adding-an-entry-)
+    * [ADD AN ENTRY:](#add-an-entry-)
       * [There are 3 ways to add an entry depending on the type of your task](#there-are-3-ways-to-add-an-entry-depending-on-the-type-of-your-task)
         * [Todo Tasks:](#todo-tasks-)
         * [Deadline Tasks:](#deadline-tasks-)
@@ -17,7 +17,6 @@ _Duke_ is a Personal Assistant Chatbot that helps a person to keep track of vari
     * [UNMARK A TASK](#unmark-a-task)
     * [DELETE AN ENTRY](#delete-an-entry)
     * [EXIT DUKE](#exit-duke)
-  * [Command Summary](#command-summary)
 <!-- TOC -->
 
 ## Quick Start
@@ -73,9 +72,6 @@ _Duke_ is a Personal Assistant Chatbot that helps a person to keep track of vari
 
 ### EXIT DUKE
       bye
-
-## Command Summary
-![](\ip\User Guide picture\Screenshot (145).png)
 
 
 
