@@ -75,7 +75,7 @@ _Duke_ is a Personal Assistant Chatbot that helps a person to keep track of vari
       bye
 
 ## Command Summary
-![]("\ip\User Guide picture\Screenshot (145).png")
+![](\ip\User Guide picture\Screenshot (145).png)
 
 
 
