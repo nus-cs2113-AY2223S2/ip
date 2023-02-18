@@ -1,6 +1,8 @@
-package duke.util;
+package duke.storage;
 
+import duke.tasklist.DataManager;
 import duke.task.Task;
+import duke.util.DukeException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -12,7 +14,9 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class FileManager {
-    static private final ArrayList<String> storedData = new ArrayList<>();
+
+    private static final ArrayList<String> storedData = new ArrayList<>();
+
     public static void readFile(String path) throws FileNotFoundException {
         File f = new File(path);
         Scanner s = new Scanner(f);
@@ -57,7 +61,7 @@ public class FileManager {
         }
     }
 
-    public  static void handleFile(DataManager dm) throws DukeException {
+    public static void handleFile(DataManager dm) throws DukeException {
         for (String str: storedData) {
             String[] temp = str.split("%",5);
             switch (temp[0].trim()) {
