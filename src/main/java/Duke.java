@@ -27,16 +27,46 @@ public class Duke {
     
 
     public static boolean isInRange(String userInput, int currentIndex) {
-        return (Integer.parseInt(userInput.split(" ")[1])>0 && Integer.parseInt(userInput.split(" ")[1])<currentIndex+1);
+        boolean isReturn = false;
+        try {
+            isReturn = Integer.parseInt(userInput.split(" ")[1])>0 && Integer.parseInt(userInput.split(" ")[1])<currentIndex+1;
+        } catch (NumberFormatException e) {
+            System.out.println("\tWhoops, need to ensure that your inputs are numbers! BUT a");
+        }
+        return (isReturn);
     }
 
     public static void printMarkedTask(String userInput, ArrayList<Task> taskList) {
+//        try {
+//            taskList.get(Integer.parseInt(userInput.split(" ")[1]) - 1).markTask();
+//        } catch (NumberFormatException e) {
+//            printLine();
+//            System.out.println("\tWhoops inputs must be numbers");
+//            printLine();
+//        } catch (IndexOutOfBoundsException e) {
+//            printLine();
+//            System.out.println("\tWhoops inputs must be valid");
+//            printLine();
+//        }
         System.out.println("\tNice! I've marked this task as done:");
         taskList.get(Integer.parseInt(userInput.split(" ")[1]) - 1).markTask();
+        try {
+            fileObject.populateFile(taskList);
+        } catch (IOException e) {
+            System.out.println("WHoops");
+        }
         System.out.println("\t\t" + taskList.get(Integer.parseInt(userInput.split(" ")[1]) - 1).getStatusAndDescription());
     }
 
-    public static void deleteTask() {
+    public static void deleteTask() throws IndexOutOfBoundsException, NumberFormatException{
+        Task item = new Task();
+        try {
+             item = taskList.get(Integer.parseInt(userInput.split(" ")[1]) - 1);
+        } catch (IndexOutOfBoundsException e) {
+            throw new IndexOutOfBoundsException();
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException();
+        }
         printLine();
         System.out.println("\tNoted! I've removed this task!");
         System.out.println("\t\t" + taskList.get(Integer.parseInt(userInput.split(" ")[1]) - 1).getStatusAndDescription());
@@ -44,11 +74,22 @@ public class Duke {
         currentIndex-=1;
         printNoTasks(currentIndex);
         printLine();
+        try {
+            fileObject.populateFile(taskList);
+        } catch (IOException e) {
+            System.out.println("Unable to delete");
+        }
+
     }
 
     public static void printUnmarkedTask(String userInput, ArrayList<Task> taskList) {
         System.out.println("\tNice! I've marked this task as not done:");
         taskList.get(Integer.parseInt(userInput.split(" ")[1]) - 1).unMarkTask();
+        try {
+            fileObject.populateFile(taskList);
+        } catch (IOException e) {
+            System.out.println("WHoops");
+        }
         System.out.println("\t\t" + taskList.get(Integer.parseInt(userInput.split(" ")[1]) - 1).getStatusAndDescription());
     }
     public static String[] getDeadline(String userInput) {
@@ -123,29 +164,41 @@ public class Duke {
         printNoTasks(currentIndex);
         printLine();
     }
-    public static void printTask(String userInput) {
-        printLine();
-        Task temp = new Task(userInput); // set the description
-        taskList.add(temp);
-        currentIndex+=1;
-        System.out.println("\tadded: " + userInput);
-        printLine();
-    }
+//    public static void printTask(String userInput) {
+//        printLine();
+//        Task temp = new Task(userInput); // set the description
+//        taskList.add(temp);
+//        currentIndex+=1;
+//        System.out.println("\tadded: " + userInput);
+//        printLine();
+//    }
     public static void sayBye() {
-        try {
-            fileObject.clearFile();
-        } catch (IOException e) {
-            System.out.println("Oh No unable to leave");
-        }
         printLine();
         System.out.println("\tBye. Hope to see you again soon!");
+        printLine();
+    }
+
+    public static void displayHelper() {
+        printLine();
+        System.out.println("\tHi! These are the commands which duke understands!");
+        printLine();
+        System.out.println("\ttodo - Creates a todo, use it by adding 'todo' and some description. An example is listed below:");
+        System.out.println("\t\t'todo get milk'");
+        printLine();
+        System.out.println("\tdeadline - Creates a deadline, use it by adding 'deadline' followed by some description and a deadline which follows '/by'");
+        System.out.println("\t\t'deadline get milk /by tomorrow'");
+        printLine();
+        System.out.println("\tevent - Creates an event, use it by adding 'event' ,some description, a start date followed by '/from' and an end date followed by '/to'");
+        System.out.println("\t\t'event get some milk /from today /to tomorrow");
+        printLine();
+        System.out.println("\tbye - to exit the program!");
         printLine();
     }
 
     public static void deadlineExceptionHandler() {
         try {
             printDeadline(userInput);
-            fileObject.addToFile(currentIndex +"." + taskList.get(taskList.size()-1).getStatusAndDescription() + System.lineSeparator());
+            fileObject.addToFile(taskList.get(taskList.size()-1).enCode() + System.lineSeparator());
         } catch (EmptyDeadline e) {
             printLine();
             System.out.println("\tPlease ensure that the deadline isn't empty!");
@@ -166,7 +219,7 @@ public class Duke {
     public static void eventExceptionHandler() {
         try {
             printEvent(userInput);
-            fileObject.addToFile(currentIndex +"." + taskList.get(taskList.size()-1).getStatusAndDescription() + System.lineSeparator());
+            fileObject.addToFile(taskList.get(taskList.size()-1).enCode() + System.lineSeparator());
         } catch (EmptyEvent e) {
             printLine();
             System.out.println("\tPlease ensure that the event isn't empty!");
@@ -206,14 +259,24 @@ public class Duke {
             printLine();
         }
         try {
-            fileObject.addToFile(currentIndex +"." + taskList.get(taskList.size()-1).getStatusAndDescription() + System.lineSeparator());
+            fileObject.addToFile(taskList.get(taskList.size()-1).enCode() + System.lineSeparator());
         } catch (IOException e) {
             System.out.println("unable to write");
         }
     }
 
     public static void deleteExceptionHandler() {
-        deleteTask();
+        try {
+            deleteTask();
+        } catch (IndexOutOfBoundsException e) {
+            printLine();
+            System.out.println("\tEnter a valid index to delete");
+            printLine();
+        } catch (NumberFormatException e) {
+            printLine();
+            System.out.println("\tEnter a valid number to delete");
+            printLine();
+        }
     }
 
 
@@ -227,8 +290,16 @@ public class Duke {
     public static Scanner in = new Scanner(System.in);
     public static String userInput;
     //public static exceptions.DukeException exceptionHandler;
-    public static FileHandler fileObject = new FileHandler("src/main/java/dukeData.txt");
+    public static FileHandler fileObject = new FileHandler(System.getProperty("user.dir") + "/dukeData.txt");
     public static void main(String[] args) {
+        try {
+            fileObject.createFile();
+            //fileObject.clearFile();
+            taskList = fileObject.readFile();
+        } catch (IOException e) {
+            System.out.println("Unable to write to file");
+        }
+        currentIndex = taskList.size();
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -238,12 +309,8 @@ public class Duke {
         System.out.println("---------------------------------------------------------------------------------");
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
+        System.out.println("If you are unsure of the commands, type 'help'");
         System.out.println("---------------------------------------------------------------------------------");
-        try {
-            fileObject.createFile();
-        } catch (IOException e) {
-            System.out.println("Unable to write to file");
-        }
         userInput = in.nextLine();
         while (true) { // ensure that the loop can stay on forever if needed.
             while(userInput.equals("") || userInput.equals(" ")) {
@@ -260,25 +327,26 @@ public class Duke {
                 listTasks(currentIndex, taskList);
                 printLine();
             } else if (isTheSame(userInput, "mark")) { //mark the task in
-                while(isInRange(userInput, currentIndex)==false) {
+                if(isInRange(userInput, currentIndex)==false) {
                     printLine();
                     System.out.println("\tNice try, enter a valid index to mark:");
                     printLine();
-                    userInput = in.nextLine();
+                } else {
+                    printLine();
+                    printMarkedTask(userInput, taskList);
+                    printLine();
                 }
-                printLine();
-                printMarkedTask(userInput, taskList);
-                printLine();
+                //printMarkedTask(userInput, taskList);
             } else if (isTheSame(userInput, "unmark")) {//unmark the task
-                while(isInRange(userInput, currentIndex)==false) {
+                if(isInRange(userInput, currentIndex)==false) {
                     printLine();
                     System.out.println("\tNice try, enter a valid index to unmark:");
                     printLine();
-                    userInput = in.nextLine();
+                } else {
+                    printLine();
+                    printUnmarkedTask(userInput, taskList);
+                    printLine();
                 }
-                printLine();
-                printUnmarkedTask(userInput, taskList);
-                printLine();
             } else if(isTheSame(userInput, "todo")) {
                 todoExceptionHandler();
                 //leave this for the final refactoring
@@ -288,15 +356,14 @@ public class Duke {
                 eventExceptionHandler();
             } else if(isTheSame(userInput, "delete")) {
                 deleteExceptionHandler();
-            }  else { // tells the user that we have added the task in
-                printTask(userInput); // could remove this and ensure that only specific tasks can be entered!
+            }  else if (isTheSame(userInput,"help")) {
+                displayHelper();
+            } else { // tells the user that we have added the task in
+                //printTask(userInput); // could remove this and ensure that only specific tasks can be entered!
+                printLine();
+                System.out.println("\tPlease enter a valid input");
+                printLine();
             }
-            /*
-            either way, the process to add to the file could be this way.
-            Essentially create file manip:
-                1. At the end of this while loop, take the final input
-                2. could add at the end of each of the exception handlers, this should work fine
-             */
             userInput = in.nextLine();
         }
        sayBye();

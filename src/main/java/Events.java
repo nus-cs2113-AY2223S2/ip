@@ -1,4 +1,4 @@
-public class Events extends Task {
+public class Events extends Task implements TaskFileHandler{
     protected String from;
     protected String to;
     Events(String description, String from, String to) {
@@ -8,6 +8,7 @@ public class Events extends Task {
         System.out.println("\tGot it. I've added this task:");
         System.out.println("\t\t" + this.getStatusAndDescription());
     }
+    Events(){}
 //    public void printAddedEvent() {
 //        System.out.println("\tGot it. I've added this task:\n");
 //        System.out.println("\t\t" + this.getDescription());
@@ -20,10 +21,19 @@ public class Events extends Task {
     public String getTo() {
         return to;
     }
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
+    public void setTo(String to) {
+        this.to = to;
+    }
 
     @Override
     public String getStatusAndDescription() {
         return "[E]" + super.getStatusAndDescription() + "(from: " + this.getFrom() + " to:" + this.getTo() + ")";
     }
-
+    public String enCode() {
+        return "E # " + super.enCode() + " # " + this.from + " # " + this.to;
+    }
 }

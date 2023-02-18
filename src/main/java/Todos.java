@@ -1,9 +1,12 @@
-public class Todos extends Task{
+public class Todos extends Task implements TaskFileHandler{
     Todos(String description) {
         super(description);
         System.out.println("\tGot it. I've added this task:");
         System.out.println("\t\t" + getStatusAndDescription());
     }
+
+    Todos () {}
+
 
     /**
      * Do not have to worry about
@@ -18,6 +21,9 @@ public class Todos extends Task{
     @Override
     public String getStatusAndDescription() {
         return "[T]" + super.getStatusAndDescription();
+    }
+    public String enCode() {
+        return "T # " + super.enCode();
     }
 }
 
