@@ -89,7 +89,17 @@ public class Command {
                 } else {
                     System.out.println("       ☹ OOPS!!! The description of an delete cannot be empty.");
                 }
-
+                break;
+            case "find":
+                if(hasDescription) {
+                    try {
+                        taskList.find(args, ui);
+                    } catch (DukeException e) {
+                        System.out.println("       " + e.getMessage());
+                    }
+                } else {
+                    System.out.println("       ☹ OOPS!!! The description of a find cannot be empty.");
+                }
                 break;
             default:
                 System.out.println("       ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");

@@ -179,4 +179,17 @@ public class TaskList {
 
     }
 
+    public void find(String keyword, Ui ui) throws DukeException {
+        System.out.println("     Here are the matching tasks in your list:");
+        for(int i = 0; i< tasks.size(); i++) {
+            if(tasks.get(i).getDescription().contains(keyword)) {
+                ui.printSmallSpace();
+                ui.print((i+1) +  ".[" + tasks.get(i).getTypeOfTask()
+                        + "][" + tasks.get(i).getStatusIcon()
+                        + "] " + tasks.get(i).getDescription());
+            }
+        }
+
+    }
+
 }

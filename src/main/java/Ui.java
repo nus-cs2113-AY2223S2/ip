@@ -48,4 +48,17 @@ public class Ui {
         System.out.println("     " + "Bye. Hope to see you again soon!");
         System.out.println(LINE);
     }
+
+    public void printSmallSpace() {
+        System.out.print(SMALL_SPACE);
+    }
+
+    public void printBigSpace() {
+        System.out.print(BIG_SPACE);
+    }
+
+    public void print(String string) {
+        System.out.println(string);
+    }
+
 }
