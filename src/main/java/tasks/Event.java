@@ -42,8 +42,6 @@ public class Event extends Task {
     @Override
     public void printTaskWithoutId() {
         System.out.println( "  [E] " + this.itemName +  " (from: " + startTime + "To: " + endTime + ")");
-        OutputDialogueManager.printInteraction(DialogueTypes.COUNT_OF_TASKS);
-        System.out.println(getItemCount());
     }
 
     @Override

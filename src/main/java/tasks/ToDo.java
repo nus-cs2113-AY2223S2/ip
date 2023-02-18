@@ -27,8 +27,6 @@ public class ToDo extends Task {
     @Override
     public void printTaskWithoutId() {
         System.out.println( "  [T] " + this.getItemName());
-        OutputDialogueManager.printInteraction(DialogueTypes.COUNT_OF_TASKS);
-        System.out.println(getItemCount());
     }
 
     @Override

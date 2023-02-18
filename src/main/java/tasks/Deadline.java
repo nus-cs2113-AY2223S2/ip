@@ -38,8 +38,6 @@ public class Deadline extends Task {
     @Override
     public void printTaskWithoutId() {
         System.out.println( "  [D] " + this.itemName + " (by: " + deadline + ")");
-        OutputDialogueManager.printInteraction(DialogueTypes.COUNT_OF_TASKS);
-        System.out.println(getItemCount());
     }
 
     @Override

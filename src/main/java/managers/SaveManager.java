@@ -27,54 +27,61 @@ public class SaveManager {
     // T0 name
     // D0 name /by time
     // E0 name /from time /to time
-    public static ArrayList<Task> initialiseData() {
+    public ArrayList<Task> initialiseData()
+            throws IOException, InvalidDeadlineException, InvalidEventException {
         File f = new File(PATHNAME);
         ArrayList<Task> storedTasks = new ArrayList<>();
-        try {
             if (f.createNewFile()) {
                 return storedTasks;
             }
-        } catch (IOException e) {
-            System.out.println("Error occurred when creating new file.");
-        }
-        try {
+//        } catch (IOException e) {
+//            System.out.println("Error occurred when creating new file.");
+//        }
+//        try {
             Scanner scanner = new Scanner(f);
             while (scanner.hasNext()) {
                 String line = scanner.nextLine();
                 processStoredTask(storedTasks, line);
             }
-        } catch (FileNotFoundException e) {
-            return storedTasks;
-        } catch (InvalidDeadlineException | InvalidEventException e) {
-            System.out.println("Stored data is corrupted.");
-        }
+//        } catch (FileNotFoundException e) {
+//            return storedTasks;
+//        } catch (InvalidDeadlineException | InvalidEventException e) {
+//            System.out.println("Stored data is corrupted.");
+//        }
 
         return storedTasks;
     }
 
-    public static void saveCurrentState (ArrayList<Task> tasksList) {
-        try {
-            FileWriter fileWriter = new FileWriter(PATHNAME, true);
-            FileWriter fileClearer = new FileWriter(PATHNAME);
-            fileClearer.write("");
-            fileClearer.close();
-            String taskState = "";
-            for (Task taskItem: tasksList) {
-                String toWrite = "";
-                if (taskItem.isDone()) {
-                    taskState = "1";
-                } else {
-                    taskState = "0";
-                }
-                toWrite = taskItem.getClassType() + taskState + taskItem.getToStore();
-                fileWriter.write(toWrite + System.lineSeparator());
+    public void saveCurrentState (TaskManager tasks) throws IOException {
+        FileWriter fileWriter = new FileWriter(PATHNAME, true);
+        FileWriter fileClearer = new FileWriter(PATHNAME);
+        fileClearer.write("");
+        fileClearer.close();
+        String taskState = "";
+        for (Task taskItem : tasks.getTasksList()) {
+            String toWrite = "";
+            if (taskItem.isDone()) {
+                taskState = "1";
+            } else {
+                taskState = "0";
             }
-            fileWriter.close();
-        } catch (IOException e) {
-            System.out.println("/(TAT)/  There seems to be some error when saving data...");
+            toWrite = taskItem.getClassType() + taskState + taskItem.getToStore();
+            fileWriter.write(toWrite + System.lineSeparator());
         }
+        fileWriter.close();
     }
-    private static void processStoredTask(ArrayList<Task> storedTasks, String line) throws InvalidDeadlineException, InvalidEventException {
+
+    public void saveNewTask (Task newTask) throws IOException {
+        FileWriter fileWriter = new FileWriter(PATHNAME, true);
+        String toWrite = "";
+        String taskState = "0";
+        toWrite = newTask.getClassType() + taskState + newTask.getToStore();
+        fileWriter.write(toWrite + System.lineSeparator());
+        fileWriter.close();
+    }
+
+    private static void processStoredTask(ArrayList<Task> storedTasks, String line)
+            throws InvalidDeadlineException, InvalidEventException {
         switch (line.substring(0,1)) {
         case TODO_CLASS:
             ToDo toDo = new ToDo(line.substring(SAVED_DATA_BEGIN_INDEX));

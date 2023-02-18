@@ -16,6 +16,7 @@ public enum DialogueTypes {
     EMPTY_TASK_NAME,
     DEADLINE_WRONG_FORMAT,
     EVENT_WRONG_FORMAT,
-    NO_TASK_IN_LIST
+    NO_TASK_IN_LIST,
+    ERROR_WHEN_SAVING
 
 }

@@ -3,7 +3,7 @@ package managers;
 import enums.DialogueTypes;
 
 public class OutputDialogueManager {
-    public static void printInteraction(DialogueTypes interactionType) {
+    public void printInteraction(DialogueTypes interactionType) {
         switch (interactionType) {
         case GREETINGS:
             System.out.println("<(0v0)/ Hey! Liri here!" + System.lineSeparator()
@@ -43,13 +43,16 @@ public class OutputDialogueManager {
         case GOODBYE:
             System.out.println("/(0A0)/ Bye. See you next time!");
             break;
+        case UNKNOWN_TYPE:
+            // fallthrough
         default:
             System.out.println("|(@A@)| I can't understand what you are talking about.");
+            printInteraction(DialogueTypes.HELP_MENU);
             break;
         }
     }
 
-    public static void printErrorDialogue(DialogueTypes errorMessage) {
+    public void printErrorDialogue(DialogueTypes errorMessage) {
         switch (errorMessage) {
         case EMPTY_TASK_NAME:
             System.out.println("|(@A@)| The description seems to be empty or incomplete, please remember to fill it");
@@ -78,6 +81,9 @@ public class OutputDialogueManager {
                     System.lineSeparator() + "       (eg: deadline return book /by Sunday)"
                     + System.lineSeparator() + "     - To add an event: event eventName /from startTime /to endTime" +
                     System.lineSeparator() + "       (eg: event project meeting /from Mon 2pm /to 4pm)");
+            break;
+        case ERROR_WHEN_SAVING:
+            System.out.println("/(TAT)/  There seems to be some error when saving data...");
             break;
         }
     }

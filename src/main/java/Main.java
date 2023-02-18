@@ -4,21 +4,22 @@ import managers.OutputDialogueManager;
 
 import java.util.Scanner;
 public class Main {
+    private InputManager inputManager;
+    private OutputDialogueManager display;
+    public Main () {
+        inputManager = new InputManager();
+        display = new OutputDialogueManager();
+    }
 
+    public void run() {
+        display.printInteraction(DialogueTypes.GREETINGS);
+        boolean isDone = false;
+        do {
+            isDone = inputManager.processOneInput();
+        } while (!isDone);
+    }
     public static void main(String[] args) {
-        OutputDialogueManager.printInteraction(DialogueTypes.GREETINGS);
-        obtainUserInputs();
-        OutputDialogueManager.printInteraction(DialogueTypes.GOODBYE);
+        new Main().run();
     }
 
-    private static void obtainUserInputs() {
-        String line;
-        Scanner in = new Scanner(System.in);
-        line = in.nextLine();
-        boolean isDone = InputManager.processInput(line);
-        while (!isDone) {
-            line = in.nextLine();
-            isDone = InputManager.processInput(line);
-        }
-    }
 }
