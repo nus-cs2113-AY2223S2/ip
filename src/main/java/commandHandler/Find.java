@@ -9,18 +9,13 @@ import java.util.Set;
 import data.tasksList;
 import duke.Task;
 import ui.Display;
-import ui.exceptions.MissingCommandException;
 
 public class Find {
     private final Set<String> keywords;
 
-    public Find(String userInput) throws MissingCommandException {
-        String[] userInputArray = userInput.split(" ");
-        if (userInputArray.length < 2) {
-            throw new MissingCommandException("Please specify at least 1 keyword!");
-        }
-        String[] keywords = userInput.split(" ", 2)[1].split(" ");
-        this.keywords = new HashSet<>(Arrays.asList(keywords));
+    public Find(String keywords) {
+        String[] keywordsArray = keywords.toLowerCase().split(" ");
+        this.keywords = new HashSet<>(Arrays.asList(keywordsArray));
         searchTasksList();
     }
 
@@ -28,7 +23,7 @@ public class Find {
         ArrayList<Task> matchingTasksList = new ArrayList<>();
         ArrayList<Task> userTasksList = tasksList.getTaskArrayList();
         for (Task task : userTasksList) {
-            Set<String> taskDescription = new HashSet<String>(Arrays.asList(task.description.split(" ")));
+            Set<String> taskDescription = new HashSet<String>(Arrays.asList(task.description.toLowerCase().split(" ")));
             if (!Collections.disjoint(taskDescription, keywords)) {
                 matchingTasksList.add(task);
             }

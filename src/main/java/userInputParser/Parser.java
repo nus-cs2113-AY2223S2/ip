@@ -45,7 +45,7 @@ public class Parser {
     public static void parseUserInput(String userInput) throws MissingCommandException {
         /** Handle single-word input commands with no arguments **/
         if (userInput.equals(COMMAND_BYE)) {
-            Display.notifyUser(Display.MESSAGE_GOODBYE);
+            Display.goodbyeUser();
             return;
         }
         if (userInput.equals(COMMAND_LIST)) {
@@ -62,6 +62,8 @@ public class Parser {
                 Add.addTask(command, arguments);
                 Display.notifyUser(
                         "Added the following task:\n" + tasksList.userTasksList.get(tasksList.userTaskCount - 1));
+            } else if (command.equals(COMMAND_FIND)) {
+                new Find(arguments);
             } else if (command.equals(COMMAND_MARK)) {
                 Mark.markTask(arguments, MarkType.MARK);
             } else if (command.equals(COMMAND_UNMARK)) {
