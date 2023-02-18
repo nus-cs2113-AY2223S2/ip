@@ -25,9 +25,9 @@ public class Duke {
     /**
      * Prints entries that contains the keyword(s).
      *
-     * @param listOfTasks ArrayList of tasks.
+     * @param listOfTasks        ArrayList of tasks.
      * @param currentNumberIndex Number of tasks present in the list.
-     * @param keyWord keyword to search for in each entry
+     * @param keyWord            keyword to search for in each entry
      */
     public static void findEntry(ArrayList<Task> listOfTasks, int currentNumberIndex, String keyWord) {
         System.out.println("     Here are the matching tasks in your list:");
@@ -45,7 +45,7 @@ public class Duke {
     /**
      * Prints all the entries in the list.
      *
-     * @param listOfTasks ArrayList of tasks.
+     * @param listOfTasks        ArrayList of tasks.
      * @param currentNumberIndex Number of tasks present in the list.
      */
     public static void listing(ArrayList<Task> listOfTasks, int currentNumberIndex) {
@@ -62,9 +62,9 @@ public class Duke {
      * Removes entry at an index
      * and returns the number of tasks in the list after removal.
      *
-     * @param listOfTasks ArrayList of tasks.
+     * @param listOfTasks        ArrayList of tasks.
      * @param currentNumberIndex Number of tasks present in the list.
-     * @param toDelete index of entry to delete.
+     * @param toDelete           index of entry to delete.
      * @return Number of tasks in the list after removal.
      */
     public static int deleting(ArrayList<Task> listOfTasks, int currentNumberIndex, int toDelete) {
@@ -76,7 +76,7 @@ public class Duke {
     }
 
     /**
-     * Exception handler that throws exception if command is invalid.
+     * Method that throws exception if command is invalid.
      *
      * @throws InvalidCommand if isNotValidCommand is true.
      */
@@ -88,7 +88,7 @@ public class Duke {
     }
 
     /**
-     * Exception handler that throws exception if command is empty after the instruction word.
+     * Method that throws exception if command is empty after the instruction word.
      *
      * @throws InvalidCommand if isEmptyCommand is true.
      */
@@ -154,7 +154,7 @@ public class Duke {
                         listing(taskArrayList, currentNumber);
                         break;
                     case "find":
-                        findEntry(taskArrayList, currentNumber,lineComponents[1]);
+                        findEntry(taskArrayList, currentNumber, lineComponents[1]);
                         break;
                     case "delete":
                         currentNumber = deleting(taskArrayList, currentNumber, Integer.parseInt(lineComponents[1]));
@@ -185,12 +185,10 @@ public class Duke {
             try {
                 if (listEditableCommands.contains(type)) {
                     WriteFile.writeToFile("data\\duke.txt", taskArrayList);
-                } else {
-                    continue;
                 }
             } catch (IOException e) {
+                System.out.println(e.getMessage());
             }
-            ;
         }
     }
 }
