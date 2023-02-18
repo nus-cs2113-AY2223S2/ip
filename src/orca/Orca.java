@@ -5,9 +5,9 @@ import java.util.Scanner;
 public class Orca {
     private static Ui ui;
     private static TaskList taskList;
+    private static Storage storage;
 
     static final boolean FINISHED = true;
-    static final String FILE_PATH = "./data/orca.txt";
 
     static Scanner in = new Scanner(System.in);
     static String userInput = "";
@@ -17,7 +17,8 @@ public class Orca {
 
     public Orca() {
         ui = new Ui();
-        taskList = new TaskList();
+        storage = new Storage();
+        taskList = new TaskList(storage.load());
     }
 
     public static void findCommandType() {
@@ -64,7 +65,7 @@ public class Orca {
         switch (commandType) {
             case BYE:
                 ui.printByeMessage();
-                taskList.writeToFile();
+                storage.write(taskList.get());
                 return FINISHED;
             case LIST:
                 ui.printTasks(taskList.get());
