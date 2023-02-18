@@ -34,18 +34,22 @@ Terminates Duke program.
 
 ## Usage
 
-### `Todo` - Describe action
+### `Todo` - Adds a Todo task.
 
-Describe the action and its outcome.
+This command adds a Todo type task to the tasks list.
 
 Example of usage:
 
-`keyword (optional arguments)`
+`/todo CS2113 Assignment`
 
 Expected outcome:
 
 Description of the outcome.
 
 ```
-expected output
+---------------------------------------------------
+[MESSAGE] Added the following task:
+[TODO]
+[ ] CS2113 Assignment
+---------------------------------------------------
 ```
