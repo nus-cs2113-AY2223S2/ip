@@ -65,8 +65,12 @@ public class Duke {
             case MARK:
                 ui.printSystemMessage(taskController.markTask(parser.getTaskIndex()));
                 return false;
+            case FIND:
+                ui.printSystemMessage(taskController.findTask(parser.getFindKeyword()));
+                return false;
             case DELETE:
                 ui.printSystemMessage(taskController.deleteTask(parser.getTaskIndex()));
+                return false;
             default:
                 return false;
             }

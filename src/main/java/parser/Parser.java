@@ -15,6 +15,12 @@ public class Parser implements IParser {
     private Scanner sc;
     private String message;
     private Command currentCommand;
+    private static final String LIST = "list";
+    private static final String EXIT = "bye";
+    private static final String MARK = "mark";
+    private static final String UNMARK = "unmark";
+    private static final String DELETE = "delete";
+    private static final String FIND = "find";
     public Parser(Scanner sc) {
         this.sc = sc;
     }
@@ -22,21 +28,21 @@ public class Parser implements IParser {
     public String getMessage() {
         return message;
     }
-    private boolean isList() {
-        return (message.split(" ")[0].toLowerCase().equals("list"));
-    }
-    private boolean isExit() {
-        return (message.split(" ")[0].toLowerCase().equals("bye"));
-    }
-    private boolean isMark(){
-        return (message.split(" ")[0].toLowerCase().equals("mark"));
-    }
-    private boolean isUnmark(){
-        return (message.split(" ")[0].toLowerCase().equals("unmark"));
-    }
-    private boolean isDelete() {
-        return (message.split(" ")[0].toLowerCase().equals("delete"));
-    }
+    // private boolean isList() {
+    //     return (message.split(" ")[0].toLowerCase().equals(LIST));
+    // }
+    // private boolean isExit() {
+    //     return (message.split(" ")[0].toLowerCase().equals(EXIT));
+    // }
+    // private boolean isMark(){
+    //     return (message.split(" ")[0].toLowerCase().equals(MARK));
+    // }
+    // private boolean isUnmark(){
+    //     return (message.split(" ")[0].toLowerCase().equals(UNMARK));
+    // }
+    // private boolean isDelete() {
+    //     return (message.split(" ")[0].toLowerCase().equals(DELETE));
+    // }
     /**
      * Method checks the type of task given by the user
      * @return TaskTypeEnum
@@ -83,25 +89,44 @@ public class Parser implements IParser {
         // Assert assumption that the message is not null
         // after calling getNextMessage
         assert message != null;
-        if (isExit()) {
-            currentCommand = Command.EXIT;
+        switch (message.split(" ")[0].toLowerCase()){
+        case LIST:
+            return currentCommand = Command.LIST;
+        case EXIT:
+            return currentCommand = Command.EXIT;
+        case DELETE:
+            return currentCommand = Command.DELETE;
+        case UNMARK:
+            return currentCommand = Command.UNMARK;
+        case MARK:
+            return currentCommand = Command.MARK;
+        case FIND:
+            return currentCommand = Command.FIND;
+        default:
+            return currentCommand = Command.TASK;
         }
-        else if (isList()) {
-            currentCommand = Command.LIST;
-        }
-        else if (isUnmark()) {
-            currentCommand = Command.UNMARK;
-        }
-        else if (isMark()) {
-            currentCommand =  Command.MARK;
-        }
-        else if (isDelete()) {
-            currentCommand =  Command.DELETE;
-        }
-        else {
-            currentCommand =  Command.TASK;
-        }
-        return currentCommand;
+        // if (isExit()) {
+        //     currentCommand = Command.EXIT;
+        // }
+        // else if (isList()) {
+        //     currentCommand = Command.LIST;
+        // }
+        // else if (isUnmark()) {
+        //     currentCommand = Command.UNMARK;
+        // }
+        // else if (isMark()) {
+        //     currentCommand =  Command.MARK;
+        // }
+        // else if (isDelete()) {
+        //     currentCommand =  Command.DELETE;
+        // }
+        // else if (isFind()) {
+        //     currentCommand =  Command.FIND;
+        // }
+        // else {
+        //     currentCommand =  Command.TASK;
+        // }
+        // return currentCommand;
     }
 
     @Override
@@ -154,4 +179,10 @@ public class Parser implements IParser {
             throw new InvalidCommandException("Invalid task index", e);
         }
 	}
+    @Override
+    public String getFindKeyword() {
+        assert (currentCommand == Command.FIND);
+
+        return message.split(" ")[1];
+    }
 }
