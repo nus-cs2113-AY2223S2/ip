@@ -1,4 +1,5 @@
-# Archduke
+<img src="/docs/img/archduke-black.svg#gh-light-mode-only" alt="Archduke" height="48px">
+<img src="/docs/img/archduke-white.svg#gh-dark-mode-only" alt="Archduke" height="48px">
 
 This is a school project for [CS2113 AY2022–23 Semester 2](https://nus-cs2113-ay2223s2.github.io/website/admin/ip-overview.html).
 
