@@ -2,6 +2,11 @@ package task;
 
 import error.DukeIllegalSyntaxException;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Deadline extends Task {
 
     private String by;
@@ -9,10 +14,37 @@ public class Deadline extends Task {
     public Deadline(String description, String by) {
         super(description, 'D');
         this.by = by;
+
+        replaceDate(by);
     }
 
     public String getBy() {
         return by;
+    }
+
+    // Replaces dates of `yyyy-mm-dd` formats into `MMM dd yyyy` formats
+    private void replaceDate(String by) {
+
+        String datePattern = "\\d{4}-\\d{2}-\\d{2}";
+        Pattern dateRegex = Pattern.compile(datePattern);
+        Matcher dateMatcher = dateRegex.matcher(by);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        String oldDateString;
+        String newDateString;
+
+        if (dateMatcher.find()) {
+            oldDateString = dateMatcher.group();
+            newDateString = getReplacementDateString(LocalDate.parse(dateMatcher.group(), formatter));
+            this.by = by.replace(oldDateString, newDateString);
+        }
+
+    }
+
+    // Returns the new date format from the input
+    private String getReplacementDateString(LocalDate date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy");
+        return date.format(formatter);
     }
 
     // Returns a String array containing {taskName, deadline}
