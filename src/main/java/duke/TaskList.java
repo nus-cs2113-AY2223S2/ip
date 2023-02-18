@@ -12,10 +12,23 @@ public class TaskList {
     private static final Ui ui = new Ui();
     public static ArrayList<Task> tasks;
 
+    /**
+     * Constructor to initialise the task list.
+     *
+     * @param tasks Arraylist used to store the tasks.
+     */
     public TaskList(ArrayList<Task> tasks) {
         this.tasks = tasks;
     }
 
+    /**
+     * Marks a particular task as done.
+     * Prints the completed task.
+     * Updates the text file based on the task status.
+     *
+     * @param input Stores the User input.
+     * @throws DukeException if the taskNumber is invalid.
+     */
     public static void markAsDone(String input) throws DukeException {
         String taskNum = input.substring(input.indexOf(" ") + 1);
         int taskNumber = Integer.parseInt(taskNum);
@@ -32,6 +45,14 @@ public class TaskList {
         }
     }
 
+    /**
+     * Marks a particular task as undone.
+     * Prints the incomplete task.
+     * Updates the text file based on the task status.
+     *
+     * @param input Stores the User input.
+     * @throws DukeException if the taskNumber is invalid.
+     */
     public static void markAsUndone(String input) throws DukeException {
         String taskNum = input.substring(input.indexOf(" ") + 1);
         int taskNumber = Integer.parseInt(taskNum);
@@ -48,7 +69,15 @@ public class TaskList {
         }
     }
 
-    public static void deleteTask(String input) throws DukeException {
+    /**
+     * Deletes a particular task.
+     * Prints the deleted task.
+     * Updates the text file by removing the deleted task.
+     *
+     * @param input Stores the User input.
+     * @throws DukeException if the taskNumber is invalid.
+     */
+    public static void deleteTask(String input) throws DukeException, IOException {
         String taskNum = input.substring(input.indexOf(" ") + 1);
         int taskNumber = Integer.parseInt(taskNum);
         if (taskNumber > tasks.size()) {
@@ -66,6 +95,11 @@ public class TaskList {
         }
     }
 
+    /**
+     * Displays all the tasks in the task list to the user.
+     *
+     * @throws DukeException if the task list is empty.
+     */
     public static void printList() throws DukeException {
         if (tasks.size() == 0) {
             throw new DukeException("Sorry, there are no tasks in the list currently.");
@@ -80,7 +114,13 @@ public class TaskList {
         ui.printLine();
     }
 
-    public static void addTodo(String input) throws DukeException, IOException {
+    /**
+     * Adds the todo to task list.
+     *
+     * @param input Stores the user input.
+     * @throws DukeException if the description is empty.
+     */
+    public static void addTodo(String input) throws DukeException {
         String[] words = input.split(" ");
         if (words.length < 2) {
             throw new DukeException("☹ OOPS!!! The description of a todo cannot be empty.");
@@ -97,7 +137,13 @@ public class TaskList {
         }
     }
 
-    public static void addDeadline(String input) throws DukeException, IOException {
+    /**
+     * Adds the deadline to task list.
+     *
+     * @param input Stores the user input.
+     * @throws DukeException if the description or date is empty.
+     */
+    public static void addDeadline(String input) throws DukeException {
         String[] words = input.split(" ");
         int index = input.indexOf("/");
         if (words.length < 2 || index == -1) {
@@ -116,7 +162,13 @@ public class TaskList {
         }
     }
 
-    public static void addEvent(String input) throws DukeException, IOException {
+    /**
+     * Adds the event to task list.
+     *
+     * @param input Stores the user input.
+     * @throws DukeException if the description or time is empty.
+     */
+    public static void addEvent(String input) throws DukeException {
         String[] words = input.split(" ");
         int index = input.indexOf("/");
         if (words.length < 2 || index == -1) {
@@ -134,6 +186,12 @@ public class TaskList {
             Storage.saveTask(tasks);
         }
     }
+
+    /**
+     * Find a task in the task list that contains the text specified by the user.
+     *
+     * @param input Stores the user input.
+     */
     public static void findTask(String input) {
         int currentIndex = 1;
         ui.printLine();

@@ -5,8 +5,16 @@ import duke.task.Task;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 public class Parser {
 
+    /**
+     * Parses the user input and performs action based on the command
+     * provided by user.
+     *
+     * @param input Input stores the command entered by user.
+     * @param tasks Arraylist used to store the tasks.
+     */
     public static void handleCommand(String input, ArrayList<Task> tasks) {
         Ui ui = new Ui();
         TaskList taskList = new TaskList(tasks);

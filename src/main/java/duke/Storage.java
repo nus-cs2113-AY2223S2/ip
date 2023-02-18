@@ -12,6 +12,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Loads previous tasks fom file into the task list.
+ * Saves the tasks to the file and updates the file on deletion
+ * or completion of tasks.
+ */
 public class Storage {
     private static final String FILE_PATH = "duke.txt";
     public static ArrayList<Task> tasks;
@@ -20,6 +25,14 @@ public class Storage {
         this.tasks = tasks;
     }
 
+    /**
+     * Calls loadTasks function to load the tasks from file into
+     * the task list.
+     * Creates new file, if file not found and catches any encountered
+     * exceptions.
+     *
+     * @param tasks Arraylist used to store the tasks.
+     */
     public static void loadData(ArrayList<Task> tasks) {
         Ui ui = new Ui();
         try {
@@ -40,6 +53,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Loads the tasks from duke.txt file into the task list.
+     *
+     * @param input Stores the contents of the file line by line.
+     * @param tasks Arraylist used to store the tasks.
+     */
     public static void loadTasks(String input, ArrayList<Task> tasks) {
         String[] splitInput = input.split("->");
         String taskType = splitInput[0].trim();
@@ -65,6 +84,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Writes the tasks from the task list to duke.txt file.
+     *
+     * @param tasks Arraylist used to store the tasks.
+     */
     public static void saveTask(ArrayList<Task> tasks) {
         Ui ui = new Ui();
         try {

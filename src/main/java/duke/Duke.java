@@ -17,6 +17,10 @@ public class Duke {
     private static final Ui ui = new Ui();
     public static ArrayList<Task> tasks = new ArrayList<>();
 
+    /**
+     * Takes input from the user and parses it.
+     * Executes Duke until user inputs the bye command.
+     */
     private static void runDuke() {
         Scanner in = new Scanner(System.in);
         String input;
@@ -27,6 +31,11 @@ public class Duke {
         }
     }
 
+    /**
+     * Reads the file and loads the saved data to the task list.
+     * Greets the user and runs duke to execute user's commands.
+     * Exits Duke by greeting the user with a bye message.
+     */
     public static void main(String[] args) {
         Storage.loadData(tasks);
         ui.printWelcomeMessage();
