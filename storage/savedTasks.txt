@@ -1,3 +1,7 @@
 0:Todo:false:eat
 1:Todo:true:test test
-2:Todo:false:cs2113 assignment
+2:Todo:false:eat shit
+3:Todo:false:drink water
+4:Todo:false:drink
+5:Deadline:false:drink this:sunday
+6:Event:false:drink that:today:tmr

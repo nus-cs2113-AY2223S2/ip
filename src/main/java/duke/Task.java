@@ -1,5 +1,12 @@
 package duke;
 
+/**
+ * Represents a task. A <code>Task</code> object represents various possible
+ * task types such as Event, Deadline or Todo. User may specify their desired
+ * task type via the respective commands e.g.,
+ * <code>/event do homework /start 01-08-2023 /end 05-08-2023</code> or
+ * <code>/todo meet John</code>
+ */
 public class Task {
     public String description;
     protected boolean isDone;
