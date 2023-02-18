@@ -1,12 +1,16 @@
 package serialiser;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
+import duke.DukeException;
 import task.ToDo;
+import ui.IUi;
+import ui.Ui;
 import task.Deadline;
 import task.Event;
 import task.ITaskController;
@@ -17,10 +21,6 @@ public class Serialiser implements ISerialiser{
     private final Path path = Paths.get(fileDirectory);
     private Scanner scanner;
     
-    public Serialiser () throws IOException {
-        scanner = new Scanner(path);
-    }
-    @Override
     public void deserialiseFile(ITaskController taskController) {
         String line = null;
         //read line by line
@@ -51,7 +51,6 @@ public class Serialiser implements ISerialiser{
             throw new IOException();
         }
     }
-    @Override
     public void serialiseFile(ITaskController taskController) {
         String storageString = "";
         while (!taskController.isEmpty()) {
@@ -64,5 +63,42 @@ public class Serialiser implements ISerialiser{
             e.printStackTrace();
         }
     }
-    
+    @Override
+    public void loadDataFile(ITaskController taskController) throws DukeException{
+        try {
+            checkDataDirectory();
+            scanner = new Scanner(path);
+            deserialiseFile(taskController);
+        } catch (IOException e) {
+            throw new DukeException("Invalid path", new IllegalAccessError());
+        }
+    }
+    @Override
+    public void saveDataFile(ITaskController taskController) {
+        serialiseFile(taskController);
+    }
+    private void checkDataDirectory() throws IOException{
+        IUi ui = Ui.getInstance();
+        File directory = new File("data");
+        if (!directory.isDirectory()) {
+            // Then directory does not exist and need to create one
+            ui.printSystemErrorMessage("The data directory does not exist yet!!\nProceeding to create one now...");
+            directory.mkdir();
+            checkDataFile();
+            ui.printSystemMessage("Directory creation success");
+        }
+        else {
+            checkDataFile();
+        }
+    }
+    private void checkDataFile() throws IOException{
+        IUi ui = Ui.getInstance();
+        File file = new File("data/duke.txt");
+        if (!file.isFile()) {
+            // Then directory does not exist and need to create one
+            ui.printSystemErrorMessage("The data file does not exist yet!!\nProceeding to create one now...");
+            file.createNewFile();
+            ui.printSystemMessage("file creation success");
+        }
+    }
 }

@@ -1,10 +1,14 @@
 package task;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import parser.InvalidCommandException;
 import serialiser.SerialiseException;
 
 public class Event extends Deadline {
     protected String startDate;
+    protected LocalDateTime startDateTimeObject = null;
     private static final String EVENT_MESSAGE = "E | %d | %s | %s | %s";
     public Event(String description, String startDate, String endDate) throws EmptyDescriptionException {
         super(description,endDate);
@@ -16,12 +20,17 @@ public class Event extends Deadline {
     }
     @Override
     public String toString() {
-        return String.format("[E][%c] %s (from: %s to: %s)", getStatusIcon(), description, startDate, endDate);
+        return String.format("[E][%c] %s (from: %s to: %s)", getStatusIcon(), description, getStartDate(), getEndDate());
     }
     public String getStartDate() {
+        if (startDateTimeObject!=null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy HHmm");
+            return startDateTimeObject.format(formatter).toString();
+        }
         return startDate;
     }
     public void setStartDate(String newStartDate) {
+        startDateTimeObject = stringToDateTime(newStartDate);
         startDate = newStartDate;
     }
     @Override
