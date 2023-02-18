@@ -15,7 +15,8 @@ import ui.Display;
 
 public class ProcessStorageTasks {
     public static final String HOME = System.getProperty("user.dir");
-    public static final Path FILE = Paths.get(HOME, "..", "..", "..", "storage", "savedTasks.txt");
+    public static final Path DIRECTORY = Paths.get(HOME, "storage");
+    public static final Path FILE = Paths.get(HOME, "storage", "savedTasks.txt");
     public static final String FILE_PATH = FILE.toString();
 
     /*
@@ -23,12 +24,19 @@ public class ProcessStorageTasks {
      * .txt file if doesn't already exists.
      */
     public static void processFile() {
+        File directory = new File(DIRECTORY.toString());
+            if (!directory.exists()) {
+                Display.notifyUser("Creating required directories...");
+                directory.mkdirs();
+            }
+
         try {
             File f = new File(FILE_PATH);
             if (!f.createNewFile()) {
                 addTasks();
             }
         } catch (IOException e) {
+            System.out.println("Path: " + FILE_PATH);
             Display.warnUser(e.getMessage());
         }
     }
