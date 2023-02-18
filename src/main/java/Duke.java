@@ -6,7 +6,6 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -14,14 +13,12 @@ import java.util.Scanner;
 public class Duke {
     public static final String LINE = "____________________________________________________________\n";
     public static final String BYE_MESSAGE = "Bye. Hope to see you again soon!\n";
-    public static final String BORDER = "//";
 
     public static boolean canExit = false;
-    public static final String FILE_PATH = "data/duke.txt";
     private static Storage database = null;
 
     /**
-     * Prints message after adding To-Do/Deadline/Event duke.task
+     * Prints message after adding To-Do/Deadline/Event
      *
      * @param myList
      */
@@ -100,7 +97,7 @@ public class Duke {
         }
         String stringToAdd = "";
         for (Task task : myList) {
-            stringToAdd += stringToWrite(task).toString() + System.lineSeparator();
+            stringToAdd += database.stringToWrite(task).toString() + System.lineSeparator();
         }
         try {
             database.writeToFile(stringToAdd);
@@ -123,7 +120,7 @@ public class Duke {
         Task toDoTask = new ToDo(newTask[1]);
         myList.add(toDoTask);
         printTaskMessage(myList);
-        addTaskToDatabase(toDoTask);
+        database.addTaskToDatabase(toDoTask);
     }
 
     /**
@@ -146,7 +143,7 @@ public class Duke {
             Task deadlineTask = new Deadline(split[0], split[1]);
             myList.add(deadlineTask);
             printTaskMessage(myList);
-            addTaskToDatabase(deadlineTask);
+            database.addTaskToDatabase(deadlineTask);
         } else {
             throw new IllegalInputException();
         }
@@ -171,7 +168,7 @@ public class Duke {
             Task eventTask = new Event(split[0], timeFrom, timeTo);
             myList.add(eventTask);
             printTaskMessage(myList);
-            addTaskToDatabase(eventTask);
+            database.addTaskToDatabase(eventTask);
         } else {
             throw new IllegalInputException();
         }
@@ -227,42 +224,6 @@ public class Duke {
         }
     }
 
-    /** Updates an individual task */
-    public static void addTaskToDatabase(Task taskToAdd) {
-        try {
-            FileWriter f = new FileWriter(FILE_PATH, true);
-            String taskInDatabaseFormat = stringToWrite(taskToAdd).toString();
-            f.write(taskInDatabaseFormat + System.lineSeparator());
-            f.close();
-        } catch (IOException e) {
-            System.out.println("Unable to add task to database :(");
-        }
-    }
-
-    /** Converts Task to StringBuilder to be passed as string */
-    public static StringBuilder stringToWrite(Task taskToAddToDatabaseList) {
-        StringBuilder sb = new StringBuilder();
-
-        // Format of task in database is: X|description|type of task
-        sb.append(taskToAddToDatabaseList.getMarking() + BORDER
-                + taskToAddToDatabaseList.getDescription() + BORDER);
-
-        // X|description|T
-        if (taskToAddToDatabaseList instanceof ToDo) {
-            sb.append("T");
-        }
-        // X|description|D|by
-        else if (taskToAddToDatabaseList instanceof Deadline) {
-            sb.append("D" + BORDER + ((Deadline) taskToAddToDatabaseList).getBy());
-        }
-        // X|description|E|from|to
-        else {
-            sb.append("E" + BORDER + ((Event) taskToAddToDatabaseList).getFrom()
-                    + BORDER + ((Event) taskToAddToDatabaseList).getTo());
-        }
-        return sb;
-    }
-
     /** Deletes the specific task by index */
     public static void deleteTask(String currTask, ArrayList<Task> myList) throws IllegalInputException {
         String[] list = currTask.split(" ");
@@ -276,7 +237,7 @@ public class Duke {
 
         String stringToAdd = "";
         for (Task task : myList) {
-            stringToAdd += stringToWrite(task).toString() + System.lineSeparator();
+            stringToAdd += database.stringToWrite(task).toString() + System.lineSeparator();
         }
         try {
             database.writeToFile(stringToAdd);

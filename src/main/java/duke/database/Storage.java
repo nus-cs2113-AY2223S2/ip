@@ -14,6 +14,7 @@ import java.util.Scanner;
 public class Storage {
     public ArrayList<Task> taskList;
     public static final String FILE_PATH = "data/duke.txt";
+    public static final String BORDER = "//";
 
     public Storage() throws IOException {
         File f = new File(FILE_PATH);
@@ -58,6 +59,42 @@ public class Storage {
             currTask.setDone();
         }
         return currTask;
+    }
+
+    /** Updates an individual task to database*/
+    public static void addTaskToDatabase(Task taskToAdd) {
+        try {
+            FileWriter f = new FileWriter(FILE_PATH, true);
+            String taskInDatabaseFormat = stringToWrite(taskToAdd).toString();
+            f.write(taskInDatabaseFormat + System.lineSeparator());
+            f.close();
+        } catch (IOException e) {
+            System.out.println("Unable to add task to database :(");
+        }
+    }
+
+    /** Converts Task to StringBuilder to be passed as string */
+    public static StringBuilder stringToWrite(Task taskToAddToDatabaseList) {
+        StringBuilder sb = new StringBuilder();
+
+        // Format of task in database is: X//description//type of task
+        sb.append(taskToAddToDatabaseList.getMarking() + BORDER
+                + taskToAddToDatabaseList.getDescription() + BORDER);
+
+        // X//description//T
+        if (taskToAddToDatabaseList instanceof ToDo) {
+            sb.append("T");
+        }
+        // X//description//D//by
+        else if (taskToAddToDatabaseList instanceof Deadline) {
+            sb.append("D" + BORDER + ((Deadline) taskToAddToDatabaseList).getBy());
+        }
+        // X//description//E//from//to
+        else {
+            sb.append("E" + BORDER + ((Event) taskToAddToDatabaseList).getFrom()
+                    + BORDER + ((Event) taskToAddToDatabaseList).getTo());
+        }
+        return sb;
     }
 
 }
