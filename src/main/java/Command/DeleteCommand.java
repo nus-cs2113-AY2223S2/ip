@@ -1,6 +1,6 @@
 package Command;
 
-import CommandUtils.ParseInput;
+import CommandUtils.InputParser;
 import Entities.Task;
 import Entities.TaskList;
 import Exceptions.DukeException;
@@ -9,7 +9,7 @@ import Exceptions.NonPositiveNumberException;
 import FileUtils.Storage;
 import Output.UI;
 
-public class DeleteCommand extends Command implements ParseInput {
+public class DeleteCommand extends Command implements InputParser {
     private int taskIndex;
 
     public DeleteCommand(String command, String input) throws DukeException {

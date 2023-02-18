@@ -3,7 +3,7 @@ package Command;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
-import CommandUtils.ParseInput;
+import CommandUtils.InputParser;
 import Entities.Deadline;
 import Entities.Event;
 import Entities.Task;
@@ -19,7 +19,7 @@ import Exceptions.UnknownInputException;
 import FileUtils.Storage;
 import Output.UI;
 
-public class AddCommand extends Command implements ParseInput {
+public class AddCommand extends Command implements InputParser {
     private Task addedTask;
 
     public AddCommand(String command, String input) throws DukeException {

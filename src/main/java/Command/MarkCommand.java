@@ -1,6 +1,6 @@
 package Command;
 
-import CommandUtils.ParseInput;
+import CommandUtils.InputParser;
 import Entities.TaskList;
 import Exceptions.DukeException;
 import Exceptions.NoDescriptionException;
@@ -8,7 +8,7 @@ import Exceptions.NonPositiveNumberException;
 import FileUtils.Storage;
 import Output.UI;
 
-public class MarkCommand extends Command implements ParseInput {
+public class MarkCommand extends Command implements InputParser {
     private int taskIndex;
 
     public MarkCommand(String command, String input) throws DukeException {
