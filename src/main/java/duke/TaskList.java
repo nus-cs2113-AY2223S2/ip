@@ -134,4 +134,17 @@ public class TaskList {
             Storage.saveTask(tasks);
         }
     }
+    public static void findTask(String input) {
+        int currentIndex = 1;
+        ui.printLine();
+        System.out.println("Here are the matching tasks in your list:");
+
+        for (Task task : tasks) {
+            if (task.description.contains(input.substring(5))) {
+                System.out.println("\t" + currentIndex + "." + task);
+                currentIndex++;
+            }
+        }
+        ui.printLine();
+    }
 }
