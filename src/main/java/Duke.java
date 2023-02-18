@@ -68,6 +68,12 @@ public class Duke {
         int currentNumber = 0; // Current number of tasks
 
         try {
+            LoadFile.initFile();
+        }catch(IOException e){
+            System.out.println(e.getMessage());
+        }
+
+        try {
             currentNumber = LoadFile.loadFileContents("data\\duke.txt",taskArrayList,currentNumber);
         }catch(FileNotFoundException e){
             System.out.println("File Not Found");

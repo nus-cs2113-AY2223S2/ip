@@ -1,8 +1,22 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 public class LoadFile {
+    private static String targetFilePath = "data";
+    private static String file = "data/duke.txt";
+
+    public static void initFile() throws IOException{
+        File directory = new File(targetFilePath);
+        if(!directory.exists()){
+            directory.mkdir();
+        }
+        File textFile = new File(file);
+        if(!textFile.exists()){
+            textFile.createNewFile();
+        }
+    }
     public static int loadFileContents(String filePath, ArrayList<Task> taskArrayList, int currentNumber) throws FileNotFoundException {
         String line;
         String type;
