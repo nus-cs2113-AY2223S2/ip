@@ -3,6 +3,7 @@ package dev.joulev.archduke.storage;
 import java.util.ArrayList;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
@@ -56,9 +57,14 @@ public class Storage {
                 tasks.add(task);
             }
             return tasks;
+        } catch (NoSuchFileException e) {
+            // If the file is not found, we consider it as non-existent and return an empty
+            // list.
+            return new ArrayList<>();
         } catch (Exception e) {
-            // Whether the file is not found, is corrupted or for whatsoever reason, we
-            // consider it as non-existent and return an empty list.
+            // If the file is corrupted or for whatsoever reason, we consider it as
+            // non-existent and return an empty list. We also need to print an error
+            // message.
             Output.printError(
                     "Stored file (%s) is corrupted. If you continue, it will be wiped. If you want to keep the data, please modify that file manually using an editor of your choice, or rename it to something else.",
                     FILE);

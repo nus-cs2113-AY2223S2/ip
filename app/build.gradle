@@ -15,7 +15,7 @@ plugins {
 shadowJar {
     archiveBaseName.set('archduke')
     archiveClassifier.set('')
-    archiveVersion.set('0.1')
+    archiveVersion.set('0.2')
 }
 
 repositories {
