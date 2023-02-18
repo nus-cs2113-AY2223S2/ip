@@ -66,7 +66,7 @@ public class PrintOperations {
     }
 
     /**
-     * Prints the total number of Tasks in the ArrayList.
+     * Prints a list of the Tasks with bulleted points.
      */
     public static void bulletedList(ArrayList<Task> listOfFilteredInputs) {
         if (listOfFilteredInputs.size() == 0) {
@@ -79,6 +79,16 @@ public class PrintOperations {
         }
     }
 
+    /**
+     * Prints a String that states that some Tasks matching an entered keyword was found.
+     */
+    public static void foundTasks() {
+        System.out.println("Here are matching tasks in your list:");
+    }
+
+    /**
+     * Prints the total number of Tasks in the ArrayList.
+     */
     public static void numberOfTasks(ArrayList<Task> tasks) {
         if (tasks.size() == 1) {
             System.out.println("Now you have 1 task in the list.");

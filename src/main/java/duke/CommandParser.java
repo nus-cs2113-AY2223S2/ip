@@ -128,6 +128,7 @@ public class CommandParser {
                 .filter(t -> t.getDescription().contains(finalUserInput))
                 .collect(Collectors.toCollection(ArrayList::new));
 
+        PrintOperations.foundTasks();
         PrintOperations.bulletedList(filteredList);
     }
 }
