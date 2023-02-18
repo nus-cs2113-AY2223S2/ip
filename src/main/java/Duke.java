@@ -1,8 +1,9 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
 
-    private static Tasks[] list_of_tasks = new Tasks[101];
+    private static ArrayList<Tasks> listOfTasks = new ArrayList<Tasks>();
     private static int counter = 0;
 
     public static void greet_user() {
@@ -19,28 +20,28 @@ public class Duke {
     public static void print_action() {
         System.out.println("\n");
         System.out.println("I have added this task: ");
-        System.out.println(list_of_tasks[counter - 1].toString());
+        System.out.println(listOfTasks.get(counter - 1).toString());
 
         System.out.println("You now have " + counter + " tasks in the list.");
     }
 
     public static void Todo(String description) {
         Tasks t = new ToDo(description);
-        list_of_tasks[counter] = t;
+        listOfTasks.add(t);
         counter++;
         print_action();
     }
 
     public static void Deadline(String description, String by) {
         Deadline d = new Deadline(description, by);
-        list_of_tasks[counter] = d;
+        listOfTasks.add(d);
         counter++;
         print_action();
     }
 
     public static void Event(String description, String start, String end) {
-        Event E = new Event(description, start, end);
-        list_of_tasks[counter] = E;
+        Event e = new Event(description, start, end);
+        listOfTasks.add(e);
         counter++;
         print_action();
     }
@@ -48,7 +49,7 @@ public class Duke {
     public static void List() {
         System.out.println("Here are all of your " + counter + " tasks: ");
         for (int i = 0; i < counter; i++) {
-            System.out.println(i + 1 + "." + list_of_tasks[i].toString());
+            System.out.println(i + 1 + "." + listOfTasks.get(i).toString());
         }
     }
 
@@ -95,9 +96,9 @@ public class Duke {
                 case "mark":
                     try {
                         Integer m_index = Integer.valueOf(command[1]);
-                        list_of_tasks[m_index - 1].markAsDone();
+                        listOfTasks.get(m_index - 1).markAsDone();
                         System.out.println("Nice! This task is completed");
-                        System.out.println(list_of_tasks[m_index - 1].toString());
+                        System.out.println(listOfTasks.get(m_index - 1).toString());
                     } catch (ArrayIndexOutOfBoundsException e) {
                         System.out.println(":( There is an error (Index is out of bounds/negative)");
                     }
@@ -105,9 +106,9 @@ public class Duke {
                 case "unmark":
                     try {
                         Integer u_index = Integer.valueOf(command[1]);
-                        list_of_tasks[u_index - 1].markAsUnDone();
+                        listOfTasks.get(u_index - 1).markAsUnDone();
                         System.out.println("Nice! This task is completed");
-                        System.out.println(list_of_tasks[u_index - 1].toString());
+                        System.out.println(listOfTasks.get(u_index - 1).toString());
                     } catch (ArrayIndexOutOfBoundsException e) {
                         System.out.println(":( There is an error (Index is out of bounds/negative)");
                     }
