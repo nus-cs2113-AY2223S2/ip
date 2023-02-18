@@ -12,6 +12,12 @@ import duke.Todo;
 import ui.Display;
 import ui.exceptions.MissingCommandException;
 
+/**
+ * Represents the add feature in the Duke program. Users may specify their type
+ * of task to add, followed by the required arguments as specified in the
+ * <code>/help</code> menu e.g.,
+ * <code>/deadline do homework /by sunday morning</code>/
+ */
 public class Add {
     private static final String COMMAND_EVENT = "/event";
     private static final String COMMAND_TODO = "/todo";
@@ -23,31 +29,33 @@ public class Add {
     private static final String COMMAND_STORAGE_TODO = "Todo";
     private static final String COMMAND_STORAGE_DEADLINE = "Deadline";
 
-    public static void addTask(String userInput) throws MissingCommandException {
-        String[] userInputArray = userInput.split(" ");
-        String command = userInputArray[0];
+    /**
+     * Adds a task specified by user into the Duke program task list.
+     * 
+     * @param command   Type of task.
+     * @param arguments Required argmuments.
+     * @throws MissingCommandException If user input is missing required arguments
+     *                                 such as description or cutoff dates/times.
+     */
+    public static void addTask(String command, String arguments) throws MissingCommandException {
         Task newTask;
-        /** Check if task description is left empty **/
-        if (userInputArray.length == 1) {
-            throw new MissingCommandException("Please enter a description for your task!");
-        }
         /** Handle different task types **/
         switch (command) {
             case COMMAND_TODO:
-                newTask = new Todo(userInput);
+                newTask = new Todo(arguments);
                 break;
             case COMMAND_DEADLINE:
-                if (!userInput.contains(COMMAND_BY)) {
+                if (!arguments.contains(COMMAND_BY)) {
                     throw new MissingCommandException("Please specify a deadline via the /by command!");
                 }
-                newTask = new Deadline(userInput);
+                newTask = new Deadline(arguments);
                 break;
             case COMMAND_EVENT:
-                if (!userInput.contains(COMMAND_START) || !userInput.contains(COMMAND_END)) {
+                if (!arguments.contains(COMMAND_START) || !arguments.contains(COMMAND_END)) {
                     throw new MissingCommandException(
                             "Please specify both start and end dates/times via the /start and /end commands!");
                 }
-                newTask = new Event(userInput);
+                newTask = new Event(arguments);
                 break;
             default:
                 return;
@@ -57,6 +65,12 @@ public class Add {
         tasksList.userTaskCount++;
     }
 
+    /**
+     * Stores newly added task into savedTasks.txt file.
+     * 
+     * @param newTask   Task added by user.
+     * @param taskCount Current saved tasks count.
+     */
     public static void addTaskToStorage(Task newTask, int taskCount) {
         try {
             FileWriter fw = new FileWriter(ProcessStorageTasks.FILE_PATH, true);
@@ -81,19 +95,25 @@ public class Add {
      * taskStringArray[4] -> cutoff
      */
 
+    /**
+     * Loads locally stored tasks into Duke program task list.
+     * 
+     * @param arguments Task details stored in storage text file.
+     */
+
     public static void addSavedTask(String arguments) {
         Task newTask;
         String[] taskStringArray = arguments.split(":");
         String command = taskStringArray[1];
         if (command.equals(COMMAND_STORAGE_TODO)) {
-            String inputFormat = "/todo " + taskStringArray[3];
+            String inputFormat = taskStringArray[3];
             newTask = new Todo(inputFormat);
         } else if (command.equals(COMMAND_STORAGE_DEADLINE)) {
-            String inputFormat = "/deadline " + taskStringArray[3] + " /by " +
+            String inputFormat = taskStringArray[3] + " /by " +
                     taskStringArray[4];
             newTask = new Deadline(inputFormat);
         } else if (command.equals(COMMAND_STORAGE_EVENT)) {
-            String inputFormat = "/event " + taskStringArray[3] + " /start " +
+            String inputFormat = taskStringArray[3] + " /start " +
                     taskStringArray[4] + " /end "
                     + taskStringArray[5];
             newTask = new Event(inputFormat);
