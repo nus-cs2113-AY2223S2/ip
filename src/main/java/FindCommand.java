@@ -1,8 +1,18 @@
+/**
+ * Represents a command to find tasks which contains a certain keyword
+ * from the list of currently tracked tasks.
+ */
 public class FindCommand extends Command {
     public FindCommand(String firstWord, String restOfCommand) {
         super(firstWord, restOfCommand);
     }
 
+    /**
+     * Prints the list of tasks whose description matches the keyword.
+     * @param taskList TaskList object containing the array of tracked tasks
+     * @param ui Ui object containing methods for user interaction
+     * @param storage Storage object for dealing with saving tasks to file
+     */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) {
         // There are no tasks in the list

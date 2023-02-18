@@ -8,7 +8,7 @@ public class AddCommand extends Command {
 
     /**
      * Determine which type of task to add before adding the right task to
-     * the array of tracked tasks
+     * the array of tracked tasks.
      * @param taskList TaskList object containing the array of tracked tasks
      * @param ui Ui object containing methods for user interaction
      * @param storage Storage object for dealing with saving tasks to file
@@ -48,7 +48,7 @@ public class AddCommand extends Command {
     }
 
     /**
-     * Add a new Todo task to the array of tracked tasks
+     * Add a new Todo task to the array of tracked tasks.
      * @param taskList TaskList object containing the array of tracked tasks
      * @param input A string containing data regarding the Todo task to be added
      * @throws DukeException If input has missing information
@@ -62,7 +62,7 @@ public class AddCommand extends Command {
     }
 
     /**
-     * Add a new Deadline task to the array of tracked tasks
+     * Add a new Deadline task to the array of tracked tasks.
      * @param taskList TaskList object containing the array of tracked tasks
      * @param input A string containing data regarding the Deadline task to be added
      * @throws DukeException If input has missing information
@@ -91,7 +91,7 @@ public class AddCommand extends Command {
     }
 
     /**
-     * Add a new Event task to the array of tracked tasks
+     * Add a new Event task to the array of tracked tasks.
      * @param taskList TaskList object containing the array of tracked tasks
      * @param input A string containing data regarding the Event task to be added
      * @throws DukeException If input has missing information

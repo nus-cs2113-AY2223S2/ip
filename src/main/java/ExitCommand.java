@@ -8,7 +8,7 @@ public class ExitCommand extends Command {
     }
 
     /**
-     * Save the current list of tracked tasks to tasks.txt
+     * Save the current list of tracked tasks to tasks.txt file.
      * @param taskList TaskList object containing the array of tracked tasks
      * @param ui Ui object containing methods for user interaction
      * @param storage Storage object for dealing with saving tasks to file

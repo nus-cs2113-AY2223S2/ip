@@ -16,14 +16,14 @@ public class TaskList {
     protected int numOfTasks = 0;
 
     /**
-     * Initialise tasks variable to an empty ArrayList<Task>
+     * Initialise tasks variable to an empty ArrayList<Task>.
      */
     public TaskList() {
         this.tasks = new ArrayList<>();
     }
 
     /**
-     * Initialise tasks variable to an array containing previously saved tasks
+     * Initialise tasks variable to an array containing previously saved tasks.
      * @param savedTasks Array of previously saved tasks, each tasks represented as strings
      */
     public TaskList(ArrayList<String> savedTasks) {
@@ -58,7 +58,7 @@ public class TaskList {
     }
 
     /**
-     * Determine which type of previously saved task needs to be added
+     * Determine which type of previously saved task needs to be added.
      * @param line A string representation of a saved task that needs to be added
      */
     public void addOldTask(String line) {
@@ -80,7 +80,7 @@ public class TaskList {
     }
 
     /**
-     * Take the previously saved Todo task and add it to the ArrayList<Task> tasks
+     * Take the previously saved Todo task and add it to the ArrayList<Task> tasks.
      * @param taskData A string array of different parts of info regarding the Todo task
      */
     public void addOldTodo(String[] taskData) {
@@ -96,7 +96,7 @@ public class TaskList {
     }
 
     /**
-     * Take the previously saved Deadline task and add it to the ArrayList<Task> tasks
+     * Take the previously saved Deadline task and add it to the ArrayList<Task> tasks.
      * @param taskData A string array of different parts of info regarding the Deadline task
      */
     public void addOldDeadline(String[] taskData) {
@@ -114,7 +114,7 @@ public class TaskList {
     }
 
     /**
-     * Take the previously saved Event task and add it to the ArrayList<Task> tasks
+     * Take the previously saved Event task and add it to the ArrayList<Task> tasks.
      * @param taskData A string array of different parts of info regarding the Event task
      */
     public void addOldEvent(String[] taskData) {

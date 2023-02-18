@@ -10,7 +10,7 @@ public class Deadline extends Task {
     }
 
     /**
-     * Returns the type of task
+     * Returns the type of task.
      * @return "D" representing Deadline task
      */
     @Override
@@ -19,7 +19,7 @@ public class Deadline extends Task {
     }
 
     /**
-     * Returns information on when the task should be completed by
+     * Returns information on when the task should be completed by.
      * @return The deadline of the task
      */
     @Override
@@ -28,7 +28,7 @@ public class Deadline extends Task {
     }
 
     /**
-     * Returns a String representation of the current Deadline task
+     * Returns a String representation of the current Deadline task.
      * @return Current task's type, description and deadline in a string
      */
     @Override

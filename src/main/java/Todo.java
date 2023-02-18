@@ -7,7 +7,7 @@ public class Todo extends Task {
     }
 
     /**
-     * Returns the type of task
+     * Returns the type of task.
      * @return "T" representing Todo task
      */
     @Override
@@ -16,7 +16,7 @@ public class Todo extends Task {
     }
 
     /**
-     * Returns a String representation of the current Todo task
+     * Returns a String representation of the current Todo task.
      * @return Current task's type and description in a string
      */
     @Override

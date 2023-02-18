@@ -7,7 +7,7 @@ public class UnmarkCommand extends Command {
     }
 
     /**
-     * Mark the task whose index is specified in restOfCommand as not done
+     * Mark the task whose index is specified in restOfCommand as not done.
      * @param taskList TaskList object containing the array of tracked tasks
      * @param ui Ui object containing methods for user interaction
      * @param storage Storage object for dealing with saving tasks to file

@@ -25,7 +25,7 @@ public class Duke {
 
     /**
      * Starts the Duke ChatBot and continuously prompts the user for
-     * commands until the user gives a "bye" command
+     * commands until the user gives a "bye" command.
      */
     public void run() {
         ui.showGreetings();

@@ -7,7 +7,7 @@ public class ListCommand extends Command {
     }
 
     /**
-     * Prints the whole list of tasks which are currently tracked
+     * Prints the whole list of tasks which are currently tracked.
      * @param taskList TaskList object containing the array of tracked tasks
      * @param ui Ui object containing methods for user interaction
      * @param storage Storage object for dealing with saving tasks to file

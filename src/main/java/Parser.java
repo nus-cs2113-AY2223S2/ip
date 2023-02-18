@@ -26,7 +26,7 @@ public class Parser {
     }
 
     /**
-     * Determine the type of command entered by the user based on the first word
+     * Determine the type of command entered by the user based on the first word.
      * @return A Command object depending on the type of command entered
      * @throws DukeException If command entered is not recognised or of wrong format
      */

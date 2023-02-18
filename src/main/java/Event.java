@@ -12,7 +12,7 @@ public class Event extends Task {
     }
 
     /**
-     * Returns the type of task
+     * Returns the type of task.
      * @return "E" representing Event task
      */
     @Override
@@ -21,7 +21,7 @@ public class Event extends Task {
     }
 
     /**
-     * Returns information on when the event starts
+     * Returns information on when the event starts.
      * @return The start date/time of the task
      */
     @Override
@@ -30,7 +30,7 @@ public class Event extends Task {
     }
 
     /**
-     * Returns information on when the event ends
+     * Returns information on when the event ends.
      * @return The end date/time of the task
      */
     @Override
@@ -39,7 +39,7 @@ public class Event extends Task {
     }
 
     /**
-     * Returns a String representation of the current Event task
+     * Returns a String representation of the current Event task.
      * @return Current task's type, description, start and end in a string
      */
     @Override

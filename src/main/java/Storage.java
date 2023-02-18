@@ -49,7 +49,7 @@ public class Storage {
     }
 
     /**
-     * Save all the tasks in the tracked array to tasks.txt
+     * Save all the tasks in the tracked array to tasks.txt file.
      * @param taskList TaskList object containing the array of tracked tasks
      * @param ui Ui object containing methods for user interaction
      */

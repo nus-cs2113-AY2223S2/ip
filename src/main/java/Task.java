@@ -11,7 +11,7 @@ public class Task {
     }
 
     /**
-     * Returns the status of the task, whether it is done or not
+     * Returns the status of the task, whether it is done or not.
      * @return "X" when task is done, " " when task is not done
      */
     public String getStatusIcon() {
@@ -28,7 +28,7 @@ public class Task {
     }
 
     /**
-     * Returns the type of the current task
+     * Returns the type of the current task.
      * @return "T", "D" or "E" depending on current task type
      */
     public String getTaskType() {
@@ -36,7 +36,7 @@ public class Task {
     }
 
     /**
-     * Returns the deadline of Deadline tasks
+     * Returns the deadline of Deadline tasks.
      * @return Deadline
      */
     public String getBy() {
@@ -44,7 +44,7 @@ public class Task {
     }
 
     /**
-     * Returns the start date/time of Events tasks
+     * Returns the start date/time of Events tasks.
      * @return Start date/time
      */
     public String getFrom() {
@@ -52,7 +52,7 @@ public class Task {
     }
 
     /**
-     * Returns the end date/time of Event tasks
+     * Returns the end date/time of Event tasks.
      * @return End date/time
      */
     public String getTo() {
@@ -60,7 +60,7 @@ public class Task {
     }
 
     /**
-     * Returns the status and description of the current task
+     * Returns the status and description of the current task.
      * @return A string containing task's status and description
      */
     @Override
