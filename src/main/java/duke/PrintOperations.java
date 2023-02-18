@@ -9,7 +9,9 @@ import java.util.ArrayList;
  */
 public class PrintOperations {
 
-    /** A String of a horizontal Line */
+    /**
+     * A String of a horizontal Line
+     */
     static final String HORIZONTAL_LINE = "____________________________________________________________";
 
     /**

@@ -22,10 +22,14 @@ import java.io.File;
  * E|0|project meeting|Aug 6th 2pm|4pm
  **/
 public class FileOperations {
-    /** Relative filepath to tasks.txt */
+    /**
+     * Relative filepath to tasks.txt
+     */
     private static final String FILE_PATH = "./tasks.txt";
 
-    /** ArrayList of tasks */
+    /**
+     * ArrayList of tasks
+     */
     private static ArrayList<Task> tasks = new ArrayList<>();
 
     /**
