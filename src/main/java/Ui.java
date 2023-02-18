@@ -56,8 +56,21 @@ public class Ui {
     }
 
     public void showSaveIsSuccessful() {
-        System.out.println("\tTasks were successfully saved.");
+        System.out.println("\tTasks were saved successfully.");
     }
+
+    public void showEmptyList() {
+        System.out.println("\tThere are no tasks in your list currently!");
+    }
+
+    public void showNoMatches() {
+        System.out.println("\tNo task in your list matches the keyword.");
+    }
+
+    public void showFindError() {
+        System.out.println("\tKeyword for find cannot be empty.");
+    }
+
     public void showInvalidTodoError() {
         System.out.println("\tDescription of todo cannot be empty.");
     }
