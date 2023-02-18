@@ -16,6 +16,12 @@ public class FileDataHandler {
     protected String filePath;
     protected String directoryName;
 
+    /**
+     * Constructs a FileDataHandler object that takes in the filePath and directoryName.
+     *
+     * @param filePath the relative path to where the saved data will be loaded from and stored to.
+     * @param directoryName the name of the folder in the saved data file is located.
+     */
     public FileDataHandler(String filePath, String directoryName){
         this.filePath = filePath;
         this.directoryName = directoryName;

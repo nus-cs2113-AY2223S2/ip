@@ -14,6 +14,13 @@ public class Duke {
     protected FileDataHandler fileDataHandler;
     protected Ui ui;
 
+    /**
+     * Creates new TaskList, Ui and FileDataHandler objects given the filePath and name of directory.
+     * Creates and loads the saved file data, if the file does not exist, throws an error message.
+     *
+     * @param filePath the path to the .txt file where the saved data will be stored.
+     * @param directoryName The name of the folder where the saved file is to be located.
+     */
     public Duke(String filePath, String directoryName) {
         taskList = new TaskList();
         fileDataHandler = new FileDataHandler(filePath, directoryName);

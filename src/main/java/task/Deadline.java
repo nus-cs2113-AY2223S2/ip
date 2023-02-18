@@ -6,6 +6,12 @@ package task;
 public class Deadline extends Task {
     protected String by;
 
+    /**
+     * Constructs a Deadline object that inherits from Task object, assigns the due date of task.
+     *
+     * @param details the string containing the detailed description of the deadline.
+     * @param by the string containing the due date of the deadline.
+     */
     public Deadline(String details, String by) {
         super(details);
         this.by = by;

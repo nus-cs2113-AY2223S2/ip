@@ -15,6 +15,11 @@ import java.util.ArrayList;
 public class TaskList {
     protected ArrayList<Task> tasks;
     protected Ui ui;
+
+    /**
+     * Constructs a new TaskList object that instantiates a new ArrayList.
+     * Creates new Ui object in order to print certain responses.
+     */
     public TaskList() {
         tasks = new ArrayList<>();
         ui = new Ui();

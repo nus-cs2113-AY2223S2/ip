@@ -5,6 +5,11 @@ package task;
  */
 public class Todo extends Task {
 
+    /**
+     * Constructs an Todo object that inherits from Task object.
+     *
+     * @param details the string containing the detailed description of the todo task.
+     */
     public Todo(String details) {
         super(details);
     }

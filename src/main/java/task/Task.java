@@ -8,6 +8,11 @@ public class Task {
     protected String details;
     protected boolean isDone;
 
+    /**
+     * Constructs a Task object that assigns the details of the task and completion status to undone.
+     *
+     * @param details the string containing the detailed description of the task.
+     */
     public Task(String details) {
         this.details = details;
         this.isDone = false;
