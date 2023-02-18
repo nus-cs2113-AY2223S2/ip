@@ -101,47 +101,4 @@ public class Storage {
         return taskList;
     }
 
-//    private void addEvent(ArrayList<Task> tasks, String todoTask, int index) throws DukeException {
-//
-//        String[] taskAndDeadline = todoTask.split(" /from ");
-//
-//        if(taskAndDeadline.length < 2) {
-//            throw new DukeException("The start date/time cannot be empty.");
-//        }
-//
-//        String theTask = taskAndDeadline[0];
-//        String dueBy = taskAndDeadline[1];
-//        String[] startAndEnd = dueBy.split(" /to ");
-//
-//        if(startAndEnd.length < 2) {
-//            throw new DukeException("The end date/time cannot be empty.");
-//        }
-//
-//        String start = startAndEnd[0];
-//        String end = startAndEnd[1];
-//        tasks.add(new Event(theTask, start, end));
-//
-//    }
-//
-//    private void addDeadline(ArrayList<Task> tasks, String todoTask, int index) throws DukeException {
-//
-//        String[] taskAndDeadline = todoTask.split(" /by ");
-//
-//        String theTask = taskAndDeadline[0];
-//        String dueBy = taskAndDeadline[1];
-//        tasks.add(new Deadline(theTask, dueBy));
-//
-//    }
-//
-//    private void addTodo(ArrayList<Task> tasks, String todoTask, int index) throws DukeException {
-//
-//        tasks.add(new Todo(todoTask));
-//
-//    }
-//
-//    private void markTask(ArrayList<Task> tasks, int index) throws DukeException {
-//
-//        tasks.get(index).mark();
-//
-//    }
 }
