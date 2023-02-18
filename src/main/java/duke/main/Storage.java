@@ -15,8 +15,8 @@ import java.util.Scanner;
 import java.util.StringJoiner;
 
 public abstract class Storage {
-    public static String DELIMITER = "\u001D";
-    public static String SAVE_PATH = "save.txt";
+    public static final String DELIMITER = "\u001D";
+    public static final String SAVE_PATH = "save.txt";
 
     private static String convertTasksToSaveString(TaskList taskList) {
         StringJoiner taskListString = new StringJoiner(System.lineSeparator());
@@ -26,8 +26,8 @@ public abstract class Storage {
         return taskListString.toString();
     }
 
-    private static boolean isValidSaveString(String[] splitTasks, int expectedArgs) {
-        return splitTasks.length == expectedArgs && (splitTasks[1].equals("1") || splitTasks[1].equals("0"));
+    private static boolean isInvalidSaveString(String[] splitTasks, int expectedArgs) {
+        return splitTasks.length != expectedArgs || !(splitTasks[1].equals("1") || splitTasks[1].equals("0"));
     }
 
     private static Task convertStringToTask(String taskString) throws DukeException {
@@ -35,21 +35,21 @@ public abstract class Storage {
         Task task;
         switch (splitTasks[0]) {
         case "T":
-            if (!isValidSaveString(splitTasks, 3)) {
+            if (isInvalidSaveString(splitTasks, 3)) {
                 throw new DukeException(Errors.INVALID_SAVE.MESSAGE);
             }
             task = new ToDo(splitTasks[2]);
             task.setDone(splitTasks[1].equals("1"));
             return task;
         case "D":
-            if (!isValidSaveString(splitTasks, 4)) {
+            if (isInvalidSaveString(splitTasks, 4)) {
                 throw new DukeException(Errors.INVALID_SAVE.MESSAGE);
             }
             task = new Deadline(splitTasks[2], splitTasks[3]);
             task.setDone(splitTasks[1].equals("1"));
             return task;
         case "E":
-            if (!isValidSaveString(splitTasks, 5)) {
+            if (isInvalidSaveString(splitTasks, 5)) {
                 throw new DukeException(Errors.INVALID_SAVE.MESSAGE);
             }
             task = new Event(splitTasks[2], splitTasks[3], splitTasks[4]);

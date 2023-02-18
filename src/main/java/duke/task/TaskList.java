@@ -37,4 +37,14 @@ public class TaskList {
         }
         return taskListString.toString();
     }
+
+    public String toString(String filter) {
+        StringJoiner taskListString = new StringJoiner(System.lineSeparator());
+        for (int i = 0, index = 0; i < size(); i++) {
+            if (getTask(i).containsFilter(filter)) {
+                taskListString.add((++index) + "." + getTask(i).toString());
+            }
+        }
+        return taskListString.toString();
+    }
 }

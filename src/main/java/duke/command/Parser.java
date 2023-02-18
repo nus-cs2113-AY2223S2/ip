@@ -58,6 +58,8 @@ public abstract class Parser {
                 return new MarkTaskCommand(command, taskList);
             case "delete":
                 return new DeleteTaskCommand(command, taskList);
+            case "find":
+                return new FindTasksCommand(command);
             case "bye":
                 return new ExitCommand();
             default:

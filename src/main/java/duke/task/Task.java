@@ -16,6 +16,10 @@ public abstract class Task {
         this.isDone = isDone;
     }
 
+    public boolean containsFilter(String filter) {
+        return description.contains(filter);
+    }
+
     public String toString() {
         return "[" + (isDone ? "X" : " ") + "] " + description;
     }

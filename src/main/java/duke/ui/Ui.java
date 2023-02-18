@@ -43,6 +43,19 @@ public abstract class Ui {
         }
     }
 
+    public static void printTaskList(TaskList taskList, String filter) {
+        if (taskList.size() == 0) {
+            print(Messages.EMPTY_LIST.MESSAGE);
+        } else {
+            String taskListString = taskList.toString(filter);
+            if (taskListString.isEmpty()) {
+                print(Messages.EMPTY_FIND.MESSAGE);
+                return;
+            }
+            print(Messages.FIND_TASKS.MESSAGE, taskListString);
+        }
+    }
+
     public static void printError(String errorMessage, String command) {
         switch (command) {
         case "todo":
@@ -65,6 +78,9 @@ public abstract class Ui {
             return;
         case "save":
             print(errorMessage, Messages.SAVE_HELP.MESSAGE);
+            return;
+        case "find":
+            print(errorMessage, Messages.FIND_HELP.MESSAGE);
             return;
         default:
             print(errorMessage, Messages.GENERIC_HELP.MESSAGE);
