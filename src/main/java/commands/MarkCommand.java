@@ -1,6 +1,7 @@
 package commands;
 
 import enums.DialogueTypes;
+import enums.ErrorDialogueTypes;
 import errors.TaskNumberOutOfRangeException;
 import managers.OutputDialogueManager;
 import managers.SaveManager;
@@ -22,7 +23,7 @@ public class MarkCommand extends Command {
             printMarkedTaskWithIndex(markedTask);
             super.saveAllTasks(taskList, storage, display);
         } catch (TaskNumberOutOfRangeException e) {
-            display.printErrorDialogue(DialogueTypes.TASK_NUMBER_OUT_OF_RANGE);
+            display.printErrorDialogue(ErrorDialogueTypes.TASK_NUMBER_OUT_OF_RANGE);
             taskList.listAllItems(display);
         }
     }

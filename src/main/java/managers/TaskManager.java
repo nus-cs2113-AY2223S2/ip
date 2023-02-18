@@ -1,6 +1,7 @@
 package managers;
 
 import enums.DialogueTypes;
+import enums.ErrorDialogueTypes;
 import errors.EmptyTaskListException;
 import errors.InvalidDeadlineException;
 import errors.InvalidEventException;
@@ -12,14 +13,18 @@ import tasks.ToDo;
 
 import java.util.ArrayList;
 
+import static java.util.stream.Collectors.toList;
+
 public class TaskManager {
     private ArrayList<Task> tasksList;
+    private ArrayList<Task> foundList;
     public static final int TODO_BEGIN_INDEX = 5;
     public static final int DEADLINE_BEGIN_INDEX = 9;
     public static final int EVENT_BEGIN_INDEX = 6;
 
     public TaskManager(ArrayList<Task> taskList) {
         tasksList = taskList;
+        foundList = new ArrayList<>();
     }
 
     public ArrayList<Task> getTasksList() {
@@ -60,9 +65,9 @@ public class TaskManager {
         try {
             checkStateOfTasksList();
             display.printInteraction(DialogueTypes.LIST_TASKS);
-            printAllTasksInList();
+            printAllTasksInList(tasksList);
         } catch (EmptyTaskListException e) {
-            display.printErrorDialogue(DialogueTypes.NO_TASK_IN_LIST);
+            display.printErrorDialogue(ErrorDialogueTypes.NO_TASK_IN_LIST);
         }
     }
 
@@ -72,9 +77,9 @@ public class TaskManager {
         }
     }
 
-    private void printAllTasksInList() {
+    private void printAllTasksInList( ArrayList<Task> listOfTasks) {
         int taskCount = 1;
-        for (Task item: tasksList) {
+        for (Task item: listOfTasks) {
             System.out.print(taskCount);
             item.printTask();
             taskCount++;
@@ -82,7 +87,6 @@ public class TaskManager {
     }
 
     public Task deleteItem(int indexToDelete) throws TaskNumberOutOfRangeException {
-//        int indexToDelete = Integer.parseInt(command) - 1;
         if (indexToDelete >= Task.getItemCount() || indexToDelete < 0) {
             throw new TaskNumberOutOfRangeException();
         }
@@ -90,5 +94,12 @@ public class TaskManager {
         tasksList.remove(indexToDelete);
         Task.decreaseItemCount();
         return toBeDeleted;
+    }
+
+    public void findTaskWithWord (String toFind, OutputDialogueManager display) {
+        foundList = (ArrayList<Task>) tasksList.stream()
+                .filter(t -> t.getItemName().contains(toFind))
+                .collect(toList());
+        printAllTasksInList(foundList);
     }
 }
