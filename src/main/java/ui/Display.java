@@ -15,13 +15,15 @@ public class Display {
             + "Here are some possibly useful commands:" + System.lineSeparator() + LINE
             + System.lineSeparator() + "/todo { description } - Add a todo task to ur task list."
             + System.lineSeparator() +
-            "/deadline { description } /by { cutoff } - Add a deadline task to ur task list." + System.lineSeparator() +
-            "/event { description } /start { start time } /end { end time } - Add an event task to ur task list."
+            "/deadline DESCRIPTION /by CUTOFF - Add a deadline task to ur task list." + System.lineSeparator() +
+            "/event DESCRIPTION /start START_TIME /end END_TIME - Add an event task to ur task list."
             + System.lineSeparator() +
-            "/list - List out all the tasks in ur task list." + System.lineSeparator() +
-            "/mark { numerical index } - Mark a specific task done." + System.lineSeparator() +
-            "/unmark { numerical index } - Mark a specific task undone." + System.lineSeparator() +
-            "/delete { numerical index } - Delete a specific task." + System.lineSeparator() +
+            "/list - Lists task(s) in ur task list." + System.lineSeparator() +
+            "/mark NUMERICAL_INDEX - Mark a specific task done." + System.lineSeparator() +
+            "/unmark NUMERICAL_INDEX - Mark a specific task undone." + System.lineSeparator() +
+            "/find KEYWORD [ADDITIONAL KEYWORDS].. - Lists task(s) matching specified keyword(s)"
+            + System.lineSeparator() +
+            "/delete NUMERICAL_INDEX - Delete a specific task." + System.lineSeparator() +
             "/bye - Terminate the program." + System.lineSeparator() + LINE;
     static public final String MESSAGE_GOODBYE = LINE + System.lineSeparator() + "Bye! Hope to see you again soon!"
             + System.lineSeparator() + LINE;
@@ -39,7 +41,7 @@ public class Display {
     }
 
     static public void notifyUser(String message) {
-        System.out.println(LINE + System.lineSeparator() + "[MESSAGE]" + message + System.lineSeparator() + LINE);
+        System.out.println(LINE + System.lineSeparator() + "[MESSAGE] " + message + System.lineSeparator() + LINE);
     }
 
     static public void warnUser(String message) {

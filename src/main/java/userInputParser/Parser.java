@@ -2,8 +2,13 @@ package userInputParser;
 
 import ui.exceptions.MissingCommandException;
 import ui.Display;
+
+import java.util.Arrays;
+import java.util.HashSet;
+
 import commandHandler.Add;
 import commandHandler.Delete;
+import commandHandler.Find;
 import commandHandler.List;
 import commandHandler.Mark;
 import data.tasksList;
@@ -21,6 +26,7 @@ public class Parser {
     private static final String COMMAND_TODO = "/todo";
     private static final String COMMAND_DEADLINE = "/deadline";
     private static final String COMMAND_DELETE = "/delete";
+    private static final String COMMAND_FIND = "/find";
 
     public enum MarkType {
         MARK, UNMARK
