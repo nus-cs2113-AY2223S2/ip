@@ -22,6 +22,8 @@ public class Parser {
             return new DeleteCommand(firstWord, restOfCommand);
         case "list":
             return new ListCommand(firstWord, restOfCommand);
+        case "find":
+            return new FindCommand(firstWord, restOfCommand);
         case "todo":
             // Fallthrough
         case "deadline":
