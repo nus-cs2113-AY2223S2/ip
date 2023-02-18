@@ -19,7 +19,6 @@ public class Duke {
 
     private static void runProgram() {
 
-        // Variables needed
         String userInput = scanner.nextLine();
 
         // Loop for next tasks to add
@@ -27,7 +26,7 @@ public class Duke {
 
             try {
                 CommandParser commandParser = new CommandParser();
-                tasks = commandParser.manageInput(userInput, userInput.split(" ")[0], tasks);
+                commandParser.manageInput(userInput, userInput.split(" ")[0], tasks);
             }
 
             // This runs when the user enters an invalid command
