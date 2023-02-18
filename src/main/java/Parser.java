@@ -8,6 +8,13 @@ public class Parser {
     protected TaskList taskList;
     protected FileDataHandler fileDataHandler;
     protected Ui ui;
+
+    /**
+     * Constructs a Parser object that takes in a Duke type object to get reference to the task list and file data.
+     * Also instantiates a Ui object to print certain responses
+     *
+     * @param duke the instance of the Duke chatbot that is currently in the running session.
+     */
     public Parser (Duke duke) {
         this.taskList = duke.taskList;
         this.fileDataHandler = duke.fileDataHandler;

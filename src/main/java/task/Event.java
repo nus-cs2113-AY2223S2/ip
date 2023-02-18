@@ -9,6 +9,13 @@ public class Event extends Task {
     protected String from;
     protected String to;
 
+    /**
+     * Constructs an Event object that inherits from Task object, assigns the start date and end date of task.
+     *
+     * @param details the string containing the detailed description of the event.
+     * @param from the string containing the starting date/time of the event.
+     * @param to the string containing the ending date/time of the event.
+     */
     public Event(String details, String from, String to) {
         super(details);
         this.from = from;
