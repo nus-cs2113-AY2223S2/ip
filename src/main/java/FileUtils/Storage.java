@@ -6,12 +6,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 import Entities.Deadline;
 import Entities.Event;
 import Entities.Task;
 import Entities.TaskList;
 import Entities.Todo;
+import EntityUtils.DateParser;
 import Exceptions.DukeException;
 
 
@@ -71,19 +73,19 @@ public class Storage {
         String taskType = taskInformation[0];
         boolean isDone = taskInformation[1].equals("1") ? true : false;
         String taskDescription = taskInformation[2];
-        String startDate, endDate;
+        LocalDateTime startDate, endDate;
 
         switch (taskType) {
             case "T":
                 task = new Todo(taskDescription, isDone);
                 break;
             case "D":
-                endDate = taskInformation[3];
+                endDate = DateParser.stringToDate(taskInformation[3]);
                 task = new Deadline(taskDescription, isDone, endDate);
                 break;
             case "E":
-                startDate = taskInformation[3];
-                endDate = taskInformation[4];
+                startDate = DateParser.stringToDate(taskInformation[3]);
+                endDate = DateParser.stringToDate(taskInformation[4]);
                 task = new Event(taskDescription, isDone, startDate, endDate);
                 break;
             default:

@@ -22,7 +22,7 @@ public class TaskList {
     }
 
     public Task deleteTask(int taskIndex) throws DukeException {
-        getTask(taskIndex);             // Checks if taskIndex is valid
+        getTask(taskIndex);                 // Throws an exception if the taskIndex is not valid 
         return tasks.remove(taskIndex);
     }
 

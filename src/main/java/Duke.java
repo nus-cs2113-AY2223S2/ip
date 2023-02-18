@@ -3,10 +3,10 @@ import Entities.TaskList;
 import EntityUtils.Parser;
 import FileUtils.Storage;
 import Output.UI;
-import Exceptions.*;
+import Exceptions.DukeException;
 
 public class Duke {
-    private static final String filePath = "data/duke.txt";
+    private static final String FILE_PATH = "data/duke.txt";
     private Storage storage;
     private TaskList tasks;
     private UI ui;
@@ -42,6 +42,6 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-        new Duke(filePath).run();
+        new Duke(FILE_PATH).run();
     }
 }

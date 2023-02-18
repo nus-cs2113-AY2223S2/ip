@@ -38,11 +38,11 @@ public class UI {
 
     public void taskAddedMessage(Task t, int numTasks) {
         System.out.println(
-            "\tGot it. I have added this task to the list!\n" + 
-            "\t   " + t.toString() + "\n" + 
-            "\tNow you have " + numTasks + 
-            " task" + (numTasks == 1 ? "" : "s") + 
-            " in the list.\n"
+                "\tGot it. I have added this task to the list!\n" + 
+                "\t   " + t.toString() + "\n" + 
+                "\tNow you have " + numTasks + 
+                " task" + (numTasks == 1 ? "" : "s") + 
+                " in the list.\n"
         );
     }
 
@@ -63,25 +63,25 @@ public class UI {
 
     public void taskDeletedMessage(Task t, int numTasks) {
         System.out.println(
-            "\tNoted. I've removed this task:\n" + 
-            "\t   " + t.toString() + "\n" + 
-            "\tNow you have " + numTasks + 
-            " task" + (numTasks == 1 ? "" : "s") + 
-            " in the list.\n"
+                "\tNoted. I've removed this task:\n" + 
+                "\t   " + t.toString() + "\n" + 
+                "\tNow you have " + numTasks + 
+                " task" + (numTasks == 1 ? "" : "s") + 
+                " in the list.\n"
         );
     }
 
     public void printMarkedTask(Task t) {
         System.out.println( 
-            "\tNice! I've marked this task as done:\n" + 
-            "\t   " + t.toString() + "\n"
+                "\tNice! I've marked this task as done:\n" + 
+                "\t   " + t.toString() + "\n"
         );
     }
 
     public void printUnmarkedTask(Task t) {
         System.out.println( 
-            "\tOK, I've marked this task as not done yet:\n" + 
-            "\t   " + t.toString() + "\n"
+                "\tOK, I've marked this task as not done yet:\n" + 
+                "\t   " + t.toString() + "\n"
         );
     }
 }

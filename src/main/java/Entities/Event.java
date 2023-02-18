@@ -1,5 +1,8 @@
 package Entities;
 
+import java.time.LocalDateTime;
+import EntityUtils.DateParser;
+
 // import java.time.LocalDateTime;
 // import java.time.format.DateTimeFormatter;
 
@@ -7,28 +10,28 @@ public class Event extends Task {
     // protected LocalDateTime startDate;
     // protected LocalDateTime endDate;
     // private static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy HH:mm");
-    protected String startDate;
-    protected String endDate;
+    protected LocalDateTime startDate;
+    protected LocalDateTime endDate;
 
-    public Event(String taskDescription, boolean isDone, String startDate, String endDate) {
+    public Event(String taskDescription, boolean isDone, LocalDateTime startDate, LocalDateTime endDate) {
         super(taskDescription, isDone);
         setStartDate(startDate);
         setEndDate(endDate);
     }
 
     public String getStartDate() {
-        return this.startDate;
+        return DateParser.dateToString(this.startDate);
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
     public String getEndDate() {
-        return this.endDate;
+        return DateParser.dateToString(this.endDate);
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 
