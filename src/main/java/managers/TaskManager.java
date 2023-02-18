@@ -5,6 +5,7 @@ import enums.ErrorDialogueTypes;
 import errors.EmptyTaskListException;
 import errors.InvalidDeadlineException;
 import errors.InvalidEventException;
+import errors.NoMatchingItemException;
 import errors.TaskNumberOutOfRangeException;
 import tasks.Deadline;
 import tasks.Event;
@@ -96,10 +97,16 @@ public class TaskManager {
         return toBeDeleted;
     }
 
-    public void findTaskWithWord (String toFind, OutputDialogueManager display) {
+    public void findTaskWithWord (String toFind, OutputDialogueManager display)
+            throws NoMatchingItemException {
+        foundList.clear();
         foundList = (ArrayList<Task>) tasksList.stream()
-                .filter(t -> t.getItemName().contains(toFind))
+                .filter(t -> t.getItemName().toLowerCase().contains(toFind))
                 .collect(toList());
+        if (foundList.isEmpty()) {
+            throw new NoMatchingItemException();
+        }
+        display.printInteraction(DialogueTypes.FIND_TASK);
         printAllTasksInList(foundList);
     }
 }

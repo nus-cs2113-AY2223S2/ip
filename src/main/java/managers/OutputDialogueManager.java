@@ -89,6 +89,9 @@ public class OutputDialogueManager {
         case ERROR_WHEN_SAVING:
             System.out.println("/(TAT)/  There seems to be some error when saving data...");
             break;
+        case NO_MATCHING_TASK:
+            System.out.println("|(@A@)| I don't see any task that contain the word you are searching.");
+            break;
         default:
             System.out.println("|(TAT)| Some error that I do not understand have happened.");
             break;

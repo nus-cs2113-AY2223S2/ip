@@ -7,5 +7,6 @@ public enum ErrorDialogueTypes {
     DEADLINE_WRONG_FORMAT,
     EVENT_WRONG_FORMAT,
     NO_TASK_IN_LIST,
-    ERROR_WHEN_SAVING
+    ERROR_WHEN_SAVING,
+    NO_MATCHING_TASK
 }
