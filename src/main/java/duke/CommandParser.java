@@ -10,14 +10,26 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-/*
- * This class contains the methods responsible for managing
- * the different types of inputs to Duke
- *
- **/
+/**
+ * This class contains the methods responsible for managing the different types of inputs to Duke.
+ */
 public class CommandParser {
-    
-    public ArrayList<Task> manageInput(String userInput, String command, ArrayList<Task> tasks)
+
+
+    /**
+     * This method manages the input entered by the user.
+     *
+     * @param userInput The entire String entered by the user.
+     * @param command   The first word of the userInput.
+     * @param tasks     The ArrayList of Tasks contained in tasks.txt.
+     * @throws DukeIllegalCharacterException If userInput contains `|`.
+     * @throws DukeTaskDoesNotExistException If the specified Task does not exist.
+     * @throws DukeAlreadyMarkedException    If the task is already marked or unmarked.
+     * @throws DukeIllegalSyntaxException    If the userInput does not conform to the required syntax.
+     * @throws DukeIllegalCommandException   If the userInput contains an illegal command.
+     * @throws IOException                   If tasks.txt cannot be read or written to.
+     */
+    public void manageInput(String userInput, String command, ArrayList<Task> tasks)
             throws DukeIllegalCharacterException, DukeTaskDoesNotExistException,
             DukeAlreadyMarkedException, DukeIllegalSyntaxException,
             DukeIllegalCommandException, IOException {
@@ -49,8 +61,6 @@ public class CommandParser {
 
         // Save task ArrayList information into tasks.txt
         FileOperations.saveArrayListToFile(tasks);
-
-        return tasks;
     }
 
     private void handleMarkAndDelete(String userInput, String command, ArrayList<Task> tasks)

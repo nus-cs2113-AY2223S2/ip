@@ -1,7 +1,7 @@
 package error;
 
-/*
- * This runs when a user tries to mark or unmark a task that already has that marking
+/**
+ * This exception is thrown if a user enters an illegal syntax for a command.
  **/
 public class DukeIllegalSyntaxException extends Exception{
 

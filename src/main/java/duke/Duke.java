@@ -73,6 +73,9 @@ public class Duke {
         System.exit(0);
     }
 
+    /**
+     * Main method of the program.
+     */
     public static void main(String[] args) {
 
         // Start the program with a lovely greeting

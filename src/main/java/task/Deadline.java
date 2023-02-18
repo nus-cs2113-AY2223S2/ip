@@ -22,6 +22,7 @@ public class Deadline extends Task {
         return by;
     }
 
+
     // Replaces dates of `yyyy-mm-dd` formats into `MMM dd yyyy` formats
     private void replaceDate(String by) {
 
@@ -47,7 +48,14 @@ public class Deadline extends Task {
         return date.format(formatter);
     }
 
-    // Returns a String array containing {taskName, deadline}
+    /**
+     * This method extracts the relevant information (description and by fields) from the userInput.
+     * It returns a String array containing {description, deadline}.
+     *
+     * @param userInput The input entered by the user.
+     * @return An array of Strings containing each word of the input in each of the indexes.
+     * @throws DukeIllegalSyntaxException If the syntax entered by the user is invalid.
+     */
     public static String[] handler(String userInput) throws DukeIllegalSyntaxException {
 
         // Format of userInput: <command> <taskName> /by <deadline>

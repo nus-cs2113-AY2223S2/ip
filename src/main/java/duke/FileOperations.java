@@ -13,23 +13,27 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.File;
 
-/*
- * This class contains the methods responsible for reading from
- * and saving information about the tasks
- * Each element in the ArrayList will be saved as a line in a txt file
- *
+/**
+ * This class contains the methods responsible for reading from and saving information about the tasks.
+ * Each element in the ArrayList will be saved as a line in a txt file.
  * Examples of lines in the txt file are as follows:
  * T|1|read book
  * D|0|return book|June 6th
  * E|0|project meeting|Aug 6th 2pm|4pm
- *
  **/
 public class FileOperations {
-
+    /** Relative filepath to tasks.txt */
     private static final String FILE_PATH = "./tasks.txt";
-    protected static ArrayList<Task> tasks = new ArrayList<>();
 
-    // Loads the information required for the ArrayList from the file
+    /** ArrayList of tasks */
+    private static ArrayList<Task> tasks = new ArrayList<>();
+
+    /**
+     * Loads the information required for the ArrayList from the tasks.txt file.
+     *
+     * @return An ArrayList of tasks.
+     * @throws IOException If the tasks.txt file does not exist.
+     */
     public static ArrayList<Task> loadArrayListFromFile() {
 
         try {
@@ -53,15 +57,19 @@ public class FileOperations {
 
     }
 
-    // Saves the information from the ArrayList to the file
+    /**
+     * Saves the information from the ArrayList to the file
+     *
+     * @param tasks An ArrayList of tasks.
+     * @throws IOException If the tasks.txt file cannot be written to.
+     */
     public static void saveArrayListToFile(ArrayList<Task> tasks) throws IOException {
         FileWriter fileWriter = new FileWriter(FILE_PATH, false);
         fileWriter.write(formatArrayList(tasks));
         fileWriter.close();
     }
 
-    // Formats the ArrayList into the desired format in the txt file
-    protected static String formatArrayList(ArrayList<Task> tasks) {
+    private static String formatArrayList(ArrayList<Task> tasks) {
 
         StringBuilder output = new StringBuilder();
 
@@ -80,7 +88,7 @@ public class FileOperations {
         return output.toString();
     }
 
-    protected static Task extractTaskFromString(String entry) {
+    private static Task extractTaskFromString(String entry) {
 
         Task task;
         String[] stringArrayOfEntry = entry.split("\\|");
