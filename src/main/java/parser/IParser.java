@@ -27,4 +27,5 @@ public interface IParser {
      * @throws InvalidCommandException
      */
     public int getTaskIndex() throws InvalidCommandException;
+    public String getFindKeyword();
 }

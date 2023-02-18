@@ -39,4 +39,5 @@ public interface ITaskController {
     public String deleteTask(int taskIndex) throws TaskIndexOutOfRangeException;
     public boolean isEmpty();
     public Task removeTaskForStorage();
+    public String findTask(String keyword);
 }

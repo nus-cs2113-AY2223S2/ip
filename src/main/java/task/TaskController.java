@@ -99,4 +99,15 @@ public class TaskController implements ITaskController  {
     public Task removeTaskForStorage() {
         return taskList.remove(0);
     }
+    @Override
+    public String findTask(String keyword) {
+        String Text = IntStream.range(0, taskList.size())
+                               .filter(index -> taskList.get(index).contains(keyword))
+                               .mapToObj(index -> String.format("%d. %s", index+1, taskList.get(index)))
+                               .collect(Collectors.joining("\n"));
+        if (Text.isEmpty()) {
+            Text = "No matches found!";
+        }
+        return Text;
+    }
 }

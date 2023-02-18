@@ -42,6 +42,9 @@ public abstract class Task{
     public boolean isMark() {
         return mark;
     }
+    public boolean contains(String keyword) {
+        return description.indexOf(keyword)!=-1;
+    }
     /**
      * Marks a task as done or not done
      * @param newMark status to update task with
