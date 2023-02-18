@@ -27,16 +27,24 @@ public class OutputDialogueManager {
             break;
         case HELP_MENU:
             System.out.println("(^A^)== Here's the list of commands you can tell me to do:"
-                    + System.lineSeparator() + "     - To add a to-do task: todo taskName" + System.lineSeparator() +
-                    "       (eg: todo borrow book)" + System.lineSeparator() +
-                    "     - To add a task with deadline: deadline taskName /by deadline" +
-                    System.lineSeparator() + "       (eg: deadline return book /by Sunday)" + System.lineSeparator() +
-                    "     - To add an event: event eventName /from startTime /to endTime" +
-                    System.lineSeparator() + "       (eg: event project meeting /from Mon 2pm /to 4pm)"
-                    + System.lineSeparator() + "     - To look at the stored tasks: list"  + System.lineSeparator() +
-                    "     - To mark/unmark a task as done: mark/unmark taskIndex" + System.lineSeparator() +
-                    "       (eg: mark 1)" + System.lineSeparator() +
-                    "     - To end this programme: bye");
+                    + System.lineSeparator() +
+                    "- To add a to-do task: todo taskName" + System.lineSeparator() +
+                    "  (eg: todo borrow book)" + System.lineSeparator() +
+                    "- To add a task with deadline: deadline taskName /by deadline" +
+                    System.lineSeparator() + "  (eg: deadline return book /by Sunday)" + System.lineSeparator() +
+                    "- To add an event: event eventName /from startTime /to endTime" +
+                    System.lineSeparator() + "  (eg: event project meeting /from Mon 2pm /to 4pm)"
+                    + System.lineSeparator() +
+                    "** Tip: You can store a date in the format of yyyy-MM-dd" + System.lineSeparator() +
+                    "  (eg: 2023-03-03)" + System.lineSeparator() +
+                    "- To look at the stored tasks: list" + System.lineSeparator() +
+                    "- To mark/unmark a task as done: mark/unmark taskIndex" + System.lineSeparator() +
+                    "  (eg: mark 1)" + System.lineSeparator() +
+                    "- To delete a task: delete taskIndex" + System.lineSeparator() +
+                    "  (eg: delete 1)" + System.lineSeparator() +
+                    "- To find a task that contains a specific word ot phrase: find phraseToFind"
+                    + System.lineSeparator() + "  (eg: find book)" + System.lineSeparator() +
+                    "- To end this programme: bye");
             break;
         case COUNT_OF_TASKS:
             System.out.print("_(#o#)_| Currently, the number of task I remembered is: ");
@@ -68,7 +76,7 @@ public class OutputDialogueManager {
             break;
         case EVENT_WRONG_FORMAT:
             System.out.println("|(@A@)| I think your format for adding an new event is wrong."
-            + System.lineSeparator() + "(0v0)-- Here's an example of adding an event: " +
+                    + System.lineSeparator() + "(0v0)-- Here's an example of adding an event: " +
                     "event project meeting /from Mon 2pm /to 4pm");
             break;
         case TASK_NUMBER_OUT_OF_RANGE:
@@ -79,12 +87,15 @@ public class OutputDialogueManager {
             break;
         case NO_TASK_IN_LIST:
             System.out.println("|(#A#)| I don't remember any task, please add some following the format below: "
-                    + System.lineSeparator() + "     - To add a to-do task: todo taskName" + System.lineSeparator() +
-                    "       (eg: todo borrow book)" + System.lineSeparator() +
-                    "     - To add a task with deadline: deadline taskName /by deadline" +
-                    System.lineSeparator() + "       (eg: deadline return book /by Sunday)"
-                    + System.lineSeparator() + "     - To add an event: event eventName /from startTime /to endTime" +
-                    System.lineSeparator() + "       (eg: event project meeting /from Mon 2pm /to 4pm)");
+                    + System.lineSeparator() + "- To add a to-do task: todo taskName" + System.lineSeparator() +
+                    "  (eg: todo borrow book)" + System.lineSeparator() +
+                    "- To add a task with deadline: deadline taskName /by deadline" +
+                    System.lineSeparator() + "  (eg: deadline return book /by Sunday)"
+                    + System.lineSeparator() + " - To add an event: event eventName /from startTime /to endTime" +
+                    System.lineSeparator() + "  (eg: event project meeting /from Mon 2pm /to 4pm)"
+                    + System.lineSeparator() +
+                    "** Tip: You can store a date in the format of yyyy-MM-dd" + System.lineSeparator()
+                    + "  (eg: 2023-03-03)");
             break;
         case ERROR_WHEN_SAVING:
             System.out.println("/(TAT)/  There seems to be some error when saving data...");
