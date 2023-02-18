@@ -11,7 +11,17 @@ import data.tasksList;
 import duke.Task;
 import ui.Display;
 
+/**
+ * Represents the Delete feature in the Duke program. Users may specify the
+ * index of the task to be deleted e.g., <code>/delete 3</code>/
+ */
 public class Delete {
+
+    /**
+     * Deletes user specified task from Duke program task list.
+     * 
+     * @param taskIndex index of task to be deleted.
+     */
     public static void deleteTask(int taskIndex) {
         try {
             ArrayList<Task> taskArrayList = tasksList.getTaskArrayList();
@@ -26,6 +36,11 @@ public class Delete {
         }
     }
 
+    /**
+     * Deletes user specified task from savedTasks.txt file.
+     * 
+     * @param taskIndex index of task to be deleted.
+     */
     public static void deleteSavedTask(int taskIndex) {
         String indexToRemove = Integer.toString(taskIndex);
         ArrayList<String> savedTasksList = new ArrayList<>();
@@ -48,7 +63,7 @@ public class Delete {
         } catch (IOException e) {
             Display.warnUser("Error accessing file!");
         }
-        /* rewrite tasks into tasks.txt */
+        /* rewrite tasks into savedTasks.txt */
         try {
             FileWriter writer = new FileWriter(ProcessStorageTasks.FILE_PATH);
             for (String task : savedTasksList) {

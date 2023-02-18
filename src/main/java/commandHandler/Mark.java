@@ -15,10 +15,22 @@ import data.tasksList;
 import duke.Task;
 import ui.Display;
 
+/**
+ * Represents the mark feature in Duke program. Users may specify the task index
+ * they would like to mark done/undone e.g., <code>/mark 3</code> or
+ * <code>/unmark 3</code>
+ */
 public class Mark {
-    public static void markTask(String[] userInputArray, Parser.MarkType action) {
+
+    /**
+     * Marks user specified task to be done/undone.
+     * 
+     * @param index  Task index to be marked.
+     * @param action Desired action to executed.
+     */
+    public static void markTask(String index, Parser.MarkType action) {
         try {
-            int taskIndex = Integer.parseInt(userInputArray[1]);
+            int taskIndex = Integer.parseInt(index);
             taskIndex--;
             Task task = tasksList.getTaskArrayList().get(taskIndex);
             if (action.equals(Parser.MarkType.MARK)) {
@@ -43,6 +55,12 @@ public class Mark {
         }
     }
 
+    /**
+     * Marks corresponding task in storage text file to be done/undone.
+     * 
+     * @param index  Task index to be marked.
+     * @param action Desired action to executed.
+     */
     public static void markStorageTask(int index, Parser.MarkType action) {
         String indexToRemove = Integer.toString(index);
         ArrayList<String> savedTasksList = new ArrayList<>();

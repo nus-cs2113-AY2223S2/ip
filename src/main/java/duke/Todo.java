@@ -1,10 +1,16 @@
 package duke;
 
+/**
+ * Represents a Todo task type. A <code>Todo</code> object corresponds
+ * to a <code>Task</code> object that requires only a description. This is
+ * provided by the user via the additional words after the <code>/todo</code>
+ * command e.g.,
+ * <code>/todo do CS2113 assignment</code>
+ */
 public class Todo extends Task {
-    public Todo(String userInput) {
+    public Todo(String arguments) {
         super();
-        String[] userInputArray = userInput.split("/todo");
-        String description = userInputArray[1].trim();
+        String description = arguments.trim();
         super.description = description;
     }
 

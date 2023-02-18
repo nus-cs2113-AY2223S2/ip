@@ -1,5 +1,8 @@
 package ui;
 
+/**
+ * Represents the messages and warnings displayed to user in the Duke UI.
+ */
 public class Display {
     static public final String LOGO = " ____        _        \n"
             + "|  _ \\ _   _| | _____ \n"

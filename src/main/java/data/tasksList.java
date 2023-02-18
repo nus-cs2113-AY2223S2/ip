@@ -1,9 +1,13 @@
 package data;
 
 import java.util.ArrayList;
-
 import duke.Task;
 
+/**
+ * Represents a list where all the user created tasks are being stored in
+ * Duke program. A <code>tasksList</code> object corresponds to an ArrayList
+ * that contains all tasks created by the user.
+ */
 public class tasksList {
     public static ArrayList<Task> userTasksList = new ArrayList<>();
     public static int userTaskCount = 0;
