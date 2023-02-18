@@ -38,13 +38,24 @@ public class PrintOperations {
         int counter = 0;
 
         if (listOfInputs.size() == 0) {
-            System.out.println("List empty!");
+            System.out.println("Your search returned no results.");
             return;
         }
 
         for (Task inputs : listOfInputs) {
             System.out.println(counter + 1 + "." + inputs.toString());
             counter++;
+        }
+    }
+
+    public static void bulletedList(ArrayList<Task> listOfFilteredInputs) {
+        if (listOfFilteredInputs.size() == 0) {
+            System.out.println("List empty!");
+            return;
+        }
+
+        for (Task inputs : listOfFilteredInputs) {
+            System.out.println("- " + inputs.toString());
         }
     }
 
