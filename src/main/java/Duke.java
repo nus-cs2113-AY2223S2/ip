@@ -10,11 +10,23 @@ import java.util.Scanner;
 
 public class Duke {
     public static final List<String> taskTypes = Arrays.asList("todo", "deadline", "event");
-    public static final List<String> listEditableCommands = Arrays.asList("todo", "deadline", "event", "mark","unmark","delete");
-    public static final List<String> commands = Arrays.asList("todo", "deadline", "event", "mark", "unmark", "list","delete", "bye");
+    public static final List<String> listEditableCommands = Arrays.asList("todo", "deadline", "event", "mark", "unmark", "delete");
+    public static final List<String> commands = Arrays.asList("todo", "deadline", "event", "mark", "unmark", "list", "find", "delete", "bye");
 
     public static void printHorizontalLine() {
         System.out.print("    ____________________________________________________________\n");
+    }
+
+    public static void findEntry(ArrayList<Task> listOfTasks, int currentNumberIndex, String keyWord) {
+        System.out.println("     Here are the matching tasks in your list:");
+        int counter = 0;
+        for (int i = 0; i < currentNumberIndex; ++i) {
+            if (listOfTasks.get(i).taskLabel.contains(keyWord) || listOfTasks.get(i).description.contains(keyWord)) {
+                counter++;
+                System.out.print("     " + counter + "." + listOfTasks.get(i).taskLabel + listOfTasks.get(i).getStatusIcon() + " ");
+                System.out.println(listOfTasks.get(i).description);
+            }
+        }
     }
 
     public static void listing(ArrayList<Task> listOfTasks, int currentNumberIndex) {
@@ -26,10 +38,10 @@ public class Duke {
         }
     }
 
-    public static int deleting(ArrayList<Task> listOfTasks, int currentNumberIndex, int toDelete){
+    public static int deleting(ArrayList<Task> listOfTasks, int currentNumberIndex, int toDelete) {
         System.out.println("     Noted. I've removed this task:");
-        currentNumberIndex-=1;
-        listOfTasks.remove(toDelete-1);
+        currentNumberIndex -= 1;
+        listOfTasks.remove(toDelete - 1);
         System.out.println("     Now you have " + currentNumberIndex + " tasks in the list.");
         return currentNumberIndex;
     }
@@ -64,18 +76,18 @@ public class Duke {
         System.out.println(greet);
 
         String line;
-        ArrayList<Task> taskArrayList= new ArrayList<>(); // Array of Tasks
+        ArrayList<Task> taskArrayList = new ArrayList<>(); // Array of Tasks
         int currentNumber = 0; // Current number of tasks
 
         try {
             LoadFile.initFile();
-        }catch(IOException e){
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
 
         try {
-            currentNumber = LoadFile.loadFileContents("data\\duke.txt",taskArrayList,currentNumber);
-        }catch(FileNotFoundException e){
+            currentNumber = LoadFile.loadFileContents("data\\duke.txt", taskArrayList, currentNumber);
+        } catch (FileNotFoundException e) {
             System.out.println("File Not Found");
         }
 
@@ -101,6 +113,9 @@ public class Duke {
                         break;
                     case "list":
                         listing(taskArrayList, currentNumber);
+                        break;
+                    case "find":
+                        findEntry(taskArrayList, currentNumber,lineComponents[1]);
                         break;
                     case "delete":
                         currentNumber = deleting(taskArrayList, currentNumber, Integer.parseInt(lineComponents[1]));
@@ -128,13 +143,14 @@ public class Duke {
                 printHorizontalLine();
             }
             try {
-                if(listEditableCommands.contains(type)){
-                    WriteFile.writeToFile("data\\duke.txt",taskArrayList);
-                }
-                else{
+                if (listEditableCommands.contains(type)) {
+                    WriteFile.writeToFile("data\\duke.txt", taskArrayList);
+                } else {
                     continue;
                 }
-            } catch(IOException e){};
+            } catch (IOException e) {
+            }
+            ;
         }
     }
 }
