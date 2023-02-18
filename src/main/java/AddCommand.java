@@ -1,8 +1,18 @@
+/**
+ * Represents a command to add a task to the current list of tracked tasks.
+ */
 public class AddCommand extends Command {
     public AddCommand(String firstWord, String restOfCommand) {
         super(firstWord, restOfCommand);
     }
 
+    /**
+     * Determine which type of task to add before adding the right task to
+     * the array of tracked tasks
+     * @param taskList TaskList object containing the array of tracked tasks
+     * @param ui Ui object containing methods for user interaction
+     * @param storage Storage object for dealing with saving tasks to file
+     */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) {
         switch (firstWord) {
@@ -37,7 +47,12 @@ public class AddCommand extends Command {
         ui.showCurrNumOfTask(taskList);
     }
 
-    // Add new Todo task to ArrayList
+    /**
+     * Add a new Todo task to the array of tracked tasks
+     * @param taskList TaskList object containing the array of tracked tasks
+     * @param input A string containing data regarding the Todo task to be added
+     * @throws DukeException If input has missing information
+     */
     public static void createTodoTask(TaskList taskList, String input) throws DukeException {
         if ((input.trim()).length() == 0) {
             // Task has no description
@@ -46,7 +61,12 @@ public class AddCommand extends Command {
         taskList.addTask(new Todo(input));
     }
 
-    // Add new Deadline task to ArrayList
+    /**
+     * Add a new Deadline task to the array of tracked tasks
+     * @param taskList TaskList object containing the array of tracked tasks
+     * @param input A string containing data regarding the Deadline task to be added
+     * @throws DukeException If input has missing information
+     */
     public static void createDeadlineTask(TaskList taskList, String input) throws DukeException {
         // Extract description and by parts from input
         int byIndex = input.indexOf("/by");
@@ -70,7 +90,12 @@ public class AddCommand extends Command {
         taskList.addTask(new Deadline(description, by));
     }
 
-    // Add new Event task to ArrayList
+    /**
+     * Add a new Event task to the array of tracked tasks
+     * @param taskList TaskList object containing the array of tracked tasks
+     * @param input A string containing data regarding the Event task to be added
+     * @throws DukeException If input has missing information
+     */
     public static void createEventTask(TaskList taskList, String input) throws DukeException {
         // Extract description, from and to parts from input
         int descriptionIndex = input.indexOf("/from");
