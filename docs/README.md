@@ -20,13 +20,14 @@ Marks a particular task as done in the task list.
 
 Marks a particular task as not done in the task list.
 
+### List tasks
+
+Displays all the tasks in the current task list.
+
 ### Find task
 
 Finds all tasks in the task list that contain the word entered by the user.
 
-### List tasks 
-
-Displays all the tasks in the current task list.
 
 ## Usage
 
