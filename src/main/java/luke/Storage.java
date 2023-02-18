@@ -16,6 +16,7 @@ import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.Map;
 
 /** Inspiration for Storage class taken from https://github.com/Magmanat/ip */
 public class Storage {
@@ -314,6 +315,99 @@ public class Storage {
             }
         }
         return loadedData;
+    }
+
+    /**
+     * Serialize tasks into a JSON string and write it to the data file.
+     *
+     * @throws IOException If there is an error writing the file.
+     */
+    private void serializeTasks(TaskList tasks) throws IOException {
+        // Buckets to store each data type
+        HashMap<Integer, ToDo> toDos = new HashMap<>();
+        HashMap<Integer, Deadline> deadlines = new HashMap<>();
+        HashMap<Integer, Event> events = new HashMap<>();
+
+        // Populate the buckets
+        for (Map.Entry<Integer, Task> entry : tasks.getTasks().entrySet()) {
+            Task task = entry.getValue();
+            String taskLabel = task.getTaskLabel();
+            switch (taskLabel) {
+            case "[T]":
+                toDos.put(task.getTaskID(), (ToDo) task);
+                break;
+            case "[D]":
+                deadlines.put(task.getTaskID(), (Deadline) task);
+                break;
+            default:
+                events.put(task.getTaskID(), (Event) task);
+            }
+        }
+
+        // Serialize toDos
+        String toDosJson = new Gson().toJson(toDos);
+        FileWriter saveToDos = new FileWriter("data/toDos.txt");
+        saveToDos.write(toDosJson);
+        saveToDos.close();
+
+        // Serialize deadlines
+        String deadlinesJson = new Gson().toJson(deadlines);
+        FileWriter saveDeadlines = new FileWriter("data/deadlines.txt");
+        saveDeadlines.write(deadlinesJson);
+        saveDeadlines.close();
+
+        // Serialize events
+        String eventsJson = new Gson().toJson(events);
+        FileWriter saveEvents = new FileWriter("data/events.txt");
+        saveEvents.write(eventsJson);
+        saveEvents.close();
+    }
+
+    /**
+     * Serialize serialNumbers into a JSON string and write it to the data file.
+     *
+     * @throws IOException If there is an error writing the file.
+     */
+    private void serialzeSerialNumbers(TaskList tasks) throws IOException {
+        String serialNumbersJson = new Gson().toJson(tasks.getSerialNumbers());
+        FileWriter saveSerialNumbers = new FileWriter("data/serialNumbers.txt");
+        saveSerialNumbers.write(serialNumbersJson);
+        saveSerialNumbers.close();
+    }
+
+    /**
+     * Serialize taskID into a JSON string and write it to the data file.
+     *
+     * @throws IOException If there is an error writing the file.
+     */
+    private void serializeTaskID(TaskList tasks) throws IOException {
+        FileWriter saveTaskID = new FileWriter("data/id.txt");
+        saveTaskID.write(Integer.toString(tasks.getNewTaskID()));
+        saveTaskID.close();
+    }
+
+    /**
+     * Serialize taskOrders into a JSON string and write it to the data file.
+     *
+     * @throws IOException If there is an error writing the file.
+     */
+    private void serializeTaskOrders(TaskList tasks) throws IOException {
+        String taskOrdersJson = new Gson().toJson(tasks.getTasks());
+        FileWriter saveTaskOrders = new FileWriter("data/taskList.txt");
+        saveTaskOrders.write(taskOrdersJson);
+        saveTaskOrders.close();
+    }
+
+    /**
+     * Serialize all data structures in TaskList into JSON strings and write them to their respective JSON file.
+     *
+     * @throws IOException If there is an error writing the file.
+     */
+    public void saveTaskList(TaskList tasks) throws IOException{
+        serializeTasks(tasks);
+        serializeTaskOrders(tasks);
+        serializeTaskID(tasks);
+        serialzeSerialNumbers(tasks);
     }
 
     /** Informs the user that there was an error creating a file then exits the program. */

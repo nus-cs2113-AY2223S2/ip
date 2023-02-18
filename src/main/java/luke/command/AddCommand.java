@@ -27,7 +27,7 @@ public class AddCommand extends Command {
         }
 
         try {
-            tasks.serializeTaskOrganizer();
+            storage.saveTaskList(tasks);
         } catch (IOException e) {
             storage.handleSaveError();
         }

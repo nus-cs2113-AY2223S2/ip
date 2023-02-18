@@ -18,7 +18,7 @@ public class MarkCommand extends Command {
         try {
             tasks.markTask(serialNumber);
             ui.printMarkTask(tasks.getTaskBySerialNumber(serialNumber));
-            tasks.serializeTaskOrganizer();
+            storage.saveTaskList(tasks);
         } catch (IOException e) {
             storage.handleSaveError();
         }

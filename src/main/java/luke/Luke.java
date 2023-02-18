@@ -36,7 +36,7 @@ public class Luke {
     public void endProgram() {
         ui.closeScanner();
         try {
-            taskList.serializeTaskOrganizer();
+            storage.saveTaskList(taskList);
         } catch (IOException e) {
             storage.handleSaveError();
         }

@@ -19,7 +19,7 @@ public class DeleteCommand extends Command {
         try {
             ui.printDeleteTask(tasks.getTaskBySerialNumber(serialNumber));
             tasks.deleteTask(serialNumber);
-            tasks.serializeTaskOrganizer();
+            storage.saveTaskList(tasks);
         } catch (IOException e) {
             storage.handleSaveError();
         }

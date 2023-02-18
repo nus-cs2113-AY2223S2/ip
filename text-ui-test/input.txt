@@ -30,4 +30,7 @@ list
 delete 5
 delete 4
 list
+mark a
+unmark b
+delete c
 bye

@@ -17,7 +17,7 @@ public class UnmarkCommand extends Command {
         try {
             tasks.unmarkTask(serialNumber);
             ui.printUnmarkTask(tasks.getTaskBySerialNumber(serialNumber));
-            tasks.serializeTaskOrganizer();
+            storage.saveTaskList(tasks);
         } catch (IOException e) {
             storage.handleSaveError();
         }
