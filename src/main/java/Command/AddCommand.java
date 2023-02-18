@@ -14,6 +14,7 @@ import Exceptions.DukeException;
 import Exceptions.EmptyArgumentException;
 import Exceptions.InsufficientArgumentsException;
 import Exceptions.InvalidDateException;
+import Exceptions.InvalidDateSequenceException;
 import Exceptions.NoDescriptionException;
 import Exceptions.UnknownInputException;
 import FileUtils.Storage;
@@ -116,6 +117,16 @@ public class AddCommand extends Command implements InputParser {
                 endDate = DateParser.stringToDate(endDateString);
             } catch (DateTimeParseException e) {
                 throw new InvalidDateException(endDateString);
+            }
+
+            // throws exception if start date is after end date
+            if (startDate.isAfter(endDate)) {
+                throw new InvalidDateSequenceException(startDate, endDate);
+            }
+
+            // throws exception if end date already passed
+            if (LocalDateTime.now().isBefore(endDate)) {
+                throw new InvalidDateSequenceException(LocalDateTime.now(), endDate);
             }
 
             this.addedTask = new Event(taskDescription, false, startDate, endDate);
