@@ -30,7 +30,7 @@ _Duke_ is a Personal Assistant Chatbot that helps a person to keep track of vari
 
 ## Features
 
-### ADDING AN ENTRY:
+### ADD AN ENTRY:
 #### There are 3 ways to add an entry depending on the type of your task
 ##### Todo Tasks:
       todo [td/TASK DESCRIPTION]
@@ -75,7 +75,7 @@ _Duke_ is a Personal Assistant Chatbot that helps a person to keep track of vari
       bye
 
 ## Command Summary
-![]("C:\Users\aviel\OneDrive - National University of Singapore\Pictures\Screenshots\Screenshot (145).png")
+![]("\ip\User Guide picture\Screenshot (145).png")
 
 
 
