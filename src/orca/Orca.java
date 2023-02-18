@@ -10,13 +10,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Orca {
-    static final String LOGO = "     _______  ______    _______  _______ \n"
-            + "    |       ||    _ |  |       ||   _   | \n"
-            + "    |   _   ||   | ||  |       ||  |_|  | \n"
-            + "    |  | |  ||   |_||_ |       ||       | \n"
-            + "    |  |_|  ||    __  ||      _||       | \n"
-            + "    |       ||   |  | ||     |_ |   _   | \n"
-            + "    |_______||___|  |_||_______||__| |__| \n";
+
+    private static Ui ui;
+
     static final boolean FINISHED = true;
     static final String FILE_PATH = "./data/orca.txt";
 
@@ -28,6 +24,7 @@ public class Orca {
     static Task newTask;
 
     public Orca() {
+        ui = new Ui();
         File f = new File(FILE_PATH);
         if (!f.exists()) {
             f.getParentFile().mkdirs();
@@ -75,43 +72,6 @@ public class Orca {
         }
     }
 
-    public static void printGreetingMessage() {
-        System.out.println("    --------------------------------------------------");
-        System.out.println(LOGO);
-        System.out.println("    Hello! I'm Orca, your assistant chatbot.");
-        System.out.println("    What can I do for you?");
-        System.out.println("    --------------------------------------------------\n");
-    }
-
-    public static void printByeMessage() {
-        System.out.println("    --------------------------------------------------");
-        System.out.println("    Bye. Hope to see you again soon!");
-        System.out.println("    --------------------------------------------------\n");
-    }
-
-    public static void printUnknownCommandMessage() {
-        System.out.println("    --------------------------------------------------");
-        System.out.println("    Sorry, I don't understand what you mean.");
-        System.out.println("    --------------------------------------------------\n");
-    }
-
-    public static void printTasks() {
-        System.out.println("    --------------------------------------------------");
-        System.out.println("    Here are the tasks in your list:");
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println("    " + (i + 1) + "." + tasks.get(i));
-        }
-        System.out.println("    --------------------------------------------------\n");
-    }
-
-    public static void printLatestAddedTask() {
-        System.out.println("    --------------------------------------------------");
-        System.out.println("    Got it. I've added this task:");
-        System.out.println("      " + tasks.get(tasks.size() - 1));
-        System.out.println("    Now you have " + tasks.size() + " tasks in the list.");
-        System.out.println("    --------------------------------------------------\n");
-    }
-
     public static void findCommandType() {
         if (userInput.equals("bye")) {
             commandType = CommandType.BYE;
@@ -150,10 +110,7 @@ public class Orca {
         } catch (ArrayIndexOutOfBoundsException e) {
             throw new OrcaException("There is no task with this number.");
         }
-        System.out.println("    --------------------------------------------------");
-        System.out.println("    Nice! I've marked this task as done:");
-        System.out.println("      " + tasks.get(taskNo - 1));
-        System.out.println("    --------------------------------------------------\n");
+        ui.printMarkedTask(tasks.get(taskNo - 1));
     }
 
     public static void unmarkTask(int taskNo) throws OrcaException {
@@ -164,10 +121,7 @@ public class Orca {
         } catch (ArrayIndexOutOfBoundsException e) {
             throw new OrcaException("There is no task with this number.");
         }
-        System.out.println("    --------------------------------------------------");
-        System.out.println("    I've marked this task as not done yet:");
-        System.out.println("      " + tasks.get(taskNo - 1));
-        System.out.println("    --------------------------------------------------\n");
+        ui.printUnmarkedTask(tasks.get(taskNo - 1));
     }
 
     public static void addTask(Task newTask) {
@@ -177,11 +131,7 @@ public class Orca {
     private static void deleteTask(int taskNo) throws OrcaException {
         try {
             Task removedTask = tasks.remove(taskNo - 1);
-            System.out.println("    --------------------------------------------------");
-            System.out.println("    Noted. I've removed this task:");
-            System.out.println("      " + removedTask);
-            System.out.println("    Now you have " + tasks.size() + " tasks in the list.");
-            System.out.println("    --------------------------------------------------\n");
+            ui.printRemovedTask(removedTask, tasks.size());
         } catch (IndexOutOfBoundsException e) {
             throw new OrcaException("There is no task with this number.");
         }
@@ -200,11 +150,11 @@ public class Orca {
     public static boolean executeCommand() throws OrcaException {
         switch (commandType) {
             case BYE:
-                printByeMessage();
+                ui.printByeMessage();
                 writeToFile();
                 return FINISHED;
             case LIST:
-                printTasks();
+                ui.printTasks(tasks);
                 break;
             case MARK:
                 taskNo = parseTaskNo(userInput, 5);
@@ -217,17 +167,17 @@ public class Orca {
             case TODO:
                 newTask = new Todo(userInput, 5);
                 addTask(newTask);
-                printLatestAddedTask();
+                ui.printLatestAddedTask(tasks);
                 break;
             case DEADLINE:
                 newTask = new Deadline(userInput, 9);
                 addTask(newTask);
-                printLatestAddedTask();
+                ui.printLatestAddedTask(tasks);
                 break;
             case EVENT:
                 newTask = new Event(userInput, 6);
                 addTask(newTask);
-                printLatestAddedTask();
+                ui.printLatestAddedTask(tasks);
                 break;
             case DELETE:
                 taskNo = parseTaskNo(userInput, 7);
@@ -259,9 +209,13 @@ public class Orca {
         in.close();
     }
 
-    public static void main(String[] args) {
-        printGreetingMessage();
+    public void run() {
+        ui.printGreetingMessage();
         runOrca();
         finishProcess();
+    }
+
+    public static void main(String[] args) {
+        new Orca().run();
     }
 }
