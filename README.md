@@ -1,24 +1,88 @@
-# Duke project template
+# Duke Project User Guide
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+_Duke_ is a Personal Assistant Chatbot that helps a person to keep track of various things.
 
-## Setting up in Intellij
+<!-- TOC -->
+* [Duke Project User Guide](#duke-project-user-guide)
+  * [Quick Start](#quick-start)
+  * [Features](#features)
+    * [ADDING AN ENTRY:](#adding-an-entry-)
+      * [There are 3 ways to add an entry depending on the type of your task](#there-are-3-ways-to-add-an-entry-depending-on-the-type-of-your-task)
+        * [Todo Tasks:](#todo-tasks-)
+        * [Deadline Tasks:](#deadline-tasks-)
+        * [Event Tasks:](#event-tasks-)
+    * [SHOW FULL LIST OF TASKS](#show-full-list-of-tasks)
+    * [SHOW LIST OF TASKS THAT CONTAINS KEYWORD(S)](#show-list-of-tasks-that-contains-keyword--s-)
+    * [MARK A TASK AS DONE](#mark-a-task-as-done)
+    * [UNMARK A TASK](#unmark-a-task)
+    * [DELETE AN ENTRY](#delete-an-entry)
+    * [EXIT DUKE](#exit-duke)
+  * [Command Summary](#command-summary)
+<!-- TOC -->
 
-Prerequisites: JDK 11, update Intellij to the most recent version.
+## Quick Start
 
-1. Open Intellij (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project first)
-1. Open the project into Intellij as follows:
-   1. Click `Open`.
-   1. Select the project directory, and click `OK`.
-   1. If there are any further prompts, accept the defaults.
-1. Configure the project to use **JDK 11** (not other versions) as explained in [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).<br>
-   In the same dialog, set the **Project language level** field to the `SDK default` option.
-3. After that, locate the `src/main/java/Duke.java` file, right-click it, and choose `Run Duke.main()` (if the code editor is showing compile errors, try restarting the IDE). If the setup is correct, you should see something like the below as the output:
-   ```
-   Hello from
-    ____        _        
-   |  _ \ _   _| | _____ 
-   | | | | | | | |/ / _ \
-   | |_| | |_| |   <  __/
-   |____/ \__,_|_|\_\___|
-   ```
+1. Ensure you have Java 11 or above installed on your Computer.
+2. Update Intellij to the most recent version
+3. Download the latest ChChing.jar from here.
+4. Copy the file to the desired folder as the home folder for the program.
+5. Open the command terminal, cd into the home folder of the program and use command java -jar ChChing.jar to run the application.
+
+## Features
+
+### ADDING AN ENTRY:
+#### There are 3 ways to add an entry depending on the type of your task
+##### Todo Tasks:
+      todo [td/TASK DESCRIPTION]
+      
+      EXAMPLE: todo borrow book
+
+
+##### Deadline Tasks:
+      deadline [td/TASK DESCRIPTION] /by [d/DATE]
+
+      EXAMPLE: deadline return book /by Sunday
+
+##### Event Tasks:
+      event [td/TASK DESCRIPTION] /from [sp/START PERIOD] /to [ep/END PERIOD]
+      
+      EXAMPLE: project meeting /from Mon 2pm /to 4pm
+
+### SHOW FULL LIST OF TASKS
+      list
+
+### SHOW LIST OF TASKS THAT CONTAINS KEYWORD(S)
+      find [kw/KEYWORDS]
+
+      EXAMPLE: find book
+
+### MARK A TASK AS DONE
+      mark [tn/TASK NUMBER]
+      
+      EXAMPLE: mark 1
+
+### UNMARK A TASK
+      unmark [tn/TASK NUMBER]
+      
+      EXAMPLE: unmark 4
+
+### DELETE AN ENTRY
+    delete [tn/TASK NUMBER]
+      
+      EXAMPLE: delete 5
+
+### EXIT DUKE
+      bye
+
+## Command Summary
+![]("C:\Users\aviel\OneDrive - National University of Singapore\Pictures\Screenshots\Screenshot (145).png")
+
+
+
+
+
+
+
+
+
+
