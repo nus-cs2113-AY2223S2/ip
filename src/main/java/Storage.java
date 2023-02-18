@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+/**
+ * Represents the memory to store tasks.
+ */
 public class Storage {
 
     private String dirPath;
@@ -15,6 +18,12 @@ public class Storage {
         this.filePath = filePath;
     }
 
+    /**
+     * Calls private function to save list of tasks to memory.
+     *
+     * @param taskList class to store list of tasks at run time.
+     * @param ui Ui class for interaction with user.
+     */
     public void save(TaskList taskList, Ui ui) {
         try {
             saveTasks(taskList.tasks, filePath);
@@ -23,6 +32,13 @@ public class Storage {
         }
     }
 
+    /**
+     * Saves list of tasks to memory.
+     *
+     * @param tasks The array of tasks.
+     * @param filePath The path to file to store tasks.
+     * @throws IOException If file is not writable.
+     */
     private void saveTasks(ArrayList<Task> tasks, String filePath) throws IOException {
         FileWriter fw = new FileWriter(filePath);
 
@@ -32,6 +48,12 @@ public class Storage {
         fw.close();
     }
 
+    /**
+     * Calls private function to load list of tasks from memory.
+     *
+     * @throws DukeException If file is cannot be created or found.
+     * @return TaskList Class containing the list of tasks.
+     */
     public TaskList load() throws DukeException {
         TaskList taskList = new TaskList();
         taskList.isSilent = true;
@@ -55,6 +77,14 @@ public class Storage {
         return taskList;
     }
 
+    /**
+     * Loads list of tasks to memory.
+     *
+     * @param taskList class to store list of tasks at run time.
+     * @param filePath The path to file to store tasks.
+     * @throws FileNotFoundException If file is not found.
+     * @return TaskList Class containing the list of tasks.
+     */
     private TaskList loadTasks(TaskList taskList , String filePath) throws FileNotFoundException {
         File f = new File(filePath);
         Scanner s = new Scanner(f); // create a Scanner using the File as the source

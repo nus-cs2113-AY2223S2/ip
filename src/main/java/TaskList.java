@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 
+/**
+ * Represents the list of task.
+ */
 public class TaskList {
 
     protected ArrayList<Task> tasks;
@@ -12,6 +15,9 @@ public class TaskList {
         this.tasks = tasks;
     }
 
+    /**
+     * Lists all tasks.
+     */
     public void listTask() {
         System.out.println("     Here are the tasks in your list:\n");
         for (int i = 0; i < tasks.size(); i = i + 1) {
@@ -23,6 +29,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * Marks specified task as done if taskNumber parameter is an integer.
+     *
+     * @param taskNumber The 1th-index of task to be marked.
+     * @throws DukeException If taskNumber is out of bounds.
+     */
     public void markTask(int taskNumber) throws DukeException {
 
         int ind = taskNumber - 1;
@@ -42,6 +54,12 @@ public class TaskList {
 
     }
 
+    /**
+     * Marks specified task as done if taskNumber parameter is a string.
+     *
+     * @param taskNumber The 1th-index of task to be marked.
+     * @throws DukeException If taskNumber is out of bounds.
+     */
     public void markTask(String taskNumber) throws DukeException {
         int ind;
         try {
@@ -66,6 +84,12 @@ public class TaskList {
 
     }
 
+    /**
+     * Marks specified task as not done.
+     *
+     * @param taskNumber The 1th-index of task to be marked.
+     * @throws DukeException If taskNumber is out of bounds.
+     */
     public void unmarkTask(String taskNumber) throws DukeException {
 
         int ind;
@@ -90,6 +114,11 @@ public class TaskList {
 
     }
 
+    /**
+     * Adds a todo task.
+     *
+     * @param todoTask The task to be added.
+     */
     public void addTodo(String todoTask) throws DukeException {
 
         tasks.add(new Todo(todoTask));
@@ -104,6 +133,12 @@ public class TaskList {
 
     }
 
+    /**
+     * Adds a deadline task.
+     *
+     * @param todoTask The task to be added.
+     * @throws DukeException If incorrect arguments are provided.
+     */
     public void addDeadline(String todoTask) throws DukeException {
 
         String[] taskAndDeadline = todoTask.split(" /by ");
@@ -126,6 +161,12 @@ public class TaskList {
 
     }
 
+    /**
+     * Adds an event task.
+     *
+     * @param todoTask The task to be added.
+     * @throws DukeException If incorrect arguments are provided.
+     */
     public void addEvent(String todoTask) throws DukeException {
 
         String[] taskAndDeadline = todoTask.split(" /from ");
@@ -156,6 +197,12 @@ public class TaskList {
 
     }
 
+    /**
+     * Deletes a specified task.
+     *
+     * @param input The 1-th index of the task to be deleted.
+     * @throws DukeException If incorrect arguments are provided or task index is out of bounds.
+     */
     public void deleteTask(String input) throws DukeException {
         int val;
         try {
@@ -179,6 +226,12 @@ public class TaskList {
 
     }
 
+    /**
+     * Finds all tasks containing a keyword and prints them with its respective 1th-index number.
+     *
+     * @param keyword The keywords to be found.
+     * @param ui Ui class for interaction with user.
+     */
     public void find(String keyword, Ui ui) throws DukeException {
         System.out.println("     Here are the matching tasks in your list:");
         for(int i = 0; i< tasks.size(); i++) {

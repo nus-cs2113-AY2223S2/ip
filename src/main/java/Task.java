@@ -1,3 +1,6 @@
+/**
+ * Represents a task.
+ */
 public class Task {
     protected String description;
     protected boolean isDone;
@@ -7,11 +10,15 @@ public class Task {
         this.isDone = false;
     }
 
+    /**
+     * Returns an icon indicating if a task is done.
+     *
+     * @return X if done
+     */
     public String getStatusIcon() {
         return (isDone ? "X" : " "); // mark done task with X
     }
 
-    //...
     public String getDescription() {
         return this.description;
     }

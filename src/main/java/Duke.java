@@ -4,6 +4,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+
+/**
+ * Represents a Personal Assistant Chat bot that helps a person to keep track of various things.
+ */
 public class Duke {
 
     private Ui ui;
@@ -13,9 +17,15 @@ public class Duke {
     private final String FILE_PATH = "data/duke.txt";
     private final String DIR_PATH = "data";
     private final String BYE = "bye";
+
     public static void main(String[] args) {
         new Duke().run();
     }
+
+    /**
+     * Initializes the task list to store tasks, ui for interaction with user,
+     * and storage to store information in duke.txt file.
+     */
     public Duke() {
         ui = new Ui();
         storage = new Storage(DIR_PATH, FILE_PATH);
@@ -28,6 +38,10 @@ public class Duke {
         }
     }
 
+    /**
+     * Represents the main run time function interacting with user.
+     * Sends input from user to the respective classes for execution.
+     */
     public void run() {
 
         ui.printLogo();
