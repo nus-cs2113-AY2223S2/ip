@@ -13,6 +13,10 @@ import commandHandler.List;
 import commandHandler.Mark;
 import data.tasksList;
 
+/**
+ * Represents the parser used to parse user input and execute corresponding
+ * functions.
+ */
 public class Parser {
     private static final String COMMAND_BYE = "/bye";
     private static final String COMMAND_LIST = "/list";
@@ -28,7 +32,17 @@ public class Parser {
         MARK, UNMARK
     }
 
-    public static void parseUserInput(String userInput) {
+    /**
+     * Takes in user input as a string and parses it into the corresponding commands
+     * and additional arguments if any. The corresponding functions that match the
+     * user specified feature will then be executed. If any required arguments are
+     * missing, a MissingCommandException is thrown.
+     * 
+     * @param userInput Contains command and additional arguments if any.
+     * @throws MissingCommandException If required arguments are missing.
+     * @see MissingCommandException
+     */
+    public static void parseUserInput(String userInput) throws MissingCommandException {
         /** Handle single-word input commands with no arguments **/
         if (userInput.equals(COMMAND_BYE)) {
             Display.notifyUser(Display.MESSAGE_GOODBYE);
@@ -40,24 +54,18 @@ public class Parser {
             /** Handle multi-word input commands with required arguments **/
             String[] userInputArray = userInput.split(" ", 2);
             String command = userInputArray[0];
+            if (userInputArray.length == 1) {
+                throw new MissingCommandException("Please enter the required arguments!");
+            }
+            String arguments = userInputArray[1];
             if (command.equals(COMMAND_TODO) || command.equals(COMMAND_EVENT) || command.equals(COMMAND_DEADLINE)) {
-                try {
-                    Add.addTask(userInput);
-                    Display.notifyUser(
-                            "Added the following task:\n" + tasksList.userTasksList.get(tasksList.userTaskCount - 1));
-                } catch (MissingCommandException e) {
-                    Display.warnUser(e.getMessage());
-                }
-            } else if (command.equals(COMMAND_FIND)) {
-                try {
-                    new Find(userInput);
-                } catch (MissingCommandException e) {
-                    Display.warnUser(e.getMessage());
-                }
+                Add.addTask(command, arguments);
+                Display.notifyUser(
+                        "Added the following task:\n" + tasksList.userTasksList.get(tasksList.userTaskCount - 1));
             } else if (command.equals(COMMAND_MARK)) {
-                Mark.markTask(userInputArray, MarkType.MARK);
+                Mark.markTask(arguments, MarkType.MARK);
             } else if (command.equals(COMMAND_UNMARK)) {
-                Mark.markTask(userInputArray, MarkType.UNMARK);
+                Mark.markTask(arguments, MarkType.UNMARK);
             } else if (command.equals(COMMAND_DELETE)) {
                 try {
                     Delete.deleteTask(Integer.parseInt(userInputArray[1]));
