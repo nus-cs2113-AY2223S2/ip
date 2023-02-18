@@ -14,15 +14,11 @@ public class Event extends Task {
         String[] descriptionComponents = lineComponents[0].split(" ", 2);
         String[] periodComponents = lineComponents[1].split("/", 2);
 
-        /**
-         * Array containing start of period and prepositions
-         */
         String[] startPrepositions = periodComponents[0].split(" ", 2);
+        //Array containing start of period and prepositions
 
-        /**
-         * Array containing end of period and prepositions
-         */
         String[] endPrepositions = periodComponents[1].split(" ", 2);
+        //Array containing end of period and prepositions
 
         this.start = "(" + startPrepositions[0] + ": " + startPrepositions[1];
         this.end = endPrepositions[0] + ": " + endPrepositions[1] + ")";
