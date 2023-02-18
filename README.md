@@ -25,7 +25,7 @@ _Duke_ is a Personal Assistant Chatbot that helps a person to keep track of vari
 2. Update Intellij to the most recent version
 3. Download the latest ChChing.jar from here.
 4. Copy the file to the desired folder as the home folder for the program.
-5. Open the command terminal, cd into the home folder of the program and use command java -jar ChChing.jar to run the application.
+5. Open the command terminal, cd into the home folder of the program and use command java -jar ip.jar to run the application.
 
 ## Features
 
