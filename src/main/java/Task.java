@@ -22,9 +22,6 @@ public abstract class Task {
 
     public Task(){};
 
-    /**
-     * Mark done task with X
-     */
     public String getStatusIcon() {
         return (isDone ? "[X]" : "[ ]");
     }

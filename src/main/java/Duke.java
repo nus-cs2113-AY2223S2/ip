@@ -76,7 +76,7 @@ public class Duke {
     }
 
     /**
-     * Method that throws exception if command is invalid.
+     * Throws exception if command is invalid.
      *
      * @throws InvalidCommand if isNotValidCommand is true.
      */
@@ -88,7 +88,7 @@ public class Duke {
     }
 
     /**
-     * Method that throws exception if command is empty after the instruction word.
+     * Throws exception if command is empty after the instruction word.
      *
      * @throws InvalidCommand if isEmptyCommand is true.
      */
