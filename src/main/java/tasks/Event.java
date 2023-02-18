@@ -25,8 +25,8 @@ public class Event extends Task {
             throw new InvalidEventException();
         }
         this.itemName = super.getItemName().substring(0, indexOfStartTime).trim();
-        this.startTime = itemName.substring(indexOfStartTime + EVENT_TIME_START_DIVIDER_LENGTH, indexOfEndTime);
-        this.endTime = itemName.substring(indexOfEndTime + EVENT_TIME_END_DIVIDER_LENGTH);
+        this.startTime = itemName.substring(indexOfStartTime + EVENT_TIME_START_DIVIDER_LENGTH, indexOfEndTime).trim();
+        this.endTime = itemName.substring(indexOfEndTime + EVENT_TIME_END_DIVIDER_LENGTH).trim();
         if (SpecialInputTimeTranslator.isInSpecialFormat(startTime)) {
             this.startDate = SpecialInputTimeTranslator.convertToDateObject(startTime);
             this.startTime = SpecialInputTimeTranslator.formatDate(startDate);
@@ -47,12 +47,12 @@ public class Event extends Task {
             status = NOT_DONE_EVENT_INDICATOR;
         }
         System.out.println("." + status + " " + this.itemName +
-                " (from: " + startTime + "to: " + endTime + ")");
+                " (from: " + startTime + " to: " + endTime + ")");
     }
 
     @Override
     public void printTaskWithoutId() {
-        System.out.println( "  [E] " + this.itemName +  " (from: " + startTime + "to: " + endTime + ")");
+        System.out.println( "  [E] " + this.itemName +  " (from: " + startTime + " to: " + endTime + ")");
     }
 
     @Override
