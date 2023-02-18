@@ -27,5 +27,9 @@ public interface IParser {
      * @throws InvalidCommandException
      */
     public int getTaskIndex() throws InvalidCommandException;
+    /**
+     * Gets the keyword input from the user when find command given
+     * @return
+     */
     public String getFindKeyword();
 }

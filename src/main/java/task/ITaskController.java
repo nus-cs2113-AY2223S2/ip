@@ -36,8 +36,27 @@ public interface ITaskController {
      * @return int count of task
      */
 	public int getCount();
+    /**
+     * Deletes a task in the list given the index of the task
+     * @param taskIndex
+     * @return
+     * @throws TaskIndexOutOfRangeException
+     */
     public String deleteTask(int taskIndex) throws TaskIndexOutOfRangeException;
+    /**
+     * Checks if there exist any task
+     * @return
+     */
     public boolean isEmpty();
+    /**
+     * Removes the first task in the list. Method is called by serialiser when saving the different task in duke
+     * @return
+     */
     public Task removeTaskForStorage();
+    /**
+     * Finds tasks containing keyword given in the description
+     * @param keyword
+     * @return
+     */
     public String findTask(String keyword);
 }
