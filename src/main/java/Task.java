@@ -1,8 +1,4 @@
-import java.util.ArrayList;
-
 public class Task {
-    protected static ArrayList<Task> tasks = new ArrayList<>();
-    protected static int numOfTasks = 0;
     protected String description;
     protected boolean isDone;
 
@@ -26,6 +22,7 @@ public class Task {
     public String getBy() {
         return "";
     }
+
     public String getFrom() {
         return "";
     }
@@ -41,5 +38,4 @@ public class Task {
         output = "[" + icon + "] " + description;
         return output;
     }
-
 }
