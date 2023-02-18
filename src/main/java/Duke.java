@@ -62,35 +62,55 @@ public class Duke {
         while (!"bye".equals(input)) {
             switch (command[0]) {
                 case "todo":
-                    Todo(command[1]);
+                    try {
+                        Todo(command[1]);
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        System.out.println(":( There is an error (Index is out of bounds/negative)");
+                    }
                     break;
                 case "deadline":
-                    String[] d = command[1].split("/by", 2);
-                    String d_description = d[0];
-                    String d_by = d[1];
-                    Deadline(d_description, d_by);
+                    try {
+                        String[] d = command[1].split("/by", 2);
+                        String d_description = d[0];
+                        String d_by = d[1];
+                        Deadline(d_description, d_by);
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        System.out.println(":( There is an error (Index is out of bounds/negative)");
+                    }
                     break;
                 case "event":
-                    String[] e = command[1].split("/", 3);
-                    String e_description = e[0];
-                    String e_start = e[1];
-                    String e_end = e[2];
-                    Event(e_description, e_start, e_end);
+                    try {
+                        String[] e = command[1].split("/", 3);
+                        String e_description = e[0];
+                        String e_start = e[1];
+                        String e_end = e[2];
+                        Event(e_description, e_start, e_end);
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        System.out.println(":( There is an error (Index is out of bounds/negative)");
+                    }
                     break;
                 case "list":
                     List();
                     break;
                 case "mark":
-                    Integer m_index = Integer.valueOf(command[1]);
-                    list_of_tasks[m_index - 1].markAsDone();
-                    System.out.println("Nice! This task is completed");
-                    System.out.println(list_of_tasks[m_index - 1].toString());
+                    try {
+                        Integer m_index = Integer.valueOf(command[1]);
+                        list_of_tasks[m_index - 1].markAsDone();
+                        System.out.println("Nice! This task is completed");
+                        System.out.println(list_of_tasks[m_index - 1].toString());
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        System.out.println(":( There is an error (Index is out of bounds/negative)");
+                    }
                     break;
                 case "unmark":
-                    Integer u_index = Integer.valueOf(command[1]);
-                    list_of_tasks[u_index - 1].markAsUnDone();
-                    System.out.println("Nice! This task is completed");
-                    System.out.println(list_of_tasks[u_index - 1].toString());
+                    try {
+                        Integer u_index = Integer.valueOf(command[1]);
+                        list_of_tasks[u_index - 1].markAsUnDone();
+                        System.out.println("Nice! This task is completed");
+                        System.out.println(list_of_tasks[u_index - 1].toString());
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        System.out.println(":( There is an error (Index is out of bounds/negative)");
+                    }
                     break;
                 default:
                     System.out.println("There was an error. Please try again");
