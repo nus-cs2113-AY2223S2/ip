@@ -5,7 +5,13 @@ public class Todo extends Task {
         super(description, 'T');
     }
 
-    // Returns a String containing taskName
+    /**
+     * This method extracts the relevant information (description) from the userInput.
+     * It returns String containing the description of the Task.
+     *
+     * @param userInput The input entered by the user.
+     * @return A String containing the description of the Task.
+     */
     public static String handler(String userInput) {
 
         // Format of userInput: <command> <task_name>
