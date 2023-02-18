@@ -53,7 +53,7 @@ public class PrintOperations {
         int counter = 0;
 
         if (listOfInputs.size() == 0) {
-            System.out.println("List empty!");
+            System.out.println("Your search returned no results.");
             return;
         }
 
@@ -66,6 +66,17 @@ public class PrintOperations {
     /**
      * Prints the total number of Tasks in the ArrayList.
      */
+    public static void bulletedList(ArrayList<Task> listOfFilteredInputs) {
+        if (listOfFilteredInputs.size() == 0) {
+            System.out.println("List empty!");
+            return;
+        }
+
+        for (Task inputs : listOfFilteredInputs) {
+            System.out.println("- " + inputs.toString());
+        }
+    }
+
     public static void numberOfTasks(ArrayList<Task> tasks) {
         if (tasks.size() == 1) {
             System.out.println("Now you have 1 task in the list.");

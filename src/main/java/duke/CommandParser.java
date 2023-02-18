@@ -8,11 +8,13 @@ import task.Todo;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  * This class contains the methods responsible for managing the different types of inputs to Duke.
  */
 public class CommandParser {
+
 
     /**
      * This method manages the input entered by the user.
@@ -49,6 +51,9 @@ public class CommandParser {
         case "unmark":
         case "delete":
             handleMarkAndDelete(userInput, command, tasks);
+            break;
+        case "find":
+            handleFind(userInput, tasks);
             break;
         default:
             addNewTask(userInput, command, tasks);
@@ -112,4 +117,17 @@ public class CommandParser {
         PrintOperations.numberOfTasks(tasks);
     }
 
+
+    private void handleFind(String userInput, ArrayList<Task> tasks) {
+        userInput = userInput.replace("find ", "");
+
+        // Necessary to declare userInput as a constant variable for input into streams
+        final String finalUserInput = userInput;
+
+        ArrayList<Task> filteredList = tasks.stream()
+                .filter(t -> t.getDescription().contains(finalUserInput))
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        PrintOperations.bulletedList(filteredList);
+    }
 }
