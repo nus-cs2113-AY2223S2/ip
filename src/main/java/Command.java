@@ -1,3 +1,6 @@
+/**
+ * Represents a command handler to execute user inputs.
+ */
 public class Command {
 
     private String typeOfCommand;
@@ -13,6 +16,13 @@ public class Command {
         }
     }
 
+    /**
+     * Executes the user command based on user input.
+     *
+     * @param taskList class to store list of tasks at run time.
+     * @param ui Ui class for interaction with user.
+     * @param storage class for loading and saving of tasks to memory.
+     */
     public void execute(TaskList taskList, Ui ui, Storage storage) {
         switch (typeOfCommand) {
             case "list":
