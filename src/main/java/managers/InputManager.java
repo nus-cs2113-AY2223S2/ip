@@ -1,23 +1,11 @@
 package managers;
 
-import commands.AddCommand;
 import commands.Command;
-import commands.DeleteCommand;
 import commands.ExitCommand;
-import commands.HelpCommand;
-import commands.ListCommand;
-import commands.MarkCommand;
-import commands.UnknownCommand;
-import enums.DialogueTypes;
 import enums.ErrorDialogueTypes;
-import parser.Parser;
-import tasks.Deadline;
-import tasks.Event;
-import tasks.Task;
-import tasks.ToDo;
+import translators.Parser;
 import errors.InvalidDeadlineException;
 import errors.InvalidEventException;
-import errors.TaskNumberOutOfRangeException;
 
 import java.io.IOException;
 import java.util.Scanner;

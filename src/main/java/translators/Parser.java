@@ -1,4 +1,4 @@
-package parser;
+package translators;
 
 import commands.AddCommand;
 import commands.Command;

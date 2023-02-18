@@ -1,7 +1,8 @@
 package tasks;
-import enums.DialogueTypes;
 import errors.InvalidEventException;
-import managers.OutputDialogueManager;
+import translators.SpecialInputTimeTranslator;
+
+import java.time.LocalDate;
 
 public class Event extends Task {
     public static final String EVENT_TIME_START_INDICATOR = "/from";
@@ -14,6 +15,8 @@ public class Event extends Task {
     private String itemName;
     private String startTime;
     private String endTime;
+    private LocalDate startDate;
+    private LocalDate endDate;
     public Event(String itemName) throws InvalidEventException {
         super(itemName);
         int indexOfStartTime = itemName.indexOf(EVENT_TIME_START_INDICATOR);
@@ -24,6 +27,14 @@ public class Event extends Task {
         this.itemName = super.getItemName().substring(0, indexOfStartTime).trim();
         this.startTime = itemName.substring(indexOfStartTime + EVENT_TIME_START_DIVIDER_LENGTH, indexOfEndTime);
         this.endTime = itemName.substring(indexOfEndTime + EVENT_TIME_END_DIVIDER_LENGTH);
+        if (SpecialInputTimeTranslator.isInSpecialFormat(startTime)) {
+            this.startDate = SpecialInputTimeTranslator.convertToDateObject(startTime);
+            this.startTime = SpecialInputTimeTranslator.formatDate(startDate);
+        }
+        if (SpecialInputTimeTranslator.isInSpecialFormat(endTime)) {
+            this.endDate = SpecialInputTimeTranslator.convertToDateObject(endTime);
+            this.endTime = SpecialInputTimeTranslator.formatDate(endDate);
+        }
         incrementItemCount();
     }
 
@@ -36,12 +47,12 @@ public class Event extends Task {
             status = NOT_DONE_EVENT_INDICATOR;
         }
         System.out.println("." + status + " " + this.itemName +
-                " (from: " + startTime + "To: " + endTime + ")");
+                " (from: " + startTime + "to: " + endTime + ")");
     }
 
     @Override
     public void printTaskWithoutId() {
-        System.out.println( "  [E] " + this.itemName +  " (from: " + startTime + "To: " + endTime + ")");
+        System.out.println( "  [E] " + this.itemName +  " (from: " + startTime + "to: " + endTime + ")");
     }
 
     @Override
