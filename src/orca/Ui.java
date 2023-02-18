@@ -62,11 +62,11 @@ public class Ui {
         System.out.println("    --------------------------------------------------\n");
     }
 
-    public void printLatestAddedTask(ArrayList<Task> tasks) {
+    public void printAddedTask(Task task, int taskSize) {
         System.out.println("    --------------------------------------------------");
         System.out.println("    Got it. I've added this task:");
-        System.out.println("      " + tasks.get(tasks.size() - 1));
-        System.out.println("    Now you have " + tasks.size() + " tasks in the list.");
+        System.out.println("      " + task);
+        System.out.println("    Now you have " + taskSize + " tasks in the list.");
         System.out.println("    --------------------------------------------------\n");
     }
 }
