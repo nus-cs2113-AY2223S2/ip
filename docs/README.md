@@ -1,29 +1,55 @@
 # User Guide
 
-## Features 
+## Features
 
-### Feature-ABC
+This is a list of features currently supported by Duke.
 
-Description of the feature.
+### Adding of tasks
 
-### Feature-XYZ
+Duke currently supports _3_ different task types.
 
-Description of the feature.
+1. Todo
+2. Deadline
+3. Event
+
+### List
+
+Displays a list of all current tasks.
+
+### Mark
+
+Marks a specific task done/undone.
+
+### Find
+
+Displays a list of current tasks that match specified keywords.
+
+### Delete
+
+Deletes a specified task.
+
+### Bye
+
+Terminates Duke program.
 
 ## Usage
 
-### `Keyword` - Describe action
+### `Todo` - Adds a Todo task.
 
-Describe the action and its outcome.
+This command adds a Todo type task to the tasks list.
 
-Example of usage: 
+Example of usage:
 
-`keyword (optional arguments)`
+`/todo CS2113 Assignment`
 
 Expected outcome:
 
 Description of the outcome.
 
 ```
-expected output
+---------------------------------------------------
+[MESSAGE] Added the following task:
+[TODO]
+[ ] CS2113 Assignment
+---------------------------------------------------
 ```
