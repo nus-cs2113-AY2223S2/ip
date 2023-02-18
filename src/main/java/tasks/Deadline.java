@@ -1,7 +1,8 @@
 package tasks;
-import enums.DialogueTypes;
 import errors.InvalidDeadlineException;
-import managers.OutputDialogueManager;
+import translators.SpecialInputTimeTranslator;
+
+import java.time.LocalDate;
 
 public class Deadline extends Task {
     public static final int DEADLINE_DIVIDER_LENGTH = 4;
@@ -12,6 +13,8 @@ public class Deadline extends Task {
     private String itemName;
     private String deadline;
 
+    private LocalDate deadlineDate;
+
     public Deadline(String itemName) throws InvalidDeadlineException {
         super(itemName);
         int indexOfDivider = itemName.indexOf(DEADLINE_SEPARATOR);
@@ -21,6 +24,10 @@ public class Deadline extends Task {
         }
         this.itemName = super.getItemName().substring(0,indexOfDivider);
         this.deadline = itemName.substring(indexOfDivider + DEADLINE_DIVIDER_LENGTH);
+        if (SpecialInputTimeTranslator.isInSpecialFormat(deadline)) {
+            this.deadlineDate = SpecialInputTimeTranslator.convertToDateObject(deadline);
+            this.deadline = SpecialInputTimeTranslator.formatDate(deadlineDate);
+        }
         incrementItemCount();
     }
 
