@@ -2,6 +2,9 @@ package luke.icon;
 
 import java.util.Random;
 
+/**
+ * A <code>LukeLogo</code> object is use to indicate generate and display a logo whenever Luke runs.
+ */
 public class LukeLogo {
     /** List of logos corresponding to the ASCII art of "LUKE" */
     private final String[] logos = {

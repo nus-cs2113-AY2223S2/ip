@@ -1,5 +1,11 @@
 package luke.icon;
 
+/**
+ * A <code>Label</code> object is use to indicate the type of the task.
+ * [T] corresponds to a <code>todo</code> task.
+ * [D] corresponds to a <code>deadline</code> task.
+ * [E] corresponds to a <code>event</code> task.
+ */
 public class Label {
     /** Visual representation of the task label */
     private String label;
