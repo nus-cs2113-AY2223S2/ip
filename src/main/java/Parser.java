@@ -1,16 +1,35 @@
 import duke.DukeException;
 import java.util.Scanner;
 
+/**
+ * Represents a parser that parses the user's commands to make sense of
+ * what the user wants to do.
+ */
 public class Parser {
-    //private TaskList tasks;
+    private final TaskList tasks;
 
+    /**
+     * Constructs a new TaskList object to be used to handle appropriate
+     * task operations based on the user's commands.
+     */
     public Parser() {
-        //tasks = new TaskList();
+        tasks = new TaskList();
     }
-    public static void printLine() {
+
+    /**
+     * Prints a horizontal line.
+     */
+    public void printLine() {
         System.out.println("____________________________________________________________");
     }
-    public static void handleCommands() {
+
+    /**
+     * Interprets user commands by checking the first word of the user input.
+     * Checks whether user command is List, Find, Mark, Unmark, Delete, To-do,
+     * Deadline or Event and calls the appropriate method to handle the command.
+     * Handles unidentified commands by giving the user a message.
+     */
+    public void handleCommands() {
         Scanner in = new Scanner(System.in);
         String command = in.nextLine();
 
@@ -21,35 +40,35 @@ public class Parser {
                 switch (firstWord) {
                     //list tasks
                     case "list" :
-                        TaskList.listTasks();
+                        tasks.listTasks();
                         break;
                     //find task
                     case "find" :
-                        TaskList.findTask(input);
+                        tasks.findTask(input);
                         break;
                     //mark task
                     case "mark":
-                        TaskList.markTask(input);
+                        tasks.markTask(input);
                         break;
                     //un-mark task
                     case "unmark":
-                        TaskList.unmarkTask(input);
+                        tasks.unmarkTask(input);
                         break;
                     //delete task
                     case "delete":
-                        TaskList.deleteTask(input);
+                        tasks.deleteTask(input);
                         break;
                     //to-do
                     case "todo":
-                        TaskList.addTodo(input);
+                        tasks.addTodo(input);
                         break;
                     //deadline
                     case "deadline":
-                        TaskList.addDeadline(input);
+                        tasks.addDeadline(input);
                         break;
                     //event
                     case "event":
-                        TaskList.addEvent(input);
+                        tasks.addEvent(input);
                         break;
                     //unidentified command
                     default:

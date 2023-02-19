@@ -8,14 +8,24 @@ import java.io.IOException;
 import java.util.Scanner;
 import static duke.FileOperations.*;
 
+/**
+ * Contains
+ */
 public class Storage {
-    public static void printLine() {
+    /**
+     * Prints a horizontal line.
+     */
+    public void printLine() {
         System.out.println("____________________________________________________________");
     }
 
-    //load the data from the hard disk when Duke starts up
-    //write the existing data into the current list of tasks
-    public static void loadData() throws FileNotFoundException {
+    /**
+     * Loads the data from the text file when Duke starts up and writes the
+     * existing data into the list of tasks.
+     * @throws FileNotFoundException when the text file "data/duke.txt" is
+     * not found.
+     */
+    public void loadData() throws FileNotFoundException {
         String filePath = "data/duke.txt";
         File f = new File(filePath);
         Scanner s = new Scanner(f);
@@ -24,10 +34,14 @@ public class Storage {
             convertFromData(str);
         }
         System.out.println("Saved data has been loaded!");
-        TaskList.listTasks();
+        printLine();
     }
 
-    public static void load() {
+    /**
+     * Attempts to load the data from the text file into the list of tasks.
+     * Attempts to create the text file for the user if it is not found.
+     */
+    public void load() {
         try {
             loadData();
         } catch (IOException e) {
@@ -37,21 +51,32 @@ public class Storage {
             File directory = new File(pathName);
             File file = new File(filePath);
             if (!directory.exists()) {
-                directory.mkdirs();
+                if (directory.mkdirs()) {
+                    System.out.println("Directory created.");
+                } else {
+                    System.out.println("Directory already exists.");
+                }
             }
             try {
-                file.createNewFile();
-                System.out.println("Now your data will be saved in the file. Please proceed!");
+                if (file.createNewFile()) {
+                    System.out.println("Now your data will be saved in the file. Please proceed!");
+                } else {
+                    System.out.println("File already exists.");
+                }
                 printLine();
             } catch (IOException exception) {
-                System.out.println("Error while creating the file.");
+                System.out.println("Error while creating the file. Your data won't be saved :(");
                 printLine();
             }
         }
     }
 
-    //save the tasks in the hard disk automatically whenever the task list changes
-    public static void saveData() {
+    /**
+     * Saves the tasks in the current list of tasks automatically whenever
+     * a new change is made to the task list. Ensures that user's data is
+     * saved even if the program crashes.
+     */
+    public void saveData() {
         String filePath = "data/duke.txt";
         try {
             writeToFile(filePath, convertToData(Task.tasks.get(0)) + System.lineSeparator());
@@ -63,8 +88,12 @@ public class Storage {
         }
     }
 
-    //convert data from text file into Task list format to Load Data
-    public static void convertFromData(String str) {
+    /**
+     * Converts data from inside the text file into a Task object before
+     * loading the data into the task list.
+     * @param str Task to be loaded from text file into task list.
+     */
+    public void convertFromData(String str) {
         String[] task = str.split("\\|");
         Character c = task[0].charAt(0); //check if task is a To-do, Deadline or Event
         Character marked = task[1].charAt(1); //check if task is marked done or not
@@ -98,8 +127,12 @@ public class Storage {
         }
     }
 
-    //convert tasks in arraylist to save in text file for Save Data
-    public static String convertToData(Task t) {
+    /**
+     * Converts a task from inside the task list into the correct format for
+     * saving the task in the text file.
+     * @param t Task to be saved from task list into text file.
+     */
+    public String convertToData(Task t) {
         String str = ""+t;
         String data;
         Character c = str.charAt(1); //check if task is a To-do, Deadline or Event
@@ -127,7 +160,7 @@ public class Storage {
             int closeBracket = task.indexOf(")");
             String description = task.substring(0,openBracket);
             String duration = task.substring(openBracket+6, closeBracket);
-            String[] eventTime = duration.split("to: ");
+            String[] eventTime = duration.split(" to: ");
             if (marked.equals('X')) {
                 data = ("E | 1 |" + description + " | " + eventTime[0].substring(1) + "-" + eventTime[1]);
             } else {
