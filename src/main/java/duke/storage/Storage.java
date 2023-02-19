@@ -1,7 +1,9 @@
-package duke;
+package duke.storage;
 
-import duke.tasklist.DoUserCommand;
+import duke.Duke;
+import duke.command.Command;
 import duke.tasklist.TaskList;
+import duke.ui.Ui;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,7 +17,7 @@ public class Storage {
         File fileName = new File(path);
         FileWriter savedFile = new FileWriter(fileName, false);
         for (int index = 0; index < Duke.taskCount; index++) {
-            savedFile.write(TaskList.tasks.get(index).returnCommand());
+            savedFile.write(TaskList.retrieveTask(index));
             savedFile.write(System.getProperty("line.separator"));
         }
         savedFile.write(System.getProperty("line.separator"));
@@ -42,14 +44,14 @@ public class Storage {
             Ui.printEmptyFile();
         } else {
             //print here are your tasks
-            System.out.println(Ui.LINE);
+            Ui.printLine();
             System.out.println("\tHere are your stored tasks!");
             int index = 1;
             while (s.hasNext()) {
                 System.out.println("\t" + index + ". " + s.nextLine());
                 index++;
             }
-            System.out.println(Ui.LINE);
+            Ui.printLine();
         }
         extractData(fileName);
     }
@@ -61,10 +63,10 @@ public class Storage {
             Duke.toPrint = false;
             String currentLine = s.nextLine();
             String userCommand = currentLine.substring(4);
-            DoUserCommand.handleUserCommand(userCommand);
+            TaskList.handleUserCommand(userCommand);
             String markStatus = currentLine.substring(0, 4);
             if (markStatus.equals("[X] ")) {
-                TaskList.doCommandMark(count);
+                Command.doCommandMark(count);
             } else if (!markStatus.equals("[ ] ")) {
                 // print task wrong format
                 Ui.printIncorrectTaskFormat();

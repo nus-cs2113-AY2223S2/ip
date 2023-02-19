@@ -1,116 +1,105 @@
 package duke.tasklist;
 
+import duke.command.Command;
 import duke.Duke;
-import duke.Ui;
-import duke.task.Deadline;
-import duke.task.Event;
+import duke.parser.Parser;
+import duke.ui.Ui;
 import duke.task.Task;
-import duke.task.Todo;
 
 import java.util.ArrayList;
 
 public class TaskList {
+    public static final String COMMAND_BYE = "bye";
+    public static final String COMMAND_LIST = "list";
+    public static final String COMMAND_MARK = "mark";
+    public static final String COMMAND_UNMARK = "unmark";
+    public static final String COMMAND_EVENT = "event";
+    public static final String COMMAND_TODO = "todo";
+    public static final String COMMAND_DELETE = "delete";
+    public static final String COMMAND_DEADLINE = "deadline";
 
     public static ArrayList<Task> tasks = new ArrayList<>();
 
-    public static void doCommandMark(int taskNum) {
-        Duke.isFileEdited = true;
-        try {
-            tasks.get(--taskNum).setStatus(true);
-            if (Duke.toPrint) {
-                System.out.println(Ui.LINE);
-                System.out.println("\tNoted. Task " + (taskNum + 1) + " has been marked as \"complete\":");
-                System.out.println("\t  " + tasks.get(taskNum).getTaskNameAndStatus());
-                System.out.println(Ui.LINE);
-            }
-        } catch (IndexOutOfBoundsException | NullPointerException out_mark_b) {
-            if (Duke.toPrint) {
+    public static String retrieveTask(int taskNum) {
+        return tasks.get(taskNum).returnCommand();
+    }
+
+    public static void handleUserCommand(String userCommand) {
+        Parser parser = new Parser(userCommand);
+
+        String command = parser.extractCommand();
+
+        switch (command) {
+        case COMMAND_MARK:
+            try {
+                String commandInfo = parser.extractCommandInfo();
+                int taskNum = Integer.parseInt(commandInfo);
+                Command.doCommandMark(taskNum);
+            } catch (IndexOutOfBoundsException | NumberFormatException out_mark_a) {
                 Ui.printInvalidNumber("mark");
             }
-        }
-    }
-
-    public static void doCommandUnmark(int taskNum) {
-        Duke.isFileEdited = true;
-        try {
-            tasks.get(--taskNum).setStatus(false);
-            if (Duke.toPrint) {
-                System.out.println(Ui.LINE);
-                System.out.println("\tOh, ok. Task " + (taskNum + 1) + " has been marked as \"incomplete\":");
-                System.out.println("\t  " + tasks.get(taskNum).getTaskNameAndStatus());
-                System.out.println(Ui.LINE);
-            }
-        } catch (IndexOutOfBoundsException | NullPointerException out_unmark_b) {
-            if (Duke.toPrint) {
+            break;
+        case COMMAND_UNMARK:
+            try {
+                String commandInfo = parser.extractCommandInfo();
+                int taskNum = Integer.parseInt(commandInfo);
+                Command.doCommandUnmark(taskNum);
+            } catch (IndexOutOfBoundsException | NumberFormatException out_unmark_a) {
                 Ui.printInvalidNumber("unmark");
             }
-        }
-    }
-
-    public static void doCommandList() {
-        System.out.println(Ui.LINE);
-        int count = 1;
-        if (Duke.taskCount == 0) {
-            System.out.println("\tYou have no pending tasks! ☺");
-        } else {
-            System.out.println("\tHere are your tasks:");
-            for (int index = 0; index < Duke.taskCount; index++) {
-                System.out.print("\t" + count + ".");
-                System.out.println(tasks.get(index));
-                count++;
+            break;
+        case COMMAND_LIST:
+            Command.doCommandList();
+            break;
+        case COMMAND_BYE:
+            Ui.doCommandBye();
+            break;
+        case COMMAND_DELETE:
+            try {
+                String commandInfo = parser.extractCommandInfo();
+                int taskNum = Integer.parseInt(commandInfo);
+                Command.doCommandDelete(taskNum);
+            } catch (IndexOutOfBoundsException | NumberFormatException out_delete_a) {
+                Ui.printInvalidNumber("delete");
+            }
+            break;
+        case COMMAND_TODO:
+            try {
+                String commandInfo = parser.extractCommandInfo();
+                Command.doCommandTodo(commandInfo);
+            } catch (IndexOutOfBoundsException out_todo_a) {
+                Ui.printEmptyCommand("todo");
+            }
+            break;
+        case COMMAND_DEADLINE:
+            try {
+                String commandInfo = parser.extractCommandInfo();
+                String taskName = parser.extractTaskName();
+                String taskDeadline = parser.extractTaskDeadline();
+                Command.doCommandDeadline(taskName, taskDeadline);
+            } catch (StringIndexOutOfBoundsException out_deadline_b) {
+                Ui.printInvalidFormat("deadline");
+            } catch (IndexOutOfBoundsException out_deadline_a) {
+                Ui.printEmptyCommand("deadline");
+            }
+            break;
+        case COMMAND_EVENT:
+            try {
+                String commandInfo = parser.extractCommandInfo();
+                String eventName = parser.extractEventName("/from");
+                String eventStartDetails = parser.extractEventStartDetails();
+                String eventEndDetails = parser.extractEventEndDetails();
+                Command.doCommandEvent(eventName, eventStartDetails, eventEndDetails);
+            } catch (StringIndexOutOfBoundsException out_event_a) {
+                Ui.printInvalidFormat("event");
+            } catch (IndexOutOfBoundsException out_event_a) {
+                Ui.printEmptyCommand("event");
+            }
+            break;
+        default:
+            if (Duke.toPrint) {
+                Ui.printInvalidCommand();
             }
         }
-        System.out.println(Ui.LINE);
     }
-
-    public static void doCommandTodo(String taskName) {
-        Duke.isFileEdited = true;
-        tasks.add(new Todo(taskName));
-        Duke.taskCount++;
-        if (Duke.toPrint) {
-            System.out.println(Ui.LINE);
-            System.out.println("\t" + "Task added!");
-            System.out.println("\t  " + tasks.get(Duke.taskCount - 1));
-            System.out.println("\t" + "Now you have " + Duke.taskCount + " pending tasks.");
-            System.out.println(Ui.LINE);
-        }
-    }
-
-    public static void doCommandDeadline(String taskName, String taskDeadline) {
-        Duke.isFileEdited = true;
-        tasks.add(new Deadline(taskName, taskDeadline));
-        Duke.taskCount++;
-        if (Duke.toPrint) {
-            System.out.println(Ui.LINE);
-            System.out.println("\t" + "Task added!");
-            System.out.println("\t  " + tasks.get(Duke.taskCount - 1));
-            System.out.println("\t" + "Now you have " + Duke.taskCount + " pending tasks.");
-            System.out.println(Ui.LINE);
-        }
-    }
-
-    public static void doCommandEvent(String eventName, String eventDetailsPartOne, String eventDetailsPartTwo) {
-        Duke.isFileEdited = true;
-        tasks.add(new Event(eventName, eventDetailsPartOne, eventDetailsPartTwo));
-        Duke.taskCount++;
-        if (Duke.toPrint) {
-            System.out.println(Ui.LINE);
-            System.out.println("\t" + "Task added!");
-            System.out.println("\t  " + tasks.get(Duke.taskCount - 1));
-            System.out.println("\t" + "Now you have " + Duke.taskCount + " pending tasks.");
-            System.out.println(Ui.LINE);
-        }
-    }
-
-    public static void doCommandDelete(int taskNum) {
-        Duke.isFileEdited = true;
-        System.out.println(Ui.LINE);
-        System.out.println("\t  " + tasks.get(taskNum - 1));
-        System.out.println("\t" + "Task removed!");
-        System.out.println("\t" + "Now you have " + (Duke.taskCount - 1) + " pending tasks.");
-        tasks.remove(taskNum - 1);
-        System.out.println(Ui.LINE);
-        Duke.taskCount--;
-    }
-
 }

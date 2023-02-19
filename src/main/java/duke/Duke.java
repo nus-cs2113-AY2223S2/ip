@@ -1,6 +1,8 @@
 package duke;
 
-import duke.tasklist.DoUserCommand;
+import duke.storage.Storage;
+import duke.tasklist.TaskList;
+import duke.ui.Ui;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -25,8 +27,8 @@ public class Duke {
 
         do {
             userCommand = in.nextLine();
-            DoUserCommand.handleUserCommand(userCommand);
-        } while (!userCommand.equals(Ui.COMMAND_BYE));
+            TaskList.handleUserCommand(userCommand);
+        } while (!userCommand.equals(TaskList.COMMAND_BYE));
         try {
             if (isFileEdited) {
                 Storage.doEditFile(absolutePath);
