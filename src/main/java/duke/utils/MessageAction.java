@@ -7,6 +7,8 @@ import duke.item.Item;
 public class MessageAction {
     /**
      * Prints the list of items.
+     * 
+     * @params items List of items that will be printed.
      */
     public static void printList(ArrayList<Item> items) {
         System.out.println(Message.INFO_LIST);
@@ -18,6 +20,8 @@ public class MessageAction {
 
     /**
      * Prints the list of filtered items.
+     * 
+     * @params filteredItems List of filtered items that will be printed.
      */
     public static void printFilteredList(ArrayList<Item> filteredItems) {
         if (filteredItems.isEmpty()) {
@@ -44,7 +48,8 @@ public class MessageAction {
     /**
      * Prints the message after an item is added.
      * 
-     * @param item Prints the description and status of the item
+     * @param item Prints the description and status of the item.
+     * @param totalItems Prints the total number of items from the list.
      */
     public static void printAddItemMessage(Item item, int totalItems) {
         System.out.println(Message.INFO_ITEM_ADD);
@@ -55,7 +60,8 @@ public class MessageAction {
     /**
      * Prints the message after an item is deleted.
      * 
-     * @param item Prints the description and status of the item
+     * @param item Prints the description and status of the item.
+     * @param totalItems Prints the total number of items from the list.
      */
     public static void printDeleteItemMessage(Item item, int totalItems) {
         System.out.println(Message.INFO_ITEM_DELETE);
