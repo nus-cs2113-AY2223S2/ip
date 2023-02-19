@@ -10,6 +10,10 @@ public abstract class Item {
         this.isDone = false;
     }
 
+    public String getDescription() {
+        return this.description;
+    }
+
     public String getStatus() {
         return (this.isDone ? "X" : " "); // mark done task with X
     }
