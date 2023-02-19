@@ -2,15 +2,15 @@ package duke;
 
 public class Ui {
 
-    static final String LINE = "\t____________________________________________________________";
-    static final String COMMAND_BYE = "bye";
-    static final String COMMAND_LIST = "list";
-    static final String COMMAND_MARK = "mark";
-    static final String COMMAND_UNMARK = "unmark";
-    static final String COMMAND_EVENT = "event";
-    static final String COMMAND_TODO = "todo";
-    static final String COMMAND_DELETE = "delete";
-    static final String COMMAND_DEADLINE = "deadline";
+    public static final String LINE = "\t____________________________________________________________";
+    public static final String COMMAND_BYE = "bye";
+    public static final String COMMAND_LIST = "list";
+    public static final String COMMAND_MARK = "mark";
+    public static final String COMMAND_UNMARK = "unmark";
+    public static final String COMMAND_EVENT = "event";
+    public static final String COMMAND_TODO = "todo";
+    public static final String COMMAND_DELETE = "delete";
+    public static final String COMMAND_DEADLINE = "deadline";
 
     public static void printInvalidNumber(String taskType) {
         System.out.println(LINE);
