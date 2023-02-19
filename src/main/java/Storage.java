@@ -9,7 +9,8 @@ import java.util.Scanner;
 import static duke.FileOperations.*;
 
 /**
- * Contains
+ * Represents a Storage object that handles the loading of data from text file and
+ * saving of data into text file.
  */
 public class Storage {
     /**
@@ -84,7 +85,7 @@ public class Storage {
                 appendToFile(filePath, convertToData(Task.tasks.get(i)) + System.lineSeparator());
             }
         } catch (IOException e) {
-            System.out.println("Something went wrong: " + e.getMessage());
+            System.out.println("Something went wrong.");
         }
     }
 

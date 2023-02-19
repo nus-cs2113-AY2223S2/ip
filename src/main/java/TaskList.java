@@ -6,9 +6,15 @@ import duke.*;
  */
 public class TaskList {
     private final Storage storage;
+    private final Ui ui;
 
+    /**
+     * Constructs new Storage object to handle saving of data into
+     * text file and new Ui object to handle some error messages.
+     */
     public TaskList() {
         storage = new Storage();
+        ui = new Ui();
     }
 
     /**
@@ -16,22 +22,6 @@ public class TaskList {
      */
     public void printLine() {
         System.out.println("____________________________________________________________");
-    }
-
-    /**
-     * Returns true if task description is blank.
-     * Returns false otherwise.
-     *
-     * @param description Description of a task.
-     * @return boolean variable isBlank (True or False).
-     */
-    public boolean isDescriptionBlank(String description) {
-        boolean isBlank = true;
-        for (int i = 0; i < description.length(); i++) {
-            char c = description.charAt(i);
-            isBlank = Character.isWhitespace(c); //true if character is whitespace
-        }
-        return isBlank;
     }
 
     /**
@@ -103,14 +93,11 @@ public class TaskList {
             System.out.println(t);
             printLine();
         } catch (NumberFormatException e) {
-            System.out.println("☹ OOPS!!! Task number is invalid. Please try again.");
-            printLine();
+            ui.handleNumberFormatException();
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("☹ OOPS!!! Task number is missing. Please try again. ");
-            printLine();
+           ui.handleIndexOutOfBoundsException();
         } catch (DukeException e) {
-            System.out.println("☹ OOPS!!! You entered an invalid task number. Please try again.");
-            printLine();
+           ui.handleDukeException();
         }
     }
 
@@ -133,14 +120,11 @@ public class TaskList {
             System.out.println(t);
             printLine();
         } catch (NumberFormatException e) {
-            System.out.println("☹ OOPS!!! Task number is invalid. Please try again.");
-            printLine();
+            ui.handleNumberFormatException();
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("☹ OOPS!!! Task number is missing. Please try again. ");
-            printLine();
+           ui.handleIndexOutOfBoundsException();
         } catch (DukeException e) {
-            System.out.println("☹ OOPS!!! You entered an invalid task number. Please try again.");
-            printLine();
+            ui.handleDukeException();
         }
     }
 
@@ -165,14 +149,11 @@ public class TaskList {
             System.out.println("Now you have " + Task.taskCount + " tasks in the list.");
             printLine();
         } catch (NumberFormatException e) {
-            System.out.println("☹ OOPS!!! Task number is invalid. Please try again.");
-            printLine();
+            ui.handleNumberFormatException();
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("☹ OOPS!!! Task number is missing. Please try again. ");
-            printLine();
+            ui.handleIndexOutOfBoundsException();
         } catch (DukeException e) {
-            System.out.println("☹ OOPS!!! You entered an invalid task number. Please try again.");
-            printLine();
+            ui.handleDukeException();
         }
     }
 
@@ -183,7 +164,7 @@ public class TaskList {
      */
     public void addTodo(String[] input) {
         try {
-            if (isDescriptionBlank(input[1])) {
+            if (input[1].isBlank()) {
                 throw new DukeException();
             }
             Task t = new Todo(input[1]);
@@ -195,16 +176,9 @@ public class TaskList {
             System.out.println(t);
             System.out.println("Now you have " + Task.taskCount + " tasks in the list.");
             printLine();
-        } catch (IndexOutOfBoundsException e) {
-            printLine();
-            System.out.println("☹ OOPS!!! The description of a todo cannot be empty.");
-            System.out.println("Please follow this format: todo [description].");
-            printLine();
-        } catch (DukeException e) {
-            printLine();
-            System.out.println("☹ OOPS!!! The description of a todo cannot be blank.");
-            System.out.println("Please follow this format: todo [description].");
-            printLine();
+        } catch (IndexOutOfBoundsException | DukeException e) {
+            ui.printErrorMessage();
+            ui.printTodoFormat();
         }
     }
 
@@ -215,7 +189,7 @@ public class TaskList {
      */
     public void addDeadline(String[] input){
         try {
-            if (isDescriptionBlank(input[1])) {
+            if (input[1].isBlank()) {
                 throw new DukeException();
             }
             String[] doBy = input[1].split(" /by ", 2);
@@ -228,16 +202,9 @@ public class TaskList {
             System.out.println(t);
             System.out.println("Now you have " + Task.taskCount + " tasks in the list.");
             printLine();
-        } catch (IndexOutOfBoundsException e) {
-            printLine();
-            System.out.println("☹ OOPS!!! The description of a deadline cannot be empty or incomplete.");
-            System.out.println("Please follow this format: deadline [description] /by [due date/time]");
-            printLine();
-        } catch (DukeException e) {
-            printLine();
-            System.out.println("☹ OOPS!!! The description of a deadline cannot be empty.");
-            System.out.println("Please follow this format: deadline [description] /by [due date/time]");
-            printLine();
+        } catch (IndexOutOfBoundsException | DukeException e) {
+            ui.printErrorMessage();
+            ui.printDeadlineFormat();
         }
     }
 
@@ -248,7 +215,7 @@ public class TaskList {
      */
     public void addEvent(String[] input){
         try {
-            if (isDescriptionBlank(input[1])) {
+            if (input[1].isBlank()) {
                 throw new DukeException();
             }
             String[] start = input[1].split(" /from ", 2);
@@ -262,16 +229,9 @@ public class TaskList {
             System.out.println(t);
             System.out.println("Now you have " + Task.taskCount + " tasks in the list.");
             printLine();
-        } catch (IndexOutOfBoundsException e) {
-            printLine();
-            System.out.println("☹ OOPS!!! The description of an event cannot be empty or incomplete.");
-            System.out.println("Please follow this format: event [description] /from [start] /to [end]");
-            printLine();
-        } catch (DukeException e) {
-            printLine();
-            System.out.println("☹ OOPS!!! The description of an event cannot be empty.");
-            System.out.println("Please follow this format: event [description] /from [start] /to [end]");
-            printLine();
+        } catch (IndexOutOfBoundsException | DukeException e) {
+            ui.printErrorMessage();
+            ui.printEventFormat();
         }
     }
 }
