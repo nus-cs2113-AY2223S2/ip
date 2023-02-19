@@ -38,6 +38,12 @@ public class TaskList {
         return taskListString.toString();
     }
 
+    /**
+     * Filters the task list before converting it into its string representation.
+     *
+     * @param filter The string that task descriptions should contain to be filtered.
+     * @return A string representation of the filtered task list.
+     */
     public String toString(String filter) {
         StringJoiner taskListString = new StringJoiner(System.lineSeparator());
         for (int i = 0, index = 0; i < size(); i++) {

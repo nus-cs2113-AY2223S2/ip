@@ -35,27 +35,6 @@ public abstract class Ui {
         Ui.print(isDone ? Messages.MARK_TASK.MESSAGE : Messages.UNMARK_TASK.MESSAGE, taskString);
     }
 
-    public static void printTaskList(TaskList taskList) {
-        if (taskList.size() == 0) {
-            print(Messages.EMPTY_LIST.MESSAGE);
-        } else {
-            print(Messages.LIST_TASKS.MESSAGE, taskList.toString());
-        }
-    }
-
-    public static void printTaskList(TaskList taskList, String filter) {
-        if (taskList.size() == 0) {
-            print(Messages.EMPTY_LIST.MESSAGE);
-        } else {
-            String taskListString = taskList.toString(filter);
-            if (taskListString.isEmpty()) {
-                print(Messages.EMPTY_FIND.MESSAGE);
-                return;
-            }
-            print(Messages.FIND_TASKS.MESSAGE, taskListString);
-        }
-    }
-
     public static void printError(String errorMessage, String command) {
         switch (command) {
         case "todo":
