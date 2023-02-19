@@ -15,3 +15,13 @@ bin/
 
 /text-ui-test/ACTUAL.TXT
 text-ui-test/EXPECTED-UNIX.TXT
+
+Mikey.class
+Task.class
+Deadline.class
+Todo.class
+Event.class
+
+META-INF/
+../../../data/Mikey.txt
+
