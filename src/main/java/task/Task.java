@@ -9,6 +9,10 @@ public class Task {
         this.isDone = false;
     }
 
+    public Task(String description, boolean isDone){
+        this.description = description;
+        this.isDone = isDone;
+    }
     public void setDescription(String description){
         this.description = description;
         return;
@@ -27,6 +31,9 @@ public class Task {
         return isDone;
     }
 
+    public int getIntStatus(){
+        return isDone? 1 : 0 ;
+    }
     public String getStatusIcon(){
         return (isDone? "[X]":"[ ]");
     }
@@ -36,4 +43,7 @@ public class Task {
         return getStatusIcon() + " " + getDescription();
     }
 
+    public String getLetter(){
+        return "A";
+    }
 }

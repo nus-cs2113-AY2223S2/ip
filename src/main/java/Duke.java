@@ -1,16 +1,26 @@
 import exceptions.DeadlineParamsFormatException;
 import exceptions.EventParamsFormatException;
+import exceptions.FileLineParseException;
 import exceptions.TaskIndexNotFoundException;
 import task.Deadline;
 import task.Event;
 import task.Task;
 import task.Todo;
+import utils.DukeFileReader;
+import utils.DukeFileWriter;
 
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 public class Duke {
 
     static ArrayList<Task> tasksList = new ArrayList<Task>();
+
+    static String filePath = "Data/duke.txt";
+    static DukeFileReader dukeFileReader = new DukeFileReader(filePath);
+    static DukeFileWriter dukeFileWriter = new DukeFileWriter(filePath);
 
     public static void sendLogo(){
         String logo = " ____        _        \n"
@@ -28,6 +38,20 @@ public class Duke {
             + "------------------------------------------------------------";
 
         System.out.println(greeting_word);
+    }
+
+    public static String initializeTaskFromFile(DukeFileReader dukeFileReader) {
+        String feedback;
+        try {
+            tasksList = dukeFileReader.readFileToTaskList();
+            feedback = "You already saved these tasks:\n";
+            feedback += executeListCommand(null);
+        } catch (FileNotFoundException e) {
+            feedback = "There is no past record in the disk.";
+        } catch (FileLineParseException e) {
+            feedback = "FileLineParseError: Cannot parse file into taskList.";
+        }
+        return feedback;
     }
 
     public static String getUserInput(){
@@ -53,6 +77,9 @@ public class Duke {
             return "ListParamsError: List command do not have Params!";
         }
 
+        if(tasksList.size() == 0){
+            return "There is nothing in the tasksList.";
+        }
         String tasksListString = "";
         for(int i = 0; i < tasksList.size() ; i++){
             tasksListString += (i + 1) + "." + tasksList.get(i).toString() + "\n";
@@ -60,11 +87,12 @@ public class Duke {
         return tasksListString;
     }
 
-    public static String executeAddTaskCommand(String newTaskString){
+    public static String executeAddTaskCommand(String newTaskString) throws IOException {
         if(newTaskString == null)return "";
 
         Task newTaskObject = new Task(newTaskString);
         tasksList.add(newTaskObject);
+        dukeFileWriter.addNewObjectToFile(newTaskObject);
 
         String feedback = "Got it. I've added this task:\n"
                 + newTaskObject.toString() + "\n"
@@ -72,7 +100,7 @@ public class Duke {
         return feedback;
     }
 
-    public static String executeMarkUnmarkTaskCommand(String taskToMarkIndexString, boolean IsMarkAsDone) throws TaskIndexNotFoundException {
+    public static String executeMarkUnmarkTaskCommand(String taskToMarkIndexString, boolean IsMarkAsDone) throws TaskIndexNotFoundException, IOException {
         int index;
         String feedback;
 
@@ -92,7 +120,9 @@ public class Duke {
 
         //set mark or unmark status, and get feedback
         Task taskToMark = tasksList.get(index);
+
         taskToMark.setStatus(IsMarkAsDone);
+        dukeFileWriter.rewriteAllToFile(tasksList);
 
         if(IsMarkAsDone == true){
             feedback = "Nice! I've marked this task as done:\n"
@@ -108,13 +138,14 @@ public class Duke {
     * Function for todo command
     * input todo command: todo [thing]
     * */
-    public static String executeTodoCommand(String todoString){
+    public static String executeTodoCommand(String todoString) throws IOException {
         if(todoString == null){
             throw new NullPointerException();
         }
 
         Todo newTodoObject = new Todo(todoString);
         tasksList.add(newTodoObject);
+        dukeFileWriter.addNewObjectToFile(newTodoObject);
 
         String feedback = "Got it. I've added this task:\n"
                 + newTodoObject.toString() + "\n"
@@ -123,7 +154,7 @@ public class Duke {
     }
 
     public static String executeDeadlineCommand(String commandParams)
-            throws ArrayIndexOutOfBoundsException, DeadlineParamsFormatException {
+            throws ArrayIndexOutOfBoundsException, DeadlineParamsFormatException, IOException {
         //input: String /by [ddl]        [have not done]: String /by ddl or /by ddl String
         //Exception 1: No '/'
         if(commandParams.indexOf('/')==-1){
@@ -140,11 +171,14 @@ public class Duke {
         if(!commandParamsList[1].startsWith("by ")){
             throw new DeadlineParamsFormatException();
         }
+
+
         String todoString = commandParamsList[0];
         String deadlineString = commandParamsList[1].substring(3);
 
         Deadline newDeadlineObject = new Deadline(todoString, deadlineString);
         tasksList.add(newDeadlineObject);
+        dukeFileWriter.addNewObjectToFile(newDeadlineObject);
 
         String feedback =  "Got it. I've added this task:\n"
                 + newDeadlineObject.toString() + "\n"
@@ -152,7 +186,7 @@ public class Duke {
         return feedback;
     }
 
-    public static String executeEventCommand(String commandParams) throws EventParamsFormatException {
+    public static String executeEventCommand(String commandParams) throws EventParamsFormatException, IOException {
         //input: String /from [startTime] /to [endTime]        [haven't done]: process case like /to /from
         //Exception 1: No '/'
         if(commandParams.indexOf('/') == -1){
@@ -170,11 +204,14 @@ public class Duke {
         if(!(commandParamsList[1].startsWith("from ")&&commandParamsList[2].startsWith("to "))){
             throw new EventParamsFormatException();
         }
+
+
         String fromString = commandParamsList[1].substring(5).trim();   //magic number
         String toString = commandParamsList[2].substring(3).trim();
 
         Event newEventObject = new Event(eventString, fromString, toString);
         tasksList.add(newEventObject);
+        dukeFileWriter.addNewObjectToFile(newEventObject);
 
         String feedback = "Got it. I've added this task:\n"
                 + newEventObject.toString() + "\n"
@@ -203,20 +240,28 @@ public class Duke {
                 feedback = executeListCommand(commandParams);
                 break;
             } case("add"):{
-                feedback = executeAddTaskCommand(commandParams);
+                try{
+                    feedback = executeAddTaskCommand(commandParams);
+                }catch (IOException e){
+                    feedback = "I/O Error: Cannot write the record to the file";
+                }
                 break;
-            } case("mark"):{
+            } case("mark"):
                 try{
                     feedback = executeMarkUnmarkTaskCommand(commandParams, true);
                 }catch(TaskIndexNotFoundException e){
                     feedback = "TaskIndexNotFoundError: Cannot find the index in TasksList!";
+                }catch (IOException e){
+                    feedback = "I/O Error: Cannot write the record to the file";
                 }
                 break;
-            } case("unmark"):{
+              case("unmark"):{
                 try{
                     feedback = executeMarkUnmarkTaskCommand(commandParams, false);
                 }catch(TaskIndexNotFoundException e){
                     feedback = "TaskIndexNotFoundError: Cannot find the index in TasksList!";
+                }catch (IOException e){
+                    feedback = "I/O Error: Cannot write the record to the file";
                 }
                 break;
             } case("todo"):{
@@ -224,6 +269,8 @@ public class Duke {
                     feedback = executeTodoCommand(commandParams);
                 }catch(NullPointerException e){
                     feedback = "ParamsError: Please input something.";
+                } catch (IOException e) {
+                    feedback = "I/O Error: Cannot write the record to the file";
                 }
                 break;
             } case("deadline"):{
@@ -236,6 +283,8 @@ public class Duke {
                     feedback = "ParamsError: Please input something.";
                 }catch (DeadlineParamsFormatException e){
                     feedback = "ParamsError: Please input in the format: [String] /by [time]";
+                }catch (IOException e){
+                    feedback = "I/O Error: Cannot write the record to the file";
                 }
                 break;
             } case("event"):{
@@ -247,6 +296,8 @@ public class Duke {
                     feedback = "ParamsError: Please input something.";
                 }catch(EventParamsFormatException e){
                     feedback = "ParamsError: Please input in the format: [String] /[from] /[to]";
+                }catch (IOException e){
+                    feedback = "I/O Error: Cannot write the record to the file";
                 }
                 break;
             } default:{
@@ -275,6 +326,10 @@ public class Duke {
     public static void main(String[] args) {
         sendLogo();
         sendGreeting();
+
+        String initialInfo = initializeTaskFromFile(dukeFileReader);
+        showResultToUser(initialInfo);
+
         while(true){
             String userCommand = getUserInput();
             if(userCommand.toLowerCase().equals("bye")){
