@@ -60,6 +60,8 @@ public class DataManager {
                 LinkedHashSet<Integer> list = dates.findDate(date);
                 tasks.printFromList(list);
                 break;
+            case "find":
+                break;
             }
         } catch (DukeException e) {
             ui.printError();
