@@ -14,42 +14,35 @@ import java.util.Scanner;
 
 public class Duke {
 
-    public static final String GREET_MESSAGE = "Hello! I'm Duke\nWhat can I do for you?";
-    public static final String EXIT_MESSAGE = "Bye. Hope to see you again soon!\n";
-    public static final String LINE = "____________________________________________________________\n";
-    public static final String MARK_MESSAGE = "Nice! I've marked this task as done:";
-    public static final String UNMARK_MESSAGE = "OK, I've marked this task as not done yet:";
-
     public static boolean isProgramRunning = true;
-
-
     private static Storage database = null;
-    private static ArrayList<Task> tasks = null;
+    public static ArrayList<Task> tasks = null;
 
+    private static Ui ui;
     public static void main(String[] args) {
-        greeting();
-        Scanner in = new Scanner(System.in);
+        ui = new Ui();
+        Ui.greeting();
         database = new Storage();
         tasks = database.tasks;
         while (isProgramRunning) {
-            String command = in.nextLine();
-            String firstWord = command.split(" ")[0];
-            if (command.equals("bye")) {
+            String fullCommand = ui.readCommand();
+            String firstWord = fullCommand.split(" ")[0];
+            if (fullCommand.equals("bye")) {
                 exit();
-            } else if (command.equals("list")) {
-                printList();
+            } else if (fullCommand.equals("list")) {
+                Ui.printList();
             } else if (firstWord.equals("mark") || firstWord.equals("unmark")) {
-                MarkOrUnmarkHandler(command);
+                MarkOrUnmarkHandler(fullCommand);
             } else if (firstWord.equals("todo")) {
-                todoTaskHandler(command);
+                todoTaskHandler(fullCommand);
             } else if (firstWord.equals("deadline")) {
-                deadlineTaskHandler(command);
+                deadlineTaskHandler(fullCommand);
             } else if (firstWord.equals("event")) {
-                eventTaskHandler(command);
+                eventTaskHandler(fullCommand);
             } else if (firstWord.equals("delete")) {
-                deleteTaskHandler(command);
+                deleteTaskHandler(fullCommand);
             } else {
-                illegalCommandMessage();
+                Ui.illegalCommandMessage();
             }
         }
     }
@@ -58,7 +51,7 @@ public class Duke {
         try {
             deleteTask(command);
         } catch (IllegalCommandException e) {
-            illegalCommandMessage();
+            Ui.illegalCommandMessage();
         }
     }
 
@@ -71,12 +64,12 @@ public class Duke {
         if (!isValidIndex(deleteIndex)) {
             throw new IllegalCommandException();
         }
-        deleteTaskMessage(deleteIndex);
+        Ui.deleteTaskMessage(deleteIndex);
         tasks.remove(deleteIndex);
         try {
             database.updateDatabaseTask();
         } catch (IOException e) {
-            System.out.println("Update database failure");
+            Ui.updateDatabaseFailureMessage();
         }
     }
 
@@ -84,7 +77,7 @@ public class Duke {
         try {
             markAndUnmarkTask(command);
         } catch (IllegalCommandException e) {
-            illegalCommandMessage();
+            Ui.illegalCommandMessage();
         }
     }
 
@@ -92,7 +85,7 @@ public class Duke {
         try {
             initTodoTask(command);
         } catch (EmptyCommandException e) {
-            emptyCommandMessage("todo");
+            Ui.emptyCommandMessage("todo");
         }
     }
 
@@ -100,9 +93,9 @@ public class Duke {
         try {
             initEventTask(command);
         } catch (IllegalCommandException e) {
-            illegalCommandMessage();
+            Ui.illegalCommandMessage();
         } catch (EmptyCommandException e) {
-            emptyCommandMessage("event");
+            Ui.emptyCommandMessage("event");
         }
     }
 
@@ -110,18 +103,10 @@ public class Duke {
         try {
             initDeadlineTask(command);
         } catch (EmptyCommandException e) {
-            emptyCommandMessage("deadline");
+            Ui.emptyCommandMessage("deadline");
         } catch (IllegalCommandException e) {
-            illegalCommandMessage();
+            Ui.illegalCommandMessage();
         }
-    }
-
-    private static void emptyCommandMessage(String task) {
-        System.out.println(LINE + " ☹ OOPS!!! The description of a " + task + " cannot be empty.\n" + LINE);
-    }
-
-    private static void illegalCommandMessage() {
-        System.out.println(LINE + " ☹ OOPS!!! I'm sorry, but I don't know what that means :-(\n" + LINE);
     }
 
     private static void initEventTask(String command) throws IllegalCommandException, EmptyCommandException {
@@ -144,7 +129,7 @@ public class Duke {
     private static void addTaskBackgroundProcess(Task currTask) {
         tasks.add(currTask);
         addTaskToDatabase(currTask);
-        addSpecialTaskMessage();
+        Ui.addSpecialTaskMessage();
     }
 
 
@@ -178,20 +163,8 @@ public class Duke {
         try {
             database.saveAddTask(currTask.getTaskString());
         } catch (IOException e) {
-            System.out.println("save failed");
+            Ui.updateDatabaseFailureMessage();
         }
-    }
-
-    private static void addSpecialTaskMessage() {
-        int lastElement = tasks.size() - 1;
-        System.out.println(LINE + tasks.get(lastElement).addTaskMessage() + "Now you have " + (lastElement + 1)
-                + " tasks in the list." + System.lineSeparator() + LINE);
-    }
-
-    private static void deleteTaskMessage(int deleteIndex) {
-        int lastElement = tasks.size() - 1;
-        System.out.println(LINE + tasks.get(deleteIndex).deleteTaskMessage() + "Now you have " + (tasks.size() - 1) +
-                " tasks in the list." + System.lineSeparator() + LINE);
     }
 
     private static void markAndUnmarkTask(String command) throws IllegalCommandException {
@@ -208,18 +181,12 @@ public class Duke {
 
     private static void createMarkOrUnmark(String command, String[] words, int indexOfMarking) {
         tasks.get(indexOfMarking).setDone(words[0]);
-        System.out.print(LINE);
-        if (command.startsWith("mark ")) {
-            System.out.println(MARK_MESSAGE);
-        } else {
-            System.out.println(UNMARK_MESSAGE);
-        }
         try {
             database.updateDatabaseTask();
         } catch (IOException e) {
-            System.out.println("Update database failure");
+            Ui.updateDatabaseFailureMessage();
         }
-        System.out.println("  " + tasks.get(indexOfMarking).toString() + System.lineSeparator() + LINE);
+        Ui.markChangeMessage(command, indexOfMarking);
     }
 
     private static boolean isValidIndex(int indexOfMarking) {
@@ -230,20 +197,8 @@ public class Duke {
     }
 
     private static void exit() {
-        System.out.print(LINE + EXIT_MESSAGE + System.lineSeparator() + LINE); // Duke saying goodbye and closes program
+        Ui.goodbyeMessage();
         isProgramRunning = false;
-    }
-
-    private static void printList() {
-        System.out.print(LINE);
-        for (int i = 0; i < tasks.size(); ++i) {
-            System.out.println((i + 1) + "." + tasks.get(i).toString());
-        }
-        System.out.println(LINE);
-    }
-
-    private static void greeting() {
-        System.out.println(LINE + GREET_MESSAGE);
     }
 
     private static int getIndex(String strNum) {
