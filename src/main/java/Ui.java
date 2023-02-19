@@ -1,9 +1,9 @@
 public class Ui {
-    public static void printLine() {
+    public void printLine() {
         System.out.println("____________________________________________________________");
     }
 
-    public static void greetUser() {
+    public void greetUser() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -17,12 +17,12 @@ public class Ui {
         printLine();
     }
 
-    public static void sayBye() {
+    public void sayBye() {
         printLine();
         System.out.println("Bye. Hope to see you again soon! :)");
         printLine();
     }
 
-    public static void printErrorMessage() {
+    public void printErrorMessage() {
     }
 }
