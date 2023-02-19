@@ -24,6 +24,14 @@ public class Event extends Task {
         return super.getTask() + " % " + fromDate + " % " + byDate;
     }
 
+    public LocalDate getLocalByDate() {
+        return localByDate;
+    }
+
+    public LocalDate getLocalFromDate() {
+        return localFromDate;
+    }
+
     @Override
     public String toString() {
         if (localFromDate == null && localByDate == null) {

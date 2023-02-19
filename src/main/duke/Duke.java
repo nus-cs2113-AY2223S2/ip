@@ -10,23 +10,7 @@ public class Duke {
     private final DataManager dm;
     private final DukeMessages ui;
     private final Parser parser;
-    //    static private final HashMap<String, String> helpOutputs = new HashMap<>();
 
-//    public static void generateHelp() {
-//        helpOutputs.put("list", "");
-//        helpOutputs.put("todo", "");
-//        helpOutputs.put("deadline", "");
-//        helpOutputs.put("event", "");
-//        helpOutputs.put("mark", "");
-//        helpOutputs.put("unmark", "");
-//        helpOutputs.put("help", "");
-//    }
-
-//    public static void printHelp(String str) {
-//        for (String i:helpOutputs.keySet()) {
-//            System.out.println(i + ": " + helpOutputs.get(i));
-//        }
-//    }
     public Duke(String path) {
         ui = new DukeMessages();
         parser = new Parser(ui);

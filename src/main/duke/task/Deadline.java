@@ -19,6 +19,10 @@ public class Deadline extends Task {
         return super.getTask() + " % " + byDate;
     }
 
+    public LocalDate getLocalByDate() {
+        return localByDate;
+    }
+
     @Override
     public String toString() {
         if (localByDate == null) {
