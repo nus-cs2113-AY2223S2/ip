@@ -35,5 +35,4 @@ public class Event extends Task {
         return "E";
     }
 
-
 }

@@ -13,6 +13,9 @@ import utils.DukeFileWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Duke {
 
@@ -60,12 +63,16 @@ public class Duke {
         return line;
     }
 
+    public static void write(String s){
+
+    }
     public static String[] getCommandTypeAndParams(String userCommand){
         String[] userCommandWords = userCommand.split(" ");
         String commandType = userCommandWords[0];
         String commandParams = null;
         if(userCommandWords.length > 1){
-            commandParams = String.join(" ",Arrays.copyOfRange(userCommandWords,1,userCommandWords.length));
+            commandParams = String.join(" ",
+                    Arrays.copyOfRange(userCommandWords,1,userCommandWords.length));
         }
         String[] commandTypeAndParams = {commandType, commandParams};
         return commandTypeAndParams;
@@ -100,7 +107,9 @@ public class Duke {
         return feedback;
     }
 
-    public static String executeMarkUnmarkTaskCommand(String taskToMarkIndexString, boolean IsMarkAsDone) throws TaskIndexNotFoundException, IOException {
+
+    public static String executeMarkUnmarkTaskCommand(String taskToMarkIndexString, boolean IsMarkAsDone)
+            throws TaskIndexNotFoundException, IOException {
         int index;
         String feedback;
 
@@ -183,8 +192,15 @@ public class Duke {
         String feedback =  "Got it. I've added this task:\n"
                 + newDeadlineObject.toString() + "\n"
                 + "Now you have " + tasksList.size() +" tasks in the list";
+
+        //write to file
+        FileWriter fw = new FileWriter("ipfile.txt",true);
+        fw.write("D | "+newDeadlineObject.getStatus()+" | "+newDeadlineObject.getDescription()+
+                " | "+newDeadlineObject.getBy() + "\n");
+        fw.close();
         return feedback;
     }
+
 
     public static String executeEventCommand(String commandParams) throws EventParamsFormatException, IOException {
         //input: String /from [startTime] /to [endTime]        [haven't done]: process case like /to /from
@@ -199,7 +215,7 @@ public class Duke {
             throw new ArrayIndexOutOfBoundsException();
         }
 
-        //Exception 3: no 'from' or 'to'
+        //Exception 3: No 'from' or 'to'
         String eventString = commandParamsList[0].trim();
         if(!(commandParamsList[1].startsWith("from ")&&commandParamsList[2].startsWith("to "))){
             throw new EventParamsFormatException();
@@ -216,7 +232,29 @@ public class Duke {
         String feedback = "Got it. I've added this task:\n"
                 + newEventObject.toString() + "\n"
                 + "Now you have " + tasksList.size() +" tasks in the list";
+
+        //write to file
+        FileWriter fw = new FileWriter("ipfile.txt",true);
+        fw.write("E | "+newEventObject.getStatus()+" | "+newEventObject.getDescription()+
+                " | "+newEventObject.getFrom()+" | "+newEventObject.getTo()+"\n");
+        fw.close();
         return feedback;
+    }
+
+    public static String executeDeleteCommand(String commandParams){
+        //[have not done]: exceptions
+        int index = Integer.parseInt(commandParams)-1;
+        if(index < 0 || index > tasksList.size()) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        String feedback = "Noted. I've removed this task:\n"
+                + tasksList.get(index).toString()
+                + "Now you have 4 tasks in the list.\n";
+        tasksList.remove(index);
+
+        return feedback;
+
     }
 
     public static String executeCommand(String userCommand){
@@ -300,7 +338,14 @@ public class Duke {
                     feedback = "I/O Error: Cannot write the record to the file";
                 }
                 break;
-            } default:{
+            } case("delete"):{
+                try{
+                    feedback = executeDeleteCommand(commandParams);
+                }catch (IndexOutOfBoundsException e){
+                    feedback = "IndexError: Please input valid index.";
+                }
+                break;
+            }default:{
                 feedback = "CommandError: I can't understand \"" + userCommand +"\"!";
                 break;
             }
