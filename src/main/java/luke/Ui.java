@@ -119,11 +119,11 @@ public class Ui {
      *
      * @param tasks The list of all the tasks in the TaskList.
      */
-    public void printTaskList(ArrayList<Task> tasks) {
+    public void printTaskList(ArrayList<Task> tasks, String firstLine) {
         printLine();
         printSignature();
         int serialNumber = 1;
-        System.out.println("Printing Tasks...");
+        System.out.println(firstLine);
         for (Task task : tasks) {
             System.out.print(serialNumber + ". ");
             task.printTaskName();
@@ -137,6 +137,13 @@ public class Ui {
         printLine();
         printSignature();
         System.out.println("The list is empty!");
+        printLine();
+    }
+
+    public void printNoSimilarTasks() {
+        printLine();
+        printSignature();
+        System.out.println("Unable to find matching tasks");
         printLine();
     }
 

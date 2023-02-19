@@ -1,12 +1,14 @@
 testing_mode
+list
+find keyword1
 add todo todoTask1
 list
 add todo
-add deadline deadlineTask1 dueDate1
+add deadline deadlineTask1 | dueDate1
 list
 mark 1
 add deadline errorDeadlineTask1
-add event eventTask1 start1 end1
+add event eventTask1 | start1 | end1
 list
 mark 2
 unmark 1
@@ -16,10 +18,10 @@ mark 3
 list
 add todo todoDelete1
 list
-add deadline deadlineDelete1 dueDate1
+add deadline deadlineDelete1 | dueDate1
 list
 delete
-add event eventDelete1 start1 end1
+add event eventDelete1 | start1 | end1
 list
 mark 5
 list
@@ -33,4 +35,12 @@ list
 mark a
 unmark b
 delete c
+add deadline keyword1 keyword2 | dueDate1
+add todo keyword3 keyword2
+add event keyword3 keyword1 | start | end
+find keyword1
+find keyword2
+find keyword3
+find keyword4
+find keyword1 keyword2
 bye

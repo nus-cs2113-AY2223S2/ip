@@ -4,6 +4,7 @@ import luke.command.AddCommand;
 import luke.command.Command;
 import luke.command.DeleteCommand;
 import luke.command.EchoCommand;
+import luke.command.FindCommand;
 import luke.command.InvalidCommand;
 import luke.command.ListCommand;
 import luke.command.MarkCommand;
@@ -11,14 +12,13 @@ import luke.command.OutOfBoundsCommand;
 import luke.command.TestingModeCommand;
 import luke.command.UnmarkCommand;
 import luke.exception.InvalidIndexException;
-import luke.task.StringManipulation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Parser implements StringManipulation {
     private static final ArrayList<String> COMMANDS = new ArrayList<String>(
-            Arrays.asList("add", "list", "mark", "unmark", "delete", "testing_mode")
+            Arrays.asList("add", "list", "mark", "unmark", "delete", "find", "testing_mode")
     );
 
 
@@ -43,22 +43,22 @@ public class Parser implements StringManipulation {
             return new InvalidCommand();
         }
 
-        String taskType = StringManipulation.getFirstWord(taskInfo);
+        String taskType = StringManipulation.getCommandKeyword(taskInfo);
 
         //Check if the task type entered by the user is valid
         if (!tasks.isTaskType(taskType)) {
             return new InvalidCommand();
         }
 
-        String taskDetail = StringManipulation.removeFirstWord(taskInfo);
+        String taskDetail = StringManipulation.removeCommandKeyword(taskInfo);
 
         //Checks if the name of the task is empty
         if (taskDetail == null) {
             return new InvalidCommand();
         }
 
-        String taskName = StringManipulation.getFirstWord(taskDetail);
-        String taskDates = StringManipulation.removeFirstWord(taskDetail);
+        String taskName = StringManipulation.getFirstDetail(taskDetail).trim();
+        String taskDates = StringManipulation.removeFirstDetail(taskDetail);
 
         return new AddCommand(taskType, taskName, taskDates);
     }
@@ -136,6 +136,10 @@ public class Parser implements StringManipulation {
         return new DeleteCommand(serialNumber);
     }
 
+    private Command prepareFindTask(String toFind) {
+        return new FindCommand(toFind);
+    }
+
     private Command prepareTestingMode() {
         return new TestingModeCommand();
     }
@@ -158,17 +162,19 @@ public class Parser implements StringManipulation {
             return prepareUnmarkTask(description, tasks);
         case "delete":
             return prepareDeleteTask(description, tasks);
+        case "find":
+            return prepareFindTask(description);
         default:
             return prepareTestingMode();
         }
     }
 
     public Command parse(String fullCommand, TaskList tasks) {
-        String firstWord = StringManipulation.getFirstWord(fullCommand);
+        String firstWord = StringManipulation.getCommandKeyword(fullCommand);
         if (!isCommand(firstWord)) {
             return new EchoCommand(fullCommand);
         }
-        String description = StringManipulation.removeFirstWord(fullCommand);
+        String description = StringManipulation.removeCommandKeyword(fullCommand);
         return prepareCommand(firstWord, description, tasks);
     }
 }
