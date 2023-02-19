@@ -1,6 +1,5 @@
 package duke.item;
 
-import duke.exceptions.DukeException;
 import duke.utils.Message;
 import duke.utils.MessageAction;
 
@@ -11,7 +10,7 @@ public class ItemAction {
      * 
      * @param parameters Find the item no. specified
      * @param isMark to mark/unmark the item in the list
-     * @throws DukeException when parseInt fails or User tries to access element that is out of bounds
+     * @return Item that was marked/unmarked.
      */
     public static Item markItem(Item item, boolean isMark) {
         item.setStatus(isMark);
@@ -25,7 +24,6 @@ public class ItemAction {
      * Removes an item from the list.
      * 
      * @param parameters Gets the description and from/to of the item.
-     * @throws DukeException when parseInt fails or User tries to access element that is out of bounds
      */
     public static void deleteItem(Item removedItem, int itemsSize) {
         MessageAction.printDeleteItemMessage(removedItem, itemsSize);
