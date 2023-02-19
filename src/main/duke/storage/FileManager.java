@@ -1,8 +1,9 @@
 package duke.storage;
 
-import duke.tasklist.DataManager;
 import duke.task.Task;
+import duke.tasklist.TaskData;
 import duke.util.DukeException;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -10,6 +11,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -25,10 +27,10 @@ public class FileManager {
         }
     }
 
-    public static void writeFile(String path, ArrayList<Task>tasks) throws IOException {
+    public static void writeFile(String path, HashMap<Integer, Task> tasks) throws IOException {
         //Overwrites previous text in file
         FileWriter fw = new FileWriter(path, false);
-        for (Task i: tasks) {
+        for (Task i: tasks.values()) {
             String t = i.checkType();
             char done = i.checkDone().charAt(1);
             String w = t.charAt(1) + " % " + done + " % " + i.getTask() + "\n";
@@ -61,21 +63,21 @@ public class FileManager {
         }
     }
 
-    public static void handleFile(DataManager dm) throws DukeException {
+    public static void handleFile(TaskData tasks) throws DukeException {
         for (String str: storedData) {
             String[] temp = str.split("%",5);
             switch (temp[0].trim()) {
             case ("T"):
-                dm.handleTodo(temp[2].trim(), false);
+                tasks.handleTodo(temp[2].trim(), false);
                 if (temp[1].trim().equals("X")) {
-                    dm.handleMark("task", temp[2].trim(), false);
+                    tasks.handleMark("task", temp[2].trim(), false);
                 }
                 break;
             case ("D"):
                 try {
-                    dm.handleDeadline(temp[2].trim() + "/by" + temp[3], false);
+                    tasks.handleDeadline(temp[2].trim() + "/by" + temp[3], false);
                     if (temp[1].trim().equals("X")) {
-                        dm.handleMark("task", temp[2].trim(), false);
+                        tasks.handleMark("task", temp[2].trim(), false);
                     }
                 } catch (DukeException e) {
                     throw new DukeException();
@@ -83,9 +85,9 @@ public class FileManager {
                 break;
             case ("E"):
                 try {
-                    dm.handleEvent(temp[2].trim() + "/from" + temp[3] + "/to" + temp[4], false);
+                    tasks.handleEvent(temp[2].trim() + "/from" + temp[3] + "/to" + temp[4], false);
                     if (temp[1].trim().equals("X")) {
-                        dm.handleMark("task", temp[2].trim(), false);
+                        tasks.handleMark("task", temp[2].trim(), false);
                     }
                 } catch (DukeException e) {
                     throw new DukeException();
