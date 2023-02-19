@@ -1,8 +1,13 @@
 package duke.task;
+
+import java.time.LocalDate;
+
 public class Task {
     protected String task;
     protected boolean isDone;
     protected String type;
+    protected LocalDate localByDate;
+    protected LocalDate localFromDate;
 
     public String getTask() {
         return task;
@@ -10,6 +15,14 @@ public class Task {
 
     public void setTask(String task) {
         this.task = task;
+    }
+
+    public LocalDate getLocalByDate() {
+        return localByDate;
+    }
+
+    public LocalDate getLocalFromDate() {
+        return localFromDate;
     }
 
     public String checkDone() {
@@ -33,6 +46,8 @@ public class Task {
     public Task(String task, boolean isDone) {
         setTask(task);
         setDone(isDone);
+        localByDate = null;
+        localFromDate = null;
     }
 
     @Override
