@@ -24,6 +24,9 @@ public class Parser implements java.io.Serializable {
     private static boolean isValidDeleteCommand(String response) {
         return response.length() >= 7 && response.substring(0, 7).equals("delete ");
     }
+    private static boolean isValidFindCommand(String response) {
+        return response.length() >= 5 && response.substring(0, 5).equals("find ");
+    }
 
     private static int parseIndex(String indexString, ArrayList<Task> tasks) throws InvalidIndexException {
         int indexInt;
@@ -120,6 +123,15 @@ public class Parser implements java.io.Serializable {
             ui.printInvalidIndex();
         }
     }
+    public static void parseFindTasks(String filterString, TaskList taskList) {
+            ArrayList<Task> filteredList = taskList.filterTaskList(filterString);
+            if (filteredList.size() > 0) {
+                ui.printFilteredList(filteredList);
+                return;
+            }
+            ui.printFilteredListEmpty();
+    }
+
 
     public static void parseResponse(String response, TaskList taskList) {
         if (response.equals("list")) {
@@ -138,7 +150,12 @@ public class Parser implements java.io.Serializable {
             ui.printSeparator();
             parseDeleteTask(response.substring(7), taskList);
             ui.printSeparator();
-        } else {
+        } else if (isValidFindCommand(response)) {
+            ui.printSeparator();
+            parseFindTasks(response.substring(5), taskList);
+            ui.printSeparator();
+        }
+        else {
             ui.printSeparator();
             try {
                 parseAddCommand(response, taskList);
