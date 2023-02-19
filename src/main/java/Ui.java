@@ -1,8 +1,17 @@
+/**
+ * Represents messages printed by Duke for interactions with the user.
+ */
 public class Ui {
+    /**
+     * Prints a horizontal line.
+     */
     public void printLine() {
         System.out.println("____________________________________________________________");
     }
 
+    /**
+     * Greets the user at the start of the program.
+     */
     public void greetUser() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -17,12 +26,12 @@ public class Ui {
         printLine();
     }
 
+    /**
+     * Bids the user farewell when they exit the program.
+     */
     public void sayBye() {
         printLine();
         System.out.println("Bye. Hope to see you again soon! :)");
         printLine();
-    }
-
-    public void printErrorMessage() {
     }
 }
