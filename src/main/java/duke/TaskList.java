@@ -13,32 +13,25 @@ import java.util.ArrayList;
 
 public class TaskList implements java.io.Serializable {
 
-    private ArrayList<Task> taskList;
+    private ArrayList<Task> tasks;
 
     public TaskList() {
-        taskList = new ArrayList<>();
+        tasks = new ArrayList<>();
     }
 
-    public void listDisplay() {
-        System.out.println(" Here are the tasks in your list:");
-        for (int i = 0; i < taskList.size(); i += 1) {
-            // print index of task
-            System.out.print(" " + (i + 1) + ".");
-
-            // list the details about the task. Based on whether the task is ToDo, Deadline or Event.
-            System.out.println(taskList.get(i));
-        }
+    public ArrayList<Task> getTasks () {
+        return tasks;
     }
 
     private void printSuccessfulAddMessage(Task currTask) {
         System.out.println(" Got it. I've added this task: ");
         System.out.println("  " + currTask);
-        System.out.println(" Now you have " + taskList.size() + " tasks in the list.");
+        System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
 
     }
 
     private void addToDo(String taskName) {
-        taskList.add(new Todo(taskName));
+        tasks.add(new Todo(taskName));
     }
 
     private void addDeadline(String taskDetails) throws InvalidCommandException {
@@ -48,7 +41,7 @@ public class TaskList implements java.io.Serializable {
         }
         String taskName = taskDetails.substring(0, byIndex);
         String dueDate = taskDetails.substring(byIndex + 5); // rest of string after " /by "
-        taskList.add(new Deadline(taskName, dueDate));
+        tasks.add(new Deadline(taskName, dueDate));
     }
 
     private void addEvent(String taskDetails) throws InvalidCommandException {
@@ -60,7 +53,7 @@ public class TaskList implements java.io.Serializable {
         String taskName = taskDetails.substring(0, fromIndex);
         String startTime = taskDetails.substring(fromIndex + 7, toIndex);
         String endTime = taskDetails.substring(toIndex + 5);
-        taskList.add(new Event(taskName, startTime, endTime));
+        tasks.add(new Event(taskName, startTime, endTime));
     }
 
 
@@ -103,7 +96,7 @@ public class TaskList implements java.io.Serializable {
             throw new InvalidCommandException();
         }
 
-        printSuccessfulAddMessage(taskList.get(taskList.size() - 1)); // get latest task in taskList
+        printSuccessfulAddMessage(tasks.get(tasks.size() - 1)); // get latest task in taskList
     }
 
 
@@ -114,7 +107,7 @@ public class TaskList implements java.io.Serializable {
 
         indexInt = Integer.parseInt(indexString);
         indexInt -= 1; // convert to 0-index
-        if (indexInt >= taskList.size() || indexInt < 0) {
+        if (indexInt >= tasks.size() || indexInt < 0) {
             throw new InvalidIndexException();
         }
         return indexInt;
@@ -125,11 +118,11 @@ public class TaskList implements java.io.Serializable {
         int indexInt;
         try {
             indexInt = parseIndex(indexString);
-            Task currTask = taskList.get(indexInt);
+            Task currTask = tasks.get(indexInt);
             currTask.setIsComplete(true);
             System.out.println(" Nice! I've marked this task as done:");
             System.out.print("   " + currTask.taskTypeBoxFormat() + currTask.markedBoxFormat() + " ");
-            System.out.println(taskList.get(indexInt).getTaskName());
+            System.out.println(tasks.get(indexInt).getTaskName());
         } catch (NumberFormatException e) {
             System.out.println("Given index is not a number!");
         } catch (InvalidIndexException e) {
@@ -143,7 +136,7 @@ public class TaskList implements java.io.Serializable {
 
         try {
             indexInt = parseIndex(indexString);
-            Task currTask = taskList.get(indexInt);
+            Task currTask = tasks.get(indexInt);
             currTask.setIsComplete(false);
 
             System.out.println(" OK, I've marked this task as not done yet:");
@@ -161,13 +154,13 @@ public class TaskList implements java.io.Serializable {
 
         try {
             indexInt = parseIndex(indexString);
-            Task removedTask = taskList.get(indexInt);
-            taskList.remove(indexInt);
+            Task removedTask = tasks.get(indexInt);
+            tasks.remove(indexInt);
 
             System.out.println(" Noted. I've removed this task:");
             System.out.println("   " + removedTask.taskTypeBoxFormat() + removedTask.markedBoxFormat() +
                     " " + removedTask.getTaskName());
-            System.out.println("Now you have " + taskList.size() + " tasks in the list.");
+            System.out.println("Now you have " + tasks.size() + " tasks in the list.");
 
         } catch (NumberFormatException e) {
             System.out.println("Given index is not a number!");
