@@ -81,6 +81,11 @@ delete (1-th index task number)
 find (keyword)
 ```
 
+## 6. Exit the program
+```
+bye
+```
+
 <hr>
 
 <br>
@@ -350,7 +355,36 @@ All tasks that contains the keywords is found and printed with its respective in
      Here are the matching tasks in your list:
      2.[E][ ] project meeting (from: August 10th 2pm to: 4pm)
     ____________________________________________________________
+```
+<hr>
 
+<br>
+
+## Exit the program
+
+Stop and quit the program.
+
+### Usage
+
+### bye
+### `bye`
+
+Program saves tasks to memory and exits.
+
+Example of usage:
+
+`bye`
+```
+bye
+``` 
+
+Expected outcome:
+
+```
+    ____________________________________________________________
+
+     Bye. Hope to see you again soon!
+    ____________________________________________________________
 ```
 <hr>
 
