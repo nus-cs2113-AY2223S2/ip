@@ -45,7 +45,6 @@ public class Duke {
     public void run() {
 
         ui.printLogo();
-
         String fullCommand = ui.readInput();
 
         while (!fullCommand.equals(BYE)) {
@@ -59,7 +58,6 @@ public class Duke {
         }
 
         storage.save(taskList, ui);
-
         ui.showGoodbye();
     }
 

@@ -93,38 +93,38 @@ public class Storage {
             String[] args = line.split(" \\| ");
 
             switch (args[0]) {
-                case "T":
-                    try {
-                        taskList.addTodo(args[2]);
-                        if(args[1].equals("1")) {
-                            taskList.markTask(taskList.tasks.size());
-                        }
-                    } catch (DukeException e) {
-                        // will not fail
+            case "T":
+                try {
+                    taskList.addTodo(args[2]);
+                    if(args[1].equals("1")) {
+                        taskList.markTask(taskList.tasks.size());
                     }
-                    break;
-                case "D":
-                    try {
-                        taskList.addDeadline(args[2]);
-                        if(args[1].equals("1")) {
-                            taskList.markTask(taskList.tasks.size());
-                        }
-                    } catch (DukeException e) {
-                        // will not fail
+                } catch (DukeException e) {
+                    // will not fail
+                }
+                break;
+            case "D":
+                try {
+                    taskList.addDeadline(args[2]);
+                    if(args[1].equals("1")) {
+                        taskList.markTask(taskList.tasks.size());
                     }
-                    break;
-                case "E":
-                    try {
-                       taskList.addEvent(args[2]);
-                        if(args[1].equals("1")) {
-                            taskList.markTask(taskList.tasks.size());
-                        }
-                    } catch (DukeException e) {
-                        // will not fail
+                } catch (DukeException e) {
+                    // will not fail
+                }
+                break;
+            case "E":
+                try {
+                   taskList.addEvent(args[2]);
+                    if(args[1].equals("1")) {
+                        taskList.markTask(taskList.tasks.size());
                     }
-                    break;
-                default:
-                    break;
+                } catch (DukeException e) {
+                    // will not fail
+                }
+                break;
+            default:
+                break;
             }
         }
 
