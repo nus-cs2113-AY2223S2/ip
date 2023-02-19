@@ -1,8 +1,5 @@
 package duke.command;
 
-import duke.error.DukeException;
-import duke.parser.Parser;
-import duke.task.TaskList;
 import duke.ui.Ui;
 
 public class MarkCommand extends Command {
@@ -11,15 +8,18 @@ public class MarkCommand extends Command {
     public static final String MESSAGE_USAGE = " " + COMMAND_WORD + ": marks a task from the task list as done. "
             + Ui.NEW_LINE + "  Parameters: task number"
             + Ui.NEW_LINE + "  Example: " + COMMAND_WORD + " 1";
+    public static int taskNumber;
 
-    public static void markTask(TaskList taskList, String[] arrayOfInput) throws DukeException {
-        int taskNumber = Integer.parseInt(Parser.parseCommand(arrayOfInput, COMMAND_WORD)) - 1;
-        try {
-            taskList.markTaskDone(taskNumber);
-            Ui.showTaskStatus(taskList, taskNumber);
-        } catch (IndexOutOfBoundsException e) {
-            Ui.showExceedTask();
-        }
+    public MarkCommand(int taskNumber) { // todo error handling
+        this.taskNumber = taskNumber;
+    }
 
+    @Override
+    public CommandResult execute() throws IndexOutOfBoundsException {
+        taskList.markTaskDone(taskNumber);
+        String output = Ui.SEGMENT_LINE;
+        output = String.join(Ui.NEW_LINE, output, MESSAGE,
+                ("   " + taskList.getTaskFullDetails(taskNumber)));
+        return new CommandResult(output);
     }
 }

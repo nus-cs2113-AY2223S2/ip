@@ -3,7 +3,6 @@ package duke.task;
 import java.util.ArrayList;
 
 public class TaskList { // contains the task list e.g., it has operations to add/delete tasks in the list
-    // todo
     private final ArrayList<Task> taskList;
 
     public TaskList(ArrayList<Task> taskList) {

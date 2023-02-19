@@ -1,8 +1,5 @@
 package duke.command;
 
-import duke.error.DukeException;
-import duke.parser.Parser;
-import duke.task.TaskList;
 import duke.ui.Ui;
 
 public class UnmarkCommand extends Command {
@@ -12,13 +9,18 @@ public class UnmarkCommand extends Command {
             + Ui.NEW_LINE + "  Parameters: task number"
             + Ui.NEW_LINE + "  Example: " + COMMAND_WORD + " 1";
 
-    public static void unmarkTask(TaskList taskList, String[] arrayOfInput) throws DukeException {
-        int taskNumber = Integer.parseInt(Parser.parseCommand(arrayOfInput, COMMAND_WORD)) - 1;
-        try {
-            taskList.markTaskNotDone(taskNumber);
-            Ui.showTaskStatus(taskList, taskNumber);
-        } catch (IndexOutOfBoundsException e) {
-            Ui.showExceedTask();
-        }
+    public static int taskNumber;
+
+    public UnmarkCommand(int taskNumber) {
+        this.taskNumber = taskNumber;
+    }
+
+    @Override
+    public CommandResult execute() {
+        taskList.markTaskNotDone(taskNumber);
+        String output = Ui.SEGMENT_LINE;
+        output = String.join(Ui.NEW_LINE, output, MESSAGE,
+                ("   " + taskList.getTaskFullDetails(taskNumber)));
+        return new CommandResult(output);
     }
 }

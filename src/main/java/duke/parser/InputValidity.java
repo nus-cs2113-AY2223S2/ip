@@ -12,15 +12,19 @@ public class InputValidity {
     private static final int MINIMUM_DEADLINE_LENGTH = 4;
     private static final int MINIMUM_EVENT_LENGTH = 6;
     private static final int VALID_LENGTH_TWO = 2;
+    public static final String DEADLINE_DELIMITER = " /by ";
+    public static final String EVENT_FROM_DELIMITER = " /from ";
+    public static final String EVENT_TO_DELIMITER = " /to ";
+
     public static void checkTodo(String input) throws DukeException {
-        String[] arrayInput = input.split(" ");
-        if (arrayInput.length < MINIMUM_TODO_LENGTH) {
+        String[] arrayOfInput = input.split(" ");
+        if (arrayOfInput.length < MINIMUM_TODO_LENGTH) {
             Error.throwError(ErrorTypes.INVALID_TODO);
         }
     }
 
     public static void checkDeadline(String input) throws DukeException {
-        if (!input.contains(" /by ")) {
+        if (!input.contains(DEADLINE_DELIMITER)) {
             Error.throwError(ErrorTypes.INVALID_DEADLINE_COMMAND);
         }
         String[] arrayInput = input.split(" ");
@@ -30,8 +34,8 @@ public class InputValidity {
     }
 
     public static void checkValidEvent(String input) throws DukeException {
-        if ((!input.contains(" /from ") || !input.contains(" /to "))
-                || (input.indexOf(" /from ") > input.indexOf(" /to "))) {
+        if ((!input.contains(EVENT_FROM_DELIMITER) || !input.contains(EVENT_TO_DELIMITER))
+                || (input.indexOf(EVENT_FROM_DELIMITER) > input.indexOf(EVENT_TO_DELIMITER))) {
             Error.throwError(ErrorTypes.INVALID_EVENT_COMMAND);
         }
         String[] arrayInput = input.split(" ");

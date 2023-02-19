@@ -1,6 +1,7 @@
 package duke.error;
 
 import duke.command.DeleteCommand;
+import duke.command.InvalidCommand;
 import duke.ui.ErrorMessages;
 import duke.ui.Ui;
 
@@ -35,7 +36,7 @@ public class Error {
             Ui.showError(ErrorMessages.ERROR_IN_SETTING_UP.MESSAGE);
             break;
         default:
-            Ui.showError(ErrorMessages.INVALID_INPUT_MESSAGE.MESSAGE);
+            Ui.showError(InvalidCommand.MESSAGE);
             break;
         }
         throw new DukeException();
