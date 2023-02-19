@@ -47,7 +47,6 @@ public class Duke {
 
     public static void main(String[] args) {
         String path = "data\\tasks.txt";
-        //        generateHelp();
         new Duke(path);
     }
 }

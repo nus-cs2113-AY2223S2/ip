@@ -88,10 +88,10 @@ public class Parser {
             if (temp.length == 3) {
                 return localByDate;
             }
-            switch (temp[0]){
+            switch (temp[0].trim()){
             case "next":
                 try {
-                    switch (temp[1]) {
+                    switch (temp[1].trim()) {
                     case "day":
                         localByDate = localByDate.plusDays(1);
                         break;
@@ -113,6 +113,7 @@ public class Parser {
                 } catch (IndexOutOfBoundsException f) {
                     throw new DukeException();
                 }
+                break;
             case "tomorrow":
                 localByDate = localByDate.plusDays(1);
                 break;

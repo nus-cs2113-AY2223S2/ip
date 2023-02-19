@@ -39,7 +39,7 @@ public class TaskData {
         }
         for (int i : list) {
             System.out.println(i + "." + tasks.get(i));
-            ui.printListSize(list.size());
+            ui.printFound(list.size());
         }
     }
 

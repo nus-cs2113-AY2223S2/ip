@@ -77,7 +77,7 @@ public class DataManager {
             throw new DukeException();
         }
         try {
-            FileManager.handleFile(this.tasks);
+            FileManager.handleFile(this.tasks, this.dates);
         } catch (DukeException e) {
             ui.printReadFileError();
             throw new DukeException();

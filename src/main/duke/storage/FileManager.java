@@ -1,6 +1,9 @@
 package duke.storage;
 
+import duke.task.Deadline;
+import duke.task.Event;
 import duke.task.Task;
+import duke.tasklist.DateData;
 import duke.tasklist.TaskData;
 import duke.util.DukeException;
 
@@ -63,7 +66,7 @@ public class FileManager {
         }
     }
 
-    public static void handleFile(TaskData tasks) throws DukeException {
+    public static void handleFile(TaskData tasks, DateData dates) throws DukeException {
         for (String str: storedData) {
             String[] temp = str.split("%",5);
             switch (temp[0].trim()) {
@@ -75,20 +78,24 @@ public class FileManager {
                 break;
             case ("D"):
                 try {
-                    tasks.handleDeadline(temp[2].trim() + "/by" + temp[3], false);
+                    Deadline deadline = tasks.handleDeadline(temp[2].trim()
+                            + "/by" + temp[3], false);
                     if (temp[1].trim().equals("X")) {
                         tasks.handleMark("task", temp[2].trim(), false);
                     }
+                    dates.addDeadline(deadline, tasks.getTaskCount());
                 } catch (DukeException e) {
                     throw new DukeException();
                 }
                 break;
             case ("E"):
                 try {
-                    tasks.handleEvent(temp[2].trim() + "/from" + temp[3] + "/to" + temp[4], false);
+                    Event event = tasks.handleEvent(temp[2].trim() + "/from"
+                            + temp[3] + "/to" + temp[4], false);
                     if (temp[1].trim().equals("X")) {
                         tasks.handleMark("task", temp[2].trim(), false);
                     }
+                    dates.addEvent(event, tasks.getTaskCount());
                 } catch (DukeException e) {
                     throw new DukeException();
                 }

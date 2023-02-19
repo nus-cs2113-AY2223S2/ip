@@ -129,6 +129,15 @@ public class DukeMessages {
         }
     }
 
+    public  void printFound(int count) {
+        if (count == 1) {
+            System.out.println("Found " + count + " matching item! *Holds shining lump up towards the sky!* ");
+        } else {
+            System.out.println("Found " + count + " matching items! *Tosses items up into the air*\n *The items "
+                    + "arranges themselves neatly on the counter!* ");
+        }
+    }
+
     public void printMarkError(String type) {
         System.out.println("It is already " + type + "ed! *Shakes head* ");
     }
