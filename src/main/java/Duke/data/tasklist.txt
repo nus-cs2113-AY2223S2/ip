@@ -1,4 +1,2 @@
-T|false|buy ingredients for food
-T|true|cook food
-D|false| cook food for the food show |tonight
-E|true| foodie thing |t |g
+T|false|buy food
+E|false| foodie cooking show |wed3pm |wed5pm

@@ -12,7 +12,16 @@ public class Ui {
     }
 
     static void greetUser() {
-        String logo = "DUKE";
+        String logo = "                                                         \n" +
+                      "  DDDDD        UUU     UUU     KKK  KKK     EEEEEEEE     !!!  \n" +
+                      "  DDD DDD      UUU     UUU     KKK KKK      EEE          !!!       \n" +
+                      "  DDD   DDD    UUU     UUU     KKKKK        EEEEEEEE     !!!  \n" +
+                      "  DDD   DDD    UUU     UUU     KKKKK        EEEEEEEE     !!!\n" +
+                      "  DDD DDD       UUU   UUU      KKK KKK      EEE             \n" +
+                      "  DDDDD          UUUUUUU       KKK  KKK     EEEEEEEE     !!!\n" +
+                      " \n" ;
+
+
 
         System.out.println(logo);
         printHorizontalBar();
