@@ -1,10 +1,10 @@
-package duke.utils;
+package duke.command;
 
 public enum Command {
     LIST,
     MARK,
     UNMARK,
-    REMIND,
+    TODO,
     DEADLINE,
     EVENT,
     DELETE,

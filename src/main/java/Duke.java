@@ -1,19 +1,15 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 
-import duke.item.Item;
-import duke.item.ItemAction;
-import duke.remind.RemindAction;
-import duke.deadline.DeadlineAction;
-import duke.event.EventAction;
+import duke.command.Command;
+import duke.command.CommandAction;
 
-import duke.utils.Command;
-import duke.utils.CommandAction;
+import duke.item.Item;
+
 import duke.utils.Message;
 import duke.utils.MessageAction;
 import duke.utils.FileAction;
 
-import duke.exceptions.DukeException;
 import duke.exceptions.FileException;
 
 public class Duke {
@@ -31,50 +27,13 @@ public class Duke {
                 Command command = CommandAction.getCommand(input);
                 String parameters = CommandAction.getParameters(input);
 
-                switch(command) {
-                case LIST:
-                    MessageAction.printList(items);
-                    break;
-                case MARK: {
-                    int num = CommandAction.validateItem(parameters, items.size());
-                    Item newItem = ItemAction.markItem(items.get(num), true);
-                    items.set(num, newItem);
-                    FileAction.exportItems(items);
-                    break;
-                }
-                case UNMARK: {
-                    int num = CommandAction.validateItem(parameters, items.size());
-                    Item newItem = ItemAction.markItem(items.get(num), false);
-                    items.set(num, newItem);
-                    FileAction.exportItems(items);
-                    break;
-                }
-                case REMIND:
-                    items.add(RemindAction.addRemind(parameters, items.size()));
-                    FileAction.exportItems(items);
-                    break;
-                case DEADLINE:
-                    items.add(DeadlineAction.addDeadline(parameters, items.size()));
-                    FileAction.exportItems(items);
-                    break;
-                case EVENT:
-                    items.add(EventAction.addEvent(parameters, items.size()));
-                    FileAction.exportItems(items);
-                    break;
-                case DELETE: {
-                    int num = CommandAction.validateItem(parameters, items.size());
-                    ItemAction.deleteItem(items.remove(num), items.size());
-                    FileAction.exportItems(items);
-                    break;
-                }
-                case EXIT: {
+                int status = CommandAction.executeCommand(command, parameters, items);
+                if (status == -1) {
                     in.close();
                     exitDuke();
-                    break;
                 }
-                default:
-                    throw new DukeException(Message.ERROR_INVALID_COMMAND.toString());
-                }
+
+                FileAction.exportItems(items);
             } catch (Exception err) {
                 System.out.println(err.getMessage());
             } finally {
@@ -98,7 +57,7 @@ public class Duke {
     }
 
     /**
-     * Saves the data file and exits the application.
+     * Exits the application.
      */
     private static void exitDuke() {
         System.out.println(Message.INFO_EXIT);

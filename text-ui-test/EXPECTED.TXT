@@ -1,6 +1,6 @@
 _________________
 Hello! I'm Duke, your friendly remainder chatbot!
-What can I do for you today?Commands: list, mark, unmark, remind, deadline, event, exit
+What can I do for you today?Commands: list, mark, unmark, todo, deadline, event, exit
 _________________
 _________________
 Got it. I've added this item:

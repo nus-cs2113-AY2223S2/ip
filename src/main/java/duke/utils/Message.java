@@ -4,7 +4,7 @@ public enum Message {
     LINE("_________________"),
     INFO_WELCOME("Hello! I'm Duke, your friendly remainder chatbot!\n" +
         "What can I do for you today? " +
-        "Commands: list, mark, unmark, remind, deadline, event, delete, exit"),
+        "Commands: list, mark, unmark, todo, deadline, event, delete, exit"),
     INFO_EXIT("Bye. Thanks for using me!"),
 
     INFO_LIST("Here are the items in your shopping list:"),
@@ -19,7 +19,7 @@ public enum Message {
     ERROR_INVALID_COMMAND("Please enter a valid command."),
     ERROR_MARK_INVALID_PARAMETER("Please specify an integer."),
     ERROR_MARK_OUT_OF_BOUNDS("Invalid item."),
-    ERROR_REMIND_MISSING_PARAMETER("Parameters contain missing fields. Example: remind to eat"),
+    ERROR_TODO_MISSING_PARAMETER("Parameters contain missing fields. Example: todo to eat"),
     ERROR_DEADLINE_MISSING_PARAMETER("Parameters contain missing fields. Example: deadline to eat /by tomorrow"),
     ERROR_EVENT_MISSING_PARAMETER("Parameters contain missing fields. Example: event to eat /from 2pm /to 4pm"),
 

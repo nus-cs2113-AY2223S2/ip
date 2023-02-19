@@ -2,7 +2,7 @@ package duke.event;
 
 import duke.item.Item;
 import duke.exceptions.DukeException;
-import duke.utils.CommandAction;
+import duke.command.CommandAction;
 import duke.utils.Message;
 import duke.utils.MessageAction;
 
@@ -11,6 +11,7 @@ public class EventAction {
      * Adds a Event item into the list.
      * 
      * @param parameters Gets the description and from/to of the item.
+     * @return Item object (Subclass Event) which will be added into the list in main
      * @throws DukeException when there are missing parameters or areValidParameters check fails
      */
     public static Item addEvent(String parameters, int itemsSize) throws Exception {

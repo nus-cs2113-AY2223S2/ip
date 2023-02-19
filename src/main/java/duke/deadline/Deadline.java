@@ -3,16 +3,16 @@ package duke.deadline;
 import duke.item.Item;
 
 public class Deadline extends Item {
-    private String by;
+    private String before;
     
-    public Deadline(String description, String by) {
+    public Deadline(String description, String before) {
         super(description);
-        this.by = by;
+        this.before = before;
         type = "Deadline";
     }
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by + ")";
+        return "[D]" + super.toString() + " (by: " + before + ")";
     }
 }

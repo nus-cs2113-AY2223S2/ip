@@ -9,8 +9,7 @@ import java.io.IOException;
 import duke.deadline.Deadline;
 import duke.event.Event;
 import duke.item.Item;
-import duke.remind.Remind;
-
+import duke.todo.Todo;
 import duke.exceptions.FileException;
 
 import com.google.gson.Gson;
@@ -32,7 +31,7 @@ public class FileAction {
 
         try(FileReader fileReader = new FileReader(file)) {
             RuntimeTypeAdapterFactory<Item> itemAdapterFactory = RuntimeTypeAdapterFactory.of(Item.class, "type")
-                .registerSubtype(Remind.class)
+                .registerSubtype(Todo.class)
                 .registerSubtype(Deadline.class)
                 .registerSubtype(Event.class);
 

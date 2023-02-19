@@ -1,8 +1,8 @@
-remind read book
+todo read book
 deadline return book /by June 6th
 mark 1
 event project meeting /from Aug 6th /to 4pm
-remind join sports club
+todo join sports club
 mark 4
 todo borrow book
 deadline return book /by Sunday
