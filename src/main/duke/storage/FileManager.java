@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -26,10 +27,10 @@ public class FileManager {
         }
     }
 
-    public static void writeFile(String path, ArrayList<Task>tasks) throws IOException {
+    public static void writeFile(String path, HashMap<Integer, Task> tasks) throws IOException {
         //Overwrites previous text in file
         FileWriter fw = new FileWriter(path, false);
-        for (Task i: tasks) {
+        for (Task i: tasks.values()) {
             String t = i.checkType();
             char done = i.checkDone().charAt(1);
             String w = t.charAt(1) + " % " + done + " % " + i.getTask() + "\n";

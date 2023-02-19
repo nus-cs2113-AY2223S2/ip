@@ -2,50 +2,65 @@ package duke.tasklist;
 
 import duke.task.Deadline;
 import duke.task.Event;
-import duke.task.Task;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 
 public class DateData {
 
-    private final HashMap<LocalDate, ArrayList<Task>> byDateTable;
-    private final HashMap<LocalDate, ArrayList<Task>> fromDateTable;
+    private final HashMap<LocalDate, LinkedHashSet<Integer>> dateTable;
 
     public DateData() {
-        this.byDateTable = new HashMap<>();
-        this.fromDateTable = new HashMap<>();
+        this.dateTable = new HashMap<>();
     }
 
-    public void addDeadline (Deadline deadline) {
+    public void addDeadline (Deadline deadline, int taskCount) {
         LocalDate date = deadline.getLocalByDate();
-        if (byDateTable.get(date) == null) {
-            ArrayList<Task> temp = new ArrayList<>();
-            temp.add(deadline);
-            byDateTable.put(date, temp);
+        if (dateTable.get(date) == null) {
+            LinkedHashSet<Integer> temp = new LinkedHashSet<>();
+            temp.add(taskCount);
+            dateTable.put(date, temp);
         } else {
-            byDateTable.get(date).add(deadline);
+            dateTable.get(date).add(taskCount);
         }
     }
 
-    public void addEvent (Event event) {
+    public void addEvent (Event event, int taskCount) {
         LocalDate byDate = event.getLocalByDate();
         LocalDate fromDate = event.getLocalFromDate();
-        if (byDateTable.get(byDate) == null) {
-            ArrayList<Task> temp = new ArrayList<>();
-            temp.add(event);
-            byDateTable.put(byDate, temp);
+        if (dateTable.get(byDate) == null) {
+            LinkedHashSet<Integer> temp = new LinkedHashSet<>();
+            temp.add(taskCount);
+            dateTable.put(byDate, temp);
         } else {
-            byDateTable.get(byDate).add(event);
+            dateTable.get(byDate).add(taskCount);
         }
-        if (fromDateTable.get(fromDate) == null) {
-            ArrayList<Task> temp = new ArrayList<>();
-            temp.add(event);
-            fromDateTable.put(byDate, temp);
+        if (dateTable.get(fromDate) == null) {
+            LinkedHashSet<Integer> temp = new LinkedHashSet<>();
+            temp.add(taskCount);
+            dateTable.put(byDate, temp);
         } else {
-            fromDateTable.get(fromDate).add(event);
+            dateTable.get(fromDate).add(taskCount);
         }
     }
 
+    public void handleDelete (int deletedIndex) {
+        for (LocalDate i : dateTable.keySet()) {
+            dateTable.get(i).remove(deletedIndex);
+            for (int j : dateTable.get(i)) {
+                if (j > deletedIndex) {
+                    dateTable.get(i).remove(j);
+                    dateTable.get(i).add(j + 1);
+                }
+            }
+        }
+    }
+
+    public LinkedHashSet<Integer> findDate (LocalDate date) {
+        if (dateTable.get(date) == null) {
+            return new LinkedHashSet<>();
+        }
+        return dateTable.get(date);
+    }
 }

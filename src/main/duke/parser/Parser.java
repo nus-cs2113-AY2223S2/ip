@@ -61,16 +61,13 @@ public class Parser {
         switch (cmd) {
         case "list":
             break;
-//            case "help":
-//                String next = in.nextLine();
-//                printHelp(next.trim());
-//                break;
         case "mark":
         case "unmark":
         case "todo":
         case "deadline":
         case "event":
         case "delete":
+        case "date":
             next = in.nextLine();
             break;
         default:
@@ -152,5 +149,4 @@ public class Parser {
         }
         return localByDate;
     }
-
 }

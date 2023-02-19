@@ -33,6 +33,8 @@ public class DukeMessages {
             + "the deadline!";
     private static final String EVENT = "Understood *Salutes* Event added!\nRemember the starting time! Don't be late!";
     private static final String FILE_FATAL_ERROR = "Failure to make and read file! No data will be stored!";
+    private static final String NOT_FOUND = " *Rummages around cabinet* Uh oh looks like your whatever you searched for"
+            + " does not exist! Check for typos!";
 
     public DukeMessages() {
     }
@@ -61,7 +63,6 @@ public class DukeMessages {
 
     public void printError() {
         System.out.println(ERROR);
-        printDiv();
     }
 
     public void printReadFileError() {
@@ -114,5 +115,25 @@ public class DukeMessages {
 
     public void printFileFatalError() {
         System.out.println(FILE_FATAL_ERROR);
+    }
+
+    public void printNotFound() {
+        System.out.println(NOT_FOUND);
+    }
+
+    public void printListSize(int count) {
+        if (count == 1) {
+            System.out.println("Looks like you have " + 1 + " thing on your list!");
+        } else {
+            System.out.println("Looks like you have " + count + " things on your list!");
+        }
+    }
+
+    public void printMarkError(String type) {
+        System.out.println("It is already " + type + "ed! *Shakes head* ");
+    }
+
+    public void printDeleted(String task) {
+        System.out.println("Roger!" + task + " removed!");
     }
 }

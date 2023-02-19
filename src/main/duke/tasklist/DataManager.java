@@ -8,6 +8,8 @@ import duke.util.DukeException;
 import duke.ui.DukeMessages;
 
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
+import java.util.LinkedHashSet;
 
 public class DataManager {
 
@@ -15,10 +17,12 @@ public class DataManager {
     private final DukeMessages ui;
     private final TaskData tasks;
     private final DateData dates;
+    private final Parser parser;
 
     public DataManager(String path, DukeMessages ui, Parser parser) {
         this.path = path;
         this.ui = ui;
+        this.parser = parser;
         this.tasks = new TaskData(ui, parser, path);
         this.dates = new DateData();
     }
@@ -41,16 +45,20 @@ public class DataManager {
                 break;
             case "deadline":
                 Deadline deadline = tasks.handleDeadline(next, isFromCommand);
-                dates.addDeadline(deadline);
+                dates.addDeadline(deadline, tasks.getTaskCount());
                 break;
             case "event":
                 Event event = tasks.handleEvent(next, isFromCommand);
-                dates.addEvent(event);
+                dates.addEvent(event, tasks.getTaskCount());
                 break;
             case "delete":
                 tasks.handleDelete(next, isFromCommand);
+                dates.handleDelete(parser.getNum());
                 break;
-            case "find":
+            case "date":
+                LocalDate date = parser.processDate(next);
+                LinkedHashSet<Integer> list = dates.findDate(date);
+                tasks.printFromList(list);
                 break;
             }
         } catch (DukeException e) {

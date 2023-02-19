@@ -5,7 +5,6 @@ import java.time.format.DateTimeFormatter;
 
 public class Deadline extends Task {
     protected String byDate;
-    protected LocalDate localByDate;
 
     public Deadline(String task, boolean isDone, String byDate, LocalDate localByDate) {
         super(task, isDone);
@@ -17,10 +16,6 @@ public class Deadline extends Task {
     @Override
     public String getTask() {
         return super.getTask() + " % " + byDate;
-    }
-
-    public LocalDate getLocalByDate() {
-        return localByDate;
     }
 
     @Override

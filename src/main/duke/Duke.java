@@ -26,8 +26,8 @@ public class Duke {
     public void run() {
         dm.run();
         do {
-            String checkCmd = parser.run();
-            if (checkCmd.equals("bye")) {
+            String parsedCommand = parser.run();
+            if (parsedCommand.equals("bye")) {
                 break;
             }
             ui.printDiv();
@@ -36,9 +36,10 @@ public class Duke {
                 next = parser.check();
             } catch (DukeException e) {
                 ui.printError();
+                ui.printDiv();
                 continue;
             }
-            dm.command(checkCmd, next);
+            dm.command(parsedCommand, next);
             ui.printDiv();
         } while (true);
         ui.printBye();

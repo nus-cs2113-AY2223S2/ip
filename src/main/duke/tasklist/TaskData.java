@@ -12,37 +12,48 @@ import duke.util.DukeException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
 
 public class TaskData {
-    private final ArrayList<Task> tasks;
+    private final HashMap<Integer, Task> tasks;
     private final DukeMessages ui;
     private final Parser parser;
     private final String path;
+    private int taskCount = 0;
 
     public TaskData(DukeMessages ui, Parser parser, String path) {
-        this.tasks = new ArrayList<>();
+        this.tasks = new HashMap<>();
         this.ui = ui;
         this.parser = parser;
         this.path = path;
     }
 
+    public int getTaskCount() {
+        return taskCount;
+    }
+
+    public void printFromList(LinkedHashSet<Integer> list) {
+        if (list.size() == 0) {
+            ui.printNotFound();
+        }
+        for (int i : list) {
+            System.out.println(i + "." + tasks.get(i));
+            ui.printListSize(list.size());
+        }
+    }
+
     public void listOut() {
-        int taskCount = tasks.size();
         if (taskCount == 0) {
             ui.printEmpty();
             return;
         } else {
             ui.printList();
         }
-        for (int i = 0; i < taskCount; ++i) {
-            System.out.println(i + 1 + "." + tasks.get(i));
+        for (int i = 1; i <= taskCount; ++i) {
+            System.out.println(i + "." + tasks.get(i));
         }
-        if (taskCount == 1) {
-            System.out.println("Looks like you have " + taskCount + " thing on your list!");
-        } else {
-            System.out.println("Looks like you have " + taskCount + " things on your list!");
-        }
+        ui.printListSize(taskCount);
     }
 
     public void rewriteFile(String path) {
@@ -54,14 +65,13 @@ public class TaskData {
     }
 
     public void checkMarkStatus(int index, boolean changeTo, String type) throws DukeException{
-        if (tasks.get(index - 1).getIsDone() == changeTo) {
-            System.out.println("It is already " + type + "ed! *Shakes head* ");
+        if (tasks.get(index).getIsDone() == changeTo) {
+            ui.printMarkError(type);
             throw new DukeException();
         }
     }
 
     public void echo() {
-        int taskCount = tasks.size() - 1;
         System.out.println(tasks.get(taskCount));
         try {
             FileManager.writeTask(path, tasks.get(taskCount));
@@ -70,38 +80,38 @@ public class TaskData {
         }
     }
 
-    public void handleMark(String checkCmd, String next, boolean isFromCommand) {
+    public void handleMark(String parsedCommand, String next, boolean isFromCommand) {
         try {
-            parser.convertString(next.trim(), tasks.size());
-            checkMarkStatus(parser.getNum(), true, checkCmd);
+            parser.convertString(next.trim(), taskCount);
+            checkMarkStatus(parser.getNum(), true, parsedCommand);
         } catch (DukeException e) {
             return;
         }
-        tasks.get(parser.getNum() - 1).setDone(true);
+        tasks.get(parser.getNum()).setDone(true);
         if (isFromCommand) {
             ui.printMark();
-            System.out.println(tasks.get(parser.getNum() - 1));
+            System.out.println(tasks.get(parser.getNum()));
             rewriteFile(path);
         }
     }
 
-    public void handleUnmark (String checkCmd, String next, boolean isFromCommand) {
+    public void handleUnmark (String parsedCommand, String next, boolean isFromCommand) {
         try {
             parser.convertString(next.trim(), tasks.size());
-            checkMarkStatus(parser.getNum(), false, checkCmd);
+            checkMarkStatus(parser.getNum(), false, parsedCommand);
         } catch (DukeException e) {
             return;
         }
-        tasks.get(parser.getNum() - 1).setDone(false);
+        tasks.get(parser.getNum()).setDone(false);
         if (isFromCommand) {
             ui.printUnmark();
-            System.out.println(tasks.get(parser.getNum() - 1));
+            System.out.println(tasks.get(parser.getNum()));
             rewriteFile(path);
         }
     }
 
     public void handleTodo(String next, boolean isFromCommand) {
-        tasks.add(new ToDo(next.stripLeading(), false));
+        tasks.put(++taskCount, new ToDo(next.stripLeading(), false));
         if (isFromCommand) {
             ui.printTodo();
             echo();
@@ -120,7 +130,7 @@ public class TaskData {
             localByDate = null;
         }
         Deadline task = new Deadline(deadline[0].trim(), false, deadline[1].trim(), localByDate);
-        tasks.add(task);
+        tasks.put(++taskCount ,task);
         if (isFromCommand) {
             ui.printDeadline();
             echo();
@@ -152,7 +162,7 @@ public class TaskData {
             }
             Event task = new Event(eventName[0].trim(), false, eventTime[0].trim(), eventTime[1].trim()
                     , localByDate, localFromDate);
-            tasks.add(task);
+            tasks.put(++taskCount, task);
             if (isFromCommand) {
                 ui.printEvent();
                 echo();
@@ -169,11 +179,17 @@ public class TaskData {
         } catch (DukeException e) {
             return;
         }
+        int num = parser.getNum();
+        Task task = tasks.get(num);
         if (isFromCommand) {
-            System.out.println("Roger!" + tasks.get(parser.getNum() - 1) + " removed!");
+            ui.printDeleted(task.toString());
         }
-        tasks.remove(tasks.get(parser.getNum() - 1));
+        while(tasks.get(num + 1) != null) {
+            tasks.put(num, tasks.get(num + 1));
+            ++num;
+        }
+        tasks.remove(num);
         rewriteFile(path);
+        --taskCount;
     }
-
 }

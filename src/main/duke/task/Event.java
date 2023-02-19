@@ -6,8 +6,6 @@ import java.time.format.DateTimeFormatter;
 public class Event extends Task {
     protected String byDate;
     protected String fromDate;
-    protected LocalDate localByDate;
-    protected LocalDate localFromDate;
 
     public Event(String task, boolean isDone, String fromDate, String toDate, LocalDate localByDate
             , LocalDate localFromDate) {
