@@ -10,6 +10,8 @@ import duke.tasks.Todo;
 
 import java.util.ArrayList;
 
+import static java.util.stream.Collectors.toList;
+
 
 public class TaskList implements java.io.Serializable {
 
@@ -62,6 +64,14 @@ public class TaskList implements java.io.Serializable {
         Task deletedTask = tasks.get(index);
         tasks.remove(index);
         return deletedTask;
+    }
+    public ArrayList<Task> filterTaskList(String filterString) {
+        ArrayList<Task> filteredList = (ArrayList<Task>) tasks.stream()
+                .filter(t -> t.getTaskName().contains(filterString))
+                .collect(toList());
+
+        return filteredList;
+
     }
 
 

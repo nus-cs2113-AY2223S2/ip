@@ -81,6 +81,22 @@ public class Ui implements java.io.Serializable {
         System.out.println(" Now you have " + numTasks + " tasks in the list.");
     }
 
+    public static void printFilteredList(ArrayList<Task> filteredList) {
+        System.out.println(" Here are the matching tasks in your list:");
+
+        for (int i = 0; i < filteredList.size(); i += 1) {
+            // print index of task
+            System.out.print(" " + (i + 1) + ".");
+
+            // list the details about the task. Based on whether the task is ToDo, Deadline or Event.
+            System.out.println(filteredList.get(i));
+        }
+    }
+
+    public static void printFilteredListEmpty() {
+        System.out.println(" There are no matching tasks!");
+    }
+
     public static void printInvalidIndex() {
         System.out.println("Given index is invalid!");
     }
@@ -100,7 +116,7 @@ public class Ui implements java.io.Serializable {
     }
 
     public static void printInvalidCommandException() {
-        System.out.println("Invalid task type!");
+        System.out.println("Invalid command!");
     }
 
     public static void printFailedToSave() {
