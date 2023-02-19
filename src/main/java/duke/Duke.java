@@ -3,7 +3,6 @@ package duke;
 import duke.task.Task;
 
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -14,12 +13,15 @@ public class Duke {
     static int taskCount = 0;
 
     public static void handleUserCommand(String userCommand) {
-        String[] extractFirstWord = userCommand.split(" ", 2);
-        String firstWord = extractFirstWord[0];
-        switch (firstWord) {
+        Parser parser = new Parser(userCommand);
+
+        String command = parser.extractCommand();
+
+        switch (command) {
         case Ui.COMMAND_MARK:
             try {
-                int taskNum = Integer.parseInt(extractFirstWord[1]);
+                String commandInfo = parser.extractCommandInfo();
+                int taskNum = Integer.parseInt(commandInfo);
                 TaskList.doCommandMark(taskNum);
             } catch (IndexOutOfBoundsException | NumberFormatException out_mark_a) {
                 Ui.printInvalidNumber("mark");
@@ -27,7 +29,8 @@ public class Duke {
             break;
         case Ui.COMMAND_UNMARK:
             try {
-                int taskNum = Integer.parseInt(extractFirstWord[1]);
+                String commandInfo = parser.extractCommandInfo();
+                int taskNum = Integer.parseInt(commandInfo);
                 TaskList.doCommandUnmark(taskNum);
             } catch (IndexOutOfBoundsException | NumberFormatException out_unmark_a) {
                 Ui.printInvalidNumber("unmark");
@@ -41,7 +44,8 @@ public class Duke {
             break;
         case Ui.COMMAND_DELETE:
             try {
-                int taskNum = Integer.parseInt(extractFirstWord[1]);
+                String commandInfo = parser.extractCommandInfo();
+                int taskNum = Integer.parseInt(commandInfo);
                 TaskList.doCommandDelete(taskNum);
             } catch (IndexOutOfBoundsException | NumberFormatException out_delete_a) {
                 Ui.printInvalidNumber("delete");
@@ -49,19 +53,19 @@ public class Duke {
             break;
         case Ui.COMMAND_TODO:
             try {
-                String taskName = (extractFirstWord[1]);
-                TaskList.doCommandTodo(taskName);
+                String commandInfo = parser.extractCommandInfo();
+                TaskList.doCommandTodo(commandInfo);
             } catch (IndexOutOfBoundsException out_todo_a) {
                 Ui.printEmptyCommand("todo");
             }
             break;
         case Ui.COMMAND_DEADLINE:
             try {
-                int index = extractFirstWord[1].indexOf("/by");
-                String taskName = extractFirstWord[1].substring(0, index);
-                String taskDeadline = extractFirstWord[1].substring(index + 4);
+                String commandInfo = parser.extractCommandInfo();
+                String taskName = parser.extractTaskName();
+                String taskDeadline = parser.extractTaskDeadline();
                 TaskList.doCommandDeadline(taskName, taskDeadline);
-            } catch (StringIndexOutOfBoundsException out_deadline_a) {
+            } catch (StringIndexOutOfBoundsException out_deadline_b) {
                 Ui.printInvalidFormat("deadline");
             } catch (IndexOutOfBoundsException out_deadline_a) {
                 Ui.printEmptyCommand("deadline");
@@ -69,12 +73,11 @@ public class Duke {
             break;
         case Ui.COMMAND_EVENT:
             try {
-                int indexOfEventDetailsPartOne = extractFirstWord[1].indexOf("/from");
-                int indexOfEventDetailsPartTwo = extractFirstWord[1].indexOf("/to");
-                String eventName = extractFirstWord[1].substring(0, indexOfEventDetailsPartOne);
-                String eventDetailsPartOne = extractFirstWord[1].substring(indexOfEventDetailsPartOne + 6, indexOfEventDetailsPartTwo - 1);
-                String eventDetailsPartTwo = extractFirstWord[1].substring(indexOfEventDetailsPartTwo + 4);
-                TaskList.doCommandEvent(eventName, eventDetailsPartOne, eventDetailsPartTwo);
+                String commandInfo = parser.extractCommandInfo();
+                String eventName = parser.extractEventName("/from");
+                String eventStartDetails = parser.extractEventStartDetails();
+                String eventEndDetails = parser.extractEventEndDetails();
+                TaskList.doCommandEvent(eventName, eventStartDetails, eventEndDetails);
             } catch (StringIndexOutOfBoundsException out_event_a) {
                 Ui.printInvalidFormat("event");
             } catch (IndexOutOfBoundsException out_event_a) {
