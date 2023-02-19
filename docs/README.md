@@ -21,6 +21,55 @@
 ```
 <hr>
 
+# Summary of features
+
+## 1. Add Tasks
+
+### Add todo
+```
+todo (arguments)
+```
+
+### Add deadline
+```
+deadline (arguments) /by (deadline)
+```
+
+### Add event
+```
+event (arguments) /from (start) /to (end)
+```
+
+## 2. Mark and un-mark tasks
+
+### Mark task
+```
+mark (1-th index task number)
+```
+
+### Un-mark task
+```
+unmark (1-th index task number)
+```
+
+## 3. List tasks
+
+```
+list
+```
+
+## 4. Delete tasks
+```
+delete (1-th index task number)
+```
+
+## 5. Find tasks
+```
+find (keyword)
+```
+
+<hr>
+
 # Features
 
 ## Add Tasks
@@ -61,7 +110,7 @@ The todo task is added to the list.
 <br>
 
 ### Deadline
-### `deadline` - Adds a todo
+### `deadline` - Adds a deadline
 
 Adds a deadline to the task tracker.
 
@@ -87,7 +136,7 @@ The deadline is added to the list.
 <br>
 
 ### Event
-### `event` - Adds a todo
+### `event` - Adds en event
 
 Adds an event to the task tracker.
 
@@ -115,7 +164,7 @@ The event is added to the list.
 <hr>
 
 
-## Mark or un-mark tasks
+## Mark and un-mark tasks
 
 Marks tasks as done or un-marks tasks as not done.
 
