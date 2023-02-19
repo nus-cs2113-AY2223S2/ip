@@ -1,5 +1,4 @@
 import java.io.File;
-import java.nio.file.Paths;
 import java.nio.file.Files;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -8,15 +7,19 @@ import java.util.Scanner;
 import java.io.FileNotFoundException;
 import duke.Task;
 
-public class Save {
-    private static String filePath = "data/duke.txt";
-    private static File file = new File(filePath);
+import static duke.TaskList.textList;
 
-    public Save(String filePath) {
-        Save.filePath = filePath;
+public class Storage {
+    private static String filePath = "data/duke.txt";
+    private static final File file = new File(filePath);
+
+    public Storage(String filePath) {
+        Storage.filePath = filePath;
     }
 
-    public static void saveFile(ArrayList<Task> textList) throws IOException {
+
+    public static void saveFile(ArrayList<Task> textList) throws ArrayIndexOutOfBoundsException {
+        try {
             Files.createDirectories(new File("data").toPath()); //create data folder if it does not exist
             File file = new File(filePath);
             FileWriter fw = new FileWriter(file);
@@ -32,8 +35,11 @@ public class Save {
                 }
             }
             fw.close();
+        } catch (IOException | ArrayIndexOutOfBoundsException e) {
+            System.out.println("Something went wrong: " + e.getMessage());
+        }
     }
-    public static void readFile(ArrayList<Task> textList) throws FileNotFoundException, ArrayIndexOutOfBoundsException {
+    public static void readFile() throws ArrayIndexOutOfBoundsException, FileNotFoundException {
         if (file.exists()) {
             Scanner s = new Scanner(file); // create a Scanner using the File as the source
             while (s.hasNext()) {
@@ -68,5 +74,7 @@ public class Save {
             }
             s.close();
         }
+
     }
+
 }

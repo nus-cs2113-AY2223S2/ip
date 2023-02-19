@@ -1,9 +1,6 @@
 package duke;
 public class Task {
     public String description;
-    public String by;
-    public String from;
-    public String to;
     public boolean isDone;
 
     public Task(String description) {
