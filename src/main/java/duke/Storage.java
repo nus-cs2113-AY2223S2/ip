@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
-public class Database {
+public class Storage {
 
     public static final int COMMAND_INDEX = 0;
     public static final int TASK_DESCRIPTION_INDEX = 2;
@@ -28,7 +28,7 @@ public class Database {
     protected ArrayList<String> databaseString;
 
 
-    public Database() {
+    public Storage() {
         this.tasks = new ArrayList<>();
         this.databaseString = new ArrayList<>();
         try {

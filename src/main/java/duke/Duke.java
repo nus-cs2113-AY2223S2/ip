@@ -23,13 +23,13 @@ public class Duke {
     public static boolean isProgramRunning = true;
 
 
-    private static Database database = null;
+    private static Storage database = null;
     private static ArrayList<Task> tasks = null;
 
     public static void main(String[] args) {
         greeting();
         Scanner in = new Scanner(System.in);
-        database = new Database();
+        database = new Storage();
         tasks = database.tasks;
         while (isProgramRunning) {
             String command = in.nextLine();
