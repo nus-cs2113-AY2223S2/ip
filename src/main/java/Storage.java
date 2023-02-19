@@ -6,9 +6,15 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import duke.Task;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 import static duke.TaskList.textList;
 
+/**
+ * Represents a storage object that deals with loading tasks
+ * from the file and saving tasks in the file.
+ */
 public class Storage {
     private static String filePath = "data/duke.txt";
     private static final File file = new File(filePath);
@@ -17,7 +23,11 @@ public class Storage {
         Storage.filePath = filePath;
     }
 
-
+    /**
+     * Saves the tasks in the task list to the file.
+     * @param textList The task list that contains the tasks to be saved.
+     * @throws ArrayIndexOutOfBoundsException
+     */
     public static void saveFile(ArrayList<Task> textList) throws ArrayIndexOutOfBoundsException {
         try {
             Files.createDirectories(new File("data").toPath()); //create data folder if it does not exist
@@ -28,10 +38,10 @@ public class Storage {
                     fw.write("T | " + (task.isDone ? "1" : "0") + " | " + task.description + System.lineSeparator());
                 } else if (task instanceof Deadline) {
                     Deadline deadline = (Deadline) task;
-                    fw.write("D | " + (task.isDone ? "1" : "0") + " | " + task.description + "| " + deadline.by + System.lineSeparator());
+                    fw.write("D | " + (task.isDone ? "1" : "0") + " | " + task.description + "| " + deadline.by_copy + System.lineSeparator());
                 } else if (task instanceof Event) {
                     Event event = (Event) task;
-                    fw.write("E | " + (task.isDone ? "1" : "0") + " | " + task.description + "| " + event.from + "-" + event.to + System.lineSeparator());
+                    fw.write("E | " + (task.isDone ? "1" : "0") + " | " + task.description + "| " + event.from_copy + " to " + event.to_copy + System.lineSeparator());
                 }
             }
             fw.close();
@@ -39,6 +49,11 @@ public class Storage {
             System.out.println("Something went wrong: " + e.getMessage());
         }
     }
+    /**
+     * Loads the tasks from the file into the task list.
+     * @throws ArrayIndexOutOfBoundsException
+     * @throws FileNotFoundException
+     */
     public static void readFile() throws ArrayIndexOutOfBoundsException, FileNotFoundException {
         if (file.exists()) {
             Scanner s = new Scanner(file); // create a Scanner using the File as the source
@@ -62,7 +77,7 @@ public class Storage {
                     }
                     textList.add(deadline);
                 } else if (taskType.equals("E")) {
-                    String[] timeArray = lineArray[3].trim().split("-");
+                    String[] timeArray = lineArray[3].trim().split("to");
                     String from = timeArray[0].trim();
                     String to = timeArray[1].trim();
                     Event event = new Event(description, from, to);

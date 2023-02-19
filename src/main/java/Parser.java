@@ -3,7 +3,17 @@ import duke.TaskList;
 import java.io.IOException;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Represents a parser that parses the user's input.
+ * It is a child of the Task class.
+ */
 public class Parser {
+
+    /**
+     * Parses the user's input and executes the appropriate command.
+     * @param command The user's input.
+     * @throws IOException
+     */
     public static void parse(String command) throws IOException {
         String[] commandArray = command.split(" ");
         String commandType = commandArray[0];
@@ -91,6 +101,10 @@ public class Parser {
         }
     }
 
+    /**
+     * Returns whether the user has entered the exit command.
+     * @return Whether the user has entered the exit command.
+     */
     public static boolean isExit() {
         return false;
     }
