@@ -8,9 +8,20 @@ import managers.SaveManager;
 import managers.TaskManager;
 import tasks.Task;
 
+/**
+ * Represents a command to mark or unmark a specific Task as done.
+ */
 public class MarkCommand extends Command {
     private boolean isDone;
     private int indexToMark;
+
+    /**
+     * Constructs a MarkCommand, specifying the state to mark and which task to mark.
+     *
+     * @param isDone A boolean function to mark the state of the specified Task to.
+     * @param indexToMark An integer representing the position of the Task to be marked in
+     *                    a list of Tasks starting from 1.
+     */
     public MarkCommand(boolean isDone, int indexToMark) {
         this.isDone = isDone;
         this.indexToMark = indexToMark;

@@ -10,7 +10,22 @@ import commands.ListCommand;
 import commands.MarkCommand;
 import commands.UnknownCommand;
 
+/**
+ * Represents a parser that separates the String of command into Command Objects.
+ */
 public class Parser {
+    /**
+     * Returns a Command of a specific type depending on the content of
+     * the input String.
+     *
+     * @param fullCommand A String inputted by the user, containing at
+     *                    least a Command word that need to be parsed
+     * @return A Command Object translated from <code>fullCommand</code>.
+     * @throws NumberFormatException If the input is not an Integer when it is
+     *                               supposed to be one.
+     * @throws IndexOutOfBoundsException If the content of a Command that should not be
+     *                                   empty is empty.
+     */
     public static Command parse(String fullCommand)
             throws NumberFormatException, IndexOutOfBoundsException {
         if (fullCommand.equals("bye")) {

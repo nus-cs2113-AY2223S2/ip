@@ -1,9 +1,13 @@
 package tasks;
 import errors.InvalidEventException;
-import translators.SpecialInputTimeTranslator;
+import translators.SpecialInputDateTranslator;
 
 import java.time.LocalDate;
 
+/**
+ * Represents a task that happen during a specific period of time. An <code>Event</code> corresponds to
+ * a task with both a start date and an end date e.g., <code>Event (from: start to: end)</code>.
+ */
 public class Event extends Task {
     public static final String EVENT_TIME_START_INDICATOR = "/from";
     public static final String EVENT_TIME_END_INDICATOR = "/to";
@@ -17,6 +21,14 @@ public class Event extends Task {
     private String endTime;
     private LocalDate startDate;
     private LocalDate endDate;
+
+    /**
+     * Creates a new event with a start date and an end date.
+     *
+     * @param itemName A String that contains the name, starting date and ending date of the task,
+     *                 with the dates seperated by <code>/from</code> and <code>/to</code>.
+     * @throws InvalidEventException If <code>itemName</code> is of an incorrect format.
+     */
     public Event(String itemName) throws InvalidEventException {
         super(itemName);
         int indexOfStartTime = itemName.indexOf(EVENT_TIME_START_INDICATOR);
@@ -27,13 +39,13 @@ public class Event extends Task {
         this.itemName = super.getItemName().substring(0, indexOfStartTime).trim();
         this.startTime = itemName.substring(indexOfStartTime + EVENT_TIME_START_DIVIDER_LENGTH, indexOfEndTime).trim();
         this.endTime = itemName.substring(indexOfEndTime + EVENT_TIME_END_DIVIDER_LENGTH).trim();
-        if (SpecialInputTimeTranslator.isInSpecialFormat(startTime)) {
-            this.startDate = SpecialInputTimeTranslator.convertToDateObject(startTime);
-            this.startTime = SpecialInputTimeTranslator.formatDate(startDate);
+        if (SpecialInputDateTranslator.isInSpecialFormat(startTime)) {
+            this.startDate = SpecialInputDateTranslator.convertToDateObject(startTime);
+            this.startTime = SpecialInputDateTranslator.formatDate(startDate);
         }
-        if (SpecialInputTimeTranslator.isInSpecialFormat(endTime)) {
-            this.endDate = SpecialInputTimeTranslator.convertToDateObject(endTime);
-            this.endTime = SpecialInputTimeTranslator.formatDate(endDate);
+        if (SpecialInputDateTranslator.isInSpecialFormat(endTime)) {
+            this.endDate = SpecialInputDateTranslator.convertToDateObject(endTime);
+            this.endTime = SpecialInputDateTranslator.formatDate(endDate);
         }
         incrementItemCount();
     }

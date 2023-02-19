@@ -3,7 +3,17 @@ package managers;
 import enums.DialogueTypes;
 import enums.ErrorDialogueTypes;
 
+/**
+ * A manager that controls what dialogue to display to the user during each interaction, or
+ * when an error is experienced.
+ */
 public class OutputDialogueManager {
+    /**
+     * Display the respective dialogue after the user inputs a command.
+     *
+     * @param interactionType A DialogueTypes Object specifying the type of interaction
+     *                        to be displayed.
+     */
     public void printInteraction(DialogueTypes interactionType) {
         switch (interactionType) {
         case GREETINGS:
@@ -64,6 +74,11 @@ public class OutputDialogueManager {
         }
     }
 
+    /**
+     * Display the respective error message when an exception occurs.
+     *
+     * @param errorMessage A ErrorDialogueTypes Object specifying what error message to display.
+     */
     public void printErrorDialogue(ErrorDialogueTypes errorMessage) {
         switch (errorMessage) {
         case EMPTY_TASK_NAME:
