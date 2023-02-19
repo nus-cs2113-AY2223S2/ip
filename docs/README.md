@@ -12,8 +12,8 @@
 - T: `Todo`
 - D: `Deadline`
 - E: `Event`
-- [ ]: Task not yet completed
-- [X]: Task is completed
+- \[ \]: Task not yet completed
+- \[X\]: Task is completed
 
 ## Todo
 
