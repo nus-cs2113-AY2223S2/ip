@@ -1,7 +1,8 @@
 package luke.task;
 
-import luke.task.Task;
-
+/**
+ * A <code>ToDo</code> object represents a task that has no deadline.
+ */
 public class ToDo extends Task {
     public ToDo(String name, int ID) {
         super(name, ID);

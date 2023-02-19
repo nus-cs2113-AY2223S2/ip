@@ -3,6 +3,11 @@ package luke.task;
 import luke.icon.CheckBox;
 import luke.icon.Label;
 
+/**
+ * A <code>Task</code> object represents a task that can be added by the user.
+ * It contains a String to indicate the taskName, a <code>Label</code> object, a <code>CheckBox</code> object and a
+ * unique ID used to reference the task.
+ */
 public class Task {
     /** The name of a task */
     private String taskName;
@@ -19,7 +24,7 @@ public class Task {
     /** The unique ID assgied to this task */
     private int taskID;
 
-    public Task(String name, int ID) {
+    protected Task(String name, int ID) {
         this.taskName = name;
         this.taskID = ID;
         this.checkBox = new CheckBox();

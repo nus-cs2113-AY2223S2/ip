@@ -1,5 +1,8 @@
 package luke.task;
 
+/**
+ * A <code>Deadline</code> object represents a task that has a deadline.
+ */
 public class Deadline extends Task {
     protected String endDate;
     public Deadline(String name, int ID, String endDate) {
