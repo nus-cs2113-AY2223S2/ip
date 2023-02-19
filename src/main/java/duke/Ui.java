@@ -15,7 +15,7 @@ public class Ui {
     public static void printInvalidNumber(String taskType) {
         System.out.println(LINE);
         System.out.println("\t☹ Error! Invalid input.");
-        System.out.println("\tPlease provide an integer number for \"" + taskType + "\" command.");
+        System.out.println("\tPlease provide a task number for \"" + taskType + "\" command.");
         System.out.println("\tPlease use \"list\" command to see your task numbers.");
         System.out.println(LINE);
     }
@@ -55,5 +55,18 @@ public class Ui {
             System.out.println("\t☹ Error! Failed to create file.");
             System.out.println(LINE);
         }
+    }
+
+    public static void doCommandGreet() {
+        System.out.println(LINE);
+        System.out.println("\tHello! I'm Duke.");
+        System.out.println("\tHow can I help you today?\n");
+        System.out.println(LINE);
+    }
+
+    public static void doCommandBye() {
+        System.out.println(LINE);
+        System.out.println("\tBye! Remember to finish your tasks.\n");
+        System.out.println(LINE);
     }
 }
