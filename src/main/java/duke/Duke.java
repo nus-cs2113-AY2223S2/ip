@@ -45,7 +45,8 @@ public class Duke {
         }
     }
     /**
-     * Executes the logic of the program. Returns true when program should exit.
+     * Executes the logic of the program.
+     * Returns true when program should exit.
      * @return boolean isExit
      */
     private static boolean executeProgram(){

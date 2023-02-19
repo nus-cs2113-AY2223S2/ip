@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public interface ITaskController {
 	/**
-	 * Method call for obtaining ArrayList of Task user has.
+	 * Returns list of tasks in duke.
 	 * @return ArrayList<Task>
 	 * @throws EmptyTaskListException
 	 */
@@ -16,7 +16,7 @@ public interface ITaskController {
 	 */
 	public String addTask(Task newTask);
 	/**
-     * Marks task based on task index specified
+     * Marks task based on task index specified.
      * @param taskIndex
      * @return String message displayed by Duke for user
      * @throws TaskIndexOutOfRangeException
@@ -32,7 +32,7 @@ public interface ITaskController {
      */
 	public String unmarkTask(int taskIndex) throws TaskIndexOutOfRangeException, TaskMarkException;
     /**
-     * Count of number of task user has created
+     * Counts the number of task user has created
      * @return int count of task
      */
 	public int getCount();

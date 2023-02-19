@@ -20,8 +20,11 @@ public class Serialiser implements ISerialiser{
     private final String fileDirectory = "data/duke.txt";
     private final Path path = Paths.get(fileDirectory);
     private Scanner scanner;
-    
-    public void deserialiseFile(ITaskController taskController) {
+    /**
+     * Reads text file into task objects
+     * @param taskController
+     */
+    private void deserialiseFile(ITaskController taskController) {
         String line = null;
         //read line by line
         while(scanner.hasNextLine()){
@@ -39,6 +42,12 @@ public class Serialiser implements ISerialiser{
             }
         }
     }
+    /**
+     * Returns task object based on string provided
+     * @param line
+     * @return
+     * @throws IOException
+     */
     private Task getTaskObject(String line) throws IOException {
         switch (line.charAt(0)) {
         case 'T':
@@ -51,7 +60,11 @@ public class Serialiser implements ISerialiser{
             throw new IOException();
         }
     }
-    public void serialiseFile(ITaskController taskController) {
+    /**
+     * Writes task object information into text file
+     * @param taskController
+     */
+    private void serialiseFile(ITaskController taskController) {
         String storageString = "";
         while (!taskController.isEmpty()) {
             storageString = storageString + taskController.removeTaskForStorage().toStorageString() + '\n';
@@ -77,6 +90,11 @@ public class Serialiser implements ISerialiser{
     public void saveDataFile(ITaskController taskController) {
         serialiseFile(taskController);
     }
+    /**
+     * Checks for existence of data directory.
+     * Also checks for existence of file in directory.
+     * @throws IOException
+     */
     private void checkDataDirectory() throws IOException{
         IUi ui = Ui.getInstance();
         File directory = new File("data");
@@ -91,6 +109,10 @@ public class Serialiser implements ISerialiser{
             checkDataFile();
         }
     }
+    /**
+     * Checks for existence of data file.
+     * @throws IOException
+     */
     private void checkDataFile() throws IOException{
         IUi ui = Ui.getInstance();
         File file = new File("data/duke.txt");
