@@ -9,18 +9,18 @@ import java.io.ObjectOutputStream;
 public class Storage implements java.io.Serializable {
     private static String filepath;
 
-    public static void saveTaskList(TaskList list) throws IOException {
+    public static void saveTaskList(TaskList taskList) throws IOException {
         // Serialization and saving of object in a file
         FileOutputStream file = new FileOutputStream(filepath);
         ObjectOutputStream out = new ObjectOutputStream(file);
-        out.writeObject(list);
+        out.writeObject(taskList);
         out.close();
         file.close();
     }
 
     public static TaskList loadTaskList() throws IOException, ClassNotFoundException {
 
-        //deserialisation
+        //deserialization
         FileInputStream file = new FileInputStream(filepath);
         ObjectInputStream in = new ObjectInputStream(file);
         TaskList list = (TaskList) in.readObject();

@@ -32,8 +32,6 @@ public abstract class Task implements java.io.Serializable {
         return isComplete;
     }
 
-
-
     public abstract String taskTypeBoxFormat();
 
     public String markedBoxFormat() {
