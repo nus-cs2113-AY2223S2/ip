@@ -6,6 +6,9 @@ import luke.task.Task;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * A <code>Ui</code> object is created to handle interaction with the user.
+ */
 public class Ui {
     private static final String LINE = "____________________________________________________________";
     private static final String SIGNATURE = "[Luke]: ";

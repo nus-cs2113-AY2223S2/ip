@@ -4,23 +4,29 @@ import luke.command.Command;
 
 import java.io.IOException;
 
+/**
+ * A <code>Luke</code> object is used to run the entire Luke application.
+ * It contains a <code>Ui</code> object, a <code>TaskList</code> object, a <code>Storage</code>, and a
+ * <code>Parser</code> object to execute various commands from the user.
+ */
 public class Luke {
-    /** An object to manage the responses of LUKE */
+    /** An object to handle the user interaction with Luke */
     private Ui ui;
 
     /** An object used to manage the tasks added by the user */
     private TaskList taskList;
 
-    /** An object to handle the save and loading of data */
+    /** An object to handle the saving and loading of data */
     private Storage storage;
 
+    /** An object to make sense of the commands keyed in by the user */
     private Parser parser;
 
     public Luke() {
         initialize();
     }
 
-    /** Initializes all the objects used in LUKE, says "Hi" to the user */
+    /** Initializes all the objects used in Luke, says "Hi" to the user */
     private void initialize() {
         // Initialization
         this.ui = new Ui();
