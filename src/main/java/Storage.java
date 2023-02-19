@@ -8,13 +8,23 @@ import java.io.IOException;
 import java.util.Scanner;
 import static duke.FileOperations.*;
 
+/**
+ * Contains
+ */
 public class Storage {
+    /**
+     * Prints a horizontal line.
+     */
     public void printLine() {
         System.out.println("____________________________________________________________");
     }
 
-    //load the data from the hard disk when Duke starts up
-    //write the existing data into the current list of tasks
+    /**
+     * Loads the data from the text file when Duke starts up and writes the
+     * existing data into the list of tasks.
+     * @throws FileNotFoundException when the text file "data/duke.txt" is
+     * not found.
+     */
     public void loadData() throws FileNotFoundException {
         String filePath = "data/duke.txt";
         File f = new File(filePath);
@@ -27,6 +37,10 @@ public class Storage {
         printLine();
     }
 
+    /**
+     * Attempts to load the data from the text file into the list of tasks.
+     * Attempts to create the text file for the user if it is not found.
+     */
     public void load() {
         try {
             loadData();
@@ -57,7 +71,11 @@ public class Storage {
         }
     }
 
-    //save the tasks in the hard disk automatically whenever the task list changes
+    /**
+     * Saves the tasks in the current list of tasks automatically whenever
+     * a new change is made to the task list. Ensures that user's data is
+     * saved even if the program crashes.
+     */
     public void saveData() {
         String filePath = "data/duke.txt";
         try {
@@ -70,7 +88,11 @@ public class Storage {
         }
     }
 
-    //convert data from text file into Task list format to Load Data
+    /**
+     * Converts data from inside the text file into a Task object before
+     * loading the data into the task list.
+     * @param str Task to be loaded from text file into task list.
+     */
     public void convertFromData(String str) {
         String[] task = str.split("\\|");
         Character c = task[0].charAt(0); //check if task is a To-do, Deadline or Event
@@ -105,7 +127,11 @@ public class Storage {
         }
     }
 
-    //convert tasks in arraylist to save in text file for Save Data
+    /**
+     * Converts a task from inside the task list into the correct format for
+     * saving the task in the text file.
+     * @param t Task to be saved from task list into text file.
+     */
     public String convertToData(Task t) {
         String str = ""+t;
         String data;

@@ -1,5 +1,9 @@
 import duke.*;
 
+/**
+ * Represents the task list and has operations to list tasks, find tasks,
+ * mark and unmark tasks, delete tasks and add To-dos, Deadlines and Events.
+ */
 public class TaskList {
     private final Storage storage;
 
@@ -173,7 +177,7 @@ public class TaskList {
     }
 
     /**
-     * Adds a To-do to the list of tasks.
+     * Adds a To-do object to the list of tasks.
      *
      * @param input The user command.
      */
@@ -205,7 +209,7 @@ public class TaskList {
     }
 
     /**
-     * Adds a Deadline to the list of tasks.
+     * Adds a Deadline object to the list of tasks.
      *
      * @param input The user command.
      */
@@ -238,7 +242,7 @@ public class TaskList {
     }
 
     /**
-     * Adds an Event to the list of tasks.
+     * Adds an Event object to the list of tasks.
      *
      * @param input The user command.
      */
