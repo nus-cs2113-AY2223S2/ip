@@ -48,7 +48,7 @@ And organized in every way!
     1. Then, right-click on the folder and select Properties
     1. Under the General tab, copy the path listed as Location
 1. Then, open a command terminal by typing cmd in your start menu and launch the command terminal. 
-1. Access the folder via the command terminal, by doing cd FILEPATH. If you followed steps 4.1 to 4.3, you can paste the filepath which was previously copied.
+1. Access the folder via the command terminal, by doing cd FILEPATH. If you followed steps 4.i to 4.iii, you can paste the filepath which was previously copied.
 1. Use the command `java -jar ip.jar` to run the command. 
 1. To execute commands, enter the command with the necessary parameters, then press the Enter key. 
 1. To see more details, refer to the Features section.
