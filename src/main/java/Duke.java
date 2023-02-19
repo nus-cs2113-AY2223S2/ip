@@ -10,6 +10,11 @@ import java.util.Scanner;
  * different types of tasks into a task list.
  */
 public class Duke {
+    public static final String SAVE_FILE_DOES_NOT_EXIST = "     ☹ OOPS!!! The save file could not be loaded as it " +
+            "does not exist.";
+    public static final String SAVE_FILE_LOAD_ERROR = "     ☹ OOPS!!! An error has occurred, the current task list " +
+            "will not be saved in a file!";
+    public static final String FILE_WRITE_ERROR = "     ☹ OOPS!!! There is an error writing to the file :-(";
     protected TaskList taskList;
     protected FileDataHandler fileDataHandler;
     protected Ui ui;
@@ -30,9 +35,9 @@ public class Duke {
                 fileDataHandler.loadFile(taskList);
             }
         } catch (FileNotFoundException exception) {
-            ui.printErrorMessage("     ☹ OOPS!!! The save file could not be loaded as it does not exist.");
+            ui.printErrorMessage(SAVE_FILE_DOES_NOT_EXIST);
         } catch (IOException exception) {
-            ui.printErrorMessage("     ☹ OOPS!!! As an error has occurred, the current task list will not be saved in a file!");
+            ui.printErrorMessage(SAVE_FILE_LOAD_ERROR);
         }
     }
 
@@ -60,7 +65,7 @@ public class Duke {
                 //for the case of no space after calling a command
                 ui.printErrorMessage("     ☹ OOPS!!! The description of a " + nextInput[0] + " cannot be empty.");
             } catch (IOException exception) {
-                ui.printErrorMessage("     ☹ OOPS!!! There is an error writing to the file :-(");
+                ui.printErrorMessage(FILE_WRITE_ERROR);
             }
         }
         ui.farewellMessage();

@@ -5,13 +5,14 @@ import exception.DukeException;
  * execute different methods to modify/search the task list.
  */
 public class Parser {
+    public static final String INVALID_COMMAND_ERROR = "     ☹ OOPS!!! I'm sorry, but I don't know what that means :-(";
     protected TaskList taskList;
     protected FileDataHandler fileDataHandler;
     protected Ui ui;
 
     /**
      * Constructs a Parser object that takes in a Duke type object to get reference to the task list and file data.
-     * Also instantiates a Ui object to print certain responses
+     * Also instantiates an Ui object to print certain responses
      *
      * @param duke the instance of the Duke chatbot that is currently in the running session.
      */
@@ -31,47 +32,39 @@ public class Parser {
      */
     public boolean parse (String[] inputs) throws DukeException {
 
-        if (inputs[0].equals("bye")) {
+        switch (inputs[0]) {
+        case "bye":
             return true;
-        }
-        if (inputs[0].isEmpty()) { //settle for the case of empty inputs
-            return false;
-        }
-        if (inputs[0].equals("list")) { //want to print out the task list
+        case "":
+            break;
+        case "list":
             ui.printTaskList(taskList);
-            return false;
-        }
-        if (inputs[0].equals("mark")) {
-            int taskNumber = Integer.parseInt(inputs[1]);
-            taskList.markTask(taskNumber);
-            return false;
-        }
-        if (inputs[0].equals("unmark")) {
-            int taskNumber = Integer.parseInt(inputs[1]);
-            taskList.unmarkTask(taskNumber);
-            return false;
-        }
-        if (inputs[0].equals("todo")) {
+            break;
+        case "mark":
+            taskList.markTask(inputs[1]);
+            break;
+        case "unmark":
+            taskList.unmarkTask(inputs[1]);
+            break;
+        case "todo":
             taskList.addTodoTask(inputs[1]);
-            return false;
-        }
-        if (inputs[0].equals("deadline")) {
+            break;
+        case "deadline":
             taskList.addDeadlineTask(inputs[1]);
-            return false;
-        }
-        if (inputs[0].equals("event")) {
+            break;
+        case "event":
             taskList.addEventTask(inputs[1]);
-            return false;
-        }
-        if (inputs[0].equals("delete")) {
+            break;
+        case "delete":
             int taskNumber = Integer.parseInt(inputs[1]);
             taskList.deleteTask(taskNumber);
-            return false;
-        }
-        if (inputs[0].equals("find")) {
+            break;
+        case "find":
             taskList.findTask(inputs[1]);
-            return false;
+            break;
+        default:
+            throw new DukeException(INVALID_COMMAND_ERROR);
         }
-        throw new DukeException("     ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+        return false;
     }
 }

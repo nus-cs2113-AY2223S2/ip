@@ -13,6 +13,9 @@ import java.util.ArrayList;
  * Contains methods to mark, unmark, add, delete, find different types of tasks.
  */
 public class TaskList {
+    public static final String EMPTY_TODO_DESCRIPTION = "     ☹ OOPS!!! The description of a todo cannot be empty.";
+    public static final String EMPTY_DEADLINE_DESCRIPTION = "     ☹ OOPS!!! The description of a deadline cannot be empty.";
+    public static final String EMPTY_EVENT_DESCRIPTION = "     ☹ OOPS!!! The description of a event cannot be empty.";
     protected ArrayList<Task> tasks;
     protected Ui ui;
 
@@ -28,9 +31,10 @@ public class TaskList {
     /**
      * Marks the given task as done.
      *
-     * @param taskNumber the task number in order of addition to the list.
+     * @param input the task number in String type in order of addition to the list.
      */
-    public void markTask(int taskNumber) {
+    public void markTask(String input) {
+        int taskNumber = Integer.parseInt(input);
         tasks.get(taskNumber - 1).markAsDone();
         ui.printMarkedTask(tasks.get(taskNumber - 1));
     }
@@ -38,9 +42,10 @@ public class TaskList {
     /**
      * Marks the given task as not done.
      *
-     * @param taskNumber the task number in order of addition to the list.
+     * @param input the task number in String type in order of addition to the list.
      */
-    public void unmarkTask(int taskNumber) {
+    public void unmarkTask(String input) {
+        int taskNumber = Integer.parseInt(input);
         tasks.get(taskNumber - 1).markAsNotDone();
         ui.printUnmarkedTask(tasks.get(taskNumber - 1));
     }
@@ -55,7 +60,7 @@ public class TaskList {
     public void addTodoTask(String description) throws DukeException {
         if (description.isBlank()) {
             //for the case where user keys in a space after the command
-            throw new DukeException("     ☹ OOPS!!! The description of a todo cannot be empty.");
+            throw new DukeException(EMPTY_TODO_DESCRIPTION);
         }
         Todo newTodoTask = new Todo(description);
         tasks.add(newTodoTask);
@@ -89,7 +94,7 @@ public class TaskList {
     public void addDeadlineTask(String description) throws DukeException {
         if (description.isBlank()) {
             //for the case where user keys in a space after the command
-            throw new DukeException("     ☹ OOPS!!! The description of a deadline cannot be empty.");
+            throw new DukeException(EMPTY_DEADLINE_DESCRIPTION);
         }
         int firstSlashIndex = description.indexOf("/by");
         int detailsEndIndex = firstSlashIndex - 1;
@@ -114,7 +119,7 @@ public class TaskList {
     public void addEventTask(String description) throws DukeException {
         if (description.isBlank()) {
             //for the case where user keys in a space after the command
-            throw new DukeException("     ☹ OOPS!!! The description of a event cannot be empty.");
+            throw new DukeException(EMPTY_EVENT_DESCRIPTION);
         }
         int firstSlashIndex = description.indexOf("/from");
         int secondSlashIndex = description.indexOf("/to", firstSlashIndex + 1);
