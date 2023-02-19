@@ -17,6 +17,22 @@ public class MessageAction {
     }
 
     /**
+     * Prints the list of filtered items.
+     */
+    public static void printFilteredList(ArrayList<Item> filteredItems) {
+        if (filteredItems.isEmpty()) {
+            System.out.println(Message.INFO_FIND_NONE);
+            return;
+        }
+
+        System.out.println(Message.INFO_FIND);
+        for (int i = 0; i < filteredItems.size(); i++) {
+            Item item = filteredItems.get(i);
+            System.out.println((i+1) + ". " + item);
+        }
+    }
+
+    /**
      * Prints the welcome message when application is launched.
      */
     public static void printWelcomeMessage() {

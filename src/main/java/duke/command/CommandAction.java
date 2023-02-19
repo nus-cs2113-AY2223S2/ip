@@ -93,6 +93,9 @@ public class CommandAction {
         case DELETE:
             deleteItem(items, parameters);
             break;
+        case FIND:
+            findItem(items, parameters);
+            break;
         case EXIT:
             return -1;
         default:
@@ -147,5 +150,20 @@ public class CommandAction {
     private static void deleteItem(ArrayList<Item> items, String parameters) throws DukeException {
         int num = validateItem(parameters, items.size());
         ItemAction.deleteItem(items.remove(num), items.size());
+    }
+
+    private static void findItem(ArrayList<Item> items, String parameters) throws DukeException {
+        if (parameters.isEmpty()) {
+            throw new DukeException(Message.ERROR_FIND_MISSING_PARAMETER.toString());
+        }
+
+        ArrayList<Item> filteredItems = new ArrayList<Item>();
+        for (Item item : items) {
+            if (item.getDescription().contains(parameters)) {
+                filteredItems.add(item);
+            }
+        }
+
+        MessageAction.printFilteredList(filteredItems);
     }
 }

@@ -19,11 +19,11 @@ public class DeadlineAction {
         try {
             String[] attributes = parameters.split(" /by ", 2);
             String description = attributes[0];
-            String before = attributes[1];
+            String datemark = attributes[1];
 
-            CommandAction.areValidParameters(new String[] {description, before});
+            CommandAction.areValidParameters(new String[] {description, datemark});
 
-            Item newDeadline = new Deadline(description, before);
+            Item newDeadline = new Deadline(description, datemark);
 
             MessageAction.printAddItemMessage(newDeadline, itemsSize + 1);
             return newDeadline;
