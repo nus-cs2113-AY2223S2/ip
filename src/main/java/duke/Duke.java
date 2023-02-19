@@ -9,53 +9,52 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
-
 public class Duke {
-
+    public static final String LINESEPARATOR = "____________________________________________________________";
     public static final String FILEPATH = "./data/savedlist.txt";
 
-    public static void printSeperator() {
-        System.out.println("____________________________________________________________");
+    public static void printSeparator() {
+        System.out.println(LINESEPARATOR);
     }
 
     private static void greet() {
-        printSeperator();
+        printSeparator();
         System.out.println(" Hello! I'm Duke\n" + " What can I do for you?");
-        printSeperator();
+        printSeparator();
         System.out.println("");
     }
 
 
     private static void farewell() {
-        printSeperator();
+        printSeparator();
         System.out.println(" Bye. Hope to see you again soon!");
-        printSeperator();
+        printSeparator();
     }
 
     private static void parseResponse(String response, TaskList list) {
 
 
         if (response.equals("list")) {
-            printSeperator();
+            printSeparator();
             list.listDisplay();
-            printSeperator();
+            printSeparator();
         } else if (response.length() >= 5 && response.substring(0, 5).equals("mark ")) {
-            printSeperator();
+            printSeparator();
             list.markTask(response.substring(5));
-            printSeperator();
+            printSeparator();
         } else if (response.length() >= 7 && response.substring(0, 7).equals("unmark ")) {
-            printSeperator();
+            printSeparator();
             list.unmarkTask(response.substring(7));
-            printSeperator();
+            printSeparator();
         } else if (response.length() >= 7 && response.substring(0, 7).equals("delete ")) {
-            printSeperator();
+            printSeparator();
             list.deleteTask(response.substring(7));
-            printSeperator();
+            printSeparator();
         }
         else { // add task
-            printSeperator();
+            printSeparator();
             list.listAdd(response);
-            printSeperator();
+            printSeparator();
         }
     }
 
