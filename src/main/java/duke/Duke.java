@@ -147,9 +147,7 @@ public class Duke {
             break;
         default:
             if (toPrint) {
-                System.out.println(Ui.LINE);
-                System.out.println("\t☹ Error! Please input a valid command!");
-                System.out.println(Ui.LINE);
+                Ui.printInvalidCommand();
             }
         }
     }
@@ -170,7 +168,7 @@ public class Duke {
                 doEditFile(path);
             }
         } catch (IOException e) {
-            System.out.println("☹ Error! Failed to create file.");
+            Ui.printFileCreated(false);
         }
     }
 }

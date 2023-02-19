@@ -69,4 +69,10 @@ public class Ui {
         System.out.println("\tBye! Remember to finish your tasks.\n");
         System.out.println(LINE);
     }
+
+    public static void printInvalidCommand() {
+        System.out.println(LINE);
+        System.out.println("\t☹ Error! Please input a valid command!");
+        System.out.println(LINE);
+    }
 }
