@@ -1,15 +1,16 @@
 package duke.tasks;
 
-public class ToDo extends Task implements java.io.Serializable {
-    // provide the details relating to this toDo Task.
-    public ToDo(String taskName) {
-        super(taskName); // invoke superclass constructor
+public class Todo extends Task implements java.io.Serializable {
+
+    public Todo(String taskName) {
+        super(taskName);
     }
 
     @Override
-    public String listTask() {
-            return taskTypeBoxFormat() + markedBoxFormat() + " " + getTaskName();
+    public String toString() {
+        return taskTypeBoxFormat() + markedBoxFormat() + " " + getTaskName();
     }
+
     @Override
     public String taskTypeBoxFormat() {
         return "[T]";

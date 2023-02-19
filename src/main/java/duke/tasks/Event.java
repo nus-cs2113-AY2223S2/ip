@@ -10,7 +10,7 @@ public class Event extends Task implements java.io.Serializable {
         this.endTime = endTime;
     }
     @Override
-    public String listTask() {
+    public String toString() {
         return taskTypeBoxFormat() + markedBoxFormat() + " " + getTaskName() +
                 " (from: " + startTime + " to: " + endTime + ')';
     }

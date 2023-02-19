@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class Duke {
 
-    public static final String FILEPATH = "data/savedlist.txt";
+    public static final String FILEPATH = "./data/savedlist.txt";
 
     public static void printSeperator() {
         System.out.println("____________________________________________________________");
@@ -32,7 +32,7 @@ public class Duke {
         printSeperator();
     }
 
-    private static void parseResponse(String response, List list) {
+    private static void parseResponse(String response, TaskList list) {
 
 
         if (response.equals("list")) {
@@ -65,7 +65,7 @@ public class Duke {
 
     }
 
-    public static void listSave(List list) {
+    public static void listSave(TaskList list) {
         // serialisation https://www.geeksforgeeks.org/serialization-in-java/
         try {
 
@@ -84,13 +84,13 @@ public class Duke {
         }
     }
 
-    public static List listLoad() throws IOException, ClassNotFoundException {
+    public static TaskList listLoad() throws IOException, ClassNotFoundException {
         //deserialisation
         FileInputStream file = new FileInputStream(FILEPATH);
         ObjectInputStream in = new ObjectInputStream(file);
 
         // Method for deserialisation of object
-        List list = (List) in.readObject();
+        TaskList list = (TaskList) in.readObject();
 
         in.close();
         file.close();
@@ -103,12 +103,12 @@ public class Duke {
 
         greet();
         File f = new File(FILEPATH);
-        List list;
+        TaskList taskList;
         if (f.exists()) {
             System.out.println("Save file detected.");
 
             try {
-                list = listLoad();
+                taskList = listLoad();
             } catch (IOException ex) {
                 System.out.println("IOException caught");
                 return;
@@ -120,7 +120,7 @@ public class Duke {
 
         } else {
             System.out.println("Save file not detected. Starting with empty list.");
-            list = new List();
+            taskList = new TaskList();
         }
 
 
@@ -128,11 +128,10 @@ public class Duke {
         String response = in.nextLine();
 
         while (!response.equals("bye")) {
-            parseResponse(response, list);
+            parseResponse(response, taskList);
             response = in.nextLine();
         }
-        // response is bye.
-        listSave(list);
+        listSave(taskList);
         farewell();
 
     }

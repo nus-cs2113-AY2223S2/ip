@@ -33,7 +33,6 @@ public abstract class Task implements java.io.Serializable {
     }
 
 
-    public abstract String listTask();
 
     public abstract String taskTypeBoxFormat();
 

@@ -5,17 +5,17 @@ import duke.exceptions.InvalidIndexException;
 import duke.tasks.Deadline;
 import duke.tasks.Event;
 import duke.tasks.Task;
-import duke.tasks.ToDo;
+import duke.tasks.Todo;
 
 
 import java.util.ArrayList;
 
 
-public class List implements java.io.Serializable {
+public class TaskList implements java.io.Serializable {
 
     private ArrayList<Task> taskList;
 
-    public List() {
+    public TaskList() {
         taskList = new ArrayList<>();
     }
 
@@ -26,22 +26,22 @@ public class List implements java.io.Serializable {
             System.out.print(" " + (i + 1) + ".");
 
             // list the details about the task. Based on whether the task is ToDo, Deadline or Event.
-            System.out.println(taskList.get(i).listTask());
+            System.out.println(taskList.get(i));
         }
     }
 
     private void printSuccessfulAddMessage(Task currTask) {
         System.out.println(" Got it. I've added this task: ");
-        System.out.println("  " + currTask.listTask());
+        System.out.println("  " + currTask);
         System.out.println(" Now you have " + taskList.size() + " tasks in the list.");
 
     }
 
-    private void listAddToDo(String taskName) {
-        taskList.add(new ToDo(taskName));
+    private void addToDo(String taskName) {
+        taskList.add(new Todo(taskName));
     }
 
-    private void listAddDeadline(String taskDetails) throws InvalidCommandException {
+    private void addDeadline(String taskDetails) throws InvalidCommandException {
         int byIndex = taskDetails.indexOf(" /by ");
         if (byIndex == -1) {
             throw new InvalidCommandException();
@@ -51,7 +51,7 @@ public class List implements java.io.Serializable {
         taskList.add(new Deadline(taskName, dueDate));
     }
 
-    private void listAddEvent(String taskDetails) throws InvalidCommandException {
+    private void addEvent(String taskDetails) throws InvalidCommandException {
         int fromIndex = taskDetails.indexOf(" /from ");
         int toIndex = taskDetails.indexOf(" /to ");
         if (fromIndex == -1 || toIndex == -1) {
@@ -71,7 +71,7 @@ public class List implements java.io.Serializable {
         switch (taskType) {
         case "todo":
             try {
-                listAddToDo(words[1]);
+                addToDo(words[1]);
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("Invalid todo command! Task description cannot be empty");
                 return;
@@ -79,7 +79,7 @@ public class List implements java.io.Serializable {
             break;
         case "deadline":
             try {
-                listAddDeadline(words[1]);
+                addDeadline(words[1]);
             } catch (InvalidCommandException e) {
                 System.out.println("Invalid deadline command!");
                 return;
@@ -90,7 +90,7 @@ public class List implements java.io.Serializable {
             break;
         case "event":
             try {
-                listAddEvent(words[1]);
+                addEvent(words[1]);
             } catch (InvalidCommandException e) {
                 System.out.println("Invalid event command!");
                 return;
