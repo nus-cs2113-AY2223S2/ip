@@ -49,7 +49,11 @@ public class Ui {
      * @param taskList The TaskList object containing the array of tracked tasks
      */
     public void showCurrNumOfTask(TaskList taskList) {
-        System.out.println("\tNow you have " + taskList.numOfTasks + " tasks in the list.");
+        if (taskList.numOfTasks == 1) {
+            System.out.println("\tNow you have " + taskList.numOfTasks + " task in the list.");
+        } else {
+            System.out.println("\tNow you have " + taskList.numOfTasks + " tasks in the list.");
+        }
     }
 
     /**
