@@ -241,7 +241,7 @@ public class Duke {
         return feedback;
     }
 
-    public static String executeDeleteCommand(String commandParams){
+    public static String executeDeleteCommand(String commandParams) throws IOException {
         //[have not done]: exceptions
         int index = Integer.parseInt(commandParams)-1;
         if(index < 0 || index > tasksList.size()) {
@@ -252,6 +252,7 @@ public class Duke {
                 + tasksList.get(index).toString()
                 + "Now you have 4 tasks in the list.\n";
         tasksList.remove(index);
+        dukeFileWriter.rewriteAllToFile(tasksList);
 
         return feedback;
 
@@ -343,6 +344,8 @@ public class Duke {
                     feedback = executeDeleteCommand(commandParams);
                 }catch (IndexOutOfBoundsException e){
                     feedback = "IndexError: Please input valid index.";
+                }catch (IOException e){
+                    feedback = "I/O Error: Cannot write the record to the file";
                 }
                 break;
             }default:{
