@@ -5,7 +5,6 @@ import duke.input.*;
 
 import java.io.IOException;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
 
 public class Duke {
     public static void main(String[] args) throws Exception {

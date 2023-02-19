@@ -17,7 +17,7 @@ public class Parser {
         String originalInput = input;
         String[] splitInput = input.split(" ");
         input = splitInput[0];
-        int numTasks = Task.getTasksArray().size();
+        int numTasks = TaskList.getTasksArray().size();
 
         // Switch to check input
         switch(input){
@@ -29,7 +29,7 @@ public class Parser {
                     throw new DukeExceptions.noTasksException("Ye have no tasks yet, ye lazy buccaneer!");
                 }
                 System.out.println(BARRIER + "\n");
-                Task.printAllTasks();
+                TaskList.printAllTasks();
                 System.out.println(BARRIER + "\n");
             } catch (DukeExceptions.noTasksException e) {
                 System.out.println(BARRIER + "\n");
@@ -45,7 +45,7 @@ public class Parser {
                     throw new DukeExceptions.invalidNumberException(BARRIER + "\n\nBlast! That isn't a valid number lad!\n" + BARRIER + "\n");
                 }
                 int index = Integer.parseInt(splitInput[1]) - 1;
-                Task.getTasksArray().get(index).markAsComplete();
+                TaskList.getTasksArray().get(index).markAsComplete();
             } finally {
                 break;
             }
@@ -58,7 +58,7 @@ public class Parser {
                     throw new DukeExceptions.invalidNumberException(BARRIER + "\n\nBlast! That isn't a valid number lad!\n" + BARRIER + "\n");
                 }
                 int index = Integer.parseInt(splitInput[1]) - 1;
-                Task.getTasksArray().get(index).unmarkAsComplete();
+                TaskList.getTasksArray().get(index).unmarkAsComplete();
             } finally {
                 break;
             }
@@ -123,8 +123,8 @@ public class Parser {
                 }
                 int index = Integer.parseInt(splitInput[1]) - 1;
                 System.out.println(BARRIER + "\n\nAye! The task be removed:");
-                System.out.println("    " + Task.getTasksArray().get(index).printTask());
-                Task.getTasksArray().remove(index);
+                System.out.println("    " + TaskList.getTasksArray().get(index).printTask());
+                TaskList.getTasksArray().remove(index);
                 printListLength();
                 System.out.println(BARRIER + "\n");
             } finally {
@@ -153,11 +153,11 @@ public class Parser {
     }
 
     public static void printListLength() {
-        int length = Task.getTasksArray().size();
+        int length = TaskList.getTasksArray().size();
         if (length == 1) {
-            System.out.println("Now you have " + Task.getTasksArray().size() + " task in the list!");
+            System.out.println("Now you have " + TaskList.getTasksArray().size() + " task in the list!");
         } else {
-            System.out.println("Now you have " + Task.getTasksArray().size() + " tasks in the list!");
+            System.out.println("Now you have " + TaskList.getTasksArray().size() + " tasks in the list!");
         }
     }
 
@@ -170,7 +170,7 @@ public class Parser {
         int index = Integer.parseInt(input) - 1;
         boolean isNumber = Character.isDigit(dynamicInput);
         boolean isZero = dynamicInput == '0';
-        boolean isInRange = index <= Task.getTasksArray().size() - 1;
+        boolean isInRange = index <= TaskList.getTasksArray().size() - 1;
         return (isNumber && !isZero && isInRange);
     }
 }

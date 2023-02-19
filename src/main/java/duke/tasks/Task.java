@@ -9,7 +9,6 @@ public class Task {
      ArrayList of all tasks
      All subclasses of Task call the parent constructor, which adds them to the list
     */
-    public static ArrayList<Task> tasks = new ArrayList<Task>(); 
 
     // Task class attributes
     public String description;
@@ -22,14 +21,14 @@ public class Task {
     public Task() {
         this.description = "";
         this.isComplete = false;
-        tasks.add(this);
+        TaskList.add(this);
     }
 
     // Dynamic task constructor
     public Task(String description) {
         this.description = description;
         this.isComplete = false;
-        tasks.add(this);
+        TaskList.add(this);
     }
 
     // Changes task isComplete attribute to true
@@ -66,18 +65,5 @@ public class Task {
             return "[X] " + this.description;
         }
         return "[ ] " + this.description; 
-    }
-
-    // Accessor method for the list of tasks
-    public static ArrayList<Task> getTasksArray() {
-        return tasks;
-    }
-
-    // Prints all tasks
-    public static void printAllTasks() {
-        System.out.println("Time for a productive day, me hearties! Here be yer list of tasks: ");
-        for(int i = 0; i<tasks.size(); i++){
-            System.out.println((i+1) + ". " + tasks.get(i).printTask());
-        }
     }
 }
