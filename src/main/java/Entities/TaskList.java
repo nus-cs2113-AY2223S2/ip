@@ -2,9 +2,12 @@ package Entities;
 
 import java.util.ArrayList;
 
+import EntityUtils.DateParser;
 import Exceptions.DukeException;
 
 import java.lang.IndexOutOfBoundsException;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 /**
  * Class which holds the list of currently added tasks
@@ -78,6 +81,49 @@ public class TaskList {
      */
     public ArrayList<Task> getTasks() {
         return this.tasks;
+    }
+
+    /**
+     * Gets all tasks with specified substring in task description
+     * @param taskSubstring query param
+     * @return TaskList of filtered tasks
+     */
+    public TaskList getFilteredTasks(String taskSubstring) {
+        TaskList filteredTasks = new TaskList();
+        for (Task t : getTasks()) {
+            if (!t.getTaskDescription().toLowerCase().contains(taskSubstring.toLowerCase())) {
+                continue;
+            }
+            filteredTasks.addTask(t);
+        }
+        return filteredTasks;
+    }
+    
+    /**
+     * Gets all upcoming tasks with deadline within the next 3 days
+     * @return TaskList of upcoming tasks
+     */
+    public TaskList getUpcomingTasks() {
+        TaskList upcomingTasks = new TaskList();
+        LocalDateTime currentDate = LocalDateTime.now();
+        LocalDateTime deadline;
+        for (Task t : getTasks()) {
+            if (t instanceof Deadline) {
+                deadline = DateParser.stringToDate(((Deadline) t).getEndDate());
+            } else if (t instanceof Event) {
+                deadline = DateParser.stringToDate(((Event) t).getEndDate());
+            } else {
+                continue;
+            }
+            
+            // If deadline is not within 3 days from now
+            if ((deadline.isBefore(currentDate) || deadline.isAfter(currentDate.plus(3, ChronoUnit.DAYS)))) {
+                continue;
+            }
+
+            upcomingTasks.addTask(t);
+        }
+        return upcomingTasks;
     }
 
     /**

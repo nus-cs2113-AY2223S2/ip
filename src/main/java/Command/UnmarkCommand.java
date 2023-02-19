@@ -1,6 +1,6 @@
 package Command;
 
-import CommandUtils.ParseInput;
+import CommandUtils.InputParser;
 import Entities.TaskList;
 import Exceptions.DukeException;
 import Exceptions.NoDescriptionException;
@@ -11,7 +11,7 @@ import Output.UI;
 /**
  * Command to mark a task as not completed
  */
-public class UnmarkCommand extends Command implements ParseInput {
+public class UnmarkCommand extends Command implements InputParser {
     private int taskIndex;
 
     /**

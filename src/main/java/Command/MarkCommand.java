@@ -1,6 +1,6 @@
 package Command;
 
-import CommandUtils.ParseInput;
+import CommandUtils.InputParser;
 import Entities.TaskList;
 import Exceptions.DukeException;
 import Exceptions.NoDescriptionException;
@@ -11,7 +11,7 @@ import Output.UI;
 /**
  * Command to mark a task as completed
  */
-public class MarkCommand extends Command implements ParseInput {
+public class MarkCommand extends Command implements InputParser {
     private int taskIndex;
 
     /**

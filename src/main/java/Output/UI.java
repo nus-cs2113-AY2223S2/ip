@@ -1,5 +1,6 @@
 package Output;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import Entities.Task;
@@ -83,6 +84,26 @@ public class UI {
             output += "\t No tasks found!\n";
         } else {
             output += "\t Here are the tasks in your list:\n";
+            for (int i = 0; i < tasks.getTasksCount(); i++) {
+                output += "\t" + (i + 1) + "." + tasks.getTask(i).toString() + "\n";
+            }
+        }
+
+        System.out.printf(output);
+    }
+
+    /**
+     * Prints all tasks upcoming tasks
+     * @param tasks
+     * @throws DukeException
+     */
+    public void printUpcomingTasks(TaskList tasks) throws DukeException {
+        String output = "";
+
+        if (tasks.getTasksCount() == 0) {
+            output += "\t No tasks found!\n";
+        } else {
+            output += "\t Please be reminded that these tasks are due soon:\n";
             for (int i = 0; i < tasks.getTasksCount(); i++) {
                 output += "\t" + (i + 1) + "." + tasks.getTask(i).toString() + "\n";
             }

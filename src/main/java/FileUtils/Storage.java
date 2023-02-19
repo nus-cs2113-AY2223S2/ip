@@ -55,7 +55,7 @@ public class Storage {
 
             return savedTasks;
         } catch (FileNotFoundException e) {
-            throw new DukeException("File does not exist!");
+            throw new DukeException("File does not exist!\nInitialising new Task List\n");
         }
     }
 

@@ -3,7 +3,7 @@ package Command;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
-import CommandUtils.ParseInput;
+import CommandUtils.InputParser;
 import Entities.Deadline;
 import Entities.Event;
 import Entities.Task;
@@ -14,6 +14,7 @@ import Exceptions.DukeException;
 import Exceptions.EmptyArgumentException;
 import Exceptions.InsufficientArgumentsException;
 import Exceptions.InvalidDateException;
+import Exceptions.InvalidDateSequenceException;
 import Exceptions.NoDescriptionException;
 import Exceptions.UnknownInputException;
 import FileUtils.Storage;
@@ -23,7 +24,7 @@ import Output.UI;
  * The AddCommand class parses command to create a new task and creates the task in the constructor
  * Updates storage when execute method is called
  */
-public class AddCommand extends Command implements ParseInput {
+public class AddCommand extends Command implements InputParser {
     private Task addedTask;
 
     /**
@@ -110,7 +111,7 @@ public class AddCommand extends Command implements ParseInput {
             startDateIdx = input.indexOf("/from ");
             endDateIdx = input.indexOf("/to ");
             if (startDateIdx == -1 || endDateIdx == -1) {
-                throw new InsufficientArgumentsException(command, "event [task] /from [startDate] /to [startDate]");
+                throw new InsufficientArgumentsException(command, "event [task] /from [startDate] /to [endDate]");
             }
 
             taskDescription = input.substring(command.length() + 1, startDateIdx - 1);
@@ -139,6 +140,16 @@ public class AddCommand extends Command implements ParseInput {
                 endDate = DateParser.stringToDate(endDateString);
             } catch (DateTimeParseException e) {
                 throw new InvalidDateException(endDateString);
+            }
+
+            // throws exception if start date is after end date
+            if (startDate.isAfter(endDate)) {
+                throw new InvalidDateSequenceException(startDate, endDate);
+            }
+
+            // throws exception if end date already passed
+            if (LocalDateTime.now().isBefore(endDate)) {
+                throw new InvalidDateSequenceException(LocalDateTime.now(), endDate);
             }
 
             this.addedTask = new Event(taskDescription, false, startDate, endDate);

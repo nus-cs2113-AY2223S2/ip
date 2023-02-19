@@ -18,21 +18,20 @@ public class DateParser {
      */
     public static LocalDateTime stringToDate(String d) throws DateTimeParseException {
         DateTimeFormatter formatter;
-        switch (d.length()) 
-        {
-        // Date does not have a time associated
+        switch (d.length()) {
+        // Date does not have an associated time
         case 8:
         case 9:
         case 10:
             formatter = DateTimeFormatter.ofPattern("yyyy-M-d");
             return LocalDate.parse(d, formatter).atTime(23, 59);
-        // Date has a time associated
+        // Date has an associated time
         case 14:
         case 15:
         case 16:
             formatter = DateTimeFormatter.ofPattern("yyyy-M-d HH:mm");
             break;
-        // For read and writing to database
+        // Time Format for reading and writing to database
         default:
             formatter = DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm");
         }

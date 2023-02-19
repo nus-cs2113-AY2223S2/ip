@@ -1,6 +1,6 @@
 package Command;
 
-import CommandUtils.ParseInput;
+import CommandUtils.InputParser;
 import Entities.Task;
 import Entities.TaskList;
 import Exceptions.DukeException;
@@ -12,7 +12,7 @@ import Output.UI;
 /**
  * Command to delete task from tasklist
  */
-public class DeleteCommand extends Command implements ParseInput {
+public class DeleteCommand extends Command implements InputParser {
     private int taskIndex;
 
     /**
