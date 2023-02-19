@@ -1,7 +1,6 @@
 package duke;
 
 import duke.exceptions.InvalidCommandException;
-import duke.exceptions.InvalidIndexException;
 import duke.tasks.Deadline;
 import duke.tasks.Event;
 import duke.tasks.Task;
@@ -12,7 +11,11 @@ import java.util.ArrayList;
 
 import static java.util.stream.Collectors.toList;
 
-
+/**
+ * Contains the list of <code>Task</code>s which consists of <code>Todo</code>, <code>Deadline</code> and
+ * <code>Event</code> <code>Task</code>s.
+ * Also contains the operations to manage the list of <code>Task</code>s.
+ */
 public class TaskList implements java.io.Serializable {
 
     private ArrayList<Task> tasks;
@@ -21,11 +24,11 @@ public class TaskList implements java.io.Serializable {
         tasks = new ArrayList<>();
     }
 
-    public  int getNumTasks() {
+    public int getNumTasks() {
         return tasks.size();
     }
 
-    public  Task getLatestTask() {
+    public Task getLatestTask() {
         return tasks.get(tasks.size() - 1);
     }
 
@@ -34,10 +37,21 @@ public class TaskList implements java.io.Serializable {
     }
 
 
+    /**
+     * Adds a <code>Todo</code> <code>Task</code> to the <code>TaskList</code>.
+     *
+     * @param taskName The name of the <code>Todo</code> <code>Task</code>.
+     */
     public void addToDo(String taskName) {
         tasks.add(new Todo(taskName));
     }
 
+    /**
+     * Adds a <code>Deadline</code> <code>Task</code> to the <code>TaskList</code>.
+     *
+     * @param taskDetails The details of the <code>Deadline</code> <code>Task</code>.
+     * @throws InvalidCommandException If the deadline is of an invalid format.
+     */
     public void addDeadline(String taskDetails) throws InvalidCommandException {
         int byIndex = taskDetails.indexOf(" /by ");
         if (byIndex == -1) {
@@ -48,6 +62,12 @@ public class TaskList implements java.io.Serializable {
         tasks.add(new Deadline(taskName, dueDate));
     }
 
+    /**
+     * Adds a <code>Event</code> <code>Task</code> to the <code>TaskList</code>.
+     *
+     * @param taskDetails The details of the <code>Event</code> <code>Task</code>.
+     * @throws InvalidCommandException If the event is of an invalid format.
+     */
     public void addEvent(String taskDetails) throws InvalidCommandException {
         int fromIndex = taskDetails.indexOf(" /from ");
         int toIndex = taskDetails.indexOf(" /to ");
@@ -60,11 +80,25 @@ public class TaskList implements java.io.Serializable {
         tasks.add(new Event(taskName, startTime, endTime));
     }
 
+    /**
+     * Returns the <code>Task</code> which is to be deleted.
+     *
+     * @param index The index of the <code>Task</code> which is to be deleted.
+     * @return The deleted <code>Task</code>.
+     */
     public Task deleteTask(int index) {
         Task deletedTask = tasks.get(index);
         tasks.remove(index);
         return deletedTask;
     }
+
+    /**
+     * Returns the filtered list of tasks matching the filterString.
+     * Uses stream to filter the list of <code>Task</code>s to just the tasks matching the filterString.
+     *
+     * @param filterString The string to filter the <code>Task</code> names by.
+     * @return The filtered list.
+     */
     public ArrayList<Task> filterTaskList(String filterString) {
         ArrayList<Task> filteredList = (ArrayList<Task>) tasks.stream()
                 .filter(t -> t.getTaskName().contains(filterString))

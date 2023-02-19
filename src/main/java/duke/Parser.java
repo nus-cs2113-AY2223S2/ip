@@ -6,7 +6,10 @@ import duke.tasks.Task;
 
 import java.util.ArrayList;
 
-public class Parser implements java.io.Serializable {
+/**
+ * Deals with making sense of the user's command
+ */
+public class Parser {
     private static Ui ui;
 
     public Parser() {
@@ -24,6 +27,7 @@ public class Parser implements java.io.Serializable {
     private static boolean isValidDeleteCommand(String response) {
         return response.length() >= 7 && response.substring(0, 7).equals("delete ");
     }
+
     private static boolean isValidFindCommand(String response) {
         return response.length() >= 5 && response.substring(0, 5).equals("find ");
     }
@@ -39,7 +43,7 @@ public class Parser implements java.io.Serializable {
         return indexInt;
     }
 
-    public static void parseAddCommand(String sentence, TaskList taskList) throws InvalidCommandException {
+    private static void parseAddCommand(String sentence, TaskList taskList) throws InvalidCommandException {
         String[] words = sentence.split(" ", 2); // split sentence only on first occurrence of space
         String taskType = words[0];
 
@@ -78,10 +82,10 @@ public class Parser implements java.io.Serializable {
             throw new InvalidCommandException();
         }
 
-        ui.printSuccessfulAddMessage(taskList.getLatestTask(), taskList.getTasks()); // get latest task in taskList
+        ui.printSuccessfulAddMessage(taskList.getLatestTask(), taskList.getNumTasks()); // get latest task in taskList
     }
 
-    public static void parseMarkCommand(String indexString, TaskList taskList) {
+    private static void parseMarkCommand(String indexString, TaskList taskList) {
         int indexInt;
         try {
             indexInt = parseIndex(indexString, taskList.getTasks());
@@ -95,7 +99,7 @@ public class Parser implements java.io.Serializable {
         }
     }
 
-    public static void parseUnmarkTask(String indexString, TaskList taskList) {
+    private static void parseUnmarkTask(String indexString, TaskList taskList) {
         int indexInt;
 
         try {
@@ -110,7 +114,7 @@ public class Parser implements java.io.Serializable {
         }
     }
 
-    public static void parseDeleteTask(String indexString, TaskList taskList) {
+    private static void parseDeleteTask(String indexString, TaskList taskList) {
         int indexInt;
 
         try {
@@ -123,42 +127,49 @@ public class Parser implements java.io.Serializable {
             ui.printInvalidIndex();
         }
     }
-    public static void parseFindTasks(String filterString, TaskList taskList) {
-            ArrayList<Task> filteredList = taskList.filterTaskList(filterString);
-            if (filteredList.size() > 0) {
-                ui.printFilteredList(filteredList);
-                return;
-            }
-            ui.printFilteredListEmpty();
+
+    private static void parseFindTasks(String filterString, TaskList taskList) {
+        ArrayList<Task> filteredList = taskList.filterTaskList(filterString);
+        if (filteredList.size() > 0) {
+            ui.printFilteredList(filteredList);
+            return;
+        }
+        ui.printFilteredListEmpty();
     }
 
 
-    public static void parseResponse(String response, TaskList taskList) {
-        if (response.equals("list")) {
+    /**
+     * Checks the user's input and applies the corresponding command if it is a valid command.
+     *
+     * @param userInput The input string supplied by the user through the standard input.
+     * @param taskList  The list of <code>Todo</code>, <code>Event</code> and <code>Deadline</code>
+     *                  <code>Task</code>s.
+     */
+    public static void parseResponse(String userInput, TaskList taskList) {
+        if (userInput.equals("list")) {
             ui.printSeparator();
             ui.displayList(taskList.getTasks());
             ui.printSeparator();
-        } else if (isValidMarkCommand(response)) {
+        } else if (isValidMarkCommand(userInput)) {
             ui.printSeparator();
-            parseMarkCommand(response.substring(5), taskList);
+            parseMarkCommand(userInput.substring(5), taskList);
             ui.printSeparator();
-        } else if (isValidUnmarkCommand(response)) {
+        } else if (isValidUnmarkCommand(userInput)) {
             ui.printSeparator();
-            parseUnmarkTask(response.substring(7), taskList);
+            parseUnmarkTask(userInput.substring(7), taskList);
             ui.printSeparator();
-        } else if (isValidDeleteCommand(response)) {
+        } else if (isValidDeleteCommand(userInput)) {
             ui.printSeparator();
-            parseDeleteTask(response.substring(7), taskList);
+            parseDeleteTask(userInput.substring(7), taskList);
             ui.printSeparator();
-        } else if (isValidFindCommand(response)) {
+        } else if (isValidFindCommand(userInput)) {
             ui.printSeparator();
-            parseFindTasks(response.substring(5), taskList);
+            parseFindTasks(userInput.substring(5), taskList);
             ui.printSeparator();
-        }
-        else {
+        } else {
             ui.printSeparator();
             try {
-                parseAddCommand(response, taskList);
+                parseAddCommand(userInput, taskList);
             } catch (InvalidCommandException e) {
                 ui.printInvalidCommandException();
             }

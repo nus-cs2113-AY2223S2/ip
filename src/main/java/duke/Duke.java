@@ -1,8 +1,5 @@
 package duke;
 
-import duke.exceptions.InvalidCommandException;
-
-import java.io.File;
 import java.io.IOException;
 
 public class Duke {
@@ -29,7 +26,7 @@ public class Duke {
         }
     }
 
-    public void run() {
+    private void run() {
         ui.greet();
 
         String userInput = ui.getInput();
