@@ -18,6 +18,10 @@ import static tasks.Deadline.DEADLINE_CLASS;
 import static tasks.Event.EVENT_CLASS;
 import static tasks.ToDo.TODO_CLASS;
 
+/**
+ * Represents a manager for saving the contents of the current list to a txt file,
+ * of the name PATHNAME, or reading the content from that file.
+ */
 public class SaveManager {
 
     public static final String PATHNAME = "data.txt";
@@ -27,6 +31,15 @@ public class SaveManager {
     // T0 name
     // D0 name /by time
     // E0 name /from time /to time
+
+    /**
+     * Reads the contents that are stored into an ArrayList of Tasks.
+     *
+     * @return An ArrayList containing Tasks from the stored txt document.
+     * @throws IOException If failed to create a File.
+     * @throws InvalidDeadlineException If a command for constructing Deadline Object is in incorrect format.
+     * @throws InvalidEventException If a command for constructing Event Object is in incorrect format.
+     */
     public ArrayList<Task> initialiseData()
             throws IOException, InvalidDeadlineException, InvalidEventException {
         File f = new File(PATHNAME);
@@ -42,6 +55,12 @@ public class SaveManager {
         return storedTasks;
     }
 
+    /**
+     * Write all the items of the current ArrayList of tasks into a txt file for storage.
+     *
+     * @param tasks The manager for Tasks where the list of Tasks is stored.
+     * @throws IOException If the FileWriter cannot be generated.
+     */
     public void saveCurrentState (TaskManager tasks) throws IOException {
         FileWriter fileWriter = new FileWriter(PATHNAME, true);
         FileWriter fileClearer = new FileWriter(PATHNAME);
@@ -61,6 +80,12 @@ public class SaveManager {
         fileWriter.close();
     }
 
+    /**
+     * Write an additional line to the document where the data is saved for when a new
+     * Task is added.
+     * @param newTask The Task that is newly added.
+     * @throws IOException If the FileWriter cannot be generated.
+     */
     public void saveNewTask (Task newTask) throws IOException {
         FileWriter fileWriter = new FileWriter(PATHNAME, true);
         String toWrite = "";
@@ -70,7 +95,7 @@ public class SaveManager {
         fileWriter.close();
     }
 
-    private static void processStoredTask(ArrayList<Task> storedTasks, String line)
+    private void processStoredTask(ArrayList<Task> storedTasks, String line)
             throws InvalidDeadlineException, InvalidEventException {
         switch (line.substring(0,1)) {
         case TODO_CLASS:
@@ -91,7 +116,7 @@ public class SaveManager {
         }
     }
 
-    private static void setMarkState(String line, Task task) {
+    private void setMarkState(String line, Task task) {
         if (Integer.parseInt(line.substring(1,2)) == 1) {
             task.markAsState(true);
         } else {

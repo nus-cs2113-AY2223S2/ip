@@ -10,9 +10,20 @@ import managers.TaskManager;
 import tasks.Task;
 import static tasks.Task.getItemCount;
 
+/**
+ * Represents a command to add a new Task in to the list of Tasks.
+ */
 public class AddCommand extends Command{
     public String commandLine;
     private String content;
+
+    /**
+     * Constructs a new AddCommand, specifying the type and the content of the Task to add.
+     *
+     * @param commandLine A String containing the type of Task to be added, <code>Todo, Deadline</code>
+     *                    or <code>Event</code>.
+     * @param content A String containing the content that is used to construct the new Task.
+     */
     public AddCommand(String commandLine, String content) {
         this.commandLine = commandLine;
         this.content = content;
@@ -31,7 +42,7 @@ public class AddCommand extends Command{
         }
     }
 
-    private static void printNewlyAddedTask(OutputDialogueManager display, Task newTask) {
+    private void printNewlyAddedTask(OutputDialogueManager display, Task newTask) {
         display.printInteraction(DialogueTypes.ADD_TASK);
         newTask.printTaskWithoutId();
         display.printInteraction(DialogueTypes.COUNT_OF_TASKS);

@@ -1,9 +1,13 @@
 package tasks;
 import errors.InvalidDeadlineException;
-import translators.SpecialInputTimeTranslator;
+import translators.SpecialInputDateTranslator;
 
 import java.time.LocalDate;
 
+/**
+ * Represents a task with a deadline. A <code>Deadline</code> object represents
+ * a task that have an end date.
+ */
 public class Deadline extends Task {
     public static final int DEADLINE_DIVIDER_LENGTH = 4;
     public static final String DEADLINE_SEPARATOR = "/by";
@@ -15,6 +19,13 @@ public class Deadline extends Task {
 
     private LocalDate deadlineDate;
 
+    /**
+     * Construct a Deadline Object from a line of information.
+     *
+     * @param itemName A String containing both name of the task and the ending time of
+     *                 the task, seperated by <code>/by</code>.
+     * @throws InvalidDeadlineException If the format of the line is incorrect.
+     */
     public Deadline(String itemName) throws InvalidDeadlineException {
         super(itemName);
         int indexOfDivider = itemName.indexOf(DEADLINE_SEPARATOR);
@@ -24,9 +35,9 @@ public class Deadline extends Task {
         }
         this.itemName = super.getItemName().substring(0,indexOfDivider).trim();
         this.deadline = itemName.substring(indexOfDivider + DEADLINE_DIVIDER_LENGTH).trim();
-        if (SpecialInputTimeTranslator.isInSpecialFormat(deadline)) {
-            this.deadlineDate = SpecialInputTimeTranslator.convertToDateObject(deadline);
-            this.deadline = SpecialInputTimeTranslator.formatDate(deadlineDate);
+        if (SpecialInputDateTranslator.isInSpecialFormat(deadline)) {
+            this.deadlineDate = SpecialInputDateTranslator.convertToDateObject(deadline);
+            this.deadline = SpecialInputDateTranslator.formatDate(deadlineDate);
         }
         incrementItemCount();
     }

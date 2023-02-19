@@ -6,16 +6,24 @@ import enums.ErrorDialogueTypes;
 import translators.Parser;
 import errors.InvalidDeadlineException;
 import errors.InvalidEventException;
-
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * A manager that connects the other three managers to process the command entered
+ * by the user and produce an output.
+ */
 public class InputManager {
     private TaskManager tasks;
     private OutputDialogueManager display;
     private SaveManager storage;
     private Scanner scanner;
 
+    /**
+     * Constructs an InputManager object by creating Objects of the other three managers
+     * and a new Scanner. Handles the exceptions that may occur when TaskManager gets
+     * created.
+     */
     public InputManager() {
         this.display = new OutputDialogueManager();
         this.storage = new SaveManager();
@@ -30,6 +38,13 @@ public class InputManager {
             display.printErrorDialogue(ErrorDialogueTypes.EVENT_WRONG_FORMAT);
         }
     }
+
+    /**
+     * Processes one input from the user according to the command provided, then return
+     * a boolean value indicating if this processing can end.
+     *
+     * @return True if the command calls to end the program, else return false.
+     */
     public boolean processOneInput() {
         String line = scanner.nextLine();
         boolean canStop = false;
