@@ -14,7 +14,7 @@ public class DukeStorage {
     private static String filePath;
 
     public DukeStorage(String filePath) {
-        this.filePath = filePath;
+        DukeStorage.filePath = filePath;
     }
 
     public void saveTaskList(ArrayList<Task> tasks) {
