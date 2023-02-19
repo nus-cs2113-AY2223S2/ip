@@ -6,7 +6,7 @@ import duke.Ui;
 
 import java.io.IOException;
 
-public class DeleteTaskCommand extends Command{
+public class DeleteTaskCommand extends Command {
 
     protected int deleteIndex;
 

@@ -148,6 +148,7 @@ public class Parser {
         }
         return new DeleteTaskCommand(deleteIndex);
     }
+
     private static boolean isValidIndex(int indexOfMarking, TaskList tasks) {
         if (indexOfMarking < 0 || indexOfMarking > (tasks.getTaskCount() - 1)) {
             return false;

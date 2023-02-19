@@ -5,7 +5,7 @@ import duke.command.Command;
 public class Duke {
 
     private Storage database;
-    
+
     public TaskList tasks;
     private Ui ui;
 
