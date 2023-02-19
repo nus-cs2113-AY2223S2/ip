@@ -40,6 +40,8 @@ deadline (arguments) /by (deadline)
 event (arguments) /from (start) /to (end)
 ```
 
+<br>
+
 ## 2. Mark and un-mark tasks
 
 ### Mark task
@@ -52,16 +54,22 @@ mark (1-th index task number)
 unmark (1-th index task number)
 ```
 
+<br>
+
 ## 3. List tasks
 
 ```
 list
 ```
 
+<br>
+
 ## 4. Delete tasks
 ```
 delete (1-th index task number)
 ```
+
+<br>
 
 ## 5. Find tasks
 ```
@@ -81,7 +89,7 @@ Types of tasks:
 2. Deadline
 3. Event
 
-## Usage
+### Usage
 
 ### Todo
 ### `todo` - Adds a todo
@@ -163,12 +171,14 @@ The event is added to the list.
 
 <hr>
 
+<br>
+
 
 ## Mark and un-mark tasks
 
 Marks tasks as done or un-marks tasks as not done.
 
-## Usage
+### Usage
 
 ### Mark
 ### `mark` - mark as done
@@ -222,12 +232,14 @@ The task is marked as done.
 ```
 <hr>
 
+<br>
+
 ## List all tasks
 
 List all tasks in the tracker with its respective status and type.
 
 
-## Usage
+### Usage
 
 ### list
 ### `list` 
@@ -266,12 +278,14 @@ All tasks are printed with its corresponding status and type.
 
 <hr>
 
+<br>
+
 ## Delete tasks
 
 Deletes tasks from list.
 
 
-## Usage
+### Usage
 
 ### delete
 ### `delete`
@@ -299,11 +313,13 @@ Task 2 is deleted from the list.
 ```
 <hr>
 
+<br>
+
 ## Find tasks
 
 Find a task by searching for a keyword.
 
-## Usage
+### Usage
 
 ### find
 ### `find`
