@@ -21,7 +21,12 @@
 ```
 <hr>
 
+<br>
+
 # Summary of features
+
+#### This is a summary. 
+#### You may find the full explanation of feature below in the ``Features`` section.
 
 ## 1. Add Tasks
 
@@ -77,6 +82,8 @@ find (keyword)
 ```
 
 <hr>
+
+<br>
 
 # Features
 
