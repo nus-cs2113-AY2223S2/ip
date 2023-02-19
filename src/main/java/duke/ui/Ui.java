@@ -22,8 +22,7 @@ public class Ui { // deals with interactions with the user
     }
 
     public String getUserCommand() { // todo
-        String input = in.nextLine();
-        return input;
+        return in.nextLine();
     }
 
     private static final String SEGMENT_LINE = "_".repeat(80);
@@ -68,6 +67,7 @@ public class Ui { // deals with interactions with the user
         System.out.println(SEGMENT_LINE);
         System.out.printf(ErrorMessages.OVER_TASK_COUNT_MESSAGE.MESSAGE, Task.getTotalTasks()
                 + NEW_LINE);
+        endLine();
     }
 
     public static void showStartingError() {
@@ -95,10 +95,9 @@ public class Ui { // deals with interactions with the user
 
     public static void showDeleteTask(TaskList taskList, int taskIndex) {
         int numberOfTasks = Task.totalTasks - 1;
-        System.out.println(SEGMENT_LINE);
-        System.out.println(DeleteCommand.OUTPUT_MESSAGE);
-        System.out.println("   " + taskList.getTaskFullDetails(taskIndex));
-        System.out.printf(DeleteCommand.REMAINING_TASK_COUNT, numberOfTasks);
+        String output = (SEGMENT_LINE + NEW_LINE + DeleteCommand.OUTPUT_MESSAGE
+                + NEW_LINE + "   " + taskList.getTaskFullDetails(taskIndex) + DeleteCommand.REMAINING_TASK_COUNT);
+        System.out.printf(output, numberOfTasks);
         endLine();
     }
 

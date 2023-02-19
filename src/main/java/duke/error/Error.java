@@ -13,10 +13,6 @@ public class Error {
         case INVALID_UNMARK_COMMAND:
             Ui.showError(ErrorMessages.INVALID_UNMARK_MESSAGE.MESSAGE);
             break;
-        case NOT_WITHIN_TASK_COUNT:
-            // Ui.showError(ErrorMessages.OVER_TASK_COUNT_MESSAGE.STANDARD_OUTPUT); todo
-            Ui.showExceedTask();
-            break;
         case INVALID_TODO:
             Ui.showError(ErrorMessages.INVALID_TODO_MESSAGE.MESSAGE);
             break;

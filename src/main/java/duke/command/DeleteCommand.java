@@ -17,8 +17,12 @@ public class DeleteCommand extends Command {
 
     public static void deleteTask(TaskList taskList, String[] arrayOfInput) throws DukeException {
         int taskNumber = Integer.parseInt(Parser.parseCommand(arrayOfInput, COMMAND_WORD)) - 1;
-        Ui.showDeleteTask(taskList, taskNumber);
-        taskList.deleteTask(taskNumber);
-        Task.totalTasks -= 1;
+        try {
+            Ui.showDeleteTask(taskList, taskNumber);
+            taskList.deleteTask(taskNumber);
+            Task.totalTasks -= 1;
+        } catch (IndexOutOfBoundsException e) {
+            Ui.showExceedTask();
+        }
     }
 }

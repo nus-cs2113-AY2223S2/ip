@@ -7,7 +7,7 @@ public class Parser { // deals with making sense of the user command
     public static String[] parse(String userInput) {
         String[] arrayOfInput = userInput.split(" ");
         arrayOfInput[0] = arrayOfInput[0].trim();
-        return arrayOfInput;
+       return arrayOfInput;
     }
 
     public static String parseTodoCommand(String input) throws DukeException {

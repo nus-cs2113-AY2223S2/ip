@@ -14,7 +14,11 @@ public class UnmarkCommand extends Command {
 
     public static void unmarkTask(TaskList taskList, String[] arrayOfInput) throws DukeException {
         int taskNumber = Integer.parseInt(Parser.parseCommand(arrayOfInput, COMMAND_WORD)) - 1;
-        taskList.markTaskNotDone(taskNumber);
-        Ui.showTaskStatus(taskList, taskNumber);
+        try {
+            taskList.markTaskNotDone(taskNumber);
+            Ui.showTaskStatus(taskList, taskNumber);
+        } catch (IndexOutOfBoundsException e) {
+            Ui.showExceedTask();
+        }
     }
 }

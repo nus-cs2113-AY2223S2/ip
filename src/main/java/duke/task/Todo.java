@@ -23,7 +23,7 @@ public class Todo extends Task {
         } else {
             taskStatus = Symbols.DATA_UNMARK;
         }
-        return String.join(Symbols.DATA_DELIMITER, Symbols.TODO, taskStatus, taskName);
+        return String.join(Symbols.ENCODE_DATA_DELIMITER, Symbols.TODO, taskStatus, taskName);
         // returns full details of task
     }
 }

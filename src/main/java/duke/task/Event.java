@@ -29,7 +29,7 @@ public class Event extends Task {
             taskStatus = Symbols.DATA_UNMARK;
         }
         String date = String.join(Symbols.DATA_EVENT_DATE_DELIMITER, startDateTime, endDateTime);
-        return String.join(Symbols.DATA_DELIMITER, Symbols.EVENT, taskStatus, taskName, date);
+        return String.join(Symbols.ENCODE_DATA_DELIMITER, Symbols.EVENT, taskStatus, taskName, date);
         // returns full details of task
     }
 }

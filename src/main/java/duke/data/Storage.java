@@ -58,7 +58,7 @@ public class Storage { // deals with loading tasks from the file and saving task
     }
 
     public static void decodeTaskData(String task, ArrayList<Task> taskList) {
-        String[] taskInfo = task.split(Symbols.DATA_DELIMITER);
+        String[] taskInfo = task.split(Symbols.DECODE_DATA_DELIMITER);
         if (taskInfo[0].equals(Symbols.TODO)) {
             taskList.add(Task.totalTasks, new Todo(taskInfo[2]));
         } else if (taskInfo[0].equals(Symbols.DEADLINE)) {

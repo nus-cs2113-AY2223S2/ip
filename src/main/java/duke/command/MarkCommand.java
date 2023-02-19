@@ -14,7 +14,12 @@ public class MarkCommand extends Command {
 
     public static void markTask(TaskList taskList, String[] arrayOfInput) throws DukeException {
         int taskNumber = Integer.parseInt(Parser.parseCommand(arrayOfInput, COMMAND_WORD)) - 1;
-        taskList.markTaskDone(taskNumber);
-        Ui.showTaskStatus(taskList, taskNumber);
+        try {
+            taskList.markTaskDone(taskNumber);
+            Ui.showTaskStatus(taskList, taskNumber);
+        } catch (IndexOutOfBoundsException e) {
+            Ui.showExceedTask();
+        }
+
     }
 }

@@ -1,8 +1,9 @@
 package duke.command;
 
+import duke.task.TaskList;
 import duke.ui.Ui;
 
-public class ListCommand {
+public class ListCommand extends Command {
     public static final String COMMAND_WORD = "list";
     public static final String EMPTY_MESSAGE = " The list is empty!";
     public static final String MESSAGE = " Here are the tasks in your lists:";

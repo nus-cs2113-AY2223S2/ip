@@ -6,7 +6,6 @@ import duke.command.UnmarkCommand;
 import duke.error.DukeException;
 import duke.error.ErrorTypes;
 import duke.error.Error;
-import duke.task.Task;
 
 public class InputValidity {
     private static final int MINIMUM_TODO_LENGTH = 2;
@@ -52,14 +51,6 @@ public class InputValidity {
         return true;
     }
 
-    public static void checkWithinCount(int inputValue) throws DukeException {
-        boolean isOverMaxTasks = (inputValue > Task.getTotalTasks());
-        if (isOverMaxTasks) {
-            // user provided taskNumber that is > noOfTasks
-            Error.throwError(ErrorTypes.NOT_WITHIN_TASK_COUNT);
-        }
-    }
-
     public static void isValid(String[] input, String command) throws DukeException {
         boolean isTwoWordInput = (input.length == VALID_LENGTH_TWO);
         if (!isTwoWordInput || !isStringOfInteger(input[1])) {
@@ -78,6 +69,5 @@ public class InputValidity {
                 break;
             }
         }
-        checkWithinCount(Integer.parseInt(input[1].trim()));
     }
 }

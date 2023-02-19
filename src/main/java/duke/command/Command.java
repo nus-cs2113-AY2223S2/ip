@@ -7,8 +7,8 @@ import duke.task.TaskList;
 import duke.ui.Ui;
 import duke.parser.Parser;
 
-public class Command {
-    public static void evaluate(String input, TaskList taskList) {
+public abstract class Command {
+    public static void evaluateCommand(String input, TaskList taskList) {
         try {
             String[] arrayOfInput = Parser.parse(input);
             switch (arrayOfInput[0]) {
