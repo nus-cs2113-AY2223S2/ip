@@ -8,16 +8,18 @@ public class Event extends Task {
     protected String start;
     protected String end;
 
+    static final int PARTITION_TO_TWO = 2;
+
     public Event(String description) {
         super(description);
-        String[] lineComponents = description.split("/", 2);
-        String[] descriptionComponents = lineComponents[0].split(" ", 2);
-        String[] periodComponents = lineComponents[1].split("/", 2);
+        String[] lineComponents = description.split("/", PARTITION_TO_TWO);
+        String[] descriptionComponents = lineComponents[0].split(" ", PARTITION_TO_TWO);
+        String[] periodComponents = lineComponents[1].split("/", PARTITION_TO_TWO);
 
-        String[] startPrepositions = periodComponents[0].split(" ", 2);
+        String[] startPrepositions = periodComponents[0].split(" ", PARTITION_TO_TWO);
         //Array containing start of period and prepositions
 
-        String[] endPrepositions = periodComponents[1].split(" ", 2);
+        String[] endPrepositions = periodComponents[1].split(" ", PARTITION_TO_TWO);
         //Array containing end of period and prepositions
 
         this.start = "(" + startPrepositions[0] + ": " + startPrepositions[1];
@@ -27,7 +29,8 @@ public class Event extends Task {
         this.taskLabel = "[E]";
     }
 
-    public Event(){}
+    public Event() {
+    }
 
     public static int add(String line, ArrayList<Task> list, int currentNumber) {
         System.out.println("     Got it. I've added this task:");

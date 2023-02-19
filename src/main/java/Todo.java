@@ -5,14 +5,17 @@ import java.util.ArrayList;
  */
 
 public class Todo extends Task {
+    static final int PARTITION_TO_TWO = 2;
+
     public Todo(String description) {
         super(description);
-        String[] lineComponents = description.split(" ", 2);
+        String[] lineComponents = description.split(" ", PARTITION_TO_TWO);
         this.description = lineComponents[1];
         this.taskLabel = "[T]";
     }
 
-    public Todo(){}
+    public Todo() {
+    }
 
     public static int add(String line, ArrayList<Task> list, int currentNumber) {
         System.out.println("     Got it. I've added this task:");

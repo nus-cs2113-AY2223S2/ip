@@ -17,6 +17,7 @@ public class Duke {
             Arrays.asList("todo", "deadline", "event", "mark", "unmark", "delete");
     public static final List<String> commands =
             Arrays.asList("todo", "deadline", "event", "mark", "unmark", "list", "find", "delete", "bye");
+    static final int PARTITION_TO_TWO = 2;
 
     public static void printHorizontalLine() {
         System.out.print("    ____________________________________________________________\n");
@@ -116,7 +117,7 @@ public class Duke {
 
         String line;
         ArrayList<Task> taskArrayList = new ArrayList<>(); // Array of Tasks
-        int currentNumber = 0; // Current number of tasks
+        int currentTaskNumber = 0; // Current number of tasks
 
         try {
             LoadFile.initFile();
@@ -125,7 +126,7 @@ public class Duke {
         }
 
         try {
-            currentNumber = LoadFile.loadFileContents("data\\duke.txt", taskArrayList, currentNumber);
+            currentTaskNumber = LoadFile.loadFileContents("data\\duke.txt", taskArrayList, currentTaskNumber);
         } catch (FileNotFoundException e) {
             System.out.println("File Not Found");
         }
@@ -133,7 +134,7 @@ public class Duke {
         while (true) {
             Scanner in = new Scanner(System.in);
             line = in.nextLine(); // Take in input line
-            String[] lineComponents = line.split(" ", 2); // Split the input line
+            String[] lineComponents = line.split(" ", PARTITION_TO_TWO); // Split the input line
             String type = lineComponents[0];
             try {
                 checkIfValid(lineComponents);
@@ -142,29 +143,29 @@ public class Duke {
                     checkIfEmpty(lineComponents);
                     switch (type) {
                     case "todo":
-                        currentNumber = Todo.add(line, taskArrayList, currentNumber);
+                        currentTaskNumber = Todo.add(line, taskArrayList, currentTaskNumber);
                         break;
                     case "deadline":
-                        currentNumber = Deadline.add(line, taskArrayList, currentNumber);
+                        currentTaskNumber = Deadline.add(line, taskArrayList, currentTaskNumber);
                         break;
                     case "event":
-                        currentNumber = Event.add(line, taskArrayList, currentNumber);
+                        currentTaskNumber = Event.add(line, taskArrayList, currentTaskNumber);
                         break;
                     case "list":
-                        listing(taskArrayList, currentNumber);
+                        listing(taskArrayList, currentTaskNumber);
                         break;
                     case "find":
-                        findEntry(taskArrayList, currentNumber, lineComponents[1]);
+                        findEntry(taskArrayList, currentTaskNumber, lineComponents[1]);
                         break;
                     case "delete":
-                        currentNumber = deleting(taskArrayList, currentNumber, Integer.parseInt(lineComponents[1]));
+                        currentTaskNumber = deleting(taskArrayList, currentTaskNumber, Integer.parseInt(lineComponents[1]));
                         break;
                     case "bye":
                         System.out.println("     Bye. Hope to see you again soon!");
                         break;
                     default:
                         if (line.matches("mark \\d") || line.matches("unmark \\d")) {
-                            Task.markOrUnmark(line, taskArrayList, currentNumber);
+                            Task.markOrUnmark(line, taskArrayList, currentTaskNumber);
                             break;
                         }
                     }

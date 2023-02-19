@@ -9,6 +9,9 @@ public abstract class Task {
     protected boolean isDone;
     protected String taskLabel;
 
+    protected String doneStatusLabel = "[X]";
+    protected String notDoneStatusLabel = "[ ]";
+
     static final int TASK_NUMBER_OFFSET = 1;
 
     public static void printHorizontalLine() {
@@ -20,10 +23,13 @@ public abstract class Task {
         this.isDone = false;
     }
 
-    public Task(){};
+    public Task() {
+    }
+
+    ;
 
     public String getStatusIcon() {
-        return (isDone ? "[X]" : "[ ]");
+        return (isDone ? doneStatusLabel : notDoneStatusLabel);
     }
 
     public String getDescription() {
@@ -46,8 +52,8 @@ public abstract class Task {
     /**
      * Check if the command is to mark or unmark an entry to then run appropriate method.
      *
-     * @param command instruction that could be "mark" or "unmark
-     * @param listOfTasks listOfTasks ArrayList of tasks.
+     * @param command       instruction that could be "mark" or "unmark
+     * @param listOfTasks   listOfTasks ArrayList of tasks.
      * @param currentNumber Number of tasks present in the list.
      */
     public static void markOrUnmark(String command, ArrayList<Task> listOfTasks, int currentNumber) {
@@ -62,7 +68,7 @@ public abstract class Task {
         return currentNumber;
     }
 
-    protected static void unmark(String command, ArrayList<Task>  listOfTasks) {
+    protected static void unmark(String command, ArrayList<Task> listOfTasks) {
         String[] seperated = command.split(" ");
         int number = Integer.parseInt(seperated[1]) - TASK_NUMBER_OFFSET;
         listOfTasks.get(number).setDone(false);
@@ -71,7 +77,7 @@ public abstract class Task {
                 listOfTasks.get(number).getStatusIcon() + " " + listOfTasks.get(number).description);
     }
 
-    protected static void mark(String command, ArrayList<Task>  listOfTasks) {
+    protected static void mark(String command, ArrayList<Task> listOfTasks) {
         String[] seperated = command.split(" ");
         int number = Integer.parseInt(seperated[1]) - TASK_NUMBER_OFFSET;
         listOfTasks.get(number).setDone(true);

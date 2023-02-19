@@ -13,16 +13,17 @@ public class LoadFile {
      *
      * @throws IOException if there are IO errors.
      */
-    public static void initFile() throws IOException{
+    public static void initFile() throws IOException {
         File directory = new File(targetFilePath);
-        if(!directory.exists()){
+        if (!directory.exists()) {
             directory.mkdir();
         }
         File textFile = new File(file);
-        if(!textFile.exists()){
+        if (!textFile.exists()) {
             textFile.createNewFile();
         }
     }
+
     public static int loadFileContents(String filePath, ArrayList<Task> taskArrayList, int currentNumber)
             throws FileNotFoundException {
         String line;
@@ -30,11 +31,11 @@ public class LoadFile {
         File f = new File(filePath); // create a File for the given file path
         Scanner s = new Scanner(f); // create a Scanner using the File as the source
         while (s.hasNext()) {
-            currentNumber+=1;
+            currentNumber += 1;
             line = s.nextLine();
             String[] lineComponents = line.split("/");
             type = lineComponents[0];
-            switch(type) {
+            switch (type) {
             case "T":
                 Todo newToDo = new Todo();
                 newToDo.taskLabel = "[T]";
