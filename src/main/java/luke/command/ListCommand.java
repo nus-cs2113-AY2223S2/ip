@@ -5,6 +5,7 @@ import luke.TaskList;
 import luke.Ui;
 
 public class ListCommand extends Command {
+    private static final String FIRST_LINE = "Printing Tasks...";
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         //Check if the TaskList is empty
@@ -12,6 +13,6 @@ public class ListCommand extends Command {
             ui.printEmptyList();
             return;
         }
-        ui.printTaskList(tasks.getTaskList());
+        ui.printTaskList(tasks.getTaskList(), FIRST_LINE);
     }
 }

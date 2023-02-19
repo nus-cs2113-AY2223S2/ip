@@ -7,6 +7,7 @@ import luke.task.Task;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -14,7 +15,7 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 
-public class TaskList {
+public class TaskList implements StringManipulation {
     /** Unique ID to be given to each new task for identification */
     private int newTaskID;
 
@@ -109,19 +110,20 @@ public class TaskList {
             if (taskDate == null) {
                 return false;
             }
-            newTask = new Deadline(taskName, newTaskID, taskDate);
+            newTask = new Deadline(taskName, newTaskID, taskDate.trim());
             break;
         default:
             if (taskDate == null) {
                 return false;
             }
-            String[] taskDates = taskDate.split(" ", 2);
-            if (taskDates.length <= 1) {
+            String startDate = StringManipulation.getFirstDetail(taskDate);
+            String endDate = StringManipulation.removeFirstDetail(taskDate);
+
+            if (startDate == null || endDate == null) {
                 return false;
             }
-            String startDate = taskDates[0];
-            String endDate = taskDates[1];
-            newTask = new Event(taskName, newTaskID, startDate, endDate);
+
+            newTask = new Event(taskName, newTaskID, startDate.trim(), endDate.trim());
             break;
         }
         tasks.put(newTaskID, newTask);
@@ -159,6 +161,17 @@ public class TaskList {
         int toDeleteID = serialNumbers.get(toDeleteSerialNumber);
         tasks.remove(toDeleteID);
         updateSerialNumbers();
+    }
+
+    public ArrayList<Task> findTask(String toFind) {
+        ArrayList<Task> found = new ArrayList<>();
+        for (Map.Entry<Integer, Task> entry : tasks.entrySet()) {
+            Task task = entry.getValue();
+            if (task.getTaskName().contains(toFind)) {
+                found.add(task);
+            }
+        }
+        return found;
     }
 
     /**

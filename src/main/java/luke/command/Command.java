@@ -3,8 +3,7 @@ package luke.command;
 import luke.Storage;
 import luke.TaskList;
 import luke.Ui;
-import luke.exception.AddTaskException;
-import luke.task.StringManipulation;
+import luke.StringManipulation;
 
 public abstract class Command implements StringManipulation {
 
