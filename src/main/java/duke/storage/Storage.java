@@ -28,17 +28,16 @@ public class Storage {
         fw.close();
     }
 
-    public static String read() {
+    public String read() {
         checkSaveDir();
         try {
-            String data = Files.readString(SAVE_FILE);
-            return data;
+            return Files.readString(SAVE_FILE);
         } catch (IOException err) {
             return "";
         }
     }
 
-    public static void save(String saveData) throws IOException {
-        writeToFile(SAVE_FILE.toString(), saveData.toString());
+    public void save(String saveData) throws IOException {
+        writeToFile(SAVE_FILE.toString(), saveData);
     }
 }

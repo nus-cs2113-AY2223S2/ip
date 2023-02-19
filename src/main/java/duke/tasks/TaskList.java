@@ -33,7 +33,10 @@ public class TaskList {
         return tasks.size();
     }
 
-    public Task delete(int id) {
+    public Task delete(int id) throws InvalidInputIDException {
+        if (id < 1 || id > tasks.size()) {
+            throw new InvalidInputIDException();
+        }
         Task temp = tasks.get(id - 1);
         tasks.remove(id - 1);
         return temp;
