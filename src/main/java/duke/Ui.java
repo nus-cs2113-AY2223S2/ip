@@ -58,11 +58,11 @@ public class Ui {
         System.out.println("Update database failure");
     }
 
-    static void goodbyeMessage() {
+    public static void goodbyeMessage() {
         System.out.print(LINE + EXIT_MESSAGE + System.lineSeparator() + LINE);
     }
 
-    static void markChangeMessage(String command, int indexOfMarking, TaskList tasks) {
+    public static void markChangeMessage(String command, int indexOfMarking, TaskList tasks) {
         System.out.print(LINE);
         if (command.startsWith("mark ")) {
             System.out.println(MARK_MESSAGE);
