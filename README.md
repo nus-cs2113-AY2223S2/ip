@@ -17,24 +17,24 @@ By: `sansders` Last Updated: `February 2023`
 - [4. Command Summary](#4.-Command-Summary)
 
 # 1. Introduction
-Duke, your personal bot,
-Second only to ChatGPT,
-Tracks your to-dos and deadlines a lot,
+Duke, your personal bot,<br>
+Second only to ChatGPT,<br>
+Tracks your to-dos and deadlines a lot,<br>
 Just like a journal, but electronically.
 
-With Duke by your side,
-Events are always on time,
-Tasks you no longer need to hide,
+With Duke by your side,<br>
+Events are always on time,<br>
+Tasks you no longer need to hide,<br>
 Completed or not, Duke keeps them in line.
 
-Minimal effort is all it takes,
-To keep your life organized and neat.
-No need to worry about missed dates,
+Minimal effort is all it takes,<br>
+To keep your life organized and neat.<br>
+No need to worry about missed dates,<br>
 With Duke, everything is a treat.
 
-So why wait any longer?
-Install Duke today!
-Your life will be much stronger,
+So why wait any longer?<br>
+Install Duke today!<br>
+Your life will be much stronger,<br>
 And organized in every way!
 
 
