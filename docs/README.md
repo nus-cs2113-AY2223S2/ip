@@ -387,44 +387,5 @@ Expected outcome:
     ____________________________________________________________
 ```
 <hr>
+
 <br>
-<!-- Template
-# Features
-
-## Add Tasks
-
-Add various types of tasks to the task tracker
-
-Types of tasks:
-1. Todo
-2. Deadline
-3. Event
-
-## Usage
-
-### Todo
-### `todo` - Adds a todo
-
-Adds a todo task to the task tracker
-
-Example of usage:
-
-`todo (arguments)`
-```
-todo read book
-``` 
-
-Expected outcome:
-
-The todo task is added to the list
-
-```
-    ____________________________________________________________
-
-     Got it. I've added this task:
-       [T][ ] read book
-     Now you have 1 task in the list.
-    ____________________________________________________________
-```
-<hr>
--->
