@@ -8,6 +8,7 @@ public class Ui {
     public static final String MARK_MESSAGE = "Nice! I've marked this task as done:";
     public static final String UNMARK_MESSAGE = "OK, I've marked this task as not done yet:";
     public static final String LINE = "____________________________________________________________\n";
+    public static final String LS = System.lineSeparator();
 
     private Scanner in;
 
@@ -21,9 +22,9 @@ public class Ui {
     }
 
     public static void addSpecialTaskMessage() {
-        int lastElement = Duke.tasks.size() - 1;
-        System.out.println(LINE + Duke.tasks.get(lastElement).addTaskMessage() + "Now you have " + (lastElement + 1)
-                + " tasks in the list." + System.lineSeparator() + LINE);
+        int lastElement = Duke.tasks.getTaskCount() - 1;
+        System.out.println(LINE + Duke.tasks.getTaskFromIndex(lastElement).addTaskMessage() + "Now you have " +
+                (lastElement + 1) + " tasks in the list." + System.lineSeparator() + LINE);
     }
 
     public static void emptyCommandMessage(String task) {
@@ -36,8 +37,8 @@ public class Ui {
 
     public static void printList() {
         System.out.print(LINE);
-        for (int i = 0; i < Duke.tasks.size(); ++i) {
-            System.out.println((i + 1) + "." + Duke.tasks.get(i).toString());
+        for (int i = 0; i < Duke.tasks.getTaskCount(); ++i) {
+            System.out.println((i + 1) + "." + Duke.tasks.getTaskFromIndex(i).toString());
         }
         System.out.println(LINE);
     }
@@ -47,8 +48,8 @@ public class Ui {
     }
 
     public static void deleteTaskMessage(int deleteIndex) {
-        System.out.println(LINE + Duke.tasks.get(deleteIndex).deleteTaskMessage() + "Now you have "
-                + (Duke.tasks.size() - 1) + " tasks in the list." + System.lineSeparator() + LINE);
+        System.out.println(LINE + Duke.tasks.getTaskFromIndex(deleteIndex).deleteTaskMessage() + "Now you have "
+                + (Duke.tasks.getTaskCount() - 1) + " tasks in the list." + System.lineSeparator() + LINE);
     }
 
     public static void updateDatabaseFailureMessage() {
@@ -66,6 +67,6 @@ public class Ui {
         } else {
             System.out.println(UNMARK_MESSAGE);
         }
-        System.out.println("  " + Duke.tasks.get(indexOfMarking).toString() + System.lineSeparator() + LINE);
+        System.out.println("  " + Duke.tasks.getTaskFromIndex(indexOfMarking).toString() + LS + LINE);
     }
 }

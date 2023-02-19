@@ -9,21 +9,18 @@ import duke.task.Todo;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Duke {
 
     public static boolean isProgramRunning = true;
     private static Storage database = null;
-    public static ArrayList<Task> tasks = null;
-
+    public static TaskList tasks;
     private static Ui ui;
     public static void main(String[] args) {
         ui = new Ui();
         Ui.greeting();
         database = new Storage();
-        tasks = database.tasks;
+        tasks = new TaskList(database.tasks);
         while (isProgramRunning) {
             String fullCommand = ui.readCommand();
             String firstWord = fullCommand.split(" ")[0];
@@ -65,7 +62,7 @@ public class Duke {
             throw new IllegalCommandException();
         }
         Ui.deleteTaskMessage(deleteIndex);
-        tasks.remove(deleteIndex);
+        tasks.deleteTaskFromTaskList(deleteIndex);
         try {
             database.updateDatabaseTask();
         } catch (IOException e) {
@@ -127,7 +124,7 @@ public class Duke {
     }
 
     private static void addTaskBackgroundProcess(Task currTask) {
-        tasks.add(currTask);
+        tasks.addTaskToTaskList(currTask);
         addTaskToDatabase(currTask);
         Ui.addSpecialTaskMessage();
     }
@@ -180,7 +177,7 @@ public class Duke {
     }
 
     private static void createMarkOrUnmark(String command, String[] words, int indexOfMarking) {
-        tasks.get(indexOfMarking).setDone(words[0]);
+        tasks.getTaskFromIndex(indexOfMarking).setDone(words[0]);
         try {
             database.updateDatabaseTask();
         } catch (IOException e) {
@@ -190,7 +187,7 @@ public class Duke {
     }
 
     private static boolean isValidIndex(int indexOfMarking) {
-        if (indexOfMarking < 0 || indexOfMarking > (tasks.size() - 1)) {
+        if (indexOfMarking < 0 || indexOfMarking > (tasks.getTaskCount() - 1)) {
             return false;
         }
         return true;
