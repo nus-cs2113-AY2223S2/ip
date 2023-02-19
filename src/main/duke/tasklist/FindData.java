@@ -4,26 +4,36 @@ import duke.task.Task;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 
 public class FindData {
-    private final HashMap<String, HashSet<Integer>> findTable;
+    private final HashMap<String, LinkedHashSet<Integer>> findTable;
 
     public FindData() {
         this.findTable = new HashMap<>();
     }
 
     public void addTask(Task task, int index) {
-        String[] split = task.getTask().split("%", 3);
+        String[] split = task.getTask().split("%");
         String name = split[0];
         String[] keywords = name.split(" ");
+        String extraKeyWord = "";
         for (String str : keywords) {
             if (findTable.get(str) == null) {
-                HashSet<Integer> temp = new HashSet<>();
+                LinkedHashSet<Integer> temp = new LinkedHashSet<>();
                 temp.add(index);
                 findTable.put(str, temp);
             } else {
                 findTable.get(str).add(index);
             }
+            extraKeyWord = extraKeyWord.concat(str + " ");
+        }
+        if (findTable.get(extraKeyWord) == null) {
+            LinkedHashSet<Integer> temp = new LinkedHashSet<>();
+            temp.add(index);
+            findTable.put(extraKeyWord, temp);
+        } else {
+            findTable.get(extraKeyWord).add(index);
         }
     }
 
@@ -39,11 +49,11 @@ public class FindData {
         }
     }
 
-    public HashSet<Integer> findKeyword(String keyword) {
-        if (findTable.get(keyword) == null) {
-            return new HashSet<>();
+    public LinkedHashSet<Integer> findKeyword(String keyword) {
+        if (findTable.get(keyword.trim()) == null) {
+            return new LinkedHashSet<>();
         } else {
-            return findTable.get(keyword);
+            return findTable.get(keyword.trim());
         }
     }
 }

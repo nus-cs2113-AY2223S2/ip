@@ -3,7 +3,9 @@ package duke.storage;
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
+import duke.task.ToDo;
 import duke.tasklist.DateData;
+import duke.tasklist.FindData;
 import duke.tasklist.TaskData;
 import duke.util.DukeException;
 
@@ -66,15 +68,16 @@ public class FileManager {
         }
     }
 
-    public static void handleFile(TaskData tasks, DateData dates) throws DukeException {
+    public static void handleFile(TaskData tasks, DateData dates, FindData find) throws DukeException {
         for (String str: storedData) {
             String[] temp = str.split("%",5);
             switch (temp[0].trim()) {
             case ("T"):
-                tasks.handleTodo(temp[2].trim(), false);
+                ToDo todo = tasks.handleTodo(temp[2].trim(), false);
                 if (temp[1].trim().equals("X")) {
                     tasks.handleMark("task", temp[2].trim(), false);
                 }
+                find.addTask(todo, tasks.getTaskCount());
                 break;
             case ("D"):
                 try {
@@ -84,6 +87,7 @@ public class FileManager {
                         tasks.handleMark("task", temp[2].trim(), false);
                     }
                     dates.addDeadline(deadline, tasks.getTaskCount());
+                    find.addTask(deadline, tasks.getTaskCount());
                 } catch (DukeException e) {
                     throw new DukeException();
                 }
@@ -96,6 +100,7 @@ public class FileManager {
                         tasks.handleMark("task", temp[2].trim(), false);
                     }
                     dates.addEvent(event, tasks.getTaskCount());
+                    find.addTask(event, tasks.getTaskCount());
                 } catch (DukeException e) {
                     throw new DukeException();
                 }

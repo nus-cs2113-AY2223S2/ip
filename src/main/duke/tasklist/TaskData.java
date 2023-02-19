@@ -39,8 +39,8 @@ public class TaskData {
         }
         for (int i : list) {
             System.out.println(i + "." + tasks.get(i));
-            ui.printFound(list.size());
         }
+        ui.printFound(list.size());
     }
 
     public void listOut() {
@@ -110,12 +110,14 @@ public class TaskData {
         }
     }
 
-    public void handleTodo(String next, boolean isFromCommand) {
-        tasks.put(++taskCount, new ToDo(next.stripLeading(), false));
+    public ToDo handleTodo(String next, boolean isFromCommand) {
+        ToDo task = new ToDo(next.stripLeading(), false);
+        tasks.put(++taskCount, task);
         if (isFromCommand) {
             ui.printTodo();
             echo();
         }
+        return task;
     }
 
     public Deadline handleDeadline(String next, boolean isFromCommand) throws DukeException {

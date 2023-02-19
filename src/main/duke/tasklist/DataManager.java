@@ -4,6 +4,7 @@ import duke.parser.Parser;
 import duke.storage.FileManager;
 import duke.task.Deadline;
 import duke.task.Event;
+import duke.task.ToDo;
 import duke.util.DukeException;
 import duke.ui.DukeMessages;
 
@@ -13,18 +14,21 @@ import java.util.LinkedHashSet;
 
 public class DataManager {
 
+    private final DateData dates;
+    private final FindData find;
+    private final Parser parser;
     protected String path;
     private final DukeMessages ui;
     private final TaskData tasks;
-    private final DateData dates;
-    private final Parser parser;
+
 
     public DataManager(String path, DukeMessages ui, Parser parser) {
+        this.dates = new DateData();
+        this.find = new FindData();
+        this.parser = parser;
         this.path = path;
         this.ui = ui;
-        this.parser = parser;
         this.tasks = new TaskData(ui, parser, path);
-        this.dates = new DateData();
     }
 
     public void command(String parsedCommand, String next) {
@@ -41,19 +45,23 @@ public class DataManager {
                 tasks.handleUnmark(parsedCommand, next, isFromCommand);
                 break;
             case "todo":
-                tasks.handleTodo(next, isFromCommand);
+                ToDo todo = tasks.handleTodo(next, isFromCommand);
+                find.addTask(todo, tasks.getTaskCount());
                 break;
             case "deadline":
                 Deadline deadline = tasks.handleDeadline(next, isFromCommand);
                 dates.addDeadline(deadline, tasks.getTaskCount());
+                find.addTask(deadline, tasks.getTaskCount());
                 break;
             case "event":
                 Event event = tasks.handleEvent(next, isFromCommand);
                 dates.addEvent(event, tasks.getTaskCount());
+                find.addTask(event, tasks.getTaskCount());
                 break;
             case "delete":
                 tasks.handleDelete(next, isFromCommand);
                 dates.handleDelete(parser.getNum());
+                find.handleDelete(parser.getNum());
                 break;
             case "date":
                 LocalDate date = parser.processDate(next);
@@ -61,6 +69,8 @@ public class DataManager {
                 tasks.printFromList(list);
                 break;
             case "find":
+                list = find.findKeyword(next);
+                tasks.printFromList(list);
                 break;
             }
         } catch (DukeException e) {
@@ -77,7 +87,7 @@ public class DataManager {
             throw new DukeException();
         }
         try {
-            FileManager.handleFile(this.tasks, this.dates);
+            FileManager.handleFile(this.tasks, this.dates, this.find);
         } catch (DukeException e) {
             ui.printReadFileError();
             throw new DukeException();
