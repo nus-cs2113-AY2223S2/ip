@@ -14,24 +14,22 @@ public class Duke {
     private Storage storage; // todo improve
     private TaskList taskList;
 
-    private void startUp() {
+    public Duke(String filePath) {
+        ui = new Ui();
+        storage = new Storage(filePath);
         try {
-            this.ui = new Ui();
-            this.storage = new Storage();
-            storage.makeDirectory(); // make dir if it does not exist
-            File dataFile = storage.openDataFile(); // make file if it does not exist
-            this.taskList = new TaskList(storage.importData(dataFile)); // import the data from file to program
-            Ui.showGreeting();
+            storage.makeDirectory();
+            File dataFile = storage.openDataFile();
+            taskList = new TaskList(storage.importData(dataFile));
         } catch (Exception e) {
-            // todo print saying not able to start, failure in storage management
+            // error from storage issues, exit
+            Ui.showStartingError();
             System.exit(1);
         }
-
     }
 
-    public void run() {
-        startUp();
-        // user to input update
+    public void run() { //todo
+        Ui.showGreeting();
         Scanner in = new Scanner(System.in);
         String input = in.nextLine();
         while (!input.equals(ExitCommand.COMMAND_WORD)) {

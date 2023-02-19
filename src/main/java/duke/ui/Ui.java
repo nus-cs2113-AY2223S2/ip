@@ -59,55 +59,20 @@ public class Ui { // deals with interactions with the user
         endLine();
     }
 
-    public static void showInvalidMark() {
+    public static void showError(String message) {
         System.out.println(SEGMENT_LINE);
-        System.out.println(ErrorMessages.INVALID_MARK_MESSAGE.STANDARD_OUTPUT);
+        System.out.println(message);
     }
 
     public static void showExceedTask() {
         System.out.println(SEGMENT_LINE);
-        System.out.printf(ErrorMessages.OVER_TASK_COUNT_MESSAGE.STANDARD_OUTPUT, Task.getTotalTasks()
+        System.out.printf(ErrorMessages.OVER_TASK_COUNT_MESSAGE.MESSAGE, Task.getTotalTasks()
                 + NEW_LINE);
     }
 
-    public static void showInvalidUnmark() {
-        System.out.println(SEGMENT_LINE);
-        System.out.println(ErrorMessages.INVALID_UNMARK_MESSAGE.STANDARD_OUTPUT);
-    }
-
-    public static void showInvalidInput() {
-        System.out.println(SEGMENT_LINE);
-        System.out.println(ErrorMessages.INVALID_INPUT_MESSAGE.STANDARD_OUTPUT);
-    }
-
-    public static void showInvalidTodo() {
-        System.out.println(SEGMENT_LINE);
-        System.out.println(ErrorMessages.INVALID_TODO_MESSAGE.STANDARD_OUTPUT);
-    }
-
-    public static void showInvalidDeadline() {
-        System.out.println(SEGMENT_LINE);
-        System.out.println(ErrorMessages.MISSING_DEADLINE_KEYWORD_MESSAGE.STANDARD_OUTPUT);
-    }
-
-    public static void showInsufficientDeadline() {
-        System.out.println(SEGMENT_LINE);
-        System.out.println(ErrorMessages.INSUFFICIENT_DEADLINE_FIELD_MESSAGE.STANDARD_OUTPUT);
-    }
-
-    public static void showInvalidEvent() {
-        System.out.println(SEGMENT_LINE);
-        System.out.println(ErrorMessages.INVALID_EVENT_FORMAT_MESSAGE.STANDARD_OUTPUT);
-    }
-
-    public static void showInsufficientEvent() {
-        System.out.println(SEGMENT_LINE);
-        System.out.println(ErrorMessages.INSUFFICIENT_EVENT_FIELD_MESSAGE.STANDARD_OUTPUT);
-    }
-
-    public static void showInvalidDelete() {
-        System.out.println(SEGMENT_LINE);
-        System.out.println(DeleteCommand.INVALID_COMMAND_MESSAGE);
+    public static void showStartingError() {
+        System.out.println(ErrorMessages.ERROR_IN_SETTING_UP.MESSAGE);
+        endLine();
     }
 
     public static void showTaskStatus(TaskList taskList, int taskIndex) {
