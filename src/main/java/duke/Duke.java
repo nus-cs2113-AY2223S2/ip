@@ -1,81 +1,17 @@
 package duke;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
+import duke.task.Task;
+
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
+    public static ArrayList<Task> tasks = new ArrayList<>();
     static boolean isFileEdited = false;
     static boolean toPrint = true;
     static int taskCount = 0;
-
-    public static void extractData(File fileName) throws FileNotFoundException {
-        Scanner s = new Scanner(fileName);
-        int count = 1;
-        while (s.hasNext()) {
-            toPrint = false;
-            String currentLine = s.nextLine();
-            String userCommand = currentLine.substring(4);
-            handleUserCommand(userCommand);
-            String markStatus = currentLine.substring(0, 4);
-            if (markStatus.equals("[X] ")) {
-                TaskList.doCommandMark(count);
-            } else if (!markStatus.equals("[ ] ")) {
-                // print task wrong format
-                Ui.printIncorrectTaskFormat();
-            }
-            count++;
-        }
-        toPrint = true;
-    }
-
-    public static void doEditFile(java.nio.file.Path path) throws IOException {
-        File fileName = new java.io.File(path.toUri());
-        FileWriter savedFile = new FileWriter(fileName, false);
-        for (int index = 0; index < taskCount; index++) {
-            savedFile.write(TaskList.tasks.get(index).returnCommand());
-            savedFile.write(System.getProperty("line.separator"));
-        }
-        savedFile.write(System.getProperty("line.separator"));
-        savedFile.close();
-    }
-
-    public static void doLoadFile(java.nio.file.Path path) {
-        try {
-            File fileName = new java.io.File(path.toUri());
-            if (fileName.createNewFile()) {
-                // print file created
-                Ui.printFileCreated(true);
-            } else {
-                Scanner s = new Scanner(fileName);
-                if (!s.hasNext()) {
-                    //print empty file
-                    Ui.printEmptyFile();
-                } else {
-                    //print here are your tasks
-                    System.out.println(Ui.LINE);
-                    System.out.println("\tHere are your stored tasks!");
-
-                    int index = 1;
-                    while (s.hasNext()) {
-                        System.out.println("\t" + index + ". " + s.nextLine());
-                        index++;
-                    }
-                    System.out.println(Ui.LINE);
-                }
-                extractData(fileName);
-            }
-        } catch (IOException e) {
-            // print file creation error
-            Ui.printFileCreated(false);
-        } catch (IndexOutOfBoundsException e) {
-            // print task saved incorrect format
-            Ui.printIncorrectTaskFormat();
-        }
-    }
 
     public static void handleUserCommand(String userCommand) {
         String[] extractFirstWord = userCommand.split(" ", 2);
@@ -155,7 +91,8 @@ public class Duke {
     public static void main(String[] args) {
         String home = System.getProperty("user.home");
         java.nio.file.Path path = java.nio.file.Paths.get(home, "duke.txt");
-        doLoadFile(path);
+        String absolutePath = path.toString();
+        Storage.openFile(absolutePath);
         Ui.doCommandGreet();
         Scanner in = new Scanner(System.in);
         String userCommand;
@@ -165,7 +102,7 @@ public class Duke {
         } while (!userCommand.equals(Ui.COMMAND_BYE));
         try {
             if (isFileEdited) {
-                doEditFile(path);
+                Storage.doEditFile(absolutePath);
             }
         } catch (IOException e) {
             Ui.printFileCreated(false);
