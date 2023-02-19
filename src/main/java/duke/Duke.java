@@ -5,7 +5,6 @@ import duke.tasklist.TaskList;
 import duke.ui.Ui;
 
 import java.io.IOException;
-import java.util.Scanner;
 
 public class Duke {
 
@@ -20,13 +19,11 @@ public class Duke {
         String absolutePath = path.toString();
         Storage.openFile(absolutePath);
 
-        Ui.doCommandGreet();
-
-        Scanner in = new Scanner(System.in);
+        Ui.printGreetMessage();
         String userCommand;
 
         do {
-            userCommand = in.nextLine();
+            userCommand = Ui.getUserInput();
             TaskList.handleUserCommand(userCommand);
         } while (!userCommand.equals(TaskList.COMMAND_BYE));
         try {
@@ -37,4 +34,5 @@ public class Duke {
             Ui.printFileCreated(false);
         }
     }
+
 }

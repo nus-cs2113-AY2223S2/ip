@@ -1,5 +1,7 @@
 package duke.ui;
 
+import java.util.Scanner;
+
 public class Ui {
 
     public static final String LINE = "\t____________________________________________________________";
@@ -53,14 +55,14 @@ public class Ui {
         }
     }
 
-    public static void doCommandGreet() {
+    public static void printGreetMessage() {
         printLine();
         System.out.println("\tHello! I'm Duke.");
         System.out.println("\tHow can I help you today?\n");
         printLine();
     }
 
-    public static void doCommandBye() {
+    public static void printExitMessage() {
         printLine();
         System.out.println("\tBye! Remember to finish your tasks.\n");
         printLine();
@@ -69,6 +71,22 @@ public class Ui {
     public static void printInvalidCommand() {
         printLine();
         System.out.println("\t☹ Error! Please input a valid command!");
+        printLine();
+    }
+
+    public static String getUserInput() {
+        Scanner in = new Scanner(System.in);
+        return in.nextLine();
+    }
+
+    public static void printFileContents(Scanner s) {
+        printLine();
+        System.out.println("\tHere are your stored tasks!");
+        int index = 1;
+        while (s.hasNext()) {
+            System.out.println("\t" + index + ". " + s.nextLine());
+            index++;
+        }
         printLine();
     }
 }

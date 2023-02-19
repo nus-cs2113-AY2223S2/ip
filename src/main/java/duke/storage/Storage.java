@@ -40,19 +40,8 @@ public class Storage {
     private static void printFile(File fileName) throws FileNotFoundException {
         Scanner s = new Scanner(fileName);
         if (!s.hasNext()) {
-            //print empty file
             Ui.printEmptyFile();
-        } else {
-            //print here are your tasks
-            Ui.printLine();
-            System.out.println("\tHere are your stored tasks!");
-            int index = 1;
-            while (s.hasNext()) {
-                System.out.println("\t" + index + ". " + s.nextLine());
-                index++;
-            }
-            Ui.printLine();
-        }
+        } else Ui.printFileContents(s);
         extractData(fileName);
     }
 
@@ -68,7 +57,6 @@ public class Storage {
             if (markStatus.equals("[X] ")) {
                 Command.doCommandMark(count);
             } else if (!markStatus.equals("[ ] ")) {
-                // print task wrong format
                 Ui.printIncorrectTaskFormat();
             }
             count++;

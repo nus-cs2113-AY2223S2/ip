@@ -52,7 +52,7 @@ public class TaskList {
             Command.doCommandList();
             break;
         case COMMAND_BYE:
-            Ui.doCommandBye();
+            Ui.printExitMessage();
             break;
         case COMMAND_DELETE:
             try {
