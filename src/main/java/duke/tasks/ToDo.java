@@ -3,6 +3,7 @@ package duke.tasks;
 import duke.exceptions.InvalidTaskFormatException;
 
 import java.util.ArrayList;
+import java.util.function.Function;
 import java.util.regex.Pattern;
 
 public class ToDo extends Task {
