@@ -4,6 +4,7 @@ import Command.Command;
 import Command.AddCommand;
 import Command.DeleteCommand;
 import Command.ExitCommand;
+import Command.FindCommand;
 import Command.ListCommand;
 import Command.MarkCommand;
 import Command.UnmarkCommand;
@@ -26,6 +27,10 @@ public class Parser {
         // Lists all added tasks
         case "list":
             c = new ListCommand();
+            break;
+        
+        case "find":
+            c = new FindCommand(input);
             break;
 
         // Lists upcoming tasks

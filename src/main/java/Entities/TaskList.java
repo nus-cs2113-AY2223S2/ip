@@ -44,6 +44,17 @@ public class TaskList {
     public ArrayList<Task> getTasks() {
         return this.tasks;
     }
+    
+    public TaskList getFilteredTasks(String taskSubstring) {
+        TaskList filteredTasks = new TaskList();
+        for (Task t : getTasks()) {
+            if (!t.getTaskDescription().toLowerCase().contains(taskSubstring.toLowerCase())) {
+                continue;
+            }
+            filteredTasks.addTask(t);
+        }
+        return filteredTasks;
+    }
 
     public TaskList getFilteredTasks(String taskSubstring) {
         TaskList filteredTasks = new TaskList();
