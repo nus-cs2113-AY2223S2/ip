@@ -13,21 +13,25 @@ import java.io.IOException;
 public class Duke {
 
     public static boolean isProgramRunning = true;
-    private static Storage database = null;
-    public static TaskList tasks;
-    private static Ui ui;
-    public static void main(String[] args) {
+    private Storage database = null;
+    public TaskList tasks;
+    private Ui ui;
+
+    public Duke() {
         ui = new Ui();
-        Ui.greeting();
         database = new Storage();
         tasks = new TaskList(database.tasks);
+        Ui.greeting();
+    }
+
+    public void run() {
         while (isProgramRunning) {
             String fullCommand = ui.readCommand();
             String firstWord = fullCommand.split(" ")[0];
             if (fullCommand.equals("bye")) {
                 exit();
             } else if (fullCommand.equals("list")) {
-                Ui.printList();
+                Ui.printList(tasks);
             } else if (firstWord.equals("mark") || firstWord.equals("unmark")) {
                 MarkOrUnmarkHandler(fullCommand);
             } else if (firstWord.equals("todo")) {
@@ -44,7 +48,11 @@ public class Duke {
         }
     }
 
-    private static void deleteTaskHandler(String command) {
+    public static void main(String[] args) {
+        new Duke().run();
+    }
+
+    private void deleteTaskHandler(String command) {
         try {
             deleteTask(command);
         } catch (IllegalCommandException e) {
@@ -52,7 +60,7 @@ public class Duke {
         }
     }
 
-    private static void deleteTask(String command) throws IllegalCommandException {
+    private void deleteTask(String command) throws IllegalCommandException {
         String[] words = command.trim().split(" ");
         if (isInvalidString(words)) {
             throw new IllegalCommandException();
@@ -61,7 +69,7 @@ public class Duke {
         if (!isValidIndex(deleteIndex)) {
             throw new IllegalCommandException();
         }
-        Ui.deleteTaskMessage(deleteIndex);
+        Ui.deleteTaskMessage(deleteIndex, tasks);
         tasks.deleteTaskFromTaskList(deleteIndex);
         try {
             database.updateDatabaseTask();
@@ -70,7 +78,7 @@ public class Duke {
         }
     }
 
-    private static void MarkOrUnmarkHandler(String command) {
+    private void MarkOrUnmarkHandler(String command) {
         try {
             markAndUnmarkTask(command);
         } catch (IllegalCommandException e) {
@@ -78,7 +86,7 @@ public class Duke {
         }
     }
 
-    private static void todoTaskHandler(String command) {
+    private void todoTaskHandler(String command) {
         try {
             initTodoTask(command);
         } catch (EmptyCommandException e) {
@@ -86,7 +94,7 @@ public class Duke {
         }
     }
 
-    private static void eventTaskHandler(String command) {
+    private void eventTaskHandler(String command) {
         try {
             initEventTask(command);
         } catch (IllegalCommandException e) {
@@ -96,7 +104,7 @@ public class Duke {
         }
     }
 
-    private static void deadlineTaskHandler(String command) {
+    private void deadlineTaskHandler(String command) {
         try {
             initDeadlineTask(command);
         } catch (EmptyCommandException e) {
@@ -106,7 +114,7 @@ public class Duke {
         }
     }
 
-    private static void initEventTask(String command) throws IllegalCommandException, EmptyCommandException {
+    private void initEventTask(String command) throws IllegalCommandException, EmptyCommandException {
         command = command.replace("event", "").trim();
         if (command.isEmpty()) {
             throw new EmptyCommandException();
@@ -123,10 +131,10 @@ public class Duke {
         addTaskBackgroundProcess(currTask);
     }
 
-    private static void addTaskBackgroundProcess(Task currTask) {
+    private void addTaskBackgroundProcess(Task currTask) {
         tasks.addTaskToTaskList(currTask);
         addTaskToDatabase(currTask);
-        Ui.addSpecialTaskMessage();
+        Ui.addSpecialTaskMessage(tasks);
     }
 
 
@@ -134,7 +142,7 @@ public class Duke {
         return stringSplit.length != 2;
     }
 
-    private static void initDeadlineTask(String command) throws EmptyCommandException, IllegalCommandException {
+    private void initDeadlineTask(String command) throws EmptyCommandException, IllegalCommandException {
         command = command.replace("deadline", "").trim();
         if (command.isEmpty()) {
             throw new EmptyCommandException();
@@ -147,7 +155,7 @@ public class Duke {
         addTaskBackgroundProcess(currTask);
     }
 
-    private static void initTodoTask(String command) throws EmptyCommandException {
+    private void initTodoTask(String command) throws EmptyCommandException {
         String todo = command.replace("todo", "").trim();
         if (todo.isEmpty()) {
             throw new EmptyCommandException();
@@ -156,7 +164,7 @@ public class Duke {
         addTaskBackgroundProcess(currTask);
     }
 
-    private static void addTaskToDatabase(Task currTask) {
+    private void addTaskToDatabase(Task currTask) {
         try {
             database.saveAddTask(currTask.getTaskString());
         } catch (IOException e) {
@@ -164,7 +172,7 @@ public class Duke {
         }
     }
 
-    private static void markAndUnmarkTask(String command) throws IllegalCommandException {
+    private void markAndUnmarkTask(String command) throws IllegalCommandException {
         String[] words = command.split(" ");
         if (words.length != 2) {
             throw new IllegalCommandException();
@@ -176,17 +184,17 @@ public class Duke {
         createMarkOrUnmark(command, words, indexOfMarking);
     }
 
-    private static void createMarkOrUnmark(String command, String[] words, int indexOfMarking) {
+    private void createMarkOrUnmark(String command, String[] words, int indexOfMarking) {
         tasks.getTaskFromIndex(indexOfMarking).setDone(words[0]);
         try {
             database.updateDatabaseTask();
         } catch (IOException e) {
             Ui.updateDatabaseFailureMessage();
         }
-        Ui.markChangeMessage(command, indexOfMarking);
+        Ui.markChangeMessage(command, indexOfMarking, tasks);
     }
 
-    private static boolean isValidIndex(int indexOfMarking) {
+    private boolean isValidIndex(int indexOfMarking) {
         if (indexOfMarking < 0 || indexOfMarking > (tasks.getTaskCount() - 1)) {
             return false;
         }

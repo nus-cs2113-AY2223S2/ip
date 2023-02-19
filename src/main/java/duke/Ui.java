@@ -1,5 +1,7 @@
 package duke;
 
+import duke.task.Task;
+
 import java.util.Scanner;
 
 public class Ui {
@@ -21,9 +23,9 @@ public class Ui {
         return command;
     }
 
-    public static void addSpecialTaskMessage() {
-        int lastElement = Duke.tasks.getTaskCount() - 1;
-        System.out.println(LINE + Duke.tasks.getTaskFromIndex(lastElement).addTaskMessage() + "Now you have " +
+    public static void addSpecialTaskMessage(TaskList tasks) {
+        int lastElement = tasks.getTaskCount() - 1;
+        System.out.println(LINE + tasks.getTaskFromIndex(lastElement).addTaskMessage() + "Now you have " +
                 (lastElement + 1) + " tasks in the list." + System.lineSeparator() + LINE);
     }
 
@@ -35,10 +37,10 @@ public class Ui {
         System.out.println(LINE + " ☹ OOPS!!! I'm sorry, but I don't know what that means :-(\n" + LINE);
     }
 
-    public static void printList() {
+    public static void printList(TaskList tasks) {
         System.out.print(LINE);
-        for (int i = 0; i < Duke.tasks.getTaskCount(); ++i) {
-            System.out.println((i + 1) + "." + Duke.tasks.getTaskFromIndex(i).toString());
+        for (int i = 0; i < tasks.getTaskCount(); ++i) {
+            System.out.println((i + 1) + "." + tasks.getTaskFromIndex(i).toString());
         }
         System.out.println(LINE);
     }
@@ -47,9 +49,9 @@ public class Ui {
         System.out.println(LINE + GREET_MESSAGE);
     }
 
-    public static void deleteTaskMessage(int deleteIndex) {
-        System.out.println(LINE + Duke.tasks.getTaskFromIndex(deleteIndex).deleteTaskMessage() + "Now you have "
-                + (Duke.tasks.getTaskCount() - 1) + " tasks in the list." + System.lineSeparator() + LINE);
+    public static void deleteTaskMessage(int deleteIndex, TaskList tasks) {
+        System.out.println(LINE + tasks.getTaskFromIndex(deleteIndex).deleteTaskMessage() + "Now you have "
+                + (tasks.getTaskCount() - 1) + " tasks in the list." + System.lineSeparator() + LINE);
     }
 
     public static void updateDatabaseFailureMessage() {
@@ -60,13 +62,13 @@ public class Ui {
         System.out.print(LINE + EXIT_MESSAGE + System.lineSeparator() + LINE);
     }
 
-    static void markChangeMessage(String command, int indexOfMarking) {
+    static void markChangeMessage(String command, int indexOfMarking, TaskList tasks) {
         System.out.print(LINE);
         if (command.startsWith("mark ")) {
             System.out.println(MARK_MESSAGE);
         } else {
             System.out.println(UNMARK_MESSAGE);
         }
-        System.out.println("  " + Duke.tasks.getTaskFromIndex(indexOfMarking).toString() + LS + LINE);
+        System.out.println("  " + tasks.getTaskFromIndex(indexOfMarking).toString() + LS + LINE);
     }
 }
