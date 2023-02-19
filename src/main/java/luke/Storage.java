@@ -443,11 +443,8 @@ public class Storage {
             toDosFile.write("");
             deadlinesFile.write("");
             eventsFile.write("");
-            loadNewData();
         } catch (IOException e) {
             handleSaveError();
-        } catch (CreateFileException e) {
-            handleFileCreationError();
         }
     }
 }

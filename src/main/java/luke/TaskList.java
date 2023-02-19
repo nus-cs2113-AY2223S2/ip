@@ -62,6 +62,11 @@ public class TaskList implements StringManipulation {
         }
     }
 
+    public void resetTaskList() {
+        this.newTaskID = 1;
+        this.tasks.clear();
+        this.serialNumbers.clear();
+    }
 
     /**
      * Checks if the type given is a valid task type.

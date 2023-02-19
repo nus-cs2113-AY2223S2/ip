@@ -8,6 +8,7 @@ public class TestingModeCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         storage.clearFiles();
+        tasks.resetTaskList();
         ui.printTestingMode();
     }
 }
