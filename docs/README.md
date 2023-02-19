@@ -3,9 +3,9 @@ Similar to post-it notes, Duke is a friendly remainder app that helps people to 
 
 ## Quick Start
 1. Ensure that you have Java 11 and above installed in your computer.
-2. Download the *ip.jar* [here](https://github.com/pinyoko573/ip/releases)
+2. Download the ***ip.jar*** [here](https://github.com/pinyoko573/ip/releases)
 3. Launch your command prompt/terminal and navigate to the folder where *ip.jar* is located.
-4. Run the following command: *java -jar ip.jar*
+4. Run the following command: `java -jar ip.jar`
 
 ## Features
 ### Keeps a list of items
@@ -35,6 +35,7 @@ Items are stored into a text file after each action is performed, so you don't n
 Shows the list of items recorded.
 
 Format: `list`
+
 Expected output:
 ```
 list
@@ -51,7 +52,9 @@ _________________
 Marks a specific item as done using the **number** shown from the list.
 
 Format: `mark (no)`
+
 Expected output:
+
 Shows the item that has been marked as done.
 ```
 mark 2
@@ -66,7 +69,9 @@ _________________
 Marks a specific item as not done using the **number** shown from the list.
 
 Format: `unmark (no)`
+
 Expected output:
+
 Shows the item that has been marked as not done.
 ```
 unmark 2
@@ -81,7 +86,9 @@ _________________
 Adds an item of type Todo into the list.
 
 Format: `todo (description)`
+
 Expected output:
+
 Displays the Todo item added and the number of items after adding.
 ```
 todo to cook
@@ -97,7 +104,9 @@ _________________
 Adds an item of type Deadline with datemark specified into the list.
 
 Format: `deadline (description) /by (datemark)`
+
 Expected output:
+
 Displays the Deadline item added and the number of items after adding.
 ```
 deadline to play /by everyday
@@ -113,7 +122,9 @@ _________________
 Adds an item of type Event with from & to date specified into the list.
 
 Format: `event (description) /from (start date) /to (end date)`
+
 Expected output:
+
 Displays the Event item added and the number of items after adding.
 ```
 event to exercise /from 1pm /to 3pm
@@ -129,7 +140,9 @@ _________________
 Delete an item using the **number** shown from the items list.
 
 Format: `delete (no)`
+
 Expected output:
+
 Shows the item that has been deleted and the number of items remaining.
 ```
 delete 6
@@ -145,7 +158,9 @@ _________________
 Find all items that contain the specified keyword.
 
 Format: `find (keyword)`
+
 Expected output:
+
 Returns the list of items that contain the keyword.
 ```
 find to s
@@ -161,6 +176,7 @@ _________________
 Exits the Duke application.
 
 Format: `exit`
+
 Expected output:
 ```
 exit
