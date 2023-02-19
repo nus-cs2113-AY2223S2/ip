@@ -15,6 +15,7 @@ public class UpcomingCommand extends Command {
     @Override
     public void execute(TaskList tasks, UI ui, Storage storage) throws DukeException {
         TaskList upcomingTasks = tasks.getUpcomingTasks();
-        ui.printUpcomingTasks(upcomingTasks);
+        String header = "Please be reminded that these tasks are due soon:";
+        ui.printTasks(upcomingTasks, header);
     }
 }

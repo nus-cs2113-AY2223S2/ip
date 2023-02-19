@@ -93,17 +93,17 @@ public class UI {
     }
 
     /**
-     * Prints all tasks upcoming tasks
+     * Prints all tasks with custom message
      * @param tasks
      * @throws DukeException
      */
-    public void printUpcomingTasks(TaskList tasks) throws DukeException {
+    public void printTasks(TaskList tasks, String header) throws DukeException {
         String output = "";
 
         if (tasks.getTasksCount() == 0) {
             output += "\t No tasks found!\n";
         } else {
-            output += "\t Please be reminded that these tasks are due soon:\n";
+            output += "\t" + header + "\n";
             for (int i = 0; i < tasks.getTasksCount(); i++) {
                 output += "\t" + (i + 1) + "." + tasks.getTask(i).toString() + "\n";
             }

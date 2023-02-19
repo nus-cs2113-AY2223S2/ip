@@ -27,7 +27,8 @@ public class FindCommand extends Command implements InputParser {
     @Override
     public void execute(TaskList tasks, UI ui, Storage storage) throws DukeException {
         TaskList filteredTasks = tasks.getFilteredTasks(taskSubstring);
-        ui.printTasks(filteredTasks);
+        String header = "Here are the tasks I found containing : " + taskSubstring;
+        ui.printTasks(filteredTasks, header);
     }
 
     /**
