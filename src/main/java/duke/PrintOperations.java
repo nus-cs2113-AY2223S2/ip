@@ -55,7 +55,7 @@ public class PrintOperations {
         int counter = 0;
 
         if (listOfInputs.size() == 0) {
-            System.out.println("Your search returned no results.");
+            System.out.println("Your list is empty.");
             return;
         }
 
@@ -69,11 +69,6 @@ public class PrintOperations {
      * Prints a list of the Tasks with bulleted points.
      */
     public static void bulletedList(ArrayList<Task> listOfFilteredInputs) {
-        if (listOfFilteredInputs.size() == 0) {
-            System.out.println("List empty!");
-            return;
-        }
-
         for (Task inputs : listOfFilteredInputs) {
             System.out.println("- " + inputs.toString());
         }
@@ -84,6 +79,13 @@ public class PrintOperations {
      */
     public static void foundTasks() {
         System.out.println("Here are matching tasks in your list:");
+    }
+
+    /**
+     * Prints a String that states that no Tasks matching an entered keyword was found.
+     */
+    public static void noTasksFound() {
+        System.out.println("No tasks matching the supplied keyword was found!");
     }
 
     /**
@@ -109,41 +111,41 @@ public class PrintOperations {
      * Prints when the user enters an illegal command.
      */
     public static void illegalCommand() {
-        System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+        System.out.println("OOPS!!! I'm sorry, but I don't know what that means :-(");
     }
 
     /**
      * Prints when the user tries to mark or unmark a Task that already has that marking.
      */
     public static void alreadyMarked() {
-        System.out.println("☹ OOPS!!! This task already has this marking :-(");
+        System.out.println("OOPS!!! This task already has this marking :-(");
     }
 
     /**
      * Prints when the user enters `|` in their input.
      */
     public static void illegalCharacter() {
-        System.out.println("☹ OOPS!!! Please do not have '|' in your input :-(");
+        System.out.println("OOPS!!! Please do not have '|' in your input :-(");
     }
 
     /**
      * Prints when the user enters an illegal syntax.
      */
     public static void illegalSyntax() {
-        System.out.println("☹ OOPS!!! I'm sorry, You entered an incorrect syntax :-(");
+        System.out.println("OOPS!!! I'm sorry, You entered an incorrect syntax :-(");
     }
 
     /**
      * Prints when the user enters an invalid Task index.
      */
     public static void doesNotExist() {
-        System.out.println("☹ OOPS!!! This task does not exist :-(");
+        System.out.println("OOPS!!! This task does not exist :-(");
     }
 
     /**
      * Prints when there is an IO error.
      */
     public static void io() {
-        System.out.println("☹ OOPS!!! Read/write file error :-(");
+        System.out.println("OOPS!!! Read/write file error :-(");
     }
 }
