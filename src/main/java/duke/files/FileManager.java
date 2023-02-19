@@ -66,7 +66,7 @@ public class FileManager {
     }
 
     // Parse all tasks from the file to list
-    public static void populateTaskList() throws Exception {
+    public void populateTaskList() throws Exception {
         try {
             File f = new File(filePath);
             if (!f.exists()) {
@@ -83,7 +83,7 @@ public class FileManager {
     }
 
     // Parse all tasks from list to file
-    public static void populateFile() throws IOException {
+    public void populateFile() throws IOException {
         ArrayList<Task> taskList = Task.getTasksArray();
         if (taskList.size() == 0) {
             writeToFile(filePath, "");

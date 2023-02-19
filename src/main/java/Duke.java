@@ -9,29 +9,27 @@ import java.util.Scanner;
 public class Duke {
     public static void main(String[] args) throws Exception {
 
+        Ui ui = new Ui();
+
         // Text declarations and initial greeting
         final String BARRIER = "____________________________________________________________";
-        final String LOGO = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
 
-        final String GREETING = BARRIER + "\n\nAhoy there! I be\n" + LOGO + "\nWhat can I do for ye?"+
-        "\nFor a list of commands, type 'help' me hearties!\n" + BARRIER + "\n";
-        final String EXIT = BARRIER + "\n\nFarewell! Hope to see ye again soon, ye scallywag!\n" + BARRIER;
-        System.out.println(GREETING);
+        ui.printGreeting();
 
         // Scanner declaration and initial input
         final Scanner CONSOLE = new Scanner(System.in);
         String input = CONSOLE.nextLine();
 
+        FileManager storage = new FileManager();
+
         // Scan data.txt for saved tasks
         try {
-            FileManager.populateTaskList();
+            storage.populateTaskList();
         } catch (FileNotFoundException e) {
             System.out.println("Argh! There was an issue fetching yer saved tasks! Ye must be in the 'java' directory!");
         }
+
+        ui.takeInput();
 
         // Read input such that it is not "bye"
         while(!input.equals("bye")) {
@@ -168,11 +166,11 @@ public class Duke {
             input = CONSOLE.nextLine();
         }
 
-        System.out.println(EXIT);
+        ui.printExit();
 
         // Save files to data.txt
         try {
-            FileManager.populateFile();
+            storage.populateFile();
         } catch (IOException e) {
             System.out.println("Argh! There was an issue saving yer tasks!");
         }
