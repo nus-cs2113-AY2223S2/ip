@@ -1,0 +1,12 @@
+package enums;
+
+public enum ErrorDialogueTypes {
+    INVALID_TASK_NUMBER,
+    TASK_NUMBER_OUT_OF_RANGE,
+    EMPTY_TASK_NAME,
+    DEADLINE_WRONG_FORMAT,
+    EVENT_WRONG_FORMAT,
+    NO_TASK_IN_LIST,
+    ERROR_WHEN_SAVING,
+    NO_MATCHING_TASK
+}
