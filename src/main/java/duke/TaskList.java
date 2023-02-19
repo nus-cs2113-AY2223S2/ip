@@ -64,7 +64,7 @@ public class TaskList implements java.io.Serializable {
     }
 
 
-    public void listAdd(String sentence) {
+    public void listAdd(String sentence) throws InvalidCommandException {
         String[] words = sentence.split(" ", 2); // split sentence only on first occurrence of space
         String taskType = words[0];
 
@@ -100,8 +100,7 @@ public class TaskList implements java.io.Serializable {
             }
             break;
         default:
-            System.out.println("Invalid task type!");
-            return;
+            throw new InvalidCommandException();
         }
 
         printSuccessfulAddMessage(taskList.get(taskList.size() - 1)); // get latest task in taskList

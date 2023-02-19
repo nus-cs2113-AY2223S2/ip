@@ -1,5 +1,7 @@
 package duke;
 
+import duke.exceptions.InvalidCommandException;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -50,10 +52,13 @@ public class Duke {
             printSeparator();
             list.deleteTask(response.substring(7));
             printSeparator();
-        }
-        else { // add task
+        } else {
             printSeparator();
-            list.listAdd(response);
+            try {
+                list.listAdd(response);
+            } catch (InvalidCommandException e) {
+                System.out.println("Invalid task type!");
+            }
             printSeparator();
         }
     }
