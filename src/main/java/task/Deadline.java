@@ -49,7 +49,7 @@ public class Deadline extends Task {
     }
 
     /**
-     * This method extracts the relevant information (description and by fields) from the userInput.
+     * Method extracts the relevant information (description and by fields) from the userInput.
      * It returns a String array containing {description, deadline}.
      *
      * @param userInput The input entered by the user.

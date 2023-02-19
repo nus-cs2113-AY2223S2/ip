@@ -2,19 +2,19 @@
 By: `sansders` Last Updated: `February 2023`
 
 # Contents
-- [1. Introduction](#1.-Introduction)
-- [2. Quick Start](#2.-Quick-Start)
-- [3. Features](#3.-Features)
-    - [3.1 Add To-do](#3.1-Add-To-do)
-    - [3.2 Add Deadline](#3.2-Add-Deadline)
-    - [3.3 Add Event](#3.3-Add-Event)
-    - [3.4 List all Tasks](#3.4-List-all-Tasks)
-    - [3.5 Mark Task as Done/Undone](#3.5-Mark-Task-as-Done/Undone)
-    - [3.6 Delete a Task](#3.6-Delete-a-Task)
-    - [3.7 Find a Task](#3.7-Find-a-Task)
-    - [3.8 Exit Duke](#3.8-Exit-Duke)
-    - [3.9 Task Storage](#3.9-Task-Storage)
-- [4. Command Summary](#4.-Command-Summary)
+- [1. Introduction](#1-Introduction)
+- [2. Quick Start](#2-Quick-Start)
+- [3. Features](#3-Features)
+    - [3.1 Add To-do](#31-Add-To-do)
+    - [3.2 Add Deadline](#32-Add-Deadline)
+    - [3.3 Add Event](#33-Add-Event)
+    - [3.4 List all Tasks](#34-List-all-Tasks)
+    - [3.5 Mark Task as Done/Undone](#35-Mark-Task-as-Done/Undone)
+    - [3.6 Delete a Task](#36-Delete-a-Task)
+    - [3.7 Find a Task](#37-Find-a-Task)
+    - [3.8 Exit Duke](#38-Exit-Duke)
+    - [3.9 Task Storage](#39-Task-Storage)
+- [4. Command Summary](#4-Command-Summary)
 
 # 1. Introduction
 Duke, your personal bot,<br>

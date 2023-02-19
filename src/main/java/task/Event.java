@@ -22,7 +22,7 @@ public class Event extends Task {
     }
 
     /**
-     * This method extracts the relevant information (description, from, and to fields) from the userInput.
+     * Method extracts the relevant information (description, from, and to fields) from the userInput.
      * It returns a String array containing {description, from, to}.
      *
      * @param userInput The input entered by the user.

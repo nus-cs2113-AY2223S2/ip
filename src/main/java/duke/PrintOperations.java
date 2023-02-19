@@ -5,7 +5,7 @@ import task.Task;
 import java.util.ArrayList;
 
 /**
- * This class contains the methods responsible for printing all the outputs of Duke.
+ * Class contains the methods responsible for printing all the outputs of Duke.
  */
 public class PrintOperations {
 
@@ -105,6 +105,22 @@ public class PrintOperations {
     public static void taskRemoved(int taskIndex, ArrayList<Task> tasks) {
         System.out.println("Noted. I've removed this task: ");
         System.out.println(taskIndex + 1 + "." + tasks.get(taskIndex).toString());
+    }
+
+    /**
+     * Prints when task is marked as done.
+     */
+    public static void taskMarked(Task task) {
+        System.out.println("Nice! I've marked this task as done:");
+        System.out.println(task);
+    }
+
+    /**
+     * Prints when task is unmarked.
+     */
+    public static void taskUnmarked(Task task) {
+        System.out.println("OK, I've marked this task as not done yet:");
+        System.out.println(task);
     }
 
     /**

@@ -1,6 +1,11 @@
 package duke;
 
-import error.*;
+import error.DukeIllegalCharacterException;
+import error.DukeTaskDoesNotExistException;
+import error.DukeIllegalSyntaxException;
+import error.DukeAlreadyMarkedException;
+import error.DukeIllegalCommandException;
+
 import task.Deadline;
 import task.Event;
 import task.Task;
@@ -11,13 +16,13 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 /**
- * This class contains the methods responsible for managing the different types of inputs to Duke.
+ * Contains the methods responsible for managing the different types of inputs to Duke.
  */
 public class CommandParser {
 
 
     /**
-     * This method manages the input entered by the user.
+     * Manages the input entered by the user.
      *
      * @param userInput The entire String entered by the user.
      * @param command   The first word of the userInput.
@@ -48,23 +53,28 @@ public class CommandParser {
             PrintOperations.list(tasks);
             break;
         case "mark":
+            handleMark(userInput, command, tasks);
+            break;
         case "unmark":
+            handleUnmark(userInput, command, tasks);
+            break;
         case "delete":
-            handleMarkAndDelete(userInput, command, tasks);
+            handleDelete(userInput, command, tasks);
             break;
         case "find":
             handleFind(userInput, tasks);
             break;
         default:
             addNewTask(userInput, command, tasks);
+            break;
         }
 
         // Save task ArrayList information into tasks.txt
         FileOperations.saveArrayListToFile(tasks);
     }
 
-    private void handleMarkAndDelete(String userInput, String command, ArrayList<Task> tasks)
-            throws DukeTaskDoesNotExistException, DukeAlreadyMarkedException {
+    private void handleDelete(String userInput, String command, ArrayList<Task> tasks)
+            throws DukeTaskDoesNotExistException{
 
         int taskIndex = Integer.parseInt(userInput.substring(userInput.length() - 1)) - 1;
 
@@ -73,20 +83,34 @@ public class CommandParser {
             throw new DukeTaskDoesNotExistException();
         }
 
-        // Mark as done
-        switch (command) {
-        case "mark":
-            tasks.get(taskIndex).markAsDone();
-            break;
-        case "unmark":
-            tasks.get(taskIndex).markAsNotDone();
-            break;
-        case "delete":
-            PrintOperations.taskRemoved(taskIndex, tasks);
-            tasks.remove(taskIndex);
-            PrintOperations.numberOfTasks(tasks);
-            break;
+        PrintOperations.taskRemoved(taskIndex, tasks);
+        tasks.remove(taskIndex);
+        PrintOperations.numberOfTasks(tasks);
+
+    }
+
+    private void handleMark(String userInput, String command, ArrayList<Task> tasks)
+            throws DukeTaskDoesNotExistException, DukeAlreadyMarkedException {
+        int taskIndex = Integer.parseInt(userInput.substring(userInput.length() - 1)) - 1;
+
+        // If task index does not exist, throw exception
+        if ((taskIndex + 1) > tasks.size() || taskIndex < 0) {
+            throw new DukeTaskDoesNotExistException();
         }
+
+        tasks.get(taskIndex).markAsDone();
+    }
+
+    private void handleUnmark(String userInput, String command, ArrayList<Task> tasks)
+            throws DukeTaskDoesNotExistException, DukeAlreadyMarkedException {
+        int taskIndex = Integer.parseInt(userInput.substring(userInput.length() - 1)) - 1;
+
+        // If task index does not exist, throw exception
+        if ((taskIndex + 1) > tasks.size() || taskIndex < 0) {
+            throw new DukeTaskDoesNotExistException();
+        }
+
+        tasks.get(taskIndex).markAsNotDone();
     }
 
     private void addNewTask(String userInput, String command, ArrayList<Task> tasks)
