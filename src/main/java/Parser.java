@@ -73,6 +73,14 @@ public class Parser {
                 Ui.printEmptyDescription();
             }
             break;
+        case "find":
+            try {
+                String keyword = command.substring(5);
+                Ui.printFindMessage(TaskList.findTask(keyword));
+            } catch (StringIndexOutOfBoundsException e) {
+                Ui.printEmptyDescription();
+            }
+            break;
         default:
             Ui.printInvalidCommand();
             break;

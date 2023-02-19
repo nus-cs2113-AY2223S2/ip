@@ -43,10 +43,14 @@ public class Ui {
         }
     }
 
-    public static void printFindMessage(ArrayList<Task> textList) {
-        System.out.println("Here are the matching tasks in your list:");
-        for (int i = 0; i < textList.size(); i++) {
-            System.out.println((i + 1) + "." + textList.get(i));
+    public static void printFindMessage(ArrayList<Task> foundList) {
+        if (foundList.size() > 0) {
+            System.out.println("Here are the matching tasks in your list:");
+            for (int i = 0; i < foundList.size(); i++) {
+                System.out.println((i + 1) + "." + foundList.get(i));
+            }
+        } else {
+            System.out.println("No matching tasks found");
         }
     }
 

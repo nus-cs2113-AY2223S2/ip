@@ -27,4 +27,14 @@ public class TaskList {
     public static ArrayList<Task> getList() {
         return textList;
     }
+
+    public static ArrayList<Task> findTask(String keyword) {
+        ArrayList<Task> foundTasks = new ArrayList<>();
+        for (int i = 0; i < textList.size(); i++) {
+            if (textList.get(i).description.contains(keyword)) {
+                foundTasks.add(textList.get(i));
+            }
+        }
+        return foundTasks;
+    }
 }
