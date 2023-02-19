@@ -2,15 +2,17 @@ import duke.DukeException;
 import java.util.Scanner;
 
 public class Parser {
-    //private TaskList tasks;
+    private final TaskList tasks;
 
     public Parser() {
-        //tasks = new TaskList();
+        tasks = new TaskList();
     }
-    public static void printLine() {
+
+    public void printLine() {
         System.out.println("____________________________________________________________");
     }
-    public static void handleCommands() {
+
+    public void handleCommands() {
         Scanner in = new Scanner(System.in);
         String command = in.nextLine();
 
@@ -21,35 +23,35 @@ public class Parser {
                 switch (firstWord) {
                     //list tasks
                     case "list" :
-                        TaskList.listTasks();
+                        tasks.listTasks();
                         break;
                     //find task
                     case "find" :
-                        TaskList.findTask(input);
+                        tasks.findTask(input);
                         break;
                     //mark task
                     case "mark":
-                        TaskList.markTask(input);
+                        tasks.markTask(input);
                         break;
                     //un-mark task
                     case "unmark":
-                        TaskList.unmarkTask(input);
+                        tasks.unmarkTask(input);
                         break;
                     //delete task
                     case "delete":
-                        TaskList.deleteTask(input);
+                        tasks.deleteTask(input);
                         break;
                     //to-do
                     case "todo":
-                        TaskList.addTodo(input);
+                        tasks.addTodo(input);
                         break;
                     //deadline
                     case "deadline":
-                        TaskList.addDeadline(input);
+                        tasks.addDeadline(input);
                         break;
                     //event
                     case "event":
-                        TaskList.addEvent(input);
+                        tasks.addEvent(input);
                         break;
                     //unidentified command
                     default:

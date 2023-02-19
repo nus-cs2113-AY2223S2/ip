@@ -1,7 +1,7 @@
 public class Duke {
-    protected Storage storage;
-    protected Parser parser;
-    protected Ui ui;
+    private final Storage storage;
+    private final Parser parser;
+    private final Ui ui;
 
     public Duke() {
         ui = new Ui();

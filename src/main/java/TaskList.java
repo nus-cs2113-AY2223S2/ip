@@ -1,17 +1,27 @@
 import duke.*;
 
 public class TaskList {
-    //private Storage storage;
+    private final Storage storage;
 
     public TaskList() {
-        //storage = new Storage();
+        storage = new Storage();
     }
-    public static void printLine() {
+
+    /**
+     * Prints a horizontal line.
+     */
+    public void printLine() {
         System.out.println("____________________________________________________________");
     }
 
-    //check if task description is blank (for to-do)
-    public static boolean isDescriptionBlank(String description) {
+    /**
+     * Returns true if task description is blank.
+     * Returns false otherwise.
+     *
+     * @param description Description of a task.
+     * @return boolean variable isBlank (True or False).
+     */
+    public boolean isDescriptionBlank(String description) {
         boolean isBlank = true;
         for (int i = 0; i < description.length(); i++) {
             char c = description.charAt(i);
@@ -20,8 +30,10 @@ public class TaskList {
         return isBlank;
     }
 
-    //list tasks
-    public static void listTasks() {
+    /**
+     * Prints out each task in the list of tasks.
+     */
+    public void listTasks() {
         printLine();
         System.out.println("Here are the tasks in your list:");
         int i = 1;
@@ -37,8 +49,13 @@ public class TaskList {
         printLine();
     }
 
-    //find task
-    public static void findTask(String[] input) {
+    /**
+     * Finds a task by searching list of tasks for a keyword.
+     * Prints out all tasks with descriptions that contain the keyword.
+     *
+     * @param input The user command.
+     */
+    public void findTask(String[] input) {
         try {
             printLine();
             String keyword = input[1];
@@ -63,8 +80,12 @@ public class TaskList {
         }
     }
 
-    //mark task as done
-    public static void markTask(String[] input) {
+    /**
+     * Marks a task as done.
+     *
+     * @param input The user command.
+     */
+    public void markTask(String[] input) {
         try {
             int index = Integer.parseInt(input[1]);
             if (index < 1 || index > Task.taskCount) {
@@ -72,7 +93,7 @@ public class TaskList {
             }
             Task t = duke.Task.tasks.get(index - 1);
             t.markAsDone();
-            Storage.saveData();
+            storage.saveData();
             printLine();
             System.out.println("Nice! I've marked this task as done:");
             System.out.println(t);
@@ -89,8 +110,12 @@ public class TaskList {
         }
     }
 
-    //mark task as not done
-    public static void unmarkTask(String[] input) {
+    /**
+     * Marks a task as not done.
+     *
+     * @param input The user command.
+     */
+    public void unmarkTask(String[] input) {
         try {
             int index = Integer.parseInt(input[1]);
             if (index < 1 || index > Task.taskCount) {
@@ -98,7 +123,7 @@ public class TaskList {
             }
             Task t = duke.Task.tasks.get(index - 1);
             t.markNotDone();
-            Storage.saveData();
+            storage.saveData();
             printLine();
             System.out.println("OK, I've marked this task as not done yet:");
             System.out.println(t);
@@ -115,8 +140,12 @@ public class TaskList {
         }
     }
 
-    //delete task
-    public static void deleteTask(String[] input) {
+    /**
+     * Deletes a task from the list of tasks.
+     *
+     * @param input The user command.
+     */
+    public void deleteTask(String[] input) {
         try {
             int index = Integer.parseInt(input[1]);
             if (index < 1 || index > Task.taskCount) {
@@ -125,7 +154,7 @@ public class TaskList {
             Task t = duke.Task.tasks.get(index - 1);
             Task.tasks.remove(index - 1);
             Task.taskCount--;
-            Storage.saveData();
+            storage.saveData();
             printLine();
             System.out.println("Noted. I've removed this task:");
             System.out.println(t);
@@ -143,8 +172,12 @@ public class TaskList {
         }
     }
 
-    //to-do
-    public static void addTodo(String[] input) {
+    /**
+     * Adds a To-do to the list of tasks.
+     *
+     * @param input The user command.
+     */
+    public void addTodo(String[] input) {
         try {
             if (isDescriptionBlank(input[1])) {
                 throw new DukeException();
@@ -152,7 +185,7 @@ public class TaskList {
             Task t = new Todo(input[1]);
             Task.tasks.add(Task.taskCount, t);
             Task.taskCount++;
-            Storage.saveData();
+            storage.saveData();
             printLine();
             System.out.println("Got it. I've added this task:");
             System.out.println(t);
@@ -171,17 +204,21 @@ public class TaskList {
         }
     }
 
-    //deadline
-    public static void addDeadline(String[] input){
+    /**
+     * Adds a Deadline to the list of tasks.
+     *
+     * @param input The user command.
+     */
+    public void addDeadline(String[] input){
         try {
             if (isDescriptionBlank(input[1])) {
                 throw new DukeException();
             }
-            String[] doBy = input[1].split("/by ", 2);
+            String[] doBy = input[1].split(" /by ", 2);
             Task t = new Deadline(doBy[0], doBy[1]);
             Task.tasks.add(Task.taskCount, t);
             Task.taskCount++;
-            Storage.saveData();
+            storage.saveData();
             printLine();
             System.out.println("Got it. I've added this task:");
             System.out.println(t);
@@ -200,18 +237,22 @@ public class TaskList {
         }
     }
 
-    //event
-    public static void addEvent(String[] input){
+    /**
+     * Adds an Event to the list of tasks.
+     *
+     * @param input The user command.
+     */
+    public void addEvent(String[] input){
         try {
             if (isDescriptionBlank(input[1])) {
                 throw new DukeException();
             }
-            String[] start = input[1].split("/from ", 2);
-            String[] end = start[1].split("/to ", 2);
+            String[] start = input[1].split(" /from ", 2);
+            String[] end = start[1].split(" /to ", 2);
             Task t = new Event(start[0], end[0], end[1] );
             Task.tasks.add(Task.taskCount, t);
             Task.taskCount++;
-            Storage.saveData();
+            storage.saveData();
             printLine();
             System.out.println("Got it. I've added this task:");
             System.out.println(t);
