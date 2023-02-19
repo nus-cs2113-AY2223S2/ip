@@ -4,13 +4,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.time.temporal.ChronoUnit;
 
 public class DateParser {
     public static LocalDateTime stringToDate(String d) throws DateTimeParseException {
         DateTimeFormatter formatter;
-        switch (d.length()) 
-        {
+        switch (d.length()) {
         case 8:
         case 9:
         case 10:

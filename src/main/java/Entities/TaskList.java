@@ -2,9 +2,12 @@ package Entities;
 
 import java.util.ArrayList;
 
+import EntityUtils.DateParser;
 import Exceptions.DukeException;
 
 import java.lang.IndexOutOfBoundsException;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 public class TaskList {
     private ArrayList<Task> tasks;
@@ -51,6 +54,40 @@ public class TaskList {
             filteredTasks.addTask(t);
         }
         return filteredTasks;
+    }
+
+    public TaskList getFilteredTasks(String taskSubstring) {
+        TaskList filteredTasks = new TaskList();
+        for (Task t : getTasks()) {
+            if (!t.getTaskDescription().toLowerCase().contains(taskSubstring.toLowerCase())) {
+                continue;
+            }
+            filteredTasks.addTask(t);
+        }
+        return filteredTasks;
+    }
+    
+    public TaskList getUpcomingTasks() {
+        TaskList upcomingTasks = new TaskList();
+        LocalDateTime currentDate = LocalDateTime.now();
+        LocalDateTime deadline;
+        for (Task t : getTasks()) {
+            if (t instanceof Deadline) {
+                deadline = DateParser.stringToDate(((Deadline) t).getEndDate());
+            } else if (t instanceof Event) {
+                deadline = DateParser.stringToDate(((Event) t).getEndDate());
+            } else {
+                continue;
+            }
+            
+            // If deadline is not within 3 days from now
+            if ((deadline.isBefore(currentDate) || deadline.isAfter(currentDate.plus(3, ChronoUnit.DAYS)))) {
+                continue;
+            }
+
+            upcomingTasks.addTask(t);
+        }
+        return upcomingTasks;
     }
 
     public void setTasks(ArrayList<Task> tasks) {
