@@ -58,6 +58,7 @@ public class Parser {
         case "deadline":
         case "event":
         case "delete":
+        case "find":
             next = in.nextLine();
             break;
         default:
