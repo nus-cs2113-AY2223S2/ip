@@ -5,11 +5,17 @@ import java.util.ArrayList;
 public class Task {
     protected String description;
     protected boolean isDone;
-    public static int numberOfTasks = 0;
+    public static int numberOfTasks=0;
 
     public Task(String description) {
         this.description = description;
         this.isDone = false;
+        numberOfTasks++;
+    }
+
+    public Task(String description, boolean isDone) {
+        this.description = description;
+        this.isDone = isDone;
         numberOfTasks++;
     }
 
@@ -48,6 +54,10 @@ public class Task {
 
     public String toString() {
         return "[" + this.getStatusIcon() + "]" + "\t" + this.getDescription();
+    }
+
+    public String toFileString() {
+        return "Task";
     }
 
 }

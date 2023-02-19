@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -8,7 +9,7 @@ import Task.Task;
 import Task.Todo;
 
 public class Duke {
-    public static void main(String[] args) throws DukeException {
+    public static void main(String[] args) throws DukeException, IOException {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -17,7 +18,9 @@ public class Duke {
         System.out.println("Hello from\n" + logo);
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?\n");
-        ArrayList<Task> tasks = new ArrayList<Task>();// using ArrayList to store tasks instead of array
+        DukeStorage storage = new DukeStorage("data/duke.txt");
+
+        ArrayList<Task> tasks = storage.loadTaskList();
         try (Scanner scan = new Scanner(System.in)) {
             String input = scan.nextLine();
             String output = new String();
@@ -85,6 +88,7 @@ public class Duke {
             e.printStackTrace();
         }
         System.out.println("Bye. Hope to see you again soon!");
+        storage.saveTaskList(tasks);
 
     }
 
