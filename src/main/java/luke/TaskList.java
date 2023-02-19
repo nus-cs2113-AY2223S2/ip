@@ -170,14 +170,14 @@ public class TaskList implements StringManipulation {
     }
 
     public ArrayList<Task> findTask(String toFind) {
-        ArrayList<Task> found = new ArrayList<>();
+        ArrayList<Task> foundTasks = new ArrayList<>();
         for (Map.Entry<Integer, Task> entry : tasks.entrySet()) {
             Task task = entry.getValue();
             if (task.getTaskName().contains(toFind)) {
-                found.add(task);
+                foundTasks.add(task);
             }
         }
-        return found;
+        return foundTasks;
     }
 
     /**
@@ -207,12 +207,12 @@ public class TaskList implements StringManipulation {
      * @return ArrayList of Tasks.
      */
     public ArrayList<Task> getTaskList() {
-        ArrayList<Task> copy = new ArrayList<Task>();
+        ArrayList<Task> printTasks = new ArrayList<Task>();
         for (Map.Entry<Integer, Task> entry : tasks.entrySet()) {
             Task task = entry.getValue();
-            copy.add(task);
+            printTasks.add(task);
         }
-        return copy;
+        return printTasks;
     }
 
     public HashMap<Integer, Task> getTasks() {
