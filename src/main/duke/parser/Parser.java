@@ -67,6 +67,7 @@ public class Parser {
         case "deadline":
         case "event":
         case "delete":
+        case "find":
         case "date":
             next = in.nextLine();
             break;
