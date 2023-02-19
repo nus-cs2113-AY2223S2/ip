@@ -10,9 +10,10 @@ public class TodoAction {
     /**
      * Adds a Todo item into the list.
      * 
-     * @param parameters Gets the item description
-     * @return Item object (Subclass Todo) which will be added into the list in main
-     * @throws DukeException when areValidParameters check fails
+     * @param parameters Gets the item description.
+     * @param itemsSize Total size of the items list. Use for printing add message.
+     * @return Item object (Subclass Todo) which will be added into the list in main.
+     * @throws DukeException when areValidParameters check fails.
      */
     public static Item addTodo(String parameters, int itemsSize) throws Exception {
         try {

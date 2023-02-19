@@ -17,13 +17,15 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 public class FileAction {
+    public static final String FILE_NAME = "items.txt";
+
     /**
-     * Imports the file and put into the list
+     * Imports the file and put into the list.
      * 
-     * @param file File object that retrieves the file location
+     * @throws FileException When file is missing or cannot be opened.
      */
     public static ArrayList<Item> importItems() throws FileException {
-        File file = new File("items.txt");
+        File file = new File(FILE_NAME);
         if (!file.exists()) {
             System.out.println(Message.WARNING_MISSING_FILE);
             return new ArrayList<Item>();
@@ -47,8 +49,10 @@ public class FileAction {
     }
 
     /**
-     * Exports the list into a file
+     * Exports the list into a file.
      * 
+     * @param items List of items which will be exported into the file.
+     * @throws FileException When file cannot be saved.
      */
     public static void exportItems(ArrayList<Item> items) throws FileException {
         try {
