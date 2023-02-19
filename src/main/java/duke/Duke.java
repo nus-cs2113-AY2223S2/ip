@@ -12,54 +12,38 @@ import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
 public class Duke {
-    public static final String LINESEPARATOR = "____________________________________________________________";
+    private static Ui ui;
+
     public static final String FILEPATH = "./data/savedlist.txt";
 
-    public static void printSeparator() {
-        System.out.println(LINESEPARATOR);
-    }
-
-    private static void greet() {
-        printSeparator();
-        System.out.println(" Hello! I'm Duke\n" + " What can I do for you?");
-        printSeparator();
-        System.out.println("");
-    }
-
-
-    private static void farewell() {
-        printSeparator();
-        System.out.println(" Bye. Hope to see you again soon!");
-        printSeparator();
-    }
 
     private static void parseResponse(String response, TaskList list) {
 
 
         if (response.equals("list")) {
-            printSeparator();
+            ui.printSeparator();
             list.listDisplay();
-            printSeparator();
+            ui.printSeparator();
         } else if (response.length() >= 5 && response.substring(0, 5).equals("mark ")) {
-            printSeparator();
+            ui.printSeparator();
             list.markTask(response.substring(5));
-            printSeparator();
+            ui.printSeparator();
         } else if (response.length() >= 7 && response.substring(0, 7).equals("unmark ")) {
-            printSeparator();
+            ui.printSeparator();
             list.unmarkTask(response.substring(7));
-            printSeparator();
+            ui.printSeparator();
         } else if (response.length() >= 7 && response.substring(0, 7).equals("delete ")) {
-            printSeparator();
+            ui.printSeparator();
             list.deleteTask(response.substring(7));
-            printSeparator();
+            ui.printSeparator();
         } else {
-            printSeparator();
+            ui.printSeparator();
             try {
                 list.listAdd(response);
             } catch (InvalidCommandException e) {
                 System.out.println("Invalid task type!");
             }
-            printSeparator();
+            ui.printSeparator();
         }
     }
 
@@ -100,12 +84,14 @@ public class Duke {
         file.close();
 
         return list;
-        // System.out.println("z = " + object1.z);
     }
 
-    public static void main(String[] args) {
+    public Duke() {
+        ui = new Ui();
+    }
 
-        greet();
+    public void run() {
+        ui.greet();
         File f = new File(FILEPATH);
         TaskList taskList;
         if (f.exists()) {
@@ -121,22 +107,23 @@ public class Duke {
                 return;
             }
 
-
         } else {
             System.out.println("Save file not detected. Starting with empty list.");
             taskList = new TaskList();
         }
 
 
-        Scanner in = new Scanner(System.in);
-        String response = in.nextLine();
 
-        while (!response.equals("bye")) {
-            parseResponse(response, taskList);
-            response = in.nextLine();
+        String userInput = ui.getInput();
+        while (!userInput.equals("bye")) {
+            parseResponse(userInput, taskList);
+            userInput = ui.getInput();
         }
         listSave(taskList);
-        farewell();
+        ui.farewell();
+    }
 
+    public static void main(String[] args) {
+        new Duke().run();
     }
 }
