@@ -11,6 +11,7 @@ public class DoUserCommand {
     }
 
     protected String userCommand;
+
     public static void handleUserCommand(String userCommand) {
         Parser parser = new Parser(userCommand);
 
