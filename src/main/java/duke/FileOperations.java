@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.io.File;
 
 /**
- * Class contains the methods responsible for reading from and saving information about the tasks.
+ * Contains the methods responsible for reading from and saving information about the tasks.
  * Each element in the ArrayList will be saved as a line in a txt file.
  * Examples of lines in the txt file are as follows:
  * T|1|read book
