@@ -1,5 +1,8 @@
 package FileUtils;
 
+/**
+ * Enum to store identifiers for the different types of task
+ */
 public enum TaskTypes {
     TODO("T"), 
     DEADLINE("D"), 
