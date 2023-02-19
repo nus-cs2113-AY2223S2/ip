@@ -1,0 +1,49 @@
+package duke.utils;
+
+import java.util.ArrayList;
+
+import duke.item.Item;
+
+public class MessageAction {
+    /**
+     * Prints the list of items.
+     */
+    public static void printList(ArrayList<Item> items) {
+        System.out.println(Message.INFO_LIST);
+        for (int i = 0; i < items.size(); i++) {
+            Item item = items.get(i);
+            System.out.println((i+1) + ". " + item);
+        }
+    }
+
+    /**
+     * Prints the welcome message when application is launched.
+     */
+    public static void printWelcomeMessage() {
+        System.out.println(Message.LINE);
+        System.out.println(Message.INFO_WELCOME);
+        System.out.println(Message.LINE);
+    }
+
+    /**
+     * Prints the message after an item is added.
+     * 
+     * @param item Prints the description and status of the item
+     */
+    public static void printAddItemMessage(Item item, int totalItems) {
+        System.out.println(Message.INFO_ITEM_ADD);
+        System.out.println(item);
+        System.out.printf(Message.INFO_ITEM_COUNT.toString(), totalItems);
+    }
+
+    /**
+     * Prints the message after an item is deleted.
+     * 
+     * @param item Prints the description and status of the item
+     */
+    public static void printDeleteItemMessage(Item item, int totalItems) {
+        System.out.println(Message.INFO_ITEM_DELETE);
+        System.out.println(item);
+        System.out.printf(Message.INFO_ITEM_COUNT.toString(), totalItems);
+    }
+}

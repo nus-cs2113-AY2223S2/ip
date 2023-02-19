@@ -1,8 +1,9 @@
-package duke.models;
+package duke.item;
 
 public abstract class Item {
     private String description; // item name
     private boolean isDone;
+    public String type = "Item";
 
     public Item (String description) {
         this.description = description;

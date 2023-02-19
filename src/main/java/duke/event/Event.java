@@ -1,4 +1,6 @@
-package duke.models;
+package duke.event;
+
+import duke.item.Item;
 
 public class Event extends Item {
     private String from;
@@ -8,6 +10,7 @@ public class Event extends Item {
         super(description);
         this.from = from;
         this.to = to;
+        type = "Event";
     }
 
     @Override
