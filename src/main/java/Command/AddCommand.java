@@ -148,7 +148,7 @@ public class AddCommand extends Command implements InputParser {
             }
 
             // throws exception if end date already passed
-            if (LocalDateTime.now().isBefore(endDate)) {
+            if (LocalDateTime.now().isAfter(endDate)) {
                 throw new InvalidDateSequenceException(LocalDateTime.now(), endDate);
             }
 

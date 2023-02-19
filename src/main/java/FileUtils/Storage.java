@@ -99,12 +99,12 @@ public class Storage {
         String taskDescription = taskInformation[2];
         LocalDateTime startDate, endDate;
 
-        if (taskType == TaskTypes.TODO.toString()) {
+        if (taskType.equalsIgnoreCase(TaskTypes.TODO.toString())) {
                 task = new Todo(taskDescription, isDone);
-        } else if (taskType == TaskTypes.DEADLINE.toString()) {
+        } else if (taskType.equalsIgnoreCase(TaskTypes.DEADLINE.toString())) {
                 endDate = DateParser.stringToDate(taskInformation[3]);
                 task = new Deadline(taskDescription, isDone, endDate);
-        } else if (taskType == TaskTypes.EVENT.toString()) {
+        } else if (taskType.equalsIgnoreCase(TaskTypes.EVENT.toString())) {
             startDate = DateParser.stringToDate(taskInformation[3]);
             endDate = DateParser.stringToDate(taskInformation[4]);
             task = new Event(taskDescription, isDone, startDate, endDate);
