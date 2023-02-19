@@ -3,9 +3,14 @@ package Duke;
 import java.util.Objects;
 import java.util.ArrayList;
 
-import static Duke.TaskList.*;
-import static Duke.Ui.*;
-import static Duke.InputCheckingPackage.InputChecking.*;
+import static Duke.InputCheckingPackage.InputChecking.isValidInput;
+import static Duke.TaskList.readTask;
+import static Duke.TaskList.checkForAdditionalTask;
+import static Duke.Ui.greetUser;
+import static Duke.Ui.showNumberOfTasks;
+import static Duke.Ui.printHorizontalBar;
+import static Duke.Ui.sayBye;
+import static Duke.InputCheckingPackage.InputChecking.isValidInput;
 
 /**
  * Duke is a Command Line Application that helps user keep track of things to do,
@@ -40,43 +45,38 @@ public class Duke {
      */
     public static void run() {
         Storage storage = new Storage(filePath);
-
         String command;
-        String latestResponse = "";
-        boolean hasAdditionalTask = false;
         greetUser();
         boolean isRunning = true;
 
-
-
-        while (true) {
-            command = latestResponse;
-
-
-            if (!hasAdditionalTask) {
-                System.out.println("What can I do for your today?");
-                command = readTask();
-            }
-            boolean isValidInput = checkForValidInput(command);
-
-            while (!isValidInput) {
-                command = readTask();
-                isValidInput = checkForValidInput(command);
-            }
-
-            Parser.respondToInput(command);
-            showNumberOfTasks(tasks);
-            printHorizontalBar();
-            latestResponse = checkForAdditionalTask();
-            hasAdditionalTask = true;
-            if (Objects.equals(latestResponse, "no") || Objects.equals(latestResponse, "bye")) {
-                break;
-            }
+        while (isRunning) {
+            isRunning = getInput();
 
         }
         Storage.writeFile(filePath, tasks);
         sayBye();
 
+    }
+
+    /**
+     * Reads the users input until the user wants to exit the application
+     * @return boolean to determine if the application should continue running
+     */
+    private static boolean getInput() {
+        String command;
+        command = readTask();
+        boolean isValidInput = isValidInput(command);
+        while (!isValidInput) {
+            command = readTask();
+            isValidInput = isValidInput(command);
+        }
+        Parser.respondToInput(command);
+        showNumberOfTasks(tasks);
+        printHorizontalBar();
+        if (Objects.equals(command, "bye")) {
+            return false;
+        }
+        return true;
     }
 
     /**

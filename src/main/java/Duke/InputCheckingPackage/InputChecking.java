@@ -266,7 +266,7 @@ public class InputChecking {
      * @param input user command
      * @return validity of the user input
      */
-    public static boolean checkForValidInput(String input) {
+    public static boolean isValidInput(String input) {
         input = input.toLowerCase();
         String[] contents = input.split(" ");
         int i = 0;

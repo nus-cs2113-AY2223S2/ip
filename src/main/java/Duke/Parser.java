@@ -14,6 +14,7 @@ public class Parser {
 
     /**
      * To determine the next method to run based on the user input
+     *
      * @param command User input command that determines what function Duke will run
      */
 
@@ -62,13 +63,15 @@ public class Parser {
             }
 
 
-        } else if (command.contains("find")){
+        } else if (command.contains("find")) {
             boolean isValidFindInput = checkFindInput(command);
             if (isValidFindInput) {
                 TaskList.findTask(command);
             }
 
-        }else {
+        } else if (command.contains("bye")) {
+            System.out.println("Saving your tasks now!");
+        } else {
             invalidInputReponse();
         }
 
