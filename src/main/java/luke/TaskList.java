@@ -5,16 +5,15 @@ import luke.task.Deadline;
 import luke.task.Event;
 import luke.task.Task;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.google.gson.Gson;
-
+/**
+ * A <code>TaskList</code> object is created to handle operations like adding, removing, marking, unmarking and finding
+ * of tasks.
+ */
 public class TaskList implements StringManipulation {
     /** Unique ID to be given to each new task for identification */
     private int newTaskID;
@@ -31,12 +30,14 @@ public class TaskList implements StringManipulation {
     );
     ;
 
+    /** Default constructor when there are no previously saved data */
     public TaskList() {
         this.newTaskID = 1;
         this.tasks = new HashMap<Integer, Task>();
         this.serialNumbers = new HashMap<Integer, Integer>();
     }
 
+    /** Constructor used when there are previously saved data */
     public TaskList(int newTaskID, HashMap<Integer, Task> savedTaskOrders, HashMap<Integer, ToDo> savedToDos,
                     HashMap<Integer, Deadline> savedDeadlines, HashMap<Integer, Event> savedEvents,
                     HashMap<Integer, Integer> savedSerialNumbers) {

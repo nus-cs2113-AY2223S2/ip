@@ -18,7 +18,10 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
-/** Inspiration for Storage class taken from https://github.com/Magmanat/ip */
+/**
+ * A <code>Storage</code> object is created to load and save data to and from the data files.
+ * Inspiration for Storage class taken from https://github.com/Magmanat/ip
+ */
 public class Storage {
     /** File names */
     private static final String FOLDER_NAME = "data";
@@ -424,7 +427,7 @@ public class Storage {
 
     /** Informs the user that there was an error saving a file then exits the program. */
     public void handleSaveError() {
-        ui.printFileLoadingError();
+        ui.printSaveError();
         System.exit(-1);
     }
 

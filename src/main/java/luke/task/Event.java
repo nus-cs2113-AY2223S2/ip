@@ -1,5 +1,8 @@
 package luke.task;
 
+/**
+ * A <code>Event</code> object represents a task that has a start and end.
+ */
 public class Event extends Task {
     protected String startDate;
     protected String endDate;
