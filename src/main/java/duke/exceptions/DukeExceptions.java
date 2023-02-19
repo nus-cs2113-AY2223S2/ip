@@ -34,4 +34,11 @@ public abstract class DukeExceptions extends Exception {
             System.out.println(errorMsg);
         }
     }
+
+    public static class invalidInputStructure extends DukeExceptions {
+        public invalidInputStructure(String errorMsg) {
+            super(errorMsg);
+            System.out.println(BARRIER + "\n\n" + errorMsg + "\n" + BARRIER + "\n");
+        }
+    }
 }
