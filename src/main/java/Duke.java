@@ -1,7 +1,24 @@
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 public class Duke {
+    private static void printFileContents(String filePath) throws FileNotFoundException {
+        File f = new File(filePath); // create a File for the given file path
+        Scanner s = new Scanner(f); // create a Scanner using the File as the source
+        while (s.hasNext()) {
+            System.out.println(s.nextLine());
+        }
+    }
+
     public static void main(String[] args) throws NoKeyException{
+        String file = "data/Duke.txt";
+        try {
+            printFileContents("data/Duke.txt");
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        }
         Scanner in = new Scanner(System.in);
         CommandManager.sayHi();
         CommandManager command = new CommandManager();
@@ -66,6 +83,11 @@ public class Duke {
                 break;
             default:
                 throw new NoKeyException("Come on, give me something that I can work with!");
+            }
+            try {
+                CommandManager.writeToFile(file);
+            } catch (IOException e) {
+                System.out.println("Something went wrong: " + e.getMessage());
             }
             command.setUserInput(in.nextLine());
         }
