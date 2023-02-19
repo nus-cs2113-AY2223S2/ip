@@ -1,5 +1,8 @@
 package duke;
 
+import duke.tasklist.DoUserCommand;
+import duke.tasklist.TaskList;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -12,7 +15,7 @@ public class Storage {
         File fileName = new File(path);
         FileWriter savedFile = new FileWriter(fileName, false);
         for (int index = 0; index < Duke.taskCount; index++) {
-            savedFile.write(Duke.tasks.get(index).returnCommand());
+            savedFile.write(TaskList.tasks.get(index).returnCommand());
             savedFile.write(System.getProperty("line.separator"));
         }
         savedFile.write(System.getProperty("line.separator"));
@@ -58,7 +61,7 @@ public class Storage {
             Duke.toPrint = false;
             String currentLine = s.nextLine();
             String userCommand = currentLine.substring(4);
-            Duke.handleUserCommand(userCommand);
+            DoUserCommand.handleUserCommand(userCommand);
             String markStatus = currentLine.substring(0, 4);
             if (markStatus.equals("[X] ")) {
                 TaskList.doCommandMark(count);
