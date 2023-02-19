@@ -70,4 +70,8 @@ public class Ui {
     public static void printInvalidCommand() {
         System.out.println("Invalid command");
     }
+
+    public static void printInvalidDateTime() {
+        System.out.println("Invalid date and time format. Please use yyyy-mm-ddTHH:mm");
+    }
 }

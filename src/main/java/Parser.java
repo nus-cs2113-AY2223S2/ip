@@ -1,7 +1,7 @@
 import duke.Ui;
 import duke.TaskList;
-
 import java.io.IOException;
+import java.time.format.DateTimeParseException;
 
 public class Parser {
     public static void parse(String command) throws IOException {
@@ -60,6 +60,8 @@ public class Parser {
                 Ui.printTaskAddedMessage(TaskList.getTask(TaskList.getSize() - 1), TaskList.getSize());
             } catch (StringIndexOutOfBoundsException e) {
                 Ui.printEmptyDescription();
+            } catch (DateTimeParseException e) {
+                Ui.printInvalidDateTime();
             }
             break;
         case "event":
@@ -71,6 +73,8 @@ public class Parser {
                 Ui.printTaskAddedMessage(TaskList.getTask(TaskList.getSize() - 1), TaskList.getSize());
             } catch (StringIndexOutOfBoundsException e) {
                 Ui.printEmptyDescription();
+            } catch (DateTimeParseException e) {
+                Ui.printInvalidDateTime();
             }
             break;
         default:
