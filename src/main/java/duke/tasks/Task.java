@@ -34,6 +34,12 @@ public abstract class Task implements java.io.Serializable {
 
     public abstract String taskTypeBoxFormat();
 
+    /**
+     * Returns the formatted box in <code>String</code> format.
+     * Formats the box based on whether the task is already marked as completed.
+     *
+     * @return The formatted box.
+     */
     public String markedBoxFormat() {
         if (isComplete) {
             return "[X]";

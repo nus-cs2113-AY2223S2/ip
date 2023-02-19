@@ -6,7 +6,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
-public class Ui implements java.io.Serializable {
+/**
+ * Deals with interactions with the user. Reads the user's input from standard input and prints the output to the
+ * standard output. Output consists of expected output and error messages.
+ */
+public class Ui {
     public static final String LINE_SEPARATOR = "____________________________________________________________";
     private static Scanner in;
 
@@ -36,21 +40,28 @@ public class Ui implements java.io.Serializable {
         printSeparator();
     }
 
+    /**
+     * Displays the list in a readable format with all the necessary information.
+     * Indicates index of <code>Task</code>.
+     * Indicates the type of <code>Task</code>, whether it is a <code>Todo</code>, <code>Deadline</code>
+     * or <code>Event</code>.
+     * Indicates if the <code>Task</code> is marked as done.
+     *
+     * @param tasks The list of <code>Task</code>s to display.
+     */
     public static void displayList(ArrayList<Task> tasks) {
         System.out.println(" Here are the tasks in your list:");
         for (int i = 0; i < tasks.size(); i += 1) {
-            // print index of task
             System.out.print(" " + (i + 1) + ".");
-
-            // list the details about the task. Based on whether the task is ToDo, Deadline or Event.
             System.out.println(tasks.get(i));
         }
     }
 
-    public void printSuccessfulAddMessage(Task currTask, ArrayList<Task> tasks) {
+
+    public void printSuccessfulAddMessage(Task currTask, int numTasks) {
         System.out.println(" Got it. I've added this task: ");
         System.out.println("  " + currTask);
-        System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
+        System.out.println(" Now you have " + numTasks + " tasks in the list.");
 
     }
 
@@ -81,14 +92,20 @@ public class Ui implements java.io.Serializable {
         System.out.println(" Now you have " + numTasks + " tasks in the list.");
     }
 
+    /**
+     * Displays the filtered list in a readable format with all the necessary information.
+     * Indicates index of <code>Task</code>.
+     * Indicates the type of <code>Task</code>, whether it is a <code>Todo</code>, <code>Deadline</code>
+     * or <code>Event</code>.
+     * Indicates if the <code>Task</code> is marked as done.
+     *
+     * @param filteredList The list of <code>Task</code>s to display.
+     */
     public static void printFilteredList(ArrayList<Task> filteredList) {
         System.out.println(" Here are the matching tasks in your list:");
 
         for (int i = 0; i < filteredList.size(); i += 1) {
-            // print index of task
             System.out.print(" " + (i + 1) + ".");
-
-            // list the details about the task. Based on whether the task is ToDo, Deadline or Event.
             System.out.println(filteredList.get(i));
         }
     }
