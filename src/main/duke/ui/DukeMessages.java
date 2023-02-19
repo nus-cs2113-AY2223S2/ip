@@ -61,6 +61,7 @@ public class DukeMessages {
 
     public void printError() {
         System.out.println(ERROR);
+        printDiv();
     }
 
     public void printReadFileError() {

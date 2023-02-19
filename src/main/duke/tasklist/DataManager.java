@@ -10,6 +10,8 @@ import duke.ui.DukeMessages;
 import duke.storage.FileManager;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class DataManager {
@@ -116,14 +118,18 @@ public class DataManager {
     }
 
     public void handleDeadline(String next, boolean isFromCommand) throws DukeException {
+        String[] deadline = next.split("/by", 2);
+        LocalDate localByDate;
         try {
-            String[] deadline = next.split("/by", 2);
-            tasks.add(new Deadline(deadline[0].trim(), false,
-                    deadline[1].trim()));
+             localByDate = parser.processDate(deadline[1].trim());
+             deadline[1] = localByDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         } catch (ArrayIndexOutOfBoundsException e) {
             ui.printError();
             throw new DukeException();
+        } catch (DukeException f) {
+            localByDate = null;
         }
+        tasks.add(new Deadline(deadline[0].trim(), false, deadline[1].trim(), localByDate));
         if (isFromCommand) {
             ui.printDeadline();
             echo();
@@ -132,11 +138,31 @@ public class DataManager {
     }
 
     public void handleEvent(String next, boolean isFromCommand) throws DukeException {
+        String[] eventName = next.split("/from", 2);
+        LocalDate localByDate;
+        LocalDate localFromDate;
         try {
-            String[] eventName = next.split("/from", 2);
             String[] eventTime = eventName[1].split("/to", 2);
-            tasks.add(new Event(eventName[0].trim(), false,
-                    eventTime[0].trim(), eventTime[1].trim()));
+            try {
+                localByDate = parser.processDate(eventTime[0].trim());
+                eventTime[0] = localByDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            } catch (DukeException e) {
+                localByDate = null;
+            } catch (ArrayIndexOutOfBoundsException e) {
+                ui.printError();
+                throw new DukeException();
+            }
+            try {
+                localFromDate = parser.processDate(eventTime[1].trim());
+                eventTime[1] = localFromDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            } catch (DukeException e) {
+                localFromDate = null;
+            } catch (ArrayIndexOutOfBoundsException e) {
+                ui.printError();
+                throw new DukeException();
+            }
+            tasks.add(new Event(eventName[0].trim(), false, eventTime[0].trim(), eventTime[1].trim()
+                    , localByDate, localFromDate));
         } catch (ArrayIndexOutOfBoundsException e) {
             ui.printError();
             throw new DukeException();

@@ -1,13 +1,22 @@
 package duke.task;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Event extends Task {
     protected String byDate;
     protected String fromDate;
+    protected LocalDate localByDate;
+    protected LocalDate localFromDate;
 
-    public Event(String task, boolean isDone, String fromDate, String toDate) {
+    public Event(String task, boolean isDone, String fromDate, String toDate, LocalDate localByDate
+            , LocalDate localFromDate) {
         super(task, isDone);
         this.type = "E";
         this.byDate = toDate;
         this.fromDate = fromDate;
+        this.localByDate = localByDate;
+        this.localFromDate = localFromDate;
     }
 
     @Override
@@ -17,6 +26,13 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return super.toString() + " (from: " + fromDate + " to: " + byDate + ")";
+        if (localFromDate == null && localByDate == null) {
+            return super.toString() + " (from: " + fromDate + " to: " + byDate + ")";
+        } else if (localFromDate == null) {
+            return super.toString() + " (from: " + fromDate
+                    + " to: " + localByDate.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + ")";
+        }
+        return super.toString() + " (from: " + localFromDate.format(DateTimeFormatter.ofPattern("MMM d yyyy"))
+                + " to: " + byDate + ")";
     }
 }
