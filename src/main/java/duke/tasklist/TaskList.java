@@ -21,10 +21,23 @@ public class TaskList {
 
     public static ArrayList<Task> tasks = new ArrayList<>();
 
+    /**
+     * Returns task details in the same format as the user command
+     *
+     * @param taskNum task number in stored list
+     * @return returns task info in a user command format
+     */
     public static String retrieveTask(int taskNum) {
         return tasks.get(taskNum).returnCommand();
     }
-    
+
+    /**
+     * Takes in a keyword from user and searches current stored tasks
+     * If matching tasks are found, prints out the tasks found
+     * Prints no match message if there are no matching tasks found
+     *
+     * @param taskDetails user input of keyword to find
+     */
     public static void getTasks(String taskDetails) {
         Ui.printLine();
         int index = 0;
@@ -55,8 +68,7 @@ public class TaskList {
         switch (command) {
         case COMMAND_MARK:
             try {
-                String commandInfo = parser.extractCommandInfo();
-                int taskNum = Integer.parseInt(commandInfo);
+                int taskNum = getTaskNum(parser);
                 Command.doCommandMark(taskNum);
             } catch (IndexOutOfBoundsException | NumberFormatException out_mark_a) {
                 Ui.printInvalidNumber("mark");
@@ -64,8 +76,7 @@ public class TaskList {
             break;
         case COMMAND_UNMARK:
             try {
-                String commandInfo = parser.extractCommandInfo();
-                int taskNum = Integer.parseInt(commandInfo);
+                int taskNum = getTaskNum(parser);
                 Command.doCommandUnmark(taskNum);
             } catch (IndexOutOfBoundsException | NumberFormatException out_unmark_a) {
                 Ui.printInvalidNumber("unmark");
@@ -79,8 +90,7 @@ public class TaskList {
             break;
         case COMMAND_DELETE:
             try {
-                String commandInfo = parser.extractCommandInfo();
-                int taskNum = Integer.parseInt(commandInfo);
+                int taskNum = getTaskNum(parser);
                 Command.doCommandDelete(taskNum);
             } catch (IndexOutOfBoundsException | NumberFormatException out_delete_a) {
                 Ui.printInvalidNumber("delete");
@@ -132,5 +142,11 @@ public class TaskList {
                 Ui.printInvalidCommand();
             }
         }
+    }
+
+    private static int getTaskNum(Parser parser) {
+        String commandInfo = parser.extractCommandInfo();
+        int taskNum = Integer.parseInt(commandInfo);
+        return taskNum;
     }
 }
