@@ -7,15 +7,29 @@ import duke.error.DukeException;
 import duke.error.ErrorTypes;
 import duke.error.Error;
 
+/** Checks input validity */
 public class InputValidity {
+
     private static final int MINIMUM_TODO_LENGTH = 2;
+
     private static final int MINIMUM_DEADLINE_LENGTH = 4;
+
     private static final int MINIMUM_EVENT_LENGTH = 6;
+
     private static final int VALID_LENGTH_TWO = 2;
+
     protected static final String DEADLINE_DELIMITER = " /by ";
+
     protected static final String EVENT_FROM_DELIMITER = " /from ";
+
     protected static final String EVENT_TO_DELIMITER = " /to ";
 
+    /**
+     * Checks whether the input given by user is a valid todo command
+     *
+     * @param input input given by the user
+     * @throws DukeException when the input provided by user does not have sufficient parameters
+     */
     protected static void checkTodo(String input) throws DukeException {
         String[] arrayOfInput = input.split(" ");
         if (arrayOfInput.length < MINIMUM_TODO_LENGTH) {
@@ -23,6 +37,13 @@ public class InputValidity {
         }
     }
 
+    /**
+     * Checks whether the input given by user is a valid deadline command
+     *
+     * @param input input given by the user
+     * @throws DukeException when the input provided by user is of incorrect format or does not have
+     *         sufficient parameters
+     */
     protected static void checkDeadline(String input) throws DukeException {
         if (!input.contains(DEADLINE_DELIMITER)) {
             Error.throwError(ErrorTypes.INVALID_DEADLINE_COMMAND);
@@ -33,6 +54,13 @@ public class InputValidity {
         }
     }
 
+    /**
+     * Checks whether the input given by user is a valid event command
+     *
+     * @param input input given by the user
+     * @throws DukeException when the input provided by user is of incorrect format or does not have
+     *         sufficient parameters
+     */
     protected static void checkValidEvent(String input) throws DukeException {
         if ((!input.contains(EVENT_FROM_DELIMITER) || !input.contains(EVENT_TO_DELIMITER))
                 || (input.indexOf(EVENT_FROM_DELIMITER) > input.indexOf(EVENT_TO_DELIMITER))) {
@@ -44,6 +72,12 @@ public class InputValidity {
         }
     }
 
+    /**
+     * Checks whether a given string only contains digit characters
+     *
+     * @param input input given by the user
+     * @return true if input only contains digit characters, false otherwise
+     */
     private static boolean isStringOfInteger(String input) {
         // takes in a string and checks whether the string only contains digits characters
         input = input.trim();
@@ -56,6 +90,13 @@ public class InputValidity {
         return true;
     }
 
+    /**
+     * Checks whether the input provided by user for mark/unmark/delete is valid
+     *
+     * @param input an array of the user input, separated by " "
+     * @param command command word provided by user: mark/unmark/delete
+     * @throws DukeException when insufficient parameters are provided or when wrong parameter format is given
+     */
      protected static void checkValid(String[] input, String command) throws DukeException {
         boolean isTwoWordInput = (input.length == VALID_LENGTH_TWO);
         if (!isTwoWordInput || !isStringOfInteger(input[1])) {
@@ -76,6 +117,12 @@ public class InputValidity {
         }
     }
 
+    /**
+     * Checks whether the input provided by user for find command is valid
+     *
+     * @param input input given by the user
+     * @throws DukeException when the find command is invalid
+     */
     protected static void checkValidFind(String input) throws DukeException {
         String[] arrayOfInput = input.split(" ");
         boolean isAtLeastTwoWord = (arrayOfInput.length >= VALID_LENGTH_TWO);
@@ -83,5 +130,4 @@ public class InputValidity {
             Error.throwError(ErrorTypes.INVALID_FIND_COMMAND);
         }
     }
-
 }

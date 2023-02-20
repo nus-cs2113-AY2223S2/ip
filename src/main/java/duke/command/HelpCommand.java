@@ -2,11 +2,19 @@ package duke.command;
 
 import duke.ui.Ui;
 
+/** sShows help instructions */
 public class HelpCommand extends Command {
+
     public static final String COMMAND_WORD = "help";
+
     public static final String MESSAGE_USAGE = " help: view all commands available. "
             + Ui.NEW_LINE + "  Example: help";
 
+    /**
+     * Executes the command and returns the result
+     *
+     * @return CommandResult with the relevant output message as its parameter
+     */
     @Override
     public CommandResult execute() {
         String output = Ui.SEGMENT_LINE;

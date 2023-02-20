@@ -4,7 +4,15 @@ import duke.command.*;
 import duke.ui.ErrorMessages;
 import duke.ui.Ui;
 
+/** Feedback to user the relevant error message and throws error */
 public class Error {
+
+    /**
+     * Shows error message to user and throws DukeException
+     *
+     * @param e type of error to be shown to user
+     * @throws DukeException thrown after displaying error message
+     */
     public static void throwError(ErrorTypes e) throws DukeException {
         switch (e) {
         case INVALID_MARK_COMMAND:

@@ -16,23 +16,36 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Storage { // deals with loading tasks from the file and saving tasks in the file
+/** Deals with loading tasks from file and saving tasks in file */
+public class Storage {
+
     public static final String DIRECTORY = "data";
+
     public static final String FILE_PATH = "data\\duke.txt";
+
     public final String path;
 
     public Storage(String filePath) {
         path = filePath;
     }
 
+    /**
+     * Checks whether the specified directory is present and creates one if absent
+     *
+     * @throws DukeException when directory does not exist and failed to create a directory
+     */
     public void makeDirectory() throws DukeException {
         File dataDirectory = new File(DIRECTORY);
         if (!dataDirectory.exists() && !dataDirectory.mkdir()) {
-            // if directory does not already exist and not able to make the directory
             Error.throwError(ErrorTypes.ERROR_WITH_DIRECTORY);
         }
     }
 
+    /**
+     * Tries to open the file specified by FILE_PATH by creating the file if it does not exist
+     *
+     * @return the file opened
+     */
     public File openDataFile() {
         File dataFile = new File(FILE_PATH);
         try {
@@ -43,6 +56,12 @@ public class Storage { // deals with loading tasks from the file and saving task
         return dataFile;
     }
 
+    /**
+     * Imports the task data from the file provided into an ArrayList
+     *
+     * @param dataFile file storing the data
+     * @return array list of task representing the task list
+     */
     public ArrayList<Task> importData(File dataFile) {
         ArrayList<Task> taskList = new ArrayList<>();
         try {
@@ -57,6 +76,12 @@ public class Storage { // deals with loading tasks from the file and saving task
         return taskList;
     }
 
+    /**
+     * Decodes the data from the file to be saved into Duke
+     *
+     * @param task the line input from the data file containing the information of a task
+     * @param taskList the task list to be used when Duke is running
+     */
     public void decodeTaskData(String task, ArrayList<Task> taskList) {
         String[] taskInfo = task.split(Symbols.DECODE_DATA_DELIMITER);
         if (taskInfo[0].equals(Symbols.TODO)) {
@@ -73,6 +98,13 @@ public class Storage { // deals with loading tasks from the file and saving task
         }
     }
 
+    /**
+     * Encodes the data from the task list to be saved into file
+     *
+     * @param taskList task list containing the tasks to be saved into file
+     * @param fileData FileWriter opened with the FILE_PATH
+     * @throws IOException when I/O error occurs
+     */
     public void encodeAndWriteTask(TaskList taskList, FileWriter fileData) throws IOException {
         int taskCount = taskList.getTaskCount();
         for (int i = 0; i < taskCount; i += 1) {
@@ -81,6 +113,11 @@ public class Storage { // deals with loading tasks from the file and saving task
         }
     }
 
+    /**
+     * Saves the data in task list into file
+     *
+     * @param taskList task list containing the tasks to be saved into file
+     */
     public void updateSavedData(TaskList taskList) {
         try {
             FileWriter fileData = new FileWriter(FILE_PATH);

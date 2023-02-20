@@ -3,6 +3,7 @@ package duke.command;
 import duke.task.Event;
 import duke.ui.Ui;
 
+/** Adds an event task */
 public class EventCommand extends AddCommand {
     public static final String INVALID_FORMAT_MESSAGE =
             " Invalid input! Valid input format: \"event <task name> /from <date> /to <date>\"";
@@ -17,6 +18,11 @@ public class EventCommand extends AddCommand {
         this.endDate = endDate;
     }
 
+    /**
+     * Executes the command and returns the result
+     *
+     * @return CommandResult with the relevant output message as its parameter
+     */
     @Override
     public CommandResult execute() {
         taskList.addTask(new Event(taskName, startDate, endDate));

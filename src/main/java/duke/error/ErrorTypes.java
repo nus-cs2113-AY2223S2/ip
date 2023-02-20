@@ -1,5 +1,6 @@
 package duke.error;
 
+/** The possible errors used in Duke */
 public enum ErrorTypes {
     INVALID_MARK_COMMAND,
     INVALID_UNMARK_COMMAND,
