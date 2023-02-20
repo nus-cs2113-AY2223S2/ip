@@ -2,6 +2,10 @@ package sage.utility;
 
 import java.util.Scanner;
 
+/**
+ * A class that represents user interaction methods.
+ */
+
 public class Ui {
 
     private static Display display = new Display();
@@ -10,6 +14,9 @@ public class Ui {
     private static Storage fm = new Storage();
 
 
+    /**
+     * Retrieves and restore any available task information data stored in ./data/sage.txt
+     */
     public void recoverData() {
         fm.recoverData(taskList);
     }
@@ -19,6 +26,12 @@ public class Ui {
         return input.nextLine();
     }
 
+    /**
+     * Reads the parsed user input and delegate the respective operation based on the task type
+     *
+     * @param parsed a Parser object that contains parsed user input
+     * @return boolean that indicates whether to exit the application
+     */
     public boolean readCommand(Parser parsed) {
         switch (parsed.getTaskType()) {
         case "bye":

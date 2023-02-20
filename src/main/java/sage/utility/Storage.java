@@ -9,11 +9,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
+/**
+ * A class that contains storage and file related I/O methods
+ */
 public class Storage {
 
     private static final String PROJECT_FILE_DIR = "./data/sage.txt";
 
-
+    /**
+     * Recovers and parse any stored data in ./data/sage.txt to taskList
+     *
+     * @param taskList contains information and methods about all the tasks currently in the list
+     */
     public void recoverData(TaskList taskList) {
         File f = new File(PROJECT_FILE_DIR);
         if (f.exists()) {
@@ -55,6 +63,12 @@ public class Storage {
             }
         }
     }
+
+    /**
+     * Updates the data file in ./data/sage.txt with the latest list of tasks
+     *
+     * @param list list of tasks information in the application
+     */
 
     public void updateFile(ArrayList<Task> list) {
         File f = new File(PROJECT_FILE_DIR);

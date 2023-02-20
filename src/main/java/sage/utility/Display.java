@@ -8,6 +8,10 @@ import sage.tasktypes.Event;
 import sage.tasktypes.Todo;
 import sage.tasktypes.Task;
 
+/**
+ * A class containing methods for printing text on the console.
+ */
+
 public class Display {
     private static final String LINE =
             "█████╗█████╗█████╗█████╗█████╗█████╗█████╗\n" +

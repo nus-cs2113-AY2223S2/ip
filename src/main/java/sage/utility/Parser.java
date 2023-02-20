@@ -1,5 +1,9 @@
 package sage.utility;
 
+
+/**
+ * A class containing methods for parsing of raw user input for easier reading
+ */
 public class Parser {
     private String[] rawOutput;
     private String taskType;
@@ -8,6 +12,11 @@ public class Parser {
     private String from = null;
     private String to = null;
 
+    /**
+     * Parses user input into its respective task type, description and other attributes
+     *
+     * @param input raw user input to be parsed
+     */
     public Parser(String input) {
         this.rawOutput = input.split("/");
         String[] body = rawOutput[0].split(" ", 2);

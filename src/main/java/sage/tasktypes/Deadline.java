@@ -5,6 +5,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+
+/**
+ * A class that represents a deadline task
+ */
+
 public class Deadline extends Task {
     private String byWhen = "";
 

@@ -13,16 +13,21 @@ import sage.tasktypes.Task;
 import sage.tasktypes.Todo;
 import sage.utility.Storage;
 
+/**
+ * A class that stores the list of tasks in the application and access methods for all task operations
+ */
+
 public class TaskList {
     private static ArrayList<Task> list = new ArrayList<>();
 
     private static final Display display = new Display();
     private static final Storage fm = new Storage();
 
-    public void update(Storage fm) {
-        fm.updateFile(list);
-    }
-
+    /**
+     * Display a list of tasks with its description matching the search query (keywords) provided by the user.
+     *
+     * @param keywords the search term input provided by the user
+     */
     public void findTask(String keywords) {
         ArrayList<Task> results = new ArrayList<Task>();
         try {
@@ -183,6 +188,9 @@ public class TaskList {
 
     }
 
+    /**
+     * Display a list of tasks currently stored in the list
+     */
     public void listTask() {
         System.out.println(display.printLine());
         try {
