@@ -3,10 +3,10 @@ Similar to post-it notes, Duke is a friendly remainder app that helps people to 
 
 ## Quick Start
 1. Ensure that you have Java 11 and above installed in your computer.
-2. Download the ***ip.jar*** [here](https://github.com/pinyoko573/ip/releases)
-3. Make sure that you do not have ***items.txt*** in the folder where *ip.jar* is located, as this file will be used to store your items!
-4. Launch your command prompt/terminal and navigate to the folder where *ip.jar* is located.
-5. Run the following command: `java -jar ip.jar`
+2. Download the ***duke.jar*** [here](https://github.com/pinyoko573/ip/releases)
+3. Make sure that you do not have ***items.txt*** in the folder where *duke.jar* is located, as this file will be used to store your items!
+4. Launch your command prompt/terminal and navigate to the folder where *duke.jar* is located.
+5. Run the following command: `java -jar duke.jar`
 
 ## Features
 ### Keeps a list of items
