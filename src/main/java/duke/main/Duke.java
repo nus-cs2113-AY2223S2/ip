@@ -7,10 +7,9 @@ import duke.filemanager.Storage;
 import duke.ui.ParseCommand;
 import duke.ui.Ui;
 
-import java.util.Scanner;
 
 /**
- * Last Modified: 20.2.23 1659
+ * Last Modified: 20.2.23 2353
  */
 public class Duke {
     private Ui ui;
