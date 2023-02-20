@@ -2,16 +2,16 @@ package duke.command;
 
 import duke.Storage;
 import duke.TaskList;
-import duke.Ui;
 import duke.task.Event;
 import duke.task.Task;
 
-import java.io.IOException;
+
 
 public class AddEventCommand extends AddCommand {
 
     protected String description;
     protected String from;
+
     protected String to;
 
     public AddEventCommand(String description, String from, String to) {

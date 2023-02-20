@@ -2,11 +2,9 @@ package duke.command;
 
 import duke.Storage;
 import duke.TaskList;
-import duke.Ui;
 import duke.task.Deadline;
 import duke.task.Task;
 
-import java.io.IOException;
 
 public class AddDeadlineCommand extends AddCommand {
 
