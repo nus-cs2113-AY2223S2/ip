@@ -8,7 +8,7 @@ import duke.task.Todo;
 
 import java.io.IOException;
 
-public class AddTodoCommand extends Command {
+public class AddTodoCommand extends AddCommand {
 
     protected String todo;
 
@@ -19,12 +19,7 @@ public class AddTodoCommand extends Command {
     @Override
     public void execute(TaskList tasks, Storage database) {
         Task currTask = new Todo(todo);
-        tasks.addTaskToTaskList(currTask);
-        Ui.addSpecialTaskMessage(tasks);
-        try {
-            database.saveAddTask(currTask.getTaskString());
-        } catch (IOException e) {
-            Ui.updateDatabaseFailureMessage();
-        }
+        addTaskToTaskList(tasks, currTask);
+        addTaskToDatabase(currTask, database);
     }
 }

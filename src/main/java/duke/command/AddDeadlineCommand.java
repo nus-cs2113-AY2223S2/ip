@@ -8,7 +8,7 @@ import duke.task.Task;
 
 import java.io.IOException;
 
-public class AddDeadlineCommand extends Command {
+public class AddDeadlineCommand extends AddCommand {
 
     protected String[] stringSplit;
 
@@ -19,12 +19,7 @@ public class AddDeadlineCommand extends Command {
     @Override
     public void execute(TaskList tasks, Storage database) {
         Task currTask = new Deadline(stringSplit[0], stringSplit[1]);
-        tasks.addTaskToTaskList(currTask);
-        Ui.addSpecialTaskMessage(tasks);
-        try {
-            database.saveAddTask(currTask.getTaskString());
-        } catch (IOException e) {
-            Ui.updateDatabaseFailureMessage();
-        }
+        addTaskToTaskList(tasks, currTask);
+        addTaskToDatabase(currTask, database);
     }
 }

@@ -8,7 +8,7 @@ import duke.task.Task;
 
 import java.io.IOException;
 
-public class AddEventCommand extends Command {
+public class AddEventCommand extends AddCommand {
 
     protected String description;
     protected String from;
@@ -23,12 +23,7 @@ public class AddEventCommand extends Command {
     @Override
     public void execute(TaskList tasks, Storage database) {
         Task currTask = new Event(description, from, to);
-        tasks.addTaskToTaskList(currTask);
-        Ui.addSpecialTaskMessage(tasks);
-        try {
-            database.saveAddTask(currTask.getTaskString());
-        } catch (IOException e) {
-            Ui.updateDatabaseFailureMessage();
-        }
+        addTaskToTaskList(tasks, currTask);
+        addTaskToDatabase(currTask, database);
     }
 }
