@@ -1,7 +1,5 @@
 package duke.ui;
 
-import duke.task.Task;
-
 import java.util.Scanner;
 
 public class Ui {
@@ -90,17 +88,5 @@ public class Ui {
             index++;
         }
         printLine();
-    }
-
-    public static void printNoMatchingTasks() {
-        System.out.println("\t☹ No matching task found in stored data.");
-    }
-
-    public static void printTaskDetails(int index, Task task) {
-        if (index == 1) {
-            System.out.println("\tHere are the matching tasks in your list:");
-        }
-        System.out.print("\t " + index + "." );
-        System.out.println(task.returnCommand());
     }
 }

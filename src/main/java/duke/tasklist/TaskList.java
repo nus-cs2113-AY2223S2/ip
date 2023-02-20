@@ -17,28 +17,11 @@ public class TaskList {
     public static final String COMMAND_TODO = "todo";
     public static final String COMMAND_DELETE = "delete";
     public static final String COMMAND_DEADLINE = "deadline";
-    public static final String COMMAND_FIND = "find";
 
     public static ArrayList<Task> tasks = new ArrayList<>();
 
     public static String retrieveTask(int taskNum) {
         return tasks.get(taskNum).returnCommand();
-    }
-
-    public static void getTasks(String taskDetails) {
-        Ui.printLine();
-        int index = 0;
-        for (Task task : tasks) {
-            if (task.isMatchingTask(taskDetails)) {
-                ++index;
-                Ui.printTaskDetails(index, task);
-            }
-        }
-        if (index == 0) {
-            Ui.printNoMatchingTasks();
-        }
-        Ui.printLine();
-
     }
 
     public static void handleUserCommand(String userCommand) {
@@ -111,14 +94,6 @@ public class TaskList {
                 Ui.printInvalidFormat("event");
             } catch (IndexOutOfBoundsException out_event_a) {
                 Ui.printEmptyCommand("event");
-            }
-            break;
-        case COMMAND_FIND:
-            try {
-                String commandInfo = parser.extractCommandInfo();
-                getTasks(commandInfo);
-            } catch (IndexOutOfBoundsException out_find_a) {
-                Ui.printEmptyCommand("find");
             }
             break;
         default:
