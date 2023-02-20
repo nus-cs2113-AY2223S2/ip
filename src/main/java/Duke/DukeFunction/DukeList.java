@@ -5,6 +5,8 @@ import Duke.DukeTask.DukeTask;
 
 import java.io.IOException;
 import java.io.FileWriter;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class DukeList {
@@ -72,6 +74,20 @@ public class DukeList {
             }
         } catch (IOException e) {
             throw e;
+        }
+    }
+    public void listTaskByDate(String date) throws DukeException {
+        try {
+            LocalDate localDate = LocalDate.parse(date);
+            System.out.println("Here are the matching tasks in your list:");
+            for(int i = 0; i < taskList.size(); i++) {
+                if(taskList.get(i).isDateMatch(localDate)) {
+                    taskList.get(i).printTask(i);
+                }
+            }
+        } catch (Exception e) {
+            throw new DukeException("[date] " + e.getMessage() +
+                    "\nPlease use the format: yyyy-mm-dd");
         }
     }
 }
