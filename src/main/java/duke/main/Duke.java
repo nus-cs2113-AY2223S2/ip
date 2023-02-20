@@ -7,6 +7,9 @@ import duke.ui.Ui;
 
 import java.util.Scanner;
 
+/**
+ * The main class. Reads in commands from the terminal, then parses and runs them.
+ */
 public class Duke {
     public static void main(String[] args) {
         TaskList taskList = Storage.readTasksFromFile(Storage.SAVE_PATH);

@@ -1,5 +1,8 @@
 package duke.ui;
 
+/**
+ * Enum that holds all the error messages to be displayed.
+ */
 public enum Errors {
     INVALID_COMMAND("Oops... you need to provide a valid command."),
     INVALID_FORMAT ("Oops... you need to provide only one of each argument"),
@@ -14,6 +17,11 @@ public enum Errors {
 
     public final String MESSAGE;
 
+    /**
+     * Constructs an enum that returns the requested message.
+     *
+     * @param message The message to be displayed.
+     */
     Errors(String message) {
         MESSAGE = message;
     }

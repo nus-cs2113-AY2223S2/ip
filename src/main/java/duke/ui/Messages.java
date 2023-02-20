@@ -2,6 +2,9 @@ package duke.ui;
 
 import duke.main.Storage;
 
+/**
+ * Enum that holds all the notification and help messages to be displayed.
+ */
 public enum Messages {
     LINE  ("_".repeat(72)),
     START ("Hello! I'm Duke" + System.lineSeparator() + "What can I do for you?"),
@@ -28,6 +31,11 @@ public enum Messages {
 
     public final String MESSAGE;
 
+    /**
+     * Constructs an enum that returns the requested message.
+     *
+     * @param message The message to be displayed.
+     */
     Messages(String message) {
         MESSAGE = message;
     }
