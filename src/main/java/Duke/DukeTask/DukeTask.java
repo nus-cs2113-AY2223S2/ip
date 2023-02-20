@@ -33,4 +33,7 @@ public class DukeTask {
     public String saveTask() {
         return "T | " + (this.isDone ? "1" : "0") + " | " + this.taskName + '\n';
     }
+    public boolean containsName(String keyword) {
+        return this.taskName.contains(keyword);
+    }
 }

@@ -16,6 +16,7 @@ public class DukeCommandLineInput {
     private static final String COMMAND_TODO = "todo";
     private static final String COMMAND_DEADLINE = "deadline";
     private static final String COMMAND_EVENT = "event";
+    private static final String COMMAND_FIND = "find";
     String commandType;
     String commandMessage;
     public DukeCommandLineInput(String commandType, String commandMessage) {
@@ -89,6 +90,9 @@ public class DukeCommandLineInput {
             } catch (DukeException e) {
                 throw e;
             }
+            break;
+        case COMMAND_FIND:
+            tasks.findTask(this.commandMessage);
             break;
         default: // invalid command
             throw new DukeException("Sorry, I don't know what that means :-( ("

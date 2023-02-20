@@ -74,4 +74,12 @@ public class DukeList {
             throw e;
         }
     }
+    public void findTask(String keyword) {
+        System.out.println("Here are the matching tasks in your list:");
+        for(int i = 0; i < taskList.size(); i++) {
+            if(taskList.get(i).containsName(keyword)) {
+                taskList.get(i).printTask(i);
+            }
+        }
+    }
 }
