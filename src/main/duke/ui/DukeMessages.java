@@ -1,5 +1,8 @@
 package duke.ui;
 
+/**
+ * Text UI for the chatbot.
+ */
 public class DukeMessages {
     private static final String HI = "\n" +
             "██████╗░░█████╗░██████╗░\n" +
@@ -36,23 +39,38 @@ public class DukeMessages {
     private static final String NOT_FOUND = " *Rummages around cabinet* Uh oh looks like your whatever you searched for"
             + " does not exist! Check for typos!";
 
+    /**
+     * Initialization for the text UI.
+     */
     public DukeMessages() {
     }
 
+    /**
+     * Prints startup message.
+     */
     public void printHi() {
         System.out.println(HI);
     }
 
+    /**
+     * Prints exit message.
+     */
     public void printBye() {
         printDiv();
         System.out.println("\n" + BYE + "\n");
         printDiv();
     }
 
+    /**
+     * Prints query portion of startup message.
+     */
     public void printQuery() {
         System.out.println(QUERY);
     }
 
+    /**
+     * Prints a line to separate each block of printed messages.
+     */
     public void printDiv() {
         System.out.println(DIV);
     }
@@ -61,66 +79,116 @@ public class DukeMessages {
         System.out.print(PROMPT);
     }
 
+    /**
+     * Prints default error message.
+     */
     public void printError() {
         System.out.println(ERROR);
     }
 
+    /**
+     * Prints error message when failed to read datafile.
+     */
     public void printReadFileError() {
         System.out.println(READ_FILE_ERROR);
     }
 
+    /**
+     * Prints error message when <code>path</code> does not lead to datafile.
+     */
     public void printFileNotFoundError() {
         System.out.println(FILE_NOT_FOUND_ERROR);
     }
 
+    /**
+     * Prints error message when unable to write to datafile.
+     */
     public void printWriteFileError() {
         System.out.println(WRITE_FILE_ERROR);
     }
 
+    /**
+     * Prints message when list is empty.
+     */
     public void printEmpty() {
         System.out.println(EMPTY);
     }
 
+    /**
+     * Prints message when list is non-empty.
+     */
     public void printList() {
         System.out.println(LIST);
     }
 
+    /**
+     * Prints error message if user input is supposed to be a number but a number is not input.
+     */
     public void printNotNumber() {
         System.out.println(NOT_NUMBER);
     }
 
+    /**
+     * Prints error message if user input for number does not exist in the list.
+     */
     public void printNotInList() {
         System.out.println(NOT_IN_LIST);
     }
 
+    /**
+     * Prints message for successfully changing task status to marked.
+     */
     public void printMark() {
         System.out.println(MARK);
     }
 
+    /**
+     * Prints message for successfully changing task status to unmarked.
+     */
     public void printUnmark() {
         System.out.println(UNMARK);
     }
 
+    /**
+     * Prints message for successfully adding a <code>ToDo</code>.
+     */
     public void printTodo() {
         System.out.println(TODO);
     }
 
+    /**
+     * Prints message for successfully adding a <code>Deadline</code>.
+     */
     public void printDeadline() {
         System.out.println(DEADLINE);
     }
 
+    /**
+     * Prints message for successfully adding an <code>Event</code>.
+     */
     public void printEvent() {
         System.out.println(EVENT);
     }
 
+    /**
+     * Prints error when unable to write to the datafile.
+     */
     public void printFileFatalError() {
         System.out.println(FILE_FATAL_ERROR);
     }
 
+    /**
+     * Prints message when the user input for <code>find</code> or <code>date</code> does not find any entries.
+     */
     public void printNotFound() {
         System.out.println(NOT_FOUND);
     }
 
+    /**
+     * Prints message displaying the size of list.
+     *
+     * @param count number of items in the list.
+     */
     public void printListSize(int count) {
         if (count == 1) {
             System.out.println("Looks like you have " + 1 + " thing on your list!");
@@ -129,6 +197,11 @@ public class DukeMessages {
         }
     }
 
+    /**
+     * Prints the number of matching entries when <code>find</code> or <code>date</code> is called.
+     *
+     * @param count number of entries found.
+     */
     public  void printFound(int count) {
         if (count == 1) {
             System.out.println("Found " + count + " matching item! *Holds shining lump up towards the sky!* ");
@@ -138,10 +211,20 @@ public class DukeMessages {
         }
     }
 
+    /**
+     * Prints error message when <code>Task</code> is already marked/unmarked.
+     *
+     * @param type Mark/Unmark depending on which is called by user input.
+     */
     public void printMarkError(String type) {
         System.out.println("It is already " + type + "ed! *Shakes head* ");
     }
 
+    /**
+     * Prints message when <code>delete</code> is called.
+     *
+     * @param task The task deleted.
+     */
     public void printDeleted(String task) {
         System.out.println("Roger!" + task + " removed!");
     }

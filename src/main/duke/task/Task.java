@@ -2,6 +2,9 @@ package duke.task;
 
 import java.time.LocalDate;
 
+/**
+ * Template for a task object.
+ */
 public class Task {
     protected String task;
     protected boolean isDone;
@@ -25,6 +28,11 @@ public class Task {
         return localFromDate;
     }
 
+    /**
+     * Returns a string representation of marked/unmarked for a task object.
+     *
+     * @returns <code>[ ]</code> if unmarked and <code>[X]</code> if marked.
+     */
     public String checkDone() {
         if (isDone) {
             return "[X]";
@@ -32,6 +40,11 @@ public class Task {
         return "[ ]";
     }
 
+    /**
+     * Returns a string representation of type for a task object.
+     *
+     * @returns <code>[ "type" ]</code>
+     */
     public String checkType() {
         if (type != null) {
             return "[" + type + "]";
@@ -43,6 +56,12 @@ public class Task {
         isDone = done;
     }
 
+    /**
+     * Template for a task object with all of its parameters initialized.
+     *
+     * @param task Contains the task contents.
+     * @param isDone Contains the task status marked/unmarked.
+     */
     public Task(String task, boolean isDone) {
         setTask(task);
         setDone(isDone);
@@ -50,6 +69,12 @@ public class Task {
         localFromDate = null;
     }
 
+    /**
+     * Returns a <code>String</code> representation of this task object.
+     *
+     * @return Returns the task object as a <code>String</code> in the form <code>"  " + type + isDone()
+     * + " " + task</code>.
+     */
     @Override
     public String toString() {
         String [] temp = this.getTask().split("%", 2);

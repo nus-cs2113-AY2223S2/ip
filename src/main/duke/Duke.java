@@ -5,12 +5,21 @@ import duke.tasklist.DataManager;
 import duke.ui.DukeMessages;
 import duke.util.DukeException;
 
+/**
+ * Main class for the chatbot application.
+ * Initializes the application by running method to read datafile.
+ */
 public class Duke {
 
     private final DataManager dm;
     private final DukeMessages ui;
     private final Parser parser;
 
+    /**
+     * Runs the initialization for the application and runs the application.
+     *
+     * @param path Path of datafile
+     */
     public Duke(String path) {
         ui = new DukeMessages();
         parser = new Parser(ui);
@@ -23,6 +32,12 @@ public class Duke {
         run();
     }
 
+    /**
+     * Starts user interaction.
+     * Prints exit message and ends application when user types <code>bye</code>.
+     * Passes all user inputs into Parser object and returns a <code>parsedCommand</code>.
+     * <code>parsedCommand</code> is then sent to DataManager object.
+     */
     public void run() {
         dm.run();
         do {

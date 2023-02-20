@@ -20,10 +20,21 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.util.ArrayList;
 
+/**
+ * This class contains all the methods to read and write to the datafile stored locally for saving the list of task
+ * objects such that the task objects are carried between each instance of running the application.
+ */
 public class FileManager {
 
     private static final ArrayList<String> storedData = new ArrayList<>();
 
+    /**
+     * Reads the datafile stored locally if it exists.
+     *
+     * @param path The path to the datafile.
+     * @throws FileNotFoundException Throws an exception if the datafile does not exist in the <code>path</code>
+     * specified.
+     */
     public static void readFile(String path) throws FileNotFoundException {
         File f = new File(path);
         Scanner s = new Scanner(f);
@@ -32,6 +43,15 @@ public class FileManager {
         }
     }
 
+    /**
+     * Converts the task objects passed through <code>tasks</code> into a readable format and stores them into the
+     * datafile at the <code>path</code> specified.
+     * This completely overwrites all contents in the datafile previously stored.
+     *
+     * @param path The path to the datafile.
+     * @param tasks The <code>Hashmap</code> containing all the task objects to write to the datafile.
+     * @throws IOException Throws an exception if this function fails to write to the datafile.
+     */
     public static void writeFile(String path, HashMap<Integer, Task> tasks) throws IOException {
         //Overwrites previous text in file
         FileWriter fw = new FileWriter(path, false);
@@ -44,6 +64,15 @@ public class FileManager {
         fw.close();
     }
 
+    /**
+     * Converts a single task object into a readable format and stores it into the datafile at the <code>path</code>
+     * specified.
+     * This appends to the end of the datafile.
+     *
+     * @param path The path to the datafile.
+     * @param task The single task object to write to the datafile.
+     * @throws IOException Throws an exception if this function fails to write to the datafile.
+     */
     public static void writeTask(String path, Task task) throws IOException {
         FileWriter fw = new FileWriter(path, true);
         String t = task.checkType();
@@ -53,6 +82,11 @@ public class FileManager {
         fw.close();
     }
 
+    /**
+     * Creates an empty datafile at the <code>path</code> specified.
+     *
+     * @param path The path to create the datafile.
+     */
     public static void createFile(String path) {
         try {
             Path dir = Paths.get("data");
@@ -68,6 +102,16 @@ public class FileManager {
         }
     }
 
+    /**
+     * Decodes the datafile such and converts them into an application readable format to pass to the <code>tasks</code>
+     * object, <code>dates</code> object, <code>find</code> object such that the previously stored task objects are
+     * stored in the current instance of the application.
+     *
+     * @param tasks The object containing all the task objects in the appliction.
+     * @param dates The object with the functionality related to <code>LocalDate</code> and <code>date</code>.
+     * @param find The object with the functionality related to <code>find</code>.
+     * @throws DukeException Throws an exception if the datafile finds an invalid format in the datafile.
+     */
     public static void handleFile(TaskData tasks, DateData dates, FindData find) throws DukeException {
         for (String str: storedData) {
             String[] temp = str.split("%",5);

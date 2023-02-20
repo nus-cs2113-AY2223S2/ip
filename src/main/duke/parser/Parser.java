@@ -2,10 +2,16 @@ package duke.parser;
 
 import duke.ui.DukeMessages;
 import duke.util.DukeException;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
+/**
+ * This object takes in the user input <code>String</code> and converts it into a format that is readable by the
+ * application.
+ * This object also verifies the validity of the user input and throws error messages for invalid inputs.
+ */
 public class Parser {
 
     private final DukeMessages ui;
@@ -14,11 +20,23 @@ public class Parser {
     private String cmd;
     private int num;
 
+    /**
+     * Initializes this object with the user input from <code>System.in</code> and with the text UI being the
+     * application's text UI.
+     * @param ui The text UI of the application.
+     */
     public Parser(DukeMessages ui) {
         this.ui = ui;
         this.in = new Scanner(System.in);
     }
 
+    /**
+     * Converts user input <code>String</code> into a valid number id for task objects currently stored within the
+     * application.
+     * @param str The user input <code>String</code>.
+     * @param taskCount The upper-bound for valid number id.
+     * @throws DukeException Throws an exception for invalid user input.
+     */
     public void convertString(String str, int taskCount) throws DukeException {
         try {
             num = Integer.parseInt(str);
@@ -32,6 +50,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Converts user input <code>String</code> into a valid positive number.
+     *
+     * @param str The user input to convert into a number.
+     * @throws DukeException Throws an exception if the user input is invalid.
+     */
     public void convertNum (String str) throws DukeException {
         try {
             num = Integer.parseInt(str);
@@ -43,10 +67,18 @@ public class Parser {
         }
     }
 
+    /**
+     * Takes in the next user input and ignores it.
+     */
     public void ignoreLine() {
         in.nextLine();
     }
 
+    /**
+     * Takes in a single <code>String</code> as a command and prints messages for prompting user.
+     *
+     * @return The command as a single <code>String</code>.
+     */
     public String run() {
         ui.printPrompt();
         cmd = in.next().toLowerCase();
@@ -57,6 +89,14 @@ public class Parser {
     public int getNum() {
         return num;
     }
+
+    /**
+     * Checks for commands which need additional user input and ignores the additional user input if additional
+     * user input is not required.
+     *
+     * @return The additional user input.
+     * @throws DukeException Throws exception if additional user input not required.
+     */
     public String check() throws DukeException {
         switch (cmd) {
         case "list":
@@ -78,6 +118,16 @@ public class Parser {
         return next;
     }
 
+    /**
+     * Checks if the user input <code>String</code> can be converted into a <code>LocalDate</code> and returns the
+     * <code>LocalDate</code> after conversion.
+     * Returns <code>null</code> otherwise.
+     * Valid keywords such as <code>tomorrow</code> can be converted into <code>LocalDate</code> as well.
+     *
+     * @param byDate The user input <code>String</code> to convert into <code>LocalDate</code>.
+     * @return The converted user input.
+     * @throws DukeException Throws exception for user inputs not able to be converted into <code>LocalDate</code>.
+     */
     public LocalDate processDate (String byDate) throws DukeException {
         LocalDate localByDate = LocalDate.now();
         try {

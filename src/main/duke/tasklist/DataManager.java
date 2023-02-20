@@ -12,6 +12,12 @@ import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
 
+/**
+ * Manages all functions of the chatbot.
+ * Calls the function concerned depending on user input.
+ * Calls the functions to modify all the data in the chatbot.
+ * Contains all the data for the chatbot.
+ */
 public class DataManager {
 
     private final DateData dates;
@@ -21,7 +27,13 @@ public class DataManager {
     private final DukeMessages ui;
     private final TaskData tasks;
 
-
+    /**
+     * Initializes all the data in the application.
+     *
+     * @param path Path to datafile.
+     * @param ui Text UI for the application.
+     * @param parser User input parser which processes user input into application readable code.
+     */
     public DataManager(String path, DukeMessages ui, Parser parser) {
         this.dates = new DateData();
         this.find = new FindData();
@@ -31,6 +43,14 @@ public class DataManager {
         this.tasks = new TaskData(ui, parser, path);
     }
 
+    /**
+     * Calls the functions concerned for each data types depending on the parsed user input.
+     * Error message printed if command is invalid.
+     * Data saved locally in datafile.
+     *
+     * @param parsedCommand The user input parsed by the <code>Parser</code>.
+     * @param next The user input after the command keyword.
+     */
     public void command(String parsedCommand, String next) {
         boolean isFromCommand = true;
         try {
@@ -78,6 +98,11 @@ public class DataManager {
         }
     }
 
+    /**
+     * Reads the local datafile and writes to all the data types involved.
+     *
+     * @throws DukeException Exception thrown if unable to find datafile or file corrupted or unreadable.
+     */
     public void initialize() throws DukeException{
         try {
             FileManager.readFile(path);
@@ -94,6 +119,9 @@ public class DataManager {
         }
     }
 
+    /**
+     * Prints all starting messages.
+     */
     public void run() {
         ui.printDiv();
         ui.printHi();
