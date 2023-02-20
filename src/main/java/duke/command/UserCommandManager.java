@@ -1,53 +1,53 @@
 package duke.command;
 
 import duke.data.TaskData;
+import duke.exceptions.DukeException;
+import duke.filemanager.Storage;
+import duke.main.Duke;
 
 import java.util.Scanner;
 
 public class UserCommandManager {
 
-    TaskData taskData = new TaskData();
-
     /**
      * Handles the command (i.e. type of task) by user
      * and parse the arguments to add to task list
      *
-     * @param userCommand type of action user wants to perform
-     * @param userInput   arguments to the action (i.e. task description)
+     * @param rawUserInput raw user input
+     * @param storage      handler for writing to json file
+     * @param taskData     taskList of tasks
      */
-    public void handleCommands(String userCommand, String userInput) {
-        Scanner scanner = new Scanner(userInput);
-        Command command = null;
-        switch (userCommand) {
+    public void handleCommands(String[] userCommand, Storage storage, TaskData taskData) throws DukeException {
+
+        Command command;
+        switch (userCommand[0]) {
         case "bye":
             command = new ExitCommand();
+            break;
         case "list":
             command = new ListTasks();
             break;
         case "mark":
-            command = new MarkCommand(userInput.replace(" ", ""));
+            command = new MarkCommand(userCommand[1]);
             break;
         case "unmark":
-            command = new UnmarkCommand(userInput.replace(" ", ""));
+            command = new UnmarkCommand(userCommand[1]);
             break;
         case "todo":
-            command = new AddTodoToList(scanner.nextLine());
+            command = new AddTodoToList(userCommand[1]);
             break;
         case "deadline":
-            command = new AddDeadlineToList(scanner.nextLine().trim().split("/by"));
+            command = new AddDeadlineToList(userCommand[1]);
             break;
         case "event":
-            command = new AddEventToList(userInput);
+            command = new AddEventToList(userCommand[1]);
             break;
         case "delete":
-            command = new DeleteFromList(userInput.replace(" ", ""));
+            command = new DeleteFromList(userCommand[1]);
             break;
         default:
-            System.out.println("error");
-            break;
+            throw new DukeException("Unknown input");
         }
-        if (command != null) {
-            command.executeCommand(taskData);
-        }
+        command.executeCommand(taskData, storage);
     }
 }

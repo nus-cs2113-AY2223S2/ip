@@ -1,27 +1,24 @@
 package duke.data;
 
+import duke.exceptions.DukeException;
+import duke.filemanager.Storage;
 import duke.filemanager.TaskLoader;
 import duke.filemanager.TaskWriter;
-import duke.task.Deadline;
 import duke.task.Task;
-import duke.task.Event;
-import duke.exceptions.ListTooLarge;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 
 public class TaskData {
     private ArrayList<Task> taskList;
-    TaskWriter taskWriter = new TaskWriter();
 
     public TaskData() {
-        this.taskList = new ArrayList<Task>();
-        setData();
+        this.taskList = new ArrayList<>();
     }
 
-    public void setData() {
-        TaskLoader taskLoader = new TaskLoader();
-        this.taskList = taskLoader.setClasses();
+    public TaskData(ArrayList<Task> tasks) throws DukeException {
+        this.taskList = tasks;
     }
 
     public ArrayList<Task> getReadableList() {
@@ -39,42 +36,14 @@ public class TaskData {
      * @param task: user task to remember
      */
 
-    public void add(Task task) {
+    public void add(Task task, Storage storage) throws DukeException {
         taskList.add(task);
-        taskWriter.writeToJson(taskList);
+        storage.writeTasks(taskList);
     }
 
-    /**
-     * Overloaded: Adds Deadline to the list to keep track
-     *
-     * @param deadline: user Deadline to remember
-
-
-    public void add(Deadline deadline) {
-    taskList.add(deadline);
-    taskWriter.writeToJson(taskList);
-    }
-
-    /**
-     * Overloaded: Adds event to the list to keep track
-     *
-     * @param event: user Deadline to remember
-
-
-    public void add(Event event){
-    taskList.add(event);
-    taskWriter.writeToJson(taskList);
-    }
-     */
-
-    /**
-     * Set the specified task at the given index to done
-     *
-     * @param taskIndex index in which the task is stored in the array
-     */
-    public Task markAsDone(int taskIndex) {
+    public Task markAsDone(int taskIndex, Storage storage) throws DukeException {
         taskList.get(taskIndex).setAsDone();
-        taskWriter.writeToJson(taskList);
+        storage.writeTasks(taskList);
         return taskList.get(taskIndex);
     }
 
@@ -83,9 +52,9 @@ public class TaskData {
      *
      * @param taskIndex index in which the task is stored in the array
      */
-    public Task markAsUndone(int taskIndex) {
+    public Task markAsUndone(int taskIndex, Storage storage) throws DukeException {
         taskList.get(taskIndex).setAsUndone();
-        taskWriter.writeToJson(taskList);
+        storage.writeTasks(taskList);
         return taskList.get(taskIndex);
 
     }
@@ -93,10 +62,10 @@ public class TaskData {
     /**
      * Deletes the specified index
      */
-    public Task deleteTask(int taskIndex) {
+    public Task deleteTask(int taskIndex, Storage storage) throws DukeException {
         Task currentTask = taskList.get(taskIndex);
         taskList.remove(taskIndex);
-        taskWriter.writeToJson(taskList);
+        storage.writeTasks(taskList);
         return currentTask;
     }
 

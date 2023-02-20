@@ -1,6 +1,8 @@
 package duke.command;
 
 import duke.data.TaskData;
+import duke.exceptions.DukeException;
+import duke.filemanager.Storage;
 import duke.task.Task;
 
 import java.util.ArrayList;
@@ -8,7 +10,7 @@ import java.util.ArrayList;
 public class ListTasks extends Command {
 
     @Override
-    public void executeCommand(TaskData taskData) {
+    public void executeCommand(TaskData taskData, Storage storage) throws DukeException {
         System.out.println("Here are the tasks in your list:");
         if (taskData.size() == 0) {
             System.out.println("There are no tasks in your list!");
