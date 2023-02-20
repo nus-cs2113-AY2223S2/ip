@@ -15,6 +15,8 @@ public class TaskList {
     public static final String TASK_REMOVED_MESSAGE_ONE = "Task removed:";
     public static final String TASK_REMOVED_MESSAGE_TWO = "Total tasks left: ";
     //Error Strings
+    public static final String TASKS_WITH_CORRESPONDING_KEYWORDS = "These are the tasks found with Keyword: ";
+    public static final String ERROR_NO_TASK_WITH_KEYWORD_FOUND = "No task with such keyword found";
     public static final String ERROR_NO_TASKS_IN_LIST = "Behold the fields of which I keep your tasks. " +
             "Lay thine eyes upon it, and see that it is barren";
 
@@ -37,38 +39,78 @@ public class TaskList {
     }
 
     public void listAllTasks() {
-        Task currentTodo;
-        int sizeOfTodoList = list.size();
-        if(sizeOfTodoList == 0) {
+        int sizeOfTaskList = list.size();
+        if (sizeOfTaskList == 0) {
             System.out.println(ERROR_NO_TASKS_IN_LIST);
         }
-        for (int i = 0; i < sizeOfTodoList; i += 1) {
-            currentTodo = list.get(i);
-            String printedMessage = String.format("%d.%s", i + 1, currentTodo);
+        for (int i = 0; i < sizeOfTaskList; i += 1) {
+            Task currentTask = list.get(i);
+            String printedMessage = String.format("%d.%s", i + 1, currentTask);
             System.out.println(printedMessage);
         }
     }
 
+    /**
+     * Removes a task, given the index of the task.
+     * List follows a 1-based indexing.
+     *
+     * @param taskIndex The index of the Task to be deleted
+     */
     public void deleteATask(int taskIndex) {
-        Task currentTodo = list.get(taskIndex);
+        Task currentTask = list.get(taskIndex);
         list.remove(taskIndex);
         System.out.println(TASK_REMOVED_MESSAGE_ONE);
-        System.out.println(currentTodo);
+        System.out.println(currentTask);
         System.out.println(TASK_REMOVED_MESSAGE_TWO + list.size());
     }
 
-    public void markTaskComplete(int taskIndex) {
-        Task currentTodo = list.get(taskIndex);
-        currentTodo.setComplete();
-        System.out.println(COMPLETED_TASK_MESSAGE);
-        System.out.println(currentTodo);
+    /**
+     * Loops through all the tasks in TaskList and prints all tasks containing the queried String
+     *
+     * @param query The String queried
+     */
+    public void searchByKeyword(String query) {
+        int indexOfTaskFound = 1;
+        for (Task currentTask : list) {
+            String currentTaskName = currentTask.getTask();
+            if (currentTaskName.contains(query)) {
+                if (indexOfTaskFound == 1) {
+                    System.out.println(TASKS_WITH_CORRESPONDING_KEYWORDS + query);
+                }
+                String printedMessage = String.format("[%d] %s", indexOfTaskFound, currentTask);
+                System.out.println(printedMessage);
+                indexOfTaskFound += 1;
+            }
+        }
+        if (indexOfTaskFound == 1) {
+            System.out.println(ERROR_NO_TASK_WITH_KEYWORD_FOUND);
+        }
     }
 
+    /**
+     * Marks a task as complete, given the index of the task.
+     * List follows a 1-based indexing.
+     *
+     * @param taskIndex The index of the Task to be marked
+     */
+    public void markTaskComplete(int taskIndex) {
+        Task currentTask = list.get(taskIndex);
+        currentTask.setComplete();
+        System.out.println(COMPLETED_TASK_MESSAGE);
+        System.out.println(currentTask);
+    }
+
+    /**
+     * Marks a task as incomplete, given the index of the task.
+     * List follows a 1-based indexing.
+     *
+     * @param taskIndex The index of the Task to be marked
+     */
     public void markTaskIncomplete(int taskIndex) {
-        Task currentTodo = list.get(taskIndex);
-        currentTodo.setIncomplete();
+        Task currentTask = list.get(taskIndex);
+        currentTask.setIncomplete();
         System.out.println(INCOMPLETE_TASK_MESSAGE);
-        System.out.println(currentTodo);
+        System.out.println(currentTask);
     }
 
     public void addNewEventTask(String[] inputMessage) {
