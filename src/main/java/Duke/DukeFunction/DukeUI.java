@@ -1,6 +1,6 @@
 package Duke.DukeFunction;
 
-public class DukePrinter {
+public class DukeUI {
     private static String LINE = "____________________________________________________________";
     private static String DukeLogo = " ____        _        \n"
             + "|  _ \\ _   _| | _____ \n"

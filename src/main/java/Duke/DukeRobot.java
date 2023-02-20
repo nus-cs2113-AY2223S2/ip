@@ -3,7 +3,7 @@ package Duke;
 import Duke.DukeCommandLine.DukeCommandLineInput;
 import Duke.DukeCommandLine.DukeTaskInputException;
 import Duke.DukeFunction.DukeList;
-import Duke.DukeFunction.DukePrinter;
+import Duke.DukeFunction.DukeUI;
 import Duke.DukeTask.DukeDeadline;
 import Duke.DukeTask.DukeEvent;
 import Duke.DukeTask.DukeTask;
@@ -54,7 +54,7 @@ public class DukeRobot {
         }
     }
     public static void main(String[] args) {
-        DukePrinter.printGreeting();
+        DukeUI.printGreeting();
         DukeList.loadTask();
         Scanner in = new Scanner(System.in);
         while (true) {
@@ -63,8 +63,8 @@ public class DukeRobot {
             int id;
             switch (command.getCommandType()){
             case "bye":
-                DukePrinter.printStringln("Bye. Hope to see you again soon!");
-                DukePrinter.printGoodbyeLogo();
+                DukeUI.printStringln("Bye. Hope to see you again soon!");
+                DukeUI.printGoodbyeLogo();
                 return;
             case "list":
                 DukeList.listTask();
@@ -73,7 +73,7 @@ public class DukeRobot {
                 try {
                     id = Integer.parseInt(command.getCommandMessage());
                 } catch (NumberFormatException integerException) {
-                      DukePrinter.printErrorln("Sorry, the id is invalid!");
+                      DukeUI.printErrorln("Sorry, the id is invalid!");
                     break;
                 }
                 DukeList.markDone(id-1);
@@ -82,7 +82,7 @@ public class DukeRobot {
                 try {
                     id = Integer.parseInt(command.getCommandMessage());
                 } catch (NumberFormatException integerException) {
-                    DukePrinter.printErrorln("Sorry, the id is invalid!");
+                    DukeUI.printErrorln("Sorry, the id is invalid!");
                     break;
                 }
                 DukeList.unmarkDone(id-1);
@@ -91,7 +91,7 @@ public class DukeRobot {
                 try {
                     id = Integer.parseInt(command.getCommandMessage());
                 } catch (NumberFormatException integerException) {
-                    DukePrinter.printErrorln("Sorry, the id is invalid!");
+                    DukeUI.printErrorln("Sorry, the id is invalid!");
                     break;
                 }
                 DukeList.deleteTask(id-1);
@@ -101,7 +101,7 @@ public class DukeRobot {
                     DukeTask newTask = processTask(command.getCommandMessage());
                     DukeList.addTask(newTask);
                 } catch (DukeTaskInputException e) {
-                    DukePrinter.printErrorln(e.getMessage());
+                    DukeUI.printErrorln(e.getMessage());
                 }
                 break;
             case "deadline":
@@ -109,7 +109,7 @@ public class DukeRobot {
                     DukeDeadline deadline = processDeadline(command.getCommandMessage());
                     DukeList.addTask(deadline);
                 } catch (DukeTaskInputException e) {
-                    DukePrinter.printErrorln(e.getMessage());
+                    DukeUI.printErrorln(e.getMessage());
                 }
                 break;
             case "event":
@@ -117,11 +117,11 @@ public class DukeRobot {
                     DukeEvent event = processEvent(command.getCommandMessage());
                     DukeList.addTask(event);
                 } catch (DukeTaskInputException e) {
-                    DukePrinter.printErrorln(e.getMessage());
+                    DukeUI.printErrorln(e.getMessage());
                 }
                 break;
             default:
-                DukePrinter.printErrorln("Sorry, I don't know what that means :-( ("
+                DukeUI.printErrorln("Sorry, I don't know what that means :-( ("
                         + command.getCommandType() + ")");
                 break;
             }
