@@ -1,10 +1,11 @@
 package duke.command;
 
-import duke.data.TaskData;
+import duke.data.TaskList;
 import duke.exceptions.DukeException;
 import duke.exceptions.InvalidInputException;
 import duke.filemanager.Storage;
 import duke.task.Task;
+import duke.ui.Ui;
 
 public class UnmarkCommand extends Command {
     private int taskIndex;
@@ -19,12 +20,10 @@ public class UnmarkCommand extends Command {
     }
 
     @Override
-    public void executeCommand(TaskData taskData, Storage storage) throws DukeException {
+    public void executeCommand(TaskList tasks, Storage storage, Ui ui) throws DukeException {
         try {
-            Task taskInfo = taskData.markAsUndone(taskIndex, storage);
-            System.out.println("Noted sir, I have marked \n"
-                    + taskInfo.getTaskType() + "[ ]" + taskInfo.getDescription() + "\n"
-                    + "as not done.");
+            Task task = tasks.markAsUndone(taskIndex, storage);
+            ui.printUnmarkedTask(task);
         } catch (IndexOutOfBoundsException e) {
             throw new DukeException("Please enter a number within list size!");
         }

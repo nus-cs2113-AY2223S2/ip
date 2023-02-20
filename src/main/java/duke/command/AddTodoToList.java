@@ -1,13 +1,13 @@
 package duke.command;
 
-import duke.data.TaskData;
+import duke.data.TaskList;
 import duke.exceptions.DukeException;
 import duke.exceptions.InvalidInputException;
 import duke.filemanager.Storage;
 import duke.task.Task;
+import duke.ui.Ui;
 
 import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 public class AddTodoToList extends Command {
     private Task newTask;
@@ -30,15 +30,12 @@ public class AddTodoToList extends Command {
     /**
      * Adds new todo object into the arrayList
      *
-     * @param taskData containing all tasks
+     * @param tasks containing all tasks
      */
     @Override
-    public void executeCommand(TaskData taskData, Storage storage) throws DukeException {
-        taskData.add(newTask, storage);
-        System.out.println("Got it! Added \n"
-                + "[T][ ]" + newTask.getDescription() + "\n"
-                + "to the list.");
-        System.out.println("Now you have " + taskData.size() + " task(s) in the list.");
+    public void executeCommand(TaskList tasks, Storage storage, Ui ui) throws DukeException {
+        tasks.add(newTask, storage);
+        ui.printTaskTodo(newTask, tasks);
     }
 
 }

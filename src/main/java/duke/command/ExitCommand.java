@@ -1,11 +1,12 @@
 package duke.command;
 
-import duke.data.TaskData;
+import duke.data.TaskList;
 import duke.filemanager.Storage;
+import duke.ui.Ui;
 
 public class ExitCommand extends Command {
     @Override
-    public void executeCommand(TaskData taskdata, Storage storage) {
+    public void executeCommand(TaskList tasks, Storage storage, Ui ui) {
         exitProgram();
     }
 

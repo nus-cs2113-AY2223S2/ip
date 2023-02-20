@@ -1,11 +1,11 @@
 package duke.command;
 
-import duke.data.TaskData;
+import duke.data.TaskList;
 import duke.exceptions.DukeException;
 import duke.exceptions.InvalidInputException;
 import duke.filemanager.Storage;
-import duke.task.Deadline;
 import duke.task.Task;
+import duke.ui.Ui;
 
 import java.util.NoSuchElementException;
 
@@ -22,13 +22,10 @@ public class DeleteFromList extends Command {
     }
 
     @Override
-    public void executeCommand(TaskData taskData, Storage storage) throws DukeException {
+    public void executeCommand(TaskList tasks, Storage storage, Ui ui) throws DukeException {
         try {
-            Task taskInfo = taskData.deleteTask(taskIndex, storage);
-            System.out.println("Noted sir, I have removed \n"
-                    + taskInfo.getTaskType() + "[ ]" + taskInfo.getDescription() + "\n"
-                    + "from the list");
-            System.out.println("Now you have " + taskData.size() + " task(s) in the list.");
+            Task task = tasks.deleteTask(taskIndex, storage);
+            ui.printDeletedTask(task, tasks);
         } catch (IndexOutOfBoundsException ex) {
             throw new DukeException("Enter a number within range of list!");
         }

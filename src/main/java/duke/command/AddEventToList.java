@@ -1,10 +1,11 @@
 package duke.command;
 
-import duke.data.TaskData;
+import duke.data.TaskList;
 import duke.exceptions.DukeException;
 import duke.exceptions.InvalidInputException;
 import duke.filemanager.Storage;
 import duke.task.Event;
+import duke.ui.Ui;
 
 import java.util.NoSuchElementException;
 
@@ -29,15 +30,12 @@ public class AddEventToList extends Command {
     /**
      * Adds a new event to the list
      *
-     * @param taskData arrayList containing all tasks
+     * @param tasks arrayList containing all tasks
      */
     @Override
-    public void executeCommand(TaskData taskData, Storage storage) throws DukeException {
-        taskData.add(newTask, storage);
-        System.out.println("Got it! Added \n"
-                + "[E][ ] " + newTask.getDescription() + newTask.getDuration() + "\n"
-                + "to the list.");
-        System.out.println("Now you have " + taskData.size() + " task(s) in the list.");
+    public void executeCommand(TaskList tasks, Storage storage, Ui ui) throws DukeException {
+        tasks.add(newTask, storage);
+        ui.printTaskEvent(newTask, tasks);
     }
 
     /**

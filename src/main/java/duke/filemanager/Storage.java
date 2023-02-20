@@ -1,12 +1,8 @@
 package duke.filemanager;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import duke.data.TaskData;
 import duke.exceptions.DukeException;
 import duke.task.Task;
 
-import java.io.*;
 import java.util.ArrayList;
 
 public class Storage {

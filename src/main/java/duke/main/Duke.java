@@ -1,10 +1,10 @@
 package duke.main;
 
 import duke.command.UserCommandManager;
-import duke.data.TaskData;
+import duke.data.TaskList;
 import duke.exceptions.DukeException;
 import duke.filemanager.Storage;
-import duke.ui.GreetUser;
+import duke.ui.ParseCommand;
 import duke.ui.Ui;
 
 import java.util.Scanner;
@@ -15,32 +15,30 @@ import java.util.Scanner;
 public class Duke {
     private Ui ui;
     private Storage storage;
-    private TaskData tasks;
+    private TaskList tasks;
 
 
     public Duke(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
         try {
-            tasks = new TaskData(storage.setTasks());
+            tasks = new TaskList(storage.setTasks());
         } catch (DukeException e) {
             ui.errorMessage(e.getMessage());
-            tasks = new TaskData();
+            tasks = new TaskList();
         }
     }
 
 
     @SuppressWarnings("InfiniteLoopStatement")
     public void run() {
-        GreetUser.greetUser();
-        Scanner input = new Scanner(System.in);
+        ui.greetUser();
+        ui.showLine();
         UserCommandManager commandManager = new UserCommandManager();
         while (true) {
             try {
-                String[] userCommand = new String[2];
-                userCommand[0] = input.next().toLowerCase();
-                userCommand[1] = input.nextLine();
-                commandManager.handleCommands(userCommand, storage, tasks);
+                String[] userCommand = ParseCommand.readInput();
+                commandManager.handleCommands(userCommand, storage, tasks, ui);
                 ui.showLine();
             } catch (DukeException e) {
                 ui.errorMessage(e.getMessage());

@@ -1,11 +1,9 @@
 package duke.command;
 
-import duke.data.TaskData;
+import duke.data.TaskList;
 import duke.exceptions.DukeException;
 import duke.filemanager.Storage;
-import duke.main.Duke;
-
-import java.util.Scanner;
+import duke.ui.Ui;
 
 public class UserCommandManager {
 
@@ -15,9 +13,9 @@ public class UserCommandManager {
      *
      * @param rawUserInput raw user input
      * @param storage      handler for writing to json file
-     * @param taskData     taskList of tasks
+     * @param tasks        taskList of tasks
      */
-    public void handleCommands(String[] userCommand, Storage storage, TaskData taskData) throws DukeException {
+    public void handleCommands(String[] userCommand, Storage storage, TaskList tasks, Ui ui) throws DukeException {
 
         Command command;
         switch (userCommand[0]) {
@@ -48,6 +46,6 @@ public class UserCommandManager {
         default:
             throw new DukeException("Unknown input");
         }
-        command.executeCommand(taskData, storage);
+        command.executeCommand(tasks, storage, ui);
     }
 }

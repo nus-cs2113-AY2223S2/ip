@@ -2,22 +2,19 @@ package duke.data;
 
 import duke.exceptions.DukeException;
 import duke.filemanager.Storage;
-import duke.filemanager.TaskLoader;
-import duke.filemanager.TaskWriter;
 import duke.task.Task;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 
-public class TaskData {
+public class TaskList {
     private ArrayList<Task> taskList;
 
-    public TaskData() {
+    public TaskList() {
         this.taskList = new ArrayList<>();
     }
 
-    public TaskData(ArrayList<Task> tasks) throws DukeException {
+    public TaskList(ArrayList<Task> tasks) throws DukeException {
         this.taskList = tasks;
     }
 
