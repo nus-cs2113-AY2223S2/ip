@@ -14,22 +14,33 @@ import java.io.FileWriter;
 import java.util.Scanner;
 import java.util.StringJoiner;
 
+/**
+ * A class for saving the task list as a text file, and subsequently loading it.
+ */
 public abstract class Storage {
     public static final String DELIMITER = "\u001D";
     public static final String SAVE_PATH = "save.txt";
 
-    private static String convertTasksToSaveString(TaskList taskList) {
-        StringJoiner taskListString = new StringJoiner(System.lineSeparator());
-        for (int i = 0; i < taskList.size(); i++) {
-            taskListString.add(taskList.getTask(i).toSaveString());
-        }
-        return taskListString.toString();
-    }
-
+    /**
+     * Checks if the save string (which represents a task) is valid,
+     * which means it has the expected number of arguments,
+     * and the completion status is either a "1" or a "0".
+     *
+     * @param splitTasks The save string split by the delimiter character.
+     * @param expectedArgs The expected number of arguments, which differs depending on the type of task.
+     * @return True if the save string is invalid, false otherwise.
+     */
     private static boolean isInvalidSaveString(String[] splitTasks, int expectedArgs) {
         return splitTasks.length != expectedArgs || !(splitTasks[1].equals("1") || splitTasks[1].equals("0"));
     }
 
+    /**
+     * Converts the save string read from the save file to a Task object.
+     *
+     * @param taskString The save string read from the file.
+     * @return The task object represented by the string.
+     * @throws DukeException If the save string is invalid.
+     */
     private static Task convertStringToTask(String taskString) throws DukeException {
         String[] splitTasks = taskString.split(DELIMITER);
         Task task;
@@ -60,6 +71,12 @@ public abstract class Storage {
         }
     }
 
+    /**
+     * Reads in the task list from the save file.
+     *
+     * @param filePath The path of the save file.
+     * @return The task list that was saved in the file.
+     */
     public static TaskList readTasksFromFile(String filePath) {
         try (Scanner in = new Scanner(new File(filePath))) {
             TaskList taskList = new TaskList();
@@ -78,9 +95,15 @@ public abstract class Storage {
         }
     }
 
+    /**
+     * Writes the current task list to the save file.
+     *
+     * @param filePath The path of the save file.
+     * @param taskList The task list being saved.
+     */
     public static void saveTasksToFile(String filePath, TaskList taskList) {
         try (FileWriter out = new FileWriter(filePath)) {
-            out.write(convertTasksToSaveString(taskList));
+            out.write(taskList.toSaveString());
         } catch (java.io.IOException e) {
             Ui.printError(Errors.FAILED_SAVE.MESSAGE, "save");
         }

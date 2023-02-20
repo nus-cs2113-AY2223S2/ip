@@ -8,28 +8,42 @@ import duke.ui.Ui;
 
 import java.util.HashMap;
 
+/**
+ * Command for adding a deadline task to the task list.
+ */
 public class DeadlineTaskCommand extends Command {
     private String description;
     private String by;
 
-    public DeadlineTaskCommand(String[] command) throws DukeException {
-        if (command.length < 2) {
+    /**
+     * Constructs a command that will add a deadline task to the task list.
+     *
+     * @param args Array that should contain the task description and deadline at index 1.
+     * @throws DukeException If no description or deadline is provided for the deadline task.
+     */
+    public DeadlineTaskCommand(String[] args) throws DukeException {
+        if (args.length < 2) {
             throw new DukeException(Errors.MISSING_DESCRIPTION.MESSAGE);
         }
 
-        HashMap<String, String> args = Parser.parseArguments(command[1],
-                new String[]{command[0], Deadline.DELIMITER_BY});
-        if (args.get(command[0]).isEmpty()) {
+        HashMap<String, String> splitArgs = Parser.parseArguments(args[1],
+                new String[]{args[0], Deadline.DELIMITER_BY});
+        if (splitArgs.get(args[0]).isEmpty()) {
             throw new DukeException(Errors.MISSING_DESCRIPTION.MESSAGE);
         }
-        if (!args.containsKey(Deadline.DELIMITER_BY) || args.get(Deadline.DELIMITER_BY).isEmpty()) {
+        if (!splitArgs.containsKey(Deadline.DELIMITER_BY) || splitArgs.get(Deadline.DELIMITER_BY).isEmpty()) {
             throw new DukeException(Errors.MISSING_TIME.MESSAGE);
         }
 
-        description = args.get(command[0]);
-        by = args.get(Deadline.DELIMITER_BY);
+        description = splitArgs.get(args[0]);
+        by = splitArgs.get(Deadline.DELIMITER_BY);
     }
 
+    /**
+     * Adds a deadline task with the description and deadline provided in the constructor to the task list.
+     *
+     * @param taskList The task list that the command is executed on.
+     */
     @Override
     public void run(TaskList taskList) {
         String taskString = taskList.addTask(new Deadline(description, by));
