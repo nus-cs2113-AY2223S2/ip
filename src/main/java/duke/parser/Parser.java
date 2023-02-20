@@ -19,7 +19,6 @@ public class Parser {
     public Parser(String userInput) {
         this.userInput = userInput;
     }
-    //public String[] extractFirstWord = userInput.split(" ", 2);
 
 
     public String extractCommand() {

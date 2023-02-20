@@ -1,6 +1,7 @@
 package duke.command;
 
 import duke.Duke;
+import duke.task.Task;
 import duke.ui.Ui;
 import duke.task.Deadline;
 import duke.task.Event;
@@ -14,6 +15,7 @@ import duke.tasklist.TaskList;
  *     commands to add respective tasks, todo, event etc
  */
 public class Command {
+
     public static void doCommandMark(int taskNum) {
         Duke.isFileEdited = true;
         try {
