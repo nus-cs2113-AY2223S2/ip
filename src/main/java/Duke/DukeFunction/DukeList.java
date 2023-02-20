@@ -1,5 +1,6 @@
 package Duke.DukeFunction;
 
+import Duke.DukeCommandLine.DukeTaskInputException;
 import Duke.DukeTask.DukeDeadline;
 import Duke.DukeTask.DukeEvent;
 import Duke.DukeTask.DukeTask;
@@ -13,59 +14,61 @@ import java.util.Scanner;
 public class DukeList {
     private static final ArrayList<DukeTask> taskList = new ArrayList<>();
     private static final String FILE_PATH = "data/list.txt";
-    public static void addTask(DukeTask task) {
+    public void addTask(DukeTask task) throws DukeTaskInputException {
         try {
             taskList.add(task);
             System.out.println("Got it. I've added this task:");
             task.printTask();
             System.out.println("Now you have " + taskList.size() + " tasks in the list.");
-            DukeUI.printLine();
         } catch (Exception e) {
-            DukeUI.printErrorln(e.getMessage());
+            throw new DukeTaskInputException(e.getMessage());
         }
     }
-    public static void listTask() {
+    public void listTask() {
         System.out.println("Here are the tasks in your list:");
         for(int i = 0; i < taskList.size(); i++) {
             taskList.get(i).printTask(i);
         }
-        DukeUI.printLine();
     }
-    public static boolean isValidID(int id) {
+    public static void isValidID(int id) throws DukeTaskInputException {
         boolean isIDInValid = id < 0 || id >= taskList.size();
         if(isIDInValid) {
-            DukeUI.printErrorln("Sorry, the id is invalid!");
-            return false;
+            throw new DukeTaskInputException("Sorry, the id is invalid!");
         }
-        return true;
     }
 
-    public static void markDone(int id) {
-        if(isValidID(id)) {
+    public void markDone(int id) throws DukeTaskInputException {
+        try {
+            isValidID(id);
             taskList.get(id).markAsDone();
             System.out.println("Nice! I've marked this task as done:");
             taskList.get(id).printTask();
-            DukeUI.printLine();
+        } catch (DukeTaskInputException e) {
+            throw new DukeTaskInputException("[mark] " + e.getMessage());
         }
     }
-    public static void unmarkDone(int id) {
-        if(isValidID(id)) {
+    public void unmarkDone(int id) throws DukeTaskInputException {
+        try {
+            isValidID(id);
             taskList.get(id).unmarkAsDone();
-            System.out.println("OK, I've marked this task as not done yet:");
+            System.out.println("Nice! I've unmarked this task as done:");
             taskList.get(id).printTask();
-            DukeUI.printLine();
+        } catch (DukeTaskInputException e) {
+            throw new DukeTaskInputException("[unmark] " + e.getMessage());
         }
     }
-    public static void deleteTask(int id) {
-        if(isValidID(id)) {
+    public void deleteTask(int id) throws DukeTaskInputException {
+        try {
+            isValidID(id);
             System.out.println("Noted. I've removed this task:");
             taskList.get(id).printTask();
             taskList.remove(id);
             System.out.println("Now you have " + taskList.size() + " tasks in the list.");
-            DukeUI.printLine();
+        } catch (DukeTaskInputException e) {
+            throw new DukeTaskInputException("[delete] " + e.getMessage());
         }
     }
-    public static void saveTask() {
+    public void saveTask() throws DukeTaskInputException {
         File file = new File(FILE_PATH);
         try {
             if(!file.exists()) {
@@ -77,16 +80,15 @@ public class DukeList {
                 fileWriter.write(taskList.get(i).saveTask());
             }
             fileWriter.close();
-//            DukeUI.printStringln("Saved successfully!");
         } catch (IOException e) {
-            DukeUI.printErrorln("[IOException] Sorry, I can't save the file, " + e.getMessage());
+            throw new DukeTaskInputException("[IOException] Sorry, I can't save the file, " + e.getMessage());
         }
     }
-    public static void loadTask() {
-        File file = new File("data/list.txt");
+    public void loadTask() throws DukeTaskInputException {
+        File file = new File(FILE_PATH);
         try {
             if(!file.exists()) {
-                DukeUI.printStringln("No file to load");
+                DukeUI.printString("No file to load");
                 return;
             }
             Scanner fileReader = new Scanner(file);
@@ -123,13 +125,11 @@ public class DukeList {
                         taskList.add(event);
                         break;
                     default:
-                        DukeUI.printErrorln("Sorry, I can't load the file!");
-                        break;
+                        throw new DukeTaskInputException("Sorry, I can't read the file, the format is wrong");
                 }
             }
-            DukeUI.printStringln("Loaded successfully!");
         } catch (IOException e) {
-            DukeUI.printErrorln("[IOException] Sorry, I can't load the file, " + e.getMessage());
+            throw new DukeTaskInputException("[IOException] Sorry, I can't load the file, " + e.getMessage());
         }
     }
 }
