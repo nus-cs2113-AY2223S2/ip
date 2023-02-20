@@ -115,7 +115,7 @@ public class Buddy {
                     int taskNumberToBeDeleted = Integer.parseInt(command.substring(indexOfTaskNumber));
                     listOfThings.remove(taskNumberToBeDeleted - 1);
                     currentPosition--;
-                    System.out.print("OK! Task deleted :) ");
+                    System.out.print("OK! Task deleted :) Type list to see remaining tasks!");
                 }
                 System.out.print("You currently have " + currentPosition);
                 if (currentPosition == 1) {
