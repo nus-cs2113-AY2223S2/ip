@@ -1,8 +1,6 @@
 package sage.utility;
 
-import sage.tasktypes.Deadline;
 import sage.tasktypes.Task;
-import sage.tasktypes.Todo;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,9 +9,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class FileMgmt {
+public class Storage {
 
     private static final String PROJECT_FILE_DIR = "./data/sage.txt";
+
 
     public void recoverData(TaskList taskList) {
         File f = new File(PROJECT_FILE_DIR);
@@ -30,6 +29,7 @@ public class FileMgmt {
                     String taskTime = "";
                     boolean isCompleted = false;
                     char s = line.charAt(4);
+
                     if (s == 'X') {
                         isCompleted = true;
                     }
@@ -49,10 +49,9 @@ public class FileMgmt {
                         }
                     }
                 }
-
                 scanner.close();
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                System.out.println("An error occurred when trying to read/access the data file");
             }
         }
     }

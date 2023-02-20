@@ -1,6 +1,6 @@
 package sage.utility;
 
-public class Command {
+public class Parser {
     private String[] rawOutput;
     private String taskType;
     private String taskDescription;
@@ -8,7 +8,7 @@ public class Command {
     private String from = null;
     private String to = null;
 
-    public Command(String input) {
+    public Parser(String input) {
         this.rawOutput = input.split("/");
         String[] body = rawOutput[0].split(" ", 2);
         this.taskType = body[0].toLowerCase();
