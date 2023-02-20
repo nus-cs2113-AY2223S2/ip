@@ -5,8 +5,9 @@ import duke.ui.Symbols;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/** Task with a deadline */
 public class Deadline extends Task {
-    // tasks that need to be done before a specific date/time
+
     public String deadline;
     public LocalDate date;
     public LocalDateTime dateTime;
@@ -18,6 +19,11 @@ public class Deadline extends Task {
         this.dateTime = DateTime.storeLocalDateTime(deadline);
     }
 
+    /**
+     * Generates the task information to be shown to user
+     *
+     * @return string containing the task information in the format: [T][] taskName (by: date)
+     */
     @Override
     public String getFullTaskDetail() {
         String taskDetail;
@@ -26,6 +32,11 @@ public class Deadline extends Task {
         return taskDetail;
     }
 
+    /**
+     * Generates the most specific date format to be shown to user given the string date provided by user
+     *
+     * @return the most specific date format in string
+     */
     private String getOutDeadline() {
         String outputDeadline;
         if (this.dateTime != null) {
@@ -38,6 +49,12 @@ public class Deadline extends Task {
         return outputDeadline;
     }
 
+    /**
+     * Checks whether a given date falls on the deadline
+     *
+     * @param date date to be checked with
+     * @return true if date falls on the deadline, false otherwise
+     */
     public boolean isDateOnDeadline(LocalDate date) {
         if (this.date == null) {
             return false;
@@ -45,6 +62,11 @@ public class Deadline extends Task {
         return this.date.equals(date);
     }
 
+    /**
+     * Generates the task information to be stored
+     *
+     * @return string containing the encoded task information in the format: D | 0 | taskName | date
+     */
     @Override
     public String getEncodedData() {
         String taskStatus;

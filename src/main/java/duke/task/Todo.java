@@ -2,13 +2,18 @@ package duke.task;
 
 import duke.ui.Symbols;
 
+/** Task without any date/time attached to it */
 public class Todo extends Task {
-    // tasks without any date/time attached to it
 
     public Todo(String taskName) {
         super(taskName);
     }
 
+    /**
+     * Generates the task information to be shown to user
+     *
+     * @return string containing the task information in the format: [T][] taskName
+     */
     @Override
     public String getFullTaskDetail() {
         String taskDetail;
@@ -16,6 +21,11 @@ public class Todo extends Task {
         return taskDetail;
     }
 
+    /**
+     * Generates the task information to be stored
+     *
+     * @return string containing the encoded task information in the format: T | 0 | taskName
+     */
     @Override
     public String getEncodedData() {
         String taskStatus;
@@ -25,6 +35,5 @@ public class Todo extends Task {
             taskStatus = Symbols.DATA_UNMARK;
         }
         return String.join(Symbols.ENCODE_DATA_DELIMITER, Symbols.TODO, taskStatus, taskName);
-        // returns full details of task
     }
 }

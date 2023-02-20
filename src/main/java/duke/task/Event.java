@@ -5,8 +5,9 @@ import duke.ui.Symbols;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/** Task with a start date and/or time and an end date and/or time */
 public class Event extends Task {
-    // tasks that start at a specific date/time and ends at specific date/time
+
     public String stringStartDate;
     public String stringEndDate;
     public LocalDate startDate;
@@ -24,6 +25,11 @@ public class Event extends Task {
         this.endDateTime = DateTime.storeLocalDateTime(endDateTime);
     }
 
+    /**
+     * Generates the task information to be shown to user
+     *
+     * @return string containing the task information in the format: [E][] taskName (from: date/time to: date/time)
+     */
     @Override
     public String getFullTaskDetail() {
         String taskDetail;
@@ -34,6 +40,11 @@ public class Event extends Task {
         return taskDetail;
     }
 
+    /**
+     * Generates the most specific start date format to be shown to user given the string start date provided by user
+     *
+     * @return the most specific date format in string
+     */
     private String getOutStartDate() {
         String outStartDate;
         if (this.startDateTime != null) {
@@ -46,6 +57,11 @@ public class Event extends Task {
         return outStartDate;
     }
 
+    /**
+     * Generates the most specific end date format to be shown to user given the string end date provided by user
+     *
+     * @return the most specific date format in string
+     */
     private String getOutEndDate() {
         String outEndDate;
         if (this.endDateTime != null) {
@@ -58,6 +74,12 @@ public class Event extends Task {
         return outEndDate;
     }
 
+    /**
+     * Checks whether a given date falls between the task start date and end date
+     *
+     * @param date date to be checked with
+     * @return true if date falls between the start and end date, else otherwise
+     */
     public boolean isDateBetweenEvent(LocalDate date) {
         if (this.startDate == null) {
             return false;
@@ -70,6 +92,12 @@ public class Event extends Task {
         return dateIsAfterStart && dateIsBeforeEnd;
     }
 
+    /**
+     * Checks whether a given date falls on the start date
+     *
+     * @param date date to be checked with
+     * @return true if date falls on the start date, false otherwise
+     */
     public boolean isDateOnStart(LocalDate date) {
         if (this.startDate == null) {
             return false;
@@ -77,6 +105,12 @@ public class Event extends Task {
         return this.startDate.equals(date);
     }
 
+    /**
+     * Checks whether a given date falls on the end date
+     *
+     * @param date date to be checked with
+     * @return true if date falls on the end date, false otherwise
+     */
     public boolean isDateOnEnd(LocalDate date) {
         if (this.endDate == null) {
             return false;
@@ -84,6 +118,11 @@ public class Event extends Task {
         return this.endDate.equals(date);
     }
 
+    /**
+     * Generates the task information to be stored
+     *
+     * @return string containing the encoded task information in the format: E | 0 | taskName | date to date
+     */
     @Override
     public String getEncodedData() {
         String taskStatus;

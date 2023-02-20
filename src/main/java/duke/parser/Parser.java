@@ -7,7 +7,15 @@ import duke.task.DateTime;
 
 import java.time.LocalDate;
 
-public class Parser { // deals with making sense of the user command
+/** Parses user input  */
+public class Parser {
+
+    /**
+     * Parses user input into command for execution
+     *
+     * @param input input given by user
+     * @return the command based on the user input
+     */
     public Command parseCommand(String input) {
         String[] arrayOfInput = input.split(" ");
         arrayOfInput[0] = arrayOfInput[0].trim();
@@ -35,6 +43,15 @@ public class Parser { // deals with making sense of the user command
         }
     }
 
+    /**
+     * Checks and prepares the parameters required to initiate a new mark/unmark/delete command and creates the
+     * relevant command
+     *
+     * @param input an array of the user input, separated by " "
+     * @param command command given by user: mark/unmark/delete
+     * @return the command based on the input provided by user
+     * @throws IndexOutOfBoundsException when task number provided by user > total task count
+     */
     private Command prepareMarkUnmarkDelete(String[] input, String command) throws IndexOutOfBoundsException {
         try {
             int taskNumber;
@@ -56,6 +73,12 @@ public class Parser { // deals with making sense of the user command
         }
     }
 
+    /**
+     * Checks and prepares the parameters required to initiate a todo command and creates the relevant command
+     *
+     * @param input input given by the user
+     * @return the command based on the input provided by user
+     */
     private Command prepareTodoCommand(String input) {
         try {
             InputValidity.checkTodo(input);
@@ -66,6 +89,12 @@ public class Parser { // deals with making sense of the user command
         }
     }
 
+    /**
+     * Checks and prepares the parameters required to initiate a deadline command and creates the relevant command
+     *
+     * @param input input given by the user
+     * @return the command based on the input provided by user
+     */
     private Command prepareDeadlineCommand(String input) {
         try {
             InputValidity.checkDeadline(input);
@@ -78,6 +107,12 @@ public class Parser { // deals with making sense of the user command
         }
     }
 
+    /**
+     * Checks and prepares the parameters required to initiate an event command and creates the relevant command
+     *
+     * @param input input given by the user
+     * @return the command based on the input provided by user
+     */
     private Command prepareEventCommand(String input) {
         try {
             InputValidity.checkValidEvent(input);
@@ -92,11 +127,25 @@ public class Parser { // deals with making sense of the user command
         }
     }
 
+    /**
+     * Checks whether the command provided by user is valid for mark, unmark and delete
+     *
+     * @param userInput an array of the user input, separated by " "
+     * @param command command word provided by user: mark/unmark/delete
+     * @return string representing the task number
+     * @throws DukeException when command provided by user is invalid
+     */
     private String parseMarkUnmarkDelete(String[] userInput, String command) throws DukeException {
         InputValidity.isValid(userInput, command);
         return userInput[1].trim();
     }
 
+    /**
+     * Checks and prepares the parameters required to initiate a data command and creates the relevant command
+     *
+     * @param input input given by the user
+     * @return the command based on the input provided by user
+     */
     private Command prepareDateCommand(String input) {
         try {
             input = input.replace(DateCommand.COMMAND_WORD, "");
