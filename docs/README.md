@@ -1,124 +1,87 @@
 # User Guide
 
-## Running Duke
-* Download the latest release for ``ip.jar`` from [GitHub](https://github.com/NicholasChungJunJie/ip/releases)
-* Open command prompt
-* Go to the directory containing ``ip.jar``<br>
+#### [© 2023 Nicholas Chung.](https://chungnicholas.com) 
+
+# Content page
+
+* [1. Installation](#1-installation)
+* [2. Summary of features](#2-summary-of-features)
+* [3. Features](#3-features)
+  * [3.1 Add Tasks](#31-add-tasks)
+    * [3.1.1 Add Todo](#311-add-todo)
+    * [3.1.2 Add Deadline](#312-add-deadline)
+    * [3.1.3 Add Event](#313-add-event)
+  * [3.2 Mark and un-mark tasks](#32-mark-and-un-mark-tasks)
+    * [3.2.1 Mark tasks](#321-mark-task)
+    * [3.2.2 Un-mark tasks](#322-un-mark-task)
+  * [3.3 List all tasks](#33-list-all-tasks)
+  * [3.4 Delete tasks](#34-delete-tasks)
+  * [3.5 Find tasks](#35-find-tasks)
+  * [3.6 Exit the program](#36-exit-the-program)
+
+# 1. Installation
+1. Install Java 11 on your device.
+1. Download the latest release for ``ip.jar`` from [GitHub](https://github.com/NicholasChungJunJie/ip/releases).
+1. Open command prompt.
+1. Go to the directory containing ``ip.jar``<br>
   ```cd [path to directory]```
-* Run the command <br>
+1. Run the command <br>
   ```java -jar ip.jar```
-* If you have successfully downloaded and run Duke, you should see
-```
-    ____________________________________________________________
+1. If you have successfully downloaded and run Duke, you should see
+    ````
+        ____________________________________________________________
+    
+         All Tasks loaded from memory successfully.
+        ____________________________________________________________
+    
+        ____________________________________________________________
+         Hello! I'm Duke
+         What can I do for you?
+        ____________________________________________________________
+    ````
+1. A directory ``/data`` containing a file ``duke.txt`` will be created in the current working directory. 
+   1. This file will be used to store tasks to memory and retrieved on every run. 
+   1. Please do not modify or delete it to prevent losing your saved data.
+1. To exit the program, use the command ``bye``. This will ensure all tasks are saved to storage for retrieval on the next run.
 
-     All Tasks loaded from memory successfully.
-    ____________________________________________________________
-
-    ____________________________________________________________
-     Hello! I'm Duke
-     What can I do for you?
-    ____________________________________________________________
-```
 <hr>
 
-<br>
 
-# Summary of features
+# 2. Summary of features
 
 #### This is a summary. 
 #### You may find the full explanation of feature below in the ``Features`` section.
 
-## 1. Add Tasks
+| Command  | Syntax                                   | Example                                             |
+|----------|------------------------------------------|-----------------------------------------------------|
+| todo     | ``todo <task>``                          | ``todo read book``                                  |
+| deadline | ``deadline <task> /by <deadline>``       | ``deadline return book /by June 6th``               |
+| event    | ``event <task> /from <start> /to <end>`` | ``event project meeting /from May 1st 2pm /to 4pm`` |
+| mark     | ``mark <index>``                         | ``mark 1``                                          |
+| unmark   | ``unmark <index>``                       | ``unmark 1``                                        |  
+| list     | ``list``                                 | ``list``                                            |
+| delete   | ``delete <index>``                       | ``delete 2``                                        |
+| find     | ``find <keyword>``                       | ``find meeting``                                    |
 
-### Add todo
-```
-todo (arguments)
-```
-
-### Add deadline
-```
-deadline (arguments) /by (deadline)
-```
-
-### Add event
-```
-event (arguments) /from (start) /to (end)
-```
-
-<br>
-
-## 2. Mark and un-mark tasks
-
-### Mark task
-```
-mark (1-th index task number)
-```
-
-### Un-mark task
-```
-unmark (1-th index task number)
-```
-
-<br>
-
-## 3. List tasks
-
-```
-list
-```
-
-<br>
-
-## 4. Delete tasks
-```
-delete (1-th index task number)
-```
-
-<br>
-
-## 5. Find tasks
-```
-find (keyword)
-```
-
-## 6. Exit the program
-```
-bye
-```
 
 <hr>
 
-<br>
 
-# Features
+# 3. Features
 
-## Add Tasks
+## 3.1 Add Tasks
 
-Add various types of tasks to the task tracker.
+Adds various types of tasks to the task tracker.
 
-Types of tasks:
-1. Todo
-2. Deadline
-3. Event
+### 3.1.1 Add Todo
 
-### Usage
+Adds a todo task to the list.
 
-### Todo
-### `todo` - Adds a todo
+Syntax: ``todo <task>``
 
-Adds a todo task to the task tracker.
-
-Example of usage:
-
-`todo (arguments)`
-```
-todo read book
-``` 
+Example of usage: ``todo read book``
 
 Expected outcome:
-
-The todo task is added to the list.
-
 ```
     ____________________________________________________________
 
@@ -127,24 +90,18 @@ The todo task is added to the list.
      Now you have 1 task in the list.
     ____________________________________________________________
 ```
+
 <br>
 
-### Deadline
-### `deadline` - Adds a deadline
+### 3.1.2 Add Deadline
 
-Adds a deadline to the task tracker.
+Adds a deadline to the list.
 
-Example of usage:
+Syntax: ``deadline <task> /by <deadline>``
 
-`deadline (arguments) /by (deadline)`
-```
-deadline return book /by June 6th
-``` 
+Example of usage: ``deadline return book /by June 6th``
 
 Expected outcome:
-
-The deadline is added to the list.
-
 ```
     ____________________________________________________________
 
@@ -153,29 +110,23 @@ The deadline is added to the list.
      Now you have 2 tasks in the list.
     ____________________________________________________________
 ```
+
 <br>
 
-### Event
-### `event` - Adds en event
+### 3.1.3 Add Event
 
-Adds an event to the task tracker.
+Adds an event to the list.
 
-Example of usage:
+Syntax: ``event <task> /from <start> /to <end>``
 
-`event (arguments) /from (start) /to (end)`
-```
-event project meeting /from August 10th 2pm /to 4pm
-``` 
+Example of usage: ``event project meeting /from May 1st 2pm /to 4pm``
 
 Expected outcome:
-
-The event is added to the list.
-
 ```
     ____________________________________________________________
 
      Got it. I've added this task:
-       [E][ ] project meeting (from: August 10th 2pm to: 4pm)
+       [E][ ] project meeting (from: May 1st 2pm to: 4pm)
      Now you have 3 tasks in the list.
     ____________________________________________________________
 ```
@@ -183,31 +134,20 @@ The event is added to the list.
 
 <hr>
 
-<br>
 
+## 3.2 Mark and un-mark tasks
 
-## Mark and un-mark tasks
+Marks tasks as done or not done.
 
-Marks tasks as done or un-marks tasks as not done.
+### 3.2.1 Mark task
 
-### Usage
+Marks task as done.
 
-### Mark
-### `mark` - mark as done
+Syntax: ``mark <index>``
 
-Marks the specified 1-th index task as done.
-
-Example of usage:
-
-`mark (1-th index task number)`
-```
-mark 1
-``` 
+Example of usage: ``mark 1``
 
 Expected outcome:
-
-The task is marked as done.
-
 ```
     ____________________________________________________________
 
@@ -216,24 +156,18 @@ The task is marked as done.
        [X] read book
     ____________________________________________________________
 ```
+
 <br>
 
-### Un-mark
-### `unmark` - mark as not done
+### 3.2.2 Un-mark task
 
-Marks the specified 1-th index task as not done.
+Marks task as not done
 
-Example of usage:
+Syntax: ``unmark <index>``
 
-`unmark (1-th index task number)`
-```
-unmark 2
-``` 
+Example of usage: ``unmark 1``
 
 Expected outcome:
-
-The task is marked as done.
-
 ```
     ____________________________________________________________
 
@@ -244,31 +178,16 @@ The task is marked as done.
 ```
 <hr>
 
-<br>
 
-## List all tasks
+## 3.3 List all tasks
 
 List all tasks in the tracker with its respective status and type.
 
+Syntax: ``list``
 
-### Usage
-
-### list
-### `list` 
-
-Prints all tasks to terminal.
-
-Example of usage:
-
-`list`
-```
-list
-``` 
+Example of usage: ``list``
 
 Expected outcome:
-
-All tasks are printed with its corresponding status and type.
-
 ```
     ____________________________________________________________
 
@@ -290,31 +209,16 @@ All tasks are printed with its corresponding status and type.
 
 <hr>
 
-<br>
 
-## Delete tasks
+## 3.4 Delete tasks
 
-Deletes tasks from list.
+Delete a task from the list.
 
+Syntax: ``delete <index>``
 
-### Usage
-
-### delete
-### `delete`
-
-Deletes the specified 1-th index task from the list.
-
-Example of usage:
-
-`delete (1-index task number)`
-```
-delete 2
-``` 
+Example of usage: ``delete 2``
 
 Expected outcome:
-
-Task 2 is deleted from the list.
-
 ```
     ____________________________________________________________
 
@@ -325,30 +229,16 @@ Task 2 is deleted from the list.
 ```
 <hr>
 
-<br>
 
-## Find tasks
+## 3.5 Find tasks
 
-Find a task by searching for a keyword.
+Find all related tasks by searching for a keyword.
 
-### Usage
+Syntax: ``find <keyword>``
 
-### find
-### `find`
-
-Finds all tasks that contains the keyword.
-
-Example of usage:
-
-`find (keyword)`
-```
-find meeting
-``` 
+Example of usage: ``find <meeting>``
 
 Expected outcome:
-
-All tasks that contains the keywords is found and printed with its respective index number.
-
 ```
     ____________________________________________________________
 
@@ -358,28 +248,17 @@ All tasks that contains the keywords is found and printed with its respective in
 ```
 <hr>
 
-<br>
 
-## Exit the program
+## 3.6 Exit the program
 
 Stop and quit the program.
+#### This is the recommended way to close the program to ensure that your data is saved to memory, and retrieved on the next run.
 
-### Usage
+Syntax: ``bye``
 
-### bye
-### `bye`
-
-Program saves tasks to memory and exits.
-
-Example of usage:
-
-`bye`
-```
-bye
-``` 
+Example of usage: ``bye``
 
 Expected outcome:
-
 ```
     ____________________________________________________________
 
