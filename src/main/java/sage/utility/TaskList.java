@@ -10,15 +10,15 @@ import sage.tasktypes.Deadline;
 import sage.tasktypes.Event;
 import sage.tasktypes.Task;
 import sage.tasktypes.Todo;
-import sage.utility.FileMgmt;
+import sage.utility.Storage;
 
 public class TaskList {
     private static ArrayList<Task> list = new ArrayList<>();
 
     private static final Display UI = new Display();
-    private static final FileMgmt fm = new FileMgmt();
+    private static final Storage fm = new Storage();
 
-    public void update(FileMgmt fm) {
+    public void update(Storage fm) {
         fm.updateFile(list);
     }
 
