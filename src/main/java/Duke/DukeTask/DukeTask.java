@@ -1,5 +1,7 @@
 package Duke.DukeTask;
 
+import java.time.LocalDate;
+
 public class DukeTask {
     protected String taskName;
     protected boolean isDone;
@@ -32,5 +34,8 @@ public class DukeTask {
     }
     public String saveTask() {
         return "T | " + (this.isDone ? "1" : "0") + " | " + this.taskName + '\n';
+    }
+    public boolean isDateMatch(LocalDate date) {
+        return false;
     }
 }

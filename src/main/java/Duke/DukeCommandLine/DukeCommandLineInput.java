@@ -16,6 +16,8 @@ public class DukeCommandLineInput {
     private static final String COMMAND_TODO = "todo";
     private static final String COMMAND_DEADLINE = "deadline";
     private static final String COMMAND_EVENT = "event";
+    private static final String COMMAND_FIND = "find";
+    private static final String COMMAND_DATE = "date";
     String commandType;
     String commandMessage;
     public DukeCommandLineInput(String commandType, String commandMessage) {
@@ -86,6 +88,13 @@ public class DukeCommandLineInput {
             try {
                 DukeEvent event = parser.processEvent(this.commandMessage);
                 tasks.addTask(event);
+            } catch (DukeException e) {
+                throw e;
+            }
+            break;
+        case COMMAND_DATE:
+            try {
+                tasks.listTaskByDate(this.commandMessage);
             } catch (DukeException e) {
                 throw e;
             }
