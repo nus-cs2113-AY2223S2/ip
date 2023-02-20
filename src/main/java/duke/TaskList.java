@@ -216,4 +216,27 @@ public class TaskList {
             fileWriter.write(task.toSaveString() + System.lineSeparator());
         }
     }
+
+    public void findTask(String keyword) {
+        if (keyword.isEmpty()) {
+            System.out.println("No keyword entered.");
+            return;
+        }
+        keyword.trim();
+        int taskNo = 1;
+        boolean taskFound = false;
+        for (Task task : tasks) {
+            if (task.getName().contains(keyword)) {
+                if (!taskFound) {
+                    taskFound = true;
+                    System.out.println("These tasks contain the keyword " + keyword);
+                }
+                System.out.println(taskNo + ". " + task.toString());
+            }
+            taskNo++;
+        }
+        if (!taskFound) {
+            System.out.println("Sorry, no tasks found with this keyword.");
+        }
+    }
 }

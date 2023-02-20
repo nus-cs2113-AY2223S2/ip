@@ -98,6 +98,9 @@ public class Duke {
                 System.out.println("Please input an integer after delete.");
             }
             break;
+        case "find":
+            taskList.findTask(args);
+            break;
         default:
             System.out.println("Invalid command entered, please enter 'help' to see " +
             "the list of commands.");
