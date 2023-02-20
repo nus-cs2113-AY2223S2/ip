@@ -88,8 +88,7 @@ public class Parser { // deals with making sense of the user command
             InputValidity.checkValidEvent(input);
             input = input.replace(AddCommand.COMMAND_EVENT, "").trim();
             String taskName = input.split(InputValidity.EVENT_FROM_DELIMITER, 2)[0].trim();
-            input = input.replace(taskName, "").trim();
-            input = input.replace(InputValidity.EVENT_FROM_DELIMITER, "").trim();
+            input = input.replace(taskName + InputValidity.EVENT_FROM_DELIMITER, "").trim();
             String startDate = input.split(InputValidity.EVENT_TO_DELIMITER, 2)[0].trim();
             String endDate = input.split(InputValidity.EVENT_TO_DELIMITER, 2)[1].trim();
             return new EventCommand(taskName, startDate, endDate);
