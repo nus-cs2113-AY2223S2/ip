@@ -44,13 +44,15 @@
    1. Please do not modify or delete it to prevent losing your saved data.
 1. To exit the program, use the command ``bye``. This will ensure all tasks are saved to storage for retrieval on the next run.
 
+[_Back To Top_](#user-guide)
+
 <hr>
 
 
 # 2. Summary of features
 
 #### This is a summary. 
-#### You may find the full explanation of feature below in the ``Features`` section.
+#### You may find the full explanation of feature below in the [``Features``](#3-features) section.
 
 | Command  | Syntax                                   | Example                                             |
 |----------|------------------------------------------|-----------------------------------------------------|
@@ -63,6 +65,7 @@
 | delete   | ``delete <index>``                       | ``delete 2``                                        |
 | find     | ``find <keyword>``                       | ``find meeting``                                    |
 
+[_Back To Top_](#user-guide)
 
 <hr>
 
@@ -130,7 +133,7 @@ Expected outcome:
      Now you have 3 tasks in the list.
     ____________________________________________________________
 ```
-
+[_Back To Top_](#user-guide)
 
 <hr>
 
@@ -176,6 +179,8 @@ Expected outcome:
        [ ] read book
     ____________________________________________________________
 ```
+[_Back To Top_](#user-guide)
+
 <hr>
 
 
@@ -200,12 +205,14 @@ Expected outcome:
 ```
 
 #### Explanation of output
-* tasks are prepended with [ _type of task_ ][ _status of task_ ]
+* Tasks are prepended with [ _type of task_ ][ _status of task_ ]
 
 > Example from the above output: <br>
 > * [T][X] implies task is a todo and has been marked done
 > * [D][&nbsp; ] implies task is a deadline and is not done
 > * [E][&nbsp; ] implies task is an event and is not done
+
+[_Back To Top_](#user-guide)
 
 <hr>
 
@@ -227,6 +234,8 @@ Expected outcome:
      Now you have 2 tasks in the list.
     ____________________________________________________________
 ```
+[_Back To Top_](#user-guide)
+
 <hr>
 
 
@@ -236,7 +245,7 @@ Find all related tasks by searching for a keyword.
 
 Syntax: ``find <keyword>``
 
-Example of usage: ``find <meeting>``
+Example of usage: ``find meeting``
 
 Expected outcome:
 ```
@@ -246,6 +255,8 @@ Expected outcome:
      2.[E][ ] project meeting (from: August 10th 2pm to: 4pm)
     ____________________________________________________________
 ```
+[_Back To Top_](#user-guide)
+
 <hr>
 
 
@@ -265,6 +276,8 @@ Expected outcome:
      Bye. Hope to see you again soon!
     ____________________________________________________________
 ```
+[_Back To Top_](#user-guide)
+
 <hr>
 
 <br>
