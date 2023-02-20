@@ -42,6 +42,9 @@ public class Error {
         case ERROR_WITH_DIRECTORY:
             Ui.showError(ErrorMessages.ERROR_IN_SETTING_UP.MESSAGE);
             break;
+        case INVALID_FIND_COMMAND:
+            Ui.showError(ErrorMessages.INVALID_FIND_MESSAGE.MESSAGE);
+            break;
         case INVALID_DATE:
             Ui.showError(DateCommand.INVALID_COMMAND_MESSAGE);
             break;

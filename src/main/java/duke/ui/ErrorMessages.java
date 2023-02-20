@@ -11,7 +11,9 @@ public enum ErrorMessages {
 
     FILE_NOT_FOUND_EXCEPTION_MESSAGE(" File not found exception from trying to read data from file"),
 
-    IO_EXCEPTION_MESSAGE(" IO exception received from trying to update data");
+    IO_EXCEPTION_MESSAGE(" IO exception received from trying to update data"),
+
+    INVALID_FIND_MESSAGE(" Invalid input! Valid input format: \"find <keyword>\"");
 
     public final String MESSAGE;
 

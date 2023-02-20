@@ -36,6 +36,8 @@ public class Parser {
             return prepareDeadlineCommand(input);
         case (AddCommand.COMMAND_EVENT):
             return prepareEventCommand(input);
+        case (FindCommand.COMMAND_WORD):
+            return prepareFindCOmmand(input);
         case (DateCommand.COMMAND_WORD):
             return prepareDateCommand(input);
         default:
@@ -136,16 +138,32 @@ public class Parser {
      * @throws DukeException when command provided by user is invalid
      */
     private String parseMarkUnmarkDelete(String[] userInput, String command) throws DukeException {
-        InputValidity.isValid(userInput, command);
+        InputValidity.checkValid(userInput, command);
         return userInput[1].trim();
     }
 
     /**
-     * Checks and prepares the parameters required to initiate a data command and creates the relevant command
+     * Checks and prepares the parameters required to initiate a date command and create the relevant command
      *
      * @param input input given by the user
      * @return the command based on the input provided by user
      */
+    private Command prepareFindCOmmand(String input) {
+        try {
+            InputValidity.checkValidFind(input);
+            String keyword = input.replace("find ", "").trim();
+            return new FindCommand(keyword);
+        } catch (DukeException e) {
+            return new InvalidCommand(ErrorTypes.INVALID_FIND_COMMAND);
+        }
+    }
+
+    /**
+    * Checks and prepares the parameters required to initiate a date command and creates the relevant command
+    *
+     * @param input input given by the user
+     * @return the command based on the input provided by user
+    */
     private Command prepareDateCommand(String input) {
         try {
             input = input.replace(DateCommand.COMMAND_WORD, "");

@@ -82,10 +82,26 @@ public class TaskList {
     }
 
     /**
+     * Gets the tasks in the task list that contains the keyword in the task name
+     *
+     * @param keyword sequence of characters to be filtered
+     * @return task list with tasks that contains the keyword in the task name
+     */
+    public TaskList findTasks(String keyword) {
+        TaskList matchingTasks = new TaskList(new ArrayList<>());
+        for (Task t : taskList) {
+            if (t.taskName.contains(keyword)) {
+                matchingTasks.addTask(t);
+            }
+        }
+        return matchingTasks;
+    }
+
+    /**
      * Gets the tasks in the task list that occurs on a date
      *
      * @param date date of tasks to be filtered
-     * @return task list containing the tasks list tagged with the date given
+     * @return task list containing the tasks tagged with the date given
      */
     public TaskList getDueTasks(LocalDate date) {
         TaskList dueTasks = new TaskList(new ArrayList<>());

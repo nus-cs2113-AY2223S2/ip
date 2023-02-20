@@ -97,7 +97,7 @@ public class InputValidity {
      * @param command command word provided by user: mark/unmark/delete
      * @throws DukeException when insufficient parameters are provided or when wrong parameter format is given
      */
-    protected static void isValid(String[] input, String command) throws DukeException {
+     protected static void checkValid(String[] input, String command) throws DukeException {
         boolean isTwoWordInput = (input.length == VALID_LENGTH_TWO);
         if (!isTwoWordInput || !isStringOfInteger(input[1])) {
             switch (command) {
@@ -114,6 +114,20 @@ public class InputValidity {
                 Error.throwError(ErrorTypes.INVALID_DELETE_COMMAND);
                 break;
             }
+        }
+    }
+
+    /**
+     * Checks whether the input provided by user for find command is valid
+     *
+     * @param input input given by the user
+     * @throws DukeException when the find command is invalid
+     */
+    protected static void checkValidFind(String input) throws DukeException {
+        String[] arrayOfInput = input.split(" ");
+        boolean isAtLeastTwoWord = (arrayOfInput.length >= VALID_LENGTH_TWO);
+        if (!isAtLeastTwoWord) {
+            Error.throwError(ErrorTypes.INVALID_FIND_COMMAND);
         }
     }
 }
