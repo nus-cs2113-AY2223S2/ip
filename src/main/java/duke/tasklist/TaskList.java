@@ -24,6 +24,13 @@ public class TaskList {
         return tasks.get(taskNum).returnCommand();
     }
 
+
+    /**
+     * Function takes in user input and identifies the user command
+     * Calls the command function to add user command into arraylist
+     *
+     * @param userCommand string of user input
+     */
     public static void handleUserCommand(String userCommand) {
         Parser parser = new Parser(userCommand);
 

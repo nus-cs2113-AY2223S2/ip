@@ -10,6 +10,12 @@ public class Deadline extends Task {
         this.dueBy = dueBy;
     }
 
+    /**
+     * returns the task stored as a string format to be
+     * saved in the save file
+     *
+     * @return returns the task in the format of user command
+     */
     public String returnCommand() {
         return super.completed() + "deadline " + taskName + " /by " + dueBy;
     }

@@ -1,5 +1,9 @@
 package duke.parser;
 
+/**
+ * parser class helps to extract relevant
+ * information from user input
+ */
 public class Parser {
 
     protected String userInput;
@@ -10,6 +14,7 @@ public class Parser {
 
     protected int indexOfFrom;
     protected int indexOfTo;
+
 
     public Parser(String userInput) {
         this.userInput = userInput;

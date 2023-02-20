@@ -7,6 +7,12 @@ import duke.task.Event;
 import duke.task.Todo;
 import duke.tasklist.TaskList;
 
+/**
+ * command class contains all the commands used
+ * in this program
+ * Ex, commands to mark / unmark and
+ *     commands to add respective tasks, todo, event etc
+ */
 public class Command {
     public static void doCommandMark(int taskNum) {
         Duke.isFileEdited = true;
