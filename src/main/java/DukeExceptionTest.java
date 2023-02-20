@@ -1,3 +1,6 @@
+/**
+ * Tests for a missing task name when the user is trying to add a todo task
+ */
 public class DukeExceptionTest {
     public static void checkMissingTodoName (String input) throws MissingTaskNameException{
         String[] inputs = input.split(" ");
