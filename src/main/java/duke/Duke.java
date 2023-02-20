@@ -7,7 +7,7 @@ public class Duke {
     private static Storage storage;
     private static TaskList taskList;
     private static Parser parser;
-    public static final String FILEPATH = "./data/savedlist.txt";
+    public static final String FILEPATH = "./savedlist.txt";
 
     public Duke() {
         ui = new Ui();
