@@ -1,10 +1,12 @@
 package duke.command;
 
+import duke.data.TaskData;
+
 import java.util.Scanner;
 
 public class UserCommandManager {
 
-    CommandHandler commandHandler = new CommandHandler();
+    TaskData taskData = new TaskData();
 
     /**
      * Handles the command (i.e. type of task) by user
@@ -15,31 +17,37 @@ public class UserCommandManager {
      */
     public void handleCommands(String userCommand, String userInput) {
         Scanner scanner = new Scanner(userInput);
+        Command command = null;
         switch (userCommand) {
+        case "bye":
+            command = new ExitCommand();
         case "list":
-            commandHandler.handleListCommand();
+            command = new ListTasks();
             break;
         case "mark":
-            commandHandler.handleMarkAsDone(userInput.replace(" ", ""));
+            command = new MarkCommand(userInput.replace(" ", ""));
             break;
         case "unmark":
-            commandHandler.handleMarkAsUndone(userInput.replace(" ", ""));
+            command = new UnmarkCommand(userInput.replace(" ", ""));
             break;
         case "todo":
-            commandHandler.handleTodoCommand(scanner.nextLine());
+            command = new AddTodoToList(scanner.nextLine());
             break;
         case "deadline":
-            commandHandler.handleDeadlineCommand(scanner.nextLine().trim().split("/by"));
+            command = new AddDeadlineToList(scanner.nextLine().trim().split("/by"));
             break;
         case "event":
-            commandHandler.handleEventCommand(userInput);
+            command = new AddEventToList(userInput);
             break;
         case "delete":
-            commandHandler.handleDeleteCommand(userInput.replace(" ", ""));
+            command = new DeleteFromList(userInput.replace(" ", ""));
             break;
         default:
-            commandHandler.handleUnknownCommand();
+            System.out.println("error");
             break;
+        }
+        if (command != null) {
+            command.executeCommand(taskData);
         }
     }
 }

@@ -5,7 +5,7 @@ import duke.command.UserCommandManager;
 import java.util.Scanner;
 
 /**
- * Last Modified: 10.2.23 0157
+ * Last Modified: 20.2.23 1659
  */
 public class Duke {
 
@@ -27,14 +27,6 @@ public class Duke {
         System.out.println(greetMessage);
     }
 
-    /**
-     * Prints out the exit message to the user
-     */
-    public static void exitProgram() {
-        String exitMessage = "Bye. Hope to see you again soon!";
-        System.out.println(exitMessage);
-        System.exit(0);
-    }
 
     /**
      * Greets user and responds to user commands from the command line
@@ -48,9 +40,6 @@ public class Duke {
         UserCommandManager commandManager = new UserCommandManager();
         while (true) {
             String userCommand = input.next().toLowerCase();
-            if (userCommand.equals("bye")) {
-                exitProgram();
-            }
             commandManager.handleCommands(userCommand, input.nextLine());
             System.out.println("=============================");
         }
