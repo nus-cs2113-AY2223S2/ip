@@ -31,7 +31,7 @@ public class Duke {
         TaskList taskList = new TaskList();
         File data = StorageFile.initialiseData(taskList);
 
-        boolean madeAValidInstruction = false;
+        boolean madeAnyValidInstruction = false;
 
         Scanner in = new Scanner(System.in);
         String[] inputMessage = Parser.processInputMessage(in);
@@ -40,14 +40,14 @@ public class Duke {
             case ACTION_LIST:
                 taskList.listAllTasks();
                 inputMessage = Parser.processInputMessage(in);
-                madeAValidInstruction = true;
+                madeAnyValidInstruction = true;
                 break;
             case ACTION_DELETE:
                 int taskIndex = Parser.checkActionInputValidity(inputMessage, taskList.getSize());
                 if (taskIndex >= 0) {
                     taskList.deleteATask(taskIndex);
                     StorageFile.updateData(taskList);
-                    madeAValidInstruction = true;
+                    madeAnyValidInstruction = true;
                 }
                 inputMessage = Parser.processInputMessage(in);
                 break;
@@ -55,7 +55,7 @@ public class Duke {
                 String query = Parser.processQuery(inputMessage);
                 if (!query.equals("")) {
                     taskList.searchByKeyword(query);
-                    madeAValidInstruction = true;
+                    madeAnyValidInstruction = true;
                 }
                 inputMessage = Parser.processInputMessage(in);
                 break;
@@ -64,7 +64,7 @@ public class Duke {
                 if (taskIndex >= 0) {
                     taskList.markTaskComplete(taskIndex);
                     StorageFile.updateData(taskList);
-                    madeAValidInstruction = true;
+                    madeAnyValidInstruction = true;
                 }
                 inputMessage = Parser.processInputMessage(in);
                 break;
@@ -73,7 +73,7 @@ public class Duke {
                 if (taskIndex >= 0) {
                     taskList.markTaskIncomplete(taskIndex);
                     StorageFile.updateData(taskList);
-                    madeAValidInstruction = true;
+                    madeAnyValidInstruction = true;
                 }
                 inputMessage = Parser.processInputMessage(in);
                 break;
@@ -82,7 +82,7 @@ public class Duke {
                 if (!todoTask.equals("")) {
                     taskList.addNewTodoTask(todoTask);
                     StorageFile.updateData(taskList);
-                    madeAValidInstruction = true;
+                    madeAnyValidInstruction = true;
                 }
                 inputMessage = Parser.processInputMessage(in);
                 break;
@@ -91,7 +91,7 @@ public class Duke {
                 if (deadlineTask.length == 2) {
                     taskList.addNewDeadlineTask(deadlineTask);
                     StorageFile.updateData(taskList);
-                    madeAValidInstruction = true;
+                    madeAnyValidInstruction = true;
                 }
                 inputMessage = Parser.processInputMessage(in);
                 break;
@@ -100,7 +100,7 @@ public class Duke {
                 if (eventTask.length == 3) {
                     taskList.addNewEventTask(eventTask);
                     StorageFile.updateData(taskList);
-                    madeAValidInstruction = true;
+                    madeAnyValidInstruction = true;
                 }
                 inputMessage = Parser.processInputMessage(in);
                 break;
@@ -109,7 +109,7 @@ public class Duke {
                 inputMessage = Parser.processInputMessage(in);
             }
         }
-        UI.printGoodbyeMessage(madeAValidInstruction, taskList.getSize());
+        UI.printGoodbyeMessage(madeAnyValidInstruction, taskList.getSize());
     }
 }
 

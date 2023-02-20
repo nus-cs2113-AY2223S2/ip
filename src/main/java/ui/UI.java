@@ -59,6 +59,13 @@ public class UI {
             "⠀⣼⡿⣻⣾⣿⡿⢛⣥⣾⣿⣿⣿⣿⣿⠿⣋⣴⡙⣿⣿⣿⣿⣷⣍⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⠀⠀⠀⠀⠘⠁⠀⣤⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀⠀⠀⠀⠀⠰⠁⠀⠹⣿⣿⣿⣿⣿⣧⣽⣿⢸\n";
     public static final String GOODBYE_WITH_NOTHING_DONE = "You must think you're funny, Ningen";
 
+    /**
+     * Prints the goodbye message
+     * Special messages are printed if TaskList exceeds 100 tasks or if nothing valid was done during runtime
+     *
+     * @param didSomethingUseful True if any valid task was done during runtime, False otherwise
+     * @param sizeOfTaskList Size of the TaskList at exit
+     */
     public static void printGoodbyeMessage(boolean didSomethingUseful, int sizeOfTaskList) {
         if (!didSomethingUseful) {
             System.out.println(NAKIRI_AYAME + GOODBYE_WITH_NOTHING_DONE);

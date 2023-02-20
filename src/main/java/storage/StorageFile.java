@@ -27,6 +27,15 @@ public class StorageFile {
     public static final String ERROR_WITH_DATA_FILE = "An error occurred with the data file...\n";
     public static final String ERROR_LOADING_FILE = "Why did you edit the data file, Ningen?";
 
+    /**
+     * Takes in the stored data specified in DATA_PATH and loads them into the TaskList
+     * Used during start-up.
+     *
+     * @param taskList an empty TaskList
+     * @return Valid TaskList and a File to the stored data if stored data is valid
+     * Program terminates if any invalid instructions is found in the stored data
+     * Will only load a maximum of 99 tasks, to prevent soft-locking.
+     */
     public static File initialiseData(TaskList taskList) {
         File data = new File(DATA_PATH);
         try {
@@ -36,28 +45,44 @@ public class StorageFile {
                 System.out.println(GREETING_MESSAGE_RETURNING_USER);
                 Scanner in = new Scanner(data);
                 boolean fileIsBroken = false;
-                while (in.hasNextLine()) {
+                while (in.hasNextLine() && taskList.getSize() < 100) {
                     String[] inputMessage = parser.Parser.processInputMessage(in);
                     switch (inputMessage[0]) {
                     case ACTION_MARK_COMPLETE:
                         int taskIndex = parser.Parser.checkActionInputValidity(inputMessage, taskList.getSize());
-                        Task currentTask = taskList.getTask(taskIndex);
-                        currentTask.setComplete();
+                        if (taskIndex >= 0) {
+                            Task currentTask = taskList.getTask(taskIndex);
+                            currentTask.setComplete();
+                        } else {
+                            fileIsBroken = true;
+                        }
                         break;
                     case ACTION_NEW_TODO:
                         String task = parser.Parser.processToDoMessage(inputMessage);
-                        Todo newTodo = new Todo(task);
-                        taskList.addTask(newTodo);
+                        if (!task.equals("")) {
+                            Todo newTodo = new Todo(task);
+                            taskList.addTask(newTodo);
+                        } else {
+                            fileIsBroken = true;
+                        }
                         break;
                     case ACTION_NEW_DEADLINE:
                         inputMessage = parser.Parser.processDeadlineMessage(inputMessage);
-                        Deadline newDeadline = new Deadline(inputMessage[0], inputMessage[1]);
-                        taskList.addTask(newDeadline);
+                        if (inputMessage.length == 2) {
+                            Deadline newDeadline = new Deadline(inputMessage[0], inputMessage[1]);
+                            taskList.addTask(newDeadline);
+                        } else {
+                            fileIsBroken = true;
+                        }
                         break;
                     case ACTION_NEW_EVENT:
                         inputMessage = parser.Parser.processEventMessage(inputMessage);
-                        Event newEvent = new Event(inputMessage[0], inputMessage[1], inputMessage[2]);
-                        taskList.addTask(newEvent);
+                        if (inputMessage.length == 3) {
+                            Event newEvent = new Event(inputMessage[0], inputMessage[1], inputMessage[2]);
+                            taskList.addTask(newEvent);
+                        } else {
+                            fileIsBroken = true;
+                        }
                         break;
                     default:
                         fileIsBroken = true;
@@ -76,6 +101,14 @@ public class StorageFile {
         return data;
     }
 
+
+    /**
+     * Updates the data stored in the file specified by DATA_PATH
+     * Data is stored as valid instructions that will result in the exact state of the TaskList
+     * Called after any edits are made to the TaskList
+     *
+     * @param taskList the current state of the TaskList
+     */
     public static void updateData(TaskList taskList) {
         try {
             FileWriter writer = new FileWriter(DATA_PATH);
