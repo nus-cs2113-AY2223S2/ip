@@ -17,19 +17,19 @@ public class Parser {
     }
 
     private static boolean isValidMarkCommand(String response) {
-        return response.length() >= 5 && response.substring(0, 5).equals("mark ");
+        return response.length() >= 5 && response.substring(0, 5).equalsIgnoreCase("mark ");
     }
 
     private static boolean isValidUnmarkCommand(String response) {
-        return response.length() >= 7 && response.substring(0, 7).equals("unmark ");
+        return response.length() >= 7 && response.substring(0, 7).equalsIgnoreCase("unmark ");
     }
 
     private static boolean isValidDeleteCommand(String response) {
-        return response.length() >= 7 && response.substring(0, 7).equals("delete ");
+        return response.length() >= 7 && response.substring(0, 7).equalsIgnoreCase("delete ");
     }
 
     private static boolean isValidFindCommand(String response) {
-        return response.length() >= 5 && response.substring(0, 5).equals("find ");
+        return response.length() >= 5 && response.substring(0, 5).equalsIgnoreCase("find ");
     }
 
     private static int parseIndex(String indexString, ArrayList<Task> tasks) throws InvalidIndexException {
@@ -146,7 +146,7 @@ public class Parser {
      *                  <code>Task</code>s.
      */
     public static void parseResponse(String userInput, TaskList taskList) {
-        if (userInput.equals("list")) {
+        if (userInput.equalsIgnoreCase("list")) {
             ui.printSeparator();
             ui.displayList(taskList.getTasks());
             ui.printSeparator();

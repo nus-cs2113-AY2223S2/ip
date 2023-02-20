@@ -30,7 +30,7 @@ public class Duke {
         ui.greet();
 
         String userInput = ui.getInput();
-        while (!userInput.equals("bye")) {
+        while (!userInput.equalsIgnoreCase("bye")) {
             parser.parseResponse(userInput, taskList);
             userInput = ui.getInput();
         }
