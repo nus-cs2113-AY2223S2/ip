@@ -1,6 +1,13 @@
 package duke.error;
 
-import duke.command.*;
+import duke.command.MarkCommand;
+import duke.command.UnmarkCommand;
+import duke.command.TodoCommand;
+import duke.command.DeadlineCommand;
+import duke.command.EventCommand;
+import duke.command.DeleteCommand;
+import duke.command.DateCommand;
+import duke.command.InvalidCommand;
 import duke.ui.ErrorMessages;
 import duke.ui.Ui;
 
