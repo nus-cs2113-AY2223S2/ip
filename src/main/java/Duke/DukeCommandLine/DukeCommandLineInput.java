@@ -99,6 +99,9 @@ public class DukeCommandLineInput {
                 throw e;
             }
             break;
+        case COMMAND_FIND:
+            tasks.findTask(this.commandMessage);
+            break;
         default: // invalid command
             throw new DukeException("Sorry, I don't know what that means :-( ("
                     + this.commandType + ")");

@@ -80,14 +80,22 @@ public class DukeList {
         try {
             LocalDate localDate = LocalDate.parse(date);
             System.out.println("Here are the matching tasks in your list:");
-            for(int i = 0; i < taskList.size(); i++) {
-                if(taskList.get(i).isDateMatch(localDate)) {
+            for (int i = 0; i < taskList.size(); i++) {
+                if (taskList.get(i).isDateMatch(localDate)) {
                     taskList.get(i).printTask(i);
                 }
             }
         } catch (Exception e) {
             throw new DukeException("[date] " + e.getMessage() +
                     "\nPlease use the format: yyyy-mm-dd");
+        }
+    }
+    public void findTask(String keyword) {
+        System.out.println("Here are the matching tasks in your list:");
+        for(int i = 0; i < taskList.size(); i++) {
+            if(taskList.get(i).containsName(keyword)) {
+                taskList.get(i).printTask(i);
+            }
         }
     }
 }

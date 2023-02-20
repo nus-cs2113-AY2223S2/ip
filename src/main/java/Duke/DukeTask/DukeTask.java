@@ -38,4 +38,7 @@ public class DukeTask {
     public boolean isDateMatch(LocalDate date) {
         return false;
     }
+    public boolean containsName(String keyword) {
+        return this.taskName.contains(keyword);
+    }
 }
