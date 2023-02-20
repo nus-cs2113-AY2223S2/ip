@@ -30,4 +30,16 @@ public class TaskList {
         return tasks.toArray(new Task[0]);
     }
 
+    public ArrayList<Task> filterByKeyword(String keyword) {
+        ArrayList<Task> filteredTasks = new ArrayList<>();
+
+        for (int i = 0; i < tasks.size(); i += 1) {
+            String taskName = tasks.get(i).getDescription();
+            if (taskName.contains(keyword)) {
+                filteredTasks.add(tasks.get(i));
+            }
+        }
+        return filteredTasks;
+    }
+
 }
