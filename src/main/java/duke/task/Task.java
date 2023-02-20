@@ -16,6 +16,16 @@ public abstract class Task {
         this.isDone = isDone;
     }
 
+    /**
+     * Checks if the task description contains the specified string.
+     *
+     * @param filter The string that the task description will be searched for.
+     * @return True if the task description contains the search string, false otherwise.
+     */
+    public boolean containsFilter(String filter) {
+        return description.contains(filter);
+    }
+
     public String toString() {
         return "[" + (isDone ? "X" : " ") + "] " + description;
     }

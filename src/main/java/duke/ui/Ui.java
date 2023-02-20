@@ -35,14 +35,6 @@ public abstract class Ui {
         Ui.print(isDone ? Messages.MARK_TASK.MESSAGE : Messages.UNMARK_TASK.MESSAGE, taskString);
     }
 
-    public static void printTaskList(TaskList taskList) {
-        if (taskList.size() == 0) {
-            print(Messages.EMPTY_LIST.MESSAGE);
-        } else {
-            print(Messages.LIST_TASKS.MESSAGE, taskList.toString());
-        }
-    }
-
     public static void printError(String errorMessage, String command) {
         switch (command) {
         case "todo":
@@ -65,6 +57,9 @@ public abstract class Ui {
             return;
         case "save":
             print(errorMessage, Messages.SAVE_HELP.MESSAGE);
+            return;
+        case "find":
+            print(errorMessage, Messages.FIND_HELP.MESSAGE);
             return;
         default:
             print(errorMessage, Messages.GENERIC_HELP.MESSAGE);
