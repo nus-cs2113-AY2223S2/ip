@@ -1,5 +1,6 @@
 package sage.utility;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import sage.exceptions.IllegalOperationException;
@@ -15,11 +16,28 @@ import sage.utility.Storage;
 public class TaskList {
     private static ArrayList<Task> list = new ArrayList<>();
 
-    private static final Display UI = new Display();
+    private static final Display display = new Display();
     private static final Storage fm = new Storage();
 
     public void update(Storage fm) {
         fm.updateFile(list);
+    }
+
+    public void findTask(String keywords) {
+        ArrayList<Task> results = new ArrayList<Task>();
+        try {
+            if (keywords == null) {
+                throw new MissingParameterException();
+            }
+            for (Task t : list) {
+                if (t.getTaskDetails().contains(keywords)) {
+                    results.add(t);
+                }
+            }
+            display.printSearchTask(results);
+        } catch (MissingParameterException e) {
+            e.missingParamKeyword();
+        }
     }
 
     /**
@@ -36,7 +54,7 @@ public class TaskList {
                 list.add(t);
                 t.setCompleted(isCompleted);
                 if (!silentmode) {
-                    UI.printAddedTask(t, list.size());
+                    display.printAddedTask(t, list.size());
                     fm.updateFile(list);
                 }
             }
@@ -61,7 +79,7 @@ public class TaskList {
                 d.setCompleted(isCompleted);
                 if (!silentMode) {
                     fm.updateFile(list);
-                    UI.printAddedTask(d, list.size());
+                    display.printAddedTask(d, list.size());
                 }
             }
         } catch (MissingParameterException e) {
@@ -90,7 +108,7 @@ public class TaskList {
                 e.setCompleted(isCompleted);
                 if (!silentmode) {
                     fm.updateFile(list);
-                    UI.printAddedTask(e, list.size());
+                    display.printAddedTask(e, list.size());
                 }
             }
         } catch (MissingParameterException e) {
@@ -118,7 +136,7 @@ public class TaskList {
             if (taskNumber <= 0 || taskNumber > list.size()) {
                 throw new OutOfBoundException();
             } else {
-                UI.printDeletedTask(list, taskNumber);
+                display.printDeletedTask(list, taskNumber);
                 fm.updateFile(list);
                 list.remove(taskNumber - 1);
             }
@@ -149,7 +167,7 @@ public class TaskList {
             } else {
                 list.get(taskNumber - 1).setCompleted(isMark);
                 fm.updateFile(list);
-                UI.printMarking(list, taskNumber, isMark);
+                display.printMarking(list, taskNumber, isMark);
             }
         } catch (OutOfBoundException e) {
             e.errorUnmark();
@@ -166,7 +184,7 @@ public class TaskList {
     }
 
     public void listTask() {
-        System.out.println(UI.printLine());
+        System.out.println(display.printLine());
         try {
             if (list.size() > 0) {
                 System.out.println("Here are the tasks in your list:");
@@ -180,7 +198,7 @@ public class TaskList {
         } catch (EmptyListException e) {
             e.errorMsg();
         }
-        System.out.println(UI.printLine());
+        System.out.println(display.printLine());
     }
 
     public int getTaskCount() {

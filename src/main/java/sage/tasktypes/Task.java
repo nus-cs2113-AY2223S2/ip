@@ -1,16 +1,16 @@
 package sage.tasktypes;
 
 public class Task {
-    private String taskName = "";
+    private String taskDetails = "";
     private boolean isCompleted = false;
 
-    public Task(String taskName) {
-        this.taskName = taskName;
+    public Task(String taskDetails) {
+        this.taskDetails = taskDetails;
         this.isCompleted = false;
     }
 
-    public String getTaskName() {
-        return this.taskName;
+    public String getTaskDetails() {
+        return this.taskDetails;
     }
 
     public void setCompleted(boolean completed) {

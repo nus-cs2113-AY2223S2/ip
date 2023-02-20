@@ -1,5 +1,6 @@
 package sage.utility;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 import sage.tasktypes.Deadline;
@@ -84,6 +85,21 @@ public class Display {
         System.out.println("Noted. I've removed this task:");
         System.out.println(taskObj);
         System.out.println("Now you have " + String.valueOf(list.size() - 1) + " tasks in the list.");
+    }
+
+    public void printSearchTask(ArrayList<Task> results) {
+        System.out.println(LINE);
+        if (results.isEmpty()) {
+            System.out.println("Found no matching query. Please try another again!");
+        } else {
+            System.out.println("Found " + results.size() + " matching queries!");
+            for (int i = 0; i < results.size(); i++) {
+                System.out.print(i + 1 + ".");
+                System.out.println(results.get(i));
+            }
+
+        }
+        System.out.println(LINE);
     }
 
 }

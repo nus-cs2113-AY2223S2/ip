@@ -38,15 +38,15 @@ public class Deadline extends Task {
     public String toString() {
         if (this.date != null) {
             if (super.isCompleted()) {
-                return "[D][X] " + super.getTaskName() + "(by: " + getFormattedTime() + ")";
+                return "[D][X] " + super.getTaskDetails() + "(by: " + getFormattedTime() + ")";
             } else {
-                return "[D][ ] " + super.getTaskName() + "(by: " + getFormattedTime() + ")";
+                return "[D][ ] " + super.getTaskDetails() + "(by: " + getFormattedTime() + ")";
             }
         } else {
             if (super.isCompleted()) {
-                return "[D][X] " + super.getTaskName() + "(by: " + getByWhen() + ")";
+                return "[D][X] " + super.getTaskDetails() + "(by: " + getByWhen() + ")";
             } else {
-                return "[D][ ] " + super.getTaskName() + "(by: " + getByWhen() + ")";
+                return "[D][ ] " + super.getTaskDetails() + "(by: " + getByWhen() + ")";
             }
         }
     }

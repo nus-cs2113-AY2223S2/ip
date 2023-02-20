@@ -45,6 +45,9 @@ public class Ui {
         case "event":
             taskList.addTask(parsed.getTaskDescription(), parsed.getFrom(), parsed.getTo(), false, false);
             break;
+        case "find":
+            taskList.findTask(parsed.getTaskDescription());
+            break;
         default:
             display.printUnknownInput();
             break;
