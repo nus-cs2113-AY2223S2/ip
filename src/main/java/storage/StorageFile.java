@@ -1,9 +1,9 @@
 package storage;
 
-import duke.Deadline;
-import duke.Event;
-import duke.Task;
-import duke.Todo;
+import tasks.Deadline;
+import tasks.Event;
+import tasks.Task;
+import tasks.Todo;
 import todolist.TaskList;
 
 import java.io.File;
@@ -32,11 +32,11 @@ public class StorageFile {
      * Used during start-up.
      *
      * @param taskList an empty TaskList
-     * @return Valid TaskList and a File to the stored data if stored data is valid
+     * taskList will be filled if stored data is valid
      * Program terminates if any invalid instructions is found in the stored data
      * Will only load a maximum of 99 tasks, to prevent soft-locking.
      */
-    public static File initialiseData(TaskList taskList) {
+    public static void initialiseData(TaskList taskList) {
         File data = new File(DATA_PATH);
         try {
             if (data.createNewFile()) {
@@ -98,7 +98,6 @@ public class StorageFile {
             System.out.println(ERROR_WITH_DATA_FILE);
             e.printStackTrace();
         }
-        return data;
     }
 
 

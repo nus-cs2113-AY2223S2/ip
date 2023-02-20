@@ -4,9 +4,8 @@ import todolist.TaskList;
 import ui.UI;
 
 import java.util.Scanner;
-import java.io.File;
 
-public class Duke {
+public class NakiriAyame {
     //Instructions Strings
     public static final String ACTION_LIST = "list";
     public static final String ACTION_FIND = "find";
@@ -22,7 +21,7 @@ public class Duke {
 
     public static void main(String[] args) {
         TaskList taskList = new TaskList();
-        File data = StorageFile.initialiseData(taskList);
+        StorageFile.initialiseData(taskList);
 
         boolean madeAnyValidInstruction = false;
 

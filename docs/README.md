@@ -80,7 +80,7 @@ Stop being lazy, get to work!
 
 Example of usage:  `list`
 
-Expected outcome: Show all recoreded Tasks and ther status.
+Expected outcome: Show all recorded Tasks and their status.
 
 ```
 1.[T][ ] Fix Ayame Ascii Art
