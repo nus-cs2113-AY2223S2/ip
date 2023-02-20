@@ -78,4 +78,34 @@ public class TaskList {
         }
         return taskListString.toString();
     }
+
+    /**
+     * Filters the task list before converting it into its string representation.
+     *
+     * @param filter The string that task descriptions should contain to be filtered.
+     * @return A string representation of the filtered task list.
+     */
+    public String toString(String filter) {
+        StringJoiner taskListString = new StringJoiner(System.lineSeparator());
+        for (int i = 0, index = 0; i < size(); i++) {
+            if (getTask(i).containsFilter(filter)) {
+                taskListString.add((++index) + "." + getTask(i).toString());
+            }
+        }
+        return taskListString.toString();
+    }
+
+    /**
+     * Converts the task list into its string representation for saving purposes,
+     * which contains delimiter characters for easier parsing when loading.
+     *
+     * @return String representation of the task list meant for saving purposes only.
+     */
+    public String toSaveString() {
+        StringJoiner taskListString = new StringJoiner(System.lineSeparator());
+        for (int i = 0; i < size(); i++) {
+            taskListString.add(getTask(i).toSaveString());
+        }
+        return taskListString.toString();
+    }
 }
