@@ -1,11 +1,32 @@
-import duke.exception.IllegalCommandException;
 import duke.command.TaskManager;
-
-
-import java.util.Scanner;
+import duke.ui.Ui;
 
 public class Duke {
 
+    private TaskManager tasks;
+    private Ui ui;
+    public Duke (){
+        ui = new Ui();
+        tasks = new TaskManager();
+    }
+    public void run(){
+        ui.showWelcome();
+        boolean isExit = false;
+        while(!isExit){
+            String fullCommand = ui.getUserCommand();
+        }
+    }
+
+    public static void main(String[]args){
+        new Duke().run();
+    }
+
+    /*
+    public final String logo = " ____        _        \n"
+            + "|  _ \\ _   _| | _____ \n"
+            + "| | | | | | | |/ / _ \\\n"
+            + "| |_| | |_| |   <  __/\n"
+            + "|____/ \\__,_|_|\\_\\___|\n";
     public static void printSeparator(){
         System.out.println("_______________________________________________________________");
     }
@@ -24,11 +45,7 @@ public class Duke {
 
 
     public static void main(String[] args) {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
+
         //System.out.println("Hello from\n" + logo);
         printGreeting();
         boolean byeFlag = false;
@@ -50,4 +67,6 @@ public class Duke {
             }
         }
     }
+
+     */
 }

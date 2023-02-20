@@ -14,10 +14,7 @@ import java.util.ArrayList;
 
 
 public class TaskManager {
-    //protected Task[] taskList;
     protected ArrayList<Task> taskList;
-    protected int taskCount;
-
     private SaveState saveState = new SaveState();
     private LoadState loadState = new LoadState();
     public TaskManager(){
@@ -25,8 +22,6 @@ public class TaskManager {
     }
     public void addTask(Task upcomingTask){
         taskList.add(upcomingTask);
-        //taskList[taskCount] = upcomingTask;
-
     }
 
     public void markTaskAsDone(String taskIndex){
@@ -38,16 +33,13 @@ public class TaskManager {
         }
         try {
             taskList.get(arrayIndex).markAsDone();
-            //taskList[arrayIndex].markAsDone();
             System.out.println("Nice! I've marked this task as done: ");
-            //System.out.println(taskList[arrayIndex].toString());
             System.out.println(taskList.get(arrayIndex).toString());
         } catch (IndexOutOfBoundsException e){
             System.out.println("No task at specified index");
         } catch (NullPointerException e){
             System.out.println("Not a valid ID");
         }
-
     }
     public void markTaskAsUndone(String taskIndex){
         int arrayIndex = 101; //as per markTaskAsDone
@@ -57,11 +49,9 @@ public class TaskManager {
             System.out.println("Enter a valid number");
         }
         try {
-            taskList.get(arrayIndex).markAsUndone(); //catch exception here too.
-            //taskList[arrayIndex].markAsUndone(); //catch exception here too.
+            taskList.get(arrayIndex).markAsUndone();
             System.out.println("OK, I've marked this task as not done yet: ");
             System.out.println(taskList.get(arrayIndex).toString());
-            //System.out.println(taskList[arrayIndex].toString());
         } catch (IndexOutOfBoundsException e){
             System.out.println("Not a valid ID");
         } catch (NullPointerException e){
