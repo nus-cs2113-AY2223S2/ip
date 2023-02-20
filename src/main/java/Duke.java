@@ -12,7 +12,7 @@ public class Duke {
 	public static final String ERROR_EMPTY_DEADLINE_DESCRIPTION = "Error: The description or by cannot be empty";
 	public static final String ERROR_TASK_NUMBER_OUT_OF_RANGE_MESSAGE = "Error: task number given out of range";
 	public static final String ERROR_TASK_NUMBER_NOT_INT_MESSAGE = "Error: Task Number given empty/not a number!";
-	public static final String PRINT_HELP_INSTRUCTIONS_MESSAGE = "The following are the commands available and their arguments: ";
+	public static final String PRINT_HELP_INSTRUCTIONS_MESSAGE = "The following are the commands available and their arguments:";
 	public static final String HELP_TODO_FORMAT = "Todo [description]";
 	public static final String HELP_TODO_DESCRIPTION = "Creates Todo task. Requires a description text.";
 	public static final String HELP_EVENT_FORMAT = "event [description] /from [from] /to [to]";
@@ -29,7 +29,17 @@ public class Duke {
 	public static final String HELP_BYE_DESCRIPTION = "Exits and closes the program";
 	public static final String RUN_CLEAR_COMPLETE_MESSAGE = "List has been cleared";
 	public static final String ERROR_WRONG_INPUT_RUN_CLEAR_MESSAGE = "Error: Please input either y (yes) or n (no)";
-	public static final String RUN_CLEAR_WARNING_MESSAGE = "You are about to clear your entire list. Are you sure? [y/n] ";
+	public static final String HELP_DELETE_FORMAT = "delete [task number]";
+	public static final String HELP_DELETE_DESCRIPTION = "Deletes selected task from the list";
+	public static final String HELP_CLEAR_FORMAT = "clear";
+	public static final String HELP_CLEAR_DESCRIPTION = "Empties the list";
+	public static final int INDEX_DESCRIPTION = 0;
+	public static final int INDEX_FROM = 1;
+	public static final int INDEX_TO = 2;
+	public static final String FROM_DEMARCATION = "/from";
+	public static final String TO_DEMARCATION = "/to";
+	public static final int BY_DESCRIPTION = 1;
+	public static final String BY_DEMARCATION = "/by";
 	
 	public static void main(String[] args) {
 		Tasks list = new Tasks();
@@ -64,7 +74,7 @@ public class Duke {
 			} catch (IOException e) {
 				System.out.println("Error: Unable to save changes");
 			} catch (NullPointerException e) {
-				System.out.println("Error: idk what");
+				System.out.println("Error: Nothing detected in save file");
 			}
 		}
 	}
@@ -126,10 +136,13 @@ public class Duke {
 		System.out.println();
 		printHelpUnmark();
 		System.out.println();
+		printHelpDelete();
+		System.out.println();
+		printHelpClear();
+		System.out.println();
 		printHelpList();
 		System.out.println();
 		printHelpBye();
-		System.out.println();
 	}
 	
 	private static void printHelpTodo() {
@@ -157,6 +170,16 @@ public class Duke {
 		System.out.println(HELP_UNMARK_DESCRIPTION);
 	}
 	
+	private static void printHelpDelete() {
+		System.out.println(HELP_DELETE_FORMAT);
+		System.out.println(HELP_DELETE_DESCRIPTION);
+	}
+	
+	private static void printHelpClear() {
+		System.out.println(HELP_CLEAR_FORMAT);
+		System.out.println(HELP_CLEAR_DESCRIPTION);
+	}
+	
 	private static void printHelpList() {
 		System.out.println(HELP_LIST_FORMAT);
 		System.out.println(HELP_LIST_DESCRIPTION);
@@ -166,6 +189,7 @@ public class Duke {
 		System.out.println(HELP_BYE_FORMAT);
 		System.out.println(HELP_BYE_DESCRIPTION);
 	}
+	
 	private static void runMark(Tasks list, String arg) {
 		try {
 			int taskNumber = Integer.parseInt(arg);
@@ -204,9 +228,9 @@ public class Duke {
 	
 	private static void addEvent(Tasks list, String arg) {
 		String[] descriptionFromAndTo = splitEventArg(arg);
-		String description = descriptionFromAndTo[0];
-		String from = descriptionFromAndTo[1];
-		String to = descriptionFromAndTo[2];
+		String description = descriptionFromAndTo[INDEX_DESCRIPTION];
+		String from = descriptionFromAndTo[INDEX_FROM];
+		String to = descriptionFromAndTo[INDEX_TO];
 		
 		if (description.isBlank() || from.isBlank() || to.isBlank()) {
 			System.out.println(ERROR_EMPTY_EVENT_DESCRIPTION_MESSAGE);
@@ -218,15 +242,15 @@ public class Duke {
 	}
 	
 	private static String[] splitEventArg(String arg) {
-		String[] splitDescription = arg.split("/from", 2); // separate the argument into description and fromAndTo
-		String[] splitFromAndTo = splitDescription[1].split("/to", 2); // separate fromAndTo into from and to
+		String[] splitDescription = arg.split(FROM_DEMARCATION, 2); // separate the argument into description and fromAndTo
+		String[] splitFromAndTo = splitDescription[1].split(TO_DEMARCATION, 2); // separate fromAndTo into from and to
 		return new String[]{splitDescription[0].trim(), splitFromAndTo[0].trim(), splitFromAndTo[1].trim()};
 	}
 	
 	private static void addDeadline(Tasks list, String arg) {
 		String[] descriptionAndBy = splitDeadlineArg(arg);
-		String description = descriptionAndBy[0];
-		String by = descriptionAndBy[1];
+		String description = descriptionAndBy[INDEX_DESCRIPTION];
+		String by = descriptionAndBy[BY_DESCRIPTION];
 		
 		if (description.isBlank() || by.isBlank()) {
 			System.out.println(ERROR_EMPTY_DEADLINE_DESCRIPTION);
@@ -238,10 +262,10 @@ public class Duke {
 	}
 	
 	private static String[] splitDeadlineArg(String arg) {
-		String[] splitDescriptionAndBy = arg.split("/by", 2);
+		String[] splitDescriptionAndBy = arg.split(BY_DEMARCATION, 2);
 		return new String[]{splitDescriptionAndBy[0].trim(), splitDescriptionAndBy[1].trim()};
 	}
-
+	
 	private static void runDelete(Tasks list, String arg) {
 		try {
 			int taskNumber = Integer.parseInt(arg);
@@ -256,21 +280,8 @@ public class Duke {
 	}
 	
 	private static void runClear(Tasks list) {
-		System.out.println(RUN_CLEAR_WARNING_MESSAGE);
-		Scanner in = new Scanner(System.in);
-		String line = in.nextLine();
-		switch (line) {
-		case "y":
-		case "Y":
-			list.clear();
-			System.out.println(RUN_CLEAR_COMPLETE_MESSAGE);
-			break;
-		case "n":
-		case "N":
-			break;
-		default:
-			System.out.println(ERROR_WRONG_INPUT_RUN_CLEAR_MESSAGE);
-		}
+		list.clear();
+		System.out.println(RUN_CLEAR_COMPLETE_MESSAGE);
 	}
 	
 	private static void printUnknownCommandMessage() {

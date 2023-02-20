@@ -4,6 +4,10 @@ What can I do for you?
 ____________________________________________________________
 
 ____________________________________________________________
+List has been cleared
+____________________________________________________________
+
+____________________________________________________________
 Got it. I've added this task:
 [T][ ] read book
 Now you have 1 tasks in the list.
@@ -68,6 +72,48 @@ ____________________________________________________________
 
 ____________________________________________________________
 Error: Unknown command detected, please type help for the list of commands available
+____________________________________________________________
+
+____________________________________________________________
+Noted. I have removed the following task:
+2.[D][ ] return book (by: Sunday)
+____________________________________________________________
+
+____________________________________________________________
+Here are the tasks in your list:
+1.[T][ ] read book
+2.[E][X] project meeting (from: Mon 2pm to: 4pm)
+Now you have 2 tasks in the list.
+____________________________________________________________
+
+____________________________________________________________
+The following are the commands available and their arguments:
+Todo [description]
+Creates Todo task. Requires a description text.
+
+event [description] /from [from] /to [to]
+Creates Event task. Requires a description, from and to texts.
+
+deadline [description] /by [by]
+Creates a Deadline task. Requires a Description, by text
+
+mark [task number]
+Marks selected task indicating it is done. Requires a task number.
+
+unmark [task number]
+Unmarks selected task indicating it is undone. Requires a task number.
+
+delete [task number]
+Deletes selected task from the list
+
+clear
+Empties the list
+
+list
+Lists the available commands.
+
+bye
+Exits and closes the program
 ____________________________________________________________
 
 ____________________________________________________________

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Tasks {
-    public static final String DELETE_TASK_ALERT = "Noted. I have removed the following task: ";
+    public static final String DELETE_TASK_ALERT = "Noted. I have removed the following task:";
     public static final String UNMARK_TASK_ALERT = "OK, I've marked this task as not done yet:";
     public static final String MARK_TASK_ALERT = "Nice! I've marked this task as done:";
     public static final String PRINT_LIST_ALERT = "Here are the tasks in your list:";
@@ -16,7 +16,7 @@ public class Tasks {
     private int tasksCount;
     
     public Tasks() {
-        // implement 1-based indexing, ignore list[0]
+        // implement 1-based indexing, ignore list[0], allows for easier use of numbering
         tasks = new ArrayList<Task>();
         tasks.add(null);
         tasksCount = 0;
