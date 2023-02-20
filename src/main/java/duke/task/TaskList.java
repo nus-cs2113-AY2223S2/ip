@@ -36,4 +36,14 @@ public class TaskList { // contains the task list e.g., it has operations to add
     public String getTaskEncoding(int taskNumber) {
         return taskList.get(taskNumber).getEncodedData();
     }
+
+    public TaskList findTasks(String keyword) {
+        TaskList matchingTasks = new TaskList(new ArrayList<>());
+        for (Task t : taskList) {
+            if (t.taskName.contains(keyword)) {
+                matchingTasks.addTask(t);
+            }
+        }
+        return matchingTasks;
+    }
 }
