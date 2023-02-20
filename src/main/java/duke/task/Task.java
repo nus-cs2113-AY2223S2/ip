@@ -23,6 +23,10 @@ public class Task {
         }
     }
 
+    public boolean isMatchingTask(String details) {
+       return taskName.contains(details);
+    }
+
     public String getTaskNameAndStatus() {
         return completed() + taskName;
     }
