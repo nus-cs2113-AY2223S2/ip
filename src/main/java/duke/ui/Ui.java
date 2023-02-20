@@ -4,6 +4,10 @@ import duke.task.Task;
 
 import java.util.Scanner;
 
+
+/**
+ * Ui class handles all interactions with user, printing messages etc
+ */
 public class Ui {
 
     public static final String LINE = "\t____________________________________________________________";
@@ -81,6 +85,13 @@ public class Ui {
         return in.nextLine();
     }
 
+
+    /**
+     * Function loops through given file and prints out each line
+     * Loops through as long as there is an available line
+     *
+     * @param s a file scanner to scan through the file
+     */
     public static void printFileContents(Scanner s) {
         printLine();
         System.out.println("\tHere are your stored tasks!");

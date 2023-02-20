@@ -24,7 +24,7 @@ public class TaskList {
     public static String retrieveTask(int taskNum) {
         return tasks.get(taskNum).returnCommand();
     }
-
+    
     public static void getTasks(String taskDetails) {
         Ui.printLine();
         int index = 0;
@@ -41,6 +41,12 @@ public class TaskList {
 
     }
 
+    /**
+     * Function takes in user input and identifies the user command
+     * Calls the command function to add user command into arraylist
+     *
+     * @param userCommand string of user input
+     */
     public static void handleUserCommand(String userCommand) {
         Parser parser = new Parser(userCommand);
 
