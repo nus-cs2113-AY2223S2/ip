@@ -1,39 +1,61 @@
 package duke;
 
-import duke.task.Task;
-import duke.data.FileActions;
-import duke.data.DataActions;
-import duke.command.CommandWords;
+import duke.command.CommandResult;
+import duke.command.ExitCommand;
+import duke.data.Storage;
 import duke.command.Command;
-import duke.output.Printer;
+import duke.parser.Parser;
+import duke.task.TaskList;
+import duke.ui.Ui;
 
-import java.util.Scanner;
-import java.util.ArrayList;
 import java.io.File;
 
 public class Duke {
-    public static void main(String[] args) {
-        Printer.greeting();
-        ArrayList<Task> tasks = new ArrayList<>();
+    private final Ui ui;
+    private final Storage storage;
+    private TaskList taskList;
 
-        // make dir if it does not exist
-        FileActions.makeDirectory();
-        // make file if it does not exist
-        File dataFile = FileActions.openDataFile();
-        // import the data from file to program
-        DataActions.importData(dataFile, tasks);
-
-        // user to input update
-        Scanner in = new Scanner(System.in);
-        String input = in.nextLine();
-        while (!input.equals(CommandWords.BYE.COMMAND)) {
-            Command.evaluate(input, tasks);
-            input = in.nextLine();
+    public Duke(String filePath) {
+        ui = new Ui();
+        storage = new Storage(filePath);
+        try {
+            storage.makeDirectory();
+            File dataFile = storage.openDataFile();
+            taskList = new TaskList(storage.importData(dataFile));
+        } catch (Exception e) {
+            // error from storage issues, exit
+            ui.showStartingError();
+            System.exit(1);
         }
+    }
 
-        // save data to file
-        DataActions.updateSavedData(tasks);
+    public void run() {
+        ui.greetingMessage();
+        runCommand();
+        ExitCommand.exit(this.taskList, this.ui, this.storage);
+    }
 
-        Printer.bye();
+    public void runCommand() {
+        Command command;
+        String input = ui.getUserCommand();
+        while (!input.equals(ExitCommand.COMMAND_WORD)) {
+            command = new Parser().parseCommand(input);
+            try {
+                CommandResult outcome = executeCommand(command);
+                ui.showToUser(outcome.output);
+                input = ui.getUserCommand();
+            } catch (NullPointerException e) {
+                input = ui.getUserCommand();
+            }
+        }
+    }
+
+    private CommandResult executeCommand(Command command) {
+        command.setData(taskList);
+        return command.execute();
+    }
+
+    public static void main(String[] args) {
+        new Duke(Storage.FILE_PATH).run();
     }
 }

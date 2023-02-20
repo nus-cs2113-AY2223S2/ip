@@ -1,6 +1,6 @@
 package duke.task;
 
-import duke.output.Symbols;
+import duke.ui.Symbols;
 
 public class Todo extends Task {
     // tasks without any date/time attached to it
@@ -16,15 +16,15 @@ public class Todo extends Task {
         return taskDetail;
     }
 
-    public String getSavedData() {
+    @Override
+    public String getEncodedData() {
         String taskStatus;
-        if (getStatusIcon().equals(Symbols.PROGRAM_MARK.SYMBOL)) {
-            taskStatus = Symbols.DATA_MARK.SYMBOL;
+        if (getStatusIcon().equals(Symbols.PROGRAM_MARK)) {
+            taskStatus = Symbols.DATA_MARK;
         } else {
-            taskStatus = Symbols.DATA_UNMARK.SYMBOL;
+            taskStatus = Symbols.DATA_UNMARK;
         }
-        String fullDetails = String.join(Symbols.DATA_DELIMITER.SYMBOL,
-                Symbols.TODO.SYMBOL, taskStatus, taskName);
-        return fullDetails;
+        return String.join(Symbols.ENCODE_DATA_DELIMITER, Symbols.TODO, taskStatus, taskName);
+        // returns full details of task
     }
 }

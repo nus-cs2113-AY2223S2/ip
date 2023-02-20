@@ -1,0 +1,54 @@
+package duke.task;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+
+public class TaskList { // contains the task list e.g., it has operations to add/delete tasks in the list
+    private final ArrayList<Task> taskList;
+
+    public TaskList(ArrayList<Task> taskList) {
+        this.taskList = taskList;
+    }
+
+    public int getTaskCount() {
+        return taskList.size();
+    }
+
+    public void addTask(Task toAdd) {
+        taskList.add(toAdd);
+    }
+
+    public void deleteTask(int taskNumber) {
+        taskList.remove(taskList.get(taskNumber));
+    }
+
+    public String getTaskFullDetails(int taskNumber) {
+        return taskList.get(taskNumber).getFullTaskDetail();
+    }
+
+    public void markTaskDone(int taskNumber) {
+        taskList.get(taskNumber).markAsDone();
+    }
+
+    public void markTaskNotDone(int taskNumber) {
+        taskList.get(taskNumber).markAsNotDone();
+    }
+
+    public String getTaskEncoding(int taskNumber) {
+        return taskList.get(taskNumber).getEncodedData();
+    }
+
+    public TaskList getDueTasks(LocalDate date) {
+        TaskList dueTasks = new TaskList(new ArrayList<>());
+        for (Task task : taskList) {
+            if (task instanceof Deadline && ((Deadline) task).isDateOnDeadline(date)) {
+                dueTasks.addTask(task);
+            }
+            if (task instanceof Event && (((Event) task).isDateBetweenEvent(date)
+                    || ((Event) task).isDateOnStart(date) || ((Event) task).isDateOnEnd(date))) {
+                dueTasks.addTask(task);
+            }
+        }
+        return dueTasks;
+    }
+}
