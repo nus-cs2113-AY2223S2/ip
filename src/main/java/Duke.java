@@ -17,29 +17,32 @@ import java.util.ArrayList;
 
 
 public class Duke {
-    private static void logoWithHello() {
-        String logo = " ____        _\n"
-                + "|  _ \\ _   _| | _____\n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);
+
+    public static final String LOGO =
+            " ____        _\n"
+            + "|  _ \\ _   _| | _____\n"
+            + "| | | | | | | |/ / _ \\\n"
+            + "| |_| | |_| |   <  __/\n"
+            + "|____/ \\__,_|_|\\_\\___|\n";
+
+    private static void printWelcomeMessage() {
+        System.out.println("Hello from\n" + LOGO);
     }
 
-    public static void horizontalLine() {
+    private static void printHorizontalLine() {
         System.out.println("____________________________________________________________");
     }
 
     public static void greet() {
-        horizontalLine();
+        printHorizontalLine();
         System.out.println("Hello! I'm Duke\nWhat can I do for you?\n");
-        horizontalLine();
+        printHorizontalLine();
     }
 
     public static void exit() {
-        horizontalLine();
+        printHorizontalLine();
         System.out.println("Bye. Hope to see you again soon!\n");
-        horizontalLine();
+        printHorizontalLine();
     }
 
     public static void processCommands(ArrayList<Task> tasks, String userInput) throws DukeException {
@@ -48,11 +51,11 @@ public class Duke {
         if (words[0].equals("list")) {
             listCommand(tasks);
         } else if (words[0].equals("todo")) {
-            todoCommand(tasks, userInput);
+            addTodoCommand(tasks, userInput);
         } else if (words[0].equals("event")) {
-            eventCommand(tasks, userInput);
+            addEventCommand(tasks, userInput);
         } else if (words[0].equals("deadline")) {
-            deadlineCommand(tasks, userInput);
+            addDeadlineCommand(tasks, userInput);
         } else if (words[0].equals("delete")) {
             deleteCommand(tasks, words);
         } else if (words[0].contains("mark")) {
@@ -64,17 +67,17 @@ public class Duke {
 
     private static void listCommand(ArrayList<Task> tasks) throws DukeException {
         if (tasks.size() > 0) {
-            horizontalLine();
+            printHorizontalLine();
             for (Task task : tasks) {
                 System.out.println((tasks.indexOf(task) + 1) + "." + task);
             }
-            horizontalLine();
+            printHorizontalLine();
         } else {
             throw new DukeException(ErrorMessage.EMPTY_LIST.toString());
         }
     }
 
-    private static void todoCommand(ArrayList<Task> tasks, String userInput) throws DukeException {
+    private static void addTodoCommand(ArrayList<Task> tasks, String userInput) throws DukeException {
         try {
             userInput = userInput.substring(5);
             tasks.add(new Todo(userInput));
@@ -84,7 +87,7 @@ public class Duke {
         }
     }
 
-    private static void eventCommand(ArrayList<Task> tasks, String userInput) throws DukeException {
+    private static void addEventCommand(ArrayList<Task> tasks, String userInput) throws DukeException {
         try {
             int firstPositionOfSlash = userInput.indexOf("/");
             if (firstPositionOfSlash == -1) {
@@ -107,7 +110,7 @@ public class Duke {
         }
     }
 
-    private static void deadlineCommand(ArrayList<Task> tasks, String userInput) throws DukeException {
+    private static void addDeadlineCommand(ArrayList<Task> tasks, String userInput) throws DukeException {
         int positionOfBy = userInput.indexOf("/by");
         if (positionOfBy == -1) {
             throw new DukeException(ErrorMessage.MISSING_DEADLINE_BY_PARAMETER.toString());
@@ -128,11 +131,11 @@ public class Duke {
     }
 
     public static void taskAdded(ArrayList<Task> tasks) {
-        horizontalLine();
+        printHorizontalLine();
         boolean lessThanOne = (tasks.size() <= 1);
         System.out.println("Got it. I've added this task:\n" + tasks.get(tasks.size() - 1));
         System.out.println("Now you have " + tasks.size() + (lessThanOne ? " task" : " tasks") + " in the list");
-        horizontalLine();
+        printHorizontalLine();
     }
 
     private static void deleteCommand(ArrayList<Task> tasks, String[] words) throws DukeException {
@@ -146,15 +149,15 @@ public class Duke {
     }
 
     public static void taskRemoved(ArrayList<Task> tasks, Task t) {
-        horizontalLine();
+        printHorizontalLine();
         boolean isLessThanOne = (tasks.size() <= 1);
         System.out.println("Got it. I've removed this task:\n" + t.toString());
         System.out.println("Now you have " + tasks.size() + (isLessThanOne ? " task" : " tasks") + " in the list\n");
-        horizontalLine();
+        printHorizontalLine();
     }
 
     private static void markUnmarkCommand(ArrayList<Task> tasks, String[] words) throws DukeException {
-        horizontalLine();
+        printHorizontalLine();
         int taskNumber = Integer.parseInt(words[1]);
         if (taskNumber > tasks.size()) {
             throw new DukeException(ErrorMessage.INVALID_TASK.toString());
@@ -168,7 +171,7 @@ public class Duke {
             System.out.println("OK, I've marked this task as not done yet:");
         }
         System.out.println(tasks.get(taskNumber - 1));
-        horizontalLine();
+        printHorizontalLine();
     }
 
     private static void writeToFile(ArrayList<Task> tasks) {
@@ -203,7 +206,7 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-        logoWithHello();
+        printWelcomeMessage();
         ArrayList<Task> tasks = new ArrayList<>();
         File file = new File("duke.txt");
         if (file.exists()) {
@@ -217,13 +220,12 @@ public class Duke {
             if (userInput.equals("bye")) {
                 break;
             }
-
             try {
                 processCommands(tasks, userInput);
             } catch (Exception error) {
-                horizontalLine();
+                printHorizontalLine();
                 System.out.println("Error message: " + error.getMessage());
-                horizontalLine();
+                printHorizontalLine();
             }
         }
         writeToFile(tasks);
