@@ -1,6 +1,7 @@
 package Duke.DukeCommandLine;
 
 import Duke.DukeFunction.DukeList;
+import Duke.DukeFunction.DukeStorage;
 import Duke.DukeFunction.DukeUI;
 import Duke.DukeTask.DukeDeadline;
 import Duke.DukeTask.DukeEvent;
@@ -22,7 +23,7 @@ public class DukeCommandLineInput {
     public boolean isExit() {
         return this.commandType.equals("bye");
     }
-    public void execute(DukeList tasks, DukeUI ui, DukeParser parser) throws DukeTaskInputException {
+    public void execute(DukeList tasks, DukeUI ui, DukeParser parser, DukeStorage storage) throws DukeTaskInputException {
         int id;
         switch (this.commandType){
         case "bye":
@@ -84,6 +85,6 @@ public class DukeCommandLineInput {
             throw new DukeTaskInputException("Sorry, I don't know what that means :-( ("
                     + this.commandType + ")");
         }
-        tasks.saveTask();
+        storage.saveTask(tasks);
     }
 }

@@ -26,8 +26,8 @@ public class DukeUI {
     public String readCommand() {
         return in.nextLine();
     }
-    public static void printDukeLogo() { System.out.println("Hello from\n" + DukeLogo);}
-    public static void printEditorLogo(){
+    public void printDukeLogo() { System.out.println("Hello from\n" + DukeLogo);}
+    public void printEditorLogo(){
         System.out.println(EditorLogo);
     }
     public void printGreeting(){
@@ -40,7 +40,7 @@ public class DukeUI {
     public void printGoodbyeLogo(){
         System.out.println(GoodbyeLogo);
     }
-    public static void printString(String s){
+    public void printString(String s){
         System.out.println(s);
     }
     public void printError(String s){
