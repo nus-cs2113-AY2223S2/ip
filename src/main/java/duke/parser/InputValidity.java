@@ -43,6 +43,7 @@ public class InputValidity {
             Error.throwError(ErrorTypes.INSUFFICIENT_EVENT_ARGUMENT);
         }
     }
+
     private static boolean isStringOfInteger(String input) {
         // takes in a string and checks whether the string only contains digits characters
         input = input.trim();

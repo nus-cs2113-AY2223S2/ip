@@ -16,9 +16,14 @@ public class InvalidCommand extends Command {
     @Override
     public CommandResult execute() {
         String output;
-        if (this.error == ErrorTypes.INVALID_INPUT) {
+        switch (error) {
+        case INVALID_INPUT:
             output = String.join(Ui.NEW_LINE, Ui.SEGMENT_LINE, MESSAGE);
-        } else {
+            break;
+        case INVALID_DATE:
+            output = String.join(Ui.NEW_LINE, Ui.SEGMENT_LINE, DateCommand.INVALID_COMMAND_MESSAGE);
+            break;
+        default:
             output = "";
         }
         return new CommandResult(output);

@@ -1,8 +1,13 @@
 package duke.command;
 
 import duke.task.Event;
+import duke.ui.Ui;
 
 public class EventCommand extends AddCommand {
+    public static final String INVALID_FORMAT_MESSAGE =
+            " Invalid input! Valid input format: \"event <task name> /from <date> /to <date>\"";
+    public static final String INSUFFICIENT_FIELD_MESSAGE = " Invalid input! Please provide enough arguments! "
+            + Ui.NEW_LINE + " Valid input format: \"event <task name> /from <date> /to <date>\"";
     public String startDate;
     public String endDate;
 

@@ -25,12 +25,7 @@ public class FindCommand extends Command {
             output = String.join(Ui.NEW_LINE, output, NO_SIMILAR_TASK_MESSAGE);
         } else {
             output = String.join(Ui.NEW_LINE, output, OUTPUT_MESSAGE);
-            for (int i = 0; i < matchingTasks.getTaskCount(); i += 1) {
-                int taskNumber = i + 1;
-                String taskInformation = String.join("", " ", Integer.toString(taskNumber), ". ",
-                        matchingTasks.getTaskFullDetails(i));
-                output = String.join(Ui.NEW_LINE, output, taskInformation);
-            }
+            output = getFilteredTasksInformation(output, matchingTasks);
         }
         return new CommandResult(output);
     }

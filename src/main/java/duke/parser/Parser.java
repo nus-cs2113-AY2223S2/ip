@@ -3,6 +3,9 @@ package duke.parser;
 import duke.command.*;
 import duke.error.DukeException;
 import duke.error.ErrorTypes;
+import duke.task.DateTime;
+
+import java.time.LocalDate;
 
 public class Parser { // deals with making sense of the user command
     public Command parseCommand(String input) {
@@ -27,6 +30,8 @@ public class Parser { // deals with making sense of the user command
             return prepareEventCommand(input);
         case (FindCommand.COMMAND_WORD):
             return prepareFindCOmmand(input);
+        case (DateCommand.COMMAND_WORD):
+            return prepareDateCommand(input);
         default:
             return new InvalidCommand(ErrorTypes.INVALID_INPUT);
         }
@@ -101,6 +106,16 @@ public class Parser { // deals with making sense of the user command
             return new FindCommand(keyword);
         } catch (DukeException e) {
             return new InvalidCommand(ErrorTypes.INVALID_FIND_COMMAND);
+        }
+    }
+
+    private Command prepareDateCommand(String input) {
+        try {
+            input = input.replace(DateCommand.COMMAND_WORD, "");
+            LocalDate date = LocalDate.parse(input.trim(), DateTime.inputDateFormat);
+            return new DateCommand(date);
+        } catch (Exception e) {
+            return new InvalidCommand(ErrorTypes.INVALID_DATE);
         }
     }
 }

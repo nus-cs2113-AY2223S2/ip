@@ -1,5 +1,6 @@
 package duke.task;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class TaskList { // contains the task list e.g., it has operations to add/delete tasks in the list
@@ -45,5 +46,19 @@ public class TaskList { // contains the task list e.g., it has operations to add
             }
         }
         return matchingTasks;
+    }
+
+    public TaskList getDueTasks(LocalDate date) {
+        TaskList dueTasks = new TaskList(new ArrayList<>());
+        for (Task task : taskList) {
+            if (task instanceof Deadline && ((Deadline) task).isDateOnDeadline(date)) {
+                dueTasks.addTask(task);
+            }
+            if (task instanceof Event && (((Event) task).isDateBetweenEvent(date)
+                    || ((Event) task).isDateOnStart(date) || ((Event) task).isDateOnEnd(date))) {
+                dueTasks.addTask(task);
+            }
+        }
+        return dueTasks;
     }
 }
