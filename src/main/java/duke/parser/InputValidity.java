@@ -56,7 +56,7 @@ public class InputValidity {
         return true;
     }
 
-    protected static void isValid(String[] input, String command) throws DukeException {
+     protected static void checkValid(String[] input, String command) throws DukeException {
         boolean isTwoWordInput = (input.length == VALID_LENGTH_TWO);
         if (!isTwoWordInput || !isStringOfInteger(input[1])) {
             switch (command) {
@@ -75,4 +75,13 @@ public class InputValidity {
             }
         }
     }
+
+    protected static void checkValidFind(String input) throws DukeException {
+        String[] arrayOfInput = input.split(" ");
+        boolean isAtLeastTwoWord = (arrayOfInput.length >= VALID_LENGTH_TWO);
+        if (!isAtLeastTwoWord) {
+            Error.throwError(ErrorTypes.INVALID_FIND_COMMAND);
+        }
+    }
+
 }

@@ -28,12 +28,7 @@ public class DateCommand extends Command {
         } else {
             output = String.join(Ui.NEW_LINE, output, OUTPUT_MESSAGE);
             output = output.replace("%s", date.format(DateTime.outDateFormatter));
-            for (int i = 0; i < dueTasks.getTaskCount(); i += 1) {
-                int taskNumber = i + 1;
-                String taskInformation = String.join("", " ", Integer.toString(taskNumber), ". ",
-                        dueTasks.getTaskFullDetails(i));
-                output = String.join(Ui.NEW_LINE, output, taskInformation);
-            }
+            output = getFilteredTasksInformation(output, dueTasks);
         }
         return new CommandResult(output);
     }

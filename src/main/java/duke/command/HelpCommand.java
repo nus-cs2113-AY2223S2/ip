@@ -4,7 +4,7 @@ import duke.ui.Ui;
 
 public class HelpCommand extends Command {
     public static final String COMMAND_WORD = "help";
-    public static final String MESSAGE_USAGE = " help" + ": view all commands available. "
+    public static final String MESSAGE_USAGE = " help: view all commands available. "
             + Ui.NEW_LINE + "  Example: help";
 
     @Override
@@ -17,6 +17,7 @@ public class HelpCommand extends Command {
                 + Ui.NEW_LINE + Ui.NEW_LINE + MarkCommand.MESSAGE_USAGE
                 + Ui.NEW_LINE + Ui.NEW_LINE + UnmarkCommand.MESSAGE_USAGE
                 + Ui.NEW_LINE + Ui.NEW_LINE + DeleteCommand.MESSAGE_USAGE
+                + Ui.NEW_LINE + Ui.NEW_LINE + FindCommand.MESSAGE_USAGE
                 + Ui.NEW_LINE + Ui.NEW_LINE + DateCommand.MESSAGE_USAGE
                 + Ui.NEW_LINE + Ui.NEW_LINE + HelpCommand.MESSAGE_USAGE
                 + Ui.NEW_LINE + Ui.NEW_LINE + ExitCommand.MESSAGE_USAGE));

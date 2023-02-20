@@ -38,6 +38,16 @@ public class TaskList { // contains the task list e.g., it has operations to add
         return taskList.get(taskNumber).getEncodedData();
     }
 
+    public TaskList findTasks(String keyword) {
+        TaskList matchingTasks = new TaskList(new ArrayList<>());
+        for (Task t : taskList) {
+            if (t.taskName.contains(keyword)) {
+                matchingTasks.addTask(t);
+            }
+        }
+        return matchingTasks;
+    }
+
     public TaskList getDueTasks(LocalDate date) {
         TaskList dueTasks = new TaskList(new ArrayList<>());
         for (Task task : taskList) {
