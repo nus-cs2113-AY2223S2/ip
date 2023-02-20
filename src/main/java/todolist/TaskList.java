@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class TaskList {
     //All the messages Strings
     public static final String COMPLETED_TASK_MESSAGE = "Nice! I've marked this task as done!";
-    public static final String INCOMPLETE_TASK_MESSAGE = "Why are you being lazy? >:(";
+    public static final String INCOMPLETE_TASK_MESSAGE = "Stop being lazy, get to work!";
     public static final String ADDED_TASK_MESSAGE = "Done! Added: ";
     public static final String TASK_REMOVED_MESSAGE_ONE = "Task removed:";
     public static final String TASK_REMOVED_MESSAGE_TWO = "Total tasks left: ";
