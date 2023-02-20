@@ -1,16 +1,9 @@
-import duke.Deadline;
-import duke.Event;
-import duke.Task;
-import duke.Todo;
 import parser.Parser;
 import storage.StorageFile;
 import todolist.TaskList;
 import ui.UI;
 
-import java.io.FileWriter;
-import java.io.PrintWriter;
 import java.util.Scanner;
-import java.util.ArrayList;
 import java.io.File;
 
 public class Duke {
