@@ -13,6 +13,13 @@ import java.util.Scanner;
 
 public class Storage {
 
+    /**
+     * Updates the save file with new tasks if
+     * list is modified at end of the program
+     *
+     * @param path path to the duke save file
+     * @throws IOException if file cannot be found
+     */
     public static void doEditFile(String path) throws IOException {
         File fileName = new File(path);
         FileWriter savedFile = new FileWriter(fileName, false);
@@ -24,6 +31,13 @@ public class Storage {
         savedFile.close();
     }
 
+    /**
+     * First, check if the file exists
+     * if file does not exist, a new file is created
+     * If file already exists prints the contents of the file
+     *
+     * @param path path to the duke save file
+     */
     public static void openFile(String path) {
         try {
             File fileName = new File(path);
@@ -37,6 +51,12 @@ public class Storage {
         }
     }
 
+    /**
+     * prints the contents of the duke save file
+     *
+     * @param fileName represents the duke save file
+     * @throws FileNotFoundException if file not found
+     */
     private static void printFile(File fileName) throws FileNotFoundException {
         Scanner s = new Scanner(fileName);
         if (!s.hasNext()) {
@@ -45,6 +65,14 @@ public class Storage {
         extractData(fileName);
     }
 
+    /**
+     * Loops through the file and passes the tasks string into
+     * handleUserCommand function
+     * handleUserCommand function then adds these tasks into arraylist
+     *
+     * @param fileName represents the duke save file
+     * @throws FileNotFoundException if file not found
+     */
     public static void extractData(File fileName) throws FileNotFoundException {
         Scanner s = new Scanner(fileName);
         int count = 1;
