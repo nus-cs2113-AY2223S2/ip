@@ -15,13 +15,13 @@ public class DukeParser {
         lineRemaining = lineRemaining.trim();
         return new DukeCommandLineInput(command[0], lineRemaining);
     }
-    public DukeTask processTask(String inputTask) throws DukeTaskInputException {
+    public DukeTask processTask(String inputTask) throws DukeException {
         if(inputTask.equals("")) {
-            throw new DukeTaskInputException("☹ OOPS!!! The description of a task cannot be empty.");
+            throw new DukeException("☹ OOPS!!! The description of a task cannot be empty.");
         }
         return new DukeTask(inputTask);
     }
-    public DukeDeadline processDeadline(String inputTask) throws DukeTaskInputException {
+    public DukeDeadline processDeadline(String inputTask) throws DukeException {
         try {
             String deadlineName = inputTask.substring(0, inputTask.indexOf("/by"));
             deadlineName = deadlineName.trim();
@@ -29,11 +29,11 @@ public class DukeParser {
             deadlineTime = deadlineTime.trim();
             return new DukeDeadline(deadlineName, deadlineTime);
         } catch (StringIndexOutOfBoundsException e) {
-            throw new DukeTaskInputException("\"Please use the format: " +
+            throw new DukeException("\"Please use the format: " +
                     "deadline <task name> /by <deadline time>");
         }
     }
-    public DukeEvent processEvent(String inputTask) throws DukeTaskInputException {
+    public DukeEvent processEvent(String inputTask) throws DukeException {
         try {
             String eventName = inputTask.substring(0, inputTask.indexOf("/from")-1);
             eventName = eventName.trim();
@@ -43,7 +43,7 @@ public class DukeParser {
             String eventTimeTo = inputTask.substring(inputTask.indexOf("/to")+4);
             return new DukeEvent(eventName, eventTimeFrom, eventTimeTo);
         } catch (StringIndexOutOfBoundsException e) {
-            throw new DukeTaskInputException("Please use the format: " +
+            throw new DukeException("Please use the format: " +
                     "event <task name> /from <event time from> /to <event time to>");
         }
     }

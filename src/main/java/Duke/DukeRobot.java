@@ -2,7 +2,7 @@ package Duke;
 
 import Duke.DukeCommandLine.DukeCommandLineInput;
 import Duke.DukeCommandLine.DukeParser;
-import Duke.DukeCommandLine.DukeTaskInputException;
+import Duke.DukeCommandLine.DukeException;
 import Duke.DukeFunction.DukeList;
 import Duke.DukeFunction.DukeStorage;
 import Duke.DukeFunction.DukeUI;
@@ -21,7 +21,7 @@ public class DukeRobot {
         try {
             System.out.println("Loading tasks from file...");
             storage.loadTask(tasks);
-        } catch (DukeTaskInputException e) {
+        } catch (DukeException e) {
             ui.printError(e.getMessage());
         }
         ui.printLine();
@@ -35,7 +35,7 @@ public class DukeRobot {
                 DukeCommandLineInput command = parser.parse(fullCommand);
                 command.execute(tasks, ui, parser, storage);
                 isExit = command.isExit();
-            } catch (DukeTaskInputException e) {
+            } catch (DukeException e) {
                 ui.printError(e.getMessage());
             } finally {
                 ui.printLine();
