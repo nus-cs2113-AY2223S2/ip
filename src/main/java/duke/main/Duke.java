@@ -1,58 +1,57 @@
 package duke.main;
 
 import duke.command.UserCommandManager;
+import duke.data.TaskList;
+import duke.exceptions.DukeException;
+import duke.filemanager.Storage;
+import duke.ui.ParseCommand;
+import duke.ui.Ui;
 
 import java.util.Scanner;
 
 /**
- * Last Modified: 10.2.23 0157
+ * Last Modified: 20.2.23 1659
  */
 public class Duke {
+    private Ui ui;
+    private Storage storage;
+    private TaskList tasks;
 
-    /**
-     * Prints out the greeting message to the user
-     */
-    public static void greetUser() {
-        String logo = " .----------------.  .----------------.  .----------------.  .----------------. \n" +
-                "| | |_   ___ `.  | || ||_   _||_   _|| || | |_  ||_  _|  | || | |_   ___  |  | |\n" +
-                "| |   | |   `. \\ | || |  | |    | |  | || |   | |_/ /    | || |   | |_  \\_|  | |\n" +
-                "| |   | |    | | | || |  | '    ' |  | || |   |  __'.    | || |   |  _|  _   | |\n" +
-                "| |  _| |___.' / | || |   \\ `--' /   | || |  _| |  \\ \\_  | || |  _| |___/ |  | |\n" +
-                "| | |________.'  | || |    `.__.'    | || | |____||____| | || | |_________|  | |\n" +
-                " '----------------'  '----------------'  '----------------'  '----------------' ";
-        System.out.println("Hello from\n" + logo);
-        String greetMessage = "Hello! I'm Duke\n"
-                + "Send me a list of things to remember!\n"
-                + "Type <bye> to exit";
-        System.out.println(greetMessage);
+
+    public Duke(String filePath) {
+        ui = new Ui();
+        storage = new Storage(filePath);
+        try {
+            tasks = new TaskList(storage.setTasks());
+        } catch (DukeException e) {
+            ui.errorMessage(e.getMessage());
+            tasks = new TaskList();
+        }
+    }
+
+
+    @SuppressWarnings("InfiniteLoopStatement")
+    public void run() {
+        ui.greetUser();
+        ui.showLine();
+        UserCommandManager commandManager = new UserCommandManager();
+        while (true) {
+            try {
+                String[] userCommand = ParseCommand.readInput();
+                commandManager.handleCommands(userCommand, storage, tasks, ui);
+                ui.showLine();
+            } catch (DukeException e) {
+                ui.errorMessage(e.getMessage());
+            }
+        }
     }
 
     /**
-     * Prints out the exit message to the user
-     */
-    public static void exitProgram() {
-        String exitMessage = "Bye. Hope to see you again soon!";
-        System.out.println(exitMessage);
-        System.exit(0);
-    }
-
-    /**
-     * Greets user and responds to user commands from the command line
+     * Waits for user commands from the command line and executes them
      *
      * @param args None taken
      */
-    @SuppressWarnings("InfiniteLoopStatement")
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        greetUser();
-        UserCommandManager commandManager = new UserCommandManager();
-        while (true) {
-            String userCommand = input.next().toLowerCase();
-            if (userCommand.equals("bye")) {
-                exitProgram();
-            }
-            commandManager.handleCommands(userCommand, input.nextLine());
-            System.out.println("=============================");
-        }
+        new Duke("duke.json").run();
     }
 }

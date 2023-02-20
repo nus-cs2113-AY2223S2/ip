@@ -11,6 +11,10 @@ public class Task {
         this.type = "todo";
     }
 
+    public String getDescription() {
+        return this.task;
+    }
+
     /**
      * sets the current task to be marked as done
      *
