@@ -4,7 +4,6 @@ import duke.ui.Symbols;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeParseException;
 
 public class Event extends Task {
     // tasks that start at a specific date/time and ends at specific date/time
@@ -30,7 +29,7 @@ public class Event extends Task {
         String taskDetail;
         String outStartDate = getOutStartDate();
         String outEndDate = getOutEndDate();
-        taskDetail = "[E][" + getStatusIcon() + "] " + taskName + " (from: " + outStartDate + " to: "
+        taskDetail = "[E][" + getStatusIcon() + "] " + this.taskName + " (from: " + outStartDate + " to: "
                 + outEndDate + ")";
         return taskDetail;
     }
@@ -38,11 +37,11 @@ public class Event extends Task {
     private String getOutStartDate() {
         String outStartDate;
         if (this.startDateTime != null) {
-            outStartDate = DateTime.outDateTimeFormatter.format(startDateTime);
+            outStartDate = DateTime.outDateTimeFormatter.format(this.startDateTime);
         } else if (this.startDate != null) {
-            outStartDate = startDate.format(DateTime.outDateFormatter);
+            outStartDate = this.startDate.format(DateTime.outDateFormatter);
         } else {
-            outStartDate = stringStartDate;
+            outStartDate = this.stringStartDate;
         }
         return outStartDate;
     }
@@ -50,13 +49,39 @@ public class Event extends Task {
     private String getOutEndDate() {
         String outEndDate;
         if (this.endDateTime != null) {
-            outEndDate = DateTime.outDateTimeFormatter.format(endDateTime);
+            outEndDate = DateTime.outDateTimeFormatter.format(this.endDateTime);
         } else if (this.startDate != null) {
-            outEndDate = endDate.format(DateTime.outDateFormatter);
+            outEndDate = this.endDate.format(DateTime.outDateFormatter);
         } else {
-            outEndDate = stringEndDate;
+            outEndDate = this.stringEndDate;
         }
         return outEndDate;
+    }
+
+    public boolean isDateBetweenEvent(LocalDate date) {
+        if (this.startDate == null) {
+            return false;
+        }
+        if (this.endDate == null) {
+            return false;
+        }
+        boolean dateIsAfterStart = this.startDate.isBefore(date);
+        boolean dateIsBeforeEnd = this.endDate.isAfter(date);
+        return dateIsAfterStart && dateIsBeforeEnd;
+    }
+
+    public boolean isDateOnStart(LocalDate date) {
+        if (this.startDate == null) {
+            return false;
+        }
+        return this.startDate.equals(date);
+    }
+
+    public boolean isDateOnEnd(LocalDate date) {
+        if (this.endDate == null) {
+            return false;
+        }
+        return this.endDate.equals(date);
     }
 
     @Override
@@ -68,7 +93,7 @@ public class Event extends Task {
             taskStatus = Symbols.DATA_UNMARK;
         }
         String date = String.join(Symbols.DATA_EVENT_DATE_DELIMITER, stringStartDate, stringEndDate);
-        return String.join(Symbols.ENCODE_DATA_DELIMITER, Symbols.EVENT, taskStatus, taskName, date);
+        return String.join(Symbols.ENCODE_DATA_DELIMITER, Symbols.EVENT, taskStatus, this.taskName, date);
         // returns full details of task
     }
 }

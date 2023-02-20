@@ -1,18 +1,11 @@
 package duke.parser;
 
-import duke.command.Command;
-import duke.command.AddCommand;
-import duke.command.ListCommand;
-import duke.command.DeleteCommand;
-import duke.command.MarkCommand;
-import duke.command.UnmarkCommand;
-import duke.command.HelpCommand;
-import duke.command.InvalidCommand;
-import duke.command.TodoCommand;
-import duke.command.DeadlineCommand;
-import duke.command.EventCommand;
+import duke.command.*;
 import duke.error.DukeException;
 import duke.error.ErrorTypes;
+import duke.task.DateTime;
+
+import java.time.LocalDate;
 
 public class Parser { // deals with making sense of the user command
     public Command parseCommand(String input) {
@@ -35,6 +28,8 @@ public class Parser { // deals with making sense of the user command
             return prepareDeadlineCommand(input);
         case (AddCommand.COMMAND_EVENT):
             return prepareEventCommand(input);
+        case (DateCommand.COMMAND_WORD):
+            return prepareDateCommand(input);
         default:
             return new InvalidCommand(ErrorTypes.INVALID_INPUT);
         }
@@ -100,5 +95,15 @@ public class Parser { // deals with making sense of the user command
     private String parseMarkUnmarkDelete(String[] userInput, String command) throws DukeException {
         InputValidity.isValid(userInput, command);
         return userInput[1].trim();
+    }
+
+    private Command prepareDateCommand(String input) {
+        try {
+            input = input.replace(DateCommand.COMMAND_WORD, "");
+            LocalDate date = LocalDate.parse(input.trim(), DateTime.inputDateFormat);
+            return new DateCommand(date);
+        } catch (Exception e) {
+            return new InvalidCommand(ErrorTypes.INVALID_DATE);
+        }
     }
 }

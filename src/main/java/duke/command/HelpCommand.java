@@ -17,6 +17,7 @@ public class HelpCommand extends Command {
                 + Ui.NEW_LINE + Ui.NEW_LINE + MarkCommand.MESSAGE_USAGE
                 + Ui.NEW_LINE + Ui.NEW_LINE + UnmarkCommand.MESSAGE_USAGE
                 + Ui.NEW_LINE + Ui.NEW_LINE + DeleteCommand.MESSAGE_USAGE
+                + Ui.NEW_LINE + Ui.NEW_LINE + DateCommand.MESSAGE_USAGE
                 + Ui.NEW_LINE + Ui.NEW_LINE + HelpCommand.MESSAGE_USAGE
                 + Ui.NEW_LINE + Ui.NEW_LINE + ExitCommand.MESSAGE_USAGE));
         return new CommandResult(output);

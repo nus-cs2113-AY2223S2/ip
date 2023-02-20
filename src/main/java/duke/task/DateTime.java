@@ -19,6 +19,12 @@ public class DateTime {
             } catch (DateTimeParseException e) {
                 return null;
             }
+        } else if (arrayDateTime.length == 2) {
+            try {
+                return LocalDate.parse(arrayDateTime[0].trim(), DateTime.inputDateFormat);
+            } catch (DateTimeParseException e) {
+                return null;
+            }
         }
         return null;
     }

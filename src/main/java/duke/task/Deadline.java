@@ -22,20 +22,27 @@ public class Deadline extends Task {
     public String getFullTaskDetail() {
         String taskDetail;
         String outputDeadline = getOutDeadline();
-        taskDetail = "[D][" + getStatusIcon() + "] " + taskName + " (by: " + outputDeadline + ")";
+        taskDetail = "[D][" + getStatusIcon() + "] " + this.taskName + " (by: " + outputDeadline + ")";
         return taskDetail;
     }
 
     private String getOutDeadline() {
         String outputDeadline;
         if (this.dateTime != null) {
-            outputDeadline = DateTime.outDateTimeFormatter.format(dateTime);
+            outputDeadline = DateTime.outDateTimeFormatter.format(this.dateTime);
         } else if (this.date != null) {
-            outputDeadline = date.format(DateTime.outDateFormatter);
+            outputDeadline = this.date.format(DateTime.outDateFormatter);
         } else {
-            outputDeadline = deadline;
+            outputDeadline = this.deadline;
         }
         return outputDeadline;
+    }
+
+    public boolean isDateOnDeadline(LocalDate date) {
+        if (this.date == null) {
+            return false;
+        }
+        return this.date.equals(date);
     }
 
     @Override
@@ -46,6 +53,6 @@ public class Deadline extends Task {
         } else {
             taskStatus = Symbols.DATA_UNMARK;
         }
-        return String.join(Symbols.ENCODE_DATA_DELIMITER, Symbols.DEADLINE, taskStatus, taskName, deadline);
+        return String.join(Symbols.ENCODE_DATA_DELIMITER, Symbols.DEADLINE, taskStatus, this.taskName, this.deadline);
     }
 }

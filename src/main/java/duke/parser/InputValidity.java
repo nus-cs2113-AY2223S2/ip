@@ -43,6 +43,7 @@ public class InputValidity {
             Error.throwError(ErrorTypes.INSUFFICIENT_EVENT_ARGUMENT);
         }
     }
+
     private static boolean isStringOfInteger(String input) {
         // takes in a string and checks whether the string only contains digits characters
         input = input.trim();
@@ -55,7 +56,7 @@ public class InputValidity {
         return true;
     }
 
-     protected static void isValid(String[] input, String command) throws DukeException {
+    protected static void isValid(String[] input, String command) throws DukeException {
         boolean isTwoWordInput = (input.length == VALID_LENGTH_TWO);
         if (!isTwoWordInput || !isStringOfInteger(input[1])) {
             switch (command) {
