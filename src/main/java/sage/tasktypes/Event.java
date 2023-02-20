@@ -22,9 +22,9 @@ public class Event extends Task {
     @Override
     public String toString() {
         if (super.isCompleted()) {
-            return "[E][X] " + super.getTaskName() + "(from: " + getStartWhen() + " to: " + getEndWhen() + ")";
+            return "[E][X] " + super.getTaskDetails() + "(from: " + getStartWhen() + " to: " + getEndWhen() + ")";
         } else {
-            return "[E][ ] " + super.getTaskName() + "(from: " + getStartWhen() + " to: " + getEndWhen() + ")";
+            return "[E][ ] " + super.getTaskDetails() + "(from: " + getStartWhen() + " to: " + getEndWhen() + ")";
         }
     }
 }
