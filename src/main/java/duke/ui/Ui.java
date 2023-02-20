@@ -1,7 +1,6 @@
 package duke.ui;
 
-import duke.command.*;
-import duke.task.Task;
+import duke.command.ExitCommand;
 
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -15,7 +14,7 @@ public class Ui { // deals with interactions with the user
         this(System.in, System.out);
     }
 
-    public Ui(InputStream in, PrintStream out){
+    public Ui(InputStream in, PrintStream out) {
         this.in = new Scanner(in);
         this.out = out;
     }
@@ -47,7 +46,7 @@ public class Ui { // deals with interactions with the user
     }
 
     public void showToUser(String outcome) {
-        System.out.println(outcome);
+        out.println(outcome);
         endLine();
     }
 
@@ -56,10 +55,9 @@ public class Ui { // deals with interactions with the user
         System.out.print(message);
     }
 
-    public void showExceedTask() {
-        System.out.println(SEGMENT_LINE);
-        System.out.printf(ErrorMessages.OVER_TASK_COUNT_MESSAGE.MESSAGE, Task.getTotalTasks()
-                + NEW_LINE);
-        endLine();
+    public static String craftExceedMessage(int taskCount) {
+        String output = String.join(Ui.NEW_LINE, SEGMENT_LINE, ErrorMessages.OVER_TASK_COUNT_MESSAGE.MESSAGE);
+        output = output.replace("%d", Integer.toString(taskCount));
+        return output;
     }
 }

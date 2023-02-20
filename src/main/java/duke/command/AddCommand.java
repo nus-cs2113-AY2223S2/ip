@@ -1,6 +1,5 @@
 package duke.command;
 
-import duke.task.Task;
 import duke.ui.Ui;
 
 public abstract class AddCommand extends Command {
@@ -20,13 +19,18 @@ public abstract class AddCommand extends Command {
             + Ui.NEW_LINE + "  Parameters: task name, start date, end date"
             + Ui.NEW_LINE + "  Example: " + COMMAND_EVENT + " make bread /from today 3pm /to 5pm";
 
-    public static String taskName;
+    public String taskName;
+
+    public AddCommand(String taskName) {
+        this.taskName = taskName;
+    }
 
     public String giveAddMessage() {
         String output = Ui.SEGMENT_LINE;
         output = String.join(Ui.NEW_LINE, output, AddCommand.ADD_MESSAGE);
-        output = output.replace("%s", taskList.getTaskFullDetails(Task.totalTasks));
-        output = output.replace("%d", Integer.toString(Task.totalTasks + 1));
+        int taskCount = taskList.getTaskCount();
+        output = output.replace("%s", taskList.getTaskFullDetails(taskCount - 1));
+        output = output.replace("%d", Integer.toString(taskCount));
         return output;
     }
 }

@@ -57,30 +57,31 @@ public class Storage { // deals with loading tasks from the file and saving task
         return taskList;
     }
 
-    public static void decodeTaskData(String task, ArrayList<Task> taskList) {
+    public void decodeTaskData(String task, ArrayList<Task> taskList) {
         String[] taskInfo = task.split(Symbols.DECODE_DATA_DELIMITER);
         if (taskInfo[0].equals(Symbols.TODO)) {
-            taskList.add(Task.totalTasks, new Todo(taskInfo[2]));
+            taskList.add(new Todo(taskInfo[2]));
         } else if (taskInfo[0].equals(Symbols.DEADLINE)) {
-            taskList.add(Task.totalTasks, new Deadline(taskInfo[2], taskInfo[3]));
+            taskList.add(new Deadline(taskInfo[2], taskInfo[3]));
         } else {
             String[] timeInterval = taskInfo[3].split(Symbols.DATA_EVENT_DATE_DELIMITER);
-            taskList.add(Task.totalTasks, new Event(taskInfo[2], timeInterval[0], timeInterval[1]));
+            taskList.add(new Event(taskInfo[2], timeInterval[0], timeInterval[1]));
         }
         if (taskInfo[1].equals(Symbols.DATA_MARK)) {
-            taskList.get(Task.totalTasks).markAsDone();
+            int taskPosition = taskList.size() - 1;
+            taskList.get(taskPosition).markAsDone();
         }
-        Task.incrementTotalTasks();
     }
 
-    public static void encodeAndWriteTask(TaskList taskList, FileWriter fileData) throws IOException {
-        for (int i = 0; i < Task.totalTasks; i += 1) {
+    public void encodeAndWriteTask(TaskList taskList, FileWriter fileData) throws IOException {
+        int taskCount = taskList.getTaskCount();
+        for (int i = 0; i < taskCount; i += 1) {
             String taskData = taskList.getTaskEncoding(i);
             fileData.write(taskData + Ui.NEW_LINE);
         }
     }
 
-    public static void updateSavedData(TaskList taskList) {
+    public void updateSavedData(TaskList taskList) {
         try {
             FileWriter fileData = new FileWriter(FILE_PATH);
             encodeAndWriteTask(taskList, fileData);

@@ -2,7 +2,7 @@ package duke.ui;
 
 public enum ErrorMessages {
     INVALID_MARK_MESSAGE(" Invalid input! Valid input format: \"mark <number>\"!"),
-    OVER_TASK_COUNT_MESSAGE(" Invalid task number provided, please give a number <= %s"),
+    OVER_TASK_COUNT_MESSAGE(" Invalid task number provided, please give a number <= %d"),
     INVALID_UNMARK_MESSAGE(" Invalid input! Valid input format: \"unmark <number>\"!"),
     INVALID_TODO_MESSAGE(" Invalid input! Valid input format: \"todo <task name>\""),
     MISSING_DEADLINE_KEYWORD_MESSAGE(" Invalid input! Valid input format: \"deadline <task name> /by <date>\""),

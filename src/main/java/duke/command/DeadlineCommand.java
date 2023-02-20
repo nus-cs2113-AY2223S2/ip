@@ -1,12 +1,11 @@
 package duke.command;
 
 import duke.task.Deadline;
-import duke.task.Task;
 
 public class DeadlineCommand extends AddCommand {
-    public static String deadline;
+    public String deadline;
     public DeadlineCommand(String taskName, String deadline) {
-        this.taskName = taskName;
+        super(taskName);
         this.deadline = deadline;
     }
 
@@ -14,7 +13,6 @@ public class DeadlineCommand extends AddCommand {
     public CommandResult execute() {
         taskList.addTask(new Deadline(taskName, deadline));
         String output = giveAddMessage();
-        Task.incrementTotalTasks();
         return new CommandResult(output);
     }
 }

@@ -13,10 +13,9 @@ import duke.command.DeadlineCommand;
 import duke.command.EventCommand;
 import duke.error.DukeException;
 import duke.error.ErrorTypes;
-import duke.ui.Ui;
 
 public class Parser { // deals with making sense of the user command
-    public Command parseCommand(String input, Ui ui) {
+    public Command parseCommand(String input) {
         String[] arrayOfInput = input.split(" ");
         arrayOfInput[0] = arrayOfInput[0].trim();
         switch (arrayOfInput[0]) {
@@ -25,11 +24,11 @@ public class Parser { // deals with making sense of the user command
         case (HelpCommand.COMMAND_WORD):
             return new HelpCommand();
         case (MarkCommand.COMMAND_WORD):
-            return prepareMarkUnmarkDelete(arrayOfInput, MarkCommand.COMMAND_WORD, ui);
+            return prepareMarkUnmarkDelete(arrayOfInput, MarkCommand.COMMAND_WORD);
         case (UnmarkCommand.COMMAND_WORD):
-            return prepareMarkUnmarkDelete(arrayOfInput, UnmarkCommand.COMMAND_WORD, ui);
+            return prepareMarkUnmarkDelete(arrayOfInput, UnmarkCommand.COMMAND_WORD);
         case (DeleteCommand.COMMAND_WORD):
-            return prepareMarkUnmarkDelete(arrayOfInput, DeleteCommand.COMMAND_WORD, ui);
+            return prepareMarkUnmarkDelete(arrayOfInput, DeleteCommand.COMMAND_WORD);
         case (AddCommand.COMMAND_TODO):
             return prepareTodoCommand(input);
         case (AddCommand.COMMAND_DEADLINE):
@@ -41,26 +40,23 @@ public class Parser { // deals with making sense of the user command
         }
     }
 
-    private Command prepareMarkUnmarkDelete(String[] input, String command, Ui ui) throws IndexOutOfBoundsException {
+    private Command prepareMarkUnmarkDelete(String[] input, String command) throws IndexOutOfBoundsException {
         try {
             int taskNumber;
             switch (command) {
             case MarkCommand.COMMAND_WORD:
-                taskNumber = Integer.parseInt(Parser.parseMarkUnmarkDelete(input, MarkCommand.COMMAND_WORD)) - 1;
+                taskNumber = Integer.parseInt(parseMarkUnmarkDelete(input, MarkCommand.COMMAND_WORD)) - 1;
                 return new MarkCommand(taskNumber);
             case UnmarkCommand.COMMAND_WORD:
-                taskNumber = Integer.parseInt(Parser.parseMarkUnmarkDelete(input, UnmarkCommand.COMMAND_WORD)) - 1;
+                taskNumber = Integer.parseInt(parseMarkUnmarkDelete(input, UnmarkCommand.COMMAND_WORD)) - 1;
                 return new UnmarkCommand(taskNumber);
             case DeleteCommand.COMMAND_WORD:
-                taskNumber = Integer.parseInt(Parser.parseMarkUnmarkDelete(input, DeleteCommand.COMMAND_WORD)) - 1;
+                taskNumber = Integer.parseInt(parseMarkUnmarkDelete(input, DeleteCommand.COMMAND_WORD)) - 1;
                 return new DeleteCommand(taskNumber);
             default:
                 return new InvalidCommand(ErrorTypes.INVALID_COMMAND);
             }
-        } catch (DukeException e) {
-            return new InvalidCommand(ErrorTypes.INVALID_COMMAND);
-        } catch (IndexOutOfBoundsException e) {
-            ui.showExceedTask();
+        } catch (Exception e) {
             return new InvalidCommand(ErrorTypes.INVALID_COMMAND);
         }
     }
@@ -102,7 +98,7 @@ public class Parser { // deals with making sense of the user command
         }
     }
 
-    public static String parseMarkUnmarkDelete(String[] userInput, String command) throws DukeException {
+    private String parseMarkUnmarkDelete(String[] userInput, String command) throws DukeException {
         InputValidity.isValid(userInput, command);
         return userInput[1].trim();
     }

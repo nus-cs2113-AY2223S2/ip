@@ -21,7 +21,8 @@ public class Event extends Task {
         return taskDetail;
     }
 
-    public String getSavedData() {
+    @Override
+    public String getEncodedData() {
         String taskStatus;
         if (getStatusIcon().equals(Symbols.PROGRAM_MARK)) {
             taskStatus = Symbols.DATA_MARK;

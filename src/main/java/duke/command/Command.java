@@ -5,6 +5,7 @@ import duke.task.TaskList;
 
 public abstract class Command {
     protected TaskList taskList;
+
     public void setData(TaskList taskList) {
         this.taskList = taskList;
     }

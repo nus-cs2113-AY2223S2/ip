@@ -9,7 +9,7 @@ public class UnmarkCommand extends Command {
             + Ui.NEW_LINE + "  Parameters: task number"
             + Ui.NEW_LINE + "  Example: " + COMMAND_WORD + " 1";
 
-    public static int taskNumber;
+    public int taskNumber;
 
     public UnmarkCommand(int taskNumber) {
         this.taskNumber = taskNumber;
@@ -17,10 +17,15 @@ public class UnmarkCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        taskList.markTaskNotDone(taskNumber);
         String output = Ui.SEGMENT_LINE;
-        output = String.join(Ui.NEW_LINE, output, MESSAGE,
-                ("   " + taskList.getTaskFullDetails(taskNumber)));
-        return new CommandResult(output);
+        try {
+            taskList.markTaskNotDone(taskNumber);
+            output = String.join(Ui.NEW_LINE, output, MESSAGE,
+                    ("   " + taskList.getTaskFullDetails(taskNumber)));
+            return new CommandResult(output);
+        } catch (IndexOutOfBoundsException e) {
+            output = Ui.craftExceedMessage(taskList.getTaskCount());
+            return new CommandResult(output);
+        }
     }
 }

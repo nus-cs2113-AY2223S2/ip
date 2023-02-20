@@ -11,8 +11,8 @@ import duke.ui.Ui;
 import java.io.File;
 
 public class Duke {
-    private Ui ui;
-    private Storage storage;
+    private final Ui ui;
+    private final Storage storage;
     private TaskList taskList;
 
     public Duke(String filePath) {
@@ -32,14 +32,14 @@ public class Duke {
     public void run() {
         ui.greetingMessage();
         runCommand();
-        ExitCommand.exit(this.taskList, this.ui);
+        ExitCommand.exit(this.taskList, this.ui, this.storage);
     }
 
     public void runCommand() {
         Command command;
         String input = ui.getUserCommand();
         while (!input.equals(ExitCommand.COMMAND_WORD)) {
-            command = new Parser().parseCommand(input, this.ui);
+            command = new Parser().parseCommand(input);
             try {
                 CommandResult outcome = executeCommand(command);
                 ui.showToUser(outcome.output);
@@ -51,13 +51,8 @@ public class Duke {
     }
 
     private CommandResult executeCommand(Command command) {
-        try {
-            command.setData(taskList);
-            return command.execute();
-        } catch (IndexOutOfBoundsException e) {
-            ui.showExceedTask();
-        }
-        return null;
+        command.setData(taskList);
+        return command.execute();
     }
 
     public static void main(String[] args) {

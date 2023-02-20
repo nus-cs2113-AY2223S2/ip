@@ -9,6 +9,10 @@ public class TaskList { // contains the task list e.g., it has operations to add
         this.taskList = taskList;
     }
 
+    public int getTaskCount() {
+        return taskList.size();
+    }
+
     public void addTask(Task toAdd) {
         taskList.add(toAdd);
     }
@@ -29,11 +33,7 @@ public class TaskList { // contains the task list e.g., it has operations to add
         taskList.get(taskNumber).markAsNotDone();
     }
 
-    public boolean getIsDone (int taskNumber) {
-        return taskList.get(taskNumber).isDone;
-    }
-
     public String getTaskEncoding(int taskNumber) {
-        return taskList.get(taskNumber).getSavedData();
+        return taskList.get(taskNumber).getEncodedData();
     }
 }

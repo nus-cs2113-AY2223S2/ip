@@ -10,8 +10,8 @@ public class ExitCommand {
     public static final String MESSAGE_USAGE = " " + COMMAND_WORD + ": exits the program. "
             + Ui.NEW_LINE + "  Example: " + COMMAND_WORD;
 
-    public static void exit(TaskList taskList, Ui ui) {
-        Storage.updateSavedData(taskList); // save data to file
+    public static void exit(TaskList taskList, Ui ui, Storage storage) {
+        storage.updateSavedData(taskList); // save data to file
         ui.byeMessage();
     }
 }

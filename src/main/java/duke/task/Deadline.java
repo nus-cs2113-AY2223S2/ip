@@ -18,7 +18,8 @@ public class Deadline extends Task {
         return taskDetail;
     }
 
-    public String getSavedData() {
+    @Override
+    public String getEncodedData() {
         String taskStatus;
         if (getStatusIcon().equals(Symbols.PROGRAM_MARK)) {
             taskStatus = Symbols.DATA_MARK;
@@ -26,7 +27,6 @@ public class Deadline extends Task {
             taskStatus = Symbols.DATA_UNMARK;
         }
         return String.join(Symbols.ENCODE_DATA_DELIMITER, Symbols.DEADLINE, taskStatus, taskName, deadline);
-        // returns full details of task
     }
 
 }
