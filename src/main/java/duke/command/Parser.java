@@ -7,7 +7,18 @@ import duke.ui.Errors;
 import java.util.HashMap;
 import java.util.StringJoiner;
 
+/**
+ * Class containing a method for parsing the commands.
+ */
 public abstract class Parser {
+    /**
+     * Splits the initial command string into its arguments.
+     *
+     * @param command The initial command string.
+     * @param flags The flags of the arguments that the command string are expected to contain.
+     * @return Map of flags to arguments extracted from the command string.
+     * @throws DukeException If the command string contains multiple of the same flag.
+     */
     public static HashMap<String, String> parseArguments(String command, String[] flags) throws DukeException {
         HashMap<String, String> args = new HashMap<>();
         StringJoiner currentArg = new StringJoiner(" ");
@@ -39,6 +50,13 @@ public abstract class Parser {
         return args;
     }
 
+    /**
+     * Parses the given command string into a command that can be executed.
+     *
+     * @param string The unparsed command string.
+     * @param taskList The task list that the parsed command will be executed on.
+     * @return A command that can be executed by calling the run() method.
+     */
     public static Command parseCommand(String string, TaskList taskList) {
         String[] command = string.trim().replaceAll("\\s+", " ").split(" ", 2);
 

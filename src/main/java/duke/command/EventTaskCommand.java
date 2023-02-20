@@ -8,33 +8,47 @@ import duke.ui.Ui;
 
 import java.util.HashMap;
 
+/**
+ * Command for adding an event task to the task list.
+ */
 public class EventTaskCommand extends Command {
     private String description;
     private String from;
     private String to;
 
-    public EventTaskCommand(String[] command) throws DukeException {
-        if (command.length < 2) {
+    /**
+     * Constructs a command that will add an event task to the task list.
+     *
+     * @param args Array that should contain the task description and start and end times at index 1.
+     * @throws DukeException If no description, start time, or end time is provided for the event task.
+     */
+    public EventTaskCommand(String[] args) throws DukeException {
+        if (args.length < 2) {
             throw new DukeException(Errors.MISSING_DESCRIPTION.MESSAGE);
         }
 
-        HashMap<String, String> args = Parser.parseArguments(command[1],
-                new String[]{command[0], Event.DELIMITER_FROM, Event.DELIMITER_TO});
-        if (args.get(command[0]).isEmpty()) {
+        HashMap<String, String> parsedArgs = Parser.parseArguments(args[1],
+                new String[]{args[0], Event.DELIMITER_FROM, Event.DELIMITER_TO});
+        if (parsedArgs.get(args[0]).isEmpty()) {
             throw new DukeException(Errors.MISSING_DESCRIPTION.MESSAGE);
         }
-        if (!args.containsKey(Event.DELIMITER_FROM)
-                || !args.containsKey(Event.DELIMITER_TO)
-                || args.get(Event.DELIMITER_FROM).isEmpty()
-                || args.get(Event.DELIMITER_TO).isEmpty()) {
+        if (!parsedArgs.containsKey(Event.DELIMITER_FROM)
+                || !parsedArgs.containsKey(Event.DELIMITER_TO)
+                || parsedArgs.get(Event.DELIMITER_FROM).isEmpty()
+                || parsedArgs.get(Event.DELIMITER_TO).isEmpty()) {
             throw new DukeException(Errors.MISSING_TIME.MESSAGE);
         }
 
-        description = args.get(command[0]);
-        from = args.get(Event.DELIMITER_FROM);
-        to = args.get(Event.DELIMITER_TO);
+        description = parsedArgs.get(args[0]);
+        from = parsedArgs.get(Event.DELIMITER_FROM);
+        to = parsedArgs.get(Event.DELIMITER_TO);
     }
 
+    /**
+     * Adds an event task with the description and deadline provided in the constructor to the task list.
+     *
+     * @param taskList The task list that the command is executed on.
+     */
     @Override
     public void run(TaskList taskList) {
         String taskString = taskList.addTask(new Event(description, from, to));
