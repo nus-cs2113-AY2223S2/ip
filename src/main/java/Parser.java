@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Parser {
     Ui ui;
@@ -146,6 +147,21 @@ public class Parser {
         return;
     }
 
+    private static void doFind(TaskList tasks, String[] wordList) throws DukeException {
+        if (wordList.length != 2) {
+            throw new DukeException("☹ OOPS!!! Wrong number of arguments for find");
+        }
+        String keyword = wordList[1];
+        ArrayList<Task> filteredList = tasks.filterByKeyword(keyword);
+
+        if (filteredList.size() > 0) {
+            System.out.println("Here are the matching tasks in your list:");
+
+            for (int i = 0; i < filteredList.size(); i += 1) {
+                System.out.println( i + 1 + ": " + filteredList.get(i));
+            }
+        }
+    }
     public static void processInput(String line, TaskList tasks, String[] wordList, String command) throws
             DukeException, IOException {
         switch (command) {
@@ -175,6 +191,9 @@ public class Parser {
         case "delete":
             doDelete(tasks, wordList);
             Storage.save(tasks);
+            break;
+        case "find":
+            doFind(tasks, wordList);
             break;
         default:
             throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
