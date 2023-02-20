@@ -59,17 +59,17 @@ public class Storage {
 
     private void initialise() throws IOException {
         File savedData = new File(FILE_PATH);
-        if (savedData.exists()) {
-            Scanner contents = new Scanner(savedData);
-            while (contents.hasNext()) {
-                databaseString.add(contents.nextLine());
-            }
-            dataConversion();
-        } else {
+        if (!savedData.exists()) {
             File directory = new File(DIRECTORY_NAME);
             directory.mkdirs();
             savedData.createNewFile();
+            return;
         }
+        Scanner contents = new Scanner(savedData);
+        while (contents.hasNext()) {
+            databaseString.add(contents.nextLine());
+        }
+        dataConversion();
     }
 
     private void dataConversion() {
@@ -93,18 +93,19 @@ public class Storage {
                 isCorrupted = true;
                 break;
             }
-            updateMarkings(SplitTaskConstituents, task, !isCorrupted);
+            updateMarkings(SplitTaskConstituents, task, isCorrupted);
         }
     }
 
-    private void updateMarkings(String[] information, Task task, boolean isNotCorrupted) {
-        if (isNotCorrupted) {
-            if (information[TASK_MARK_INDEX].equals("true")) {
-                task.setDone("mark");
-            } else if (information[TASK_MARK_INDEX].equals("false")) {
-                task.setDone("unmark");
-            }
-            tasks.add(task);
+    private void updateMarkings(String[] information, Task task, boolean isCorrupted) {
+        if (isCorrupted) {
+            return;
         }
+        if (information[TASK_MARK_INDEX].equals("true")) {
+            task.setDone("mark");
+        } else if (information[TASK_MARK_INDEX].equals("false")) {
+            task.setDone("unmark");
+        }
+        tasks.add(task);
     }
 }
