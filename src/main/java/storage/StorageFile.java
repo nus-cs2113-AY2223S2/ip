@@ -10,6 +10,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.Scanner;
 
+import static ui.UI.NAKIRI_AYAME;
+
 public class StorageFile {
     //Data_Path
     public static final String DATA_PATH = "data.txt";
@@ -23,7 +25,7 @@ public class StorageFile {
     public static final String ACTION_NEW_DEADLINE = "deadline";
     public static final String ACTION_NEW_EVENT = "event";
     public static final String ERROR_WITH_DATA_FILE = "An error occurred with the data file...\n";
-    public static final String ERROR_LOADING_FILE = "Why did you edit the data file?";
+    public static final String ERROR_LOADING_FILE = "Why did you edit the data file, Ningen?";
 
     public static File initialiseData(TaskList taskList) {
         File data = new File(DATA_PATH);
@@ -39,8 +41,8 @@ public class StorageFile {
                     switch (inputMessage[0]) {
                     case ACTION_MARK_COMPLETE:
                         int taskIndex = parser.Parser.checkActionInputValidity(inputMessage, taskList.getSize());
-                        Task currentTodo = taskList.getTask(taskIndex);
-                        currentTodo.setComplete();
+                        Task currentTask = taskList.getTask(taskIndex);
+                        currentTask.setComplete();
                         break;
                     case ACTION_NEW_TODO:
                         String task = parser.Parser.processToDoMessage(inputMessage);
@@ -61,8 +63,8 @@ public class StorageFile {
                         fileIsBroken = true;
                     }
                     if (fileIsBroken) {
-                        System.out.println(ERROR_LOADING_FILE);
-                        //TODO: introduce clear feature to wipe everything, to force-use here + use as feature.
+                        System.out.println(NAKIRI_AYAME + ERROR_LOADING_FILE);
+                        java.lang.System.exit(0);
                     }
                 }
                 System.out.println(WELCOME_BACK_MESSAGE);
@@ -75,26 +77,25 @@ public class StorageFile {
     }
 
     public static void updateData(TaskList taskList) {
-        Task currentTodo;
         try {
             FileWriter writer = new FileWriter(DATA_PATH);
-            int sizeOfTodoList = taskList.getSize();
-            for (int i = 0; i < sizeOfTodoList; i += 1) {
-                currentTodo = taskList.getTask(i);
-                String type = currentTodo.getType();
-                String task = currentTodo.getTask();
+            int sizeOfTaskList = taskList.getSize();
+            for (int i = 0; i < sizeOfTaskList; i += 1) {
+                Task currentTask = taskList.getTask(i);
+                String type = currentTask.getType();
+                String task = currentTask.getTask();
                 String instruction;
                 switch (type) {
                 case ACTION_NEW_TODO:
                     instruction = String.format("%s %s\n", type, task);
                     break;
                 case ACTION_NEW_DEADLINE:
-                    Deadline deadline = (Deadline) currentTodo;
+                    Deadline deadline = (Deadline) currentTask;
                     String by = deadline.getDetails();
                     instruction = String.format("%s %s /by %s\n", type, task, by);
                     break;
                 case ACTION_NEW_EVENT:
-                    Event event = (Event) currentTodo;
+                    Event event = (Event) currentTask;
                     String[] details = event.getDetails();
                     instruction = String.format("%s %s /from %s /to %s\n", type, task, details[0], details[1]);
                     break;
@@ -102,7 +103,7 @@ public class StorageFile {
                     instruction = "Something is wrong I can feel it\n";
                 }
                 writer.write(instruction);
-                if (currentTodo.getComplete() == 'X') {
+                if (currentTask.getComplete() == 'X') {
                     instruction = String.format("mark %d\n", i + 1);
                     writer.write(instruction);
                 }

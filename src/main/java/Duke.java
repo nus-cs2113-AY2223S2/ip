@@ -16,6 +16,7 @@ import java.io.File;
 public class Duke {
     //Instructions Strings
     public static final String ACTION_LIST = "list";
+    public static final String ACTION_FIND = "find";
     public static final String ACTION_DELETE = "delete";
     public static final String ACTION_MARK_COMPLETE = "mark";
     public static final String ACTION_MARK_INCOMPLETE = "unmark";
@@ -46,6 +47,14 @@ public class Duke {
                 if (taskIndex >= 0) {
                     taskList.deleteATask(taskIndex);
                     StorageFile.updateData(taskList);
+                    madeAValidInstruction = true;
+                }
+                inputMessage = Parser.processInputMessage(in);
+                break;
+            case ACTION_FIND:
+                String query = Parser.processQuery(inputMessage);
+                if (!query.equals("")) {
+                    taskList.searchByKeyword(query);
                     madeAValidInstruction = true;
                 }
                 inputMessage = Parser.processInputMessage(in);
