@@ -3,6 +3,7 @@ package UI;
 import task.Task;
 import task.TaskList;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Ui {
@@ -17,6 +18,7 @@ public class Ui {
     public static final String FILE_UPDATING_ERROR = "File update failed!";
     public static final String FILE_LOADING_ERROR = "File loading failed!";
     public static final String FILEWRITER_CREATION_ERROR = "Filewriter object creation failed!";
+    public static final String FIND_ITEM_EMPTY = "please include keyword to find!";
 
     public static void showError(String constant) {
         System.out.println(LINE);
@@ -89,7 +91,22 @@ public class Ui {
             System.out.println(LINE);
             System.out.println("Here are the tasks in your list:");
             for (int i = 0; i < TaskList.list.size(); i += 1) {
-                System.out.println(Integer.toString(i+1) + "." + TaskList.list.get(i));
+                System.out.println(i+1 + "." + TaskList.list.get(i));
+            }
+            System.out.println(LINE);
+        }
+    }
+
+    public static void printList(ArrayList<Task> list) {
+        if(list.size() == 0) {
+            System.out.println(LINE);
+            System.out.println("No item match!");
+            System.out.println(LINE);
+        } else {
+            System.out.println(LINE);
+            System.out.println("Here are the matching tasks in your list:");
+            for (int i = 0; i < list.size(); i += 1) {
+                System.out.println(i+1 + "." + list.get(i));
             }
             System.out.println(LINE);
         }
