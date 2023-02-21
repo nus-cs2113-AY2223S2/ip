@@ -73,6 +73,14 @@ public class TaskList {
         return tasks.toArray(new Task[0]);
     }
 
+    /**
+     * Filter the task list to only return tasks with the
+     * specified keyword
+     *
+     * @param keyword the keyword which the filter is based on
+     * @return a list of tasks that all contains the keyword specified
+     */
+
     public ArrayList<Task> filterByKeyword(String keyword) {
         ArrayList<Task> filteredTasks = new ArrayList<>();
 

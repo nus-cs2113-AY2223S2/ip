@@ -19,14 +19,6 @@ public class Task {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public boolean isDone() {
-        return isDone;
-    }
-
     /**
      * Sets the status of the task as done or not done
      * based on the variable passes in
@@ -36,10 +28,6 @@ public class Task {
 
     public void setDone(boolean done) {
         isDone = done;
-    }
-
-    public String getStatusIcon() {
-        return (isDone ? "X" : " "); // mark done task with X
     }
 
     /**

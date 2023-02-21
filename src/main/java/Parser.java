@@ -239,6 +239,15 @@ public class Parser {
             System.out.println(exception);
         }
     }
+
+    /**
+     * Filter the task list to print out tasks corresponding to
+     * a keyword input by the user.
+     *
+     * @param tasks the list storing the users tasks
+     * @param wordList the line of user input stored as an array of strings
+     * @throws DukeException thrown when number of arguments is wrong
+     */
     private static void doFind(TaskList tasks, String[] wordList) throws DukeException {
         if (wordList.length != 2) {
             throw new DukeException("☹ OOPS!!! Wrong number of arguments for find");
