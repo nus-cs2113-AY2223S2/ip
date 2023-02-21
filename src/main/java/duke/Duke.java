@@ -18,6 +18,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * The main driver code
+ */
 public class Duke {
     static final int USER_INPUT_EXPECTED_SIZE = 2;
     static final String FILE_PATH = "./duke.txt";
@@ -61,7 +64,7 @@ public class Duke {
 
             switch (keyword) {
                 case "list":
-                    printTaskList(taskList);
+                    printFullTaskList(taskList);
                     break;
 
                 case "mark":

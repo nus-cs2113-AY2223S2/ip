@@ -10,6 +10,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Custom File class to read and write to a save file.
+ * The save file will be created and maintained in the root folder of where the Duke JAR file is located.
+ */
 public class File {
     static final String FILE_PATH = "./duke.txt";
 

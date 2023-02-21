@@ -13,13 +13,19 @@ import java.util.ArrayList;
 import static duke.print.Print.*;
 
 /**
- * Collection of Commands to be used in the Duke programme
+ * Collection of Commands to be used in the Duke programme.
  * These include:
- * --> Adding todo, deadline and event task types
- * --> Deleting a task from the list of tasks
- * --> Marking / Unmarking a task as done
+ * --> Adding todo, deadline and event task types.
+ * --> Deleting a task from the list of tasks.
+ * --> Marking / Unmarking a task as done.
+ * --> Finding tasks that contain a keyword from the user.
  */
 public class Commands {
+    /**
+     * Method to find tasks in the task list that contain a particular keyword.
+     * @param taskList The list to find tasks that contain the keyword.
+     * @param keyword  The keyword to search for.
+     */
     public static void findTasks(ArrayList<Task> taskList, String keyword) {
         ArrayList<Task> foundTasks = new ArrayList<>();
         for (Task task : taskList) {
@@ -31,6 +37,11 @@ public class Commands {
         printFoundTasks(foundTasks);
     }
 
+    /**
+     * Method to delete one task from the tasks list.
+     * @param taskList   The list to delete one task from.
+     * @param taskNumber The task to delete
+     */
     public static void deleteOneTask(ArrayList<Task> taskList, String taskNumber) {
         int taskNumberToDelete = Integer.parseInt(taskNumber);
         taskNumberToDelete -= 1;
