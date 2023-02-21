@@ -6,17 +6,15 @@ Thank you for using Duke. Duke is a command-line interface, personal assistant b
 2. [Quick Note about Formatting and Inputs](#quick-notes-about-formatting-and-inputs)
 3. [Features](#features)
    1. [Tasks](#tasks)
-      1. [Deadline](#deadline)
-      2. [Event](#event)
-      3. [Todo](#todo)
+      1. [Todo](#todo)
+      2. [Deadline](#deadline)
+      3. [Event](#event)
    2. [List](#list)
    3. [Marking Tasks](#marking-tasks)
       1. [Mark Tasks](#mark-tasks)
       2. [Unmark Tasks](#unmark-tasks) 
    4. [Delete](#delete)
-   5. [Search](#search)
-      1. [By Time](#by-time)
-      2. [By Description](#by-description)
+   5. [Find](#find)
    6. [Saving Files](#saving-files)
 4. [Command Summary](#command-summary)
 
@@ -32,50 +30,52 @@ Thank you for using Duke. Duke is a command-line interface, personal assistant b
 
 # Quick Notes about Formatting and Inputs
 1. All words in `UPPER_CASE` are parameters, and all words in `this formatting` are instructions that you can copy directly.
-2. There are **no optional parameters**, so each parameter must have an input
-3. All command words, such as `deadline` or `unmark`, are case-insensitive: any combination of capitalized and non-capitalized characters will still call the correct command, as long as it is spelt correctly. However,
+2. There are **no optional parameters**, so each parameter must have an input. Any mistakes will throw an error message to inform you that there has been a mistake, and what the correct format is. 
+3. All command words, such as `deadline` or `unmark`, are case-insensitive: any combination of capitalized and non-capitalized characters will still call the correct command, as long as it is spelt correctly.
+4. `DATE TIME` inputs for deadline and event tasks, ie. using the commands `/by`, `/from` and `/to`, will use the format `YYYY-MM-DD HH:MM`, in 24-hour time.
 
 # Features 
 The following sections will show you the features of Duke and how to use Duke effectively. It is broken up into a few sections to help you find what you need better. These sections are: [tasks](#tasks), [marking tasks](#marking-tasks), [delete](#delete), [search](#search), and [saving files](#saving-files).
 
 ## Tasks
-Duke has 3 classifications of tasks: [deadlines](#deadline), [events](#event) and [todos](#todo). More details on each task can be found in their individual sections.
+Duke has 3 classifications of tasks: [todos](#todo), [deadlines](#deadline) and [events](#event). More details on each task can be found in their individual sections.
 
 Note: For all tasks, the parameters can consist of multiple words, which will be shown in each subsection. 
 
-### Deadline
-Deadlines consist of a description and a date by which the task has to be completed. 
-
-The command usage is `deadline TASK \by DATE`, ie. `deadline return book \by tomorrow 5pm` or `deadline assignment \by sunday`.
-
-If the input method is correct, you will see something like this:
-
-Otherwise, Duke will inform you that you had an error and will show your input:
-
-### Event
-Events consist of a description, and two times, indicating the start and end of the event.
-
-The command usage is `event TASK \from DATE \to DATE`, ie. `event project meeting \from saturday 2pm \to saturday 4pm`.
-
-If the input method is correct, you will see something like this:
-
-Otherwise, Duke will inform you that you had an error and will show your input:
-
 ### Todo
-Todos are the most basic form of tasks, consisting of only a description. 
+Todos are the most basic form of tasks, consisting of only a description.
 
 The command usage is `todo TASK`, ie. `todo written assignment`.
 
 If the input method is correct, you will see something like this:
 
-Otherwise, Duke will inform you that you had an error and will show your input:
+![todoCorrectpng](images/todoCorrect.png)
+
+
+### Deadline
+Deadlines consist of a description and a date by which the task has to be completed. 
+
+The command usage is `deadline TASK /by DATE TIME`, ie. `deadline return book /by 2023-12-23 12:55`.
+
+If the input method is correct, you will see something like this:
+
+![deadlineCorrect.png](images/deadlineCorrect.png)
+
+### Event
+Events consist of a description, and two times, indicating the start and end of the event.
+
+The command usage is `event TASK /from DATE /to DATE`, ie. `event project meeting /from 2023-11-23 12:55 /to 2023-11-23 15:55`.
+
+If the input method is correct, you will see something like this:
+
+![eventCorrect.png](images/eventCorrect.png)
 
 ## List
 If you want to see all the tasks that Duke has helped you store, you can do so with the command `list`. This is a single word command which has no additional parameters.
 
 Your tasks will be printed out by Duke in the same order that you input them, with its index. There are three main sections when your tasks are printed, as shown below:
 
-//image
+![list.png](images/list.png)
 
 The first section shows the type of task, with 'T' for todo, 'D' for deadline, and 'E' for event. The next shows the completion status of the task, with an 'X' to show the task is complete and a blank space, ' ', to show that the tasks is incomplete. The last section is the description of the task. 
 
@@ -89,14 +89,14 @@ After you have completed a task, you can use the command `mark INDEX`, ie. `mark
 
 If the input method is correct, you will see something like this:
 
-Otherwise, Duke will inform you that you had an error and will show your input:
+![mark.png](images/mark.png)
 
 ### Unmark Tasks
 If you wish to unmark a task, you can use the command `unmark INDEX`, ie. `unmark 1`.
 
 If the input method is correct, you will see something like this:
 
-Otherwise, Duke will inform you that you had an error and will show your input:
+![unmark.png](images/unmark.png)
 
 ## Delete
 Currently, there Duke does not have the ability to edit tasks. If you make a mistake, or want to delete a task, you can do so with this feature. 
@@ -105,11 +105,16 @@ The command usage is `delete INDEX`, ie. `delete 1`.
 
 If the input method is correct, you will see something like this:
 
-Otherwise, Duke will inform you that you had an error and will show your input:
+![delete.png](images/delete.png)
 
-## Search
-### By Time
-### By Description
+## Find
+If you wish to find tasks which contain specific words, you can do so with this feature.
+
+The command usage is `find DESCRIPTION`.
+
+If the input method is correct, you will see something like this:
+
+![find.png](images/find.png)
 
 ## Saving Files
 On the first creation of Duke, the file will be created in the same folder as the .jar file. Note that putting the file in a different folder will cause Duke to be unable to read the file.
@@ -121,14 +126,16 @@ If you want to edit the save file, you may do so, but note that improper edits m
 # Command Summary
 This section will give the full list of features that Duke has. If you want to see more details, you can refer to the [Table of Contents](#table-of-contents) to navigate to the section you want.
 
-| Name of Command       | General Format                   | Examples                                                    |
-|-----------------------|----------------------------------|-------------------------------------------------------------|
-| Creating Deadline     | `deadline TASK \by DATE`         | `deadline return book \by Sunday`                           |
-| Creating Event        | `event TASK \from DATE \to DATE` | `event project meeting \from Saturday 2pm \to Saturday 4pm` |
-| Creating Todo         | `todo TASK`                      | `todo written assignment`                                   |
-| List                  | `list`                           | `list`                                                      |
-| Mark Tasks            | `mark INDEX`                     | `mark 1`                                                    |
-| Unmark Tasks          | `unmark INDEX`                   | `unmark 1`                                                  |
-| Delete                | `delete INDEX`                   | `delete 1`                                                  |
-| Search by Time        |                                  |                                                             |
-| Search by Description |                                  |                                                             |
+| Name of Command   | General Format                   | Examples                                                            |
+|-------------------|----------------------------------|---------------------------------------------------------------------|
+| Creating Deadline | `deadline TASK /by DATE`         | `deadline return book /by 2023-12-23 12:55`                         |
+| Creating Event    | `event TASK /from DATE /to DATE` | `event project meeting /from 2023-11-23 12:55 /to 2023-11-23 15:55` |
+| Creating Todo     | `todo TASK`                      | `todo written assignment`                                           |
+| List              | `list`                           | `list`                                                              |
+| Mark Tasks        | `mark INDEX`                     | `mark 1`                                                            |
+| Unmark Tasks      | `unmark INDEX`                   | `unmark 1`                                                          |
+| Delete            | `delete INDEX`                   | `delete 1`                                                          |
+| Find              | `find DESCRIPTION`               | `find book`                                                         |
+
+# Conclusion
+Thank you for your interest in Duke! If you have any issues, please reach out to me via email, natashatan.yt@gmail.com
