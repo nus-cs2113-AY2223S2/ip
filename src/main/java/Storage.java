@@ -52,6 +52,11 @@ public class Storage {
         fw.close();
     }
 
+    /***
+     * Checks if there is an existing folder named data in the user's directory. Folder will be created if
+     * it does not exist.
+     * @param path The supposed path of the folder data.
+     */
     static void checkIfFolderExists(Path path) {
         boolean directoryExists = Files.exists(path);
         if (!directoryExists) {
@@ -63,6 +68,11 @@ public class Storage {
         }
     }
 
+    /***
+     * Checks if there is an existing txt file in the user's directory named duke-inputs.txt, and will create
+     * one if not.
+     * @return The path of the textFile.
+     */
     static Path checkIfFileExists() {
         Path textFile = Paths.get(Duke.HOME, "IdeaProjects", "ip", "src", "main", "data", "duke-inputs.txt");
         try {
@@ -73,6 +83,10 @@ public class Storage {
         return textFile;
     }
 
+    /***
+     * The function aims to create the txt file required to store the data inputs from the user.
+     * @return The data file.
+     */
     static File createFile() {
         Path path = Paths.get(Duke.HOME, "IdeaProjects", "ip", "src", "main", "data");
         checkIfFolderExists(path);
@@ -124,6 +138,14 @@ public class Storage {
         writer.close();
     }
 
+    /***
+     * The function creates a duplicate list which is required to overwrite the data that has to change,
+     * following the mark/unmark command that changes it from "X" to " " or vice versa.
+     * @param prevContent The string to store the data from txt file.
+     * @param reader Java BufferedReader command.
+     * @return The string of prevContent after duplicating.
+     * @throws IOException Throws error if line cannot be read.
+     */
     private static String writingDuplicateArrayList(String prevContent, BufferedReader reader) throws IOException {
         String input = reader.readLine();
         while (input != null) {
@@ -133,6 +155,16 @@ public class Storage {
         return prevContent;
     }
 
+    /***
+     * The function identifies the string that needs to be replaced with and replaces it with the new content,
+     * thus rewriting the part that needs to be updated in the txt file.
+     * @param storedValues The existing list of values stored in the txt file.
+     * @param numToMark The line number that requires the update given the previous command.
+     * @param before The string of either " " or "X" that needs to be updated.
+     * @param after The string of either "X" or " " that should reflect the new update.
+     * @param prevContent The duplicated list.
+     * @return Returns the new content to be written.
+     */
     private static String rewriteContent(ArrayList<Task> storedValues, int numToMark, String before, String after, String prevContent) {
         char type = storedValues.get(numToMark - 1).getClass().toString().substring(6).charAt(0);
         String toReplace = (type + before + storedValues.get(numToMark - 1).description);
