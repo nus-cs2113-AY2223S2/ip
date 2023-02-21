@@ -2,6 +2,7 @@ import exceptions.MarkOutOfBounds;
 import exceptions.UnmarkOutOfBounds;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Parser {
@@ -61,6 +62,11 @@ public class Parser {
         return taskNum;
     }
 
+    static void processFind(ArrayList<Task> storedValues, String line) {
+        String wordToFind = line.substring(Duke.REMOVE_FIND_NUM);
+        TaskList.findTasks(storedValues, wordToFind);
+    }
+
     /***
      * Detects the user input and matches the command with the desired output.
      * @param line User input to be processed.
@@ -75,7 +81,8 @@ public class Parser {
         case "bye":
             return true;
         case "list":
-            TaskList.printList(storedValues);
+            String textToPrint = "Here are the tasks in your list:";
+            TaskList.printList(storedValues, textToPrint);
             break;
         case "mark":
             try {
@@ -126,6 +133,9 @@ public class Parser {
             } catch (IOException e) {
                 System.out.println("Error!");
             }
+            break;
+        case "find":
+            processFind(storedValues, line);
             break;
         default:
             // Commands that are not listed above

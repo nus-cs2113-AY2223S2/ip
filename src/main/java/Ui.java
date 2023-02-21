@@ -106,4 +106,14 @@ public class Ui {
         }
         Duke.taskNum += 1;
     }
+
+    public static void printWordToFind(ArrayList<Task> keywordList, String wordToFind) {
+        if (keywordList.size() == 0) {
+            // Means that there are no common matches
+            System.out.println("Sorry, the keyword " + wordToFind + " did not appear in your list of tasks.");
+        } else {
+            String textToPrint = "Here are the matches in your list!";
+            TaskList.printList(keywordList,textToPrint);
+        }
+    }
 }
