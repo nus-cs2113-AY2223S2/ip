@@ -3,17 +3,19 @@ package inu.commands;
 import inu.task.Event;
 import inu.task.TaskList;
 
+import java.time.LocalDateTime;
+
 public class EventCommand extends Command {
 
     public static final String COMMAND_WORD = "event";
 
     private final String eventDescription;
 
-    private final String eventFrom;
+    private final LocalDateTime eventFrom;
 
-    private final String eventTo;
+    private final LocalDateTime eventTo;
 
-    public EventCommand(String eventDescription, String eventFrom, String eventTo) {
+    public EventCommand(String eventDescription, LocalDateTime eventFrom, LocalDateTime eventTo) {
         this.eventDescription = eventDescription;
         this.eventFrom = eventFrom;
         this.eventTo = eventTo;

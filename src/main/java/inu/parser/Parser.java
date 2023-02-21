@@ -14,12 +14,15 @@ import inu.commons.Messages;
 import inu.exceptionhandling.EmptyTaskListException;
 import inu.exceptionhandling.EmptyUserInputException;
 import inu.exceptionhandling.ExceptionManager;
+import inu.exceptionhandling.InvalidDateFormat;
 import inu.task.DeadLine;
 import inu.task.Event;
 import inu.task.Task;
 import inu.task.Todo;
 import inu.task.TaskList;
 import inu.commons.Util;
+
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 
@@ -137,28 +140,35 @@ public class Parser {
 
     public static Command runDeadLine(String entry) {
         try {
-            String task = Util.fetchTask(entry);
+            String task = Util.fetchTask(entry, Util.DELIMITER_DEADLINE_BY);
             String by = Util.fetchBy(entry);
             ExceptionManager.checkEmptyUserInput(task, by);
-            return new DeadlineCommand(task, by);
+            LocalDateTime byDate = Util.parseDate(by);
+            return new DeadlineCommand(task, byDate);
         } catch (StringIndexOutOfBoundsException e) {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_DEADLINE);
         } catch (EmptyUserInputException e) {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_BY_DATE_ENTRY_AFTER_SLASH);
+        } catch (InvalidDateFormat e) {
+            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_DATE);
         }
     }
 
     public static Command runEvent(String entry) {
         try {
-            String task = Util.fetchTask(entry);
+            String task = Util.fetchTask(entry, Util.DELIMITER_EVENT_FROM);
             String from = Util.fetchFrom(entry);
             String to = Util.fetchTo(entry);
             ExceptionManager.checkEmptyUserInput(task, from, to);
-            return new EventCommand(task, from, to);
+            LocalDateTime fromDate = Util.parseDate(from);
+            LocalDateTime toDate = Util.parseDate(to);
+            return new EventCommand(task, fromDate, toDate);
         } catch (StringIndexOutOfBoundsException e) {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_EVENT);
         } catch (EmptyUserInputException e) {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_FROM_AND_TO_ENTRY_AFTER_SLASH);
+        } catch (InvalidDateFormat e) {
+        return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_DATE);
         }
     }
 
@@ -223,8 +233,9 @@ public class Parser {
             }
             return todo;
         case DECODE_DEADLINE:
-            String dueDate = fileStrings[DECODED_DUE_DATE];
-            DeadLine deadLine = new DeadLine(task, dueDate);
+            String byDate = fileStrings[DECODED_DUE_DATE];
+            LocalDateTime by = LocalDateTime.parse(byDate);
+            DeadLine deadLine = new DeadLine(task, by);
             if (markStatus.equals(DECODE_MARKED)) {
                 deadLine.setDone();
             }
@@ -232,7 +243,9 @@ public class Parser {
         case DECODE_EVENT:
             String fromDate = fileStrings[DECODED_FROM_DATE];
             String toDate = fileStrings[DECODED_TO_DATE];
-            Event event = new Event(task, fromDate, toDate);
+            LocalDateTime from = LocalDateTime.parse(fromDate);
+            LocalDateTime to = LocalDateTime.parse(toDate);
+            Event event = new Event(task, from, to);
             if (markStatus.equals(DECODE_MARKED)) {
                 event.setDone();
             }

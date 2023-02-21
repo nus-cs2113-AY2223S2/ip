@@ -1,10 +1,9 @@
 package inu.commands;
 
-import inu.commons.Messages;
-import inu.exceptionhandling.EmptyUserInputException;
-import inu.exceptionhandling.ExceptionManager;
 import inu.task.DeadLine;
 import inu.task.TaskList;
+
+import java.time.LocalDateTime;
 
 public class DeadlineCommand extends Command {
 
@@ -12,9 +11,9 @@ public class DeadlineCommand extends Command {
 
     private final String deadlineDescription;
 
-    private final String deadlineBy;
+    private final LocalDateTime deadlineBy;
 
-    public DeadlineCommand(String deadlineDescription, String deadlineBy) {
+    public DeadlineCommand(String deadlineDescription, LocalDateTime deadlineBy) {
         this.deadlineDescription = deadlineDescription;
         this.deadlineBy = deadlineBy;
     }
