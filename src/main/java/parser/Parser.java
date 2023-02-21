@@ -38,7 +38,8 @@ public class Parser {
     public static int checkActionInputValidity(String[] input, int indexLimit) {
         try {
             if (input.length == 1) {
-                throw new NullPointerException();
+                System.out.println(ERROR_NO_INDEX_PROVIDED);
+                return -1;
             }
             int taskIndex = Integer.parseInt(input[1]);
             if (taskIndex > indexLimit || taskIndex < 1) {
@@ -50,9 +51,6 @@ public class Parser {
             return -1;
         } catch (IndexOutOfBoundsException outOfBoundsIndex) {
             System.out.println(ERROR_NON_EXISTENT_TASK);
-            return -1;
-        } catch (NullPointerException noIndex) {
-            System.out.println(ERROR_NO_INDEX_PROVIDED);
             return -1;
         }
     }
