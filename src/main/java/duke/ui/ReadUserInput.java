@@ -2,7 +2,7 @@ package duke.ui;
 
 import java.util.Scanner;
 
-public class ParseCommand {
+public class ReadUserInput {
     public static String[] readInput() {
         Scanner input = new Scanner(System.in);
         String[] userCommand = new String[2];

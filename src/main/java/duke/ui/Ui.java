@@ -109,5 +109,17 @@ public class Ui {
         tasks.saveList(storage);
     }
 
+    public void findQueryTasks(TaskList tasks, String query) {
+        ArrayList<Task> readableList = tasks.getReadableList();
+        int matches = 0;
+        for (Task task : readableList) {
+            if (task.getDescription().contains(query)) {
+                matches += 1;
+                System.out.println(matches + ". " + task.getTaskStatus());
+            }
+        }
+        System.out.println("You have " + matches + " to your query of: " + query);
+    }
+
 
 }

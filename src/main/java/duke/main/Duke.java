@@ -4,7 +4,7 @@ import duke.command.UserCommandManager;
 import duke.data.TaskList;
 import duke.exceptions.DukeException;
 import duke.filemanager.Storage;
-import duke.ui.ParseCommand;
+import duke.ui.ReadUserInput;
 import duke.ui.Ui;
 
 
@@ -35,7 +35,7 @@ public class Duke {
         UserCommandManager commandManager = new UserCommandManager();
         while (true) {
             try {
-                String[] userCommand = ParseCommand.readInput();
+                String[] userCommand = ReadUserInput.readInput();
                 commandManager.handleCommands(userCommand, storage, tasks, ui);
                 ui.showLine();
             } catch (DukeException e) {
