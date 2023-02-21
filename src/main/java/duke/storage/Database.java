@@ -1,9 +1,6 @@
-package duke;
+package duke.storage;
 
-import duke.tasks.Task;
-import duke.tasks.Deadline;
-import duke.tasks.Todo;
-import duke.tasks.Event;
+import duke.tasks.*;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -20,7 +17,7 @@ public class Database {
     private final static String DUKE_TXT_FILE_NAME = "duke.txt";
 
     public Database() {
-        this.taskList = new ArrayList<>();
+        taskList = new ArrayList<>();
         this.databaseDirectory= "./data/";
         this.filePath = this.databaseDirectory + DUKE_TXT_FILE_NAME;
         File directory = new File(this.databaseDirectory);
