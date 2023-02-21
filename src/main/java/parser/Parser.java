@@ -8,7 +8,7 @@ import validator.error.InvalidTaskError;
 import java.util.HashMap;
 import java.util.regex.PatternSyntaxException;
 
-public class IoParser {
+public class Parser {
 
     protected final String COMMAND = "command";
     protected final String DESCRIPTION = "description";

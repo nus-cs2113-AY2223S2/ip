@@ -1,7 +1,7 @@
 import constants.Command;
 import constants.ErrorMessage;
 import controller.TaskController;
-import parser.IoParser;
+import parser.Parser;
 import ui.Ui;
 import validator.error.InvalidTaskError;
 
@@ -10,7 +10,7 @@ import java.util.HashMap;
 public class Duke {
 
   private static final TaskController controller = new TaskController();
-  private static final IoParser parser = new IoParser();
+  private static final Parser parser = new Parser();
   private static final Ui ui = new Ui();
   private static boolean isRunning = true;
 
