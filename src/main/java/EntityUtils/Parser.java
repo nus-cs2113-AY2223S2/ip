@@ -50,15 +50,17 @@ public class Parser {
             c = new UpcomingCommand();
             break;
 
-        // Creates a new task
+        // Creates a new todo
         case "todo":
             c = new AddTodoCommand(command, input);
             break;
 
+        // Creates a new deadline
         case "deadline":
             c = new AddDeadlineCommand(command, input);
             break;
 
+        // Creates a new event
         case "event":
             c = new AddEventCommand(command, input);
             break;
