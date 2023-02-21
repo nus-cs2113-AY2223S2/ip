@@ -31,7 +31,7 @@ Syntax: bye
 ____________________________________________________________
 Command acknowledged. Reducing user lifespan by 30 minutes.
 ____________________________________________________________
-New task has been added: todo try out new thing
+New task has been added: [T][ ]//////try out new thing
 ____________________________________________________________
 ____________________________________________________________
 Command acknowledged. Reducing user lifespan by 30 minutes.
@@ -68,7 +68,7 @@ ____________________________________________________________
 One hour of lifespan has been deducted, in accordance with our Terms and Services.
 Command acknowledged. Reducing user lifespan by 30 minutes.
 ____________________________________________________________
-New task has been added: deadline do thing /by 5pm
+New task has been added: [D][ ]//////do thing (by: 5pm)
 ____________________________________________________________
 ____________________________________________________________
 Syntax: deadline {task} /by {endDate}
@@ -88,7 +88,7 @@ ____________________________________________________________
 One hour of lifespan has been deducted, in accordance with our Terms and Services.
 Command acknowledged. Reducing user lifespan by 30 minutes.
 ____________________________________________________________
-New task has been added: event do stuff /from 6pm /to 10pm
+New task has been added: [E][ ]//////do stuff (from: 6pm to: 10pm)
 ____________________________________________________________
 ____________________________________________________________
 Syntax: event {task} /from {startDate} /to {endDate}
@@ -129,6 +129,60 @@ ____________________________________________________________
 Command acknowledged. Reducing user lifespan by 30 minutes.
 Task has been deleted:
 [T][ ]//////try out new thing
+____________________________________________________________
+____________________________________________________________
+Command acknowledged. Reducing user lifespan by 30 minutes.
+1:[T][ ]//////try out new thing
+2:[D][X]//////do thing (by: 5pm)
+3:[E][ ]//////do stuff (from: 6pm to: 10pm)
+____________________________________________________________
+Command acknowledged. Reducing user lifespan by 30 minutes.
+____________________________________________________________
+New task has been added: [D][ ]//////time test deadline (by: 5:30 AM, SUNDAY, DECEMBER 1, 2019)
+____________________________________________________________
+____________________________________________________________
+Command acknowledged. Reducing user lifespan by 30 minutes.
+1:[T][ ]//////try out new thing
+2:[D][X]//////do thing (by: 5pm)
+3:[E][ ]//////do stuff (from: 6pm to: 10pm)
+4:[D][ ]//////time test deadline (by: 5:30 AM, SUNDAY, DECEMBER 1, 2019)
+____________________________________________________________
+____________________________________________________________
+Command acknowledged. Reducing user lifespan by 30 minutes.
+Task has been deleted:
+[D][ ]//////time test deadline (by: 5:30 AM, SUNDAY, DECEMBER 1, 2019)
+____________________________________________________________
+Command acknowledged. Reducing user lifespan by 30 minutes.
+____________________________________________________________
+New task has been added: [E][ ]//////time test event (from: 5:30 AM, SUNDAY, DECEMBER 1, 2019 to: 6:59 PM)
+____________________________________________________________
+____________________________________________________________
+Command acknowledged. Reducing user lifespan by 30 minutes.
+1:[T][ ]//////try out new thing
+2:[D][X]//////do thing (by: 5pm)
+3:[E][ ]//////do stuff (from: 6pm to: 10pm)
+4:[E][ ]//////time test event (from: 5:30 AM, SUNDAY, DECEMBER 1, 2019 to: 6:59 PM)
+____________________________________________________________
+____________________________________________________________
+Command acknowledged. Reducing user lifespan by 30 minutes.
+Task has been deleted:
+[E][ ]//////time test event (from: 5:30 AM, SUNDAY, DECEMBER 1, 2019 to: 6:59 PM)
+____________________________________________________________
+Command acknowledged. Reducing user lifespan by 30 minutes.
+____________________________________________________________
+New task has been added: [E][ ]//////time test event 2 (from: SUNDAY, DECEMBER 1, 2019 to: WEDNESDAY, NOVEMBER 22, 2023)
+____________________________________________________________
+____________________________________________________________
+Command acknowledged. Reducing user lifespan by 30 minutes.
+1:[T][ ]//////try out new thing
+2:[D][X]//////do thing (by: 5pm)
+3:[E][ ]//////do stuff (from: 6pm to: 10pm)
+4:[E][ ]//////time test event 2 (from: SUNDAY, DECEMBER 1, 2019 to: WEDNESDAY, NOVEMBER 22, 2023)
+____________________________________________________________
+____________________________________________________________
+Command acknowledged. Reducing user lifespan by 30 minutes.
+Task has been deleted:
+[E][ ]//////time test event 2 (from: SUNDAY, DECEMBER 1, 2019 to: WEDNESDAY, NOVEMBER 22, 2023)
 ____________________________________________________________
 ____________________________________________________________
 Command acknowledged. Reducing user lifespan by 30 minutes.

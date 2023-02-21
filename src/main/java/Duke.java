@@ -200,7 +200,7 @@ public class Duke {
             tasks.add(new Event(command));
         }
         System.out.println(VALID_COMMAND_STRING);
-        System.out.println(LINE + '\n' + TASK_ADDED_STRING + command + '\n' + LINE);
+        System.out.println(LINE + '\n' + TASK_ADDED_STRING + tasks.get(tasks.size()-1).toString() + '\n' + LINE);
         try{
             save();
         }catch(IOException e){

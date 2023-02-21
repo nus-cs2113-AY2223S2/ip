@@ -9,7 +9,7 @@ public class Event extends Task{
     }
 
     public void setStartDate(String startDate) {
-        this.startDate = startDate;
+        this.startDate = parseDateTimeString(startDate);
     }
 
     public String getEndDate() {
@@ -17,7 +17,7 @@ public class Event extends Task{
     }
 
     public void setEndDate(String endDate) {
-        this.endDate = endDate;
+        this.endDate = parseDateTimeString(endDate);
     }
     public Event(String command){
         super();
