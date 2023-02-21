@@ -133,9 +133,9 @@ Syntax: list
 todo: adds a todo task.
 Syntax: todo {task}
 deadline: adds a deadline task.
-Syntax: deadline {task} /by {endDate}
+Syntax: deadline {task} /by [endDate]
 event: adds an event task.
-Syntax: event {task} /from {startDate} /to {endDate}
+Syntax: event {task} /from [startDate] /to [endDate]
 mark: marks a task as done.
 Syntax: mark {index}
 unmark: marks a task as not done.
