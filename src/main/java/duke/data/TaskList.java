@@ -78,4 +78,8 @@ public class TaskList {
     public void sortTaskList() {
         Collections.sort(taskList, new TaskList.CustomComparator());
     }
+
+    public void saveList(Storage storage) throws DukeException {
+        storage.writeTasks(taskList);
+    }
 }

@@ -96,9 +96,17 @@ public class Ui {
     }
 
     public void printSorted(Storage storage) throws DukeException {
-        TaskList toSort = new TaskList(storage.setTasks());
+        System.out.println("Sorting the list for you...");
+        TaskList toSort = new TaskList(storage.setTasks()); //temp TaskList to sort and discard
         toSort.sortTaskList();
         printTasks(toSort);
+    }
+
+    public void sortTasks(TaskList tasks, Storage storage) throws DukeException {
+        System.out.println("Sorting and saving the list for you...");
+        tasks.sortTaskList();
+        printTasks(tasks);
+        tasks.saveList(storage);
     }
 
 

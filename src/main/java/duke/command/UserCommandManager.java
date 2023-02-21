@@ -23,10 +23,15 @@ public class UserCommandManager {
             command = new ExitCommand();
             break;
         case "list":
+        case "ls":
             command = new ListTasks();
             break;
-        case "sorted":
-            command = new printSortedTasks();
+        case "list-sorted":
+        case "ls -s":
+            command = new PrintSortedTasks();
+            break;
+        case "sort":
+            command = new SortTasks();
             break;
         case "mark":
             command = new MarkCommand(userCommand[1]);
