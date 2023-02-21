@@ -1,233 +1,73 @@
 package duke;
 
 import duke.exceptions.InsufficientInputException;
-import duke.exceptions.InvalidTaskNumberException;
 import duke.exceptions.UnkownCommandException;
 
-import java.io.*;
-import java.lang.reflect.Type;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Scanner;
+import java.io.File;
+import java.io.IOException;
+
 
 public class Duke {
-    public static String HorizontalLine = "__________________________\n";
-    private static ArrayList<Task> taskList = new ArrayList<>();
+    private String path = System.getProperty("user.dir") + File.separator + "data.txt";
+    private Storage storage;
+    private TaskList taskList;
+    private Parser parser;
+    private UI ui;
 
-    private static String path = System.getProperty("user.dir") + File.separator + "data.txt";
-
-    public static void main(String[] args) throws UnkownCommandException {
-        try{
-            File f = new File(path);
-            createTasklistFile();
-            readData(f);
-        }catch (IOException e){
-            System.out.println("No file exists");
-        };
-        System.out.println(HorizontalLine + "Hello! I'm Duke\n" + "What can I do for you?\n"
-                + HorizontalLine);
-        Scanner in = new Scanner(System.in);
-        String input = in.nextLine();
+    public Duke() {
+        storage = new Storage();
+        taskList = new TaskList();
+        storage.setTaskList(taskList, taskList.getTaskListArray());
+        parser = new Parser();
+        ui = new UI();
+        storage.initializeFile(path);
+    }
+    public void run() {
+        ui.printGreeting();
+        String input = parser.readInput();
         while (!input.equals("bye")) {
             try {
                 String[] inputWords = input.split(" ", 2);
                 switch (inputWords[0]) {
                 case "list":
-                    displayList();
+                    taskList.displayList();
                     break;
                 case "mark":
-                    markTask(inputWords);
+                    taskList.markTask(inputWords);
                     break;
                 case "unmark":
-                    unmarkTask(inputWords);
+                    taskList.unmarkTask(inputWords);
                     break;
                 case "todo":
-                    createTodo(inputWords);
+                    taskList.createTodo(inputWords);
                     break;
                 case "deadline":
-                    createDeadline(inputWords);
+                    taskList.createDeadline(inputWords);
                     break;
                 case "event":
-                    createEvent(inputWords);
+                    taskList.createEvent(inputWords);
                     break;
                 case "delete":
-                    deleteTask(inputWords);
+                    taskList.deleteTask(inputWords);
                     break;
                 default:
                     throw new UnkownCommandException("Unknown command, please try again.");
                 }
-                saveTasklist(path, taskList);
+                storage.saveTasklist(path);
             } catch (InsufficientInputException e) {
                 System.out.println(e.getMessage());
             } catch (UnkownCommandException e) {
                 System.out.println(e.getMessage());
-//            } catch (InvalidTaskNumberException e) {
-//                System.out.println(e.getMessage());
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("Invalid task number");
             } catch (IOException e) {
                 System.out.println("Error occurred while saving file\n");
             }
-            input = in.nextLine();
+            input = parser.readInput();
         }
-        System.out.println(HorizontalLine + "Goodbye!" + "\n" + HorizontalLine);
+        ui.printGoodbye();
     }
-
-    private static void readData(File f) throws IOException {
-        Scanner s = new Scanner(f);
-        while (s.hasNext()) {
-            String input = s.nextLine();
-            String[] data = input.split("\\|");
-            switch(data[0].trim()) {
-            case "todo":
-                taskList.add(new ToDo(data[2].trim()));
-                taskList.get(Task.maxTaskNumber).setTaskType("todo");
-                break;
-            case "deadline":
-                taskList.add(new Deadline(data[2].trim(), data[3].trim()));
-                taskList.get(Task.maxTaskNumber).setTaskType("deadline");
-                break;
-
-            case "event":
-                taskList.add(new Event(data[2].trim(), data[3].trim(), data[4].trim()));
-                taskList.get(Task.maxTaskNumber).setTaskType("event");
-                break;
-            }
-            if(data[1].trim().equals("X")) {
-                taskList.get(Task.maxTaskNumber).setDone();
-            }
-            Task.maxTaskNumber++;
-            //System.out.println(input);
-        }
-    }
-
-    private static void createTasklistFile() throws IOException {
-        File tasklistFile = new File("./data.txt");
-        if (!tasklistFile.createNewFile()) {
-            System.out.println("File already exists");
-        }
-    }
-
-    private static void saveTasklist(String path, ArrayList<Task> taskList) throws IOException {
-        FileWriter fw = new FileWriter(path, false);
-        for (Task i : taskList) {
-            String taskType = i.getTaskType();
-            switch (taskType) {
-            case "todo":
-                fw.write(taskType + " | " + i.getDone() + " | " + i.getTaskName() + System.lineSeparator());
-                break;
-
-            case "deadline":
-                Deadline d = (Deadline) i;
-                fw.write(taskType + " | " + i.getDone() + " | " + i.getTaskName() + " | " + d.getBy() + System.lineSeparator());
-                break;
-            case "event":
-                Event e = (Event) i;
-                fw.write(taskType + "|" + i.getDone()+ "|" + i.getTaskName() + "|" + e.getStartDate() + "|"
-                        + e.getEndDate()  + System.lineSeparator());
-            }
-        }
-        fw.close();
-    }
-
-    private static void createEvent(String[] inputWords) throws InsufficientInputException {
-        if (inputWords.length < 2) {
-            throw new InsufficientInputException("Event command has insufficient input, please try again.");
-        }
-        String[] event = inputWords[1].split(" /from | /to ", 3);
-        if (event.length < 3 || event[0].trim().equals("") || event[1].trim().equals("") || event[2].trim().equals("")) {
-            throw new InsufficientInputException("Event command has insufficient input, please try again.");
-        }
-        taskList.add(new Event(event[0], event[1], event[2]));
-        taskList.get(Task.maxTaskNumber).setTaskType("event");
-        Task.maxTaskNumber++;
-        System.out.printf(HorizontalLine + "Event added: %s (from: %s to: %s)\n" + HorizontalLine, event[0], event[1], event[2]);
-    }
-
-    private static void createDeadline(String[] inputWords) throws InsufficientInputException {
-        if (inputWords.length < 2) {
-            throw new InsufficientInputException("Deadline command has insufficient input, please try again.");
-        }
-        String[] deadline = inputWords[1].split(" /by ", 2);
-        if (deadline.length < 2 || deadline[0].trim().equals("") || deadline[1].trim().equals("")) {
-            throw new InsufficientInputException("Deadline command has insufficient input, please try again.");
-        }
-        taskList.add(new Deadline(deadline[0], deadline[1]));
-        taskList.get(Task.maxTaskNumber).setTaskType("deadline");
-        Task.maxTaskNumber++;
-        System.out.printf(HorizontalLine + "Deadline added: %s (by: %s)\n" + HorizontalLine, deadline[0], deadline[1]);
-    }
-
-    private static void createTodo(String[] inputWords) throws InsufficientInputException {
-        if (inputWords.length < 2 || inputWords[1].trim().equals("")) {
-            throw new InsufficientInputException("Todo command has insufficient input, please try again.");
-        }
-        taskList.add(new ToDo(inputWords[1].trim()));
-        taskList.get(Task.maxTaskNumber).setTaskType("todo");
-        Task.maxTaskNumber++;
-        System.out.println(HorizontalLine + "To do added: " + inputWords[1] + "\n" + HorizontalLine);
-    }
-
-    private static void unmarkTask(String[] inputWords) throws ArrayIndexOutOfBoundsException, InsufficientInputException {
-        if (inputWords.length < 2 || inputWords[1].trim().equals("")) {
-            throw new InsufficientInputException("Task number not specified, please try again");
-        }
-        int unmarkTaskNumber = Integer.valueOf(inputWords[1]) - 1;
-        if (unmarkTaskNumber >= Task.maxTaskNumber || unmarkTaskNumber < 0) {
-            //throw new InvalidTaskNumberException("Task number not found, please try again.");
-            throw new ArrayIndexOutOfBoundsException();
-            // System.out.println("No such task found\n" + HorizontalLine);
-        } else {
-            taskList.get(unmarkTaskNumber).unsetDone();
-            System.out.println(HorizontalLine + "Task set as undone: " + taskList.get(unmarkTaskNumber).getTaskName() +
-                    "\n" + HorizontalLine);
-        }
-    }
-
-    private static void markTask(String[] inputWords) throws ArrayIndexOutOfBoundsException, InsufficientInputException {
-        if (inputWords.length < 2 || inputWords[1].trim().equals("")) {
-            throw new InsufficientInputException("Task number not specified, please try again");
-        }
-        int markTaskNumber = Integer.valueOf(inputWords[1]) - 1;
-        if (markTaskNumber >= Task.maxTaskNumber || markTaskNumber < 0) {
-            //throw new InvalidTaskNumberException("Task number not found, please try again.");
-            throw new ArrayIndexOutOfBoundsException();
-            //System.out.println("No such task found\n" + HorizontalLine);
-        } else {
-            taskList.get(markTaskNumber).setDone();
-            System.out.println(HorizontalLine + "Task set as done: " + taskList.get(markTaskNumber).getTaskName() + "\n"
-                    + HorizontalLine);
-        }
-    }
-
-    private static void displayList() {
-        if (taskList.size() != 0) {
-            System.out.println(HorizontalLine + "List of Tasks: \n");
-            for (int i = 0; i < Task.maxTaskNumber; i++) {
-                System.out.printf("%d.", i + 1);
-                taskList.get(i).getTaskStatus();
-            }
-            System.out.println(HorizontalLine);
-        } else {
-            System.out.println(HorizontalLine + "no task added yet\n" + HorizontalLine);
-        }
-    }
-    private static void deleteTask(String[] inputWords) throws ArrayIndexOutOfBoundsException, InsufficientInputException{
-        if (inputWords.length < 2 || inputWords[1].trim().equals("")) {
-            throw new InsufficientInputException("Task number not specified, please try again");
-        }
-        int taskIndex = Integer.valueOf(inputWords[1])-1;
-        if(taskIndex >= Task.maxTaskNumber || taskIndex < 0) {
-            //throw new InvalidTaskNumberException("Task number not found, please try again.");
-            throw new ArrayIndexOutOfBoundsException();
-        }else{
-            taskList.remove(taskIndex);
-            Task.maxTaskNumber--;
-            System.out.printf(HorizontalLine + "Task %d has been deleted\n" + HorizontalLine, taskIndex+1);
-        }
+    public static void main(String[] args) {
+        new Duke().run();
     }
 }
-

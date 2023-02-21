@@ -12,7 +12,8 @@ public class Event extends Task {
 
     @Override
     public void getTaskStatus() {
-        System.out.printf("[E][%s] %s (from: %s to: %s)\n", this.getDone(), this.getTaskName(), this.startDate, this.endDate);
+        System.out.printf("[E][%s] %s (from: %s to: %s)\n", this.getDone(), this.getTaskName(),
+                this.startDate, this.endDate);
     }
 
     public String getStartDate() {
