@@ -6,10 +6,19 @@ import duke.taskTypes.Deadline;
 import duke.taskTypes.Event;
 import duke.taskTypes.Todo;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import static duke.print.Print.*;
 
+/**
+ * Collection of Commands to be used in the Duke programme
+ * These include:
+ * --> Adding todo, deadline and event task types
+ * --> Deleting a task from the list of tasks
+ * --> Marking / Unmarking a task as done
+ */
 public class Commands {
     public static void deleteOneTask(ArrayList<Task> taskList, String taskNumber) {
         int taskNumberToDelete = Integer.parseInt(taskNumber);
@@ -62,7 +71,10 @@ public class Commands {
         String taskName = taskDetails[0];
         String taskDueDate = taskDetails[1];
 
-        Deadline new_deadline = new Deadline(taskName, taskDueDate);
+        LocalDate formattedDueDate = LocalDate.parse(taskDueDate);
+
+        Deadline new_deadline
+                = new Deadline(taskName, formattedDueDate.format(DateTimeFormatter.ofPattern("MMM d yyyy")));
 
         taskList.add(new_deadline);
 
