@@ -62,7 +62,7 @@ public class Duke {
     /***
      * Keeps track of the current position of task in the list.
      */
-    private static int taskNum = 0;
+    public static int taskNum = 0;
     /***
      * Resizeable array that stores the user inputs.
      */
@@ -220,11 +220,11 @@ public class Duke {
         case "bye":
             return true;
         case "list":
-            printList(storedValues);
+            TaskList.printList(storedValues);
             break;
         case "mark":
             try {
-                markItem(storedValues, line, taskNum);
+                TaskList.markItem(storedValues, line, taskNum);
             } catch (MarkOutOfBounds e) {
                 System.out.println("Item to mark is not in list!");
             } catch (IOException e) {
@@ -233,7 +233,7 @@ public class Duke {
             break;
         case "unmark":
             try {
-                unmarkItem(storedValues, line);
+                TaskList.unmarkItem(storedValues, line);
             } catch (UnmarkOutOfBounds e) {
                 System.out.println("Item to unmark is not in list!");
             } catch (IOException e) {
@@ -265,7 +265,7 @@ public class Duke {
             break;
         case "delete":
             try {
-                deleteTask(line, storedValues);
+                TaskList.deleteTask(line, storedValues);
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("Item to delete is not in the list!");
             } catch (IOException e) {
@@ -277,31 +277,6 @@ public class Duke {
             System.out.println("Invalid command, try again! \n");
         }
         return false;
-    }
-
-    /***
-     * Deletes the task in the list and the txt file, when the user no longer needs the task.
-     * @param line The command input from user.
-     * @param storedValues List of inputs stored by the user.
-     * @throws IOException Thrown when error is detected.
-     */
-    private static void deleteTask(String line, ArrayList<Task> storedValues) throws IOException {
-        int length = line.length();
-        String itemToDelete = line.substring(REMOVE_DELETE_NUM, length);
-        int posToDelete = Integer.parseInt(itemToDelete);
-        Task value = storedValues.get(posToDelete - 1);
-        int currLine = 0;
-
-        Storage.deleteTaskInTxt(posToDelete, currLine);
-
-        storedValues.remove(posToDelete - 1);
-        formattingLine();
-        System.out.println("Noted. I've removed this task: \n" +
-                value + "\n" +
-                "Now you have " + (taskNum - 1) + " tasks in the list. \n");
-        formattingLine();
-
-        taskNum -= 1;
     }
 
 
@@ -323,7 +298,7 @@ public class Duke {
         String endingTime = duration.substring(secondForwardSlash + REMOVE_TO_NUM);
         Event eventInput = new Event(taskName, startingTime, endingTime);
 
-        taskNum = addTask(storedValues, taskNum, eventInput);
+        taskNum = TaskList.addTask(storedValues, taskNum, eventInput);
         return taskNum;
     }
 
@@ -338,7 +313,7 @@ public class Duke {
     private static int processToDo(ArrayList<Task> storedValues, int taskNum, String line) {
         String removeCommand = line.substring(REMOVE_TODO_NUM);
         Todo todoInput = new Todo(removeCommand);
-        taskNum = addTask(storedValues, taskNum, todoInput);
+        taskNum = TaskList.addTask(storedValues, taskNum, todoInput);
         return taskNum;
     }
 
@@ -355,50 +330,8 @@ public class Duke {
         int endOfTask = forwardSlash - 1;
         int dates = forwardSlash + REMOVE_BY_NUM;
         Deadline deadlineInput = new Deadline(line.substring(9, endOfTask), line.substring(dates));
-        taskNum = addTask(storedValues, taskNum, deadlineInput);
+        taskNum = TaskList.addTask(storedValues, taskNum, deadlineInput);
         return taskNum;
-    }
-
-    /***
-     * Adds processed user inputs into the list of stored values.
-     * @param storedValues List of tasks from user inputs.
-     * @param taskNum The existing position in the list.
-     * @param line User input to be processed.
-     * @return Updated position in the list.
-     */
-    private static int addTask(ArrayList<Task> storedValues, int taskNum, Task line) {
-        formattingLine();
-        System.out.println("Got it. I've added this task: \n" + line.toString() + "\n" +
-                "Now you have " + (taskNum + 1) + " tasks in the list.\n");
-        formattingLine();
-        // Store value in line into list
-        storedValues.add(taskNum,line);
-        taskNum += 1;
-        try {
-            Storage.writeToFile(line);
-        } catch (IOException e) {
-            System.out.println("Something went wrong..." + e.getMessage());
-        }
-        return taskNum;
-    }
-
-    /***
-     * Unmarks the task in the list when called.
-     * @param storedValues List of tasks from user inputs.
-     * @param line User input to be processed.
-     * @throws UnmarkOutOfBounds Thrown when the value input is out of bounds.
-     * @throws IOException Thrown when other errors are detected.
-     */
-    private static void unmarkItem(ArrayList<Task> storedValues, String line) throws UnmarkOutOfBounds, IOException {
-        int length = line.length();
-        String itemToMark = line.substring(REMOVE_UNMARK_NUM, length);
-        int numToMark = Integer.parseInt(itemToMark);
-        // Unmark the item
-        if (taskNum < numToMark) {
-            throw new UnmarkOutOfBounds();
-        } else {
-            unmarkTaskInTxt(storedValues, numToMark);
-        }
     }
 
     /***
@@ -407,12 +340,12 @@ public class Duke {
      * @param numToMark The row in txt file to be unmarked.
      * @throws IOException Thrown when file cannot be read.
      */
-    private static void unmarkTaskInTxt(ArrayList<Task> storedValues, int numToMark) throws IOException {
+    public static void unmarkTaskInTxt(ArrayList<Task> storedValues, int numToMark) throws IOException {
         storedValues.get(numToMark -1).unmarkAsDone();
-        formattingLine();
+        TaskList.formattingLine();
         System.out.println("OK, I've marked this task as not done yet: \n" +
                 storedValues.get(numToMark -1).toString() + "\n");
-        formattingLine();
+        TaskList.formattingLine();
 
         File dukeInputs = FILEPATH;
         String prevContent = "";
@@ -434,38 +367,17 @@ public class Duke {
     }
 
     /***
-     * Marks the task in the list when called.
-     * @param storedValues List of tasks from user inputs.
-     * @param line User input to be processed.
-     * @param taskNum The task number from user input that is to be marked.
-     * @throws MarkOutOfBounds Thrown when the task number exceeds the number of items in list.
-     * @throws IOException Thrown when error is detected.
-     */
-    private static void markItem(ArrayList<Task> storedValues, String line, int taskNum) throws MarkOutOfBounds, IOException {
-        int length = line.length();
-        String itemToMark = line.substring(REMOVE_MARK_NUM, length);
-        int numToMark = Integer.parseInt(itemToMark);
-        // Mark the item as complete
-        if (taskNum < numToMark) {
-            // Means that it is out of bounds
-            throw new MarkOutOfBounds();
-        } else {
-            markTaskInTxt(storedValues, numToMark);
-        }
-    }
-
-    /***
      * Marks the task in the txt file.
      * @param storedValues List of tasks from user inputs.
      * @param numToMark Task number from user input that is to be marked.
      * @throws IOException Thrown when file cannot be read.
      */
-    private static void markTaskInTxt(ArrayList<Task> storedValues, int numToMark) throws IOException {
+    public static void markTaskInTxt(ArrayList<Task> storedValues, int numToMark) throws IOException {
         storedValues.get(numToMark -1).markAsDone();
-        formattingLine();
+        TaskList.formattingLine();
         System.out.println("Nice! I've marked this task as done: \n"
                 + storedValues.get(numToMark -1).toString() + "\n");
-        formattingLine();
+        TaskList.formattingLine();
 
         File dukeInputs = FILEPATH;
         String prevContent = "";
@@ -487,29 +399,14 @@ public class Duke {
     }
 
     /***
-     * Print all items within the list of stored tasks.
-     * @param storedValues List of tasks from user inputs.
-     */
-    private static void printList(ArrayList<Task> storedValues) {
-        int currValue = 0;
-        formattingLine();
-        System.out.println("Here are the tasks in your list:");
-        for (Task value : storedValues) {
-            System.out.println((currValue + 1) + "." + value.toString());
-            currValue += 1;
-        }
-        formattingLine();
-    }
-
-    /***
      * Outputs the goodbye formatting and message to the user when bye
      * command is called.
      */
     private static void showGoodbye() {
         String bye = "Bye. Hope to see you again soon!\n";
-        formattingLine();
+        TaskList.formattingLine();
         System.out.println(bye);
-        formattingLine();
+        TaskList.formattingLine();
     }
 
     /**
@@ -526,15 +423,9 @@ public class Duke {
                 " What can I do for you?\n";
 
         System.out.println("Hello from\n" + logo);
-        formattingLine();
+        TaskList.formattingLine();
         System.out.println(hello);
-        formattingLine();
+        TaskList.formattingLine();
     }
 
-    /***
-     * Prints the fixed formatting line when called.
-     */
-    private static void formattingLine() {
-        System.out.println(LINE_FORMATTING);
-    }
 }
