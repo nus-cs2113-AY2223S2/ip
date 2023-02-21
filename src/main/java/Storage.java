@@ -38,7 +38,7 @@ public class Storage {
                 File file = new File(filePath);
                 file.getParentFile().mkdirs();
                 file.createNewFile();
-            }catch(Exception e1){
+            } catch (Exception e1){
                 e1.printStackTrace();
             }
         }
