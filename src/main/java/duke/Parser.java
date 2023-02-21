@@ -217,7 +217,7 @@ public class Parser {
     /**
      * Returns the Delete type command that has been already prepared if successful
      * Returns an Illegal type command if there is a incorrect format type
-     * Handles the event type of command and outputs an illegal command message when there is na exception
+     * Handles the event type of command and outputs an illegal command message when there is an exception
      *
      * @param command the user input command line
      * @param tasks   the current TaskList to be referenced from
@@ -239,7 +239,7 @@ public class Parser {
      *
      * @param command the user input command line
      * @param tasks   the current TaskList to be referenced from
-     * @return the Delete command type
+     * @return the Delete command typethe user input command line
      * @throws IllegalCommandException when index is out of bounds or when string length is not 2 after splitting
      */
     private static Command prepareDeleteTask(String command, TaskList tasks) throws IllegalCommandException {
@@ -254,17 +254,31 @@ public class Parser {
         return new DeleteTaskCommand(deleteIndex);
     }
 
-
+    /**
+     * Returns the Find type Command if preparation is successful
+     * Returns an Illegal type command if there is an incorrect format type
+     * Handles the event type of finding through preparation
+     *
+     * @param fullCommand the user input command line
+     * @return
+     */
     private static Command findTaskHandler(String fullCommand) {
         Command findCommand = null;
         try {
             findCommand = prepareFindTask(fullCommand);
         } catch (IllegalCommandException e) {
-            Ui.illegalCommandMessage();
+            return new IllegalCommand();
         }
         return findCommand;
     }
 
+    /**
+     * Returns the find type command after prepared with the corresponding keyword (search word)
+     *
+     * @param fullCommand the user input command line
+     * @return a new FindCommand object if successful
+     * @throws IllegalCommandException when the keyword is empty
+     */
     private static Command prepareFindTask(String fullCommand) throws IllegalCommandException {
         String keyword = fullCommand.replaceFirst("find", "").trim();
         if (keyword.isEmpty()) {

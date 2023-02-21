@@ -60,6 +60,11 @@ public class TaskList {
         return tasks.size();
     }
 
+    /**
+     * Prints all the tasks that description contains the keyword
+     *
+     * @param keyword the search word the user inputs
+     */
     public void printTasksByKeyword(String keyword) {
         int filteredTaskCount = 1;
         for (int i = 0; i < tasks.size(); ++i) {

@@ -32,11 +32,16 @@ public class Ui {
         return command;
     }
 
-
+    /**
+     * Outputs the find task command's opening message
+     */
     public static void FindTaskByKeywordOpeningMessage() {
         System.out.println(LINE + FIND_MESSAGE);
     }
 
+    /**
+     * Outputs a row of underscores representing a line
+     */
     public static void printLine() {
         System.out.print(LINE);
     }
