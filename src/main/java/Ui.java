@@ -107,6 +107,12 @@ public class Ui {
         Duke.taskNum += 1;
     }
 
+    /***
+     * Given the word to search for, this function checks if there are any tasks within the tasklist that
+     * has the keyword the user is requesting for.
+     * @param keywordList The list of tasks with the given keyword.
+     * @param wordToFind The keyword that has been searched by the user.
+     */
     public static void printWordToFind(ArrayList<Task> keywordList, String wordToFind) {
         if (keywordList.size() == 0) {
             // Means that there are no common matches

@@ -115,6 +115,11 @@ public class TaskList {
         formattingLine();
     }
 
+    /***
+     * Searches the tasks within the existing task list with the same keyword typed in the "find" command.
+     * @param storedValues The existing task list that the user has.
+     * @param wordToFind The string that the user is trying to find within their task list.
+     */
     static void findTasks(ArrayList<Task> storedValues, String wordToFind) {
         ArrayList<Task> keywordList = new ArrayList<>();
         for (Task task : storedValues) {

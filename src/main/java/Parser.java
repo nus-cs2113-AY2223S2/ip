@@ -2,7 +2,6 @@ import exceptions.MarkOutOfBounds;
 import exceptions.UnmarkOutOfBounds;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Parser {
@@ -62,6 +61,12 @@ public class Parser {
         return taskNum;
     }
 
+    /***
+     * Prior to searching the keyword that the user has inputted, processFind extracts the keyword for
+     * further comparison.
+     * @param storedValues The existing task list saved by the user.
+     * @param line The whole command typed in by the user.
+     */
     static void processFind(ArrayList<Task> storedValues, String line) {
         String wordToFind = line.substring(Duke.REMOVE_FIND_NUM);
         TaskList.findTasks(storedValues, wordToFind);
