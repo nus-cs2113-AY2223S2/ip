@@ -12,8 +12,19 @@ import duke.command.MarkAndUnmarkCommand;
 import duke.exception.EmptyCommandException;
 import duke.exception.IllegalCommandException;
 
+/**
+ * Parser object that deals with making sense of the user command
+ */
 public class Parser {
-
+    /**
+     * Returns a Command object that will be used by Duke to run the command
+     *
+     * @param fullCommand the full input from the user in one line
+     * @param tasks       the current TaskList to be referenced from
+     * @param database    the current database of all the files and tasks
+     * @return the type of command corresponding to the first word of user input, where an illegal command will be
+     * given when it does not match any of the supported commands by Duke
+     */
     public static Command parse(String fullCommand, TaskList tasks, Storage database) {
         String firstWord = fullCommand.split(" ")[0];
         if (fullCommand.equals("bye")) {
@@ -21,7 +32,7 @@ public class Parser {
         } else if (fullCommand.equals("list")) {
             return new ListCommand();
         } else if (firstWord.equals("mark") || firstWord.equals("unmark")) {
-            return MarkOrUnmarkHandler(fullCommand, tasks, database);
+            return MarkOrUnmarkHandler(fullCommand, tasks);
         } else if (firstWord.equals("todo")) {
             return todoTaskHandler(fullCommand);
         } else if (firstWord.equals("deadline")) {
@@ -35,17 +46,35 @@ public class Parser {
         }
     }
 
-    private static Command MarkOrUnmarkHandler(String command, TaskList tasks, Storage database) {
+    /**
+     * Returns the Command object for mark and unmark commands
+     * Returns an illegal command if there is an error in the format
+     * Handles the mark and unmark type of commands and outputs illegal message if command is illegal
+     *
+     * @param command the user input command line
+     * @param tasks   the current TaskList to be referenced from
+     * @return a Command object that is already prepared, ready for use in the execution step
+     */
+    private static Command MarkOrUnmarkHandler(String command, TaskList tasks) {
         Command markingCommand = null;
         try {
-            markingCommand = prepareMarkAndUnmarkTask(command, tasks, database);
+            markingCommand = prepareMarkAndUnmarkTask(command, tasks);
         } catch (IllegalCommandException e) {
-            Ui.illegalCommandMessage();
+            return new IllegalCommand();
         }
         return markingCommand;
     }
 
-    private static Command prepareMarkAndUnmarkTask(String command, TaskList tasks, Storage database) throws IllegalCommandException {
+    /**
+     * Returns Command object for mark and unmark commands if successful
+     * Does input preparation where it separates the key commands from the user input into the mark or unmark Command
+     *
+     * @param command the user input command line
+     * @param tasks   the current TaskList to be referenced from
+     * @return the prepared mark or unmark Command
+     * @throws IllegalCommandException if format of command is wrong, or when index is out of bounds of the TaskList
+     */
+    private static Command prepareMarkAndUnmarkTask(String command, TaskList tasks) throws IllegalCommandException {
         String[] words = command.split(" ");
         if (words.length != 2) {
             throw new IllegalCommandException();
@@ -57,6 +86,13 @@ public class Parser {
         return new MarkAndUnmarkCommand(command, words, indexOfMarking);
     }
 
+    /**
+     * Returns the Todo type Command that has been already prepared or null if there is an error
+     * Handles the todo type of command and outputs an empty command message when the description is empty
+     *
+     * @param command the user input command line
+     * @return a todo Command type or null is there is an error
+     */
     private static Command todoTaskHandler(String command) {
         Command todoCommand = null;
         try {
@@ -67,6 +103,14 @@ public class Parser {
         return todoCommand;
     }
 
+    /**
+     * Returns the Todo type Command that has been already prepared
+     * Does input preparation where it separates the key commands from the user input into the todo Command type
+     *
+     * @param command the user input command line
+     * @return the todo Command if it is successful
+     * @throws EmptyCommandException whenever the todo task description is empty
+     */
     private static Command prepareTodoTask(String command) throws EmptyCommandException {
         String todo = command.replace("todo", "").trim();
         if (todo.isEmpty()) {
@@ -75,6 +119,16 @@ public class Parser {
         return new AddTodoCommand(todo);
     }
 
+    /**
+     * Returns the deadline type command that has been already prepared
+     * Returns an illegal command if there is an error in the format
+     * Returns null if there is an empty description
+     * Handles the deadline type of command and outputs an empty command message when the description is empty
+     * or an illegal command message when the format of the deadline is wrong
+     *
+     * @param command the user input command line
+     * @return a Command object or null if there is an empty description
+     */
     private static Command deadlineTaskHandler(String command) {
         Command deadlineCommand = null;
         try {
@@ -82,11 +136,20 @@ public class Parser {
         } catch (EmptyCommandException e) {
             Ui.emptyCommandMessage("deadline");
         } catch (IllegalCommandException e) {
-            Ui.illegalCommandMessage();
+            return new IllegalCommand();
         }
         return deadlineCommand;
     }
 
+    /**
+     * Returns the deadline type command that has been already prepared
+     * Does input preparation where it separates the key commands from the user input into the deadline Command type
+     *
+     * @param command the user input command line
+     * @return the deadline command if successful
+     * @throws EmptyCommandException   when description of deadline is empty
+     * @throws IllegalCommandException when the string array length is not 2 after splitting as the format is wrong
+     */
     private static Command prepareDeadlineTask(String command) throws EmptyCommandException, IllegalCommandException {
         command = command.replace("deadline", "").trim();
         if (command.isEmpty()) {
@@ -99,18 +162,37 @@ public class Parser {
         return new AddDeadlineCommand(stringSplit);
     }
 
+    /**
+     * Returns the event type command that has been already prepared
+     * Returns an illegal command if there is an error in the format
+     * Returns null when the description of the event is empty
+     * Handles the event type of command and outputs an empty command message when the description is empty
+     * or an illegal command message when the format is wrong
+     *
+     * @param command the user input command line
+     * @return the a command type or null if description is empty
+     */
     private static Command eventTaskHandler(String command) {
         Command eventCommand = null;
         try {
             eventCommand = prepareEventTask(command);
         } catch (IllegalCommandException e) {
-            Ui.illegalCommandMessage();
+            return new IllegalCommand();
         } catch (EmptyCommandException e) {
             Ui.emptyCommandMessage("event");
         }
         return eventCommand;
     }
 
+    /**
+     * Returns the event type command that has been already prepared
+     * Does input preparation where it separates the key commands from the user input into the event Command type
+     *
+     * @param command the user input command line
+     * @return the event command type if successful
+     * @throws IllegalCommandException whenever there the string array is not of length 2 after splitting
+     * @throws EmptyCommandException   whenever the description of the event command is empty
+     */
     private static Command prepareEventTask(String command) throws IllegalCommandException, EmptyCommandException {
         command = command.replace("event", "").trim();
         if (command.isEmpty()) {
@@ -127,17 +209,35 @@ public class Parser {
         return new AddEventCommand(stringSplit[0], startToEndTime[0], startToEndTime[1]);
     }
 
+    /**
+     * Returns the Delete type command that has been already prepared if successful
+     * Returns an Illegal type command if there is a incorrect format type
+     * Handles the event type of command and outputs an illegal command message when there is na exception
+     *
+     * @param command the user input command line
+     * @param tasks   the current TaskList to be referenced from
+     * @return a type of Command to be executed by Duke
+     */
     private static Command deleteTaskHandler(String command, TaskList tasks) {
         Command deleteCommand = null;
         try {
-            deleteCommand = deleteTask(command, tasks);
+            deleteCommand = prepareDeleteTask(command, tasks);
         } catch (IllegalCommandException e) {
-            Ui.illegalCommandMessage();
+            return new IllegalCommand();
         }
         return deleteCommand;
     }
 
-    private static Command deleteTask(String command, TaskList tasks) throws IllegalCommandException {
+    /**
+     * Returns the Delete type command that is prepared
+     * Does input preparation where it separates the key commands from the user input into the delete Command type
+     *
+     * @param command the user input command line
+     * @param tasks   the current TaskList to be referenced from
+     * @return the Delete command type
+     * @throws IllegalCommandException when index is out of bounds or when string length is not 2 after splitting
+     */
+    private static Command prepareDeleteTask(String command, TaskList tasks) throws IllegalCommandException {
         String[] words = command.trim().split(" ");
         if (isInvalidString(words)) {
             throw new IllegalCommandException();
@@ -149,6 +249,13 @@ public class Parser {
         return new DeleteTaskCommand(deleteIndex);
     }
 
+    /**
+     * Returns true is the 0-indexed marking is within the array boundaries of 0 and size-1, false otherwise
+     *
+     * @param indexOfMarking the index to be checked if it is within the TaskList length
+     * @param tasks          the current TaskList's length to be referenced from
+     * @return a boolean value to allow the person to know if their index is within array range
+     */
     private static boolean isValidIndex(int indexOfMarking, TaskList tasks) {
         if (indexOfMarking < 0 || indexOfMarking > (tasks.getTaskCount() - 1)) {
             return false;
@@ -156,10 +263,23 @@ public class Parser {
         return true;
     }
 
+    /**
+     * Returns true if length of the input string array is not equals to 2, false otherwise
+     *
+     * @param stringSplit a String array to be referenced from which is used after splitting of a string for formatting
+     * @return a boolean value on whether the string array given is a valid string array
+     */
     private static boolean isInvalidString(String[] stringSplit) {
         return stringSplit.length != 2;
     }
 
+    /**
+     * Returns 0-index of parsing Integer
+     * Returns -1 if string is not a number or empty
+     *
+     * @param strNum the input String to test if it is a number or not a number
+     * @return an integer value of either -1 if the string is invalid, or a 0-indexed integer when the string is valid
+     */
     private static int getIndex(String strNum) {
         // Referenced from https://www.baeldung.com/java-check-string-number
         int index = 0;
@@ -172,7 +292,7 @@ public class Parser {
             return -1;
         }
         index--;
-        return index; // Returns 0-index of parsing Integer or -1 if string is not a number or empty
+        return index;
     }
 
 }
