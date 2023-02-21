@@ -1,6 +1,6 @@
 # Araxys Task Manager - User Guide
 
-Araxys is a task manager that allows you to to get your life together at just a fraction of your lifespan. The steal of a lifetime, wouldn't you say?
+Araxys is a task manager that allows you to get your life together at just a fraction of your lifespan. The steal of a lifetime, wouldn't you say?
 
 Table of contents:
 1. [Quick Start](#quick_start)
