@@ -87,7 +87,12 @@ public class TaskList{
     public Task get(int taskNumber){
         return tasks.get(taskNumber - 1);
     }
-    //method that returns matching tasks that contain the keyword
+
+    /**
+     * This method returns the tasks that contain the keyword.
+     * @param keyword the keyword to be matched
+     * @return the arraylist of matching tasks
+     */
     public ArrayList<Task> find(String keyword){
         ArrayList<Task> matchingTasks = new ArrayList<Task>();
         for (Task task : tasks){
