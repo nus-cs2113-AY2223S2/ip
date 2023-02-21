@@ -16,6 +16,9 @@ import duke.exception.IllegalCommandException;
  * Parser object that deals with making sense of the user command
  */
 public class Parser {
+
+    public static final int FIRST_WORD_INDEX = 0;
+
     /**
      * Returns a Command object that will be used by Duke to run the command
      *
@@ -25,7 +28,7 @@ public class Parser {
      * given when it does not match any of the supported commands by Duke
      */
     public static Command parse(String fullCommand, TaskList tasks) {
-        String firstWord = fullCommand.split(" ")[0];
+        String firstWord = fullCommand.split(" ")[FIRST_WORD_INDEX];
         if (fullCommand.equals("bye")) {
             return new ExitCommand();
         } else if (fullCommand.equals("list")) {
