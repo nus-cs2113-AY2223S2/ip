@@ -5,10 +5,8 @@ import duke.task.Task;
 import java.util.ArrayList;
 
 /**
- *
  * Custom Print class to include methods
  * that will be used throughout the Duke project
- *
  */
 public class Print {
 
@@ -91,6 +89,37 @@ public class Print {
         printOneLine();
     }
 
+    public static void printFoundTasks(ArrayList<Task> foundTasksList) {
+        printOneLine();
+        if (foundTasksList.isEmpty()) {
+            println("     Oops! I can't find any tasks containing that word. Try another keyword!");
+            printOneLine();
+        } else {
+            println("     Here are the matching tasks in your list:");
+            for (int i = 0; i < foundTasksList.size(); i += 1) {
+                if (foundTasksList.get(i) == null) {
+                    break;
+                }
+                print("     " + (i + 1) + ".");
+                print("[" + foundTasksList.get(i).getTypeIcon() + "]");
+                print("[" + foundTasksList.get(i).getDoneIcon() + "] " + foundTasksList.get(i).getDescription());
+
+                switch (foundTasksList.get(i).getTypeIcon()) {
+                    case "D":
+                        println(" (by:" + foundTasksList.get(i).getBy() + ")");
+                        break;
+
+                    case "E":
+                        println("(from: " + foundTasksList.get(i).getFrom() + " to:" + foundTasksList.get(i).getTo() + ")");
+                        break;
+
+                    case "T":
+                        println("");
+                }
+            }
+            printOneLine();
+        }
+    }
 
     /**
      * Prints the list of tasks
@@ -166,6 +195,7 @@ public class Print {
 
     /**
      * Prints a task when it has been marked on unmarked as DONE.
+     *
      * @param selectedTask The task that has been marked or unmarked.
      */
     public static void printMarkingOrUnmarkingOneTask(Task selectedTask) {
