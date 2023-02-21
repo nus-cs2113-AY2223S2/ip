@@ -215,18 +215,25 @@ public class Duke {
                     return;
                 }
                 case ("find"): {
-                    description = removeCommandWord(userInput);
-                    int counter = 0;
+                    try {
+                        description = removeCommandWord(userInput);
+                        int counter = 0;
 
-                    printHorizontalRule();
-                    System.out.println("The index given here is not reflective of the task's actual index.\nHere are all tasks which contain " + description + " in your list:");
-                    for (int i = 0; i < tasks.size(); i++) {
-                        if (tasks.get(i).contains(description)) {
-                            System.out.println((counter + 1) + ". " + tasks.get(i));
-                            counter++;
+                        printHorizontalRule();
+                        System.out.println("The index given here is not reflective of the task's actual index.\nHere are all tasks which contain " + description + " in your list:");
+                        for (int i = 0; i < tasks.size(); i++) {
+                            if (tasks.get(i).contains(description)) {
+                                System.out.println((counter + 1) + ". " + tasks.get(i));
+                                counter++;
+                            }
                         }
+                        printHorizontalRule();
+                    } catch (IndexOutOfBoundsException e) {
+                        printHorizontalRule();
+                        System.out.println("Wrong usage of deadline. Format is: find DESCRIPTION");
+                        System.out.println("You entered: " + userInput);
+                        printHorizontalRule();
                     }
-                    printHorizontalRule();
                     break;
                 }
                 case ("list"): {
@@ -336,7 +343,7 @@ public class Duke {
                         printAcknowledgement("Deadline", description, String.valueOf(tasks.size()));
                     } catch (IndexOutOfBoundsException e) {
                         printHorizontalRule();
-                        System.out.println("Wrong usage of deadline. Format is: deadline {description} /by {date}");
+                        System.out.println("Wrong usage of deadline. Format is: deadline DESCRIPTION /by DATE TIME");
                         System.out.println("You entered: " + userInput);
                         printHorizontalRule();
                     } catch (DateTimeParseException e) {
@@ -367,7 +374,7 @@ public class Duke {
                         printAcknowledgement("Event", description, String.valueOf(tasks.size()));
                     } catch (IndexOutOfBoundsException e) {
                         printHorizontalRule();
-                        System.out.println("Wrong usage of event. Format is: event {description} /from {date} /to {date}");
+                        System.out.println("Wrong usage of event. Format is: event DESCRIPTION /from DATE TIME /to DATE TIME");
                         System.out.println("You entered: " + userInput);
                         printHorizontalRule();
                     } catch (DateTimeParseException e) {

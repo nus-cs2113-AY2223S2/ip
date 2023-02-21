@@ -32,7 +32,7 @@ public class Task {
     }
 
     public boolean contains(String description) {
-        if (getTask().contains(description)){
+        if (getTask().toLowerCase().contains(description.toLowerCase())){
             return true;
         }
         return false;
