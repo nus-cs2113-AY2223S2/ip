@@ -18,6 +18,7 @@ public class Parser {
     public static final String DEADLINE = "deadline";
     public static final String DELETE = "delete";
     public static final String TODO = "todo";
+    public static final String FIND = "find";
 
     /***
      * Prior to adding events with command deadline to the list, processDeadline separates the
@@ -151,7 +152,7 @@ public class Parser {
                 System.out.println("Error!");
             }
             break;
-        case "find":
+        case FIND:
             processFind(storedValues, line);
             break;
         default:
