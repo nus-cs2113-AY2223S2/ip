@@ -29,9 +29,11 @@ public class TaskList {
     }
 
     public void printTasksByKeyword(String keyword) {
+        int filteredTaskCount = 1;
         for (int i = 0; i < tasks.size(); ++i) {
             if (tasks.get(i).getTaskString().contains(keyword)) {
-                System.out.println(tasks.get(i));
+                System.out.println(filteredTaskCount + "." + tasks.get(i));
+                filteredTaskCount++;
             }
         }
     }
