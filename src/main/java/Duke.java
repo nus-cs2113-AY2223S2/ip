@@ -15,6 +15,15 @@ public class Duke {
     public static final String SAVE_FILE_LOAD_ERROR = "     ☹ OOPS!!! An error has occurred, the current task list " +
             "will not be saved in a file!";
     public static final String FILE_WRITE_ERROR = "     ☹ OOPS!!! There is an error writing to the file :-(";
+
+    public static final String INVALID_COMMAND_FORMAT = "     ☹ OOPS!!! Invalid command format! Remember the format: "
+            + System.lineSeparator() + "     deadline <description> /by <due date>" + System.lineSeparator() +
+            "     event <description> /from <start date/time> /to <end date/time>";
+    public static final String INVALID_TASK_NUMBER = "     ☹ OOPS!!! This task number is invalid! " +
+            System.lineSeparator() + "     Please enter a task number in the valid range.";
+    public static final String EMPTY_TASK_NUMBER = "     ☹ OOPS!!! Please provide a task number! Remember this format:"
+            + System.lineSeparator() + "     mark <taskNumber>" + System.lineSeparator() +
+            "     unmark <taskNumber>" + System.lineSeparator() +  "     delete <taskNumber>";
     protected TaskList taskList;
     protected FileDataHandler fileDataHandler;
     protected Ui ui;
@@ -44,7 +53,7 @@ public class Duke {
     /**
      * Starts the Duke chatbot, begins to wait for inputs by the user to pass to the Parser class to
      * execute the commands. The loop finishes upon user keying in command "bye" and triggers an exit.
-     * This also catches exceptions thrown by the Parser class during execution.
+     * This also catches exceptions thrown by the Parser and TaskList class during execution.
      */
     public void run() {
         ui.welcomeMessage();
@@ -66,6 +75,12 @@ public class Duke {
                 ui.printErrorMessage("     ☹ OOPS!!! The description of a " + nextInput[0] + " cannot be empty.");
             } catch (IOException exception) {
                 ui.printErrorMessage(FILE_WRITE_ERROR);
+            } catch (StringIndexOutOfBoundsException exception) {
+                ui.printErrorMessage(INVALID_COMMAND_FORMAT);
+            } catch (IndexOutOfBoundsException exception) {
+                ui.printErrorMessage(INVALID_TASK_NUMBER);
+            } catch (NumberFormatException exception) {
+                ui.printErrorMessage(EMPTY_TASK_NUMBER);
             }
         }
         ui.farewellMessage();
