@@ -6,6 +6,8 @@ public class Messages {
 
     public static final String MESSAGE_PROMPT = " What can I do for you today?";
 
+    public static final String MESSAGE_EXIT = " Woof! Saving your task list before exiting...";
+
     public static final String MESSAGE_FAREWELL = " Bye. Hope to see you again soon ^.^!";
 
     public static final String MESSAGE_LIST_HEADER = " Woof! Here are your current tasks ^.^:";
@@ -18,7 +20,7 @@ public class Messages {
 
     public static final String MESSAGE_INVALID = " Sorry! Please type a valid command! ^.^";
 
-    public static final String MESSAGE_PROMPT_VALID_INPUT = " Sorry! "
+    public static final String MESSAGE_PROMPT_VALID_STRING_INPUT = " Sorry! "
             + "You need a space between your command and task input!" + "\n"
             + "Please enter your task as such: <todo/deadline/event> <your task> ^.^";
 
@@ -45,7 +47,7 @@ public class Messages {
     public static final String MESSAGE_PROMPT_VALID_TASK_INDEX = " Sorry! "
             + "This task does not exist in your list! ^.^";
 
-    public static final String MESSAGE_PROMPT_VALID_TASK_INDEX_ENTRY = " Sorry! "
+    public static final String MESSAGE_PROMPT_VALID_INTEGER_INPUT = " Sorry! "
             + "You need a space between your command and task number to mark/unmark/delete!" + "\n"
             + "Please enter your task to mark or unmark as such: <mark/unmark/delete> <task number> ^.^";
 

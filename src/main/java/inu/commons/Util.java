@@ -1,48 +1,52 @@
 package inu.commons;
 
-import inu.exceptionhandling.EmptyUserInputException;
 import inu.task.TaskList;
 
 public class Util {
 
-    protected static final int INDEX_BEGIN = 0;
+    public static final int INDEX_BEGIN = 0;
 
-    protected static final int INDEX_OFFSET_IN_COMMAND = 1;
+    public static final int INDEX_OFFSET_IN_COMMAND = 1;
 
-    public static int fetchIndexFromString(String userString) {
-        return Integer.parseInt(userString) - INDEX_OFFSET_IN_COMMAND;
-    }
+    public static final String EMPTY_STRING = "";
 
-    public static void markTask(TaskList taskList, int taskIndex) {
-        taskList.getTask(taskIndex).setDone();
-    }
-
-    public static void unMarkTask(TaskList taskList, int taskIndex) {
-        taskList.getTask(taskIndex).resetDone();
+    public static int fetchIndexFromString(TaskList taskList, String userString) throws IndexOutOfBoundsException {
+        int actualIndex = Integer.parseInt(userString) - INDEX_OFFSET_IN_COMMAND;
+        int taskListSize = taskList.getTaskListSize();
+        if (actualIndex >= INDEX_BEGIN && actualIndex < taskListSize) {
+            return actualIndex;
+        } else {
+            throw new IndexOutOfBoundsException();
+        }
     }
 
     public static String fetchTask(String userString) {
         int indexOfFirstSlash = userString.indexOf("/");
-        return userString.substring(INDEX_BEGIN, indexOfFirstSlash);
+        String task = userString.substring(INDEX_BEGIN, indexOfFirstSlash);
+        return task;
     }
 
-    public static String fetchDeadLine(String userString) {
+    public static String fetchBy(String userString) {
         int firstSlashEntry = userString.indexOf("/");
-        return userString.substring(firstSlashEntry + INDEX_OFFSET_IN_COMMAND);
+        String by = userString.substring(firstSlashEntry + INDEX_OFFSET_IN_COMMAND);
+        return by;
     }
 
-    public static String fetchFrom(String userString) throws EmptyUserInputException {
+    public static String fetchFrom(String userString) {
         int firstSlashEntry = userString.indexOf("/");
         int secondSlashEntry = userString.lastIndexOf("/");
         if (firstSlashEntry != secondSlashEntry) {
-            return userString.substring(firstSlashEntry + INDEX_OFFSET_IN_COMMAND, secondSlashEntry);
+            String from = userString.substring(firstSlashEntry + INDEX_OFFSET_IN_COMMAND, secondSlashEntry);
+            return from;
+        } else {
+            return EMPTY_STRING;
         }
-        throw new EmptyUserInputException();
     }
 
     public static String fetchTo(String userString) {
         int secondSlashEntry = userString.lastIndexOf("/");
-        return userString.substring(secondSlashEntry + INDEX_OFFSET_IN_COMMAND);
+        String to = userString.substring(secondSlashEntry + INDEX_OFFSET_IN_COMMAND);
+        return to;
     }
 
 }

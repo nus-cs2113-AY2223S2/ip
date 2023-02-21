@@ -1,31 +1,50 @@
 package inu.task;
 
+import inu.exceptionhandling.EmptyUserInputException;
+
 import java.util.ArrayList;
-import inu.task.Task;
 
 public class TaskList {
 
-    private ArrayList<Task> taskList;
+    private final ArrayList<Task> taskList;
+
+    private final String EMPTY_STRING = "";
 
     private final int INDEX_OFFSET = 1;
+
+    private final int INDEX_EMPTY_INPUT = -1;
 
     public TaskList() {
         taskList = new ArrayList<>();
     }
 
-    public void printList() {
+    public String printList() {
+
+        String printTaskListResult = EMPTY_STRING;
+
         for (int taskIndex = 0; taskIndex < taskList.size(); taskIndex++) {
             int taskNumber = taskIndex + INDEX_OFFSET;
-            System.out.println(taskNumber + ". " + taskList.get(taskIndex).toString());
+            printTaskListResult += ("\n" + taskNumber + ". " + taskList.get(taskIndex).toString());
         }
+
+        return printTaskListResult;
+
     }
 
     public void addTask(Task t) {
         taskList.add(t);
     }
 
-    public void deleteTask(int taskIndex) {
-        taskList.remove(taskIndex);
+    public void markTask(int index) {
+        taskList.get(index).setDone();
+    }
+
+    public void unMarkTask(int index) {
+        taskList.get(index).resetDone();
+    }
+
+    public void deleteTask(int index) {
+        taskList.remove(index);
         taskList.trimToSize();
     }
 
