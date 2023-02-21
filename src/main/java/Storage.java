@@ -146,19 +146,4 @@ public class Storage {
         writer.close();
     }
 
-    /***
-     * Checks if the file is already created in the user's environment. If not, fileAvailability will
-     * create the directory or txt file, depending on what is missing.
-     * Duke will only proceed when the txt file is detected.
-     * @throws FileNotFoundException When the file is not found in the environment.
-     */
-    public static void fileAvailability() throws FileNotFoundException {
-        File data = createFile();
-
-        if (data.exists()) {
-            Duke.showGreetings();
-            Ui.acceptUserInputs(data);
-            Duke.showGoodbye();
-        }
-    }
 }

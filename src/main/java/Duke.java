@@ -74,9 +74,25 @@ public class Duke {
      */
     public static void main(String[] args) {
         try {
-            Storage.fileAvailability();
+            fileAvailability();
         } catch (FileNotFoundException e) {
             System.out.println("File not found!\n");
+        }
+    }
+
+    /***
+     * Checks if the file is already created in the user's environment. If not, fileAvailability will
+     * create the directory or txt file, depending on what is missing.
+     * Duke will only proceed when the txt file is detected.
+     * @throws FileNotFoundException When the file is not found in the environment.
+     */
+    public static void fileAvailability() throws FileNotFoundException {
+        File data = Storage.createFile();
+
+        if (data.exists()) {
+            showGreetings();
+            Ui.acceptUserInputs(data);
+            showGoodbye();
         }
     }
 
@@ -84,7 +100,7 @@ public class Duke {
      * Outputs the goodbye formatting and message to the user when bye
      * command is called.
      */
-    public static void showGoodbye() {
+    private static void showGoodbye() {
         String bye = "Bye. Hope to see you again soon!\n";
         TaskList.formattingLine();
         System.out.println(bye);
@@ -94,7 +110,7 @@ public class Duke {
     /**
      * Shows the formatted greetings to the user when called.
      */
-    public static void showGreetings() {
+    private static void showGreetings() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -109,5 +125,6 @@ public class Duke {
         System.out.println(hello);
         TaskList.formattingLine();
     }
+
 
 }
