@@ -1,6 +1,7 @@
 package constants;
 
 public enum ErrorMessage {
+    PARSE_INT_ERROR("You have attempted to mark a non-number index"),
     INVALID_COMMAND("An invalid command has been provided"),
     INVALID_FORMAT("Ensure that your /from comes before your /to"),
     INVALID_NUMBER("Please provide a number when marking or un-marking a task"),
