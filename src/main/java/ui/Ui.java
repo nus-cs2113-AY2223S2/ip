@@ -26,7 +26,7 @@ public class Ui {
   /**
    * Prints the error message
    */
-  public void printErrorMessage(String message) {
+  public void printMessage(String message) {
     System.out.println(message);
   }
 
@@ -38,5 +38,15 @@ public class Ui {
   public String readInput() {
     String input = scanner.nextLine().trim();
     return input;
+  }
+
+  /**
+   * Mimics the printf
+   *
+   * @param format The string format
+   * @param args The arguments
+   */
+  public void printf(String format, Object... args) {
+    System.out.printf(format, args);
   }
 }

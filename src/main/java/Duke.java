@@ -62,9 +62,9 @@ public class Duke {
           throw new InvalidTaskError(ErrorMessage.INVALID_COMMAND.message);
       }
     } catch (NumberFormatException e) {
-      ui.printErrorMessage(ErrorMessage.PARSE_INT_ERROR.message);
+      ui.printMessage(ErrorMessage.PARSE_INT_ERROR.message);
     } catch (Exception e) {
-      ui.printErrorMessage(e.getMessage());
+      ui.printMessage(e.getMessage());
     }
   }
 

@@ -1,9 +1,12 @@
 package view;
 
+import ui.Ui;
 import model.task.Task;
 
 public class TaskView {
+    protected static Ui ui = new Ui();
+
     public void printTaskDescriptionText(Task model) {
-        System.out.println(model.getDescriptionText());
+        ui.printMessage(model.getDescriptionText());
     }
 }

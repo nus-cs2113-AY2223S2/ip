@@ -3,6 +3,7 @@ package parser;
 import constants.Command;
 import constants.ErrorMessage;
 import validator.error.InvalidTaskError;
+import ui.Ui;
 
 import java.util.HashMap;
 import java.util.regex.PatternSyntaxException;
@@ -13,6 +14,7 @@ public class IoParser {
     protected final String DESCRIPTION = "description";
     protected final String DEADLINE = "deadline";
     protected final String BY = " /by ";
+    protected final Ui ui = new Ui();
 
     protected HashMap<String, String> handleTodo(String text) {
         HashMap<String, String> dictionary = new HashMap<String, String>();
@@ -35,7 +37,7 @@ public class IoParser {
             dictionary.put(DEADLINE, deadline);
             return dictionary;
         } catch (PatternSyntaxException e) {
-            System.out.println("No deadline provided");
+            ui.printMessage("No deadline provided");
             return null;
         }
     }
@@ -124,11 +126,11 @@ public class IoParser {
                 return handleEvent(words[1]);
             }
         } catch (IndexOutOfBoundsException e) {
-            System.out.println(ErrorMessage.NO_DESCRIPTION.message);
+            ui.printMessage(ErrorMessage.NO_DESCRIPTION.message);
         } catch (NumberFormatException e) {
-            System.out.println(ErrorMessage.INVALID_NUMBER.message);
+            ui.printMessage(ErrorMessage.INVALID_NUMBER.message);
         } catch (Exception e) {
-            System.out.printf("Server error %s\n", e.getMessage());
+            ui.printf("Server error %s\n", e.getMessage());
         }
 
         return dictionary;

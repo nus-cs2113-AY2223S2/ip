@@ -1,23 +1,25 @@
 package parser;
 
 import com.google.gson.Gson;
+import constants.ErrorMessage;
 import controller.TaskController;
+import java.io.*;
+import java.util.ArrayList;
 import model.storage.JsonStorage;
 import model.task.Deadline;
 import model.task.Event;
 import model.task.Task;
 import model.task.Todo;
-
-import java.io.*;
-import java.util.ArrayList;
+import ui.Ui;
 
 public class FileParser {
 
   protected static FileParser instance = null;
-  protected static final String FILE_NAME = "./data/data.json";
+  protected static final String FILE_NAME = "./data.json";
   protected static final TaskController taskController = new TaskController();
   protected static final Gson gson = new Gson();
   protected static File file = new File(FILE_NAME);
+  protected static Ui ui = new Ui();
 
   /**
    * This function is used to create a file if it does not exist. This helps
@@ -28,7 +30,7 @@ public class FileParser {
     try {
       file.createNewFile();
     } catch (IOException e) {
-      System.out.println("An IO Exception occured");
+      ui.printMessage("An IO Exception occured");
       e.printStackTrace();
     }
   }
@@ -48,31 +50,37 @@ public class FileParser {
       for (JsonStorage item : x) {
         String type = item.getType();
         switch (type) {
-        case "todo":
-          Todo todo = new Todo(item.getDescription());
-          isMarked = item.isMarked();
-          todo.setDone(isMarked);
-          taskController.manuallyAdd(todo);
-          break;
-        case "event":
-          Event event = new Event(item.getDescription(), item.getStart(), item.getEnd());
-          isMarked = item.isMarked();
-          event.setDone(isMarked);
-          taskController.manuallyAdd(event);
-          break;
-        default:
-          Deadline deadline = new Deadline(item.getDescription(), item.getEnd());
-          isMarked = item.isMarked();
-          deadline.setDone(isMarked);
-          taskController.manuallyAdd(deadline);
-          break;
+          case "todo":
+            Todo todo = new Todo(item.getDescription());
+            isMarked = item.isMarked();
+            todo.setDone(isMarked);
+            taskController.manuallyAdd(todo);
+            break;
+          case "event":
+            Event event = new Event(
+              item.getDescription(),
+              item.getStart(),
+              item.getEnd()
+            );
+            isMarked = item.isMarked();
+            event.setDone(isMarked);
+            taskController.manuallyAdd(event);
+            break;
+          default:
+            Deadline deadline = new Deadline(
+              item.getDescription(),
+              item.getEnd()
+            );
+            isMarked = item.isMarked();
+            deadline.setDone(isMarked);
+            taskController.manuallyAdd(deadline);
+            break;
         }
       }
     } catch (FileNotFoundException e) {
-      System.out.println("A file not found exception occured");
-      System.out.println(e.getMessage());
+      ui.printMessage(ErrorMessage.FOUND_NOT_FOUND_EXCEPTION.message);
     } catch (Exception e) {
-      System.out.println(e.getMessage());
+      ui.printMessage(e.getMessage());
     }
   }
 
@@ -98,11 +106,11 @@ public class FileParser {
         type = "event";
       }
       JsonStorage item = new JsonStorage(
-              task.getTaskName(),
-              task.isDone(),
-              end,
-              type,
-              start
+        task.getTaskName(),
+        task.isDone(),
+        end,
+        type,
+        start
       );
       items.add(item);
     }
@@ -113,12 +121,11 @@ public class FileParser {
       writer.write(json);
       writer.close();
     } catch (IOException e) {
-      System.out.println("Something went wrong");
+      ui.printMessage(ErrorMessage.IO_EXCEPTION_ERROR.message);
     }
   }
 
-  protected FileParser() {
-  }
+  protected FileParser() {}
 
   public static FileParser getInstance() {
     if (instance == null) {

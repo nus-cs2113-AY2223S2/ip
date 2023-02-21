@@ -6,20 +6,21 @@ import model.task.Event;
 import model.task.Task;
 import model.task.Todo;
 import storage.Database;
+import ui.Ui;
 import validator.Validator;
 import view.TaskView;
-
 
 public class TaskController {
 
   protected TaskView view = new TaskView();
   protected Validator validator = new Validator();
   protected Database db = Database.getInstance();
+  protected Ui ui = new Ui();
 
   private void printDescription(Task model) {
-    System.out.println(Message.TASK_ADDED.message);
+    ui.printMessage(Message.TASK_ADDED.message);
     view.printTaskDescriptionText(model);
-    System.out.printf(Message.LIST_NUMBER.message, db.getSize());
+    ui.printf(Message.LIST_NUMBER.message, db.getSize());
   }
 
   /**
@@ -29,11 +30,11 @@ public class TaskController {
    *                   fetching the data from the database.
    */
   public void listTasks() throws Exception {
-    System.out.println(Message.LIST_TASKS.message);
+    ui.printMessage(Message.LIST_TASKS.message);
     int numberOfEntries = db.getSize();
     for (int i = 0; i < numberOfEntries; i += 1) {
       Task model = db.read(i);
-      System.out.printf("%d. ", (i + 1));
+      ui.printf("%d. ", (i + 1));
       view.printTaskDescriptionText(model);
     }
   }
@@ -62,7 +63,7 @@ public class TaskController {
   public void toggleMark(boolean isMark, int index) throws Exception {
     db.update(index, isMark);
     Task model = db.read(index);
-    System.out.printf(
+    ui.printf(
       "%s\n",
       isMark ? Message.MARKED.message : Message.UNMARKED.message
     );
@@ -75,7 +76,8 @@ public class TaskController {
    * @param taskDescription The task description
    * @throws Exception An exception if the task is invalid
    */
-  public void addDeadlineTask(String description, String deadline) throws Exception {
+  public void addDeadlineTask(String description, String deadline)
+    throws Exception {
     Deadline model = new Deadline(description, deadline);
     db.create(model);
     printDescription(model);
@@ -88,7 +90,8 @@ public class TaskController {
    * @param taskDescription A string after removing the
    *                        command
    */
-  public void addEventTask(String taskDescription, String start, String end) throws Exception {
+  public void addEventTask(String taskDescription, String start, String end)
+    throws Exception {
     Event model = new Event(taskDescription, start, end);
     db.create(model);
     printDescription(model);
@@ -99,7 +102,7 @@ public class TaskController {
   }
 
   public void deleteTask(int index) throws Exception {
-    System.out.println("Task successfully deleted");
+    ui.printMessage("Task successfully deleted");
     db.delete(index);
   }
 }
