@@ -7,13 +7,17 @@ public class Deadline extends Task {
         this.deadline = deadline;
     }
 
+    public String formatDeadline() {
+        String[] dates = deadline.split("by", 2);
+        return "(by: " + this.deadline + ")";
+    }
+
     public String getDeadline() {
-        String[] dates = deadline.split("\\s+", 2);
-        return "(" + dates[0] + ":" + dates[1] + ")";
+        return this.deadline;
     }
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + this.getDeadline();
+        return "[D]" + super.toString() + " " + formatDeadline();
     }
 }

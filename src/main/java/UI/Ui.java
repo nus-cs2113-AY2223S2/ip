@@ -16,6 +16,7 @@ public class Ui {
     public static final String FILE_ACCESS_ERROR = "File access failed!";
     public static final String FILE_UPDATING_ERROR = "File update failed!";
     public static final String FILE_LOADING_ERROR = "File loading failed!";
+    public static final String FILEWRITER_CREATION_ERROR = "Filewriter object creation failed!";
 
     public static void showError(String constant) {
         System.out.println(LINE);

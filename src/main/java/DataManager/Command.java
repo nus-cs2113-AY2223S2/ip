@@ -2,6 +2,7 @@ package DataManager;
 
 import UI.Ui;
 import Exception.DukeException;
+import task.Storage;
 import task.TaskList;
 
 public class Command {
@@ -45,4 +46,10 @@ public class Command {
     public static void deleteTask(int index) {
         TaskList.deleteTask(index);
     }
+
+    public static void updateFileData(String taskDescription) {
+        Storage.storeFileData(taskDescription);
+    }
+
+
 }

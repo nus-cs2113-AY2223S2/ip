@@ -27,6 +27,7 @@ public class Parser {
         } else {
             throw new DukeException(Ui.UNRECOGNISED_INPUT);
         }
+        updateFileData(action);
         return action;
     }
 
@@ -67,7 +68,7 @@ public class Parser {
             throw new DukeException(Ui.WRONG_INPUTS_GIVEN);
         }
         String task = instruction[0];
-        String deadline = instruction[1];
+        String deadline = instruction[1].split("\\s+", 2)[1];
         action.createDeadlineTask(task, deadline);
     }
 
@@ -101,17 +102,48 @@ public class Parser {
         }
     }
 
+    public static void updateFileData(Command action) throws DukeException {
+        Storage.createFileWriterObject();
+        for (Task t : TaskList.list) {
+            String typeOfTask = t.getType();
+            String status = t.getStatus();
+            String task = t.getTask();
+            String taskDescription;
+            switch (typeOfTask) {
+            case "T":
+                taskDescription = String.format("%s-%s-%s", typeOfTask, status, task);
+                break;
+            case "D":
+                Deadline deadlineTask = (Deadline) t;
+                String deadline = deadlineTask.getDeadline();
+                taskDescription = String.format("%s-%s-%s-%s", typeOfTask, status, task, deadline);
+                break;
+            case "E":
+                Event eventTask = (Event) t;
+                String from = eventTask.getFrom();
+                String to = eventTask.getTo();
+                taskDescription = String.format("%s-%s-%s-from %s-to%s", typeOfTask, status, task, from, to);
+                break;
+            default:
+                throw new DukeException(Ui.UNRECOGNISED_TASKTYPE);
+            }
+            action.updateFileData(taskDescription);
+        }
+        Storage.closeFileWriterObject();
+    }
+
     public static void parseExistingTodo(String existingData) {
         String[] tokens = existingData.split("-");
         String status = tokens[1];
         String task = tokens[2];
         TaskList.addTodo(task, status);
     }
+
     public static void parseExistingDeadline(String existingData) {
         String[] tokens = existingData.split("-");
-        String status = tokens[1];
-        String task = tokens[2];
-        String deadline = tokens[3];
+        String status = tokens[1].trim();
+        String task = tokens[2].trim();
+        String deadline = tokens[3].trim();
         TaskList.addDeadline(task, deadline, status);
     }
 
@@ -135,6 +167,4 @@ public class Parser {
         }
         TaskList.addEvent(task, from, to, status);
     }
-
-
 }
