@@ -5,7 +5,7 @@ import model.task.Deadline;
 import model.task.Event;
 import model.task.Task;
 import model.task.Todo;
-import storage.Database;
+import database.Database;
 import ui.Ui;
 import validator.Validator;
 import view.TaskView;
