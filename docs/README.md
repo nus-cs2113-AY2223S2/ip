@@ -3,10 +3,10 @@
 This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
 
 Table of contents:
-1. [Quick Start](#quickStart)
+1. [Quick Start](#quick_start)
 2. [Features](#features) 
-    1. [Command Format](#commandFormat)
-    2. [Project Commands](#projectCommands)
+    1. [Command Format](#command_format)
+    2. [Project Commands](#project_commands)
         1. [Todo](#todo)
         2. [Deadline](#deadline)
         3. [Event](#event)
@@ -17,7 +17,8 @@ Table of contents:
         8. [Find](#find)
         9. [Exit](#bye)
 3. [FAQ](#faq)
-## 1. Quick Start <a name = "quickStart"></a>
+
+## 1. Quick Start <a name = "quick_start"></a>
 ```
 ____________________________________________________________
     // | |     //   ) )  // | |  \\ / / \\    / / //   ) )
@@ -39,13 +40,13 @@ Type "help" to get help.
 
 ## 2. Features <a name = "features"></a>
 
-### 2.1 Command Format <a name = "commandFormat"></a>
+### 2.1 Command Format <a name = "command_format"></a>
    * Parameters are defined in curly brackets and need to be defined by the user.
       * E.g. ```todo {description}``` where {description} is a parameter which can be defined, such as ```todo Read Remembrance of Earth's Past```
    * Date/time parameters are defined in square brackets and are automatically reformatted if in a valid format.
       * E.g. ```deadline {description} /by [end date/time]``` can be used as ```deadline Do Assignment 3 /by 2023-02-25 23:59``` and will appear as ```Do Assignment 3 (by: 11:59 PM, SATURDAY, FEBRUARY 25, 2023)```
      
-### 2.2 Project Commands <a name = "projectCommands"></a>
+### 2.2 Project Commands <a name = "project_commands"></a>
 
 #### 2.2.1 Add a todo task: ```todo``` <a name = "todo"></a>
 This command will create a new todo task with a given description, and then automatically save the task
