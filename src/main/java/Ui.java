@@ -27,8 +27,8 @@ public class Ui {
     public static final String TASK_DELETED_STRING = "Task has been deleted:";
     public static final String INVALID_TASK_TYPE_STRING = "Invalid task type specified.";
     public static final String TODO_SYNTAX_STRING = "Syntax: todo {task}";
-    public static final String DEADLINE_SYNTAX_STRING = "Syntax: deadline {task} /by {endDate}";
-    public static final String EVENT_SYNTAX_STRING = "Syntax: event {task} /from {startDate} /to {endDate}";
+    public static final String DEADLINE_SYNTAX_STRING = "Syntax: deadline {task} /by [endDate]";
+    public static final String EVENT_SYNTAX_STRING = "Syntax: event {task} /from [startDate] /to [endDate]";
     public static final String TASK_ADDED_STRING = "New task has been added: ";
     public static final String GOODBYE_STRING = "Goodbye. To reach customer service, just look outside your window.";
     public static final String LIST_DESCRIPTION_STRING = "list: lists out all current items and their current status.";

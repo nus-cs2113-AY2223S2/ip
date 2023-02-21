@@ -161,7 +161,7 @@ public class Task {
         try{
             LocalTime time = LocalTime.parse(userInput);
             LocalTime noon = LocalTime.parse("12:00");
-            return adjustHour(time.getHour()) + ":" + time.getMinute() + " " + (time.isBefore(noon)?"AM":"PM");
+            return adjustHour(time.getHour()) + ":" + (time.getMinute()<10 ? "0" : "") + time.getMinute() + " " + (time.isBefore(noon)?"AM":"PM");
         }catch(Exception e){
             return userInput;
         }
