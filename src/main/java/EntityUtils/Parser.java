@@ -1,7 +1,9 @@
 package EntityUtils;
 
 import Command.Command;
-import Command.AddCommand;
+import Command.AddDeadlineCommand;
+import Command.AddTodoCommand;
+import Command.AddEventCommand;
 import Command.DeleteCommand;
 import Command.ExitCommand;
 import Command.FindCommand;
@@ -50,9 +52,15 @@ public class Parser {
 
         // Creates a new task
         case "todo":
+            c = new AddTodoCommand(command, input);
+            break;
+
         case "deadline":
+            c = new AddDeadlineCommand(command, input);
+            break;
+
         case "event":
-            c = new AddCommand(command, input);
+            c = new AddEventCommand(command, input);
             break;
 
         // Marks a task as done using its index

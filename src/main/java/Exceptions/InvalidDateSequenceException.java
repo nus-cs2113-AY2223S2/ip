@@ -14,6 +14,7 @@ public class InvalidDateSequenceException extends DukeException {
      * @param endDate
      */
     public InvalidDateSequenceException(LocalDateTime startDate, LocalDateTime endDate) {
-        super(DateParser.dateToString(startDate) + " cannot be after " + DateParser.dateToString(endDate) + "!");
+        super("Invalid end date: " + DateParser.dateToString(endDate) + "\n\t" + 
+                DateParser.dateToString(startDate) + " cannot be after " + DateParser.dateToString(endDate) + "!");
     }
 }
