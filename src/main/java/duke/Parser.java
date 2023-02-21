@@ -71,7 +71,7 @@ public class Parser {
     }
 
     private static Command prepareTodoTask(String command) throws EmptyCommandException {
-        String todo = command.replace("todo", "").trim();
+        String todo = command.replaceFirst("todo", "").trim();
         if (todo.isEmpty()) {
             throw new EmptyCommandException();
         }
@@ -91,7 +91,7 @@ public class Parser {
     }
 
     private static Command prepareDeadlineTask(String command) throws EmptyCommandException, IllegalCommandException {
-        command = command.replace("deadline", "").trim();
+        command = command.replaceFirst("deadline", "").trim();
         if (command.isEmpty()) {
             throw new EmptyCommandException();
         }
@@ -115,7 +115,7 @@ public class Parser {
     }
 
     private static Command prepareEventTask(String command) throws IllegalCommandException, EmptyCommandException {
-        command = command.replace("event", "").trim();
+        command = command.replaceFirst("event", "").trim();
         if (command.isEmpty()) {
             throw new EmptyCommandException();
         }
@@ -163,7 +163,7 @@ public class Parser {
     }
 
     private static Command prepareFindTask(String fullCommand) throws IllegalCommandException {
-        String keyword = fullCommand.replace("find", "").trim();
+        String keyword = fullCommand.replaceFirst("find", "").trim();
         if (keyword.isEmpty()) {
             throw new IllegalCommandException();
         }
