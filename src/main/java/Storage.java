@@ -89,25 +89,14 @@ public class Storage {
      * @throws IOException Thrown when file cannot be read.
      */
     public static void markTaskInTxt(ArrayList<Task> storedValues, int numToMark) throws IOException {
-        storedValues.get(numToMark -1).markAsDone();
-        TaskList.formattingLine();
-        System.out.println("Nice! I've marked this task as done: \n"
-                + storedValues.get(numToMark -1).toString() + "\n");
-        TaskList.formattingLine();
+        Ui.informUserTaskMarked(storedValues, numToMark);
 
         File dukeInputs = Duke.FILEPATH;
         String prevContent = "";
         BufferedReader reader = new BufferedReader(new FileReader(dukeInputs));
-        String input = reader.readLine();
-        while (input != null) {
-            prevContent = prevContent + input + "\n";
-            input = reader.readLine();
-        }
+        prevContent = writingDuplicateArrayList(prevContent, reader);
 
-        char type = storedValues.get(numToMark -1).getClass().toString().substring(6).charAt(0);
-        String toReplace = (type + " | 0 | " + storedValues.get(numToMark -1).description);
-        String toReplaceWith = (type + " | 1 | " + storedValues.get(numToMark -1).description);
-        String newContent = prevContent.replace(toReplace, toReplaceWith);
+        String newContent = rewriteContent(storedValues, numToMark, " | 0 | ", " | 1 | ", prevContent);
         FileWriter writer = new FileWriter(dukeInputs);
         writer.write(newContent);
         reader.close();
@@ -121,29 +110,34 @@ public class Storage {
      * @throws IOException Thrown when file cannot be read.
      */
     public static void unmarkTaskInTxt(ArrayList<Task> storedValues, int numToMark) throws IOException {
-        storedValues.get(numToMark -1).unmarkAsDone();
-        TaskList.formattingLine();
-        System.out.println("OK, I've marked this task as not done yet: \n" +
-                storedValues.get(numToMark -1).toString() + "\n");
-        TaskList.formattingLine();
+        Ui.informUserTaskUnmarked(storedValues, numToMark);
 
         File dukeInputs = Duke.FILEPATH;
         String prevContent = "";
         BufferedReader reader = new BufferedReader(new FileReader(dukeInputs));
-        String input = reader.readLine();
-        while (input != null) {
-            prevContent = prevContent + input + "\n";
-            input = reader.readLine();
-        }
+        prevContent = writingDuplicateArrayList(prevContent, reader);
 
-        char type = storedValues.get(numToMark -1).getClass().toString().substring(6).charAt(0);
-        String toReplace = (type + " | 1 | " + storedValues.get(numToMark -1).description);
-        String toReplaceWith = (type + " | 0 | " + storedValues.get(numToMark -1).description);
-        String newContent = prevContent.replace(toReplace, toReplaceWith);
+        String newContent = rewriteContent(storedValues, numToMark, " | 1 | ", " | 0 | ", prevContent);
         FileWriter writer = new FileWriter(dukeInputs);
         writer.write(newContent);
         reader.close();
         writer.close();
     }
 
+    private static String writingDuplicateArrayList(String prevContent, BufferedReader reader) throws IOException {
+        String input = reader.readLine();
+        while (input != null) {
+            prevContent = prevContent + input + "\n";
+            input = reader.readLine();
+        }
+        return prevContent;
+    }
+
+    private static String rewriteContent(ArrayList<Task> storedValues, int numToMark, String before, String after, String prevContent) {
+        char type = storedValues.get(numToMark - 1).getClass().toString().substring(6).charAt(0);
+        String toReplace = (type + before + storedValues.get(numToMark - 1).description);
+        String toReplaceWith = (type + after + storedValues.get(numToMark - 1).description);
+        String newContent = prevContent.replace(toReplace, toReplaceWith);
+        return newContent;
+    }
 }

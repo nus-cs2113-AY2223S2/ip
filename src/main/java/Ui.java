@@ -124,4 +124,20 @@ public class Ui {
         }
         Duke.taskNum += 1;
     }
+
+    static void informUserTaskMarked(ArrayList<Task> storedValues, int numToMark) {
+        storedValues.get(numToMark -1).markAsDone();
+        TaskList.formattingLine();
+        System.out.println("Nice! I've marked this task as done: \n"
+                + storedValues.get(numToMark -1).toString() + "\n");
+        TaskList.formattingLine();
+    }
+
+    static void informUserTaskUnmarked(ArrayList<Task> storedValues, int numToMark) {
+        storedValues.get(numToMark -1).unmarkAsDone();
+        TaskList.formattingLine();
+        System.out.println("OK, I've marked this task as not done yet: \n" +
+                storedValues.get(numToMark -1).toString() + "\n");
+        TaskList.formattingLine();
+    }
 }
