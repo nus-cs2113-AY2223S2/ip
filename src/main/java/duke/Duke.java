@@ -214,7 +214,21 @@ public class Duke {
                     printHorizontalRule();
                     return;
                 }
+                case ("find"): {
+                    description = removeCommandWord(userInput);
+                    int counter = 0;
 
+                    printHorizontalRule();
+                    System.out.println("The index given here is not reflective of the task's actual index.\nHere are all tasks which contain " + description + " in your list:");
+                    for (int i = 0; i < tasks.size(); i++) {
+                        if (tasks.get(i).contains(description)) {
+                            System.out.println((counter + 1) + ". " + tasks.get(i));
+                            counter++;
+                        }
+                    }
+                    printHorizontalRule();
+                    break;
+                }
                 case ("list"): {
                     // Prints all contents of task Array
                     printHorizontalRule();

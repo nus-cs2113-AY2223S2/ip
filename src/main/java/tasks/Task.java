@@ -30,5 +30,12 @@ public class Task {
     public void setIncomplete() {
         this.isComplete = false;
     }
+
+    public boolean contains(String description) {
+        if (getTask().contains(description)){
+            return true;
+        }
+        return false;
+    }
 }
 
