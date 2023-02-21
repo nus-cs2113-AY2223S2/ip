@@ -56,7 +56,7 @@ public class Event extends Task {
     }
 
     /**
-     * Overrides the template task toString with additional attribute <code>byDate</code> and <codefromDate</code> and
+     * Overrides the template task toString with additional attribute <code>byDate</code> and <code>fromDate</code> and
      * returns it as <code>String</code> representation of the task object.
      * <code>byDate</code> and <code>fromDate</code> is instead returned as <code>LocalDate</code> if the format
      * is eligible.
@@ -70,8 +70,11 @@ public class Event extends Task {
         } else if (localFromDate == null) {
             return super.toString() + " (from: " + fromDate
                     + " to: " + localByDate.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + ")";
+        } else if (localByDate == null) {
+            return super.toString() + " (from: " + localFromDate.format(DateTimeFormatter.ofPattern("MMM d yyyy"))
+                    + " to: " + byDate + ")";
         }
         return super.toString() + " (from: " + localFromDate.format(DateTimeFormatter.ofPattern("MMM d yyyy"))
-                + " to: " + byDate + ")";
+                + " to: " + localByDate.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + ")";
     }
 }

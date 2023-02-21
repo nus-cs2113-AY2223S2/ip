@@ -6,7 +6,7 @@ import duke.ui.DukeMessages;
 import duke.util.DukeException;
 
 /**
- * Main class for the chatbot application.
+ * Main class for the application.
  * Initializes the application by running method to read datafile.
  */
 public class Duke {
@@ -24,11 +24,7 @@ public class Duke {
         ui = new DukeMessages();
         parser = new Parser(ui);
         dm = new DataManager(path, ui, parser);
-        try {
-            dm.initialize();
-        } catch (DukeException e) {
-            ui.printFileFatalError();
-        }
+        dm.initialize();
         run();
     }
 
@@ -61,7 +57,7 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-        String path = "data\\tasks.txt";
+        String path = ".\\data\\tasks.txt";
         new Duke(path);
     }
 }

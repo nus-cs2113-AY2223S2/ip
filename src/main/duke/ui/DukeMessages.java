@@ -1,7 +1,7 @@
 package duke.ui;
 
 /**
- * Text UI for the chatbot.
+ * Text UI for the application.
  */
 public class DukeMessages {
     private static final String HI = "\n" +
@@ -35,10 +35,9 @@ public class DukeMessages {
     private static final String DEADLINE = "Understood *Salutes* Task with deadline added!\nRemember to complete it by "
             + "the deadline!";
     private static final String EVENT = "Understood *Salutes* Event added!\nRemember the starting time! Don't be late!";
-    private static final String FILE_FATAL_ERROR = "Failure to make and read file! No data will be stored!";
     private static final String NOT_FOUND = " *Rummages around cabinet* Uh oh looks like your whatever you searched for"
             + " does not exist! Check for typos!";
-
+    private static final String CLEAR = " *Tosses cabinet into incinerator* All records dumped boss!";
     /**
      * Initialization for the text UI.
      */
@@ -171,13 +170,6 @@ public class DukeMessages {
     }
 
     /**
-     * Prints error when unable to write to the datafile.
-     */
-    public void printFileFatalError() {
-        System.out.println(FILE_FATAL_ERROR);
-    }
-
-    /**
      * Prints message when the user input for <code>find</code> or <code>date</code> does not find any entries.
      */
     public void printNotFound() {
@@ -227,5 +219,9 @@ public class DukeMessages {
      */
     public void printDeleted(String task) {
         System.out.println("Roger!" + task + " removed!");
+    }
+
+    public void printClear() {
+        System.out.println(CLEAR);
     }
 }
