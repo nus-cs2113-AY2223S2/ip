@@ -22,10 +22,10 @@ public class Deadline extends Task {
     }
 
     /**
-     * Returns the specific Object task in readable format to the user which contains information such as
-     * the description, whether its marked or not and the deadline
+     * Returns the specific Object Deadline task in readable format of a string to the user which contains information
+     * such as the description, whether it's marked or not and the deadline
      *
-     * @return
+     * @return the String in a readable format referring to the Deadline task
      */
     @Override
     public String toString() {
@@ -33,7 +33,7 @@ public class Deadline extends Task {
     }
 
     /**
-     * Returns the string in the format that it is to be saved in the database
+     * Returns the string in the format to be saved in the database
      *
      * @return the String in the right format of deadline type of task
      */
