@@ -30,6 +30,9 @@ public class UserCommandManager {
         case "ls -s":
             command = new PrintSortedTasks();
             break;
+        case "find":
+            command = new FindTask(userCommand[1]);
+            break;
         case "sort":
             command = new SortTasks();
             break;
