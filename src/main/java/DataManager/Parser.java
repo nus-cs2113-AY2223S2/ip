@@ -22,6 +22,8 @@ public class Parser {
             eventTask(input, action);
         } else if (inst.equalsIgnoreCase("delete")) {
             deleteTask(input, action);
+        } else if (inst.equalsIgnoreCase("find")) {
+            findTask(input, action);
         } else if (inst.equalsIgnoreCase("bye")) {
             action.setExit(true);
         } else {
@@ -100,6 +102,15 @@ public class Parser {
         } catch (Exception e) {
             throw new Exception(Ui.UNRECOGNISED_ITEM_INDEX);
         }
+    }
+
+    public static void findTask(String input, Command action) throws Exception {
+        String[] tokens = input.split("\\s+");
+        if(tokens.length < 2) {
+            throw new Exception(Ui.FIND_ITEM_EMPTY);
+        }
+        String keyword = tokens[1];
+        action.findItems(keyword);
     }
 
     public static void updateFileData(Command action) throws DukeException {

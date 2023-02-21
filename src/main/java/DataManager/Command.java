@@ -3,7 +3,10 @@ package DataManager;
 import UI.Ui;
 import Exception.DukeException;
 import task.Storage;
+import task.Task;
 import task.TaskList;
+
+import java.util.ArrayList;
 
 public class Command {
     private String commandAction;
@@ -51,5 +54,14 @@ public class Command {
         Storage.storeFileData(taskDescription);
     }
 
-
+    public static void findItems(String keyword) {
+        ArrayList<Task> itemMatch = new ArrayList<>();
+        for (Task item : TaskList.list) {
+            String taskDescription = item.getTask();
+            if(taskDescription.contains(keyword)) {
+                itemMatch.add(item);
+            }
+        }
+        Ui.printList(itemMatch);
+    }
 }
