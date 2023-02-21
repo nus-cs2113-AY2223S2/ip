@@ -44,7 +44,7 @@ public class Duke {
 				fileIO.writeFile (tasks);
 			} else {
 				printLine ();
-				throw new DukeException ("OOPS!!! The description of a " + input + " cannot be empty.");
+				throw new DukeException ("OOPS!!! I'm sorry, but I don't know what that means :-(");
 			}
 		} else {
 			if ("list".equalsIgnoreCase (input)) {
