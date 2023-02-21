@@ -7,6 +7,7 @@ import duke.exceptions.UnknownCommandException;
 import duke.exceptions.*;
 import duke.tasks.Bye;
 import duke.tasks.Greet;
+import duke.tasks.Task;
 import duke.tools.Parser;
 
 import java.io.IOException;
@@ -69,6 +70,9 @@ public class CommandManager {
             break;
         case "find":
             TaskManager.findTasksByKeyword(this.commandDescription);
+            break;
+        case "date":
+            TaskManager.findDeadlinesByDate(this.commandDescription);
             break;
         default:
             throw new UnknownCommandException();

@@ -60,6 +60,7 @@ public class Parser {
         case "todo":
         case "deadline":
         case "find":
+        case "date":
             if(command.length() == inputWords.length()){
                 throw new CommandDescriptionEmptyException();
             }
