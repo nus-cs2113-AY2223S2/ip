@@ -113,5 +113,14 @@ public class TaskList {
         ui.showSuccessfulAdd(newTask);
     }
 
-
+    public void find(String description){
+        ArrayList<Task> temp = new ArrayList<>();
+        for (Task task : tasks){
+            if (task.getDescription().contains(description)){
+                temp.add(task);
+            }
+        }
+        ui.searchResults(temp);
+        temp.clear();
+    }
 }

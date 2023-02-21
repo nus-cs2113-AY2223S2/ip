@@ -31,7 +31,9 @@ public class Parser {
     private static boolean isEventCommand(String userInput, String Command){
         return userInput.length()>6 && Command.equalsIgnoreCase("event");
     }
-
+    private static boolean isFindCommand(String userInput, String Command){
+        return userInput.length()>5 && Command.equalsIgnoreCase("find");
+    }
     public static void parseInput(String userInput, TaskList taskList){
         userInput = userInput.trim(); //removes excess whitespace in front and back of command
         String[] commandLine = userInput.split(" "); //split substrings by whitespaces
@@ -54,9 +56,16 @@ public class Parser {
             parseEventCommand(remainder, taskList);
         } else if (userInput.equalsIgnoreCase("bye")){
             ui.handleExit();
+        } else if (isFindCommand(userInput,commandLine[0])){
+            parseFindCommand(remainder, taskList);
         } else{
             ui.showException("IllegalCommandException");
         }
+    }
+
+    private static void parseFindCommand(String remainder, TaskList taskList) {
+        String description = remainder.trim();
+        taskList.find(description);
     }
 
     private static void parseEventCommand(String remainder, TaskList taskList) {
