@@ -4,15 +4,31 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * deals with loading tasks from the file and saving tasks in the file
+ */
 public class Storage {
     private final static String LOAD_PATH = "save/tasks.txt";
     File file;
 
+    /**
+     * Constructor for Storage
+     *
+     * @param filePath Path to locate file relative to project root.
+     */
     public Storage(String filePath) {
         file = new File(filePath);
     }
 
-    public static void save(TaskList tasks) throws DukeException, IOException {
+    /**
+     * Writes current TaskList onto file on hard drive after
+     * checking if the directory the file is in and the file exists.
+     * If they do not exist, create them
+     *
+     * @param tasks TaskList with tasks in Duke.
+     * @throws IOException Thrown when file system encounters an error.
+     */
+    public static void save(TaskList tasks) throws IOException {
         File file = new File(LOAD_PATH);
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
@@ -27,6 +43,15 @@ public class Storage {
         }
         fileWriter.close();
     }
+
+    /**
+     * Retrieves data from a previous session of Duke, if it exists,
+     * and then format the data into an appropriate format to add into
+     * the task list
+     *
+     * @return An array of Tasks.
+     * @throws DukeException Thrown when unexpected behaviour occurs with Duke.
+     */
 
     public Task[] load() throws DukeException {
         try {

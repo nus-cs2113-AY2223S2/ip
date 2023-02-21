@@ -1,31 +1,74 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+
+/**
+ * Class representing the task list of users
+ */
 public class TaskList {
     ArrayList<Task> tasks;
 
+    /**
+     * Constructor for TaskList when there are no prior Tasks
+     * from a previous session
+     */
     public TaskList() {
         tasks = new ArrayList<>();
     }
-    public TaskList(Task[] inputTasks) {
+
+    /**
+     * Constructor for TaskList when Tasks are present
+     * from a previous session
+     *
+     * @param loadedTasks Array of Tasks to be added.
+     */
+    public TaskList(Task[] loadedTasks) {
         this();
-        tasks.addAll(Arrays.asList(inputTasks));
+        tasks.addAll(Arrays.asList(loadedTasks));
     }
+
+    /**
+     * Adds a Task to the task list
+     *
+     * @param task Task to be added to current list.
+     */
 
     public void add(Task task) {
         tasks.add(task);
     }
 
+    /**
+     * Returns a task at a given index.
+     *
+     * @param i Index where task is to be returned.
+     * @return The task requested by Duke.
+     */
     public Task get(int i) {
         return tasks.get(i);
     }
+
+    /**
+     * Removes task from list at given index.
+     *
+     * @param i Index where task is to be removed.
+     */
     public void remove(int i) {
         tasks.remove(i);
     }
 
+    /**
+     * Returns the number of items in the existing TaskList.
+     *
+     * @return Number of tasks in the TaskList.
+     */
     public int size() {
         return tasks.size();
     }
 
+    /**
+     * Returns an array of tasks stored in current Task List.
+     *
+     * @return An array of Tasks from current Task List.
+     */
     public Task[] asList() {
         return tasks.toArray(new Task[0]);
     }

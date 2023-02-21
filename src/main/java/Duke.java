@@ -6,6 +6,11 @@ public class Duke {
     private Ui ui;
     private TaskList tasks;
 
+    /**
+     * Constructs a Duke object for program to run by
+     * Initialising the ui, storage, parser and task list
+     * to be used for the program.
+     */
     public Duke() {
         ui = new Ui();
         storage = new Storage(LOAD_PATH);
@@ -23,6 +28,9 @@ public class Duke {
         new Duke().run();
     }
 
+    /**
+     * Runs the Duke program
+     */
     public void run() {
         try {
             String input = ui.requestUserInput();

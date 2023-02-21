@@ -1,17 +1,35 @@
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * deals with making sense of the user command
+ */
 public class Parser {
     Ui ui;
     Storage storage;
     TaskList taskList;
 
+    /**
+     * Constructor for a parser.
+     *
+     * @param ui deals with interactions with the user
+     * @param storage deals with loading tasks from the file and saving tasks in the file
+     * @param taskList contains the task list of the user
+     */
     public Parser(Ui ui, Storage storage, TaskList taskList) {
         this.ui = ui;
         this.storage = storage;
         this.taskList = taskList;
     }
 
+    /**
+     * Continue receiving user inputs and runs the parser
+     * as long as the user does not input "bye"
+     * Outputs farewell message if user inputs "bye"
+     *
+     * @param tasks the list storing the user's tasks
+     * @param line the user input
+     */
     public static void run(TaskList tasks, String line) {
         while (!line.equals("bye")) {
             if (line.length() == 0) {
@@ -24,7 +42,14 @@ public class Parser {
         Ui.showFarewellMessage();
     }
 
-
+    /**
+     * Splits the line of user input into a list of words so
+     * that the command and arguments can be easily processed.
+     * Then process the input
+     *
+     * @param tasks the list storing the user's tasks
+     * @param line the user input
+     */
     public static void prepareInput(TaskList tasks, String line) {
         String[] wordList = line.split(" ");
         String command = wordList[0];
@@ -35,6 +60,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Adds the task into the list containing the user
+     * tasks and prints confirmation message
+     *
+     * @param tasks the list storing the user's tasks
+     * @param task the task to be added
+     */
     public static void addTask(TaskList tasks, Task task) {
         tasks.add(task);
         System.out.println("Got it. I've added this task:");
@@ -42,6 +74,14 @@ public class Parser {
         System.out.printf("Now you have %d tasks in the list\n", tasks.size());
     }
 
+    /**
+     * Marks the task indicated by the second argument of the user
+     * input as done
+     *
+     * @param tasks the list storing the user's tasks
+     * @param wordList the line of user input stored as an array of strings
+     * @throws DukeException Thrown when number of arguments is incorrect
+     */
     private static void doMark(TaskList tasks, String[] wordList) throws DukeException {
         if (wordList.length != 2) {
             throw new DukeException("☹ OOPS!!! Wrong number of arguments for mark");
@@ -57,6 +97,15 @@ public class Parser {
         }
     }
 
+    /**
+     * Unmarks the task indicated by the second argument of the user
+     * input as not done
+     *
+     * @param tasks the list storing the user's tasks
+     * @param wordList the line of user input stored as an array of strings
+     * @throws DukeException Thrown when number of arguments is incorrect
+     */
+
     private static void doUnmark(TaskList tasks, String[] wordList) throws DukeException {
         if (wordList.length != 2) {
             throw new DukeException("☹ OOPS!!! Wrong number of arguments for unmark");
@@ -70,6 +119,15 @@ public class Parser {
             System.out.println(exception);
         }
     }
+
+    /**
+     * Interprets the user input and adds an event task with its
+     * corresponding description, start and end time to the task list
+     *
+     * @param line the user input
+     * @param tasks the list storing the user's tasks
+     * @throws DukeException thrown when the event description is empty
+     */
 
     private static void doEvent(String line, TaskList tasks) throws DukeException {
         if (line.length() <= 6 || line.substring(6).isBlank()) {
@@ -88,6 +146,15 @@ public class Parser {
         }
     }
 
+    /**
+     * Interprets the user input and adds a to-do task with
+     * its corresponding description into the task list
+     *
+     * @param line the user input
+     * @param tasks the list storing the user's tasks
+     * @throws DukeException thrown when the to-do description is empty
+     */
+
     private static void doTodo(String line, TaskList tasks) throws DukeException {
         if (line.length() <= 5 || line.substring(5).isBlank()) {
             throw new DukeException("☹ OOPS!!! The description of a todo cannot be empty.");
@@ -96,6 +163,16 @@ public class Parser {
         Todo todoTask = new Todo(description);
         addTask(tasks, todoTask);
     }
+
+    /**
+     * Interprets the user input and adds a deadline task
+     * with its corresponding deadline and
+     * description into the task list
+     *
+     * @param line the user input
+     * @param tasks the list storing the user's tasks
+     * @throws DukeException thrown when the deadline description is empty
+     */
 
     private static void doDeadline(String line, TaskList tasks) throws DukeException {
         if (line.length() <= 9 || line.substring(9).isBlank()) {
@@ -112,6 +189,15 @@ public class Parser {
         }
     }
 
+    /**
+     * Prints out all the tasks the user currently have in
+     * their list
+     *
+     * @param tasks the list storing the user's tasks
+     * @param wordList the line of user input stored as an array of strings
+     * @throws DukeException
+     */
+
     private static void printList(TaskList tasks, String[] wordList) throws DukeException {
         if (wordList.length > 1) {
             throw new DukeException("☹ OOPS!!! Too much arguments for list");
@@ -125,6 +211,14 @@ public class Parser {
             System.out.println("There is no tasks");
         }
     }
+
+    /**
+     * Deletes the task indicated by the second argument of the user
+     *
+     * @param tasks the list storing the user's tasks
+     * @param wordList the line of user input stored as an array of strings
+     * @throws DukeException thrown when number of arguments is incorrect
+     */
 
     private static void doDelete(TaskList tasks, String[] wordList) throws DukeException {
         if (wordList.length != 2) {
@@ -144,9 +238,7 @@ public class Parser {
         } catch (Exception exception) {
             System.out.println(exception);
         }
-        return;
     }
-
     private static void doFind(TaskList tasks, String[] wordList) throws DukeException {
         if (wordList.length != 2) {
             throw new DukeException("☹ OOPS!!! Wrong number of arguments for find");
@@ -162,6 +254,18 @@ public class Parser {
             }
         }
     }
+
+    /**
+     * interprets the user input and performs the corresponding actions,
+     * if possible, according to the command inputted by the user
+     *
+     * @param line the user input
+     * @param tasks the list storing the user's tasks
+     * @param wordList the line of user input stored as an array of strings
+     * @param command The command to be performed
+     * @throws DukeException thrown when the command cannot be interpreted
+     * @throws IOException Thrown when file system encounters an error.
+     */
     public static void processInput(String line, TaskList tasks, String[] wordList, String command) throws
             DukeException, IOException {
         switch (command) {
