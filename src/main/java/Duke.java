@@ -18,8 +18,8 @@ import java.util.ArrayList;
 
 public class Duke {
 
-    public static final String LOGO =
-            " ____        _\n"
+    private static final String LOGO =
+              " ____        _\n"
             + "|  _ \\ _   _| | _____\n"
             + "| | | | | | | |/ / _ \\\n"
             + "| |_| | |_| |   <  __/\n"
@@ -59,7 +59,7 @@ public class Duke {
         } else if (words[0].equals("delete")) {
             deleteCommand(tasks, words);
         } else if (words[0].contains("mark")) {
-            markUnmarkCommand(tasks, words);
+            toggleMarkCommand(tasks, words);
         } else {
             throw new DukeException(ErrorMessage.INVALID_COMMAND.toString());
         }
@@ -156,7 +156,7 @@ public class Duke {
         printHorizontalLine();
     }
 
-    private static void markUnmarkCommand(ArrayList<Task> tasks, String[] words) throws DukeException {
+    private static void toggleMarkCommand(ArrayList<Task> tasks, String[] words) throws DukeException {
         printHorizontalLine();
         int taskNumber = Integer.parseInt(words[1]);
         if (taskNumber > tasks.size()) {
@@ -164,10 +164,10 @@ public class Duke {
         }
 
         if (words[0].equals("mark")) {
-            tasks.get(taskNumber - 1).markDone();
+            tasks.get(taskNumber - 1).toggleMark(1);
             System.out.println("Nice! I've marked this task as done:");
         } else {
-            tasks.get(taskNumber - 1).markUndone();
+            tasks.get(taskNumber - 1).toggleMark(0);
             System.out.println("OK, I've marked this task as not done yet:");
         }
         System.out.println(tasks.get(taskNumber - 1));

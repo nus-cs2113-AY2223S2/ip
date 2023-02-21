@@ -2,7 +2,7 @@ package task;
 
 import java.io.Serializable;
 
-public class Task implements Serializable {
+public abstract class Task implements Serializable {
     private final String description;
     private boolean isDone;
 
@@ -10,12 +10,13 @@ public class Task implements Serializable {
         this.description = description;
         this.isDone = false;
     }
-    public void markDone(){
-        isDone = true;
-    }
-
-    public void markUndone() {
-        isDone = false;
+    public void toggleMark(int value){
+        if (value == 1) {
+            isDone = true;
+        }
+        else {
+            isDone = false;
+        }
     }
 
     public String getStatusIcon() {
