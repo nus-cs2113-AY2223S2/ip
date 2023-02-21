@@ -75,7 +75,7 @@ public class TaskList {
         if (Duke.taskNum < numToMark) {
             throw new UnmarkOutOfBounds();
         } else {
-            Duke.unmarkTaskInTxt(storedValues, numToMark);
+            Storage.unmarkTaskInTxt(storedValues, numToMark);
         }
     }
 
@@ -96,7 +96,7 @@ public class TaskList {
             // Means that it is out of bounds
             throw new MarkOutOfBounds();
         } else {
-            Duke.markTaskInTxt(storedValues, numToMark);
+            Storage.markTaskInTxt(storedValues, numToMark);
         }
     }
 

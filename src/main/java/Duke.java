@@ -7,9 +7,6 @@ import exceptions.UnmarkOutOfBounds;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.FileReader;
-import java.io.BufferedReader;
 import java.io.IOException;
 
 public class Duke {
@@ -332,70 +329,6 @@ public class Duke {
         Deadline deadlineInput = new Deadline(line.substring(9, endOfTask), line.substring(dates));
         taskNum = TaskList.addTask(storedValues, taskNum, deadlineInput);
         return taskNum;
-    }
-
-    /***
-     * Unmarks the tast in the txt file when called.
-     * @param storedValues List of tasks from user inputs.
-     * @param numToMark The row in txt file to be unmarked.
-     * @throws IOException Thrown when file cannot be read.
-     */
-    public static void unmarkTaskInTxt(ArrayList<Task> storedValues, int numToMark) throws IOException {
-        storedValues.get(numToMark -1).unmarkAsDone();
-        TaskList.formattingLine();
-        System.out.println("OK, I've marked this task as not done yet: \n" +
-                storedValues.get(numToMark -1).toString() + "\n");
-        TaskList.formattingLine();
-
-        File dukeInputs = FILEPATH;
-        String prevContent = "";
-        BufferedReader reader = new BufferedReader(new FileReader(dukeInputs));
-        String input = reader.readLine();
-        while (input != null) {
-            prevContent = prevContent + input + "\n";
-            input = reader.readLine();
-        }
-
-        char type = storedValues.get(numToMark -1).getClass().toString().substring(6).charAt(0);
-        String toReplace = (type + " | 1 | " + storedValues.get(numToMark -1).description);
-        String toReplaceWith = (type + " | 0 | " + storedValues.get(numToMark -1).description);
-        String newContent = prevContent.replace(toReplace, toReplaceWith);
-        FileWriter writer = new FileWriter(dukeInputs);
-        writer.write(newContent);
-        reader.close();
-        writer.close();
-    }
-
-    /***
-     * Marks the task in the txt file.
-     * @param storedValues List of tasks from user inputs.
-     * @param numToMark Task number from user input that is to be marked.
-     * @throws IOException Thrown when file cannot be read.
-     */
-    public static void markTaskInTxt(ArrayList<Task> storedValues, int numToMark) throws IOException {
-        storedValues.get(numToMark -1).markAsDone();
-        TaskList.formattingLine();
-        System.out.println("Nice! I've marked this task as done: \n"
-                + storedValues.get(numToMark -1).toString() + "\n");
-        TaskList.formattingLine();
-
-        File dukeInputs = FILEPATH;
-        String prevContent = "";
-        BufferedReader reader = new BufferedReader(new FileReader(dukeInputs));
-        String input = reader.readLine();
-        while (input != null) {
-            prevContent = prevContent + input + "\n";
-            input = reader.readLine();
-        }
-
-        char type = storedValues.get(numToMark -1).getClass().toString().substring(6).charAt(0);
-        String toReplace = (type + " | 0 | " + storedValues.get(numToMark -1).description);
-        String toReplaceWith = (type + " | 1 | " + storedValues.get(numToMark -1).description);
-        String newContent = prevContent.replace(toReplace, toReplaceWith);
-        FileWriter writer = new FileWriter(dukeInputs);
-        writer.write(newContent);
-        reader.close();
-        writer.close();
     }
 
     /***
