@@ -3,9 +3,12 @@ import Exception.DukeException;
 import UI.Ui;
 import task.*;
 
-
+/**
+ * This class is used to parse user input commands and execute the corresponding function
+ * Also used to break down or format instructions/data such that it is understood by Duke
+ */
 public class Parser {
-    public static Command parseUserInput(String input) throws Exception {
+    public static Command parseUserInput(String input) throws DukeException {
         String inst = input.split("\\s+")[0];
         Command action = new Command(input);
         if (inst.equalsIgnoreCase("list")) {
@@ -33,24 +36,32 @@ public class Parser {
         return action;
     }
 
-    private static void markTask(String input, Command action) throws Exception {
+    private static void markTask(String input, Command action) throws DukeException {
         try {
             int index = Integer.parseInt(input.split("\\s+")[1]) - 1;
             action.markTask(index);
         } catch (Exception e) {
-            throw new Exception(Ui.UNRECOGNISED_ITEM_INDEX);
+            throw new DukeException(Ui.UNRECOGNISED_ITEM_INDEX);
         }
     }
 
-    private static void unmarkTask(String input, Command action) throws Exception {
+    private static void unmarkTask(String input, Command action) throws DukeException {
         try {
             int index = Integer.parseInt(input.split("\\s+")[1]) - 1;
             action.unmarkTask(index);
         } catch (Exception e) {
-            throw new Exception(Ui.UNRECOGNISED_ITEM_INDEX);
+            throw new DukeException(Ui.UNRECOGNISED_ITEM_INDEX);
         }
     }
 
+    /**
+     * parses the input into a format appropriate to Duke executes the corresponding action in Command class
+     * todo tasks user input will be in the format "[type of task] [task description]"
+     *
+     * @param input user's input
+     * @param action
+     * @throws DukeException if input is not in the correct format
+     */
     private static void todoTask(String input, Command action) throws DukeException {
         String[] tokens = input.split("\\s+", 2);
         if(tokens.length < 2) {
@@ -60,6 +71,14 @@ public class Parser {
         action.createTodoTask(task);
     }
 
+    /**
+     * parses the input into a format appropriate to Duke executes the corresponding action in Command class
+     * deadline tasks user input will be in the format "[type of task] [task description]/[deadline]"
+     *
+     * @param input user's input
+     * @param action to execute the correct Command
+     * @throws DukeException if input is not in the correct format
+     */
     private static void deadlineTask(String input, Command action) throws DukeException {
         String[] tokens = input.split("\\s+", 2);
         String[] instruction = tokens[1].split("/");
@@ -74,6 +93,14 @@ public class Parser {
         action.createDeadlineTask(task, deadline);
     }
 
+    /**
+     * parses the input into a format appropriate to Duke executes the corresponding action in Command class
+     * event tasks user input will be in the format "[type of task] [task description]/[from]/[to]"
+     *
+     * @param input user's input
+     * @param action to execute the correct Command
+     * @throws DukeException if input is not in the correct format
+     */
     private static void eventTask(String input, Command action) throws DukeException {
         String[] tokens = input.split("\\s+", 2);
         String[] instruction = tokens[1].split("/");
@@ -91,7 +118,7 @@ public class Parser {
         action.createEventTask(task, dateFrom, dateTo);
     }
 
-    private static void deleteTask(String input, Command action) throws Exception {
+    private static void deleteTask(String input, Command action) throws DukeException {
         String[] tokens = input.split("\\s+", 2);
         if(tokens.length < 2) {
             throw new DukeException(Ui.WRONG_INPUTS_GIVEN);
@@ -100,19 +127,27 @@ public class Parser {
             int index = Integer.parseInt(tokens[1]) - 1;
             action.deleteTask(index);
         } catch (Exception e) {
-            throw new Exception(Ui.UNRECOGNISED_ITEM_INDEX);
+            throw new DukeException(Ui.UNRECOGNISED_ITEM_INDEX);
         }
     }
 
-    public static void findTask(String input, Command action) throws Exception {
+    public static void findTask(String input, Command action) throws DukeException {
         String[] tokens = input.split("\\s+");
         if(tokens.length < 2) {
-            throw new Exception(Ui.FIND_ITEM_EMPTY);
+            throw new DukeException(Ui.FIND_ITEM_EMPTY);
         }
         String keyword = tokens[1];
         action.findItems(keyword);
     }
 
+    /**
+     * method formats the data in the current list into a manner separated by '-' such that splitting
+     * will be simpler
+     * executes method in Command to update the file on disk containing the data after every change is made
+     *
+     * @param action to execute the correct Command
+     * @throws DukeException if task type updated wrongly
+     */
     public static void updateFileData(Command action) throws DukeException {
         Storage.createFileWriterObject();
         for (Task t : TaskList.list) {
@@ -143,6 +178,12 @@ public class Parser {
         Storage.closeFileWriterObject();
     }
 
+    /**
+     * formats data that already exists on disk such and adds the task into the current list
+     * todo data will be in the form "[type of task]-[status]-[task description]", separated by '-'
+     *
+     * @param existingData current line of data being read in the file on disk
+     */
     public static void parseExistingTodo(String existingData) {
         String[] tokens = existingData.split("-");
         String status = tokens[1];
@@ -150,6 +191,13 @@ public class Parser {
         TaskList.addTodo(task, status);
     }
 
+    /**
+     * formats data that already exists on disk such and adds the task into the current list
+     * deadline data will be in the following form:
+     * "[type of task]-[status]-[task description]-[deadline]", separated by '-'
+     *
+     * @param existingData current line of data being read in the file on disk
+     */
     public static void parseExistingDeadline(String existingData) {
         String[] tokens = existingData.split("-");
         String status = tokens[1].trim();
@@ -158,6 +206,13 @@ public class Parser {
         TaskList.addDeadline(task, deadline, status);
     }
 
+    /**
+     * formats data that already exists on disk such and adds the task into the current list
+     * event data will be in the following form:
+     * "[type of task]-[status]-[task description]-from [from]-to [to]", separated by '-'
+     *
+     * @param existingData current line of data being read in the file on disk
+     */
     public static void parseExistingEvent(String existingData) {
         String[] tokens = existingData.split("-");
         String status = tokens[1];

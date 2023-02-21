@@ -1,13 +1,15 @@
 package DataManager;
 
 import UI.Ui;
-import Exception.DukeException;
 import task.Storage;
 import task.Task;
 import task.TaskList;
 
 import java.util.ArrayList;
 
+/**
+ * This class manages all the commands to execute, and executes corresponding methods in other classes
+ */
 public class Command {
     private String commandAction;
     private boolean isExit = false;

@@ -6,13 +6,17 @@ import task.TaskList;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * This class manages all the UI interactions and exception messages to be displayed to the user
+ */
 public class Ui {
     public static final String WRONG_INPUTS_GIVEN = "Wrong inputs given";
     public static final String LINE = "____________________________________________________________";
     public static final String UNRECOGNISED_INPUT = "☹ OOPS!!! I'm sorry, but I don't know what that means :-(";
     public static final String UNRECOGNISED_ITEM_INDEX = "☹ OOPS!!! unrecognised item index!";
-    public static final String EMPTY_DESCRIPTION = "☹ OOPS!!! The description cannot be empty.";
     public static final String UNRECOGNISED_TASKTYPE = "☹ OOPS!!! I do not recognise the type of task";
+    public static final String UNRECOGNISED_ACTION = "☹ OOPS!!! I do not recognise the action to take";
+    public static final String EMPTY_DESCRIPTION = "☹ OOPS!!! The description cannot be empty.";
     public static final String FILE_PATH = "data.txt";
     public static final String FILE_ACCESS_ERROR = "File access failed!";
     public static final String FILE_UPDATING_ERROR = "File update failed!";
@@ -72,16 +76,15 @@ public class Ui {
         System.out.println(LINE);
     }
 
-    public static void printLine() {
-        System.out.println(LINE);
-    }
-
     public static String getUserInput() {
         Scanner input = new Scanner(System.in);
         String userInput = input.nextLine().trim();
         return userInput;
     }
 
+    /**
+     * This method prints the ArrayList of tasks currently managed by TaskList
+     */
     public static void printList() {
         if(TaskList.list.size() == 0) {
             System.out.println(LINE);
@@ -97,6 +100,10 @@ public class Ui {
         }
     }
 
+    /**
+     * This method is an overload of the previous printList, except it prints a custom arraylist instead
+     * of the arraylist currently managed by TaskList
+     */
     public static void printList(ArrayList<Task> list) {
         if(list.size() == 0) {
             System.out.println(LINE);
@@ -126,6 +133,13 @@ public class Ui {
         System.out.println(LINE);
     }
 
+    /**
+     * This method prints the appropriate response according to 'action'. Confirmation for both actions
+     * was combined into this method as they had very similar functionalities
+     *
+     * @param newTask task to add or delete
+     * @param action either "add" or "delete"
+     */
     public static void printConfirmation(Task newTask, String action) {
         System.out.println(LINE);
         switch(action) {
@@ -138,6 +152,9 @@ public class Ui {
             System.out.println("I've removed this task:");
             System.out.println(newTask);
             break;
+
+        default:
+            System.out.println(UNRECOGNISED_ACTION);
         }
         System.out.println("Now you have " + TaskList.list.size() + " tasks in the list");
         System.out.println(LINE);

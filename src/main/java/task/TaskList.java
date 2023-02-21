@@ -4,6 +4,10 @@ import UI.Ui;
 
 import java.util.ArrayList;
 
+/**
+ * this class manages the list of tasks that Duke is using
+ * Supports adding and deleting different types of tasks
+ */
 public class TaskList {
     public static ArrayList<Task> list;
 

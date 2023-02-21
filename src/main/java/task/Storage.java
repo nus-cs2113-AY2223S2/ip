@@ -7,6 +7,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * This class manages all the operations on the file on the disk that stores our task data
+ */
 public class Storage {
     public static String filePath;
     private static FileWriter fw;
@@ -15,6 +18,10 @@ public class Storage {
         this.filePath = filePath;
     }
 
+    /**
+     * This method loads existing data on the disk and passes each line of data into the parser
+     *
+     */
     public static void loadExistingData() {
         try {
             File savedFile = new File(filePath);
@@ -48,7 +55,7 @@ public class Storage {
         try {
             fw = new FileWriter(filePath);
         } catch (Exception e) {
-            System.out.println(Ui.FILEWRITER_CREATION_ERROR);
+            Ui.showError(Ui.FILEWRITER_CREATION_ERROR);
         }
     }
 
@@ -56,7 +63,7 @@ public class Storage {
         try {
             fw.write(taskDescription + System.lineSeparator());
         } catch (Exception e) {
-            System.out.println(Ui.FILE_UPDATING_ERROR);
+            Ui.showError(Ui.FILE_UPDATING_ERROR);
         }
     }
 
@@ -64,7 +71,7 @@ public class Storage {
         try {
             fw.close();
         } catch (Exception e) {
-            System.out.println(Ui.FILEWRITER_CREATION_ERROR);
+            Ui.showError(Ui.FILEWRITER_CREATION_ERROR);
         }
     }
 }
