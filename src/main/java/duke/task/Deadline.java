@@ -6,7 +6,7 @@ public class Deadline extends Task{
     }
 
     public void setEndDate(String endDate) {
-        this.endDate = endDate;
+        this.endDate = parseDateTimeString(endDate);
     }
 
     private String endDate;

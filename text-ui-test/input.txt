@@ -21,3 +21,13 @@ delete the fifth element
 delete 3
 delete 3
 list
+deadline time test deadline /by 2019-12-01 05:30
+list
+delete 4
+event time test event /from 05:30 2019-12-01 /to 18:59
+list
+delete 4
+event time test event 2 /from 2019-12-01 /to 2023-11-22
+list
+delete 4
+list
