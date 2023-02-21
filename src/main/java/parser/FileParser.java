@@ -3,14 +3,15 @@ package parser;
 import com.google.gson.Gson;
 import constants.ErrorMessage;
 import controller.TaskController;
-import java.io.*;
-import java.util.ArrayList;
 import model.storage.JsonStorage;
 import model.task.Deadline;
 import model.task.Event;
 import model.task.Task;
 import model.task.Todo;
 import ui.Ui;
+
+import java.io.*;
+import java.util.ArrayList;
 
 public class FileParser {
 

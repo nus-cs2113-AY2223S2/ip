@@ -2,8 +2,8 @@ package parser;
 
 import constants.Command;
 import constants.ErrorMessage;
-import validator.error.InvalidTaskError;
 import ui.Ui;
+import validator.error.InvalidTaskError;
 
 import java.util.HashMap;
 import java.util.regex.PatternSyntaxException;

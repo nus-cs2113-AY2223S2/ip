@@ -1,8 +1,9 @@
 package storage;
 
-import java.util.ArrayList;
 import model.task.Task;
 import parser.FileParser;
+
+import java.util.ArrayList;
 
 /**
  * Database is a class that is used to mock a real life database. It contains

@@ -1,10 +1,11 @@
 import constants.Command;
 import constants.ErrorMessage;
 import controller.TaskController;
-import java.util.HashMap;
 import parser.IoParser;
 import ui.Ui;
 import validator.error.InvalidTaskError;
+
+import java.util.HashMap;
 
 public class Duke {
 

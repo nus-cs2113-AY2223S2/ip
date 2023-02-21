@@ -1,7 +1,7 @@
 package view;
 
-import ui.Ui;
 import model.task.Task;
+import ui.Ui;
 
 public class TaskView {
     protected static Ui ui = new Ui();
