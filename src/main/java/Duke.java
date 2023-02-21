@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.io.File;
 import java.io.FileWriter;
 public class Duke {
+    public static final String MISSING_FIND_KEYWORD_STRING = "Missing find keyword.";
     private static final String LINE = "____________________________________________________________";
     private static final String INVALID_COMMAND_STRING = "One hour of lifespan has been deducted,"
             + " in accordance with our Terms and Services.";
@@ -59,6 +60,10 @@ public class Duke {
     public static final String LOADING_SYSTEM_ERROR_STRING = "There was an system error in loading.";
     public static final String LOADING_PROGRAM_ERROR_STRING = "There was a program error in loading. 3 hours of "
             + "lifetime have been added for your inconvenience.";
+    public static final int FIND_COMMAND_LENGTH = 2;
+    public static final String TASKS_FOUND_STRING = "Here are the tasks that we have found: ";
+    public static final String FIND_DESCRIPTION_STRING = "find: finds any item with the keywords in the description.";
+    public static final String FIND_SYNTAX_STRING = "Syntax: find {keywords}";
     private static String command;
     private static ArrayList<Task> tasks = new ArrayList<>();
     private static Scanner in = new Scanner(System.in);
@@ -207,6 +212,32 @@ public class Duke {
             System.out.println(SAVING_ERROR_STRING);
         }
     }
+    private static void findTask(String[] commands){
+        String keyword = "";
+        if(commands.length < FIND_COMMAND_LENGTH){
+            System.out.println(LINE);
+            System.out.println(MISSING_FIND_KEYWORD_STRING);
+            System.out.println(LINE);
+            return;
+        }
+        for(int i = 1; i < commands.length ; i++){
+            keyword+=commands[i];
+            if(i < commands.length - 1){
+                keyword+=" ";
+            }
+        }
+        int counter = 1;
+        System.out.println(LINE);
+        System.out.println(VALID_COMMAND_STRING);
+        System.out.println(TASKS_FOUND_STRING);
+        for(int i = 0; i < tasks.size(); i++){
+            if(tasks.get(i).getDescription().toLowerCase().contains(keyword.toLowerCase())){
+                System.out.println(counter + ": " + tasks.get(i).toString());
+                counter++;
+            }
+        }
+        System.out.println(LINE);
+    }
     private static void silentlyAddTask(String command) throws IllegalCommandException{
         taskType currentTaskType = getTaskType(command);
         if(currentTaskType == taskType.INVALID){
@@ -251,6 +282,8 @@ public class Duke {
                 setMarkedOrUnmarked(commands, false);
             }else if(commands[0].equals("delete")){
                 delete(commands);
+            }else if(commands[0].equals("find")){
+                findTask(commands);
             }else{
                 try{
                     addTask(command);
@@ -288,6 +321,8 @@ public class Duke {
         System.out.println(HELP_SYNTAX_STRING);
         System.out.println(EXIT_DESCRIPTION_STRING);
         System.out.println(EXIT_SYNTAX_STRING);
+        System.out.println(FIND_DESCRIPTION_STRING);
+        System.out.println(FIND_SYNTAX_STRING);
         System.out.println(LINE);
     }
     private static void load() throws IOException, IllegalCommandException {
