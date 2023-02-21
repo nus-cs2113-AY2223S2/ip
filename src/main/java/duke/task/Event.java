@@ -1,14 +1,28 @@
 package duke.task;
 
-public class Event extends Task {
-    protected String startTime;
-    protected String endTime;
+import java.time.LocalDateTime;
 
-    public Event(String task, String startTime, String endTime) {
+public class Event extends Task {
+    protected String startString;
+    protected String endString;
+    protected LocalDateTime startTime;
+
+    public Event(String task, String startString, String endString) {
         super(task);
+        this.startString = startString;
+        this.endString = endString;
+        this.type = "Event";
+        this.startTime = LocalDateTime.now();
+        this.endTime = LocalDateTime.now();
+    }
+
+    public Event(String task, String startString, String endString, LocalDateTime startTime, LocalDateTime endTime) {
+        super(task);
+        this.startString = startString;
+        this.endString = endString;
+        this.type = "Event";
         this.startTime = startTime;
         this.endTime = endTime;
-        this.type = "Event";
     }
 
     /**
@@ -17,7 +31,12 @@ public class Event extends Task {
      * @return the formatted string of the event duration
      */
     public String getDuration() {
-        return "(from:" + startTime + "to:" + endTime + ")";
+        return " (from: " + startString + " to: " + endString + ")";
+    }
+
+    @Override
+    public LocalDateTime getEndTime() {
+        return this.endTime;
     }
 
     /**

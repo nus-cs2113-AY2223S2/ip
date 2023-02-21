@@ -21,7 +21,7 @@ public class AddTodoToList extends Command {
      */
     public AddTodoToList(String userInput) throws DukeException {
         try {
-            this.newTask = new Task(userInput);
+            this.newTask = new Task(userInput.replaceFirst(" ", ""));
         } catch (IndexOutOfBoundsException | NoSuchElementException ex) {
             throw new InvalidInputException();
         }

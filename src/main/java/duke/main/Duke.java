@@ -28,7 +28,6 @@ public class Duke {
         }
     }
 
-
     @SuppressWarnings("InfiniteLoopStatement")
     public void run() {
         ui.greetUser();

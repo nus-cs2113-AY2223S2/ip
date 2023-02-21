@@ -1,5 +1,8 @@
 package duke.task;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 public class Deadline extends Task {
     protected String dueBy;
 
@@ -7,15 +10,28 @@ public class Deadline extends Task {
         super(task);
         this.dueBy = dueBy;
         this.type = "Deadline";
+        this.endTime = LocalDateTime.now();
+    }
+
+    public Deadline(String task, String dueBy, LocalDateTime endTime) {
+        super(task);
+        this.dueBy = dueBy;
+        this.type = "Deadline";
+        this.endTime = endTime;
     }
 
     /**
-     * gets the due date of the task
+     * gets the due string of the task
      *
      * @return formatted string of due date
      */
-    public String getDueDate() {
-        return "(by:" + dueBy + ")";
+    public String getDueBy() {
+        return "(by: " + dueBy + ")";
+    }
+
+    @Override
+    public LocalDateTime getEndTime() {
+        return this.endTime;
     }
 
     /**
@@ -35,6 +51,6 @@ public class Deadline extends Task {
      */
     @Override
     public String getTaskStatus() {
-        return "[D]" + "[" + getStatusIcon() + "] " + task + getDueDate();
+        return "[D]" + "[" + getStatusIcon() + "] " + task + getDueBy();
     }
 }

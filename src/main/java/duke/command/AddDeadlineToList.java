@@ -7,8 +7,14 @@ import duke.filemanager.Storage;
 import duke.task.Deadline;
 import duke.ui.Ui;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
+import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 public class AddDeadlineToList extends Command {
     private Deadline newTask;
@@ -49,8 +55,16 @@ public class AddDeadlineToList extends Command {
     public void setTasks(String[] userInputArray) throws DukeException {
         try {
             String description = userInputArray[0];
-            String dueBy = userInputArray[1];
-            newTask = new Deadline(description, dueBy);
+            String dueBy = userInputArray[1].replaceFirst(" ", "");
+            try {
+                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
+                newTask = new Deadline(description, dueBy, LocalDateTime.parse(dueBy, dateTimeFormatter));
+            } catch (DateTimeParseException ex) {
+                System.out.println("Not a date and time, you can add a datetime with dd-MM-yyyy HHmm format");
+                newTask = new Deadline(description, dueBy);
+            }
+
+
         } catch (IndexOutOfBoundsException outOfBounds) {
             throw new DukeException("Please input all the necessary details");
         }

@@ -3,10 +3,15 @@ package duke.command;
 import duke.data.TaskList;
 import duke.exceptions.DukeException;
 import duke.exceptions.InvalidInputException;
+import duke.exceptions.InvalidScheduleException;
 import duke.filemanager.Storage;
+import duke.task.Deadline;
 import duke.task.Event;
 import duke.ui.Ui;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.NoSuchElementException;
 
 public class AddEventToList extends Command {
@@ -20,7 +25,7 @@ public class AddEventToList extends Command {
      */
     public AddEventToList(String userInput) throws DukeException {
         try {
-            final String[] userInputArray = userInput.trim().split("/from|/to");
+            final String[] userInputArray = userInput.trim().split(" /from | /to ");
             setTasks(userInputArray);
         } catch (IndexOutOfBoundsException ex) {
             throw new InvalidInputException();
@@ -47,9 +52,22 @@ public class AddEventToList extends Command {
     public void setTasks(String[] userInputArray) throws DukeException {
         try {
             String description = userInputArray[0];
-            String startTime = userInputArray[1];
-            String endTime = userInputArray[2];
-            this.newTask = new Event(description, startTime, endTime);
+            String startString = userInputArray[1];
+            String endString = userInputArray[2];
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
+            try {
+                LocalDateTime startTime = LocalDateTime.parse(startString, dateTimeFormatter);
+                LocalDateTime endTime = LocalDateTime.parse(endString, dateTimeFormatter);
+                if (endTime.isBefore(startTime)) {
+                    throw new InvalidScheduleException();
+                }
+                newTask = new Event(description, startString, endString
+                        , startTime
+                        , endTime);
+            } catch (DateTimeParseException ex) {
+                System.out.println("Not a date and time, you can add a datetime with dd-MM-yyyy HHmm format");
+                this.newTask = new Event(description, startString, endString);
+            }
         } catch (IndexOutOfBoundsException | NoSuchElementException ex) {
             throw new InvalidInputException();
         }

@@ -5,6 +5,8 @@ import duke.filemanager.Storage;
 import duke.task.Task;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 public class TaskList {
@@ -66,5 +68,14 @@ public class TaskList {
         return currentTask;
     }
 
+    public static class CustomComparator implements Comparator<Task> {
+        @Override
+        public int compare(Task o1, Task o2) {
+            return o1.getEndTime().compareTo(o2.getEndTime());
+        }
+    }
 
+    public void sortTaskList() {
+        Collections.sort(taskList, new TaskList.CustomComparator());
+    }
 }

@@ -1,18 +1,26 @@
 package duke.task;
 
+import java.time.LocalDateTime;
+
 public class Task {
     protected String type;
     protected String task;
     private boolean isDone;
+    protected LocalDateTime endTime;
 
     public Task(String task) {
         this.task = task;
         this.isDone = false;
         this.type = "todo";
+        this.endTime = LocalDateTime.of(0, 1, 1, 0, 0);
     }
 
     public String getDescription() {
         return this.task;
+    }
+
+    public LocalDateTime getEndTime() {
+        return this.endTime;
     }
 
     /**
@@ -60,6 +68,6 @@ public class Task {
      * @return task status and description
      */
     public String getTaskStatus() {
-        return "[T]" + "[" + getStatusIcon() + "]" + task;
+        return "[T]" + "[" + getStatusIcon() + "] " + task;
     }
 }

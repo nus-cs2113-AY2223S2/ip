@@ -1,11 +1,15 @@
 package duke.ui;
 
 import duke.data.TaskList;
+import duke.exceptions.DukeException;
+import duke.filemanager.Storage;
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Ui {
 
@@ -38,7 +42,7 @@ public class Ui {
 
     public void printTaskDeadline(Deadline deadline, TaskList tasks) {
         System.out.println("Got it! Added \n"
-                + "[D][ ] " + deadline.getDescription() + deadline.getDueDate() + "\n"
+                + "[D][ ] " + deadline.getDescription() + deadline.getDueBy() + "\n"
                 + "to the list.");
         System.out.println("Now you have " + tasks.size() + " task(s) in the list.");
     }
@@ -90,4 +94,12 @@ public class Ui {
         }
         System.out.println("Now you have " + readableList.size() + " tasks in the list.");
     }
+
+    public void printSorted(Storage storage) throws DukeException {
+        TaskList toSort = new TaskList(storage.setTasks());
+        toSort.sortTaskList();
+        printTasks(toSort);
+    }
+
+
 }

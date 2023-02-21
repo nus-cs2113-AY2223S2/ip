@@ -7,13 +7,19 @@ import duke.task.Event;
 import duke.task.Task;
 
 import java.io.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class TaskLoader {
 
     public ArrayList<Task> setClasses(String filePath) throws DukeException {
         ArrayList<Task> tasks = new ArrayList<Task>();
-        Gson gson = new Gson();
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateAdapter())
+                .setPrettyPrinting()
+                .create();
         JsonArray jsonArray;
         try {
             Reader reader = new FileReader(filePath);

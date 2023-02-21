@@ -25,6 +25,9 @@ public class UserCommandManager {
         case "list":
             command = new ListTasks();
             break;
+        case "sorted":
+            command = new printSortedTasks();
+            break;
         case "mark":
             command = new MarkCommand(userCommand[1]);
             break;
