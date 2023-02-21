@@ -46,8 +46,21 @@ public class Ui {
             case "E":
                 readExistingEvent(storedValues, extractType, marked);
                 break;
+            default:
+                System.out.println("Line in txt file cannot be read!");
+                break;
             }
         }
+    }
+
+    private static String[] splitCommand(int slash, String command) {
+        String beforeSlash = command.substring(0, slash-1);
+        String afterSlash = command.substring(slash+2);
+        String[] content = new String[2];
+        content[0] = beforeSlash;
+        content[1] = afterSlash;
+
+        return content;
     }
 
     /***
@@ -59,11 +72,15 @@ public class Ui {
      */
     private static void readExistingEvent(ArrayList<Task> storedValues, String[] extractType, String marked) {
         int firstSlash = extractType[4].indexOf("|");
-        String eventName = extractType[4].substring(0,firstSlash-1);
-        String eventDuration = extractType[4].substring(firstSlash+2);
+        String eventInputs[] = splitCommand(firstSlash, extractType[4]);
+        String eventName = eventInputs[0];
+        String eventDuration = eventInputs[1];
+
         int secondSlash = eventDuration.indexOf("|");
-        String eventFrom = eventDuration.substring(0,secondSlash-1);
-        String eventTo = eventDuration.substring(secondSlash+2);
+        String secondEventInputs[] = splitCommand(secondSlash, eventDuration);
+        String eventFrom = secondEventInputs[0];
+        String eventTo = secondEventInputs[1];
+
         Event addInputE = new Event(eventName, eventFrom, eventTo);
         storedValues.add(Duke.taskNum,addInputE);
         if (marked.equals("1")) {
@@ -81,8 +98,9 @@ public class Ui {
      */
     private static void readExistingDeadline(ArrayList<Task> storedValues, String[] extractType, String marked) {
         int slash = extractType[4].indexOf("|");
-        String deadlineTask = extractType[4].substring(0, slash-1);
-        String deadlineBy = extractType[4].substring(slash+2);
+        String deadlineInputs[] = splitCommand(slash, extractType[4]);
+        String deadlineTask = deadlineInputs[0];
+        String deadlineBy = deadlineInputs[1];
         Deadline addInputD = new Deadline(deadlineTask, deadlineBy);
         storedValues.add(Duke.taskNum,addInputD);
         if (marked.equals("1")) {

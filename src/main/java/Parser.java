@@ -8,6 +8,18 @@ public class Parser {
     // Functions in this file deals with making sense of the user command
 
     /***
+     * The fixed constants used to determine the commands by the user.
+     */
+    public static final String BYE = "bye";
+    public static final String LIST = "list";
+    public static final String MARK = "mark";
+    public static final String UNMARK = "unmark";
+    public static final String EVENT = "event";
+    public static final String DEADLINE = "deadline";
+    public static final String DELETE = "delete";
+    public static final String TODO = "todo";
+
+    /***
      * Prior to adding events with command deadline to the list, processDeadline separates the
      * important details within the input for data storage.
      * @param storedValues List of tasks from user inputs.
@@ -72,12 +84,12 @@ public class Parser {
         String splitInputs[] = line.split(" ", 2);
         String command = splitInputs[0];
         switch (command) {
-        case "bye":
+        case BYE:
             return true;
-        case "list":
+        case LIST:
             TaskList.printList(storedValues);
             break;
-        case "mark":
+        case MARK:
             try {
                 TaskList.markItem(storedValues, line, Duke.taskNum);
             } catch (MarkOutOfBounds e) {
@@ -86,7 +98,7 @@ public class Parser {
                 System.out.println("File is not found!");
             }
             break;
-        case "unmark":
+        case UNMARK:
             try {
                 TaskList.unmarkItem(storedValues, line);
             } catch (UnmarkOutOfBounds e) {
@@ -95,7 +107,7 @@ public class Parser {
                 System.out.println("File is not found!");
             }
             break;
-        case "deadline":
+        case DEADLINE:
             try {
                 Duke.taskNum = processDeadline(storedValues, Duke.taskNum, line);
             } catch (StringIndexOutOfBoundsException e) {
@@ -103,14 +115,14 @@ public class Parser {
                         "deadline <description> /by <date> \n");
             }
             break;
-        case "todo":
+        case TODO:
             try {
                 Duke.taskNum = processToDo(storedValues, Duke.taskNum, line);
             } catch (StringIndexOutOfBoundsException e) {
                 System.out.println("The description after todo cannot be empty!");
             }
             break;
-        case "event":
+        case EVENT:
             try {
                 Duke.taskNum = processEvent(storedValues, Duke.taskNum, line);
             } catch (StringIndexOutOfBoundsException e) {
@@ -118,7 +130,7 @@ public class Parser {
                         "event <description> /from <date> /to <date> \n");
             }
             break;
-        case "delete":
+        case DELETE:
             try {
                 TaskList.deleteTask(line, storedValues);
             } catch (IndexOutOfBoundsException e) {

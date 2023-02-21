@@ -18,7 +18,7 @@ public class Task {
     }
 
     /***
-     * Gets the current status of the task within the list.
+     * Returns the status of the task, which is indicated either by an X or a blank space.
      * @return isDone.
      */
     public String getStatusIcon() {
@@ -26,14 +26,14 @@ public class Task {
     }
 
     /***
-     * Marks the specified item as done.
+     * Marks the specified item as done, which is indicated with a X.
      */
     public void markAsDone() {
         isDone = true;
     }
 
     /***
-     * Unmarks the specified item as done.
+     * Unmarks the specified item as done, which is indicated with a blank space.
      */
     public void unmarkAsDone() {
         isDone = false;
