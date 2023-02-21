@@ -25,7 +25,7 @@ public abstract class Task {
      * Constructor of the Task object that creates a new Task which initialises its description, makes it unmarked at
      * the start and creates its dedicated taskString in the correct format
      *
-     * @param description describes the event that the user is referring to
+     * @param description describes what the task is about
      */
     public Task(String description) {
         this.description = description;

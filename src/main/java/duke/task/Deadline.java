@@ -12,7 +12,7 @@ public class Deadline extends Task {
     /**
      * The Constructor of the Deadline Object which initialises the description, deadline and the taskString
      *
-     * @param description describes what the task is about
+     * @param description describes what the deadline is about
      * @param deadline    the timing the task should be completed by
      */
     public Deadline(String description, String deadline) {

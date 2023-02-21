@@ -161,7 +161,7 @@ public class Parser {
         if (isInvalidString(stringSplit)) {
             throw new IllegalCommandException();
         }
-        return new AddDeadlineCommand(stringSplit);
+        return new AddDeadlineCommand(stringSplit[0],stringSplit[1]);
     }
 
     /**

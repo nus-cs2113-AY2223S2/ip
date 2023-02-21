@@ -7,7 +7,7 @@ public class Todo extends Task {
     /**
      * Todo class constructor that creates a new todo object and initialises its description
      *
-     * @param description describes the event that the user is referring to
+     * @param description describes the todo task that the user is referring to
      */
     public Todo(String description) {
         super(description);
