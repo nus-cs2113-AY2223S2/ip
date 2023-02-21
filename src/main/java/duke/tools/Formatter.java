@@ -11,7 +11,7 @@ public class Formatter {
      *
      * @param size of indentation.
      */
-    public void printIndentation(int size) {
+    public static void printIndentation(int size) {
         for (int i = 0; i<size; i+=1){
             System.out.print(' ');
         }
@@ -25,7 +25,7 @@ public class Formatter {
      * @param inputArray array.
      */
 
-    public void addStringIndentation(String[] inputArray) {
+    public static void addStringIndentation(String[] inputArray) {
         for(int i=0; i<inputArray.length; i+=1){
             inputArray[i] = STRING_INDENTATION + inputArray[i];
         }
@@ -41,7 +41,7 @@ public class Formatter {
      *
      * @param[in]: length/number of characters of the horizontal separation line.
      */
-    public void drawSeparationLine(){
+    public static void drawSeparationLine(){
         printIndentation(4);
         String s = "_";
         for (int i=0; i<LINE_LENGTH; i+=1){

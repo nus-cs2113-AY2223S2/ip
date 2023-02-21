@@ -19,7 +19,6 @@ public class CommandManager {
     private String inputCommand;
     private String commandType;
     private String commandDescription;
-    private static final TaskManager TASK_MANAGER = new TaskManager();
     private static final Parser COMMAND_PARSER = new Parser();
 
     public void setCommand(String command) throws UnknownCommandException, CommandDescriptionEmptyException {
@@ -54,15 +53,15 @@ public class CommandManager {
             sayBye();
             System.exit(0);
         }else if(commandType.equals("list")){
-            TASK_MANAGER.listTask();
+            TaskManager.listTask();
         }else if(commandType.equals("mark")){
-            TASK_MANAGER.editTaskStatus(this.commandDescription, "mark");
+            TaskManager.editTaskStatus(this.commandDescription, "mark");
         }else if(commandType.equals("unmark")){
-            TASK_MANAGER.editTaskStatus(this.commandDescription, "unmark");
+            TaskManager.editTaskStatus(this.commandDescription, "unmark");
         }else if(commandType.equals("todo")||commandType.equals("event")||commandType.equals("deadline")){
-            TASK_MANAGER.addTask(this.commandType, this.commandDescription);
+            TaskManager.addTask(this.commandType, this.commandDescription);
         }else if(commandType.equals("delete")){
-            TASK_MANAGER.deleteTask(this.commandDescription);
+            TaskManager.deleteTask(this.commandDescription);
         }
     }
 }

@@ -1,6 +1,7 @@
 package duke;
 
 import duke.exceptions.*;
+import duke.tools.Storage;
 import duke.tools.UI;
 
 import java.io.File;
@@ -8,8 +9,8 @@ import java.io.IOException;
 
 public class Duke {
 
-    private final static UI READ_COMMAND = new UI();
-    private final static CommandManager COMMAND_MANAGER = new CommandManager();
+    private static UI ui = new UI();
+    private static CommandManager commandManager = new CommandManager();
     private final static String UNKNOWN_COMMAND_MESSAGE = " OOPS!!! I'm sorry, but I don't know what that means :-(\n";
     private final static String EMPTY_CONTENT = "OOPS!!! The description of a task cannot be empty.\n";
     private final static String MISSING_PARAMETER = "Date/Timing is missing!!\n";
@@ -21,32 +22,32 @@ public class Duke {
 
 
     public static void startDuke() throws IOException{
-        COMMAND_MANAGER.sayHello();
-        READ_COMMAND.loadData();
+        commandManager.sayHello();
+        Storage.loadData();
     }
 
     public static void useDuke(){
         while(true){
             try{
-                String input = READ_COMMAND.readInput();
-                COMMAND_MANAGER.setCommand(input);
-                COMMAND_MANAGER.executeCommand();
+                String input = ui.readInput();
+                commandManager.setCommand(input);
+                commandManager.executeCommand();
             }catch(UnknownCommandException unknownCommand){
-                READ_COMMAND.printError(UNKNOWN_COMMAND_MESSAGE);
+                ui.printError(UNKNOWN_COMMAND_MESSAGE);
             }catch(MissingParameterException missingParameter){
-                READ_COMMAND.printError(MISSING_PARAMETER);
+                ui.printError(MISSING_PARAMETER);
             }catch(CommandDescriptionEmptyException emptyContent){
-                READ_COMMAND.printError(EMPTY_CONTENT);
+                ui.printError(EMPTY_CONTENT);
             }catch(DeleteIndexOutOfBound indexOutOfBound){
-                READ_COMMAND.printError(INDEX_OUT_OF_BOUND);
+                ui.printError(INDEX_OUT_OF_BOUND);
             }catch(DeleteEmptyTasks deleteEmptyTasks){
-                READ_COMMAND.printError(DELETE_EMPTY_TASKS);
+                ui.printError(DELETE_EMPTY_TASKS);
             }catch(IOException dataError){
-                READ_COMMAND.printError(DATA_ERROR);
+                ui.printError(DATA_ERROR);
             }catch(MissingFileException missingFile){
-                READ_COMMAND.printError(MISSING_DATA_FILE);
+                ui.printError(MISSING_DATA_FILE);
             }catch(EditEmptyTasks editEmptyTask){
-                READ_COMMAND.printError(EDIT_EMPTY_TASKS);
+                ui.printError(EDIT_EMPTY_TASKS);
             }finally{
                 continue;
             }
