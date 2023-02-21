@@ -19,7 +19,9 @@ public class Command {
 
     //method that executes the command
     public void execute(TaskList tasks, Ui ui, Storage storage) throws DukeException{
-    
+        //throw invalid command exception
+        throw new DukeException("Invalid command");
+
     }
 
     //method that returns the if the command is a bye command
