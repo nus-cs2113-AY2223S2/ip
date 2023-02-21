@@ -8,6 +8,8 @@ public class Ui {
     public static final String GREET_MESSAGE = "Hello! I'm Duke\nWhat can I do for you?";
     public static final String MARK_MESSAGE = "Nice! I've marked this task as done:";
     public static final String UNMARK_MESSAGE = "OK, I've marked this task as not done yet:";
+
+    public static final String FIND_MESSAGE = "Here are the matching tasks in your list:";
     public static final String LINE = "____________________________________________________________\n";
     public static final String LS = System.lineSeparator();
 
@@ -28,6 +30,15 @@ public class Ui {
     public String readCommand() {
         String command = in.nextLine();
         return command;
+    }
+
+
+    public static void FindTaskByKeywordOpeningMessage() {
+        System.out.println(LINE + FIND_MESSAGE);
+    }
+
+    public static void printLine() {
+        System.out.print(LINE);
     }
 
     /**

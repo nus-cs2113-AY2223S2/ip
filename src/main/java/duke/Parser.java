@@ -6,6 +6,7 @@ import duke.command.AddTodoCommand;
 import duke.command.Command;
 import duke.command.DeleteTaskCommand;
 import duke.command.ExitCommand;
+import duke.command.FindCommand;
 import duke.command.IllegalCommand;
 import duke.command.ListCommand;
 import duke.command.MarkAndUnmarkCommand;
@@ -43,6 +44,8 @@ public class Parser {
             return eventTaskHandler(fullCommand);
         } else if (firstWord.equals("delete")) {
             return deleteTaskHandler(fullCommand, tasks);
+        } else if (firstWord.equals("find")) {
+            return findTaskHandler(fullCommand);
         } else {
             return new IllegalCommand();
         }
@@ -114,7 +117,7 @@ public class Parser {
      * @throws EmptyCommandException whenever the todo task description is empty
      */
     private static Command prepareTodoTask(String command) throws EmptyCommandException {
-        String todo = command.replace("todo", "").trim();
+        String todo = command.replaceFirst("todo", "").trim();
         if (todo.isEmpty()) {
             throw new EmptyCommandException();
         }
@@ -153,7 +156,7 @@ public class Parser {
      * @throws IllegalCommandException when the string array length is not 2 after splitting as the format is wrong
      */
     private static Command prepareDeadlineTask(String command) throws EmptyCommandException, IllegalCommandException {
-        command = command.replace("deadline", "").trim();
+        command = command.replaceFirst("deadline", "").trim();
         if (command.isEmpty()) {
             throw new EmptyCommandException();
         }
@@ -161,7 +164,7 @@ public class Parser {
         if (isInvalidString(stringSplit)) {
             throw new IllegalCommandException();
         }
-        return new AddDeadlineCommand(stringSplit[0],stringSplit[1]);
+        return new AddDeadlineCommand(stringSplit[0], stringSplit[1]);
     }
 
     /**
@@ -196,7 +199,7 @@ public class Parser {
      * @throws EmptyCommandException   whenever the description of the event command is empty
      */
     private static Command prepareEventTask(String command) throws IllegalCommandException, EmptyCommandException {
-        command = command.replace("event", "").trim();
+        command = command.replaceFirst("event", "").trim();
         if (command.isEmpty()) {
             throw new EmptyCommandException();
         }
@@ -250,6 +253,26 @@ public class Parser {
         }
         return new DeleteTaskCommand(deleteIndex);
     }
+
+
+    private static Command findTaskHandler(String fullCommand) {
+        Command findCommand = null;
+        try {
+            findCommand = prepareFindTask(fullCommand);
+        } catch (IllegalCommandException e) {
+            Ui.illegalCommandMessage();
+        }
+        return findCommand;
+    }
+
+    private static Command prepareFindTask(String fullCommand) throws IllegalCommandException {
+        String keyword = fullCommand.replaceFirst("find", "").trim();
+        if (keyword.isEmpty()) {
+            throw new IllegalCommandException();
+        }
+        return new FindCommand(keyword);
+    }
+
 
     /**
      * Returns true is the 0-indexed marking is within the array boundaries of 0 and size-1, false otherwise

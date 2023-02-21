@@ -97,4 +97,13 @@ public abstract class Task {
         return taskString;
     }
 
+    /**
+     * Returns the description of the task
+     *
+     * @return the description String of the task
+     */
+    public String getDescription() {
+        return description;
+    }
+
 }
