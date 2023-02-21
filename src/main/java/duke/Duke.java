@@ -14,7 +14,7 @@ public class Duke {
     private TaskList taskList;
     private Parser parser;
     private UI ui;
-
+    /** Creates and initializes an instance of Duke by looking for saved data in the listed path**/
     public Duke() {
         storage = new Storage();
         taskList = new TaskList();
@@ -23,6 +23,7 @@ public class Duke {
         ui = new UI();
         storage.initializeFile(path);
     }
+    /** Runs the Duke program, checks and executes the first word of the input string as a command**/
     public void run() {
         ui.printGreeting();
         String input = parser.readInput();

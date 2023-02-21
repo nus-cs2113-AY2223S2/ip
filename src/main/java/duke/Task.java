@@ -32,6 +32,7 @@ public class Task {
     public String getTaskType() {
         return this.taskType;
     }
+    /** Gets the stored information of a task depending on its task type **/
     public void getTaskStatus() {
     }
 }

@@ -3,7 +3,6 @@ package duke;
 import duke.exceptions.InsufficientInputException;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -17,6 +16,7 @@ public class TaskList {
     private static final int DEADLINE_COMMAND_LENGTH = 2;
 
     private ArrayList<Task> taskListArray = new ArrayList<>();
+    /** Prints the currently stored list of tasks in ascending order **/
     public void displayList() {
         if (taskListArray.size() != 0) {
             System.out.println(UI.HorizontalLine + "List of Tasks: \n");
@@ -29,6 +29,7 @@ public class TaskList {
             System.out.println(UI.HorizontalLine + "no task added yet\n" + UI.HorizontalLine);
         }
     }
+    /** Creates a new event task, stores the name of the task and the start and end timings **/
     public void createEvent(String[] inputWords) throws InsufficientInputException {
         if (inputWords.length < INPUT_LENGTH) {
             throw new InsufficientInputException("Event command has insufficient input, please try again.");
@@ -42,7 +43,7 @@ public class TaskList {
         Task.maxTaskNumber++;
         System.out.printf(UI.HorizontalLine + "Event added: %s (from: %s to: %s)\n" + UI.HorizontalLine, event[0], event[1], event[2]);
     }
-
+    /** Creates a new deadline task, stores the name of the task and the deadline date **/
     public void createDeadline(String[] inputWords) throws InsufficientInputException, DateTimeParseException {
         if (inputWords.length < INPUT_LENGTH) {
             throw new InsufficientInputException("Deadline command has insufficient input, please try again.");
@@ -57,7 +58,7 @@ public class TaskList {
         System.out.printf(UI.HorizontalLine + "Deadline added: %s (by: %s)\n" + UI.HorizontalLine, deadline[0],
                 LocalDate.parse(deadline[1]).format(DateTimeFormatter.ofPattern("MMM dd yyyy")));
     }
-
+    /** Creates a new todo task, stores the name of the task**/
     public void createTodo(String[] inputWords) throws InsufficientInputException {
         if (inputWords.length < INPUT_LENGTH || inputWords[1].trim().equals("")) {
             throw new InsufficientInputException("Todo command has insufficient input, please try again.");
@@ -67,7 +68,7 @@ public class TaskList {
         Task.maxTaskNumber++;
         System.out.println(UI.HorizontalLine + "To do added: " + inputWords[1] + "\n" + UI.HorizontalLine);
     }
-
+    /** Unmarks the task of the task number specified **/
     public void unmarkTask(String[] inputWords) throws ArrayIndexOutOfBoundsException, InsufficientInputException {
         if (inputWords.length < INPUT_LENGTH || inputWords[1].trim().equals("")) {
             throw new InsufficientInputException("Task number not specified, please try again");
@@ -81,7 +82,7 @@ public class TaskList {
                     "\n" + UI.HorizontalLine);
         }
     }
-
+    /** Marks the task of the task number specified **/
     public void markTask(String[] inputWords) throws ArrayIndexOutOfBoundsException, InsufficientInputException {
         if (inputWords.length < INPUT_LENGTH || inputWords[1].trim().equals("")) {
             throw new InsufficientInputException("Task number not specified, please try again");
@@ -95,7 +96,7 @@ public class TaskList {
                     + UI.HorizontalLine);
         }
     }
-
+    /** Deletes the task of the task number specified from the list **/
     public void deleteTask(String[] inputWords) throws ArrayIndexOutOfBoundsException, InsufficientInputException{
         if (inputWords.length < INPUT_LENGTH || inputWords[1].trim().equals("")) {
             throw new InsufficientInputException("Task number not specified, please try again");
@@ -109,6 +110,7 @@ public class TaskList {
             System.out.printf(UI.HorizontalLine + "Task %d has been deleted\n" + UI.HorizontalLine, taskIndex+1);
         }
     }
+    /** Searches for tasks which contain the keyword specified in the task name and returns the list of tasks **/
     public void findTask(String[] inputWords) throws InsufficientInputException{
         if (inputWords.length < INPUT_LENGTH || inputWords[1].trim().equals("")) {
             throw new InsufficientInputException("Please specify a keyword");
@@ -124,6 +126,7 @@ public class TaskList {
         }
         System.out.println(UI.HorizontalLine);
     }
+    /** Reads and adds each task saved in the file into the current list **/
     public void readData(File f) throws IOException {
         Scanner s = new Scanner(f);
         while (s.hasNext()) {

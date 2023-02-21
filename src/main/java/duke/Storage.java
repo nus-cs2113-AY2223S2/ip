@@ -14,16 +14,16 @@ public class Storage {
         this.taskList = taskList;
         this.taskListArray = taskListArray;
     }
-
+    /** Creates a new file in the target path and checks for an existing save file **/
     public void initializeFile(String path) {
         try {
             File f = new File(path);
             taskList.readData(f);
         } catch (IOException e) {
-            System.out.println("No file exists");
+            System.out.println("No current save file exists");
         }
     }
-
+    /** Writes the current stored data in the ArrayList to the file specified in the path **/
     public void saveTasklist(String path) throws IOException {
         FileWriter fw = new FileWriter(path, false);
         for (Task i : taskListArray) {
