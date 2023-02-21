@@ -5,6 +5,7 @@ import duke.exceptions.UnkownCommandException;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.format.DateTimeParseException;
 
 
 public class Duke {
@@ -65,6 +66,8 @@ public class Duke {
                 System.out.println("Invalid task number");
             } catch (IOException e) {
                 System.out.println("Error occurred while saving file\n");
+            } catch (DateTimeParseException e) {
+                System.out.println("Please input date of format yyyy-mm-dd");
             }
             input = parser.readInput();
         }
