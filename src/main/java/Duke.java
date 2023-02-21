@@ -4,7 +4,6 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.Todo;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -12,73 +11,78 @@ import java.io.File;
 import java.io.FileWriter;
 public class Duke {
     private static final String LINE = "____________________________________________________________";
-    private static final String INVALID_COMMAND_PRINTER = "One hour of lifespan has been deducted, in accordance with our Terms and Services.";
-    private static final String VALID_COMMAND_PRINTER = "Command acknowledged. Reducing user lifespan by 30 minutes.";
+    private static final String INVALID_COMMAND_STRING = "One hour of lifespan has been deducted,"
+            + " in accordance with our Terms and Services.";
+    private static final String VALID_COMMAND_STRING = "Command acknowledged. Reducing user lifespan"
+            + " by 30 minutes.";
+    private static final String INVALID_MARK_LENGTH_STRING = "Please only input \"mark\" followed by an integer.";
+    private static final String INVALID_UNMARK_LENGTH_STRING = "Please only input \"unmark\" followed by an integer.";
     private static final String LOGO =
               "    // | |     //   ) )  // | |  \\\\ / / \\\\    / / //   ) )\n"
             + "   //__| |    //___/ /  //__| |   \\  /   \\\\  / / ((\n"
             + "  / ___  |   / ___ (   / ___  |   / /     \\\\/ /    \\\\\n"
             + " //    | |  //   | |  //    | |  / /\\\\     / /       ) )\n"
             + "//     | | //    | | //     | | / /  \\\\   / / ((___ / /";
+    private static final int MARK_OR_UNMARK_COMMAND_LENGTH = 2;
+    private static final int DELETE_COMMAND_LENGTH = 2;
+    private static final int TODO_COMMAND_LENGTH = 2;
+    public static final String ALREADY_MARKED_STRING = "The task specified is already marked.";
+    public static final String ALREADY_UNMARKED_STRING = "The task specified is already unmarked.";
+    public static final String MARKED_AS_COMPLETED_STRING = "Task has been marked as: completed";
+    public static final String MARKED_AS_NOT_COMPLETED_STRING = "Task has been marked as: not completed";
+    public static final String NONNUMERIC_INDEX_STRING = "Sorry, index is not numeric.";
+    public static final String INVALID_INDEX_STRING = "Sorry, index is invalid.";
+    public static final String SAVING_ERROR_STRING = "There was an error in saving.";
+    public static final String INVALID_DELETE_COMMAND_STRING = "Please only input \"delete\" followed by an integer.";
+    public static final String TASK_DELETED_STRING = "Task has been deleted:";
+    public static final String INVALID_TASK_TYPE_STRING = "Invalid task type specified.";
+    public static final String TODO_SYNTAX_STRING = "Syntax: todo {task}";
+    public static final String DEADLINE_SYNTAX_STRING = "Syntax: deadline {task} /by {endDate}";
+    public static final String EVENT_SYNTAX_STRING = "Syntax: event {task} /from {startDate} /to {endDate}";
+    public static final String TASK_ADDED_STRING = "New task has been added: ";
+    public static final String GOODBYE_STRING = "Goodbye. To reach customer service, just look outside your window.";
+    public static final String LIST_DESCRIPTION_STRING = "list: lists out all current items and their current status.";
+    public static final String LIST_SYNTAX_STRING = "Syntax: list";
+    public static final String TODO_DESCRIPTION_STRING = "todo: adds a todo task.";
+    public static final String DEADLINE_DESCRIPTION_STRING = "deadline: adds a deadline task.";
+    public static final String EVENT_DESCRIPTION_STRING = "event: adds an event task.";
+    public static final String MARK_DESCRIPTION_STRING = "mark: marks a task as done.";
+    public static final String MARK_SYNTAX_STRING = "Syntax: mark {index}";
+    public static final String UNMARK_DESCRIPTION_STRING = "unmark: marks a task as not done.";
+    public static final String UNMARK_SYNTAX_STRING = "Syntax: unmark {index}";
+    public static final String DELETE_DESCRIPTION_STRING = "delete: deletes an event.";
+    public static final String DELETE_SYNTAX_STRING = "Syntax: delete {index}";
+    public static final String HELP_DESCRIPTION_STRING = "help: brings you here.";
+    public static final String HELP_SYNTAX_STRING = "Syntax: help";
+    public static final String EXIT_DESCRIPTION_STRING = "bye: exits the program.";
+    public static final String EXIT_SYNTAX_STRING = "Syntax: bye";
+    public static final String LOADING_SYSTEM_ERROR_STRING = "There was an system error in loading.";
+    public static final String LOADING_PROGRAM_ERROR_STRING = "There was a program error in loading. 3 hours of "
+            + "lifetime have been added for your inconvenience.";
     private static String command;
-    private static ArrayList<Task>tasks = new ArrayList<>();
+    private static ArrayList<Task> tasks = new ArrayList<>();
     private static Scanner in = new Scanner(System.in);
     private enum taskType{
         TODO,DEADLINE,EVENT,INVALID
     }
     private static void printList(){
         System.out.println(LINE);
-        System.out.println(VALID_COMMAND_PRINTER);
-        for(int i=0;i<tasks.size();i++){
-            System.out.print(i+1+":");
+        System.out.println(VALID_COMMAND_STRING);
+        for(int i=0; i<tasks.size(); i++){
+            System.out.print(i + 1 + ":");
             System.out.println(tasks.get(i).toString());
         }
         System.out.println(LINE);
     }
-    private static void mark(String[] commands){
-        if (commands.length!=2){
+    private static void setMarkedOrUnmarked(String[] commands, boolean setMarked){
+        if (commands.length != MARK_OR_UNMARK_COMMAND_LENGTH){
             System.out.println(LINE);
-            System.out.println("Please only input \"mark\" followed by an integer.");
-            System.out.println(INVALID_COMMAND_PRINTER);
-            System.out.println(LINE);
-            return;
-        }
-        int index;
-        try{
-            index = Integer.parseInt(commands[1]);
-        } catch (NumberFormatException numberFormatException){
-            System.out.println(LINE+'\n'+"Sorry, index is not numeric."+'\n'+LINE);
-            System.out.println(INVALID_COMMAND_PRINTER);
-            return;
-        }
-        index--;
-        try{
-            tasks.get(index).setDone(true);
-        } catch (IndexOutOfBoundsException e){
-            System.out.println(LINE+'\n'+"Sorry, index is invalid."+'\n'+LINE);
-            System.out.println(INVALID_COMMAND_PRINTER);
-            return;
-        } catch (IllegalCommandException e){
-            System.out.println(LINE+'\n'+"The task specified is already marked."+'\n'+LINE);
-            System.out.println(INVALID_COMMAND_PRINTER);
-            return;
-        }
-        System.out.println(LINE);
-        System.out.println(VALID_COMMAND_PRINTER);
-        System.out.println("Task has been marked as: completed");
-        System.out.println(tasks.get(index).toString());
-        System.out.println(LINE);
-        try{
-            save();
-        }catch(IOException e){
-            System.out.println("There was an error in saving.");
-        }
-    }
-    private static void unmark(String[] commands){
-        if (commands.length!=2){
-            System.out.println(LINE);
-            System.out.println("Please only input \"unmark\" followed by an integer.");
-            System.out.println(INVALID_COMMAND_PRINTER);
+            if(setMarked) {
+                System.out.println(INVALID_MARK_LENGTH_STRING);
+            }else{
+                System.out.println(INVALID_UNMARK_LENGTH_STRING);
+            }
+            System.out.println(INVALID_COMMAND_STRING);
             System.out.println(LINE);
             return;
         }
@@ -86,38 +90,46 @@ public class Duke {
         try{
             index = Integer.parseInt(commands[1]);
         } catch (NumberFormatException numberFormatException){
-            System.out.println(LINE+'\n'+"Sorry, index is not numeric."+'\n'+LINE);
-            System.out.println(INVALID_COMMAND_PRINTER);
+            System.out.println(LINE + '\n' + NONNUMERIC_INDEX_STRING + '\n' + LINE);
+            System.out.println(INVALID_COMMAND_STRING);
             return;
         }
         index--;
         try{
-            tasks.get(index).setDone(false);
+            tasks.get(index).setDone(setMarked);
         } catch (IndexOutOfBoundsException e){
-            System.out.println(LINE+'\n'+"Sorry, index is invalid."+'\n'+LINE);
-            System.out.println(INVALID_COMMAND_PRINTER);
+            System.out.println(LINE + '\n' + INVALID_INDEX_STRING + '\n' + LINE);
+            System.out.println(INVALID_COMMAND_STRING);
             return;
         } catch (IllegalCommandException e){
-            System.out.println(LINE+'\n'+"The task specified is already unmarked."+'\n'+LINE);
-            System.out.println(INVALID_COMMAND_PRINTER);
+            if(setMarked){
+                System.out.println(LINE + '\n' + ALREADY_MARKED_STRING + '\n' + LINE);
+            }else{
+                System.out.println(LINE + '\n' + ALREADY_UNMARKED_STRING + '\n' + LINE);
+            }
+            System.out.println(INVALID_COMMAND_STRING);
             return;
         }
         System.out.println(LINE);
-        System.out.println(VALID_COMMAND_PRINTER);
-        System.out.println("Task has been marked as: not completed");
+        System.out.println(VALID_COMMAND_STRING);
+        if(setMarked){
+            System.out.println(MARKED_AS_COMPLETED_STRING);
+        }else{
+            System.out.println(MARKED_AS_NOT_COMPLETED_STRING);
+        }
         System.out.println(tasks.get(index).toString());
         System.out.println(LINE);
         try{
             save();
         }catch(IOException e){
-            System.out.println("There was an error in saving.");
+            System.out.println(SAVING_ERROR_STRING);
         }
     }
     private static void delete(String[] commands){
-        if (commands.length!=2){
+        if (commands.length != DELETE_COMMAND_LENGTH){
             System.out.println(LINE);
-            System.out.println("Please only input \"delete\" followed by an integer.");
-            System.out.println(INVALID_COMMAND_PRINTER);
+            System.out.println(INVALID_DELETE_COMMAND_STRING);
+            System.out.println(INVALID_COMMAND_STRING);
             System.out.println(LINE);
             return;
         }
@@ -125,8 +137,8 @@ public class Duke {
         try{
             index = Integer.parseInt(commands[1]);
         } catch (NumberFormatException numberFormatException){
-            System.out.println(LINE+'\n'+"Sorry, index is not numeric."+'\n'+LINE);
-            System.out.println(INVALID_COMMAND_PRINTER);
+            System.out.println(LINE + '\n' + NONNUMERIC_INDEX_STRING + '\n' + LINE);
+            System.out.println(INVALID_COMMAND_STRING);
             return;
         }
         index--;
@@ -135,19 +147,19 @@ public class Duke {
             taskString = tasks.get(index).toString();
             tasks.remove(index);
         } catch (IndexOutOfBoundsException e){
-            System.out.println(LINE+'\n'+"Sorry, index is invalid."+'\n'+LINE);
-            System.out.println(INVALID_COMMAND_PRINTER);
+            System.out.println(LINE + '\n' + INVALID_INDEX_STRING + '\n' + LINE);
+            System.out.println(INVALID_COMMAND_STRING);
             return;
         }
         System.out.println(LINE);
-        System.out.println(VALID_COMMAND_PRINTER);
-        System.out.println("Task has been deleted:");
+        System.out.println(VALID_COMMAND_STRING);
+        System.out.println(TASK_DELETED_STRING);
         System.out.println(taskString);
         System.out.println(LINE);
         try{
             save();
         }catch(IOException e){
-            System.out.println("There was an error in saving.");
+            System.out.println(SAVING_ERROR_STRING);
         }
     }
     private static taskType getTaskType(String command){
@@ -165,51 +177,51 @@ public class Duke {
     }
     private static void addTask(String command) throws IllegalCommandException{
         taskType currentTaskType = getTaskType(command);
-        if(currentTaskType==taskType.INVALID){
-            System.out.println(LINE+'\n'+"Invalid task type specified."+'\n'+LINE);
+        if(currentTaskType == taskType.INVALID){
+            System.out.println(LINE + '\n' + INVALID_TASK_TYPE_STRING + '\n' + LINE);
             throw new IllegalCommandException("Illegal task type");
-        }else if(currentTaskType==taskType.TODO){
-            if(command.split(" ").length<=1){
-                System.out.println(LINE+'\n'+"Syntax: todo {task}"+'\n'+LINE);
+        }else if(currentTaskType == taskType.TODO){
+            if(command.split(" ").length<TODO_COMMAND_LENGTH){
+                System.out.println(LINE + '\n' + TODO_SYNTAX_STRING + '\n' + LINE);
                 throw new IllegalCommandException("Illegal todo command");
             }
             tasks.add(new Todo(command));
-        }else if(currentTaskType==taskType.DEADLINE){
+        }else if(currentTaskType == taskType.DEADLINE){
             if(!command.contains("/by")){
-                System.out.println(LINE+'\n'+"Syntax: deadline {task} /by {endDate}"+'\n'+LINE);
+                System.out.println(LINE + '\n' + DEADLINE_SYNTAX_STRING + '\n' + LINE);
                 throw new IllegalCommandException("Illegal deadline command");
             }
             tasks.add(new Deadline(command));
-        }else if(currentTaskType==taskType.EVENT){
+        }else if(currentTaskType == taskType.EVENT){
             if(!(command.contains("/from")&&command.contains("/to"))){
-                System.out.println(LINE+'\n'+"Syntax: event {task} /from {startDate} /to {endDate}"+'\n'+LINE);
+                System.out.println(LINE + '\n' + EVENT_SYNTAX_STRING + '\n' + LINE);
                 throw new IllegalCommandException("Illegal event command");
             }
             tasks.add(new Event(command));
         }
-        System.out.println(VALID_COMMAND_PRINTER);
-        System.out.println(LINE+'\n'+"New task has been added: "+command+'\n'+LINE);
+        System.out.println(VALID_COMMAND_STRING);
+        System.out.println(LINE + '\n' + TASK_ADDED_STRING + command + '\n' + LINE);
         try{
             save();
         }catch(IOException e){
-            System.out.println("There was an error in saving.");
+            System.out.println(SAVING_ERROR_STRING);
         }
     }
     private static void silentlyAddTask(String command) throws IllegalCommandException{
         taskType currentTaskType = getTaskType(command);
-        if(currentTaskType==taskType.INVALID){
+        if(currentTaskType == taskType.INVALID){
             throw new IllegalCommandException("Illegal task type");
-        }else if(currentTaskType==taskType.TODO){
-            if(command.split(" ").length<=1){
+        }else if(currentTaskType == taskType.TODO){
+            if(command.split(" ").length<TODO_COMMAND_LENGTH){
                 throw new IllegalCommandException("Illegal todo command");
             }
             tasks.add(new Todo(command));
-        }else if(currentTaskType==taskType.DEADLINE){
+        }else if(currentTaskType == taskType.DEADLINE){
             if(!command.contains("/by")){
                 throw new IllegalCommandException("Illegal deadline command");
             }
             tasks.add(new Deadline(command));
-        }else if(currentTaskType==taskType.EVENT){
+        }else if(currentTaskType == taskType.EVENT){
             if(!(command.contains("/from")&&command.contains("/to"))){
                 throw new IllegalCommandException("Illegal event command");
             }
@@ -224,7 +236,7 @@ public class Duke {
     }
     private static void executeCommand(String command){
         if(command.equals("bye")){
-            System.out.println(LINE+'\n'+"Goodbye. To reach customer service, just look outside your window."+'\n'+LINE);
+            System.out.println(LINE + '\n' + GOODBYE_STRING + '\n' + LINE);
             System.exit(0);
         }
         if(command.equals("list")){
@@ -234,16 +246,16 @@ public class Duke {
         }else{
             String[] commands = command.split(" ");
             if(commands[0].equals("mark")){
-                mark(commands);
+                setMarkedOrUnmarked(commands, true);
             }else if(commands[0].equals("unmark")){
-                unmark(commands);
+                setMarkedOrUnmarked(commands, false);
             }else if(commands[0].equals("delete")){
                 delete(commands);
             }else{
                 try{
                     addTask(command);
                 }catch (IllegalCommandException e){
-                    System.out.println(INVALID_COMMAND_PRINTER);
+                    System.out.println(INVALID_COMMAND_STRING);
                     return;
                 }
             }
@@ -258,24 +270,24 @@ public class Duke {
     }
     private static void printHelp(){
         System.out.println(LINE);
-        System.out.println("list: lists out all current items and their current status.");
-        System.out.println("Syntax: list");
-        System.out.println("todo: adds a todo task.");
-        System.out.println("Syntax: todo {task}");
-        System.out.println("deadline: adds a deadline task.");
-        System.out.println("Syntax: deadline {task} /by {endDate}");
-        System.out.println("event: adds an event task.");
-        System.out.println("Syntax: event {task} /from {startDate} /to {endDate}");
-        System.out.println("mark: marks a task as done.");
-        System.out.println("Syntax: mark {index}");
-        System.out.println("unmark: marks a task as not done.");
-        System.out.println("Syntax: unmark {index}");
-        System.out.println("delete: deletes an event.");
-        System.out.println("Syntax: delete {index}");
-        System.out.println("help: brings you here.");
-        System.out.println("Syntax: help");
-        System.out.println("bye: exits the program.");
-        System.out.println("Syntax: bye");
+        System.out.println(LIST_DESCRIPTION_STRING);
+        System.out.println(LIST_SYNTAX_STRING);
+        System.out.println(TODO_DESCRIPTION_STRING);
+        System.out.println(TODO_SYNTAX_STRING);
+        System.out.println(DEADLINE_DESCRIPTION_STRING);
+        System.out.println(DEADLINE_SYNTAX_STRING);
+        System.out.println(EVENT_DESCRIPTION_STRING);
+        System.out.println(EVENT_SYNTAX_STRING);
+        System.out.println(MARK_DESCRIPTION_STRING);
+        System.out.println(MARK_SYNTAX_STRING);
+        System.out.println(UNMARK_DESCRIPTION_STRING);
+        System.out.println(UNMARK_SYNTAX_STRING);
+        System.out.println(DELETE_DESCRIPTION_STRING);
+        System.out.println(DELETE_SYNTAX_STRING);
+        System.out.println(HELP_DESCRIPTION_STRING);
+        System.out.println(HELP_SYNTAX_STRING);
+        System.out.println(EXIT_DESCRIPTION_STRING);
+        System.out.println(EXIT_SYNTAX_STRING);
         System.out.println(LINE);
     }
     private static void load() throws IOException, IllegalCommandException {
@@ -291,12 +303,12 @@ public class Duke {
         while(s.hasNext()){
             String nextLine =  s.nextLine();
             String[] saveLine = nextLine.split(" ");
-            String cmd="";
-            for(int i=0;i<saveLine.length-1;i++){
-                cmd+=" ";
-                cmd+=saveLine[i];
+            String cmd = "";
+            for(int i=0; i<saveLine.length-1; i++){
+                cmd += " ";
+                cmd += saveLine[i];
             }
-            cmd=cmd.trim();
+            cmd = cmd.trim();
             String done = saveLine[saveLine.length-1].trim();
             try{
                 silentlyAddTask(cmd);
@@ -325,9 +337,9 @@ public class Duke {
         try{
             load();
         }catch(IOException e){
-            System.out.println("There was an error in loading.");
+            System.out.println(LOADING_SYSTEM_ERROR_STRING);
         }catch(IllegalCommandException e){
-            System.out.println("Unhandled loading exception. 3 hours of lifetime have been added for your inconvenience.");
+            System.out.println(LOADING_PROGRAM_ERROR_STRING);
         }
     }
     public static void main(String[] args) {

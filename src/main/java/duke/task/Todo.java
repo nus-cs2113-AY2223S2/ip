@@ -9,6 +9,6 @@ public class Todo extends Task{
     }
     @Override
     public String toString(){
-        return "[T]["+(isDone()?'X':' ')+"]//////"+super.toString();
+        return "[T][" + (isDone() ? 'X' : ' ') + "]//////" + super.toString();
     }
 }

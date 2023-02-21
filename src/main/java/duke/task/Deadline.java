@@ -13,8 +13,8 @@ public class Deadline extends Task{
     public Deadline(String command){
         super();
         setInitCommand(command);
-        setDescription(command.substring(command.indexOf(" "),command.indexOf("/by")).trim());
-        setEndDate(command.substring(command.indexOf("/by")+3).trim());
+        setDescription(command.substring(command.indexOf(" "), command.indexOf("/by")).trim());
+        setEndDate(command.substring(command.indexOf("/by") + 3).trim());
     }
     public Deadline(String description, String endDate){
         super(description);
@@ -22,6 +22,6 @@ public class Deadline extends Task{
     }
     @Override
     public String toString(){
-        return "[D]["+(isDone()?'X':' ')+"]//////"+super.toString()+" (by: "+getEndDate()+')';
+        return "[D][" + (isDone() ? 'X' : ' ') + "]//////" + super.toString() + " (by: " + getEndDate() + ')';
     }
 }

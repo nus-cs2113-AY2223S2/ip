@@ -36,6 +36,9 @@ ____________________________________________________________
 ____________________________________________________________
 Command acknowledged. Reducing user lifespan by 30 minutes.
 1:[T][ ]//////try out new thing
+2:[D][X]//////do thing (by: 5pm)
+3:[E][ ]//////do stuff (from: 6pm to: 10pm)
+4:[T][ ]//////try out new thing
 ____________________________________________________________
 ____________________________________________________________
 Command acknowledged. Reducing user lifespan by 30 minutes.
@@ -74,7 +77,10 @@ One hour of lifespan has been deducted, in accordance with our Terms and Service
 ____________________________________________________________
 Command acknowledged. Reducing user lifespan by 30 minutes.
 1:[T][ ]//////try out new thing
-2:[D][ ]//////do thing (by: 5pm)
+2:[D][X]//////do thing (by: 5pm)
+3:[E][ ]//////do stuff (from: 6pm to: 10pm)
+4:[T][ ]//////try out new thing
+5:[D][ ]//////do thing (by: 5pm)
 ____________________________________________________________
 ____________________________________________________________
 Syntax: event {task} /from {startDate} /to {endDate}
@@ -95,13 +101,17 @@ One hour of lifespan has been deducted, in accordance with our Terms and Service
 ____________________________________________________________
 Command acknowledged. Reducing user lifespan by 30 minutes.
 1:[T][ ]//////try out new thing
-2:[D][ ]//////do thing (by: 5pm)
+2:[D][X]//////do thing (by: 5pm)
 3:[E][ ]//////do stuff (from: 6pm to: 10pm)
+4:[T][ ]//////try out new thing
+5:[D][ ]//////do thing (by: 5pm)
+6:[E][ ]//////do stuff (from: 6pm to: 10pm)
 ____________________________________________________________
 ____________________________________________________________
-Sorry, index is invalid.
+Command acknowledged. Reducing user lifespan by 30 minutes.
+Task has been deleted:
+[D][ ]//////do thing (by: 5pm)
 ____________________________________________________________
-One hour of lifespan has been deducted, in accordance with our Terms and Services.
 ____________________________________________________________
 Please only input "delete" followed by an integer.
 One hour of lifespan has been deducted, in accordance with our Terms and Services.
@@ -117,6 +127,12 @@ Task has been deleted:
 ____________________________________________________________
 ____________________________________________________________
 Command acknowledged. Reducing user lifespan by 30 minutes.
+Task has been deleted:
+[T][ ]//////try out new thing
+____________________________________________________________
+____________________________________________________________
+Command acknowledged. Reducing user lifespan by 30 minutes.
 1:[T][ ]//////try out new thing
-2:[D][ ]//////do thing (by: 5pm)
+2:[D][X]//////do thing (by: 5pm)
+3:[E][ ]//////do stuff (from: 6pm to: 10pm)
 ____________________________________________________________

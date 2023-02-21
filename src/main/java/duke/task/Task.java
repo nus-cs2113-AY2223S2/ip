@@ -13,13 +13,13 @@ public class Task {
         this.initCommand = initCommand;
     }
     public String getSaveString(){
-        return initCommand+" "+(isDone() ? "1":"0")+System.lineSeparator();
+        return initCommand + " " + ( isDone() ? "1" : "0") + System.lineSeparator();
     }
 
     private String initCommand;
     public Task(){
-        this.isDone=false;
-        this.description="";
+        this.isDone = false;
+        this.description = "";
     }
     public Task(String description) {
         this.description = description;
@@ -27,11 +27,9 @@ public class Task {
     }
 
     public String getStatusIcon() {
-
-        return (isDone() ? "X" : " "); // mark done task with X
+        return (isDone() ? "X" : " ");
     }
 
-    //...
 
     public String getDescription() {
 
@@ -46,11 +44,11 @@ public class Task {
         return isDone;
     }
 
-    public void setDone(boolean done) throws IllegalCommandException {
-        if(isDone==done){
+    public void setDone(boolean isDone) throws IllegalCommandException {
+        if(this.isDone == isDone){
             throw new IllegalCommandException("No change in done state");
         }
-        isDone = done;
+        this.isDone = isDone;
     }
     @Override
     public String toString(){

@@ -19,4 +19,5 @@ delete 5
 delete
 delete the fifth element
 delete 3
+delete 3
 list
