@@ -81,6 +81,13 @@ public class Duke {
 
                     break;
 
+                case "find":
+                    String toFind = userInput[1];
+
+                    findTasks(taskList, toFind);
+
+                    break;
+
                 case "deadline":
                     try {
                         if (userInput.length != USER_INPUT_EXPECTED_SIZE) {

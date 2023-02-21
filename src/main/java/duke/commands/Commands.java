@@ -11,6 +11,17 @@ import java.util.ArrayList;
 import static duke.print.Print.*;
 
 public class Commands {
+    public static void findTasks(ArrayList<Task> taskList, String keyword) {
+        ArrayList<Task> foundTasks = new ArrayList<>();
+        for (Task task : taskList) {
+            if (task.getDescription().contains(keyword)) {
+                foundTasks.add(task);
+            }
+        }
+
+        printFoundTasks(foundTasks);
+    }
+
     public static void deleteOneTask(ArrayList<Task> taskList, String taskNumber) {
         int taskNumberToDelete = Integer.parseInt(taskNumber);
         taskNumberToDelete -= 1;
