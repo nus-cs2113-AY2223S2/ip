@@ -6,6 +6,7 @@ import duke.command.AddTodoCommand;
 import duke.command.Command;
 import duke.command.DeleteTaskCommand;
 import duke.command.ExitCommand;
+import duke.command.FindCommand;
 import duke.command.IllegalCommand;
 import duke.command.ListCommand;
 import duke.command.MarkAndUnmarkCommand;
@@ -30,6 +31,8 @@ public class Parser {
             return eventTaskHandler(fullCommand);
         } else if (firstWord.equals("delete")) {
             return deleteTaskHandler(fullCommand, tasks);
+        } else if (firstWord.equals("find")) {
+            return findTaskHandler(fullCommand);
         } else {
             return new IllegalCommand();
         }
@@ -68,7 +71,7 @@ public class Parser {
     }
 
     private static Command prepareTodoTask(String command) throws EmptyCommandException {
-        String todo = command.replace("todo", "").trim();
+        String todo = command.replaceFirst("todo", "").trim();
         if (todo.isEmpty()) {
             throw new EmptyCommandException();
         }
@@ -88,7 +91,7 @@ public class Parser {
     }
 
     private static Command prepareDeadlineTask(String command) throws EmptyCommandException, IllegalCommandException {
-        command = command.replace("deadline", "").trim();
+        command = command.replaceFirst("deadline", "").trim();
         if (command.isEmpty()) {
             throw new EmptyCommandException();
         }
@@ -112,7 +115,7 @@ public class Parser {
     }
 
     private static Command prepareEventTask(String command) throws IllegalCommandException, EmptyCommandException {
-        command = command.replace("event", "").trim();
+        command = command.replaceFirst("event", "").trim();
         if (command.isEmpty()) {
             throw new EmptyCommandException();
         }
@@ -148,6 +151,25 @@ public class Parser {
         }
         return new DeleteTaskCommand(deleteIndex);
     }
+
+    private static Command findTaskHandler(String fullCommand) {
+        Command findCommand = null;
+        try {
+            findCommand = prepareFindTask(fullCommand);
+        } catch (IllegalCommandException e) {
+            Ui.illegalCommandMessage();
+        }
+        return findCommand;
+    }
+
+    private static Command prepareFindTask(String fullCommand) throws IllegalCommandException {
+        String keyword = fullCommand.replaceFirst("find", "").trim();
+        if (keyword.isEmpty()) {
+            throw new IllegalCommandException();
+        }
+        return new FindCommand(keyword);
+    }
+
 
     private static boolean isValidIndex(int indexOfMarking, TaskList tasks) {
         if (indexOfMarking < 0 || indexOfMarking > (tasks.getTaskCount() - 1)) {
