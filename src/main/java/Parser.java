@@ -1,7 +1,20 @@
-// This class is used to parse the input command and return a task
+/**
+ * This class represents the parser that parses the input command and returns a command.
+ * @param parse method to parse the input command and return a command
+ * @param input the input command
+ * @param command the command to be returned
+ * @throws DukeException if the input command is not in the correct format
+ */
 
 public class Parser {
-    //parse the input string and return a command
+    /**
+     * This method parses the input command and returns a command.
+     * @param input the input command
+     * @return command the command to be returned
+     * @throws DukeException if the input command is not in the correct format
+     * @throws NumberFormatException if the input command is not in the correct format
+     * @throws ArrayIndexOutOfBoundsException if the input command is not in the correct format
+     */
     public static Command parse(String input) throws DukeException{
         //split the input string
         String[] inputSplit = input.split(" ");
@@ -162,10 +175,8 @@ public class Parser {
         //return a invalid command of the input is not any of the above
         else{
             return new Command();
-        }
-
-            
+        }     
 
     }
-    
+
 }

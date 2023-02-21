@@ -1,3 +1,15 @@
+/**
+ * This class represents the storage of the task list.
+ * It contains the file path of the file that stores the task list.
+ * It contains the constructor that takes in the file path and creates a new file if it does not exist.
+ * It contains the readFile method that reads the file and returns an arraylist of tasks.
+ * It contains the writeFile method that takes in input tasks and taskCount and writes the tasks into the file.
+ * @param filePath the file path of the file that stores the task list
+ * @param readFile method that reads the file and returns an arraylist of tasks
+ * @param writeFile method that takes in input tasks and taskCount and writes the tasks into the file
+ * @throws IOException if there is an error reading the file
+ */
+
 import java.util.Scanner;  // Import the Scanner class
 import java.io.File; // Import the File class
 import java.io.FileWriter; // Import the FileWriter class
@@ -10,7 +22,13 @@ public class Storage {
     //file path
     protected String filePath;
 
-    //constructor that takes in file path and creates a new file if it does not exist
+    /**
+     * This is the constructor for the Storage class.
+     * It takes in the file path and creates a new file if it does not exist.
+     * @param filePath the file path of the file that stores the task list
+     * @throws IOException if there is an error reading the file
+     * @throws IOException if there is an error creating the file
+     */
     public Storage(String filePath){
         //set the file path
         this.filePath = filePath;
@@ -20,19 +38,24 @@ public class Storage {
             Scanner fileScan = new Scanner(file);
             fileScan.close();
         //otherwise create a new file
-        } catch(Exception e){
+        } catch(IOException e){
             //Create a new file and directory
             try{
                 File file = new File(filePath);
                 file.getParentFile().mkdirs();
                 file.createNewFile();
-            }catch(Exception e1){
+            } catch (IOException e1){
                 e1.printStackTrace();
             }
         }
     }
    
-    //method that tand reads the file and returns an arraylist of tasks 
+    /**
+     * This method reads the file and returns an arraylist of tasks.
+     * @param filePath the file path of the file that stores the task list
+     * @return tasks the arraylist of tasks
+     * @throws IOException if there is an error reading the file
+     */
     public static ArrayList<Task> readFile(String filePath){
         //new arraylist of tasks
         ArrayList<Task> tasks = new ArrayList<Task>();
@@ -97,7 +120,12 @@ public class Storage {
         return tasks;
     }
 
-    //method that takes in input tasks and taskCount and writes the tasks into the file
+    /**
+     * This method takes in input tasks and taskCount and writes the tasks into the file.
+     * @param tasks the arraylist of tasks
+     * @param filePath the file path of the file that stores the task list
+     * @throws IOException if there is an error writing to the file
+     */
     public static void writeFile(ArrayList<Task> tasks, String filePath){
         //Write the tasks to the file
          try{
