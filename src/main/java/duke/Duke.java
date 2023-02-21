@@ -38,7 +38,7 @@ public class Duke {
         boolean isProgramRunning = true;
         while (isProgramRunning) {
             String fullCommand = ui.readCommand();
-            Command currentCommand = Parser.parse(fullCommand, tasks, database);
+            Command currentCommand = Parser.parse(fullCommand, tasks);
             if (currentCommand == null) {
                 continue;
             }

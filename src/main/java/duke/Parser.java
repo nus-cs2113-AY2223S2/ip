@@ -21,11 +21,10 @@ public class Parser {
      *
      * @param fullCommand the full input from the user in one line
      * @param tasks       the current TaskList to be referenced from
-     * @param database    the current database of all the files and tasks
      * @return the type of command corresponding to the first word of user input, where an illegal command will be
      * given when it does not match any of the supported commands by Duke
      */
-    public static Command parse(String fullCommand, TaskList tasks, Storage database) {
+    public static Command parse(String fullCommand, TaskList tasks) {
         String firstWord = fullCommand.split(" ")[0];
         if (fullCommand.equals("bye")) {
             return new ExitCommand();
