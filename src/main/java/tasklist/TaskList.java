@@ -1,4 +1,4 @@
-package database;
+package tasklist;
 
 import model.task.Task;
 import storage.Storage;
@@ -10,19 +10,19 @@ import java.util.ArrayList;
  * the basic CRUD operations in the modern database. It adheres to the
  * Singleton design pattern which will be taught later.
  */
-public class Database {
+public class TaskList {
 
-  protected static Database instance = null;
+  protected static TaskList instance = null;
 
   protected final ArrayList<Task> tasks = new ArrayList<Task>();
 
   protected final static Storage storage = Storage.getInstance();
 
-  protected Database() {}
+  protected TaskList() {}
 
-  public static Database getInstance() {
+  public static TaskList getInstance() {
     if (instance == null) {
-      instance = new Database();
+      instance = new TaskList();
     }
     return instance;
   }

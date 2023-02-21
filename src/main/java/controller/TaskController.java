@@ -5,7 +5,7 @@ import model.task.Deadline;
 import model.task.Event;
 import model.task.Task;
 import model.task.Todo;
-import database.Database;
+import tasklist.TaskList;
 import ui.Ui;
 import validator.Validator;
 import view.TaskView;
@@ -14,7 +14,7 @@ public class TaskController {
 
   protected TaskView view = new TaskView();
   protected Validator validator = new Validator();
-  protected Database db = Database.getInstance();
+  protected TaskList db = TaskList.getInstance();
   protected Ui ui = new Ui();
 
   private void printDescription(Task model) {
