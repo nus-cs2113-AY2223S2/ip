@@ -23,10 +23,8 @@ public class Greet {
     private UI sayHello = new UI();
 
     public void printHello() {
-
         formatter.addStringIndentation(LOGO);
         formatter.addStringIndentation(HELLO);
         sayHello.greet(LOGO, HELLO);
-
     }
 }
