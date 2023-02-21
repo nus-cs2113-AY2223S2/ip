@@ -53,6 +53,14 @@ public class Ui {
         }
     }
 
+    /***
+     * Function splits the command before and after the first slash spotted in the command into useful
+     * information that will be subsequently used.
+     * @param slash The position of the slash in the Task stored
+     * @param command The list of values stored, with the first value being the command prior to the slash
+     *                and the second value being the command after the slash.
+     * @return Returns the list of values that has been split.
+     */
     private static String[] splitCommand(int slash, String command) {
         String beforeSlash = command.substring(0, slash-1);
         String afterSlash = command.substring(slash+2);
@@ -125,6 +133,12 @@ public class Ui {
         Duke.taskNum += 1;
     }
 
+    /***
+     * Function provides the user a visual confirmation that the item to mark has been completed, before
+     * proceeding with storing the marked data.
+     * @param storedValues The existing list by the user.
+     * @param numToMark The task that the user is looking to mark.
+     */
     static void informUserTaskMarked(ArrayList<Task> storedValues, int numToMark) {
         storedValues.get(numToMark -1).markAsDone();
         TaskList.formattingLine();
@@ -133,6 +147,12 @@ public class Ui {
         TaskList.formattingLine();
     }
 
+    /***
+     * Function provides the user a visual confirmation that the item to unmark has been completed, before
+     * proceeding with storing the unmarked data.
+     * @param storedValues The existing list by the user.
+     * @param numToMark The task that the user is looking to unmark.
+     */
     static void informUserTaskUnmarked(ArrayList<Task> storedValues, int numToMark) {
         storedValues.get(numToMark - 1).unmarkAsDone();
         TaskList.formattingLine();
