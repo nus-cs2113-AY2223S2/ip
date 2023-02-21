@@ -1,4 +1,10 @@
-// This class is used to parse the input command and return a task
+/**
+ * This class represents the parser that parses the input command and returns a command.
+ * @param parse method to parse the input command and return a command
+ * @param input the input command
+ * @param command the command to be returned
+ * @throws DukeException if the input command is not in the correct format
+ */
 
 public class Parser {
     //parse the input string and return a command

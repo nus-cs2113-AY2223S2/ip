@@ -1,4 +1,14 @@
-// Eventcommand class that is used to create event commands
+/**
+ * This class represents the command to add an event task to the task list.
+ * It is a subclass of the Command class.
+ * It contains the execute method to add the event task to the task list.
+ * It also contains the isExit method to return false.
+ * @param taskName the name of the task
+ * @param eventTime the event time of the task
+ * @param execute method to execute the command
+ * @param isExit method to return false if the command is not an exit command
+ * @throws DukeException if the event time is not in the correct format
+ */
 
 public class EventCommand extends Command {
     protected String taskName;

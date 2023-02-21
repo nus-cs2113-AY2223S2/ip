@@ -1,3 +1,15 @@
+/**
+ * This class represents the storage of the task list.
+ * It contains the file path of the file that stores the task list.
+ * It contains the constructor that takes in the file path and creates a new file if it does not exist.
+ * It contains the readFile method that reads the file and returns an arraylist of tasks.
+ * It contains the writeFile method that takes in input tasks and taskCount and writes the tasks into the file.
+ * @param filePath the file path of the file that stores the task list
+ * @param readFile method that reads the file and returns an arraylist of tasks
+ * @param writeFile method that takes in input tasks and taskCount and writes the tasks into the file
+ * @throws IOException if there is an error reading the file
+ */
+
 import java.util.Scanner;  // Import the Scanner class
 import java.io.File; // Import the File class
 import java.io.FileWriter; // Import the FileWriter class

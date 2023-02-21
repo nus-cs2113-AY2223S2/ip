@@ -1,4 +1,17 @@
-//Create a task class
+/**
+ * This class represents a task.
+ * It contains the task name and the status of the task.
+ * It also contains methods to mark the task as done and not done.
+ * It also contains a toString method to print the status of the task followed by the task name.
+ * It is the parent class of the Todo, Deadline and Event classes that inherits from it.
+ * @param taskName the name of the task
+ * @param isDone the status of the task
+ * @param markAsDone method to mark the task as done
+ * @param markAsNotDone method to mark the task as not done
+ * @param toString method to print the status of the task followed by the task name
+ * 
+ */
+
 public class Task {
     protected String taskName;
     protected boolean isDone;
@@ -30,6 +43,7 @@ class Todo extends Task {
         super(taskName);
     }
     //toString method to print the status of the task followed by the task name
+    @Override
     public String toString(){
         if(this.isDone){
             return "[T][X] " + this.taskName;
@@ -47,6 +61,7 @@ class Deadline extends Task {
         this.deadline = deadline;
     }
     //toString method to print the status of the task followed by the task name
+    @Override
     public String toString(){
         if(this.isDone){
             return "[D][X] " + this.taskName + " (" + this.deadline + ")";
@@ -64,6 +79,7 @@ class Event extends Task {
         this.eventTime = eventTime;
     }
     //toString method to print the status of the task followed by the task name
+    @Override
     public String toString(){
         if(this.isDone){
             return "[E][X] " + this.taskName + " (" + this.eventTime + ")";

@@ -1,4 +1,13 @@
-//Delete command class that extends command
+/**
+ * This class represents the command to delete a task from the task list.
+ * It is a subclass of the Command class.
+ * It contains the execute method to delete the task from the task list.
+ * It also contains the isExit method to return false.
+ * @param taskNumber the number of the task to be deleted
+ * @param execute method to execute the command
+ * @param isExit method to return false if the command is not an exit command
+ * @throws DukeException if the deadline is not in the correct format
+ */
 
 public class DeleteCommand extends Command {
     //the task number to be deleted

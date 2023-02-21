@@ -1,4 +1,11 @@
-//AddCommand that extends Command
+/**
+ * Represents a command to add a task to the task list.
+ * It is a subclass of the Command class.
+ * @param task the task to be added
+ * @param execute method to execute the command
+ * @throws DukeException if the deadline is not in the correct format
+ */
+
 public class AddCommand extends Command {
     //the task to be added
     private Task task;

@@ -1,6 +1,17 @@
-// This class handles the user interface of the program
+/**
+ * This class handles the user interface of the program.
+ * It contains methods to print the welcome message, goodbye message, list of tasks, added task, deleted task, and marked task as done.
+ * It also contains a scanner object to read the user input.
+ * @param scan the scanner object to read the user input
+ * @param printWelcomeMessage method to print the welcome message
+ * @param printGoodbyeMessage method to print the goodbye message
+ * @param printTaskList method to print the list of tasks
+ * @param printAddedTask method to print the added task
+ * @param printDeletedTask method to print the deleted task
+ * @param printDoneTask method to print the marked task as done
+ * @throws DukeException if the deadline is not in the correct format
+ */
 
-//import required packages
 import java.util.ArrayList;
 import java.util.Scanner;
 
