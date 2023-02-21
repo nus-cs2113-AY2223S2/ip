@@ -2,9 +2,6 @@ import java.util.ArrayList;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
-import java.nio.file.Path;
-import java.nio.file.Files;
-
 import exceptions.MarkOutOfBounds;
 import exceptions.UnmarkOutOfBounds;
 
@@ -73,11 +70,11 @@ public class Duke {
     /***
      * Home directory for creating directory and txt file.
      */
-    private static final String HOME = System.getProperty("user.home");
+    public static final String HOME = System.getProperty("user.home");
     /***
      * Fixed directory where txt file will be saved.
      */
-    private static final File FILEPATH = Paths.get(HOME, "IdeaProjects", "ip", "src",
+    public static final File FILEPATH = Paths.get(HOME, "IdeaProjects", "ip", "src",
             "main", "data", "duke-inputs.txt").toFile();
 
     /***
@@ -98,23 +95,7 @@ public class Duke {
      * @throws FileNotFoundException When the file is not found in the environment.
      */
     public static void fileAvailability() throws FileNotFoundException {
-        Path path = Paths.get(HOME, "IdeaProjects", "ip", "src", "main", "data");
-        boolean directoryExists = Files.exists(path);
-        if (!directoryExists) {
-            try {
-                Files.createDirectory(path);
-            } catch (IOException e) {
-                System.out.println("Error occurred!\n");
-            }
-        }
-        Path textFile = Paths.get(HOME, "IdeaProjects", "ip", "src", "main", "data", "duke-inputs.txt");
-        try {
-            Files.createFile(textFile);
-        } catch (IOException e) {
-            System.out.println("File already exists!\n");
-        }
-
-        File data = textFile.toFile();
+        File data = Storage.createFile();
 
         if (data.exists()) {
             showGreetings();
@@ -311,7 +292,7 @@ public class Duke {
         Task value = storedValues.get(posToDelete - 1);
         int currLine = 0;
 
-        deleteTaskInTxt(posToDelete, currLine);
+        Storage.deleteTaskInTxt(posToDelete, currLine);
 
         storedValues.remove(posToDelete - 1);
         formattingLine();
@@ -323,50 +304,6 @@ public class Duke {
         taskNum -= 1;
     }
 
-    /***
-     * Deletes task in txt file.
-     * @param posToDelete Row to delete.
-     * @param currLine Tracks the current line that it is on.
-     * @throws IOException Thrown when error is detected.
-     */
-    private static void deleteTaskInTxt(int posToDelete, int currLine) throws IOException {
-        File dukeInputs = FILEPATH;
-        String newContent = "";
-        BufferedReader reader = new BufferedReader(new FileReader(dukeInputs));
-        String input = reader.readLine();
-        while (input != null) {
-            if (posToDelete -1 != currLine) {
-                newContent = newContent + input + "\n";
-            }
-            currLine += 1;
-            input = reader.readLine();
-        }
-
-        FileWriter writer = new FileWriter(dukeInputs);
-        writer.write(newContent);
-        reader.close();
-        writer.close();
-    }
-
-    /***
-     * Writes all the inputs made by user to the txt file so that data is saved in hard disk.
-     * @param storedValues List of input values made by the user.
-     * @throws IOException Thrown when error is detected.
-     */
-    private static void writeToFile(Task storedValues) throws IOException {
-        FileWriter fw = new FileWriter(FILEPATH, true);
-        int marked = ((storedValues.getStatusIcon().equals(" ")) ? 0 : 1);
-        if (storedValues.getClass().getSimpleName().equals("Todo")) {
-            fw.write("T | " + marked + " | " + storedValues.description + "\n");
-        } else if (storedValues.getClass().getSimpleName().equals("Deadline")) {
-            fw.write("D | " + marked + " | " + storedValues.description + " | " +
-                    ((Deadline) storedValues).by + "\n");
-        } else {
-            fw.write("E | " + marked + " | " + storedValues.description + " | " +
-                    ((Event) storedValues).by + " | " + ((Event) storedValues).to + "\n");
-        }
-        fw.close();
-    }
 
     /***
      * Prior to adding events to the list, processEvent separates the important details
@@ -438,7 +375,7 @@ public class Duke {
         storedValues.add(taskNum,line);
         taskNum += 1;
         try {
-            writeToFile(line);
+            Storage.writeToFile(line);
         } catch (IOException e) {
             System.out.println("Something went wrong..." + e.getMessage());
         }

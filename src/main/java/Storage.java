@@ -1,0 +1,87 @@
+import java.io.FileWriter;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.io.File;
+
+public class Storage {
+    // Functions in storage deals with loading tasks from the file and saving tasks in the file
+    /***
+     * Deletes task in txt file.
+     * @param posToDelete Row to delete.
+     * @param currLine Tracks the current line that it is on.
+     * @throws IOException Thrown when error is detected.
+     */
+    static void deleteTaskInTxt(int posToDelete, int currLine) throws IOException {
+        File dukeInputs = Duke.FILEPATH;
+        String newContent = "";
+        BufferedReader reader = new BufferedReader(new FileReader(dukeInputs));
+        String input = reader.readLine();
+        while (input != null) {
+            if (posToDelete -1 != currLine) {
+                newContent = newContent + input + "\n";
+            }
+            currLine += 1;
+            input = reader.readLine();
+        }
+
+        FileWriter writer = new FileWriter(dukeInputs);
+        writer.write(newContent);
+        reader.close();
+        writer.close();
+    }
+
+
+    /***
+     * Writes all the inputs made by user to the txt file so that data is saved in hard disk.
+     * @param storedValues List of input values made by the user.
+     * @throws IOException Thrown when error is detected.
+     */
+    static void writeToFile(Task storedValues) throws IOException {
+        FileWriter fw = new FileWriter(Duke.FILEPATH, true);
+        int marked = ((storedValues.getStatusIcon().equals(" ")) ? 0 : 1);
+        if (storedValues.getClass().getSimpleName().equals("Todo")) {
+            fw.write("T | " + marked + " | " + storedValues.description + "\n");
+        } else if (storedValues.getClass().getSimpleName().equals("Deadline")) {
+            fw.write("D | " + marked + " | " + storedValues.description + " | " +
+                    ((Deadline) storedValues).by + "\n");
+        } else {
+            fw.write("E | " + marked + " | " + storedValues.description + " | " +
+                    ((Event) storedValues).by + " | " + ((Event) storedValues).to + "\n");
+        }
+        fw.close();
+    }
+
+    static void checkIfFolderExists(Path path) {
+        boolean directoryExists = Files.exists(path);
+        if (!directoryExists) {
+            try {
+                Files.createDirectory(path);
+            } catch (IOException e) {
+                System.out.println("Error occurred!\n");
+            }
+        }
+    }
+
+    static Path checkIfFileExists() {
+        Path textFile = Paths.get(Duke.HOME, "IdeaProjects", "ip", "src", "main", "data", "duke-inputs.txt");
+        try {
+            Files.createFile(textFile);
+        } catch (IOException e) {
+            System.out.println("File already exists!\n");
+        }
+        return textFile;
+    }
+
+    static File createFile() {
+        Path path = Paths.get(Duke.HOME, "IdeaProjects", "ip", "src", "main", "data");
+        checkIfFolderExists(path);
+        Path textFile = checkIfFileExists();
+
+        File data = textFile.toFile();
+        return data;
+    }
+}
