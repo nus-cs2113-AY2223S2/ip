@@ -11,17 +11,31 @@
 
 public class TodoCommand extends Command {
     protected String taskName;
-    //constructor that takes in the task name
+
+    /**
+     * This constructor takes in the task name.
+     * @param taskName the name of the task
+     */
     public TodoCommand(String taskName){
         this.taskName = taskName;
     }
-    //method that executes the todo command
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws DukeException{
+
+    /**
+     * This method executes the todo command.
+     * @param tasks the task list
+     * @param ui the user interface
+     * @throws DukeException if the deadline is not in the correct format
+     */
+    public void execute(TaskList tasks, Ui ui) throws DukeException{
         Todo todo = new Todo(taskName);
         tasks.add(todo);
         ui.printAddedTask(todo, tasks.size());
     }
-    //method that checks if the command is an exit command
+
+    /**
+     * This method checks if the command is an exit command.
+     * @return false if the command is not an exit command
+     */
     public boolean isExit(){
         return false;
     }

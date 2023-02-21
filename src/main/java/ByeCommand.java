@@ -9,16 +9,26 @@
  */
 
 public class ByeCommand extends Command {
+
     //constructor
     public ByeCommand(){
         
     }
-    //execute the command
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws DukeException{
+
+    /**
+     * This method executes the command to exit the program.
+     * @param tasks the task list
+     * @param ui the user interface
+     */
+    public void execute(TaskList tasks, Ui ui) throws DukeException{
         //print the message
         ui.printGoodbyeMessage();
     }
-    //check if the command is an exit command
+
+    /**
+     * This method checks if the command is an exit command.
+     * @return true if the command is an exit command
+     */
     public boolean isExit(){
         return true;
     }

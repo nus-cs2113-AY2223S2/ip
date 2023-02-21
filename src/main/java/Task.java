@@ -15,19 +15,34 @@
 public class Task {
     protected String taskName;
     protected boolean isDone;
+
+    /**
+     * This constructor takes in the task name.
+     * @param taskName the name of the task
+     */
     public Task(String taskName){
         this.taskName = taskName;
         this.isDone = false;
     }
-    //method to mark as done
+
+    /**
+     * This method marks the task as done.
+     */
     public void markAsDone(){
         this.isDone = true;
     }
-    //method to mark as not done
+
+    /**
+     * This method marks the task as not done.
+     */
     public void markAsNotDone(){
         this.isDone = false;
     }
-    //toString method to print the status of the task followed by the task name
+
+    /**
+     * This method prints the status of the task followed by the task name.
+     * @return the status of the task followed by the task name
+     */
     public String toString(){
         if(this.isDone){
             return "[X] " + this.taskName;
@@ -37,12 +52,22 @@ public class Task {
     }
 }
 
-//Create a todo class that inherits from the task class
+/**
+ * This class represents a todo task.
+ * It is a subclass of the Task class.
+ * It contains the constructor to create a todo task.
+ * It also contains a toString method to print the status of the task followed by the task name.
+ * @param taskName the name of the task
+ */
 class Todo extends Task {
     protected Todo(String taskName){
         super(taskName);
     }
-    //toString method to print the status of the task followed by the task name
+
+    /**
+     * This method prints the status of the task followed by the task name.
+     * @return the status of the task followed by the task name
+     */
     @Override
     public String toString(){
         if(this.isDone){
@@ -53,14 +78,25 @@ class Todo extends Task {
     }
 }
 
-//Create a deadline class that inherits from the task class
+/**
+ * This class represents a deadline task.
+ * It is a subclass of the Task class.
+ * It contains the constructor to create a deadline task.
+ * It also contains a toString method to print the status of the task followed by the task name.
+ * @param taskName the name of the task
+ * @param deadline the deadline of the task
+ */
 class Deadline extends Task {
     protected String deadline;
     public Deadline(String taskName, String deadline){
         super(taskName);
         this.deadline = deadline;
     }
-    //toString method to print the status of the task followed by the task name
+
+    /**
+     * This method prints the status of the task followed by the task name.
+     * @return the status of the task followed by the task name
+     */
     @Override
     public String toString(){
         if(this.isDone){
@@ -71,14 +107,25 @@ class Deadline extends Task {
     }
 }
 
-//Create an event class that inherits from the task class
+/**
+ * This class represents an event task.
+ * It is a subclass of the Task class.
+ * It contains the constructor to create an event task.
+ * It also contains a toString method to print the status of the task followed by the task name.
+ * @param taskName the name of the task
+ * @param eventTime the time of the event
+ */
 class Event extends Task {
     protected String eventTime;
     public Event(String taskName, String eventTime){
         super(taskName);
         this.eventTime = eventTime;
     }
-    //toString method to print the status of the task followed by the task name
+
+    /**
+     * This method prints the status of the task followed by the task name.
+     * @return the status of the task followed by the task name
+     */
     @Override
     public String toString(){
         if(this.isDone){

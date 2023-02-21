@@ -17,39 +17,73 @@ import java.util.ArrayList;
 
 public class TaskList{
     protected ArrayList<Task> tasks;
-    //constructor that takes in an arraylist of tasks
+
+    /**
+     * This is the constructor for the TaskList class.
+     * It takes in an arraylist of tasks.
+     * If the arraylist is empty, it creates a new arraylist.
+     * @param tasks the arraylist of tasks
+     */
     public TaskList(ArrayList<Task> tasks){
         this.tasks = tasks;
     }
-    //if there is no file to read from
     public TaskList(){
         this.tasks = new ArrayList<Task>();
     }
-    //method that adds a task to the arraylist
+
+    /**
+     * This method adds a task to the arraylist.
+     * @param task the task to be added
+     */
     public void add(Task task){
         tasks.add(task);
     }
-    //method that deletes a task from the arraylist
+
+    /**
+     * This method deletes a task from the arraylist.
+     * @param taskNumber the number of the task to be deleted
+     */
     public void delete(int taskNumber){
         tasks.remove(taskNumber - 1);
     }
-    //method that marks a task as done
+
+    /**
+     * This method marks a task as done.
+     * @param taskNumber the number of the task to be marked as done
+     */
     public void markTask(int taskNumber){
         tasks.get(taskNumber - 1).markAsDone();
     }
-    //method that marks a task as undone
+
+    /**
+     * This method marks a task as not done.
+     * @param taskNumber the number of the task to be marked as not done
+     */
     public void unmarkTask(int taskNumber){
         tasks.get(taskNumber - 1).markAsNotDone();
     }
-    //method that returns the arraylist of tasks
+
+    /**
+     * This method returns the arraylist of tasks.
+     * @return the arraylist of tasks
+     */
     public ArrayList<Task> getTasks(){
         return tasks;
     }
-    //method that returns the size of the arraylist
+
+    /**
+     * This method returns the size of the arraylist.
+     * @return the size of the arraylist
+     */
     public int size(){
         return tasks.size();
     }
-    //method that returns a task from the arraylist
+
+    /**
+     * This method returns a task from the arraylist.
+     * @param taskNumber the number of the task to be returned
+     * @return the task
+     */
     public Task get(int taskNumber){
         return tasks.get(taskNumber - 1);
     }

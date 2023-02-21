@@ -10,20 +10,35 @@
  */
 
 public class DeleteCommand extends Command {
+    
     //the task number to be deleted
     private int taskNumber;
-    //constructor
+
+    /**
+     * This is the constructor for the DeleteCommand class.
+     * @param taskNumber the number of the task to be deleted
+     */
     public DeleteCommand(int taskNumber){
         this.taskNumber = taskNumber;
     }
-    //execute the command
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws DukeException{
+
+    /**
+     * This method executes the command to delete a task from the task list.
+     * @param tasks the task list
+     * @param ui the user interface
+     * @throws DukeException if the deadline is not in the correct format
+     */
+    public void execute(TaskList tasks, Ui ui) throws DukeException{
         //print the message
         ui.printDeletedTask(tasks.get(taskNumber), tasks.size()-1);
         //delete the task from the task list
         tasks.delete(taskNumber);
     }
-    //check if the command is an exit command
+
+    /**
+     * This method checks if the command is an exit command.
+     * @return false if the command is not an exit command
+     */
     public boolean isExit(){
         return false;
     }
