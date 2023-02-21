@@ -7,9 +7,7 @@ public class ExitCommand extends Command {
 
     public static final String COMMAND_WORD = "bye";
 
-    public ExitCommand() {
-
-    }
+    public ExitCommand() {}
 
     @Override
     public CommandResult execute(TaskList taskList) {

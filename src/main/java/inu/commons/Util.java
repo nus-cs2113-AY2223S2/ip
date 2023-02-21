@@ -1,5 +1,6 @@
 package inu.commons;
 
+import inu.exceptionhandling.EmptyUserInputException;
 import inu.task.TaskList;
 
 public class Util {
@@ -8,15 +9,13 @@ public class Util {
 
     public static final int INDEX_OFFSET_IN_COMMAND = 1;
 
-    public static final String EMPTY_STRING = "";
-
     public static int fetchIndexFromString(TaskList taskList, String userString) throws IndexOutOfBoundsException {
         int actualIndex = Integer.parseInt(userString) - INDEX_OFFSET_IN_COMMAND;
         int taskListSize = taskList.getTaskListSize();
-        if (actualIndex >= INDEX_BEGIN && actualIndex < taskListSize) {
-            return actualIndex;
-        } else {
+        if (actualIndex < INDEX_BEGIN || actualIndex >= taskListSize) {
             throw new IndexOutOfBoundsException();
+        } else {
+            return actualIndex;
         }
     }
 
@@ -32,14 +31,14 @@ public class Util {
         return by;
     }
 
-    public static String fetchFrom(String userString) {
+    public static String fetchFrom(String userString) throws EmptyUserInputException {
         int firstSlashEntry = userString.indexOf("/");
         int secondSlashEntry = userString.lastIndexOf("/");
-        if (firstSlashEntry != secondSlashEntry) {
+        if (firstSlashEntry == secondSlashEntry) {
+            throw new EmptyUserInputException();
+        } else {
             String from = userString.substring(firstSlashEntry + INDEX_OFFSET_IN_COMMAND, secondSlashEntry);
             return from;
-        } else {
-            return EMPTY_STRING;
         }
     }
 

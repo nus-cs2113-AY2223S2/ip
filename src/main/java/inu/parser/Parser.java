@@ -1,6 +1,15 @@
 package inu.parser;
 
-import inu.commands.*;
+import inu.commands.Command;
+import inu.commands.TodoCommand;
+import inu.commands.DeadlineCommand;
+import inu.commands.EventCommand;
+import inu.commands.DeleteCommand;
+import inu.commands.MarkCommand;
+import inu.commands.UnMarkCommand;
+import inu.commands.ListCommand;
+import inu.commands.ExitCommand;
+import inu.commands.InvalidCommand;
 import inu.commons.Messages;
 import inu.exceptionhandling.EmptyTaskListException;
 import inu.exceptionhandling.EmptyUserInputException;
@@ -11,7 +20,6 @@ import inu.task.Task;
 import inu.task.Todo;
 import inu.task.TaskList;
 import inu.commons.Util;
-
 import java.util.Scanner;
 
 
@@ -67,71 +75,53 @@ public class Parser {
             switch (command) {
 
             case TodoCommand.COMMAND_WORD:
-
                 try {
                     entry = userString[INDEX_ENTRY];
                     return runTodo(entry);
                 } catch (ArrayIndexOutOfBoundsException e) {
                     return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_STRING_INPUT);
                 }
-
             case DeadlineCommand.COMMAND_WORD:
-
                 try {
                     entry = userString[INDEX_ENTRY];
                     return runDeadLine(entry);
                 } catch (ArrayIndexOutOfBoundsException e) {
                     return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_STRING_INPUT);
                 }
-
             case EventCommand.COMMAND_WORD:
-
                 try {
                     entry = userString[INDEX_ENTRY];
                     return runEvent(entry);
                 } catch (ArrayIndexOutOfBoundsException e) {
                     return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_STRING_INPUT);
                 }
-
             case DeleteCommand.COMMAND_WORD:
-
                 try {
                     entry = userString[INDEX_ENTRY];
                     return runDelete(taskList, entry);
                 } catch (ArrayIndexOutOfBoundsException e) {
                     return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_INTEGER_INPUT);
                 }
-
             case ListCommand.COMMAND_WORD:
-
                 return runList(taskList);
-
             case MarkCommand.COMMAND_WORD:
-
                 try {
                     entry = userString[INDEX_ENTRY];
                     return runMark(taskList, entry);
                 } catch (ArrayIndexOutOfBoundsException e) {
                     return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_INTEGER_INPUT);
                 }
-
             case UnMarkCommand.COMMAND_WORD:
-
                 try {
                     entry = userString[INDEX_ENTRY];
                     return runUnMark(taskList, entry);
                 } catch (ArrayIndexOutOfBoundsException e) {
                     return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_INTEGER_INPUT);
                 }
-
             case ExitCommand.COMMAND_WORD:
-
                 return new ExitCommand();
-
             default:
-
                 return new InvalidCommand(Messages.MESSAGE_INVALID);
-
             }
 
     }
@@ -227,24 +217,19 @@ public class Parser {
         switch (taskType) {
 
         case DECODE_TODO:
-
             Todo todo = new Todo(task);
             if (markStatus.equals(DECODE_MARKED)) {
                 todo.setDone();
             }
             return todo;
-
         case DECODE_DEADLINE:
-
             String dueDate = fileStrings[DECODED_DUE_DATE];
             DeadLine deadLine = new DeadLine(task, dueDate);
             if (markStatus.equals(DECODE_MARKED)) {
                 deadLine.setDone();
             }
             return deadLine;
-
         case DECODE_EVENT:
-
             String fromDate = fileStrings[DECODED_FROM_DATE];
             String toDate = fileStrings[DECODED_TO_DATE];
             Event event = new Event(task, fromDate, toDate);
@@ -252,7 +237,6 @@ public class Parser {
                 event.setDone();
             }
             return event;
-
         default:
             return null;
         }

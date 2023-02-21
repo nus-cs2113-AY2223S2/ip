@@ -7,7 +7,6 @@ public class DeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";
 
-
     private final int targetIndex;
 
     public DeleteCommand(int targetIndex) {
