@@ -1,4 +1,4 @@
-package parser;
+package storage;
 
 import com.google.gson.Gson;
 import constants.ErrorMessage;
@@ -13,9 +13,9 @@ import ui.Ui;
 import java.io.*;
 import java.util.ArrayList;
 
-public class FileParser {
+public class Storage {
 
-  protected static FileParser instance = null;
+  protected static Storage instance = null;
   protected static final String FILE_NAME = "./data.json";
   protected static final TaskController taskController = new TaskController();
   protected static final Gson gson = new Gson();
@@ -126,11 +126,11 @@ public class FileParser {
     }
   }
 
-  protected FileParser() {}
+  protected Storage() {}
 
-  public static FileParser getInstance() {
+  public static Storage getInstance() {
     if (instance == null) {
-      instance = new FileParser();
+      instance = new Storage();
     }
 
     createFileIfNotExist();

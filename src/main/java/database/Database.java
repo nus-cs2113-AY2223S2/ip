@@ -1,7 +1,7 @@
 package database;
 
 import model.task.Task;
-import parser.FileParser;
+import storage.Storage;
 
 import java.util.ArrayList;
 
@@ -16,7 +16,7 @@ public class Database {
 
   protected final ArrayList<Task> tasks = new ArrayList<Task>();
 
-  protected final static FileParser parser = FileParser.getInstance();
+  protected final static Storage storage = Storage.getInstance();
 
   protected Database() {}
 
@@ -39,7 +39,7 @@ public class Database {
    */
   public void create(Task model) {
     tasks.add(model);
-    parser.updateFile(tasks);
+    storage.updateFile(tasks);
   }
 
   /**
@@ -74,7 +74,7 @@ public class Database {
     Task model = tasks.get(index);
     model.setDone(value);
     tasks.set(index, model);
-    parser.updateFile(tasks);
+    storage.updateFile(tasks);
   }
 
   /**
@@ -90,6 +90,6 @@ public class Database {
       throw new Exception("Invalid index provided.");
     }
     tasks.remove(index);
-    parser.updateFile(tasks);
+    storage.updateFile(tasks);
   }
 }
