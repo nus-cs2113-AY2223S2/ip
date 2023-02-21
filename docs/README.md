@@ -1,6 +1,6 @@
 # Araxys Task Manager - User Guide
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+Araxys is a task manager that allows you to to get your life together at just a fraction of your lifespan. The steal of a lifetime, wouldn't you say?
 
 Table of contents:
 1. [Quick Start](#quick_start)
