@@ -74,6 +74,17 @@ public class Parser {
     }
 
     /***
+     * Prior to searching the keyword that the user has inputted, processFind extracts the keyword for
+     * further comparison.
+     * @param storedValues The existing task list saved by the user.
+     * @param line The whole command typed in by the user.
+     */
+    static void processFind(ArrayList<Task> storedValues, String line) {
+        String wordToFind = line.substring(Duke.REMOVE_FIND_NUM);
+        TaskList.findTasks(storedValues, wordToFind);
+    }
+
+    /***
      * Detects the user input and matches the command with the desired output.
      * @param line User input to be processed.
      * @param storedValues List of inputs stored by the user.
@@ -87,7 +98,8 @@ public class Parser {
         case BYE:
             return true;
         case LIST:
-            TaskList.printList(storedValues);
+            String textToPrint = "Here are the tasks in your list:";
+            TaskList.printList(storedValues, textToPrint);
             break;
         case MARK:
             try {
@@ -138,6 +150,9 @@ public class Parser {
             } catch (IOException e) {
                 System.out.println("Error!");
             }
+            break;
+        case "find":
+            processFind(storedValues, line);
             break;
         default:
             // Commands that are not listed above

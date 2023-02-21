@@ -70,6 +70,12 @@ public class Duke {
             "main", "data", "duke-inputs.txt").toFile();
 
     /***
+     * The fixed number of spaces when processing commands involving "find" in
+     * the input.
+     */
+    public static final int REMOVE_FIND_NUM = 5;
+
+    /***
      * Main function greets the user and runs processInputs().
      */
     public static void main(String[] args) {

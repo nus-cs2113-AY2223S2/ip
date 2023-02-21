@@ -134,10 +134,25 @@ public class Ui {
     }
 
     static void informUserTaskUnmarked(ArrayList<Task> storedValues, int numToMark) {
-        storedValues.get(numToMark -1).unmarkAsDone();
+        storedValues.get(numToMark - 1).unmarkAsDone();
         TaskList.formattingLine();
         System.out.println("OK, I've marked this task as not done yet: \n" +
-                storedValues.get(numToMark -1).toString() + "\n");
+                storedValues.get(numToMark - 1).toString() + "\n");
         TaskList.formattingLine();
+    }
+    /***
+     * Given the word to search for, this function checks if there are any tasks within the tasklist that
+     * has the keyword the user is requesting for.
+     * @param keywordList The list of tasks with the given keyword.
+     * @param wordToFind The keyword that has been searched by the user.
+     */
+    static void printWordToFind(ArrayList<Task> keywordList, String wordToFind) {
+        if (keywordList.size() == 0) {
+            // Means that there are no common matches
+            System.out.println("Sorry, the keyword " + wordToFind + " did not appear in your list of tasks.");
+        } else {
+            String textToPrint = "Here are the matches in your list!";
+            TaskList.printList(keywordList,textToPrint);
+        }
     }
 }

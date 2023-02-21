@@ -104,14 +104,30 @@ public class TaskList {
      * Print all items within the list of stored tasks.
      * @param storedValues List of tasks from user inputs.
      */
-    static void printList(ArrayList<Task> storedValues) {
+    static void printList(ArrayList<Task> storedValues, String textToPrint) {
         int currValue = 0;
         formattingLine();
-        System.out.println("Here are the tasks in your list:");
+        System.out.println(textToPrint);
         for (Task value : storedValues) {
             System.out.println((currValue + 1) + "." + value.toString());
             currValue += 1;
         }
         formattingLine();
+    }
+
+    /***
+     * Searches the tasks within the existing task list with the same keyword typed in the "find" command.
+     * @param storedValues The existing task list that the user has.
+     * @param wordToFind The string that the user is trying to find within their task list.
+     */
+    static void findTasks(ArrayList<Task> storedValues, String wordToFind) {
+        ArrayList<Task> keywordList = new ArrayList<>();
+        for (Task task : storedValues) {
+            if (task.description.contains(wordToFind)) {
+                keywordList.add(task);
+            }
+        }
+
+        Ui.printWordToFind(keywordList, wordToFind);
     }
 }
