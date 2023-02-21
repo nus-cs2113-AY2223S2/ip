@@ -5,6 +5,9 @@ import duke.exceptions.InsufficientInputException;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -40,7 +43,7 @@ public class TaskList {
         System.out.printf(UI.HorizontalLine + "Event added: %s (from: %s to: %s)\n" + UI.HorizontalLine, event[0], event[1], event[2]);
     }
 
-    public void createDeadline(String[] inputWords) throws InsufficientInputException {
+    public void createDeadline(String[] inputWords) throws InsufficientInputException, DateTimeParseException {
         if (inputWords.length < INPUT_LENGTH) {
             throw new InsufficientInputException("Deadline command has insufficient input, please try again.");
         }
@@ -48,10 +51,11 @@ public class TaskList {
         if (deadline.length < DEADLINE_COMMAND_LENGTH || deadline[0].trim().equals("") || deadline[1].trim().equals("")) {
             throw new InsufficientInputException("Deadline command has insufficient input, please try again.");
         }
-        taskListArray.add(new Deadline(deadline[0], deadline[1]));
+        taskListArray.add(new Deadline(deadline[0], LocalDate.parse(deadline[1])));
         taskListArray.get(Task.maxTaskNumber).setTaskType("deadline");
         Task.maxTaskNumber++;
-        System.out.printf(UI.HorizontalLine + "Deadline added: %s (by: %s)\n" + UI.HorizontalLine, deadline[0], deadline[1]);
+        System.out.printf(UI.HorizontalLine + "Deadline added: %s (by: %s)\n" + UI.HorizontalLine, deadline[0],
+                LocalDate.parse(deadline[1]).format(DateTimeFormatter.ofPattern("MMM dd yyyy")));
     }
 
     public void createTodo(String[] inputWords) throws InsufficientInputException {
@@ -116,7 +120,7 @@ public class TaskList {
                 taskListArray.get(Task.maxTaskNumber).setTaskType("todo");
                 break;
             case "deadline":
-                taskListArray.add(new Deadline(data[2].trim(), data[3].trim()));
+                taskListArray.add(new Deadline(data[2].trim(), LocalDate.parse(data[3].trim())));
                 taskListArray.get(Task.maxTaskNumber).setTaskType("deadline");
                 break;
 

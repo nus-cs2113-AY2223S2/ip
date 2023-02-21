@@ -1,19 +1,23 @@
 package duke;
 
-public class Deadline extends Task {
-    private String by;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
-    public Deadline(String taskName, String by) {
+public class Deadline extends Task {
+    private LocalDate by;
+
+    public Deadline(String taskName, LocalDate by) {
         super(taskName);
         this.by = by;
     }
 
     @Override
     public void getTaskStatus() {
-        System.out.printf("[D][%s] %s (by: %s)\n", this.getDone(), this.getTaskName(), this.by);
+        System.out.printf("[D][%s] %s (by: %s)\n", this.getDone(), this.getTaskName(),
+                this.by.format(DateTimeFormatter.ofPattern("MMM dd yyyy")));
     }
 
-    public String getBy() {
+    public LocalDate getBy() {
         return this.by;
     }
 }
