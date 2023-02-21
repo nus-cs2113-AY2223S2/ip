@@ -17,7 +17,7 @@ Type "help" to get help.
 ```
 
 1. Make sure Java 11 is set up on your machine. Type java -version into your favourite terminal to see what version of Java is currently installed there (such as Command Prompt, Git Bash, or MacOS terminal) 
-2. Download the latest .jar file from here: 
+2. Download the latest .jar file from here: ```[Releases](https://github.com/ArtemiszenN/ip/releases)```
 3. Copy the .jar file to the desired location.
 4. Run the java file using the command ```java -jar Araxys.jar```. You should see the welcome message shown above.
 5. Enter your commands in the terminal and press Enter to execute them.
