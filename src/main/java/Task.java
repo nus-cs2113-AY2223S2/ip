@@ -50,6 +50,10 @@ public class Task {
             return "[ ] " + this.taskName;
         }
     }
+    //method to get the task name
+    public String getTaskname(){
+        return this.taskName;
+    }
 }
 
 /**

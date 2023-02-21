@@ -156,6 +156,21 @@ public class Parser {
                 }
             }
         }
+        //if the input is find
+        else if(inputSplit[0].equals("find")){
+            //if the input is not find followed by a keyword
+            if(inputSplit.length == 1){
+                //throw an exception
+                throw new DukeException("OOPS!!! The description of a find cannot be empty.");
+            }
+            //if the input is find followed by a keyword
+            else{
+                //get the keyword
+                String keyword = input.substring(5);
+                //return a find command
+                return new FindCommand(keyword);
+            }
+        }
 
         //return a invalid command of the input is not any of the above
         else{

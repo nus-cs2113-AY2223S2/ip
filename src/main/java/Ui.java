@@ -87,15 +87,10 @@ public class Ui {
         System.out.println(task);
         System.out.println("Now you have " + taskCount + " tasks in the list.");
     }
-
-    /**
-     * This method prints the matching tasks.
-     * @param tasks the list of matching tasks
-     * @param taskCount the number of tasks in the task list
-     */
-    public static void printMatchingTasks(ArrayList<Task> tasks, int taskCount){
+    //method that prints the tasks that match the keyword
+    public static void printMatchingTasks(ArrayList<Task> tasks){
         System.out.println("Here are the matching tasks in your list:");
-        for(int i=0;i<taskCount;i++){
+        for(int i=0;i<tasks.size();i++){
             System.out.println((i+1) + "." + tasks.get(i));
         }
     }
