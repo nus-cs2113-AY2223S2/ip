@@ -5,6 +5,8 @@ import luke.task.Deadline;
 import luke.task.Event;
 import luke.task.Task;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -23,6 +25,9 @@ public class TaskList implements StringManipulation {
 
     /** A dictionary that maps the serial number of the task list printed out to the taskID */
     private HashMap<Integer, Integer> serialNumbers;
+
+    /** Default time if the user did not key in a time when adding a deadline or event */
+    private static final String DEFAULT_TIME = "00:00";
 
     /** A list containing all valid task types */
     private static final ArrayList<String> TASK_TYPES = new ArrayList<String>(
@@ -99,6 +104,22 @@ public class TaskList implements StringManipulation {
     }
 
     /**
+     * This method takes an input date and formats it so that it can be parsed into a LocalDateTime object
+     * If the method cannot find a time component in the date, it adds in the default time of 00:00.
+     *
+     * @param date The input date string to be formatted.
+     * @return A string that can be parsed into a LocalDateTime object.
+     */
+    private String formatDate(String date) {
+        String dateString = StringManipulation.getFirstWord(date.trim());
+        String timeString= StringManipulation.removeFirstWord(date.trim());
+        if (timeString == null) {
+            return String.format(dateString + "T" + DEFAULT_TIME);
+        }
+        return String.format(dateString + "T" + timeString);
+    }
+
+    /**
      * Adds a task to the list of tasks.
      *
      * @param taskType The type of the task to be added.
@@ -116,20 +137,33 @@ public class TaskList implements StringManipulation {
             if (taskDate == null) {
                 return false;
             }
-            newTask = new Deadline(taskName, newTaskID, taskDate.trim());
+            String formattedDeadline = formatDate(taskDate);
+            try {
+                LocalDateTime.parse(formattedDeadline);
+                newTask = new Deadline(taskName, newTaskID, formattedDeadline);
+            } catch (DateTimeParseException e) {
+                return false;
+            }
             break;
         default:
             if (taskDate == null) {
                 return false;
             }
-            String startDate = StringManipulation.getFirstDetail(taskDate);
-            String endDate = StringManipulation.removeFirstDetail(taskDate);
-
-            if (startDate == null || endDate == null) {
+            String startDateString = StringManipulation.getFirstDetail(taskDate);
+            String endDateString = StringManipulation.removeFirstDetail(taskDate);
+            if (startDateString == null || endDateString == null) {
                 return false;
             }
+            String formattedStartDate = formatDate(startDateString);
+            String formattedEndDate = formatDate(endDateString);
 
-            newTask = new Event(taskName, newTaskID, startDate.trim(), endDate.trim());
+            try {
+                LocalDateTime.parse(formattedStartDate);
+                LocalDateTime.parse(formattedEndDate);
+                newTask = new Event(taskName, newTaskID, formattedStartDate, formattedEndDate);
+            } catch (DateTimeParseException e) {
+                return false;
+            }
             break;
         }
         tasks.put(newTaskID, newTask);

@@ -54,14 +54,14 @@ public class Parser implements StringManipulation {
             return new InvalidCommand();
         }
 
-        String taskType = StringManipulation.getCommandKeyword(taskInfo);
+        String taskType = StringManipulation.getFirstWord(taskInfo);
 
         //Check if the task type entered by the user is valid
         if (!tasks.isTaskType(taskType)) {
             return new InvalidCommand();
         }
 
-        String taskDetail = StringManipulation.removeCommandKeyword(taskInfo);
+        String taskDetail = StringManipulation.removeFirstWord(taskInfo);
 
         //Checks if the name of the task is empty
         if (taskDetail == null) {
@@ -206,11 +206,11 @@ public class Parser implements StringManipulation {
      * @return A Command objects that suits the user input.
      */
     public Command parse(String fullCommand, TaskList tasks) {
-        String firstWord = StringManipulation.getCommandKeyword(fullCommand);
+        String firstWord = StringManipulation.getFirstWord(fullCommand);
         if (!isCommand(firstWord)) {
             return new EchoCommand(fullCommand);
         }
-        String description = StringManipulation.removeCommandKeyword(fullCommand);
+        String description = StringManipulation.removeFirstWord(fullCommand);
         return prepareCommand(firstWord, description, tasks);
     }
 }

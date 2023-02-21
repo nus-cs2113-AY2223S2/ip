@@ -33,7 +33,7 @@ ____________________________________________________________
 ____________________________________________________________
 [Luke]: Printing Tasks...
 1. [T][ ] todoTask1
-2. [D][ ] deadlineTask1 (Due: dueDate1)
+2. [D][ ] deadlineTask1 (Due: Dec 18 2023 06 00 AM)
 ____________________________________________________________
 ____________________________________________________________
 [Luke]: todoTask1 has been marked as complete.
@@ -47,8 +47,8 @@ ____________________________________________________________
 ____________________________________________________________
 [Luke]: Printing Tasks...
 1. [T][X] todoTask1
-2. [D][ ] deadlineTask1 (Due: dueDate1)
-3. [E][ ] eventTask1 (From: start1 to: end1)
+2. [D][ ] deadlineTask1 (Due: Dec 18 2023 06 00 AM)
+3. [E][ ] eventTask1 (From: Dec 18 2023 06 00 AM to: Dec 18 2023 04 00 PM)
 ____________________________________________________________
 ____________________________________________________________
 [Luke]: deadlineTask1 has been marked as complete.
@@ -59,8 +59,8 @@ ____________________________________________________________
 ____________________________________________________________
 [Luke]: Printing Tasks...
 1. [T][ ] todoTask1
-2. [D][X] deadlineTask1 (Due: dueDate1)
-3. [E][ ] eventTask1 (From: start1 to: end1)
+2. [D][X] deadlineTask1 (Due: Dec 18 2023 06 00 AM)
+3. [E][ ] eventTask1 (From: Dec 18 2023 06 00 AM to: Dec 18 2023 04 00 PM)
 ____________________________________________________________
 ____________________________________________________________
 [Luke]: todoTask1 has been marked as complete.
@@ -71,8 +71,8 @@ ____________________________________________________________
 ____________________________________________________________
 [Luke]: Printing Tasks...
 1. [T][X] todoTask1
-2. [D][X] deadlineTask1 (Due: dueDate1)
-3. [E][X] eventTask1 (From: start1 to: end1)
+2. [D][X] deadlineTask1 (Due: Dec 18 2023 06 00 AM)
+3. [E][X] eventTask1 (From: Dec 18 2023 06 00 AM to: Dec 18 2023 04 00 PM)
 ____________________________________________________________
 ____________________________________________________________
 [Luke]: Added: todoDelete1
@@ -80,8 +80,8 @@ ____________________________________________________________
 ____________________________________________________________
 [Luke]: Printing Tasks...
 1. [T][X] todoTask1
-2. [D][X] deadlineTask1 (Due: dueDate1)
-3. [E][X] eventTask1 (From: start1 to: end1)
+2. [D][X] deadlineTask1 (Due: Dec 18 2023 06 00 AM)
+3. [E][X] eventTask1 (From: Dec 18 2023 06 00 AM to: Dec 18 2023 04 00 PM)
 4. [T][ ] todoDelete1
 ____________________________________________________________
 ____________________________________________________________
@@ -90,10 +90,10 @@ ____________________________________________________________
 ____________________________________________________________
 [Luke]: Printing Tasks...
 1. [T][X] todoTask1
-2. [D][X] deadlineTask1 (Due: dueDate1)
-3. [E][X] eventTask1 (From: start1 to: end1)
+2. [D][X] deadlineTask1 (Due: Dec 18 2023 06 00 AM)
+3. [E][X] eventTask1 (From: Dec 18 2023 06 00 AM to: Dec 18 2023 04 00 PM)
 4. [T][ ] todoDelete1
-5. [D][ ] deadlineDelete1 (Due: dueDate1)
+5. [D][ ] deadlineDelete1 (Due: Dec 18 2023 04 00 PM)
 ____________________________________________________________
 ____________________________________________________________
 [Luke]: You have entered an invalid command!
@@ -104,11 +104,11 @@ ____________________________________________________________
 ____________________________________________________________
 [Luke]: Printing Tasks...
 1. [T][X] todoTask1
-2. [D][X] deadlineTask1 (Due: dueDate1)
-3. [E][X] eventTask1 (From: start1 to: end1)
+2. [D][X] deadlineTask1 (Due: Dec 18 2023 06 00 AM)
+3. [E][X] eventTask1 (From: Dec 18 2023 06 00 AM to: Dec 18 2023 04 00 PM)
 4. [T][ ] todoDelete1
-5. [D][ ] deadlineDelete1 (Due: dueDate1)
-6. [E][ ] eventDelete1 (From: start1 to: end1)
+5. [D][ ] deadlineDelete1 (Due: Dec 18 2023 04 00 PM)
+6. [E][ ] eventDelete1 (From: Dec 18 2023 06 00 AM to: Dec 18 2023 04 00 PM)
 ____________________________________________________________
 ____________________________________________________________
 [Luke]: deadlineDelete1 has been marked as complete.
@@ -116,11 +116,11 @@ ____________________________________________________________
 ____________________________________________________________
 [Luke]: Printing Tasks...
 1. [T][X] todoTask1
-2. [D][X] deadlineTask1 (Due: dueDate1)
-3. [E][X] eventTask1 (From: start1 to: end1)
+2. [D][X] deadlineTask1 (Due: Dec 18 2023 06 00 AM)
+3. [E][X] eventTask1 (From: Dec 18 2023 06 00 AM to: Dec 18 2023 04 00 PM)
 4. [T][ ] todoDelete1
-5. [D][X] deadlineDelete1 (Due: dueDate1)
-6. [E][ ] eventDelete1 (From: start1 to: end1)
+5. [D][X] deadlineDelete1 (Due: Dec 18 2023 04 00 PM)
+6. [E][ ] eventDelete1 (From: Dec 18 2023 06 00 AM to: Dec 18 2023 04 00 PM)
 ____________________________________________________________
 ____________________________________________________________
 [Luke]: todoDelete1 has been deleted.
@@ -128,10 +128,10 @@ ____________________________________________________________
 ____________________________________________________________
 [Luke]: Printing Tasks...
 1. [T][X] todoTask1
-2. [D][X] deadlineTask1 (Due: dueDate1)
-3. [E][X] eventTask1 (From: start1 to: end1)
-4. [D][X] deadlineDelete1 (Due: dueDate1)
-5. [E][ ] eventDelete1 (From: start1 to: end1)
+2. [D][X] deadlineTask1 (Due: Dec 18 2023 06 00 AM)
+3. [E][X] eventTask1 (From: Dec 18 2023 06 00 AM to: Dec 18 2023 04 00 PM)
+4. [D][X] deadlineDelete1 (Due: Dec 18 2023 04 00 PM)
+5. [E][ ] eventDelete1 (From: Dec 18 2023 06 00 AM to: Dec 18 2023 04 00 PM)
 ____________________________________________________________
 ____________________________________________________________
 [Luke]: deadlineDelete1 has been deleted.
@@ -139,9 +139,9 @@ ____________________________________________________________
 ____________________________________________________________
 [Luke]: Printing Tasks...
 1. [T][X] todoTask1
-2. [D][X] deadlineTask1 (Due: dueDate1)
-3. [E][X] eventTask1 (From: start1 to: end1)
-4. [E][ ] eventDelete1 (From: start1 to: end1)
+2. [D][X] deadlineTask1 (Due: Dec 18 2023 06 00 AM)
+3. [E][X] eventTask1 (From: Dec 18 2023 06 00 AM to: Dec 18 2023 04 00 PM)
+4. [E][ ] eventDelete1 (From: Dec 18 2023 06 00 AM to: Dec 18 2023 04 00 PM)
 ____________________________________________________________
 ____________________________________________________________
 [Luke]: You have entered an index that does not exist!
@@ -152,8 +152,8 @@ ____________________________________________________________
 ____________________________________________________________
 [Luke]: Printing Tasks...
 1. [T][X] todoTask1
-2. [D][X] deadlineTask1 (Due: dueDate1)
-3. [E][X] eventTask1 (From: start1 to: end1)
+2. [D][X] deadlineTask1 (Due: Dec 18 2023 06 00 AM)
+3. [E][X] eventTask1 (From: Dec 18 2023 06 00 AM to: Dec 18 2023 04 00 PM)
 ____________________________________________________________
 ____________________________________________________________
 [Luke]: You have entered an invalid command!
@@ -175,25 +175,67 @@ ____________________________________________________________
 ____________________________________________________________
 ____________________________________________________________
 [Luke]: Printing matching tasks...
-1. [D][ ] keyword1 keyword2 (Due: dueDate1)
-2. [E][ ] keyword3 keyword1 (From: start to: end)
+1. [D][ ] keyword1 keyword2 (Due: Dec 18 2023 06 00 AM)
+2. [E][ ] keyword3 keyword1 (From: Dec 18 2023 06 00 AM to: Dec 18 2023 04 00 PM)
 ____________________________________________________________
 ____________________________________________________________
 [Luke]: Printing matching tasks...
-1. [D][ ] keyword1 keyword2 (Due: dueDate1)
+1. [D][ ] keyword1 keyword2 (Due: Dec 18 2023 06 00 AM)
 2. [T][ ] keyword3 keyword2
 ____________________________________________________________
 ____________________________________________________________
 [Luke]: Printing matching tasks...
 1. [T][ ] keyword3 keyword2
-2. [E][ ] keyword3 keyword1 (From: start to: end)
+2. [E][ ] keyword3 keyword1 (From: Dec 18 2023 06 00 AM to: Dec 18 2023 04 00 PM)
 ____________________________________________________________
 ____________________________________________________________
 [Luke]: Unable to find matching tasks
 ____________________________________________________________
 ____________________________________________________________
 [Luke]: Printing matching tasks...
-1. [D][ ] keyword1 keyword2 (Due: dueDate1)
+1. [D][ ] keyword1 keyword2 (Due: Dec 18 2023 06 00 AM)
+____________________________________________________________
+____________________________________________________________
+[Luke]: Added: No Time
+____________________________________________________________
+____________________________________________________________
+[Luke]: You have entered an invalid command!
+____________________________________________________________
+____________________________________________________________
+[Luke]: You have entered an invalid command!
+____________________________________________________________
+____________________________________________________________
+[Luke]: Printing Tasks...
+1. [T][X] todoTask1
+2. [D][X] deadlineTask1 (Due: Dec 18 2023 06 00 AM)
+3. [E][X] eventTask1 (From: Dec 18 2023 06 00 AM to: Dec 18 2023 04 00 PM)
+4. [D][ ] keyword1 keyword2 (Due: Dec 18 2023 06 00 AM)
+5. [T][ ] keyword3 keyword2
+6. [E][ ] keyword3 keyword1 (From: Dec 18 2023 06 00 AM to: Dec 18 2023 04 00 PM)
+7. [D][ ] No Time (Due: Dec 18 2023 12 00 AM)
+____________________________________________________________
+____________________________________________________________
+[Luke]: Added: No time
+____________________________________________________________
+____________________________________________________________
+[Luke]: You have entered an invalid command!
+____________________________________________________________
+____________________________________________________________
+[Luke]: You have entered an invalid command!
+____________________________________________________________
+____________________________________________________________
+[Luke]: You have entered an invalid command!
+____________________________________________________________
+____________________________________________________________
+[Luke]: Printing Tasks...
+1. [T][X] todoTask1
+2. [D][X] deadlineTask1 (Due: Dec 18 2023 06 00 AM)
+3. [E][X] eventTask1 (From: Dec 18 2023 06 00 AM to: Dec 18 2023 04 00 PM)
+4. [D][ ] keyword1 keyword2 (Due: Dec 18 2023 06 00 AM)
+5. [T][ ] keyword3 keyword2
+6. [E][ ] keyword3 keyword1 (From: Dec 18 2023 06 00 AM to: Dec 18 2023 04 00 PM)
+7. [D][ ] No Time (Due: Dec 18 2023 12 00 AM)
+8. [E][ ] No time (From: Dec 18 2023 12 00 AM to: Dec 18 2023 12 00 AM)
 ____________________________________________________________
 ____________________________________________________________
 [Luke]: Bye. Hope to see you again soon!
