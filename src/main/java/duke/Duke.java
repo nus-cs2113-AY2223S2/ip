@@ -5,12 +5,18 @@ import tasks.Event;
 import tasks.Task;
 import tasks.Todo;
 
+
 import java.util.Scanner;
 import java.util.ArrayList;
 
 import java.io.FileWriter;
 import java.io.File;
 import java.io.IOException;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Locale;
 
 public class Duke {
     /* --- GLOBAL VARIABLES --- */
@@ -19,13 +25,19 @@ public class Duke {
     // Horizontal Rule to act as a divider
     private static final String HORIZONTAL_RULE = "___________________________________________________________________";
 
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm", Locale.US);
+
     public static void printHorizontalRule() {
         System.out.println(HORIZONTAL_RULE);
     }
 
-
-
     /* --- FUNCTIONS --- */
+
+    /**
+     * Either creates a save file if one does not exist,
+     * or processes saved contents of a text file
+     * Entries are parsed in order
+     */
     public static void startFileProcessing(ArrayList<Task> tasks) throws IndexOutOfBoundsException {
         try {
             File saveFile = new File("duke.txt");
@@ -55,7 +67,7 @@ public class Duke {
                     case "D": {
                         String[] deadlineBreakdown = savedTask[2].split(" \\(By: ");
                         String by = deadlineBreakdown[1].substring(0, deadlineBreakdown[1].length() - 1);
-                        Deadline deadline = new Deadline(deadlineBreakdown[0], by);
+                        Deadline deadline = new Deadline(deadlineBreakdown[0], LocalDateTime.parse(by, FORMATTER).format(FORMATTER));
                         tasks.add(deadline);
 
                         if (savedTask[1].equals("X")) {
@@ -71,7 +83,7 @@ public class Duke {
                         String from = timeBreakdown[0];
                         String to = timeBreakdown[1].substring(0, timeBreakdown[1].length() - 1);
 
-                        Event event = new Event (eventDescription, from, to);
+                        Event event = new Event(eventDescription, LocalDateTime.parse(from, FORMATTER).format(FORMATTER), LocalDateTime.parse(to, FORMATTER).format(FORMATTER));
                         tasks.add(event);
 
                         if (savedTask[1].equals("X")) {
@@ -89,6 +101,11 @@ public class Duke {
         }
     }
 
+    /**
+     * Saves tasks upon being given the command 'bye'
+     * For each task in the arraylist, it saves the task in the format of
+     * type / completion status / task description
+     */
     public static void endFileProcessing(ArrayList<Task> tasks) {
         try {
             System.out.println("Saving current tasks...");
@@ -97,7 +114,7 @@ public class Duke {
             for (int i = 0; i < tasks.size(); ++i) {
                 String task = String.valueOf(tasks.get(i));
                 String[] splitTaskDescription = task.split("] ", 3);
-                saveFile.write(tasks.get(i).getType() + " / "  + tasks.get(i).getStatus() + " / " + splitTaskDescription[2] + '\n');
+                saveFile.write(tasks.get(i).getType() + " / " + tasks.get(i).getStatus() + " / " + splitTaskDescription[2] + '\n');
             }
 
             saveFile.close();
@@ -298,7 +315,7 @@ public class Duke {
                         description = getDescriptionForDeadline(withoutCommand);
                         String by = getDeadline(withoutCommand);
 
-                        Deadline deadline = new Deadline(description, by);
+                        Deadline deadline = new Deadline(description, LocalDateTime.parse(by, FORMATTER).format(FORMATTER));
                         tasks.add(deadline);
 
                         // Prints acknowledgement
@@ -307,6 +324,10 @@ public class Duke {
                         printHorizontalRule();
                         System.out.println("Wrong usage of deadline. Format is: deadline {description} /by {date}");
                         System.out.println("You entered: " + userInput);
+                        printHorizontalRule();
+                    } catch (DateTimeParseException e) {
+                        printHorizontalRule();
+                        System.out.println("Wrong date and time format used! The required format is YYYY-MM-DD HH:MM");
                         printHorizontalRule();
                     }
                     break;
@@ -325,7 +346,7 @@ public class Duke {
                         // Returns in the format [from, to]
                         String[] timings = getTimings(withoutCommand);
 
-                        Event event = new Event(description, timings[0], timings[1]);
+                        Event event = new Event(description, LocalDateTime.parse(timings[0], FORMATTER).format(FORMATTER), LocalDateTime.parse(timings[1], FORMATTER).format(FORMATTER));
                         tasks.add(event);
 
                         // Prints acknowledgement
@@ -334,6 +355,10 @@ public class Duke {
                         printHorizontalRule();
                         System.out.println("Wrong usage of event. Format is: event {description} /from {date} /to {date}");
                         System.out.println("You entered: " + userInput);
+                        printHorizontalRule();
+                    } catch (DateTimeParseException e) {
+                        printHorizontalRule();
+                        System.out.println("Wrong date and time format used! The required format is YYYY-MM-DD HH:MM");
                         printHorizontalRule();
                     }
                     break;
