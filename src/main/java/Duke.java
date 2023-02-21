@@ -82,6 +82,7 @@ public class Duke {
             userInput = userInput.substring(5);
             tasks.add(new Todo(userInput));
             taskAdded(tasks);
+            writeToFile(tasks);
         } catch (IndexOutOfBoundsException error) {
             throw new DukeException(ErrorMessage.MISSING_TODO_PARAMETER.toString());
         }
@@ -105,6 +106,7 @@ public class Duke {
             String description = userInput.substring(6, firstPositionOfSlash - 1);
             tasks.add(new Event(description, start, end));
             taskAdded(tasks);
+            writeToFile(tasks);
         } catch (IndexOutOfBoundsException error) {
             throw new DukeException(ErrorMessage.MISSING_EVENT_PARAMETER.toString());
         }
@@ -122,6 +124,7 @@ public class Duke {
                 String description = userInput.substring(9, positionOfBy - 1);
                 tasks.add(new Deadline(description, by));
                 taskAdded(tasks);
+                writeToFile(tasks);
             } catch (IndexOutOfBoundsException error) {
                 throw new DukeException(ErrorMessage.MISSING_DEADLINE_PARAMETER.toString());
             }
@@ -146,6 +149,7 @@ public class Duke {
         Task taskToRemove = tasks.get(taskNumber - 1);
         tasks.remove(taskNumber - 1);
         taskRemoved(tasks, taskToRemove);
+        writeToFile(tasks);
     }
 
     public static void taskRemoved(ArrayList<Task> tasks, Task t) {
@@ -165,9 +169,11 @@ public class Duke {
 
         if (words[0].equals("mark")) {
             tasks.get(taskNumber - 1).toggleMark(1);
+            writeToFile(tasks);
             System.out.println("Nice! I've marked this task as done:");
         } else {
             tasks.get(taskNumber - 1).toggleMark(0);
+            writeToFile(tasks);
             System.out.println("OK, I've marked this task as not done yet:");
         }
         System.out.println(tasks.get(taskNumber - 1));
@@ -188,30 +194,27 @@ public class Duke {
     }
 
     private static ArrayList<Task> readFromFile(ArrayList<Task> tasks) {
-        try {
+        File file = new File("duke.txt");
+        if (file.exists()) {
             try {
                 FileInputStream readData = new FileInputStream("duke.txt");
                 ObjectInputStream readStream = new ObjectInputStream(readData);
-                @SuppressWarnings("unchecked")
-                ArrayList<Task> tasks2 = (ArrayList<Task>) readStream.readObject();
-                tasks = tasks2;
+                tasks = (ArrayList<Task>) readStream.readObject();
                 readStream.close();
-            } catch (FileNotFoundException error) {
-                System.out.println("File");
+            } catch (Exception e) {
+                System.out.println("Error in file");
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        }
+        else {
+            tasks = new ArrayList<>();
         }
         return tasks;
     }
 
     public static void main(String[] args) {
         printWelcomeMessage();
-        ArrayList<Task> tasks = new ArrayList<>();
-        File file = new File("duke.txt");
-        if (file.exists()) {
-            tasks = readFromFile(tasks);
-        }
+        ArrayList<Task> tasks = null;
+        tasks = readFromFile(tasks);
 
         greet();
         Scanner in = new Scanner(System.in);
@@ -228,7 +231,6 @@ public class Duke {
                 printHorizontalLine();
             }
         }
-        writeToFile(tasks);
         exit();
     }
 }
