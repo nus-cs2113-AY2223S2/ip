@@ -24,8 +24,7 @@ public abstract class Parser {
      * Parses the command from the user and decides on the appropriate command to
      * execute
      * 
-     * @param input
-     *              the command sent by the user
+     * @param input the command sent by the user
      */
     public static void parseCommand(String input) throws UnrecognisedCommandException {
         String[] inputArr = input.split(" ", 2);
@@ -80,10 +79,8 @@ public abstract class Parser {
     /**
      * Parses the input and creates a new task based on the type of task
      * 
-     * @param input
-     *              the input from the user
-     * @param type
-     *              the type of task
+     * @param input the input from the user
+     * @param type  the type of task
      * @return the new task
      */
     public static Task parseNewTask(String input, String type) throws GrandException {
@@ -114,8 +111,7 @@ public abstract class Parser {
     /**
      * Creates a new Todo task
      * 
-     * @param input
-     *              the input from the user
+     * @param input the input from the user
      * @return the new Todo task
      */
     public static Task createTodo(String input) throws EmptyTodoException {
@@ -128,8 +124,7 @@ public abstract class Parser {
     /**
      * Creates a new Deadline task
      * 
-     * @param input
-     *              the input from the user
+     * @param input the input from the user
      * @return the new Deadline task
      */
     public static Task createDeadline(String input) throws EmptyDeadlineException, MissingByException,
@@ -160,8 +155,7 @@ public abstract class Parser {
     /**
      * Creates a new Event task
      * 
-     * @param input
-     *              the input from the user
+     * @param input the input from the user
      * @return the new Event task
      */
     public static Task createEvent(String input) throws EmptyEventException, MissingFromException,

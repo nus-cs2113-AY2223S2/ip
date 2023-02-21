@@ -26,8 +26,7 @@ public abstract class TaskList {
     /**
      * Creates and adds a new task into the tasks ArrayList
      * 
-     * @param input
-     *              the description of the new task to be added
+     * @param input the description of the new task to be added
      */
     public static void addTask(String input, String type) throws GrandException {
         Task newTask;
@@ -48,8 +47,7 @@ public abstract class TaskList {
     /**
      * Deletes a task at a index specified by the user in the tasklist
      * 
-     * @param input
-     *              the input by the user that specifies the index
+     * @param input the input by the user that specifies the index
      */
     public static void deleteTask(String index) throws OutOfBoundsException, DeleteFormatException {
         if (index.equals("")) {
@@ -75,10 +73,8 @@ public abstract class TaskList {
     /**
      * loads a task from the save file into the task list
      * 
-     * @param loadString
-     *                   the string to be loaded
-     * @throws GrandException
-     *                        if the string is not in the correct format
+     * @param loadString the string to be loaded
+     * @throws GrandException if the string is not in the correct format
      */
     public static void loadTask(String loadString) throws GrandException {
         Task newTask;
@@ -110,8 +106,7 @@ public abstract class TaskList {
     /**
      * mark a task at a index specified by the user in the tasklist as done/undone
      * 
-     * @param input
-     *              the input by the user that specifies the index
+     * @param input the input by the user that specifies the index
      */
     public static void markTask(String index, Boolean isDone)
             throws OutOfBoundsException, MarkMissingDescriptionException, MarkFormatException {

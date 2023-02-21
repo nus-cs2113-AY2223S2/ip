@@ -5,8 +5,7 @@ public class Todo extends Task {
     /**
      * Creates a new Todo object
      * 
-     * @param taskDesc
-     *                 the description of the task
+     * @param taskDesc the description of the task
      */
     public Todo(String taskDesc) {
         super(taskDesc);

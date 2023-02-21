@@ -31,8 +31,7 @@ public abstract class Io {
     /**
      * Prints a custom message to the command line
      * 
-     * @param message
-     *                the message to be printed
+     * @param message the message to be printed
      */
     public static void printOutput(String message) {
         System.out.print("        ");

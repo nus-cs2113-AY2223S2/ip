@@ -10,8 +10,7 @@ public class Task {
      * Constructor for a new Task object. Stores a description and status of the
      * task. The task is set to unmarked at initialization
      * 
-     * @param taskDesc
-     *                 the description of the new task created
+     * @param taskDesc the description of the new task created
      */
     public Task(String taskDesc) {
         this.taskDesc = taskDesc;
@@ -76,8 +75,7 @@ public class Task {
      * Returns the string representation of the Task object to be saved in the data
      * file
      * 
-     * @param task
-     *             the task to be saved
+     * @param task the task to be saved
      * @return the string representation of the task to be saved
      */
     public String getTaskSaveString() {
