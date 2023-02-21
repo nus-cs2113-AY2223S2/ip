@@ -28,6 +28,8 @@ help: brings you here.
 Syntax: help
 bye: exits the program.
 Syntax: bye
+find: finds any item with the keywords in the description.
+Syntax: find {keywords}
 ____________________________________________________________
 Command acknowledged. Reducing user lifespan by 30 minutes.
 ____________________________________________________________
@@ -189,4 +191,10 @@ Command acknowledged. Reducing user lifespan by 30 minutes.
 1:[T][ ]//////try out new thing
 2:[D][X]//////do thing (by: 5pm)
 3:[E][ ]//////do stuff (from: 6pm to: 10pm)
+____________________________________________________________
+____________________________________________________________
+Command acknowledged. Reducing user lifespan by 30 minutes.
+Here are the tasks that we have found:
+1: [D][X]//////do thing (by: 5pm)
+2: [E][ ]//////do stuff (from: 6pm to: 10pm)
 ____________________________________________________________
