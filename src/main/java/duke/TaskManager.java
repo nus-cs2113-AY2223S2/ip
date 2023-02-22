@@ -5,20 +5,14 @@ import duke.tasks.Deadline;
 import duke.tasks.Event;
 import duke.tasks.Task;
 import duke.tasks.Todo;
-import duke.tools.Parser;
+import duke.tools.Formatter;
 import duke.tools.Storage;
 import duke.tools.UI;
 
 import java.util.ArrayList;
-
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Task manager with private attribute task array to store tasks.
@@ -31,6 +25,7 @@ public class TaskManager {
     private final static String NEW_TASK_CAPTION = "      Got it. I've added this task:";
     private final static String DELETE_TASK_CAPTION = "      Noted! I've removed this task:c";
     private final static String UNMARKED_CAPTION = "      OK, I've marked this task as not done yet:";
+    private final static String FOUND_CAPTION = "    Here are the matching tasks in your list:";
 
 
     public static void loadTask(Task task){
@@ -173,5 +168,30 @@ public class TaskManager {
         tasks.remove(index);
         Storage.copyToFile();
 
+    }
+
+    public static void findTasksByKeyword(String keyword){
+        int count = 1;
+        Formatter.drawSeparationLine();
+        System.out.println(FOUND_CAPTION);
+        tasks.stream().forEach(x->{
+            if (x.getTaskDescription().contains(keyword)){
+                print.foundTasks(x, count);
+            }
+        });
+        Formatter.drawSeparationLine();
+    }
+
+    public static void findDeadlinesByDate(String keyword){
+        LocalDate date = LocalDate.parse(keyword);
+        int count = 1;
+        Formatter.drawSeparationLine();
+        System.out.println(FOUND_CAPTION);
+        tasks.stream().forEach(x->{
+            if (x instanceof Deadline && ((Deadline)x).getBy().equals(date)){
+                print.foundTasks(x, count);
+            }
+        });
+        Formatter.drawSeparationLine();
     }
 }

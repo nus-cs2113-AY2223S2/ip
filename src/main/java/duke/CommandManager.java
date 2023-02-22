@@ -7,6 +7,7 @@ import duke.exceptions.UnknownCommandException;
 import duke.exceptions.*;
 import duke.tasks.Bye;
 import duke.tasks.Greet;
+import duke.tasks.Task;
 import duke.tools.Parser;
 
 import java.io.IOException;
@@ -23,11 +24,7 @@ public class CommandManager {
 
     public void setCommand(String command) throws UnknownCommandException, CommandDescriptionEmptyException {
         this.inputCommand = command;
-
         this.commandType = COMMAND_PARSER.getCommandType(command);
-        if(!(commandType.equals("todo")||commandType.equals("event")||commandType.equals("deadline")||commandType.equals("list")||commandType.equals("bye")||commandType.equals("mark")||commandType.equals("unmark")||commandType.equals("delete"))){
-            throw new UnknownCommandException();
-        }
         this.commandDescription = COMMAND_PARSER.getCommandDescription(command);
     }
 
@@ -48,20 +45,37 @@ public class CommandManager {
      * If command is unmark, mark a particular task as undone.
      * Else add new task.
      */
-    public void executeCommand() throws MissingParameterException,EditEmptyTasks,MissingFileException, IOException,  DeleteIndexOutOfBound, DeleteEmptyTasks{
-        if(commandType.equals("bye")){
+    public void executeCommand() throws MissingParameterException,EditEmptyTasks,MissingFileException, IOException,  DeleteIndexOutOfBound, DeleteEmptyTasks, UnknownCommandException{
+        switch(commandType){
+        case "bye":
             sayBye();
             System.exit(0);
-        }else if(commandType.equals("list")){
+            break;
+        case "list":
             TaskManager.listTask();
-        }else if(commandType.equals("mark")){
+            break;
+        case "mark":
             TaskManager.editTaskStatus(this.commandDescription, "mark");
-        }else if(commandType.equals("unmark")){
+            break;
+        case "unmark":
             TaskManager.editTaskStatus(this.commandDescription, "unmark");
-        }else if(commandType.equals("todo")||commandType.equals("event")||commandType.equals("deadline")){
-            TaskManager.addTask(this.commandType, this.commandDescription);
-        }else if(commandType.equals("delete")){
+            break;
+        case "delete":
             TaskManager.deleteTask(this.commandDescription);
+            break;
+        case "todo":
+        case "event":
+        case "deadline":
+            TaskManager.addTask(this.commandType, this.commandDescription);
+            break;
+        case "find":
+            TaskManager.findTasksByKeyword(this.commandDescription);
+            break;
+        case "date":
+            TaskManager.findDeadlinesByDate(this.commandDescription);
+            break;
+        default:
+            throw new UnknownCommandException();
         }
     }
 }
