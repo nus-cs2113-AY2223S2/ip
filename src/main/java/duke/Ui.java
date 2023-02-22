@@ -115,7 +115,7 @@ public class Ui {
      * Shows the user goodbye after the user wants to exit the program by typing bye
      */
     public static void goodbyeMessage() {
-        System.out.print(LINE + EXIT_MESSAGE + System.lineSeparator() + LINE);
+        System.out.print(LINE + EXIT_MESSAGE + LINE);
     }
 
     /**
