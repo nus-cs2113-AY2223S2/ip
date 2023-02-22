@@ -1,7 +1,6 @@
 package duke;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,7 +8,7 @@ import java.util.Scanner;
 
 import duke.task.*;
 
-public class TaskData {
+public class Storage {
     public static void storeTaskData(File taskDataFile, ArrayList<Task> tasks) throws IOException {
         FileWriter fileWriter = new FileWriter(taskDataFile);
         if(!taskDataFile.exists()){
