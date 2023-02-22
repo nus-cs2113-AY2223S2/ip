@@ -156,6 +156,11 @@ public abstract class TaskList {
         tasks.get(taskNum).markDone(isDone, false);
     }
 
+    /**
+     * Returns the size of the task list
+     * 
+     * @return the size of the task list
+     */
     public static int getTaskListSize() {
         return tasks.size();
     }
