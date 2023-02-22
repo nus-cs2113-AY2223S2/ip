@@ -1,4 +1,4 @@
-package duke;
+package duke.task;
 
 import duke.exception.EmptyTaskException;
 import duke.exception.IllegalCommandException;
@@ -27,27 +27,27 @@ public class TaskList {
         return allTasks.size();
     }
 
-    protected static void markDone(int idx) {
+    public static void markDone(int idx) {
         allTasks.get(idx).setDone(true);
     }
 
-    protected static void markNotDone(int idx) {
+    public static void markNotDone(int idx) {
         allTasks.get(idx).setDone(false);
     }
 
-    protected static void deleteTask(int idx) {
+    public static void deleteTask(int idx) {
         allTasks.remove(idx);
     }
 
-    protected static void addToDo(String param) {
+    public static void addToDo(String param) {
         allTasks.add(new ToDo(param));
     }
 
-    protected static void addDeadline(String param, String by) {
+    public static void addDeadline(String param, String by) {
         allTasks.add(new Deadline(param, by));
     }
 
-    protected static void addEvent(String param, String from, String to) {
+    public static void addEvent(String param, String from, String to) {
         allTasks.add(new Event(param, from, to));
     }
 }

@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static duke.TaskList.allTasks;
+import static duke.task.TaskList.allTasks;
 
 public class Storage {
     private static final char TXT_TODO_WORD = 'T';

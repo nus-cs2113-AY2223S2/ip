@@ -1,6 +1,9 @@
-package duke;
+package duke.command;
 
-import duke.exception.EmptyTaskException;
+import duke.Parser;
+import duke.Storage;
+import duke.task.TaskList;
+import duke.Ui;
 import duke.exception.InvalidDeadline;
 import duke.exception.InvalidEvent;
 
@@ -9,7 +12,7 @@ import java.io.IOException;
 import static duke.Parser.COMMAND_DEADLINE_WORD;
 import static duke.Parser.COMMAND_EVENT_WORD;
 import static duke.Parser.COMMAND_TODO_WORD;
-import static duke.TaskList.allTasks;
+import static duke.task.TaskList.allTasks;
 
 public class AddCommand extends Command {
 
@@ -39,7 +42,7 @@ public class AddCommand extends Command {
     }
 
     @Override
-    protected void execute(TaskList tasks, Ui ui, Storage storage) {
+    public void execute(TaskList tasks, Ui ui, Storage storage) {
         switch(type) {
         case COMMAND_TODO_WORD:
             tasks.addToDo(desc);
@@ -51,7 +54,7 @@ public class AddCommand extends Command {
             tasks.addEvent(desc, from, to);
             break;
         }
-        Ui.printAddMessage(allTasks.get(allTasks.size() - 1));
+        ui.printAddMessage(allTasks.get(allTasks.size() - 1));
         try {
             Storage.update();
         } catch (IOException e) {

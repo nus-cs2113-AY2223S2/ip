@@ -1,9 +1,13 @@
-package duke;
+package duke.command;
+
+import duke.Storage;
+import duke.task.TaskList;
+import duke.Ui;
 
 public abstract class Command {
 
     private Boolean isExit = false;
-    protected void execute(TaskList tasks, Ui ui, Storage storage) {
+    public void execute(TaskList tasks, Ui ui, Storage storage) {
     }
 
     public void setExit() {

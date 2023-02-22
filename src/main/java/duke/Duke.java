@@ -1,9 +1,11 @@
 package duke;
 
+import duke.command.Command;
 import duke.exception.EmptyTaskException;
 import duke.exception.IllegalCommandException;
 import duke.exception.InvalidDeadline;
 import duke.exception.InvalidEvent;
+import duke.task.TaskList;
 
 import java.io.IOException;
 

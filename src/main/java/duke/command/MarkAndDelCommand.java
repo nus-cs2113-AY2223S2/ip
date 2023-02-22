@@ -1,4 +1,10 @@
-package duke;
+package duke.command;
+
+import duke.Storage;
+import duke.task.TaskList;
+import duke.Ui;
+
+import java.io.IOException;
 
 import static duke.Parser.COMMAND_DELETE_WORD;
 import static duke.Parser.COMMAND_MARK_WORD;
@@ -14,7 +20,7 @@ public class MarkAndDelCommand extends Command {
         this.idx = idx;
     }
     @Override
-    protected void execute(TaskList tasks, Ui ui, Storage storage) {
+    public void execute(TaskList tasks, Ui ui, Storage storage) {
         if (idx < 0 || idx >= tasks.getSize()) {
             throw new NumberFormatException();
         }
