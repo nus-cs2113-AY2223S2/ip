@@ -1,8 +1,11 @@
 package inu.commons;
 
-import inu.exceptionhandling.EmptyUserInputException;
+import inu.exceptionhandling.EmptyStringException;
 import inu.exceptionhandling.InvalidDateFormat;
+import inu.exceptionhandling.InvalidDateTimeFormat;
 import inu.task.TaskList;
+
+import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -47,11 +50,11 @@ public class Util {
         return by;
     }
 
-    public static String fetchFrom(String userString) throws EmptyUserInputException {
+    public static String fetchFrom(String userString) throws EmptyStringException {
         int firstSlashEntry = userString.indexOf(DELIMITER_EVENT_FROM);
         int secondSlashEntry = userString.indexOf(DELIMITER_EVENT_TO);
         if (firstSlashEntry == secondSlashEntry) {
-            throw new EmptyUserInputException();
+            throw new EmptyStringException();
         } else {
             String from = userString.substring(firstSlashEntry + INDEX_OFFSET_IN_FROM_COMMAND, secondSlashEntry);
             return from;
@@ -64,16 +67,31 @@ public class Util {
         return to;
     }
 
-    public static LocalDateTime parseDate(String localDateTime) throws InvalidDateFormat {
+    public static LocalDate parseDate(String localDate) throws InvalidDateFormat {
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-            return LocalDateTime.parse(localDateTime, formatter);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            return LocalDate.parse(localDate, formatter);
         } catch (DateTimeParseException ignored) {
             throw new InvalidDateFormat();
         }
     }
 
-    public static String convertDateToString(LocalDateTime localDateTime) {
+
+    public static LocalDateTime parseDateTime(String localDateTime) throws InvalidDateTimeFormat {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+            return LocalDateTime.parse(localDateTime, formatter);
+        } catch (DateTimeParseException ignored) {
+            throw new InvalidDateTimeFormat();
+        }
+    }
+
+    public static String convertDateToString(LocalDate localDate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy");
+        return localDate.format(formatter);
+    }
+
+    public static String convertDateTimeToString(LocalDateTime localDateTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy hh:mm a");
         return localDateTime.format(formatter);
     }

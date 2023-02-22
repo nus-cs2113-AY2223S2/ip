@@ -7,14 +7,12 @@ import inu.commands.EventCommand;
 import inu.commands.DeleteCommand;
 import inu.commands.MarkCommand;
 import inu.commands.UnMarkCommand;
-import inu.commands.ListCommand;
+import inu.commands.ListWithDateCommand;
+import inu.commands.ListDefaultCommand;
 import inu.commands.ExitCommand;
 import inu.commands.InvalidCommand;
 import inu.commons.Messages;
-import inu.exceptionhandling.EmptyTaskListException;
-import inu.exceptionhandling.EmptyUserInputException;
-import inu.exceptionhandling.ExceptionManager;
-import inu.exceptionhandling.InvalidDateFormat;
+import inu.exceptionhandling.*;
 import inu.task.DeadLine;
 import inu.task.Event;
 import inu.task.Task;
@@ -22,6 +20,7 @@ import inu.task.Todo;
 import inu.task.TaskList;
 import inu.commons.Util;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
@@ -60,7 +59,7 @@ public class Parser {
 
     protected static final String DECODE_EVENT = "E";
 
-    protected static final String DECODE_MARKED = "X";
+    protected static final String DECODE_MARKED = "[X]";
 
     public static String[] readCommand() {
         String userInput;
@@ -105,8 +104,13 @@ public class Parser {
                 } catch (ArrayIndexOutOfBoundsException e) {
                     return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_INTEGER_INPUT);
                 }
-            case ListCommand.COMMAND_WORD:
-                return runList(taskList);
+            case ListWithDateCommand.COMMAND_WORD:
+                try {
+                    entry = userString[INDEX_ENTRY];
+                    return runListWithDate(taskList, entry);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    return runDefaultList(taskList);
+                }
             case MarkCommand.COMMAND_WORD:
                 try {
                     entry = userString[INDEX_ENTRY];
@@ -131,9 +135,9 @@ public class Parser {
 
     public static Command runTodo(String entry) {
         try {
-            ExceptionManager.checkEmptyUserInput(entry);
+            ExceptionManager.checkEmptyString(entry);
             return new TodoCommand(entry);
-        } catch (EmptyUserInputException e) {
+        } catch (EmptyStringException e) {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_TASK_ENTRY);
         }
     }
@@ -142,15 +146,14 @@ public class Parser {
         try {
             String task = Util.fetchTask(entry, Util.DELIMITER_DEADLINE_BY);
             String by = Util.fetchBy(entry);
-            ExceptionManager.checkEmptyUserInput(task, by);
-            LocalDateTime byDate = Util.parseDate(by);
-            return new DeadlineCommand(task, byDate);
+            ExceptionManager.checkEmptyString(task, by);
+            return new DeadlineCommand(task, Util.parseDateTime(by));
         } catch (StringIndexOutOfBoundsException e) {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_DEADLINE);
-        } catch (EmptyUserInputException e) {
+        } catch (EmptyStringException e) {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_BY_DATE_ENTRY_AFTER_SLASH);
-        } catch (InvalidDateFormat e) {
-            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_DATE);
+        } catch (InvalidDateTimeFormat e) {
+            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_DATE_TIME);
         }
     }
 
@@ -159,59 +162,78 @@ public class Parser {
             String task = Util.fetchTask(entry, Util.DELIMITER_EVENT_FROM);
             String from = Util.fetchFrom(entry);
             String to = Util.fetchTo(entry);
-            ExceptionManager.checkEmptyUserInput(task, from, to);
-            LocalDateTime fromDate = Util.parseDate(from);
-            LocalDateTime toDate = Util.parseDate(to);
-            return new EventCommand(task, fromDate, toDate);
+            ExceptionManager.checkEmptyString(task, from, to);
+            return new EventCommand(task, Util.parseDateTime(from), Util.parseDateTime(to));
         } catch (StringIndexOutOfBoundsException e) {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_EVENT);
-        } catch (EmptyUserInputException e) {
+        } catch (EmptyStringException e) {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_FROM_AND_TO_ENTRY_AFTER_SLASH);
-        } catch (InvalidDateFormat e) {
-        return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_DATE);
+        } catch (InvalidDateTimeFormat e) {
+        return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_DATE_TIME);
         }
     }
 
     public static Command runDelete(TaskList taskList, String entry) {
         try {
-            ExceptionManager.checkEmptyUserInput(entry);
+            ExceptionManager.checkEmptyString(entry);
             int targetIndex = Util.fetchIndexFromString(taskList, entry);
             return new DeleteCommand(targetIndex);
-        } catch (EmptyUserInputException e) {
+        } catch (EmptyStringException e) {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_DELETE_ENTRY);
         } catch (IndexOutOfBoundsException e) {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_TASK_INDEX);
+        } catch (NumberFormatException e) {
+            return new InvalidCommand(Messages.MESSAGE_PROMPT_FOR_INDEX_INPUT);
         }
     }
 
     public static Command runMark(TaskList taskList, String entry) {
         try {
-            ExceptionManager.checkEmptyUserInput(entry);
+            ExceptionManager.checkEmptyString(entry);
             int targetIndex = Util.fetchIndexFromString(taskList, entry);
             return new MarkCommand(targetIndex);
         } catch (IndexOutOfBoundsException e) {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_TASK_INDEX);
-        } catch (EmptyUserInputException e) {
+        } catch (EmptyStringException e) {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_MARK_ENTRY);
+        } catch (NumberFormatException e) {
+            return new InvalidCommand(Messages.MESSAGE_PROMPT_FOR_INDEX_INPUT);
         }
     }
 
     public static Command runUnMark(TaskList taskList, String entry) {
         try {
-            ExceptionManager.checkEmptyUserInput(entry);
+            ExceptionManager.checkEmptyString(entry);
             int targetIndex = Util.fetchIndexFromString(taskList, entry);
             return new UnMarkCommand(targetIndex);
         } catch (IndexOutOfBoundsException e) {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_TASK_INDEX);
-        } catch (EmptyUserInputException e) {
+        } catch (EmptyStringException e) {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_UN_MARK_ENTRY);
+        } catch (NumberFormatException e) {
+            return new InvalidCommand(Messages.MESSAGE_PROMPT_FOR_INDEX_INPUT);
         }
     }
 
-    public static Command runList(TaskList taskList) {
+    public static Command runListWithDate(TaskList taskList, String entry) {
+        try {
+            ExceptionManager.checkEmptyString(entry);
+            ExceptionManager.checkEmptyTaskList(taskList);
+            LocalDate date = Util.parseDate(entry);
+            return new ListWithDateCommand(date);
+        } catch (EmptyStringException e) {
+            return runDefaultList(taskList);
+        } catch (EmptyTaskListException e) {
+            return new InvalidCommand(Messages.MESSAGE_PROMPT_EMPTY_TASK_LIST);
+        } catch (InvalidDateFormat e) {
+            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_DATE);
+        }
+    }
+
+    public static Command runDefaultList(TaskList taskList) {
         try {
             ExceptionManager.checkEmptyTaskList(taskList);
-            return new ListCommand();
+            return new ListDefaultCommand();
         } catch (EmptyTaskListException e) {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_EMPTY_TASK_LIST);
         }

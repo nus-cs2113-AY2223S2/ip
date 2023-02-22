@@ -65,6 +65,15 @@ public class Messages {
     public static final String MESSAGE_DELETE_TASK = " Woof! I've deleted this task for you:";
 
     public static final String MESSAGE_PROMPT_VALID_DATE = " Sorry! Please provide a valid date and time in "
+            + "<DD/MM/YYYY>";
+
+    public static final String MESSAGE_PROMPT_VALID_DATE_TIME = " Sorry! Please provide a valid date and time in "
             + "<DD/MM/YYYY HH:MM> (24HR clock format)";
+
+    public static final String MESSAGE_NO_TASK_ON_DATE = " Hooray! You have no tasks occurring on this date!";
+
+    public static final String MESSAGE_LIST_HEADER_WITH_DATE = " Woof! Here are your current tasks occurring on: ";
+
+    public static final String MESSAGE_PROMPT_FOR_INDEX_INPUT = " Sorry! Please provide a task number!";
 
 }

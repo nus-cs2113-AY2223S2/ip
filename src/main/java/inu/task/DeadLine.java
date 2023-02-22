@@ -1,14 +1,8 @@
 package inu.task;
 
-import inu.commons.Messages;
-import inu.commons.Ui;
 import inu.commons.Util;
-import inu.exceptionhandling.EmptyUserInputException;
-import inu.exceptionhandling.ExceptionManager;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 public class DeadLine extends Task {
 
@@ -29,7 +23,7 @@ public class DeadLine extends Task {
 
     @Override
     public String toString() {
-        String byDate = Util.convertDateToString(by);
+        String byDate = Util.convertDateTimeToString(by);
         return String.format("[D]%s (by: %s)", super.toString(), byDate);
     }
 

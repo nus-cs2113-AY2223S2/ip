@@ -4,10 +4,10 @@ import inu.task.TaskList;
 
 public class ExceptionManager {
 
-    public static void checkEmptyUserInput(String... strings) throws EmptyUserInputException {
+    public static void checkEmptyString(String... strings) throws EmptyStringException {
         for (String s : strings) {
             if (s.isEmpty()) {
-                throw new EmptyUserInputException();
+                throw new EmptyStringException();
             }
         }
     }

@@ -1,15 +1,11 @@
 package inu.commands;
 
 import inu.commons.Messages;
-import inu.exceptionhandling.EmptyTaskListException;
-import inu.exceptionhandling.ExceptionManager;
 import inu.task.TaskList;
 
-public class ListCommand extends Command {
+public class ListDefaultCommand extends Command {
 
-    public static final String COMMAND_WORD = "list";
-
-    public ListCommand() {}
+    public ListDefaultCommand() {}
 
     @Override
     public CommandResult execute(TaskList taskList) {

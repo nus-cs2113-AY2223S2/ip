@@ -1,14 +1,8 @@
 package inu.task;
 
-import inu.commons.Messages;
-import inu.commons.Ui;
 import inu.commons.Util;
-import inu.exceptionhandling.EmptyUserInputException;
-import inu.exceptionhandling.ExceptionManager;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 public class Event extends Task {
 
@@ -40,8 +34,8 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        String fromDate = Util.convertDateToString(from);
-        String toDate = Util.convertDateToString(to);
+        String fromDate = Util.convertDateTimeToString(from);
+        String toDate = Util.convertDateTimeToString(to);
         return String.format("[E]%s (from: %s || to: %s)", super.toString(), fromDate, toDate);
     }
 
