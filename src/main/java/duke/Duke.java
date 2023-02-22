@@ -1,33 +1,19 @@
 package duke;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Scanner;
 
 import tasklist.TaskList;
 
 public class Duke {
     private static boolean hasEnteredBye = false;
-    private static DukeUi ui = new DukeUi();
-
-    public static void save() {
-        System.out.println("Saving tasks to savefile, please do not close the application.");
-        try {
-            FileWriter fileWriter = new FileWriter(SAVE_FILE, false);
-            fileWriter.write("");
-            taskList.saveToFile(fileWriter);
-            fileWriter.close();
-        } catch (IOException e) {
-            System.out.println("Saving failed for some reason.");
-            e.printStackTrace();
-        }
-    }
+    private static final boolean WITH_SCANNER = true;
+    private static DukeUi ui = new DukeUi(WITH_SCANNER);
+    private static TaskList taskList;
+    private static SavefileManager savefileManager = new SavefileManager();
 
     public static void exit() {
         ui.printLine();
-        save();
+        savefileManager.save(taskList);
         ui.closeScanner();
         System.out.println("Bye. Hope to see you again soon!");
     }
