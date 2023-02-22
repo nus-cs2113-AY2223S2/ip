@@ -18,62 +18,77 @@ public class Parser {
      * @param command User input command that determines what function Duke will run
      */
 
-    public static void respondToInput(String command) {
-        if (command.contains("list")) {
-            TaskList.printTaskList();
 
-        } else if (command.contains("unmark")) {
+    public static void respondToInput(String command) {
+        String[] stringArray = command.split(" ",2);
+        String keyword = stringArray[0];
+        switch (keyword) {
+
+        case "list" :
+            TaskList.printTaskList();
+            break;
+
+        case "unmark":
             boolean isValidUnmarkInput = checkUnmarkInput(command, tasks.size());
             if (isValidUnmarkInput) {
                 TaskList.unmarkTask(command, tasks.size());
             }
+            break;
 
 
-        } else if (command.contains("mark")) {
+        case "mark":
             boolean isValidMarkInput = checkMarkInput(command, tasks.size());
             if (isValidMarkInput) {
                 TaskList.markTask(command, tasks.size());
             }
+            break;
 
-        } else if (command.contains("delete")) {
+        case "delete":
             boolean isValidDeleteInput = checkDeleteInput(command, tasks.size());
-
             if (isValidDeleteInput) {
                 TaskList.deleteTask(command);
             }
+            break;
 
-        } else if (command.contains("deadline")) {
+        case "deadline":
             boolean isValidDeadlineInput = checkDeadlineInput(command);
             if (isValidDeadlineInput) {
                 TaskList.createDeadline(command);
             }
+            break;
 
 
-        } else if (command.contains("event")) {
+        case "event":
             boolean isValidEventInput = checkEventInput(command);
             if (isValidEventInput) {
                 TaskList.createEvent(command);
             }
+            break;
 
 
-        } else if (command.contains("todo")) {
+        case "todo":
             boolean isValidTodoInput = checkTodoInput(command);
             if (isValidTodoInput) {
                 TaskList.createTodo(command);
             }
+            break;
 
 
-        } else if (command.contains("find")) {
+        case "find":
             boolean isValidFindInput = checkFindInput(command);
             if (isValidFindInput) {
                 TaskList.findTask(command);
             }
+            break;
 
-        } else if (command.contains("bye")) {
+        case "bye":
             System.out.println("Saving your tasks now!");
-        } else {
+            break;
+
+        default:
             invalidInputReponse();
         }
+
 
     }
 
