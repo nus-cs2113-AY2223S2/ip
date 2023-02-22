@@ -9,9 +9,18 @@ import duke.ui.Ui;
 
 import java.util.NoSuchElementException;
 
+/**
+ * Handles the delete command to remove task from list
+ */
 public class DeleteFromList extends Command {
     private int taskIndex;
 
+    /**
+     * Constructor to process userInput and set taskIndex to delete
+     *
+     * @param userInput raw user input containing taskIndex
+     * @throws DukeException Occurs when there is a format error or invalid input
+     */
     public DeleteFromList(String userInput) throws DukeException {
         try {
             String taskIndex = userInput.replace(" ", "");
@@ -21,6 +30,14 @@ public class DeleteFromList extends Command {
         }
     }
 
+    /**
+     * Executes the command to delete and save the deleted task index provided
+     *
+     * @param tasks   TaskList of tasks currently stored
+     * @param storage Handler to read write to json
+     * @param ui      Handler to print text to user
+     * @throws DukeException Occurs when there is an invalid input or write error
+     */
     @Override
     public void executeCommand(TaskList tasks, Storage storage, Ui ui) throws DukeException {
         try {
@@ -31,6 +48,11 @@ public class DeleteFromList extends Command {
         }
     }
 
+    /**
+     * Sets the taskIndex to delete
+     *
+     * @param taskIndex taskIndex that corresponds to task to delete
+     */
     public void setDeleteTask(int taskIndex) {
         this.taskIndex = taskIndex;
     }

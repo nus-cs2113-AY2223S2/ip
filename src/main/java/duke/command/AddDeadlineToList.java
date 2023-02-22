@@ -9,13 +9,14 @@ import duke.ui.Ui;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
-import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 
+
+/**
+ * Handles the deadline command to add a new deadline to the list
+ */
 public class AddDeadlineToList extends Command {
     private Deadline newTask;
 

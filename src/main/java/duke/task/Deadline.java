@@ -3,9 +3,19 @@ package duke.task;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/**
+ * Task with a deadline
+ */
 public class Deadline extends Task {
     protected String dueBy;
 
+    /**
+     * Constructor to set a deadline when with no given datetime
+     * sets default to current datetime
+     *
+     * @param task  description of the deadline
+     * @param dueBy due description
+     */
     public Deadline(String task, String dueBy) {
         super(task);
         this.dueBy = dueBy;
@@ -13,6 +23,13 @@ public class Deadline extends Task {
         this.endTime = LocalDateTime.now();
     }
 
+    /**
+     * Constructor to set a deadline with given datetime
+     *
+     * @param task    description of deadline
+     * @param dueBy   due description
+     * @param endTime time of the due date
+     */
     public Deadline(String task, String dueBy, LocalDateTime endTime) {
         super(task);
         this.dueBy = dueBy;
@@ -21,14 +38,19 @@ public class Deadline extends Task {
     }
 
     /**
-     * gets the due string of the task
+     * gets the due description of the deadline
      *
-     * @return formatted string of due date
+     * @return formatted string of due description
      */
     public String getDueBy() {
         return "(by: " + dueBy + ")";
     }
 
+    /**
+     * gets the end time of deadline
+     *
+     * @return LocalDateTime of dueDate
+     */
     @Override
     public LocalDateTime getEndTime() {
         return this.endTime;
@@ -53,4 +75,5 @@ public class Deadline extends Task {
     public String getTaskStatus() {
         return "[D]" + "[" + getStatusIcon() + "] " + task + getDueBy();
     }
+
 }
