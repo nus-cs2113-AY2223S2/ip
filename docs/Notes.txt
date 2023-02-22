@@ -61,3 +61,8 @@ Class Ui should implement:
     printLine()
     help()
     All printing in tasklist.
+
+Ui classes should be all completed. I made 2 separate ui classes, one for Duke
+and one for TaskList, cos the tasklist Ui requires information from within tasklist
+and I will need to type a lot more for certain functions. Too lazy to do that. The 
+next in line will be savefile manager. How fun.
