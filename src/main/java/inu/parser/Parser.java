@@ -9,6 +9,7 @@ import inu.commands.MarkCommand;
 import inu.commands.UnMarkCommand;
 import inu.commands.ListWithDateCommand;
 import inu.commands.ListDefaultCommand;
+import inu.commands.FindCommand;
 import inu.commands.ExitCommand;
 import inu.commands.InvalidCommand;
 import inu.commons.Messages;
@@ -110,6 +111,13 @@ public class Parser {
                     return runListWithDate(taskList, entry);
                 } catch (ArrayIndexOutOfBoundsException e) {
                     return runDefaultList(taskList);
+                }
+            case FindCommand.COMMAND_WORD:
+                try {
+                    entry = userString[INDEX_ENTRY];
+                    return runFindCommand(taskList, entry);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_STRING_INPUT);
                 }
             case MarkCommand.COMMAND_WORD:
                 try {
@@ -234,6 +242,18 @@ public class Parser {
         try {
             ExceptionManager.checkEmptyTaskList(taskList);
             return new ListDefaultCommand();
+        } catch (EmptyTaskListException e) {
+            return new InvalidCommand(Messages.MESSAGE_PROMPT_EMPTY_TASK_LIST);
+        }
+    }
+
+    public static Command runFindCommand(TaskList taskList, String entry) {
+        try {
+            ExceptionManager.checkEmptyString(entry);
+            ExceptionManager.checkEmptyTaskList(taskList);
+            return new FindCommand(entry);
+        } catch (EmptyStringException e) {
+            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_KEYWORD);
         } catch (EmptyTaskListException e) {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_EMPTY_TASK_LIST);
         }
