@@ -3,7 +3,8 @@ package duke;
 import duke.exception.InvalidDeadline;
 import duke.exception.InvalidEvent;
 
-public class Processor {
+public class Parser {
+
     public static String[] command(String userCommand) {
         final String[] split = userCommand.trim().split("\\s+", 2);
         return (split.length == 2) ? split : new String[]{split[0], ""};

@@ -2,10 +2,13 @@ package duke;
 
 import duke.task.Task;
 import java.util.ArrayList;
-import static duke.Duke.allTasks;
-import static duke.Storage.FILE_PATH;
+import java.util.Scanner;
 
-public class Output {
+import static duke.Duke.FILE_PATH;
+import static duke.Duke.allTasks;
+
+public class Ui {
+    private static final Scanner in = new Scanner(System.in);
     public static final String DIVIDER = "____________________________________________________________\n";
     public static final String INVALID_DEADLINE =
             DIVIDER + "Please enter deadline as \"deadline [task] /by [date]\".\n" + DIVIDER;
@@ -15,6 +18,10 @@ public class Output {
             DIVIDER + "Sorry, but I don't know what that means :(\n" + DIVIDER;
     public static final String EMPTY_TASK_DESCRIPTION =
             DIVIDER + "Oops! The description of a task cannot be empty.\n" + DIVIDER;
+
+    public static String readCommand() {
+        return in.nextLine();
+    }
     public static void printWelcomeMessage() {
         System.out.println(DIVIDER +
                 "Hello from\n" +
@@ -47,6 +54,11 @@ public class Output {
     }
 
     public static void printList(ArrayList<Task> allTasks) {
+        if (allTasks.size()==0) {
+            System.out.println(DIVIDER +
+                    "There are no tasks in your list!\n" + DIVIDER);
+            return;
+        }
         System.out.println(DIVIDER +
                 "Here are the tasks in your list:");
         for (int i = 0; i < allTasks.size(); i++) {
