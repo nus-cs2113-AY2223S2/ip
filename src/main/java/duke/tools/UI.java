@@ -116,6 +116,11 @@ public class UI {
         Formatter.drawSeparationLine();
     }
 
+    public void foundTasks(Task task, int count){
+        Formatter.printIndentation(8);
+        System.out.print(count+".");
+        System.out.println(task);
+    }
     /**
      * Read user input command from terminal.
      *

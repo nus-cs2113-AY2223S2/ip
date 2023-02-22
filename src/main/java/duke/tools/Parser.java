@@ -53,14 +53,26 @@ public class Parser {
      */
     public String getCommandDescription(String inputWords) throws CommandDescriptionEmptyException {
         String command = getCommandType(inputWords);
-        if(command.equals("bye")||command.equals("list")){
-            return inputWords;
-        }else{
+        String description;
+        switch(command){
+        case "mark":
+        case "unmark":
+        case "delete":
+        case "event":
+        case "todo":
+        case "deadline":
+        case "find":
+        case "date":
             if(command.length() == inputWords.length()){
                 throw new CommandDescriptionEmptyException();
             }
             String commandDescriptionString = inputWords.substring((command.length())+1);
-            return commandDescriptionString;
+            description = commandDescriptionString;
+            break;
+        default:
+            description =  inputWords;
+            break;
         }
+        return description;
     }
 }
