@@ -35,7 +35,7 @@ public abstract class Parser {
         if (inputArr.length > 1) {
             commandDetails = inputArr[1].strip();
         } else {
-            commandDetails = "";
+            commandDetails = Io.EMPTY_COMMAND;
         }
 
         try {
@@ -115,7 +115,7 @@ public abstract class Parser {
      * @return the new Todo task
      */
     public static Task createTodo(String input) throws EmptyTodoException {
-        if (input.equals("")) {
+        if (input.equals(Io.EMPTY_COMMAND)) {
             throw new EmptyTodoException();
         }
         return new Todo(input);
@@ -130,7 +130,7 @@ public abstract class Parser {
     public static Task createDeadline(String input) throws EmptyDeadlineException, MissingByException,
             EmptyDeadlineDescriptionException, EmptyDeadlineDateException {
 
-        if (input.equals("")) {
+        if (input.equals(Io.EMPTY_COMMAND)) {
             throw new EmptyDeadlineException();
         }
 
@@ -140,12 +140,12 @@ public abstract class Parser {
 
         String[] inputList = input.split("/by", 2);
         String taskDesc = inputList[0].strip();
-        if (taskDesc.equals("")) {
+        if (taskDesc.equals(Io.EMPTY_COMMAND)) {
             throw new EmptyDeadlineDescriptionException();
         }
 
         String deadline = inputList[1].strip();
-        if (deadline.equals("")) {
+        if (deadline.equals(Io.EMPTY_COMMAND)) {
             throw new EmptyDeadlineDateException();
         }
 
@@ -162,7 +162,7 @@ public abstract class Parser {
             MissingToException, EmptyEventDescriptionException, EmptyEventFromException,
             EmptyEventToException {
 
-        if (input.equals("")) {
+        if (input.equals(Io.EMPTY_COMMAND)) {
             throw new EmptyEventException();
         }
 
@@ -175,20 +175,20 @@ public abstract class Parser {
         }
 
         String[] inputList = input.split("/from", 2);
-        String[] inputList2 = inputList[1].split("/to", 2);
+        String[] inputListFromTo = inputList[1].split("/to", 2);
         String taskDesc = inputList[0].strip();
 
-        if (taskDesc.equals("")) {
+        if (taskDesc.equals(Io.EMPTY_COMMAND)) {
             throw new EmptyEventDescriptionException();
         }
 
-        String eventFrom = inputList2[0].strip();
-        if (eventFrom.equals("")) {
+        String eventFrom = inputListFromTo[0].strip();
+        if (eventFrom.equals(Io.EMPTY_COMMAND)) {
             throw new EmptyEventFromException();
         }
 
-        String eventTo = inputList2[1].strip();
-        if (eventTo.equals("")) {
+        String eventTo = inputListFromTo[1].strip();
+        if (eventTo.equals(Io.EMPTY_COMMAND)) {
             throw new EmptyEventToException();
         }
 

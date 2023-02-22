@@ -20,6 +20,7 @@ public abstract class Io {
     public static final String DEADLINE_COMMAND = "deadline";
     public static final String EVENT_COMMAND = "event";
     public static final String DELETE_COMMAND = "delete";
+    public static final String EMPTY_COMMAND = "";
 
     /**
      * Prints a horizontal line

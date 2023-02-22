@@ -87,9 +87,7 @@ public abstract class Storage {
 
             saveList(file);
 
-        } catch (FileNotFoundException e) {
-            Io.printOutput("Error saving data.");
-        } catch (IOException e) {
+        } catch (Exception e) {
             Io.printOutput("Error saving data.");
         }
     }
