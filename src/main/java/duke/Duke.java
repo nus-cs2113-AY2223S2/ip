@@ -34,5 +34,4 @@ public class Duke {
             Ui.printFileCreated(false);
         }
     }
-
 }
