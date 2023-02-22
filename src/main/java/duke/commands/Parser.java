@@ -28,7 +28,9 @@ public class Parser {
             } else if (command.equals("unmark")) {
                 unmarkTask(cases[1]);
             } else if (command.equals("delete")) {
-                deleteTask (cases[1]);
+                deleteTask(cases[1]);
+            } else if (command.equals("find")) {
+                findTask(cases[1]);
             } else {
                 throw new InvalidCommandException();
             }
@@ -79,7 +81,7 @@ public class Parser {
     }
 
     private static void printList() {
-        System.out.println("Here are the tasks in your list:");
+        Ui.printOpeningListMessage();
         for (int i = 0; i < taskList.listCount(); ++i) {
             String index = Integer.toString(i + 1);
             System.out.println(index + '.' + taskList.getTask(i).toString());
@@ -91,7 +93,7 @@ public class Parser {
         if (index >= taskList.listCount()) {
             throw new InvalidIndexException();
         }
-        taskList.getTask(index).setDone(true);
+        taskList.setDone(index, true);
         Ui.markDoneMessage(taskList, index);
     }
 
@@ -113,6 +115,17 @@ public class Parser {
         System.out.println("  " + taskList.getTask(index).toString());
         taskList.deleteTasks(index);
         Ui.printListMessage(taskList.listCount());
+    }
+
+    private static void findTask(String filter) {
+        Ui.printFindMessage();
+        int findListIndex = 0;
+        for (int i = 0; i < taskList.listCount(); ++i) {
+            if(taskList.getTask(i).containsFilter(filter)) {
+                ++findListIndex;
+                System.out.println(Integer.toString(findListIndex )+ '.' + taskList.getTask(i).toString());
+            }
+        }
     }
 }
 

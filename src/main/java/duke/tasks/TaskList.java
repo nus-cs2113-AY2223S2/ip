@@ -36,6 +36,15 @@ public class TaskList {
         }
     }
 
+    public void setDone(int index, boolean isDone) {
+        tasks.get(index).setDone(isDone);
+        try {
+            database.updateDatabase();
+        } catch (IOException e){
+            System.out.println("Failed to update database");
+        }
+    }
+
     public static void addToDatabase(Task currTask){
         try {
             database.appendSaveTasks(currTask.taskInformation());

@@ -30,6 +30,10 @@ public class Task {
         return isDone;
     }
 
+    public boolean containsFilter(String filter) {
+        return description.contains(filter);
+    }
+
     public String toString() {
         return "[" + this.getStatusIcon() + "] " + this.description;
     }
