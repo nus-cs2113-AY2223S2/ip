@@ -71,6 +71,21 @@ public abstract class TaskList {
     }
 
     /**
+     * Finds tasks in the task list that matches the keyword specified by the user
+     * 
+     * @param input the input by the user that specifies the keyword
+     */
+    public static void findTasks(String input) {
+        Io.printOutput("Here are the matching tasks in your list:");
+
+        for (int i = 0; i < tasks.size(); i++) {
+            if (tasks.get(i).getTaskPrint().contains(input)) {
+                Io.printOutput(Integer.toString(i + 1) + ". " + tasks.get(i).getTaskPrint());
+            }
+        }
+    }
+
+    /**
      * loads a task from the save file into the task list
      * 
      * @param loadString the string to be loaded
