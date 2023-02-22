@@ -1,29 +1,22 @@
 package dude.commands;
 
 import dude.task.ListManager;
-import dude.task.Task;
-import exception.EmptyInputException;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
-;
+
 
 public abstract class SaveData {
 
-    private static final String DIRECTORY ="storage";
+    private static final String DIRECTORY = "storage";
     private static final String FILEPATH = DIRECTORY + "/data.txt";
 
-    public static String getFilepath(){
+    public static String getFilepath() {
         return FILEPATH;
     }
-    public static String getDirectory(){
+
+    public static String getDirectory() {
         return DIRECTORY;
     }
 
@@ -35,7 +28,7 @@ public abstract class SaveData {
             }
             fw.close();
             System.out.println("Saving current list");
-        } catch(Exception e){
+        } catch (Exception e) {
             System.out.println("Error saving");
         }
     }
@@ -52,20 +45,19 @@ public abstract class SaveData {
             }
             File f = new File(FILEPATH); // create a File for the given file path
             Scanner s = new Scanner(f); // create a Scanner using the File as the source
-            String[] tmp;
             int index = 0;
             while (s.hasNext()) {
-                tmp = s.nextLine().split("=",2);
-                if(tmp[0].equals("1")) {
-                    Parser.parseInput(tmp[1],true);
+                String[] tmp = s.nextLine().split("=", 2);
+                if (tmp[0].equals("1")) {
+                    Parser.parseInput(tmp[1], true);
                     ListManager.getList().get(index).setDone();
                     index++;
                 } else {
-                    Parser.parseInput(tmp[1],true);
+                    Parser.parseInput(tmp[1], true);
                     index++;
                 }
-
             }
+            s.close();
             System.out.println("Here is your saved list");
             ListManager.printList();
         } catch (Exception e) {

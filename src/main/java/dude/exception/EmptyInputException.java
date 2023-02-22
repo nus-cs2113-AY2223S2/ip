@@ -1,4 +1,4 @@
-package exception;
+package dude.exception;
 
 public class EmptyInputException extends DudeException {
     @Override

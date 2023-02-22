@@ -15,8 +15,8 @@ public class Deadline extends Task {
     }
 
     @Override
-    public String toSave(){
-        return getStatus() + "=" + "deadline "+ super.getDescription() + " /by " + deadline;
+    public String toSave() {
+        return getStatus() + "=" + "deadline " + super.getDescription() + " /by " + deadline;
     }
 
 }

@@ -1,6 +1,5 @@
-package exception;
+package dude.exception;
 
-import dude.Dude;
 
 public class InvalidMarkException extends DudeException {
     @Override

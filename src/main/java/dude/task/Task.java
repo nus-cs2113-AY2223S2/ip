@@ -1,6 +1,5 @@
 package dude.task;
 
-import java.io.Serializable;
 
 public class Task {
     private final String description;
@@ -10,15 +9,17 @@ public class Task {
         this.description = description;
         this.isDone = false;
     }
-    public String getDescription(){
+
+    public String getDescription() {
         return description;
     }
 
     public String getStatusIcon() {
         return (isDone ? "X" : " ");
     }
-    public String getStatus(){
-        return (isDone? "1" : "0");
+
+    public String getStatus() {
+        return (isDone ? "1" : "0");
     }
 
     public void setDone() {
@@ -34,7 +35,7 @@ public class Task {
         return "[" + getStatusIcon() + "] " + description;
     }
 
-    public String toSave(){
+    public String toSave() {
         return "";
     }
 
