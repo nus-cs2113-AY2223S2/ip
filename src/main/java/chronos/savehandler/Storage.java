@@ -18,7 +18,7 @@ public class Storage {
     private static final Logger LOGGER = Logger.getLogger(Storage.class.getName());
     private static final String FILE = ".Chronos/taskList.txt";
 
-    private static final Gson gson
+
 
 
     private static void writeToFile(String path, String content) {
