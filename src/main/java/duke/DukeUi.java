@@ -1,8 +1,8 @@
-package duke.ui;
+package duke;
 
 import java.util.Scanner;
 
-public class DukeUi extends Ui {
+public class DukeUi {
     
     private final String LINE = "____________________________________________________________";
 

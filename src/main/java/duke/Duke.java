@@ -6,7 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-import duke.ui.DukeUi;
+import tasklist.TaskList;
 
 public class Duke {
     private static boolean hasEnteredBye = false;
