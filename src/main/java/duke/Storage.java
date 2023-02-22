@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static duke.Duke.allTasks;
+import static duke.TaskList.allTasks;
 
 public class Storage {
     private static final char TXT_TODO_WORD = 'T';
@@ -39,7 +39,7 @@ public class Storage {
         case TXT_DEADLINE_WORD:
             final String[] paramAndBy;
             try {
-                paramAndBy = Parser.deadline(param);
+                paramAndBy = Parser.parseDeadline(param);
             } catch (InvalidDeadline e) {
                 throw new InvalidSaveFile();
             }
@@ -49,7 +49,7 @@ public class Storage {
         case TXT_EVENT_WORD:
             final String[] paramAndFromTo;
             try {
-                paramAndFromTo = Parser.event(param);
+                paramAndFromTo = Parser.parseEvent(param);
             } catch (InvalidEvent e) {
                 throw new InvalidSaveFile();
             }
@@ -76,7 +76,7 @@ public class Storage {
                 newArrayList.add(newTask(s.nextLine()));
                 counter++;
             } catch (InvalidSaveFile e) {
-                Ui.printInvalidSaveFile(counter);
+                Ui.printInvalidSaveFile(counter, filePath);
             }
         }
         return newArrayList;
@@ -95,7 +95,7 @@ public class Storage {
         }
     }
 
-    public static void updateDuke() throws IOException {
+    public static void update() throws IOException {
         FileWriter overwrite = new FileWriter(filePath);
         for (Task task : allTasks) {
             String desc = task.getDescription();
