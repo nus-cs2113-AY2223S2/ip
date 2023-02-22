@@ -15,11 +15,22 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Store tasks into data file.
+ * Read data from data file.
+ */
 public class Storage {
     private final static String DATA_PATH = "duke_data.text";
     private final static String TEMP_PATH = "temp_data.text";
     private final static File DATA_FILE = new File(DATA_PATH);
 
+    /**
+     * Read data from data file if exits.
+     * Make sense of the type of command and command description from data in data file.
+     * Populate tasks array with tasks stored in data file.
+     *
+     * @throws IOException
+     */
     public static void loadData() throws IOException {
         if(DATA_FILE.exists()){
             Scanner readFile = new Scanner(DATA_FILE);
@@ -57,6 +68,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Overwrite data file with updated tasks to make sure data file is up-to-date.
+     *
+     * @throws IOException
+     */
     public static void copyToFile( ) throws IOException {
         FileWriter fileWriter = new FileWriter(DATA_PATH);
         ArrayList<Task> tasks = TaskManager.getALLTasks();
@@ -72,6 +88,16 @@ public class Storage {
         fileWriter.close();
     }
 
+    /**
+     * Update the data file with the help of a temporary file.
+     * Copy the unchanged parts of data into a temporary data file.
+     * Write the changed tasks into the temporary file.
+     * Copy data from temporary file into data file and delete temporary file.
+     *
+     * @param command
+     * @param index
+     * @throws IOException
+     */
     public static void updateData(String command, int index) throws IOException{
         Scanner read = new Scanner(DATA_FILE);
         String data;
@@ -99,6 +125,13 @@ public class Storage {
         Files.delete(Paths.get(TEMP_PATH));
     }
 
+    /**
+     * Append new content into data file without overwriting existing data.
+     *
+     * @param data
+     * @param path
+     * @throws IOException
+     */
     public static void writeToFile(String data, String path) throws IOException {
         FileWriter fileWriter = new FileWriter(path, true);
         fileWriter.write(data);

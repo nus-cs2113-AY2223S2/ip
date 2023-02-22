@@ -5,10 +5,13 @@ import duke.tasks.Deadline;
 import duke.tasks.Event;
 import duke.tasks.Todo;
 
+/**
+ * Process and make sense of user inputs.
+ */
 public class Parser {
 
     /**
-     * Split a string with one or multiple words into an array of strings
+     * Split a string with one or multiple words into an array of strings based on empty spaces.
      *
      * @param inputCommand
      * @return inputWords
@@ -19,7 +22,7 @@ public class Parser {
     }
 
     /**
-     * Get the first word in the input command.
+     * Get the first word in the input command as the command type.
      * Convert the command into small letter before returning.
      *
      * @param inputWords
@@ -43,8 +46,7 @@ public class Parser {
     }
 
     /**
-     * Get the description of the task in the command.
-     * The second word onwards in the command.
+     * Get the second word onwards in the command as task description.
      *
      * @param inputWords
      * @return
@@ -61,5 +63,4 @@ public class Parser {
             return commandDescriptionString;
         }
     }
-
 }

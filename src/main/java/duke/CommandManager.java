@@ -13,7 +13,7 @@ import java.io.IOException;
 
 /**
  * Manage input commands.
- * Keep reading input command until 'bye'.
+ * Call relevant TaskManager methods based on user commands to edit tasks.
  */
 public class CommandManager {
     private String inputCommand;
@@ -21,6 +21,13 @@ public class CommandManager {
     private String commandDescription;
     private static final Parser COMMAND_PARSER = new Parser();
 
+    /**
+     * Set user command type and command description from user input string.
+     *
+     * @param command
+     * @throws UnknownCommandException
+     * @throws CommandDescriptionEmptyException
+     */
     public void setCommand(String command) throws UnknownCommandException, CommandDescriptionEmptyException {
         this.inputCommand = command;
 
@@ -42,11 +49,8 @@ public class CommandManager {
     }
 
     /**
-     * If command is 'bye', exit.
-     * If command is 'list', list out all the tasks.
-     * If command is mark, mark a particular task as done.
-     * If command is unmark, mark a particular task as undone.
-     * Else add new task.
+     * Call different TaskManager methods based on input commands.
+     * Throw errors if an unknown command is caught.
      */
     public void executeCommand() throws MissingParameterException,EditEmptyTasks,MissingFileException, IOException,  DeleteIndexOutOfBound, DeleteEmptyTasks{
         if(commandType.equals("bye")){

@@ -7,6 +7,10 @@ import duke.tools.UI;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Keep track of users' tasks.
+ * Allow users to add/delete/update/find tasks.
+ */
 public class Duke {
 
     private static UI ui = new UI();
@@ -26,6 +30,10 @@ public class Duke {
         Storage.loadData();
     }
 
+    /**
+     * Constantly listen to users input, execute the commands, and print relevant output, until exit command.
+     * Catch possible errors that might arise in the process.
+     */
     public static void useDuke(){
         while(true){
             try{
