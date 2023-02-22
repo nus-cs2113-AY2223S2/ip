@@ -84,6 +84,11 @@ public class Parser {
             newCommand.handleCommand(line, taskList, storage);
             break;
 
+        case "find":
+            newCommand = new FindCommand();
+            newCommand.handleCommand(line, taskList, storage);
+            break;
+
         case "help":
             newCommand = new HelpCommand();
             newCommand.handleCommand(line, taskList, storage);
