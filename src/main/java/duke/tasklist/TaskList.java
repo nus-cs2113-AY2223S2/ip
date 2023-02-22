@@ -2,6 +2,10 @@ package duke.tasklist;
 
 import duke.command.Command;
 import duke.Duke;
+import duke.command.CommandDelete;
+import duke.command.CommandList;
+import duke.command.CommandMark;
+import duke.command.CommandUnmark;
 import duke.parser.Parser;
 import duke.ui.Ui;
 import duke.task.Task;
@@ -69,7 +73,7 @@ public class TaskList {
         case COMMAND_MARK:
             try {
                 int taskNum = getTaskNum(parser);
-                Command.doCommandMark(taskNum);
+                CommandMark.execute(taskNum);
             } catch (IndexOutOfBoundsException | NumberFormatException out_mark_a) {
                 Ui.printInvalidNumber("mark");
             }
@@ -77,13 +81,13 @@ public class TaskList {
         case COMMAND_UNMARK:
             try {
                 int taskNum = getTaskNum(parser);
-                Command.doCommandUnmark(taskNum);
+                CommandUnmark.execute(taskNum);
             } catch (IndexOutOfBoundsException | NumberFormatException out_unmark_a) {
                 Ui.printInvalidNumber("unmark");
             }
             break;
         case COMMAND_LIST:
-            Command.doCommandList();
+            CommandList.execute();
             break;
         case COMMAND_BYE:
             Ui.printExitMessage();
@@ -91,7 +95,7 @@ public class TaskList {
         case COMMAND_DELETE:
             try {
                 int taskNum = getTaskNum(parser);
-                Command.doCommandDelete(taskNum);
+                CommandDelete.execute(taskNum);
             } catch (IndexOutOfBoundsException | NumberFormatException out_delete_a) {
                 Ui.printInvalidNumber("delete");
             }
