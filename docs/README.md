@@ -32,14 +32,14 @@ the things you need to do, quickly and efficiently.
 
 ### Command Menu
 * Add new tasks
-    * [`todo`](#[t]odo)
-    * [`deadline`](#[d]ead[l]ine)
-    * [`event`](#[e]vent)
-* [Deleting tasks](#[d]elete)
+    * [`todo`](#todo)
+    * [`deadline`](#deadline)
+    * [`event`](#event)
+* [Deleting tasks](#delete)
 * [Mark task as done](#mark)
 * [Mark task as not done](#unmark)
 * [List all tasks](#list)
-* [Find tasks](#[f]ind)
+* [Find tasks](#find)
 * [Exit the program](#bye)
 
 ## Usage
