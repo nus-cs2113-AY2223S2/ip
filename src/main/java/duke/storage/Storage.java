@@ -1,7 +1,7 @@
 package duke.storage;
 
 import duke.Duke;
-import duke.command.Command;
+import duke.command.CommandMark;
 import duke.tasklist.TaskList;
 import duke.ui.Ui;
 
@@ -61,13 +61,14 @@ public class Storage {
         Scanner s = new Scanner(fileName);
         if (!s.hasNext()) {
             Ui.printEmptyFile();
-        } else Ui.printFileContents(s);
-        extractData(fileName);
+        } else {
+            Ui.printFileContents(s);
+            extractData(fileName);
+        }
     }
 
     /**
-     * Loops through the file and passes the tasks string into
-     * handleUserCommand function
+     * Loops through the file and passes the tasks string into handleUserCommand function
      * handleUserCommand function then adds these tasks into arraylist
      *
      * @param fileName represents the duke save file
@@ -83,7 +84,7 @@ public class Storage {
             TaskList.handleUserCommand(userCommand);
             String markStatus = currentLine.substring(0, 4);
             if (markStatus.equals("[X] ")) {
-                Command.doCommandMark(count);
+                CommandMark.execute(count);
             } else if (!markStatus.equals("[ ] ")) {
                 Ui.printIncorrectTaskFormat();
             }
