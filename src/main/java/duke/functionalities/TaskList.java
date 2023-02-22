@@ -1,6 +1,7 @@
 package duke.functionalities;
 
 import java.util.ArrayList;
+
 import duke.exception.DukeException;
 import duke.tasks.Deadline;
 import duke.tasks.Event;
@@ -10,7 +11,7 @@ import duke.tasks.Todo;
 public class TaskList {
 
     protected ArrayList<Task> tasks;
-    private Ui ui;
+    private final Ui ui;
 
     public TaskList(ArrayList<Task> tasks, Ui ui) {
         this.tasks = tasks;
@@ -91,6 +92,17 @@ public class TaskList {
             throw new DukeException(" The task to mark does not exist in the list!");
         } catch (NumberFormatException e) {
             throw new DukeException(" Task index should be an integer!");
+        }
+    }
+
+    public void findTask(String description) {
+        ui.showUserMessage(" Here are the matching tasks in your list:");
+        int index = 1;
+        for (Task userTask : tasks) {
+            if (userTask.toString().contains(description)) {
+                ui.showUserMessage("  " + index + "." + userTask);
+                index++;
+            }
         }
     }
 }

@@ -33,6 +33,8 @@ public class Command {
             tasks.addEvent(description, eventStart, eventEnd);
         } else if (command.equalsIgnoreCase("delete")) {
             tasks.deleteTask(description);
+        } else if (command.equalsIgnoreCase("find")) {
+            tasks.findTask(description);
         } else if (command.equalsIgnoreCase("bye")) {
             ui.showUserMessage(" Bye. Hope to see you again soon!");
             storage.saveFile();
