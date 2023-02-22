@@ -42,6 +42,9 @@ public class Duke {
         case "deadline":
             executeDeadlineAction(tasks, description);
             break;
+        case "delete":
+            executeDeleteAction(tasks, description);
+            break;
         default:
             System.out.println("OOPS!!! I'm sorry, but I don't know what that means :-(");
         }
@@ -69,7 +72,7 @@ public class Duke {
         System.out.println("Got it. I've added this task:");
         System.out.println(tasks.get(lastIndexOfTasks).toString());
         if (tasks.size() == 1){
-            System.out.println("Now you have " +tasks.size()+" task in the list.");
+            System.out.println("Now you have " + tasks.size()+ " task in the list.");
         } else {
             System.out.println("Now you have " + tasks.size() + " tasks in the list.");
         }
@@ -124,5 +127,17 @@ public class Duke {
             throw new DukeException(new IllegalArgumentException());
         }
         return indexArr;
+    }
+    private static void executeDeleteAction(ArrayList<Task>tasks, String description) {
+        Integer index = Integer.parseInt(description) - 1;
+        String deletedTask = tasks.get(index).name;
+        tasks.remove((int)index);
+        System.out.println("Noted. I've removed this task:");
+        System.out.println(deletedTask);
+        if (tasks.size() == 1){
+            System.out.println("Now you have " + tasks.size()+ " task in the list.");
+        } else {
+            System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+        }
     }
 }
