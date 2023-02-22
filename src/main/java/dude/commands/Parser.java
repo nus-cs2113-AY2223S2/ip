@@ -59,20 +59,20 @@ public class Parser {
     }
 
     public static Task createDeadline(String input) throws InvalidDeadlineException {
-        if (input.equals("") | !input.contains("/by")) {
+        if (input.equals("") || !input.contains("/by")) {
             throw new InvalidDeadlineException();
         }
         String[] description = input.split("/by", 2);
         String deadlineDesc = description[0].trim();
         String deadlineDate = description[1].trim();
-        if (deadlineDesc.equals("") | deadlineDate.equals("")) {
+        if (deadlineDesc.equals("") || deadlineDate.equals("")) {
             throw new InvalidDeadlineException();
         }
         return new Deadline(deadlineDesc, deadlineDate);
     }
 
     public static Task createEvent(String input) throws InvalidEventException {
-        if (input.equals("") | !input.contains("/from") | !input.contains("/to")) {
+        if (input.equals("") || !input.contains("/from") || !input.contains("/to")) {
             throw new InvalidEventException();
         }
         String[] description = input.split("/from", 2);
@@ -81,7 +81,7 @@ public class Parser {
         String eventStart = range[0].trim();
         String eventEnd = range[1].trim();
 
-        if (eventDesc.equals("") | eventStart.equals("") | eventEnd.equals("")) {
+        if (eventDesc.equals("") || eventStart.equals("") || eventEnd.equals("")) {
             throw new InvalidEventException();
         }
         return new Event(eventDesc, eventStart, eventEnd);
