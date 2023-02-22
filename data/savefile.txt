@@ -1,3 +1,3 @@
 T|Y|hi
-D|N|hihi|this time
-E|Y|hihihi|here|there
+D|N|hihihi|now
+E|Y|hihihihi|here|there

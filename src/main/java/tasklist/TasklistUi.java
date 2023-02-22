@@ -11,7 +11,7 @@ public class TasklistUi {
     // Output
 
     protected void printTaskWithNumber(int taskNo) {
-        System.out.println(taskNo + ". " + taskList.tasks.get(taskNo).toString());
+        System.out.println((taskNo + 1) + ". " + taskList.tasks.get(taskNo).toString());
     }
 
     protected void printTaskWithoutNumber(int taskNo) {
@@ -82,6 +82,5 @@ public class TasklistUi {
     protected void printTaskFoundMessage(String keyword) {
         System.out.println("These tasks contain the keyword " + keyword);
     }
-
 }
 

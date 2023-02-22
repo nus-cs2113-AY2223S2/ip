@@ -156,7 +156,7 @@ public class TaskList {
         if (!isValidTaskNo(taskNo)) {
             return;
         }
-        if (!tasks.get(taskNo - 1).isDone()) {
+        if (tasks.get(taskNo - 1).isDone()) {
             ui.printAlreadyDoneMessage();
         } else {
             tasks.get(taskNo - 1).setStatus(true);
