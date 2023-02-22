@@ -17,12 +17,11 @@ public class TaskList {
 
     private boolean isValidTaskNo(int taskNo) {
         if (taskNo <= 0) {
-            System.out.println("Negative task number entered.");
+            ui.printNegTaskNoError();
             return false;
         }
         if (taskNo > noOfTasks) {
-            System.out.println("Task number does not exist, there are only " + noOfTasks +
-                     " tasks in total.");
+            ui.printOOBTaskNoError();
             return false;
         }
         return true;
@@ -125,8 +124,7 @@ public class TaskList {
         }
         if (indexOfFrom > indexOfTo) {
             noOfTasks--;
-            System.out.println("Please ensure that /from is before /to.");
-            System.out.println("Cos I am too lazy to code for both cases.");
+            ui.printFromBeforeToError();
             return;
         }
         String name = args.substring(0, indexOfFrom);
@@ -151,25 +149,18 @@ public class TaskList {
     }
 
     public void listTasks() {
-        if (noOfTasks == 0) {
-            System.out.println("No tasks yet. Please input a task.");
-        }
-        for (int i = 0; i < noOfTasks; i++) {
-            System.out.print((i + 1) + ". ");
-            System.out.println(tasks.get(i).toString());
-        }
+        ui.printAllTasks();
     }
 
     public void markDone(int taskNo) {
         if (!isValidTaskNo(taskNo)) {
             return;
         }
-        if (tasks.get(taskNo - 1).isDone()) {
-            System.out.println("Already done.");
+        if (!tasks.get(taskNo - 1).isDone()) {
+            ui.printAlreadyDoneMessage();
         } else {
             tasks.get(taskNo - 1).setStatus(true);
-            System.out.println("Nice! I have marked this task as done.");
-            System.out.println(tasks.get(taskNo - 1).toString());
+            ui.printMarkDoneMessage(taskNo);
         }
     }
 
@@ -178,11 +169,10 @@ public class TaskList {
             return;
         }
         if (!tasks.get(taskNo - 1).isDone()) {
-            System.out.println("Not done yet. Please finish it.");
+            ui.printNotDoneMessage();
         } else {
             tasks.get(taskNo - 1).setStatus(false);
-            System.out.println("Ok I have marked this as not done yet.");
-            System.out.println(tasks.get(taskNo - 1).toString());
+            ui.printUnmarkDoneMessage(taskNo);
         }
     }
 
@@ -203,7 +193,7 @@ public class TaskList {
 
     public void findTask(String keyword) {
         if (keyword.isEmpty()) {
-            System.out.println("No keyword entered.");
+            ui.printBlankArgumentError("Keyword");
             return;
         }
         keyword.trim();
@@ -213,9 +203,9 @@ public class TaskList {
             if (task.getName().contains(keyword)) {
                 if (!taskFound) {
                     taskFound = true;
-                    System.out.println("These tasks contain the keyword " + keyword);
+                    ui.printTaskFoundMessage(keyword);
                 }
-                System.out.println(taskNo + ". " + task.toString());
+                ui.printTaskWithNumber(taskNo);
             }
             taskNo++;
         }
