@@ -11,16 +11,18 @@ import tasks.Task;
 import tasks.ToDo;
 
 public class TaskList {
-    private ArrayList<Task> tasks;
-    private int noOfTasks;
+    protected ArrayList<Task> tasks;
+    protected int noOfTasks;
+    private TasklistUi ui = new TasklistUi();
 
     private boolean isValidTaskNo(int taskNo) {
         if (taskNo <= 0) {
-            System.out.println("Negative task number entered, please don't try to crash the program a**h***.");
+            System.out.println("Negative task number entered.");
             return false;
         }
         if (taskNo > noOfTasks) {
-            System.out.println("Task number does not exist, there are only " + noOfTasks + " tasks in total.");
+            System.out.println("Task number does not exist, there are only " + noOfTasks +
+                     " tasks in total.");
             return false;
         }
         return true;
@@ -60,30 +62,10 @@ public class TaskList {
         listTasks();
     }
 
-    private void printAddTaskMessage(int taskNo) {
-        System.out.println("Got it. I have added this task:");
-        System.out.println(tasks.get(taskNo - 1).toString());
-        System.out.println("Now you have " + noOfTasks + " tasks in the list");
-    }
-
-    private void printDeleteTaskMessage(int taskNo) {
-        System.out.println("Noted. I've removed this task:");
-        System.out.println(tasks.get(taskNo-1).toString());
-        System.out.println("Now you have " + noOfTasks + " tasks in the list");
-    }
-
-    private void printBlankArgumentError(String type) {
-        System.out.println(type + " cannot be blank.");
-    }
-
-    private void printMissingKeywordError(String type) {
-        System.out.println(type + " keyword is missing.");
-    }
-
     private boolean hasBlankArgument(String arg, String type) {
         if(arg.isEmpty()) {
             noOfTasks--;
-            printBlankArgumentError(type);
+            ui.printBlankArgumentError(type);
             return true;
         }
         return false;
@@ -92,7 +74,7 @@ public class TaskList {
     private boolean hasMissingKeyword(int index, String type) {
         if (index == -1) {
             noOfTasks--;
-            printMissingKeywordError(type);
+            ui.printMissingKeywordError(type);
             return true;
         }
         return false;
@@ -105,7 +87,7 @@ public class TaskList {
             return;
         }
         tasks.add(new ToDo(args));
-        printAddTaskMessage(noOfTasks);
+        ui.printAddTaskMessage(noOfTasks);
     }
 
     public void addDeadline(String args) {
@@ -126,7 +108,7 @@ public class TaskList {
             return;
         }
         tasks.add(new Deadline(name, by));
-        printAddTaskMessage(noOfTasks);
+        ui.printAddTaskMessage(noOfTasks);
     }
 
     public void addEvent(String args) {
@@ -163,7 +145,7 @@ public class TaskList {
             return;
         }
         tasks.add(new Event(name, from, to));
-        printAddTaskMessage(noOfTasks);
+        ui.printAddTaskMessage(noOfTasks);
     }
 
     public void listTasks() {
@@ -207,7 +189,7 @@ public class TaskList {
             return;
         }
         noOfTasks--;
-        printDeleteTaskMessage(taskNo);
+        ui.printDeleteTaskMessage(taskNo);
         tasks.remove(taskNo - 1);
     }
 
