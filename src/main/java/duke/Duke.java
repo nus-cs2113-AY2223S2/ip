@@ -7,9 +7,21 @@ import duke.task.*;
 public class Duke {
 
     private static TodoList todoList;
+    private static final String logo = " ____        _        \n"
+                + "|  _ \\ _   _| | _____ \n"
+                + "| | | | | | | |/ / _ \\\n"
+                + "| |_| | |_| |   <  __/\n"
+                + "|____/ \\__,_|_|\\_\\___|\n";
+    private static final String enterGreet = "    ____________________________________________________________\n"
+                + "     Hello! I'm Duke\n"
+                + "     What can I do for you?\n"
+                + "    ____________________________________________________________\n";
+    private static final String exitPrompt = "    ____________________________________________________________\n"
+                + "     Bye. Hope to see you again soon!\n"
+                + "    ____________________________________________________________\n";
 
     public static void printError(String errMsg){
-        String printContent = "    ____________________________________________________________\n"
+        final String printContent = "    ____________________________________________________________\n"
         + "     " + errMsg + "\n"
         + "    ____________________________________________________________\n";
         System.out.println(printContent);
@@ -72,19 +84,7 @@ public class Duke {
         }
 
         Scanner in = new Scanner(System.in);
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
-        String enterGreet = "    ____________________________________________________________\n"
-                           + "     Hello! I'm Duke\n"
-                           + "     What can I do for you?\n"
-                           + "    ____________________________________________________________\n";
-        String exitPrompt = "    ____________________________________________________________\n"
-                           + "     Bye. Hope to see you again soon!\n"
-                           + "    ____________________________________________________________\n";
         System.out.println(enterGreet);
         while(true){
             String line = in.nextLine();
@@ -103,7 +103,7 @@ public class Duke {
                 if(cmdIdx == line.length()){
                     cmdContent = "";
                 }else{
-                    cmdContent = line.substring(cmdIdx+1);
+                    cmdContent = line.substring(cmdIdx + 1);
                 }
 
                 // do commands

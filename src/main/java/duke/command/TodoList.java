@@ -4,7 +4,7 @@ import duke.task.Deadline;
 import duke.task.Task;
 import duke.task.Todo;
 import duke.task.Event;
-import duke.*;
+import duke.DukeException;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
@@ -112,16 +112,20 @@ public class TodoList {
         System.out.println();
     }
 
+    public static void accessFile(File f) throws IOException{
+        // create file `f` if it does not exist
+        if(!f.exists()){
+            if(!f.getParentFile().exists()){
+                f.getParentFile().mkdirs();
+            }
+            f.createNewFile();
+        }
+    }
+
     public void saveList() throws IOException{
         File listFile = new File(DATA_PATH);
 
-        // create file(if it does not exist)
-            if(!listFile.exists()){
-                if(!listFile.getParentFile().exists()){
-                    listFile.getParentFile().mkdirs();
-                }
-                listFile.createNewFile();
-            }
+        accessFile(listFile);
 
         FileWriter saver = new FileWriter(listFile);
         for(Task task : tasks){
@@ -141,13 +145,7 @@ public class TodoList {
     public void loadList() throws IOException, DukeException{
         File listFile = new File(DATA_PATH);
 
-        // create file(if it does not exist)
-        if(!listFile.exists()){
-            if(!listFile.getParentFile().exists()){
-                listFile.getParentFile().mkdirs();
-            }
-            listFile.createNewFile();
-        }
+        accessFile(listFile);
 
         Scanner in = new Scanner(listFile);
         while(in.hasNext()){
@@ -158,7 +156,6 @@ public class TodoList {
             String type = line.substring(0, typeIdx);
 
             int doneIdx = line.indexOf(" | ", typeIdx + " | ".length());
-            // int doneIdx = line.substring(typeIdx + " | ".length()).indexOf(" | ");
             String done = line.substring(typeIdx + " | ".length(), doneIdx);
 
             if(type.equals("T")){
