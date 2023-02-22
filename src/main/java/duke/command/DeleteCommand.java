@@ -9,7 +9,7 @@ public class DeleteCommand extends Command {
 
     public static final String OUTPUT_MESSAGE = " Noted. Task removed: ";
 
-    public static final String REMAINING_TASK_MESSAGE = " You now have %d task[s] in the list.";
+    public static final String REMAINING_TASK_MESSAGE = " You now have %d task(s) in the list.";
 
     public static final String INVALID_COMMAND_MESSAGE = " Invalid input! Valid input format: \"delete <number>\"";
 

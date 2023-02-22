@@ -66,7 +66,7 @@ public class Event extends Task {
         String outEndDate;
         if (this.endDateTime != null) {
             outEndDate = DateTime.outDateTimeFormatter.format(this.endDateTime);
-        } else if (this.startDate != null) {
+        } else if (this.endDate != null) {
             outEndDate = this.endDate.format(DateTime.outDateFormatter);
         } else {
             outEndDate = this.stringEndDate;

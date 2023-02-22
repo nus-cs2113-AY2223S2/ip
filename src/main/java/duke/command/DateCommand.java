@@ -11,7 +11,7 @@ public class DateCommand extends Command {
 
     public static final String COMMAND_WORD = "date";
 
-    public static final String OUTPUT_MESSAGE = " The following tasks are due on %s:";
+    public static final String OUTPUT_MESSAGE = " The following task(s) occurs on %s:";
 
     public static final String NO_MENTIONED_TASK_DATE = " There are no tasks found with the date provided";
 
