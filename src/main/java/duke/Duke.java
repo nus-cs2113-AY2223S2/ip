@@ -32,6 +32,7 @@ public class Duke {
             try {
                 tasks.executeCommand(command, param);
                 Storage.updateDuke();
+                ui.showLine();
             } catch (IllegalCommandException e) {
                 ui.printInvalidCommand();
             } catch (EmptyTaskException e) {
@@ -40,6 +41,8 @@ public class Duke {
                 ui.printErrorForIO();
             } catch (NumberFormatException e) {
                 ui.printErrorForIdx();
+            } finally {
+                ui.showLine();
             }
         }
     }

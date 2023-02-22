@@ -4,39 +4,32 @@ import duke.task.Task;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static duke.Duke.FILE_PATH;
-import static duke.Duke.allTasks;
-
 public class Ui {
     private static final Scanner in = new Scanner(System.in);
-    public static final String DIVIDER = "____________________________________________________________\n";
-    public static final String INVALID_DEADLINE =
-            DIVIDER + "Please enter deadline as \"deadline [task] /by [date]\".\n" + DIVIDER;
-    public static final String INVALID_EVENT =
-            DIVIDER + "Please enter event as \"event [task] /from [date] /to [date]\".\n" + DIVIDER;
-    public static final String INVALID_COMMAND =
-            DIVIDER + "Sorry, but I don't know what that means :(\n" + DIVIDER;
-    public static final String EMPTY_TASK_DESCRIPTION =
-            DIVIDER + "Oops! The description of a task cannot be empty.\n" + DIVIDER;
 
     public static String readCommand() {
         return in.nextLine();
     }
+
+    public static void showLine() {
+        System.out.println("____________________________________________________________");
+    }
     public static void printWelcomeMessage() {
-        System.out.println(DIVIDER +
+        showLine();
+        System.out.println(
                 "Hello from\n" +
                 " ____        _\n" +
                 "|  _ \\ _   _| | _____\n" +
                 "| | | | | | | |/ / _ \\\n" +
                 "| |_| | |_| |   <  __/\n" +
                 "|____/ \\__,_|_|\\_\\___|\n" +
-                "Enter \"help\" to see a list of commands.\n" +
-                DIVIDER);
+                "Enter \"help\" to see a list of commands.");
+        showLine();
     }
 
     // functions
     public static void printHelpMessage() {
-        System.out.println(DIVIDER +
+        System.out.println(
                 " Enter \"list\" to see all tasks\n" +
                 " Enter \"todo [task]\" to add a task\n" +
                 " Enter \"deadline [task] /by [date]\" to add a deadline\n" +
@@ -44,97 +37,86 @@ public class Ui {
                 " Enter \"mark [idx]\" to mark task as done\n" +
                 " Enter \"unmark [idx]\" to mark task as not done\n" +
                 " Enter \"delete [idx]\" to remove task from list\n" +
-                " Enter \"bye\" to exit the program\n" +
-                DIVIDER);
+                " Enter \"bye\" to exit the program");
     }
     public static void printAddMessage(Task newTask) {
         System.out.println(
-                DIVIDER + "Got it. I've added this " + newTask.getType() + ":\n" +
-                "  " + newTask + "\n" + DIVIDER);
+                "Got it. I've added this " + newTask.getType() + ":\n" +
+                "  " + newTask);
     }
 
     public static void printList(ArrayList<Task> allTasks) {
         if (allTasks.size()==0) {
-            System.out.println(DIVIDER +
-                    "There are no tasks in your list!\n" + DIVIDER);
+            System.out.println("There are no tasks in your list!\n");
             return;
         }
-        System.out.println(DIVIDER +
-                "Here are the tasks in your list:");
+        System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < allTasks.size(); i++) {
             System.out.println(i+1 + "." + allTasks.get(i));
         }
-        System.out.println(DIVIDER);
     }
 
     public static void printMarkDone(Task doneTask) {
-        System.out.println(DIVIDER +
+        System.out.println(
                 "Nice!, I've marked this task as done:\n" +
-                "  " + doneTask + "\n" + DIVIDER);
+                "  " + doneTask);
     }
 
     public static void printMarkNotDone(Task notDoneTask) {
-        System.out.println(DIVIDER +
+        System.out.println(
                 "OK, I've marked this task as not done yet:\n" +
-                "  " + notDoneTask + "\n" + DIVIDER);
+                "  " + notDoneTask);
     }
 
-    public static void printDeleted(Task deletedTask) {
-        System.out.println(DIVIDER +
+    public static void printDeleted(Task deletedTask, int size) {
+        System.out.println(
                 "Noted, I've removed this task:\n" +
                 "  " + deletedTask + "\n" +
-                "Now you have " + (allTasks.size()-1) + " tasks in the list\n" +
-                DIVIDER);
+                "Now you have " + (size - 1) + " tasks in the list");
     }
 
     public static void printExitMessage() {
-        System.out.println(DIVIDER +
-                "Bye. Hope to see you again soon!\n" +
-                DIVIDER);
+        System.out.println("Bye. Hope to see you again soon!");
     }
 
     // error messages
-    public static void printErrorForIdx() {
-        if (allTasks.size() != 0) {
-            System.out.println(DIVIDER +
-                    "Please enter [idx] in the form of an integer from 1 to " + allTasks.size() + ".\n" +
-                    DIVIDER);
+    public static void printErrorForIdx(int size) {
+        if (size != 0) {
+            System.out.println("Please enter [idx] in the form of an integer from 1 to " + size);
         } else {
-            System.out.println(DIVIDER + "There are no tasks in your list!\n" + DIVIDER);
+            System.out.println("There are no tasks in your list!");
         }
     }
 
     public static void printErrorForIO() {
-        System.out.println(DIVIDER +
-                "Something went wrong with the hard disk :(\n" +
-                DIVIDER);
+        System.out.println("Something went wrong with the hard disk :(");
     }
 
     public static void printErrorFileNotFound() {
-        System.out.println(DIVIDER +
-                "Save file not found, initialising empty list...\n" +
-                DIVIDER);
+        System.out.println("Save file not found, initialising empty list...");
     }
 
     public static void printInvalidDeadline() {
-        System.out.println(INVALID_DEADLINE);
+        System.out.println("Please enter deadline as \"deadline [task] /by [date]\".");
     }
 
     public static void printInvalidEvent() {
-        System.out.println(INVALID_EVENT);
+        System.out.println("Please enter event as \"event [task] /from [date] /to [date]\".");
     }
 
     public static void printInvalidCommand() {
-        System.out.println(INVALID_COMMAND);
+        System.out.println("Sorry, but I don't know what that means :(");
     }
 
-    public static void printInvalidSaveFile(int counter) {
-        System.out.println(DIVIDER + "There is an error in save.txt at line " + (counter+1) + "\n" +
+    public static void printInvalidSaveFile(int counter, String filePath) {
+        showLine();
+        System.out.println("There is an error in save.txt at line " + (counter+1) + "\n" +
                 "Task " + (counter+1) + " has been excluded. You can edit the save file at:\n" +
-                FILE_PATH + "\n" + DIVIDER);
+                filePath);
+        showLine();
     }
 
     public static void printEmptyTask() {
-        System.out.println(EMPTY_TASK_DESCRIPTION);
+        System.out.println("Oops! The description of a task cannot be empty.");
     }
 }
