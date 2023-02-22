@@ -1,9 +1,8 @@
 package duke.tasks;
 
 /**
- * Manage each task.
- * Private attributes: taskDescription, isDone.
- * Public methods to get/edit task status.
+ * Superclass of all types of tasks.
+ * Contains basic attributes of task description and task status(isDone).
  */
 public class Task {
     protected String taskDescription;
@@ -16,6 +15,7 @@ public class Task {
 
     /**
      * Returns the status of a particular task.
+     * '[X]' as done and '[]' as not done.
      *
      * @return X or ' '
      */
@@ -44,6 +44,11 @@ public class Task {
         this.isDone = false;
     }
 
+    /**
+     * Overwrite toString method to return the task with associated task status prefix.
+     *
+     * @return
+     */
     @Override
     public String toString(){
         String taskObjectString = "[" + getTaskStatus() + "]" + this.taskDescription;

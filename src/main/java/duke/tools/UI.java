@@ -18,16 +18,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- * I/O class
- * Read user input.
- * Print output.
+ * I/O class, interacting with users.
+ * Read user input and print output.
  */
 public class UI {
     private static final Scanner SCANNER = new Scanner(System.in);
     private final static String LIST_CAPTION = "      Here are the tasks in your list:";
 
     /**
-     * Print the list of tasks.
+     * Print the list of tasks with the appropriate index and indentation.
      *
      * @param tasks
      * @param count
@@ -45,7 +44,7 @@ public class UI {
     }
 
     /**
-     * Echo back the newly created task to user.
+     * Echo back the newly created tasks and print the total number tasks in the list.
      *
      * @param numTasks
      * @param task
@@ -76,7 +75,7 @@ public class UI {
     }
 
     /**
-     * Print hello and logo.
+     * Print hello message and logo.
      *
      * @param logo
      * @param hello
@@ -94,7 +93,7 @@ public class UI {
     }
 
     /**
-     * Print bye and exit the program.
+     * Print bye message and exit the program.
      *
      * @param bye
      */
@@ -105,6 +104,11 @@ public class UI {
         Formatter.drawSeparationLine();
     }
 
+    /**
+     * Print the errors caught when using the app.
+     *
+     * @param errMessage
+     */
     public void printError(String errMessage){
         Formatter.drawSeparationLine();
         Formatter.printIndentation(4);
@@ -118,7 +122,7 @@ public class UI {
         System.out.println(task);
     }
     /**
-     * Read user input.
+     * Read user input command from terminal.
      *
      * @return
      */

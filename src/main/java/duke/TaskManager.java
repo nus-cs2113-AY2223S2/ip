@@ -6,17 +6,19 @@ import duke.tasks.Event;
 import duke.tasks.Task;
 import duke.tasks.Todo;
 import duke.tools.Formatter;
+
 import duke.tools.Storage;
 import duke.tools.UI;
-
 import java.util.ArrayList;
 import java.io.IOException;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+
 /**
- * Task manager with private attribute task array to store tasks.
- * Public methods to read/write tasks
+ * Store all the input tasks.
+ * Perform actions on tasks such as add/delete/find tasks or update task status.
  */
 public class TaskManager {
     private static ArrayList<Task> tasks = new ArrayList<>();
@@ -35,6 +37,7 @@ public class TaskManager {
     public static ArrayList<Task> getALLTasks(){
         return tasks;
     }
+
     /**
      * Create new todoTask.
      *
@@ -85,7 +88,7 @@ public class TaskManager {
     }
 
     /**
-     * Create new task obejcts based on the type of the task.
+     * Create new task objects based on the type of the task requested.
      *
      * @param taskType
      * @param taskDescription
@@ -106,6 +109,7 @@ public class TaskManager {
 
     /**
      * Add a new task into tasks array.
+     * Store this task in file and print output messages.
      *
      * @param taskType .
      * @param taskDescription
@@ -118,7 +122,8 @@ public class TaskManager {
     }
 
     /**
-     * Mark tasks as done/not done.
+     * Mark a particular task as done/not done based on input command.
+     * Update data file accordingly and print output messages.
      *
      * @param taskIndex index of the task to be edited.
      * @param status mark/unmark.
@@ -145,15 +150,21 @@ public class TaskManager {
         print.updateTaskStatus(tasks.get(index), caption);
     }
 
-    /**
-     * List all tasks.
-     */
     public static void listTask(){
 
         print.listCurrentTasks(tasks, tasks.size());
 
     }
 
+    /**
+     * Delete a particular task based on user command.
+     * Update data file and print output messages.
+     *
+     * @param description
+     * @throws DeleteIndexOutOfBound
+     * @throws DeleteEmptyTasks
+     * @throws IOException
+     */
     public static void deleteTask(String description) throws DeleteIndexOutOfBound, DeleteEmptyTasks, IOException {
         if(tasks.size()==0){
             throw new DeleteEmptyTasks();
@@ -170,6 +181,12 @@ public class TaskManager {
 
     }
 
+    /**
+     * Check each task description whether they contain the keyword string.
+     * Print the matched tasks.
+     *
+     * @param keyword
+     */
     public static void findTasksByKeyword(String keyword){
         int count = 1;
         Formatter.drawSeparationLine();
@@ -182,6 +199,12 @@ public class TaskManager {
         Formatter.drawSeparationLine();
     }
 
+    /**
+     * Check each deadline date whether they match the input date.
+     * Print the matched deadlines.
+     *
+     * @param keyword
+     */
     public static void findDeadlinesByDate(String keyword){
         LocalDate date = LocalDate.parse(keyword);
         int count = 1;

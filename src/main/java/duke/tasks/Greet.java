@@ -22,6 +22,9 @@ public class Greet {
     private Formatter formatter = new Formatter();
     private UI sayHello = new UI();
 
+    /**
+     * Print hello message and logo in an appropriate format.
+     */
     public void printHello() {
         formatter.addStringIndentation(LOGO);
         formatter.addStringIndentation(HELLO);

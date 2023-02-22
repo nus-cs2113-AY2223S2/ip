@@ -1,6 +1,8 @@
 package duke.tools;
 
-import java.util.Arrays;
+/**
+ * Format terminal output with separation lines and indentation.
+ */
 public class Formatter {
     private final static int LINE_LENGTH = 60;
     private final static String STRING_INDENTATION = "      ";
@@ -34,10 +36,6 @@ public class Formatter {
 
     /**
      * Draws horizontal separation lines in between lines of text.
-     * Use unicode box drawings light horizontal(0x2500).
-     * Important to note the code is in hex.
-     * Character.toString(char c) converts character to string to print.
-     * Otherwise, use print(char) method of PrintStream class to output a single character.
      *
      * @param[in]: length/number of characters of the horizontal separation line.
      */
