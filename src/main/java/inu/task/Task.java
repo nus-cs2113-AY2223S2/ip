@@ -28,12 +28,12 @@ public abstract class Task {
     }
 
     public String getStatusIcon() {
-        return (isDone ? "X" : " ");
+        return (isDone ? "[X]" : "[ ]");
     }
 
     @Override
     public String toString() {
-        return "[" + getStatusIcon() + "] " + getDescription();
+        return String.format("%s %s", getStatusIcon(), getDescription());
     }
 
     public String encodeTask() {

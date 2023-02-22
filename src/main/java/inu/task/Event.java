@@ -1,36 +1,42 @@
 package inu.task;
 
+import inu.commons.Util;
+
+import java.time.LocalDateTime;
+
 public class Event extends Task {
 
-    private String from;
+    private LocalDateTime from;
 
-    private String to;
+    private LocalDateTime to;
 
-    public Event(String description, String from, String to) {
+    public Event(String description, LocalDateTime from, LocalDateTime to) {
         super(description);
         setFrom(from);
         setTo(to);
     }
 
-    public String getFrom() {
+    public LocalDateTime getFrom() {
         return from;
     }
 
-    public String getTo() {
+    public LocalDateTime getTo() {
         return to;
     }
 
-    public void setFrom(String from) {
+    public void setFrom(LocalDateTime from) {
         this.from = from;
     }
 
-    public void setTo(String to) {
+    public void setTo(LocalDateTime to) {
         this.to = to;
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + "(from: " + getFrom() + "to: " + getTo() + ")";
+        String fromDate = Util.convertDateTimeToString(from);
+        String toDate = Util.convertDateTimeToString(to);
+        return String.format("[E]%s (from: %s || to: %s)", super.toString(), fromDate, toDate);
     }
 
     @Override
