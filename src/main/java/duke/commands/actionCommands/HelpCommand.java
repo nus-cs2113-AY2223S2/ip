@@ -28,7 +28,7 @@ public class HelpCommand extends Command {
                 throw new InvalidArgsException();
             }
             System.out.println(MESSAGE_HELP);
-        } catch (InvalidArgsException e){
+        } catch (InvalidArgsException e) {
             System.out.println(e.getMessage());
         }
     }

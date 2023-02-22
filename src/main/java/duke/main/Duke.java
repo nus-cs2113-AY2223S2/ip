@@ -14,16 +14,24 @@ public class Duke {
     private TaskList tasks;
     private Ui ui;
 
-    public Duke(String filepath){
+    /**
+     * Constructor for Duke class.
+     *
+     * @param filepath The filepath of the file.
+     */
+    public Duke(String filepath) {
         ui = new Ui();
         storage = new Storage(filepath);
         tasks = new TaskList();
     }
 
-    public void run(){
-        try{
+    /**
+     * Runs the program until termination.
+     */
+    public void run() {
+        try {
             storage.initFile();
-        } catch (IOException e){
+        } catch (IOException e) {
             System.out.println("Error with hard disk!");
             exit(1);
         }

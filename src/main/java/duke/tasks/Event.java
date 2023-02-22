@@ -9,8 +9,8 @@ public class Event extends ToDo {
      * Constructor for Events class.
      *
      * @param taskName Task description.
-     * @param start Start time of event.
-     * @param end  End time of event.
+     * @param start    Start time of event.
+     * @param end      End time of event.
      */
     public Event(String taskName, String start, String end) {
         super(taskName);
@@ -24,7 +24,7 @@ public class Event extends ToDo {
      *
      * @return the start time of the event.
      */
-    public String getStart(){
+    public String getStart() {
         return this.start;
     }
 
@@ -33,12 +33,12 @@ public class Event extends ToDo {
      *
      * @return the end time of the event.
      */
-    public String getEnd(){
+    public String getEnd() {
         return this.end;
     }
 
     @Override
-    public String toString(){
-        return checkBoxOutput() + this.taskName + " (from: " + this.start + " to: "+ this.end + ")";
+    public String toString() {
+        return checkBoxOutput() + this.taskName + " (from: " + this.start + " to: " + this.end + ")";
     }
 }
