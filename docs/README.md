@@ -82,23 +82,29 @@ ____________________________________________________________
 Format:
 
 ````
-add deadline TASK_DESCRIPTION | TASK_DEADLINE
+add deadline TASK_DESCRIPTION | TASK_DEADLINE_DATE TASK_DEADLINE_TIME
 ````
 
 - **Compulsory:** `TASK_DESCRIPTION` corresponds to the description of the task.
-- **Compulsory:** `TASK_DEADLINE` corresponds to the deadline of the task.
+- **Compulsory:** `TASK_DEADLINE_DATE` corresponds to the date the task is due.
+  - **Important** The format for `TASK_DEADLINE_DATE` is `YYYY-MM-DD`.
+- `TASK_DEADLINE_TIME` corresponds to the time the task is due.
+  - **Important** The format for `TASK_DEADLINE_TIME` is `HH:MM` where the time is in
+    24 Hour clock format.
+- If `TASK_DEADLINE_TIME` is left empty, it will be given a default value of `00:00`.
 
 Example of usage:
 
 ````
-add deadline This is deadline task 1 | 24 March 2023
+add deadline This is deadline task 1 | 2023-03-01 18:00
 ````
 
 Expected outcome:
 
 - Adds a task with the following information to `Luke`.
   - `TASK_DESCRIPTION`: `This is deadline task 1`
-  - `TASK_DEADLINE`: `24 March 2023`
+  - `TASK_DEADLINE_DATE`: `2023-03-01`
+  - `TASK_DEADLINE_TIME`: `18:00`
 - A confirmation by `Luke` that the task have been added.
 
 Description of the outcome.
@@ -113,25 +119,36 @@ ____________________________________________________________
 Format:
 
 ````
-add event TASK_DESCRIPTION | TASK_START | TASK_END
+add event TASK_DESCRIPTION | TASK_START_DATE TASK_START_TIME | TASK_END_DATE TASK_END_TIME
 ````
 
 - **Compulsory:** `TASK_DESCRIPTION` corresponds to the description of the task.
-- **Compulsory:** `TASK_START` corresponds to the date/ time when the task begins.
-- **Compulsory:** `TASK_END` corresponds to the date/ time when the task ends.
+- **Compulsory:** `TASK_START_DATE` corresponds to the date the event starts.
+  - **Important** The format for `TASK_START_DATE` is `YYYY-MM-DD`.
+- `TASK_START_TIME` corresponds to the time the event starts.
+  - **Important** The format for `TASK_START_TIME` is `HH:MM` where the time is in
+    24 Hour clock format.
+- **Compulsory:** `TASK_END_DATE` corresponds to the date the event ends.
+  - **Important** The format for `TASK_END_DATE` is `YYYY-MM-DD`.
+- `TASK_END_TIME` corresponds to the time the event ends.
+  - **Important** The format for `TASK_END_TIME` is `HH:MM` where the time is in
+    24 Hour clock format.
+- If `TASK_START_TIME` or `TASK_END_TIME` is left empty, it will be given a default value of `00:00`.
 
 Example of usage:
 
 ````
-add event This is event task 1 | 24 March 2023 12pm | 24 March 2023 6pm
+add event This is event task 1 | 2023-03-01 18:00 | 2023-03-01 22:00
 ````
 
 Expected outcome:
 
 - Adds a task with the following information to `Luke`.
     - `TASK_DESCRIPTION`: `This is deadline task 1`
-    - `TASK_START`: `24 March 2023 12pm`
-    - `TASK_END`: `24 March 2023 6pm`
+    - `TASK_START_DATE`: `2023-03-01`
+    - `TASK_START_TIME`: `18:00`
+    - `TASK_END_DATE`: `2023-03-01`
+    - `TASK_END_TIME`: `22:00`
 - A confirmation by `Luke` that the task have been added.
 
 Description of the outcome.
