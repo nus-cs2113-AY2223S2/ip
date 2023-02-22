@@ -7,6 +7,7 @@ import grandduke.command.Parser;
 import grandduke.exception.GrandException;
 import grandduke.exception.OutOfBoundsException;
 import grandduke.exception.delete.DeleteFormatException;
+import grandduke.exception.find.FindEmptyDescException;
 import grandduke.exception.mark.MarkFormatException;
 import grandduke.exception.mark.MarkMissingDescriptionException;
 
@@ -68,6 +69,35 @@ public abstract class TaskList {
         Io.printOutput("  " + tasks.get(taskNum).getTaskPrint());
         tasks.remove(taskNum);
         Io.printOutput("Now you have " + tasks.size() + " tasks in the list.");
+    }
+
+    /**
+     * Finds tasks in the task list that matches the keyword specified by the user
+     * 
+     * @param input the input by the user that specifies the keyword
+     */
+    public static void findTasks(String input) throws FindEmptyDescException {
+        if (input.equals(Io.EMPTY_COMMAND)) {
+            throw new FindEmptyDescException();
+        }
+
+        String lowerCaseInput = input.toLowerCase();
+        boolean isFound = false;
+
+        for (int i = 0; i < tasks.size(); i++) {
+            if (tasks.get(i).getTaskDesc().toLowerCase().contains(lowerCaseInput)) {
+                if (!isFound) {
+                    Io.printOutput("Here are the matching tasks in your list:");
+                }
+
+                Io.printOutput(Integer.toString(i + 1) + ". " + tasks.get(i).getTaskPrint());
+                isFound = true;
+            }
+        }
+
+        if (!isFound) {
+            Io.printOutput("No matching tasks found!");
+        }
     }
 
     /**
