@@ -1,6 +1,5 @@
 package duke.exceptions;
 
-import duke.tasks.Task;
 import duke.tasks.TaskEnum;
 
 public class InvalidTaskFormatException extends Exception {
@@ -11,9 +10,6 @@ public class InvalidTaskFormatException extends Exception {
     private static final String FORMAT_EVENT = "Event - event <task details> /from <date details> /to <date details>\n";
     private final TaskEnum id;
 
-    public InvalidTaskFormatException() {
-        this.id = TaskEnum.UNDEFINED;
-    }
     public InvalidTaskFormatException(TaskEnum t) {
         this.id = t;
     }

@@ -28,7 +28,6 @@ public class Parser {
     private static final String COMMAND_EXIT = "bye";
     private static final String COMMAND_LIST = "list";
     private static final String COMMAND_MARK = "mark";
-    private static final String COMMAND_SAVE = "save";
     private static final String COMMAND_TODO = "todo";
     private static final String COMMAND_UNMARK = "unmark";
     private static final String KEYWORD_BY = "/by";
