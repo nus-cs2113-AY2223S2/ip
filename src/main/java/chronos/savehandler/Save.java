@@ -34,17 +34,17 @@ public class Save {
     }
 
     public Task bucketConverter() {
-        if (taskType == "[T]"){
+        if (taskType.equals("[T]")){
            return convertToTodo();
         }
-        else if (taskType == "[E]"){
+        else if (taskType.equals("[E]")){
             return convertToEvent();
         }
-        else if (taskType == "[D]"){
+        else if (taskType.equals("[D]")){
            return convertToDeadline();
         }
         else {
-            throw new RuntimeException();
+            throw new RuntimeException("Unknown Task Type");
         }
     }
 
