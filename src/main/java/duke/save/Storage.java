@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class Storage {
 
@@ -60,7 +61,7 @@ public class Storage {
                         newTodo.setDone(true);
                     }
                 } else if (array[0].equals("[D]")) {
-                    Deadline newDeadline = new Deadline(array[2], array[3]);
+                    Deadline newDeadline = new Deadline(array[2], LocalDate.parse(array[3]));
                     newTask = newDeadline;
                     if (array[1].equals("X")) {
                         newDeadline.setDone(true);
