@@ -1,5 +1,4 @@
-T|false|buy food
 T|true|this
 T|true|that
-E|false| this |e |t
+E|true| this |e |t
 D|false| d1 |gbesadf

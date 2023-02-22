@@ -1,3 +1,0 @@
-D|false| d1 |b
-E|false| e1 |t |f
-E|false| yongrui attend CS2113 lecture friday 17 feb |4pm |6pm
