@@ -63,6 +63,23 @@ public class TaskList {
 
     }
 
+    public String printListByKeyWord(String keyword) {
+        String printTaskListResult = EMPTY_STRING;
+        for (int taskIndex = 0; taskIndex < taskList.size(); taskIndex++) {
+            String currentTaskDescription = taskList.get(taskIndex).getDescription();
+            if (currentTaskDescription.contains(keyword)) {
+                int taskNumber = taskIndex + INDEX_OFFSET;
+                printTaskListResult += ("\n" + taskNumber + ". " + taskList.get(taskIndex).toString());
+            }
+        }
+        try {
+            ExceptionManager.checkEmptyString(printTaskListResult);
+            return printTaskListResult;
+        } catch (EmptyStringException e) {
+            return Messages.MESSAGE_NO_TASK_FOUND;
+        }
+    }
+
     public void addTask(Task t) {
         taskList.add(t);
     }
