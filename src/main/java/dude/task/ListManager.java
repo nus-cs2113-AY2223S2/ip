@@ -103,4 +103,14 @@ public class ListManager {
             throw new InvalidDeleteException();
         }
     }
+
+    public static void findTask(String input){
+        System.out.println(Io.LINE + "\n" + "Here are the matching tasks in your list:" + "\n");
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getDescription().contains(input)) {
+                System.out.println((i + 1) + "." + list.get(i));
+            }
+        }
+        System.out.println(Io.LINE);
+    }
 }
