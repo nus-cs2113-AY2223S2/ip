@@ -17,7 +17,8 @@ public class HelpCommand extends Command {
             + "5. mark <task number> - Marks a task as done.\n"
             + "6. unmark <task number> - Marks a task as not done.\n"
             + "7. help - Shows program usage instructions.\n"
-            + "8. bye - Exits the program.\n"
+            + "8. find <keyword> - Finds tasks with the keyword.\n"
+            + "9. bye - Exits the program.\n"
             + LINEBREAK;
 
     @Override
