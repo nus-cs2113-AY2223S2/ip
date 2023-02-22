@@ -38,5 +38,10 @@ public class MarkAndDelCommand extends Command {
             tasks.deleteTask(idx);
             break;
         }
+        try {
+            Storage.update();
+        } catch (IOException e) {
+            ui.printErrorForIO();
+        }
     }
 }
