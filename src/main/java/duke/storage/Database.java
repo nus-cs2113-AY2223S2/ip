@@ -78,7 +78,7 @@ public class Database {
             break;
         default:
         }
-        updateMark(components[1], task);
+        updateMark(mark, task);
         return task;
     }
 

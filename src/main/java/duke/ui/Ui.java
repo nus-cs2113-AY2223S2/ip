@@ -45,6 +45,14 @@ public class Ui {
         System.out.println(taskList.getTask(index).toString());
     }
 
+    public static void printOpeningListMessage() {
+        System.out.println("Here are the tasks in your list:");
+    }
+
+    public static void printFindMessage(){
+        System.out.println("Here are the matching tasks in your list:");
+    }
+
     public static void printInvalidMessage() {
         System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
     }
