@@ -125,12 +125,9 @@ public class Ui {
     public void printTaskList(ArrayList<Task> tasks, String firstLine) {
         printLine();
         printSignature();
-        int serialNumber = 1;
         System.out.println(firstLine);
         for (Task task : tasks) {
-            System.out.print(serialNumber + ". ");
             task.printTaskName();
-            serialNumber += 1;
         }
         printLine();
     }

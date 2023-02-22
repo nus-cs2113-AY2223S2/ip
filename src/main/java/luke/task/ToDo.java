@@ -12,6 +12,7 @@ public class ToDo extends Task {
     /** Prints out the label followed by the checkBox followed by the name of the task */
     @Override
     public void printTaskName() {
+        System.out.print(this.serialNumber + ". ");
         this.label.printLabel();
         this.checkBox.printCheckBox();
         System.out.println(this.getTaskName());

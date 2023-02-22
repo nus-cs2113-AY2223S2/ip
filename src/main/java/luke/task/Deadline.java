@@ -19,6 +19,8 @@ public class Deadline extends Task {
     @Override
     public void printTaskName() {
         LocalDateTime end = LocalDateTime.parse(this.endDate);
+
+        System.out.print(this.serialNumber + ". ");
         this.label.printLabel();
         this.checkBox.printCheckBox();
         System.out.print(this.getTaskName());

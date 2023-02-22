@@ -230,6 +230,7 @@ public class TaskList implements StringManipulation {
         int serialNumber = 1;
         for (Map.Entry<Integer, Task> entry : tasks.entrySet()) {
             Task task = entry.getValue();
+            task.updateSerialNumber(serialNumber);
             serialNumbers.put(serialNumber, task.getTaskID());
             serialNumber += 1;
         }

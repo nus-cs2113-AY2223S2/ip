@@ -24,12 +24,16 @@ public class Task {
     /** The unique ID assgied to this task */
     private int taskID;
 
+    /** The serial number of the task. E.g if the task is the 3rd to be printed then its serial number is 3 */
+    protected int serialNumber;
+
     protected Task(String name, int ID) {
         this.taskName = name;
         this.taskID = ID;
         this.checkBox = new CheckBox();
         this.label = new Label();
         this.isMarked = false;
+        this.serialNumber = ID;
     }
 
     /**
@@ -49,6 +53,14 @@ public class Task {
     }
 
     /**
+     * Update the serial number of the task.
+     * @param newSerialNumber The new serial number.
+     */
+    public void updateSerialNumber(int newSerialNumber) {
+        this.serialNumber = newSerialNumber;
+    }
+
+    /**
      * Returns the label of the task.
      * @return label of the task.
      */
@@ -58,7 +70,7 @@ public class Task {
 
     /** Prints out the checkBox followed by the name of the task */
     public void printTaskName() {
-        //label.printLabel();
+        System.out.print(this.serialNumber + ". ");
         checkBox.printCheckBox();
         System.out.println(taskName);
     }

@@ -22,6 +22,7 @@ public class Event extends Task {
         LocalDateTime start = LocalDateTime.parse(this.startDate);
         LocalDateTime end = LocalDateTime.parse(this.endDate);
 
+        System.out.print(this.serialNumber + ". ");
         this.label.printLabel();
         this.checkBox.printCheckBox();
         System.out.print(this.getTaskName());
