@@ -213,3 +213,20 @@ find workshop
         2. [E][ ] ESP32 workshop (from: 23/2/2023 4pm to: 23/2/2023 6pm)
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ```
+
+### `bye` - Bye keyword
+
+Exits the program and saves all items in the tasklist to a data file
+
+Example of usage:
+`bye`
+
+Expected outcome:
+
+```
+find workshop
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Bye. Hope to see you again soon!
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
+
