@@ -18,10 +18,14 @@ import java.util.Scanner;
 import static duke.Duke.allTasks;
 
 public class Storage {
-    public static final String FILE_PATH = "/Users/linshang/Documents/cs2113/ip/save.txt";
     private static final char TXT_TODO_WORD = 'T';
     private static final char TXT_DEADLINE_WORD = 'D';
     private static final char TXT_EVENT_WORD = 'E';
+    protected static String filePath;
+
+    public Storage(String filePath) {
+        this.filePath = filePath;
+    }
 
     private static Task newTask(String text) throws InvalidSaveFile {
         char type = text.charAt(0);
@@ -35,7 +39,7 @@ public class Storage {
         case TXT_DEADLINE_WORD:
             final String[] paramAndBy;
             try {
-                paramAndBy = Processor.deadline(param);
+                paramAndBy = Parser.deadline(param);
             } catch (InvalidDeadline e) {
                 throw new InvalidSaveFile();
             }
@@ -45,7 +49,7 @@ public class Storage {
         case TXT_EVENT_WORD:
             final String[] paramAndFromTo;
             try {
-                paramAndFromTo = Processor.event(param);
+                paramAndFromTo = Parser.event(param);
             } catch (InvalidEvent e) {
                 throw new InvalidSaveFile();
             }
@@ -72,27 +76,27 @@ public class Storage {
                 newArrayList.add(newTask(s.nextLine()));
                 counter++;
             } catch (InvalidSaveFile e) {
-                Output.printInvalidSaveFile(counter);
+                Ui.printInvalidSaveFile(counter);
             }
         }
         return newArrayList;
     }
 
-    public static ArrayList<Task> initDuke() throws IOException {
+    public static ArrayList<Task> load() throws IOException {
         ArrayList<Task> newAllTasks = new ArrayList<>();
-        File save = new File(FILE_PATH);
+        File save = new File(filePath);
         try {
             newAllTasks = readFileContents(save);
             return newAllTasks;
         } catch (FileNotFoundException e) {
-            Output.printErrorFileNotFound();
+            Ui.printErrorFileNotFound();
             save.createNewFile();
             return newAllTasks;
         }
     }
 
     public static void updateDuke() throws IOException {
-        FileWriter overwrite = new FileWriter(FILE_PATH);
+        FileWriter overwrite = new FileWriter(filePath);
         for (Task task : allTasks) {
             String desc = task.getDescription();
             String type = task.getType();

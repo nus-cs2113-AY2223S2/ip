@@ -2,46 +2,55 @@ package duke;
 
 import duke.exception.EmptyTaskException;
 import duke.exception.IllegalCommandException;
-import duke.exception.InvalidDeadline;
-import duke.exception.InvalidEvent;
-import duke.task.Deadline;
-import duke.task.Event;
-import duke.task.Task;
-import duke.task.ToDo;
 
-import java.util.ArrayList;
 import java.io.IOException;
-import java.util.Scanner;
 
 
+public class Duke {
+    public static final String FILE_PATH = "/Users/linshang/Documents/cs2113/ip/save.txt";
+    private Storage storage;
+    private TaskList tasks;
+    private Ui ui;
 
-    public static void main(String[] args) {
-        initTasks();
-        Output.printWelcomeMessage();
+    public Duke(String filePath) {
+        ui = new Ui();
+        Ui.printWelcomeMessage();
+        storage = new Storage(filePath);
+        try {
+            tasks = new TaskList(storage.load());
+        } catch (IOException e) {
+            Ui.printErrorForIO();
+        }
+    }
+
+    public void run() {
         while (true) {
-            String userCommand = in.nextLine();
-            final String[] commandAndParam = Processor.command(userCommand);
+            String fullCommand = ui.readCommand();
+            final String[] commandAndParam = Parser.command(fullCommand);
             String command = commandAndParam[0];
             String param = commandAndParam[1];
             try {
-                executeCommand(command, param);
+                tasks.executeCommand(command, param);
                 Storage.updateDuke();
             } catch (IllegalCommandException e) {
-                Output.printInvalidCommand();
+                ui.printInvalidCommand();
             } catch (EmptyTaskException e) {
-                Output.printEmptyTask();
+                ui.printEmptyTask();
             } catch (IOException e) {
-                Output.printErrorForIO();
+                ui.printErrorForIO();
             } catch (NumberFormatException e) {
-                Output.printErrorForIdx();
+                ui.printErrorForIdx();
             }
         }
     }
 
 
 
+    // array list of all tasks
 
 
+    public static void main(String[] args) {
+        new Duke(FILE_PATH).run();
     }
 
 
