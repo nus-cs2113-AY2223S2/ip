@@ -6,32 +6,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- *
  * Contains the methods that change the tasks in the task list
  */
 public class TaskList {
     public static ArrayList<Task> tasks = Duke.tasks;
 
     /**
-     * Deletes a specific task from the list
-     * @param command Task number to delete from the list
-     */
-    public static void deleteTask(String command) {
-        try {
-            int val = Integer.parseInt(command.substring(7));
-            System.out.println("Noted. I've removed this task:");
-            Task task = tasks.get(val - 1);
-            System.out.print(val);
-            task.printTask();
-            tasks.remove(val - 1);
-        } catch (NumberFormatException e) {
-            System.out.println("ERROR The task number is invalid!");
-        }
-
-    }
-
-    /**
-     *  Prints a list of tasks that have a name that includes a user-specified keyword
+     * Prints a list of tasks that have a name that includes a user-specified keyword
+     *
      * @param command user input that includes keyword to search for that are in the name of currents tasks
      */
 
@@ -61,6 +43,7 @@ public class TaskList {
 
     /**
      * Creates a todo task of name determined by user input
+     *
      * @param command user input that contains the name of task to create
      */
     public static void createTodo(String command) {
@@ -74,6 +57,7 @@ public class TaskList {
 
     /**
      * Creates an event task of name, start time and end time determined by user-input
+     *
      * @param command user input that contains name, start and end time of event task
      */
     public static void createEvent(String command) {
@@ -92,6 +76,7 @@ public class TaskList {
 
     /**
      * Creates a deadline task of name and end time determined by user-input
+     *
      * @param command user input that contains task name and end time
      */
     public static void createDeadline(String command) {
@@ -108,41 +93,36 @@ public class TaskList {
 
     /**
      * Changes the completed status of task to not completed
-     * @param command name of task to change completed status of
+     *
+     * @param command       name of task to change completed status of
      * @param numberOfTasks number of tasks in the list
      */
-    public static void unmarkTask(String command, int numberOfTasks) {
+    public static void numericTaskAction(String command, int numberOfTasks) {
         String[] result = command.split(" ");
+
         int taskNum = Integer.parseInt(result[1]);
         if (taskNum > numberOfTasks || taskNum <= 0) {
             System.out.println("Error! No such task exists!");
         } else {
-            Task target = tasks.get(taskNum - 1);
-            target.markAsNotDone();
-            System.out.println("OK, I've marked this task as not done yet:");
-            System.out.println(target.getStatusIcon() + "   " + target.taskName);
+            switch (result[0]) {
+            case "mark":
+                numericMethods.markTask(tasks, taskNum);
+                break;
+
+            case "unmark":
+                numericMethods.unmarkTask(tasks, taskNum);
+                break;
+
+            case "delete":
+                numericMethods.deleteTask(tasks, taskNum);
+            }
+
         }
-    }
-    /**
-     * Changes the completed status of task to completed
-     * @param command name of task to change completed status of
-     * @param numberOfTasks number of tasks in the list
-     */
-    public static void markTask(String command, int numberOfTasks) {
-        String[] result = command.split(" ");
-        int taskNum = Integer.parseInt(result[1]);
-        if (taskNum > numberOfTasks || taskNum <= 0) {
-            System.out.println("Error! No such task exists!");
-        } else {
-            Task target = tasks.get(taskNum - 1);
-            target.markAsDone();
-            System.out.println("Nice! I've marked this task as done:");
-            System.out.println(target.getStatusIcon() + "   " + target.taskName);
-        }
+
     }
 
+
     /**
-     *
      * Prints all the details of all tasks in the list
      */
     public static void printTaskList() {
@@ -158,6 +138,7 @@ public class TaskList {
 
     /**
      * Reads the input from user
+     *
      * @return user input
      */
     public static String readTask() {
@@ -170,6 +151,7 @@ public class TaskList {
 
     /**
      * Prompts the user for additional commands
+     *
      * @return user input
      */
     public static String checkForAdditionalTask() {

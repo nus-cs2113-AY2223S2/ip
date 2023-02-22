@@ -29,24 +29,11 @@ public class Parser {
             break;
 
         case "unmark":
-            boolean isValidUnmarkInput = checkUnmarkInput(command, tasks.size());
-            if (isValidUnmarkInput) {
-                TaskList.unmarkTask(command, tasks.size());
-            }
-            break;
-
-
         case "mark":
-            boolean isValidMarkInput = checkMarkInput(command, tasks.size());
-            if (isValidMarkInput) {
-                TaskList.markTask(command, tasks.size());
-            }
-            break;
-
         case "delete":
-            boolean isValidDeleteInput = checkDeleteInput(command, tasks.size());
+            boolean isValidDeleteInput = checkNumericInput(command, tasks.size());
             if (isValidDeleteInput) {
-                TaskList.deleteTask(command);
+                TaskList.numericTaskAction(command,tasks.size());
             }
             break;
 

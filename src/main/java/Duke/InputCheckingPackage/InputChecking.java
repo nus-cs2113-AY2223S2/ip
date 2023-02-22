@@ -25,15 +25,12 @@ public class InputChecking {
         }
 
         String keyword = command.substring(0, 8);
-        String deadlineName = command.substring(0, command.indexOf("/"));
-        String[] deadlineNameWords = deadlineName.split(" ");
-        int nameLength = deadlineNameWords.length;
+
 
         if (!keyword.equals("deadline")) {
             System.out.println("The keyword 'deadline' should be the first word");
             return false;
         }
-
 
         char slash = words[words.length - 1].charAt(0);
         int compareChars = Character.compare(slash, '/');
@@ -50,9 +47,8 @@ public class InputChecking {
         }
 
         return true;
-
-
     }
+
     /**
      * Check if Todo input format is valid
      * @param command input from user
@@ -77,8 +73,8 @@ public class InputChecking {
 
         return true;
 
-
     }
+
     /**
      * Check if Event input format is valid
      * @param command input from user
@@ -88,7 +84,6 @@ public class InputChecking {
         command = command.toLowerCase();
         String keyword = command.substring(0, 5);
 
-        int numberOfErrors = 0;
         if (!keyword.equals("event")) {
             System.out.println("The keyword 'event' should be the first word");
             return false;
@@ -111,37 +106,37 @@ public class InputChecking {
             return false;
         }
 
-
         return true;
-
-
     }
 
     /**
-     * Check if delete input format is valid
+     * Check if numeric inputs (includes mark,unmark,delete methods)format is valid
      * @param command user input
      * @param numberOfTasks number of tasks in the task list
-     * @return validity of delete input format
+     * @return validity of numeric input format
      */
-    public static boolean checkDeleteInput(String command, int numberOfTasks){
+    public static boolean checkNumericInput(String command, int numberOfTasks){
         command = command.toLowerCase();
         String[] words = command.split(" ");
         int numberOfErrors = 0;
-        if (words.length > 2) {
-            System.out.println("The delete function is used in the following format:");
-            System.out.println("Delete 'task number'");
+        if (words.length != 2) {
+            System.out.println("The mark/unmark/delete function is used in the following format:");
+            System.out.println("mark/unmark/delete [task_number]");
             numberOfErrors++;
         }
+        try {
+            int taskNumber = Integer.parseInt(words[1]);
 
-        if (!Objects.equals(words[0], "delete")) {
-            System.out.println("The keyword 'delete' should be the first word");
-            numberOfErrors++;
-        }
-        int taskNumber = Integer.parseInt(words[1]);
-
-        if (taskNumber > numberOfTasks || taskNumber < 1) {
-            System.out.println("The task number is invalid!");
-            numberOfErrors++;
+            if (taskNumber > numberOfTasks || taskNumber < 1) {
+                System.out.println("The task number is invalid!");
+                numberOfErrors++;
+            }
+        }catch (NumberFormatException e){
+            System.out.println("2nd word is not a number!");
+            return false;
+        }catch (ArrayIndexOutOfBoundsException e){
+            System.out.println("task number is missing!");
+            return false;
         }
 
         if (numberOfErrors > 0) {
@@ -174,78 +169,8 @@ public class InputChecking {
         return true;
     }
 
-    /**
-     * Check format validity of user command that sets the completion status of a task to not completed
-     * @param command user input
-     * @param numberOfTasks number of tasks in the task list
-     * @return validity of user input format
-     */
-    public static boolean checkUnmarkInput(String command, int numberOfTasks) {
-        command = command.toLowerCase();
-        String[] words = command.split(" ");
-
-        int numberOfErrors = 0;
-        if (words.length > 2) {
-            System.out.println("The unmark function is used in the following format:");
-            System.out.println("Unmark 'task number'");
-            numberOfErrors++;
-        }
-        if (!Objects.equals(words[0], "unmark")) {
-            System.out.println("The keyword 'unmark' should be the first word");
-            numberOfErrors++;
-        }
-
-        int taskNumber = Integer.parseInt(words[1]);
-
-        if (taskNumber > numberOfTasks || taskNumber < 1) {
-            System.out.println("The task number is invalid!");
-            numberOfErrors++;
-        }
-
-        if (numberOfErrors > 0) {
-            System.out.println("Please input again in the correct format!");
-            return false;
-        }
-        return true;
 
 
-    }
-    /**
-     * Check format validity of user command that sets the completion status of a task to completed
-     * @param command user input
-     * @param numberOfTasks number of tasks in the task list
-     * @return validity of user input format
-     */
-    public static boolean checkMarkInput(String command, int numberOfTasks) {
-        command = command.toLowerCase();
-        String[] words = command.split(" ");
-
-        int numberOfErrors = 0;
-        if (words.length > 2) {
-            System.out.println("The mark function is used in the following format:");
-            System.out.println("mark 'task number'");
-            numberOfErrors++;
-        }
-        if (!Objects.equals(words[0], "mark")) {
-            System.out.println("The keyword 'mark' should be the first word");
-            numberOfErrors++;
-        }
-
-        int taskNumber = Integer.parseInt(words[1]);
-
-        if (taskNumber > numberOfTasks || taskNumber < 1) {
-            System.out.println("The task number is invalid!");
-            numberOfErrors++;
-        }
-
-        if (numberOfErrors > 0) {
-            System.out.println("Please input again in the correct format!");
-            return false;
-        }
-        return true;
-
-
-    }
 
     /**
      * Prints to user interface that there is an error where there are multiple keywords detected in the user input
