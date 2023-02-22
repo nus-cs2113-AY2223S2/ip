@@ -66,9 +66,7 @@ public class Duke {
     /***
      * Fixed directory where txt file will be saved.
      */
-    public static final File FILEPATH = Paths.get(HOME, "IdeaProjects", "ip", "src",
-            "main", "data", "duke-inputs.txt").toFile();
-
+    public static final File FILEPATH = Paths.get(HOME,"ip-data", "duke-inputs.txt").toFile();
     /***
      * The fixed number of spaces when processing commands involving "find" in
      * the input.

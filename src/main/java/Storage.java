@@ -1,4 +1,8 @@
-import java.io.*;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.File;
+import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -63,7 +67,7 @@ public class Storage {
             try {
                 Files.createDirectory(path);
             } catch (IOException e) {
-                System.out.println("Error occurred!\n");
+                System.out.println(e);
             }
         }
     }
@@ -74,7 +78,7 @@ public class Storage {
      * @return The path of the textFile.
      */
     static Path checkIfFileExists() {
-        Path textFile = Paths.get(Duke.HOME, "IdeaProjects", "ip", "src", "main", "data", "duke-inputs.txt");
+        Path textFile = Paths.get(Duke.HOME, "ip-data", "duke-inputs.txt");
         try {
             Files.createFile(textFile);
         } catch (IOException e) {
@@ -88,7 +92,7 @@ public class Storage {
      * @return The data file.
      */
     static File createFile() {
-        Path path = Paths.get(Duke.HOME, "IdeaProjects", "ip", "src", "main", "data");
+        Path path = Paths.get(Duke.HOME, "ip-data");
         checkIfFolderExists(path);
         Path textFile = checkIfFileExists();
 
