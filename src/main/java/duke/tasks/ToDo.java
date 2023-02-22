@@ -1,6 +1,6 @@
 package duke.tasks;
 
-public class ToDo extends Task{
+public class ToDo extends Task {
 
     /**
      * Constructor for ToDo.
@@ -13,7 +13,7 @@ public class ToDo extends Task{
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return checkBoxOutput() + this.taskName;
     }
 }

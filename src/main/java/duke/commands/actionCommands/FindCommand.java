@@ -16,7 +16,7 @@ public class FindCommand extends Command {
     @Override
     public void handleCommand(String line, TaskList taskList, Storage storage) {
         try {
-            if (getArgumentNumber(line) != 2){
+            if (getArgumentNumber(line) != 2) {
                 throw new InvalidArgsException();
             }
             String word = line.split(" ")[1];

@@ -31,7 +31,7 @@ public class Task {
      *
      * @return The current "done" status of the task
      */
-    public boolean getIsDone(){
+    public boolean getIsDone() {
         return isDone;
     }
 
@@ -40,8 +40,8 @@ public class Task {
      *
      * @return Current index count of a
      */
-    public static int getIndexCount(){
-       return indexCount;
+    public static int getIndexCount() {
+        return indexCount;
     }
 
     /**
@@ -51,11 +51,12 @@ public class Task {
         indexCount--;
     }
 
-    /*
+    /**
      * Getters for Task type
+     *
      * @return a String representing the type of the task
      */
-    public String getType(){
+    public String getType() {
         return type;
     }
 
@@ -64,7 +65,7 @@ public class Task {
      *
      * @return Task description.
      */
-    public String getTaskName(){
+    public String getTaskName() {
         return taskName;
     }
 
@@ -73,21 +74,21 @@ public class Task {
      *
      * @return a string with a checkmark if task is done, and a blank space if task is not done.
      */
-    public String checkBoxOutput(){
+    public String checkBoxOutput() {
         String checkMark = isDone ? " [X] " : " [ ] ";
         String taskType = type;
 
-        return  taskType + checkMark;
+        return taskType + checkMark;
     }
 
     /**
      * Outputs a message when task is added
      */
-    public void printAdded(){
+    public void printAdded() {
         int taskCount = indexCount;
         String word1;
         String word2;
-        if (taskCount == 1){
+        if (taskCount == 1) {
             word1 = "is ";
             word2 = " task";
         } else {
@@ -101,20 +102,7 @@ public class Task {
     /**
      * Outputs a message when task is deleted
      */
-    public void printDeleted(){
-        int taskCount = indexCount;
-        String word1;
-        String word2;
-        if (taskCount == 1){
-            word1 = "is ";
-            word2 = " task";
-        } else {
-            word1 = "are ";
-            word2 = " tasks";
-        }
-
+    public void printDeleted() {
         System.out.println("Got it. I've deleted this task:\n " + this);
-
-
     }
 }

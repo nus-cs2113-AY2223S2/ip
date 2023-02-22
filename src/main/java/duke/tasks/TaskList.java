@@ -11,13 +11,13 @@ public class TaskList extends ArrayList<Task> {
      *
      * @param taskToAdd Task to be added.
      */
-    public void addTask(Task taskToAdd){
+    public void addTask(Task taskToAdd) {
         this.add(taskToAdd);
         taskToAdd.printAdded();
         System.out.println(LINEBREAK);
     }
 
-    public void loadTask(int i, Task taskToAdd){
+    public void loadTask(int i, Task taskToAdd) {
         this.add(taskToAdd);
     }
 
@@ -26,7 +26,7 @@ public class TaskList extends ArrayList<Task> {
      *
      * @param indexToDelete The index of the Task to be deleted.
      */
-    public void deleteTask(int indexToDelete){
+    public void deleteTask(int indexToDelete) {
         Task taskToDelete = this.get(indexToDelete);
         this.remove(indexToDelete);
         Task.decrementIndexCount();
