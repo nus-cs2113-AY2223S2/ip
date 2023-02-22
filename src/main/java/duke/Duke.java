@@ -6,6 +6,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+import duke.ui.DukeUi;
+
 public class Duke {
     private static boolean hasEnteredBye = false;
     
@@ -162,12 +164,13 @@ public class Duke {
             return;
         }
         
-        Scanner scanner = new Scanner(System.in);
+        DukeUi ui = new DukeUi();
+
         while (!hasEnteredBye) {
-            String line = scanner.nextLine();
+            String line = ui.getNextLine();
             parseUserInput(line);
             printLine();
         }
-        scanner.close();
+        ui.closeScanner();
     }
 }
