@@ -38,8 +38,12 @@ public class Ui {
      *
      * @return the string of text entered by the user
      */
-    public String getUserCommand() { // todo
-        return in.nextLine();
+    public String getUserCommand() {
+        String input = in.nextLine();
+        while (input.trim().isEmpty()) {
+            input = in.nextLine();
+        }
+        return input;
     }
 
     /** Generates and prints the output to be shown when the program faces an error on start up */
