@@ -13,14 +13,28 @@ public abstract class Storage {
     private static final String FILE_DIRECTORY = "./store";
     private static final String FILE_NAME = "data.txt";
 
-    public static String getFilePath() {
-        return FILE_DIRECTORY + "/" + FILE_NAME;
-    }
-
+    /**
+     * get the directory of the data file
+     * 
+     * @return the directory of the data file
+     */
     public static String getFileDirectory() {
         return FILE_DIRECTORY;
     }
 
+    /**
+     * get the file path of the data file
+     * 
+     * @return the file path of the data file
+     */
+    public static String getFilePath() {
+        return getFileDirectory() + "/" + FILE_NAME;
+    }
+
+    /**
+     * Ensure that the appropriate directory and file exists. If not, create them,
+     * then load the data
+     */
     public static void loadData() {
         try {
             // check if folder exists first
@@ -48,6 +62,12 @@ public abstract class Storage {
         }
     }
 
+    /**
+     * Load the data from the data file into the task list
+     * 
+     * @param file the data file
+     * @throws FileNotFoundException if the data file is not found
+     */
     public static void loadList(File file) throws FileNotFoundException {
         Scanner sc = new Scanner(file);
 
@@ -69,6 +89,10 @@ public abstract class Storage {
         sc.close();
     }
 
+    /**
+     * Ensure that the appropriate directory and file exists. If not, create them,
+     * then save the data
+     */
     public static void saveData() {
         try {
             // check if folder exists first
@@ -92,6 +116,12 @@ public abstract class Storage {
         }
     }
 
+    /**
+     * Save the data from the task list into the data file
+     * 
+     * @param file the data file
+     * @throws IOException if there is an error writing to the data file
+     */
     public static void saveList(File file) throws IOException {
         FileWriter fw = new FileWriter(file);
 
