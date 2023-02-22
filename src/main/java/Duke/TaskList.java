@@ -71,7 +71,7 @@ public class TaskList {
         newEvent.setEndTime(endTime);
         newEvent.setAsEvent();
         tasks.add(newEvent);
-        newEvent.newEventResponse();
+        newEvent.newEventAction();
     }
 
     /**
@@ -88,7 +88,7 @@ public class TaskList {
         newDeadline.setEndTime(dueDate);
         newDeadline.setAsDeadline();
         tasks.add(newDeadline);
-        newDeadline.newDeadlineResponse();
+        newDeadline.newDeadlineAction();
     }
 
     /**

@@ -17,7 +17,7 @@ public class Deadline extends Task {
         super(description);
     }
 
-    public void newDeadlineResponse() {
+    public void newDeadlineAction() {
         System.out.println("Got it. I've added \"" + this.taskName +"\"");
         System.out.println("with a deadline of: " + this.getEndTime());
 

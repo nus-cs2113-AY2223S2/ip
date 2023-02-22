@@ -32,7 +32,7 @@ public final class Event extends Deadline {
      * Prints to user interface a message that tells the user a new event has successfully been created
      * and shows the task name , start and end time
      */
-    public void newEventResponse() {
+    public void newEventAction() {
         System.out.println("Got it. I've added \"" + this.taskName +"\"");
         System.out.println("with a start time of: " + this.getStartTime());
         System.out.println("and an ending time of: " + this.getEndTime());
