@@ -2,19 +2,20 @@ package duke;
 
 import duke.exception.EmptyTaskException;
 import duke.exception.IllegalCommandException;
+import duke.exception.InvalidDeadline;
+import duke.exception.InvalidEvent;
 
 import java.io.IOException;
 
 
 public class Duke {
     public static final String FILE_PATH = "/Users/linshang/Documents/cs2113/ip/save.txt";
-    private Storage storage;
-    private TaskList tasks;
-    private Ui ui;
+    private static Storage storage;
+    private static TaskList tasks;
+    private static Ui ui;
 
     public Duke(String filePath) {
         ui = new Ui();
-        Ui.printWelcomeMessage();
         storage = new Storage(filePath);
         try {
             tasks = new TaskList(storage.load());
@@ -24,37 +25,33 @@ public class Duke {
     }
 
     public void run() {
-        while (true) {
-            String fullCommand = ui.readCommand();
-            final String[] commandAndParam = Parser.command(fullCommand);
-            String command = commandAndParam[0];
-            String param = commandAndParam[1];
+        ui.printWelcomeMessage();
+        boolean isExit = false;
+        while (!isExit) {
             try {
-                tasks.executeCommand(command, param);
-                Storage.updateDuke();
+                String fullCommand = ui.readCommand();
                 ui.showLine();
+                Command c = Parser.parseCommand(fullCommand);
+                c.execute(tasks, ui, storage);
+                isExit = c.getExit();
             } catch (IllegalCommandException e) {
                 ui.printInvalidCommand();
             } catch (EmptyTaskException e) {
                 ui.printEmptyTask();
-            } catch (IOException e) {
-                ui.printErrorForIO();
             } catch (NumberFormatException e) {
-                ui.printErrorForIdx();
+                ui.printErrorForIdx(tasks.getSize());
+            } catch (InvalidDeadline e) {
+                ui.printInvalidDeadline();
+            } catch (InvalidEvent e) {
+                ui.printInvalidEvent();
             } finally {
                 ui.showLine();
             }
         }
     }
 
-
-
-    // array list of all tasks
-
-
     public static void main(String[] args) {
         new Duke(FILE_PATH).run();
+        System.exit(0);
     }
-
-
 }
