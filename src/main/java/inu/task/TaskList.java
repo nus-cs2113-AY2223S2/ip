@@ -3,7 +3,6 @@ package inu.task;
 import inu.commons.Messages;
 import inu.exceptionhandling.EmptyStringException;
 import inu.exceptionhandling.ExceptionManager;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -12,6 +11,8 @@ public class TaskList {
     private final ArrayList<Task> taskList;
 
     private final String EMPTY_STRING = "";
+
+    private final String STRING_PERIOD = ". ";
 
     private final int INDEX_OFFSET = 1;
 
@@ -25,7 +26,8 @@ public class TaskList {
 
         for (int taskIndex = 0; taskIndex < taskList.size(); taskIndex++) {
             int taskNumber = taskIndex + INDEX_OFFSET;
-            printTaskListResult += ("\n" + taskNumber + ". " + taskList.get(taskIndex).toString());
+            String currentTaskDisplay = taskList.get(taskIndex).toString();
+            printTaskListResult += ("\n" + taskNumber + STRING_PERIOD + currentTaskDisplay);
         }
 
         return printTaskListResult;
@@ -33,26 +35,23 @@ public class TaskList {
     }
 
     public String printListByDate(LocalDate date) {
-
         String printTaskListResult = EMPTY_STRING;
-
         for (int taskIndex = 0; taskIndex < taskList.size(); taskIndex++) {
-
             Task currentTask = taskList.get(taskIndex);
-
             if (currentTask instanceof DeadLine) {
                 LocalDate byDate = ((DeadLine) currentTask).getBy().toLocalDate();
                 if (byDate.equals(date)) {
-                    printTaskListResult += ("\n" + taskList.get(taskIndex).toString());
+                    String currentTaskDisplay = currentTask.toString();
+                    printTaskListResult += ("\n" + currentTaskDisplay);
                 }
             } else if (currentTask instanceof Event) {
                 LocalDate fromDate = ((Event) currentTask).getFrom().toLocalDate();
                 LocalDate toDate = ((Event) currentTask).getTo().toLocalDate();
                 if (fromDate.equals(date) || date.isBefore(toDate) || toDate.equals(date)) {
-                    printTaskListResult += ("\n" + taskList.get(taskIndex).toString());
+                    String currentTaskDisplay = currentTask.toString();
+                    printTaskListResult += ("\n" + currentTaskDisplay);
                 }
             }
-
         }
         try {
             ExceptionManager.checkEmptyString(printTaskListResult);
@@ -69,7 +68,10 @@ public class TaskList {
             String currentTaskDescription = taskList.get(taskIndex).getDescription();
             if (currentTaskDescription.contains(keyword)) {
                 int taskNumber = taskIndex + INDEX_OFFSET;
-                printTaskListResult += ("\n" + taskNumber + ". " + taskList.get(taskIndex).toString());
+                String currentTaskDisplay = taskList.get(taskIndex).toString();
+                String STRING_FOUND_TASK_NUMBER = "Task number: ";
+                printTaskListResult += ("\n" + STRING_FOUND_TASK_NUMBER +  taskNumber + STRING_PERIOD
+                        + currentTaskDisplay);
             }
         }
         try {
