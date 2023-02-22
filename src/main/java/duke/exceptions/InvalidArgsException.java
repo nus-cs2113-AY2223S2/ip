@@ -10,6 +10,6 @@ public class InvalidArgsException extends Exception {
          *
          * @return Error message for incorrect arg number.
          */
-        return "The command has the wrong number of arguments!\n" + LINEBREAK;
+        return "Invalid Command. Please try again.\n" + LINEBREAK;
     }
 }

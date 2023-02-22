@@ -12,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Storage {
 
@@ -67,7 +68,7 @@ public class Storage {
                         newDeadline.setDone(true);
                     }
                 } else {
-                    Event newEvent = new Event(array[2], array[3], array[4]);
+                    Event newEvent = new Event(array[2], LocalDateTime.parse(array[3]), LocalDateTime.parse(array[4]));
                     newTask = newEvent;
                     if (array[1].equals("X")) {
                         newEvent.setDone(true);

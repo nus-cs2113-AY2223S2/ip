@@ -35,22 +35,19 @@ public class DeadlineCommand extends Command {
                 throw new InvalidTaskException();
             }
 
-            try {
-                deadline = LocalDate.parse(deadlineString);
-                ToDo newDeadline = new Deadline(description, deadline);
-                taskList.addTask(newDeadline);
-                storage.updateFile(taskList);
-            } catch (DateTimeParseException e) {
-                System.out.println("Invalid date format. Please try again.\n" + LINEBREAK);
-            }
-
-
-
+            deadline = LocalDate.parse(deadlineString);
+            ToDo newDeadline = new Deadline(description, deadline);
+            taskList.addTask(newDeadline);
+            storage.updateFile(taskList);
 
         } catch (InvalidTaskException e) {
             System.out.println(e.getMessage());
         } catch (IOException e) {
             System.out.println("Something went wrong!");
+        } catch (DateTimeParseException e) {
+            System.out.println("Invalid date format. Please try again.\n" + LINEBREAK);
+        } catch (StringIndexOutOfBoundsException e) {
+            System.out.println("Invalid Command. Please try again.\n" + LINEBREAK);
         }
     }
 }

@@ -20,16 +20,25 @@ public class Deadline extends ToDo {
     }
 
     /**
-     * Getter for deadline field.
+     * Formats the deadline to a more readable format.
      *
-     * @return the deadline of the task.
+     * @return Formatted deadline.
+     */
+    public String formatDeadline() {
+        return this.deadline.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
+    }
+
+    /**
+     * Returns the deadline of the task.
+     *
+     * @return Deadline of task.
      */
     public String getDeadline() {
-        return this.deadline.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
+        return this.deadline.toString();
     }
 
     @Override
     public String toString() {
-        return checkBoxOutput() + this.taskName + " (by: " + this.deadline + ")";
+        return checkBoxOutput() + this.taskName + " (by: " + this.formatDeadline() + ")";
     }
 }
