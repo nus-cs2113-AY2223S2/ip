@@ -12,14 +12,27 @@ public abstract class SaveData {
     private static final String DIRECTORY = "storage";
     private static final String FILEPATH = DIRECTORY + "/data.txt";
 
+    /**
+     * Returns the filepath of the saved data.
+     * 
+     * @return Filepath of the saved data.
+     */
     public static String getFilepath() {
         return FILEPATH;
     }
 
+    /**
+     * Returns the directory of the saved data.
+     * 
+     * @return Directory of the saved data.
+     */
     public static String getDirectory() {
         return DIRECTORY;
     }
 
+    /**
+     * Writes the current list to the saved datan file.
+     */
     public static void writeToFile() {
         try {
             FileWriter fw = new FileWriter(FILEPATH);
@@ -33,6 +46,10 @@ public abstract class SaveData {
         }
     }
 
+    /**
+     * Checks if the directory and file exists, if not, creates them.
+     * Loads the saved data into the current list.
+     */
     public static void loadSaved() {
         try {
             File fileDirectory = new File(getDirectory());
@@ -43,8 +60,8 @@ public abstract class SaveData {
             if (!txtFile.exists()) {
                 txtFile.createNewFile();
             }
-            File f = new File(FILEPATH); // create a File for the given file path
-            Scanner s = new Scanner(f); // create a Scanner using the File as the source
+            File f = new File(FILEPATH); 
+            Scanner s = new Scanner(f);
             int index = 0;
             while (s.hasNext()) {
                 String[] tmp = s.nextLine().split("=", 2);

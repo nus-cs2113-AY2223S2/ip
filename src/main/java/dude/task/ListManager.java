@@ -10,17 +10,34 @@ import dude.exception.InvalidUnmarkException;
 import java.util.ArrayList;
 
 public class ListManager {
+
     private static final ArrayList<Task> list = new ArrayList<>();
+
     private static int index = 0;
 
+    /**
+     * Getter for  task at index in list.
+     * 
+     * @return Task at index in list.
+     */
     public static Task getTask(int index) {
         return list.get(index);
     }
 
+    /**
+     * Getter for list.
+     * 
+     * @return list.
+     */
     public static ArrayList<Task> getList() {
         return list;
     }
 
+    /**
+     * Function to print whole Arraylist
+     * 
+     * @return
+     */
     public static void printList() {
         System.out.println(Io.LINE);
         if (list.size() == 0) {
@@ -33,10 +50,12 @@ public class ListManager {
         System.out.println(Io.LINE);
     }
 
-    public static Task getString(int index) {
-        return list.get(index);
-    }
-
+    /**
+     * Function to mark task as done.
+     * 
+     * @param index Index of task to be marked as done.
+     * @throws InvalidMarkException If index is invalid.
+     */
     public static void markDone(String index) throws InvalidMarkException {
         try {
             int intIndex = Integer.parseInt(index) - 1;
@@ -51,6 +70,12 @@ public class ListManager {
         }
     }
 
+    /**
+     * Function to mark task as undone.
+     * 
+     * @param index Index of task to be marked as undone.
+     * @throws InvalidUnmarkException If index is invalid.
+     */
     public static void markUndone(String index) throws InvalidUnmarkException {
         try {
             int intIndex = Integer.parseInt(index) - 1;
@@ -65,7 +90,14 @@ public class ListManager {
         }
     }
 
-
+    /**
+     * Function to add new task to list.
+     * 
+     * @param input     Input string.
+     * @param taskType  Type of task to be added.
+     * @param isSilent  Boolean to determine if message should be printed.
+     * @throws DudeException If taskType is invalid.
+     */
     public static void addNewTask(String input, String taskType, Boolean isSilent) throws DudeException {
         Task newTask;
         switch (taskType) {
@@ -89,6 +121,12 @@ public class ListManager {
         index++;
     }
 
+    /**
+     * Function to delete task from list.
+     * 
+     * @param index Index of task to be deleted.
+     * @throws InvalidDeleteException If index is invalid.
+     */
     public static void deleteTask(String index) throws InvalidDeleteException {
         try {
             int intIndex = Integer.parseInt(index) - 1;
