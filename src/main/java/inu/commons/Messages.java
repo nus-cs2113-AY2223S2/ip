@@ -72,8 +72,14 @@ public class Messages {
 
     public static final String MESSAGE_NO_TASK_ON_DATE = " Hooray! You have no tasks occurring on this date!";
 
+    public static final String MESSAGE_NO_TASK_FOUND = " Hooray! You have no tasks matching this keyword!";
+
     public static final String MESSAGE_LIST_HEADER_WITH_DATE = " Woof! Here are your current tasks occurring on: ";
 
+    public static final String MESSAGE_LIST_HEADER_WITH_KEYWORD = " Woof! Here are your matching tasks with keyword:  ";
+
     public static final String MESSAGE_PROMPT_FOR_INDEX_INPUT = " Sorry! Please provide a task number!";
+
+    public static final String MESSAGE_PROMPT_VALID_KEYWORD = " Sorry! Please provide a key word!";
 
 }
