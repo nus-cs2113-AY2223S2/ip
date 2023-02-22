@@ -5,6 +5,7 @@ import inu.exceptionhandling.EmptyStringException;
 import inu.exceptionhandling.ExceptionManager;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class TaskList {
 
@@ -20,66 +21,54 @@ public class TaskList {
         taskList = new ArrayList<>();
     }
 
-    public String printList() {
+    public String printList(TaskList taskList) {
 
         String printTaskListResult = EMPTY_STRING;
 
-        for (int taskIndex = 0; taskIndex < taskList.size(); taskIndex++) {
+        for (int taskIndex = 0; taskIndex < taskList.getTaskListSize(); taskIndex++) {
             int taskNumber = taskIndex + INDEX_OFFSET;
-            String currentTaskDisplay = taskList.get(taskIndex).toString();
+            String currentTaskDisplay = taskList.getTask(taskIndex).toString();
             printTaskListResult += ("\n" + taskNumber + STRING_PERIOD + currentTaskDisplay);
         }
 
-        return printTaskListResult;
+        try {
+            ExceptionManager.checkEmptyString(printTaskListResult);
+            return printTaskListResult;
+        } catch (EmptyStringException e) {
+            return Messages.MESSAGE_PROMPT_EMPTY_TASK_LIST;
+        }
 
     }
 
-    public String printListByDate(LocalDate date) {
-        String printTaskListResult = EMPTY_STRING;
-        for (int taskIndex = 0; taskIndex < taskList.size(); taskIndex++) {
-            Task currentTask = taskList.get(taskIndex);
+    public TaskList filterDate(LocalDate date) {
+        TaskList dateTaskList = new TaskList();
+        for (Task currentTask : taskList) {
             if (currentTask instanceof DeadLine) {
                 LocalDate byDate = ((DeadLine) currentTask).getBy().toLocalDate();
                 if (byDate.equals(date)) {
-                    String currentTaskDisplay = currentTask.toString();
-                    printTaskListResult += ("\n" + currentTaskDisplay);
+                    dateTaskList.addTask(currentTask);
                 }
             } else if (currentTask instanceof Event) {
                 LocalDate fromDate = ((Event) currentTask).getFrom().toLocalDate();
                 LocalDate toDate = ((Event) currentTask).getTo().toLocalDate();
-                if (fromDate.equals(date) || date.isBefore(toDate) || toDate.equals(date)) {
-                    String currentTaskDisplay = currentTask.toString();
-                    printTaskListResult += ("\n" + currentTaskDisplay);
+                if (fromDate.equals(date) || (date.isAfter(fromDate) && date.isBefore(toDate)) || toDate.equals(date)) {
+                    dateTaskList.addTask(currentTask);
                 }
             }
         }
-        try {
-            ExceptionManager.checkEmptyString(printTaskListResult);
-            return printTaskListResult;
-        } catch (EmptyStringException e) {
-            return Messages.MESSAGE_NO_TASK_ON_DATE;
-        }
-
+        return dateTaskList;
     }
 
-    public String printListByKeyWord(String keyword) {
-        String printTaskListResult = EMPTY_STRING;
-        for (int taskIndex = 0; taskIndex < taskList.size(); taskIndex++) {
-            String currentTaskDescription = taskList.get(taskIndex).getDescription();
-            if (currentTaskDescription.contains(keyword)) {
-                int taskNumber = taskIndex + INDEX_OFFSET;
-                String currentTaskDisplay = taskList.get(taskIndex).toString();
-                String STRING_FOUND_TASK_NUMBER = "Task number: ";
-                printTaskListResult += ("\n" + STRING_FOUND_TASK_NUMBER +  taskNumber + STRING_PERIOD
-                        + currentTaskDisplay);
-            }
+    public TaskList filterKeyWord(String keyWord) {
+        ArrayList<Task> streamKeyWordTaskList = taskList
+                .stream()
+                .filter(c -> c.getDescription().contains(keyWord))
+                .collect(Collectors.toCollection(ArrayList::new));
+        TaskList keyWordTaskList = new TaskList();
+        for (Task t : streamKeyWordTaskList) {
+            keyWordTaskList.addTask(t);
         }
-        try {
-            ExceptionManager.checkEmptyString(printTaskListResult);
-            return printTaskListResult;
-        } catch (EmptyStringException e) {
-            return Messages.MESSAGE_NO_TASK_FOUND;
-        }
+        return keyWordTaskList;
     }
 
     public void addTask(Task t) {

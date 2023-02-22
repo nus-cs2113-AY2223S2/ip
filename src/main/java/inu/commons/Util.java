@@ -4,7 +4,6 @@ import inu.exceptionhandling.EmptyStringException;
 import inu.exceptionhandling.InvalidDateFormat;
 import inu.exceptionhandling.InvalidDateTimeFormat;
 import inu.task.TaskList;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.time.LocalDateTime;
@@ -75,7 +74,6 @@ public class Util {
             throw new InvalidDateFormat();
         }
     }
-
 
     public static LocalDateTime parseDateTime(String localDateTime) throws InvalidDateTimeFormat {
         try {

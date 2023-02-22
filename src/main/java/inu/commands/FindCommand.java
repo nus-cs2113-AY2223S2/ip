@@ -16,7 +16,7 @@ public class FindCommand extends Command {
 
     public CommandResult execute(TaskList taskList) {
         return new CommandResult(Messages.MESSAGE_LIST_HEADER_WITH_KEYWORD + keyWord + "\n"
-                + taskList.printListByKeyWord(keyWord));
+                + taskList.printList(taskList.filterKeyWord(keyWord)));
     }
 
 }

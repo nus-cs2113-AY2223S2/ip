@@ -19,7 +19,7 @@ public class ListWithDateCommand extends Command {
     @Override
     public CommandResult execute(TaskList taskList) {
         return new CommandResult(Messages.MESSAGE_LIST_HEADER_WITH_DATE + Util.convertDateToString(date) + "\n"
-                + taskList.printListByDate(date));
+                + taskList.printList(taskList.filterDate(date)));
     }
 
 }

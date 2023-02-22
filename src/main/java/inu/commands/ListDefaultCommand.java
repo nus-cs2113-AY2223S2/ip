@@ -9,6 +9,6 @@ public class ListDefaultCommand extends Command {
 
     @Override
     public CommandResult execute(TaskList taskList) {
-        return new CommandResult(Messages.MESSAGE_LIST_HEADER + "\n" + taskList.printList());
+        return new CommandResult(Messages.MESSAGE_LIST_HEADER + "\n" + taskList.printList(taskList));
     }
 }
