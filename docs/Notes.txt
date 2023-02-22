@@ -15,3 +15,49 @@ Yay parsing done, now left with saving into the file. File corruption not handle
 so if stupid shit like ||||||| got entered into the savefile, I am screwed. Will 
 finish up saving into the savefile tomorrow. Should really find a time to refactor 
 certain methods into other classes.
+
+List of all methods so that life becomes easier for me.
+Duke:
+    greetUser()
+    printLine()
+    help()
+    save()
+    exit()
+    parseUserInput()
+    parseSaveFile()
+    savefileChecker()
+    main()
+TaskList:
+    isValidTaskNo()
+    parseTasks()
+    constructor Tasklist()
+    constructor Tasklist(savefile)
+    printAddTaskMessage()
+    printDeleteTaskMessage()
+    printBlankArgumentError()
+    printMissingKeywordError()
+    hasBlankArgument()
+    hasMissingKeyword()
+    addTodo()
+    addDeadline()
+    addEvent()
+    listTasks()
+    markDone()
+    unmarkDone()
+    deleteTask()
+    saveToFile()
+    findTask()
+Task:
+    constructor Task()
+    getName()
+    getTaskType()
+    setStatus()
+    isDone()
+    toString()
+    toSaveString()
+
+Class Ui should implement:
+    greetUser()
+    printLine()
+    help()
+    All printing in tasklist.

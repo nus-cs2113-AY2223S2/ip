@@ -6,33 +6,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+import tasklist.TaskList;
+
 public class Duke {
     private static boolean hasEnteredBye = false;
-    
-    public static void greetUser() {
-        printLine();
-        System.out.println("Hello, I'm Duke");
-        System.out.println("Loading savefile...");
-        printLine();
-    }
-    
-    public static void printLine() {
-        System.out.println("____________________________________________________________");
-    }
-    
-    public static void help() {
-        System.out.println("List of commands:");
-        System.out.println("list: Lists all tasks.");
-        System.out.println("todo <name>: Adds a ToDo task.");
-        System.out.println("deadline <name> /by <by when>: Adds a deadline task" +
-        " with specified deadline.");
-        System.out.println("event <name> /from <from when> /to <to when>:" +
-        " Adds an event with specified time period.");
-        System.out.println("mark <task number>: Marks the task specified as done.");
-        System.out.println("unmark <task number>: Marks the task specified as not done.");
-        System.out.println("delete <task number>: Deletes the task from the list.");
-        System.out.println("bye: Exits the program.");
-    }
+    private static DukeUi ui = new DukeUi();
 
     public static void save() {
         System.out.println("Saving tasks to savefile, please do not close the application.");
@@ -48,7 +26,7 @@ public class Duke {
     }
 
     public static void exit() {
-        printLine();
+        ui.printLine();
         save();
         System.out.println("Bye. Hope to see you again soon!");
     }
@@ -66,7 +44,7 @@ public class Duke {
             taskList.listTasks();
             break;
         case "help":
-            help();
+            ui.printHelp();
             break;
         case "mark":
             try {
@@ -146,7 +124,7 @@ public class Duke {
                 throw e;
             }
         }
-        printLine();
+        ui.printLine();
     }
     
     public static TaskList taskList;
@@ -154,7 +132,7 @@ public class Duke {
     public static final File SAVE_FILE = new File("data/savefile.txt");
     
     public static void main(String[] args) {
-        greetUser();
+        ui.greetUser();
         try {
             savefileChecker();
         } catch (IOException e) {
@@ -162,12 +140,11 @@ public class Duke {
             return;
         }
         
-        Scanner scanner = new Scanner(System.in);
         while (!hasEnteredBye) {
-            String line = scanner.nextLine();
+            String line = ui.getNextLine();
             parseUserInput(line);
-            printLine();
+            ui.printLine();
         }
-        scanner.close();
+        ui.closeScanner();
     }
 }

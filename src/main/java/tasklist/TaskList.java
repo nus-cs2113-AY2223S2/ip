@@ -1,26 +1,27 @@
-package duke;
+package tasklist;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import duke.tasks.Deadline;
-import duke.tasks.Event;
-import duke.tasks.Task;
-import duke.tasks.ToDo;
+import tasks.Deadline;
+import tasks.Event;
+import tasks.Task;
+import tasks.ToDo;
 
 public class TaskList {
-    private ArrayList<Task> tasks;
-    private int noOfTasks;
+    protected ArrayList<Task> tasks;
+    protected int noOfTasks;
+    private TasklistUi ui;
 
     private boolean isValidTaskNo(int taskNo) {
         if (taskNo <= 0) {
-            System.out.println("Negative task number entered, please don't try to crash the program a**h***.");
+            ui.printNegTaskNoError();
             return false;
         }
         if (taskNo > noOfTasks) {
-            System.out.println("Task number does not exist, there are only " + noOfTasks + " tasks in total.");
+            ui.printOOBTaskNoError();
             return false;
         }
         return true;
@@ -46,6 +47,7 @@ public class TaskList {
     public TaskList() {
         this.tasks = new ArrayList<>();
         noOfTasks = 0;
+        this.ui = new TasklistUi(this);
     }
 
     public TaskList(Scanner s) {
@@ -57,33 +59,14 @@ public class TaskList {
             String[] args = line.split("\\|");
             parseTasks(args);
         }
+        this.ui = new TasklistUi(this);
         listTasks();
-    }
-
-    private void printAddTaskMessage(int taskNo) {
-        System.out.println("Got it. I have added this task:");
-        System.out.println(tasks.get(taskNo - 1).toString());
-        System.out.println("Now you have " + noOfTasks + " tasks in the list");
-    }
-
-    private void printDeleteTaskMessage(int taskNo) {
-        System.out.println("Noted. I've removed this task:");
-        System.out.println(tasks.get(taskNo-1).toString());
-        System.out.println("Now you have " + noOfTasks + " tasks in the list");
-    }
-
-    private void printBlankArgumentError(String type) {
-        System.out.println(type + " cannot be blank.");
-    }
-
-    private void printMissingKeywordError(String type) {
-        System.out.println(type + " keyword is missing.");
     }
 
     private boolean hasBlankArgument(String arg, String type) {
         if(arg.isEmpty()) {
             noOfTasks--;
-            printBlankArgumentError(type);
+            ui.printBlankArgumentError(type);
             return true;
         }
         return false;
@@ -92,7 +75,7 @@ public class TaskList {
     private boolean hasMissingKeyword(int index, String type) {
         if (index == -1) {
             noOfTasks--;
-            printMissingKeywordError(type);
+            ui.printMissingKeywordError(type);
             return true;
         }
         return false;
@@ -105,7 +88,7 @@ public class TaskList {
             return;
         }
         tasks.add(new ToDo(args));
-        printAddTaskMessage(noOfTasks);
+        ui.printAddTaskMessage(noOfTasks);
     }
 
     public void addDeadline(String args) {
@@ -126,7 +109,7 @@ public class TaskList {
             return;
         }
         tasks.add(new Deadline(name, by));
-        printAddTaskMessage(noOfTasks);
+        ui.printAddTaskMessage(noOfTasks);
     }
 
     public void addEvent(String args) {
@@ -141,8 +124,7 @@ public class TaskList {
         }
         if (indexOfFrom > indexOfTo) {
             noOfTasks--;
-            System.out.println("Please ensure that /from is before /to.");
-            System.out.println("Cos I am too lazy to code for both cases.");
+            ui.printFromBeforeToError();
             return;
         }
         String name = args.substring(0, indexOfFrom);
@@ -163,29 +145,22 @@ public class TaskList {
             return;
         }
         tasks.add(new Event(name, from, to));
-        printAddTaskMessage(noOfTasks);
+        ui.printAddTaskMessage(noOfTasks);
     }
 
     public void listTasks() {
-        if (noOfTasks == 0) {
-            System.out.println("No tasks yet. Please input a task.");
-        }
-        for (int i = 0; i < noOfTasks; i++) {
-            System.out.print((i + 1) + ". ");
-            System.out.println(tasks.get(i).toString());
-        }
+        ui.printAllTasks();
     }
 
     public void markDone(int taskNo) {
         if (!isValidTaskNo(taskNo)) {
             return;
         }
-        if (tasks.get(taskNo - 1).isDone()) {
-            System.out.println("Already done.");
+        if (!tasks.get(taskNo - 1).isDone()) {
+            ui.printAlreadyDoneMessage();
         } else {
             tasks.get(taskNo - 1).setStatus(true);
-            System.out.println("Nice! I have marked this task as done.");
-            System.out.println(tasks.get(taskNo - 1).toString());
+            ui.printMarkDoneMessage(taskNo);
         }
     }
 
@@ -194,11 +169,10 @@ public class TaskList {
             return;
         }
         if (!tasks.get(taskNo - 1).isDone()) {
-            System.out.println("Not done yet. Please finish it.");
+            ui.printNotDoneMessage();
         } else {
             tasks.get(taskNo - 1).setStatus(false);
-            System.out.println("Ok I have marked this as not done yet.");
-            System.out.println(tasks.get(taskNo - 1).toString());
+            ui.printUnmarkDoneMessage(taskNo);
         }
     }
 
@@ -207,7 +181,7 @@ public class TaskList {
             return;
         }
         noOfTasks--;
-        printDeleteTaskMessage(taskNo);
+        ui.printDeleteTaskMessage(taskNo);
         tasks.remove(taskNo - 1);
     }
 
@@ -219,7 +193,7 @@ public class TaskList {
 
     public void findTask(String keyword) {
         if (keyword.isEmpty()) {
-            System.out.println("No keyword entered.");
+            ui.printBlankArgumentError("Keyword");
             return;
         }
         keyword.trim();
@@ -229,9 +203,9 @@ public class TaskList {
             if (task.getName().contains(keyword)) {
                 if (!taskFound) {
                     taskFound = true;
-                    System.out.println("These tasks contain the keyword " + keyword);
+                    ui.printTaskFoundMessage(keyword);
                 }
-                System.out.println(taskNo + ". " + task.toString());
+                ui.printTaskWithNumber(taskNo);
             }
             taskNo++;
         }
