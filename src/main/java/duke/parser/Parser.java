@@ -16,8 +16,9 @@ import duke.tasks.Task;
 import duke.tasks.TaskEnum;
 import duke.tasks.ToDo;
 
-import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Parser {
     private static final String CHAR_SPACE = " ";
@@ -30,6 +31,18 @@ public class Parser {
     private static final String COMMAND_SAVE = "save";
     private static final String COMMAND_TODO = "todo";
     private static final String COMMAND_UNMARK = "unmark";
+    private static final String KEYWORD_BY = "/by";
+    private static final String KEYWORD_FROM = "/from";
+    private static final String KEYWORD_TO = "/to";
+    private static final Pattern patternToDo = Pattern.compile(
+            "^(\\S+[\\S\\s]*)$",
+            Pattern.CASE_INSENSITIVE);
+    private static final Pattern patternDeadline = Pattern.compile(
+            "^(\\S+[\\S\\s]*)(\\s+/by\\s+)(\\S+[\\S\\s]*)$",
+            Pattern.CASE_INSENSITIVE);
+    private static final Pattern patternEvent = Pattern.compile(
+            "^(\\S+[\\S\\s]*)(\\s+/from\\s+)(\\S+[\\S\\s]*)(\\s+/to\\s+)(\\S+[\\S\\s]*)$",
+            Pattern.CASE_INSENSITIVE);
 
     private static int getID(Scanner scanner) throws InvalidInputIDException {
         if (!scanner.hasNextInt()) {
@@ -38,34 +51,59 @@ public class Parser {
         return scanner.nextInt();
     }
 
-    private static Task getTaskFromInput(Scanner input, TaskEnum type) throws Exception {
+    public static void checkValidInput(String input, Pattern pattern, TaskEnum taskType) throws InvalidTaskFormatException {
+        Matcher matcher = pattern.matcher(input.trim());
+        if (input.trim().isEmpty() || !matcher.find()) {
+            throw new InvalidTaskFormatException(taskType);
+        }
+    }
+
+    private static ToDo parseToDoInput(String input) throws InvalidTaskFormatException {
+        checkValidInput(input, patternToDo, TaskEnum.TODO);
+        return new ToDo(input);
+    }
+
+    private static Event parseEventInput(String input) throws InvalidTaskFormatException {
+        checkValidInput(input, patternEvent, TaskEnum.EVENT);
+        int fromStartIndex = input.indexOf(KEYWORD_FROM);
+        int toStartIndex = input.indexOf(KEYWORD_TO);
+        String description = input.substring(0, fromStartIndex).trim();
+        String from = input.substring(fromStartIndex + KEYWORD_FROM.length(), toStartIndex).trim();
+        String to = input.substring(toStartIndex + KEYWORD_TO.length()).trim();
+        return new Event(description, from, to);
+    }
+
+    private static Deadline parseDeadlineInput(String input) throws InvalidTaskFormatException {
+        checkValidInput(input, patternDeadline, TaskEnum.DEADLINE);
+        int byStartIndex = input.indexOf(KEYWORD_BY);
+        String description = input.substring(0, byStartIndex).trim();
+        String from = input.substring(byStartIndex + KEYWORD_BY.length()).trim();
+        return new Deadline(description, from);
+    }
+
+    private static Task getTaskFromInput(Scanner input, TaskEnum type) throws InvalidTaskFormatException {
         // validate input
         if (!input.hasNextLine()) {
             throw new InvalidTaskFormatException(type);
         }
         String taskDetails = input.nextLine().trim();
-        if (!ToDo.isValidInput(taskDetails) || taskDetails.isEmpty()) {
-            throw new InvalidTaskFormatException(type);
-        }
 
         Task task;
-        ArrayList<String> details;
         switch (type) {
         case TODO:
-            details = ToDo.convertInputIntoDetails(taskDetails);
-            task = new ToDo(details);
+            task = parseToDoInput(taskDetails);
             break;
         case EVENT:
-            details = Event.convertInputIntoDetails(taskDetails);
-            task = new Event(details);
+            task = parseEventInput(taskDetails);
             break;
         case DEADLINE:
-            details = Deadline.convertInputIntoDetails(taskDetails);
-            task = new Deadline(details);
+            task = parseDeadlineInput(taskDetails);
             break;
         default:
-            details = Task.convertInputIntoDetails(taskDetails);
-            task = new Task(details);
+            if (taskDetails.isEmpty()) {
+                throw new InvalidTaskFormatException(TaskEnum.UNDEFINED);
+            }
+            task = new Task(taskDetails, TaskEnum.UNDEFINED);
         }
 
         return task;
