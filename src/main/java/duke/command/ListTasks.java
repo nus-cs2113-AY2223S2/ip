@@ -3,15 +3,22 @@ package duke.command;
 import duke.data.TaskList;
 import duke.exceptions.DukeException;
 import duke.filemanager.Storage;
-import duke.task.Task;
 import duke.ui.Ui;
 
-import java.util.ArrayList;
-
+/**
+ * This class handles the listing of tasks command
+ */
 public class ListTasks extends Command {
 
+    /**
+     * Executes the command to list task
+     *
+     * @param tasks   TaskList of tasks currently stored
+     * @param storage Handler to read write to json
+     * @param ui      Handler to print text to user
+     */
     @Override
-    public void executeCommand(TaskList tasks, Storage storage, Ui ui) throws DukeException {
+    public void executeCommand(TaskList tasks, Storage storage, Ui ui) {
         ui.printTasks(tasks);
     }
 }

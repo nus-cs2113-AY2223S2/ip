@@ -2,12 +2,22 @@ package duke.task;
 
 import java.time.LocalDateTime;
 
+/**
+ * Basic todo task with only description
+ */
 public class Task {
     protected String type;
     protected String task;
     private boolean isDone;
     protected LocalDateTime endTime;
 
+    /**
+     * Constructor to a new todo task with default date
+     * of 1/1/0000 0000 so that it will be placed at the top when
+     * sorted
+     *
+     * @param task description of task
+     */
     public Task(String task) {
         this.task = task;
         this.isDone = false;
@@ -15,10 +25,20 @@ public class Task {
         this.endTime = LocalDateTime.of(0, 1, 1, 0, 0);
     }
 
+    /**
+     * getter of task description
+     *
+     * @return string containing task description
+     */
     public String getDescription() {
         return this.task;
     }
 
+    /**
+     * getter of endTime
+     *
+     * @return LocalDateTime object of endTime
+     */
     public LocalDateTime getEndTime() {
         return this.endTime;
     }
@@ -70,4 +90,5 @@ public class Task {
     public String getTaskStatus() {
         return "[T]" + "[" + getStatusIcon() + "] " + task;
     }
+    
 }

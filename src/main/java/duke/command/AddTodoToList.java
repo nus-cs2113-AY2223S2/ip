@@ -9,6 +9,9 @@ import duke.ui.Ui;
 
 import java.util.NoSuchElementException;
 
+/**
+ * Handles command to add a new todo to list
+ */
 public class AddTodoToList extends Command {
     private Task newTask;
 

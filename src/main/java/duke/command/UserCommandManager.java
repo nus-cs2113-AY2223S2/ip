@@ -11,14 +11,15 @@ public class UserCommandManager {
      * Handles the command (i.e. type of task) by user
      * and parse the arguments to add to task list
      *
-     * @param rawUserInput raw user input
+     * @param userCommands parsed userInput containing command, and arguments
      * @param storage      handler for writing to json file
      * @param tasks        taskList of tasks
+     * @param ui           handler for printing text to the screen
      */
-    public void handleCommands(String[] userCommand, Storage storage, TaskList tasks, Ui ui) throws DukeException {
+    public void handleCommands(String[] userCommands, Storage storage, TaskList tasks, Ui ui) throws DukeException {
 
         Command command;
-        switch (userCommand[0]) {
+        switch (userCommands[0]) {
         case "bye":
             command = new ExitCommand();
             break;
@@ -31,28 +32,28 @@ public class UserCommandManager {
             command = new PrintSortedTasks();
             break;
         case "find":
-            command = new FindTask(userCommand[1]);
+            command = new FindTask(userCommands[1]);
             break;
         case "sort":
             command = new SortTasks();
             break;
         case "mark":
-            command = new MarkCommand(userCommand[1]);
+            command = new MarkCommand(userCommands[1]);
             break;
         case "unmark":
-            command = new UnmarkCommand(userCommand[1]);
+            command = new UnmarkCommand(userCommands[1]);
             break;
         case "todo":
-            command = new AddTodoToList(userCommand[1]);
+            command = new AddTodoToList(userCommands[1]);
             break;
         case "deadline":
-            command = new AddDeadlineToList(userCommand[1]);
+            command = new AddDeadlineToList(userCommands[1]);
             break;
         case "event":
-            command = new AddEventToList(userCommand[1]);
+            command = new AddEventToList(userCommands[1]);
             break;
         case "delete":
-            command = new DeleteFromList(userCommand[1]);
+            command = new DeleteFromList(userCommands[1]);
             break;
         default:
             throw new DukeException("Unknown input");

@@ -5,7 +5,6 @@ import duke.exceptions.DukeException;
 import duke.exceptions.InvalidInputException;
 import duke.exceptions.InvalidScheduleException;
 import duke.filemanager.Storage;
-import duke.task.Deadline;
 import duke.task.Event;
 import duke.ui.Ui;
 
@@ -14,6 +13,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.NoSuchElementException;
 
+/**
+ * Handles the event command to add a new event to the list
+ */
 public class AddEventToList extends Command {
     private Event newTask;
 
