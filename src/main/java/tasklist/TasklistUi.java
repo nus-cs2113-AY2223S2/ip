@@ -1,6 +1,6 @@
 package tasklist;
 
-public class TasklistUi extends TaskList {
+public class TasklistUi {
 
     // Output
 

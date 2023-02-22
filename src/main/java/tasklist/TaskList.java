@@ -13,7 +13,7 @@ import tasks.ToDo;
 public class TaskList {
     protected ArrayList<Task> tasks;
     protected int noOfTasks;
-    private TasklistUi ui = new TasklistUi();
+    private TasklistUi ui;
 
     private boolean isValidTaskNo(int taskNo) {
         if (taskNo <= 0) {
@@ -48,6 +48,7 @@ public class TaskList {
     public TaskList() {
         this.tasks = new ArrayList<>();
         noOfTasks = 0;
+        this.ui = new TasklistUi(this);
     }
 
     public TaskList(Scanner s) {
@@ -59,6 +60,7 @@ public class TaskList {
             String[] args = line.split("\\|");
             parseTasks(args);
         }
+        this.ui = new TasklistUi(this);
         listTasks();
     }
 
