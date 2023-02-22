@@ -28,6 +28,7 @@ public class Duke {
     public static void exit() {
         ui.printLine();
         save();
+        ui.closeScanner();
         System.out.println("Bye. Hope to see you again soon!");
     }
     

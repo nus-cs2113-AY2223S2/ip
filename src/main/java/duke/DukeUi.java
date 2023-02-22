@@ -8,8 +8,10 @@ public class DukeUi {
 
     private Scanner scanner;
 
-    public DukeUi() {
-        this.scanner = new Scanner(System.in);
+    public DukeUi(boolean withScanner) {
+        if (withScanner) {
+            this.scanner = new Scanner(System.in);
+        }
     }
 
     // Input
