@@ -9,6 +9,11 @@ import duke.tasks.TaskList;
 import duke.tasks.ToDo;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
+import java.time.format.DateTimeFormatter;
+
+import static duke.constants.Constants.LINEBREAK;
 
 public class EventCommand extends Command {
 
@@ -19,9 +24,14 @@ public class EventCommand extends Command {
         int indexCount = Task.getIndexCount();
         String description;
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+
         try {
-            String from;
-            String to;
+            String fromString;
+            String toString;
+
+            LocalDateTime from;
+            LocalDateTime to;
 
             description = line.substring(line.indexOf(' ') + 1, line.indexOf('/')).trim();
             markIndex = line.indexOf("/from");
@@ -30,21 +40,28 @@ public class EventCommand extends Command {
                 throw new InvalidTaskException();
             }
 
-            from = line.substring(markIndex + 5, markIndex1).trim();
-            to = line.substring(markIndex1 + 3).trim();
+            fromString = line.substring(markIndex + 5, markIndex1).trim();
+            toString = line.substring(markIndex1 + 3).trim();
 
-            if (from.equals("")) {
+            if (fromString.equals("") || toString.equals("")) {
                 throw new InvalidTaskException();
             }
 
+            from = LocalDateTime.parse(fromString, formatter);
+            to = LocalDateTime.parse(toString, formatter);
             ToDo newDeadline = new Event(description, from, to);
             taskList.addTask(newDeadline);
             storage.updateFile(taskList);
+
 
         } catch (InvalidTaskException e) {
             System.out.println(e.getMessage());
         } catch (IOException e) {
             System.out.println("Something went wrong!");
+        } catch (DateTimeParseException e) {
+            System.out.println("Invalid date/time format. Please try again.\n" + LINEBREAK);
+        } catch (StringIndexOutOfBoundsException e) {
+            System.out.println("Invalid Command. Please try again.\n" + LINEBREAK);
         }
     }
 }
