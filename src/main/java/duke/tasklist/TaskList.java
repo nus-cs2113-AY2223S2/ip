@@ -1,26 +1,21 @@
-package duke.tasks;
+package duke.tasklist;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 import duke.exceptions.InvalidInputIDException;
 import duke.exceptions.NoTaskException;
+import duke.tasks.Task;
 
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * A list used to store and access all tasks created.
  */
 public class TaskList {
-    private static GsonBuilder builder = new GsonBuilder();
-    private static Gson gson = builder.create();
     private static final String MESSAGE_TASKS_MARKED = "Nice! I've marked this task as done:";
     private static final String MESSAGE_TASKS_UNMARKED = "OK, I've marked this task as not done yet:";
     private static final String MESSAGE_TASKS_AVAILABLE = "Here are the tasks in your list:";
-    private static final String TASK_TODO = "TODO";
-    private static final String TASK_DEADLINE = "DEADLINE";
-    private static final String TASK_EVENT = "EVENT";
+    private static final String MESSAGE_TASKS_NONE = "There are no tasks available.";
     private static ArrayList<Task> tasks = new ArrayList<>();
 
     /**
@@ -29,7 +24,7 @@ public class TaskList {
      * @param json String to be deserialized
      */
     public TaskList(String json) {
-        this.tasks = fromJson(json);
+        tasks = JsonParser.fromJson(json);
     }
 
     /**
@@ -93,11 +88,20 @@ public class TaskList {
 
     /**
      * Lists all the tasks available in the list with their corresponding id
-     *
      * @return String containing the tasks
      * @throws NoTaskException If the list is empty
      */
     public String listAll() throws NoTaskException {
+        return listAll(tasks);
+    }
+
+    /**
+     * Lists all the tasks available in the list with their corresponding id
+     * @param tasks ArrayList containing the tasks
+     * @return String containing the tasks
+     * @throws NoTaskException If the list is empty
+     */
+    public static String listAll(ArrayList<Task> tasks) throws NoTaskException {
         if (tasks.size() == 0) {
             throw new NoTaskException();
         }
@@ -117,43 +121,24 @@ public class TaskList {
         return output.toString();
     }
 
-    public ArrayList<Task> fromJson(String json) {
-        Scanner scanner = new Scanner(json);
-        ArrayList<Task> savedTasks = new ArrayList<>();
-        while (scanner.hasNextLine()) {
-            String task = scanner.nextLine();
-            savedTasks.add(deserializeJSON(task));
+    public String find(String keyword) throws NoTaskException {
+        ArrayList<Task> matchingTasks = new ArrayList<>();
+        Pattern pattern = Pattern.compile(keyword, Pattern.CASE_INSENSITIVE);
+        for (Task task : tasks) {
+            Matcher matcher = pattern.matcher(task.describe());
+            if (matcher.find()) {
+                matchingTasks.add(task);
+            }
         }
-        return savedTasks;
+
+        if (matchingTasks.size() == 0) {
+            throw new NoTaskException();
+        }
+
+        return listAll(matchingTasks);
     }
 
     public String toJson() {
-        StringBuilder saveData = new StringBuilder();
-        for (Task t : tasks) {
-            String json = gson.toJson(t);
-            saveData.append(json);
-            saveData.append(System.lineSeparator());
-        }
-        return saveData.toString();
-    }
-
-    private static Task deserializeJSON(String json) {
-        JsonObject j = gson.fromJson(json, JsonObject.class);
-        Task t;
-        String taskType = j.get("type").getAsString();
-        switch (taskType) {
-        case TASK_TODO:
-            t = gson.fromJson(j, ToDo.class);
-            break;
-        case TASK_EVENT:
-            t = gson.fromJson(j, Event.class);
-            break;
-        case TASK_DEADLINE:
-            t = gson.fromJson(j, Deadline.class);
-            break;
-        default:
-            t = gson.fromJson(j, Task.class);
-        }
-        return t;
+        return JsonParser.toJson(tasks);
     }
 }

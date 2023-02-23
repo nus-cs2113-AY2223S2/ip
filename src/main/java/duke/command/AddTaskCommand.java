@@ -1,7 +1,7 @@
 package duke.command;
 
 import duke.tasks.Task;
-import duke.tasks.TaskList;
+import duke.tasklist.TaskList;
 import duke.ui.UI;
 
 /**
@@ -15,7 +15,7 @@ public class AddTaskCommand extends Command {
     }
 
     @Override
-    public void executor(TaskList tasks, UI ui) throws Exception {
+    public void executor(TaskList tasks, UI ui) {
         tasks.add(taskObj);
         ui.printTaskAdded(taskObj.describe(), tasks.size());
     }

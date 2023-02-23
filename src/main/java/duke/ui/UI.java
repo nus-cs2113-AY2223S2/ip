@@ -13,8 +13,6 @@ public class UI {
     private static final String MESSAGE_EXIT = "Bye. Hope to see you again soon!";
     private static final String MESSAGE_GREET = "Hello! I'm Duke\nWhat can I do for you?";
     private static final String MESSAGE_LOGO = "Hello from";
-    private static final String MESSAGE_SAVE_SUCCESS = "Saved tasks successfully.";
-    private static final String MESSAGE_SAVE_FAIL = "Failed to update save data. Type \"save\" to try again";
 
     public void print(String output) {
         Scanner scan = new Scanner(output);
@@ -56,13 +54,6 @@ public class UI {
 
     public void printExit() {
         print(MESSAGE_EXIT);
-        printLine();
-    }
-
-    public void printSaveStatus(boolean success) {
-        print(success
-                ? MESSAGE_SAVE_SUCCESS
-                : MESSAGE_SAVE_FAIL);
         printLine();
     }
 }
