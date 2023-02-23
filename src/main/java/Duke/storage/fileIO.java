@@ -1,4 +1,4 @@
-package Duke;
+package Duke.storage;
 
 import Duke.task.Deadline;
 import Duke.task.Event;
@@ -21,7 +21,7 @@ public class fileIO {
 		return count;
 	}
 
-	protected static ArrayList<Task> readFile () {
+	public static ArrayList<Task> readFile () {
 		try {
 			File dukeFile = new File (FILEPATH);
 			BufferedReader reader = new BufferedReader (new FileReader (dukeFile));
@@ -57,7 +57,7 @@ public class fileIO {
 		return tasks;
 	}
 
-	protected static void writeFile (ArrayList<Task> tasks) {
+	public static void writeFile (ArrayList<Task> tasks) {
 		try {
 			FileWriter fileWrite = new FileWriter (FILEPATH, false);
 			for (int i = 0; i < tasks.size (); i++) {

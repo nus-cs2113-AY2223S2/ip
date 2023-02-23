@@ -1,2 +1,0 @@
-T | 0 |   homework
-E | 1 |   meeting    |    2pm - 4pm
