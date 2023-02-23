@@ -2,10 +2,10 @@ class Event extends Task {
     private final String startDateAndTime;
     private final String endDateAndTime;
 
-    Event(boolean isDone, String taskDescription, String sdnt, String ednt) {
+    Event(boolean isDone, String taskDescription, String startDateAndTime, String endDateAndTime) {
         super("E", isDone, taskDescription);
-        this.startDateAndTime = sdnt;
-        this.endDateAndTime = ednt;
+        this.startDateAndTime = startDateAndTime;
+        this.endDateAndTime = endDateAndTime;
     }
 
     Event(String[] parameters) {

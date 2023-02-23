@@ -1,13 +1,12 @@
 import java.io.IOException;
 import java.io.File;
-import java.util.Scanner;
 import java.io.FileWriter;
+import java.util.Scanner;
 import java.util.ArrayList;
-import java.util.Arrays;
 
-class Backend {
-    public static ArrayList<Task> initialisation() {
-        ArrayList<Task> res = new ArrayList<Task>();
+class Storage {
+    public static TaskList initialisation() {
+        ArrayList<Task> taskList = new ArrayList<Task>();
 
         //create folder if it does not exists
         String currDir = System.getProperty("user.dir");
@@ -28,34 +27,35 @@ class Backend {
         try {
             Scanner reader = new Scanner(database);
             while (reader.hasNextLine()) {
-                String[] inputtArray = reader.nextLine().split(",");
-                res = Backend.readAndUpdate(inputtArray, res);
+                String[] inputArray = reader.nextLine().split(",");
+                taskList = Storage.readAndUpdate(inputArray, taskList);
             }
             reader.close();
         } catch (IOException e) {}
-        return res;
+        return new TaskList(taskList);
     }
 
-    public static ArrayList<Task> readAndUpdate(String[] inputt, ArrayList<Task> database) {
-        if (inputt[0].equals("T")) {
-            database.add(new ToDo(inputt));
-        } else if (inputt[0].equals("D")) {
-            database.add(new Deadline(inputt));
-        } else if (inputt[0].equals("E")) {
-            database.add(new Event(inputt));
+    public static ArrayList<Task> readAndUpdate(String[] input, ArrayList<Task> database) {
+        if (input[0].equals("T")) {
+            database.add(new ToDo(input));
+        } else if (input[0].equals("D")) {
+            database.add(new Deadline(input));
+        } else if (input[0].equals("E")) {
+            database.add(new Event(input));
         }
         return database;
     }
 
-    public static void updateDatabase(ArrayList<Task> inputt) {
+    public static void updateStorage(TaskList input) {
         String currDir = System.getProperty("user.dir");
         String databasePath = java.nio.file.Paths.get(currDir, "assets", "database.txt").toString();
         File database = new File(databasePath);
 
         try {
             FileWriter myWriter = new FileWriter(database);
-            for (Task t : inputt) {
-                myWriter.write(t.toStringForDatabase() + "\n");
+            for (int i = 0; i < input.size(); i++) {
+                Task task = input.get(i);
+                myWriter.write(task.toStringForDatabase() + "\n");
             }
             myWriter.close();
         } catch (IOException e) {}

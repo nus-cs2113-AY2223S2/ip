@@ -1,13 +1,23 @@
 import java.util.ArrayList;
+
 public class Duke {
+
+    public static void printWelcomeMessage() {
+        System.out.println("Hello! I am Duke");
+        System.out.println("What can I do for you?");
+    }
+
+    private static void printEndingMessage() {
+        System.out.println("Bye. Hope to see you again soon!");
+    }
+
     public static void main(String[] args) {
-        ArrayList<Task> taskList = Backend.initialisation();
+        TaskList taskList = Storage.initialisation();
         DukeManager dukeManager = new DukeManager(taskList);
 
         //Duke starts here
-        System.out.println("Hello! I am Duke");
-        System.out.println("What can I do for you?");
+        Duke.printWelcomeMessage();
         dukeManager.run();
-        System.out.println("Bye. Hope to see you again soon!");
+        Duke.printEndingMessage();
     }
 }

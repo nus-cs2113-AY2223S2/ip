@@ -3,10 +3,10 @@ abstract class Task {
     protected final boolean isDone;
     protected final String taskDescription;
 
-    Task(String l, boolean id, String td) {
-        this.label = l;
-        this.isDone = id;
-        this.taskDescription = td;
+    Task(String label, boolean isDone, String taskDescription) {
+        this.label = label;
+        this.isDone = isDone;
+        this.taskDescription = taskDescription;
     }
 
     public abstract Task mark();
