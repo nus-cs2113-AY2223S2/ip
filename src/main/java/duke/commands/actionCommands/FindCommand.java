@@ -19,7 +19,7 @@ public class FindCommand extends Command {
             if (getArgumentNumber(line) != 2) {
                 throw new InvalidArgsException();
             }
-            String word = line.split(" ")[1];
+            String word = line.split(" ")[1].trim().toLowerCase();
             List<Task> filteredTasks = taskList.stream().filter(t -> t.getTaskName().toLowerCase().contains(word))
                     .collect(Collectors.toList());
 
@@ -31,6 +31,7 @@ public class FindCommand extends Command {
                     System.out.print(i++ + ". ");
                     System.out.println(t);
                 }
+                System.out.println(LINEBREAK);
             }
         } catch (InvalidArgsException e) {
             System.out.println(e.getMessage());

@@ -42,6 +42,6 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-        new Duke("./taskList.csv").run();
+        new Duke("./src/data").run();
     }
 }

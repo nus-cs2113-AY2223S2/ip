@@ -9,6 +9,8 @@ import duke.tasks.ToDo;
 
 import java.io.IOException;
 
+import static duke.constants.Constants.LINEBREAK;
+
 public class ToDoCommand extends Command {
 
     @Override
@@ -29,7 +31,7 @@ public class ToDoCommand extends Command {
         } catch (InvalidTaskException e) {
             System.out.println(e.getMessage());
         } catch (IOException e) {
-            System.out.println("Something went wrong!");
+            System.out.println("Oops, something went wrong!\n" + LINEBREAK);
         }
     }
 }

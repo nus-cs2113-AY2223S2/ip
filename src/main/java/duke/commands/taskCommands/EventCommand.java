@@ -57,7 +57,7 @@ public class EventCommand extends Command {
         } catch (InvalidTaskException e) {
             System.out.println(e.getMessage());
         } catch (IOException e) {
-            System.out.println("Something went wrong!");
+            System.out.println("Oops, something went wrong!\n" + LINEBREAK);
         } catch (DateTimeParseException e) {
             System.out.println("Invalid date/time format. Please try again.\n" + LINEBREAK);
         } catch (StringIndexOutOfBoundsException e) {

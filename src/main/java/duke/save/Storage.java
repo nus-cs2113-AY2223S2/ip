@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import static duke.constants.Constants.LINEBREAK;
+
 public class Storage {
 
     private String filepath;
@@ -33,10 +35,16 @@ public class Storage {
      * @throws IOException If there is an error with the hard disk.
      */
     public void initFile() throws IOException {
-        File newFile = new File(filepath);
+        File newDirectory = new File(filepath);
 
-        if (!newFile.exists()) {
-            newFile.mkdirs();
+        if (!(newDirectory.exists() && newDirectory.isDirectory())){
+            newDirectory.mkdirs();
+            newDirectory.createNewFile();
+        }
+
+        File newFile = new File(filepath + "/taskList.txt");
+
+        if (!(newFile.exists() && newFile.isFile())) {
             newFile.createNewFile();
         }
     }
@@ -49,7 +57,7 @@ public class Storage {
      */
     public void loadFile(TaskList list) {
         try {
-            FileReader reader = new FileReader(filepath);
+            FileReader reader = new FileReader(filepath + "/taskList.txt");
             BufferedReader bufferedReader = new BufferedReader(reader);
             String line;
             while ((line = bufferedReader.readLine()) != null) {
@@ -79,9 +87,9 @@ public class Storage {
             }
             reader.close();
         } catch (IOException e) {
-            System.out.println("Oops, something went wrong!");
+            System.out.println("Oops, something went wrong!\n" + LINEBREAK);
         } catch (Exception e) {
-            System.out.println("Your file is corrupted! Please delete the file");
+            System.out.println("Your file is corrupted! Please delete the file\n" + LINEBREAK);
         }
     }
 
@@ -92,7 +100,7 @@ public class Storage {
      * @throws IOException If there is an error with the hard disk.
      */
     public void updateFile(TaskList taskList) throws IOException {
-        FileWriter overwriteFile = new FileWriter(filepath);
+        FileWriter overwriteFile = new FileWriter(filepath + "/taskList.txt");
         for (int i = 0; i < Task.getIndexCount(); i++) {
             Task temp = taskList.get(i);
             String type = temp.getType();
