@@ -14,7 +14,7 @@ public class Deadline extends Task {
     }
 
     /**
-     * Describes the task with its status, description and completion deadline.
+     * Describes the task with its task type, status, description and completion deadline.
      *
      * @return String describing the task
      */

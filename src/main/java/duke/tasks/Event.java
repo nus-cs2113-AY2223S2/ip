@@ -15,7 +15,7 @@ public class Event extends Task {
     }
 
     /**
-     * Describes the task with its status, description, event start and end details.
+     * Describes the task with its task type, status, description, event start and end details.
      *
      * @return String describing the task
      */

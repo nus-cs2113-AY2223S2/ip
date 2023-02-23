@@ -11,6 +11,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Serializes and deserializes tasks using the Gson library.
+ */
 public class JsonParser {
     private static final GsonBuilder builder = new GsonBuilder()
             .registerTypeAdapter(LocalDateTime.class,
@@ -26,6 +29,12 @@ public class JsonParser {
     private static final String TASK_DEADLINE = "DEADLINE";
     private static final String TASK_EVENT = "EVENT";
 
+    /**
+     * Deserializes the given string in JSON format.
+     *
+     * @param json Tasks to be deserialized
+     * @return ArrayList containing Task objects corresponding to the saved data
+     */
     public static ArrayList<Task> fromJson(String json) {
         Scanner scanner = new Scanner(json);
         ArrayList<Task> savedTasks = new ArrayList<>();
@@ -36,6 +45,12 @@ public class JsonParser {
         return savedTasks;
     }
 
+    /**
+     * Serializes the given tasks into JSON format.
+     *
+     * @param tasks Tasks to be serialized
+     * @return String containing serialized tasks in JSON format
+     */
     public static String toJson(ArrayList<Task> tasks) {
         StringBuilder saveData = new StringBuilder();
         for (Task t : tasks) {
@@ -46,6 +61,12 @@ public class JsonParser {
         return saveData.toString();
     }
 
+    /**
+     * Convert the JSON string into the corresponding task. If the data is corrupted, a generic Task object is returned.
+     *
+     * @param json Task to be deserialized
+     * @return Task object corresponding to the JSON string
+     */
     public static Task deserializeJSON(String json) {
         JsonObject j = gson.fromJson(json, JsonObject.class);
         Task t;

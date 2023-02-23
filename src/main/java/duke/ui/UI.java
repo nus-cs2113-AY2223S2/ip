@@ -2,6 +2,9 @@ package duke.ui;
 
 import java.util.Scanner;
 
+/**
+ * Handles all UI outputs
+ */
 public class UI {
     private static final String INDENT = "    ";
     private static final String LINE = "____________________________________________________________";
@@ -14,6 +17,11 @@ public class UI {
     private static final String MESSAGE_GREET = "Hello! I'm Duke\nWhat can I do for you?";
     private static final String MESSAGE_LOGO = "Hello from";
 
+    /**
+     * Prints the given string with indentation.
+     *
+     * @param output String to be printed
+     */
     public void print(String output) {
         Scanner scan = new Scanner(output);
         while (scan.hasNextLine()) { // add indentation
@@ -36,6 +44,12 @@ public class UI {
         printLine();
     }
 
+    /**
+     * Prints the message after a new task is created.
+     *
+     * @param description Description of the task added
+     * @param numTasks    Number of tasks in the list
+     */
     public void printTaskAdded(String description, int numTasks) {
         String output = "Got it. I've added this task:\n"
                 + INDENT + description + "\n"
@@ -44,6 +58,12 @@ public class UI {
         printLine();
     }
 
+    /**
+     * Prints the message after a task is deleted.
+     *
+     * @param description Description of the task deleted
+     * @param numTasks    Number of tasks in the list
+     */
     public void printTaskDeleted(String description, int numTasks) {
         String output = "Noted. I have removed this task:\n"
                 + INDENT + description + "\n"
