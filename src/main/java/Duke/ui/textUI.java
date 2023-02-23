@@ -48,12 +48,10 @@ public class textUI {
 			for (int i = 0; i < tasks.size (); i++) {
 				System.out.println ((i + 1) + ". " + "[" + tasks.get (i).getType () + "]" + tasks.get (i).toString ());
 			}
-			printLine ();
 		} else {
-			printLine ();
 			System.out.println ("Your list is empty!");
-			printLine ();
 		}
+		printLine ();
 	}
 
 	public static void printEnd () {

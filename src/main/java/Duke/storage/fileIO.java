@@ -1,5 +1,6 @@
 package Duke.storage;
 
+import Duke.exception.DukeException;
 import Duke.task.Deadline;
 import Duke.task.Event;
 import Duke.task.Task;
@@ -27,21 +28,25 @@ public class fileIO {
 			BufferedReader reader = new BufferedReader (new FileReader (dukeFile));
 			String data = reader.readLine ();
 			System.out.println ("File found. Reading file content:");
-			while (data != null) {
-				String[] arrData = data.split ("\\|");
-				if (data.startsWith ("T")) {
-					tasks.add (new Task (arrData[2]));
-				} else if (data.startsWith ("D")) {
-					tasks.add (new Deadline (arrData[2], arrData[3]));
-				} else {
-					String[] arrEvent = arrData[3].split ("-");
-					tasks.add (new Event (arrData[2], arrEvent[0], arrEvent[1]));
+			try {
+				while (data != null) {
+					String[] arrData = data.split ("\\|");
+					if (data.startsWith ("T")) {
+						tasks.add (new Task (arrData[2]));
+					} else if (data.startsWith ("D")) {
+						tasks.add (new Deadline (arrData[2], arrData[3]));
+					} else {
+						String[] arrEvent = arrData[3].split ("-");
+						tasks.add (new Event (arrData[2], arrEvent[0], arrEvent[1]));
+					}
+					tasks.get (count).setIsDone (arrData[1].equals (" 1 "));
+					count++;
+					data = reader.readLine ();
 				}
-				tasks.get (count).setIsDone (arrData[1].equals (" 1 "));
-				count++;
-				data = reader.readLine ();
+				reader.close ();
+			} catch (ArrayIndexOutOfBoundsException e) {
+				System.out.println ("File is empty");
 			}
-			reader.close ();
 		} catch (FileNotFoundException e) {
 			File fold = new File ("data");
 			fold.mkdir ();
