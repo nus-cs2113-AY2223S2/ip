@@ -7,13 +7,11 @@ import model.task.Task;
 import model.task.Todo;
 import tasklist.TaskList;
 import ui.Ui;
-import validator.Validator;
 import view.TaskView;
 
 public class TaskController {
 
   protected TaskView view = new TaskView();
-  protected Validator validator = new Validator();
   protected TaskList db = TaskList.getInstance();
   protected Ui ui = new Ui();
 

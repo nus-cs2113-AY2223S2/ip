@@ -1,9 +1,9 @@
-package validator.error;
+package exception;
 
-public class InvalidTaskError extends Exception {
+public class DukeException extends Exception {
     String description;
 
-    public InvalidTaskError(String description) {
+    public DukeException(String description) {
         this.description = description;
     }
 

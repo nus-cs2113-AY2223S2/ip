@@ -1,9 +1,8 @@
 package parser;
 
 import constants.Command;
-import constants.ErrorMessage;
+import exception.DukeException;
 import ui.Ui;
-import validator.error.InvalidTaskError;
 
 import java.util.HashMap;
 import java.util.regex.PatternSyntaxException;
@@ -23,12 +22,12 @@ public class Parser {
         return dictionary;
     }
 
-    protected HashMap<String, String> handleDeadline(String text) throws InvalidTaskError {
+    protected HashMap<String, String> handleDeadline(String text) throws DukeException {
         try {
             HashMap<String, String> dictionary = new HashMap<String, String>();
             String[] words = text.split(BY);
             if (words.length == 1) {
-                throw new InvalidTaskError("No description has been provided");
+                throw new DukeException("No description has been provided");
             }
             dictionary.put(COMMAND, Command.DEADLINE);
             String description = words[0].trim();
@@ -55,12 +54,12 @@ public class Parser {
         return dictionary;
     }
 
-    protected HashMap<String, String> handleEvent(String text) throws InvalidTaskError {
+    protected HashMap<String, String> handleEvent(String text) throws DukeException {
         HashMap<String, String> dictionary = new HashMap<String, String>();
         dictionary.put(COMMAND, Command.EVENT);
         String[] words = text.split("/");
         if (words.length != 3) {
-            throw new InvalidTaskError("Invalid input");
+            throw new DukeException("Invalid input");
         }
 
         String start = "";
@@ -78,11 +77,11 @@ public class Parser {
         }
 
         if (numOfEnd == 0 && numOfStart == 0) {
-            throw new InvalidTaskError("No start or end provided");
+            throw new DukeException("No start or end provided");
         }
 
         if (numOfEnd > 1 || numOfStart > 1) {
-            throw new InvalidTaskError("You did not provide a description");
+            throw new DukeException("You did not provide a description");
         }
 
         for (int i = 0; i < 3; ++i) {
@@ -103,36 +102,27 @@ public class Parser {
         return dictionary;
     }
 
-    public HashMap<String, String> parse(String input) {
+    public HashMap<String, String> parse(String input) throws DukeException {
         input = input.trim();
         String[] words = input.split(" ", 2);
         String command = words[0];
-        HashMap<String, String> dictionary = new HashMap<String, String>();
 
-        try {
-            switch (command) {
-            case Command.LIST:
-            case Command.BYE:
-                return handleOthers(command);
-            case Command.TODO:
-                return handleTodo(words[1]);
-            case Command.MARK:
-            case Command.UNMARK:
-            case Command.DELETE:
-                return handleMarkAndDelete(words[1], command);
-            case Command.DEADLINE:
-                return handleDeadline(words[1]);
-            case Command.EVENT:
-                return handleEvent(words[1]);
-            }
-        } catch (IndexOutOfBoundsException e) {
-            ui.printMessage(ErrorMessage.NO_DESCRIPTION.message);
-        } catch (NumberFormatException e) {
-            ui.printMessage(ErrorMessage.INVALID_NUMBER.message);
-        } catch (Exception e) {
-            ui.printf("Server error %s\n", e.getMessage());
+        switch (command) {
+        case Command.LIST:
+        case Command.BYE:
+            return handleOthers(command);
+        case Command.TODO:
+            return handleTodo(words[1]);
+        case Command.MARK:
+        case Command.UNMARK:
+        case Command.DELETE:
+            return handleMarkAndDelete(words[1], command);
+        case Command.DEADLINE:
+            return handleDeadline(words[1]);
+        case Command.EVENT:
+            return handleEvent(words[1]);
+        default:
+            throw new DukeException("Invalid command");
         }
-
-        return dictionary;
     }
 }
