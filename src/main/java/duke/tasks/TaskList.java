@@ -8,6 +8,8 @@ import duke.exceptions.NoTaskException;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TaskList {
     private static GsonBuilder builder = new GsonBuilder();
@@ -49,22 +51,26 @@ public class TaskList {
             }
             tasks.get(id).setIsCompleted(isCompleted);
             String output = isCompleted
-                    ? MESSAGE_TASKS_MARKED + "\n"
-                    : MESSAGE_TASKS_UNMARKED + "\n";
+                            ? MESSAGE_TASKS_MARKED + "\n"
+                            : MESSAGE_TASKS_UNMARKED + "\n";
             output += tasks.get(id).describe();
             return output;
         } catch (IndexOutOfBoundsException e) {
             throw (tasks.size() == 0)
-                    ? new NoTaskException()
-                    : new InvalidInputIDException();
+                  ? new NoTaskException()
+                  : new InvalidInputIDException();
         }
     }
 
     public String listAll() {
+        return listAll(tasks);
+    }
+
+    public static String listAll(ArrayList<Task> tasks) {
         StringBuilder output = new StringBuilder();
         output.append(tasks.size() == 0
-                ? MESSAGE_TASKS_NONE
-                : MESSAGE_TASKS_AVAILABLE + "\n");
+                      ? MESSAGE_TASKS_NONE
+                      : MESSAGE_TASKS_AVAILABLE + "\n");
 
         // adds tasks to output, if any
         // combine details of tasks into a single string
@@ -75,6 +81,23 @@ public class TaskList {
                   .append("\n");
         }
         return output.toString();
+    }
+
+    public String find(String keyword) throws NoTaskException {
+        ArrayList<Task> matchingTasks = new ArrayList<>();
+        Pattern pattern = Pattern.compile(keyword, Pattern.CASE_INSENSITIVE);
+        for (Task task : tasks) {
+            Matcher matcher = pattern.matcher(task.describe());
+            if (matcher.find()) {
+                matchingTasks.add(task);
+            }
+        }
+
+        if (matchingTasks.size() == 0) {
+            throw new NoTaskException();
+        }
+
+        return listAll(matchingTasks);
     }
 
     public ArrayList<Task> fromJson(String json) {
