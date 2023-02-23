@@ -56,6 +56,18 @@ public class TaskList extends ArrayList<Task> {
         return deletedTask;
     }
 
+    public TaskList findTask(String message) {
+        TaskList tasksFound = new TaskList();
+        String keyword = duke.Parser.parseKeyword(message);
+        for (Task task : this) {
+            String taskDescription = task.getDescription();
+            if (taskDescription.contains(keyword)) {
+                tasksFound.add(task);
+            }
+        }
+        return tasksFound;
+    }
+
     public void loadTaskList(String fileContent) {
         String[] lines = fileContent.split("\n");
         for (String line : lines) {
