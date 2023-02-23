@@ -67,5 +67,16 @@ public class DukeCommands {
         System.out.println("    [" + list.get(taskIndex - 1).getTaskType() + "] " + "[" + list.get(taskIndex - 1).getStatusIcon() + "] " + list.get(taskIndex - 1).toString());
         System.out.println("  was discarded. ");
         list.remove(taskIndex - 1);
+        System.out.println(spacer);
+    }
+    
+    public static void findTask(String findTaskName) {
+        System.out.println("  Here are the matching Tasks: ");
+        for (DukeTasks dukeTasks : list) {
+            if (dukeTasks.description.contains(findTaskName)) {
+                System.out.println("    [" + dukeTasks.getTaskType() + "] " + "[" + dukeTasks.getStatusIcon() + "] " + dukeTasks.toString());
+            }
+        }
+        System.out.println(spacer);
     }
 }

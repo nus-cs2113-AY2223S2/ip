@@ -43,6 +43,8 @@ public class Duke extends DukeCommands{
                 DukeSave.saveDukeToFile(list);
             } else if (word.equals("load")) {
                 list = DukeSave.loadDukeFromFile();
+            } else if (word.startsWith("find ")) {
+                findTask(word.replaceFirst("find ", ""));
             } else {
                 DukeCommands.addToList(word);
             }
