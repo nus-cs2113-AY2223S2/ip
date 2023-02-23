@@ -1,9 +1,32 @@
+Adapted from [AB3 User Guide](https://se-education.org/addressbook-level3/UserGuide.html).
+
 # User Guide
 Welcome to Duke, an organiser to help you keep track of your tasks!
 
+## Table of contents
+- [User Guide](#user-guide)
+    * [Set-up](#set-up)
+    * [Command summary](#command-summary)
+    * [Features](#features)
+        + [`help` - Viewing help](#-help----viewing-help)
+        + [`list` - Listing all saved tasks](#-list----listing-all-saved-tasks)
+        + [`todo` - Adding a ToDo](#-todo----adding-a-todo)
+        + [`deadline` - Adding a Deadline](#-deadline----adding-a-deadline)
+        + [`event` - Adding an Event](#-event----adding-an-event)
+        + [`mark` - Marking done](#-mark----marking-done)
+        + [`unmark` - Marking not done](#-unmark----marking-not-done)
+        + [`delete` - Deleting a task](#-delete----deleting-a-task)
+        + [`find` - Finding a task](#-find----finding-a-task)
+        + [`date` - Find tasks on date](#-date----find-tasks-on-date)
+        + [`bye` - Exiting the program](#-bye----exiting-the-program)
+        + [Loading and saving of data](#loading-and-saving-of-data)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
+
 ## Set-up
 1. Ensure that you have Java `11` or above installed on your Computer. 
-2. Download the latest `ip.jar` from [here](). 
+2. Download the latest `ip.jar` from [here](https://github.com/honglinshang/ip/releases/tag/v2.0). 
 3. Copy the file to the folder you want to use as the *home folder* for Duke.
 3. Open a command terminal, cd into the folder you put the jar file in, and use the 
 `java -jar ip.jar` command to run the application

@@ -1,5 +1,7 @@
 # Contributors
 
+User Guide adapted from [AB3 User Guide](https://se-education.org/addressbook-level3/UserGuide.html).
+
 Display | Name | Github Profile | Homepage
 ---|:---:|:---:|:---:
 ![](https://avatars0.githubusercontent.com/u/22460123?s=100) | Jeffry Lum | [Github](https://github.com/j-lum/) | [Homepage](https://se.kasugano.moe)
