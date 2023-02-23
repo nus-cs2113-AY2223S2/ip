@@ -3,6 +3,9 @@ package duke.exceptions;
 import duke.parser.DateTimeParser;
 import duke.tasks.TaskEnum;
 
+/**
+ * Exception when the input task command does not follow the required format.
+ */
 public class InvalidTaskFormatException extends Exception {
     private static final String MESSAGE_HEADER = "Invalid input format!\n"
             + "Use the following format to create a new task:\n";
@@ -15,10 +18,20 @@ public class InvalidTaskFormatException extends Exception {
             + "/to <" + DATE_FORMAT + ">\n";
     private final TaskEnum id;
 
+    /**
+     * Class constructor for the task the user is trying to create.
+     *
+     * @param t TaskEnum corresponding to the task type
+     */
     public InvalidTaskFormatException(TaskEnum t) {
         this.id = t;
     }
 
+    /**
+     * Get the input format of the task the user is attempting to create.
+     *
+     * @return The error message
+     */
     @Override
     public String getMessage() {
         String msg = MESSAGE_HEADER;

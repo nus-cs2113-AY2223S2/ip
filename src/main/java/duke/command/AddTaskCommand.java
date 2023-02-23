@@ -4,8 +4,11 @@ import duke.tasks.Task;
 import duke.tasklist.TaskList;
 import duke.ui.UI;
 
+/**
+ * Adds a new task to the list.
+ */
 public class AddTaskCommand extends Command {
-    private final Task taskObj;
+    private Task taskObj;
 
     public AddTaskCommand(Task taskObj) {
         this.taskObj = taskObj;

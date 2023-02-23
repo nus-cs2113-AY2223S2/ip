@@ -3,6 +3,9 @@ package duke.command;
 import duke.tasklist.TaskList;
 import duke.ui.UI;
 
+/**
+ * Updates the status of a task in the list.
+ */
 public class CommandMarking extends Command {
     private final int taskNum;
     private final boolean isMark;

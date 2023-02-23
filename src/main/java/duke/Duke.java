@@ -9,6 +9,10 @@ import duke.ui.UI;
 import java.util.Scanner;
 
 
+/**
+ * The main controller for the task manager. Runs indefinitely until the exit keyword is input by the user. Input
+ * data is saved in the JSON format under the directory {projectDirectory}/data/save.txt.
+ */
 public class Duke {
     public static void main(String[] args) {
         UI ui = new UI();

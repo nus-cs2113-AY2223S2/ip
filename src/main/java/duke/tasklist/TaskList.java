@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * A list used to store and access all tasks created.
+ */
 public class TaskList {
     private static final String MESSAGE_TASKS_MARKED = "Nice! I've marked this task as done:";
     private static final String MESSAGE_TASKS_UNMARKED = "OK, I've marked this task as not done yet:";
@@ -15,18 +18,40 @@ public class TaskList {
     private static final String MESSAGE_TASKS_NONE = "There are no tasks available.";
     private static ArrayList<Task> tasks = new ArrayList<>();
 
+    /**
+     * Initialise the object using JSON string.
+     *
+     * @param json String to be deserialized
+     */
     public TaskList(String json) {
         tasks = JsonParser.fromJson(json);
     }
 
+    /**
+     * Add a task to the list.
+     *
+     * @param taskObj Task object to be added
+     */
     public void add(Task taskObj) {
         tasks.add(taskObj);
     }
 
+    /**
+     * Get the size of the list.
+     *
+     * @return Integer
+     */
     public int size() {
         return tasks.size();
     }
 
+    /**
+     * Delete a task from the list.
+     *
+     * @param id 1-based ID corresponding to the task
+     * @return Copy of the task deleted
+     * @throws InvalidInputIDException If the given ID is invalid
+     */
     public Task delete(int id) throws InvalidInputIDException {
         if (id < 1 || id > tasks.size()) {
             throw new InvalidInputIDException();
@@ -36,10 +61,19 @@ public class TaskList {
         return temp;
     }
 
-    public String setStatus(int id, boolean isCompleted) throws Exception {
+    /**
+     * Set the completion status of a task
+     *
+     * @param id          1-based ID corresponding to the task
+     * @param isCompleted The completion status
+     * @return String describing the action completed and task changed
+     * @throws NoTaskException         If the list is empty
+     * @throws InvalidInputIDException If the given ID is invalid
+     */
+    public String setStatus(int id, boolean isCompleted) throws NoTaskException, InvalidInputIDException {
         try {
-            if (id >= tasks.size() || id < 0) {
-                throw new IndexOutOfBoundsException();
+            if (tasks.size() == 0) {
+                throw new NoTaskException();
             }
             tasks.get(id).setIsCompleted(isCompleted);
             String output = isCompleted
@@ -48,30 +82,42 @@ public class TaskList {
             output += tasks.get(id).describe();
             return output;
         } catch (IndexOutOfBoundsException e) {
-            throw (tasks.size() == 0)
-                  ? new NoTaskException()
-                  : new InvalidInputIDException();
+            throw new InvalidInputIDException();
         }
     }
 
-    public String listAll() {
+    /**
+     * Lists all the tasks available in the list with their corresponding id
+     * @return String containing the tasks
+     * @throws NoTaskException If the list is empty
+     */
+    public String listAll() throws NoTaskException {
         return listAll(tasks);
     }
 
-    public static String listAll(ArrayList<Task> tasks) {
-        StringBuilder output = new StringBuilder();
-        output.append(tasks.size() == 0
-                      ? MESSAGE_TASKS_NONE
-                      : MESSAGE_TASKS_AVAILABLE + "\n");
+    /**
+     * Lists all the tasks available in the list with their corresponding id
+     * @param tasks ArrayList containing the tasks
+     * @return String containing the tasks
+     * @throws NoTaskException If the list is empty
+     */
+    public static String listAll(ArrayList<Task> tasks) throws NoTaskException {
+        if (tasks.size() == 0) {
+            throw new NoTaskException();
+        }
 
         // adds tasks to output, if any
         // combine details of tasks into a single string
+        StringBuilder output = new StringBuilder(MESSAGE_TASKS_AVAILABLE);
+        output.append(System.lineSeparator());
+
         for (int i = 0; i < tasks.size(); ++i) {
             output.append(i + 1)
                   .append(".") // number
                   .append(tasks.get(i).describe())
-                  .append("\n");
+                  .append(System.lineSeparator());
         }
+
         return output.toString();
     }
 

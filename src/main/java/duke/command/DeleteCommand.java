@@ -4,6 +4,10 @@ import duke.tasks.Task;
 import duke.tasklist.TaskList;
 import duke.ui.UI;
 
+
+/**
+ * Deletes the task ID from the list.
+ */
 public class DeleteCommand extends Command {
     private final int deleteId;
 

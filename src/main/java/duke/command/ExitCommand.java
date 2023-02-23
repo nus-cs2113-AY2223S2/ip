@@ -3,6 +3,9 @@ package duke.command;
 import duke.tasklist.TaskList;
 import duke.ui.UI;
 
+/**
+ * Exits the program.
+ */
 public class ExitCommand extends Command {
     public ExitCommand() {
         this.isExitCommand = true;

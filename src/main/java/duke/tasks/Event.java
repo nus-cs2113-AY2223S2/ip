@@ -14,6 +14,11 @@ public class Event extends Task {
         this.to = to;
     }
 
+    /**
+     * Describes the task with its status, description, event start and end details.
+     *
+     * @return String describing the task
+     */
     @Override
     public String describe() {
         return getCheckbox(true, MARKER)
