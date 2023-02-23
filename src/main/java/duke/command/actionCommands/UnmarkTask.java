@@ -3,6 +3,7 @@ package duke.command.actionCommands;
 import duke.command.Command;
 import duke.exception.InvalidTaskException;
 import duke.tasks.Task;
+import duke.tasks.TaskList;
 
 import java.util.ArrayList;
 
@@ -11,7 +12,7 @@ import static duke.main.Duke.taskCount;
 
 public class UnmarkTask extends Command {
     @Override
-    public void processCommand(ArrayList<Task> tasksList, String line) throws InvalidTaskException {
+    public void processCommand(TaskList tasksList, String line) throws InvalidTaskException {
         int taskIndex = Integer.parseInt(line);
         if (taskIndex > taskCount || taskIndex < 1) {
             throw new InvalidTaskException();

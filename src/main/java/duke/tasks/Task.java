@@ -1,10 +1,16 @@
 package duke.tasks;
 
+import java.time.format.DateTimeFormatter;
+
+import static duke.main.Duke.printHorizontalLine;
+import static duke.main.Duke.taskCount;
+
 public class Task {
     private String description;
     private boolean isDone;
 
     private String type;
+    public static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MMM d yyyy ha");
 
 
     public Task(String description) {
@@ -39,5 +45,12 @@ public class Task {
     @Override
     public String toString() {
         return "[" + this.getStatusIcon() + "] " + this.description;
+    }
+
+    public void printAdded() {
+        printHorizontalLine();
+        System.out.println(
+                "Got it. I've added this task:\n" + this + "\nNow you have " + (taskCount + 1) + " in the list");
+        printHorizontalLine();
     }
 }

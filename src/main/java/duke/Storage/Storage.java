@@ -1,25 +1,36 @@
-package duke.fileOperation;
+package duke.Storage;
 
 
 import duke.tasks.*;
 
 
 import java.io.*;
+import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.zip.DataFormatException;
+
+import static duke.tasks.Deadline.dateTimeFormatter;
 
 import static duke.main.Duke.taskCount;
 
-public class FileOperation {
-    public static void initFile() throws IOException {
-        File newFile = new File("./taskslist.csv");
+public class Storage {
+    private final String filepath;
+
+    public Storage(String filepath) {
+        this.filepath = filepath;
+    }
+
+    public void initFile() throws IOException {
+        File newFile = new File(this.filepath);
         if (!newFile.exists()) {
             newFile.createNewFile();
         }
     }
 
-    public static void loadFile(ArrayList<Task> tasksList) throws FileNotFoundException {
-        File file = new File("./taskslist.csv");
+    public void loadFile(TaskList tasksList) throws FileNotFoundException, ParseException, DataFormatException {
+        File file = new File(this.filepath);
         Scanner s = new Scanner(file);
         while (s.hasNext()) {
             String input = s.nextLine();
@@ -36,7 +47,7 @@ public class FileOperation {
                 }
                 break;
             case "D":
-                newTask = new Deadline(args[2], args[3]);
+                newTask = new Deadline(args[2], LocalDateTime.parse(args[3].trim(), dateTimeFormatter));
                 tasksList.add(newTask);
                 taskCount++;
                 if (!args[1].equals(" ")) {
@@ -44,7 +55,7 @@ public class FileOperation {
                 }
                 break;
             case "E":
-                newTask = new Event(args[2], args[3], args[4]);
+                newTask = new Event(args[2], LocalDateTime.parse(args[3].trim(), dateTimeFormatter), LocalDateTime.parse(args[4].trim(), dateTimeFormatter));
                 tasksList.add(newTask);
                 taskCount++;
                 if (!args[1].equals(" ")) {
@@ -57,7 +68,7 @@ public class FileOperation {
 
     }
 
-    public static void updateFile(ArrayList<Task> tasksList) throws IOException {
+    public static void updateFile(TaskList tasksList) throws IOException {
         FileWriter overwriteFile = new FileWriter("./taskslist.csv");
         for (int i = 0; i < taskCount; i++) {
             Task task = tasksList.get(i);
