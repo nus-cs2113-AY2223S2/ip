@@ -8,6 +8,9 @@ import siri.task.Event;
 import siri.task.Task;
 import siri.task.ToDo;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLOutput;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -19,9 +22,10 @@ import java.io.IOException;
 
 public class Duke {
 
+    private static final String TASK_FILE = "data/tasklists.txt";
     private static ArrayList<Task> tasks = new ArrayList<>();
-    //private static Task[] tasks = new Task[100];
     private static int indexOfTask = 0;
+    private static File file = new File(TASK_FILE);
 
     public static void drawLine() {
         System.out.println("=====================================================================================");
@@ -93,7 +97,7 @@ public class Duke {
             break;
         }
 
-        appendToFile(getFilePath(), tasks.get(indexOfTask).toFileString());
+        appendToFile(TASK_FILE, tasks.get(indexOfTask).toFileString());
     }
 
     public static void deleteTask(String taskNumberString) {
@@ -117,8 +121,8 @@ public class Duke {
         System.out.println("Now you have " + (indexOfTask - 1) + " tasks in the list.");
     }
 
-    public static void overwriteEntireList(String filePath) throws IOException {
-        FileWriter fw = new FileWriter(filePath);
+    public static void overwriteEntireList() throws IOException {
+        FileWriter fw = new FileWriter(TASK_FILE);
         for(int i = 0; i < indexOfTask; ++i){
             fw.write(tasks.get(i).toFileString() + System.lineSeparator());
         }
@@ -184,14 +188,13 @@ public class Duke {
         }
     }
 
-    private static String getFilePath(){
-        String filePath = "data/tasklist.txt";
-        return filePath;
+    private static void createFile() throws IOException {
+        Path path = Paths.get(TASK_FILE);
+        Files.createDirectories(path.getParent());
+        file.createNewFile();
     }
     private static void readFile() throws FileNotFoundException {
-        File f = new File("data/tasklist.txt");
-
-        Scanner s = new Scanner(f);
+        Scanner s = new Scanner(file);
         while (s.hasNext()){
             String[] command = s.nextLine().split(" | ", 2);
             loadPreviousTasks(command[0], command[1]);
@@ -205,11 +208,11 @@ public class Duke {
         fw.close();
     }
     public static void main(String[] args) throws IOException {
-
         try {
             readFile();
         } catch(FileNotFoundException e){
-            System.out.println("File not found.");
+            createFile();
+            //System.out.println("File not found.");
         }
 
         String logo = "  ______     __     __  _____     __\n"
@@ -258,7 +261,7 @@ public class Duke {
             input = in.nextLine().trim();
         }
 
-        overwriteEntireList(getFilePath());
+        overwriteEntireList();
         sayGoodbye();
     }
 }
