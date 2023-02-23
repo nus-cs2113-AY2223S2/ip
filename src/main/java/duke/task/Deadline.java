@@ -2,6 +2,7 @@ package duke.task;
 
 import duke.Parser;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -27,6 +28,14 @@ public class Deadline extends Task {
 
     public String getBy(DateTimeFormatter pattern) {
         return Parser.parseDateTime(by, byString, pattern);
+    }
+
+    @Override
+    public Boolean isOnDate(LocalDate date) {
+        if (by != null && date.isEqual(by.toLocalDate())) {
+            return true;
+        }
+        return false;
     }
 
     @Override

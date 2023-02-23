@@ -2,6 +2,7 @@ package duke.task;
 
 import duke.Parser;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -37,6 +38,25 @@ public class Event extends Task {
 
     public String getTo(DateTimeFormatter pattern) {
         return Parser.parseDateTime(to, toString, pattern);
+    }
+
+    @Override
+    public Boolean isOnDate(LocalDate date) {
+        if (from != null) {
+            if (date.isEqual(from.toLocalDate())) {
+                return true;
+            }
+            if (date.isBefore(from.toLocalDate())) {
+                return false;
+            }
+            if (to != null && date.isBefore(to.toLocalDate())) {
+                return true;
+            }
+        }
+        if (to != null && date.isEqual(to.toLocalDate())) {
+            return true;
+        }
+        return false;
     }
 
     @Override

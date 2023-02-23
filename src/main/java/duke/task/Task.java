@@ -1,5 +1,6 @@
 package duke.task;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public abstract class Task {
@@ -31,6 +32,10 @@ public abstract class Task {
 
     public void setDone(boolean done) {
         isDone = done;
+    }
+
+    public Boolean isOnDate(LocalDate date) {
+        return false;
     }
 
     @Override
