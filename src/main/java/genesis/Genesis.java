@@ -3,10 +3,7 @@ package genesis;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import task.Deadline;
-import task.Event;
 import task.Task;
-import task.Todo;
 
 import utility.ConsolePrinter;
 import utility.FileHandler;
@@ -33,78 +30,7 @@ public class Genesis {
         }
     }
 
-    private void handleListTasks() throws GenesisException {
-        if (tasks.size() < 1) {
-            throw new GenesisException("List is empty, nothing to show");
-        }
-
-        ConsolePrinter.listTasks(tasks);
-    }
-
-    private void handleMarkTask(String content) {
-        int index = Integer.parseInt(content) - 1;
-        Task task = tasks.get(index);
-        task.setIsDone(true);
-
-        ConsolePrinter.onTaskMarked(task.getListDescription());
-    }
-
-    private void handleUnmarkTask(String content) {
-        int index = Integer.parseInt(content) - 1;
-        Task task = tasks.get(index);
-        task.setIsDone(false);
-
-        ConsolePrinter.onTaskUnmarked(task.getListDescription());
-    }
-
-    private void handleTodo(String description) throws GenesisException {
-        Todo todo = new Todo(description);
-        tasks.add(todo);
-
-        ConsolePrinter.onTaskAdded(todo.getListDescription(), tasks.size());
-    }
-
-    private void handleDeadline(String content) throws GenesisException {
-        String[] parts = content.split(" /by ", 2);
-        if (parts.length < 2) {
-            throw new GenesisException("Description for deadline is invalid");
-        }
-
-        String description = parts[0];
-        String by = parts[1];
-
-        Deadline deadline = new Deadline(description, by);
-        tasks.add(deadline);
-
-        ConsolePrinter.onTaskAdded(deadline.getListDescription(), tasks.size());
-    }
-
-    private void handleEvent(String content) throws GenesisException {
-        String[] parts = content.split(" /from | /to ", 3);
-        if (parts.length < 3) {
-            throw new GenesisException("Description for event is invalid");
-        }
-
-        String description = parts[0];
-        String from = parts[1];
-        String to = parts[2];
-
-        Event event = new Event(description, from, to);
-        tasks.add(event);
-
-        ConsolePrinter.onTaskAdded(event.getListDescription(), tasks.size());
-    }
-
-    private void handleDelete(String content) {
-        int index = Integer.parseInt(content) - 1;
-        Task task = tasks.remove(index);
-
-        ConsolePrinter.onTaskDelete(task.getListDescription(), tasks.size());
-    }
-
-
     private void validateIndex(String[] contentArr) throws GenesisException {
-
         if (contentArr.length < 2) {
             throw new GenesisException("Index cannot be empty");
         }
@@ -124,43 +50,42 @@ public class Genesis {
             String command = contentArr[0];
 
             switch (command) {
-            case "list": {
-                handleListTasks();
+            case "list":
+                CommandHandler.handleListTasks(tasks);
                 return;
-            }
-            case "mark": {
+
+            case "mark":
                 validateIndex(contentArr);
-                handleMarkTask(contentArr[1]);
+                CommandHandler.handleMarkTask(contentArr[1], tasks);
                 break;
-            }
-            case "unmark": {
+
+            case "unmark":
                 validateIndex(contentArr);
-                handleUnmarkTask(contentArr[1]);
+                CommandHandler.handleUnmarkTask(contentArr[1], tasks);
                 break;
-            }
-            case "todo": {
+
+            case "todo":
                 validateDescription(contentArr);
-                handleTodo(contentArr[1]);
+                CommandHandler.handleTodo(contentArr[1], tasks);
                 break;
-            }
-            case "deadline": {
+
+            case "deadline":
                 validateDescription(contentArr);
-                handleDeadline(contentArr[1]);
+                CommandHandler.handleDeadline(contentArr[1], tasks);
                 break;
-            }
-            case "event": {
+
+            case "event":
                 validateDescription(contentArr);
-                handleEvent(contentArr[1]);
+                CommandHandler.handleEvent(contentArr[1], tasks);
                 break;
-            }
-            case "delete": {
+
+            case "delete":
                 validateIndex(contentArr);
-                handleDelete(contentArr[1]);
+                CommandHandler.handleDelete(contentArr[1], tasks);
                 break;
-            }
-            default: {
+
+            default:
                 throw new UnknownCommandException("I'm sorry, but I don't know what that means :-(");
-            }
             }
 
             FileHandler.saveToFile(tasks);

@@ -1,12 +1,16 @@
 package utility;
 
+
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Properties;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
 
 import task.Task;
 import task.Todo;
@@ -16,12 +20,19 @@ import task.Event;
 import exception.GenesisException;
 
 public class FileHandler {
-    final static String DIR_PATH = "./store";
-    final static String FILE_PATH = "./store/genesis.txt";
+    final static String CONFIG_FILE_PATH = "src/config.properties";
 
     public static void saveToFile(ArrayList<Task> tasks) throws IOException {
-        Files.createDirectories(Paths.get(DIR_PATH));
-        File file = new File(FILE_PATH);
+
+        FileInputStream propsInput = new FileInputStream(CONFIG_FILE_PATH);
+        Properties prop = new Properties();
+        prop.load(propsInput);
+
+        String filePath = prop.getProperty("GENESIS_STORE_FILE");
+        String dirPath = prop.getProperty("GENESIS_STORE_DIR");
+
+        Files.createDirectories(Paths.get(dirPath));
+        File file = new File(filePath);
         FileWriter fw = new FileWriter(file);
 
         for (Task task : tasks) {
@@ -36,7 +47,13 @@ public class FileHandler {
 
         ArrayList<Task> tasks = new ArrayList<>();
 
-        File file = new File(FILE_PATH);
+        FileInputStream propsInput = new FileInputStream(CONFIG_FILE_PATH);
+        Properties prop = new Properties();
+        prop.load(propsInput);
+
+        String filePath = prop.getProperty("GENESIS_STORE_FILE");
+
+        File file = new File(filePath);
         Scanner sc = new Scanner(file);
         sc.useDelimiter("\n");
 
