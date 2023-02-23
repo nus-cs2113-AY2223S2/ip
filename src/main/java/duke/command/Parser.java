@@ -1,10 +1,7 @@
 package duke.command;
 
 import duke.Storage.Storage;
-import duke.command.actionCommands.DeleteTask;
-import duke.command.actionCommands.ListTasks;
-import duke.command.actionCommands.MarkTask;
-import duke.command.actionCommands.UnmarkTask;
+import duke.command.actionCommands.*;
 import duke.command.taskCommands.DeadlineTask;
 import duke.command.taskCommands.EventTask;
 import duke.command.taskCommands.TodoTask;
