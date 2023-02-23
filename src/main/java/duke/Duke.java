@@ -1,6 +1,7 @@
 package duke;
 
 import duke.exceptions.DukeCreateDatabaseException;
+import duke.exceptions.DukeFileEmptyException;
 import duke.exceptions.DukeLoadDatabaseException;
 import duke.exceptions.DukeSaveDatabaseException;
 import duke.exceptions.DukeWrongArgsException;
@@ -272,6 +273,8 @@ public class Duke {
             } else {
                 ui.printMessage("Database file does not exist, creating one now!");
             }
+        } catch (DukeFileEmptyException error) {
+            ui.printMessage("Database file is empty!");
         } catch (DukeCreateDatabaseException error) {
             ui.printMessage("Unable to create database file!");
         } catch (DukeLoadDatabaseException error) {

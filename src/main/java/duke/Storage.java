@@ -1,6 +1,7 @@
 package duke;
 
 import duke.exceptions.DukeCreateDatabaseException;
+import duke.exceptions.DukeFileEmptyException;
 import duke.exceptions.DukeLoadDatabaseException;
 import duke.exceptions.DukeSaveDatabaseException;
 import duke.task.Deadline;
@@ -27,7 +28,8 @@ public class Storage {
      * @throws DukeCreateDatabaseException On failure to create new database file.
      * @throws DukeLoadDatabaseException   On failure to load past database file.
      */
-    protected String loadDatabase() throws DukeCreateDatabaseException, DukeLoadDatabaseException {
+    protected String loadDatabase()
+            throws DukeCreateDatabaseException, DukeLoadDatabaseException, DukeFileEmptyException {
         String fileContent;
         Path filepath = Paths.get("data", "duke.txt");
         File databaseFile = filepath.toFile();
@@ -86,7 +88,8 @@ public class Storage {
         return "";
     }
 
-    private String loadDatabaseFile(File databaseFile) throws DukeLoadDatabaseException {
+    private String loadDatabaseFile(File databaseFile)
+            throws DukeLoadDatabaseException, DukeFileEmptyException {
         try {
             FileReader fileReader = new FileReader(databaseFile);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -99,6 +102,11 @@ public class Storage {
 
             bufferedReader.close();
             fileReader.close();
+
+            if (fileContent.toString().isEmpty()) {
+                throw new DukeFileEmptyException();
+            }
+
             return fileContent.toString();
         } catch (IOException error) {
             throw new DukeLoadDatabaseException();

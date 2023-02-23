@@ -27,6 +27,15 @@ Here is the startup message if the file does not exist:
 ----------------------------------------------------------------------------------------------------
 ```
 
+Here is the startup message if the file exist but is empty:
+```
+----------------------------------------------------------------------------------------------------
+| Hello! I'm Duke                                                                                  |
+| Let me check the current list of tasks                                                           |
+| Database file is empty!                                                                          |
+----------------------------------------------------------------------------------------------------
+```
+
 ## Types of tasks
 
 Below are the 3 types of tasks supported:
