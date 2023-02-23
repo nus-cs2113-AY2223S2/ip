@@ -2,12 +2,14 @@ package duke;
 
 import duke.command.AddCommand;
 import duke.command.Command;
+import duke.command.DateCommand;
 import duke.command.ExitCommand;
 import duke.command.HelpCommand;
 import duke.command.ListCommand;
 import duke.command.MarkAndDelCommand;
 import duke.exception.EmptyTaskException;
 import duke.exception.IllegalCommandException;
+import duke.exception.InvalidDateTime;
 import duke.exception.InvalidDeadline;
 import duke.exception.InvalidEvent;
 
@@ -20,6 +22,7 @@ public class Parser {
     public static final String COMMAND_EXIT_WORD = "bye";
     public static final String COMMAND_HELP_WORD = "help";
     public static final String COMMAND_LIST_WORD = "list";
+    public static final String COMMAND_DATE_WORD = "date";
     public static final String COMMAND_MARK_WORD = "mark";
     public static final String COMMAND_UNMARK_WORD = "unmark";
     public static final String COMMAND_DELETE_WORD = "delete";
@@ -28,7 +31,8 @@ public class Parser {
     public static final String COMMAND_EVENT_WORD = "event";
 
     public static Command parseCommand(String userCommand)
-            throws EmptyTaskException, IllegalCommandException, NumberFormatException, InvalidDeadline, InvalidEvent {
+            throws EmptyTaskException, IllegalCommandException, NumberFormatException,
+            InvalidDeadline, InvalidEvent, InvalidDateTime {
         final String[] split = userCommand.trim().split("\\s+", 2);
         String command = split[0];
         switch (command) {
@@ -38,6 +42,11 @@ public class Parser {
             return new HelpCommand();
         case COMMAND_LIST_WORD:
             return new ListCommand();
+        case COMMAND_DATE_WORD:
+            if (split.length != 2) {
+                throw new InvalidDateTime();
+            }
+            return new DateCommand(split[1]);
         case COMMAND_MARK_WORD:
         case COMMAND_UNMARK_WORD:
         case COMMAND_DELETE_WORD:

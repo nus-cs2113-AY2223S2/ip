@@ -1,6 +1,9 @@
 package duke;
 
 import duke.task.Task;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -50,10 +53,22 @@ public class Ui {
 
     public static void printList(ArrayList<Task> allTasks) {
         if (allTasks.size()==0) {
-            System.out.println("There are no tasks in your list!\n");
+            System.out.println("There are no tasks in your list!");
             return;
         }
         System.out.println("Here are the tasks in your list:");
+        for (int i = 0; i < allTasks.size(); i++) {
+            System.out.println(i+1 + "." + allTasks.get(i));
+        }
+    }
+
+    public static void printDateList(ArrayList<Task> allTasks, LocalDate date) {
+        String dateString = date.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
+        if (allTasks.size()==0) {
+            System.out.println("There are no tasks on " + dateString + "!");
+            return;
+        }
+        System.out.println("Here are the tasks happening on " + dateString + ":");
         for (int i = 0; i < allTasks.size(); i++) {
             System.out.println(i+1 + "." + allTasks.get(i));
         }
@@ -105,6 +120,10 @@ public class Ui {
 
     public static void printInvalidEvent() {
         System.out.println("Please enter event as \"event [task] /from [date] /to [date]\".");
+    }
+
+    public void printInvalidDateTime() {
+        System.out.println("Please enter date in the format of yyyy-MM-dd.");
     }
 
     public static void printInvalidCommand() {

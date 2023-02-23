@@ -18,7 +18,7 @@ public class DateCommand extends Command {
             throw new InvalidDateTime();
         }
     }
-    
+
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         ui.printDateList(tasks.getTasksOnDate(date), date);

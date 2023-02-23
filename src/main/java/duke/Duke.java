@@ -3,6 +3,7 @@ package duke;
 import duke.command.Command;
 import duke.exception.EmptyTaskException;
 import duke.exception.IllegalCommandException;
+import duke.exception.InvalidDateTime;
 import duke.exception.InvalidDeadline;
 import duke.exception.InvalidEvent;
 import duke.task.Storage;
@@ -46,6 +47,8 @@ public class Duke {
                 ui.printInvalidDeadline();
             } catch (InvalidEvent e) {
                 ui.printInvalidEvent();
+            } catch (InvalidDateTime e) {
+                ui.printInvalidDateTime();
             } finally {
                 ui.showLine();
             }
