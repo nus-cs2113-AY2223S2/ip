@@ -1,11 +1,11 @@
 package duke.command;
 
 import duke.tasks.Task;
-import duke.tasks.TaskList;
+import duke.tasklist.TaskList;
 import duke.ui.UI;
 
-public class DeleteCommand extends Command{
-    private int deleteId;
+public class DeleteCommand extends Command {
+    private final int deleteId;
 
     public DeleteCommand(int deleteId) {
         this.deleteId = deleteId;

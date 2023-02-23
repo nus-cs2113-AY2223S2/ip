@@ -1,6 +1,6 @@
 package duke.command;
 
-import duke.tasks.TaskList;
+import duke.tasklist.TaskList;
 import duke.ui.UI;
 
 public class CommandMarking extends Command {

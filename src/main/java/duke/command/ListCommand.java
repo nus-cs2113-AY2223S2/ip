@@ -1,9 +1,9 @@
 package duke.command;
 
-import duke.tasks.TaskList;
+import duke.tasklist.TaskList;
 import duke.ui.UI;
 
-public class ListCommand extends Command{
+public class ListCommand extends Command {
     @Override
     public void executor(TaskList tasks, UI ui) {
         String output = tasks.listAll();

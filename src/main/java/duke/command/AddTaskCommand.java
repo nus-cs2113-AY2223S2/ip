@@ -1,7 +1,7 @@
 package duke.command;
 
 import duke.tasks.Task;
-import duke.tasks.TaskList;
+import duke.tasklist.TaskList;
 import duke.ui.UI;
 
 public class AddTaskCommand extends Command {

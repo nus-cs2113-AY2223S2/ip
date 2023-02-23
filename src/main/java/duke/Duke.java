@@ -2,7 +2,7 @@ package duke;
 
 import duke.command.Command;
 import duke.parser.InputParser;
-import duke.tasks.*;
+import duke.tasklist.TaskList;
 import duke.storage.Storage;
 import duke.ui.UI;
 
