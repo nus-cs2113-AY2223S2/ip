@@ -1,6 +1,8 @@
 package Duke.parser;
 
-
+/**
+ * Parser: deals with making sense of the user command
+ */
 public class parse {
 	public static String[] parseTask (String input) {
 
