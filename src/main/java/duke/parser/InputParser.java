@@ -1,12 +1,6 @@
 package duke.parser;
 
-import duke.command.AddTaskCommand;
-import duke.command.Command;
-import duke.command.DeleteCommand;
-import duke.command.ExitCommand;
-import duke.command.ListCommand;
-import duke.command.MarkCommand;
-import duke.command.UnmarkCommand;
+import duke.command.*;
 import duke.exceptions.InvalidCommandException;
 import duke.exceptions.InvalidDateTimeException;
 import duke.exceptions.InvalidInputIDException;
@@ -28,6 +22,7 @@ public class InputParser {
     private static final String COMMAND_DELETE = "delete";
     private static final String COMMAND_EVENT = "event";
     private static final String COMMAND_EXIT = "bye";
+    private static final String COMMAND_FIND = "find";
     private static final String COMMAND_LIST = "list";
     private static final String COMMAND_MARK = "mark";
     private static final String COMMAND_TODO = "todo";
@@ -148,6 +143,9 @@ public class InputParser {
             break;
         case COMMAND_DELETE:
             result = new DeleteCommand(getID(scanner));
+            break;
+        case COMMAND_FIND:
+            result = new FindCommand(scanner.nextLine());
             break;
         default:
             throw new InvalidCommandException();

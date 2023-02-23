@@ -5,6 +5,8 @@ import duke.exceptions.NoTaskException;
 import duke.tasks.Task;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TaskList {
     private static final String MESSAGE_TASKS_MARKED = "Nice! I've marked this task as done:";
@@ -53,6 +55,10 @@ public class TaskList {
     }
 
     public String listAll() {
+        return listAll(tasks);
+    }
+
+    public static String listAll(ArrayList<Task> tasks) {
         StringBuilder output = new StringBuilder();
         output.append(tasks.size() == 0
                       ? MESSAGE_TASKS_NONE
@@ -67,6 +73,23 @@ public class TaskList {
                   .append("\n");
         }
         return output.toString();
+    }
+
+    public String find(String keyword) throws NoTaskException {
+        ArrayList<Task> matchingTasks = new ArrayList<>();
+        Pattern pattern = Pattern.compile(keyword, Pattern.CASE_INSENSITIVE);
+        for (Task task : tasks) {
+            Matcher matcher = pattern.matcher(task.describe());
+            if (matcher.find()) {
+                matchingTasks.add(task);
+            }
+        }
+
+        if (matchingTasks.size() == 0) {
+            throw new NoTaskException();
+        }
+
+        return listAll(matchingTasks);
     }
 
     public String toJson() {
