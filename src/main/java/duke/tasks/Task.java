@@ -1,5 +1,7 @@
 package duke.tasks;
 
+import java.time.format.DateTimeFormatter;
+
 import static duke.main.Duke.printHorizontalLine;
 import static duke.main.Duke.taskCount;
 
@@ -10,11 +12,18 @@ public class Task {
     private String description;
     private boolean isDone;
 
+<<<<<<< HEAD
     /**
      * Construct a task object with taskName and task is marked as undone by default
      *
      * @param description
      */
+=======
+    private String type;
+    public static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MMM d yyyy ha");
+
+
+>>>>>>> master
     public Task(String description) {
         this.description = description;
         this.isDone = false;

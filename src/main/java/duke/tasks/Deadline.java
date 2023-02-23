@@ -1,22 +1,43 @@
 package duke.tasks;
 
+
 /**
  * One of the three task type (todo, deadline, event)
  */
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.DateTimeException;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Date;
+import java.util.zip.DataFormatException;
+
+import static duke.main.Duke.taskCount;
+
 public class Deadline extends Task {
-    private String by;
+    private LocalDateTime deadline;
+
 
     /**
      * @param description tasks name
-     * @param by          deadline of task
+     * @param deadline    deadline of task
      */
-    public Deadline(String description, String by) {
+
+    public Deadline(String description, LocalDateTime deadline) throws DataFormatException {
+
         super(description);
-        this.by = by;
+        this.deadline = deadline;
+    }
+
+    public String formatDeadline() {
+        return this.deadline.format(DateTimeFormatter.ofPattern("MMM d yyyy ha "));
     }
 
     public String getDeadline() {
-        return this.by;
+        return this.formatDeadline();
     }
 
     @Override
@@ -26,7 +47,7 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + this.by + ")";
+        return "[D]" + super.toString() + " (by: " + this.formatDeadline() + ")";
     }
 
 
