@@ -1,9 +1,15 @@
 package duke;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 /**
  * Class that parses user input into commands
  */
 public class Parser {
+
+    public static final DateTimeFormatter storedDateFormat = DateTimeFormatter.ofPattern("MMM d yyyy");
+    public static final DateTimeFormatter inputDateFormat = DateTimeFormatter.ISO_LOCAL_DATE;
 
     /**
      * Returns the parsed command from the user input
@@ -60,7 +66,7 @@ public class Parser {
      * @return Task numbers stored as a string array
      * @throws DukeException if the task numbers are invalid
      */
-    protected static String[] getTaskNumbers(String userInput) throws DukeException{
+    private static String[] getTaskNumbers(String userInput) throws DukeException{
         userInput = userInput.trim();
         int indexOfFirstSpace = userInput.indexOf(" ");
         if(indexOfFirstSpace == -1 || indexOfFirstSpace == userInput.length() - 1){
@@ -80,7 +86,7 @@ public class Parser {
      * @return additional parameters for todo class
      * @throws DukeException if the parameters are invalid
      */
-    protected static String[] getToDoAdditionalParameters(String userInput) throws DukeException{
+    private static String[] getToDoAdditionalParameters(String userInput) throws DukeException{
         String[] additionalParameters = new String[1];
         int indexOfFirstSpace = userInput.indexOf(" ");
         if(indexOfFirstSpace == -1){
@@ -101,14 +107,14 @@ public class Parser {
      * @return additional parameters for deadline task
      * @throws DukeException if the parameters are invalid
      */
-    protected static String[] getDeadlineAdditionalParameters(String userInput) throws DukeException{
+    private static String[] getDeadlineAdditionalParameters(String userInput) throws DukeException{
         int indexOfFirstSpace = userInput.indexOf(" ");
         int indexOfBy =  userInput.indexOf(CommandInputs.ADD_DEADLINE_BY_COMMAND_INPUT);
         if(indexOfFirstSpace == -1){
             throw new TaskNameException(CommandInputs.ADD_DEADLINE_COMMAND_INPUT);
         }
         if(indexOfBy == -1 || indexOfBy < indexOfFirstSpace){
-            throw new TaskParameterException(CommandInputs.ADD_DEADLINE_COMMAND_INPUT);
+            throw new DeadlineParameterException();
         }
         String name = userInput.substring(indexOfFirstSpace,indexOfBy).trim();
         String by = userInput.substring(indexOfBy + CommandInputs.ADD_DEADLINE_BY_COMMAND_INPUT.length()).trim();
@@ -117,10 +123,12 @@ public class Parser {
             throw new TaskNameException(CommandInputs.ADD_DEADLINE_COMMAND_INPUT);
         }
         if(!isDateValid(by)){
-            throw new TaskParameterException(CommandInputs.ADD_DEADLINE_COMMAND_INPUT);
+            throw new TaskDateFormatException(CommandInputs.ADD_DEADLINE_COMMAND_INPUT);
         }
+        // Parse with same formatter as when stored, since the same function is used to parse stored data as user input
+        LocalDate byLocalDate = LocalDate.parse(by, inputDateFormat);
         additionalParameters[0] = name;
-        additionalParameters[1] = by;
+        additionalParameters[1] = byLocalDate.format(storedDateFormat);
         return additionalParameters;
     }
 
@@ -131,7 +139,7 @@ public class Parser {
      * @return additional parameters for an event task
      * @throws DukeException if the parameters are invalid
      */
-    protected static String[] getEventAdditionalParameters(String userInput) throws DukeException{
+    private static String[] getEventAdditionalParameters(String userInput) throws DukeException{
         int indexOfFirstSpace = userInput.indexOf(" ");
         int indexOfFrom = userInput.indexOf(CommandInputs.ADD_EVENT_FROM_COMMAND_INPUT);
         int indexOfTo = userInput.indexOf(CommandInputs.ADD_EVENT_TO_COMMAND_INPUT);
@@ -139,7 +147,7 @@ public class Parser {
             throw new TaskNameException(CommandInputs.ADD_EVENT_COMMAND_INPUT);
         }
         if(indexOfFrom == -1 || indexOfTo == -1 || indexOfFrom < indexOfFirstSpace || indexOfTo < indexOfFirstSpace){
-            throw new TaskParameterException(CommandInputs.ADD_EVENT_COMMAND_INPUT);
+            throw new EventParameterException();
         }
         String[] additionalParameters = new String[3];
         String name;
@@ -158,19 +166,36 @@ public class Parser {
             throw new TaskNameException(CommandInputs.ADD_EVENT_COMMAND_INPUT);
         }
         if(!isDateValid(from) || !isNameValid(to)){
-            throw new TaskParameterException(CommandInputs.ADD_EVENT_COMMAND_INPUT);
+            throw new TaskDateFormatException(CommandInputs.ADD_EVENT_COMMAND_INPUT);
+        }
+
+        // Parse with the same formatter as when stored, since same function is used to parse stored data as user input
+        LocalDate fromLocalDate = LocalDate.parse(from, inputDateFormat);
+        LocalDate toLocalDate = LocalDate.parse(to, inputDateFormat);
+        if(toLocalDate.isBefore(fromLocalDate)){
+            throw new TaskDateOrderException(CommandInputs.ADD_EVENT_COMMAND_INPUT);
         }
         additionalParameters[0] = name;
-        additionalParameters[1] = from;
-        additionalParameters[2] = to;
+        additionalParameters[1] = fromLocalDate.format(storedDateFormat);
+        additionalParameters[2] = toLocalDate.format(storedDateFormat);
         return additionalParameters;
     }
 
-    protected static boolean isNameValid(String name){
+    private static boolean isNameValid(String name){
         return !name.isEmpty();
     }
 
-    protected static boolean isDateValid(String date){
-        return !date.isEmpty();
+    private static boolean isDateValid(String date){
+        if(date.isEmpty()){
+            return false;
+        }
+        try{
+            String[] dateParameters = date.split("-");
+            // Check if date can be parsed
+            LocalDate.parse(date, inputDateFormat);
+        }catch (Exception e){
+            return false;
+        }
+        return true;
     }
 }
