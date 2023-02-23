@@ -12,19 +12,19 @@ public abstract class Task {
         this.type = type;
     }
 
-    public void setDescription(String description){
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    public String getDescription(){
+    public String getDescription() {
         return description;
     }
 
-    public void setIsDone(boolean isDone){
+    public void setIsDone(boolean isDone) {
         this.isDone = isDone;
     }
 
-    public boolean getIsDone(){
+    public boolean getIsDone() {
         return isDone;
     }
 
@@ -32,18 +32,18 @@ public abstract class Task {
         return (isDone ? "X" : " "); // mark done task with X
     }
 
-    public char getTypeIcon(){
+    public char getTypeIcon() {
         return type;
     }
 
-    public void mark(boolean done){
+    public void mark(boolean done) {
         isDone = done;
     }
 
     public abstract String getTimeBound();
 
     @Override
-    public String toString(){
+    public String toString() {
         return ("[" + getTypeIcon() + "] " + "[" + getStatusIcon() + "] " + getDescription());
     }
 }
