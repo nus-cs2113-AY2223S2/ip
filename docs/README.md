@@ -4,7 +4,7 @@
 
 ### Feature- List
 
-Displays the **list** of all tasks in Duke Task List.
+Displays the **List** of all tasks in Duke Task List.
 
 ### Feature- Mark
 
