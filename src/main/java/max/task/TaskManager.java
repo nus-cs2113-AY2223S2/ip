@@ -2,7 +2,7 @@ package max.task;
 
 import max.Ui.Ui;
 import max.command.Command;
-import max.data.PersistentDataHandler;
+import max.data.Storage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -105,12 +105,12 @@ public class TaskManager {
     }
 
     public void loadData() {
-        PersistentDataHandler dataHandler = new PersistentDataHandler();
+        Storage dataHandler = new Storage();
         this.tasks = dataHandler.loadTasksFromDisk();
     }
 
     public void saveData() {
-        PersistentDataHandler dataHandler = new PersistentDataHandler();
+        Storage dataHandler = new Storage();
         dataHandler.saveTasksToDisk(tasks);
     }
 
