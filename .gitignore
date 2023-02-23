@@ -19,3 +19,7 @@ text-ui-test/EXPECTED-UNIX.TXT
 # .class files
 *.class
 *.jar
+
+# data
+data
+./src/main/java/duke/data/
