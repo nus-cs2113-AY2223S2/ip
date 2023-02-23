@@ -1,22 +1,34 @@
 package duke.tasks;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import static duke.main.Duke.taskCount;
 
 public class Event extends Task {
-    private String from, to;
+    private LocalDateTime startTime, endTime;
 
-    public Event(String description, String from, String to) {
+
+    public Event(String description, LocalDateTime startTime, LocalDateTime endTime) {
         super(description);
-        this.from = from;
-        this.to = to;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     public String getStart() {
-        return this.from;
+        return this.formatStartTime();
     }
 
     public String getEnd() {
-        return this.to;
+        return this.formatEndTime();
+    }
+
+    public String formatStartTime() {
+        return this.startTime.format(dateTimeFormatter);
+    }
+
+    public String formatEndTime() {
+        return this.endTime.format(dateTimeFormatter);
     }
 
     @Override
@@ -26,8 +38,6 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + this.from + " to: " + this.to + ")";
+        return "[E]" + super.toString() + " (from: " + this.formatStartTime() + " to: " + this.formatEndTime() + ")";
     }
-
-
 }
