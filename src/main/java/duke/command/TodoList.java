@@ -139,7 +139,17 @@ public class TodoList {
         System.out.println();
     }
 
-    public void findDesc() throws DukeException {
-        return;
+    public void findDesc(String pattern) throws DukeException {
+        Ui.showLine();
+        System.out.println("     Here are the matching task(s) in your list: ");
+        int counter = 0;
+        for(Task task : tasks) {
+            if(task.getDescription().contains(pattern)){
+                Ui.showTask(++counter, task, 5);
+            }
+        }
+        System.out.println("     (Total " + counter + ")");
+        Ui.showLine();
+        System.out.println();
     }
 }
