@@ -15,6 +15,9 @@ public class HandleUserCommand {
             userCommand = in.nextLine();
             Parser newCommand = new Parser();
             switch (newCommand.parseCommand(userCommand)) {
+                case "find":
+                    FindTask.findTask(list,userCommand);
+                    break;
                 case "todo":
                     AddTodo.addTodoTask(list, userCommand);
                     break;
