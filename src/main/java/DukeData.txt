@@ -1,5 +1,0 @@
-  [T][X] read book
-  [E][ ] road show (from Monday 3pm to 7pm)
-  [D][ ] submit report (by 10pm)
-  [E][ ] Nivetha attend CS2113 Lecture Friday 17 Feb 2023 (from 4pm to 6pm)
-  [D][ ] Nivetha return book (by 2pm)
