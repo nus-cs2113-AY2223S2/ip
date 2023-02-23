@@ -68,10 +68,11 @@ public class CommandManager {
         System.out.println(DIVIDER);
     }
     public static void writeToFile(String filePath) throws IOException {
-        FileWriter fw = new FileWriter(filePath); // create a FileWriter in append mode
+        FileWriter fw = new FileWriter(filePath);
         for (int num = 1; num <= Tasks.getNumberOfTasks(); ++num) {
             Tasks thisTask = Tasks.getTaskList().get(num - 1);
             fw.write(String.valueOf(thisTask));
+            fw.write("\n");
         }
         fw.close();
     }
