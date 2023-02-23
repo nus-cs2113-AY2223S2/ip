@@ -81,4 +81,9 @@ public class DukeUi {
     public void printSavingToFile() {
         System.out.println("Saving tasks to savefile, please do not close the application.");
     }
+
+    public void printInvalidCommand() {
+        System.out.println("Invalid command entered, please enter 'help' to see " +
+                "the list of commands.");
+    }
 }
