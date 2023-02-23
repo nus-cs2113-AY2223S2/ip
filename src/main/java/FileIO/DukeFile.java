@@ -39,4 +39,14 @@ public class DukeFile {
         Todos todo = new Todos(description, isMarked, type);
         return todo;
     }
+
+    public static ArrayList<Todos> CreateFile() throws IOException {
+        File file = new File("Data.txt");
+        ArrayList<Todos> todoItems;
+        if (file.exists()) {
+            todoItems = DukeFile.loadListFromFile("Data.txt");
+            return todoItems;
+        }
+        return new ArrayList<Todos>();
+    }
 }

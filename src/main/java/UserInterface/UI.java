@@ -5,6 +5,7 @@ import TaskItems.Event;
 import TaskItems.Todos;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class UI {
     public static void greet() {
@@ -45,12 +46,12 @@ public class UI {
 
     }
 
-    public static void addEvent(String UserInput, int count, ArrayList<Todos> todoItems) {
+    public static void addEvent(String UserInput, ArrayList<Todos> todoItems) {
         System.out.println("Got it, ive done the Following");
         System.out.println("Added: " + UserInput);
-        System.out.println("now you have: " + count + " tasks in this list.");
-        Event x = new Event(UserInput, false, "E");
-        todoItems.add(x);
+        System.out.println("now you have: " + todoItems.size() + " tasks in this list.");
+        Event Item = new Event(UserInput, false, "E");
+        todoItems.add(Item);
     }
 
     public static void DeleteItem(ArrayList<Todos> todoItems, String UserInput) {
@@ -58,19 +59,18 @@ public class UI {
         todoItems.remove(Integer.parseInt(UserInput.substring(7))-1);
     }
 
-    public static void Deadline(String UserInput, int count) {
+    public static void Deadline(String UserInput, ArrayList<Todos> todoItems) {
         String date = UserInput.substring(UserInput.indexOf("/by") + 4);
         UserInput = UserInput.substring(UserInput.indexOf(" ") + 1, UserInput.indexOf('/') - 1) + " (by: " + date + ")";
         System.out.println("Got it, ive done the Following");
         System.out.println("Added: " + UserInput);
-        System.out.println("now you have: " + count + " tasks in this list.");
+        System.out.println("now you have: " + todoItems.size() + " tasks in this list.");
     }
 
-    public static void addTodo(ArrayList<Todos> todoItems, int new_tasks, String UserInput) {
+    public static void addTodo(ArrayList<Todos> todoItems, String UserInput) {
         System.out.println("Got it, Ive done the Following!");
-        System.out.println("Added: " + "[" + todoItems.get(new_tasks).type + "]" + "[ ]" + UserInput.substring(UserInput.indexOf((" "))));
-        int count = new_tasks + 1;
-        System.out.println("now you have: " + count + " tasks in this list.");
+        System.out.println("Added: " + "[T]" + "[ ]" + UserInput.substring(UserInput.indexOf((" "))));
+        System.out.println("now you have: " + todoItems.size() + " tasks in this list.");
     }
 
     public static void sayBye() {
@@ -79,5 +79,10 @@ public class UI {
 
     public static void Error() {
         System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+    }
+
+    public static String GetInput() {
+        Scanner ReadingUserInput = new Scanner(System.in);
+        return ReadingUserInput.nextLine();
     }
 }
