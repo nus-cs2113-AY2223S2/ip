@@ -19,6 +19,11 @@ public class Duke {
     private static final Storage storage = new Storage();
     private static final TaskList tasks = new TaskList();
 
+    /**
+     * Checks input from user and executes the appropriate command.
+     *
+     * @param inputMessage Raw input string from user
+     */
     public static void checkInput(String inputMessage) {
         String cleanInput = inputMessage.trim();
         String[] message = cleanInput.split(" ");
@@ -45,11 +50,17 @@ public class Duke {
         }
     }
 
+    /**
+     * Marks the task in the task-list based on the numbering specified by the user. Prints out an appropriate
+     * error message whenever it receives an invalid input.
+     *
+     * @param message Input string from user separated by spaces.
+     */
     public static void markItem(String[] message) {
         ui.printSeparator();
         try {
             int itemIndex = tasks.markItem(message);
-            String outputMessage = String.format("Nice! I've marked task %d as done:", itemIndex+1);
+            String outputMessage = String.format("Nice! I've marked task %d as done:", itemIndex + 1);
             ui.printMessage(outputMessage);
             ui.printMessage(tasks.get(itemIndex).toString());
         } catch (DukeWrongArgsException error) {
@@ -63,8 +74,7 @@ public class Duke {
             ui.printMessage(errorMessageEcho);
         } catch (IndexOutOfBoundsException error) {
             String errorMessage = "Out of bounds value provided.";
-            String errorMessageEcho = String.format("List only has %d items!",
-                    tasks.size());
+            String errorMessageEcho = String.format("List only has %d items!", tasks.size());
             ui.printMessage(errorMessage);
             ui.printMessage(errorMessageEcho);
         } finally {
@@ -72,11 +82,17 @@ public class Duke {
         }
     }
 
+    /**
+     * Unmarks the task in the task-list based on the numbering specified by the user. Prints out an
+     * appropriate error message whenever it receives an invalid input.
+     *
+     * @param message Input string from user separated by spaces.
+     */
     public static void unmarkItem(String[] message) {
         ui.printSeparator();
         try {
             int itemIndex = tasks.unmarkItem(message);
-            String outputMessage = String.format("OK, I've marked task %d as not done yet:", itemIndex+1);
+            String outputMessage = String.format("OK, I've marked task %d as not done yet:", itemIndex + 1);
             ui.printMessage(outputMessage);
             ui.printMessage(tasks.get(itemIndex).toString());
         } catch (DukeWrongArgsException error) {
@@ -90,8 +106,7 @@ public class Duke {
             ui.printMessage(errorMessageEcho);
         } catch (IndexOutOfBoundsException error) {
             String errorMessage = "Out of bounds value provided.";
-            String errorMessageEcho = String.format("List only has %d items!",
-                    tasks.size());
+            String errorMessageEcho = String.format("List only has %d items!", tasks.size());
             ui.printMessage(errorMessage);
             ui.printMessage(errorMessageEcho);
         } finally {
@@ -99,6 +114,11 @@ public class Duke {
         }
     }
 
+    /**
+     * Adds a Todo task to the task-list. Prints an error message if insufficient arguments are provided.
+     *
+     * @param cleanInput Input string from user that has been trimmed.
+     */
     public static void addTodo(String cleanInput) {
         ui.printSeparator();
 
@@ -116,6 +136,11 @@ public class Duke {
         }
     }
 
+    /**
+     * Adds a Deadline task to the task-list. Prints an error message if insufficient arguments are provided.
+     *
+     * @param message Input string from user separated by spaces.
+     */
     public static void addDeadline(String[] message) {
         ui.printSeparator();
 
@@ -135,6 +160,11 @@ public class Duke {
         }
     }
 
+    /**
+     * Adds a Deadline task to the task-list. Prints an error message if insufficient arguments are provided.
+     *
+     * @param message Input string from user separated by spaces.
+     */
     public static void addEvent(String[] message) {
         ui.printSeparator();
 
@@ -155,12 +185,22 @@ public class Duke {
         }
     }
 
+    /**
+     * Displays all the tasks currently in the task-list.
+     */
+
     public static void displayList(TaskList tasks) {
         ui.printSeparator();
         ui.printTaskList(tasks);
         ui.printSeparator();
     }
 
+    /**
+     * Deletes a task from the task-list. Prints an appropriate error message when command is called by user
+     * incorrectly.
+     *
+     * @param message Input string from user separated by spaces.
+     */
     public static void deleteTask(String[] message) {
         ui.printSeparator();
         try {
@@ -181,8 +221,7 @@ public class Duke {
             ui.printMessage(errorMessageEcho);
         } catch (IndexOutOfBoundsException error) {
             String errorMessage = "Out of bounds value provided.";
-            String errorMessageEcho = String.format("List only has %d items!",
-                    tasks.size());
+            String errorMessageEcho = String.format("List only has %d items!", tasks.size());
             ui.printMessage(errorMessage);
             ui.printMessage(errorMessageEcho);
         } finally {
@@ -190,6 +229,12 @@ public class Duke {
         }
     }
 
+    /**
+     * Finds and displays all task in the current task-list that contain the keyword specified by the user in
+     * the task description.
+     *
+     * @param message Input from user that has been trimmed.
+     */
     public static void findTask(String message) {
         ui.printSeparator();
         try {
@@ -208,7 +253,11 @@ public class Duke {
         }
     }
 
-    public static void startDuke(){
+    /**
+     * Greets user and loads previously created database file. If past database file does not exist, new
+     * database file will be created.
+     */
+    public static void startDuke() {
         ui.printSeparator();
         ui.printMessage("Hello! I'm Duke");
         ui.printMessage("Let me check the current list of tasks");
@@ -232,6 +281,9 @@ public class Duke {
         }
     }
 
+    /**
+     * Saves current task-list into database and then exits the program.
+     */
     public static void endDuke() {
         ui.printSeparator();
         ui.printMessage("Saving current list of data into database...");

@@ -22,7 +22,10 @@ public class Storage {
      * Checks for database file on local filesystem. Create parent directory and database file if it does not
      * exist, otherwise reads the data in the database file
      *
-     * @return Data in database in the form of a String. If database did not exist, return empty String.
+     * @return String This returns the data in database in the form of a String. If database did not exist,
+     * returns empty String.
+     * @throws DukeCreateDatabaseException On failure to create new database file.
+     * @throws DukeLoadDatabaseException   On failure to load past database file.
      */
     protected String loadDatabase() throws DukeCreateDatabaseException, DukeLoadDatabaseException {
         String fileContent;
@@ -37,6 +40,13 @@ public class Storage {
         return fileContent;
     }
 
+    /**
+     * Saves all the items in the task-list into a local file used as the database. Tasks are saved in a
+     * format that can be easily read in order to load the task-list from the database file.
+     *
+     * @param tasks Task-list to be saved into the database
+     * @throws DukeSaveDatabaseException On failure to save task-list into database.
+     */
     protected void saveDatabase(TaskList tasks) throws DukeSaveDatabaseException {
         try {
             Path filepath = Paths.get("data", "duke.txt");
@@ -65,8 +75,11 @@ public class Storage {
 
     private String createDatabaseFile(File databaseFile) throws DukeCreateDatabaseException {
         try {
-            databaseFile.getParentFile().mkdirs();
-            databaseFile.createNewFile();
+            boolean canCreateDirectory = databaseFile.getParentFile().mkdirs();
+            boolean canCreateFile = databaseFile.createNewFile();
+            if (!canCreateFile | !canCreateDirectory) {
+                throw new DukeCreateDatabaseException();
+            }
         } catch (IOException error) {
             throw new DukeCreateDatabaseException();
         }
