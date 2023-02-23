@@ -20,6 +20,7 @@ ____________________________________________________________
  Enter "mark [idx]" to mark task as done
  Enter "unmark [idx]" to mark task as not done
  Enter "delete [idx]" to remove task from list
+ Enter "find [keyword]" to see all tasks containing [keyword]
  Enter "bye" to exit the program
 ____________________________________________________________
 ____________________________________________________________
