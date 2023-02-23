@@ -5,6 +5,52 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Duke {
+    final static String logo = "____   _   _  ____   _____   -        \n"
+                             + "|  _ \\ | | | ||  _ \\ |  ___| | |    \n"
+                             + "| | | || | | || | | || |__   | |      \n"
+                             + "| | | || | | || | | ||  __|  | |      \n"
+                             + "| |_| || |_| || |_| || |___   -      \n"
+                             + "|____/ \\____/ |____/ |_____|  O     \n";
+    final static String WELCOME_MESSAGE = "HELLLOO there! I am \n "
+            + logo + '\n'
+            + "Your personal robot assistant! \n"
+            + "What can I do for you today? \n \n"
+            + "You can start by adding items to a task list that I can generate, simply follow the format below: \n \n"
+            + "Todos      : \"todo <insert todo task description>\" \n"
+            + "Deadlines  : \"deadline <insert deadline task description> /by <insert date/time> \" \n"
+            + "Events     : \"event <insert event description> /from <insert start date/time> /to <insert end date/time>\" \n \n"
+            + "If you wish to view the full list of commands, simply type \"help\"! \n";
+
+    final static String HELP = "\nNO WORRIES! Help is here! You may find the list of commands below useful. \n \n \n"
+            + "COMMANDS LIST: \n \n \n"
+            + "## List ## \n"
+            + "Description : Displays the current tasks queued in the list. \n"
+            + "Format      : \"list\" \n"
+            + "Example use : \"list\" \n \n"
+            + "## Todos ## \n"
+            + "Description : Adds a new task without any time element in the task list. \n"
+            + "Format      : \"todo <insert todo task description>\"\n"
+            + "Example use : \"todo eat dinner\" \n \n"
+            + "## Deadlines ## \n"
+            + "Description : Adds a new task with ONE time element indicating the due date in the task list. \n"
+            + "Format      : \"deadline <insert deadline task description> /by <insert date/time> \" \n"
+            + "Example use : \"deadline CS2040C Kattis Week 6 /by 2359hrs tmr\" \n \n"
+            + "## Events ## \n"
+            + "Description : Adds a new task with TWO time elements indicating the starting date/time and the ending date/time. \n"
+            + "Format      : \"event <insert event description> /from <insert start date/time> /to <insert end date/time>\" \n"
+            + "Example use : \"event Recess Week /from 20th Feb 2023 /to 24th Feb 2023\" \n \n"
+            + "## Mark ## \n"
+            + "Description : Crosses out tasks which are done, requires the task index on the list as an input. \n"
+            + "Format      : \"mark <insert task index number>\" \n"
+            + "Example use : \"mark 10\" \n \n"
+            + "## Unmark ## \n"
+            + "Description : Undo the cross of any tasks which are done, requires the task index on the list as an input. \n"
+            + "Format      : \"unmark <insert task index number>\" \n"
+            + "Example use : \"unmark 10\" \n \n \n"
+            + "Hope this list has been informational to you! \n";
+
+    final static String UNRECOGNIZABLE_ERROR = "\n☹ OOPS!!! I'm sorry, but I don't know what that means :-(\n";
+    final static String MISSING_INPUTS_ERROR = "\n☹ OOPS!!! The description of a todo cannot be empty.\n";
     public static void printList(Task[] l1, int currListIndex) {
         int index;
         if (l1[0] == null) {
@@ -68,14 +114,8 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-        /*String logo = " ____        _        \n"
-                      + "|  _ \\ _   _| | _____ \n"
-                      + "| | | | | | | |/ / _ \\\n"
-                      + "| |_| | |_| |   <  __/\n"
-                      + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);*/
-        System.out.println("Hello! I'm a Robot");
-        System.out.println("What can I do for you?\n");
+
+        System.out.println(WELCOME_MESSAGE);
         Task[] tasksList = new Task[100];
         Scanner in = new Scanner(System.in);
         String line, commandWord, description;
@@ -129,6 +169,8 @@ public class Duke {
                 tasksList[currTaskNumber] = new Event(lineSpaced[0].substring(commandWord.length()+1), lineSpaced[1],lineSpaced[2]);
                 printAdded(tasksList[currTaskNumber], currTaskNumber+1);
                 currTaskNumber++;
+            case "help" :
+                System.out.println(HELP);
             default:
                 /*printAdded(line);
                 Task temp_task = new Task(line);
