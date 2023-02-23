@@ -1,7 +1,8 @@
 package duke.tasks;
 
-import static duke.main.Duke.taskCount;
-
+/**
+ * One of the three task type (todo, deadline, event)
+ */
 public class Todo extends Task {
     public Todo(String description) {
         super(description);
@@ -11,7 +12,6 @@ public class Todo extends Task {
     public String getType() {
         return "T";
     }
-
 
     @Override
     public String toString() {
