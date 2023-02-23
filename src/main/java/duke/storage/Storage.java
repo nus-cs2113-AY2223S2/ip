@@ -11,6 +11,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * storage class handles all file related tasks
+ * such as creating file, printing file, editing file etc
+ */
 public class Storage {
 
     /**

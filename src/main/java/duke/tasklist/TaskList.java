@@ -56,7 +56,6 @@ public class TaskList {
             Ui.printNoMatchingTasks();
         }
         Ui.printLine();
-
     }
 
     /**

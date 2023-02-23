@@ -18,7 +18,7 @@ public class Ui {
 
     public static void printInvalidNumber(String taskType) {
         printLine();
-        System.out.println("\t☹ Error! Invalid input.");
+        System.out.println("\tError! Invalid input.");
         System.out.println("\tPlease provide a task number for \"" + taskType + "\" command.");
         System.out.println("\tPlease use \"list\" command to see your task numbers.");
         printLine();
@@ -26,14 +26,14 @@ public class Ui {
 
     public static void printEmptyCommand(String taskType) {
         printLine();
-        System.out.println("\t☹ Error! \"" + taskType + "\" command cannot be empty.");
+        System.out.println("\tError! \"" + taskType + "\" command cannot be empty.");
         System.out.println("\tPlease provide more details");
         printLine();
     }
 
     public static void printInvalidFormat(String taskType) {
         printLine();
-        System.out.println("\t☹ Error! Invalid format for \"" + taskType + "\" command.");
+        System.out.println("\tError! Invalid format for \"" + taskType + "\" command.");
         printLine();
     }
 
@@ -45,7 +45,7 @@ public class Ui {
 
     public static void printIncorrectTaskFormat() {
         printLine();
-        System.out.println("\t☹ Error! Tasks saved in incorrect format.");
+        System.out.println("\tError! Tasks saved in incorrect format.");
         printLine();
     }
 
@@ -56,13 +56,12 @@ public class Ui {
             printLine();
         } else {
             printLine();
-            System.out.println("\t☹ Error! Failed to create file.");
+            System.out.println("\tError! Failed to create file.");
             printLine();
         }
     }
 
     public static void printGreetMessage() {
-        printLine();
         System.out.println("\tHello! I'm Duke.");
         System.out.println("\tHow can I help you today?\n");
         printLine();
@@ -76,7 +75,7 @@ public class Ui {
 
     public static void printInvalidCommand() {
         printLine();
-        System.out.println("\t☹ Error! Please input a valid command!");
+        System.out.println("\tError! Please input a valid command!");
         printLine();
     }
 
@@ -104,7 +103,7 @@ public class Ui {
     }
 
     public static void printNoMatchingTasks() {
-        System.out.println("\t☹ No matching task found in stored data.");
+        System.out.println("\tNo matching task found in stored data.");
     }
 
     public static void printTaskDetails(int index, Task task) {
