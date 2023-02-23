@@ -39,9 +39,14 @@ public class TaskList {
             return;
         }
         tasks.add(newTask);
+        // Print a singular form of task if there is only one task in the list
+        String taskString = "tasks";
+        if(tasks.size() == 1){
+            taskString = "task";
+        }
         UI.printToUser("Got it. I've added this task:\n" +
                 "  " + newTask + "\n" +
-                "Now you have " + tasks.size() + " tasks in the list.");
+                "Now you have " + tasks.size() + " " + taskString + " in the list.");
     }
 
     /**
@@ -112,9 +117,14 @@ public class TaskList {
 
         Task taskToRemove = tasks.get(taskIndex);
         tasks.remove(taskIndex);
+        // Print a singular form of task if there is only one task in the list
+        String taskString = "tasks";
+        if(tasks.size() == 1){
+            taskString = "task";
+        }
         String successMessage = "Noted. I've removed this task:\n" +
                 "  " + taskToRemove + "\n" +
-                "Now you have " + tasks.size() + " tasks in the list." ;
+                "Now you have " + tasks.size() + " " + taskString + " in the list." ;
         UI.printToUser(successMessage);
     }
 
