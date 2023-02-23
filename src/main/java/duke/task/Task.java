@@ -3,6 +3,15 @@ package duke.task;
 public class Task {
     protected String taskDescription;
     protected boolean isDone;
+    protected String command;
+
+    public String getCommand() {
+        return command;
+    }
+
+    public void setCommand(String command) {
+        this.command = command;
+    }
 
     public Task(String taskDescription) {
         this.taskDescription = taskDescription;
@@ -34,5 +43,8 @@ public class Task {
 
     public String toString() {
         return "[" + getStatusIcon() + "] " + taskDescription;
+    }
+    public String getSave() {
+        return (isDone() ? "1 " : "0 ") + command + " " +  System.lineSeparator();
     }
 }
