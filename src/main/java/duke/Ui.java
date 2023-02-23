@@ -40,6 +40,7 @@ public class Ui {
                 " Enter \"unmark [idx]\" to mark task as not done\n" +
                 " Enter \"delete [idx]\" to remove task from list\n" +
                 " Enter \"find [keyword]\" to see all tasks containing [keyword]\n" +
+                " Enter \"date [yyyy-MM-dd]\" to see all tasks occurring on that date\n" +
                 " Enter \"bye\" to exit the program\n" +
                 "\n For Duke to understand [date], you can enter it in the form of\n" +
                 "     \"yyyy-MM-ddThh:mm\"\n" +

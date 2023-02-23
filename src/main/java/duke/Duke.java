@@ -18,16 +18,17 @@ public class Duke {
 
     public Duke(String filePath) {
         ui = new Ui();
+        ui.printWelcomeMessage();
         storage = new Storage(filePath);
         try {
             tasks = new TaskList(storage.load());
+            storage.update();
         } catch (IOException e) {
             Ui.printErrorForIO();
         }
     }
 
     public void run() {
-        ui.printWelcomeMessage();
         boolean isExit = false;
         while (!isExit) {
             try {
