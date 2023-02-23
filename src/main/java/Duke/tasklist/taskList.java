@@ -60,5 +60,4 @@ public class taskList {
 		fileIO.writeFile (tasks);
 	}
 
-
 }
