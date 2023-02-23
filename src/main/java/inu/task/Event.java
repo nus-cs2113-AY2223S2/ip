@@ -4,6 +4,9 @@ import inu.commons.Util;
 
 import java.time.LocalDateTime;
 
+/**
+ * Represents an event.
+ */
 public class Event extends Task {
 
     private LocalDateTime from;
@@ -40,7 +43,7 @@ public class Event extends Task {
     }
 
     @Override
-    public String encodeTask() {
+    public String encodeTaskToString() {
         return "E" + "//" + getStatusIcon() + "//" + getDescription() + "//" + getFrom() + "//" + getTo();
     }
 

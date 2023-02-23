@@ -62,6 +62,13 @@ public class Parser {
 
     protected static final String DECODE_MARKED = "[X]";
 
+    /**
+     * Reads user input as a string and converts it into an array.
+     * This allows inputs to be processed as potential command instructions by
+     * splitting inputs into commands and task descriptions.
+     *
+     * @return String array of user input
+     */
     public static String[] readCommand() {
         String userInput;
         String[] userString;
@@ -70,6 +77,13 @@ public class Parser {
         return userString;
     }
 
+    /**
+     * Parses user input into command for execution.
+     * This method also handles empty inputs.
+     *
+     * @param taskList the task list where the task will be added to.
+     * @return the command based on the user input.
+     */
     public static Command parseCommand(TaskList taskList) {
 
             userString = readCommand();
@@ -110,7 +124,7 @@ public class Parser {
                     entry = userString[INDEX_ENTRY];
                     return runListWithDate(taskList, entry);
                 } catch (ArrayIndexOutOfBoundsException e) {
-                    return runDefaultList(taskList);
+                    return new ListDefaultCommand();
                 }
             case FindCommand.COMMAND_WORD:
                 try {
@@ -141,6 +155,14 @@ public class Parser {
 
     }
 
+    /**
+     * Collects user input and prepares {@code TodoCommand} for execution.
+     * This method handles empty user inputs.
+     *
+     * @param entry the user input provided for the {@code TodoCommand}.
+     * @return the {@code TodoCommand} with the user input as its description.
+     * Else an {@code InvalidCommand} with a corresponding prompt..
+     */
     public static Command runTodo(String entry) {
         try {
             ExceptionManager.checkEmptyString(entry);
@@ -150,6 +172,14 @@ public class Parser {
         }
     }
 
+    /**
+     * Collects user input and prepares {@code DeadlineCommand} for execution.
+     * This method handles empty user inputs.
+     *
+     * @param entry the user input provided for the {@code DeadlineCommand}.
+     * @return the {@code DeadlineCommand} with the user input as its description.
+     * Else an {@code InvalidCommand} with a corresponding prompt..
+     */
     public static Command runDeadLine(String entry) {
         try {
             String task = Util.fetchTask(entry, Util.DELIMITER_DEADLINE_BY);
@@ -165,6 +195,14 @@ public class Parser {
         }
     }
 
+    /**
+     * Collects user input and prepares {@code EventCommand} for execution.
+     * This method handles empty user inputs.
+     *
+     * @param entry the user input provided for the {@code EventCommand}.
+     * @return the {@code EventCommand} with the user input as its description.
+     * Else an {@code InvalidCommand} with a corresponding prompt.
+     */
     public static Command runEvent(String entry) {
         try {
             String task = Util.fetchTask(entry, Util.DELIMITER_EVENT_FROM);
@@ -181,6 +219,16 @@ public class Parser {
         }
     }
 
+    /**
+     * Collects user input and prepares {@code DeleteCommand} for execution.
+     * This method handles empty user inputs.
+     *
+     * @param taskList the task list the target task is in.
+     * @param entry the user input provided for the {@code DeleteCommand}.
+     *              It is only parsed as a number.
+     * @return the {@code DeleteCommand} with the user input as its description.
+     * Else an {@code InvalidCommand} with a corresponding prompt.
+     */
     public static Command runDelete(TaskList taskList, String entry) {
         try {
             ExceptionManager.checkEmptyString(entry);
@@ -195,6 +243,16 @@ public class Parser {
         }
     }
 
+    /**
+     * Collects user input and prepares {@code MarkCommand} for execution.
+     * This method handles empty user inputs.
+     *
+     * @param taskList the task list the target task is in.
+     * @param entry the user input provided for the {@code MarkCommand}.
+     *              It is only parsed as a number.
+     * @return the {@code MarkCommand} with the user input as its description.
+     * Else an {@code InvalidCommand} with a corresponding prompt.
+     */
     public static Command runMark(TaskList taskList, String entry) {
         try {
             ExceptionManager.checkEmptyString(entry);
@@ -208,7 +266,16 @@ public class Parser {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_FOR_INDEX_INPUT);
         }
     }
-
+    /**
+     * Collects user input and prepares {@code UnMarkCommand} for execution.
+     * This method handles empty user inputs.
+     *
+     * @param taskList the task list the target task is in.
+     * @param entry the user input provided for the {@code UnMarkCommand}.
+     *              It is only parsed as a number.
+     * @return the {@code UnMarkCommand} with the user input as its description.
+     * Else an {@code InvalidCommand} with a corresponding prompt.
+     */
     public static Command runUnMark(TaskList taskList, String entry) {
         try {
             ExceptionManager.checkEmptyString(entry);
@@ -223,6 +290,16 @@ public class Parser {
         }
     }
 
+    /**
+     * Collects user input as a date and prepares {@code ListWithDateCommand} for execution.
+     * If a date is not provided, the method prepares {@code ListDefaultCommand} for execution.
+     * This method handles empty user inputs.
+     *
+     * @param taskList the task list to containing the tasks to be displayed.
+     * @param entry the date in {@code DD/MM/YYYY} format to query
+     * @return the {@code ListWithDateCommand} with the user input as the date to query.
+     * If there is no date provided, {@code ListDefaultCommand} is returned instead.
+     */
     public static Command runListWithDate(TaskList taskList, String entry) {
         try {
             ExceptionManager.checkEmptyString(entry);
@@ -230,7 +307,7 @@ public class Parser {
             LocalDate date = Util.parseDate(entry);
             return new ListWithDateCommand(date);
         } catch (EmptyStringException e) {
-            return runDefaultList(taskList);
+            return new ListDefaultCommand();
         } catch (EmptyTaskListException e) {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_EMPTY_TASK_LIST);
         } catch (InvalidDateFormat e) {
@@ -238,15 +315,14 @@ public class Parser {
         }
     }
 
-    public static Command runDefaultList(TaskList taskList) {
-        try {
-            ExceptionManager.checkEmptyTaskList(taskList);
-            return new ListDefaultCommand();
-        } catch (EmptyTaskListException e) {
-            return new InvalidCommand(Messages.MESSAGE_PROMPT_EMPTY_TASK_LIST);
-        }
-    }
-
+    /**
+     * Collects user input as a key word and prepares {@code FindCommand} for execution.
+     * This method handles empty user inputs.
+     *
+     * @param taskList the task list to containing the tasks to be displayed.
+     * @param entry the key word to query
+     * @return the {@code FindCommand} with the user input as the key word to query.
+     */
     public static Command runFindCommand(TaskList taskList, String entry) {
         try {
             ExceptionManager.checkEmptyString(entry);
@@ -259,6 +335,11 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses each saved task from the {@code TaskList} data from the storage file and return it.
+     *
+     * @return the task read from the storage file
+     */
     public static Task decodeString(String fileString) {
 
         String[] fileStrings = fileString.split("//");

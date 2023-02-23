@@ -1,11 +1,19 @@
 package inu.task;
 
+/**
+ * Represents a task.
+ */
 public abstract class Task {
 
     private String description;
 
     private boolean isDone;
 
+    /**
+     * Constructor for task.
+     *
+     * @param description description of the task
+     */
     public Task(String description) {
         setDescription(description);
         resetDone();
@@ -19,10 +27,16 @@ public abstract class Task {
         this.description = description;
     }
 
+    /**
+     * Set status of task to done.
+     */
     public void setDone() {
         isDone = true;
     }
 
+    /**
+     * Set status of task to not done.
+     */
     public void resetDone() {
         isDone = false;
     }
@@ -36,7 +50,12 @@ public abstract class Task {
         return String.format("%s %s", getStatusIcon(), getDescription());
     }
 
-    public String encodeTask() {
+    /**
+     * Converts task to string to be saved in storage file.
+     *
+     * @return string to save in file.
+     */
+    public String encodeTaskToString() {
         return "";
     }
 
