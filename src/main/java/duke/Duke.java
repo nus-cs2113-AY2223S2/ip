@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 public class Duke {
 
+    /** Runs the Duke bot */
     private static void runDuke() {
         Ui.greetingMessage();
 

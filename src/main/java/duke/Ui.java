@@ -4,8 +4,16 @@ import duke.task.Task;
 
 import java.util.ArrayList;
 
+/**
+ * Deals with interactions with the user
+ */
 public class Ui {
 
+    /**
+     * Prints out all currently stored tasks in the list
+     *
+     * @param tasks The array list of tasks
+     */
     static void list(ArrayList<Task> tasks) {
         int taskCount = Task.getTaskCount();
         borderLine();
@@ -16,6 +24,12 @@ public class Ui {
         borderLine();
     }
 
+    /**
+     * Finds tasks in the list that contain keywords input by the user
+     *
+     * @param tasks The array list of tasks
+     * @param words The array of words generated from the user input
+     */
     static void find(ArrayList<Task> tasks, String[] words) {
         ArrayList<Task> matchingResults = new ArrayList<>();
         int matchCount = 0;
@@ -30,6 +44,12 @@ public class Ui {
         printFindResults(matchingResults, matchCount);
     }
 
+    /**
+     * Prints the results of the find command
+     *
+     * @param matchingResults The array list of tasks that contain the keywords
+     * @param matchCount The number of tasks in the list that contain the keywords
+     */
     private static void printFindResults(ArrayList<Task> matchingResults, int matchCount) {
         if (matchingResults.isEmpty()) {
             noMatchMessage();
@@ -38,6 +58,12 @@ public class Ui {
         }
     }
 
+    /**
+     * Prints the list of tasks that contain the keywords
+     *
+     * @param matchingResults The array list of tasks that contain the keywords
+     * @param matchCount The number of tasks in the list that contain the keywords
+     */
     static void printMatchingList(ArrayList<Task> matchingResults, int matchCount) {
         borderLine();
         System.out.println("\t Here are the matching tasks in your list:");
@@ -47,6 +73,7 @@ public class Ui {
         borderLine();
     }
 
+    /** Prints the border for opening or closing messages */
     static void borderLine() {
         System.out.println("\t____________________________________________________________");
     }
@@ -102,6 +129,7 @@ public class Ui {
         borderLine();
     }
 
+    /** Prints the startup message, includes instructions on available commands */
     static void greetingMessage() {
         borderLine();
         System.out.println("\t Hello! I'm Vivy.");
@@ -123,6 +151,7 @@ public class Ui {
         borderLine();
     }
 
+    /** Prints the exiting message when closing the program */
     static void exitMessage() {
         borderLine();
         System.out.println("\t Bye. Hope to see you again soon!");
