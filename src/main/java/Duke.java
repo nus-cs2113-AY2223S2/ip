@@ -1,4 +1,5 @@
 import duke.exception.DukeException;
+
 import duke.functionalities.Command;
 import duke.functionalities.Storage;
 import duke.functionalities.TaskList;
@@ -11,6 +12,11 @@ public class Duke {
     private TaskList tasks;
     private final Ui ui;
 
+    /**
+     * Loads the Stored Data into the Duke Task List
+     *
+     * @param filePath The Path of Duke Data File
+     * */
     public Duke(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath, ui);
@@ -27,6 +33,9 @@ public class Duke {
         new Duke("DukeData.txt").run();
     }
 
+    /**
+     * This method executes the Duke Task Operations
+     * */
     public void run() {
         ui.showWelcomeMessage();
         boolean isExit = false;
