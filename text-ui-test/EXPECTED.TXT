@@ -6,7 +6,17 @@
 | $$\  $ | $$| $$  | $$ /$$/\  $$       / - \
 | $$ \/  | $$| $$  | $$| $$  \ $$      /    |
 |__/     |__/|__/  |__/|__/  |__/     V__)  ||
+Hello! I'm Max, your PAWsonal productivity assistant
+What can I do for you to MAXimize your day?
 ────────────────────────────────────────────────────────────
+ /$$      /$$  /$$$$$$  /$$   /$$
+| $$$    /$$$ /$$__  $$| $$  / $$
+| $$$$  /$$$$| $$  \ $$|  $$/ $$/       /^ ^\
+| $$ $$/$$ $$| $$$$$$$$ \  $$$$/       / 0 0 \
+| $$  $$$| $$| $$__  $$  >$$  $$       V\ Y /V
+| $$\  $ | $$| $$  | $$ /$$/\  $$       / - \
+| $$ \/  | $$| $$  | $$| $$  \ $$      /    |
+|__/     |__/|__/  |__/|__/  |__/     V__)  ||
 Hello! I'm Max, your PAWsonal productivity assistant
 What can I do for you to MAXimize your day?
 ────────────────────────────────────────────────────────────
@@ -14,6 +24,7 @@ What can I do for you to MAXimize your day?
 There's nothing in your list. I'm gonna bite you.
 ────────────────────────────────────────────────────────────
 ~$ ────────────────────────────────────────────────────────────
+--- BORK BORK ---- THIS IS IMPORTANT! ---- BORK BORK ---
 MAX is now in debug mode. No data will be saved or loaded from disk.
 To exit debug mode, restart MAX.
 ────────────────────────────────────────────────────────────
@@ -60,15 +71,22 @@ You now have 5 tasks in your list.
 ~$ ────────────────────────────────────────────────────────────
 Here's what's in your list:
 1. [T][ ] Foobar
+
 2. [D][ ] deadline1 (by: Sunday)
+
 3. [D][ ] deadline2 (by: Some--day)
+
 4. [E][ ] event1 (FROM: Foo, TO: Bar)
+
 5. [E][ ] event2 (FROM: Zulu, TO: Baz)
+
 ────────────────────────────────────────────────────────────
 ~$ ────────────────────────────────────────────────────────────
+Awoo? Max dug up an error:
 Invalid task number!
 ────────────────────────────────────────────────────────────
 ~$ ────────────────────────────────────────────────────────────
+Awoo? Max dug up an error:
 Invalid task number!
 ────────────────────────────────────────────────────────────
 ~$ ────────────────────────────────────────────────────────────
@@ -80,17 +98,24 @@ Okay, marking this task as done:
 [D][X] deadline1 (by: Sunday)
 ────────────────────────────────────────────────────────────
 ~$ ────────────────────────────────────────────────────────────
+Awoo? Max dug up an error:
 Invalid task number!
 ────────────────────────────────────────────────────────────
 ~$ ────────────────────────────────────────────────────────────
 Here's what's in your list:
 1. [T][X] Foobar
+
 2. [D][X] deadline1 (by: Sunday)
+
 3. [D][ ] deadline2 (by: Some--day)
+
 4. [E][ ] event1 (FROM: Foo, TO: Bar)
+
 5. [E][ ] event2 (FROM: Zulu, TO: Baz)
+
 ────────────────────────────────────────────────────────────
 ~$ ────────────────────────────────────────────────────────────
+Awoo? Max dug up an error:
 Invalid task number!
 ────────────────────────────────────────────────────────────
 ~$ ────────────────────────────────────────────────────────────
@@ -98,15 +123,21 @@ Okay, setting this task as undone:
 [T][ ] Foobar
 ────────────────────────────────────────────────────────────
 ~$ ────────────────────────────────────────────────────────────
+Awoo? Max dug up an error:
 Invalid task number!
 ────────────────────────────────────────────────────────────
 ~$ ────────────────────────────────────────────────────────────
 Here's what's in your list:
 1. [T][ ] Foobar
+
 2. [D][X] deadline1 (by: Sunday)
+
 3. [D][ ] deadline2 (by: Some--day)
+
 4. [E][ ] event1 (FROM: Foo, TO: Bar)
+
 5. [E][ ] event2 (FROM: Zulu, TO: Baz)
+
 ────────────────────────────────────────────────────────────
 ~$ ────────────────────────────────────────────────────────────
 Goodbye! Thank you for using MAX.
