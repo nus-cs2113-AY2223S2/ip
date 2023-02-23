@@ -273,7 +273,7 @@ Example of usage :
 Expected outcome:
 
 - Finds all tasks which description contains the string home
-- Displays all the tasks in the TaskList that match the keyword with their index
+- Displays all the tasks in the TaskList that match the keyword with their index in the list
 
 Description of the outcome :
 
