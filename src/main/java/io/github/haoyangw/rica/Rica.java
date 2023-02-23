@@ -17,8 +17,8 @@ public class Rica {
     private static final String TODO_TRIGGER = "todo";
     private static final String UNKNOWN_CMD_ERROR = " ??? Sorry, I don't understand this command. Sent to the wrong bot? xD";
     private static final String UNMARK_TRIGGER = "unmark";
-    private TaskManager taskManager;
-    private TextUi textUi;
+    private final TaskManager taskManager;
+    private final TextUi textUi;
 
     public Rica() {
         this.taskManager = new TaskManager();
