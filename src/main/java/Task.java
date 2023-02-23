@@ -13,6 +13,9 @@ public abstract class Task {
         this.isDone = false;
     }
 
+    /**
+     * Reduces the count of taskCount and prints deleted message
+     */
     public void deleteTask() {
         --taskCount;
         System.out.println("Noted. I've removed this task: \n" + "  " + statusMessage() + "\n" +
@@ -42,7 +45,6 @@ public abstract class Task {
         System.out.println("OK, I've marked this task as not done yet:");
     }
 
-//    public abstract String statusMessage()  {return getStatusIcon() + " " + description;}
     public abstract String statusMessage();
 
     public abstract String addedMessage();

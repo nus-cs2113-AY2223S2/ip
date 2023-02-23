@@ -32,6 +32,12 @@ public class Duke {
         new Duke();
     }
 
+
+    /**
+     * Keeps repeating Duke functions until user enters terminating command
+     * @param database Database containing memory of tasks
+     * @throws DukeException
+     */
     public void readAndRespond(Database database) throws DukeException {
         Scanner sc = new Scanner(System.in);
         String input = sc.nextLine();
@@ -70,6 +76,13 @@ public class Duke {
             input = sc.nextLine();
         }
     }
+
+    /**
+     * Retrieves the name and type of the task
+     * @param task Task that is being evaluated
+     * @param input String that contains the user inputs
+     * @return Returns the name and type of the task to be added into database
+     */
     private static String getNameAndType (Task task, String input) {
         String type = null;
         String name = null;
@@ -86,6 +99,12 @@ public class Duke {
         return name + "###" + type;
     }
 
+    /**
+     * Appends string to database txt file
+     * @param database Database containing the memory of tasks
+     * @param name Name to be inserted into memory of tasks
+     * @param type Type of task to be inserted into memory of tasks
+     */
     private static void addTaskToDatabase(Database database, String name, String type) {
         try {
             database.appendToFile(name +  " --- " + type + " |[ ]| " + "\n");
@@ -94,6 +113,12 @@ public class Duke {
         }
     }
 
+    /**
+     * Deletes the task from the database based on the user input.
+     * If task is invalid, prints invalid task message.
+     * @param listOfTasks Arraylist containing tasks.
+     * @param words String array containing input.
+     */
     private static void removeTask(ArrayList<Task> listOfTasks, String[] words) {
         int number = Integer.parseInt(words[1]);
         if (number <= 0 || words.length == 1 || !isInt(words[1]) || listOfTasks.size() < number) {
@@ -110,6 +135,7 @@ public class Duke {
             }
         }
     }
+
     private static boolean IsValidDelete(String input, String[] words) {
         return input.startsWith("delete") && words.length == 2 && isInt(words[1]);
     }
@@ -123,8 +149,7 @@ public class Duke {
     }
 
     /**
-     * Determines if the string is an integer
-     *
+     * Determines if the string is an integer.
      * @param str Str is the string we are checking
      * @return True if str is an integer, false otherwise
      * @catch NumberFormatException If str cannot be converted into integer
@@ -138,6 +163,12 @@ public class Duke {
         }
     }
 
+    /**
+     * Marks a valid task given by the user to indicate that the task has been completed.
+     * If task is invalid, print out invalid task message.
+     * @param listOfTasks Arraylist containing tasks
+     * @param words String array containing input
+     */
     private static void markTask(ArrayList<Task> listOfTasks, String[] words) {
         int number = Integer.parseInt(words[1]);
         if (number <= 0 || words.length == 1 || !isInt(words[1]) || listOfTasks.size() < number) {
@@ -154,6 +185,11 @@ public class Duke {
         }
     }
 
+    /**
+     * Sums up the string that is to be inserted into databse txt file.
+     * @param listOfTasks Arraylist containing tasks
+     * @return the string to be added into the database txt file.
+     */
     private static String getUpdatedFileContents(ArrayList<Task> listOfTasks) {
         String addedString = "";
         for (Task curr : listOfTasks) {
@@ -171,7 +207,13 @@ public class Duke {
         return addedString;
     }
 
-    private static void unmarkTask(ArrayList<Task> listOfTasks, String[] words) throws DukeException {
+    /**
+     * Unmarks a valid task given by the user to indicate that the task has not completed.
+     * If task is invalid, prints out invalid task message.
+     * @param listOfTasks Arraylist containing tasks
+     * @param words String array containing input
+     */
+    private static void unmarkTask(ArrayList<Task> listOfTasks, String[] words) {
         int number = Integer.parseInt(words[1]);
         if (number <= 0 || words.length == 1 || !isInt(words[1]) || listOfTasks.size() < number) {
             ui.showUnmarkingInvalidTaskError();
@@ -187,6 +229,11 @@ public class Duke {
         }
     }
 
+    /**
+     * Prints out every task within listOfTasks.
+     * If list is empty, print out empty list message.
+     * @param listOfTasks Arraylist containing tasks
+     */
     public static void printList(ArrayList<Task> listOfTasks) {
         ui.showListHeaderMessage();
         if (listOfTasks.size() == 0) {
