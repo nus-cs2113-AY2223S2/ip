@@ -65,7 +65,7 @@ ______________________________________________________________________
 ### `mark` - Marks the Task as **Complete** in Duke Task List.
 
 Marks the Task as **Complete** using the 'X' character in Duke Task List.
-Marks the Task given the **specific task index**.
+Marks the Task given the **Specific Task Index**.
 
 Example of usage:
 
@@ -85,7 +85,7 @@ ______________________________________________________________________
 ### `unmark` - Marks the Task as **Not Complete** in Duke Task List.
 
 Marks the Task as **Not Complete** using the ' ' character in Duke Task List.
-Unmarks the Task given the **specific task index**.
+Unmarks the Task given the **Specific Task Index**.
 
 Example of usage:
 
@@ -104,7 +104,7 @@ ______________________________________________________________________
 
 ### `todo` - Creates a **Todo Task** in Duke Task List.
 
-Creates a **Todo Task** in Duke Task List given the **todo description** from the user.
+Creates a **Todo Task** in Duke Task List given the **Todo Description** from the user.
 
 Example of usage:
 
@@ -124,7 +124,7 @@ ______________________________________________________________________
 
 ### `deadline` - Creates a **Deadline Task** in Duke Task List.
 
-Creates a **Deadline Task** in Duke Task List given the **deadline description** and **due date** from the user.
+Creates a **Deadline Task** in Duke Task List given the **Deadline Description** and **Due Date** from the user.
 
 Example of usage:
 
@@ -144,7 +144,7 @@ ______________________________________________________________________
 
 ### `event` - Creates an **Event Task** in Duke Task List.
 
-Creates an **Event Task** in Duke Task List given the event description, event start date/time and event end date/time from the user.
+Creates an **Event Task** in Duke Task List given the **Event Description**, **Event Start Date/Time** and **Event End Date/Time** from the user.
 
 Example of usage:
 
@@ -164,7 +164,7 @@ ______________________________________________________________________
 
 ### `delete` - Deletes the **Task** from Duke Task List.
 
-Deletes the specified task from the Duke Task List given the **Task Index**.
+Deletes the **Specified Task** from the Duke Task List given the **Task Index**.
 
 Example of usage:
 
@@ -184,7 +184,7 @@ ______________________________________________________________________
 
 ### `find` - Finds the list of **Matching Tasks** from Duke Task List.
 
-Finds and displays the list of task from Duke Task List matching the **Search Keyword**.
+Finds and displays the **List of Tasks** from Duke Task List matching the **Search Keyword**.
 
 Example of usage:
 
@@ -192,7 +192,7 @@ Example of usage:
 
 Expected outcome:
 
-Finds all Matching Tasks from Duke Task List given the above keyword **book**.
+Finds all Matching Tasks from Duke Task List given the above **Keyword book**.
 
 ```
 ______________________________________________________________________
