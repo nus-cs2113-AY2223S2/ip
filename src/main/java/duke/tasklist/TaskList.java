@@ -15,7 +15,6 @@ public class TaskList {
     private static final String MESSAGE_TASKS_MARKED = "Nice! I've marked this task as done:";
     private static final String MESSAGE_TASKS_UNMARKED = "OK, I've marked this task as not done yet:";
     private static final String MESSAGE_TASKS_AVAILABLE = "Here are the tasks in your list:";
-    private static final String MESSAGE_TASKS_NONE = "There are no tasks available.";
     private static ArrayList<Task> tasks = new ArrayList<>();
 
     /**
@@ -88,6 +87,7 @@ public class TaskList {
 
     /**
      * Lists all the tasks available in the list with their corresponding id
+     *
      * @return String containing the tasks
      * @throws NoTaskException If the list is empty
      */
@@ -97,6 +97,7 @@ public class TaskList {
 
     /**
      * Lists all the tasks available in the list with their corresponding id
+     *
      * @param tasks ArrayList containing the tasks
      * @return String containing the tasks
      * @throws NoTaskException If the list is empty
@@ -121,6 +122,13 @@ public class TaskList {
         return output.toString();
     }
 
+    /**
+     * Searches for the keyword specified by the user.
+     *
+     * @param keyword The string to be searched (Supports RegEx format, search is case-insensitive)
+     * @return String containing matching tasks
+     * @throws NoTaskException If there are no tasks in the list
+     */
     public String find(String keyword) throws NoTaskException {
         ArrayList<Task> matchingTasks = new ArrayList<>();
         Pattern pattern = Pattern.compile(keyword, Pattern.CASE_INSENSITIVE);
@@ -138,6 +146,11 @@ public class TaskList {
         return listAll(matchingTasks);
     }
 
+    /**
+     * Serializes the stored tasks into JSON format.
+     *
+     * @return String in JSON format
+     */
     public String toJson() {
         return JsonParser.toJson(tasks);
     }
