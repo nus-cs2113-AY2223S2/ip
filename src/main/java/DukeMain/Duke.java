@@ -1,6 +1,10 @@
 package DukeMain;
 
+import ErrorHandling.ErrorHandler;
 import FileIO.DukeFile;
+import TaskItems.Deadline;
+import TaskItems.Event;
+import TaskItems.Todos;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package DukeMain;
+package ErrorHandling;
 
 public class ErrorHandler {
     public static Boolean isInputValid(String input) {

@@ -1,4 +1,4 @@
-package DukeMain;
+package TaskItems;
 
 public class Todos {
 

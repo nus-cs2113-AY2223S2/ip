@@ -1,6 +1,6 @@
 package FileIO;
 
-import DukeMain.Todos;
+import TaskItems.Todos;
 
 import java.io.*;
 import java.util.ArrayList;

@@ -1,10 +1,10 @@
-package DukeMain;
+package TaskItems;
 
 public class Event extends Todos {
 
     protected String type = "E";
 
-    Event(String name, boolean isMarked, String type) {
+    public Event(String name, boolean isMarked, String type) {
         super(name, isMarked, type);
     }
 
