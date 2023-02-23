@@ -4,19 +4,19 @@ If you can type fast, Duke can get your task management done faster than traditi
 helping you **keeping track of your tasks, deadlines and events.**
 
 ## Table of Contents
-1. [Quick Start](##Quick-Start)
-2. [Features](##Features)
-    1. [Viewing help: `help`](###Viewing-help:-`help`)
-    2. [Listing all tasks: `list`](###Listing-all-tasks:-`list`)
-    3. [Adding a todo task: `todo`](###Adding-a-todo-task:-`todo`)
-    4. [Adding a deadline task: `deadline`](###Adding-a-deadline-task:-`deadline`)
-    5. [Adding an event task: `event`](###Adding-an-event-task:-`event`)
-    6. [Marking a task as done: `mark`](###Marking-a-task-as-done:-`mark`)
-    7. [Marking a task as undone: `unmark`](###Marking-a-task-as-undone:-`unmark`)
-    8. [Deleting a task: `delete`](###Deleting-a-task:-`delete`)
-    9. [Finding a task by keyword: `find`](###Finding-a-task-by-keyword:-`find`)
-    10. [Exiting the program: `bye`](###Exiting-the-program:-`bye`)
-3. [FAQ](##FAQ)
+1. [Quick Start](#quick-start)
+2. [Features](#features)
+    1. [Viewing help: `help`](#viewing-help-help)
+    2. [Listing all tasks: `list`](#listing-all-tasks-list)
+    3. [Adding a todo task: `todo`](#adding-a-todo-task-todo)
+    4. [Adding a deadline task: `deadline`](#adding-a-deadline-task-deadline)
+    5. [Adding an event task: `event`](#adding-an-event-task-event)
+    6. [Marking a task as done: `mark`](#marking-a-task-as-done-mark)
+    7. [Marking a task as undone: `unmark`](#marking-a-task-as-undone-unmark)
+    8. [Deleting a task: `delete`](#deleting-a-task-delete)
+    9. [Finding a task by keyword: `find`](#finding-a-task-by-keyword-find)
+    10. [Exiting the program: `bye`](#exiting-the-program-bye)
+3. [FAQ](#faq)
 
 ## Quick Start
 
@@ -27,7 +27,7 @@ helping you **keeping track of your tasks, deadlines and events.**
 ip.jar command to run the application.
 5. Type the command in the command box and press Enter to execute it.
 e.g. typing `help` and pressing Enter will display the list of commands available in Duke.
-6. Refer to the [Features](##Features) below for details of each command.
+6. Refer to the [Features](#features) below for details of each command.
 
 ## Features 
 
