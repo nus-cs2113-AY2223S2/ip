@@ -31,9 +31,21 @@ dos2unix ACTUAL.TXT EXPECTED-UNIX.TXT
 diff ACTUAL.TXT EXPECTED-UNIX.TXT
 if [ $? -eq 0 ]
 then
-    echo "Test result: PASSED"
-    exit 0
+    echo "Output: PASSED"
+    # compare save file to expected save file
+    diff /Users/linshang/Documents/cs2113/ip/save.txt save_result.txt
+    if [ $? -eq 0 ]
+    then
+        echo "Save file: PASSED"
+        echo "Test result: PASSED"
+        exit 0
+    else
+        echo "Save file: FAILED"
+        echo "Test result: FAILED"
+        exit 1
+    fi
 else
+    echo "Output: FAILED"
     echo "Test result: FAILED"
     exit 1
 fi

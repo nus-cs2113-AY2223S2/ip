@@ -7,9 +7,19 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * User Interface class that deals with inputs from and outputs to the user
+ */
 public class Ui {
+
+    // Scanner to read user inputs on CLI
     private static final Scanner in = new Scanner(System.in);
 
+    /**
+     * Get user input from CLI.
+     *
+     * @return String containing the CLI input
+     */
     public static String readCommand() {
         return in.nextLine();
     }
@@ -30,7 +40,10 @@ public class Ui {
         showLine();
     }
 
-    // functions
+    /**
+     * For <code>help</code> command.
+     * Prints out a list of all available commands.
+     */
     public static void printHelpMessage() {
         System.out.println(" Enter \"list\" to see all tasks\n" +
                 " Enter \"todo [task]\" to add a task\n" +
@@ -47,11 +60,12 @@ public class Ui {
                 " eg. \"2023-10-30T23:59\" for Oct 20 2023, 11:59PM");
     }
 
-    public static void printAddMessage(Task newTask) {
-        System.out.println("Got it. I've added this " + newTask.getType() + ":\n" +
-                "  " + newTask);
-    }
-
+    /**
+     * For <code>list</code> command.
+     * Prints all Tasks within the ArrayList given.
+     *
+     * @param allTasks ArrayList of Tasks
+     */
     public static void printList(ArrayList<Task> allTasks) {
         if (allTasks.size() == 0) {
             System.out.println("There are no tasks in your list!");
@@ -63,6 +77,58 @@ public class Ui {
         }
     }
 
+    /**
+     * For <code>todo</code>, <code>deadline</code>, and <code>event</code> commands.
+     * Prints out message for successful adding of Task.
+     *
+     * @param newTask Task that has just been added
+     */
+    public static void printAddMessage(Task newTask) {
+        System.out.println("Got it. I've added this " + newTask.getType() + ":\n" +
+                "  " + newTask);
+    }
+
+    /**
+     * For <code>mark</code> command.
+     * Prints out message for successful marking of Task as done.
+     *
+     * @param doneTask Task that has just been marked as done
+     */
+    public static void printMarkDone(Task doneTask) {
+        System.out.println("Nice!, I've marked this task as done:\n" +
+                "  " + doneTask);
+    }
+
+    /**
+     * For <code>unmark</code> command.
+     * Prints out message for successful marking of Task as not done.
+     *
+     * @param notDoneTask Task that has just been marked as not done
+     */
+    public static void printMarkNotDone(Task notDoneTask) {
+        System.out.println("OK, I've marked this task as not done yet:\n" +
+                "  " + notDoneTask);
+    }
+
+    /**
+     * For <code>delete</code> command.
+     * Prints out message for successful deletion of Task.
+     *
+     * @param deletedTask Task that will be deleted
+     * @param size        Number of tasks left in the list after deletion
+     */
+    public static void printDeleted(Task deletedTask, int size) {
+        System.out.println("Noted, I've removed this task:\n" +
+                "  " + deletedTask + "\n" +
+                "Now you have " + (size - 1) + " tasks in the list");
+    }
+
+    /**
+     * For <code>find</code> command.
+     * Prints all Tasks within the ArrayList given, all containing a certain keyword.
+     *
+     * @param foundTasks ArrayList of Tasks containing a keyword
+     */
     public static void printFoundList(ArrayList<Task> foundTasks) {
         if (foundTasks.size() == 0) {
             System.out.println("There are no matching tasks!");
@@ -74,35 +140,22 @@ public class Ui {
         }
     }
 
-    public static void printDateList(ArrayList<Task> allTasks, LocalDate date) {
+    /**
+     * For <code>date</code> command.
+     * Prints all Tasks within the ArrayList given, all happening on a certain date.
+     *
+     * @param happeningTasks ArrayList of Tasks happening on a date
+     */
+    public static void printDateList(ArrayList<Task> happeningTasks, LocalDate date) {
         String dateString = date.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
-        if (allTasks.size() == 0) {
+        if (happeningTasks.size() == 0) {
             System.out.println("There are no tasks on " + dateString + "!");
             return;
         }
         System.out.println("Here are the tasks happening on " + dateString + ":");
-        for (int i = 0; i < allTasks.size(); i++) {
-            System.out.println(i + 1 + "." + allTasks.get(i));
+        for (int i = 0; i < happeningTasks.size(); i++) {
+            System.out.println(i + 1 + "." + happeningTasks.get(i));
         }
-    }
-
-    public static void printMarkDone(Task doneTask) {
-        System.out.println(
-                "Nice!, I've marked this task as done:\n" +
-                        "  " + doneTask);
-    }
-
-    public static void printMarkNotDone(Task notDoneTask) {
-        System.out.println(
-                "OK, I've marked this task as not done yet:\n" +
-                        "  " + notDoneTask);
-    }
-
-    public static void printDeleted(Task deletedTask, int size) {
-        System.out.println(
-                "Noted, I've removed this task:\n" +
-                        "  " + deletedTask + "\n" +
-                        "Now you have " + (size - 1) + " tasks in the list");
     }
 
     public static void printExitMessage() {
@@ -153,4 +206,5 @@ public class Ui {
     public static void printEmptyDescription() {
         System.out.println("Oops! The description cannot be empty.");
     }
+
 }

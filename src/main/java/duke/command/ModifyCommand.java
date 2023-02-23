@@ -10,15 +10,34 @@ import static duke.Parser.COMMAND_DELETE_WORD;
 import static duke.Parser.COMMAND_MARK_WORD;
 import static duke.Parser.COMMAND_UNMARK_WORD;
 
-public class MarkAndDelCommand extends Command {
+/**
+ * Mark and Delete Command class that modifies an existing Task from the TaskList tasks.
+ * Handles <code>mark</code>, <code>unmark</code>, and <code>delete</code> commands.
+ */
+public class ModifyCommand extends Command {
 
     protected String command;
     protected int idx;
-    public MarkAndDelCommand(String command, String param) {
+
+    /**
+     * Initialises the class with the type and description of the task given in the command.
+     *
+     * @param command Type of modification command being executed (mark, unmark, delete)
+     * @param param Contains the index of the task to be modified
+     */
+    public ModifyCommand(String command, String param) {
         int idx = Integer.parseInt(param) - 1;
         this.command = command;
         this.idx = idx;
     }
+
+    /**
+     * Executes the modification of a Task in the TaskList tasks based on data in the class.
+     *
+     * @param tasks The TaskList of existing Tasks
+     * @param ui Prints success or error message to user
+     * @param storage Gets updated after the TaskList has been modified
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         if (idx < 0 || idx >= tasks.getSize()) {
@@ -44,4 +63,5 @@ public class MarkAndDelCommand extends Command {
             ui.printErrorForIO();
         }
     }
+
 }

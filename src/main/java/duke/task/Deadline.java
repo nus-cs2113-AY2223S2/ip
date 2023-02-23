@@ -13,6 +13,13 @@ public class Deadline extends Task {
     protected LocalDateTime by;
     protected String byString;
 
+    /**
+     * Initialises as in Task, with added parsing for due date.
+     * If parsing is not possible, save due date as String.
+     *
+     * @param description String describing the Task
+     * @param by String describing the due date
+     */
     public Deadline(String description, String by) {
         super(description);
         try {
@@ -22,12 +29,19 @@ public class Deadline extends Task {
         }
     }
 
-    public String getType() {
-        return "deadline";
-    }
-
+    /**
+     * Get a String describing the due date of the Deadline.
+     *
+     * @param pattern Desired format for String after parsing
+     * @return Parsed due date
+     */
     public String getBy(DateTimeFormatter pattern) {
         return Parser.parseDateTime(by, byString, pattern);
+    }
+
+    @Override
+    public String getType() {
+        return "deadline";
     }
 
     @Override
@@ -42,4 +56,5 @@ public class Deadline extends Task {
     public String toString() {
         return "[" + DEADLINE_LABEL + "][" + getStatus() + "] " + description + " (by: " + getBy(printPattern) + ")";
     }
+
 }

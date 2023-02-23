@@ -7,7 +7,7 @@ import duke.command.ExitCommand;
 import duke.command.FindCommand;
 import duke.command.HelpCommand;
 import duke.command.ListCommand;
-import duke.command.MarkAndDelCommand;
+import duke.command.ModifyCommand;
 import duke.exception.EmptyDescException;
 import duke.exception.IllegalCommandException;
 import duke.exception.InvalidDateTime;
@@ -17,8 +17,12 @@ import duke.exception.InvalidEvent;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Parser class that makes sense of user commands or text.
+ */
 public class Parser {
 
+    // User command words understood by Duke
     public static final String COMMAND_EXIT_WORD = "bye";
     public static final String COMMAND_HELP_WORD = "help";
     public static final String COMMAND_LIST_WORD = "list";
@@ -31,6 +35,18 @@ public class Parser {
     public static final String COMMAND_DEADLINE_WORD = "deadline";
     public static final String COMMAND_EVENT_WORD = "event";
 
+    /**
+     * Returns a different type of Command class depending on the type of command input by the user.
+     *
+     * @param userCommand Command line input from user
+     * @return Corresponding Command class to user input
+     * @throws EmptyDescException If task description/keyword is left empty (for Add/Find commands respectively)
+     * @throws IllegalCommandException If an unknown command is input by the user
+     * @throws NumberFormatException If the index is left empty (for Mark, Delete commands)
+     * @throws InvalidDeadline If the input format for adding a deadline is wrong
+     * @throws InvalidEvent If the input format for adding an event is wrong
+     * @throws InvalidDateTime If the input format for a date and time is wrong
+     */
     public static Command parseCommand(String userCommand)
             throws EmptyDescException, IllegalCommandException, NumberFormatException,
             InvalidDeadline, InvalidEvent, InvalidDateTime {
@@ -59,7 +75,7 @@ public class Parser {
             if (split.length != 2) {
                 throw new NumberFormatException();
             }
-            return new MarkAndDelCommand(command, split[1]);
+            return new ModifyCommand(command, split[1]);
         case COMMAND_TODO_WORD:
         case COMMAND_DEADLINE_WORD:
         case COMMAND_EVENT_WORD:
@@ -72,6 +88,14 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses the input date and time, returns it as a String according to the given pattern.
+     *
+     * @param date Input date and time in the form of LocalDateTime
+     * @param dateString Input date and time in the form of a String
+     * @param pattern Format that the input date and time should be parsed into
+     * @return String with parsed date and time
+     */
     public static String parseDateTime(LocalDateTime date, String dateString, DateTimeFormatter pattern) {
         if (date != null) {
             return date.format(pattern);
@@ -79,6 +103,13 @@ public class Parser {
         return dateString;
     }
 
+    /**
+     * Separates the user input for a Deadline into the Deadline's description and its due date.
+     *
+     * @param param CLI user input after "deadline"
+     * @return String array consisting separated description and due date of the deadline
+     * @throws InvalidDeadline If the user did not input the due date in the right format
+     */
     public static String[] parseDeadline(String param) throws InvalidDeadline {
         String[] split = param.trim().split("\\s/by\\s", 2);
         if (split.length != 2) {
@@ -87,6 +118,13 @@ public class Parser {
         return split;
     }
 
+    /**
+     * Separates the user input for a Deadline into the Event's description and its start and end date.
+     *
+     * @param param CLI user input after "event"
+     * @return String array consisting separated description, start date, and end date of the event
+     * @throws InvalidEvent If the user did not input the start or end date in the right format
+     */
     public static String[] parseEvent(String param) throws InvalidEvent {
         String[] split = param.trim().split("\\s/from\\s|\\s/to\\s", 3);
         if (split.length != 3) {
@@ -94,4 +132,5 @@ public class Parser {
         }
         return split;
     }
+
 }

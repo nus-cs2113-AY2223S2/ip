@@ -10,12 +10,22 @@ import duke.task.TaskList;
 
 import java.io.IOException;
 
+/**
+ * Main class for running Duke
+ */
 public class Duke {
+
     public static final String FILE_PATH = "/Users/linshang/Documents/cs2113/ip/save.txt";
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
 
+    /**
+     * Initialises Duke by loading in data from save file.
+     * Sets up Ui, Storage, and Tasklist.
+     *
+     * @param filePath location of the local save file
+     */
     public Duke(String filePath) {
         ui = new Ui();
         ui.printWelcomeMessage();
@@ -28,6 +38,9 @@ public class Duke {
         }
     }
 
+    /**
+     * Continuously reads, executes, and prints outputs of user commands until ExitCommand is called.
+     */
     public void run() {
         boolean isExit = false;
         while (!isExit) {
@@ -55,8 +68,12 @@ public class Duke {
         }
     }
 
+    /**
+     * Main method. Initialises and runs Duke
+     */
     public static void main(String[] args) {
         new Duke(FILE_PATH).run();
         System.exit(0);
     }
+
 }

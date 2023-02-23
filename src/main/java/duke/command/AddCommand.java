@@ -14,6 +14,10 @@ import static duke.Parser.COMMAND_EVENT_WORD;
 import static duke.Parser.COMMAND_TODO_WORD;
 import static duke.task.TaskList.allTasks;
 
+/**
+ * Add Command class that adds a Task to the existing TaskList tasks.
+ * Handles <code>todo</code>, <code>deadline</code>, and <code>event</code> commands.
+ */
 public class AddCommand extends Command {
 
     protected String type;
@@ -22,6 +26,14 @@ public class AddCommand extends Command {
     protected String from;
     protected String to;
 
+    /**
+     * Initialises the class with the type and description of the task given in the command.
+     *
+     * @param type Type of task being added (ToDo, Deadline, or Event)
+     * @param param Description of task given by user (including date(s) for Deadline, Event)
+     * @throws InvalidDeadline If the Deadline being added has the wrong format
+     * @throws InvalidEvent If the Event being added has the wrong format
+     */
     public AddCommand(String type, String param) throws InvalidDeadline, InvalidEvent {
         this.type = type;
         switch(type){
@@ -41,6 +53,13 @@ public class AddCommand extends Command {
         }
     }
 
+    /**
+     * Executes the adding of a Task to the TaskList tasks based on data in the class.
+     *
+     * @param tasks The TaskList to be added to
+     * @param ui Prints success or error message to user
+     * @param storage Gets updated after the Task has been added
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         switch(type) {
@@ -61,6 +80,5 @@ public class AddCommand extends Command {
             ui.printErrorForIO();
         }
     }
-
 
 }
