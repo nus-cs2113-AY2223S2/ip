@@ -28,6 +28,11 @@ public class DukeSave {
         }
     }
     
+    /**
+     * Saves an ArrayList of tasks to DukeTaskList.txt file
+     * 
+     * @param list ArrayList of tasks
+     */
     public static void saveDukeToFile(ArrayList<DukeTasks> list) {
         String writeToFile = "";
         
@@ -55,6 +60,11 @@ public class DukeSave {
         }
     }
 
+    /**
+     * Returns an ArrayList of tasks from DukeTaskList.txt file
+     * 
+     * @return ArrayList of tasks
+     */
     public static ArrayList<DukeTasks> loadDukeFromFile() {
         ArrayList<DukeTasks> savedList = new ArrayList<>();
         setupFile();
