@@ -3,6 +3,7 @@ package io.github.haoyangw.rica;
 import io.github.haoyangw.rica.exception.RicaException;
 import io.github.haoyangw.rica.exception.RicaTaskException;
 import io.github.haoyangw.rica.task.TaskManager;
+import io.github.haoyangw.rica.ui.TextUi;
 
 import java.util.Scanner;
 
@@ -19,9 +20,14 @@ public class Rica {
     private static final String UNKNOWN_CMD_ERROR = " ??? Sorry, I don't understand this command. Sent to the wrong bot? xD";
     private static final String UNMARK_TRIGGER = "unmark";
     private static TaskManager taskManager;
+    private static TextUi textUi;
 
     private static TaskManager getTaskManager() {
         return Rica.taskManager;
+    }
+
+    private static TextUi getTextUi() {
+        return Rica.textUi;
     }
 
     private static void printlnWithIndent(String line) {
@@ -37,7 +43,7 @@ public class Rica {
         String command = "";
         do {
             command = in.nextLine();
-            printlnWithIndent(Rica.LINE);
+            Rica.getTextUi().printHeader();
             String[] params = command.split(" ");
             switch (params[0]) {
             case Rica.MARK_TRIGGER:
@@ -57,37 +63,34 @@ public class Rica {
                 try {
                     Rica.getTaskManager().createTaskFrom(command);
                 } catch (RicaTaskException exception) {
-                    printlnWithIndent(exception.getMessage());
+                    Rica.getTextUi().printlnWithIndent(exception.getMessage());
                 }
                 break;
             case Rica.DELETE_TRIGGER:
                 try {
                     Rica.getTaskManager().rmTask(command);
                 } catch (RicaTaskException exception) {
-                    printlnWithIndent(exception.getMessage());
+                    Rica.getTextUi().printlnWithIndent(exception.getMessage());
                 }
                 break;
             case Rica.BYE_TRIGGER:
-                printlnWithIndent(Rica.BYE_PHRASE);
+                Rica.getTextUi().printGoodbyeMessage();
                 break;
             default:
-                printlnWithIndent(UNKNOWN_CMD_ERROR);
+                Rica.getTextUi().printlnWithIndent(UNKNOWN_CMD_ERROR);
             }
-            printlnWithIndent(Rica.LINE);
+            Rica.getTextUi().printFooter();
         } while (!command.equals(Rica.BYE_TRIGGER));
     }
 
     public static void main(String[] args) {
-        printlnWithIndent(Rica.LINE);
-        printlnWithIndent(" Hello! I'm R.I.C.A.");
-        printlnWithIndent((" That's Really-Intelligent-Chat-Assistant for you!"));
-        printlnWithIndent(" How may I be of assistance?");
-        printlnWithIndent(Rica.LINE);
-        taskManager = new TaskManager();
+        Rica.textUi = new TextUi();
+        Rica.getTextUi().printWelcomeMessage();
+        Rica.taskManager = new TaskManager();
         try {
             Rica.runCommands();
         } catch (RicaException exception) {
-            printlnWithIndent(exception.getMessage());
+            Rica.getTextUi().printErrorMessage(exception);
         }
     }
 

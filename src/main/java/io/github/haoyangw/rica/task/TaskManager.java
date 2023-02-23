@@ -2,6 +2,7 @@ package io.github.haoyangw.rica.task;
 
 import io.github.haoyangw.rica.exception.RicaStorageException;
 import io.github.haoyangw.rica.exception.RicaTaskException;
+import io.github.haoyangw.rica.ui.TextUi;
 import io.github.haoyangw.rica.util.StorageManager;
 
 import java.util.ArrayList;
@@ -24,14 +25,16 @@ public class TaskManager {
     private static final String WRONG_CMD_ERROR = " Hello wrong command for %s! Check again?";
     private static final String WRONG_TASK_TYPE = " Erm I don't think this task can be marked done xD";
     private final StorageManager storageManager;
+    private final TextUi textUi;
     private ArrayList<Task> tasks;
 
     public TaskManager() {
         storageManager = new StorageManager();
+        textUi = new TextUi();
         try {
             tasks = storageManager.getSavedTasks();
         } catch (RicaStorageException exception) {
-            TaskManager.printlnWithIndent(exception.getMessage());
+            textUi.printErrorMessage(exception);
             tasks = new ArrayList<>();
         }
     }
@@ -47,23 +50,23 @@ public class TaskManager {
         case TaskManager.TODO_CMD:
             Todo newTodo = Todo.create(command);
             this.addTask(newTodo);
-            TaskManager.printlnWithIndent(String.format(TaskManager.ADD_PHRASE,
+            this.getTextUi().printlnWithIndent(String.format(TaskManager.ADD_PHRASE,
                     TaskManager.TODO_CMD));
-            TaskManager.printlnWithIndent("   " + newTodo.toString());
+            this.getTextUi().printlnWithIndent("   " + newTodo.toString());
             break;
         case TaskManager.DEADLINE_CMD:
             Deadline newDeadline = Deadline.create(command);
             this.addTask(newDeadline);
-            TaskManager.printlnWithIndent(String.format(TaskManager.ADD_PHRASE,
+            this.getTextUi().printlnWithIndent(String.format(TaskManager.ADD_PHRASE,
                     TaskManager.DEADLINE_CMD));
-            TaskManager.printlnWithIndent("   " + newDeadline.toString());
+            this.getTextUi().printlnWithIndent("   " + newDeadline.toString());
             break;
         case TaskManager.EVENT_CMD:
             Event newEvent = Event.create(command);
             this.addTask(newEvent);
-            TaskManager.printlnWithIndent(String.format(TaskManager.ADD_PHRASE,
+            this.getTextUi().printlnWithIndent(String.format(TaskManager.ADD_PHRASE,
                     TaskManager.EVENT_CMD));
-            TaskManager.printlnWithIndent("   " + newEvent.toString());
+            this.getTextUi().printlnWithIndent("   " + newEvent.toString());
             break;
         }
     }
@@ -83,6 +86,10 @@ public class TaskManager {
 
     private ArrayList<Task> getTasks() {
         return this.tasks;
+    }
+
+    private TextUi getTextUi() {
+        return this.textUi;
     }
 
     private boolean hasAnyTasks() {
@@ -116,10 +123,10 @@ public class TaskManager {
         this.getStorageManager().saveTasks(this.getTasks());
         int howManyTasks = this.getTasks().size();
         if (howManyTasks > 1) {
-            TaskManager.printlnWithIndent(String.format(TaskManager.TASK_ADDED_PHRASE,
+            this.getTextUi().printlnWithIndent(String.format(TaskManager.TASK_ADDED_PHRASE,
                     this.getTasks().size()));
         } else if (howManyTasks == 1) {
-            TaskManager.printlnWithIndent(String.format(TaskManager.SINGLE_TASK_ADDED_PHRASE,
+            this.getTextUi().printlnWithIndent(String.format(TaskManager.SINGLE_TASK_ADDED_PHRASE,
                     this.getTasks().size()));
         }
     }
@@ -145,16 +152,16 @@ public class TaskManager {
         // At this point, rica.Task is definitely an instance of rica.Todo. Can cast it to rica.Todo safely
         Todo selectedTodo = (Todo) selectedTask;
         if (selectedTodo.getIsDone()) {
-            TaskManager.printlnWithIndent(" Take a break maybe? Alright marked as done my friend:");
-            TaskManager.printlnWithIndent("    " + selectedTodo);
+            this.getTextUi().printlnWithIndent(" Take a break maybe? Alright marked as done my friend:");
+            this.getTextUi().printlnWithIndent("    " + selectedTodo);
             return selectedTodo;
         }
         this.rmTask(indexOfTask);
         selectedTodo = selectedTodo.setDone(true);
         this.insertTask(indexOfTask, selectedTodo);
         this.getStorageManager().saveTasks(this.getTasks());
-        TaskManager.printlnWithIndent(" Shall remember that this task is done:");
-        TaskManager.printlnWithIndent("    " + selectedTodo);
+        this.getTextUi().printlnWithIndent(" Shall remember that this task is done:");
+        this.getTextUi().printlnWithIndent("    " + selectedTodo);
         return selectedTodo;
     }
 
@@ -164,12 +171,12 @@ public class TaskManager {
      */
     public void printTasks() {
         if (!this.hasAnyTasks()) {
-            TaskManager.printlnWithIndent(" Hope I'm not amnesiac, but I don't remember any tasks?");
+            this.getTextUi().printlnWithIndent(" Hope I'm not amnesiac, but I don't remember any tasks?");
         } else {
             ArrayList<Task> tasks = this.getTasks();
-            TaskManager.printlnWithIndent(" I think you have these tasks:");
+            this.getTextUi().printlnWithIndent(" I think you have these tasks:");
             for (int i = 1; i <= tasks.size(); i += 1) {
-                TaskManager.printlnWithIndent(" " + i + "." + tasks.get(i - 1));
+                this.getTextUi().printlnWithIndent(" " + i + "." + tasks.get(i - 1));
             }
         }
     }
@@ -193,13 +200,13 @@ public class TaskManager {
         //   before passing to rmTask()
         Task removedTask = this.rmTask(givenIndex - 1);
         this.getStorageManager().saveTasks(this.getTasks());
-        TaskManager.printlnWithIndent(TaskManager.TASK_REMOVED_PHRASE);
-        TaskManager.printlnWithIndent("   " + removedTask.toString());
+        this.getTextUi().printlnWithIndent(TaskManager.TASK_REMOVED_PHRASE);
+        this.getTextUi().printlnWithIndent("   " + removedTask.toString());
         int numTasksLeft = this.getTasks().size();
         if (numTasksLeft == 1) {
-            TaskManager.printlnWithIndent(TaskManager.TASK_REMAINING_PHRASE);
+            this.getTextUi().printlnWithIndent(TaskManager.TASK_REMAINING_PHRASE);
         } else {
-            TaskManager.printlnWithIndent(String.format(TaskManager.TASKS_REMAINING_PHRASE, numTasksLeft));
+            this.getTextUi().printlnWithIndent(String.format(TaskManager.TASKS_REMAINING_PHRASE, numTasksLeft));
         }
     }
 
@@ -223,17 +230,17 @@ public class TaskManager {
         }
         Todo selectedTodo = (Todo) selectedTask;
         if (!selectedTodo.getIsDone()) {
-            TaskManager.printlnWithIndent(" Getting a little ahead of yourself"
+            this.getTextUi().printlnWithIndent(" Getting a little ahead of yourself"
                     + "are you xD It's not even done:");
-            TaskManager.printlnWithIndent("    " + selectedTodo);
+            this.getTextUi().printlnWithIndent("    " + selectedTodo);
             return selectedTodo;
         }
         this.rmTask(indexOfTask);
         selectedTodo = selectedTodo.setDone(false);
         this.insertTask(indexOfTask, selectedTodo);
         this.getStorageManager().saveTasks(this.getTasks());
-        TaskManager.printlnWithIndent(" (Why??) Anyway, I've marked this task as not done yet:");
-        TaskManager.printlnWithIndent("    " + selectedTodo);
+        this.getTextUi().printlnWithIndent(" (Why??) Anyway, I've marked this task as not done yet:");
+        this.getTextUi().printlnWithIndent("    " + selectedTodo);
         return selectedTodo;
     }
 
