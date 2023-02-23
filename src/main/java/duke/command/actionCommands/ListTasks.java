@@ -2,6 +2,7 @@ package duke.command.actionCommands;
 
 import duke.command.Command;
 import duke.tasks.Task;
+import duke.tasks.TaskList;
 
 import java.util.ArrayList;
 
@@ -10,7 +11,7 @@ import static duke.main.Duke.taskCount;
 
 public class ListTasks extends Command {
     @Override
-    public void processCommand(ArrayList<Task> tasksList, String input) {
+    public void processCommand(TaskList tasksList, String input) {
         int idxCount = 1;
         printHorizontalLine();
         System.out.println("Here are the tasks in your list:");

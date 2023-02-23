@@ -1,4 +1,4 @@
-package duke.fileOperation;
+package duke.Storage;
 
 
 import duke.tasks.*;
@@ -10,16 +10,22 @@ import java.util.Scanner;
 
 import static duke.main.Duke.taskCount;
 
-public class FileOperation {
-    public static void initFile() throws IOException {
-        File newFile = new File("./taskslist.csv");
+public class Storage {
+    private final String filepath;
+
+    public Storage(String filepath) {
+        this.filepath = filepath;
+    }
+
+    public void initFile() throws IOException {
+        File newFile = new File(this.filepath);
         if (!newFile.exists()) {
             newFile.createNewFile();
         }
     }
 
-    public static void loadFile(ArrayList<Task> tasksList) throws FileNotFoundException {
-        File file = new File("./taskslist.csv");
+    public void loadFile(TaskList tasksList) throws FileNotFoundException {
+        File file = new File(this.filepath);
         Scanner s = new Scanner(file);
         while (s.hasNext()) {
             String input = s.nextLine();
@@ -57,7 +63,7 @@ public class FileOperation {
 
     }
 
-    public static void updateFile(ArrayList<Task> tasksList) throws IOException {
+    public static void updateFile(TaskList tasksList) throws IOException {
         FileWriter overwriteFile = new FileWriter("./taskslist.csv");
         for (int i = 0; i < taskCount; i++) {
             Task task = tasksList.get(i);
