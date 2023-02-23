@@ -5,6 +5,9 @@ import duke.task.Task;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Class that handles interaction with the user
+ */
 public class UI {
     public static void printGreeting(){
         System.out.println("Hello! I'm Duke");

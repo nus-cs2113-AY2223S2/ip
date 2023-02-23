@@ -3,10 +3,21 @@ package duke;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Class that parses user input into commands
+ */
 public class Parser {
 
     public static final DateTimeFormatter storedDateFormat = DateTimeFormatter.ofPattern("MMM d yyyy");
     public static final DateTimeFormatter inputDateFormat = DateTimeFormatter.ISO_LOCAL_DATE;
+
+    /**
+     * Returns the parsed command from the user input
+     *
+     * @param userInput The user's input
+     * @return Parsed command
+     * @throws DukeException if the user input is invalid
+     */
     public static Command parseCommand(String userInput) throws DukeException{
         String firstWordOfInput = userInput.split(" ")[0];
         CommandType commandType;
@@ -52,6 +63,13 @@ public class Parser {
         return new Command(commandType,additionalParameters);
     }
 
+    /**
+     * Returns the string array of task numbers parsed from user input
+     *
+     * @param userInput The user's input
+     * @return Task numbers stored as a string array
+     * @throws DukeException if the task numbers are invalid
+     */
     private static String[] getTaskNumbers(String userInput) throws DukeException{
         userInput = userInput.trim();
         int indexOfFirstSpace = userInput.indexOf(" ");
@@ -64,6 +82,14 @@ public class Parser {
         }
         return taskNumbers;
     }
+
+    /**
+     * Returns the additional parameters for a todo task parsed from user input
+     *
+     * @param userInput The user's input
+     * @return additional parameters for todo class
+     * @throws DukeException if the parameters are invalid
+     */
 
 
     protected static String[] getTaskNameParameter(String userInput, String commandName) throws DukeException{
@@ -79,6 +105,14 @@ public class Parser {
         additionalParameters[0] = name;
         return additionalParameters;
     }
+
+    /**
+     * Returns the additional parameters for a deadline task parsed from user input
+     *
+     * @param userInput The user's input
+     * @return additional parameters for deadline task
+     * @throws DukeException if the parameters are invalid
+     */
     private static String[] getDeadlineAdditionalParameters(String userInput) throws DukeException{
         int indexOfFirstSpace = userInput.indexOf(" ");
         int indexOfBy =  userInput.indexOf(CommandInputs.ADD_DEADLINE_BY_COMMAND_INPUT);
@@ -104,6 +138,13 @@ public class Parser {
         return additionalParameters;
     }
 
+    /**
+     * Returns the additional parameters for an event task parsed from user input
+     *
+     * @param userInput The user's input
+     * @return additional parameters for an event task
+     * @throws DukeException if the parameters are invalid
+     */
     private static String[] getEventAdditionalParameters(String userInput) throws DukeException{
         int indexOfFirstSpace = userInput.indexOf(" ");
         int indexOfFrom = userInput.indexOf(CommandInputs.ADD_EVENT_FROM_COMMAND_INPUT);

@@ -1,5 +1,8 @@
 package duke.task;
 
+/**
+ * Task type that includes a by time
+ */
 public class Deadline extends Task{
     private String doBy;
     public Deadline(String name, String doBy){

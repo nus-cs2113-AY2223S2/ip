@@ -1,5 +1,8 @@
 package duke;
 
+/**
+ * Type representing a command after it is parsed by the parser
+ */
 public class Command {
     private CommandType commandType;
     private String[] additionalParameters;

@@ -1,5 +1,8 @@
 package duke.task;
 
+/**
+ * Task type that includes from time and to time
+ */
 public class Event extends Task{
     private String from;
     private String to;

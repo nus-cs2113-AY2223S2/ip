@@ -5,12 +5,21 @@ import duke.task.*;
 import java.sql.Array;
 import java.util.ArrayList;
 
+/**
+ * Class that stores tasks and handles operations performed on tasks
+ */
 public class TaskList {
     private ArrayList<Task> tasks;
     TaskList(ArrayList<Task> tasks){
         this.tasks = tasks;
     }
 
+    /**
+     * Adds a new task to the task list
+     *
+     * @param taskParameters The parameters for the task
+     * @param taskType The type of the task
+     */
     public void addNewTask(String[] taskParameters, TaskType taskType) {
         Task newTask;
         switch (taskType) {
@@ -35,6 +44,14 @@ public class TaskList {
                 "Now you have " + tasks.size() + " tasks in the list.");
     }
 
+    /**
+     * Gets the task index from the string of task numbers received from parser
+     *
+     * @param taskNumbers String array received from parser representing task numbers
+     * @param totalTasks Total tasks in the list
+     * @return The 0-based index of the task indicated by user
+     * @throws DukeException if the task number is invalid
+     */
     public int getTaskIndex(String[] taskNumbers, int totalTasks) throws DukeException{
         // From parser, in the current implementation, taskNumbers.length is always equal to 1
         int taskIndex;
@@ -51,6 +68,14 @@ public class TaskList {
         taskIndex -= 1;
         return taskIndex;
     }
+
+    /**
+     * Changes the task status of a task
+     *
+     * @param taskNumbers String array representing the 1-based task number to change the status of
+     * @param isDone Boolean representing what to set the status of the task to be
+     * @throws DukeException if task number is invalid
+     */
     public void changeTaskStatus(String[] taskNumbers, boolean isDone) throws DukeException{
         // From parser, taskNumbers.length is always equal to 1
         int taskIndex = getTaskIndex(taskNumbers, tasks.size());
@@ -76,6 +101,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * Deletes a task
+     *
+     * @param taskNumbers String array representing the 1-based task number to delete
+     * @throws DukeException if task number is invalid
+     */
     public void deleteTask(String[] taskNumbers) throws DukeException{
         int taskIndex = getTaskIndex(taskNumbers, tasks.size());
 
