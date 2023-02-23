@@ -1,5 +1,8 @@
 package duke;
 
+import duke.task.Task;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -21,5 +24,14 @@ public class UI {
 
     public static void printToUser(String message){
         System.out.println(message);
+    }
+
+    public static void printTasklist(ArrayList<Task> tasks, String header){
+        String stringToPrint = "";
+        stringToPrint = stringToPrint.concat(header);
+        for(int i = 0; i < tasks.size(); ++i) {
+            stringToPrint = stringToPrint.concat("\n" + Integer.toString(i + 1) + "." + tasks.get(i).toString());
+        }
+        System.out.println(stringToPrint);
     }
 }

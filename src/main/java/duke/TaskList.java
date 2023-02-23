@@ -118,16 +118,17 @@ public class TaskList {
         UI.printToUser(successMessage);
     }
 
-    public ArrayList<Task> getTaskArrayList(){
-        return tasks;
-    }
-    @Override
-    public String toString(){
-        String stringToPrint = "";
-        stringToPrint = stringToPrint.concat("Here are the tasks in your list:");
-        for(int i = 0; i < tasks.size(); ++i) {
-            stringToPrint = stringToPrint.concat("\n" + Integer.toString(i + 1) + "." + tasks.get(i).toString());
+    public ArrayList<Task> tasksWithKeyword(String keyWord){
+        ArrayList<Task> selectedTasks = new ArrayList<>();
+        for(Task task : tasks) {
+            if (task.getTaskName().contains(keyWord)) {
+                selectedTasks.add(task);
+            }
         }
-        return stringToPrint;
+        return selectedTasks;
+    }
+
+    public ArrayList<Task> getTaskArrayList() {
+        return tasks;
     }
 }
