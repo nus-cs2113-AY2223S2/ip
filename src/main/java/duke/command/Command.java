@@ -149,7 +149,7 @@ public class Command {
             }
             todoList.findEndTimeBefore(timeBefore);
         } else {
-            todoList.findDesc();
+            todoList.findDesc(cmdContent);
         }
     }
 
