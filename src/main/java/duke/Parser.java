@@ -68,6 +68,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Process the array of words from the user input and extracts the
+     * keywords into a single string to use for the find function
+     *
+     * @param words The array of words generated from the user input
+     * @return The keywords string to use for the find function
+     */
     static String processKeywords(String[] words) {
         String rawKeyword = "";
         for (int i = 1; i < words.length; i++) {
