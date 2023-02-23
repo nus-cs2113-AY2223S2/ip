@@ -2,9 +2,13 @@ package Duke.ui;
 
 
 import Duke.tasklist.taskList;
-
+/**
+ * deals with interaction with user
+ */
 public class textUI {
-
+	/**
+	 * print welcome message
+	 */
 	public static void printStart () {
 		String logo = " ____        _        \n"
 				+ "|  _ \\ _   _| | _____ \n"
@@ -18,6 +22,10 @@ public class textUI {
 		printLine ();
 	}
 
+	/**
+	 * Print the newly added task
+	 * @param tasks stores the taskList
+	 */
 	public static void printTask (taskList tasks) {
 		printLine ();
 		System.out.println ("Got it. I've added this task:");
@@ -26,6 +34,11 @@ public class textUI {
 		printLine ();
 	}
 
+	/**
+	 * Print updated status of a specific task
+	 * @param tasks stores the taskList
+	 * @param index user specified task number
+	 */
 	public static void printStatus (taskList tasks, int index) {
 		printLine ();
 		System.out.println ("Nice! I've marked this task as " + (tasks.get (index).getIsDone () ? "done" : "undone") + ":");
@@ -33,6 +46,11 @@ public class textUI {
 		printLine ();
 	}
 
+	/**
+	 * Print the deleted task
+	 * @param tasks stores the taskList
+	 * @param index user specified task number
+	 */
 	public static void printDelete (taskList tasks, int index) {
 		printLine ();
 		System.out.println ("Noted. I've removed this task:");
@@ -41,6 +59,10 @@ public class textUI {
 		printLine ();
 	}
 
+	/**
+	 * Print all the stored tasks in the taskList
+	 * @param tasks stores the taskList
+	 */
 	public static void listTasks (taskList tasks) {
 		printLine ();
 		if (tasks.size () > 0) {
@@ -54,6 +76,11 @@ public class textUI {
 		printLine ();
 	}
 
+	/**
+	 * Print all the tasks that contains the search keyword
+	 * @param tasks store the taskList
+	 * @param description user specified keyword
+	 */
 	public static void findTasks (taskList tasks, String description) {
 		printLine ();
 		boolean isFound = false;
@@ -76,12 +103,18 @@ public class textUI {
 		printLine ();
 	}
 
+	/**
+	 * Print before exit program
+	 */
 	public static void printEnd () {
 		printLine ();
 		System.out.println ("Bye. Hope to see you again soon!");
 		printLine ();
 	}
 
+	/**
+	 * Print the line separator
+	 */
 	public static void printLine () {
 		System.out.println ("____________________________________________________________");
 	}

@@ -1,6 +1,5 @@
 package Duke.storage;
 
-import Duke.exception.DukeException;
 import Duke.task.Deadline;
 import Duke.task.Event;
 import Duke.task.Task;
@@ -13,15 +12,23 @@ import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.io.File;
 
+/**
+ * Storage: deals with loading tasks from the file and saving tasks in the file
+ */
 public class fileIO {
 	private static final String FILEPATH = "data/duke.txt";
 	protected static ArrayList<Task> tasks = new ArrayList<> ();
 	protected static int count = 0;
 
 	public static int getCount () {
+
 		return count;
 	}
 
+	/**
+	 * Read the tasks from file and add them to task list
+	 * @return updated task list
+	 */
 	public static ArrayList<Task> readFile () {
 		try {
 			File dukeFile = new File (FILEPATH);
@@ -62,6 +69,10 @@ public class fileIO {
 		return tasks;
 	}
 
+	/**
+	 * Write tasks from task list to file
+	 * @param tasks task list
+	 */
 	public static void writeFile (ArrayList<Task> tasks) {
 		try {
 			FileWriter fileWrite = new FileWriter (FILEPATH, false);
