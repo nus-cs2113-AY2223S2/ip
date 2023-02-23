@@ -6,6 +6,11 @@ import keqing.tasks.Event;
 import keqing.tasks.Task;
 import keqing.tasks.ToDo;
 
+import keqing.KeqingStorage;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.FileStore;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -63,7 +68,7 @@ public class Keqing {
             System.out.println("   " + tasks.get(currentID).toString());
         }
         else {
-            tasks.get(currentID).seUndone();
+            tasks.get(currentID).setUndone();
             System.out.println("OK, I've marked this task as not done yet:");
             System.out.println("   " + tasks.get(currentID).toString());
         }
@@ -87,7 +92,7 @@ public class Keqing {
             throw new IllegalInputException("Keqing doesn't understand what you actually want to do...");
         }
         else {
-            ToDo toDoTask = new ToDo(content, getTaskCount());
+            ToDo toDoTask = new ToDo(content);
             tasks.add(toDoTask);
             echoAdd();
         }
@@ -98,7 +103,7 @@ public class Keqing {
             int indexOfBy = content.indexOf("/by");
             if (indexOfBy + 3 < content.length()) {
                 String by = content.substring(indexOfBy + 3).trim();
-                Deadline deadlineTask = new Deadline(content, getTaskCount(), by);
+                Deadline deadlineTask = new Deadline(content, by);
                 tasks.add(deadlineTask);
                 echoAdd();
             }
@@ -112,13 +117,13 @@ public class Keqing {
     }
 
     public static void readEvent(String content) throws IllegalInputException {
-        if (content.contains("./from") && content.contains("./to")) {
+        if (content.contains("/from") && content.contains("/to")) {
             int indexOfFrom = content.indexOf("/from");
             int indexOfTo = content.indexOf("/to");
             if (indexOfFrom < indexOfTo) {
                 String from = content.substring(indexOfFrom + 5, indexOfTo).trim();
                 String to = content.substring(indexOfTo + 3).trim();
-                Event eventTask = new Event(content, getTaskCount(), from, to);
+                Event eventTask = new Event(content, from, to);
                 tasks.add(eventTask);
                 echoAdd();
             }
@@ -146,7 +151,7 @@ public class Keqing {
     }
 
     public static void doCommand(String text) throws IllegalInputException {
-        String splittedText[] = text.split(" ", 2);
+        String[] splittedText = text.split(" ", 2);
         String command = splittedText[0];
         String content = splittedText[splittedText.length - 1];
         switch (command) {
@@ -157,6 +162,7 @@ public class Keqing {
             printMenu();
             break;
         case "mark":
+            //Fallthrough
         case "unmark":
             int currentID = Integer.parseInt(text.substring(text.length() - 1)) - 1;
             boolean isDone;
@@ -178,6 +184,11 @@ public class Keqing {
         default:
             throw new IllegalInputException("Keqing doesn't understand your input...?");
         }
+        try {
+            KeqingStorage.updateFile(tasks);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void loopCommand() {
@@ -194,7 +205,7 @@ public class Keqing {
         }
     }
     public static ArrayList<Task> tasks = new ArrayList<Task>();
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         String logo = "                    /                                       /                   \n"
                 + "                    ////(                              .(////                   \n" +
                 "                    *///*(//.    .*((//((///(/,   .**/////*/,                   \n" +
@@ -230,6 +241,7 @@ public class Keqing {
         System.out.println("Hello! I'm Keqin");
         System.out.println("What can I do for you?" + System.lineSeparator() + "Type 'menu' to know the commands.");
         System.out.println(LINE);
+        tasks = KeqingStorage.loadFile();
         loopCommand();
         System.out.println(LINE);
         System.out.println("Bye. Hope to see you again soon!");

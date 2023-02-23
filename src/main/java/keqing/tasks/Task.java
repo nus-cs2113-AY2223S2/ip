@@ -3,7 +3,6 @@ package keqing.tasks;
 public class Task {
     protected String description;
     protected static int taskCount = 0;
-    protected int taskID;
     protected boolean isDone = false;
 
 
@@ -11,21 +10,23 @@ public class Task {
         isDone = true;
     }
 
-    public void seUndone() {
+    public void setUndone() {
         isDone = false;
     }
 
-    public Task(String description, int taskID) {
+    public Task() {
+    }
+
+    public Task(String description) {
         this.description = description;
-        this.taskID = taskID;
+    }
+
+    public String getTaskType() {
+        return null;
     }
 
     public String getDescription() {
         return description;
-    }
-
-    public int getID() {
-        return taskID;
     }
 
     public static int getTaskCount() {
@@ -43,5 +44,9 @@ public class Task {
         else{
             return "[ ] " +  description;
         }
+    }
+
+    public boolean getStatus() {
+        return isDone;
     }
 }

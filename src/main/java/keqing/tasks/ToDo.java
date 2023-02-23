@@ -1,9 +1,16 @@
 package keqing.tasks;
 
 public class ToDo extends Task {
-    public ToDo(String description, int taskID) {
-        super(description, taskID);
+    public static final String sign = "T";
+
+    public ToDo(String description) {
+        super(description);
         taskCount += 1;
+    }
+
+    @Override
+    public String getTaskType() {
+        return sign;
     }
 
     @Override
