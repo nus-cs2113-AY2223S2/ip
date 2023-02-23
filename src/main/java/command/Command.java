@@ -2,6 +2,7 @@ package command;
 
 import exception.DukeException;
 import task.Task;
+import taskList.TaskList;
 
 import java.util.ArrayList;
 
@@ -16,5 +17,5 @@ public abstract class Command {
         return commands;
     }
 
-    public abstract String doCommand(ArrayList<Task> tasks) throws DukeException;
+    public abstract String doCommand(TaskList taskList) throws DukeException;
 }

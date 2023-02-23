@@ -5,6 +5,7 @@ import task.Deadline;
 import task.Event;
 import task.Task;
 import task.Todo;
+import taskList.TaskList;
 import ui.Ui;
 
 import java.io.File;
@@ -21,7 +22,7 @@ public class Storage {
     private final String dirPath = "." + File.separator + "data";
     private final String filePath = dirPath + File.separator + "duke.txt";
 
-    public void loadData(Ui ui, ArrayList<Task> tasks) {
+    public void loadData(Ui ui, TaskList taskList) {
         try {
             File file = new File(filePath);
             if (!file.exists()) {
@@ -36,7 +37,7 @@ public class Storage {
                 String data = scanner.nextLine();
                 String[] parameters = data.split(" \\| ");
                 Task task = createTask(parameters);
-                tasks.add(task);
+                taskList.add(task);
             }
             scanner.close();
         } catch (DukeException | IOException e) {
@@ -69,10 +70,10 @@ public class Storage {
         return newTask;
     }
 
-    public void updateData(ArrayList<Task> tasks) throws IOException {
+    public void updateData(TaskList taskList) throws IOException {
         //format content to write
         StringBuilder content = new StringBuilder();
-        for (Task task : tasks) {
+        for (Task task : taskList.getTasks()) {
             content.append(task.getDataSummary());
             content.append("\n");
         }
