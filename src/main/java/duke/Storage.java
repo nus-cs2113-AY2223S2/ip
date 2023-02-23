@@ -71,7 +71,7 @@ public class Storage {
      * @return The appropriate decoded task object
      * @throws Exception if encoded task is invalid
      */
-    public static Task decodeTask(String encodedTask) throws Exception{
+    private static Task decodeTask(String encodedTask) throws Exception{
         String[] taskParameters = encodedTask.split("`");
         String taskType = taskParameters[0];
         boolean isDone = taskParameters[1].equals("1");

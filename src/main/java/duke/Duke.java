@@ -50,7 +50,7 @@ public class Duke {
                     Storage.storeTaskData(taskDataFile, taskList.getTaskArrayList());
                     break;
                 case LIST_TASKS_COMMAND:
-                    UI.printTasklist(taskList.getTaskArrayList(),
+                    UI.printTaskList(taskList.getTaskArrayList(),
                             "Here are the tasks in your list:");
                     break;
                 case MARK_TASK_COMMAND:
@@ -66,7 +66,7 @@ public class Duke {
                     Storage.storeTaskData(taskDataFile, taskList.getTaskArrayList());
                     break;
                 case FIND_TASK_COMMAND:
-                    UI.printTasklist(taskList.tasksWithKeyword(command.getAdditionalParameters()[0]),
+                    UI.printTaskList(taskList.tasksWithKeyword(command.getAdditionalParameters()[0]),
                             "Here are the matching tasks in your list:");
                     break;
                 case END_PROGRAM_COMMAND:

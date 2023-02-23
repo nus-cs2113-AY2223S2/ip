@@ -26,7 +26,13 @@ public class UI {
         System.out.println(message);
     }
 
-    public static void printTasklist(ArrayList<Task> tasks, String header){
+    /**
+     * Formats and prints the list of tasks passed in to the user
+     *
+     * @param tasks The list of tasks to print
+     * @param header The header to print before the list of tasks
+     */
+    public static void printTaskList(ArrayList<Task> tasks, String header){
         String stringToPrint = "";
         stringToPrint = stringToPrint.concat(header);
         for(int i = 0; i < tasks.size(); ++i) {

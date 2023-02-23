@@ -92,7 +92,7 @@ public class Parser {
      */
 
 
-    protected static String[] getTaskNameParameter(String userInput, String commandName) throws DukeException{
+    private static String[] getTaskNameParameter(String userInput, String commandName) throws DukeException{
         String[] additionalParameters = new String[1];
         int indexOfFirstSpace = userInput.indexOf(" ");
         if(indexOfFirstSpace == -1){

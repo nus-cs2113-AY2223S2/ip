@@ -52,7 +52,7 @@ public class TaskList {
      * @return The 0-based index of the task indicated by user
      * @throws DukeException if the task number is invalid
      */
-    public int getTaskIndex(String[] taskNumbers, int totalTasks) throws DukeException{
+    private int getTaskIndex(String[] taskNumbers, int totalTasks) throws DukeException{
         // From parser, in the current implementation, taskNumbers.length is always equal to 1
         int taskIndex;
         try {
@@ -118,6 +118,12 @@ public class TaskList {
         UI.printToUser(successMessage);
     }
 
+    /**
+     * Searches through the list of tasks and returns an array list of tasks containing the keyword passed in
+     *
+     * @param keyWord The keyword to search for
+     * @return An array list of tasks with the keyword in their name
+     */
     public ArrayList<Task> tasksWithKeyword(String keyWord){
         ArrayList<Task> selectedTasks = new ArrayList<>();
         for(Task task : tasks) {
