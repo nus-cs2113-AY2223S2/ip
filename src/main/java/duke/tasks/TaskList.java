@@ -9,6 +9,9 @@ import duke.exceptions.NoTaskException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * A list used to store and access all tasks created.
+ */
 public class TaskList {
     private static GsonBuilder builder = new GsonBuilder();
     private static Gson gson = builder.create();
@@ -20,18 +23,40 @@ public class TaskList {
     private static final String TASK_EVENT = "EVENT";
     private static ArrayList<Task> tasks = new ArrayList<>();
 
+    /**
+     * Initialise the object using JSON string.
+     *
+     * @param json String to be deserialized
+     */
     public TaskList(String json) {
         this.tasks = fromJson(json);
     }
 
+    /**
+     * Add a task to the list.
+     *
+     * @param taskObj Task object to be added
+     */
     public void add(Task taskObj) {
         tasks.add(taskObj);
     }
 
+    /**
+     * Get the size of the list.
+     *
+     * @return Integer
+     */
     public int size() {
         return tasks.size();
     }
 
+    /**
+     * Delete a task from the list.
+     *
+     * @param id 1-based ID corresponding to the task
+     * @return Copy of the task deleted
+     * @throws InvalidInputIDException If the given ID is invalid
+     */
     public Task delete(int id) throws InvalidInputIDException {
         if (id < 1 || id > tasks.size()) {
             throw new InvalidInputIDException();
@@ -41,6 +66,15 @@ public class TaskList {
         return temp;
     }
 
+    /**
+     * Set the completion status of a task
+     *
+     * @param id          1-based ID corresponding to the task
+     * @param isCompleted The completion status
+     * @return String describing the action completed and task changed
+     * @throws NoTaskException         If the list is empty
+     * @throws InvalidInputIDException If the given ID is invalid
+     */
     public String setStatus(int id, boolean isCompleted) throws NoTaskException, InvalidInputIDException {
         try {
             if (tasks.size() == 0) {
@@ -57,6 +91,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * Lists all the tasks available in the list with their corresponding id
+     *
+     * @return String containing the tasks
+     * @throws NoTaskException If the list is empty
+     */
     public String listAll() throws NoTaskException {
         if (tasks.size() == 0) {
             throw new NoTaskException();

@@ -4,6 +4,9 @@ import duke.storage.Storage;
 import duke.tasks.TaskList;
 import duke.ui.UI;
 
+/**
+ * Updates the status of a task in the list.
+ */
 public class CommandMarking extends Command {
     private int taskNum;
     private boolean isMark;

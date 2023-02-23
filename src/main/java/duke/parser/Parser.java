@@ -19,6 +19,9 @@ import duke.tasks.ToDo;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Processes user input
+ */
 public class Parser {
     private static final String CHAR_SPACE = " ";
     private static final String COMMAND_DEADLINE = "deadline";
@@ -31,6 +34,13 @@ public class Parser {
     private static final String COMMAND_TODO = "todo";
     private static final String COMMAND_UNMARK = "unmark";
 
+    /**
+     * Reads the task ID input by the user.
+     *
+     * @param scanner Scanner with the ID to be read
+     * @return Task ID
+     * @throws InvalidInputIDException If the given ID is invalid
+     */
     private static int getID(Scanner scanner) throws InvalidInputIDException {
         if (!scanner.hasNextInt()) {
             throw new InvalidInputIDException();
@@ -38,7 +48,16 @@ public class Parser {
         return scanner.nextInt();
     }
 
-    private static Task getTaskFromInput(Scanner input, TaskEnum type) throws Exception {
+    /**
+     * Reads the user input and creates the corresponding task.
+     *
+     * @param input User input
+     * @param type  TaskEnum, for deserializing from JSON
+     * @return The Task object corresponding to user input
+     * @throws InvalidTaskFormatException If user input does not match the required format.
+     *                                    Exception message will describe the required format.
+     */
+    private static Task getTaskFromInput(Scanner input, TaskEnum type) throws InvalidTaskFormatException {
         // validate input
         if (!input.hasNextLine()) {
             throw new InvalidTaskFormatException(type);
@@ -71,7 +90,17 @@ public class Parser {
         return task;
     }
 
-    public Command parse(String input) throws Exception {
+    /**
+     * Reads user input and creates the corresponding Command object to be executed
+     *
+     * @param input String containing the command and parameters
+     * @throws InvalidTaskFormatException If user input does not match the required format.
+     *                                    Exception message will describe the required format.
+     * @throws InvalidInputIDException    If the given ID is invalid
+     * @throws InvalidCommandException    If the command does not match any supported commands
+     */
+    public Command parse(String input)
+            throws InvalidTaskFormatException, InvalidInputIDException, InvalidCommandException {
         boolean isExit = input.split(CHAR_SPACE)[0].equals(COMMAND_EXIT);
         if (isExit) {
             return new ExitCommand();

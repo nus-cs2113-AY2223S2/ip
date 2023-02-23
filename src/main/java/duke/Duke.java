@@ -16,6 +16,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
+/**
+ * The main controller for the task manager. Runs indefinitely until the exit keyword is input by the user. Input
+ * data is saved in the JSON format under the directory {projectDirectory}/data/save.txt.
+ */
 public class Duke {
 
     // commands

@@ -18,6 +18,11 @@ public class Deadline extends Task {
         this.by = details.get(1);
     }
 
+    /**
+     * Describes the task with its status, description and completion deadline.
+     *
+     * @return String describing the task
+     */
     @Override
     public String describe() {
         return getCheckbox(true, MARKER)

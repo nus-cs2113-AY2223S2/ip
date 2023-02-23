@@ -4,6 +4,9 @@ import duke.exceptions.NoTaskException;
 import duke.tasks.TaskList;
 import duke.ui.UI;
 
+/**
+ * Lists all the tasks available.
+ */
 public class ListCommand extends Command {
     @Override
     public void executor(TaskList tasks, UI ui) throws NoTaskException {
