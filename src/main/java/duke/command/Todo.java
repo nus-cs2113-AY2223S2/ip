@@ -7,6 +7,7 @@ public class Todo extends Task {
 
     public Todo(String taskDescription) {
         super(taskDescription);
+        setCommand("todo " + taskDescription);
     }
 
     @Override

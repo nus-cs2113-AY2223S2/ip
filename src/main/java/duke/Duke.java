@@ -9,16 +9,24 @@ import duke.task.Task;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import java.io.FileWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 public class Duke {
 
-    public static final String LINE_BREAK = "    ____________________________________________________________";
-    public static final String INDENTATION = "    ";
+    private static final String LINE_BREAK = "    ____________________________________________________________";
+    private static final String INDENTATION = "    ";
 
-    public static final String HELP_PAGE = "    todo: add a new task to Duke\n" +
+    private static final String HELP_PAGE = "    todo: add a new task to Duke\n" +
             "    deadline: add a new task and '/by' date to add a task with deadline\n" +
             "    event: add a new event with '/from' and '/to' duration\n" +
             "    list: list out all tasks stored\n" +
             "    help: no :D\n    bye: end the program\n    Please enter command:\n";
+
+    private static ArrayList<Task> tasks = new ArrayList<>();
+    private static Scanner in = new Scanner(System.in);
 
 
     public static void main(String[] args) {
@@ -26,9 +34,12 @@ public class Duke {
         printlnWithIndentation("Hello! I'm Duke");
         printlnWithIndentation("What can I do for you?");
         System.out.println(LINE_BREAK);
-        Scanner in = new Scanner(System.in);
+        try {
+            load();
+        } catch (IOException e) {
+            printException("Something went wrong while loading file!");
+        }
         String userInput;
-        ArrayList<Task> tasks = new ArrayList<>();
         while (true) {
             userInput = in.nextLine();
             String[] inputLine = userInput.split(" ", 2);
@@ -61,23 +72,23 @@ public class Duke {
             try {
                 switch (command) {
                 case "delete":
-                    deleteTask(tasks, inputLine);
+                    deleteTask(inputLine);
                     break;
                 case "mark":
-                    markTask(tasks, inputLine);
+                    markTask(inputLine);
                     break;
                 case "unmark":
-                    unmarkTask(tasks, inputLine);
+                    unmarkTask(inputLine);
                     break;
                 case "todo":
                     // command todo
-                    makeTodo(tasks, inputLine);
+                    makeTodo(inputLine);
                     break;
                 case "deadline":
-                    makeDeadline(tasks, inputLine);
+                    makeDeadline(inputLine);
                     break;
                 case "event":
-                    makeEvent(tasks, inputLine);
+                    makeEvent(inputLine);
                     break;
                 case "help":
                     System.out.println(HELP_PAGE);
@@ -85,6 +96,7 @@ public class Duke {
                 default:
                     throw new IllegalCommandException(command);
                 }
+
             } catch (IllegalCommandException e) {
                 printException("INVALID COMMAND!");
             }
@@ -97,7 +109,7 @@ public class Duke {
         System.out.println(HELP_PAGE + LINE_BREAK);
     }
 
-    private static void makeEvent(ArrayList<Task> tasks, String[] inputLine) {
+    private static void makeEvent(String[] inputLine) {
         try {
             String action = inputLine[1];
             if (action.contains("/from") & action.contains("/to")) {
@@ -114,7 +126,8 @@ public class Duke {
                 System.out.println(LINE_BREAK);
                 printlnWithIndentation("Got it. I've added this task: ");
                 System.out.println(INDENTATION + "  " + addEvent);
-                printTaskCount(tasks);
+                printTaskCount();
+                save();
             } else {
                 throw new IllegalCommandException(action);
             }
@@ -122,15 +135,17 @@ public class Duke {
             printException("INVALID COMMAND! Missing '/from' or '/to'");
         } catch (ArrayIndexOutOfBoundsException e) {
             printException("event cannot be empty");
+        } catch (IOException e) {
+            printException("Error saving file!");
         }
     }
 
-    private static void printTaskCount(ArrayList<Task> tasks) {
+    private static void printTaskCount() {
         // print out the number of task user has
         System.out.println(INDENTATION + "Now you have " + tasks.size() + " tasks in the list. \n" + LINE_BREAK);
     }
 
-    private static void makeDeadline(ArrayList<Task> tasks, String[] inputLine) {
+    private static void makeDeadline(String[] inputLine) {
         try {
             String action = inputLine[1];
             if (action.contains("/by")) {
@@ -144,7 +159,8 @@ public class Duke {
                 System.out.println(LINE_BREAK);
                 printlnWithIndentation("Got it. I've added this task: ");
                 System.out.println(INDENTATION + "  " + addDeadline);
-                printTaskCount(tasks);
+                printTaskCount();
+                save();
             } else {
                 throw new IllegalCommandException(action);
             }
@@ -152,10 +168,12 @@ public class Duke {
             printException("INVALID COMMAND! Missing '/by'");
         } catch (ArrayIndexOutOfBoundsException e) {
             printException("deadline cannot be empty");
+        } catch (IOException e) {
+            printException("Error saving file!");
         }
     }
 
-    private static void makeTodo(ArrayList<Task> tasks, String[] inputLine) {
+    private static void makeTodo(String[] inputLine) {
         try {
             String action = inputLine[1];
             action = action.trim();
@@ -164,13 +182,16 @@ public class Duke {
             System.out.println(LINE_BREAK);
             printlnWithIndentation("Got it. I've added this task: ");
             System.out.println(INDENTATION + "  " + addTodo);
-            printTaskCount(tasks);
+            printTaskCount();
+            save();
         } catch (ArrayIndexOutOfBoundsException e) {
             printException("todo cannot be empty");
+        } catch (IOException e) {
+            printException("Error saving file!");
         }
     }
 
-    private static void unmarkTask(ArrayList<Task> tasks, String[] inputLine) {
+    private static void unmarkTask(String[] inputLine) {
         try {
             String action = inputLine[1];
             action = action.trim();
@@ -178,16 +199,19 @@ public class Duke {
             tasks.get(indexToMark).setDone(false);
             printlnWithIndentation("OK, I've marked this task as not done yet: ");
             System.out.println(INDENTATION + "  [ ] " + tasks.get(indexToMark).getTaskDescription() + '\n' + LINE_BREAK);
+            save();
         } catch (ArrayIndexOutOfBoundsException e) {
             printException("unmark cannot be empty");
         } catch (IndexOutOfBoundsException e) {
             printException("Invalid task number! Task number does not exist!");
         } catch (NumberFormatException e) {
             printException("Please input numeric number to unmark task!");
+        } catch (IOException e) {
+            printException("Error saving file!");
         }
     }
 
-    private static void markTask(ArrayList<Task> tasks, String[] inputLine) {
+    private static void markTask(String[] inputLine) {
         try {
             String action = inputLine[1];
             action = action.trim();
@@ -195,31 +219,38 @@ public class Duke {
             tasks.get(indexToMark).setDone(true);
             printlnWithIndentation("Nice! I've marked this task as done:");
             System.out.println(INDENTATION + "  [X] " + tasks.get(indexToMark).getTaskDescription() + '\n' + LINE_BREAK);
+            save();
         } catch (ArrayIndexOutOfBoundsException e) {
             printException("mark cannot be empty");
         } catch (IndexOutOfBoundsException e) {
             printException("Invalid task number! Task number does not exist!");
         } catch (NumberFormatException e) {
             printException("Please input numeric number to mark task!");
+        } catch (IOException e) {
+            printException("Error saving file!");
         }
     }
 
-    private static void deleteTask(ArrayList<Task> tasks, String[] inputLine) {
+    private static void deleteTask(String[] inputLine) {
         try {
             String action = inputLine[1];
             action = action.trim();
             int indexToDelete = Integer.parseInt(action) - 1;
-            printlnWithIndentation("Nice! I've deleted this task:");
-            System.out.println(INDENTATION + tasks.get(indexToDelete).toString() +
-                    '\n' + LINE_BREAK);
+            String toPrint = tasks.get(indexToDelete).toString();
             tasks.remove(indexToDelete);
-            printTaskCount(tasks);
+            printlnWithIndentation("Nice! I've deleted this task:");
+            System.out.println(INDENTATION + toPrint +
+                    '\n' + LINE_BREAK);
+            printTaskCount();
+            save();
         } catch (ArrayIndexOutOfBoundsException e) {
             printException("delete cannot be empty");
         } catch (IndexOutOfBoundsException e) {
             printException("Invalid task number! Task number does not exist!");
         } catch (NumberFormatException e) {
             printException("Please input numeric number to delete task!");
+        } catch (IOException e) {
+            printException("Error saving file!");
         }
     }
 
@@ -227,4 +258,78 @@ public class Duke {
         System.out.println(INDENTATION + string);
     }
 
+    private static void load() throws IOException {
+        File folder = new File("data");
+        if (!(folder.exists() && folder.isDirectory())) {
+            // create new folder under root directory
+            new File("data").mkdirs();
+        }
+        File txtFile = new File("data/duketasks.txt");
+        if (!txtFile.exists()) {
+            txtFile.createNewFile();
+        }
+        Scanner f = new Scanner(txtFile);
+        while (f.hasNext()) {
+            String nextLine = f.nextLine();
+            String[] saveLine = nextLine.split(" ", 3);
+            String fileLine = saveLine[2];
+            String command = saveLine[1].trim();
+            // last string is "1" for done, "0" for not done
+            String checkDone = saveLine[0].trim();
+            try {
+                // add task into duke
+                addTaskFromFile(fileLine, command);
+            } catch (IllegalCommandException e) {
+                printException("Parsing error!");
+            }
+            if (checkDone.equals("1")) {
+                tasks.get(tasks.size()-1).setDone(true);
+            }
+        }
+    }
+
+    private static void addTaskFromFile(String fileLine, String command) throws IllegalCommandException {
+        switch (command) {
+        case "todo":
+            Todo addTodo = new Todo(fileLine);
+            tasks.add(addTodo);
+            break;
+        case "deadline":
+            int byIndex = fileLine.indexOf("/by");
+            String toAddDeadline = fileLine.substring(0, byIndex - 1);
+            String by = fileLine.substring(byIndex + 3);
+            toAddDeadline = toAddDeadline.trim();
+            by = by.trim();
+            Deadline addDeadline = new Deadline(toAddDeadline, by);
+            tasks.add(addDeadline);
+            break;
+        case "event":
+            int fromIndex = fileLine.indexOf("/from");
+            int toIndex = fileLine.indexOf("/to");
+            String toAddEvent = fileLine.substring(0, fromIndex - 1);
+            String fromTime = fileLine.substring(fromIndex + 5, toIndex - 1);
+            String toTime = fileLine.substring(toIndex + 3);
+            toAddEvent = toAddEvent.trim();
+            fromTime = fromTime.trim();
+            toTime = toTime.trim();
+            Event addEvent = new Event(toAddEvent, fromTime, toTime);
+            tasks.add(addEvent);
+            break;
+        default: throw new IllegalCommandException("Parsing error!");
+        }
+    }
+
+    private static void save() throws IOException {
+        File f = new File("data/duketasks.txt");
+        if (f.exists()) {
+            f.delete();
+        }
+        f.createNewFile();
+        FileWriter writeFile = new FileWriter(f);
+        for (Task t : tasks) {
+            writeFile.write(t.getSave());
+        }
+        writeFile.close();
+    }
 }
+

@@ -10,6 +10,7 @@ public class Event extends Task {
         super(taskDescription);
         this.from = from;
         this.to = to;
+        setCommand("event " + taskDescription + " /from " + from + " /to " + to);
     }
 
     @Override

@@ -8,6 +8,7 @@ public class Deadline extends Task {
     public Deadline(String taskDescription, String by) {
         super(taskDescription);
         this.by = by;
+        setCommand("deadline " + taskDescription + " /by " + by);
     }
 
     @Override
