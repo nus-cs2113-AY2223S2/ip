@@ -12,7 +12,8 @@ public class Command {
 
 	public static boolean checkCmd (String input) {
 		if ("mark".equalsIgnoreCase (input) || "unmark".equalsIgnoreCase (input) || "todo".equalsIgnoreCase (input)
-				|| "event".equalsIgnoreCase (input) || "deadline".equalsIgnoreCase (input) || "delete".equalsIgnoreCase (input)) {
+				|| "event".equalsIgnoreCase (input) || "deadline".equalsIgnoreCase (input)
+				|| "delete".equalsIgnoreCase (input) || "find".equalsIgnoreCase (input)) {
 			return true;
 		} else {
 			return false;
@@ -80,6 +81,10 @@ public class Command {
 				textUI.printDelete (tasks, dIndex - 1);
 				tasks.deleteTask (dIndex);
 				break;
+			case "find":
+				textUI.findTasks (tasks, description);
+				break;
+
 		}
 	}
 }
