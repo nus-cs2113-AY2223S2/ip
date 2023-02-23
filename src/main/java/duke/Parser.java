@@ -45,6 +45,9 @@ public class Parser {
                 // Delete a task
                 TaskList.deleteTask(tasks, words);
                 Storage.trySave(tasks);
+            } else if (words[0].equals("find") && (words.length > 1)) {
+                // Find tasks that contain a keyword
+                Ui.find(tasks, words);
             } else {
                 // Adding a task to the list
                 TaskList.addTask(line, tasks);
@@ -53,5 +56,14 @@ public class Parser {
             }
             line = in.nextLine();
         }
+    }
+
+    static String processKeywords(String[] words) {
+        String rawKeyword = "";
+        for (int i = 1; i < words.length; i++) {
+            rawKeyword += (" " + words[i]);
+        }
+        String keyword = rawKeyword.trim();
+        return keyword;
     }
 }
