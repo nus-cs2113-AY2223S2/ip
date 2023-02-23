@@ -1,8 +1,13 @@
 package duke.task;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public abstract class Task {
     protected String description;
     protected boolean isDone;
+    protected static DateTimeFormatter printPattern = DateTimeFormatter.ofPattern("MMM dd yyyy, hh:mma");
+    public static DateTimeFormatter storePattern = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
     public Task(String description) {
         this.description = description;
@@ -27,6 +32,10 @@ public abstract class Task {
 
     public void setDone(boolean done) {
         isDone = done;
+    }
+
+    public Boolean isOnDate(LocalDate date) {
+        return false;
     }
 
     @Override

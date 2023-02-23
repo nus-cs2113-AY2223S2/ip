@@ -21,6 +21,10 @@ ____________________________________________________________
  Enter "unmark [idx]" to mark task as not done
  Enter "delete [idx]" to remove task from list
  Enter "bye" to exit the program
+
+ For Duke to understand [date], you can enter it in the form of
+     "yyyy-MM-ddThh:mm"
+ eg. "2023-10-30T23:59" for Oct 20 2023, 11:59PM
 ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:
@@ -43,7 +47,7 @@ Please enter deadline as "deadline [task] /by [date]".
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this deadline:
-  [D][ ] submit tutorial (by: 10pm)
+  [D][ ] submit tutorial (by: Mar 03 2023, 11:59PM)
 ____________________________________________________________
 ____________________________________________________________
 Oops! The description of a task cannot be empty.
@@ -53,7 +57,7 @@ Please enter event as "event [task] /from [date] /to [date]".
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this event:
-  [E][ ] lecture (from: 9am to: 11am)
+  [E][ ] lecture (from: May 03 2023, 09:00AM to: 11:00AM)
 ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:
@@ -61,8 +65,8 @@ Here are the tasks in your list:
 2.[D][ ] return book (by: June 6th)
 3.[E][X] project meeting Aug 6th (from: 2pm to: 4pm)
 4.[T][ ] eat lunch
-5.[D][ ] submit tutorial (by: 10pm)
-6.[E][ ] lecture (from: 9am to: 11am)
+5.[D][ ] submit tutorial (by: Mar 03 2023, 11:59PM)
+6.[E][ ] lecture (from: May 03 2023, 09:00AM to: 11:00AM)
 ____________________________________________________________
 ____________________________________________________________
 Please enter [idx] in the form of an integer from 1 to 6
@@ -72,7 +76,7 @@ Please enter [idx] in the form of an integer from 1 to 6
 ____________________________________________________________
 ____________________________________________________________
 Nice!, I've marked this task as done:
-  [D][X] submit tutorial (by: 10pm)
+  [D][X] submit tutorial (by: Mar 03 2023, 11:59PM)
 ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:
@@ -80,12 +84,12 @@ Here are the tasks in your list:
 2.[D][ ] return book (by: June 6th)
 3.[E][X] project meeting Aug 6th (from: 2pm to: 4pm)
 4.[T][ ] eat lunch
-5.[D][X] submit tutorial (by: 10pm)
-6.[E][ ] lecture (from: 9am to: 11am)
+5.[D][X] submit tutorial (by: Mar 03 2023, 11:59PM)
+6.[E][ ] lecture (from: May 03 2023, 09:00AM to: 11:00AM)
 ____________________________________________________________
 ____________________________________________________________
 OK, I've marked this task as not done yet:
-  [D][ ] submit tutorial (by: 10pm)
+  [D][ ] submit tutorial (by: Mar 03 2023, 11:59PM)
 ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:
@@ -93,8 +97,8 @@ Here are the tasks in your list:
 2.[D][ ] return book (by: June 6th)
 3.[E][X] project meeting Aug 6th (from: 2pm to: 4pm)
 4.[T][ ] eat lunch
-5.[D][ ] submit tutorial (by: 10pm)
-6.[E][ ] lecture (from: 9am to: 11am)
+5.[D][ ] submit tutorial (by: Mar 03 2023, 11:59PM)
+6.[E][ ] lecture (from: May 03 2023, 09:00AM to: 11:00AM)
 ____________________________________________________________
 ____________________________________________________________
 Please enter [idx] in the form of an integer from 1 to 6
@@ -112,8 +116,20 @@ Here are the tasks in your list:
 1.[T][X] read book
 2.[D][ ] return book (by: June 6th)
 3.[E][X] project meeting Aug 6th (from: 2pm to: 4pm)
-4.[D][ ] submit tutorial (by: 10pm)
-5.[E][ ] lecture (from: 9am to: 11am)
+4.[D][ ] submit tutorial (by: Mar 03 2023, 11:59PM)
+5.[E][ ] lecture (from: May 03 2023, 09:00AM to: 11:00AM)
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this event:
+  [E][ ] recess week (from: Feb 25 2023, 12:00AM to: Mar 04 2023, 11:59PM)
+____________________________________________________________
+____________________________________________________________
+Please enter date in the format of yyyy-MM-dd.
+____________________________________________________________
+____________________________________________________________
+Here are the tasks happening on Mar 03 2023:
+1.[D][ ] submit tutorial (by: Mar 03 2023, 11:59PM)
+2.[E][ ] recess week (from: Feb 25 2023, 12:00AM to: Mar 04 2023, 11:59PM)
 ____________________________________________________________
 ____________________________________________________________
 Sorry, but I don't know what that means :(

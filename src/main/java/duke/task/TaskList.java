@@ -1,14 +1,6 @@
 package duke.task;
 
-import duke.exception.EmptyTaskException;
-import duke.exception.IllegalCommandException;
-import duke.exception.InvalidDeadline;
-import duke.exception.InvalidEvent;
-import duke.task.Deadline;
-import duke.task.Event;
-import duke.task.Task;
-import duke.task.ToDo;
-
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class TaskList {
@@ -21,6 +13,16 @@ public class TaskList {
 
     public static ArrayList<Task> getAllTasks() {
         return allTasks;
+    }
+
+    public static ArrayList<Task> getTasksOnDate(LocalDate date) {
+        ArrayList<Task> tasksOnDate = new ArrayList<>();
+        for (Task task : allTasks) {
+            if (task.isOnDate(date)) {
+                tasksOnDate.add(task);
+            }
+        }
+        return tasksOnDate;
     }
 
     public static int getSize() {

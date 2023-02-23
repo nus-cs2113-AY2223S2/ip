@@ -1,5 +1,7 @@
-package duke;
+package duke.task;
 
+import duke.Parser;
+import duke.Ui;
 import duke.exception.InvalidDeadline;
 import duke.exception.InvalidEvent;
 import duke.exception.InvalidSaveFile;
@@ -107,13 +109,13 @@ public class Storage {
                 break;
             case "deadline":
                 Deadline tempDeadline = (Deadline) task;
-                String by = tempDeadline.getBy();
+                String by = tempDeadline.getBy(Task.storePattern);
                 overwrite.write("D | " + stat + " | " + desc + " /by " + by + "\n");
                 break;
             case "event":
                 Event tempEvent = (Event) task;
-                String from = tempEvent.getFrom();
-                String to = tempEvent.getTo();
+                String from = tempEvent.getFrom(Task.storePattern);
+                String to = tempEvent.getTo(Task.storePattern);
                 overwrite.write("E | " + stat + " | " + desc + " /from " + from + " /to " + to + "\n");
                 break;
             }

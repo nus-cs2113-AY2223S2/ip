@@ -3,18 +3,19 @@ package duke;
 import duke.command.Command;
 import duke.exception.EmptyTaskException;
 import duke.exception.IllegalCommandException;
+import duke.exception.InvalidDateTime;
 import duke.exception.InvalidDeadline;
 import duke.exception.InvalidEvent;
+import duke.task.Storage;
 import duke.task.TaskList;
 
 import java.io.IOException;
 
-
 public class Duke {
     public static final String FILE_PATH = "/Users/linshang/Documents/cs2113/ip/save.txt";
-    private static Storage storage;
-    private static TaskList tasks;
-    private static Ui ui;
+    private Storage storage;
+    private TaskList tasks;
+    private Ui ui;
 
     public Duke(String filePath) {
         ui = new Ui();
@@ -46,6 +47,8 @@ public class Duke {
                 ui.printInvalidDeadline();
             } catch (InvalidEvent e) {
                 ui.printInvalidEvent();
+            } catch (InvalidDateTime e) {
+                ui.printInvalidDateTime();
             } finally {
                 ui.showLine();
             }

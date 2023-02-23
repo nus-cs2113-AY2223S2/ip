@@ -4,10 +4,10 @@ todo
 todo eat lunch
 deadline
 deadline submit tutorial
-deadline submit tutorial /by 10pm
+deadline submit tutorial /by 2023-03-03T23:59
 event
-event lecture /from 9am
-event lecture /from 9am /to 11am
+event lecture /from 2023-05-03T09:00
+event lecture /from 2023-05-03T09:00 /to 11:00AM
 list
 mark eat lunch
 mark 8
@@ -19,5 +19,8 @@ delete eat lunch
 delete 0
 delete 4
 list
+event recess week /from 2023-02-25T00:00 /to 2023-03-04T23:59
+date
+date 2023-03-03
 hello
 bye
