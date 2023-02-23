@@ -1,0 +1,2 @@
+[D][ ] eat  (by: 1am)
+[E][ ] drink  (from: 1am to: 3am)
