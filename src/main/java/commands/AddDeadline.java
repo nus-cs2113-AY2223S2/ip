@@ -23,6 +23,8 @@ public class AddDeadline {
 
             if (by.equals("")) {
                 throw new InvalidTaskException();
+            } else if (!by.contains("/")) {
+                throw new InvalidTaskException();
             }
             Deadline newTask = new Deadline(ins, description, by);
             list.add(newTask);
