@@ -86,7 +86,7 @@ public class Parser {
                 description = task.substring(taskToDeleteIndex);
                 command = new Command(userCommand, description, notApplicable, notApplicable, notApplicable);
             } catch (IndexOutOfBoundsException e) {
-                throw new DukeException(" Task to delete does not exist in the list!");
+                throw new DukeException(" Task to delete is not recognized!");
             }
         } else if (task.toLowerCase().startsWith("find")) {
             try {

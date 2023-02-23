@@ -76,7 +76,7 @@ public class TaskList {
             ui.showTaskDeleted(tasks, description);
             tasks.remove(index - 1);
         } catch (IndexOutOfBoundsException e) {
-            throw new DukeException(" The task to delete does not exist in the list!");
+            throw new DukeException(" Task to delete is not recognized!");
         } catch (NumberFormatException e) {
             throw new DukeException(" Task index should be an integer!");
         }
@@ -124,7 +124,7 @@ public class TaskList {
             ui.showUserMessage(" Okay, I've marked this task as not done yet:");
             ui.showUserMessage(tasks.get(index - 1).toString());
         } catch (IndexOutOfBoundsException e) {
-            throw new DukeException(" The task to unmark does not exist in the list!");
+            throw new DukeException(" Task to unmark is not recognized!");
         } catch (NumberFormatException e) {
             throw new DukeException(" Task index should be an integer!");
         }
@@ -143,7 +143,7 @@ public class TaskList {
             ui.showUserMessage(" Nice! I've marked this task as done:");
             ui.showUserMessage(tasks.get(index - 1).toString());
         } catch (IndexOutOfBoundsException e) {
-            throw new DukeException(" The task to mark does not exist in the list!");
+            throw new DukeException(" Task to mark is not recognized!");
         } catch (NumberFormatException e) {
             throw new DukeException(" Task index should be an integer!");
         }
