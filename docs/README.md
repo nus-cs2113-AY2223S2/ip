@@ -8,17 +8,17 @@ Welcome to Duke, an organiser to help you keep track of your tasks!
     * [Set-up](#set-up)
     * [Command summary](#command-summary)
     * [Features](#features)
-        + [`help` - Viewing help](#help----viewing-help)
-        + [`list` - Listing all saved tasks](#list----listing-all-saved-tasks)
-        + [`todo` - Adding a ToDo](#todo----adding-a-todo)
-        + [`deadline` - Adding a Deadline](#deadline----adding-a-deadline)
-        + [`event` - Adding an Event](#event----adding-an-event)
-        + [`mark` - Marking done](#mark----marking-done)
-        + [`unmark` - Marking not done](#unmark----marking-not-done)
-        + [`delete` - Deleting a task](#delete----deleting-a-task)
-        + [`find` - Finding a task](#find----finding-a-task)
-        + [`date` - Find tasks on date](#date----find-tasks-on-date)
-        + [`bye` - Exiting the program](#bye----exiting-the-program)
+        + [`help` - Viewing help](#help---viewing-help)
+        + [`list` - Listing all saved tasks](#list---listing-all-saved-tasks)
+        + [`todo` - Adding a ToDo](#todo---adding-a-todo)
+        + [`deadline` - Adding a Deadline](#deadline---adding-a-deadline)
+        + [`event` - Adding an Event](#event---adding-an-event)
+        + [`mark` - Marking done](#mark---marking-done)
+        + [`unmark` - Marking not done](#unmark---marking-not-done)
+        + [`delete` - Deleting a task](#delete---deleting-a-task)
+        + [`find` - Finding a task](#find---finding-a-task)
+        + [`date` - Find tasks on date](#date---find-tasks-on-date)
+        + [`bye` - Exiting the program](#bye---exiting-the-program)
         + [Loading and saving of data](#loading-and-saving-of-data)
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
@@ -41,7 +41,7 @@ Hello from
 ```
 5. Type the command in the command box and press Enter to execute it. 
 e.g. typing `help` and pressing Enter will show a list of all available commands.
-6. Refer to [Features](https://honglinshang.github.io/ip/#features) below for details of each command.  
+6. Refer to [Features](#features) below for details of each command.  
 
 ## Command summary
 |  Action  | Format                           |
