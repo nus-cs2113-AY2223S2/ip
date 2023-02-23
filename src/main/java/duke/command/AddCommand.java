@@ -1,7 +1,7 @@
 package duke.command;
 
 import duke.Parser;
-import duke.task.Storage;
+import duke.Storage;
 import duke.task.TaskList;
 import duke.Ui;
 import duke.exception.InvalidDeadline;

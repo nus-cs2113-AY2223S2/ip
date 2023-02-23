@@ -1,5 +1,10 @@
 package duke.task;
 
+import duke.task.Deadline;
+import duke.task.Event;
+import duke.task.Task;
+import duke.task.ToDo;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -23,6 +28,16 @@ public class TaskList {
             }
         }
         return tasksOnDate;
+    }
+
+    public static ArrayList<Task> findTasks(String keyword) {
+        ArrayList<Task> foundTasks = new ArrayList<>();
+        for (Task task : allTasks) {
+            if (task.description.contains(keyword)) {
+                foundTasks.add(task);
+            }
+        }
+        return foundTasks;
     }
 
     public static int getSize() {

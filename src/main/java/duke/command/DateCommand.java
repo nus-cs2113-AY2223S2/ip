@@ -2,7 +2,7 @@ package duke.command;
 
 import duke.Ui;
 import duke.exception.InvalidDateTime;
-import duke.task.Storage;
+import duke.Storage;
 import duke.task.TaskList;
 
 import java.time.LocalDate;

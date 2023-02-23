@@ -17,10 +17,10 @@ public class Ui {
     public static void showLine() {
         System.out.println("____________________________________________________________");
     }
+
     public static void printWelcomeMessage() {
         showLine();
-        System.out.println(
-                "Hello from\n" +
+        System.out.println("Hello from\n" +
                 " ____        _\n" +
                 "|  _ \\ _   _| | _____\n" +
                 "| | | | | | | |/ / _ \\\n" +
@@ -32,65 +32,76 @@ public class Ui {
 
     // functions
     public static void printHelpMessage() {
-        System.out.println(
-                " Enter \"list\" to see all tasks\n" +
+        System.out.println(" Enter \"list\" to see all tasks\n" +
                 " Enter \"todo [task]\" to add a task\n" +
                 " Enter \"deadline [task] /by [date]\" to add a deadline\n" +
                 " Enter \"event [task] /from [date] /to [date]\" to add an event\n" +
                 " Enter \"mark [idx]\" to mark task as done\n" +
                 " Enter \"unmark [idx]\" to mark task as not done\n" +
                 " Enter \"delete [idx]\" to remove task from list\n" +
+                " Enter \"find [keyword]\" to see all tasks containing [keyword]\n" +
                 " Enter \"bye\" to exit the program\n" +
                 "\n For Duke to understand [date], you can enter it in the form of\n" +
                 "     \"yyyy-MM-ddThh:mm\"\n" +
                 " eg. \"2023-10-30T23:59\" for Oct 20 2023, 11:59PM");
     }
+
     public static void printAddMessage(Task newTask) {
-        System.out.println(
-                "Got it. I've added this " + newTask.getType() + ":\n" +
+        System.out.println("Got it. I've added this " + newTask.getType() + ":\n" +
                 "  " + newTask);
     }
 
     public static void printList(ArrayList<Task> allTasks) {
-        if (allTasks.size()==0) {
+        if (allTasks.size() == 0) {
             System.out.println("There are no tasks in your list!");
             return;
         }
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < allTasks.size(); i++) {
-            System.out.println(i+1 + "." + allTasks.get(i));
+            System.out.println(i + 1 + "." + allTasks.get(i));
+        }
+    }
+
+    public static void printFoundList(ArrayList<Task> foundTasks) {
+        if (foundTasks.size() == 0) {
+            System.out.println("There are no matching tasks!");
+            return;
+        }
+        System.out.println("Here are the matching tasks in your list:");
+        for (int i = 0; i < foundTasks.size(); i++) {
+            System.out.println(i + 1 + "." + foundTasks.get(i));
         }
     }
 
     public static void printDateList(ArrayList<Task> allTasks, LocalDate date) {
         String dateString = date.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
-        if (allTasks.size()==0) {
+        if (allTasks.size() == 0) {
             System.out.println("There are no tasks on " + dateString + "!");
             return;
         }
         System.out.println("Here are the tasks happening on " + dateString + ":");
         for (int i = 0; i < allTasks.size(); i++) {
-            System.out.println(i+1 + "." + allTasks.get(i));
+            System.out.println(i + 1 + "." + allTasks.get(i));
         }
     }
 
     public static void printMarkDone(Task doneTask) {
         System.out.println(
                 "Nice!, I've marked this task as done:\n" +
-                "  " + doneTask);
+                        "  " + doneTask);
     }
 
     public static void printMarkNotDone(Task notDoneTask) {
         System.out.println(
                 "OK, I've marked this task as not done yet:\n" +
-                "  " + notDoneTask);
+                        "  " + notDoneTask);
     }
 
     public static void printDeleted(Task deletedTask, int size) {
         System.out.println(
                 "Noted, I've removed this task:\n" +
-                "  " + deletedTask + "\n" +
-                "Now you have " + (size - 1) + " tasks in the list");
+                        "  " + deletedTask + "\n" +
+                        "Now you have " + (size - 1) + " tasks in the list");
     }
 
     public static void printExitMessage() {
@@ -132,13 +143,13 @@ public class Ui {
 
     public static void printInvalidSaveFile(int counter, String filePath) {
         showLine();
-        System.out.println("There is an error in save.txt at line " + (counter+1) + "\n" +
-                "Task " + (counter+1) + " has been excluded. You can edit the save file at:\n" +
+        System.out.println("There is an error in save.txt at line " + (counter + 1) + "\n" +
+                "Task " + (counter + 1) + " has been excluded. You can edit the save file at:\n" +
                 filePath);
         showLine();
     }
 
-    public static void printEmptyTask() {
-        System.out.println("Oops! The description of a task cannot be empty.");
+    public static void printEmptyDescription() {
+        System.out.println("Oops! The description cannot be empty.");
     }
 }

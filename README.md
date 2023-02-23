@@ -23,6 +23,7 @@ Hello from
 - Enter ```mark [idx]``` based on the task's index in the list to mark it as done 
 - Enter ```unmark [idx]``` based on the task's index in the list to mark it as not done 
 - Enter ```delete [idx]``` based on the task's index in the list to remove the task from your list
+- Enter ```find [keyword]``` to see all tasks containing the keyword
 - Enter ```bye``` to exit the program 
 
 For Duke to understand your ```[date]```, you can enter it in the form of
