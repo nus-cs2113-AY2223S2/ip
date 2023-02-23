@@ -3,6 +3,14 @@ package Duke;
 import java.util.ArrayList;
 
 public class DukeSortInputTask {
+    /**
+     * Determines which task constructor to send description of new task to
+     * 
+     * @param list ArrayList of tasks
+     * @param taskLength Number of elements in this ArrayList of tasks
+     * @param taskName description of task from user input
+     * @throws DukeExceptions
+     */
     public static void dukeSortInputTask(ArrayList<DukeTasks> list, Integer taskLength, String taskName) throws DukeExceptions {
         String[] taskType = taskName.split(" ", 2);
         String[] taskDescription;

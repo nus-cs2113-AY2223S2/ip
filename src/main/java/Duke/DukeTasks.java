@@ -13,10 +13,20 @@ public class DukeTasks {
         this.isDone = false;
     }
 
+    /**
+     * Returns "X" if task is marked, else " "
+     * 
+     * @return Status of task
+     */
     public String getStatusIcon() {
         return (isDone ? "X" : " ");
     }
 
+    /**
+     * Returns "T", "D" or "E" depending on type of task constructed
+     * 
+     * @return Type of task
+     */
     public String getTaskType() {
         return (" ");
     }
