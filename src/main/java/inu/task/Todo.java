@@ -1,5 +1,8 @@
 package inu.task;
 
+/**
+ * Represents a to-do.
+ */
 public class Todo extends Task {
 
     public Todo(String description) {
@@ -12,7 +15,7 @@ public class Todo extends Task {
     }
 
     @Override
-    public String encodeTask() {
+    public String encodeTaskToString() {
         return "T" + "//" + getStatusIcon() + "//" + getDescription();
     }
 

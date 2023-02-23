@@ -5,6 +5,9 @@ import inu.task.TaskList;
 
 import java.time.LocalDateTime;
 
+/**
+ * Adds a new deadline to the task list.
+ */
 public class DeadlineCommand extends Command {
 
     public static final String COMMAND_WORD = "deadline";
@@ -13,6 +16,12 @@ public class DeadlineCommand extends Command {
 
     private final LocalDateTime deadlineBy;
 
+    /**
+     * Constructor.
+     *
+     * @param deadlineDescription description of the new deadline.
+     * @param deadlineBy date and time the deadline is to be completed by.
+     */
     public DeadlineCommand(String deadlineDescription, LocalDateTime deadlineBy) {
         this.deadlineDescription = deadlineDescription;
         this.deadlineBy = deadlineBy;

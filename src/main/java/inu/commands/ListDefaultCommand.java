@@ -3,8 +3,14 @@ package inu.commands;
 import inu.commons.Messages;
 import inu.task.TaskList;
 
+/**
+ * List all the tasks in the task list to the user.
+ */
 public class ListDefaultCommand extends Command {
 
+    /**
+     * Constructor.
+     */
     public ListDefaultCommand() {}
 
     @Override

@@ -3,12 +3,20 @@ package inu.commands;
 import inu.commons.Messages;
 import inu.task.TaskList;
 
+/**
+ * Delete a task in the task list.
+ */
 public class DeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";
 
     private final int targetIndex;
 
+    /**
+     * Constructor.
+     *
+     * @param targetIndex index of task to be deleted.
+     */
     public DeleteCommand(int targetIndex) {
         this.targetIndex = targetIndex;
     }

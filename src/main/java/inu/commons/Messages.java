@@ -1,5 +1,8 @@
 package inu.commons;
 
+/**
+ * Container for messages shown to user.
+ */
 public class Messages {
 
     public static final String MESSAGE_GREETING = " Woof Woof! I'm Inu! Your personal Shib-Assistant ^.^";
@@ -69,10 +72,6 @@ public class Messages {
 
     public static final String MESSAGE_PROMPT_VALID_DATE_TIME = " Sorry! Please provide a valid date and time in "
             + "<DD/MM/YYYY HH:MM> (24HR clock format)";
-
-    public static final String MESSAGE_NO_TASK_ON_DATE = " Hooray! You have no tasks occurring on this date!";
-
-    public static final String MESSAGE_NO_TASK_FOUND = " Hooray! You have no tasks matching this keyword!";
 
     public static final String MESSAGE_LIST_HEADER_WITH_DATE = " Woof! Here are your current tasks occurring on: ";
 
