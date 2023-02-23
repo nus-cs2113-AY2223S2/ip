@@ -56,13 +56,16 @@ public class TaskManager {
      * @param taskDescription
      * @return
      */
-    public static Deadline createNewDeadline(String taskDescription) throws MissingParameterException {
+    public static Deadline createNewDeadline(String taskDescription) throws MissingParameterException, WrongDateFormat {
         int index = taskDescription.indexOf("/by");
         if(index==-1){
             throw new MissingParameterException();
         }
         String deadlineContent = taskDescription.substring(0,index-1);
         String deadlineDate = taskDescription.substring(index+4);
+        if(!(deadlineDate.matches("\\d{4}-\\d{2}-\\d{2}"))){
+            throw new WrongDateFormat();
+        }
         Deadline newDeadline = new Deadline(deadlineContent, deadlineDate);
         return newDeadline;
     }
@@ -94,7 +97,7 @@ public class TaskManager {
      * @param taskDescription
      * @return
      */
-    public static Task generateNewTask(String taskType, String taskDescription) throws MissingParameterException, IOException{
+    public static Task generateNewTask(String taskType, String taskDescription) throws MissingParameterException, WrongDateFormat, IOException{
         Task newTask;
         if(taskType.equals("todo")){
             newTask = createNewTodo(taskDescription);
@@ -114,7 +117,7 @@ public class TaskManager {
      * @param taskType .
      * @param taskDescription
      */
-    public static void addTask(String taskType, String taskDescription) throws MissingParameterException, IOException{
+    public static void addTask(String taskType, String taskDescription) throws MissingParameterException, IOException, WrongDateFormat{
         Task newTask = generateNewTask(taskType, taskDescription);
         tasks.add(newTask);
         Storage.copyToFile();
@@ -128,12 +131,15 @@ public class TaskManager {
      * @param taskIndex index of the task to be edited.
      * @param status mark/unmark.
      */
-    public static void editTaskStatus(String taskIndex, String status) throws EditEmptyTasks, IOException {
+    public static void editTaskStatus(String taskIndex, String status) throws EditEmptyTasks, IOException, UpdateOutOfBound {
         if(tasks.size()==0){
             throw new EditEmptyTasks();
         }
         Storage.copyToFile();
         int index = Integer.parseInt(taskIndex)-1;
+        if(index<0 || index>=tasks.size()){
+            throw new UpdateOutOfBound();
+        }
         if(status.equals("mark")) {
             tasks.get(index).markDone();
             Storage.updateData("mark",index);
@@ -205,7 +211,10 @@ public class TaskManager {
      *
      * @param keyword
      */
-    public static void findDeadlinesByDate(String keyword){
+    public static void findDeadlinesByDate(String keyword) throws WrongDateFormat{
+        if(!(keyword.matches("\\d{4}-\\d{2}-\\d{2}"))){
+            throw new WrongDateFormat();
+        }
         LocalDate date = LocalDate.parse(keyword);
         int count = 1;
         Formatter.drawSeparationLine();

@@ -49,7 +49,7 @@ public class CommandManager {
      * Call different TaskManager methods based on input commands.
      * Throw errors if an unknown command is caught.
      */
-    public void executeCommand() throws MissingParameterException,EditEmptyTasks,MissingFileException, IOException,  DeleteIndexOutOfBound, DeleteEmptyTasks, UnknownCommandException{
+    public void executeCommand() throws MissingParameterException,EditEmptyTasks,MissingFileException, IOException,  DeleteIndexOutOfBound, DeleteEmptyTasks, UnknownCommandException, UpdateOutOfBound, WrongDateFormat{
         switch(commandType){
         case "bye":
             sayBye();
