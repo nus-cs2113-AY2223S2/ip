@@ -12,9 +12,9 @@ import java.io.IOException;
 
 public class Duke {
     public static final String FILE_PATH = "/Users/linshang/Documents/cs2113/ip/save.txt";
-    private static Storage storage;
-    private static TaskList tasks;
-    private static Ui ui;
+    private Storage storage;
+    private TaskList tasks;
+    private Ui ui;
 
     public Duke(String filePath) {
         ui = new Ui();

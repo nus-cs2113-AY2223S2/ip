@@ -24,3 +24,9 @@ Hello from
 - Enter ```unmark [idx]``` based on the task's index in the list to mark it as not done 
 - Enter ```delete [idx]``` based on the task's index in the list to remove the task from your list
 - Enter ```bye``` to exit the program 
+
+For Duke to understand your ```[date]```, you can enter it in the form of
+```
+yyyy-MM-ddTHH:mm
+``` 
+eg. ```2023-10-30T23:59``` for Oct 20 2023, 11:59PM
