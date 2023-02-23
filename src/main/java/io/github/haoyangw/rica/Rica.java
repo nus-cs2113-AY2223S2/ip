@@ -17,74 +17,81 @@ public class Rica {
     private static final String TODO_TRIGGER = "todo";
     private static final String UNKNOWN_CMD_ERROR = " ??? Sorry, I don't understand this command. Sent to the wrong bot? xD";
     private static final String UNMARK_TRIGGER = "unmark";
-    private static TaskManager taskManager;
-    private static TextUi textUi;
+    private TaskManager taskManager;
+    private TextUi textUi;
 
-    private static TaskManager getTaskManager() {
-        return Rica.taskManager;
+    public Rica() {
+        this.taskManager = new TaskManager();
+        this.textUi = new TextUi();
     }
 
-    private static TextUi getTextUi() {
-        return Rica.textUi;
+    private TaskManager getTaskManager() {
+        return this.taskManager;
+    }
+
+    private TextUi getTextUi() {
+        return this.textUi;
     }
 
     /**
      * Parse the command entered into CLI and execute the corresponding actions
      */
-    private static void runCommands() throws RicaTaskException {
+    private void runCommands() throws RicaTaskException {
         Scanner in = new Scanner(System.in);
         String command = "";
         do {
             command = in.nextLine();
-            Rica.getTextUi().printHeader();
+            this.getTextUi().printHeader();
             String[] params = command.split(" ");
             switch (params[0]) {
             case Rica.MARK_TRIGGER:
                 int indexOfTodo = Integer.parseInt(params[1]) - 1;
-                Rica.getTaskManager().markDone(indexOfTodo);
+                this.getTaskManager().markDone(indexOfTodo);
                 break;
             case Rica.UNMARK_TRIGGER:
                 indexOfTodo = Integer.parseInt(params[1]) - 1;
-                Rica.getTaskManager().unmarkDone(indexOfTodo);
+                this.getTaskManager().unmarkDone(indexOfTodo);
                 break;
             case Rica.LIST_TRIGGER:
-                Rica.getTaskManager().printTasks();
+                this.getTaskManager().printTasks();
                 break;
             case Rica.DEADLINE_TRIGGER:
             case Rica.EVENT_TRIGGER:
             case Rica.TODO_TRIGGER:
                 try {
-                    Rica.getTaskManager().createTaskFrom(command);
+                    this.getTaskManager().createTaskFrom(command);
                 } catch (RicaTaskException exception) {
-                    Rica.getTextUi().printlnWithIndent(exception.getMessage());
+                    this.getTextUi().printlnWithIndent(exception.getMessage());
                 }
                 break;
             case Rica.DELETE_TRIGGER:
                 try {
-                    Rica.getTaskManager().rmTask(command);
+                    this.getTaskManager().rmTask(command);
                 } catch (RicaTaskException exception) {
-                    Rica.getTextUi().printlnWithIndent(exception.getMessage());
+                    this.getTextUi().printlnWithIndent(exception.getMessage());
                 }
                 break;
             case Rica.BYE_TRIGGER:
-                Rica.getTextUi().printGoodbyeMessage();
+                this.getTextUi().printGoodbyeMessage();
                 break;
             default:
-                Rica.getTextUi().printlnWithIndent(UNKNOWN_CMD_ERROR);
+                this.getTextUi().printlnWithIndent(UNKNOWN_CMD_ERROR);
             }
-            Rica.getTextUi().printFooter();
+            this.getTextUi().printFooter();
         } while (!command.equals(Rica.BYE_TRIGGER));
     }
 
-    public static void main(String[] args) {
-        Rica.textUi = new TextUi();
-        Rica.getTextUi().printWelcomeMessage();
-        Rica.taskManager = new TaskManager();
+    public void start() {
+        this.getTextUi().printWelcomeMessage();
         try {
-            Rica.runCommands();
+            this.runCommands();
         } catch (RicaException exception) {
-            Rica.getTextUi().printErrorMessage(exception);
+            this.getTextUi().printErrorMessage(exception);
         }
+    }
+
+    public static void main(String[] args) {
+        new Rica().start();
     }
 
 }
