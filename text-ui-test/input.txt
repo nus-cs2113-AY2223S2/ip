@@ -1,0 +1,13 @@
+todo
+todo homework
+deadline assignment /by Monday
+event meeting /from Tue 2pm /to 4pm
+mark 1
+mark 2
+list
+unmark 1
+unmark 2
+list
+delete 3
+list
+bye

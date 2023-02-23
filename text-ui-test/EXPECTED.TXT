@@ -5,3 +5,75 @@ Hello from
 | |_| | |_| |   <  __/
 |____/ \__,_|_|\_\___|
 
+____________________________________________________________
+Hello! I'm Duke
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+OOPS!!! The description of a todo cannot be empty.
+Please enter again: 
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+[T][ ] homework
+Now you have 1 task in the list.
+____________________________________________________________
+Successfully wrote to the file.
+____________________________________________________________
+Got it. I've added this task:
+[D][ ] assignment (by: Monday)
+Now you have 2 tasks in the list.
+____________________________________________________________
+Successfully wrote to the file.
+____________________________________________________________
+Got it. I've added this task:
+[E][ ] meeting (from: Tue 2pm to: 4pm)
+Now you have 3 tasks in the list.
+____________________________________________________________
+Successfully wrote to the file.
+____________________________________________________________
+Nice! I've marked this task as done:
+[T][X] homework
+____________________________________________________________
+Successfully wrote to the file.
+____________________________________________________________
+Nice! I've marked this task as done:
+[D][X] assignment (by: Monday)
+____________________________________________________________
+Successfully wrote to the file.
+____________________________________________________________
+Here are the tasks in your list:
+1. [T][X] homework
+2. [D][X] assignment (by: Monday)
+3. [E][ ] meeting (from: Tue 2pm to: 4pm)
+____________________________________________________________
+____________________________________________________________
+Nice! I've marked this task as undone:
+[T][ ] homework
+____________________________________________________________
+Successfully wrote to the file.
+____________________________________________________________
+Nice! I've marked this task as undone:
+[D][ ] assignment (by: Monday)
+____________________________________________________________
+Successfully wrote to the file.
+____________________________________________________________
+Here are the tasks in your list:
+1. [T][ ] homework
+2. [D][ ] assignment (by: Monday)
+3. [E][ ] meeting (from: Tue 2pm to: 4pm)
+____________________________________________________________
+____________________________________________________________
+Noted. I've removed this task:
+	E[ ] meeting (from: Tue 2pm to: 4pm)
+Now you have 2 tasks in the list.
+____________________________________________________________
+Successfully wrote to the file.
+____________________________________________________________
+Here are the tasks in your list:
+1. [T][ ] homework
+2. [D][ ] assignment (by: Monday)
+____________________________________________________________
+____________________________________________________________
+Bye. Hope to see you again soon!
+____________________________________________________________
