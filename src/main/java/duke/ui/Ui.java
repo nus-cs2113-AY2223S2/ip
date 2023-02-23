@@ -111,7 +111,7 @@ public class Ui {
         if (index == 1) {
             System.out.println("\tHere are the matching tasks in your list:");
         }
-        System.out.print("\t " + index + "." );
+        System.out.print("\t " + index + ".");
         System.out.println(task.returnCommand());
     }
 }

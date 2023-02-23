@@ -124,7 +124,7 @@ public class TaskList {
         case COMMAND_EVENT:
             try {
                 String commandInfo = parser.extractCommandInfo();
-                String eventName = parser.extractEventName("/from");
+                String eventName = parser.extractEventName();
                 String eventStartDetails = parser.extractEventStartDetails();
                 String eventEndDetails = parser.extractEventEndDetails();
                 Command.doCommandEvent(eventName, eventStartDetails, eventEndDetails);
