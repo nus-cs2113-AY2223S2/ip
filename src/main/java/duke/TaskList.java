@@ -61,16 +61,14 @@ public class TaskList {
     }
 
     /**
-     * Prints all the tasks that description contains the keyword
+     * Prints all the tasks that description contains the keyword and their index
      *
      * @param keyword the search word the user inputs
      */
     public void printTasksByKeyword(String keyword) {
-        int filteredTaskCount = 1;
         for (int i = 0; i < tasks.size(); ++i) {
             if (tasks.get(i).getDescription().contains(keyword)) {
-                System.out.println(filteredTaskCount + "." + tasks.get(i));
-                filteredTaskCount++;
+                System.out.println((i+1) + "." + tasks.get(i));
             }
         }
     }
