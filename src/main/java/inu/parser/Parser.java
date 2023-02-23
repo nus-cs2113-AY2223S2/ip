@@ -34,8 +34,6 @@ public class Parser {
 
     public static String command;
 
-    public static String entry;
-
     public static final int INDEX_COMMAND = 0;
 
     public static final int INDEX_ENTRY = 1;
@@ -70,9 +68,7 @@ public class Parser {
      * @return String array of user input
      */
     public static String[] readCommand() {
-        String userInput;
-        String[] userString;
-        userInput = input.nextLine();
+        String userInput = input.nextLine();
         userString = userInput.split(" ", USER_STRING_SPLIT_LIMIT);
         return userString;
     }
@@ -90,63 +86,22 @@ public class Parser {
             command = userString[INDEX_COMMAND];
 
             switch (command) {
-
             case TodoCommand.COMMAND_WORD:
-                try {
-                    entry = userString[INDEX_ENTRY];
-                    return runTodo(entry);
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_STRING_INPUT);
-                }
+                return runTodo();
             case DeadlineCommand.COMMAND_WORD:
-                try {
-                    entry = userString[INDEX_ENTRY];
-                    return runDeadLine(entry);
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_STRING_INPUT);
-                }
+                return runDeadline();
             case EventCommand.COMMAND_WORD:
-                try {
-                    entry = userString[INDEX_ENTRY];
-                    return runEvent(entry);
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_STRING_INPUT);
-                }
+                return runEvent();
             case DeleteCommand.COMMAND_WORD:
-                try {
-                    entry = userString[INDEX_ENTRY];
-                    return runDelete(taskList, entry);
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_INTEGER_INPUT);
-                }
+                return runDelete(taskList);
             case ListWithDateCommand.COMMAND_WORD:
-                try {
-                    entry = userString[INDEX_ENTRY];
-                    return runListWithDate(taskList, entry);
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    return new ListDefaultCommand();
-                }
+                return runListWithDate(taskList);
             case FindCommand.COMMAND_WORD:
-                try {
-                    entry = userString[INDEX_ENTRY];
-                    return runFindCommand(taskList, entry);
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_STRING_INPUT);
-                }
+                return runFindCommand(taskList);
             case MarkCommand.COMMAND_WORD:
-                try {
-                    entry = userString[INDEX_ENTRY];
-                    return runMark(taskList, entry);
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_INTEGER_INPUT);
-                }
+                return runMark(taskList);
             case UnMarkCommand.COMMAND_WORD:
-                try {
-                    entry = userString[INDEX_ENTRY];
-                    return runUnMark(taskList, entry);
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_INTEGER_INPUT);
-                }
+                return runUnmark(taskList);
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
             default:
@@ -159,14 +114,16 @@ public class Parser {
      * Collects user input and prepares {@code TodoCommand} for execution.
      * This method handles empty user inputs.
      *
-     * @param entry the user input provided for the {@code TodoCommand}.
      * @return the {@code TodoCommand} with the user input as its description.
      * Else an {@code InvalidCommand} with a corresponding prompt..
      */
-    public static Command runTodo(String entry) {
+    public static Command runTodo() {
         try {
-            ExceptionManager.checkEmptyString(entry);
-            return new TodoCommand(entry);
+            String description = userString[INDEX_ENTRY].trim();
+            ExceptionManager.checkEmptyString(description);
+            return new TodoCommand(description);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_STRING_INPUT);
         } catch (EmptyStringException e) {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_TASK_ENTRY);
         }
@@ -176,16 +133,18 @@ public class Parser {
      * Collects user input and prepares {@code DeadlineCommand} for execution.
      * This method handles empty user inputs.
      *
-     * @param entry the user input provided for the {@code DeadlineCommand}.
      * @return the {@code DeadlineCommand} with the user input as its description.
      * Else an {@code InvalidCommand} with a corresponding prompt..
      */
-    public static Command runDeadLine(String entry) {
+    public static Command runDeadline() {
         try {
-            String task = Util.fetchTask(entry, Util.DELIMITER_DEADLINE_BY);
-            String by = Util.fetchBy(entry);
+            String description = userString[INDEX_ENTRY].trim();
+            String task = Util.fetchTask(description, Util.DELIMITER_DEADLINE_BY);
+            String by = Util.fetchBy(description);
             ExceptionManager.checkEmptyString(task, by);
             return new DeadlineCommand(task, Util.parseDateTime(by));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_STRING_INPUT);
         } catch (StringIndexOutOfBoundsException e) {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_DEADLINE);
         } catch (EmptyStringException e) {
@@ -199,23 +158,25 @@ public class Parser {
      * Collects user input and prepares {@code EventCommand} for execution.
      * This method handles empty user inputs.
      *
-     * @param entry the user input provided for the {@code EventCommand}.
      * @return the {@code EventCommand} with the user input as its description.
      * Else an {@code InvalidCommand} with a corresponding prompt.
      */
-    public static Command runEvent(String entry) {
+    public static Command runEvent() {
         try {
-            String task = Util.fetchTask(entry, Util.DELIMITER_EVENT_FROM);
-            String from = Util.fetchFrom(entry);
-            String to = Util.fetchTo(entry);
+            String description = userString[INDEX_ENTRY].trim();
+            String task = Util.fetchTask(description, Util.DELIMITER_EVENT_FROM);
+            String from = Util.fetchFrom(description);
+            String to = Util.fetchTo(description);
             ExceptionManager.checkEmptyString(task, from, to);
             return new EventCommand(task, Util.parseDateTime(from), Util.parseDateTime(to));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_STRING_INPUT);
         } catch (StringIndexOutOfBoundsException e) {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_EVENT);
         } catch (EmptyStringException e) {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_FROM_AND_TO_ENTRY_AFTER_SLASH);
         } catch (InvalidDateTimeFormat e) {
-        return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_DATE_TIME);
+            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_DATE_TIME);
         }
     }
 
@@ -224,16 +185,17 @@ public class Parser {
      * This method handles empty user inputs.
      *
      * @param taskList the task list the target task is in.
-     * @param entry the user input provided for the {@code DeleteCommand}.
-     *              It is only parsed as a number.
      * @return the {@code DeleteCommand} with the user input as its description.
      * Else an {@code InvalidCommand} with a corresponding prompt.
      */
-    public static Command runDelete(TaskList taskList, String entry) {
+    public static Command runDelete(TaskList taskList) {
         try {
-            ExceptionManager.checkEmptyString(entry);
-            int targetIndex = Util.fetchIndexFromString(taskList, entry);
+            String taskNumber = userString[INDEX_ENTRY].trim();
+            ExceptionManager.checkEmptyString(taskNumber);
+            int targetIndex = Util.fetchIndexFromString(taskList, taskNumber);
             return new DeleteCommand(targetIndex);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_INTEGER_INPUT);
         } catch (EmptyStringException e) {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_DELETE_ENTRY);
         } catch (IndexOutOfBoundsException e) {
@@ -248,16 +210,17 @@ public class Parser {
      * This method handles empty user inputs.
      *
      * @param taskList the task list the target task is in.
-     * @param entry the user input provided for the {@code MarkCommand}.
-     *              It is only parsed as a number.
      * @return the {@code MarkCommand} with the user input as its description.
      * Else an {@code InvalidCommand} with a corresponding prompt.
      */
-    public static Command runMark(TaskList taskList, String entry) {
+    public static Command runMark(TaskList taskList) {
         try {
-            ExceptionManager.checkEmptyString(entry);
-            int targetIndex = Util.fetchIndexFromString(taskList, entry);
+            String taskNumber = userString[INDEX_ENTRY].trim();
+            ExceptionManager.checkEmptyString(taskNumber);
+            int targetIndex = Util.fetchIndexFromString(taskList, taskNumber);
             return new MarkCommand(targetIndex);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_INTEGER_INPUT);
         } catch (IndexOutOfBoundsException e) {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_TASK_INDEX);
         } catch (EmptyStringException e) {
@@ -266,21 +229,23 @@ public class Parser {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_FOR_INDEX_INPUT);
         }
     }
+
     /**
      * Collects user input and prepares {@code UnMarkCommand} for execution.
      * This method handles empty user inputs.
      *
      * @param taskList the task list the target task is in.
-     * @param entry the user input provided for the {@code UnMarkCommand}.
-     *              It is only parsed as a number.
      * @return the {@code UnMarkCommand} with the user input as its description.
      * Else an {@code InvalidCommand} with a corresponding prompt.
      */
-    public static Command runUnMark(TaskList taskList, String entry) {
+    public static Command runUnmark(TaskList taskList) {
         try {
-            ExceptionManager.checkEmptyString(entry);
-            int targetIndex = Util.fetchIndexFromString(taskList, entry);
+            String taskNumber = userString[INDEX_ENTRY].trim();
+            ExceptionManager.checkEmptyString(taskNumber);
+            int targetIndex = Util.fetchIndexFromString(taskList, taskNumber);
             return new UnMarkCommand(targetIndex);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_INTEGER_INPUT);
         } catch (IndexOutOfBoundsException e) {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_TASK_INDEX);
         } catch (EmptyStringException e) {
@@ -296,17 +261,17 @@ public class Parser {
      * This method handles empty user inputs.
      *
      * @param taskList the task list to containing the tasks to be displayed.
-     * @param entry the date in {@code DD/MM/YYYY} format to query
      * @return the {@code ListWithDateCommand} with the user input as the date to query.
      * If there is no date provided, {@code ListDefaultCommand} is returned instead.
      */
-    public static Command runListWithDate(TaskList taskList, String entry) {
+    public static Command runListWithDate(TaskList taskList) {
         try {
-            ExceptionManager.checkEmptyString(entry);
+            String dateString = userString[INDEX_ENTRY].trim();
+            ExceptionManager.checkEmptyString(dateString);
             ExceptionManager.checkEmptyTaskList(taskList);
-            LocalDate date = Util.parseDate(entry);
+            LocalDate date = Util.parseDate(dateString);
             return new ListWithDateCommand(date);
-        } catch (EmptyStringException e) {
+        } catch (ArrayIndexOutOfBoundsException | EmptyStringException e) {
             return new ListDefaultCommand();
         } catch (EmptyTaskListException e) {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_EMPTY_TASK_LIST);
@@ -320,14 +285,16 @@ public class Parser {
      * This method handles empty user inputs.
      *
      * @param taskList the task list to containing the tasks to be displayed.
-     * @param entry the key word to query
      * @return the {@code FindCommand} with the user input as the key word to query.
      */
-    public static Command runFindCommand(TaskList taskList, String entry) {
+    public static Command runFindCommand(TaskList taskList) {
         try {
-            ExceptionManager.checkEmptyString(entry);
+            String keyword = userString[INDEX_ENTRY].trim();
+            ExceptionManager.checkEmptyString(keyword);
             ExceptionManager.checkEmptyTaskList(taskList);
-            return new FindCommand(entry);
+            return new FindCommand(keyword);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_STRING_INPUT);
         } catch (EmptyStringException e) {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_KEYWORD);
         } catch (EmptyTaskListException e) {
