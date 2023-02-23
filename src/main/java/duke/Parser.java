@@ -8,7 +8,7 @@ public class Parser {
         switch (firstWordOfInput) {
         case CommandInputs.ADD_TODO_COMMAND_INPUT:
             commandType = CommandType.ADD_TODO_COMMAND;
-            additionalParameters = getToDoAdditionalParameters(userInput);
+            additionalParameters = getTaskNameParameter(userInput, CommandInputs.ADD_TODO_COMMAND_INPUT);
             break;
         case CommandInputs.ADD_DEADLINE_COMMAND_INPUT:
             commandType = CommandType.ADD_DEADLINE_COMMAND;
@@ -33,6 +33,10 @@ public class Parser {
             commandType = CommandType.DELETE_TASK_COMMAND;
             additionalParameters = getTaskNumbers(userInput);
             break;
+        case CommandInputs.FIND_COMMAND_INPUT:
+            commandType = CommandType.FIND_TASK_COMMAND;
+            additionalParameters = getTaskNameParameter(userInput, CommandInputs.FIND_COMMAND_INPUT);
+            break;
         case CommandInputs.END_PROGRAM_COMMAND_INPUT:
             commandType = CommandType.END_PROGRAM_COMMAND;
             break;
@@ -54,15 +58,17 @@ public class Parser {
         }
         return taskNumbers;
     }
-    protected static String[] getToDoAdditionalParameters(String userInput) throws DukeException{
+
+
+    protected static String[] getTaskNameParameter(String userInput, String commandName) throws DukeException{
         String[] additionalParameters = new String[1];
         int indexOfFirstSpace = userInput.indexOf(" ");
         if(indexOfFirstSpace == -1){
-            throw new TaskNameException(CommandInputs.ADD_TODO_COMMAND_INPUT);
+            throw new TaskNameException(commandName);
         }
         String name = userInput.substring(indexOfFirstSpace).trim();
         if(!isNameValid(name)){
-            throw new TaskNameException(CommandInputs.ADD_TODO_COMMAND_INPUT);
+            throw new TaskNameException(commandName);
         }
         additionalParameters[0] = name;
         return additionalParameters;
