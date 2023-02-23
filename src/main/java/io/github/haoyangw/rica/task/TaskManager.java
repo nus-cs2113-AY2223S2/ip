@@ -102,11 +102,6 @@ public class TaskManager {
         }
     }
 
-    private static void printlnWithIndent(String line) {
-        System.out.print("    ");
-        System.out.println(line);
-    }
-
     private Task rmTask(int indexOfTask) throws RicaTaskException {
         boolean isNegativeIndex = indexOfTask < 0;
         boolean isIndexTooLarge = indexOfTask >= this.getTasks().size();

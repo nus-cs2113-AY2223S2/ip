@@ -8,12 +8,10 @@ import io.github.haoyangw.rica.ui.TextUi;
 import java.util.Scanner;
 
 public class Rica {
-    private static final String BYE_PHRASE = " Leaving so soon? Come back anytime, I'll be happy to help!";
     private static final String BYE_TRIGGER = "bye";
     private static final String DEADLINE_TRIGGER = "deadline";
     private static final String DELETE_TRIGGER = "delete";
     private static final String EVENT_TRIGGER = "event";
-    private static final String LINE = "____________________________________________________________";
     private static final String LIST_TRIGGER = "list";
     private static final String MARK_TRIGGER = "mark";
     private static final String TODO_TRIGGER = "todo";
@@ -28,11 +26,6 @@ public class Rica {
 
     private static TextUi getTextUi() {
         return Rica.textUi;
-    }
-
-    private static void printlnWithIndent(String line) {
-        System.out.print("    ");
-        System.out.println(line);
     }
 
     /**
