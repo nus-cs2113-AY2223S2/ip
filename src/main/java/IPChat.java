@@ -40,7 +40,7 @@ public class IPChat {
     }
 
     // tasks to do
-    public static void toDo (String statements) {
+    public static void toDoTasks (String statements) {
         int todoLength = statements.length();
         String todoName = statements.substring(5, todoLength);
         tasks[tasksCount] = new ToDo (todoName);
@@ -52,7 +52,7 @@ public class IPChat {
     }
 
     // Tasks having deadlines
-    public static void deadline(String statements) {
+    public static void deadlineTasks (String statements) {
         int deadlineLength = statements.length();
         String deadlineName = statements.substring(9, statements.lastIndexOf("/"));
         String by = statements.substring((statements.lastIndexOf("/") + 4), deadlineLength);
@@ -65,7 +65,7 @@ public class IPChat {
     }
 
     // Events of the task
-    public static void event(String statements) {
+    public static void eventTasks (String statements) {
         int eventLength = statements.length();
         String eventName = statements.substring(6, statements.lastIndexOf("/"));
         int index = statements.lastIndexOf("/") + 4;
@@ -79,25 +79,25 @@ public class IPChat {
     }
 
     // Compilation
-    public static void mySequence(String statements) {
+    public static void mySequence (String statements) {
         while (!statements.equals("bye")) {
             if (statements.equals("list")) {
                 listTasks();
             } else if (statements.contains("done")) {
                 markDone(statements);
             } else if (statements.contains("todo")) {
-                toDo(statements);
+                toDoTasks(statements);
             } else if (statements.contains("deadline")) {
-                deadline(statements);
+                deadlineTasks(statements);
             } else if (statements.contains("event")) {
-                event(statements);
+                eventTasks(statements);
             }
 
             inputUser();
         }
         sayBye();
     }
-    public static void main(String[] args) {
+    public static void main (String[] args) {
         System.out.println("Hello I'm IPChat, What can I do for you");
         System.out.println("------------------------------------------");
         inputUser();
