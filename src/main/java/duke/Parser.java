@@ -11,6 +11,10 @@ import duke.exception.IllegalCommandException;
 import duke.exception.InvalidDeadline;
 import duke.exception.InvalidEvent;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 public class Parser {
 
     public static final String COMMAND_EXIT_WORD = "bye";
@@ -51,6 +55,13 @@ public class Parser {
         default:
             throw new IllegalCommandException();
         }
+    }
+
+    public static String parseDateTime(LocalDateTime date, String dateString, String pattern) {
+        if (date != null) {
+            return date.format(DateTimeFormatter.ofPattern(pattern));
+        }
+        return dateString;
     }
 
     public static String[] parseDeadline(String param) throws InvalidDeadline {
