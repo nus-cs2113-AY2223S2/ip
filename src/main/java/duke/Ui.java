@@ -4,8 +4,16 @@ import duke.task.Task;
 
 import java.util.ArrayList;
 
+/**
+ * Deals with interactions with the user
+ */
 public class Ui {
 
+    /**
+     * Prints out all currently stored tasks in the list
+     *
+     * @param tasks The array list of tasks
+     */
     static void list(ArrayList<Task> tasks) {
         int taskCount = Task.getTaskCount();
         borderLine();
@@ -16,6 +24,7 @@ public class Ui {
         borderLine();
     }
 
+    /** Prints the border for opening or closing messages */
     static void borderLine() {
         System.out.println("\t____________________________________________________________");
     }
@@ -65,6 +74,7 @@ public class Ui {
         borderLine();
     }
 
+    /** Prints the startup message, includes instructions on available commands */
     static void greetingMessage() {
         borderLine();
         System.out.println("\t Hello! I'm Vivy.");
@@ -86,6 +96,7 @@ public class Ui {
         borderLine();
     }
 
+    /** Prints the exiting message when closing the program */
     static void exitMessage() {
         borderLine();
         System.out.println("\t Bye. Hope to see you again soon!");

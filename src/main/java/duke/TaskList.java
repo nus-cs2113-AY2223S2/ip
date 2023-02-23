@@ -10,6 +10,9 @@ import duke.task.Todo;
 
 import java.util.ArrayList;
 
+/**
+ * Contains operations to manipulate the task list
+ */
 public class TaskList {
     static void addTask(String line, ArrayList<Task> tasks) {
         if (line.contains("/by")) {
@@ -38,6 +41,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * Adds a _Todo_ to the list
+     *
+     * @param line The line of input from the user
+     * @param tasks The array list of tasks
+     */
     static void addTodo(String line, ArrayList<Task> tasks) throws IllegalTodoException {
         if (line.isBlank()) {
             throw new IllegalTodoException();
@@ -48,6 +57,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * Adds an event to the list
+     *
+     * @param line The line of input from the user
+     * @param tasks The array list of tasks
+     */
     static void addEvent(String line, ArrayList<Task> tasks) throws IllegalEventException {
         String description = line.substring(0, line.indexOf("/from")).trim();
         String start = line.substring(line.indexOf("/from") + 5, line.indexOf("/to")).trim();
@@ -61,6 +76,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * Adds a deadline to the list
+     *
+     * @param line The line of input from the user
+     * @param tasks The array list of tasks
+     */
     static void addDeadline(String line, ArrayList<Task> tasks) throws IllegalDeadlineException {
         String description = line.substring(0, line.indexOf("/by")).trim();
         String deadline = line.substring(line.indexOf("/by") + 3).trim();
@@ -74,6 +95,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * Marks a task as done
+     *
+     * @param tasks The array list of tasks
+     * @param words The array of words generated from the user input
+     */
     static void markTask(ArrayList<Task> tasks, String[] words) {
         int taskNumber = Integer.parseInt(words[1]);
         int taskCount = Task.getTaskCount();
@@ -90,6 +117,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * Marks a task as not done
+     *
+     * @param tasks The array list of tasks
+     * @param words The array of words generated from the user input
+     */
     static void unmarkTask(ArrayList<Task> tasks, String[] words) {
         int taskNumber = Integer.parseInt(words[1]);
         int taskCount = Task.getTaskCount();
@@ -106,6 +139,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * Deletes a task from the list
+     *
+     * @param tasks The array list of tasks
+     * @param words The array of words generated from the user input
+     */
     static void deleteTask(ArrayList<Task> tasks, String[] words) {
         int taskNumber = Integer.parseInt(words[1]);
         int taskCount = Task.getTaskCount();

@@ -11,10 +11,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Deals with loading tasks from the file and saving tasks in the file
+ */
 public class Storage {
     static final String SAVEPATH = "data/savedata.txt";
     static final String SAVEFOLDER = "data";
 
+    /** Load tasks from save data into the list
+     *
+     * @param line The line of input from the save file
+     * @param tasks The array list of tasks
+     */
     static void loadTask(String line, ArrayList<Task> tasks) {
         if (line.contains("/by")) {
             loadDeadline(line, tasks);
@@ -25,11 +33,25 @@ public class Storage {
         }
     }
 
+    /**
+     * Adds a _Todo_ into the list without generating messages,
+     * to be used when loading from save data.
+     *
+     * @param line The line of input from the save file
+     * @param tasks The array list of tasks
+     */
     static void loadTodo(String line, ArrayList<Task> tasks) {
         Todo currTodo = new Todo(line);
         tasks.add(currTodo);
     }
 
+    /**
+     * Adds an event into the list without generating messages,
+     * to be used when loading from save data.
+     *
+     * @param line The line of input from the save file
+     * @param tasks The array list of tasks
+     */
     static void loadEvent(String line, ArrayList<Task> tasks) {
         String description = line.substring(0, line.indexOf("/from")).trim();
         String start = line.substring(line.indexOf("/from") + 5, line.indexOf("/to")).trim();
@@ -38,6 +60,13 @@ public class Storage {
         tasks.add(currEvent);
     }
 
+    /**
+     * Adds a deadline into the list without generating messages,
+     * to be used when loading from save data.
+     *
+     * @param line The line of input from the save file
+     * @param tasks The array list of tasks
+     */
     static void loadDeadline(String line, ArrayList<Task> tasks) {
         String description = line.substring(0, line.indexOf("/by")).trim();
         String deadline = line.substring(line.indexOf("/by") + 3).trim();
@@ -45,6 +74,12 @@ public class Storage {
         tasks.add(currDeadline);
     }
 
+    /**
+     * Load the task status of a task from the save data
+     *
+     * @param tasks The array list of tasks
+     * @param doneStatus The done status of the current task
+     */
     static void loadTaskStatus(ArrayList<Task> tasks, String doneStatus) {
         int taskNumber = Task.getTaskCount();
         if (doneStatus.equals("1")) {
@@ -54,6 +89,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Saves the tasks in the list to the save file
+     *
+     * @param tasks The array list of tasks
+     */
     static void save(ArrayList<Task> tasks) throws IOException {
         File f = new File(SAVEPATH);
         if (f.exists()) {
@@ -68,6 +108,11 @@ public class Storage {
         fw.close();
     }
 
+    /**
+     * Try to save, shows error message if saving fails
+     *
+     * @param tasks The array list of tasks
+     */
     static void trySave(ArrayList<Task> tasks) {
         try {
             save(tasks);
@@ -76,6 +121,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Load the save data
+     *
+     * @param tasks The array list of tasks
+     */
     static void load(ArrayList<Task> tasks) throws IOException {
         File folder = new File(SAVEFOLDER);
         if (!folder.exists()) {
@@ -103,6 +153,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Try to load the save data, shows error message if loading fails
+     *
+     * @param tasks The array list of tasks
+     */
     static void tryLoad(ArrayList<Task> tasks) {
         try {
             load(tasks);

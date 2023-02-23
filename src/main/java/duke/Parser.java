@@ -5,6 +5,9 @@ import duke.task.Task;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Deals with making sense of the user command
+ */
 public class Parser {
 
     /**
@@ -25,6 +28,13 @@ public class Parser {
         return false;
     }
 
+    /**
+     * Processes the user input and executes the appropriate command
+     *
+     * @param tasks The array list of tasks
+     * @param line The line of user input
+     * @param in The input from scanner
+     */
     static void processCommand(ArrayList<Task> tasks, String line, Scanner in) {
         while (!line.equals("bye")) { // Exits the program if input is "bye"
             String[] words = line.split(" ");
