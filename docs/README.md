@@ -23,73 +23,73 @@
 ## Features 
 
 ### Add todo task
-**ToDos**: tasks without any date/time attached to it <span style="font-weight:400px">e.g. return book</span>
-**Format**: `todo TASK`
-**Example**:
-    Input:
-    ```agsl
-    todo return book
-    ```
-    Output: 
-    ```agsl
-    ____________________________________________________________
-      Got it. I've added this task:
-        [T][ ]return book
-      Now you have 8 tasks in the list.
-    ____________________________________________________________
-    ```
+    **ToDos**: tasks without any date/time attached to it <span style="font-weight:400px">e.g. return book</span>
+    **Format**: `todo TASK`
+    **Example**:
+        Input:
+        ```agsl
+        todo return book
+        ```
+        Output: 
+        ```agsl
+        ____________________________________________________________
+          Got it. I've added this task:
+            [T][ ]return book
+          Now you have 8 tasks in the list.
+        ____________________________________________________________
+        ```
 
 ### Add event task
-**Events**: tasks that start at a specific date/time and ends at a specific date/time <span style="font-weight:400px">e.g. team project meeting 2/10/2019 2-4pm</span>
-**Format**: `event TASK /from START /to END`
-**Example**:
-    Input:
-    ```agsl
-    event project meeting /from Monday 2pm /to 4pm
-    ```
-    Output:
-    ```agsl
-    ____________________________________________________________
-      Got it. I've added this task:
-        [E][ ]project meeting (from: Monday 2pm to: 4pm)
-      Now you have 10 tasks in the list.
-    ____________________________________________________________
-    ```
+    **Events**: tasks that start at a specific date/time and ends at a specific date/time <span style="font-weight:400px">e.g. team project meeting 2/10/2019 2-4pm</span>
+    **Format**: `event TASK /from START /to END`
+    **Example**:
+        Input:
+        ```agsl
+        event project meeting /from Monday 2pm /to 4pm
+        ```
+        Output:
+        ```agsl
+        ____________________________________________________________
+          Got it. I've added this task:
+            [E][ ]project meeting (from: Monday 2pm to: 4pm)
+          Now you have 10 tasks in the list.
+        ____________________________________________________________
+        ```
 
 ### Add deadline task
-**DeadLines**: tasks that need to be done before a specific date/time  <span style="font-weight:400px">e.g. submit report by 11/10/2019 5pm</span>
-**Format**: `deadline TASK /by YYYY-MM-DD`
-**Example**:
-    Input:
-    ```agsl
-    deadline submit report /by 2023-02-23
-    ```
-    Output:
-    ```agsl
-    ____________________________________________________________
-    Got it. I've added this task:
-    [D][ ]submit report (by: Feb 23 2023)
-    Now you have 9 tasks in the list.
-    ____________________________________________________________
-    ```
+    **DeadLines**: tasks that need to be done before a specific date/time  <span style="font-weight:400px">e.g. submit report by 11/10/2019 5pm</span>
+    **Format**: `deadline TASK /by YYYY-MM-DD`
+    **Example**:
+        Input:
+        ```agsl
+        deadline submit report /by 2023-02-23
+        ```
+        Output:
+        ```agsl
+        ____________________________________________________________
+        Got it. I've added this task:
+        [D][ ]submit report (by: Feb 23 2023)
+        Now you have 9 tasks in the list.
+        ____________________________________________________________
+        ```
 
 ### View tasks
-**List**: View all the tasks in the list.
-**Format**: `list`
-**Example**:
-    Input:
-    ```agsl
-    deadline submit report /by 2023-02-23
-    ```
-    Output:
-    ```agsl
-    ____________________________________________________________
-      Here are the tasks in your list:
-        1.[T][ ]return book
-        2.[D][ ]submit report (by: Feb 23 2023)
-        3.[E][ ]project meeting (from: Monday 2pm to: 4pm)
-    ____________________________________________________________
-    ```
+    **List**: View all the tasks in the list.
+    **Format**: `list`
+    **Example**:
+        Input:
+        ```agsl
+        deadline submit report /by 2023-02-23
+        ```
+        Output:
+        ```agsl
+        ____________________________________________________________
+          Here are the tasks in your list:
+            1.[T][ ]return book
+            2.[D][ ]submit report (by: Feb 23 2023)
+            3.[E][ ]project meeting (from: Monday 2pm to: 4pm)
+        ____________________________________________________________
+        ```
 
 ### Update task status
 Mark a task as done or change the status back to not done([]). 
