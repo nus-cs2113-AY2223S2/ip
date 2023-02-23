@@ -66,6 +66,10 @@ public class Parser {
                 newCommand = new EventTask();
                 newCommand.processCommand(tasks, args[1]);
                 break;
+            case "find":
+                newCommand = new FindTask();
+                newCommand.processCommand(tasks, args[1]);
+                break;
             default:
                 throw new InvalidTaskException();
             }
