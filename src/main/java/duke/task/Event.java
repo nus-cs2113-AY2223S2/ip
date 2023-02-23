@@ -1,11 +1,16 @@
 package duke.task;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
+
 import duke.DukeException;
 
 public class Event extends Task {
     
     protected String from;
     protected String to;
+    protected LocalDateTime localFrom;
+    protected LocalDateTime localTo;
 
     public static Event toEvent(String instruction) throws DukeException {
         int contentIdx = instruction.indexOf("/from");
@@ -44,6 +49,18 @@ public class Event extends Task {
         super(description, 'E');
         this.from = from;
         this.to = to;
+        convertDateTime(from, to);
+    }
+
+    private void convertDateTime(String from, String to) {
+        try {
+            from = from.substring(0, from.length() - 1);
+            localFrom = LocalDateTime.parse(from, parseFormatter);
+            localTo   = LocalDateTime.parse(to  , parseFormatter);
+        } catch(DateTimeParseException e) {
+            localFrom = null;
+            localTo   = null;
+        }
     }
 
     @Override
@@ -53,6 +70,20 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return super.toString() + "(from: " + from + "to: " + to + ")";
+        if (localFrom == null || localTo == null) {
+            return super.toString() + "(from: " + from + "to: " + to + ")";
+        } else {            
+            return super.toString() + "(from: " + localFrom.format(printFormatter) + " to: " + localTo.format(printFormatter) + ")";
+        }
+    }
+
+    @Override
+    public boolean haveValidDate() {
+        return (localFrom != null) && (localTo != null);
+    }
+
+    @Override
+    public LocalDateTime getEndTime() {
+        return localTo;
     }
 }

@@ -2,6 +2,7 @@ package duke.command;
 
 import java.util.ArrayList;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 import duke.task.Task;
 import duke.DukeException;
@@ -39,7 +40,8 @@ public class TodoList {
             listnum++;
             System.out.println(SPLITTER);
             System.out.println("    " + "Got it. I've added this task:");
-            System.out.println("      " + task.toString());
+            // System.out.println("      " + task.toString());
+            Ui.showTask(task, 6);
             System.out.println("    " + "Now you have " + listnum + " task" + ((listnum>1) ? "s" : "") + " in the list.");
             System.out.println(SPLITTER);
             System.out.println();
@@ -61,7 +63,8 @@ public class TodoList {
         if(tasks.size() > num) {
             System.out.println(SPLITTER);
             System.out.println("    " + "Noted. I've removed this task:");
-            System.out.println("      " + tasks.get(num));
+            // System.out.println("      " + tasks.get(num));
+            Ui.showTask(tasks.get(num), 6);
             System.out.println("    " + "Now you have " + --listnum + " task" + ((listnum>1) ? "s" : "") + " in the list.");
             System.out.println(SPLITTER);
             System.out.println();
@@ -90,8 +93,9 @@ public class TodoList {
                 System.out.println(SPLITTER);
                 System.out.println("    OK, I've marked this task as not done yet:");
             }
-            System.out.print("      ");
-            System.out.println(tasks.get(num));
+            // System.out.print("      ");
+            // System.out.println(tasks.get(num));
+            Ui.showTask(tasks.get(num), 6);
             System.out.println(SPLITTER);
             System.out.println();
 
@@ -111,9 +115,31 @@ public class TodoList {
     public void showList() {
         System.out.println(SPLITTER);
         for(int i = 0; i < listnum; i++) {
-            System.out.println("    " + (i + 1) + ". " + tasks.get(i));
+            Ui.showTask(i + 1, tasks.get(i), 4);
         }
         System.out.println(SPLITTER);
         System.out.println();
+    }
+
+    public void findEndTimeBefore(LocalDateTime endTimeBefore) throws DukeException {
+        Ui.showLine();
+        System.out.println("     Here are the task(s) ending before " + 
+                            endTimeBefore.format(Task.printFormatter) + " in your list: ");
+        int counter = 0;
+        for(Task task : tasks) {
+            if(!task.haveValidDate()) {
+                continue;
+            }
+            if(task.getEndTime().isBefore(endTimeBefore) || task.getEndTime().isEqual(endTimeBefore)) {
+                Ui.showTask(++counter, task, 5);
+            }
+        }
+        System.out.println("     (Total " + counter + ")");
+        Ui.showLine();
+        System.out.println();
+    }
+
+    public void findDesc() throws DukeException {
+        return;
     }
 }

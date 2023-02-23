@@ -1,5 +1,7 @@
 package duke.task;
 
+import java.time.LocalDateTime;
+
 import duke.DukeException;
 
 public class Todo extends Task {
@@ -19,5 +21,15 @@ public class Todo extends Task {
     @Override
     public String getTimeBound() {
         return "";
+    }
+
+    @Override
+    public boolean haveValidDate() {
+        return false;
+    }
+
+    @Override
+    public LocalDateTime getEndTime() {
+        return null;
     }
 }

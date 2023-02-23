@@ -2,6 +2,8 @@ package duke.command;
 
 import java.util.Scanner;
 
+import duke.task.Task;
+
 public class Ui {
     
     private static final String SPLITTER = "    ____________________________________________________________";
@@ -41,6 +43,20 @@ public class Ui {
         System.out.println(enterGreet);
         showLine();
         System.out.println();
+    }
+
+    public static void showTask(int num, Task task, int leadingSpaceNum) {
+        for(int i = 0; i < leadingSpaceNum; i++) {
+            System.out.print(" ");
+        }
+        System.out.println(num + ". " + task);
+    }
+
+    public static void showTask(Task task, int leadingSpaceNum) {
+        for(int i = 0; i < leadingSpaceNum; i++) {
+            System.out.print(" ");
+        }
+        System.out.println(task);
     }
 
     public static void showExit() {

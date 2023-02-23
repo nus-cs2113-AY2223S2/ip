@@ -1,6 +1,14 @@
 package duke.task;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public abstract class Task {
+
+    public static final String dateTimeParseFormat = "yyyy/MM/dd' 'HH:mm";
+    public static final String dateTimePrintFormat = "MMM dd yyyy hh:mm a";
+    public static final DateTimeFormatter parseFormatter = DateTimeFormatter.ofPattern(dateTimeParseFormat);
+    public static final DateTimeFormatter printFormatter = DateTimeFormatter.ofPattern(dateTimePrintFormat);
     
     protected String description;
     protected boolean isDone;
@@ -41,6 +49,8 @@ public abstract class Task {
     }
 
     public abstract String getTimeBound();
+    public abstract boolean haveValidDate();
+    public abstract LocalDateTime getEndTime();
 
     @Override
     public String toString() {

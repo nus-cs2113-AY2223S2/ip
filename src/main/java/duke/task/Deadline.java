@@ -1,10 +1,14 @@
 package duke.task;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
+
 import duke.DukeException;
 
 public class Deadline extends Task {
 
     protected String by;
+    protected LocalDateTime localBy;
 
     public static Deadline toDeadline(String instruction) throws DukeException {
         int contentIdx = instruction.indexOf("/by");
@@ -32,6 +36,15 @@ public class Deadline extends Task {
     public Deadline(String description, String by) {
         super(description, 'D');
         this.by = by;
+        convertDateTime(by);
+    }
+
+    private void convertDateTime(String by) {
+        try {
+            localBy = LocalDateTime.parse(by, parseFormatter);
+        } catch(DateTimeParseException e) {
+            localBy = null;
+        }
     }
 
     @Override
@@ -41,6 +54,20 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return super.toString() + "(by: " + by + ")";
+        if(localBy == null) {
+            return super.toString() + "(by: " + by + ")";
+        }else {
+            return super.toString() + "(by: " + localBy.format(printFormatter) + ")";
+        }
+    }
+
+    @Override
+    public boolean haveValidDate() {
+        return (localBy != null);
+    }
+
+    @Override
+    public LocalDateTime getEndTime() {
+        return localBy;
     }
 }
