@@ -1,11 +1,18 @@
 package duke.command;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 // import java.util.function.Consumer;
 
 import duke.DukeException;
 import duke.task.Todo;
 import duke.task.Deadline;
 import duke.task.Event;
+import duke.task.Task;
 
 public class Command {
 
@@ -64,6 +71,7 @@ public class Command {
             command.equals("deadline") ? this::deadline :
             command.equals("event")    ? this::event :
             command.equals("delete")   ? this::delete :
+            command.equals("find")     ? this::find :
                                          this::unknown ;
         commandFunction.accept(todoList);
     }
@@ -119,6 +127,29 @@ public class Command {
             }
         } catch(NumberFormatException e) {
             throw new DukeException("Wrong number format: " + cmdContent);
+        }
+    }
+
+    public void find(TodoList todoList) throws DukeException {
+        int byIdx = line.indexOf("/by");
+        if(byIdx != -1) {
+            String timeBeforeStr = line.substring(byIdx + "/by ".length());
+            LocalDateTime timeBefore;
+            // dateBefore = LocalDateTime.parse(dateBeforeStr, Task.parseFormatter);
+            try {
+                timeBefore = LocalDateTime.parse(timeBeforeStr, Task.parseFormatter);
+            } catch(DateTimeParseException e1) {
+                try {
+                    LocalDate dateBefore = LocalDate.parse(timeBeforeStr, DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+                    LocalTime endOfDay = LocalTime.parse("23:59", DateTimeFormatter.ofPattern("HH:mm"));
+                    timeBefore = LocalDateTime.of(dateBefore, endOfDay);
+                } catch(DateTimeParseException e2) {
+                    throw new DukeException("Wrong time format!");
+                }
+            }
+            todoList.findEndTimeBefore(timeBefore);
+        } else {
+            todoList.findDesc();
         }
     }
 
