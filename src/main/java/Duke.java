@@ -53,6 +53,7 @@ public class Duke {
         }
     }
 
+
     public static void main(String[] args) throws IOException {
         Scanner in = new Scanner(System.in);
         CommandManager.sayHi();
@@ -125,6 +126,12 @@ public class Duke {
                 break;
             case "list":
                 command.printOutput();
+                break;
+            case "delete":
+                Tasks toDelete = Tasks.getTaskList().get(Integer.parseInt(userInput[1]) - 1);
+                command.setKey("delete");
+                command.printOutput(toDelete);
+                Tasks.deleteFromList(Integer.parseInt(userInput[1]) - 1);
                 break;
             default:
                 System.out.println("Try again!");
