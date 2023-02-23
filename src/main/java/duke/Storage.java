@@ -8,7 +8,18 @@ import java.util.Scanner;
 
 import duke.task.*;
 
+/**
+ * Class that handles storing and retrieving task data from local storage
+ */
 public class Storage {
+
+    /**
+     * Stores task data into the task data file
+     *
+     * @param taskDataFile The data file in which to store task data
+     * @param tasks The array list of tasks
+     * @throws IOException if there was an error initialising the file or storing the data in the file
+     */
     public static void storeTaskData(File taskDataFile, ArrayList<Task> tasks) throws IOException {
         FileWriter fileWriter = new FileWriter(taskDataFile);
         if(!taskDataFile.exists()){
@@ -33,6 +44,13 @@ public class Storage {
         fileWriter.close();
     }
 
+    /**
+     * Retrieves task data into an array list of task
+     *
+     * @param taskDataFile The task data file to retrieve data from
+     * @return An array list of tasks
+     * @throws Exception if there was an error creating or retrieving data from the task data file
+     */
     public static ArrayList<Task> retrieveTaskData(File taskDataFile) throws Exception{
         if(!taskDataFile.exists()){
             taskDataFile.createNewFile();
@@ -46,6 +64,13 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Decodes the task data stored as a string into an appropriate task object
+     *
+     * @param encodedTask The task data as a string
+     * @return The appropriate decoded task object
+     * @throws Exception if encoded task is invalid
+     */
     public static Task decodeTask(String encodedTask) throws Exception{
         String[] taskParameters = encodedTask.split("`");
         String taskType = taskParameters[0];
@@ -74,6 +99,13 @@ public class Storage {
         return decodedTask;
     }
 
+    /**
+     * Encodes a task object's name and status into a string for storage
+     *
+     * @param task The task to be encoded
+     * @param taskTypeAsString The type of the task as a string
+     * @return A string representing the task's name and status
+     */
     private static String encodeTaskNameAndStatus(Task task, String taskTypeAsString){
         String encodedOutput = taskTypeAsString;
         if(task.isDone()) {
@@ -85,12 +117,24 @@ public class Storage {
         return encodedOutput;
     }
 
+    /**
+     * Encodes a deadline type task into a string
+     *
+     * @param deadlineTask The deadline task object to be encoded
+     * @return A string representing the encoded task
+     */
     private static String encodeDeadlineData(Deadline deadlineTask){
         String encodedTask = encodeTaskNameAndStatus(deadlineTask, CommandInputs.ADD_DEADLINE_COMMAND_INPUT);
         encodedTask = encodedTask.concat("`" + deadlineTask.getDoBy());
         return encodedTask;
     }
 
+    /**
+     * Encodes an event type task into a string
+     *
+     * @param eventTask The event task object to be encoded
+     * @return A string representing the encoded task
+     */
     private static String encodeEventData(Event eventTask){
         String encodedTask = encodeTaskNameAndStatus(eventTask, CommandInputs.ADD_EVENT_COMMAND_INPUT);
         encodedTask = encodedTask.concat("`"+ eventTask.getFrom() + "`" + eventTask.getTo());

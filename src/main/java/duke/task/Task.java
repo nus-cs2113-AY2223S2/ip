@@ -1,5 +1,9 @@
 package duke.task;
 
+/**
+ * The parent class of all the tasks
+ * Initialises and stores name and completion status of the task
+ */
 public class Task {
     private boolean isDone;
     private String name;
