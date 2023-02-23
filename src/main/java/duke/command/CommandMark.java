@@ -8,6 +8,7 @@ import duke.ui.Ui;
  * contains command to mark tasks
  */
 public class CommandMark {
+
     public static void execute(int taskNum) {
         Duke.isFileEdited = true;
         try {

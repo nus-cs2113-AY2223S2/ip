@@ -8,6 +8,7 @@ import duke.ui.Ui;
  * contains command to list tasks
  */
 public class CommandList {
+
     public static void execute() {
         System.out.println(Ui.LINE);
         int count = 1;

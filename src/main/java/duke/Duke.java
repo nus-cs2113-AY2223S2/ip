@@ -13,7 +13,6 @@ public class Duke {
     public static int taskCount = 0;
 
     public static void main(String[] args) {
-
         String home = System.getProperty("user.home");
         java.nio.file.Path path = java.nio.file.Paths.get(home, "duke.txt");
         String absolutePath = path.toString();

@@ -8,6 +8,7 @@ import duke.ui.Ui;
  * contains command to list unmark tasks
  */
 public class CommandUnmark {
+
     public static void execute(int taskNum) {
         Duke.isFileEdited = true;
         try {

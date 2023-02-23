@@ -8,6 +8,7 @@ import duke.ui.Ui;
  * contains command to delete tasks
  */
 public class CommandDelete {
+
     public static void execute(int taskNum) {
         Duke.isFileEdited = true;
         System.out.println(Ui.LINE);

@@ -13,6 +13,7 @@ import duke.task.Task;
 import java.util.ArrayList;
 
 public class TaskList {
+
     public static final String COMMAND_BYE = "bye";
     public static final String COMMAND_LIST = "list";
     public static final String COMMAND_MARK = "mark";
