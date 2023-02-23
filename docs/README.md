@@ -28,9 +28,9 @@ Welcome to Duke, an organiser to help you keep track of your tasks!
 1. Ensure that you have Java `11` or above installed on your Computer. 
 2. Download the latest `ip.jar` from [here](https://github.com/honglinshang/ip/releases/tag/v2.0). 
 3. Copy the file to the folder you want to use as the *home folder* for Duke.
-3. Open a command terminal, cd into the folder you put the jar file in, and use the 
+4. Open a command terminal, cd into the folder you put the jar file in, and use the 
 `java -jar ip.jar` command to run the application
-4. On opening, Duke should greet you with this
+5. On opening, Duke should greet you with this
 ```
 Hello from
  ____        _        
@@ -39,9 +39,9 @@ Hello from
 | |_| | |_| |   <  __/
 |____/ \__,_|_|\_\___|
 ```
-5. Type the command in the command box and press Enter to execute it. 
+6. Type the command in the command box and press Enter to execute it. 
 e.g. typing `help` and pressing Enter will show a list of all available commands.
-6. Refer to [Features](#features) below for details of each command.  
+7. Refer to [Features](#features) below for details of each command.  
 
 ## Command summary
 |  Action  | Format                           |
@@ -53,19 +53,19 @@ e.g. typing `help` and pressing Enter will show a list of all available commands
 |  Event   | `event TASK /from DATE /to DATE` |
 |   Mark   | `mark IDX`                       |
 |  Unmark  | `unmark IDX`                     |
-|  Delete  | `delete IDX`                      |
-|   Find   | `find KEYWORD`                    |
-|   Date   | `date DATE`                       |
-|   Bye    | `bye`                             |
+|  Delete  | `delete IDX`                     |
+|   Find   | `find KEYWORD`                   |
+|   Date   | `date DATE`                      |
+|   Bye    | `bye`                            |
 
 ## Features
 > Notes:
 > - Words in `UPPER_CASE` are parameters to be supplied by the user.  
->   eg. in 'todo TASK', `TASK` is a parameter that can be used as `todo read book`. 
+>   e.g. in 'todo TASK', `TASK` is a parameter that can be used as `todo read book`. 
 > - Extraneous parameters for commands that do not take in parameters will be ignored.
->   eg. `help 123` will be interpreted as `help`. 
+>   e.g. `help 123` will be interpreted as `help`. 
 > - `date` only considers Deadlines and Events with `DATE`s input as `year-month-dayThour:minute`.
->   eg. `deadline read book /by 2023-10-30T23:59` sets a deadline for Oct 20 2023, 11:59PM
+>   e.g. `deadline read book /by 2023-10-30T23:59` sets a deadline for Oct 20 2023, 11:59PM
 > - By default, all newly added tasks are not completed. 
 
 ### `help` - Viewing help
