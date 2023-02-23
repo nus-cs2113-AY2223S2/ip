@@ -35,6 +35,9 @@ public class Parser {
         case "delete":
             return new DeleteCommand(firstWord, restOfCommand);
         case "list":
+            if (restOfCommand.length() != 0) {
+                throw new DukeException();
+            }
             return new ListCommand(firstWord, restOfCommand);
         case "find":
             return new FindCommand(firstWord, restOfCommand);
@@ -49,6 +52,9 @@ public class Parser {
         case "unmark":
             return new UnmarkCommand(firstWord, restOfCommand);
         case "bye":
+            if (restOfCommand.length() != 0) {
+                throw new DukeException();
+            }
             return new ExitCommand(firstWord, restOfCommand);
         default:
             throw new DukeException();

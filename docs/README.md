@@ -70,7 +70,36 @@ event Swimming /from 1400 /to 1500
 	____________________________________________________________
 ```
 
-### 2. Mark / Unmark Task
+### 2. List all Tasks
+`list`
+
+Shows the user every task that is currently in the list.
+
+*Example of usage:*
+
+```
+list
+```
+
+*Expected outcome:*
+
+```
+	____________________________________________________________
+	Here are the tasks in your list:
+	1.[T][ ] Read book
+	2.[D][ ] Return book (by: friday)
+	3.[E][ ] Swimming (from: 1400 to: 1500)
+	____________________________________________________________
+```
+*When there are no tasks in the list:*
+
+```
+	____________________________________________________________
+	There are no tasks in your list currently!
+	____________________________________________________________
+```
+
+### 3. Mark / Unmark Task
 **Mark Task**
 
 `mark <task number in the list>` 
@@ -115,7 +144,7 @@ unmark 1
 	____________________________________________________________
 ```
 
-### 3. Delete Task
+### 4. Delete Task
 
 `delete <task number in the list>` 
 
@@ -138,34 +167,7 @@ delete 1
 	____________________________________________________________
 ```
 
-### 4. List all Tasks
-`list`
 
-Shows the user every task that is currently in the list.
-
-*Example of usage:*
-
-```
-list
-```
-
-*Expected outcome:*
-
-```
-	____________________________________________________________
-	Here are the tasks in your list:
-	1.[T][ ] Read book
-	2.[D][ ] Return book (by: friday)
-	3.[E][ ] Swimming (from: 1400 to: 1500)
-	____________________________________________________________
-```
-*When there are no tasks in the list:*
-
-```
-	____________________________________________________________
-	There are no tasks in your list currently!
-	____________________________________________________________
-```
 
 ### 5. Find All Tasks Containing A Keyword
 `find <keyword>`
