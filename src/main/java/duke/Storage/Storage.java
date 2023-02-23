@@ -5,12 +5,10 @@ import duke.tasks.*;
 import java.io.*;
 import java.text.ParseException;
 import java.time.LocalDateTime;
-
 import java.util.Scanner;
 import java.util.zip.DataFormatException;
 
 import static duke.tasks.Deadline.dateTimeFormatter;
-
 import static duke.main.Duke.taskCount;
 
 /**
@@ -35,7 +33,6 @@ public class Storage {
             newFile.createNewFile();
         }
     }
-
 
     /**
      * Load previously stored file to Duke application

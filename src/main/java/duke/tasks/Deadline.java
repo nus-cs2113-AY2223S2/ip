@@ -1,10 +1,6 @@
 package duke.tasks;
 
 
-/**
- * One of the three task type (todo, deadline, event)
- */
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
@@ -16,6 +12,10 @@ import java.util.Date;
 import java.util.zip.DataFormatException;
 
 import static duke.main.Duke.taskCount;
+
+/**
+ * One of the three task type (todo, deadline, event)
+ */
 
 public class Deadline extends Task {
     private LocalDateTime deadline;
