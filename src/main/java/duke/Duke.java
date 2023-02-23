@@ -30,7 +30,7 @@ public class Duke {
         if (message[0].equalsIgnoreCase("bye")) {
             isCompleted = true;
         } else if (message[0].equalsIgnoreCase("list")) {
-            displayList();
+            displayList(tasks);
         } else if (message[0].equalsIgnoreCase("mark")) {
             markItem(message);
         } else if (message[0].equalsIgnoreCase("unmark")) {
@@ -43,6 +43,8 @@ public class Duke {
             addEvent(message);
         } else if (message[0].equalsIgnoreCase("delete")) {
             deleteTask(message);
+        } else if (message[0].equalsIgnoreCase("find")) {
+            findTask(cleanInput);
         } else {
             unknownCommand();
         }
@@ -186,21 +188,10 @@ public class Duke {
     /**
      * Displays all the tasks currently in the task-list.
      */
-    public static void displayList() {
-        ui.printSeparator();
-        int numItems = tasks.size();
-        if (numItems == 0) {
-            ui.printMessage("List is empty!");
-            ui.printSeparator();
-            return;
-        }
 
-        ui.printMessage("Here are the tasks in your list:");
-        for (int i = 0; i < numItems; i++) {
-            String item = tasks.get(i).toString();
-            String outputMessage = String.format("%d.%s", i + 1, item);
-            ui.printMessage(outputMessage);
-        }
+    public static void displayList(TaskList tasks) {
+        ui.printSeparator();
+        ui.printTaskList(tasks);
         ui.printSeparator();
     }
 
@@ -233,6 +224,30 @@ public class Duke {
             String errorMessageEcho = String.format("List only has %d items!", tasks.size());
             ui.printMessage(errorMessage);
             ui.printMessage(errorMessageEcho);
+        } finally {
+            ui.printSeparator();
+        }
+    }
+
+    /**
+     * Finds and displays all task in the current task-list that contain the keyword specified by the user in
+     * the task description.
+     *
+     * @param message Input from user that has been trimmed.
+     */
+    public static void findTask(String message) {
+        ui.printSeparator();
+        try {
+            TaskList tasksFound = tasks.findTask(message);
+            if (tasksFound.isEmpty()) {
+                ui.printMessage("No tasks found!");
+            } else {
+                ui.printMessage("Here are the matching tasks in your list:");
+                ui.printTaskList(tasksFound);
+            }
+        } catch (StringIndexOutOfBoundsException error) {
+            String errorMessage = "Expected 2 arguments, only 1 provided.";
+            ui.printMessage(errorMessage);
         } finally {
             ui.printSeparator();
         }

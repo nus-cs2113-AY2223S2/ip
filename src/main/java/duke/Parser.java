@@ -105,4 +105,15 @@ public class Parser {
 
         return new Event(eventArray[0], eventArray[1], eventArray[2]);
     }
+
+    public static String parseKeyword(String message) throws StringIndexOutOfBoundsException {
+        int keywordStartIndex = 5;
+        if (message.length() < keywordStartIndex) {
+            throw new StringIndexOutOfBoundsException();
+        } else {
+            String keyword = message.substring(keywordStartIndex);
+            keyword = keyword.trim();
+            return keyword;
+        }
+    }
 }
