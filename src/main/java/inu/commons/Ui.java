@@ -1,6 +1,8 @@
 package inu.commons;
 
-
+/**
+ * Represents the ui used to interact with the user.
+ */
 public class Ui {
 
     public static void printDivider() {

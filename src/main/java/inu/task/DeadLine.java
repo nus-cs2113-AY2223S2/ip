@@ -4,6 +4,9 @@ import inu.commons.Util;
 
 import java.time.LocalDateTime;
 
+/**
+ * Represents a deadline.
+ */
 public class DeadLine extends Task {
 
     private LocalDateTime by;
@@ -28,7 +31,7 @@ public class DeadLine extends Task {
     }
 
     @Override
-    public String encodeTask() {
+    public String encodeTaskToString() {
         return "D" + "//" + getStatusIcon() + "//" + getDescription() + "//" + getBy();
     }
 

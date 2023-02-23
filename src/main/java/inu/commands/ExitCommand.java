@@ -3,10 +3,16 @@ package inu.commands;
 import inu.commons.Messages;
 import inu.task.TaskList;
 
+/**
+ * Terminates the program.
+ */
 public class ExitCommand extends Command {
 
     public static final String COMMAND_WORD = "bye";
 
+    /**
+     * Contructor.
+     */
     public ExitCommand() {}
 
     @Override

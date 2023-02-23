@@ -9,6 +9,9 @@ import java.time.format.DateTimeParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Utility methods.
+ */
 public class Util {
 
     public static final int INDEX_BEGIN = 0;
@@ -66,6 +69,12 @@ public class Util {
         return to;
     }
 
+    /**
+     * Parses the string and converts to a LocalDate object.
+     *
+     * @param localDate string to be converted to date (format: yyyy-MM-dd)
+     * @return LocalDate converted from the given string
+     */
     public static LocalDate parseDate(String localDate) throws InvalidDateFormat {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -75,6 +84,12 @@ public class Util {
         }
     }
 
+    /**
+     * Parses the string and converts to a LocalDateTime object.
+     *
+     * @param localDateTime string to be converted to date (format: yyyy-MM-dd)
+     * @return LocalDateTime converted from the given string
+     */
     public static LocalDateTime parseDateTime(String localDateTime) throws InvalidDateTimeFormat {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
@@ -84,11 +99,27 @@ public class Util {
         }
     }
 
+    /**
+     * Parses the LocalDate and converts to a string.
+     *
+     * @param localDate date (format: yyyy-MM-dd) to be converted into string (format: "d MMM yyyy")
+     * @return string converted from the given LocalDate
+     * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html">
+     *     DateTimeFormatter</a>
+     */
     public static String convertDateToString(LocalDate localDate) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy");
         return localDate.format(formatter);
     }
 
+    /**
+     * Parses the LocalDateTime and converts to a string.
+     *
+     * @param localDateTime date (format: yyyy-MM-dd) to be converted into string (format: "d MMM yyyy hh:mm a")
+     * @return string converted from the given LocalDateTime
+     * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html">
+     *     DateTimeFormatter</a>
+     */
     public static String convertDateTimeToString(LocalDateTime localDateTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy hh:mm a");
         return localDateTime.format(formatter);
