@@ -3,13 +3,18 @@ package duke.tasks;
 import static duke.main.Duke.printHorizontalLine;
 import static duke.main.Duke.taskCount;
 
+/**
+ * Represent a task whenever task is added
+ */
 public class Task {
     private String description;
     private boolean isDone;
 
-    private String type;
-
-
+    /**
+     * Construct a task object with taskName and task is marked as undone by default
+     *
+     * @param description
+     */
     public Task(String description) {
         this.description = description;
         this.isDone = false;
@@ -19,8 +24,11 @@ public class Task {
         return this.description;
     }
 
+    /**
+     * @return the task type ( todo, deadline , event)
+     */
     public String getType() {
-        return type;
+        return "";
     }
 
     public String getStatusIcon() {
@@ -35,15 +43,14 @@ public class Task {
         this.isDone = false;
     }
 
-    public String getDescription() {
-        return this.description;
-    }
-
     @Override
     public String toString() {
         return "[" + this.getStatusIcon() + "] " + this.description;
     }
 
+    /**
+     * message print whenever new task is added
+     */
     public void printAdded() {
         printHorizontalLine();
         System.out.println(

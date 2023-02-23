@@ -1,21 +1,27 @@
 package duke.Storage;
 
-
 import duke.tasks.*;
 
-
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import static duke.main.Duke.taskCount;
 
+/**
+ * Represents the database of the tasks list in local device
+ */
 public class Storage {
     private final String filepath;
 
     public Storage(String filepath) {
         this.filepath = filepath;
     }
+
+    /**
+     * to create new file to store task if there is no previous database
+     *
+     * @throws IOException if  file crash during file creation
+     */
 
     public void initFile() throws IOException {
         File newFile = new File(this.filepath);
@@ -24,6 +30,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Load previously stored file to Duke application
+     *
+     * @param tasksList
+     * @throws FileNotFoundException if file not found
+     */
     public void loadFile(TaskList tasksList) throws FileNotFoundException {
         File file = new File(this.filepath);
         Scanner s = new Scanner(file);
@@ -63,6 +75,13 @@ public class Storage {
 
     }
 
+    /**
+     * Update database whenever there is changes in tasks
+     * eg: add, delete, unmark , mark
+     *
+     * @param tasksList
+     * @throws IOException if file crash during overwriting
+     */
     public static void updateFile(TaskList tasksList) throws IOException {
         FileWriter overwriteFile = new FileWriter("./taskslist.csv");
         for (int i = 0; i < taskCount; i++) {

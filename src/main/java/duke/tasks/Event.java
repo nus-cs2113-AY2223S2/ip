@@ -1,10 +1,16 @@
 package duke.tasks;
 
-import static duke.main.Duke.taskCount;
-
+/**
+ * One of the three task type (todo, deadline, event)
+ */
 public class Event extends Task {
     private String from, to;
 
+    /**
+     * @param description task name
+     * @param from
+     * @param to
+     */
     public Event(String description, String from, String to) {
         super(description);
         this.from = from;

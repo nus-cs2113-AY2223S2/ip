@@ -1,10 +1,15 @@
 package duke.tasks;
 
-import static duke.main.Duke.taskCount;
-
+/**
+ * One of the three task type (todo, deadline, event)
+ */
 public class Deadline extends Task {
     private String by;
 
+    /**
+     * @param description tasks name
+     * @param by          deadline of task
+     */
     public Deadline(String description, String by) {
         super(description);
         this.by = by;
