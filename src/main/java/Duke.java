@@ -49,15 +49,25 @@ public class Duke {
             + "Example use : \"unmark 10\" \n \n \n"
             + "Hope this list has been informational to you! \n";
 
-    final static String UNRECOGNIZABLE_ERROR = "\n☹ OOPS!!! I'm sorry, but I don't know what that means :-(\n";
-    final static String MISSING_INPUTS_ERROR = "\n☹ OOPS!!! The description of a todo cannot be empty.\n";
+    final static String UNRECOGNIZABLE_ERROR = "\n\uD83D\uDE16 OOPS!!! I'm sorry, but I don't know what that means \uD83D\uDE1E\n"
+                                             + "Try typing \"help\" to see the valid commands you can use!\n";
+    final static String PREFIX_MISSING_INPUTS_ERROR = "\n\uD83D\uDE13 OOPS!!! The description of ";
+    final static String SUFFIX_MISSING_INPUTS_ERROR = " cannot be empty.\n";
+    final static String PREFIX_EMPTY_LIST_ERROR = "\n\uD83D\uDE20 HELLOO???!!! Your list is either EMPTY or does not contain tasks up to the index you inputted yet, so you cannot use ";
+    final static String SUFFIX_EMPTY_LIST_ERROR = " command yet!! Try filling up the list first!\n";
+    final static String PREFIX_LIST_LIMIT_ERROR = "\n\uD83D\uDE05 SORRY MATE!!! I can only take in up to 100 tasks for now... \uD83D\uDE47 So please only ";
+    final static String SUFFIX_LIST_LIMIT_ERROR = " up to that amount and not anything more!\n";
+    final static String FORMAT_CONVERT_ERROR = "\n\uD83D\uDE31 MATE!!! Either you are giving me too big of a number for me to handle or putting words when I am expecting a number.\n"
+                                             + "If it is the former I can only count up to 2147483647 for now... Please lower your expectations! \uD83D\uDE29 \n"
+                                             + "As for the latter, please give me proper inputs so that I can work things out for you okay? \uD83D\uDE11 \n";
+
     public static void printList(Task[] l1, int currListIndex) {
         int index;
         if (l1[0] == null) {
-            System.out.println('\n' + "List is empty!" + '\n');
+            System.out.println('\n' + "MATE! \uD83D\uDE24 Your list is empty!" + '\n');
             return;
         }
-        System.out.println();
+        System.out.println("\nTASKS LIST\n");
         for (int i = 0; i < currListIndex; i += 1) {
             index = i + 1;
             System.out.println(index + ". " + l1[i].toString());
@@ -95,13 +105,19 @@ public class Duke {
         }
         return lineSpaced;
     }
-    public static String[] parseDeadline(String description) {
+    public static String[] parseDeadline(String description) throws IncompleteInputException {
         String[] parsed = description.split(" /by");
+        if (parsed.length < 2) {
+            throw new IncompleteInputException("Deadline is missing \"BY\"!\n");
+        }
         return parsed;
     }
 
-    public static String[] parseEvent(String description) {
+    public static String[] parseEvent(String description) throws IncompleteInputException {
         String[] parsed = description.split(" /", 3);
+        if (parsed.length < 3) {
+            throw new IncompleteInputException("Event is missing either \"FROM\" or \"TO\"!\n");
+        }
         parsed[1] = parsed[1].substring(4);
         parsed[2] = parsed[2].substring(2);
         return parsed;
@@ -133,48 +149,90 @@ public class Duke {
                 printList(tasksList, currTaskNumber);
                 break;
             case "mark":
-                description = lineSpaced[1];
-                taskListIndex = Integer.parseInt(description) - 1;
-                isChanged = false;
-                if (!tasksList[taskListIndex].getIsDone()) {
-                    tasksList[taskListIndex].markAsDone();
-                    isChanged = true;
+                try {
+                    description = lineSpaced[1];
+                } catch (ArrayIndexOutOfBoundsException ex) {
+                    System.out.println(PREFIX_MISSING_INPUTS_ERROR + commandWord + SUFFIX_MISSING_INPUTS_ERROR);
+                    break;
                 }
-                printMarked(isChanged, tasksList[taskListIndex].getStatusIcon(), tasksList[taskListIndex].getDescription());
+                try {
+                    taskListIndex = Integer.parseInt(description) - 1;
+                    isChanged = false;
+                    if (!tasksList[taskListIndex].getIsDone()) {
+                        tasksList[taskListIndex].markAsDone();
+                        isChanged = true;
+                    }
+                    printMarked(isChanged, tasksList[taskListIndex].getStatusIcon(), tasksList[taskListIndex].getDescription());
+                } catch (NullPointerException nu) {
+                    System.out.println(PREFIX_EMPTY_LIST_ERROR + commandWord + SUFFIX_EMPTY_LIST_ERROR);
+                } catch (ArrayIndexOutOfBoundsException ex) {
+                    System.out.println(PREFIX_LIST_LIMIT_ERROR + commandWord + SUFFIX_LIST_LIMIT_ERROR);
+                } catch (NumberFormatException fe) {
+                    System.out.println(FORMAT_CONVERT_ERROR);
+                }
                 break;
             case "unmark":
-                description = lineSpaced[1];
-                taskListIndex = Integer.parseInt(description) - 1;
-                isChanged = false;
-                if (tasksList[taskListIndex].getIsDone()) {
-                    tasksList[taskListIndex].markAsUndone();
-                    isChanged = true;
+                try {
+                    description = lineSpaced[1];
+                } catch (ArrayIndexOutOfBoundsException ex) {
+                    System.out.println(PREFIX_MISSING_INPUTS_ERROR + commandWord + SUFFIX_MISSING_INPUTS_ERROR);
+                    break;
                 }
-                printUnmarked(isChanged, tasksList[taskListIndex].getStatusIcon(), tasksList[taskListIndex].getDescription());
+                try {
+                    taskListIndex = Integer.parseInt(description) - 1;
+                    isChanged = false;
+                    if (tasksList[taskListIndex].getIsDone()) {
+                        tasksList[taskListIndex].markAsUndone();
+                        isChanged = true;
+                    }
+                    printUnmarked(isChanged, tasksList[taskListIndex].getStatusIcon(), tasksList[taskListIndex].getDescription());
+                } catch (NullPointerException nu) {
+                    System.out.println(PREFIX_EMPTY_LIST_ERROR + commandWord + SUFFIX_EMPTY_LIST_ERROR);
+                } catch (ArrayIndexOutOfBoundsException ex) {
+                    System.out.println(PREFIX_LIST_LIMIT_ERROR + commandWord + SUFFIX_LIST_LIMIT_ERROR);
+                } catch (NumberFormatException fe) {
+                    System.out.println(FORMAT_CONVERT_ERROR);
+                }
                 break;
             case "todo":
-                description = lineSpaced[1];
-                tasksList[currTaskNumber] = new ToDo (description);
-                printAdded(tasksList[currTaskNumber], currTaskNumber+1);
-                currTaskNumber++;
+                try {
+                    description = lineSpaced[1];
+                    tasksList[currTaskNumber] = new ToDo(description);
+                    printAdded(tasksList[currTaskNumber], currTaskNumber + 1);
+                    currTaskNumber++;
+                } catch (ArrayIndexOutOfBoundsException ex) {
+                    System.out.println(PREFIX_MISSING_INPUTS_ERROR + commandWord + SUFFIX_MISSING_INPUTS_ERROR);
+                } catch (NullPointerException nu) {
+                    System.out.println(PREFIX_EMPTY_LIST_ERROR + commandWord + SUFFIX_EMPTY_LIST_ERROR);
+                }
                 break;
             case "deadline":
-                lineSpaced = parseDeadline(line);
-                tasksList[currTaskNumber] = new Deadline(lineSpaced[0].substring(commandWord.length()+1), lineSpaced[1]);
-                printAdded(tasksList[currTaskNumber], currTaskNumber+1);
-                currTaskNumber++;
+                try {
+                    lineSpaced = parseDeadline(line);
+                    tasksList[currTaskNumber] = new Deadline(lineSpaced[0].substring(commandWord.length()+1), lineSpaced[1]);
+                    printAdded(tasksList[currTaskNumber], currTaskNumber+1);
+                    currTaskNumber++;
+                } catch (IncompleteInputException inc) {
+                    System.out.println("\nError in inputs!");
+                    System.out.println("Exception occurred: " + inc);
+                }
                 break;
             case "event":
-                lineSpaced = parseEvent(line);
-                tasksList[currTaskNumber] = new Event(lineSpaced[0].substring(commandWord.length()+1), lineSpaced[1],lineSpaced[2]);
-                printAdded(tasksList[currTaskNumber], currTaskNumber+1);
-                currTaskNumber++;
+                try {
+                    lineSpaced = parseEvent(line);
+                    tasksList[currTaskNumber] = new Event(lineSpaced[0].substring(commandWord.length()+1), lineSpaced[1],lineSpaced[2]);
+                    printAdded(tasksList[currTaskNumber], currTaskNumber+1);
+                    currTaskNumber++;
+                } catch (IncompleteInputException inc) {
+                    System.out.println("\nError in inputs!");
+                    System.out.println("Exception occurred: " + inc);
+                }
+                break;
             case "help" :
                 System.out.println(HELP);
+                break;
             default:
-                /*printAdded(line);
-                Task temp_task = new Task(line);
-                 */
+                System.out.println(UNRECOGNIZABLE_ERROR);
             }
             line = in.nextLine();
             lineSpaced = parseCommands(line);
