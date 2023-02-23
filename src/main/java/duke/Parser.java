@@ -8,6 +8,14 @@ import java.util.Arrays;
 
 public class Parser {
 
+    /**
+     * Parses an input that is expected to be a Todo task. Checks for errors early on, otherwise it returns a
+     * Todo task to be saved into the task-list.
+     *
+     * @param message Input from the user.
+     * @return Todo This task is to be saved into the task-list.
+     * @throws StringIndexOutOfBoundsException On input of insufficient length.
+     */
     public static Todo parseTodo(String message) throws StringIndexOutOfBoundsException {
         int secondArgStartIndex = 5;
         if (message.length() < secondArgStartIndex) {
@@ -17,6 +25,14 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses an input that is expected to be a Deadline task. Checks for errors early on, otherwise it
+     * returns a Deadline task to be saved into the task-list.
+     *
+     * @param message Input from user.
+     * @return Deadline This task is to be saved into the task-list.
+     * @throws DukeWrongArgsException On incorrect number of input arguments.
+     */
     public static Deadline parseDeadline(String[] message) throws DukeWrongArgsException {
         int descriptionStartIndex = 1;
         int descriptionEndIndex = 0;
@@ -46,6 +62,14 @@ public class Parser {
         return new Deadline(deadlineArray[0], deadlineArray[1]);
     }
 
+    /**
+     * Parses an input that is expected to be an Event task. Checks for errors early on, otherwise it returns
+     * an Event task to be saved into the task-list.
+     *
+     * @param message Input from user.
+     * @return Event This task is to be saved into the task-list.
+     * @throws DukeWrongArgsException On incorrect number of input arguments.
+     */
     public static Event parseEvent(String[] message) throws DukeWrongArgsException {
         int descriptionStartIndex = 1;
         int descriptionEndIndex = 0;
