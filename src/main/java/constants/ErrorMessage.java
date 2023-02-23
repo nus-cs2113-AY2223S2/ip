@@ -1,5 +1,8 @@
 package constants;
 
+/**
+ * An enum that contains all of the error messages.
+ */
 public enum ErrorMessage {
   IO_EXCEPTION_ERROR(
     "Named file exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other reason."

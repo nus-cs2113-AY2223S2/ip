@@ -70,6 +70,9 @@ public class Duke {
     }
   }
 
+  /**
+   * Running the chat bot with all the commands
+   */
   public void run() {
     ui.printWelcomeMessage();
 

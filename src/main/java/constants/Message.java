@@ -1,5 +1,8 @@
 package constants;
 
+/**
+ * An enum that contains the messages that will be mentioned by the chat bot
+ */
 public enum Message {
     TASK_ADDED("Got it. I've added this task:"),
     GOODBYE("Bye. Hope to see you again soon!"),
