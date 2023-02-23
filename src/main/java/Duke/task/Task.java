@@ -21,6 +21,9 @@ public class Task {
 		isDone = done;
 	}
 
+	public String getDescription () {
+		return description;
+	}
 
 	public String getType () {
 

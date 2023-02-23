@@ -54,6 +54,28 @@ public class textUI {
 		printLine ();
 	}
 
+	public static void findTasks (taskList tasks, String description) {
+		printLine ();
+		boolean isFound = false;
+		for (int i = 0; i < tasks.size (); i++) {
+			if (tasks.get (i).getDescription ().contains (description)) {
+				isFound = true;
+				break;
+			}
+		}
+		if (isFound) {
+			System.out.println ("Here are the matching tasks in your list:");
+			for (int i = 0; i < tasks.size (); i++) {
+				if (tasks.get (i).getDescription ().contains (description)) {
+					System.out.println ((i + 1) + ". " + "[" + tasks.get (i).getType () + "]" + tasks.get (i).toString ());
+				}
+			}
+		} else {
+			System.out.println ("There is no matching task.");
+		}
+		printLine ();
+	}
+
 	public static void printEnd () {
 		printLine ();
 		System.out.println ("Bye. Hope to see you again soon!");
