@@ -54,12 +54,22 @@ public class Database {
         memoryContents += (item + "\n");
     }
 
+    /**
+     * Append a String into the database txt file
+     * @param textToAppend String that is about to be appended into the txt file
+     * @throws IOException
+     */
     public static void appendToFile(String textToAppend) throws IOException {
         FileWriter fw = new FileWriter("data/database.txt", true);
         fw.write(textToAppend);
         fw.close();
     }
 
+    /**
+     * Create a new database txt file and add a String into the txt file
+     * @param textToAdd String that is about to be added into the txt file
+     * @throws IOException
+     */
     public static void writeToFile(String textToAdd) throws IOException {
         FileWriter fw = new FileWriter("data/database.txt");
         fw.write(textToAdd);
