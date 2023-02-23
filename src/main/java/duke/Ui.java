@@ -56,6 +56,17 @@ public class Ui {
         }
     }
 
+    public static void printFoundList(ArrayList<Task> foundTasks) {
+        if (foundTasks.size()==0) {
+            System.out.println("There are no matching tasks!");
+            return;
+        }
+        System.out.println("Here are the matching tasks in your list:");
+        for (int i = 0; i < foundTasks.size(); i++) {
+            System.out.println(i+1 + "." + foundTasks.get(i));
+        }
+    }
+
     public static void printMarkDone(Task doneTask) {
         System.out.println(
                 "Nice!, I've marked this task as done:\n" +

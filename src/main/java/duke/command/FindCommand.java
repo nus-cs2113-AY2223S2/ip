@@ -13,6 +13,6 @@ public class FindCommand extends Command {
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        ui.printList(tasks.findTasks(keyword));
+        ui.printFoundList(tasks.findTasks(keyword));
     }
 }
