@@ -137,8 +137,8 @@ public class TaskList {
                 throw new OutOfBoundException();
             } else {
                 display.printDeletedTask(list, taskNumber);
-                fm.updateFile(list);
                 list.remove(taskNumber - 1);
+                fm.updateFile(list);
             }
         } catch (OutOfBoundException e) {
             e.errorDelete();
