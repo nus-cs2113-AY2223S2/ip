@@ -15,7 +15,6 @@ public class TaskList {
     private static final String MESSAGE_TASKS_MARKED = "Nice! I've marked this task as done:";
     private static final String MESSAGE_TASKS_UNMARKED = "OK, I've marked this task as not done yet:";
     private static final String MESSAGE_TASKS_AVAILABLE = "Here are the tasks in your list:";
-    private static final String MESSAGE_TASKS_NONE = "There are no tasks available.";
     private static final String TASK_TODO = "TODO";
     private static final String TASK_DEADLINE = "DEADLINE";
     private static final String TASK_EVENT = "EVENT";
@@ -42,38 +41,39 @@ public class TaskList {
         return temp;
     }
 
-    public String setStatus(int id, boolean isCompleted) throws Exception {
+    public String setStatus(int id, boolean isCompleted) throws NoTaskException, InvalidInputIDException {
         try {
-            if (id >= tasks.size() || id < 0) {
-                throw new IndexOutOfBoundsException();
+            if (tasks.size() == 0) {
+                throw new NoTaskException();
             }
             tasks.get(id).setIsCompleted(isCompleted);
             String output = isCompleted
-                    ? MESSAGE_TASKS_MARKED + "\n"
-                    : MESSAGE_TASKS_UNMARKED + "\n";
+                            ? MESSAGE_TASKS_MARKED + "\n"
+                            : MESSAGE_TASKS_UNMARKED + "\n";
             output += tasks.get(id).describe();
             return output;
         } catch (IndexOutOfBoundsException e) {
-            throw (tasks.size() == 0)
-                    ? new NoTaskException()
-                    : new InvalidInputIDException();
+            throw new InvalidInputIDException();
         }
     }
 
-    public String listAll() {
-        StringBuilder output = new StringBuilder();
-        output.append(tasks.size() == 0
-                ? MESSAGE_TASKS_NONE
-                : MESSAGE_TASKS_AVAILABLE + "\n");
+    public String listAll() throws NoTaskException {
+        if (tasks.size() == 0) {
+            throw new NoTaskException();
+        }
 
         // adds tasks to output, if any
         // combine details of tasks into a single string
+        StringBuilder output = new StringBuilder(MESSAGE_TASKS_AVAILABLE);
+        output.append(System.lineSeparator());
+
         for (int i = 0; i < tasks.size(); ++i) {
             output.append(i + 1)
                   .append(".") // number
                   .append(tasks.get(i).describe())
-                  .append("\n");
+                  .append(System.lineSeparator());
         }
+
         return output.toString();
     }
 
