@@ -1,7 +1,7 @@
 package duke;
 
 import duke.command.Command;
-import duke.exception.EmptyTaskException;
+import duke.exception.EmptyDescException;
 import duke.exception.IllegalCommandException;
 import duke.exception.InvalidDeadline;
 import duke.exception.InvalidEvent;
@@ -38,8 +38,8 @@ public class Duke {
                 isExit = c.getExit();
             } catch (IllegalCommandException e) {
                 ui.printInvalidCommand();
-            } catch (EmptyTaskException e) {
-                ui.printEmptyTask();
+            } catch (EmptyDescException e) {
+                ui.printEmptyDescription();
             } catch (NumberFormatException e) {
                 ui.printErrorForIdx(tasks.getSize());
             } catch (InvalidDeadline e) {

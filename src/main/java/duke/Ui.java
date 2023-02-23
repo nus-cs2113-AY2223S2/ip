@@ -127,7 +127,7 @@ public class Ui {
         showLine();
     }
 
-    public static void printEmptyTask() {
-        System.out.println("Oops! The description of a task cannot be empty.");
+    public static void printEmptyDescription() {
+        System.out.println("Oops! The description cannot be empty.");
     }
 }
