@@ -1,6 +1,7 @@
 package duke.commands.taskCommands;
 
 import duke.commands.Command;
+import duke.exceptions.DeadlineDateException;
 import duke.exceptions.InvalidTaskException;
 import duke.save.Storage;
 import duke.tasks.Deadline;
@@ -8,8 +9,6 @@ import duke.tasks.TaskList;
 import duke.tasks.ToDo;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.io.IOException;
 import java.time.format.DateTimeParseException;
 
@@ -31,11 +30,16 @@ public class DeadlineCommand extends Command {
             }
 
             String deadlineString = line.substring(markIndex + 3).trim();
-            if (deadlineString.equals("")) {
+            if (deadlineString.equals("") || description.equals("")) {
                 throw new InvalidTaskException();
             }
 
             deadline = LocalDate.parse(deadlineString);
+
+            if (deadline.isBefore(LocalDate.now())) {
+                throw new DeadlineDateException();
+            }
+
             ToDo newDeadline = new Deadline(description, deadline);
             taskList.addTask(newDeadline);
             storage.updateFile(taskList);
@@ -48,6 +52,8 @@ public class DeadlineCommand extends Command {
             System.out.println("Invalid date format. Please try again.\n" + LINEBREAK);
         } catch (StringIndexOutOfBoundsException e) {
             System.out.println("Invalid Command. Please try again.\n" + LINEBREAK);
+        } catch (DeadlineDateException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

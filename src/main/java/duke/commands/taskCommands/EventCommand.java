@@ -1,6 +1,7 @@
 package duke.commands.taskCommands;
 
 import duke.commands.Command;
+import duke.exceptions.EventDateException;
 import duke.exceptions.InvalidTaskException;
 import duke.save.Storage;
 import duke.tasks.Event;
@@ -21,7 +22,6 @@ public class EventCommand extends Command {
     public void handleCommand(String line, TaskList taskList, Storage storage) {
         int markIndex;
         int markIndex1;
-        int indexCount = Task.getIndexCount();
         String description;
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
@@ -43,12 +43,17 @@ public class EventCommand extends Command {
             fromString = line.substring(markIndex + 5, markIndex1).trim();
             toString = line.substring(markIndex1 + 3).trim();
 
-            if (fromString.equals("") || toString.equals("")) {
+            if (fromString.equals("") || toString.equals("") || description.equals("")) {
                 throw new InvalidTaskException();
             }
 
             from = LocalDateTime.parse(fromString, formatter);
             to = LocalDateTime.parse(toString, formatter);
+
+            if (from.isAfter(to) || from.isBefore(LocalDateTime.now()) || to.isBefore(LocalDateTime.now())) {
+                throw new EventDateException();
+            }
+
             ToDo newDeadline = new Event(description, from, to);
             taskList.addTask(newDeadline);
             storage.updateFile(taskList);
@@ -62,6 +67,8 @@ public class EventCommand extends Command {
             System.out.println("Invalid date/time format. Please try again.\n" + LINEBREAK);
         } catch (StringIndexOutOfBoundsException e) {
             System.out.println("Invalid Command. Please try again.\n" + LINEBREAK);
+        } catch (EventDateException e) {
+            System.out.println(e.getMessage());
         }
     }
 }
