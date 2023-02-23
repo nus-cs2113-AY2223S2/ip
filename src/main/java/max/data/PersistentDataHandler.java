@@ -1,5 +1,6 @@
 package max.data;
 
+import max.Ui.Ui;
 import max.task.*;
 
 import java.io.File;
@@ -25,15 +26,18 @@ public class PersistentDataHandler {
     private static final int TASK_DUE_DATE_INDEX = 3;
     private static final int TASK_END_DATE_INDEX = 4;
     private static final String TASK_FILENAME = "tasklist";
+
+    private static Ui ui;
     Path maxDataDirectory;
 
     public PersistentDataHandler() {
+        ui = new Ui();
         maxDataDirectory = Paths.get(".", "data");
         // Create data directory if it does not exist
         try {
             Files.createDirectories(maxDataDirectory);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            ui.printError(e.getMessage());
         }
     }
 
@@ -47,8 +51,9 @@ public class PersistentDataHandler {
             try {
                 maxDataFile.createNewFile();
             } catch (IOException exception) {
-                System.out.println("Failed to create new file!");
-                System.out.println(exception.getMessage());
+                ui.notifyImportant();
+                ui.printError("Failed to create new file!");
+                ui.printMessage(exception.getMessage());
             }
         }
         return isDataExist;
@@ -85,11 +90,12 @@ public class PersistentDataHandler {
         if (errors.size() == 0) {
             return;
         }
-        System.out.println("Awoo? There are tasks I couldn't load ><");
-        System.out.println("You'll have to manually input these tasks again:");
+        ui.notifyImportant();
+        ui.printError("There are tasks I couldn't load ><\"");
+        ui.printMessage("You MUST manually input these tasks again:");
         int count = 1;
         for (String error : errors) {
-            System.out.println(count + ": " + error);
+            ui.printMessage(count + ": " + error);
             ++count;
         }
 

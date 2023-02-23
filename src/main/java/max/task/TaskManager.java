@@ -1,7 +1,7 @@
 package max.task;
 
+import max.Ui.Ui;
 import max.command.Command;
-import max.command.InvalidCommandException;
 import max.data.PersistentDataHandler;
 
 import java.util.ArrayList;
@@ -9,6 +9,7 @@ import java.util.HashMap;
 
 public class TaskManager {
     private ArrayList<Task> tasks;
+    private Ui ui;
 
     public void createTask(HashMap<String, String> commandMap, Command command) throws TaskException {
         // Assertion: commandMap has the correct subcommands & length
@@ -34,21 +35,21 @@ public class TaskManager {
             throw new TaskException("Throw me a bone here, I couldn't create a task!");
         }
         tasks.add(newTask);
-        System.out.println("Got it. Task added:");
-        System.out.println(newTask.getDescription());
-        System.out.println("You now have " + tasks.size() + " tasks in your list.");
+        ui.printMessage("Got it. Task added:");
+        ui.printMessage(newTask.getDescription());
+        ui.printMessage("You now have " + tasks.size() + " tasks in your list.");
     }
 
     public void printTasklist() {
         if (tasks.size() == 0) {
-            System.out.println("There's nothing in your list. I'm gonna bite you.");
+            ui.printMessage("There's nothing in your list. I'm gonna bite you.");
             return;
         }
-        System.out.println("Here's what's in your list:");
+        ui.printMessage("Here's what's in your list:");
         for (int i = 0; i < tasks.size(); ++i) {
             // Print number, box, description in that order
             Task curr = tasks.get(i);
-            System.out.print(i + 1 + ". " + curr.getDescription() + '\n');
+            ui.printMessage(i + 1 + ". " + curr.getDescription() + '\n');
         }
     }
 
@@ -73,19 +74,19 @@ public class TaskManager {
         try {
             taskNum = convertTaskNumberString(taskNumString);
         } catch (TaskException exception) {
-            System.out.println(exception.getMessage());
+            ui.printError(exception.getMessage());
             return;
         }
 
         // Update the task's done status
         if (isDone) {
             tasks.get(taskNum).markAsDone();
-            System.out.println("Okay, marking this task as done: ");
+            ui.printMessage("Okay, marking this task as done: ");
         } else {
             tasks.get(taskNum).markAsUndone();
-            System.out.println("Okay, setting this task as undone: ");
+            ui.printMessage("Okay, setting this task as undone: ");
         }
-        System.out.println(tasks.get(taskNum).getDescription());
+        ui.printMessage(tasks.get(taskNum).getDescription());
     }
 
     public void deleteTask(String taskNumString) {
@@ -93,14 +94,14 @@ public class TaskManager {
         try {
             taskNum = convertTaskNumberString(taskNumString);
         } catch (TaskException exception) {
-            System.out.println(exception.getMessage());
+            ui.printMessage(exception.getMessage());
             return;
         }
         // Assertion: taskNum is in tasklist range, guaranteed by convertTaskNumStr()
-        System.out.println("Woof woof this task will be rem-woofed:");
-        System.out.println(tasks.get(taskNum).getDescription());
+        ui.printMessage("Woof woof this task will be rem-woofed:");
+        ui.printMessage(tasks.get(taskNum).getDescription());
         tasks.remove(taskNum);
-        System.out.println("You have have " + tasks.size() + " tasks left.");
+        ui.printMessage("You have have " + tasks.size() + " tasks left.");
     }
 
     public void loadData() {
@@ -119,5 +120,6 @@ public class TaskManager {
 
     public TaskManager() {
         tasks = new ArrayList<>();
+        ui = new Ui();
     }
 }

@@ -1,5 +1,6 @@
 package max;
 
+import max.Ui.Ui;
 import max.command.Command;
 import max.command.CommandParser;
 import max.command.CommandValidator;
@@ -13,19 +14,16 @@ public class Max {
     private static boolean isListening;
     private static boolean isDebugMode = false;
 
+    private static Ui ui;
     private static TaskManager taskManager;
 
     public static void setIsListening(boolean isListening) {
         Max.isListening = isListening;
     }
 
-    public static void printBorder() {
-        System.out.println("────────────────────────────────────────────────────────────");
-    }
-
     public static void exit() {
         setIsListening(false);
-        System.out.print("Goodbye! Thank you for using MAX.\n");
+        ui.printMessage("Goodbye! Thank you for using MAX.");
     }
 
 
@@ -48,7 +46,7 @@ public class Max {
         try {
             commandValidator.validateCommandPayloadMap(mainCommand, commandPayload);
         } catch (InvalidCommandException exception) {
-            System.out.println(exception.getMessage());
+            ui.printMessage(exception.getMessage());
             return;
         }
 
@@ -84,12 +82,13 @@ public class Max {
         case DEBUG:
             isDebugMode = true;
             taskManager.resetTaskList();
-            System.out.println("MAX is now in debug mode. No data will be saved or loaded from disk.");
-            System.out.println("To exit debug mode, restart MAX.");
+            ui.notifyImportant();
+            ui.printMessage("MAX is now in debug mode. No data will be saved or loaded from disk.");
+            ui.printMessage("To exit debug mode, restart MAX.");
             break;
         default:
-            // { Command.UNKNOWN_COMMAND }
-            System.out.println("Awoo? I don't understand that command.");
+            // { CommandType.UNKNOWN_COMMAND }
+            ui.printMessage("Awoo? I don't understand that command.");
             break;
         }
 
@@ -99,41 +98,27 @@ public class Max {
         }
     }
 
-    public static void greet() {
-        printBorder();
-        System.out.println("Hello! I'm Max, your PAWsonal productivity assistant");
-        System.out.println("What can I do for you to MAXimize your day?");
-        printBorder();
-    }
-
     public static void main(String[] args) {
-        String logo = " /$$      /$$  /$$$$$$  /$$   /$$\n" +
-                "| $$$    /$$$ /$$__  $$| $$  / $$\n" +
-                "| $$$$  /$$$$| $$  \\ $$|  $$/ $$/       /^ ^\\\n" +
-                "| $$ $$/$$ $$| $$$$$$$$ \\  $$$$/       / 0 0 \\\n" +
-                "| $$  $$$| $$| $$__  $$  >$$  $$       V\\ Y /V\n" +
-                "| $$\\  $ | $$| $$  | $$ /$$/\\  $$       / - \\\n" +
-                "| $$ \\/  | $$| $$  | $$| $$  \\ $$      /    |\n" +
-                "|__/     |__/|__/  |__/|__/  |__/     V__)  ||";
-        System.out.println(logo);
+        ui = new Ui();
+        ui.greet();
 
         // Init task subsystem (Controller)
         taskManager = new TaskManager();
         taskManager.loadData();
 
         // Greet when data has been loaded and problematic saved data has been highlighted
-        greet();
+        ui.greet();
         setIsListening(true);
         // Init IO
         Scanner input = new Scanner(System.in);
 
         // Event driver loop to continuously listen for inputs
         while (isListening) {
-            System.out.print("~$ ");
+            ui.printCommandPrompt();
             String command = input.nextLine();
-            printBorder();
+            ui.printBorder();
             handleCommand(command);
-            printBorder();
+            ui.printBorder();
         }
     }
 }
