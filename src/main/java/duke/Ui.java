@@ -38,9 +38,9 @@ public class Ui {
                 " Enter \"unmark [idx]\" to mark task as not done\n" +
                 " Enter \"delete [idx]\" to remove task from list\n" +
                 " Enter \"bye\" to exit the program\n" +
-                "\n For Duke to understand [date], you can enter it in the form of\n     " +
-                Task.storePattern +
-                "\n eg. \"2023-10-30T23:59\" for Oct 20 2023, 11:59PM");
+                "\n For Duke to understand [date], you can enter it in the form of\n" +
+                "     \"yyyy-MM-ddThh:mm\"\n" +
+                " eg. \"2023-10-30T23:59\" for Oct 20 2023, 11:59PM");
     }
     public static void printAddMessage(Task newTask) {
         System.out.println(
