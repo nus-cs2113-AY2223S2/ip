@@ -57,9 +57,9 @@ public class Parser {
         }
     }
 
-    public static String parseDateTime(LocalDateTime date, String dateString, String pattern) {
+    public static String parseDateTime(LocalDateTime date, String dateString, DateTimeFormatter pattern) {
         if (date != null) {
-            return date.format(DateTimeFormatter.ofPattern(pattern));
+            return date.format(pattern);
         }
         return dateString;
     }

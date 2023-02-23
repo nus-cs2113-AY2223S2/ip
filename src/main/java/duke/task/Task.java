@@ -1,10 +1,12 @@
 package duke.task;
 
+import java.time.format.DateTimeFormatter;
+
 public abstract class Task {
     protected String description;
     protected boolean isDone;
-    protected static String printPattern = "MMM dd yyyy, hh:mma";
-    public static String storePattern = "yyyy-mm-ddTHH:mm";
+    protected static DateTimeFormatter printPattern = DateTimeFormatter.ofPattern("MMM dd yyyy, hh:mma");
+    public static DateTimeFormatter storePattern = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
     public Task(String description) {
         this.description = description;

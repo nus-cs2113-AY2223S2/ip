@@ -3,6 +3,7 @@ package duke.task;
 import duke.Parser;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public class Deadline extends Task {
@@ -24,7 +25,7 @@ public class Deadline extends Task {
         return "deadline";
     }
 
-    public String getBy(String pattern) {
+    public String getBy(DateTimeFormatter pattern) {
         return Parser.parseDateTime(by, byString, pattern);
     }
 

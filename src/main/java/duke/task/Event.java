@@ -3,6 +3,7 @@ package duke.task;
 import duke.Parser;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public class Event extends Task {
@@ -30,11 +31,11 @@ public class Event extends Task {
         return "event";
     }
 
-    public String getFrom(String pattern) {
+    public String getFrom(DateTimeFormatter pattern) {
         return Parser.parseDateTime(from, fromString, pattern);
     }
 
-    public String getTo(String pattern) {
+    public String getTo(DateTimeFormatter pattern) {
         return Parser.parseDateTime(to, toString, pattern);
     }
 
