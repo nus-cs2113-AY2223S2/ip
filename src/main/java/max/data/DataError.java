@@ -6,11 +6,12 @@ public enum DataError {
 
 
     private String errorMessage;
-    DataError(String errorMessage){
+
+    DataError(String errorMessage) {
         this.errorMessage = errorMessage;
     }
 
-    public String getErrorMessage(){
+    public String getErrorMessage() {
         return errorMessage;
     }
 }

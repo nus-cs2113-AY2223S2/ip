@@ -37,7 +37,7 @@ public class PersistentDataHandler {
         }
     }
 
-    private boolean doesFileExist(String filename){
+    private boolean doesFileExist(String filename) {
         // Check if file exists
         // If it doesn't exist, then create it but return does not exist
         Path pathToFilename = maxDataDirectory.resolve(filename + ".txt");
@@ -53,6 +53,7 @@ public class PersistentDataHandler {
         }
         return isDataExist;
     }
+
     private String tokenizeTasks(ArrayList<Task> arrayList) {
         String tokenizedString = "";
         // Each task will be tokenized in this format:
@@ -108,7 +109,7 @@ public class PersistentDataHandler {
         String[] tasks = tokenizedString.split("\n");
 
         // Edge case: Handle empty file
-        if(tasks.length == 1 && tasks[0].length() == 0){
+        if (tasks.length == 1 && tasks[0].length() == 0) {
             return taskArrayList;
         }
 
@@ -214,7 +215,7 @@ public class PersistentDataHandler {
 
     public ArrayList<Task> loadTasksFromDisk() {
         ArrayList<Task> processedTaskData;
-        if(doesFileExist(TASK_FILENAME)){
+        if (doesFileExist(TASK_FILENAME)) {
             String tokenizedTaskString = loadFromDisk(TASK_FILENAME);
             processedTaskData = detokenizeTasks(tokenizedTaskString);
             return processedTaskData;

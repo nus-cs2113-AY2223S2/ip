@@ -15,8 +15,8 @@ public class Max {
 
     private static TaskManager taskManager;
 
-    public static void setIsListening(boolean keepListening) {
-        Max.isListening = keepListening;
+    public static void setIsListening(boolean isListening) {
+        Max.isListening = isListening;
     }
 
     public static void printBorder() {
@@ -27,8 +27,6 @@ public class Max {
         setIsListening(false);
         System.out.print("Goodbye! Thank you for using MAX.\n");
     }
-
-
 
 
     public static void handleCommand(String command) {
@@ -75,7 +73,7 @@ public class Max {
         case TASK_TODO:
             try {
                 taskManager.createTask(commandPayload, mainCommand);
-            }catch (TaskException exception){
+            } catch (TaskException exception) {
                 System.out.println(exception.getMessage());
             }
             break;
@@ -96,7 +94,7 @@ public class Max {
         }
 
         // Backup data after every command
-        if(!isDebugMode){
+        if (!isDebugMode) {
             taskManager.saveData();
         }
     }

@@ -9,6 +9,7 @@ import java.util.HashMap;
 
 public class TaskManager {
     private ArrayList<Task> tasks;
+
     public void createTask(HashMap<String, String> commandMap, Command command) throws TaskException {
         // Assertion: commandMap has the correct subcommands & length
         Task newTask = null;
@@ -61,16 +62,17 @@ public class TaskManager {
         } catch (NumberFormatException exception) {
             throw new TaskException("I'm a dog, but even I know that you didn't enter a number.");
         }
-        if(taskNum < 0 || taskNum >= tasks.size()){
+        if (taskNum < 0 || taskNum >= tasks.size()) {
             throw new TaskException("Invalid task number!");
         }
         return taskNum;
     }
+
     public void markTask(String taskNumString, boolean isDone) {
         int taskNum;
         try {
             taskNum = convertTaskNumberString(taskNumString);
-        }catch (TaskException exception){
+        } catch (TaskException exception) {
             System.out.println(exception.getMessage());
             return;
         }
@@ -86,11 +88,11 @@ public class TaskManager {
         System.out.println(tasks.get(taskNum).getDescription());
     }
 
-    public void deleteTask(String taskNumString){
+    public void deleteTask(String taskNumString) {
         int taskNum;
         try {
             taskNum = convertTaskNumberString(taskNumString);
-        }catch (TaskException exception){
+        } catch (TaskException exception) {
             System.out.println(exception.getMessage());
             return;
         }
@@ -101,18 +103,20 @@ public class TaskManager {
         System.out.println("You have have " + tasks.size() + " tasks left.");
     }
 
-    public void loadData(){
+    public void loadData() {
         PersistentDataHandler dataHandler = new PersistentDataHandler();
         this.tasks = dataHandler.loadTasksFromDisk();
     }
-    public void saveData(){
+
+    public void saveData() {
         PersistentDataHandler dataHandler = new PersistentDataHandler();
         dataHandler.saveTasksToDisk(tasks);
     }
 
-    public void resetTaskList(){
+    public void resetTaskList() {
         tasks.clear();
     }
+
     public TaskManager() {
         tasks = new ArrayList<>();
     }
