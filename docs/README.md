@@ -46,14 +46,13 @@ Retrieves all the tasks from Duke ArrayList and displays it to the user.
 
 Example of usage: 
 
-`keyword (optional arguments)`
+`list`
 
 Expected outcome:
 
 Displays the Duke Task List.
 
 ```
-list
 ______________________________________________________________________
  Here are the tasks in your list:
   1.  [T][X] read book
@@ -66,17 +65,17 @@ ______________________________________________________________________
 ### `mark` - Marks the Task as **Complete** in Duke Task List.
 
 Marks the Task as **Complete** using the 'X' character in Duke Task List.
+Marks the Task given the **specific task index**.
 
 Example of usage:
 
-`mark (task index to mark)`
+`mark 2`
 
 Expected outcome:
 
-Marks the Specified Task.
+Marks the above Specified Task.
 
 ```
-mark 2
 ______________________________________________________________________
  Nice! I've marked this task as done:
   [D][X] submit report (by Friday 3pm)
@@ -86,17 +85,17 @@ ______________________________________________________________________
 ### `unmark` - Marks the Task as **Not Complete** in Duke Task List.
 
 Marks the Task as **Not Complete** using the ' ' character in Duke Task List.
+Unmarks the Task given the **specific task index**.
 
 Example of usage:
 
-`unmark (task index to unmark)`
+`unmark 2`
 
 Expected outcome:
 
-Unmark the Specified Task.
+Unmark the above Specified Task.
 
 ```
-unmark 2
 ______________________________________________________________________
  Okay, I've marked this task as not done yet:
   [D][ ] submit report (by Friday 3pm)
@@ -105,18 +104,17 @@ ______________________________________________________________________
 
 ### `todo` - Creates a **Todo Task** in Duke Task List.
 
-Creates a **Todo Task** in Duke Task List given the todo description from the user.
+Creates a **Todo Task** in Duke Task List given the **todo description** from the user.
 
 Example of usage:
 
-`todo (todo description)`
+`todo dance practice`
 
 Expected outcome:
 
-Creates the Todo Task for the given input.
+Creates the Todo Task for the above given input.
 
 ```
-todo dance practice
 ______________________________________________________________________
  Got it. I've added this task:
   [T][ ] dance practice
@@ -126,18 +124,17 @@ ______________________________________________________________________
 
 ### `deadline` - Creates a **Deadline Task** in Duke Task List.
 
-Creates a **Deadline Task** in Duke Task List given the deadline description and due date from the user.
+Creates a **Deadline Task** in Duke Task List given the **deadline description** and **due date** from the user.
 
 Example of usage:
 
-`deadline (deadline description) /by (due date)`
+`deadline submit report final draft /by Tuesday 12pm`
 
 Expected outcome:
 
-Creates the Deadline Task for the given inputs.
+Creates the Deadline Task for the above given inputs.
 
 ```
-deadline submit report final draft /by Tuesday 12pm
 ______________________________________________________________________
  Got it. I've added this task:
   [D][ ] submit report final draft (by Tuesday 12pm)
@@ -151,14 +148,13 @@ Creates an **Event Task** in Duke Task List given the event description, event s
 
 Example of usage:
 
-`event (event description) /from (event start date/time) /to (event end date/time)`
+`event Birthday Party /from Wednesday 2pm /to 5pm`
 
 Expected outcome:
 
-Creates the Event Task for the given inputs.
+Creates the Event Task for the above given inputs.
 
 ```
-event Birthday Party /from Wednesday 2pm /to 5pm
 ______________________________________________________________________
  Got it. I've added this task:
   [E][ ] Birthday Party (from Wednesday 2pm to 5pm)
@@ -172,14 +168,13 @@ Deletes the specified task from the Duke Task List given the **Task Index**.
 
 Example of usage:
 
-`delete (task index to delete)`
+`delete 7`
 
 Expected outcome:
 
-Deletes the Specified Task from Duke Task List.
+Deletes the above Specified Task from Duke Task List.
 
 ```
-delete 7
 ______________________________________________________________________
  Noted. I've deleted this task:
   [E][ ] Birthday Party (from Wednesday 2pm to 5pm)
@@ -193,14 +188,13 @@ Finds and displays the list of task from Duke Task List matching the **Search Ke
 
 Example of usage:
 
-`find (search keyword)`
+`find book`
 
 Expected outcome:
 
-Finds all Matching Tasks from Duke Task List.
+Finds all Matching Tasks from Duke Task List given the above keyword **book**.
 
 ```
-find book
 ______________________________________________________________________
  Here are the matching tasks in your list:
   1.  [T][X] read book
@@ -221,7 +215,6 @@ Expected outcome:
 Displays Bye Message to the user.
 
 ```
-bye
 ______________________________________________________________________
  Bye. Hope to see you again soon!
 ______________________________________________________________________

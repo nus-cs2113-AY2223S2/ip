@@ -21,6 +21,10 @@ Prerequisites: JDK 11, Update Intellij to the most recent version.
    | | | | | | | |/ / _ \
    | |_| | |_| |   <  __/
    |____/ \__,_|_|\_\___|
+   ______________________________________________________________________
+    Hello! I'm Duke, your personal task manager.
+    What can I do for you?
+   ______________________________________________________________________
    ```
 ## Duke Supported Commands
 
@@ -29,6 +33,7 @@ Here is the list of all operations supported by Duke Task Manager:
 1. The `list` Operation
    1. Displays the List of all Tasks in Duke Task List.
    2. **Command Format:** list
+   
       ```
       list
       ______________________________________________________________________
@@ -42,6 +47,7 @@ Here is the list of all operations supported by Duke Task Manager:
 2. The `mark` Operation
    1. Marks the Task as **Complete** in Duke Task List.
    2. **Command Format:** mark <enter_task_index>
+   
       ```
       mark 2
       ______________________________________________________________________
@@ -52,6 +58,7 @@ Here is the list of all operations supported by Duke Task Manager:
 3. The `unmark` Operation
    1. Marks the Task as **Not Complete** in Duke Task List.
    2. **Command Format:** unmark <enter_task_index>
+   
       ```
       unmark 2
       ______________________________________________________________________
@@ -62,6 +69,7 @@ Here is the list of all operations supported by Duke Task Manager:
 4. The `todo` Operation
    1. Creates a **Todo Task** in Duke Task List.
    2. **Command Format:** todo <enter_todo_description>
+   
       ```
       todo dance practice
       ______________________________________________________________________
@@ -73,6 +81,7 @@ Here is the list of all operations supported by Duke Task Manager:
 5. The `deadline` Operation
    1. Creates a **Deadline Task** in Duke Task List.
    2. **Command Format:** deadline <enter_deadline_description> /by <enter_deadline_due_date>
+   
       ```
       deadline submit report final draft /by Tuesday 12pm
       ______________________________________________________________________
@@ -84,6 +93,7 @@ Here is the list of all operations supported by Duke Task Manager:
 6. The `event` Operation
    1. Creates an **Event Task** in Duke Task List.
    2. **Command Format:** event <enter_event_description> /from <enter_event_start> /to <enter_event_end>
+   
       ```
       event Birthday Party /from Wednesday 2pm /to 5pm
       ______________________________________________________________________
@@ -95,6 +105,7 @@ Here is the list of all operations supported by Duke Task Manager:
 7. The `delete` Operation
    1. Deletes the specified task from the Duke Task List given the **Task Index**.
    2. **Command Format:** delete <enter_task_index>
+   
       ```
       delete 7
       ______________________________________________________________________
@@ -106,6 +117,7 @@ Here is the list of all operations supported by Duke Task Manager:
 8. The `find` Operation
    1. Finds and displays the list of task from Duke Task List matching the **Search Keyword**.
    2. **Command Format:** find <search_keyword>
+   
       ```
       find book
       ______________________________________________________________________
@@ -117,6 +129,7 @@ Here is the list of all operations supported by Duke Task Manager:
 9. The `bye` Operation
    1. **Exits** the Duke Program.
    2. **Command Format:** bye
+   
       ```
       bye
       ______________________________________________________________________
