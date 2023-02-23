@@ -8,8 +8,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class FileIO {
-    static String parentDir = "data";
-    static Path parentPath = Paths.get(parentDir);
+    final static String parentDir = "data";
+    final static Path parentPath = Paths.get(parentDir);
     static File f = new File("data/userData.txt");
 
     public static boolean isExist() {
