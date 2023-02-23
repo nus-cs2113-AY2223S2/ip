@@ -2,6 +2,9 @@ package duke.functionalities;
 
 import duke.exception.DukeException;
 
+/**
+ * This Class deals with making sense of the User Command
+ * */
 public class Parser {
     protected static Command command;
     protected static String description;
@@ -10,6 +13,13 @@ public class Parser {
     protected static int fromIndex;
     protected static int toIndex;
 
+    /**
+     * Interprets the User Command to be Executed
+     *
+     * @param userCommand The Command to be interpreted
+     * @throws DukeException if there is an error encountered when interpreting the Duke Command
+     * @return The Interpreted Duke Command
+     * */
     public static Command parse(String userCommand) throws DukeException {
         String task = userCommand.trim();
         if (task.equalsIgnoreCase("list")) {
