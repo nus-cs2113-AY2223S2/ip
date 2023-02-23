@@ -26,4 +26,18 @@ public class Ui {
         String outputMessage = String.format("Loaded a total of %d tasks!", tasks.size());
         printMessage(outputMessage);
     }
+
+    protected void printTaskList(TaskList tasks) {
+        int numItems = tasks.size();
+        if (numItems == 0) {
+            printMessage("List is empty!");
+        } else {
+            printMessage("Here are the tasks in your list:");
+            for (int i = 0; i < numItems; i++) {
+                String item = tasks.get(i).toString();
+                String outputMessage = String.format("%d.%s", i + 1, item);
+                printMessage(outputMessage);
+            }
+        }
+    }
 }
