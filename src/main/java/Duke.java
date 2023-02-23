@@ -1,4 +1,3 @@
-import storage.ListEncoder;
 import storage.Storage;
 import tasks.Deadline;
 import tasks.Event;
@@ -6,20 +5,43 @@ import tasks.Tasks;
 import tasks.Todo;
 import ui.Ui;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
 public class Duke {
-	// TODO DELETE
-
-	// TODO DELETE
+	public static final String LIST_COMMAND = "list";
+	public static final String HELP_COMMAND = "help";
+	public static final String MARK_COMMAND = "mark";
+	public static final String UNMARK_COMMAND = "unmark";
+	public static final String TODO_COMMAND = "todo";
+	public static final String EVENT_COMMAND = "event";
+	public static final String DEADLINE_COMMAND = "deadline";
+	public static final String DELETE_COMMAND = "delete";
+	public static final String CLEAR_COMMAND = "clear";
+	public static final int INDEX_DESCRIPTION = 0;
+	public static final int INDEX_FROM = 1;
+	public static final int INDEX_TO = 2;
+	public static final String FROM_DEMARCATION = "/from";
+	public static final String TO_DEMARCATION = "/to";
+	public static final int BY_DESCRIPTION = 1;
+	public static final String BY_DEMARCATION = "/by";
+	private Ui ui;
+	private Storage storage;
+	private Tasks list;
 	
-	public static void main(String[] args) {
-		Tasks list = Storage.loadSave();
-		greet();
+	public Duke() {
+		ui = new Ui();
+		storage = new Storage();
+		list = Storage.loadSave();
+	}
+	
+	public void run() {
+		Ui.greet();
 		readCommandLine(list);
-		exit();
+		Ui.exit();
+	}
+	public static void main(String[] args) {
+		new Duke().run();
 	}
 	
 	public static void greet() {
@@ -34,7 +56,7 @@ public class Duke {
 		String line = in.nextLine();
 		
 		// continuously reads input from command line until command 'bye' is inputted
-		while (!line.equalsIgnoreCase("bye")) {
+		while (!line.equalsIgnoreCase(Ui.BYE_COMMAND)) {
 			System.out.print(Ui.DIVIDER);
 			runCommand(list, line);
 			System.out.println(Ui.DIVIDER);
@@ -42,9 +64,9 @@ public class Duke {
 			try {
 				Storage.saveTasks(list);
 			} catch (IOException e) {
-				System.out.println("Error: Unable to save changes");
+				Ui.printUnableToSaveChanges();
 			} catch (NullPointerException e) {
-				System.out.println("Error: Nothing detected in save file");
+				Ui.printNoFileDetected();
 			}
 		}
 	}
@@ -55,35 +77,35 @@ public class Duke {
 		String arg = commandAndArg[1];
 		
 		switch (command) {
-		case "list":
+		case LIST_COMMAND:
 			list.printList();
 			break;
-		case "help":
-			printHelp();
+		case HELP_COMMAND:
+			Ui.printHelp();
 			break;
-		case "mark":
+		case MARK_COMMAND:
 			runMark(list, arg);
 			break;
-		case "unmark":
+		case UNMARK_COMMAND:
 			runUnmark(list, arg);
 			break;
-		case "todo":
+		case TODO_COMMAND:
 			addTodo(list, arg);
 			break;
-		case "event":
+		case EVENT_COMMAND:
 			addEvent(list, arg);
 			break;
-		case "deadline":
+		case DEADLINE_COMMAND:
 			addDeadline(list, arg);
 			break;
-		case "delete":
+		case DELETE_COMMAND:
 			runDelete(list, arg);
 			break;
-		case "clear":
+		case CLEAR_COMMAND:
 			runClear(list);
 			break;
 		default:
-			printUnknownCommandMessage();
+			Ui.printUnknownCommandMessage();
 			break;
 		}
 	}
@@ -91,73 +113,6 @@ public class Duke {
 	private static String[] splitCommandAndArgs(String line) {
 		final String[] splitStrings = line.split(" ", 2);
 		return splitStrings.length == 2 ? splitStrings : new String[]{splitStrings[0], ""};
-	}
-	
-	private static void printHelp() {
-		//  TODO
-		System.out.println(Ui.PRINT_HELP_INSTRUCTIONS_MESSAGE);
-		printHelpTodo();
-		System.out.println();
-		printHelpEvent();
-		System.out.println();
-		printHelpDeadline();
-		System.out.println();
-		printHelpMark();
-		System.out.println();
-		printHelpUnmark();
-		System.out.println();
-		printHelpDelete();
-		System.out.println();
-		printHelpClear();
-		System.out.println();
-		printHelpList();
-		System.out.println();
-		printHelpBye();
-	}
-	
-	private static void printHelpTodo() {
-		System.out.println(Ui.HELP_TODO_FORMAT);
-		System.out.println(Ui.HELP_TODO_DESCRIPTION);
-	}
-	
-	private static void printHelpEvent() {
-		System.out.println(Ui.HELP_EVENT_FORMAT);
-		System.out.println(Ui.HELP_EVENT_DESCRIPTION);
-	}
-	
-	private static void printHelpDeadline() {
-		System.out.println(Ui.HELP_DEADLINE_FORMAT);
-		System.out.println(Ui.HELP_DEADLINE_DESCRIPTION);
-	}
-	
-	private static void printHelpMark() {
-		System.out.println(Ui.HELP_MARK_FORMAT);
-		System.out.println(Ui.HELP_MARK_DESCRIPTION);
-	}
-	
-	private static void printHelpUnmark() {
-		System.out.println(Ui.HELP_UNMARK_FORMAT);
-		System.out.println(Ui.HELP_UNMARK_DESCRIPTION);
-	}
-	
-	private static void printHelpDelete() {
-		System.out.println(Ui.HELP_DELETE_FORMAT);
-		System.out.println(Ui.HELP_DELETE_DESCRIPTION);
-	}
-	
-	private static void printHelpClear() {
-		System.out.println(Ui.HELP_CLEAR_FORMAT);
-		System.out.println(Ui.HELP_CLEAR_DESCRIPTION);
-	}
-	
-	private static void printHelpList() {
-		System.out.println(Ui.HELP_LIST_FORMAT);
-		System.out.println(Ui.HELP_LIST_DESCRIPTION);
-	}
-	
-	private static void printHelpBye() {
-		System.out.println(Ui.HELP_BYE_FORMAT);
-		System.out.println(Ui.HELP_BYE_DESCRIPTION);
 	}
 	
 	private static void runMark(Tasks list, String arg) {
@@ -189,7 +144,7 @@ public class Duke {
 	private static void addTodo(Tasks list, String arg) {
 		if (arg.isBlank()) {
 			System.out.println(Ui.ERROR_EMPTY_TODO_DESCRIPTION_MESSAGE);
-			printHelpTodo();
+			Ui.printHelpTodo();
 		} else {
 			Todo newTodo = new Todo(arg);
 			list.addTask(newTodo);
@@ -198,13 +153,13 @@ public class Duke {
 	
 	private static void addEvent(Tasks list, String arg) {
 		String[] descriptionFromAndTo = splitEventArg(arg);
-		String description = descriptionFromAndTo[Ui.INDEX_DESCRIPTION];
-		String from = descriptionFromAndTo[Ui.INDEX_FROM];
-		String to = descriptionFromAndTo[Ui.INDEX_TO];
+		String description = descriptionFromAndTo[INDEX_DESCRIPTION];
+		String from = descriptionFromAndTo[INDEX_FROM];
+		String to = descriptionFromAndTo[INDEX_TO];
 		
 		if (description.isBlank() || from.isBlank() || to.isBlank()) {
 			System.out.println(Ui.ERROR_EMPTY_EVENT_DESCRIPTION_MESSAGE);
-			printHelpEvent();
+			Ui.printHelpEvent();
 		} else {
 			Event newEvent = new Event(description, from, to);
 			list.addTask(newEvent);
@@ -212,19 +167,19 @@ public class Duke {
 	}
 	
 	private static String[] splitEventArg(String arg) {
-		String[] splitDescription = arg.split(Ui.FROM_DEMARCATION, 2); // separate the argument into description and fromAndTo
-		String[] splitFromAndTo = splitDescription[1].split(Ui.TO_DEMARCATION, 2); // separate fromAndTo into from and to
+		String[] splitDescription = arg.split(FROM_DEMARCATION, 2); // separate the argument into description and fromAndTo
+		String[] splitFromAndTo = splitDescription[1].split(TO_DEMARCATION, 2); // separate fromAndTo into from and to
 		return new String[]{splitDescription[0].trim(), splitFromAndTo[0].trim(), splitFromAndTo[1].trim()};
 	}
 	
 	private static void addDeadline(Tasks list, String arg) {
 		String[] descriptionAndBy = splitDeadlineArg(arg);
-		String description = descriptionAndBy[Ui.INDEX_DESCRIPTION];
-		String by = descriptionAndBy[Ui.BY_DESCRIPTION];
+		String description = descriptionAndBy[INDEX_DESCRIPTION];
+		String by = descriptionAndBy[BY_DESCRIPTION];
 		
 		if (description.isBlank() || by.isBlank()) {
 			System.out.println(Ui.ERROR_EMPTY_DEADLINE_DESCRIPTION);
-			printHelpDeadline();
+			Ui.printHelpDeadline();
 		} else {
 			Deadline newDeadline = new Deadline(description, by);
 			list.addTask(newDeadline);
@@ -232,7 +187,7 @@ public class Duke {
 	}
 	
 	private static String[] splitDeadlineArg(String arg) {
-		String[] splitDescriptionAndBy = arg.split(Ui.BY_DEMARCATION, 2);
+		String[] splitDescriptionAndBy = arg.split(BY_DEMARCATION, 2);
 		return new String[]{splitDescriptionAndBy[0].trim(), splitDescriptionAndBy[1].trim()};
 	}
 	
@@ -254,12 +209,6 @@ public class Duke {
 		System.out.println(Ui.RUN_CLEAR_COMPLETE_MESSAGE);
 	}
 	
-	private static void printUnknownCommandMessage() {
-		System.out.println(Ui.UNKNOWN_COMMAND_MESSAGE);
-	}
 	
-	public static void exit() {
-		String exit = Ui.DIVIDER + Ui.EXIT_MESSAGE + Ui.DIVIDER;
-		System.out.println(exit);
-	}
+	
 }

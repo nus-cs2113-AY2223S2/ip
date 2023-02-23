@@ -8,6 +8,7 @@ public class Ui {
 	public static final String UNKNOWN_COMMAND_MESSAGE = "Error: Unknown command detected, please type help for the list of commands available";
 	public static final String EXIT_MESSAGE = "Bye. Hope to see you again soon!\n";
 	public static final String GREET_MESSAGE = "Hello! I'm Bob\n" + "What can I do for you?\n";
+	public static final String BYE_COMMAND = "bye";
 	public static final String ERROR_EMPTY_TODO_DESCRIPTION_MESSAGE = "Error: The description of Todo cannot be empty";
 	public static final String ERROR_EMPTY_EVENT_DESCRIPTION_MESSAGE = "Error: The description, from or to cannot be empty";
 	public static final String ERROR_EMPTY_DEADLINE_DESCRIPTION = "Error: The description or by cannot be empty";
@@ -33,13 +34,95 @@ public class Ui {
 	public static final String HELP_DELETE_DESCRIPTION = "Deletes selected task from the list";
 	public static final String HELP_CLEAR_FORMAT = "clear";
 	public static final String HELP_CLEAR_DESCRIPTION = "Empties the list";
-	public static final int INDEX_DESCRIPTION = 0;
-	public static final int INDEX_FROM = 1;
-	public static final int INDEX_TO = 2;
-	public static final String FROM_DEMARCATION = "/from";
-	public static final String TO_DEMARCATION = "/to";
-	public static final int BY_DESCRIPTION = 1;
-	public static final String BY_DEMARCATION = "/by";
+	public static final String ERROR_UNABLE_TO_SAVE_CHANGES_MESSAGE = "Error: Unable to save changes";
+	public static final String ERROR_FILE_NOT_DETECTED_MESSAGE = "Error: Nothing detected in save file";
 	
-	
+	public static void greet() {
+		String greet = DIVIDER +
+				GREET_MESSAGE +
+				DIVIDER;
+		System.out.println(greet);
 	}
+	
+	public static void printHelp() {
+		System.out.println(PRINT_HELP_INSTRUCTIONS_MESSAGE);
+		printHelpTodo();
+		System.out.println();
+		printHelpEvent();
+		System.out.println();
+		printHelpDeadline();
+		System.out.println();
+		printHelpMark();
+		System.out.println();
+		printHelpUnmark();
+		System.out.println();
+		printHelpDelete();
+		System.out.println();
+		printHelpClear();
+		System.out.println();
+		printHelpList();
+		System.out.println();
+		printHelpBye();
+	}
+	
+	public static void printHelpTodo() {
+		System.out.println(HELP_TODO_FORMAT);
+		System.out.println(HELP_TODO_DESCRIPTION);
+	}
+	
+	public static void printHelpEvent() {
+		System.out.println(HELP_EVENT_FORMAT);
+		System.out.println(HELP_EVENT_DESCRIPTION);
+	}
+	
+	public static void printHelpDeadline() {
+		System.out.println(HELP_DEADLINE_FORMAT);
+		System.out.println(HELP_DEADLINE_DESCRIPTION);
+	}
+	
+	public static void printHelpMark() {
+		System.out.println(HELP_MARK_FORMAT);
+		System.out.println(HELP_MARK_DESCRIPTION);
+	}
+	
+	public static void printHelpUnmark() {
+		System.out.println(HELP_UNMARK_FORMAT);
+		System.out.println(HELP_UNMARK_DESCRIPTION);
+	}
+	
+	public static void printHelpDelete() {
+		System.out.println(HELP_DELETE_FORMAT);
+		System.out.println(HELP_DELETE_DESCRIPTION);
+	}
+	
+	public static void printHelpClear() {
+		System.out.println(HELP_CLEAR_FORMAT);
+		System.out.println(HELP_CLEAR_DESCRIPTION);
+	}
+	
+	public static void printHelpList() {
+		System.out.println(HELP_LIST_FORMAT);
+		System.out.println(HELP_LIST_DESCRIPTION);
+	}
+	
+	public static void printHelpBye() {
+		System.out.println(HELP_BYE_FORMAT);
+		System.out.println(HELP_BYE_DESCRIPTION);
+	}
+	public static void printUnknownCommandMessage() {
+		System.out.println(UNKNOWN_COMMAND_MESSAGE);
+	}
+	
+	public static void exit() {
+		String exit = DIVIDER + EXIT_MESSAGE + DIVIDER;
+		System.out.println(exit);
+	}
+	
+	public static void printUnableToSaveChanges() {
+		System.out.println(ERROR_UNABLE_TO_SAVE_CHANGES_MESSAGE);
+	}
+	
+	public static void printNoFileDetected() {
+		System.out.println(ERROR_FILE_NOT_DETECTED_MESSAGE);
+	}
+}
