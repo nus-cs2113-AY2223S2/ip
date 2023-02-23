@@ -2,6 +2,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 public class Duke {
 
@@ -50,7 +53,18 @@ public class Duke {
                 markTask(database.listOfTasks, words);
             } else if (IsValidDelete(input, words)) {
                 removeTask(database.listOfTasks, words);
-            } else if (parser.parseTask(input) != null) {
+            } else if (input.startsWith("find") && words.length != 1) {
+                ArrayList<Task> filteredList = (ArrayList<Task>)database.listOfTasks.stream()
+                        .filter(t -> t.description.contains(words[1]))
+                        .collect(toList());
+                System.out.println(" Here are the matching tasks in your list:");
+                int index = 0;
+                for (Task x : filteredList) {
+                    System.out.println(" " + (index + 1) + "." + x.statusMessage());
+                    ++index;
+                }
+            }
+            else if (parser.parseTask(input) != null) {
                 Task task = parser.parseTask(input);
                 database.listOfTasks.add(task);
                 String[] taskDetail = getNameAndType(task,input).split("###");
