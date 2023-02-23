@@ -16,8 +16,45 @@ public class Ui {
         borderLine();
     }
 
+    static void find(ArrayList<Task> tasks, String[] words) {
+        ArrayList<Task> matchingResults = new ArrayList<>();
+        int matchCount = 0;
+        String keyword = Parser.processKeywords(words);
+
+        for (Task task : tasks) {
+            if (task.getDescription().contains(keyword)) {
+                matchingResults.add(task);
+                matchCount++;
+            }
+        }
+        printFindResults(matchingResults, matchCount);
+    }
+
+    private static void printFindResults(ArrayList<Task> matchingResults, int matchCount) {
+        if (matchingResults.isEmpty()) {
+            noMatchMessage();
+        } else {
+            printMatchingList(matchingResults, matchCount);
+        }
+    }
+
+    static void printMatchingList(ArrayList<Task> matchingResults, int matchCount) {
+        borderLine();
+        System.out.println("\t Here are the matching tasks in your list:");
+        for (int i = 0; i < matchCount; i++) {
+            System.out.println("\t " + (i + 1) + "." + matchingResults.get(i));
+        }
+        borderLine();
+    }
+
     static void borderLine() {
         System.out.println("\t____________________________________________________________");
+    }
+
+    private static void noMatchMessage() {
+        borderLine();
+        System.out.println("\t There are no matching tasks in your list.");
+        borderLine();
     }
 
     static void emptyCommandMessage() {
