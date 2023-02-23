@@ -12,14 +12,16 @@ public class TodoCommand extends Command {
     }
 
     @Override
-    public void doCommand(ArrayList<Task> tasks) {
+    public String doCommand(ArrayList<Task> tasks) {
+        StringBuilder result = new StringBuilder();
         String description = getCommands().get(1);
         Todo todoTask = new Todo(description);
         tasks.add(todoTask);
-        System.out.println("____________________________________________________________");
-        System.out.println("Got it. I've added this task:");
-        System.out.println(todoTask.getSummary());
-        System.out.printf("Now you have %d tasks in the list.\n", tasks.size());
-        System.out.println("____________________________________________________________");
+        result.append("____________________________________________________________\n");
+        result.append("Got it. I've added this task:\n");
+        result.append(todoTask.getSummary()).append("\n");
+        result.append("Now you have ").append(tasks.size()).append(" tasks in the list.\n");
+        result.append("____________________________________________________________");
+        return String.valueOf(result);
     }
 }

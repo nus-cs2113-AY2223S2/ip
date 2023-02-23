@@ -16,5 +16,5 @@ public abstract class Command {
         return commands;
     }
 
-    public abstract void doCommand(ArrayList<Task> tasks) throws DukeException;
+    public abstract String doCommand(ArrayList<Task> tasks) throws DukeException;
 }

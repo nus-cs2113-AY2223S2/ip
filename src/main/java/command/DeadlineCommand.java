@@ -12,15 +12,17 @@ public class DeadlineCommand extends Command {
     }
 
     @Override
-    public void doCommand(ArrayList<Task> tasks) {
+    public String doCommand(ArrayList<Task> tasks) {
+        StringBuilder result = new StringBuilder();
         String description = getCommands().get(1);
         String due = getCommands().get(2);
         Deadline deadlineTask = new Deadline(description, due);
         tasks.add(deadlineTask);
-        System.out.println("____________________________________________________________");
-        System.out.println("Got it. I've added this task:");
-        System.out.println(deadlineTask.getSummary());
-        System.out.printf("Now you have %d tasks in the list.\n", tasks.size());
-        System.out.println("____________________________________________________________");
+        result.append("____________________________________________________________\n");
+        result.append("Got it. I've added this task:\n");
+        result.append(deadlineTask.getSummary()).append("\n");
+        result.append("Now you have ").append(tasks.size()).append(" tasks in the list.\n");
+        result.append("____________________________________________________________");
+        return String.valueOf(result);
     }
 }

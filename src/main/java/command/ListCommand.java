@@ -10,13 +10,15 @@ public class ListCommand extends Command {
     }
 
     @Override
-    public void doCommand(ArrayList<Task> tasks) {
-        System.out.println("____________________________________________________________"
-                + "\nHere are the tasks in your list:");
+    public String doCommand(ArrayList<Task> tasks) {
+        StringBuilder result = new StringBuilder();
+        result.append("____________________________________________________________"
+                + "\nHere are the tasks in your list:\n");
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.print(i + 1);
-            System.out.println(":" + tasks.get(i).getSummary());
+            result.append(i + 1);
+            result.append(":").append(tasks.get(i).getSummary()).append("\n");
         }
-        System.out.println("____________________________________________________________");
+        result.append("____________________________________________________________");
+        return String.valueOf(result);
     }
 }

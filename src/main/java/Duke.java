@@ -12,6 +12,8 @@ import task.Deadline;
 import task.Event;
 import task.Task;
 import task.Todo;
+import ui.Ui;
+
 import java.util.ArrayList;
 import java.io.File;
 import java.io.FileWriter;
@@ -23,7 +25,7 @@ import java.util.Scanner;
 import static java.nio.file.Files.createDirectories;
 
 public class Duke {
-    private static final String line = "____________________________________________________________";
+    private static Ui ui;
     private static ArrayList<Task> tasks = new ArrayList<>();
     private static boolean isDone = false;
     private static final String dirPath = "." + File.separator + "data";
@@ -35,9 +37,6 @@ public class Duke {
         exitDuke();
     }
 
-    private static void greetUser() {
-        System.out.println(line + "\nHello! I'm Duke\nWhat can I do for you?\n" + line);
-    }
 
     private static Task createTask(String[] parameters) throws DukeException {
         Task newTask;
@@ -69,7 +68,7 @@ public class Duke {
                 Path dirPath = Paths.get("./data");
                 createDirectories(dirPath);
                 file.createNewFile();
-                System.out.println(line + '\n' + "No existing data found.\nCreated new file \"./data/duke.txt\"" + '\n' + line);
+                ui.printFileCreated();
                 return;
             }
             Scanner scanner = new Scanner(file);
@@ -82,10 +81,9 @@ public class Duke {
             scanner.close();
         } catch (DukeException | IOException e) {
             String errorMessage = e.getMessage();
-            System.out.println(line + '\n' + errorMessage + '\n' + line);
+            ui.printErrorMessage(errorMessage);
         }
-
-        System.out.println(line + '\n' + "\"./data/duke.txt\" found.\nData loaded into Duke!" + '\n' + line);
+        ui.printDataLoadSuccess();
     }
 
     private static void updateData() throws IOException {
@@ -101,65 +99,69 @@ public class Duke {
     }
 
     private static void startDuke() {
-        greetUser();
+        ui = new Ui(System.in);
+        ui.greetUser();
         loadData();
     }
 
     private static void exitDuke() {
-        System.out.println(line + "\nBye. Hope to see you again soon!\n" + line);
+        ui.byeUser();
+        System.exit(0);
     }
 
     private static void runDuke() {
-        Scanner in = new Scanner(System.in);
         while (!isDone) {
             try {
-                String input = in.nextLine();
+                String input = ui.getNextLineInput();
                 ArrayList<String> commands = Parser.parse(input);
                 Command commandObject;
+                String result;
                 switch (commands.get(0)) {
                 case "bye":
                     isDone = true;
+                    result = null;
                     break;
                 case "list":
                     commandObject = new ListCommand(commands);
-                    commandObject.doCommand(tasks);
+                    result = commandObject.doCommand(tasks);
                     break;
                 case "mark":
                     commandObject = new MarkCommand(commands);
-                    commandObject.doCommand(tasks);
+                    result = commandObject.doCommand(tasks);
                     updateData();
                     break;
                 case "unmark":
                     commandObject = new UnmarkCommand(commands);
-                    commandObject.doCommand(tasks);
+                    result = commandObject.doCommand(tasks);
                     updateData();
                     break;
                 case "todo":
                     commandObject = new TodoCommand(commands);
-                    commandObject.doCommand(tasks);
+                    result = commandObject.doCommand(tasks);
                     updateData();
                     break;
                 case "deadline":
                     commandObject = new DeadlineCommand(commands);
-                    commandObject.doCommand(tasks);
+                    result = commandObject.doCommand(tasks);
                     updateData();
                     break;
                 case "event":
                     commandObject = new EventCommand(commands);
-                    commandObject.doCommand(tasks);
+                    result = commandObject.doCommand(tasks);
                     updateData();
                     break;
                 case "delete":
                     commandObject = new DeleteCommand(commands);
-                    commandObject.doCommand(tasks);
+                    result = commandObject.doCommand(tasks);
                     updateData();
                     break;
                 default:
                     throw new DukeException("OOPS!!! I'm sorry, but I don't know what that means :-(");
                 }
+                ui.printCommandResult(result);
             } catch (DukeException | IOException e) {
                 String errorMessage = e.getMessage();
-                System.out.println(line + '\n' + errorMessage + '\n' + line);
+                ui.printErrorMessage(errorMessage);
             }
         }
     }

@@ -11,15 +11,16 @@ public class UnmarkCommand extends Command {
     }
 
     @Override
-    public void doCommand(ArrayList<Task> tasks) throws DukeException {
+    public String doCommand(ArrayList<Task> tasks) throws DukeException {
         try {
+            StringBuilder result = new StringBuilder();
             int taskNum = Integer.parseInt(getCommands().get(1));
             tasks.get(taskNum - 1).unmarkDone();
-            System.out.println("____________________________________________________________"
-                    + "\nOK, I've marked this task as not done yet:\n" + tasks.get(taskNum - 1).getSummary() + "\n" +
-                    "____________________________________________________________");
+            result.append("____________________________________________________________" + "\nOK, I've marked this task as not done yet:\n").append(tasks.get(taskNum - 1).getSummary()).append("\n").append("____________________________________________________________");
+            return String.valueOf(result);
         } catch (NumberFormatException | IndexOutOfBoundsException | NullPointerException e) {
             throw new DukeException("Invalid task number!");
         }
+
     }
 }
