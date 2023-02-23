@@ -8,7 +8,6 @@ import model.task.Todo;
 import tasklist.TaskList;
 import ui.Ui;
 import validator.Validator;
-import validator.error.InvalidTaskError;
 import view.TaskView;
 
 public class TaskController {
