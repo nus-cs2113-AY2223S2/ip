@@ -1,7 +1,7 @@
 package duke;
 
 import duke.command.Command;
-import duke.parser.Parser;
+import duke.parser.InputParser;
 import duke.tasks.*;
 import duke.storage.Storage;
 import duke.ui.UI;
@@ -14,7 +14,7 @@ public class Duke {
         UI ui = new UI();
         Storage storage = new Storage();
         TaskList tasks = new TaskList(storage.read());
-        Parser parser = new Parser();
+        InputParser inputParser = new InputParser();
 
         Scanner scan = new Scanner(System.in);
         ui.printLogo();
@@ -26,7 +26,7 @@ public class Duke {
             try {
                 input = scan.nextLine();
                 ui.printLine();
-                Command command = parser.parse(input);
+                Command command = inputParser.parse(input);
                 // tasks saved after every command execution
                 command.execute(tasks, ui, storage);
                 isExit = command.isExit();

@@ -1,17 +1,25 @@
 package duke.tasks;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import duke.exceptions.InvalidInputIDException;
 import duke.exceptions.NoTaskException;
+import duke.parser.DateTimeParser;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TaskList {
-    private static GsonBuilder builder = new GsonBuilder();
-    private static Gson gson = builder.create();
+    private static final GsonBuilder builder = new GsonBuilder()
+            .registerTypeAdapter(LocalDateTime.class,
+                                 (JsonSerializer<LocalDateTime>) (json, type, jsonDeserializationContext)
+                                         -> new JsonPrimitive(json.format(DateTimeParser.getFormatter())))
+            .registerTypeAdapter(LocalDateTime.class,
+                                 (JsonDeserializer<LocalDateTime>) (json, type, jsonDeserializationContext)
+                                         -> LocalDateTime.parse(json.getAsJsonPrimitive().getAsString(),
+                                                                DateTimeParser.getFormatter()))
+            .create().newBuilder();
+    private static final Gson gson = builder.create();
     private static final String MESSAGE_TASKS_MARKED = "Nice! I've marked this task as done:";
     private static final String MESSAGE_TASKS_UNMARKED = "OK, I've marked this task as not done yet:";
     private static final String MESSAGE_TASKS_AVAILABLE = "Here are the tasks in your list:";
@@ -22,7 +30,7 @@ public class TaskList {
     private static ArrayList<Task> tasks = new ArrayList<>();
 
     public TaskList(String json) {
-        this.tasks = fromJson(json);
+        tasks = fromJson(json);
     }
 
     public void add(Task taskObj) {
@@ -49,22 +57,22 @@ public class TaskList {
             }
             tasks.get(id).setIsCompleted(isCompleted);
             String output = isCompleted
-                    ? MESSAGE_TASKS_MARKED + "\n"
-                    : MESSAGE_TASKS_UNMARKED + "\n";
+                            ? MESSAGE_TASKS_MARKED + "\n"
+                            : MESSAGE_TASKS_UNMARKED + "\n";
             output += tasks.get(id).describe();
             return output;
         } catch (IndexOutOfBoundsException e) {
             throw (tasks.size() == 0)
-                    ? new NoTaskException()
-                    : new InvalidInputIDException();
+                  ? new NoTaskException()
+                  : new InvalidInputIDException();
         }
     }
 
     public String listAll() {
         StringBuilder output = new StringBuilder();
         output.append(tasks.size() == 0
-                ? MESSAGE_TASKS_NONE
-                : MESSAGE_TASKS_AVAILABLE + "\n");
+                      ? MESSAGE_TASKS_NONE
+                      : MESSAGE_TASKS_AVAILABLE + "\n");
 
         // adds tasks to output, if any
         // combine details of tasks into a single string

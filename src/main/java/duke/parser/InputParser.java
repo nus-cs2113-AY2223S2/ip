@@ -8,6 +8,7 @@ import duke.command.ListCommand;
 import duke.command.MarkCommand;
 import duke.command.UnmarkCommand;
 import duke.exceptions.InvalidCommandException;
+import duke.exceptions.InvalidDateTimeException;
 import duke.exceptions.InvalidInputIDException;
 import duke.exceptions.InvalidTaskFormatException;
 import duke.tasks.Deadline;
@@ -16,11 +17,12 @@ import duke.tasks.Task;
 import duke.tasks.TaskEnum;
 import duke.tasks.ToDo;
 
+import java.time.LocalDateTime;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Parser {
+public class InputParser {
     private static final String CHAR_SPACE = " ";
     private static final String COMMAND_DEADLINE = "deadline";
     private static final String COMMAND_DELETE = "delete";
@@ -62,25 +64,28 @@ public class Parser {
         return new ToDo(input);
     }
 
-    private static Event parseEventInput(String input) throws InvalidTaskFormatException {
+    private static Event parseEventInput(String input) throws InvalidTaskFormatException, InvalidDateTimeException {
         checkValidInput(input, patternEvent, TaskEnum.EVENT);
         int fromStartIndex = input.indexOf(KEYWORD_FROM);
         int toStartIndex = input.indexOf(KEYWORD_TO);
         String description = input.substring(0, fromStartIndex).trim();
-        String from = input.substring(fromStartIndex + KEYWORD_FROM.length(), toStartIndex).trim();
-        String to = input.substring(toStartIndex + KEYWORD_TO.length()).trim();
-        return new Event(description, from, to);
+        String fromString = input.substring(fromStartIndex + KEYWORD_FROM.length(), toStartIndex).trim();
+        String toString = input.substring(toStartIndex + KEYWORD_TO.length()).trim();
+        LocalDateTime fromDateTime = DateTimeParser.parse(fromString);
+        LocalDateTime toDateTime = DateTimeParser.parse(toString);
+        return new Event(description, fromDateTime, toDateTime);
     }
 
-    private static Deadline parseDeadlineInput(String input) throws InvalidTaskFormatException {
+    private static Deadline parseDeadlineInput(String input) throws InvalidTaskFormatException, InvalidDateTimeException {
         checkValidInput(input, patternDeadline, TaskEnum.DEADLINE);
         int byStartIndex = input.indexOf(KEYWORD_BY);
         String description = input.substring(0, byStartIndex).trim();
-        String from = input.substring(byStartIndex + KEYWORD_BY.length()).trim();
-        return new Deadline(description, from);
+        String byString = input.substring(byStartIndex + KEYWORD_BY.length()).trim();
+        LocalDateTime byDateTime = DateTimeParser.parse(byString);
+        return new Deadline(description, byDateTime);
     }
 
-    private static Task getTaskFromInput(Scanner input, TaskEnum type) throws InvalidTaskFormatException {
+    private static Task getTaskFromInput(Scanner input, TaskEnum type) throws InvalidTaskFormatException, InvalidDateTimeException {
         // validate input
         if (!input.hasNextLine()) {
             throw new InvalidTaskFormatException(type);
