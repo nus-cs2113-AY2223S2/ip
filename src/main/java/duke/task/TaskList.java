@@ -86,13 +86,13 @@ public class TaskList extends ArrayList<Task> {
         return deletedTask;
     }
 
-<<<<<<< HEAD
     /**
-     * Loads the previous task-list saved in the database file.
+     * Finds the tasks in the current task-list with the specified keyword.
      *
-     * @param fileContent Database file concatenated into a String.
+     * @param message Input from user.
+     * @return TaskList Returns a TaskList object containing all the tasks that contains the keyword in the
+     * task description.
      */
-=======
     public TaskList findTask(String message) {
         TaskList tasksFound = new TaskList();
         String keyword = duke.Parser.parseKeyword(message);
@@ -105,7 +105,11 @@ public class TaskList extends ArrayList<Task> {
         return tasksFound;
     }
 
->>>>>>> master
+    /**
+     * Loads the previous task-list saved in the database file.
+     *
+     * @param fileContent Database file concatenated into a String.
+     */
     public void loadTaskList(String fileContent) {
         String[] lines = fileContent.split("\n");
         for (String line : lines) {

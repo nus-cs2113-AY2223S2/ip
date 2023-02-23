@@ -48,4 +48,12 @@ public class Ui {
             }
         }
     }
+
+    protected void printKeywordTaskList(TaskList tasks) {
+        for (int i = 0; i < tasks.size(); i++) {
+            String item = tasks.get(i).toString();
+            String outputMessage = String.format("%d.%s", i + 1, item);
+            printMessage(outputMessage);
+        }
+    }
 }

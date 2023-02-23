@@ -243,7 +243,7 @@ public class Duke {
                 ui.printMessage("No tasks found!");
             } else {
                 ui.printMessage("Here are the matching tasks in your list:");
-                ui.printTaskList(tasksFound);
+                ui.printKeywordTaskList(tasksFound);
             }
         } catch (StringIndexOutOfBoundsException error) {
             String errorMessage = "Expected 2 arguments, only 1 provided.";

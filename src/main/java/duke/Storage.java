@@ -75,9 +75,9 @@ public class Storage {
 
     private String createDatabaseFile(File databaseFile) throws DukeCreateDatabaseException {
         try {
-            boolean canCreateDirectory = databaseFile.getParentFile().mkdirs();
+            databaseFile.getParentFile().mkdirs();
             boolean canCreateFile = databaseFile.createNewFile();
-            if (!canCreateFile | !canCreateDirectory) {
+            if (!canCreateFile) {
                 throw new DukeCreateDatabaseException();
             }
         } catch (IOException error) {
