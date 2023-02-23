@@ -3,7 +3,6 @@ There is an error in save.txt at line 3
 Task 3 has been excluded. You can edit the save file at:
 /Users/linshang/Documents/cs2113/ip/save.txt
 ____________________________________________________________
-
 ____________________________________________________________
 Hello from
  ____        _
@@ -13,7 +12,6 @@ Hello from
 |____/ \__,_|_|\_\___|
 Enter "help" to see a list of commands.
 ____________________________________________________________
-
 ____________________________________________________________
  Enter "list" to see all tasks
  Enter "todo [task]" to add a task
@@ -24,49 +22,39 @@ ____________________________________________________________
  Enter "delete [idx]" to remove task from list
  Enter "bye" to exit the program
 ____________________________________________________________
-
 ____________________________________________________________
 Here are the tasks in your list:
 1.[T][X] read book
 2.[D][ ] return book (by: June 6th)
 3.[E][X] project meeting Aug 6th (from: 2pm to: 4pm)
 ____________________________________________________________
-
 ____________________________________________________________
 Oops! The description of a task cannot be empty.
 ____________________________________________________________
-
 ____________________________________________________________
 Got it. I've added this todo:
   [T][ ] eat lunch
 ____________________________________________________________
-
 ____________________________________________________________
 Oops! The description of a task cannot be empty.
 ____________________________________________________________
-
 ____________________________________________________________
 Please enter deadline as "deadline [task] /by [date]".
 ____________________________________________________________
-
 ____________________________________________________________
 Got it. I've added this deadline:
   [D][ ] submit tutorial (by: 10pm)
 ____________________________________________________________
-
 ____________________________________________________________
 Oops! The description of a task cannot be empty.
 ____________________________________________________________
-
 ____________________________________________________________
 Please enter event as "event [task] /from [date] /to [date]".
 ____________________________________________________________
-
 ____________________________________________________________
 Got it. I've added this event:
   [E][ ] lecture (from: 9am to: 11am)
 ____________________________________________________________
-
 ____________________________________________________________
 Here are the tasks in your list:
 1.[T][X] read book
@@ -76,20 +64,16 @@ Here are the tasks in your list:
 5.[D][ ] submit tutorial (by: 10pm)
 6.[E][ ] lecture (from: 9am to: 11am)
 ____________________________________________________________
-
 ____________________________________________________________
-Please enter [idx] in the form of an integer from 1 to 6.
+Please enter [idx] in the form of an integer from 1 to 6
 ____________________________________________________________
-
 ____________________________________________________________
-Please enter [idx] in the form of an integer from 1 to 6.
+Please enter [idx] in the form of an integer from 1 to 6
 ____________________________________________________________
-
 ____________________________________________________________
 Nice!, I've marked this task as done:
   [D][X] submit tutorial (by: 10pm)
 ____________________________________________________________
-
 ____________________________________________________________
 Here are the tasks in your list:
 1.[T][X] read book
@@ -99,12 +83,10 @@ Here are the tasks in your list:
 5.[D][X] submit tutorial (by: 10pm)
 6.[E][ ] lecture (from: 9am to: 11am)
 ____________________________________________________________
-
 ____________________________________________________________
 OK, I've marked this task as not done yet:
   [D][ ] submit tutorial (by: 10pm)
 ____________________________________________________________
-
 ____________________________________________________________
 Here are the tasks in your list:
 1.[T][X] read book
@@ -114,21 +96,17 @@ Here are the tasks in your list:
 5.[D][ ] submit tutorial (by: 10pm)
 6.[E][ ] lecture (from: 9am to: 11am)
 ____________________________________________________________
-
 ____________________________________________________________
-Please enter [idx] in the form of an integer from 1 to 6.
+Please enter [idx] in the form of an integer from 1 to 6
 ____________________________________________________________
-
 ____________________________________________________________
-Please enter [idx] in the form of an integer from 1 to 6.
+Please enter [idx] in the form of an integer from 1 to 6
 ____________________________________________________________
-
 ____________________________________________________________
 Noted, I've removed this task:
   [T][ ] eat lunch
 Now you have 5 tasks in the list
 ____________________________________________________________
-
 ____________________________________________________________
 Here are the tasks in your list:
 1.[T][X] read book
@@ -137,12 +115,9 @@ Here are the tasks in your list:
 4.[D][ ] submit tutorial (by: 10pm)
 5.[E][ ] lecture (from: 9am to: 11am)
 ____________________________________________________________
-
 ____________________________________________________________
 Sorry, but I don't know what that means :(
 ____________________________________________________________
-
 ____________________________________________________________
 Bye. Hope to see you again soon!
 ____________________________________________________________
-
