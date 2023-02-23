@@ -1,3 +1,3 @@
-{"name":"Bake cookies","isCompleted":true,"type":"TODO"}
-{"by":"tomorrow 4pm","name":"Submit application form","isCompleted":false,"type":"DEADLINE"}
-{"from":"2pm","to":"6pm","name":"Christmas celebration","isCompleted":false,"type":"EVENT"}
+{"from":"2023-02-27 1400","to":"2023-02-27 1600","name":"ie2141 midterms","isCompleted":false,"type":"EVENT"}
+{"by":"2023-02-23 2359","name":"complete cs2113 ip w7","isCompleted":true,"type":"DEADLINE"}
+{"name":"buy mangoes","isCompleted":false,"type":"TODO"}

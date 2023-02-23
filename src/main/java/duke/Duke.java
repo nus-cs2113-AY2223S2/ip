@@ -1,38 +1,20 @@
 package duke;
 
 import duke.command.Command;
-import duke.exceptions.InvalidCommandException;
-import duke.exceptions.InvalidInputIDException;
-import duke.exceptions.InvalidTaskFormatException;
-import duke.exceptions.NoTaskException;
-import duke.parser.Parser;
-import duke.tasks.*;
-
+import duke.parser.InputParser;
+import duke.tasklist.TaskList;
 import duke.storage.Storage;
 import duke.ui.UI;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 
 public class Duke {
-
-    // commands
-
-
-    // messages
-
-    private static UI ui;
-    private static TaskList tasks;
-    private static Storage storage;
-    private static Parser parser;
-
     public static void main(String[] args) {
-        ui = new UI();
-        storage = new Storage();
-        tasks = new TaskList(storage.read());
-        parser = new Parser();
+        UI ui = new UI();
+        Storage storage = new Storage();
+        TaskList tasks = new TaskList(storage.read());
+        InputParser inputParser = new InputParser();
 
         Scanner scan = new Scanner(System.in);
         ui.printLogo();
@@ -44,7 +26,7 @@ public class Duke {
             try {
                 input = scan.nextLine();
                 ui.printLine();
-                Command command = parser.parse(input);
+                Command command = inputParser.parse(input);
                 // tasks saved after every command execution
                 command.execute(tasks, ui, storage);
                 isExit = command.isExit();

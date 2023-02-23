@@ -1,12 +1,11 @@
 package duke.command;
 
-import duke.storage.Storage;
-import duke.tasks.TaskList;
+import duke.tasklist.TaskList;
 import duke.ui.UI;
 
 public class CommandMarking extends Command {
-    private int taskNum;
-    private boolean isMark;
+    private final int taskNum;
+    private final boolean isMark;
 
     public CommandMarking(int taskNum, boolean isMark) {
         this.taskNum = taskNum;
