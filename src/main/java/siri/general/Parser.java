@@ -52,6 +52,9 @@ public class Parser {
             tasks.printNewTask();
             indexOfTask++;
             break;
+        case "find":
+            tasks.findTask(command[1]);
+            break;
         default:
             throw new UnknownCommandException();
         }

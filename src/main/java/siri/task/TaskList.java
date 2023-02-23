@@ -75,4 +75,13 @@ public class TaskList {
 
         //Null Pointer Exception (taskNumber > indexOfTask)
     }
+
+    public void findTask(String keyword){
+        System.out.println("Here are the matching tasks in your list");
+        for (int i = 0; i < indexOfTask; ++i) {
+            if (taskList.get(i).getDescription().contains(keyword)){
+                System.out.println((i + 1) + ". " + taskList.get(i).toString());
+            }
+        }
+    }
 }
