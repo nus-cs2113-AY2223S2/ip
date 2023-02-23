@@ -9,6 +9,7 @@ public class Deadline extends Task {
     }
 
     public String addedMessage() {
+        ++taskCount;
         return " Got it. I've added this task:\n" + "   [D]"
                 + getStatusIcon() + " " + description + "(by: " + byDate + ")\n"
                 + " Now you have " + Task.taskCount + (Task.taskCount != 1 ? " tasks" : " task") + " in the list.";

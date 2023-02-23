@@ -1,4 +1,4 @@
-public class Task {
+public abstract class Task {
     protected String description;
     protected boolean isDone;
 
@@ -11,11 +11,6 @@ public class Task {
     public Task(String description) {
         this.description = description;
         this.isDone = false;
-        ++taskCount;
-    }
-
-    public static void printMessage() {
-        System.out.println("error in printing");
     }
 
     public void deleteTask() {
@@ -47,12 +42,9 @@ public class Task {
         System.out.println("OK, I've marked this task as not done yet:");
     }
 
-    public String statusMessage() {
-        return getStatusIcon() + " " + description;
-    }
+//    public abstract String statusMessage()  {return getStatusIcon() + " " + description;}
+    public abstract String statusMessage();
 
-    public String addedMessage() {
-        return "added: " + description;
-    }
+    public abstract String addedMessage();
 
 }
