@@ -11,4 +11,9 @@ public class Todo extends Task {
         return "[T][" + getStatusIcon() + "] " + getDescription();
     }
 
+    @Override
+    public String saveTask() {
+        return ("T" + "//" + checkCompletion() + "//" + getDescription() + "\n");
+    }
+
 }

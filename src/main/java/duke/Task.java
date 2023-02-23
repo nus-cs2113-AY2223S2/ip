@@ -25,7 +25,19 @@ public class Task {
         return ("  " + "[" + getStatusIcon() + "]" + " " + getDescription());
     }
 
+    public String checkCompletion() {
+        if (isDone) {
+            return "1";
+        } else {
+            return "0";
+        }
+    }
+
     public String getDescription() {
         return this.description;
+    }
+
+    public String saveTask() {
+        return "";
     }
 }
