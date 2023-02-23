@@ -1,6 +1,9 @@
 package duke.task;
 
 public abstract class Task {
+
+    protected final String MARKED = "X";
+    protected final String UNMARKED = " ";
     protected String description;
     protected String startDate;
     protected String endDate;
@@ -14,7 +17,7 @@ public abstract class Task {
     }
 
     public String getStatusIcon() {
-        return ((this.isDone) ? "X" : " ");
+        return ((this.isDone) ? MARKED : UNMARKED);
     }
 
     public String getDescription() {
