@@ -3,6 +3,8 @@ package duke.task;
 public abstract class Task {
     protected String description;
     protected boolean isDone;
+    protected static String printPattern = "MMM dd yyyy, hh:mma";
+    public static String storePattern = "yyyy-mm-ddTHH:mm";
 
     public Task(String description) {
         this.description = description;
