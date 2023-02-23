@@ -1,16 +1,15 @@
 
 import java.io.*;
-import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class FileWriterClass {
+public class Storage {
     public static void writeToFile() {
         try {
             FileWriter writer = new FileWriter("tasks.txt");
 
-            for (Task task : Duke.tasksList) {
+            for (Task task : TasksList.tasks) {
                 StringBuilder sb = new StringBuilder();
                 int x;
                 if (task.getStatusIcon().equals(" ")) {
@@ -81,7 +80,7 @@ public class FileWriterClass {
                 }
             }
             bf.close();
-            Duke.tasksList = tasksList;
+            TasksList.tasks = tasksList;
             System.out.println("Tasks loaded successfully from file.");
         } catch (IOException e) {
             System.out.println("Error reading from file: " + e.getMessage());
