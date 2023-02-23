@@ -19,5 +19,8 @@ delete eat lunch
 delete 0
 delete 4
 list
+find
+find cat
+find book
 hello
 bye
