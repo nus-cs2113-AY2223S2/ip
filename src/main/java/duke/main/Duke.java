@@ -1,8 +1,10 @@
 package duke.main;
 
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.io.IOException;
+import java.util.zip.DataFormatException;
 
 import duke.Storage.Storage;
 import duke.tasks.*;
@@ -32,6 +34,10 @@ public class Duke {
         } catch (IOException e) {
             System.out.println("I/O Error! ");
             exit(1);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        } catch (DataFormatException e) {
+            throw new RuntimeException(e);
         }
 
         ui.greet();
