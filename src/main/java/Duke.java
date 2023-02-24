@@ -18,6 +18,11 @@ public class Duke {
                 tasks.printTasks();
                 break;
 
+            case "find":
+                String taskKeyWord = userInput.substring(5);
+                tasks.findTask(taskKeyWord);
+                break;
+
             case "unmark":
                 String taskNumberUnmark = userInput.substring(7);
                 tasks.unmark(taskNumberUnmark);

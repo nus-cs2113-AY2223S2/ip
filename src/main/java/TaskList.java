@@ -26,6 +26,19 @@ public class TaskList {
         tasks.get(tasks.size() - 1).MarkStatusDone();
     }
 
+    public void findTask(String taskKeyWord) {
+        Greeting.printSeperator();
+        System.out.println("Here are the matching tasks in your list:");
+        for (int i = 0; i < tasks.size(); i++) {
+            String taskDecription = tasks.get(i).getTask();
+            if (taskDecription.contains(taskKeyWord)){
+                //System.out.println(taskDecription);
+                System.out.println("\t" + (i+1) + "." + tasks.get(i).printTask());
+            }
+        }
+        Greeting.printSeperator();
+    }
+
     /*
      * =================================================================================
      *                      Declaration of tasks ArrayList, print Tasks
@@ -100,7 +113,6 @@ public class TaskList {
             throw new IllegalInputException();
         }
         tasks.add(new Todo (todoTask));
-
         return;
     }
 
@@ -118,15 +130,6 @@ public class TaskList {
             throw new IllegalDayException();
         }
         tasks.add(new Deadline(deadlineTask, deadlineDay));
-
-        /*
-        try {
-            writeToFile("T:0:"+deadlineTask+":"+deadlineDay);
-        } catch (IOException e){
-            System.out.println(e);
-        }
-         */
-
         return;
     }
 
@@ -145,15 +148,6 @@ public class TaskList {
             throw new IllegalDayException();
         }
         tasks.add(new Event(eventTask, eventFrom, eventTo));
-
-        /*
-        try {
-            writeToFile("T:0:"+eventTask+":"+eventFrom+":"+eventTo);
-        } catch (IOException e){
-            System.out.println(e);
-        }
-        */
-
         return;
     }
 
