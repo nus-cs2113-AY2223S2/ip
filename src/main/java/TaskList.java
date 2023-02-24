@@ -13,11 +13,11 @@ public class TaskList {
     }
 
     //TODO: Add Task into the TaskList -- done
-    //TODO: Delete Element from the taskList
+    //TODO: Delete Element from the taskList --done
     //TODO: Retrieve element from the taskList --done
     //TODO: Get the size of the tasklist -- done
 
-    public void AddTask(Task task) {
+    public void addTask(Task task) {
         taskList.add(task); //note that the actual addition is done in the ExceptionHandler
     }
 

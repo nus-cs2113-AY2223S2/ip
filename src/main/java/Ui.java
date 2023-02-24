@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 public class Ui {
     protected String userInput;
-    protected Parser parser;
+    protected Parser parser = new Parser();
 
 
     Ui () {}
@@ -37,38 +37,41 @@ public class Ui {
     }
 
     //TODO: Update the parameters to new TaskList Object
-    public void listTasks(ArrayList<Task> taskList) {
-        for(int i = 0; i< taskList.size();i+=1) {
-            System.out.println('\t' + Integer.toString(i+1) + "." + taskList.get(i).getStatusAndDescription());
+    public void listTasks(TaskList taskList) {
+        this.printLine();
+        System.out.println("\tHere are the tasks in your list:");
+        for(int i = 0; i< taskList.getSize();i+=1) {
+            System.out.println('\t' + Integer.toString(i+1) + "." + taskList.getTask(i).getStatusAndDescription());
             // can be further optimized.
         }
+        this.printLine();
     }
 
     //TODO: Update the parameters to new TaskList Object
-    public void printMarkedTask(String userInput, ArrayList<Task> taskList, FileHandler fileObject) {
+    public void printMarkedTask(String userInput, TaskList taskList, FileHandler fileObject) {
         this.printLine();
         System.out.println("\tNice! I've marked this task as done:");
-        taskList.get(Integer.parseInt(userInput.split(" ")[1]) - 1).markTask(); //modifying element in the tasklist
+        taskList.getTask(Integer.parseInt(userInput.split(" ")[1]) - 1).markTask(); //modifying element in the tasklist
         try {
             fileObject.populateFile(taskList);
         } catch (IOException e) {
             System.out.println("WHoops");
         }
-        System.out.println("\t\t" + taskList.get(Integer.parseInt(userInput.split(" ")[1]) - 1).getStatusAndDescription());
+        System.out.println("\t\t" + taskList.getTask(Integer.parseInt(userInput.split(" ")[1]) - 1).getStatusAndDescription());
         this.printLine();
     }
 
     //TODO: Update the parameters to new TaskList Object
-    public void printUnmarkedTask(String userInput, ArrayList<Task> taskList, FileHandler fileObject) {
+    public void printUnmarkedTask(String userInput, TaskList taskList, FileHandler fileObject) {
         this.printLine();
         System.out.println("\tNice! I've marked this task as not done:");
-        taskList.get(Integer.parseInt(userInput.split(" ")[1]) - 1).unMarkTask(); //modifying the task list
+        taskList.getTask(Integer.parseInt(userInput.split(" ")[1]) - 1).unMarkTask(); //modifying the task list
         try {
             fileObject.populateFile(taskList);
         } catch (IOException e) {
             System.out.println("WHoops");
         }
-        System.out.println("\t\t" + taskList.get(Integer.parseInt(userInput.split(" ")[1]) - 1).getStatusAndDescription());
+        System.out.println("\t\t" + taskList.getTask(Integer.parseInt(userInput.split(" ")[1]) - 1).getStatusAndDescription());
         this.printLine();
     }
 
@@ -80,23 +83,29 @@ public class Ui {
         }
     }
 
-    //TODO: Update the parameters to new TaskList Object
-    public void printTodo(String userInput, ArrayList<Task> taskList) throws EmptyTodo {
+    // TODO: Change the name and move this to the command module, and only leave the base Todo Here
+    //TODO: Also wanna add the FileHandler module here
+    public void printTodo(String userInput, TaskList taskList) throws EmptyTodo {
+        //TODO: Make a Command Module, add the Todo Command
+
+        //TODO: Make a method in the exception generator class which throws the exception
         String[] holder = parser.getTodo(userInput);
         if(holder.length<2)
         {
             throw new EmptyTodo();
         }
+
+        //TODO: Split the printing and adding Todo Process
         this.printLine();
         String input = userInput.replace("todo ", "");
         Todos temp = new Todos(input);
-        taskList.add(temp); // this will be an issue, weirdly it isn't
-        this.printNoTasks(taskList.size());
+        taskList.addTask(temp); // this will be an issue, weirdly it isn't
+        this.printNoTasks(taskList.getSize());
         this.printLine();
     }
 
     //TODO: Update the parameters to new TaskList Object
-    public void printDeadline(String userInput, ArrayList<Task> taskList) throws EmptyDeadline, DeadlineMissingPhrase, DeadlineIsBlank {
+    public void printDeadline(String userInput, TaskList taskList) throws EmptyDeadline, DeadlineMissingPhrase, DeadlineIsBlank {
         this.printLine();
         String[] deadlineAndDescription = parser.getDeadline(userInput);
         if(!userInput.contains("/by ") && userInput.split(" ").length>1) {
@@ -107,13 +116,13 @@ public class Ui {
             throw new DeadlineIsBlank();
         }
         Deadlines temp = new Deadlines(deadlineAndDescription[0], deadlineAndDescription[1]);
-        taskList.add(temp);
-        this.printNoTasks(taskList.size());
+        taskList.addTask(temp);
+        this.printNoTasks(taskList.getSize());
         this.printLine();
     }
 
     //TODO: Update the parameters to new TaskList Object
-    public void printEvent(String userInput, ArrayList<Task> taskList) throws EmptyEvent, EventMissingBothPhrases, EventMissingToPhrase, EventMissingFromPhrase, EventFromIsBlank, EventToIsBlank {
+    public void printEvent(String userInput, TaskList taskList) throws EmptyEvent, EventMissingBothPhrases, EventMissingToPhrase, EventMissingFromPhrase, EventFromIsBlank, EventToIsBlank {
         this.printLine();
         String [] eventDescription = parser.getEvent(userInput);
         if(!userInput.contains("/from") && userInput.split(" ").length>1) {
@@ -130,8 +139,8 @@ public class Ui {
             throw new EventToIsBlank();
         }
         Events temp = new Events(eventDescription[0], eventDescription[1], eventDescription[2]);
-        taskList.add(temp);
-        this.printNoTasks(taskList.size());
+        taskList.addTask(temp);
+        this.printNoTasks(taskList.getSize());
         this.printLine();
     }
 
@@ -165,6 +174,32 @@ public class Ui {
             this.printLine();
             this.readCommand();
         }
+    }
+
+    public void markQualityChecker(TaskList taskList, FileHandler fileObject) {
+        if(parser.isInRange(this.userInput, taskList)==false) {
+            this.printLine();
+            System.out.println("\tNice try, enter a valid index to mark:");
+            this.printLine();
+        } else {
+            this.printMarkedTask(this.userInput, taskList, fileObject);
+        }
+    }
+
+    public void unMarkQualityChecker (TaskList taskList, FileHandler fileObject) {
+        if(parser.isInRange(this.userInput, taskList)==false) {
+            this.printLine();
+            System.out.println("\tNice try, enter a valid index to unmark:");
+            this.printLine();
+        } else {
+            this.printUnmarkedTask(this.userInput, taskList, fileObject);
+        }
+    }
+
+    public void validCommand() {
+        this.printLine();
+        System.out.println("\tPlease enter a valid input");
+        this.printLine();
     }
 
 
