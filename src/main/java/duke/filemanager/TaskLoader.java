@@ -1,6 +1,12 @@
 package duke.filemanager;
 
-import com.google.gson.*;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonElement;
+
 import duke.exceptions.DukeException;
 import duke.task.Deadline;
 import duke.task.Event;
