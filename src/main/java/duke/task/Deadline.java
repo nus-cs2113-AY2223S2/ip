@@ -11,6 +11,7 @@ public class Deadline extends Task {
         this.deadline = deadline;
     }
 
+    /* change data to a file format in order to store in a file */
     @Override
     public String toFileFormat() {
         return "D | " + isMarked + " | " + description + " | " + deadline + "\n";

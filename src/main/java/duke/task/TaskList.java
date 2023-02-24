@@ -6,7 +6,8 @@ import duke.ui.Ui;
 import java.util.ArrayList;
 
 public class TaskList {
-    private final ArrayList<Task> tasks;
+    /* list of tasks */
+    private ArrayList<Task> tasks;
 
     public TaskList(){
         this.tasks = new ArrayList<>();
@@ -16,14 +17,14 @@ public class TaskList {
         return this.tasks;
     }
 
-    // add a new task
+    /* add new Todo task to task list*/
     public void addTodo(String taskInfo) {
         Task newTask = new Todo(taskInfo);
         tasks.add(newTask);
         printAddTaskResult(newTask);
     }
 
-    // create deadline
+    /* create a new Deadline task from the input received */
     public Deadline createDeadline(String taskInfo) {
         String description, deadline;
         String[] info = taskInfo.split("#by ", 2);
@@ -32,14 +33,14 @@ public class TaskList {
         return new Deadline(description, deadline);
     }
 
-    // add a new deadline
+    /* add a new Deadline to task list */
     public void addDeadline(String taskInfo) {
         Task newTask = createDeadline(taskInfo);
         tasks.add(newTask);
         printAddTaskResult(newTask);
     }
 
-    // create new event
+    /* create a new Event task from the input received */
     public Event createEvent(String taskInfo) {
         String description, from, to;
         String[] info = taskInfo.split("#from ", 2);
@@ -50,14 +51,14 @@ public class TaskList {
         return new Event(description, from, to);
     }
 
-    // add a new event
+    /* add a new Event to task list */
     public void addEvent(String taskInfo) {
         Task newTask = createEvent(taskInfo);
         tasks.add(newTask);
         printAddTaskResult(newTask);
     }
 
-    // print result of add task
+    /* print what task was recently added */
     public void printAddTaskResult(Task addedTask) {
         System.out.print(Ui.BREAK_LINE
                 + "\tadded:\n\t\t" + addedTask + '\n'
@@ -65,7 +66,7 @@ public class TaskList {
                 + Ui.BREAK_LINE);
     }
 
-    // list all tasks
+    /* list all the task in the list */
     public void listTask() {
         System.out.println(Ui.BREAK_LINE + "\tThese are the tasks you have (" + tasks.size() + " tasks):");
         int order = 1;
@@ -76,7 +77,7 @@ public class TaskList {
         System.out.print(Ui.BREAK_LINE);
     }
 
-    // mark the task
+    /* mark a specific task by the task number */
     public void markTask(String taskNumber) {
         int taskIndex = Integer.parseInt(taskNumber) - 1;
         try {
@@ -91,7 +92,7 @@ public class TaskList {
         }
     }
 
-    // unmark the task
+    /* unmark a specific task by the task number */
     public void unmarkTask(String taskNumber) {
         int taskIdx = Integer.parseInt(taskNumber) - 1;
         try {
@@ -106,7 +107,7 @@ public class TaskList {
         }
     }
 
-    // delete Task
+    /* delete a specific task by the task number */
     public void deleteTask(String taskNumber) {
         int taskIdx = Integer.parseInt(taskNumber) - 1;
         try {
@@ -122,6 +123,7 @@ public class TaskList {
         }
     }
 
+    /* find tasks that contain a specific keyword */
     public void findTask(String keyword) {
         int order = 1;
         try {
