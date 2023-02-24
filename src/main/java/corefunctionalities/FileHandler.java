@@ -1,17 +1,27 @@
+package corefunctionalities;
+
+import dataypes.Deadlines;
+import dataypes.Events;
+import dataypes.Task;
+import dataypes.Todos;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.ListIterator;
 import java.util.Scanner;
 
 public class FileHandler {
     public String filePath;
     public File dukeFile;
-    FileHandler(String filePath){
+    public FileHandler(String filePath){
         this.filePath = filePath;
         this.dukeFile = new File(filePath); //just creates a new file object, not a new file
+        try {
+            dukeFile.createNewFile();
+        } catch (IOException e) {
+            System.out.println("Whoops, couldnt create/locate file");
+        }
     }
     public void createFile() throws IOException{
 //        if(this.dukeFile.exists()==false) {

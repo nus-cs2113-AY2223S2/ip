@@ -1,4 +1,6 @@
-public class Task  implements TaskFileHandler{
+package dataypes;
+
+public class Task  implements TaskFileHandler {
     /** Name of the task **/
     protected String description;
     /** Boolean to indicate if task is done or not **/

@@ -1,5 +1,9 @@
+package helpers;
+
+import corefunctionalities.TaskList;
+
 public class Parser {
-    Parser () {}
+    public Parser () {}
     public String[] getTodo(String userInput) {
         return userInput.split(" ");
     }

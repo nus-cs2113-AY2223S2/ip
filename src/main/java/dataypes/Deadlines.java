@@ -1,12 +1,14 @@
-public class Deadlines extends Task implements TaskFileHandler{
+package dataypes;
+
+public class Deadlines extends Task implements TaskFileHandler {
     protected String deadline;
-    Deadlines(String description, String deadline) {
+    public Deadlines(String description, String deadline) {
         super(description);
         this.deadline = deadline;
         System.out.println("\tGot it. I've added this task:");
         System.out.println("\t\t" + this.getStatusAndDescription());
     }
-    Deadlines(){} //more when you get to decode and less in enCode
+    public Deadlines(){} //more when you get to decode and less in enCode
     public String getDeadline() {
         return this.deadline;
     }

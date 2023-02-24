@@ -1,7 +1,9 @@
-import exceptions.*;
+package corefunctionalities;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import dataypes.Task;
+import helpers.ExceptionGenerator;
+import helpers.Parser;
+
 import java.util.Scanner;
 public class Ui {
     protected String userInput;
@@ -9,7 +11,7 @@ public class Ui {
     protected ExceptionGenerator exceptionGenerator = new ExceptionGenerator();
 
 
-    Ui () {}
+    public Ui () {}
 
     public void readCommand() {
         Scanner in = new Scanner(System.in);
