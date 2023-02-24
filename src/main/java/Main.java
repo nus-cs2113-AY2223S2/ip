@@ -1,4 +1,4 @@
-import storage.Storage;;
+import storage.Storage;
 
 /**
  * The main class where we compile and run.

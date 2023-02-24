@@ -1,5 +1,8 @@
 package model.task;
 
+/**
+ * An event model
+ */
 public class Event extends Task {
     protected String from;
     protected String to;

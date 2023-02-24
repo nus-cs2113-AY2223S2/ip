@@ -113,7 +113,6 @@ public class TaskController {
    * @throws Exception When the index is out of bounds
    */
   public void deleteTask(int index) throws Exception {
-    ui.printMessage("Task successfully deleted");
     db.delete(index);
   }
 }

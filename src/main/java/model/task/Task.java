@@ -1,4 +1,8 @@
 package model.task;
+
+/**
+ * The task class which is the super class for Deadline, Event and Todo
+ */
 public abstract class Task {
     private boolean isDone;
     private final String taskName;
