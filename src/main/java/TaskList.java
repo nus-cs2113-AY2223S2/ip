@@ -14,7 +14,6 @@ public class TaskList {
     public static void viewList () {
         for (int i = 0; i < TaskList.size(); ++i) {
             System.out.print(i+1 + ". ");
-
             System.out.println(TaskList.get(i).getTask());
         }
     }
@@ -34,6 +33,11 @@ public class TaskList {
     public static void printItem (int index) {
         System.out.print(index+1 + ". ");
         System.out.println(TaskList.get(index).getTask());
+    }
+
+    public static void deleteTask(int index) {
+        TaskList.remove(index);
+        NumTasks -= 1;
     }
 
 
