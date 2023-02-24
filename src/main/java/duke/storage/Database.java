@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Storage class that handles the saving of the task list as a file and loading the tasks from the file.
+ */
 public class Database {
 
     public ArrayList<Task> taskList;
@@ -16,6 +19,10 @@ public class Database {
 
     private final static String DUKE_TXT_FILE_NAME = "duke.txt";
 
+    /**
+     * Constructor of the Database class that creates a new file and directory if they do not exist
+     * and initialises and creates a new Arraylist of tasks with the tasks previously saved.
+     */
     public Database() {
         taskList = new ArrayList<>();
         this.databaseDirectory= "./data/";
@@ -35,12 +42,23 @@ public class Database {
         }
     }
 
+    /**
+     * Appends the newly added task to the saved database txt file.
+     *
+     * @param userInput String of the task in a fixed format that has been newly added to the task list.
+     * @throws IOException Executes when the FileWriter fails to append the task.
+     */
     public void appendSaveTasks(String userInput) throws IOException {
         FileWriter fw = new FileWriter(filePath, true);
         fw.write(userInput + System.lineSeparator());
         fw.close();
     }
 
+    /**
+     * Updates the database when a task is being removed from the list or when a task is being marked/unmarked.
+     *
+     * @throws IOException Executes when the FileWriter fails to update the txt file.
+     */
     public void updateDatabase() throws IOException {
         FileWriter fw = new FileWriter(filePath);
         for (int i = 0; i < taskList.size(); ++i){
@@ -49,6 +67,12 @@ public class Database {
         fw.close();
     }
 
+    /**
+     * Initialises the Database by adding saved task from the saved txt file to the task list.
+     *
+     * @param savedFile The txt file that is being saved to store previous tasks on the list.
+     * @throws IOException Executes when the scanner fails to scan or task list fails to add saved task.
+     */
     private void initialisation(File savedFile) throws IOException{
         Scanner scan = new Scanner(savedFile);
         while (scan.hasNext()) {
@@ -57,6 +81,13 @@ public class Database {
         }
     }
 
+    /**
+     * Method used to convert the saved string from the saved file to a task object
+     * so that it can be added to the list.
+     *
+     * @param taskInput The saved string being read from the file.
+     * @return Returns the task object that is represented by the saved string.
+     */
     private Task handleTask(String taskInput) {
         String[] components = taskInput.split(" , ");
         String command = components[0];
@@ -82,6 +113,12 @@ public class Database {
         return task;
     }
 
+    /**
+     * Method used to determine if the task is mark as done from the saved string in the saved file.
+     *
+     * @param mark The string that represents whether the task has been marked/unmarked.
+     * @param task The task that is currently being added to the list.
+     */
     private void updateMark(String mark, Task task) {
         if (mark.equals("true")) {
             task.setDone(true);
