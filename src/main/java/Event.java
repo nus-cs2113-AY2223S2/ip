@@ -24,8 +24,8 @@ class Event extends Task {
     }
     public String toString() {
         String formattedEventDetails = "(from: " + this.startDateAndTime +
-                "to: " + this.endDateAndTime + ")";
-        return super.toString() + formattedEventDetails;
+                "to:" + this.endDateAndTime + ")";
+        return super.toString() + " " +formattedEventDetails;
     }
 
     public String toStringForDatabase() {
