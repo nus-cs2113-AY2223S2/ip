@@ -65,6 +65,18 @@ public class Command {
                 DukeFile.WriteToFile(todoItems);
                 break;
             }
+            case "find": {
+                String[] parts = UserInput.split(" ");
+                String toFind = String.join(" ", Arrays.copyOfRange(parts, 1, parts.length));
+                ArrayList<Todos> foundItems = new ArrayList<>();
+                for (Todos item : todoItems) {
+                    if (item.item.contains(toFind)) {
+                        foundItems.add(item);
+                    }
+                }
+                UI.ListItems(foundItems);
+                break;
+            }
             default: {
                 UI.Error();
                 break;
