@@ -44,4 +44,10 @@ public class Ui {
         System.out.println("Now you have " + taskCount + " tasks in your list.");
         printLine();
     }
+    public static void showAddTaskMessage(ArrayList<Task> tasks) {
+        printLine();
+        System.out.println("Got it. I've added this task: \n" + tasks.get(tasks.size()-1));
+        System.out.println("Now you have " + tasks.size() + " tasks in your list. ^ ^");
+        printLine();
+    }
 }

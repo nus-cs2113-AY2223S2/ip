@@ -4,8 +4,12 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Command {
+    public static void printLine() {
+        System.out.println("____________________________________________________________");
+    }
     public static void addTodo(ArrayList<Task> tasks, String commandArgs) throws NoDescriptionException {
-        if ((commandArgs.trim()).length() == 0) {
+        final String taskName = commandArgs.trim();
+        if (taskName.length() == 0) {
             throw new NoDescriptionException();
         }
         addTask(tasks, new Todo(commandArgs));
@@ -41,5 +45,47 @@ public class Command {
             throw new NoDescriptionException();
         }
         addTask(tasks, new Deadline(deadlineDescription, deadline));
+    }
+    public static void printListOfTasks(ArrayList<Task> tasks) {
+        for (int i = 0; i < tasks.size(); i += 1) {
+            System.out.print(i + 1);
+            System.out.print(". ");
+            System.out.println(tasks.get(i));
+        }
+        printLine();
+    }
+    public static void unmarkTask(ArrayList<Task> tasks, String commandArgs) throws NoDescriptionException, IndexOutOfBoundsException {
+        if (commandArgs.trim().length() == 0) {
+            throw new NoDescriptionException();
+        }
+        final int unmarkId = Integer.parseInt(commandArgs) - 1;
+        if (unmarkId < 0 || unmarkId >= tasks.size()) {
+            throw new IndexOutOfBoundsException();
+        }
+        if (!tasks.get(unmarkId).isDone) {
+            System.out.println("This task hasn't been marked as done yet ∪･ω･∪");
+        } else {
+            tasks.get(unmarkId).markAsNotDone();
+            System.out.println("I've unmarked this task ∪･ω･∪:");
+            System.out.println(tasks.get(unmarkId));
+        }
+        printLine();
+    }
+    public static void markTask(ArrayList<Task> tasks, String commandArgs) throws NoDescriptionException, IndexOutOfBoundsException {
+        if (commandArgs.trim().length() == 0) {
+            throw new NoDescriptionException();
+        }
+        final int markId = Integer.parseInt(commandArgs) - 1;
+        if (markId < 0 || markId >= tasks.size()) {
+            throw new IndexOutOfBoundsException();
+        }
+        if (tasks.get(markId).isDone) {
+            System.out.println("This task has already been marked as done ੯•໒꒱❤︎");
+        } else {
+            tasks.get(markId).markAsDone();
+            System.out.println("I've marked this task as done ੯•໒꒱❤︎:");
+            System.out.println(tasks.get(markId));
+        }
+        printLine();
     }
 }
