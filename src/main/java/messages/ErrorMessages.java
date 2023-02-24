@@ -6,4 +6,5 @@ public class ErrorMessages {
     public static final String INCORRECT_FIELDS = "You need to include the correct fields for this command";
     public static final String LOAD_FAIL = "Cannnot find load fail";
     public static final String SAVE_FAIL = "Cannot find save fail";
+    public static final String NONE_FOUND = "No Matching Items Found!";
 }

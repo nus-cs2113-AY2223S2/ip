@@ -10,6 +10,7 @@ public class OperationsMessages {
     public static final String DELETED_MSG = "    Noted. I've removed this task:\n      %s\n    Now you have %d tasks in the list.";
     public static final String SAVED_MSG = "    Save Successful!";
     public static final String LOADED_MSG = "    Load Successful!";
+    public static final String SHOW_FINDINGS = "    Here are the matching tasks in your list:";
     
 }
 

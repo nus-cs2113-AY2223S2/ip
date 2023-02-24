@@ -1,24 +1,22 @@
 import java.util.Scanner;
-import java.util.Arrays;
-import java.util.Scanner;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 import messages.ErrorMessages;
 import messages.OperationsMessages;
 import tasks.Deadline;
 import tasks.Event;
 import tasks.Todo;
+import exceptions.NotFoundException;
 import exceptions.EmptyInputException;
 import exceptions.InvalidCommand;
+import exceptions.NotFoundException;
 
 public class Duke {
     // Constants
     private static final String BOT_NAME = "Duke"; 
 
-    private static Parser parser = new Parser();
     private static Storage storage = new Storage();
     private static TaskList tasklist = new TaskList();
     // private static Set<String> markedItems = new HashSet<String>(MAX_ITEMS);
@@ -49,12 +47,14 @@ public class Duke {
                 Ui.printResponse(ErrorMessages.INCORRECT_FIELDS);
             } catch (IOException e) {
                 Ui.printResponse(ErrorMessages.LOAD_FAIL);
+            } catch (NotFoundException e) {
+                Ui.printResponse(ErrorMessages.NONE_FOUND);
             }
         }
         scanner.close();
     }
 
-    private static void handleInput(String line) throws EmptyInputException, InvalidCommand, IOException {
+    private static void handleInput(String line) throws EmptyInputException, InvalidCommand, IOException, NotFoundException {
         int numWords = Parser.getNumWords(line);
         String command = Parser.getCommand(line);
         if (command.equals("list")) {
@@ -70,6 +70,9 @@ public class Duke {
             throw new EmptyInputException();
         } else if (command.equals("bye")) {
             Ui.printResponse(OperationsMessages.BYE_MSG);
+        } else if (command.equals("find")) {
+            line = line.substring(command.length() + 1);
+            findItem(line);
         } else if (command.equals("todo")) {
             line = line.substring(command.length() + 1);
             createTodo(line);
@@ -140,4 +143,19 @@ public class Duke {
         }
         Ui.printResponse(response);
     }
+
+    private static void findItem(String nameLike) throws NotFoundException {
+        ArrayList<Todo> results = tasklist.findLike(nameLike);
+        String response = OperationsMessages.SHOW_FINDINGS + "\n";
+        if (results.size() == 0) {
+            throw new NotFoundException();
+        }
+        int i = 1;
+        for (Todo item: results) {
+            response += String.format("    %d.%s\n", i, item.toString());
+            i++;
+        }
+        Ui.printResponse(response);
+    }
+
 }

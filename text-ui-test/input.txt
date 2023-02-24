@@ -14,3 +14,6 @@ event /from /to
 event badevent /from wer /to
 deadline rejwkjr wnrmqe
 list
+find CS2113
+find weekly
+find Hosea: Answer

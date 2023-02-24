@@ -34,4 +34,14 @@ public class TaskList {
     public ArrayList<Todo> asList() {
         return itemList;
     }
+
+    public ArrayList<Todo> findLike(String nameLike) {
+        ArrayList<Todo> results = new ArrayList<Todo>(0);
+        for (Todo item: itemList) {
+            if (item.getDescription().contains(nameLike)) {
+                results.add(item);
+            }
+        }
+        return results;
+    }
 }

@@ -96,3 +96,25 @@ You need to include the correct fields for this command
     6.[E][ ] CS2113 lecture (from: Friday 4pm to: 6pm)
 
     ____________________________________________________________
+    ____________________________________________________________
+    Here are the matching tasks in your list:
+    1.[T][ ] Hosea: Answer CS2113 tutorial questions
+    2.[D][ ] weekly CS2113 quiz (by: Monday 9pm)
+    3.[E][ ] CS2113 lecture (from: Friday 4pm to: 6pm)
+    4.[T][ ] Hosea: Answer CS2113 tutorial questions
+    5.[D][ ] weekly CS2113 quiz (by: Monday 9pm)
+    6.[E][ ] CS2113 lecture (from: Friday 4pm to: 6pm)
+
+    ____________________________________________________________
+    ____________________________________________________________
+    Here are the matching tasks in your list:
+    1.[D][ ] weekly CS2113 quiz (by: Monday 9pm)
+    2.[D][ ] weekly CS2113 quiz (by: Monday 9pm)
+
+    ____________________________________________________________
+    ____________________________________________________________
+    Here are the matching tasks in your list:
+    1.[T][ ] Hosea: Answer CS2113 tutorial questions
+    2.[T][ ] Hosea: Answer CS2113 tutorial questions
+
+    ____________________________________________________________
