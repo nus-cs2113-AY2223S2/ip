@@ -17,10 +17,7 @@ public class Echo {
         String readInput = in.nextLine();
         String readInputAsArray[] = readInput.split(" ", 2);
         String command = readInputAsArray[0];
-        String task = " ";
-        if (readInputAsArray.length > 1) {
-            task = readInputAsArray[1];
-        }
+        String task = getTaskNameOrTaskNo(readInputAsArray);
 
         while (!(command.equals("Bye") || command.equals("bye"))) {
             if (command.equals("list")) {
@@ -87,6 +84,14 @@ public class Echo {
         }
 
         System.out.println("Bye. Hope to see you again!");
+    }
+
+    private static String getTaskNameOrTaskNo(String[] readInputAsArray) {
+        String task = " ";
+        if (readInputAsArray.length > 1) {
+            task = readInputAsArray[1];
+        }
+        return task;
     }
 
     private static void event_Input(ArrayList<Task> tasks, String task) throws DukeException, IOException {

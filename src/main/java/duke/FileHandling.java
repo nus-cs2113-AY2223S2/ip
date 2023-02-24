@@ -8,9 +8,10 @@ import java.util.Scanner; // Import the Scanner class to read text files
 public class FileHandling {
     public static void saveContents() {
         try {
-            File fileObj = new File("tasklist.txt");
+            File fileObj = new File("./tasklist.txt");
             if (fileObj.createNewFile()) {
                 System.out.println("File created: " + fileObj.getName());
+                System.out.println(fileObj.getAbsolutePath()); // checker
             } else {
                 System.out.println("File already exists.");
             }
@@ -19,7 +20,7 @@ public class FileHandling {
         }
 
         try {
-            FileWriter myWriter = new FileWriter("tasklist.txt");
+            FileWriter myWriter = new FileWriter("./tasklist.txt");
             for (Task task : Echo.tasks) {
                 if (task.getSymbol() == "T") {
                     myWriter.write(task.getSymbol() + "|" + task.getStatusIcon() + "|" + task.description + '\n');
@@ -42,7 +43,7 @@ public class FileHandling {
     public static void loadContents() {
         try {
             System.out.println("Loading contents...");
-            File myObj = new File("tasklist.txt");
+            File myObj = new File("./tasklist.txt");
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
