@@ -1,11 +1,14 @@
 package duke.task;
 
+import duke.ui.ExceptionsUi;
 import duke.ui.Ui;
 
 import java.util.ArrayList;
 
 public class TaskList {
     private ArrayList<Task> tasks;
+    private ExceptionsUi exceptionsUi = new ExceptionsUi();
+    private Ui ui = new Ui();
 
     public TaskList(){
         this.tasks = new ArrayList<>();
@@ -58,10 +61,10 @@ public class TaskList {
 
     // print result of add task
     public void printAddTaskResult(Task addedTask) {
-        System.out.print(Ui.BREAK_LINE
+        System.out.print(ui.BREAK_LINE
                 + "\tadded:\n\t\t" + addedTask + '\n'
                 + "\t(total: " + tasks.size() + " tasks)\n"
-                + Ui.BREAK_LINE);
+                + ui.BREAK_LINE);
     }
 
     // list all tasks
@@ -72,7 +75,7 @@ public class TaskList {
             System.out.print("\t" + order + ". " + task.toString() + '\n');
             order++;
         }
-        System.out.print(Ui.BREAK_LINE);
+        System.out.print(ui.BREAK_LINE);
     }
 
     // mark the task
@@ -81,14 +84,14 @@ public class TaskList {
         try {
             Task currentTask = tasks.get(taskIndex);
             currentTask.mark();
-            System.out.print(Ui.BREAK_LINE
+            System.out.print(ui.BREAK_LINE
                     + "\tNice! I've marked this task as done :D\n\t\t"
                     + currentTask + '\n'
-                    + Ui.BREAK_LINE);
+                    + ui.BREAK_LINE);
         } catch (IndexOutOfBoundsException e) {
-            System.out.print(Ui.BREAK_LINE
+            System.out.print(ui.BREAK_LINE
                     + "\t(!) Invalid task number. Please try again :(\n"
-                    + Ui.BREAK_LINE);
+                    + ui.BREAK_LINE);
         }
     }
 
@@ -98,14 +101,14 @@ public class TaskList {
         try {
             Task currentTask = tasks.get(taskIdx);
             currentTask.unmark();
-            System.out.print(Ui.BREAK_LINE
+            System.out.print(ui.BREAK_LINE
                     + "\tOh. I've unmarked this task as not done yet :(\n\t"
                     + currentTask + '\n'
-                    + Ui.BREAK_LINE);
+                    + ui.BREAK_LINE);
         } catch (IndexOutOfBoundsException e) {
             System.out.print(Ui.BREAK_LINE
                     + "\t(!) Invalid task number. Please try again :(\n"
-                    + Ui.BREAK_LINE);
+                    + ui.BREAK_LINE);
         }
     }
 
@@ -115,15 +118,33 @@ public class TaskList {
         try {
             Task currentTask = tasks.get(taskIdx);
             tasks.remove(taskIdx);
-            System.out.println(Ui.BREAK_LINE
+            System.out.println(ui.BREAK_LINE
                     + "\tOk! I've deleted the task :D\n\t\t"
                     + currentTask);
             System.out.print("\tThere are " + tasks.size() + " remaining tasks.\n"
-                    + Ui.BREAK_LINE);
+                    + ui.BREAK_LINE);
         } catch (IndexOutOfBoundsException e) {
-            System.out.print(Ui.BREAK_LINE
+            System.out.print(ui.BREAK_LINE
                     + "\t(!) Invalid task number. Please try again :(\n"
-                    + Ui.BREAK_LINE);
+                    + ui.BREAK_LINE);
         }
+    }
+
+    public void findTask(String keyword) {
+        int order = 1;
+        try {
+            System.out.println(ui.BREAK_LINE + "\tThese are what I found :)");
+            for (Task task : tasks) {
+                if (task.description.contains(keyword)) {
+                    System.out.print("\t" + order + ". " + task.toString() + '\n');
+                    order++;
+                }
+            }
+            System.out.print(ui.BREAK_LINE);
+        }
+        catch (NullPointerException e) {
+            exceptionsUi.printFindKeywordMissing();
+        }
+
     }
 }
