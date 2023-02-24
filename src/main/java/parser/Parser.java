@@ -13,6 +13,7 @@ public class Parser {
     protected final String DESCRIPTION = "description";
     protected final String DEADLINE = "deadline";
     protected final String BY = " /by ";
+    protected final String KEYWORD = "keyword";
     protected final Ui ui = new Ui();
 
     protected HashMap<String, String> handleTodo(String text) {
@@ -102,12 +103,24 @@ public class Parser {
         return dictionary;
     }
 
+
+    protected HashMap<String, String> handleFind(String keyword) {
+        HashMap<String, String> dictionary = new HashMap<String, String>();
+        keyword = keyword.trim();
+        dictionary.put(COMMAND, "find");
+        dictionary.put("keyword", keyword);
+        return dictionary;
+    }
+
     public HashMap<String, String> parse(String input) throws DukeException {
         input = input.trim();
         String[] words = input.split(" ", 2);
         String command = words[0];
 
+
         switch (command) {
+        case Command.FIND:
+            return handleFind(words[1]);
         case Command.LIST:
         case Command.BYE:
             return handleOthers(command);
@@ -122,7 +135,8 @@ public class Parser {
         case Command.EVENT:
             return handleEvent(words[1]);
         default:
-            throw new DukeException("Invalid command");
+            throw new DukeException("Cannot process command");
         }
+
     }
 }

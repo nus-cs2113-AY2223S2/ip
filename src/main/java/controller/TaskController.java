@@ -115,4 +115,18 @@ public class TaskController {
   public void deleteTask(int index) throws Exception {
     db.delete(index);
   }
+
+  public void findTask(String keyword) throws Exception {
+    int numberOfEntries = db.getSize();
+    int counter = 1;
+    ui.printMessage("Here are the matching tasks in your list:");
+    for (int i = 0; i < numberOfEntries; i += 1) {
+      Task model = db.read(i);
+      String taskName = model.getDescriptionText();
+      if (model.getTaskName().contains(keyword)) {
+        ui.printf("%d. %s\n", counter, taskName);
+        counter += 1;
+      }
+    }
+  }
 }

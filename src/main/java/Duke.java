@@ -60,6 +60,12 @@ public class Duke {
         String end = dictionary.get("end");
         controller.addEventTask(description, start, end);
         break;
+      case Command.FIND:
+        String keyword = dictionary.get("keyword");
+        controller.findTask(keyword);
+        break;
+      default:
+        throw new DukeException(ErrorMessage.INVALID_COMMAND.message);
       }
     } catch (DukeException e) {
       ui.printMessage(e.getDescription());
