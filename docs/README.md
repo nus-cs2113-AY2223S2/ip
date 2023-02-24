@@ -52,7 +52,3 @@ Ability to interact with the tasks:
 
 - Ability to list all current tasks
 - Sort and display tasks according to deadline
-
-
-theme: minima
-
