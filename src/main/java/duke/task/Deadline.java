@@ -1,5 +1,8 @@
 package duke.task;
 
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 public class Deadline extends Task {
     protected String deadline;
 
@@ -15,6 +18,12 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return "[D]" + super.getStatusIcon() + " " + super.description + "(by:" + deadline + ")";
+        try {
+            String formattedDeadline;
+            formattedDeadline = LocalDate.parse(deadline).format(DateTimeFormatter.ofPattern("dd MMM uuuu"));
+            return "[D]" + super.getStatusIcon() + " " + super.description + "(by: " + formattedDeadline + ")";
+        } catch (DateTimeException e) {
+            return "[D]" + super.getStatusIcon() + " " + super.description + "(by: " + deadline + ")";
+        }
     }
 }
