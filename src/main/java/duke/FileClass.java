@@ -7,13 +7,16 @@ import java.util.regex.Pattern;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import duke.keycommand.Deadline;
-import duke.keycommand.Event;
-import duke.keycommand.ToDo;
+import duke.keycommands.Deadline;
+import duke.keycommands.Event;
+import duke.keycommands.ToDo;
 public class FileClass {
     public File directory;
     public File file;
     public ArrayList<Task> tasks;
+    public static final String FILE_PATH = "data.txt";
+    public static final String WRITEFILE_EXCEPTION_MESSAGE = "OPPS!!! Something went wrong when you write to data file";
+
     public FileClass(String filePath, ArrayList<Task> tasks) {
         directory = new File("data");
         directory.mkdirs();
@@ -80,6 +83,13 @@ public class FileClass {
         fileWriter.close();
     }
 
+    public void appendTaskToDataFile(String inputToDataFile) {
+        try {
+            Common.dataFile.appendToFile(FILE_PATH, inputToDataFile);
+        } catch (IOException e) {
+            System.out.println(WRITEFILE_EXCEPTION_MESSAGE);
+        }
+    }
     public void deleteTask(String filePath, int lineNumber) throws IOException {
         Scanner s = new Scanner(file); // create a Scanner using the File as the source
         ArrayList<String> extractedTasks = new ArrayList<>();
