@@ -1,11 +1,7 @@
 package sage.utility;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 
-import sage.tasktypes.Deadline;
-import sage.tasktypes.Event;
-import sage.tasktypes.Todo;
 import sage.tasktypes.Task;
 
 /**
@@ -88,7 +84,7 @@ public class Display {
         Task taskObj = list.get(taskNumber - 1);
         System.out.println("Noted. I've removed this task:");
         System.out.println(taskObj);
-        System.out.println("Now you have " + String.valueOf(list.size() - 1) + " tasks in the list.");
+        System.out.println("Now you have " + (list.size() - 1) + " tasks in the list.");
     }
 
     public void printSearchTask(ArrayList<Task> results) {

@@ -34,7 +34,6 @@ public class Storage {
                     String line = scanner.nextLine();
                     char taskType = line.charAt(1);
                     String taskDescription = "";
-                    String taskTime = "";
                     boolean isCompleted = false;
                     char s = line.charAt(4);
 
@@ -48,7 +47,7 @@ public class Storage {
                         String taskPeriod = line.substring(line.indexOf('(') + 1, line.indexOf(')'));
                         taskDescription = line.substring(7, line.indexOf('(') - 1) + " ";
                         if (taskType == 'D') {
-                            String taskBy = taskPeriod.substring(taskPeriod.indexOf(":") + 2);
+                            String taskBy = taskPeriod.substring(taskPeriod.indexOf(':') + 2);
                             taskList.addTask(taskDescription, taskBy, isCompleted, true);
                         } else {
                             String taskFrom = taskPeriod.substring(taskPeriod.indexOf("from: ") + 6, taskPeriod.indexOf("to: ") - 1);
@@ -79,11 +78,11 @@ public class Storage {
             }
             FileWriter fw = new FileWriter(PROJECT_FILE_DIR);
             for (Task taskobj : list) {
-                fw.write(String.valueOf(taskobj) + " \r\n");
+                fw.write(taskobj + " \r\n");
             }
             fw.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Info: Error Updating Changes to Data File, Please refresh App!");
         }
     }
 }

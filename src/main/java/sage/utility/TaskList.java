@@ -1,6 +1,5 @@
 package sage.utility;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import sage.exceptions.IllegalOperationException;
@@ -11,7 +10,6 @@ import sage.tasktypes.Deadline;
 import sage.tasktypes.Event;
 import sage.tasktypes.Task;
 import sage.tasktypes.Todo;
-import sage.utility.Storage;
 
 /**
  * A class that stores the list of tasks in the application and access methods for all task operations
