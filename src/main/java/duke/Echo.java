@@ -1,12 +1,16 @@
 package duke;//import java.util.Scanner;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.*;
 
+import static java.util.stream.Collectors.toList;
+
 public class Echo {
 
     public static ArrayList<Task> tasks = new ArrayList<>();
+
     public static void Echo() {
 
         //loading up contents into program
@@ -15,9 +19,13 @@ public class Echo {
 
         Scanner in = new Scanner(System.in);
         String readInput = in.nextLine();
-        String readInputAsArray[] = readInput.split(" ", 2);
+        String[] readInputAsArray = readInput.split(" ", 2);
         String command = readInputAsArray[0];
-        String task = getTaskNameOrTaskNo(readInputAsArray);
+//        String task = getTaskNameOrTaskNo(readInputAsArray);
+        String task = " ";
+        if (readInputAsArray.length > 1) {
+            task = readInputAsArray[1];
+        }
 
         while (!(command.equals("Bye") || command.equals("bye"))) {
             if (command.equals("list")) {
@@ -41,7 +49,7 @@ public class Echo {
             } else if (command.equals("delete")) {
                 try {
                     delete(tasks, task);
-                } catch (DukeException e){
+                } catch (DukeException e) {
                     System.out.println("☹ OOPS!!! Which task do you want to delete?");
                 } catch (IOException i) {
                     System.out.println("An error occurred with txt file");
@@ -70,6 +78,14 @@ public class Echo {
                 } catch (IOException i) {
                     System.out.println("An error occurred with txt file");
                 }
+            } else if (command.equals("find")) {
+                try {
+                    ArrayList<Task> tasksFound = find_Input(tasks, task);
+                    list_Input(tasksFound);
+                } catch (DukeException e) {
+                    System.out.println("☹ OOPS!!!  What are you trying to find?");
+                }
+
             } else {
                 System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
             }
@@ -86,12 +102,14 @@ public class Echo {
         System.out.println("Bye. Hope to see you again!");
     }
 
-    private static String getTaskNameOrTaskNo(String[] readInputAsArray) {
-        String task = " ";
-        if (readInputAsArray.length > 1) {
-            task = readInputAsArray[1];
+    private static ArrayList<Task> find_Input(ArrayList<Task> tasks, String task) throws DukeException {
+        if (task == " ") {
+            throw new DukeException();
         }
-        return task;
+        return (ArrayList<Task>) tasks.stream()
+                .filter(t -> t.description.contains(task))
+                .collect(toList());
+
     }
 
     private static void event_Input(ArrayList<Task> tasks, String task) throws DukeException, IOException {
@@ -144,7 +162,7 @@ public class Echo {
         FileHandling.saveContents();
     }
 
-    private static void unmark_Input(ArrayList<Task> tasks, String task) throws DukeException, IOException{
+    private static void unmark_Input(ArrayList<Task> tasks, String task) throws DukeException, IOException {
         if (task == " ") {
             throw new DukeException();
         }
@@ -163,7 +181,7 @@ public class Echo {
         System.out.println("Noted. I've removed this task: ");
         System.out.println(tasks.get(taskNoInt - 1).toString());
         tasks.remove(taskNoInt - 1);
-        System.out.println("Now you have " + tasks.size() +" tasks in the list.");
+        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
         FileHandling.saveContents();
     }
 
