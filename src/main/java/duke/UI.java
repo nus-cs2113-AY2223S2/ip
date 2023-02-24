@@ -15,6 +15,15 @@ public class UI {
         //loading up contents into program
         FileHandling.loadContents();
 
+        String logo = " ____        _        \n"
+                + "|  _ \\ _   _| | _____ \n"
+                + "| | | | | | | |/ / _ \\\n"
+                + "| |_| | |_| |   <  __/\n"
+                + "|____/ \\__,_|_|\\_\\___|\n";
+        System.out.println("Hello from\n" + logo + '\n');
+
+        System.out.println("Hello I'm Duke!\nWhat can I do for you?\n");
+
 
         Scanner in = new Scanner(System.in);
         String readInput = in.nextLine();
@@ -23,10 +32,10 @@ public class UI {
 
         while (!(command.equals("Bye") || command.equals("bye"))) {
             if (command.equals("list")) {
-                list_Input(tasks);
+                TaskList.list_Input(tasks);
             } else if (command.equals("unmark")) {
                 try {
-                    unmark_Input(tasks, TaskDescOrTaskNo);
+                    TaskList.unmark_Input(tasks, TaskDescOrTaskNo);
                 } catch (DukeException e) {
                     System.out.println("☹ OOPS!!! Which task do you want to unmark?");
                 } catch (IOException i) {
@@ -34,7 +43,7 @@ public class UI {
                 }
             } else if (command.equals("mark")) {
                 try {
-                    mark_Input(tasks, TaskDescOrTaskNo);
+                    TaskList.mark_Input(tasks, TaskDescOrTaskNo);
                 } catch (DukeException e) {
                     System.out.println("☹ OOPS!!! Which task do you want to mark?");
                 } catch (IOException i) {
@@ -42,7 +51,7 @@ public class UI {
                 }
             } else if (command.equals("delete")) {
                 try {
-                    delete(tasks, TaskDescOrTaskNo);
+                    TaskList.delete(tasks, TaskDescOrTaskNo);
                 } catch (DukeException e) {
                     System.out.println("☹ OOPS!!! Which task do you want to delete?");
                 } catch (IOException i) {
@@ -50,7 +59,7 @@ public class UI {
                 }
             } else if (command.equals("todo")) {
                 try {
-                    todo_Input(tasks, TaskDescOrTaskNo);
+                    TaskList.todo_Input(tasks, TaskDescOrTaskNo);
                 } catch (DukeException e) {
                     System.out.println("☹ OOPS!!! The description of a todo cannot be empty.");
                 } catch (IOException i) {
@@ -58,7 +67,7 @@ public class UI {
                 }
             } else if (command.equals("deadline")) {
                 try {
-                    deadline_Input(tasks, TaskDescOrTaskNo);
+                    TaskList.deadline_Input(tasks, TaskDescOrTaskNo);
                 } catch (DukeException e) {
                     System.out.println("☹ OOPS!!! The description of a deadline cannot be empty.");
                 } catch (IOException i) {
@@ -66,7 +75,7 @@ public class UI {
                 }
             } else if (command.equals("event")) {
                 try {
-                    event_Input(tasks, TaskDescOrTaskNo);
+                    TaskList.event_Input(tasks, TaskDescOrTaskNo);
                 } catch (DukeException e) {
                     System.out.println("☹ OOPS!!! The description of an event cannot be empty.");
                 } catch (IOException i) {
@@ -74,12 +83,11 @@ public class UI {
                 }
             } else if (command.equals("find")) {
                 try {
-                    ArrayList<Task> tasksFound = find_Input(tasks, TaskDescOrTaskNo);
-                    list_Input(tasksFound);
+                    ArrayList<Task> tasksFound = TaskList.find_Input(tasks, TaskDescOrTaskNo);
+                    TaskList.list_Input(tasksFound);
                 } catch (DukeException e) {
                     System.out.println("☹ OOPS!!!  What are you trying to find?");
                 }
-
             } else {
                 System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
             }
@@ -91,96 +99,5 @@ public class UI {
 
         System.out.println("Bye. Hope to see you again!");
     }
-
-    private static ArrayList<Task> find_Input(ArrayList<Task> tasks, String task) throws DukeException {
-        if (task == " ") {
-            throw new DukeException();
-        }
-        return (ArrayList<Task>) tasks.stream()
-                .filter(t -> t.description.contains(task))
-                .collect(toList());
-
-    }
-
-    private static void event_Input(ArrayList<Task> tasks, String task) throws DukeException, IOException {
-        if (task == " ") {
-            throw new DukeException();
-        }
-        System.out.println("Got it. I've added this task:");
-        String taskAsArray[] = task.split("/");
-        Event obj = new Event(taskAsArray[0], taskAsArray[1], taskAsArray[2]);
-        tasks.add(obj); //.toString is automatically called;
-        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
-        FileHandling.saveContents();
-    }
-
-    private static void deadline_Input(ArrayList<Task> tasks, String task) throws DukeException, IOException {
-        if (task == " ") {
-            throw new DukeException();
-        }
-        System.out.println("Got it. I've added this task:");
-        String taskAsArray[] = task.split("/");
-        Deadline obj = new Deadline(taskAsArray[0], taskAsArray[1]);
-        tasks.add(obj);
-        System.out.println(obj); //.toString is automatically called;
-        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
-        FileHandling.saveContents();
-
-    }
-
-    private static void todo_Input(ArrayList<Task> tasks, String task) throws DukeException, IOException {
-        if (task == " ") {
-            throw new DukeException();
-        }
-        System.out.println("Got it. I've added this task:");
-        Todo obj = new Todo(task);
-        tasks.add(obj);
-        System.out.println(obj); //.toString is automatically called;
-        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
-        FileHandling.saveContents();
-
-    }
-
-    private static void mark_Input(ArrayList<Task> tasks, String task) throws DukeException, IOException {
-        if (task == " ") {
-            throw new DukeException();
-        }
-        int taskNoInt = Integer.parseInt(task);
-        tasks.get(taskNoInt - 1).markAsDone();
-        System.out.println("Nice! I've marked this task as done:");
-        System.out.println(tasks.get(taskNoInt - 1).toString());
-        FileHandling.saveContents();
-    }
-
-    private static void unmark_Input(ArrayList<Task> tasks, String task) throws DukeException, IOException {
-        if (task == " ") {
-            throw new DukeException();
-        }
-        int taskNoInt = Integer.parseInt(task);
-        tasks.get(taskNoInt - 1).markAsUndone();
-        System.out.println("OK, I've marked this task as not done yet:");
-        System.out.println(tasks.get(taskNoInt - 1).toString());
-        FileHandling.saveContents();
-    }
-
-    private static void delete(ArrayList<Task> tasks, String task) throws DukeException, IOException {
-        if (task == " ") {
-            throw new DukeException();
-        }
-        int taskNoInt = Integer.parseInt(task);
-        System.out.println("Noted. I've removed this task: ");
-        System.out.println(tasks.get(taskNoInt - 1).toString());
-        tasks.remove(taskNoInt - 1);
-        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
-        FileHandling.saveContents();
-    }
-
-    private static void list_Input(ArrayList<Task> tasks) {
-        System.out.println("Here are the tasks in your list:");
-        int index = 1;
-        for (Task task : tasks) {
-            System.out.println(index + "." + task.toString());
-            ++index;
-        }
-    }
 }
+
