@@ -1,7 +1,5 @@
 package duke.task;
 
-import jdk.jfr.Percentage;
-
 public class Task {
     private final static String MARKED_ICON = "[/]";
     private final static String UNMARKED_ICON = "[ ]";
