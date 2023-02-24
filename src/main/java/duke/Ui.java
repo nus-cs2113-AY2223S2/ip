@@ -138,6 +138,7 @@ public class Ui {
         System.out.println("\t - mark <task_number>: I'll mark that task as done.");
         System.out.println("\t - unmark <task_number>: I'll mark that task as undone.");
         System.out.println("\t - delete <task_number>: I'll delete that task from your list.");
+        System.out.println("\t - find <keyword>: I'll find the tasks in your list that contain the keyword.");
         System.out.println("\t - bye: I will shut down my program.");
         System.out.println("\t - Anything else will be recorded as a task. \n");
         System.out.println("\t Format for tasks:");
