@@ -54,10 +54,11 @@ public class Ui {
                 " Enter \"delete [idx]\" to remove task from list\n" +
                 " Enter \"find [keyword]\" to see all tasks containing [keyword]\n" +
                 " Enter \"date [yyyy-MM-dd]\" to see all tasks occurring on that date\n" +
-                " Enter \"bye\" to exit the program\n" +
-                "\n For Duke to understand [date], you can enter it in the form of\n" +
+                " Enter \"bye\" to exit the program\n\n" +
+                " ***NOTE***\n" +
+                " The \"date\" command only considers tasks when [date] is input in the format:\n" +
                 "     \"yyyy-MM-ddThh:mm\"\n" +
-                " eg. \"2023-10-30T23:59\" for Oct 20 2023, 11:59PM");
+                " eg. \"2023-10-30T23:59\" represents Oct 20 2023, 11:59PM");
     }
 
     /**
@@ -205,6 +206,10 @@ public class Ui {
 
     public static void printEmptyDescription() {
         System.out.println("Oops! The description cannot be empty.");
+    }
+
+    public static void printDateOrderException() {
+        System.out.println("Oops, the start date for your event occurs after the end date!");
     }
 
 }

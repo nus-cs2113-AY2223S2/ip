@@ -1,7 +1,6 @@
-Adapted from [AB3 User Guide](https://se-education.org/addressbook-level3/UserGuide.html).
-
 # User Guide
-Welcome to Duke, an organiser to help you keep track of your tasks!
+Welcome to Duke, an organiser to help you keep track of your tasks!  
+<small><i> Adapted from [AB3 User Guide](https://se-education.org/addressbook-level3/UserGuide.html). </i></small>
 
 ## Table of contents
 - [User Guide](#user-guide)
@@ -43,7 +42,8 @@ Hello from
 e.g. typing `help` and pressing Enter will show a list of all available commands.
 7. Refer to [Features](#features) below for details of each command.  
 
-## Command summary
+## Command summary  
+
 |  Action  | Format                           |
 |:--------:|----------------------------------|
 |   Help   | `help`                           |
@@ -58,13 +58,13 @@ e.g. typing `help` and pressing Enter will show a list of all available commands
 |   Date   | `date DATE`                      |
 |   Bye    | `bye`                            |
 
-## Features
+## Features  
 > Notes:
 > - Words in `UPPER_CASE` are parameters to be supplied by the user.  
 >   e.g. in 'todo TASK', `TASK` is a parameter that can be used as `todo read book`. 
-> - Extraneous parameters for commands that do not take in parameters will be ignored.
+> - Extraneous parameters for commands that do not take in parameters will be ignored.  
 >   e.g. `help 123` will be interpreted as `help`. 
-> - `date` only considers Deadlines and Events with `DATE`s input as `year-month-dayThour:minute`.
+> - The `date` command only considers tasks when `DATE` is input in the format `yyyy-MM-ddThh:mm`.  
 >   e.g. `deadline read book /by 2023-10-30T23:59` sets a deadline for Oct 20 2023, 11:59PM
 > - By default, all newly added tasks are not completed. 
 
@@ -83,7 +83,6 @@ Adds a normal task to Duke.
 
 Format: `todo TASK`  
 
-Example:
 ```
 >> todo eat lunch
 
@@ -97,7 +96,6 @@ Adds a task with a due date to Duke.
 Format: `deadline TASK /by DATE`
 - Enter `DATE` in `yyyy-MM-ddThh:mm` format to use `date` on this task.
 
-Example:
 ```
 >> deadline submit tutorial /by 2023-03-03T23:59
 
@@ -111,7 +109,6 @@ Adds a task with a start and end date to Duke.
 Format: `event TASK /from DATE /to DATE`
 - Enter `DATE` in `yyyy-MM-ddThh:mm` format to use `date` on this task.
 
-Example:
 ```
 >> event holiday /from 2023-02-25T00:00 /to 2023-03-04T23:59
 
@@ -125,7 +122,6 @@ Marks the specified task as completed.
 Format: `mark IDX`
 - `IDX` can be obtained by using `list` to find the task's index.  
 
-Example:
 ```
 >> mark 4
 
@@ -139,7 +135,6 @@ Marks the specified task as yet to be completed.
 Format: `unmark IDX`
 - `IDX` can be obtained by using `list` to find the task's index.
 
-Example:
 ```
 >> unmark 4
 
@@ -153,7 +148,6 @@ Deletes the specified task from Duke.
 Format: `delete IDX`
 - `IDX` can be obtained by using `list` to find the task's index.
 
-Example:
 ```
 >> delete 4
 
@@ -167,7 +161,6 @@ Shows all tasks in Duke that contain the specified keyword.
 
 Format: `find KEYWORD`
 
-Example:
 ```
 >> find book
 
@@ -182,7 +175,6 @@ Shows all tasks in Duke that occur on the specified date.
 Format: `date DATE`
 - `DATE` should be entered in the format `yyyy-MM-dd`.
 
-Example:
 ```
 >> date 2023-03-03
 
@@ -198,8 +190,9 @@ Format: `exit`
 
 ### Loading and saving of data
 Duke automatically loads up your data on start-up.  
-After any command that changes the data, Duke will save the changes into your hard disk automatically.  
-No worries about saving manually!  
+  
+After any command that changes the data, Duke will save the changes into your hard disk automatically. 
+No need to save manually!  
 
 The default path for the save file is defined in `Duke.java` should you wish to change it.  
 
