@@ -1,5 +1,3 @@
-# Modifying tasklist
-
 ## Usage
 
 ### `delete [index]` - deletes a task at index
@@ -104,4 +102,3 @@ as not done.
 ```
 
 Go [back](README.md)
-

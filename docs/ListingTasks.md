@@ -1,8 +1,3 @@
-# Displaying Tasks
-
-- Ability to list all current tasks
-- Sort and display tasks according to deadline
-
 ## Usage
 
 ### `list`, `ls` - lists all current tasks
