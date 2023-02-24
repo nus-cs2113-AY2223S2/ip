@@ -46,6 +46,9 @@ public class Parser extends TaskList {
         case "list":
             dukeUserInterface.printList(list, listSize, command);
             break;
+        case "find":
+            dukeUserInterface.printListOfTasksFound(list, listSize, command);
+            break;
         case "mark":
             TaskList.markAsDone(list, listSize, command);
             break;
@@ -86,6 +89,9 @@ public class Parser extends TaskList {
         switch (command[0]) {
         case "list":
             dukeUserInterface.printListCommandError();
+            break;
+        case "find":
+            dukeUserInterface.printFindCommandError();
             break;
         case "todo":
             dukeUserInterface.printTodoAdditionError();

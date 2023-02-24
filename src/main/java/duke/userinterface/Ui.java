@@ -34,6 +34,16 @@ public class Ui {
     }
 
     /**
+     * Prints a string to inform the user about the lack of tasks in the list containing the
+     * specific keyword.
+     */
+    public void printFindCommandError() {
+        printLineSeparator();
+        System.out.println("OOPS!!! No task containing the keywords has been found. Please try another keyword!");
+        printLineSeparator();
+    }
+
+    /**
      * Prints a string to inform the user to retype a valid task number.
      */
     public void printInvalidInputError() {
@@ -120,7 +130,7 @@ public class Ui {
      * incrementing the "listSize" variable used to track the total tasks in the list by one.
      *
      * @param list     The ArrayList containing all information about existing tasks and their completion status.
-     * @param listSize The current number of tasks populating the "list" array.
+     * @param listSize The current number of tasks populating the "list" ArrayList.
      * @return Returns the new total number of tasks found in the list.
      */
     public int printNewlyAddedTask(ArrayList<Task> list, int listSize) {
@@ -137,10 +147,10 @@ public class Ui {
      * Removes one task from the list of tasks based on the index number of the task inputted by the user, and
      * informs the user of the removal of the selected task from the list.
      *
-     * @param list The ArrayList containing all information about existing tasks and their completion status.
-     * @param listSize The current number of tasks populating the "list" array.
-     * @param command The string array containing all individual strings separated by a space (" ") character in
-     *                the user inputted string.
+     * @param list     The ArrayList containing all information about existing tasks and their completion status.
+     * @param listSize The current number of tasks populating the "list" ArrayList.
+     * @param command  The string array containing all individual strings separated by a space (" ") character in
+     *                 the user inputted string.
      * @return Returns the size of the "list" ArrayList after the removal of one task from the list.
      * @throws DukeException The custom defined exception relating to all errors specific to the Duke program.
      */
@@ -171,7 +181,7 @@ public class Ui {
      * in entry order, starting from the task that was entered into the list first.
      *
      * @param list     The ArrayList containing all information about existing tasks and their completion status.
-     * @param listSize The current number of tasks populating the "list" array.
+     * @param listSize The current number of tasks populating the "list" ArrayList.
      * @param command  The string array containing all individual strings separated by a space (" ") character in
      *                 the user inputted string.
      * @throws DukeException The custom defined exception relating to all errors specific to the Duke program.
@@ -185,6 +195,53 @@ public class Ui {
             printLineSeparator();
         } else {
             throw new DukeException();
+        }
+    }
+
+    /**
+     * Checks the tasks found in the "list" ArrayList to find specific tasks containing the user inputted
+     * keyword and prints the tasks for the user's reference.
+     *
+     * @param list     The ArrayList containing all information about existing tasks and their completion status.
+     * @param listSize The current number of tasks populating the "list" ArrayList.
+     * @param command  The string array containing all individual strings separated by a space (" ") character in
+     *                 the user inputted string.
+     * @throws DukeException The custom defined exception relating to all errors specific to the Duke program.
+     */
+    public void printListOfTasksFound(ArrayList<Task> list, int listSize, String[] command) throws DukeException {
+        if (command.length >= 2) {
+            printLineSeparator();
+            String keyWord = command[1];
+            for (int i = 2; i < command.length; i += 1) {
+                keyWord = String.join(" ", keyWord, command[i]);
+            }
+            System.out.println("Here are the matching tasks in your list:");
+            printTaskFound(list, listSize, keyWord);
+            printLineSeparator();
+        } else {
+            throw new DukeException();
+        }
+    }
+
+    /**
+     * Used by printListOfTasksFound() method to print the relevant tasks found in the list that contains
+     * the user inputted keywords.
+     *
+     * @param list     The ArrayList containing all information about existing tasks and their completion status.
+     * @param listSize The current number of tasks populating the "list" ArrayList.
+     * @param keyWord  A string that represents the keyword to be found i the task description.
+     */
+    private static void printTaskFound(ArrayList<Task> list, int listSize, String keyWord) {
+        int tasksFoundCounter = 0;
+        for (int index = 0; index < listSize; index += 1) {
+            if (list.get(index).getDescription().contains(keyWord)) {
+                tasksFoundCounter += 1;
+                System.out.println("(List Index:" + (index + 1) + ") " + tasksFoundCounter
+                        + ". " + list.get(index).toString());
+            }
+        }
+        if (tasksFoundCounter == 0) {
+            System.out.println("No tasks with the keyword: '" + keyWord + "' has been found.");
         }
     }
 
