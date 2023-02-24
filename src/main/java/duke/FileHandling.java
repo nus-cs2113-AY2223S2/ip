@@ -21,7 +21,7 @@ public class FileHandling {
 
         try {
             FileWriter myWriter = new FileWriter("./tasklist.txt");
-            for (Task task : Echo.tasks) {
+            for (Task task : UI.tasks) {
                 if (task.getSymbol() == "T") {
                     myWriter.write(task.getSymbol() + "|" + task.getStatusIcon() + "|" + task.description + '\n');
                 } else if (task.getSymbol() == "D") {
@@ -55,7 +55,7 @@ public class FileHandling {
                     } else {
                         obj.markAsUndone();
                     }
-                    Echo.tasks.add(obj);
+                    UI.tasks.add(obj);
                 } else if (array[1].equals("X")) {
                     Deadline obj = new Deadline(array[2], array[3]);
                     if (array[1] == "X") {
@@ -63,7 +63,7 @@ public class FileHandling {
                     } else {
                         obj.markAsUndone();
                     }
-                    Echo.tasks.add(obj);
+                    UI.tasks.add(obj);
                 } else if (array[1].equals("X")) {
                     Event obj = new Event(array[2], array[3], array[4]);
                     if (array[1] == "X") {
@@ -71,7 +71,7 @@ public class FileHandling {
                     } else {
                         obj.markAsUndone();
                     }
-                    Echo.tasks.add(obj);
+                    UI.tasks.add(obj);
                 }
             }
             myReader.close();
