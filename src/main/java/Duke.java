@@ -18,55 +18,28 @@ public class Duke {
 //        ui = new Ui();
 //    }
 
-    //This can go in the UI Class
-//    public static void ui.printLine() {
-//        System.out.println("\t---------------------------------------------------------------------------------");
-//    }
-
-    //This can go in the UI Class
-
-
-    //This goes in the parser class
-    public static boolean isTheSame(String userInput, String toCompare) {
-        return userInput.split(" ")[0].equals(toCompare);
-    }
-    
-
-    //This goes in the parser class
-    public static boolean isInRange(String userInput, ArrayList<Task> taskList) {
-        boolean isReturn = false;
-        try {
-            isReturn = Integer.parseInt(userInput.split(" ")[1])>0 && Integer.parseInt(userInput.split(" ")[1])<taskList.size()+1;
-        } catch (NumberFormatException e) {
-            System.out.println("\tWhoops, need to ensure that your inputs are numbers! BUT a");
-        }
-        return (isReturn);
-    }
-
-    //This goes in the UI Class
 
 
     //This goes in the TaskList Class
-    public static void deleteTask(String userInput, ArrayList<Task> taskList) throws IndexOutOfBoundsException, NumberFormatException{
+    public static void deleteTask(String userInput, TaskList taskList, FileHandler fileObject) throws IndexOutOfBoundsException, NumberFormatException, IOException{
         Task item = new Task();
         try {
-             item = taskList.get(Integer.parseInt(userInput.split(" ")[1]) - 1);
+             item = taskList.getTask(Integer.parseInt(userInput.split(" ")[1]) - 1);
+             taskList.removeTask(Integer.parseInt(userInput.split(" ")[1]) - 1);
+             fileObject.populateFile(taskList);
         } catch (IndexOutOfBoundsException e) {
             throw new IndexOutOfBoundsException();
         } catch (NumberFormatException e) {
             throw new NumberFormatException();
+        } catch (IOException e) {
+            throw new IOException();
         }
+        //TODO: Throw the exception, this way the flow of control is properly handled --done
         ui.printLine();
         System.out.println("\tNoted! I've removed this task!");
-        System.out.println("\t\t" + taskList.get(Integer.parseInt(userInput.split(" ")[1]) - 1).getStatusAndDescription());
-        taskList.remove(Integer.parseInt(userInput.split(" ")[1]) - 1);
-        ui.printNoTasks(taskList.size());
+        System.out.println("\t\t" + item.getStatusAndDescription());
+        ui.printNoTasks(taskList.getSize());
         ui.printLine();
-        try {
-            fileObject.populateFile(taskList);
-        } catch (IOException e) {
-            System.out.println("Unable to delete");
-        }
 
     }
 
@@ -103,11 +76,10 @@ public class Duke {
     //This goes into the UI Class
 
 
-    //TODO: Update the parameters to new TaskList Object
-    public static void deadlineExceptionHandler(String userInput, ArrayList<Task> taskList) {
+    public static void deadlineExceptionHandler(String userInput, TaskList taskList) {
         try {
             ui.printDeadline(userInput, taskList);
-            fileObject.addToFile(taskList.get(taskList.size()-1).enCode() + System.lineSeparator());
+            fileObject.addToFile(taskList.getTask(taskList.getSize()-1).enCode() + System.lineSeparator());
         } catch (EmptyDeadline e) {
             ui.printLine();
             System.out.println("\tPlease ensure that the deadline isn't empty!");
@@ -125,11 +97,10 @@ public class Duke {
         }
     }
 
-    //TODO: Update the parameters to new TaskList Object
-    public static void eventExceptionHandler(String userInput, ArrayList<Task> taskList) {
+    public static void eventExceptionHandler(String userInput, TaskList taskList) {
         try {
             ui.printEvent(userInput, taskList);
-            fileObject.addToFile(taskList.get(taskList.size()-1).enCode() + System.lineSeparator());
+            fileObject.addToFile(taskList.getTask(taskList.getSize()-1).enCode() + System.lineSeparator());
         } catch (EmptyEvent e) {
             ui.printLine();
             System.out.println("\tPlease ensure that the event isn't empty!");
@@ -159,27 +130,23 @@ public class Duke {
         }
     }
 
-    //TODO: Update the parameters to new TaskList Object
-    public static void todoExceptionHandler(String userInput, ArrayList<Task> arrayList) {
+    public static void todoExceptionHandler(String userInput, TaskList taskList) {
         try {
             ui.printTodo(userInput, taskList);
-        }
-        catch (EmptyTodo e) {
+            fileObject.addToFile(taskList.getTask(taskList.getSize()-1).enCode() + System.lineSeparator());
+        }  catch (EmptyTodo e) {
             ui.printLine();
             System.out.println("\tPlease ensure that the todo has a description!");
             ui.printLine();
-        }
-        try {
-            fileObject.addToFile(taskList.get(taskList.size()-1).enCode() + System.lineSeparator());
         } catch (IOException e) {
             System.out.println("unable to write");
         }
     }
 
     //TODO: Update the parameters to new TaskList Object
-    public static void deleteExceptionHandler(String userInput, ArrayList<Task> arrayList) {
+    public static void deleteExceptionHandler(String userInput, TaskList taskList) {
         try {
-            deleteTask(userInput, arrayList);
+            deleteTask(userInput, taskList, fileObject);
         } catch (IndexOutOfBoundsException e) {
             ui.printLine();
             System.out.println("\tEnter a valid index to delete");
@@ -188,20 +155,25 @@ public class Duke {
             ui.printLine();
             System.out.println("\tEnter a valid number to delete");
             ui.printLine();
+        } catch (IOException e) {
+            ui.printLine();
+            System.out.println("\tUnable to delete from the file");
+            ui.printLine();
         }
     }
 
 
 
 
-//    final static int MAXTASKS = 100;
-//    public static Task[] taskList = new Task[MAXTASKS];
-    public static  ArrayList<Task> taskList = new ArrayList<Task>();
+
+    //public static  ArrayList<Task> taskList = new ArrayList<Task>();
     public static Scanner in = new Scanner(System.in);
     //public static String userInput;
     //public static exceptions.DukeException exceptionHandler;
     public static FileHandler fileObject = new FileHandler(System.getProperty("user.dir") + "/dukeData.txt");
     public static Ui ui = new Ui();
+    public static TaskList taskList = new TaskList(fileObject);
+    public static Parser parser = new Parser();
 
     public static Boolean isExit = false;
 
@@ -209,7 +181,7 @@ public class Duke {
     public static void main(String[] args) {
         try {
             fileObject.createFile();
-            taskList = fileObject.readFile();
+            //taskList = fileObject.readFile();
         } catch (IOException e) {
             System.out.println("Unable to write to file");
         }
@@ -222,43 +194,24 @@ public class Duke {
             if(ui.getUserInput().equals("bye")) { // exit command
                 isExit=true;
             } else if(ui.getUserInput().equals("list")) { //displays the list if needed
-                ui.printLine();
-                System.out.println("\tHere are the tasks in your list:");
                 ui.listTasks(taskList);
-                ui.printLine();
-            } else if (isTheSame(ui.getUserInput(), "mark")) { //mark the task in
-                if(isInRange(ui.getUserInput(), taskList)==false) {
-                    ui.printLine();
-                    System.out.println("\tNice try, enter a valid index to mark:");
-                    ui.printLine();
-                } else {
-                    ui.printMarkedTask(ui.getUserInput(), taskList, fileObject);
-                }
-                //printMarkedTask(ui.getUserInput(), taskList);
-            } else if (isTheSame(ui.getUserInput(), "unmark")) {//unmark the task
-                if(isInRange(ui.getUserInput(), taskList)==false) {
-                    ui.printLine();
-                    System.out.println("\tNice try, enter a valid index to unmark:");
-                    ui.printLine();
-                } else {
-                    ui.printUnmarkedTask(ui.getUserInput(), taskList, fileObject);
-                }
-            } else if(isTheSame(ui.getUserInput(), "todo")) {
+            } else if (parser.isTheSame(ui.getUserInput(), "mark")) { //mark the task in
+                ui.markQualityChecker(taskList, fileObject);
+            } else if (parser.isTheSame(ui.getUserInput(), "unmark")) {//unmark the task
+                ui.unMarkQualityChecker(taskList, fileObject);
+            } else if(parser.isTheSame(ui.getUserInput(), "todo")) {
                 todoExceptionHandler(ui.getUserInput(), taskList);
-                //leave this for the final refactoring
-            } else if(isTheSame(ui.getUserInput(), "deadline")) {
+            } else if(parser.isTheSame(ui.getUserInput(), "deadline")) {
                 deadlineExceptionHandler(ui.getUserInput(), taskList);
-            } else if(isTheSame(ui.getUserInput(), "event")) {
+            } else if(parser.isTheSame(ui.getUserInput(), "event")) {
                 eventExceptionHandler(ui.getUserInput(), taskList);
-            } else if(isTheSame(ui.getUserInput(), "delete")) {
+            } else if(parser.isTheSame(ui.getUserInput(), "delete")) {
                 deleteExceptionHandler(ui.getUserInput(), taskList);
-            }  else if (isTheSame(ui.getUserInput(),"help")) {
+            }  else if (parser.isTheSame(ui.getUserInput(),"help")) {
                 ui.displayHelper();
             } else { // tells the user that we have added the task in
                 //printTask(ui.getUserInput()); // could remove this and ensure that only specific tasks can be entered!
-                ui.printLine();
-                System.out.println("\tPlease enter a valid input");
-                ui.printLine();
+                ui.validCommand();
             }
             //ui.readCommand(); moved to the top
         }

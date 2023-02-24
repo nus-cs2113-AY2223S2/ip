@@ -40,11 +40,9 @@ public class FileHandler {
         fw.close();
     }
 
-    public void populateFile(ArrayList<Task> arrayList) throws IOException {
+    public void populateFile(TaskList taskList) throws IOException {
         clearFile();
-        for(Task ele: arrayList) {
-            addToFile(ele.enCode() + System.lineSeparator());
-        }
+        taskList.addTaskListFile(this);
     }
 
     public ArrayList<Task> readFile() throws IOException{
