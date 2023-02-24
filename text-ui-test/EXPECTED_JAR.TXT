@@ -12,29 +12,30 @@ Hello from
     ____________________________________________________________
     Got it. I've added this task:
       [T][ ] Hosea: Answer CS2113 tutorial questions
-    Now you have 1 tasks in your list.
+    Now you have 4 tasks in your list.
     ____________________________________________________________
     ____________________________________________________________
     Got it. I've added this task:
       [D][ ] weekly CS2113 quiz (by: Monday 9pm)
-    Now you have 2 tasks in your list.
-    ____________________________________________________________
-    ____________________________________________________________
-    Here are the tasks in your list:
-    1.[T][ ] Hosea: Answer CS2113 tutorial questions
-    2.[D][ ] weekly CS2113 quiz (by: Monday 9pm)
-
-    ____________________________________________________________
-    ____________________________________________________________
-    Got it. I've added this task:
-      [E][ ] CS2113 lecture (from: Friday 4pm to: 6pm)
-    Now you have 3 tasks in your list.
+    Now you have 5 tasks in your list.
     ____________________________________________________________
     ____________________________________________________________
     Here are the tasks in your list:
     1.[T][ ] Hosea: Answer CS2113 tutorial questions
     2.[D][ ] weekly CS2113 quiz (by: Monday 9pm)
     3.[E][ ] CS2113 lecture (from: Friday 4pm to: 6pm)
+    4.[T][ ] Hosea: Answer CS2113 tutorial questions
+    5.[D][ ] weekly CS2113 quiz (by: Monday 9pm)
+
+    ____________________________________________________________
+    ____________________________________________________________
+    Here are the tasks in your list:
+    1.[T][ ] Hosea: Answer CS2113 tutorial questions
+    2.[D][ ] weekly CS2113 quiz (by: Monday 9pm)
+    3.[E][ ] CS2113 lecture (from: Friday 4pm to: 6pm)
+    4.[T][ ] Hosea: Answer CS2113 tutorial questions
+    5.[D][ ] weekly CS2113 quiz (by: Monday 9pm)
+    6.[E][ ] CS2113 lecture (from: Friday 4pm to: 6pm)
 
     ____________________________________________________________
     ____________________________________________________________
@@ -53,6 +54,9 @@ Hello from
     1.[T][X] Hosea: Answer CS2113 tutorial questions
     2.[D][X] weekly CS2113 quiz (by: Monday 9pm)
     3.[E][ ] CS2113 lecture (from: Friday 4pm to: 6pm)
+    4.[T][ ] Hosea: Answer CS2113 tutorial questions
+    5.[D][ ] weekly CS2113 quiz (by: Monday 9pm)
+    6.[E][ ] CS2113 lecture (from: Friday 4pm to: 6pm)
 
     ____________________________________________________________
     ____________________________________________________________
@@ -68,6 +72,9 @@ Hello from
     1.[T][ ] Hosea: Answer CS2113 tutorial questions
     2.[D][ ] weekly CS2113 quiz (by: Monday 9pm)
     3.[E][ ] CS2113 lecture (from: Friday 4pm to: 6pm)
+    4.[T][ ] Hosea: Answer CS2113 tutorial questions
+    5.[D][ ] weekly CS2113 quiz (by: Monday 9pm)
+    6.[E][ ] CS2113 lecture (from: Friday 4pm to: 6pm)
 
     ____________________________________________________________
     ____________________________________________________________
@@ -78,34 +85,6 @@ You need to include the correct fields for this command
     ____________________________________________________________
     ____________________________________________________________
 You need to include the correct fields for this command
-    ____________________________________________________________
-    ____________________________________________________________
-    Here are the tasks in your list:
-    1.[T][ ] Hosea: Answer CS2113 tutorial questions
-    2.[D][ ] weekly CS2113 quiz (by: Monday 9pm)
-    3.[E][ ] CS2113 lecture (from: Friday 4pm to: 6pm)
-
-    ____________________________________________________________
-    ____________________________________________________________
-    Save Successful!
-    ____________________________________________________________
-    ____________________________________________________________
-    Got it. I've added this task:
-      [T][ ] Hosea: Answer CS2113 tutorial questions
-    Now you have 4 tasks in your list.
-    ____________________________________________________________
-    ____________________________________________________________
-    Got it. I've added this task:
-      [D][ ] weekly CS2113 quiz (by: Monday 9pm)
-    Now you have 5 tasks in your list.
-    ____________________________________________________________
-    ____________________________________________________________
-    Got it. I've added this task:
-      [E][ ] CS2113 lecture (from: Friday 4pm to: 6pm)
-    Now you have 6 tasks in your list.
-    ____________________________________________________________
-    ____________________________________________________________
-    Load Successful!
     ____________________________________________________________
     ____________________________________________________________
     Here are the tasks in your list:
