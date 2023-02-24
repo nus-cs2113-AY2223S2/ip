@@ -13,9 +13,9 @@ public class Duke {
         int tasksSize = 100;
         ArrayList<Task> tasks = new ArrayList<>();
         int maxIndex = tasksSize - 1;
-        Save.filePath = "./taskSave.txt";
-        Save.createSaveFile();
-        Save.loadSaveFile(tasks);
+        Storage.filePath = "./taskSave.txt";
+        Storage.createSaveFile();
+        Storage.loadSaveFile(tasks);
         printHelloStatement();
         while (true) {
             String input;
@@ -31,7 +31,7 @@ public class Duke {
                     int taskIndex = Integer.parseInt(temp[1]);
                     Task curTask = tasks.get(taskIndex-1);
                     curTask.markAsDone();
-                    Save.updateSaveFile(tasks);
+                    Storage.updateSaveFile(tasks);
                     printTaskStatusStatement(curTask, "mark");
                 } catch (ArrayIndexOutOfBoundsException exception) {
                     printDottedLine();
@@ -54,7 +54,7 @@ public class Duke {
                     int taskIndex = Integer.parseInt(temp[1]);
                     Task curTask = tasks.get(taskIndex-1);
                     curTask.unmarkAsDone();
-                    Save.updateSaveFile(tasks);
+                    Storage.updateSaveFile(tasks);
                     printTaskStatusStatement(curTask, "unmark");
                 } catch (ArrayIndexOutOfBoundsException exception) {
                     printDottedLine();
@@ -75,7 +75,7 @@ public class Duke {
                     int taskIndex = Integer.parseInt(temp[1]);
                     printTaskDeletedStatement(tasks, tasks.get(taskIndex-1));
                     tasks.remove(taskIndex-1);
-                    Save.updateSaveFile(tasks);
+                    Storage.updateSaveFile(tasks);
                 } catch (ArrayIndexOutOfBoundsException exception) {
                     printDottedLine();
                     System.out.println("☹ OOPS!!! The description of a delete cannot be empty");
@@ -95,7 +95,7 @@ public class Duke {
                     String description = temp[1];
                     ToDo todo = new ToDo(description);
                     tasks.add(todo);
-                    Save.updateSaveFile(tasks);
+                    Storage.updateSaveFile(tasks);
                     printTaskAddedStatement(tasks, todo);
                 } catch (IndexOutOfBoundsException exception) {
                     printDottedLine();
@@ -111,7 +111,7 @@ public class Duke {
                     String by = temp[2];
                     Deadline deadline = new Deadline(description, by);
                     tasks.add(deadline);
-                    Save.updateSaveFile(tasks);
+                    Storage.updateSaveFile(tasks);
                     printTaskAddedStatement(tasks, deadline);
                 } catch (IndexOutOfBoundsException exception) {
                     printDottedLine();
@@ -128,7 +128,7 @@ public class Duke {
                     String to = temp[3];
                     Event event = new Event(description, from, to);
                     tasks.add(event);
-                    Save.updateSaveFile(tasks);
+                    Storage.updateSaveFile(tasks);
                     printTaskAddedStatement(tasks, event);
                 } catch (IndexOutOfBoundsException exception) {
                     printDottedLine();
