@@ -10,6 +10,7 @@ public class Event extends Task {
         this.to = to;
     }
 
+    /* change data to a file format in order to store in a file */
     @Override
     public String toFileFormat() {
         return "E | " + isMarked + " | " + description + " | " + from + " | " + to + "\n";

@@ -11,6 +11,7 @@ public class Task {
         this.isMarked = false;
     }
 
+    /* get status icon for a task to represent whether it is marked */
     public String getStatusIcon() {
         String statusIcon = isMarked ? MARKED_ICON : UNMARKED_ICON;
         return statusIcon;
@@ -24,6 +25,7 @@ public class Task {
         this.isMarked = false;
     }
 
+    /* change data to a file format in order to store in a file */
     public String toFileFormat() {
         return description;
     }

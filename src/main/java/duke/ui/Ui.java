@@ -3,6 +3,7 @@ package duke.ui;
 public abstract class Ui {
     public static String BREAK_LINE = "\t-------------------------------------------------------------------\n";
 
+    /* print greet messages from Duke */
     public static void greet() {
         String logo = " ____        _\n"
                 + "|  _ \\ _   _| | _____\n"

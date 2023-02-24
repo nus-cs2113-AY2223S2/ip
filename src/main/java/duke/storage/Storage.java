@@ -14,12 +14,14 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Storage {
+    /* file path of the data */
     private String filePath;
 
     public Storage(String filePath) {
         this.filePath = filePath;
     }
 
+    /* read all the data from the file */
     public void getFileData(TaskList taskList) {
         File file = new File(filePath);
         System.out.println("\tLoading existing data . . .\n");
@@ -40,23 +42,9 @@ public class Storage {
         } finally {
             Ui.printLoadDataComplete();
         }
-
     }
 
-    // write data to a file
-    public void saveDataToFile(TaskList taskList) {
-        try {
-            FileWriter fileWriter = new FileWriter(filePath);
-            for (Task task : taskList.getTasks()) {
-                fileWriter.write(task.toFileFormat());
-            }
-            fileWriter.close();
-        } catch (IOException e) {
-            ExceptionsUi.printIOExceptionError();
-        }
-    }
-
-    // add data read from file to list
+    /* interpret the data read from the file into Task and store in task list */
     public void addFileDataToList(String[] inputArgs, TaskList taskList) {
         Task newTask;
         String command = inputArgs[0];
@@ -78,5 +66,18 @@ public class Storage {
             newTask.mark();
         }
         taskList.getTasks().add(newTask);
+    }
+
+    /* store all the tasks in the task list into the file */
+    public void saveDataToFile(TaskList taskList) {
+        try {
+            FileWriter fileWriter = new FileWriter(filePath);
+            for (Task task : taskList.getTasks()) {
+                fileWriter.write(task.toFileFormat());
+            }
+            fileWriter.close();
+        } catch (IOException e) {
+            ExceptionsUi.printIOExceptionError();
+        }
     }
 }
