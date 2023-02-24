@@ -77,4 +77,22 @@ Here are the tasks in your list:
 Now you have 5 tasks in the list.
 ```
 
+### `find [query]` - Searches for query string in task description and prints matche(s)
+
+Finds a task that corresponds to query string and prints matche(s)
+
+Example of usage:
+
+`find CS2113`
+
+Expected outcome:
+
+You should see a successful output matching tasks.
+
+```
+1. [E][ ] CS2113 Exam (from: 24-02-2023 1500 to: 24-02-2023 1700)
+2. [D][ ] submit CS2113 assignmnet (by: 24-02-2023 1700)
+You have 2 to your query of: CS2113
+```
+
 Go [back](README.md)
