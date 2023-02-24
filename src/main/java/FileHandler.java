@@ -48,7 +48,7 @@ public class FileHandler {
     }
 
     public ArrayList<Task> readFile() throws IOException{
-        ArrayList<Task> arrayList = new ArrayList<>();
+        ArrayList<Task> arrayList = new ArrayList<Task>();
         if(dukeFile.createNewFile()==true) {
             System.out.println("Returned empty");
             return arrayList;
