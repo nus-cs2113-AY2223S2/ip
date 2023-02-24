@@ -12,7 +12,6 @@ public class Duke {
     public static final String EMPTY_DESCRIPTION = "     ☹ OOPS!!! The description cannot be empty.";
     public static final String LINE = "    ____________________________________________________________";
     private static final String UNRECOGNISED_INPUT = "     ☹ OOPS!!! I'm sorry, but I don't know what that means :-(";
-    protected static boolean isByeEnter = false;
     private static final ArrayList<Task> taskNameList = new ArrayList<>();
 
     public static void greeting() {
