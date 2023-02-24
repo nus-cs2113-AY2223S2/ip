@@ -28,7 +28,7 @@ Automatically stores users' task list into the hard drive of their computer. The
 
 ## Usage
 
-### `todo` - Adds a todo task
+### `todo` - Add a todo task
 
 Adds a new todo task to the task list. The description of the task has to be provided.
 
@@ -52,7 +52,7 @@ Now you have 1 tasks in the list.
 ____________________________________________________________
 ```
 
-### `list` - Adds a deadline task
+### `list` - Add a deadline task
 
 Adds a new deadline task to the task list. The description and the deadline of the task has to be provided.
 
@@ -77,7 +77,7 @@ Now you have 1 tasks in the list.
 ____________________________________________________________
 ```
 
-### `event` - Adds an event task
+### `event` - Add an event task
 
 Adds a new event task to the task list. The description and the duration of the task has to be provided.
 
@@ -127,7 +127,7 @@ Here are the tasks in your list:
 ____________________________________________________________
 ```
 
-### `mark` - Marks a task
+### `mark` - Mark a task
 
 Marks a task with the given index by the user as completed. The index has to be a number from 1 to the size of the task list.
 
@@ -173,7 +173,7 @@ OK, I've marked this task as not done yet:
 ____________________________________________________________
 ```
 
-### `delete` - Deletes a task
+### `delete` - Delete a task
 
 Removes the task with the given index by the user from the task list. The index has to be a number from 1 to the size of the task list.
 
@@ -198,7 +198,7 @@ Now you have 2 tasks in the list.
 ____________________________________________________________
 ```
 
-### `find` - finds tasks with substring
+### `find` - Finds tasks with substring
 
 Finds the tasks with similar substring given by the user from the task list. 
 
@@ -221,7 +221,7 @@ Here are the matching tasks in your list:
 ____________________________________________________________
 ```
 
-### `bye` - exits program
+### `bye` - Exit the program
 
 Closes and exits the program, Duke 
 
