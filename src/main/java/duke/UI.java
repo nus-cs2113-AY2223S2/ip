@@ -7,11 +7,11 @@ import java.io.*;
 
 import static java.util.stream.Collectors.toList;
 
-public class Echo {
+public class UI {
 
     public static ArrayList<Task> tasks = new ArrayList<>();
 
-    public static void Echo() {
+    public static void UI() {
 
         //loading up contents into program
         FileHandling.loadContents();
@@ -19,20 +19,15 @@ public class Echo {
 
         Scanner in = new Scanner(System.in);
         String readInput = in.nextLine();
-        String[] readInputAsArray = readInput.split(" ", 2);
-        String command = readInputAsArray[0];
-//        String task = getTaskNameOrTaskNo(readInputAsArray);
-        String task = " ";
-        if (readInputAsArray.length > 1) {
-            task = readInputAsArray[1];
-        }
+        String command = Parser.parseType(readInput);
+        String TaskDescOrTaskNo = Parser.parseTaskDescOrTaskNo(readInput);
 
         while (!(command.equals("Bye") || command.equals("bye"))) {
             if (command.equals("list")) {
                 list_Input(tasks);
             } else if (command.equals("unmark")) {
                 try {
-                    unmark_Input(tasks, task);
+                    unmark_Input(tasks, TaskDescOrTaskNo);
                 } catch (DukeException e) {
                     System.out.println("☹ OOPS!!! Which task do you want to unmark?");
                 } catch (IOException i) {
@@ -40,7 +35,7 @@ public class Echo {
                 }
             } else if (command.equals("mark")) {
                 try {
-                    mark_Input(tasks, task);
+                    mark_Input(tasks, TaskDescOrTaskNo);
                 } catch (DukeException e) {
                     System.out.println("☹ OOPS!!! Which task do you want to mark?");
                 } catch (IOException i) {
@@ -48,7 +43,7 @@ public class Echo {
                 }
             } else if (command.equals("delete")) {
                 try {
-                    delete(tasks, task);
+                    delete(tasks, TaskDescOrTaskNo);
                 } catch (DukeException e) {
                     System.out.println("☹ OOPS!!! Which task do you want to delete?");
                 } catch (IOException i) {
@@ -56,7 +51,7 @@ public class Echo {
                 }
             } else if (command.equals("todo")) {
                 try {
-                    todo_Input(tasks, task);
+                    todo_Input(tasks, TaskDescOrTaskNo);
                 } catch (DukeException e) {
                     System.out.println("☹ OOPS!!! The description of a todo cannot be empty.");
                 } catch (IOException i) {
@@ -64,7 +59,7 @@ public class Echo {
                 }
             } else if (command.equals("deadline")) {
                 try {
-                    deadline_Input(tasks, task);
+                    deadline_Input(tasks, TaskDescOrTaskNo);
                 } catch (DukeException e) {
                     System.out.println("☹ OOPS!!! The description of a deadline cannot be empty.");
                 } catch (IOException i) {
@@ -72,7 +67,7 @@ public class Echo {
                 }
             } else if (command.equals("event")) {
                 try {
-                    event_Input(tasks, task);
+                    event_Input(tasks, TaskDescOrTaskNo);
                 } catch (DukeException e) {
                     System.out.println("☹ OOPS!!! The description of an event cannot be empty.");
                 } catch (IOException i) {
@@ -80,7 +75,7 @@ public class Echo {
                 }
             } else if (command.equals("find")) {
                 try {
-                    ArrayList<Task> tasksFound = find_Input(tasks, task);
+                    ArrayList<Task> tasksFound = find_Input(tasks, TaskDescOrTaskNo);
                     list_Input(tasksFound);
                 } catch (DukeException e) {
                     System.out.println("☹ OOPS!!!  What are you trying to find?");
@@ -91,12 +86,8 @@ public class Echo {
             }
 
             readInput = in.nextLine();
-            readInputAsArray = readInput.split(" ", 2);
-            command = readInputAsArray[0];
-            task = " ";
-            if (readInputAsArray.length > 1) {
-                task = readInputAsArray[1];
-            }
+            command = Parser.parseType(readInput);
+            TaskDescOrTaskNo = Parser.parseTaskDescOrTaskNo(readInput);
         }
 
         System.out.println("Bye. Hope to see you again!");
