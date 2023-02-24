@@ -1,18 +1,18 @@
-package duke;
+package duke.parser;
 
 import java.util.Scanner;
 
-public class Parser {
+public abstract class Parser {
     public static Scanner inputReader = new Scanner(System.in);
     private static String[] inputArgs = null;
 
     // read input
-    public String readInput() {
+    public static String readInput() {
         System.out.print(">> ");
         return inputReader.nextLine();
     }
 
-    public String parse() {
+    public static String parse() {
         String command;
         String input = readInput();
         inputArgs = input.split(" ", 2);
@@ -20,7 +20,7 @@ public class Parser {
         return command;
     }
 
-    public String getCommandArgs() {
+    public static String getCommandArgs() {
         if (inputArgs.length <= 1) {
             return null;
         }

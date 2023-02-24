@@ -1,9 +1,9 @@
 package duke.ui;
 
-public class Ui {
+public abstract class Ui {
     public static String BREAK_LINE = "\t-------------------------------------------------------------------\n";
 
-    public void greet() {
+    public static void greet() {
         String logo = " ____        _\n"
                 + "|  _ \\ _   _| | _____\n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -16,11 +16,11 @@ public class Ui {
                 + BREAK_LINE);
     }
 
-    public void printLoadDataComplete() {
+    public static void printLoadDataComplete() {
         System.out.print("\tLoading Complete :)\n" + BREAK_LINE);
     }
 
-    public void printExit() {
+    public static void printExit() {
         System.out.print(BREAK_LINE + "\tBa-bye. Hope to see you again soon :)\n" + BREAK_LINE);
     }
 }

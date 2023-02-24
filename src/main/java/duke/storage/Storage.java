@@ -1,4 +1,4 @@
-package duke;
+package duke.storage;
 
 import duke.task.TaskList;
 import duke.task.Task;
@@ -6,6 +6,7 @@ import duke.task.Todo;
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.ui.ExceptionsUi;
+import duke.ui.Ui;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -14,7 +15,6 @@ import java.util.Scanner;
 
 public class Storage {
     private String filePath;
-    private ExceptionsUi uiException = new ExceptionsUi();
 
     public Storage(String filePath) {
         this.filePath = filePath;
@@ -34,11 +34,11 @@ public class Storage {
                 }
             }
         } catch (IOException e) {
-            uiException.printIOExceptionError();
+            ExceptionsUi.printIOExceptionError();
         } catch (IllegalStateException e) {
-            uiException.printIllegalStateExceptionError();
+            ExceptionsUi.printInvalidFileContentError();
         } finally {
-            uiException.printLoadDataComplete();
+            Ui.printLoadDataComplete();
         }
 
     }
@@ -52,7 +52,7 @@ public class Storage {
             }
             fileWriter.close();
         } catch (IOException e) {
-            uiException.printIOExceptionError();
+            ExceptionsUi.printIOExceptionError();
         }
     }
 
