@@ -58,7 +58,7 @@ public class ModifyCommand extends Command {
             break;
         }
         try {
-            Storage.update();
+            storage.update(tasks);
         } catch (IOException e) {
             ui.printErrorForIO();
         }

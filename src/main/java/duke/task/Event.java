@@ -81,10 +81,7 @@ public class Event extends Task {
                 return true;
             }
         }
-        if (to != null && date.isEqual(to.toLocalDate())) {
-            return true;
-        }
-        return false;
+        return to != null && date.isEqual(to.toLocalDate());
     }
 
     @Override

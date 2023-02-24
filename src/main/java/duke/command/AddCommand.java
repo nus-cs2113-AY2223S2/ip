@@ -13,7 +13,6 @@ import java.io.IOException;
 import static duke.Parser.COMMAND_DEADLINE_WORD;
 import static duke.Parser.COMMAND_EVENT_WORD;
 import static duke.Parser.COMMAND_TODO_WORD;
-import static duke.task.TaskList.allTasks;
 
 /**
  * Add Command class that adds a Task to the existing TaskList tasks.
@@ -79,9 +78,9 @@ public class AddCommand extends Command {
             }
             break;
         }
-        ui.printAddMessage(allTasks.get(allTasks.size() - 1));
+        ui.printAddMessage(tasks.allTasks.get(tasks.getSize() - 1));
         try {
-            Storage.update();
+            storage.update(tasks);
         } catch (IOException e) {
             ui.printErrorForIO();
         }

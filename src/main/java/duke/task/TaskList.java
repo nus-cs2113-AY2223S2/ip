@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class TaskList {
 
     // Task list containing all Tasks
-    public static ArrayList<Task> allTasks;
+    public ArrayList<Task> allTasks;
 
     /**
      * Initialise allTasks with the given ArrayList.
@@ -27,7 +27,7 @@ public class TaskList {
      *
      * @return ArrayList allTasks
      */
-    public static ArrayList<Task> getAllTasks() {
+    public ArrayList<Task> getAllTasks() {
         return allTasks;
     }
 
@@ -37,7 +37,7 @@ public class TaskList {
      * @param date The given date to check for
      * @return ArrayList of all shortlisted tasks
      */
-    public static ArrayList<Task> getTasksOnDate(LocalDate date) {
+    public ArrayList<Task> getTasksOnDate(LocalDate date) {
         ArrayList<Task> tasksOnDate = new ArrayList<>();
         for (Task task : allTasks) {
             if (task.isOnDate(date)) {
@@ -53,7 +53,7 @@ public class TaskList {
      * @param keyword The given keyword to check for
      * @return ArrayList of all shortlisted tasks
      */
-    public static ArrayList<Task> findTasks(String keyword) {
+    public ArrayList<Task> findTasks(String keyword) {
         ArrayList<Task> foundTasks = new ArrayList<>();
         for (Task task : allTasks) {
             if (task.description.contains(keyword)) {
@@ -68,7 +68,7 @@ public class TaskList {
      *
      * @return Number of existing Tasks
      */
-    public static int getSize() {
+    public int getSize() {
         return allTasks.size();
     }
 
@@ -77,7 +77,7 @@ public class TaskList {
      *
      * @param idx Given index
      */
-    public static void markDone(int idx) {
+    public void markDone(int idx) {
         allTasks.get(idx).setDone(true);
     }
 
@@ -86,7 +86,7 @@ public class TaskList {
      *
      * @param idx Given index
      */
-    public static void markNotDone(int idx) {
+    public void markNotDone(int idx) {
         allTasks.get(idx).setDone(false);
     }
 
@@ -95,7 +95,7 @@ public class TaskList {
      *
      * @param idx Given index
      */
-    public static void deleteTask(int idx) {
+    public void deleteTask(int idx) {
         allTasks.remove(idx);
     }
 
@@ -104,7 +104,7 @@ public class TaskList {
      *
      * @param param String describing the Todo
      */
-    public static void addToDo(String param) {
+    public void addToDo(String param) {
         allTasks.add(new ToDo(param));
     }
 
@@ -113,7 +113,7 @@ public class TaskList {
      *
      * @param param String describing the Deadline
      */
-    public static void addDeadline(String param, String by) {
+    public void addDeadline(String param, String by) {
         allTasks.add(new Deadline(param, by));
     }
 

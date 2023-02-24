@@ -22,7 +22,7 @@ public class Duke {
 
     /**
      * Initialises Duke by loading in data from save file.
-     * Sets up Ui, Storage, and Tasklist.
+     * Sets up Ui, Storage, and TaskList.
      *
      * @param filePath location of the local save file
      */
@@ -31,10 +31,10 @@ public class Duke {
         ui.printWelcomeMessage();
         storage = new Storage(filePath);
         try {
-            tasks = new TaskList(storage.load());
-            storage.update();
+            tasks = new TaskList(storage.load(ui));
+            storage.update(tasks);
         } catch (IOException e) {
-            Ui.printErrorForIO();
+            ui.printErrorForIO();
         }
     }
 

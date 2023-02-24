@@ -1,11 +1,13 @@
 package duke;
 
+import duke.exception.DateOrderException;
 import duke.exception.InvalidDeadline;
 import duke.exception.InvalidEvent;
 import duke.exception.InvalidSaveFile;
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
+import duke.task.TaskList;
 import duke.task.ToDo;
 
 import java.io.File;
@@ -14,9 +16,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-// Task list
-import static duke.task.TaskList.allTasks;
 
 /**
  * Storage class that initialises the task list and updates the save file.
@@ -48,7 +47,7 @@ public class Storage {
      * Initialise Storage class, set filePath.
      */
     public Storage(String filePath) {
-        this.filePath = filePath;
+        Storage.filePath = filePath;
     }
 
     /**
@@ -56,9 +55,9 @@ public class Storage {
      *
      * @throws IOException If something goes wrong during the overwriting process
      */
-    public static void update() throws IOException {
+    public void update(TaskList tasks) throws IOException {
         FileWriter overwrite = new FileWriter(filePath);
-        for (Task task : allTasks) {
+        for (Task task : tasks.allTasks) {
             String desc = task.getDescription();
             String type = task.getType();
             String stat = task.getStatus();
@@ -89,14 +88,14 @@ public class Storage {
      * @return ArrayList of Tasks (either containing data in save file or empty)
      * @throws IOException If save file is not found, and a new one cannot be created
      */
-    public static ArrayList<Task> load() throws IOException {
+    public ArrayList<Task> load(Ui ui) throws IOException {
         ArrayList<Task> newAllTasks = new ArrayList<>();
         File save = new File(filePath);
         try {
-            newAllTasks = readFileContents(save);
+            newAllTasks = readFileContents(save, ui);
             return newAllTasks;
         } catch (FileNotFoundException e) {
-            Ui.printErrorFileNotFound();
+            ui.printErrorFileNotFound();
             save.createNewFile();
             return newAllTasks;
         }
@@ -109,7 +108,7 @@ public class Storage {
      * @return ArrayList of Tasks based on data written in the save file
      * @throws FileNotFoundException If the save file cannot be found at filePath
      */
-    private static ArrayList<Task> readFileContents(File save) throws FileNotFoundException {
+    private static ArrayList<Task> readFileContents(File save, Ui ui) throws FileNotFoundException {
         Scanner s = new Scanner(save);
         ArrayList<Task> newArrayList = new ArrayList<>();
         int counter = 0;
@@ -118,7 +117,7 @@ public class Storage {
                 newArrayList.add(newTask(s.nextLine()));
                 counter++;
             } catch (InvalidSaveFile e) {
-                Ui.printInvalidSaveFile(counter, filePath);
+                ui.printInvalidSaveFile(counter, filePath);
             }
         }
         return newArrayList;
@@ -152,10 +151,7 @@ public class Storage {
     }
 
     private static Boolean isStatusDone(String text) {
-        if (text.charAt(STATUS_POS) == 'X') {
-            return true;
-        }
-        return false;
+        return text.charAt(STATUS_POS) == 'X';
     }
 
     private static String getParam(String text) {

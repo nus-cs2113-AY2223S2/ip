@@ -20,15 +20,15 @@ public class Ui {
      *
      * @return String containing the CLI input
      */
-    public static String readCommand() {
+    public String readCommand() {
         return in.nextLine();
     }
 
-    public static void showLine() {
+    public void showLine() {
         System.out.println("____________________________________________________________");
     }
 
-    public static void printWelcomeMessage() {
+    public void printWelcomeMessage() {
         showLine();
         System.out.println("Hello from\n" +
                 " ____        _\n" +
@@ -44,7 +44,7 @@ public class Ui {
      * For <code>help</code> command.
      * Prints out a list of all available commands.
      */
-    public static void printHelpMessage() {
+    public void printHelpMessage() {
         System.out.println(" Enter \"list\" to see all tasks\n" +
                 " Enter \"todo [task]\" to add a task\n" +
                 " Enter \"deadline [task] /by [date]\" to add a deadline\n" +
@@ -67,7 +67,7 @@ public class Ui {
      *
      * @param allTasks ArrayList of Tasks
      */
-    public static void printList(ArrayList<Task> allTasks) {
+    public void printList(ArrayList<Task> allTasks) {
         if (allTasks.size() == 0) {
             System.out.println("There are no tasks in your list!");
             return;
@@ -84,7 +84,7 @@ public class Ui {
      *
      * @param newTask Task that has just been added
      */
-    public static void printAddMessage(Task newTask) {
+    public void printAddMessage(Task newTask) {
         System.out.println("Got it. I've added this " + newTask.getType() + ":\n" +
                 "  " + newTask);
     }
@@ -95,7 +95,7 @@ public class Ui {
      *
      * @param doneTask Task that has just been marked as done
      */
-    public static void printMarkDone(Task doneTask) {
+    public void printMarkDone(Task doneTask) {
         System.out.println("Nice!, I've marked this task as done:\n" +
                 "  " + doneTask);
     }
@@ -106,7 +106,7 @@ public class Ui {
      *
      * @param notDoneTask Task that has just been marked as not done
      */
-    public static void printMarkNotDone(Task notDoneTask) {
+    public void printMarkNotDone(Task notDoneTask) {
         System.out.println("OK, I've marked this task as not done yet:\n" +
                 "  " + notDoneTask);
     }
@@ -118,7 +118,7 @@ public class Ui {
      * @param deletedTask Task that will be deleted
      * @param size        Number of tasks left in the list after deletion
      */
-    public static void printDeleted(Task deletedTask, int size) {
+    public void printDeleted(Task deletedTask, int size) {
         System.out.println("Noted, I've removed this task:\n" +
                 "  " + deletedTask + "\n" +
                 "Now you have " + (size - 1) + " tasks in the list");
@@ -130,7 +130,7 @@ public class Ui {
      *
      * @param foundTasks ArrayList of Tasks containing a keyword
      */
-    public static void printFoundList(ArrayList<Task> foundTasks) {
+    public void printFoundList(ArrayList<Task> foundTasks) {
         if (foundTasks.size() == 0) {
             System.out.println("There are no matching tasks!");
             return;
@@ -147,7 +147,7 @@ public class Ui {
      *
      * @param happeningTasks ArrayList of Tasks happening on a date
      */
-    public static void printDateList(ArrayList<Task> happeningTasks, LocalDate date) {
+    public void printDateList(ArrayList<Task> happeningTasks, LocalDate date) {
         String dateString = date.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
         if (happeningTasks.size() == 0) {
             System.out.println("There are no tasks on " + dateString + "!");
@@ -159,12 +159,12 @@ public class Ui {
         }
     }
 
-    public static void printExitMessage() {
+    public void printExitMessage() {
         System.out.println("Bye. Hope to see you again soon!");
     }
 
     // error messages
-    public static void printErrorForIdx(int size) {
+    public void printErrorForIdx(int size) {
         if (size != 0) {
             System.out.println("Please enter [idx] in the form of an integer from 1 to " + size);
         } else {
@@ -172,19 +172,19 @@ public class Ui {
         }
     }
 
-    public static void printErrorForIO() {
+    public void printErrorForIO() {
         System.out.println("Something went wrong with the hard disk :(");
     }
 
-    public static void printErrorFileNotFound() {
+    public void printErrorFileNotFound() {
         System.out.println("Save file not found, initialising empty list...");
     }
 
-    public static void printInvalidDeadline() {
+    public void printInvalidDeadline() {
         System.out.println("Please enter deadline as \"deadline [task] /by [date]\".");
     }
 
-    public static void printInvalidEvent() {
+    public void printInvalidEvent() {
         System.out.println("Please enter event as \"event [task] /from [date] /to [date]\".");
     }
 
@@ -192,11 +192,11 @@ public class Ui {
         System.out.println("Please enter date in the format of yyyy-MM-dd.");
     }
 
-    public static void printInvalidCommand() {
+    public void printInvalidCommand() {
         System.out.println("Sorry, but I don't know what that means :(");
     }
 
-    public static void printInvalidSaveFile(int counter, String filePath) {
+    public void printInvalidSaveFile(int counter, String filePath) {
         showLine();
         System.out.println("There is an error in save.txt at line " + (counter + 1) + "\n" +
                 "Task " + (counter + 1) + " has been excluded. You can edit the save file at:\n" +
@@ -204,11 +204,11 @@ public class Ui {
         showLine();
     }
 
-    public static void printEmptyDescription() {
+    public void printEmptyDescription() {
         System.out.println("Oops! The description cannot be empty.");
     }
 
-    public static void printDateOrderException() {
+    public void printDateOrderException() {
         System.out.println("Oops, the start date for your event occurs after the end date!");
     }
 

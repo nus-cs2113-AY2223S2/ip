@@ -41,4 +41,4 @@ There is no need to save the task list before exiting the program.
 
 > #### Using the ```date``` function
 > The ```date``` function will only work for Deadlines and Events with ```[date]``` entered as ```[yyyy-MM-ddTHH:mm]```       
-> eg. ```deadline read book /by 2023-10-30T23:59``` sets a deadline for Oct 20 2023, 11:59PM
+> e.g. ```deadline read book /by 2023-10-30T23:59``` sets a deadline for Oct 20 2023, 11:59PM

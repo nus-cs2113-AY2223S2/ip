@@ -18,14 +18,14 @@ public class Deadline extends Task {
      * If parsing is not possible, save due date as String.
      *
      * @param description String describing the Task
-     * @param by String describing the due date
+     * @param byString String describing the due date
      */
-    public Deadline(String description, String by) {
+    public Deadline(String description, String byString) {
         super(description);
         try {
-            this.by = LocalDateTime.parse(by);
+            this.by = LocalDateTime.parse(byString);
         } catch (DateTimeParseException e) {
-            this.byString = by;
+            this.byString = byString;
         }
     }
 
@@ -46,10 +46,7 @@ public class Deadline extends Task {
 
     @Override
     public Boolean isOnDate(LocalDate date) {
-        if (by != null && date.isEqual(by.toLocalDate())) {
-            return true;
-        }
-        return false;
+        return by != null && date.isEqual(by.toLocalDate());
     }
 
     @Override
