@@ -28,28 +28,29 @@ public class TaskList {
             return;
         }
 
+        Parser.taskType currTaskType = Parser.getTaskType(command);
         try {
-            switch (command) {
-            case "delete":
+            switch (currTaskType) {
+            case DELETE:
                 deleteTask(inputLine, storage);
                 break;
-            case "mark":
+            case MARK:
                 markTask(inputLine, storage);
                 break;
-            case "unmark":
+            case UNMARK:
                 unmarkTask(inputLine, storage);
                 break;
-            case "todo":
+            case TODO:
                 // command todo
                 makeTodo(inputLine, storage);
                 break;
-            case "deadline":
+            case DEADLINE:
                 makeDeadline(inputLine, storage);
                 break;
-            case "event":
+            case EVENT:
                 makeEvent(inputLine, storage);
                 break;
-            case "help":
+            case HELP:
                 System.out.println(Ui.HELP_PAGE);
                 break;
             default:
