@@ -2,6 +2,7 @@ package duke.command;
 
 import duke.Parser;
 import duke.Storage;
+import duke.exception.DateOrderException;
 import duke.task.TaskList;
 import duke.Ui;
 import duke.exception.InvalidDeadline;
@@ -70,7 +71,12 @@ public class AddCommand extends Command {
             tasks.addDeadline(desc, by);
             break;
         case COMMAND_EVENT_WORD:
-            tasks.addEvent(desc, from, to);
+            try {
+                tasks.addEvent(desc, from, to);
+            } catch (DateOrderException e) {
+                ui.printDateOrderException();
+                return;
+            }
             break;
         }
         ui.printAddMessage(allTasks.get(allTasks.size() - 1));

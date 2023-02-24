@@ -24,9 +24,10 @@ ____________________________________________________________
  Enter "date [yyyy-MM-dd]" to see all tasks occurring on that date
  Enter "bye" to exit the program
 
- For Duke to understand [date], you can enter it in the form of
+ ***NOTE***
+ The "date" command only considers tasks when [date] is input in the format:
      "yyyy-MM-ddThh:mm"
- eg. "2023-10-30T23:59" for Oct 20 2023, 11:59PM
+ eg. "2023-10-30T23:59" represents Oct 20 2023, 11:59PM
 ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:
@@ -120,6 +121,9 @@ Here are the tasks in your list:
 3.[E][X] project meeting Aug 6th (from: 2pm to: 4pm)
 4.[D][ ] submit tutorial (by: Mar 03 2023, 11:59PM)
 5.[E][ ] lecture (from: May 03 2023, 09:00AM to: 11:00AM)
+____________________________________________________________
+____________________________________________________________
+Oops, the start date for your event occurs after the end date!
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this event:

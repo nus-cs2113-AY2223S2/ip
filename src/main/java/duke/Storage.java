@@ -20,15 +20,17 @@ import static duke.task.TaskList.allTasks;
 
 /**
  * Storage class that initialises the task list and updates the save file.
- *
- * Each task is saved as a line in the save file in this format:
- *   [type] | [status] | [description]
- *
- * Followed by:
- *   /by [date]                  for Deadlines or
- *   /from [date] /to [date]     for Events
  */
 public class Storage {
+    /*
+    Each task is saved as a line in the save file in this format:
+        [type] | [status] | [description]
+    Followed by:
+        /by [date]                  for Deadlines or
+        /from [date] /to [date]     for Events
+
+    eg. E | X | holiday /from 2023-02-25T00:00:00 /to 2023-03-04T23:59:00
+    */
 
     // ints indicating position of terms in each line of the save file
     private static final int TYPE_POS = 0;
@@ -185,9 +187,13 @@ public class Storage {
         } catch (InvalidEvent e) {
             throw new InvalidSaveFile();
         }
-        Event newEvent = new Event(paramAndFromTo[0], paramAndFromTo[1], paramAndFromTo[2]);
-        newEvent.setDone(isDone);
-        return newEvent;
+        try {
+            Event newEvent = new Event(paramAndFromTo[0], paramAndFromTo[1], paramAndFromTo[2]);
+            newEvent.setDone(isDone);
+            return newEvent;
+        } catch (DateOrderException e) {
+            throw new InvalidSaveFile();
+        }
     }
 
 }

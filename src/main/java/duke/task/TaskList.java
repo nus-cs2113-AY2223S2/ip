@@ -1,5 +1,7 @@
 package duke.task;
 
+import duke.exception.DateOrderException;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -119,8 +121,9 @@ public class TaskList {
      * Adds an Event to the TaskList.
      *
      * @param param String describing the Event
+     * @throws DateOrderException If the end date occurs before the start date
      */
-    public static void addEvent(String param, String from, String to) {
+    public void addEvent(String param, String from, String to) throws DateOrderException {
         allTasks.add(new Event(param, from, to));
     }
 

@@ -71,7 +71,7 @@ public abstract class Task {
     }
 
     /**
-     * Given a date, determine if it overlaps with the duration of the Task.
+     * Given a date, determine if it occurs during the duration of the Task.
      *
      * @param date Date to be checked
      * @return <code>true</code> if there is overlap, <code>false</code> otherwise
