@@ -2,17 +2,19 @@
 
 ## Features 
 
-### Feature-ABC
+### Record tasks
 
-Description of the feature.
+User will be able to add/edit/delete a ToDo/Deadline/Event
+User will also be able to mark/unmark the task as done
+User can list all recorded tasks
 
-### Feature-XYZ
+### Save/Load tasks
 
-Description of the feature.
+User will be able to save and load tasks form a text file, DukeTaskList.txt
 
 ## Usage
 
-### `Keyword` - Describe action
+### `list` - List all recorded tasks
 
 Describe the action and its outcome.
 
