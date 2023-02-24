@@ -18,49 +18,49 @@ public class ThomasShelby {
         }
     }
 
-    private static void addToDo(String[] cmdSplit) {
-        ToDo newToDo = new ToDo(cmdSplit[1]);
+    private static void addToDo(String[] parsedCommand) {
+        ToDo newToDo = new ToDo(parsedCommand[1]);
         taskManager.add(newToDo);
         System.out.println("Don't sleep on it.\n" + "added: " + newToDo);
     }
 
-    private static void addDeadline(String[] cmdSplit) {
-        String[] taskAndDeadline = cmdSplit[1].split("/", 2);
+    private static void addDeadline(String[] parsedCommand) {
+        String[] taskAndDeadline = parsedCommand[1].split("/", 2);
         Deadline newDeadline = new Deadline(taskAndDeadline[0], taskAndDeadline[1]);
         taskManager.add(newDeadline);
         System.out.println("Time is money, chop chop!\n" + "added: " + newDeadline);
     }
 
-    private static void addEvent(String[] cmdSplit) {
-        String[] taskAndDuration = cmdSplit[1].split("/");
+    private static void addEvent(String[] parsedCommand) {
+        String[] taskAndDuration = parsedCommand[1].split("/");
         Event newEvent = new Event(taskAndDuration[0], taskAndDuration[1], taskAndDuration[2]);
         taskManager.add(newEvent);
         System.out.println("I'll see you there.\n" + "added: " + newEvent);
     }
 
-    private static void markTask(String[] cmdSplit) {
-        int whichTask = Integer.parseInt(cmdSplit[1]) - 1; // shift back index
+    private static void markTask(String[] parsedCommand) {
+        int whichTask = Integer.parseInt(parsedCommand[1]) - 1; // shift back index
         taskManager.get(whichTask).setIsDone(true);
         System.out.println("That was long due, well done.\n" + taskManager.get(whichTask));
     }
 
-    private static void unmarkTask(String[] cmdSplit) {
-        int whichTask = Integer.parseInt(cmdSplit[1]) - 1; // shift back index
+    private static void unmarkTask(String[] parsedCommand) {
+        int whichTask = Integer.parseInt(parsedCommand[1]) - 1; // shift back index
         taskManager.get(whichTask).setIsDone(false);
         System.out.println("You've gotten lazy.\n" + taskManager.get(whichTask));
     }
 
-    private static void deleteTask(String[] cmdSplit) {
-        int whichTask = Integer.parseInt(cmdSplit[1]) - 1; // shift back index
-        Task taskToDelete = taskManager.get(whichTask); // store in temp var to print later
-        taskManager.remove(whichTask);
+    private static void deleteTask(String[] parsedCommand) {
+        int taskNumber = Integer.parseInt(parsedCommand[1]) - 1; // shift back index
+        Task taskToDelete = taskManager.get(taskNumber); // store in temp var to print later
+        taskManager.remove(taskNumber);
         System.out.println("That's off the list: \n" + taskToDelete);
         System.out.println("You're left with " + taskManager.size() + " tasks.");
     }
 
-    private static ArrayList<Task> findTask(String[] cmdSplit) {
+    private static ArrayList<Task> findTask(String[] parseCommand) {
         ArrayList<Task> filteredTaskList = (ArrayList<Task>) taskManager.stream()
-                .filter(task -> task.getDescription().contains(cmdSplit[1]))
+                .filter(task -> task.getDescription().contains(parseCommand[1]))
                 .collect(toList());
         return filteredTaskList;
     }
@@ -73,8 +73,8 @@ public class ThomasShelby {
         while (true) {
             try {
                 String command = in.nextLine();
-                String[] parseCommand = Parser.parseCommand(command); // user input split into individual words
-                switch (parseCommand[0]) {
+                String[] parsedCommand = Parser.parseCommand(command); // user input split into individual words
+                switch (parsedCommand[0]) {
                 case "bye":
                     Data.saveData(taskManager);
                     System.out.println("Cheers.");
@@ -83,25 +83,25 @@ public class ThomasShelby {
                     listTasks(taskManager);
                     break;
                 case "todo":
-                    addToDo(parseCommand);
+                    addToDo(parsedCommand);
                     break;
                 case "deadline":
-                    addDeadline(parseCommand);
+                    addDeadline(parsedCommand);
                     break;
                 case "event":
-                    addEvent(parseCommand);
+                    addEvent(parsedCommand);
                     break;
                 case "mark":
-                    markTask(parseCommand);
+                    markTask(parsedCommand);
                     break;
                 case "unmark":
-                    unmarkTask(parseCommand);
+                    unmarkTask(parsedCommand);
                     break;
                 case "delete":
-                    deleteTask(parseCommand);
+                    deleteTask(parsedCommand);
                     break;
                 case "find":
-                    listTasks(findTask(parseCommand));
+                    listTasks(findTask(parsedCommand));
                     break;
                 default:
                     throw new Exception();
