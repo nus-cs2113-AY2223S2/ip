@@ -1,3 +1,10 @@
+package duke.util;
+
+import duke.task.Task;
+import duke.task.Deadline;
+import duke.task.Event;
+import duke.task.Todo;
+import duke.exception.DukeException;
 import java.io.FileNotFoundException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -107,7 +114,7 @@ public class Duke {
                 throw new DukeException();
             }
         } catch (DukeException e){
-            System.out.println("I am not a chatbot, please do not chat to me.");
+            System.out.println("I am not a chat bot, please do not chat to me.");
         }
     }
 

@@ -1,8 +1,10 @@
+package duke.task;
+
 import java.util.StringJoiner;
 
 public class Task {
     public static final String LINE_BREAK = "---------------------------------------------";
-    protected String description;
+    public String description;
     protected boolean isDone;
 
     public Task(String description) {
