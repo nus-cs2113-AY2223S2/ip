@@ -25,6 +25,7 @@ public class Duke {
         String exitCommand = "bye";
         String taskList = "list";
         String checkAsDone = "mark";
+        String del = "delete";
         int numberOfTasks = 0;
 
         String[] tokens = line.split(" ", 2);
@@ -45,6 +46,21 @@ public class Duke {
                 tasks[finishedTask].markAsDone();
                 System.out.println("Alright! I have marked the task as complete!");
 
+                for (int i = 0; i < numberOfTasks; ++i) {
+                    System.out.format("%d. ", (i + 1));
+                    System.out.println(tasks[i]);
+                }
+
+                line = in.nextLine();
+                tokens = line.split(" ", 0);
+                command = tokens[0];
+            } else if (command.equals(del)) {
+                int taskToDelete = Integer.parseInt(tokens[1]) - 1;
+                for (int i = taskToDelete; i < (tasks.length - 1); ++i) {
+                    tasks[i] = tasks[i + 1];
+                }
+                --numberOfTasks;
+                System.out.println("Removed task number " + (taskToDelete + 1) + ". Here are your remaining tasks:");
                 for (int i = 0; i < numberOfTasks; ++i) {
                     System.out.format("%d. ", (i + 1));
                     System.out.println(tasks[i]);
