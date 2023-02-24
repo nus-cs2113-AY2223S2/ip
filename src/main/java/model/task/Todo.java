@@ -1,5 +1,8 @@
 package model.task;
 
+/**
+ * A Todo task that extends the Task
+ */
 public class Todo extends Task {
 
     public Todo(String taskName) {

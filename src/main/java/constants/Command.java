@@ -1,6 +1,8 @@
 package constants;
 
-// Use of interface here as I am not creating any object
+/**
+ * An interface containing all the commands that will be processed.
+ */
 public interface Command {
   String FIND = "find";
   String DELETE = "delete";

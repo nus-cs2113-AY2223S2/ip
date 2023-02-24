@@ -90,6 +90,11 @@ public class Storage {
     }
   }
 
+  /**
+   * Updates the JSON file
+   *
+   * @param tasks The array list from Storage
+   */
   public void updateFile(ArrayList<Task> tasks) {
     ArrayList<JsonStorage> items = new ArrayList<JsonStorage>();
     for (Task task : tasks) {

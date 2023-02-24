@@ -1,5 +1,8 @@
 package model.storage;
 
+/**
+ * Uses the following model to store the data in the format inside of the JSON file.
+ */
 public class JsonStorage {
 
   public JsonStorage(String description, boolean marked, String end, String type, String start) {

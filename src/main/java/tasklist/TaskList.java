@@ -60,7 +60,7 @@ public class TaskList {
   }
 
   /**
-   * A simple function to micmic the database UPDATE functionality.
+   * A simple function to mimic the database UPDATE functionality.
    *
    * @param index The index of the task to be updated.
    * @param task  The new state of the task.
@@ -78,7 +78,7 @@ public class TaskList {
   }
 
   /**
-   * A simple function to micmic the database DELETE functionality.
+   * A simple function to mimic the database DELETE functionality.
    *
    * @param index The index of the task to be updated.
    * @param task  The new state of the task.

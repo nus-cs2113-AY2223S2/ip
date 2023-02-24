@@ -7,13 +7,11 @@ import model.task.Task;
 import model.task.Todo;
 import tasklist.TaskList;
 import ui.Ui;
-import validator.Validator;
 import view.TaskView;
 
 public class TaskController {
 
   protected TaskView view = new TaskView();
-  protected Validator validator = new Validator();
   protected TaskList db = TaskList.getInstance();
   protected Ui ui = new Ui();
 
@@ -24,7 +22,7 @@ public class TaskController {
   }
 
   /**
-   * List out all the tasks in the database.
+   * List out all the tasks in the task lists.
    *
    * @throws Exception An exception if there is an issue with
    *                   fetching the data from the database.
@@ -40,7 +38,7 @@ public class TaskController {
   }
 
   /**
-   * Adds a todo task into the database.
+   * Adds a todo task into the task list
    *
    * @param taskDescription The description of the todo task.
    * @throws Exception An exception if there is an issue with
@@ -54,7 +52,7 @@ public class TaskController {
 
   /**
    * Updates the task model in the database with the updated value.
-   * Following which, we will read the model and print the corresponding value.
+   * Following which, print the corresponding value.
    *
    * @param isMark The value to update the task with
    * @param index  The index of the task to be updated
@@ -71,7 +69,7 @@ public class TaskController {
   }
 
   /**
-   * Adds a deadline task into the database
+   * Adds a deadline task into the database and prints out the corresponding message
    *
    * @param taskDescription The task description
    * @throws Exception An exception if the task is invalid
@@ -84,8 +82,7 @@ public class TaskController {
   }
 
   /**
-   * Adds an event task into the tasks array and prints
-   * out the corresponding message
+   * Adds an event task into the tasks array and prints out the corresponding message
    *
    * @param taskDescription A string after removing the
    *                        command
@@ -97,12 +94,25 @@ public class TaskController {
     printDescription(model);
   }
 
+  /**
+   * Manually add the tasks into the tasks list
+   * 
+   * @remarks Used only when parsing the json file into the task lists upon
+   * start up. 
+   * 
+   * @param model The task model
+   */
   public void manuallyAdd(Task model) {
     db.create(model);
   }
 
+  /**
+   * Deletes the task from the task list
+   * 
+   * @param index The index of the task to be deleted
+   * @throws Exception When the index is out of bounds
+   */
   public void deleteTask(int index) throws Exception {
-    ui.printMessage("Task successfully deleted");
     db.delete(index);
   }
 
