@@ -5,14 +5,16 @@ import java.util.Arrays;
 import java.io.File;
 import tasks.*;
 
+import static java.util.stream.Collectors.toList;
+
 public class ThomasShelby {
     static ArrayList<Task> taskManager = new ArrayList<>();
 
-    private static void listTasks() {
+    private static void listTasks(ArrayList<Task> taskList) {
         System.out.println("Here are the tasks in your list:");
-        for (int i = 0; i < taskManager.size(); i++) {
+        for (int i = 0; i < taskList.size(); i++) {
             System.out.println((i + 1) + ". "
-                    + taskManager.get(i));
+                    + taskList.get(i));
         }
     }
 
@@ -56,6 +58,13 @@ public class ThomasShelby {
         System.out.println("You're left with " + taskManager.size() + " tasks.");
     }
 
+    private static ArrayList<Task> findTask(String[] cmdSplit) {
+        ArrayList<Task> filteredTaskList = (ArrayList<Task>) taskManager.stream()
+                .filter(task -> task.getDescription().contains(cmdSplit[1]))
+                .collect(toList());
+        return filteredTaskList;
+    }
+
     public static void main(String[] args) throws IOException {
         System.out.print("Good day, I'm Thomas Shelby.\nTo what do I owe the pleasure?\n");
         File data = new File("data/data.txt");
@@ -71,7 +80,7 @@ public class ThomasShelby {
                     System.out.println("Cheers.");
                     return;
                 case "list":
-                    listTasks();
+                    listTasks(taskManager);
                     break;
                 case "todo":
                     addToDo(cmdSplit);
@@ -90,6 +99,9 @@ public class ThomasShelby {
                     break;
                 case "delete":
                     deleteTask(cmdSplit);
+                    break;
+                case "find":
+                    listTasks(findTask(cmdSplit));
                     break;
                 default:
                     throw new Exception();
