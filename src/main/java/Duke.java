@@ -11,7 +11,7 @@ import java.util.Scanner;
  */
 public class Duke {
 
-    //Need to uncomment whatever is written down here, ordinally you can use this but since main is static cannot run this
+    //Need to uncomment whatever is written down here, ordinarily you can use this but since main is static cannot run this
     //private Ui ui;
 
 //    public Duke() {
@@ -103,6 +103,7 @@ public class Duke {
     //This goes into the UI Class
 
 
+    //TODO: Update the parameters to new TaskList Object
     public static void deadlineExceptionHandler(String userInput, ArrayList<Task> taskList) {
         try {
             ui.printDeadline(userInput, taskList);
@@ -124,6 +125,7 @@ public class Duke {
         }
     }
 
+    //TODO: Update the parameters to new TaskList Object
     public static void eventExceptionHandler(String userInput, ArrayList<Task> taskList) {
         try {
             ui.printEvent(userInput, taskList);
@@ -157,6 +159,7 @@ public class Duke {
         }
     }
 
+    //TODO: Update the parameters to new TaskList Object
     public static void todoExceptionHandler(String userInput, ArrayList<Task> arrayList) {
         try {
             ui.printTodo(userInput, taskList);
@@ -173,6 +176,7 @@ public class Duke {
         }
     }
 
+    //TODO: Update the parameters to new TaskList Object
     public static void deleteExceptionHandler(String userInput, ArrayList<Task> arrayList) {
         try {
             deleteTask(userInput, arrayList);
@@ -193,11 +197,11 @@ public class Duke {
 //    final static int MAXTASKS = 100;
 //    public static Task[] taskList = new Task[MAXTASKS];
     public static  ArrayList<Task> taskList = new ArrayList<Task>();
-    public static Ui ui = new Ui();
     public static Scanner in = new Scanner(System.in);
     //public static String userInput;
     //public static exceptions.DukeException exceptionHandler;
     public static FileHandler fileObject = new FileHandler(System.getProperty("user.dir") + "/dukeData.txt");
+    public static Ui ui = new Ui();
 
     public static Boolean isExit = false;
 
@@ -205,23 +209,16 @@ public class Duke {
     public static void main(String[] args) {
         try {
             fileObject.createFile();
-            //fileObject.clearFile();
             taskList = fileObject.readFile();
         } catch (IOException e) {
             System.out.println("Unable to write to file");
         }
+        //Ui ui = new Ui(); cannot do this here yet
         ui.showWelcome();
         //ui.readCommand();     //Make user Input a member of the UI Class also
         while (!isExit) { // ensure that the loop can stay on forever if needed.
             ui.readCommand();
-
-            while(ui.getUserInput().equals("") || ui.getUserInput().equals(" ")) {
-                ui.printLine();
-                System.out.println("\tSorry please enter a valid input ");
-                ui.printLine();
-                ui.readCommand();
-            }
-
+            ui.nullChecker();
             if(ui.getUserInput().equals("bye")) { // exit command
                 isExit=true;
             } else if(ui.getUserInput().equals("list")) { //displays the list if needed

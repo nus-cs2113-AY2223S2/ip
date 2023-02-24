@@ -36,6 +36,7 @@ public class Ui {
         System.out.println("\t---------------------------------------------------------------------------------");
     }
 
+    //TODO: Update the parameters to new TaskList Object
     public void listTasks(ArrayList<Task> taskList) {
         for(int i = 0; i< taskList.size();i+=1) {
             System.out.println('\t' + Integer.toString(i+1) + "." + taskList.get(i).getStatusAndDescription());
@@ -43,18 +44,8 @@ public class Ui {
         }
     }
 
+    //TODO: Update the parameters to new TaskList Object
     public void printMarkedTask(String userInput, ArrayList<Task> taskList, FileHandler fileObject) {
-//        try {
-//            taskList.get(Integer.parseInt(userInput.split(" ")[1]) - 1).markTask();
-//        } catch (NumberFormatException e) {
-//            this.printLine();
-//            System.out.println("\tWhoops inputs must be numbers");
-//            this.printLine();
-//        } catch (IndexOutOfBoundsException e) {
-//            this.printLine();
-//            System.out.println("\tWhoops inputs must be valid");
-//            this.printLine();
-//        }
         this.printLine();
         System.out.println("\tNice! I've marked this task as done:");
         taskList.get(Integer.parseInt(userInput.split(" ")[1]) - 1).markTask(); //modifying element in the tasklist
@@ -67,6 +58,7 @@ public class Ui {
         this.printLine();
     }
 
+    //TODO: Update the parameters to new TaskList Object
     public void printUnmarkedTask(String userInput, ArrayList<Task> taskList, FileHandler fileObject) {
         this.printLine();
         System.out.println("\tNice! I've marked this task as not done:");
@@ -88,6 +80,7 @@ public class Ui {
         }
     }
 
+    //TODO: Update the parameters to new TaskList Object
     public void printTodo(String userInput, ArrayList<Task> taskList) throws EmptyTodo {
         String[] holder = parser.getTodo(userInput);
         if(holder.length<2)
@@ -102,6 +95,7 @@ public class Ui {
         this.printLine();
     }
 
+    //TODO: Update the parameters to new TaskList Object
     public void printDeadline(String userInput, ArrayList<Task> taskList) throws EmptyDeadline, DeadlineMissingPhrase, DeadlineIsBlank {
         this.printLine();
         String[] deadlineAndDescription = parser.getDeadline(userInput);
@@ -118,6 +112,7 @@ public class Ui {
         this.printLine();
     }
 
+    //TODO: Update the parameters to new TaskList Object
     public void printEvent(String userInput, ArrayList<Task> taskList) throws EmptyEvent, EventMissingBothPhrases, EventMissingToPhrase, EventMissingFromPhrase, EventFromIsBlank, EventToIsBlank {
         this.printLine();
         String [] eventDescription = parser.getEvent(userInput);
@@ -161,6 +156,15 @@ public class Ui {
         this.printLine();
         System.out.println("\tbye - to exit the program!");
         this.printLine();
+    }
+    
+    public void nullChecker() {
+        while(this.getUserInput().equals("") || this.getUserInput().equals(" ")) {
+            this.printLine();
+            System.out.println("\tSorry please enter a valid input ");
+            this.printLine();
+            this.readCommand();
+        }
     }
 
 
