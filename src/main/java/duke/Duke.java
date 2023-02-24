@@ -5,7 +5,6 @@ public class Duke {
 
     private static final String HELLO_IM_DUKE = "Hello! I'm Duke";
     private static final String KEYWORD_TO_SEE_THE_INSTRUCTIONS = "Please type 'help' if you want to see the instructions";
-
     private static final String ASKING_MESSAGE = "What can I do for you?";
     public static final String MEANINGLESS_SENTENCE_AFTER_KEYWORD = "OPPS!!! The sentence after keyword has no meaning";
     public static String userInput;

@@ -1,7 +1,7 @@
 package duke.keycommands;
-import duke.Common;
-import duke.Task;
 
+import duke.Common;
+import duke.tasktypes.Task;
 import java.io.IOException;
 
 public class DeleteCommand {
@@ -31,15 +31,7 @@ public class DeleteCommand {
             } else {
                 Task item = Common.tasks.get(taskNumber - 1);
                 System.out.println(REMOVE_MESSAGE);
-                if (item.getClassSymbol().equals("[T]")) {
-                    System.out.println(item.getClassSymbol() + item.getMarkingStatus() + " " + item.getContent());
-                } else if (item.getClassSymbol().equals("[D]")) {
-                    System.out.println(item.getClassSymbol() + item.getMarkingStatus() + " " + item.getContent()
-                            + "(by: " + item.getDate() + ")");
-                } else if (item.getClassSymbol().equals("[E]")) {
-                    System.out.println(item.getClassSymbol() + item.getMarkingStatus() + " " + item.getContent()
-                            + "(from: " + item.getBeginDate() + " to: " + item.getEndDate() + ")");
-                }
+                System.out.println(item.printTask());
                 Common.tasks.remove(taskNumber - 1);
                 System.out.println("Now you have " + Common.tasks.size() + " tasks in the list");
                 try {

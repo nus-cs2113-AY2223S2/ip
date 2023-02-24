@@ -1,9 +1,7 @@
-package duke;
+package duke.tasktypes;
 
-import java.util.ArrayList;
-
-public class Task {
-    private String content;
+public abstract class Task {
+    protected String content;
     private boolean isMarked;
 
     public Task(String content) {
@@ -27,20 +25,15 @@ public class Task {
         return this.content;
     }
 
-    public String getClassSymbol() {
-        return "";
+    public String convertMarkingStatusToNumber() {
+        if (this.getMarkingStatus().equals("[ ]")) {
+            return "0";
+        } else {
+            return "1";
+        }
     }
 
-    public String getDate() {
-        return "";
-    }
+    public abstract String printTask();
 
-    public String getBeginDate() {
-        return "";
-    }
-
-    public String getEndDate() {
-        return "";
-    }
-
+    public abstract String putInputToDataFile();
 }

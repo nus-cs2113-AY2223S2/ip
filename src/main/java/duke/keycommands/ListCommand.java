@@ -1,7 +1,7 @@
 package duke.keycommands;
 
 import duke.Common;
-import duke.Task;
+import duke.tasktypes.Task;
 
 public class ListCommand {
     public ListCommand() {
@@ -13,16 +13,8 @@ public class ListCommand {
             Task item = Common.tasks.get(i);
             if (item == null) {
                 break;
-            } else if (item.getClassSymbol().equals("[T]")) {
-                System.out.println((i + 1) + "." + item.getClassSymbol()
-                        + item.getMarkingStatus() + " " + item.getContent());
-            } else if (item.getClassSymbol().equals("[D]")) {
-                System.out.println((i + 1) + "." + item.getClassSymbol()
-                        + item.getMarkingStatus() + " " + item.getContent() + "(by: " + item.getDate() + ")");
-            } else if (item.getClassSymbol().equals("[E]")) {
-                System.out.println((i + 1) + "." + item.getClassSymbol()
-                        + item.getMarkingStatus() + " " + item.getContent() + "(from: " + item.getBeginDate()
-                        + " to: " + item.getEndDate() + ")");
+            } else {
+                System.out.println((i + 1) + "." + item.printTask());
             }
         }
     }

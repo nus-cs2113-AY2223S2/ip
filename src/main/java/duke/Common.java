@@ -1,4 +1,7 @@
 package duke;
+import duke.file.FileClass;
+import duke.tasktypes.Task;
+
 import java.util.ArrayList;
 
 public class Common {

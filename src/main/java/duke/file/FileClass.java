@@ -1,4 +1,4 @@
-package duke;
+package duke.file;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -7,9 +7,12 @@ import java.util.regex.Pattern;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import duke.keycommands.Deadline;
-import duke.keycommands.Event;
-import duke.keycommands.ToDo;
+import duke.Common;
+import duke.tasktypes.Deadline;
+import duke.tasktypes.Event;
+import duke.tasktypes.ToDo;
+import duke.tasktypes.Task;
+
 public class FileClass {
     public File directory;
     public File file;

@@ -1,8 +1,9 @@
 package duke.keycommands;
 
 import duke.Common;
-import duke.Task;
+import duke.tasktypes.Task;
 import duke.exception.EmptyDescription;
+import duke.tasktypes.ToDo;
 
 public class TodoCommand {
     private String[] separatedKeyWordAndContent;
@@ -44,15 +45,7 @@ public class TodoCommand {
         System.out.println(ADDING_TASK);
         System.out.println("[T][] " + content);
         System.out.println("Now you have " + Common.tasks.size() + " tasks in the list.");
-        String inputToDataFile = "T | " + convertMarkingStatusToNumber(task) + " | " + task.getContent() + "\n";
-        Common.dataFile.appendTaskToDataFile(inputToDataFile);
+        Common.dataFile.appendTaskToDataFile(task.putInputToDataFile());
     }
 
-    private String convertMarkingStatusToNumber(Task task) {
-        if (task.getMarkingStatus().equals("[ ]")) {
-            return "0";
-        } else {
-            return "1";
-        }
-    }
 }
