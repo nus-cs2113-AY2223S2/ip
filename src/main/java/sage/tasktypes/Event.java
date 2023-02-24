@@ -1,5 +1,9 @@
 package sage.tasktypes;
 
+/**
+ * A class that represents an event task
+ */
+
 public class Event extends Task {
 
     private String startWhen = "";
