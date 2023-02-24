@@ -1,8 +1,11 @@
+package helpers;
+
+import corefunctionalities.TaskList;
 import exceptions.*;
 
 public class ExceptionGenerator {
     protected Parser parser = new Parser();
-    ExceptionGenerator () {}
+    public ExceptionGenerator () {}
     public void todoExceptionGenerator(String [] holder) throws EmptyTodo {
         if(holder.length<2)
         {

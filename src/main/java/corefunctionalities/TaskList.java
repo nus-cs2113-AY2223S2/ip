@@ -1,10 +1,14 @@
+package corefunctionalities;
+
+import dataypes.Task;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class TaskList {
     ArrayList<Task> taskList;
 
-    TaskList(FileHandler fileObject) {
+    public TaskList(FileHandler fileObject) {
         try {
             taskList = fileObject.readFile();
         } catch (IOException e) {

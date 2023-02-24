@@ -1,10 +1,16 @@
+package corefunctionalities;
+
 import exceptions.*;
+import helpers.Command;
+import helpers.Parser;
 
 import java.io.IOException;
 
 public class ExceptionHandler {
     protected Ui ui = new Ui();
     protected Command command = new Command();
+    protected Parser parser = new Parser();
+    protected boolean isExit = false;
     public void deadlineExceptionHandler(String userInput, TaskList taskList, FileHandler fileObject) {
         try {
             command.commandDeadline(userInput, taskList, fileObject);
@@ -116,6 +122,35 @@ public class ExceptionHandler {
             ui.printLine();
             System.out.println("\tNice try, enter a valid Number to unmark:");
             ui.printLine();
+        }
+    }
+
+    public boolean isExit() {
+        return isExit;
+    }
+
+    public void execute(String userInput, TaskList taskList, FileHandler fileObject) {
+        if(userInput.equals("bye")) { // exit command
+            isExit=true;
+        } else if(userInput.equals("list")) { //displays the list if needed
+            command.commandlistTasks(taskList);
+        } else if (parser.isTheSame(userInput, "mark")) { //mark the task in
+            this.markExceptionHandler(userInput, taskList, fileObject);
+        } else if (parser.isTheSame(userInput, "unmark")) {//unmark the task
+            this.unMarkExceptionHandler(ui.userInput, taskList, fileObject);
+        } else if(parser.isTheSame(userInput, "todo")) {
+            this.todoExceptionHandler(userInput, taskList, fileObject);
+        } else if(parser.isTheSame(userInput, "deadline")) {
+            this.deadlineExceptionHandler(userInput, taskList, fileObject);
+        } else if(parser.isTheSame(userInput, "event")) {
+            this.eventExceptionHandler(userInput, taskList, fileObject);
+        } else if(parser.isTheSame(userInput, "delete")) {
+            this.deleteExceptionHandler(userInput, taskList, fileObject);
+        }  else if (parser.isTheSame(userInput,"help")) {
+            command.commandHelp();
+        } else { // tells the user that we have added the task in
+            //printTask(userInput); // could remove this and ensure that only specific tasks can be entered!
+            ui.validCommand();
         }
     }
 }
