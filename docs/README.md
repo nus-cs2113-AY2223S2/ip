@@ -4,7 +4,7 @@
 is used specifically via a **Command Line Interface(CLI)** and thus may work better than applications that uses
 a Graphical User Interface(GUI) for users who can type fast.
    
-   ### **Table of Contents:**
+   ### Table of Contents:
    1. Quick Start
    2. Features
       1. List all tasks: `list`
@@ -159,17 +159,17 @@ the **Duke** program is abruptly terminated, current progress **will not** be sa
 version of the task list, if any.
 
 ## Command Summary
-|  Command   |                                                   Format                                                   |
-|:----------:|:----------------------------------------------------------------------------------------------------------:|
-|   `list`   |                                                   `list`                                                   |
-|   `find`   |                                      `find INDEX`<br/>e.g., `find 3`                                       |
-|   `mark`   |                                       `mark INDEX`<br/>e.g, `mark 1`                                       |
-|  `unmark`  |                                    `unmark INDEX`<br/>e.g., `unmark 5`                                     |
-|  `delete`  |                                    `delete INDEX`<br/>e.g., `delete 2`                                     |
-|   `todo`   |                                 `todo DESCRIPTION`<br/>e.g., `todo sleep`                                  |
-| `deadline` |      `deadline DESCRIPTION /by DUEDATE`<br/>e.g., `deadline Do CS2113 Assignment /by 1st March 2023`       |
-|  `event`   | `event DESCRIPTION /from STARTDATE /to ENDDATE`<br/>e.g., `event Attend John's Birthday /from 6pm /to 9pm` |
-|   `bye`    |                                                   `bye`                                                    |
+| Command    | Format                                                                                                     |
+|:-----------|:-----------------------------------------------------------------------------------------------------------|
+| `list`     | `list`                                                                                                     |
+| `find`     | `find INDEX`<br/>e.g., `find 3`                                                                            |
+| `mark`     | `mark INDEX`<br/>e.g, `mark 1`                                                                             |
+| `unmark`   | `unmark INDEX`<br/>e.g., `unmark 5`                                                                        |
+| `delete`   | `delete INDEX`<br/>e.g., `delete 2`                                                                        |
+| `todo`     | `todo DESCRIPTION`<br/>e.g., `todo sleep`                                                                  |
+| `deadline` | `deadline DESCRIPTION /by DUEDATE`<br/>e.g., `deadline Do CS2113 Assignment /by 1st March 2023`            |
+| `event`    | `event DESCRIPTION /from STARTDATE /to ENDDATE`<br/>e.g., `event Attend John's Birthday /from 6pm /to 9pm` |
+| `bye`      | `bye`                                                                                                      |
 
 
 
