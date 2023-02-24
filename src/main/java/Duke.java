@@ -19,10 +19,10 @@ public class Duke {
     public static final Ui dukeUserInterface = new Ui();
 
     /**Instance to parse all user inputs.*/
-    public static final Parser dukeUserInputParser = new Parser(list, listSize);
+    public static final Parser dukeUserInputParser = new Parser();
 
     /**Instance to handle all data storage related operations in the Duke Program.*/
-    public static final Storage dukeDataStorage = new Storage(list, listSize);
+    public static final Storage dukeDataStorage = new Storage();
 
     /**
      * Executes the "Duke" program.
@@ -30,9 +30,9 @@ public class Duke {
      * @param args The command line arguments.
      */
     public static void main(String[] args) {
-        Scanner userInput = new Scanner(System.in);
         retrieveFileData();
         dukeUserInterface.greetUser();
+        Scanner userInput = new Scanner(System.in);
         dukeUserInputParser.obtainUserInputs(list, listSize, userInput);
         saveDataToFile();
     }
