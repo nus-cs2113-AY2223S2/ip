@@ -1,3 +1,9 @@
+---
+title: About
+layout: template
+filename: README.md
+--- 
+
 # User Guide
 
 Duke is a Command Line Interface based task tracker. This program can help you organise your tasks to keep
@@ -43,6 +49,8 @@ You can add three types of tasks:
 ### Feature-Modifiers
 
 Ability to interact with the tasks:
+
+Go to [Adding Tasks](AddingTasks.md)
 
 - Delete a task
 - Mark a task as done
