@@ -1,3 +1,5 @@
+# Adding Tasks
+
 ## Usage
 
 ### `todo [description]` - Creates a new todo task

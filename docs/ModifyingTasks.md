@@ -1,3 +1,5 @@
+# Modifying Tasks
+
 ## Usage
 
 ### `delete [index]` - deletes a task at index

@@ -1,3 +1,5 @@
+# Displaying Tasks
+
 ## Usage
 
 ### `list`, `ls` - lists all current tasks
