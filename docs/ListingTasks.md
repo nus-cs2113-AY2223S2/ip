@@ -1,4 +1,6 @@
-# Displaying Tasks
+---
+title: Displaying Tasks
+---
 
 ## Usage
 

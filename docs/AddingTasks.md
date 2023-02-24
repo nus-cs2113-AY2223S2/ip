@@ -1,4 +1,6 @@
-# Adding Tasks
+---
+title: Adding Tasks
+---
 
 ## Usage
 
