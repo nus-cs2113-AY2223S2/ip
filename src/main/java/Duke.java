@@ -11,7 +11,6 @@ public class Duke {
         task_Array = new Task[110];
         boolean isRunning = true;
 
-
         while (isRunning) {
             Scanner command = new Scanner(System.in);
             String input_Command = command.nextLine();
@@ -75,7 +74,7 @@ public class Duke {
             case "list":
                 System.out.println("Here are the tasks in your list:");
                 for (int i = 0; i < counter; i = i + 1) {
-                    System.out.println((i + 1) + ". " + task_Array[i+1]);
+                    System.out.println((i + 1) + ". " + task_Array[i]);
                 }
                 break;
 
