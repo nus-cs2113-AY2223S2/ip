@@ -1,5 +1,9 @@
 package duke;
 
+import duke.exceptions.FormatException;
+import duke.exceptions.InvalidCommandException;
+import duke.exceptions.NoDescriptionException;
+
 import java.util.Scanner;
 import java.util.ArrayList;
 

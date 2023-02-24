@@ -1,5 +1,7 @@
 package duke;
 
+import duke.exceptions.NoDescriptionException;
+
 import java.util.ArrayList;
 
 public class TaskList {

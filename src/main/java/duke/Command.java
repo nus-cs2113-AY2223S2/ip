@@ -1,5 +1,8 @@
 package duke;
 
+import duke.exceptions.FormatException;
+import duke.exceptions.NoDescriptionException;
+
 import java.util.ArrayList;
 
 public class Command {
