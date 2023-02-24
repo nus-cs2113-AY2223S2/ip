@@ -1,24 +1,96 @@
-# Duke project template
+# Vivy bot
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+Vivy is a Command Line Interface (CLI) program that is based off the Duke bot. It allows users to record down different types of tasks, keeping track of what to do and what has or has not been done.
 
-## Setting up in Intellij
+## Features
 
-Prerequisites: JDK 11, update Intellij to the most recent version.
+### Viewing list of tasks: `list`
+Displays all the current tasks in your list in the terminal.
 
-1. Open Intellij (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project first)
-1. Open the project into Intellij as follows:
-   1. Click `Open`.
-   1. Select the project directory, and click `OK`.
-   1. If there are any further prompts, accept the defaults.
-1. Configure the project to use **JDK 11** (not other versions) as explained in [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).<br>
-   In the same dialog, set the **Project language level** field to the `SDK default` option.
-3. After that, locate the `src/main/java/Duke.java` file, right-click it, and choose `Run Duke.main()` (if the code editor is showing compile errors, try restarting the IDE). If the setup is correct, you should see something like the below as the output:
-   ```
-   Hello from
-    ____        _        
-   |  _ \ _   _| | _____ 
-   | | | | | | | |/ / _ \
-   | |_| | |_| |   <  __/
-   |____/ \__,_|_|\_\___|
-   ```
+Input: `list`
+
+Output:
+```
+____________________________________________________________
+ Here are the tasks in your list:
+ 1. TASK 1
+ 2. TASK 2
+____________________________________________________________
+```
+
+<br />
+
+### Marking a task as done: `mark`
+Marks a specified task in your list as done.
+
+Input: `mark TASK_NUMBER`
+
+Output:
+```
+____________________________________________________________
+ Understood. I've marked this task as done:
+ [T][X] TASK DESCRIPTION 
+____________________________________________________________
+```
+
+<br />
+
+### Marking a task as not done: `unmark`
+Marks a specified task in your list as not done.
+
+Input: `unmark TASK_NUMBER`
+
+Output:
+```
+____________________________________________________________
+ Understood. I've marked this task as not done yet:
+ [T][ ] TASK DESCRIPTION
+____________________________________________________________
+```
+
+<br />
+
+### Deleting a task: `delete`
+Deletes a task from your list.
+
+Input: `delete TASK_NUMBER`
+
+Output:
+```
+____________________________________________________________
+ Understood. I have removed this task:
+	[T][ ] TASK DESCRIPTION
+ You now have NUMBER_OF_TASKS tasks in your list.
+____________________________________________________________
+```
+
+<br />
+
+### Finding tasks containing a keyword: `find`
+Finds the tasks in your list that contain a specified keyword.
+
+Input: `find KEYWORD`
+
+Output:
+```
+____________________________________________________________
+ Here are the matching tasks in your list:
+ 1.[T][ ] TASK DESCRIPTION
+ 2.[T][ ] TASK DESCRIPTION 
+____________________________________________________________
+```
+
+<br />
+
+### Closing the program: `bye`
+Shuts down the Vivy bot.
+
+Input: `bye`
+
+Output:
+```
+____________________________________________________________
+ Bye. Hope to see you again soon!
+____________________________________________________________
+
+```
