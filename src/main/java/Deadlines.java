@@ -1,4 +1,4 @@
-public class Deadlines extends Task{
+public class Deadlines extends Task {
     protected String deadline;
     public Deadlines(String description, String deadline) {
         super(description);
@@ -7,6 +7,10 @@ public class Deadlines extends Task{
     public String getIcon(){
         return "D";
     }
-    public String getDeadline(){return deadline;}
-    public void setDeadline(String newDeadline){deadline = newDeadline;}
+    public String getDeadline() {
+        return deadline;
+    }
+    public void setDeadline(String newDeadline) {
+        deadline = newDeadline;
+    }
 }

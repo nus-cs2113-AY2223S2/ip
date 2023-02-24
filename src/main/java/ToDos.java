@@ -1,8 +1,8 @@
-public class ToDos extends Task{
+public class ToDos extends Task {
     public ToDos(String description) {
         super(description);
     }
-    public String getIcon(){
+    public String getIcon() {
         return "T";
     }
 }

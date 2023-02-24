@@ -11,18 +11,26 @@ public class Task {
         return (isDone ? "X" : " "); // mark done task with X
     }
 
-    public void markAsDone(){
+    public void markAsDone() {
         isDone = true;
     }
 
-    public void markAsNotDone(){isDone = false;}
+    public void markAsNotDone() {
+        isDone = false;
+    }
 
-    public String getIcon(){
+    public String getIcon() {
         return " ";
     }
 
-    public String getStart(){return "";}
-    public String getEnd(){return "";}
-    public String getDeadline(){return "";}
+    public String getStart() {
+        return "";
+    }
+    public String getEnd() {
+        return "";
+    }
+    public String getDeadline() {
+        return "";
+    }
 }
 

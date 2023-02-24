@@ -1,4 +1,4 @@
-public class Events extends Task{
+public class Events extends Task {
     protected String start;
     protected String end;
     public Events(String description, String start, String end) {
@@ -9,8 +9,16 @@ public class Events extends Task{
     public String getIcon(){
         return "E";
     }
-    public String getStart(){ return start; }
-    public String getEnd(){ return end; }
-    public void setStart(String newStart){start = newStart;}
-    public void setEnd(String newEnd){end = newEnd;}
+    public String getStart() {
+        return start;
+    }
+    public String getEnd() {
+        return end;
+    }
+    public void setStart(String newStart) {
+        start = newStart;
+    }
+    public void setEnd(String newEnd) {
+        end = newEnd;
+    }
 }
