@@ -12,12 +12,23 @@ import java.io.FileNotFoundException;
 public class Storage {
     private static final String saveFilePath = "./data/duke.txt";
 
+    /**
+     * Writes a specific content to a file that is provided
+     * 
+     * @param filePath The path to the file that is going to be written on
+     * @param content A string that summarises the content to be written to the file
+     */
     public void writeToFile(String filePath, String content) throws IOException {
         FileWriter fw = new FileWriter(filePath);
         fw.write(content);
         fw.close();
     }
 
+    /**
+     * Saves all task that currently exists in the pre-determined save file
+     * 
+     * @param itemList The TaskList instance to be saved into the file
+     */
     public void save(TaskList itemList) throws IOException {
         // create directory and file if they dont exist
         File fileObj = new File(saveFilePath);
@@ -31,7 +42,12 @@ public class Storage {
     }
 
 
-
+    /**
+     * Loads all task from the pre-determined save file into the TaskList instance
+     * It appends to the TaskList (does not destroy the previously added tasks)
+     * 
+     * @param itemList The TaskList instance to be loaded into the file
+     */
     public void load(TaskList itemList) throws FileNotFoundException {
         File loadFile = new File(saveFilePath);
         Scanner fileScanner = new Scanner(loadFile);
