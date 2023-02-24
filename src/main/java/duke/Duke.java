@@ -5,7 +5,8 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Duke {
-    static String FILEPATH = "data/duke.txt";
+    private Ui ui;
+    static String FILEPATH = "duke.txt";
     private static int taskCount = 0;
     static ArrayList <Task> tasks = new ArrayList<>();
 
@@ -332,10 +333,10 @@ public class Duke {
         }
         printLine();
     }
-
-    public static void main(String[] args) {
-        greet();
-        String s = inputCommand();
+    public void run(String[] launchArgs) {
+        this.ui = new Ui();
+        ui.showWelcomeMessage();
+        String s = ui.getUserCommand();
         while (!s.equals("bye")) {
             try {
                 process(s);
@@ -345,6 +346,10 @@ public class Duke {
             }
             s = inputCommand();
         }
-        goodBye();
+        ui.showGoodByeMessage();
+    }
+
+    public static void main(String[] args) {
+        new Duke().run(args);
     }
 }
