@@ -25,7 +25,7 @@ public class TaskList {
     // create deadline
     public Deadline createDeadline(String taskInfo) {
         String description, deadline;
-        String[] info = taskInfo.split("#by", 2);
+        String[] info = taskInfo.split("#by ", 2);
         description = info[0];
         deadline = info[1];
         return new Deadline(description, deadline);
@@ -41,8 +41,8 @@ public class TaskList {
     // create new event
     public Event createEvent(String taskInfo) {
         String description, from, to;
-        String[] info = taskInfo.split("#from", 2);
-        String[] timeInfo = info[1].split("#to", 2);
+        String[] info = taskInfo.split("#from ", 2);
+        String[] timeInfo = info[1].split("#to ", 2);
         description = info[0];
         from = timeInfo[0];
         to = timeInfo[1];
