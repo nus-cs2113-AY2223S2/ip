@@ -6,73 +6,32 @@ import java.util.ArrayList;
 
 public class Duke {
     private Ui ui;
+    private Storage storage;
     static String FILEPATH = "duke.txt";
     private static int taskCount = 0;
     static ArrayList <Task> tasks = new ArrayList<>();
 
     public static void addTask(Task t) {
         tasks.add(t);
-        taskCount++;
     }
     public static void deleteTask(String commandArgs) throws NoDescriptionException, IndexOutOfBoundsException{
         if (commandArgs.trim().length() == 0) {
             throw new NoDescriptionException();
         }
         final int deleteId = Integer.parseInt(commandArgs) - 1;
-        if (deleteId < 0 || deleteId >= taskCount) {
+        if (deleteId < 0 || deleteId >= tasks.size()) {
             throw new IndexOutOfBoundsException();
         }
         System.out.println("I've deleted this task ∪･ω･∪:");
         System.out.println(tasks.get(deleteId));
         printLine();
         tasks.remove(deleteId);
-        taskCount--;
     }
 
     public static void printLine() {
         System.out.println("____________________________________________________________");
     }
 
-    public static void greet() {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);
-        try {
-            printFileContents(FILEPATH);
-        } catch (FileNotFoundException e) {
-            System.out.println("No previous file, Duke will try to create a file to store your data.");
-            try {
-                new File(FILEPATH).createNewFile();
-            } catch (IOException ioe) {
-                throw new RuntimeException("Creation of file failed.", ioe);
-            }
-        }
-        printLine();
-        System.out.println("Hello! I'm Duke  U ´ᴥ` U\n" + "What can I do for you?");
-        printLine();
-    }
-    private static void writeToFile(String filePath) throws IOException {
-        BufferedWriter outputWriter;
-        outputWriter = new BufferedWriter(new FileWriter(filePath));
-        for (int i = 0; i < taskCount; i += 1) {
-            outputWriter.write(tasks.get(i).toString() + System.lineSeparator());
-        }
-        outputWriter.flush();
-        outputWriter.close();
-    }
-    public static void goodBye() {
-        try {
-            writeToFile(FILEPATH);
-        } catch (IOException e) {
-            System.out.println("Something went wrong: " + e.getMessage());
-        }
-        printLine();
-        System.out.println("Bye. Hope to see you again soon!ﾉ~");
-        printLine();
-    }
 
     public static void info() {
         printLine();
@@ -84,56 +43,6 @@ public class Duke {
         System.out.println("Type: [unmark] [number], and the system will unmark the item of the number.");
         System.out.println("Type: bye, to say goodbye to Duke!");
         System.out.println("Hope it helps!! woof a nice day ੯•໒꒱❤︎");
-        printLine();
-    }
-
-    private static void printFileContents(String filePath) throws FileNotFoundException {
-        File f = new File(filePath);
-        Scanner s = new Scanner(f);
-        System.out.println("These are the task from your file: ");
-        while (s.hasNext()) {
-            String task = s.nextLine();
-            System.out.println(task);
-            String type = task.substring(1,2);
-            final int descriptionId = task.lastIndexOf("]");
-            String taskDescription = task.substring(descriptionId+1).trim().replace("(", "").replace(")", "");
-            final int doneId = task.indexOf("[X]");
-            switch(type) {
-            case "T":
-                try {
-                    addTodo(taskDescription);
-                    if (doneId != -1) {
-                        tasks.get(taskCount-1).markAsDone();
-                    }
-                } catch (NoDescriptionException e) {
-                    System.out.println("WOOFS!!! Something went wrong");
-                    printLine();
-                }
-                break;
-            case "E":
-                try {
-                    addEvent(taskDescription);
-                    if (doneId != -1) {
-                        tasks.get(taskCount-1).markAsDone();
-                    }
-                } catch (NoDescriptionException | FormatException e) {
-                    System.out.println("WOOFS!!! Something went wrong");
-                    printLine();
-                }
-                break;
-            case "D":
-                try {
-                    addDeadline(taskDescription);
-                    if (doneId != -1) {
-                        tasks.get(taskCount-1).markAsDone();
-                    }
-                } catch (NoDescriptionException | FormatException e) {
-                    System.out.println("WOOFS!!! Something went wrong");
-                    printLine();
-                }
-                break;
-            }
-        }
         printLine();
     }
 
@@ -150,8 +59,8 @@ public class Duke {
             try {
                 addTodo(commandArgs);
                 printLine();
-                System.out.println("Got it. I've added this task: \n" + tasks.get(taskCount-1));
-                System.out.println("Now you have " + taskCount + " tasks in your list.");
+                System.out.println("Got it. I've added this task: \n" + tasks.get(tasks.size()-1));
+                System.out.println("Now you have " + tasks.size() + " tasks in your list.");
                 printLine();
             } catch (NoDescriptionException e) {
                 System.out.println("WOOFS!!! The description of a todo cannot be empty.");
@@ -163,8 +72,8 @@ public class Duke {
             try {
                 addDeadline(commandArgs);
                 printLine();
-                System.out.println("Got it. I've added this task: \n" + tasks.get(taskCount-1));
-                System.out.println("Now you have " + taskCount + " tasks in your list.");
+                System.out.println("Got it. I've added this task: \n" + tasks.get(tasks.size()-1));
+                System.out.println("Now you have " + tasks.size() + " tasks in your list.");
                 printLine();
             } catch (NoDescriptionException e) {
                 System.out.println("WOOFS!!! The description of a deadline cannot be empty.");
@@ -180,8 +89,8 @@ public class Duke {
             try {
                 addEvent(commandArgs);
                 printLine();
-                System.out.println("Got it. I've added this task: \n" + tasks.get(taskCount-1));
-                System.out.println("Now you have " + taskCount + " tasks in your list.");
+                System.out.println("Got it. I've added this task: \n" + tasks.get(tasks.size()-1));
+                System.out.println("Now you have " + tasks.size() + " tasks in your list.");
                 printLine();
             } catch (NoDescriptionException e) {
                 System.out.println("WOOFS!!! The description of a event cannot be empty.");
@@ -256,7 +165,7 @@ public class Duke {
             throw new NoDescriptionException();
         }
         final int unmarkId = Integer.parseInt(commandArgs) - 1;
-        if (unmarkId < 0 || unmarkId >= taskCount) {
+        if (unmarkId < 0 || unmarkId >= tasks.size()) {
             throw new IndexOutOfBoundsException();
         }
         if (!tasks.get(unmarkId).isDone) {
@@ -274,7 +183,7 @@ public class Duke {
             throw new NoDescriptionException();
         }
         final int markId = Integer.parseInt(commandArgs) - 1;
-        if (markId < 0 || markId >= taskCount) {
+        if (markId < 0 || markId >= tasks.size()) {
             throw new IndexOutOfBoundsException();
         }
         if (tasks.get(markId).isDone) {
@@ -326,16 +235,19 @@ public class Duke {
     }
 
     private static void printListOfTasks() {
-        for (int i = 0; i < taskCount; i += 1) {
+        for (int i = 0; i < tasks.size(); i += 1) {
             System.out.print(i + 1);
             System.out.print(". ");
             System.out.println(tasks.get(i));
         }
         printLine();
     }
-    public void run(String[] launchArgs) {
+
+    public void run() {
         this.ui = new Ui();
+        this.storage = new Storage();
         ui.showWelcomeMessage();
+        storage.initializeStorage(tasks, FILEPATH);
         String s = ui.getUserCommand();
         while (!s.equals("bye")) {
             try {
@@ -347,9 +259,11 @@ public class Duke {
             s = inputCommand();
         }
         ui.showGoodByeMessage();
+        storage.storeChanges(FILEPATH, tasks);
     }
 
+
     public static void main(String[] args) {
-        new Duke().run(args);
+        new Duke().run();
     }
 }
