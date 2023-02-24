@@ -25,6 +25,7 @@ public class TaskList {
     public void MarkStatusAsDone(int taskNumber) {
         tasks.get(tasks.size() - 1).MarkStatusDone();
     }
+
     /*
      * =================================================================================
      *                      Declaration of tasks ArrayList, print Tasks
@@ -48,8 +49,6 @@ public class TaskList {
          System.out.println("\tNow you have " + tasks.size() + " tasks in the list.");
          Greeting.printSeperator();
      }
- 
- 
  
      /*
       * =================================================================================
@@ -86,5 +85,76 @@ public class TaskList {
                  "\t\t" + taskToBeRemoved.printTask());
          Greeting.printSeperator();
      }
- 
+     
+     /*
+     * =================================================================================
+     *                      Adding of New Tasks (Todo/ Deadline/ Event)
+     *                                      vvvvvvvvvv
+     * =================================================================================
+     */
+
+    public void addTodo(String userInput) throws IllegalInputException {
+
+        String todoTask = userInput.substring(4).trim();
+        if (todoTask == "") {
+            throw new IllegalInputException();
+        }
+        tasks.add(new Todo (todoTask));
+
+        return;
+    }
+
+    public void addDeadline(String userInput) throws IllegalInputException, MissingCommandException, IllegalDayException {
+
+        if ((userInput.indexOf("/by") < 0 )){
+            throw new MissingCommandException();
+        }
+        String deadlineTask = userInput.substring(8, userInput.indexOf("/by")).trim();
+        if (deadlineTask == "") {
+            throw new IllegalInputException();
+        }
+        String deadlineDay = userInput.substring(userInput.indexOf("/by") + 3).trim();
+        if (deadlineDay == "") {
+            throw new IllegalDayException();
+        }
+        tasks.add(new Deadline(deadlineTask, deadlineDay));
+
+        /*
+        try {
+            writeToFile("T:0:"+deadlineTask+":"+deadlineDay);
+        } catch (IOException e){
+            System.out.println(e);
+        }
+         */
+
+        return;
+    }
+
+    public void addEvent(String userInput) throws IllegalInputException, MissingCommandException, IllegalDayException {
+
+        if ((userInput.indexOf("/from") < 0 ) || (userInput.indexOf("/to") < 0 )){
+            throw new MissingCommandException();
+        }
+        String eventTask = userInput.substring(5, userInput.indexOf("/")).trim();
+        if (eventTask == "") {
+            throw new IllegalInputException();
+        }
+        String eventFrom = userInput.substring(userInput.indexOf("/from") + 5, userInput.indexOf("/to")).trim();
+        String eventTo = userInput.substring(userInput.indexOf("/to") + 3).trim();
+        if (eventFrom == "" || eventTo == "") {
+            throw new IllegalDayException();
+        }
+        tasks.add(new Event(eventTask, eventFrom, eventTo));
+
+        /*
+        try {
+            writeToFile("T:0:"+eventTask+":"+eventFrom+":"+eventTo);
+        } catch (IOException e){
+            System.out.println(e);
+        }
+        */
+
+        return;
+    }
+
 }
