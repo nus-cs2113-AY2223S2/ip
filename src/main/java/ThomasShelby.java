@@ -72,9 +72,9 @@ public class ThomasShelby {
         Scanner in = new Scanner(System.in);
         while (true) {
             try {
-                String cmd = in.nextLine();
-                String[] cmdSplit = cmd.split(" ", 2); // user input split into individual words
-                switch (cmdSplit[0]) {
+                String command = in.nextLine();
+                String[] parseCommand = Parser.parseCommand(command); // user input split into individual words
+                switch (parseCommand[0]) {
                 case "bye":
                     Data.saveData(taskManager);
                     System.out.println("Cheers.");
@@ -83,25 +83,25 @@ public class ThomasShelby {
                     listTasks(taskManager);
                     break;
                 case "todo":
-                    addToDo(cmdSplit);
+                    addToDo(parseCommand);
                     break;
                 case "deadline":
-                    addDeadline(cmdSplit);
+                    addDeadline(parseCommand);
                     break;
                 case "event":
-                    addEvent(cmdSplit);
+                    addEvent(parseCommand);
                     break;
                 case "mark":
-                    markTask(cmdSplit);
+                    markTask(parseCommand);
                     break;
                 case "unmark":
-                    unmarkTask(cmdSplit);
+                    unmarkTask(parseCommand);
                     break;
                 case "delete":
-                    deleteTask(cmdSplit);
+                    deleteTask(parseCommand);
                     break;
                 case "find":
-                    listTasks(findTask(cmdSplit));
+                    listTasks(findTask(parseCommand));
                     break;
                 default:
                     throw new Exception();
