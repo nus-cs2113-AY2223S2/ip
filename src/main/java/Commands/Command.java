@@ -6,7 +6,9 @@ import TaskItems.Deadline;
 import TaskItems.Todos;
 import UserInterface.UI;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Command {
     public String command;
@@ -17,38 +19,56 @@ public class Command {
 
     public void executeCommand(String UserInput, ArrayList<Todos> todoItems) {
 
-        if (this.command.equals("list")) {
-            UI.ListItems(todoItems);
-        } else if (this.command.equals("mark")) {
-            UI.Mark(UserInput, todoItems);
-            DukeFile.WriteToFile(todoItems);
-        } else if (this.command.equals("unmark")) {
-            UI.unMark(UserInput, todoItems);
-            DukeFile.WriteToFile(todoItems);
-        } else if (this.command.equals("event")) {
+        switch (this.command) {
+            case "list": {
+                UI.ListItems(todoItems);
+                break;
+            }
+            case "mark": {
+                UI.Mark(UserInput, todoItems);
+                DukeFile.WriteToFile(todoItems);
+                break;
+            }
+            case "unmark": {
+                UI.unMark(UserInput, todoItems);
+                DukeFile.WriteToFile(todoItems);
+                break;
+            }
+            case "event": {
 //            int count = new_tasks + 1;
-            UserInput = parseEventString.parseString(UserInput);
-            UI.addEvent(UserInput, todoItems);
-            DukeFile.WriteToFile(todoItems);
+                UserInput = parseEventString.parseString(UserInput);
+                UI.addEvent(UserInput, todoItems);
+                DukeFile.WriteToFile(todoItems);
 //            new_tasks++;
-        } else if (this.command.equals("deadline")) {
+                break;
+            }
+            case "deadline": {
 //            int count = new_tasks + 1;
-            UI.Deadline(UserInput, todoItems);
-            Deadline Item = new Deadline(UserInput, false, "D");
-            todoItems.add(Item);
-            DukeFile.WriteToFile(todoItems);
+                UI.Deadline(UserInput, todoItems);
+                LocalDate dueBy = handleDate.getDate(UserInput);
+                Deadline Item = new Deadline(UserInput, false, "D", dueBy);
+                todoItems.add(Item);
+                DukeFile.WriteToFile(todoItems);
 //            new_tasks++;
-        } else if (this.command.equals("todo")) {
-            Todos Item = new Todos(UserInput.substring(UserInput.indexOf((" "))), false, "T");
-            todoItems.add(Item);
-            UI.addTodo(todoItems, UserInput);
-            DukeFile.WriteToFile(todoItems);
+                break;
+            }
+            case "todo": {
+                Todos Item = new Todos(UserInput.substring(UserInput.indexOf((" "))), false, "T");
+                todoItems.add(Item);
+                UI.addTodo(todoItems, UserInput);
+                DukeFile.WriteToFile(todoItems);
 //            new_tasks++;
-        } else if (this.command.equals("delete")) {
-            UI.DeleteItem(todoItems, UserInput);
-            DukeFile.WriteToFile(todoItems);
-        } else {
-            UI.Error();
+                break;
+            }
+            case "delete": {
+                UI.DeleteItem(todoItems, UserInput);
+                DukeFile.WriteToFile(todoItems);
+                break;
+            }
+            default: {
+                UI.Error();
+                break;
+            }
         }
     }
 }

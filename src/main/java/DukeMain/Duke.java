@@ -27,7 +27,6 @@ public class Duke {
 
         ArrayList<Todos> todoItems = DukeFile.CreateFile();
 
-        int new_tasks = 0;
         while (!UserInput.equalsIgnoreCase("bye")) {
             if (!ErrorHandler.isInputValid(UserInput)) {
                 UserInput = UI.GetInput();
@@ -36,7 +35,6 @@ public class Duke {
             Command instruction = new Command(UserInput.split(" ")[0]);
             instruction.executeCommand(UserInput, todoItems);
             UserInput = UI.GetInput();
-
         }
         UI.sayBye();
     }
