@@ -1,116 +1,62 @@
-import java.io.IOException;
 import java.util.Scanner;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.io.File;
-import tasks.*;
+import java.io.IOException;
 
-import static java.util.stream.Collectors.toList;
-
+/**
+ * This <code>ThomasShelby</code> class is used to run the entire ThomasShelby bot application.
+ * It calls methods from various classes (TaskManager, Ui, Parser, and Data) to provide full feature functionality
+ * @version v0.2
+ * @since 2023-02-24
+ *
+ * @see TaskManager
+ * @see Ui
+ * @see Parser
+ * @see Data
+ */
 public class ThomasShelby {
-    static ArrayList<Task> taskManager = new ArrayList<>();
-
-    private static void listTasks(ArrayList<Task> taskList) {
-        System.out.println("Here are the tasks in your list:");
-        for (int i = 0; i < taskList.size(); i++) {
-            System.out.println((i + 1) + ". "
-                    + taskList.get(i));
-        }
-    }
-
-    private static void addToDo(String[] cmdSplit) {
-        ToDo newToDo = new ToDo(cmdSplit[1]);
-        taskManager.add(newToDo);
-        System.out.println("Don't sleep on it.\n" + "added: " + newToDo);
-    }
-
-    private static void addDeadline(String[] cmdSplit) {
-        String[] taskAndDeadline = cmdSplit[1].split("/", 2);
-        Deadline newDeadline = new Deadline(taskAndDeadline[0], taskAndDeadline[1]);
-        taskManager.add(newDeadline);
-        System.out.println("Time is money, chop chop!\n" + "added: " + newDeadline);
-    }
-
-    private static void addEvent(String[] cmdSplit) {
-        String[] taskAndDuration = cmdSplit[1].split("/");
-        Event newEvent = new Event(taskAndDuration[0], taskAndDuration[1], taskAndDuration[2]);
-        taskManager.add(newEvent);
-        System.out.println("I'll see you there.\n" + "added: " + newEvent);
-    }
-
-    private static void markTask(String[] cmdSplit) {
-        int whichTask = Integer.parseInt(cmdSplit[1]) - 1; // shift back index
-        taskManager.get(whichTask).setIsDone(true);
-        System.out.println("That was long due, well done.\n" + taskManager.get(whichTask));
-    }
-
-    private static void unmarkTask(String[] cmdSplit) {
-        int whichTask = Integer.parseInt(cmdSplit[1]) - 1; // shift back index
-        taskManager.get(whichTask).setIsDone(false);
-        System.out.println("You've gotten lazy.\n" + taskManager.get(whichTask));
-    }
-
-    private static void deleteTask(String[] cmdSplit) {
-        int whichTask = Integer.parseInt(cmdSplit[1]) - 1; // shift back index
-        Task taskToDelete = taskManager.get(whichTask); // store in temp var to print later
-        taskManager.remove(whichTask);
-        System.out.println("That's off the list: \n" + taskToDelete);
-        System.out.println("You're left with " + taskManager.size() + " tasks.");
-    }
-
-    private static ArrayList<Task> findTask(String[] cmdSplit) {
-        ArrayList<Task> filteredTaskList = (ArrayList<Task>) taskManager.stream()
-                .filter(task -> task.getDescription().contains(cmdSplit[1]))
-                .collect(toList());
-        return filteredTaskList;
-    }
-
     public static void main(String[] args) throws IOException {
-        System.out.print("Good day, I'm Thomas Shelby.\nTo what do I owe the pleasure?\n");
-        File data = new File("data/data.txt");
-        Data.loadData(taskManager);
+        Ui.printWelcomeMessage();
+        Data.loadData(TaskManager.taskManager);
         Scanner in = new Scanner(System.in);
         while (true) {
             try {
-                String cmd = in.nextLine();
-                String[] cmdSplit = cmd.split(" ", 2); // user input split into individual words
-                switch (cmdSplit[0]) {
+                String command = in.nextLine();
+                String[] parsedCommand = Parser.parseCommand(command);
+                switch (parsedCommand[0]) {
                 case "bye":
-                    Data.saveData(taskManager);
+                    Data.saveData(TaskManager.taskManager);
                     System.out.println("Cheers.");
                     return;
                 case "list":
-                    listTasks(taskManager);
+                    TaskManager.listTasks(TaskManager.taskManager);
                     break;
                 case "todo":
-                    addToDo(cmdSplit);
+                    TaskManager.addToDo(parsedCommand);
                     break;
                 case "deadline":
-                    addDeadline(cmdSplit);
+                    TaskManager.addDeadline(parsedCommand);
                     break;
                 case "event":
-                    addEvent(cmdSplit);
+                    TaskManager.addEvent(parsedCommand);
                     break;
                 case "mark":
-                    markTask(cmdSplit);
+                    TaskManager.markTask(parsedCommand);
                     break;
                 case "unmark":
-                    unmarkTask(cmdSplit);
+                    TaskManager.unmarkTask(parsedCommand);
                     break;
                 case "delete":
-                    deleteTask(cmdSplit);
+                    TaskManager.deleteTask(parsedCommand);
                     break;
                 case "find":
-                    listTasks(findTask(cmdSplit));
+                    TaskManager.listTasks(TaskManager.findTask(parsedCommand));
                     break;
                 default:
-                    throw new Exception();
+                    throw new IncompleteTaskException();
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("Something's wrong: " + e);
-                System.out.println("You probably didn't include the task or the timeframe.");
-            } catch (Exception e) {
-                System.out.println("Don't know what that means comrade.");
+                Ui.printArrayIndexOutOfBoundsExceptionErrorMessage(e);
+            } catch (IncompleteTaskException e) {
+                Ui.printIncompleteTaskExceptionErrorMessage();
             }
         }
     }
