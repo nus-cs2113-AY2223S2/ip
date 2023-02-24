@@ -1,6 +1,7 @@
 package corefunctionalities;
 
 import dataypes.Task;
+import exceptions.EmptyList;
 import helpers.ExceptionGenerator;
 import helpers.Parser;
 
@@ -40,7 +41,10 @@ public class Ui {
     }
 
     //TODO: Update the parameters to new TaskList Object
-    public void listTasks(TaskList taskList) {
+    public void listTasks(TaskList taskList) throws EmptyList {
+        if(taskList.getSize()==0) {
+            throw new EmptyList();
+        }
         this.printLine();
         System.out.println("\tHere are the tasks in your list:");
         for(int i = 0; i< taskList.getSize();i+=1) {
@@ -95,14 +99,30 @@ public class Ui {
         this.printLine();
         System.out.println("\tHi! These are the commands which duke understands!");
         this.printLine();
+        System.out.println("\tlist - This would display all the existing Tasks in the Task List");
+        this.printLine();
         System.out.println("\ttodo - Creates a todo, use it by adding 'todo' and some description. An example is listed below:");
         System.out.println("\t\t'todo get milk'");
         this.printLine();
         System.out.println("\tdeadline - Creates a deadline, use it by adding 'deadline' followed by some description and a deadline which follows '/by'");
-        System.out.println("\t\t'deadline get milk /by tomorrow'");
+        System.out.println("\tNote that the dates must follow the following format: yyyy-mm-dd");
+        System.out.println("\t\t'deadline get milk /by 2023-12-01'");
         this.printLine();
         System.out.println("\tevent - Creates an event, use it by adding 'event' ,some description, a start date followed by '/from' and an end date followed by '/to'");
-        System.out.println("\t\t'event get some milk /from today /to tomorrow");
+        System.out.println("\tNote that the dates must follow the following format: yyyy-mm-dd");
+        System.out.println("\t\t'event get some milk /from 2023-03-01 /to 2023-03-02");
+        this.printLine();
+        System.out.println("\tmark - mark would inform Duke to mark a task as complete. To invoke type 'mark' followed by the serial number of the specific task");
+        System.out.println("\t\t 'mark 1'");
+        this.printLine();
+        System.out.println("\tunmark - unmark would inform Duke to unmark a task as incomplete. To invoke type 'unmark' followed by the serial number of the specific task");
+        System.out.println("\t\t 'unmark 1'");
+        this.printLine();
+        System.out.println("\tdelete - delete would inform Duke to delete a task. To invoke type 'delete' followed by the serial number of the specific task");
+        System.out.println("\t\t 'delete 1'");
+        this.printLine();
+        System.out.println("\tfind - find would inform Duke to look for a certain phrase across all the Tasks. To invoke type 'find' followed by the phrase you wish to look for");
+        System.out.println("\t\t 'find book'");
         this.printLine();
         System.out.println("\tbye - to exit the program!");
         this.printLine();

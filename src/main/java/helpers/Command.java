@@ -17,7 +17,7 @@ public class Command {
     protected ExceptionGenerator exceptionGenerator = new ExceptionGenerator();
     protected Ui ui = new Ui();
 
-    public void commandlistTasks(TaskList taskList) {
+    public void commandlistTasks(TaskList taskList) throws EmptyList {
         ui.listTasks(taskList);
     }
     public void commandHelp() {
@@ -53,7 +53,7 @@ public class Command {
         ui.printTaskEnding(taskList);
     }
 
-    public void commandMarkTask(String userInput, TaskList taskList, FileHandler fileObject) throws MarkQualityException, IOException, NumberFormatException {
+    public void commandMarkTask(String userInput, TaskList taskList, FileHandler fileObject) throws MarkQualityException, IOException, NumberFormatException, TaskMarked {
         exceptionGenerator.markExceptionGenerator(userInput, taskList);
         taskList.getTask(Integer.parseInt(userInput.split(" ")[1]) - 1).markTask();
         fileObject.populateFile(taskList);
@@ -61,7 +61,7 @@ public class Command {
 
     }
 
-    public void commandUnMarkTask(String userInput, TaskList taskList, FileHandler fileObject) throws UnmarkQualityException, IOException, NumberFormatException {
+    public void commandUnMarkTask(String userInput, TaskList taskList, FileHandler fileObject) throws UnmarkQualityException, IOException, NumberFormatException, TaskUnMarked {
         exceptionGenerator.unMarkExceptionGenerator(userInput, taskList);
         taskList.getTask(Integer.parseInt(userInput.split(" ")[1]) - 1).unMarkTask();
         fileObject.populateFile(taskList);

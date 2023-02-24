@@ -1,5 +1,6 @@
 package corefunctionalities;
 
+import dataypes.Task;
 import exceptions.*;
 import helpers.Command;
 import helpers.Parser;
@@ -28,13 +29,12 @@ public class ExceptionHandler {
             System.out.println("\tPlease ensure that the deadline is not composed of solely white spaces!");
             ui.printLine();
         } catch (IOException e) {
+            ui.printLine();
             System.out.println("unable to write");
         } catch (DateTimeParseException e) {
-            ui.printLine();
             System.out.println("\tPlease ensure that the deadline follows the following format: yyyy-mm-dd.");
             ui.printLine();
         } catch (WrongChrono e) {
-            ui.printLine();
             System.out.println("\tPlease ensure that the deadline isn't before the current date");
             ui.printLine();
         }
@@ -68,18 +68,15 @@ public class ExceptionHandler {
             System.out.println("\tPlease ensure that the event has a valid end time period");
             ui.printLine();
         } catch (IOException e) {
+            ui.printLine();
             System.out.println("unable to write");
         } catch (DateTimeParseException e) {
-            ui.printLine();
             System.out.println("\tPlease ensure that the from and to dates follow the following format: yyyy-mm-dd.");
             ui.printLine();
         } catch (WrongChrono e) {
-            ui.printLine();
             System.out.println("\tPlease ensure that the from and to dates aren't in the past...");
             ui.printLine();
-        }
-        catch (FromAfterTo e) {
-            ui.printLine();
+        }  catch (FromAfterTo e) {
             System.out.println("\tPlease ensure that your dates are chronologically appropriate...");
             System.out.println("\tThe from date cannot be after the to date");
             ui.printLine();
@@ -129,6 +126,10 @@ public class ExceptionHandler {
             ui.printLine();
             System.out.println("\tNice try, enter a valid Number to mark:");
             ui.printLine();
+        } catch (TaskMarked e) {
+            ui.printLine();
+            System.out.println("\tTask has already been marked");
+            ui.printLine();
         }
     }
 
@@ -145,6 +146,19 @@ public class ExceptionHandler {
             ui.printLine();
             System.out.println("\tNice try, enter a valid Number to unmark:");
             ui.printLine();
+        } catch (TaskUnMarked e) {
+            ui.printLine();
+            System.out.println("\tTask has already been unmarked");
+            ui.printLine();
+        }
+    }
+    public void listExceptionHandler(TaskList taskList) {
+        try {
+            command.commandlistTasks(taskList);
+        } catch (EmptyList e) {
+            ui.printLine();
+            System.out.println("\tThe list is empty!");
+            ui.printLine();
         }
     }
 
@@ -156,11 +170,11 @@ public class ExceptionHandler {
         if(userInput.equals("bye")) { // exit command
             isExit=true;
         } else if(userInput.equals("list")) { //displays the list if needed
-            command.commandlistTasks(taskList);
+            this.listExceptionHandler(taskList);
         } else if (parser.isTheSame(userInput, "mark")) { //mark the task in
             this.markExceptionHandler(userInput, taskList, fileObject);
         } else if (parser.isTheSame(userInput, "unmark")) {//unmark the task
-            this.unMarkExceptionHandler(ui.userInput, taskList, fileObject);
+            this.unMarkExceptionHandler(userInput, taskList, fileObject);
         } else if(parser.isTheSame(userInput, "todo")) {
             this.todoExceptionHandler(userInput, taskList, fileObject);
         } else if(parser.isTheSame(userInput, "deadline")) {
@@ -171,8 +185,9 @@ public class ExceptionHandler {
             this.deleteExceptionHandler(userInput, taskList, fileObject);
         }  else if (parser.isTheSame(userInput,"help")) {
             command.commandHelp();
-        } else { // tells the user that we have added the task in
-            //printTask(userInput); // could remove this and ensure that only specific tasks can be entered!
+        }else if (parser.isTheSame(userInput, "find")) {
+            taskList.find(parser.withoutFind(userInput), ui);
+        }  else {
             ui.validCommand();
         }
     }

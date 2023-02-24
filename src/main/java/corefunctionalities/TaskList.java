@@ -28,6 +28,9 @@ public class TaskList {
     public int getSize() {
         return taskList.size();
     }
+    public int getIndex(Task ele) {
+        return taskList.indexOf(ele);
+    }
 
     public Task getTask(int i) {
         return taskList.get(i);
@@ -42,4 +45,21 @@ public class TaskList {
             fileObject.addToFile(ele.enCode() + System.lineSeparator());
         }
     }
+    public void find(String toSearch, Ui ui) {
+        ui.printLine();
+        int counter = 0;
+        for(Task ele: taskList) {
+            if(ele.getDescription().contains(toSearch)==true) {
+                System.out.println("\t" + Integer.toString(getIndex(ele)+1) + "." + ele.getStatusAndDescription());
+                counter+=1;
+            }
+        }
+        if(counter == 0) {
+            System.out.println("\tSorry, nothing matches this!");
+            ui.printLine();
+        } else {
+            ui.printLine();
+        }
+    }
+
 }

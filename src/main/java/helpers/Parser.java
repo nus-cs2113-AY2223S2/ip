@@ -33,4 +33,8 @@ public class Parser {
 //        }
         return (isReturn);
     }
+    public String withoutFind(String userInput) {
+        return userInput.replace("find ", "");
+    }
+
 }
