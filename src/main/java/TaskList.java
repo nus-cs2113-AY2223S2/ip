@@ -53,13 +53,14 @@ public class TaskList {
     */
     public void findTask(String taskKeyWord) {
         Greeting.printSeperator();
-        System.out.println("Here are the matching tasks in your list:");
+        System.out.println("Okay, Auntie find for you already... here:");
         for (int i = 0; i < tasks.size(); i++) {
             String taskDecription = tasks.get(i).getTask();
             if (taskDecription.contains(taskKeyWord)){
                 System.out.println("\t" + (i+1) + "." + tasks.get(i).printTask());
             }
         }
+        System.out.println("\n");
         Greeting.printSeperator();
     }
 
@@ -68,10 +69,11 @@ public class TaskList {
     */
     public void printTasks() {
         Greeting.printSeperator();
-        System.out.println("\tHere are the tasks in your list:");
+        System.out.println("\tAuntie show you ah... all this are your tasks:");
         for (int i = 0; i < tasks.size(); i++) {
             System.out.println("\t" + (i+1) + "." + tasks.get(i).printTask());
         }
+        System.out.println("\n");
         Greeting.printSeperator();
     }
  
@@ -82,9 +84,9 @@ public class TaskList {
     */
     public void printNewTask(int taskNumber) {
         Greeting.printSeperator();
-        System.out.println("\tGot it. I've added this task: \n"+ "\t\t" + tasks.get(tasks.size()-1).printTask());
+        System.out.println("\tOkay auntie add for you this one: \n"+ "\t\t" + tasks.get(tasks.size()-1).printTask());
         //tasksLength ++;
-        System.out.println("\tNow you have " + tasks.size() + " tasks in the list.");
+        System.out.println("\tNow you got " + tasks.size() + " tasks" + "\n");
         Greeting.printSeperator();
     }
  
@@ -97,8 +99,8 @@ public class TaskList {
         int taskNumber = Integer.parseInt(userInput);
         tasks.get(taskNumber - 1).MarkStatusDone();
         Greeting.printSeperator();
-        System.out.println("\tNice! I've marked this task as done:\n" +
-                "\t\t" + tasks.get(taskNumber - 1).printTask());
+        System.out.println("\tVery good... finish more task next time more successfull than me okay\n" +
+                "\t\t" + tasks.get(taskNumber - 1).printTask() + "\n");
         Greeting.printSeperator();
     }
 
@@ -111,9 +113,9 @@ public class TaskList {
         int taskNumber = Integer.parseInt(userInput);
         tasks.get(taskNumber - 1).MarkStatusUndone();
         Greeting.printSeperator();
-        System.out.println("\tOK, I've marked this task as not done yet:\n" +
+        System.out.println("\tHuh... then Auntie ask you, you mark as done for what??\n" +
 
-                "\t\t" + tasks.get(taskNumber - 1).printTask());
+                "\t\t" + tasks.get(taskNumber - 1).printTask()+ "\n");
         Greeting.printSeperator();
     }
 
@@ -127,8 +129,8 @@ public class TaskList {
         Task taskToBeRemoved = tasks.get(taskNumber - 1);
         tasks.remove(taskNumber - 1);
         Greeting.printSeperator();
-        System.out.println("\tNoted. I've removed this task:\n" +
-                "\t\t" + taskToBeRemoved.printTask());
+        System.out.println("\tAlways so lazy... Okay Auntie remove this one for you:\n" +
+                "\t\t" + taskToBeRemoved.printTask() + "\n");
         Greeting.printSeperator();
     }
     

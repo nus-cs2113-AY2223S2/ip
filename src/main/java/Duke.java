@@ -95,10 +95,9 @@ public class Duke {
 
         try {
             tasks = Storage.readFileContents("duke.txt");
-            System.out.println("Data load successfull");
+            Greeting.printDataFound();
         } catch (FileNotFoundException e) {
-            System.out.println("No Past Data Found. Will create a new data file after ending the Bot...");
-            Greeting.printSeperator();
+            Greeting.printDataNotFound();
         }
 
         Greeting.printLogo();
