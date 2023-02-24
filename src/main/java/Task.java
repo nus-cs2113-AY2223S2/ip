@@ -20,7 +20,7 @@ abstract class Task {
         if (!isDone) {
             checkbox = "[ ]";
         }
-        return formattedLabel + checkbox + this.taskDescription;
+        return formattedLabel + checkbox + " " + this.taskDescription;
     }
 
     public String CommonFieldsFor_toStringForDatabase() {

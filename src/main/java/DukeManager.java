@@ -1,6 +1,7 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 
+//printing when there are errors
 class DukeManager {
     private final TaskList taskList;
 
@@ -39,6 +40,3 @@ class DukeManager {
     }
 
 }
-
-//parse input from user
-//perform command

@@ -3,9 +3,7 @@ public class Ui {
     private static final String OOPS = "OOPS! ";
     private static final String LINEDIVIDER = "___________________________________________";
 
-    //marktask
 
-    //deletetask
     public static void printResponse(ArrayList<String> responseList) {
         for (String s : responseList) {
             System.out.println(s);

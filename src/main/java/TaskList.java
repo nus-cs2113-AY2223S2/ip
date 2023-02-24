@@ -1,13 +1,11 @@
 //to handle all changes made to list of tasks during run time
 import java.util.ArrayList;
+import java.util.Arrays;
 public class TaskList {
 
-    private static final int TODO = 4;
+    private static final int TODO = 5;
     private static final int DEADLINE = 9;
-    private static final int BY = 3;
     private static final int EVENT = 6;
-    private static final int FROM = 5;
-    private static final int TO = 3;
     private ArrayList<Task> taskList;
 
     TaskList(ArrayList<Task> taskList) {
@@ -88,9 +86,9 @@ public class TaskList {
 
     public void createDeadline(String input) throws MissingFieldException {
         try {
-            String[] inputArray = input.split("/");
-            String description = inputArray[0].substring(TaskList.DEADLINE, inputArray[0].length());
-            String deadline = inputArray[1].substring(TaskList.BY, inputArray[1].length());
+            String[] inputArray = input.split("/by ");
+            String description = inputArray[0].substring(TaskList.DEADLINE, inputArray[0].length() - 1);
+            String deadline = inputArray[1];
 
             Deadline deadlineTask = new Deadline(false, description, deadline);
             this.taskList.add(deadlineTask);
@@ -101,10 +99,12 @@ public class TaskList {
 
     public void createEvent(String input) throws MissingFieldException {
         try {
-            String[] inputArray = input.split("/");
-            String description = inputArray[0].substring(TaskList.EVENT, inputArray[0].length());
-            String from = inputArray[1].substring(TaskList.FROM, inputArray[1].length());
-            String to = inputArray[2].substring(TaskList.TO, inputArray[2].length());
+            String[] inputArray = input.split("/from ");
+            String description = inputArray[0].substring(TaskList.EVENT, inputArray[0].length() - 1);
+            String[] dateTimeArray = inputArray[1].split("/to");
+            String from = dateTimeArray[0];
+            String to = dateTimeArray[1];
+            System.out.println(description + "|" +from + "|" + to);
 
             Event event = new Event(false, description, from, to);
             this.taskList.add(event);

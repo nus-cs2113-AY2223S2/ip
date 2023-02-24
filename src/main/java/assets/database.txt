@@ -1,2 +1,3 @@
-T,false, hi
-T,false, hi
+T,false,hi
+T,false,herro
+E,false,idk,idk , idk
