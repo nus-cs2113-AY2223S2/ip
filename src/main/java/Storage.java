@@ -6,6 +6,13 @@ import java.io.IOException;
 
 public class Storage {
 
+    /**
+    * Method to read file contents
+    *
+    * @param filepath path that the file is in
+    * @return the TaskList that has been created from the data in the file read
+    * @see TaskList
+    */
     public static TaskList readFileContents(String filePath) throws FileNotFoundException {
         TaskList tempTasks = new TaskList();
 
@@ -40,6 +47,12 @@ public class Storage {
         return tempTasks;
     }
 
+    /**
+    * Method to update file contents
+    *
+    * @param tasks the current task list 
+    * @see TaskList
+    */
     public static void updateFile(TaskList tasks) {
         for (int i = 0; i < tasks.getSize(); i++) {
             Task currentTask = tasks.getTask(i);
@@ -79,12 +92,20 @@ public class Storage {
         }
     }
 
+    /**
+    * Method to write file contents
+    *
+    * @param textToAdd the text that is to be added to the file
+    */
     public static void writeToFile(String textToAdd) throws IOException {
         FileWriter fw = new FileWriter("duke.txt", true);
         fw.write(textToAdd+System.lineSeparator());
         fw.close();
     }
 
+    /**
+    * Method to clear file contents
+    */
     public static void clearFile() throws IOException {
         FileWriter fw = new FileWriter("duke.txt");
         fw.write("");

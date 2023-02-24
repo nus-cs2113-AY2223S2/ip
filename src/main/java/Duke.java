@@ -6,6 +6,9 @@ import java.io.IOException;
 public class Duke {
     static TaskList tasks = new TaskList();
 
+    /**
+    * This method polls for user commands
+    */
     public static void ChatPolling() {
         String userInput;
         Scanner in = new Scanner(System.in);

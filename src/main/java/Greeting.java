@@ -1,9 +1,15 @@
 public class Greeting {
     
+    /**
+    * Method to print a line seperator
+    */
     public static void printSeperator() {
         System.out.println("____________________________________________________________\n");
     }
 
+    /**
+    * Method to print the chatbot Logo
+    */
     public static void printLogo() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -13,6 +19,9 @@ public class Greeting {
         System.out.println("\tHello from\n" + logo);
     }
 
+    /**
+    * Method to print welcome message
+    */
     public static void printWelcome() {
         printSeperator();
         System.out.println(
@@ -21,6 +30,9 @@ public class Greeting {
         printSeperator();
     }
 
+    /**
+    * Method to print the message informing users that the command input is invalid
+    */
     public static void printHelp() {
         printSeperator();
         System.out.println(
@@ -28,25 +40,37 @@ public class Greeting {
         printSeperator();
     }
 
+    /**
+    * Method to print the message informing users that the task input is empty
+    */
     public static void printEmptyTask() {
         printSeperator();
         System.out.println("\tTask cannot be empty!");
         printSeperator();
     }
 
+    /**
+    * Method to print the message informing users that the date input is empty
+    */
     public static void printEmptyDate() {
         printSeperator();
         System.out.println("\tDate cannot be empty!");
         printSeperator();
     }
 
+    /**
+    * Method to print the message informing users that there is not enough 
+    * required information for a particular command
+    */
     public static void printEmptyCommand() {
         printSeperator();
         System.out.println("\tPlease use the relevant commands for this task type!");
         printSeperator();
     }
 
-
+    /**
+    * Method to print goodbye message
+    */
     public static void printGoodbye() {
         printSeperator();
         System.out.println(
