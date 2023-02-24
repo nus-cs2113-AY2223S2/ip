@@ -55,7 +55,7 @@ public class Duke {
         Ui.printExit();
     }
 
-    public void main(String[] args) {
+    public static void main(String[] args) {
         new Duke(FILE_PATH).run();
     }
 
