@@ -1,6 +1,4 @@
----
-title: User Guide
----
+# User Guide
 
 Duke is a Command Line Interface based task tracker. This program can help you organise your tasks to keep
 you in track with your assignments so that you can be as productive as ever!
