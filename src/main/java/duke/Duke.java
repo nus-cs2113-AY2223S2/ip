@@ -1,30 +1,17 @@
 package duke;
 
-import java.io.*;
 import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Duke {
     private Ui ui;
     private Storage storage;
+    private TaskList taskList;
     static String FILEPATH = "duke.txt";
     static ArrayList <Task> tasks = new ArrayList<>();
 
     public static void addTask(Task t) {
         tasks.add(t);
-    }
-    public static void deleteTask(String commandArgs) throws NoDescriptionException, IndexOutOfBoundsException{
-        if (commandArgs.trim().length() == 0) {
-            throw new NoDescriptionException();
-        }
-        final int deleteId = Integer.parseInt(commandArgs) - 1;
-        if (deleteId < 0 || deleteId >= tasks.size()) {
-            throw new IndexOutOfBoundsException();
-        }
-        System.out.println("I've deleted this task ∪･ω･∪:");
-        System.out.println(tasks.get(deleteId));
-        printLine();
-        tasks.remove(deleteId);
     }
 
     public static void printLine() {
@@ -120,7 +107,7 @@ public class Duke {
             break;
         case "delete":
             try {
-                deleteTask(commandArgs);
+                TaskList.deleteTask(tasks, commandArgs);
             } catch (NoDescriptionException e) {
                 System.out.println("WOOFS!!! The index of entering task must be stated.");
                 System.out.println("Please try to delete task again υ´• ﻌ •`υ");
@@ -149,7 +136,7 @@ public class Duke {
         }
         return s;
     }
-    
+
 
 
     private void start() {

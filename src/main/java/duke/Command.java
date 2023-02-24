@@ -1,6 +1,5 @@
 package duke;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Command {
@@ -12,10 +11,7 @@ public class Command {
         if (taskName.length() == 0) {
             throw new NoDescriptionException();
         }
-        addTask(tasks, new Todo(commandArgs));
-    }
-    public static void addTask(ArrayList<Task> tasks, Task t) {
-        tasks.add(t);
+        TaskList.addTask(tasks, new Todo(commandArgs));
     }
     public static void addEvent(ArrayList<Task> tasks, String commandArgs) throws NoDescriptionException, FormatException {
         final int indexOfFrom = commandArgs.indexOf("from:");
@@ -29,7 +25,7 @@ public class Command {
         if (eventDescription.trim().length() == 0 || from.length() == 0 || to.length() == 0) {
             throw new NoDescriptionException();
         }
-        addTask(tasks, new Event(eventDescription, from, to));
+        TaskList.addTask(tasks, new Event(eventDescription, from, to));
     }
     public static void addDeadline(ArrayList<Task> tasks, String commandArgs) throws NoDescriptionException, FormatException {
         final int indexOfDeadline = commandArgs.indexOf("by:");
@@ -44,7 +40,7 @@ public class Command {
         if (deadline.trim().length() == 0) {
             throw new NoDescriptionException();
         }
-        addTask(tasks, new Deadline(deadlineDescription, deadline));
+        TaskList.addTask(tasks, new Deadline(deadlineDescription, deadline));
     }
     public static void printListOfTasks(ArrayList<Task> tasks) {
         for (int i = 0; i < tasks.size(); i += 1) {

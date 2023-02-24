@@ -1,6 +1,5 @@
 package duke;
 
-import java.util.ArrayList;
 
 public class Parser {
     public String[] parseCommand(String userInputCommand) {

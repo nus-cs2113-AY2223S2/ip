@@ -8,7 +8,6 @@ public class Storage {
     public static void printLine() {
         System.out.println("____________________________________________________________");
     }
-    /** Default file path used if the user doesn't provide the file name. */
     public static final String DEFAULT_STORAGE_FILEPATH = "data.txt";
     private static Command command = new Command();
     public void initializeStorage(ArrayList<Task> tasks, String filepath) {
