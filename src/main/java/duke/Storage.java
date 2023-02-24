@@ -5,7 +5,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import duke.TaskList;
 import duke.commands.Task;
 
 public class Storage {
@@ -16,7 +15,8 @@ public class Storage {
         for (int i = 0; i < tasks.size(); i++) {
             Task curtask = tasks.get(i);
             content += (Integer.toString(i + 1) + " | ");
-            content += ((curtask.getTaskStatus().equals("X") ? "1" : "0") + " | " + curtask.getTaskDiscription());
+            content += ((curtask.getTaskStatus().equals("X") ? "1" : "0") + " | "
+                    + curtask.getTaskDiscription());
             if (!curtask.getClass().getName().equals("duke.commands.Todo")) {
                 content += ("| " + tasks.get(i).getDue());
             }

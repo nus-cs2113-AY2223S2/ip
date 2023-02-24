@@ -1,9 +1,7 @@
 package duke;
 
-import duke.TaskList;
-
 public class Ui {
-    protected static String LINE = "---------------------------------------------------------";
+    protected static final String LINE = "---------------------------------------------------------";
     protected static final String KEQING = """
                     ....,***//*,,,,,,,**,,,,,,,,,,,,.......................
                     .,*%&&,.......,...
@@ -77,14 +75,14 @@ public class Ui {
     public static void showDelete(String task, int size) {
         System.out.println(LINE + System.lineSeparator() + "Noted. I've removed this task:");
         System.out.println("   > " + task);
-        System.out.println(
-                "Now you have " + Integer.toString(size) + " tasks in the list." + System.lineSeparator() + LINE);
+        System.out.println("Now you have " + Integer.toString(size) + " tasks in the list."
+                + System.lineSeparator() + LINE);
     }
 
     public static void showAddTask(String taskDiscription, int size) {
         System.out.println(LINE + System.lineSeparator() + "Got it. I've added this task:");
         System.out.println("   > " + taskDiscription);
-        System.out.println(
-                "Now you have " + Integer.toString(size) + " tasks in the list." + System.lineSeparator() + LINE);
+        System.out.println("Now you have " + Integer.toString(size) + " tasks in the list."
+                + System.lineSeparator() + LINE);
     }
 }

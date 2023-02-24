@@ -6,65 +6,63 @@ import duke.commands.Deadline;
 import duke.commands.Event;
 
 import java.util.ArrayList;
-import duke.Ui;
 
 public class TaskList {
-    protected ArrayList<Task> tasklist;
-    protected int listsize;
+    protected ArrayList<Task> taskList;
+    protected int listSize;
 
     public TaskList() {
-        this.tasklist = new ArrayList<Task>();
-        this.listsize = 0;
+        this.taskList = new ArrayList<Task>();
+        this.listSize = 0;
     }
 
     public int getSize() {
-        return listsize;
+        return listSize;
     }
 
-    public String getDescription(int idx) {
-        return tasklist.get(idx).toString();
+    public String getDescription(int index) {
+        return taskList.get(index).toString();
     }
 
-    public void markThisTask(int idx) {
-        tasklist.get(idx).markAsDone();
+    public void markThisTask(int index) {
+        taskList.get(index).markAsDone();
     }
 
-    public void unMarkThisTask(int idx) {
-        tasklist.get(idx).unmark();
+    public void unMarkThisTask(int index) {
+        taskList.get(index).unmark();
     }
 
-    public String getTask(int idx) {
-        return tasklist.get(idx).toString();
+    public String getTask(int index) {
+        return taskList.get(index).toString();
     }
 
-    public void deleteThisTask(int idx) {
-        tasklist.remove(idx);
-        listsize--;
+    public void deleteThisTask(int index) {
+        taskList.remove(index);
+        listSize--;
     }
 
     public void addToDo(String description) {
         Todo newtodo = new Todo(description);
-        tasklist.add(newtodo);
-        listsize++;
+        taskList.add(newtodo);
+        listSize++;
     }
 
     public void addTaskWithTime(String[] description, String tasktype) {
-        if(tasktype.equals("deadline")) {
-            Deadline newddl = new Deadline(description[0],description[1]);
-            tasklist.add(newddl);
+        if (tasktype.equals("deadline")) {
+            Deadline newDdl = new Deadline(description[0], description[1]);
+            taskList.add(newDdl);
+        } else {
+            Event newevent = new Event(description[0], description[1]);
+            taskList.add(newevent);
         }
-        else {
-            Event newevent = new Event(description[0],description[1]);
-            tasklist.add(newevent);
-        }
-        listsize++;
+        listSize++;
     }
 
     public String latesttask() {
-        return tasklist.get(listsize-1).toString();
+        return taskList.get(listSize - 1).toString();
     }
 
     public ArrayList<Task> fullList() {
-        return this.tasklist;
+        return this.taskList;
     }
 }

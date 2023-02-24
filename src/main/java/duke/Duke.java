@@ -3,17 +3,11 @@ package duke;
 import java.io.IOException;
 import java.util.Scanner;
 
-import duke.Ui;
-import duke.Parser;
-import duke.TaskList;
-
 import duke.exceptions.TaskNumberOutOfRange;
 import duke.exceptions.LackOfTaskDetail;
 
 public class Duke {
     public static void main(String[] args) {
-        Ui ui = new Ui();
-        Parser parser = new Parser();
         TaskList tasks = new TaskList();
         Scanner in = new Scanner(System.in);
         boolean isEnd = false;
@@ -22,16 +16,16 @@ public class Duke {
 
         while (!isEnd) {
             String command = in.nextLine();
-            String commandtype = parser.parseCommand(command);
+            String commandType = Parser.parseCommand(command);
             int idx = 0;
 
-            switch (commandtype) {
+            switch (commandType) {
             case "list":
                 Ui.listTasks(tasks);
                 break;
             case "mark":
                 try {
-                    idx = parser.getTaskIndex(tasks.getSize());
+                    idx = Parser.getTaskIndex(tasks.getSize());
                 } catch (TaskNumberOutOfRange e) {
                     System.out.println(e.getMessage());
                 } catch (NumberFormatException e) {
@@ -47,7 +41,7 @@ public class Duke {
                 break;
             case "unmark":
                 try {
-                    idx = parser.getTaskIndex(tasks.getSize());
+                    idx = Parser.getTaskIndex(tasks.getSize());
                 } catch (TaskNumberOutOfRange e) {
                     System.out.println(e.getMessage());
                 } catch (NumberFormatException e) {
@@ -65,13 +59,13 @@ public class Duke {
                 isEnd = true;
                 break;
             case "todo":
-                String tododetail = "";
+                String todoDetail = "";
                 try {
-                    tododetail = parser.getToDoDescription();
+                    todoDetail = Parser.getToDoDescription();
                 } catch (LackOfTaskDetail e) {
                     System.out.println(e.getMessage());
                 }
-                tasks.addToDo(tododetail);
+                tasks.addToDo(todoDetail);
                 Ui.showAddTask(tasks.latesttask(), tasks.getSize());
                 try {
                     Storage.autoSave(tasks.fullList());
@@ -81,13 +75,13 @@ public class Duke {
                 break;
             case "deadline":
             case "event": {
-                String[] taskdetail = {};
+                String[] taskDetail = {};
                 try {
-                    taskdetail = parser.getTaskWithTime(commandtype);
+                    taskDetail = Parser.getTaskWithTime(commandType);
                 } catch (LackOfTaskDetail e) {
                     System.out.println(e.getMessage());
                 }
-                tasks.addTaskWithTime(taskdetail, commandtype);
+                tasks.addTaskWithTime(taskDetail, commandType);
                 Ui.showAddTask(tasks.latesttask(), tasks.getSize());
                 try {
                     Storage.autoSave(tasks.fullList());
@@ -98,7 +92,7 @@ public class Duke {
                 break;
             case "delete":
                 try {
-                    idx = parser.getTaskIndex(tasks.getSize());
+                    idx = Parser.getTaskIndex(tasks.getSize());
                 } catch (TaskNumberOutOfRange e) {
                     System.out.println(e.getMessage());
                 } catch (NumberFormatException e) {
