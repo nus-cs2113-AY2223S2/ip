@@ -13,6 +13,10 @@ abstract class Task {
 
     public abstract Task unmark();
 
+    public boolean containsKeyword(String keyword) {
+        return this.toString().contains(keyword);
+    }
+
     @Override
     public String toString() {
         String formattedLabel = "[" + this.label + "]";

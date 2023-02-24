@@ -113,6 +113,24 @@ public class TaskList {
         }
     }
 
+    public ArrayList<String> findTasks(String input) {
+        String keyword = input.substring(5, input.length());
+        ArrayList<String> matchingTasks = new ArrayList<String>();
+        matchingTasks.add("Here are the matching tasks in your list: ");
+        int index = 1;
+        for (Task t : this.taskList) {
+            if (t.containsKeyword(keyword)) {
+                matchingTasks.add(index + "." +t.toString());
+                index++;
+            }
+        }
+        if (matchingTasks.size() == 1) {
+            matchingTasks = new ArrayList<String>();
+            matchingTasks.add("There are no tasks that match that description!");
+        }
+        return matchingTasks;
+    }
+
     public ArrayList<String> printTasks() {
         ArrayList<String> responseList = new ArrayList<String>();
         responseList.add("Here are the tasks in your list:");

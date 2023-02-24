@@ -26,6 +26,8 @@ class DukeManager {
                 } else if (Parser.parse(input, "todo") | Parser.parse(input, "deadline") |
                         Parser.parse(input, "event")) {
                     responseList= this.taskList.createTask(input);
+                } else if (Parser.parse(input, "find")) {
+                    responseList= this.taskList.findTasks(input);
                 } else {
                     throw new IncorrectCommandException("I'm sorry, but I don't know what that means :-(");
                 }
