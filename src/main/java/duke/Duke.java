@@ -5,15 +5,25 @@ import duke.instructions.Event;
 import duke.instructions.Task;
 import duke.instructions.Todo;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Duke {
     public static final String EMPTY_DESCRIPTION = "     ☹ OOPS!!! The description cannot be empty.";
     public static final String LINE = "    ____________________________________________________________";
     private static final String UNRECOGNISED_INPUT = "     ☹ OOPS!!! I'm sorry, but I don't know what that means :-(";
+
+    private static final String FILE_PATH = "data/tasks.txt";
     protected static boolean isByeEnter = false;
     private static final ArrayList<Task> taskNameList = new ArrayList<>();
+
+
+
 
     public static void greeting() {
 
@@ -88,6 +98,7 @@ public class Duke {
 
     public static void toDoMain(String input) throws DukeException {
         Todo toDo = new Todo(input);
+        toDo.setTaskType("T");
         Task task = new Task(input);
         String[] tokens = input.split("\\s+", 2);
         if (tokens.length < 2) {
@@ -105,6 +116,7 @@ public class Duke {
 
     public static void eventMain(String input) {
         Event event = new Event(input);
+        event.setTaskType("E");
         Task task = new Task(input);
         taskNameList.add(event);
         String outputForEvent = event.guideline()
@@ -117,6 +129,7 @@ public class Duke {
 
     public static void deadlineMain(String input) {
         Deadline deadLine = new Deadline(input);
+        deadLine.setTaskType("D");
         Task task = new Task(input);
         System.out.println(LINE);
         taskNameList.add(deadLine);
@@ -139,16 +152,77 @@ public class Duke {
         System.out.println(LINE);
     }
 
-    public static void main(String[] args) {
-        greeting();
-        Scanner userInput = new Scanner(System.in);
+    public static void readFile() throws FileNotFoundException {
 
+        File savedFile = new File(FILE_PATH);
+        if(!savedFile.getParentFile().exists()){
+            savedFile.getParentFile().mkdirs();
+
+        }
+        try{
+            if(!savedFile.exists()){
+                savedFile.createNewFile();
+            }
+        } catch (IOException e) {
+            System.out.println("Failed to create a new file!!!");
+        }
+
+
+    }
+    public static void loadTaskFromFile() throws DukeException{
+        try{
+            readFile();
+        }catch(java.io.FileNotFoundException e) {
+            System.out.println("Error loading tasks from the file ");
+        }
+
+    }
+
+    public static void writeTaskToFile(String taskName){
+
+        try{
+            File savedFile = new File(FILE_PATH);
+            FileWriter writeFile = new FileWriter(savedFile);
+/*
+            for (int indexOfInstruction = 0; indexOfInstruction < taskNameList.size(); indexOfInstruction++) {
+                if(taskNameList.get(indexOfInstruction).getState().trim().contains("D")){
+                    Deadline newDeadline = (Deadline) taskNameList[];
+                    writeFile.write("D | " + newDeadline.getStatusIcon() + " | " + newDeadline.getState().eventName[0]);
+
+                }*/
+            for(Task tasks : taskNameList){
+                String typeOfTask = tasks.getTaskType();
+               switch(typeOfTask){
+               case "D":
+                   Deadline newDeadline = (Deadline) tasks;
+                   writeFile.write("D | " + newDeadline.getStatusIcon() + " | ");
+                   break;
+               case "E":
+                   break;
+               case "T":
+                   break;
+               default:
+               }
+
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
+    public static void checkInput(){
+        Scanner userInput = new Scanner(System.in);
         while (true) {
             String taskName = userInput.nextLine();
             if (taskName.equalsIgnoreCase("bye")) {
+                writeTaskToFile(taskName);
                 break;
             }
             try {
+                loadTaskFromFile();
                 inputValues(taskName);
             } catch (Exception e) {
                 System.out.println(LINE);
@@ -156,5 +230,11 @@ public class Duke {
                 System.out.println(LINE);
             }
         }
+    }
+
+
+    public static void main(String[] args) {
+        greeting();
+        checkInput();
     }
 }

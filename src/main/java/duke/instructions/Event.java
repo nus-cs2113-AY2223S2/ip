@@ -2,11 +2,13 @@
 package duke.instructions;
 
 public class Event extends Task{
-    String input;
+    protected  String input;
+    protected String taskType;
 
     public Event(String input) {
         super(input);
         this.input = input;
+        this.taskType = "E";
     }
 
     @Override
@@ -29,5 +31,15 @@ public class Event extends Task{
     public String guideline(){
         return "     Got it. I've added this task: "
                 + System.lineSeparator();
+    }
+
+
+    @Override
+    public String getTaskType() {
+        return taskType;
+    }
+
+    public void setTaskType(String taskType) {
+        this.taskType = taskType;
     }
 }

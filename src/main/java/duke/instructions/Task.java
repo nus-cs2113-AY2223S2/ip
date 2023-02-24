@@ -1,11 +1,12 @@
 package duke.instructions;
 
 public class Task {
+
     protected String description;
     protected boolean isDone;
     protected String state;
     protected String checkComplete;
-    protected String eventState;
+    protected String taskType;
 
     public Task(String description) {
         this.description = description;
@@ -29,6 +30,9 @@ public class Task {
     }
     public String getState(){
         return state;
+    }
+    public String getTaskType(){
+        return taskType;
     }
     public String guideline(){
        return "     Here are the task in your list: "

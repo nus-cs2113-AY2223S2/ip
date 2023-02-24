@@ -18,6 +18,14 @@ public class Todo extends Task{
                 + System.lineSeparator();
     }
 
+    @Override
+    public String getTaskType() {
+        return taskType;
+    }
+
+    public void setTaskType(String taskType) {
+        this.taskType = taskType;
+    }
 
 }
 

@@ -2,9 +2,20 @@ package duke.instructions;
 
 public class Deadline extends Task{
     String input;
+    protected String taskType;
     public Deadline(String input) {
         super(input);
         this.input = input;
+        this.taskType = "D";
+    }
+
+    @Override
+    public String getTaskType() {
+        return taskType;
+    }
+
+    public void setTaskType(String taskType) {
+        this.taskType = taskType;
     }
 
     @Override
