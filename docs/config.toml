@@ -1,0 +1,9 @@
+baseURL = 'https://jinxuan-owyong.github.io/ip/'
+languageCode = 'en-sg'
+title = 'Duke'
+theme = "hugo-book"
+enableGitInfo = true
+[params]
+    BookTheme = 'auto'
+    BookToC = true
+    BookRepo = 'https://github.com/jinxuan-owyong/ip/'
