@@ -17,6 +17,7 @@ public class MarkCommand extends Command{
         try{
             setIndex(input);
             Task task = tasks.getTask(index - 1);
+            task.setAsDone();
             ui.printTaskStatusStatement(task, "mark");
         } catch (IndexOutOfBoundsException exception) {
             Messages.invalidTaskMessage();

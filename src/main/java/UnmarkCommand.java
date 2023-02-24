@@ -17,6 +17,7 @@ public class UnmarkCommand extends Command{
         try{
             setIndex(input);
             Task task = tasks.getTask(index - 1);
+            task.setAsUndone();
             ui.printTaskStatusStatement(task, "unmark");
         } catch (IndexOutOfBoundsException exception) {
             Messages.invalidTaskMessage();
