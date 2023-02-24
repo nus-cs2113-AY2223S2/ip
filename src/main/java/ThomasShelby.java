@@ -1,11 +1,9 @@
 import java.io.IOException;
 import java.util.Scanner;
-import java.io.File;
 
 public class ThomasShelby {
     public static void main(String[] args) throws IOException {
-        System.out.print("Good day, I'm Thomas Shelby.\nTo what do I owe the pleasure?\n");
-        File data = new File("data/data.txt");
+        Ui.printWelcomeMessage();
         Data.loadData(TaskManager.taskManager);
         Scanner in = new Scanner(System.in);
         while (true) {
@@ -45,10 +43,9 @@ public class ThomasShelby {
                     throw new IncompleteTaskException();
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("Something's wrong: " + e);
-                System.out.println("You probably didn't include the task or the timeframe.");
+                Ui.printArrayIndexOutOfBoundsExceptionErrorMessage(e);
             } catch (IncompleteTaskException e) {
-                System.out.println("Don't know what that means comrade.");
+                Ui.printIncompleteTaskExceptionErrorMessage(e);
             }
         }
     }
