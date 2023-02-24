@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 public class Duke {
     private static ArrayList<Task> tasks = new ArrayList<>();
-    private static Scanner in = new Scanner(System.in);
+    private static Scanner inputReader = new Scanner(System.in);
     private static final String FILE_PATH = "duke.txt";
 
     private static void printDuke() {
@@ -44,9 +44,9 @@ public class Duke {
         String input;
         try {
             if (!file.createNewFile()) {
-                Scanner fileInput = new Scanner(file);
-                while (fileInput.hasNext()) {
-                    input = fileInput.nextLine();
+                Scanner fileInputReader = new Scanner(file);
+                while (fileInputReader.hasNext()) {
+                    input = fileInputReader.nextLine();
                     String[] inputArgs = input.split(" \\| ");
                     addFileDataToList(inputArgs);
                 }
@@ -55,8 +55,10 @@ public class Duke {
             System.out.print("\t(!) IOException error: get existing file data.\n" + breakLine());
         } catch (IllegalStateException e) {
             System.out.print("\t(!) IllegalStateException: (!) Invalid file contents.\n" + breakLine());
+        } finally {
+            System.out.print("\tLoading Complete :)\n" + breakLine());
         }
-        System.out.print("\tLoading Done :)\n" + breakLine());
+
     }
 
     // add data read from file to list
@@ -88,10 +90,7 @@ public class Duke {
     private static void addTodo(String taskInfo) {
         Task newTask = new Todo(taskInfo);
         tasks.add(newTask);
-        System.out.print(breakLine()
-                + "\tadded:\n\t\t" + newTask + '\n'
-                + "\t(total: " + tasks.size() + " tasks)\n"
-                + breakLine());
+        printAddTaskStatus(newTask);
     }
 
     // create deadline
@@ -107,20 +106,17 @@ public class Duke {
     private static void addDeadline(String taskInfo) {
         Task newTask = createDeadline(taskInfo);
         tasks.add(newTask);
-        System.out.print(breakLine()
-                + "\tadded:\n\t\t" + newTask + '\n'
-                + "\t(total: " + tasks.size() + " tasks)\n"
-                + breakLine());
+        printAddTaskStatus(newTask);
     }
 
     // create new event
     private static Event createEvent(String taskInfo) {
         String description, from, to;
         String[] info = taskInfo.split("#from", 2);
+        String[] timeInfo = info[1].split("#to", 2);
         description = info[0];
-        info = info[1].split("#to", 2);
-        from = info[0];
-        to = info[1];
+        from = timeInfo[0];
+        to = timeInfo[1];
         return new Event(description, from, to);
     }
 
@@ -128,8 +124,13 @@ public class Duke {
     private static void addEvent(String taskInfo) {
         Task newTask = createEvent(taskInfo);
         tasks.add(newTask);
+        printAddTaskStatus(newTask);
+    }
+
+    // print result of add task
+    private static void printAddTaskStatus(Task addedTask) {
         System.out.print(breakLine()
-                + "\tadded:\n\t\t" + newTask + '\n'
+                + "\tadded:\n\t\t" + addedTask + '\n'
                 + "\t(total: " + tasks.size() + " tasks)\n"
                 + breakLine());
     }
@@ -147,9 +148,9 @@ public class Duke {
 
     // mark the task
     private static void markTask(String taskNumber) {
-        int taskIdx = Integer.parseInt(taskNumber) - 1;
+        int taskIndex = Integer.parseInt(taskNumber) - 1;
         try {
-            Task currentTask = tasks.get(taskIdx);
+            Task currentTask = tasks.get(taskIndex);
             currentTask.mark();
             System.out.print(breakLine()
                     + "\tNice! I've marked this task as done :D\n\t\t"
@@ -200,17 +201,17 @@ public class Duke {
     // read input
     private static String readInput() {
         System.out.print(">> ");
-        return in.nextLine();
+        return inputReader.nextLine();
     }
 
     // write data to a file
     private static void saveDataToFile() {
         try {
-            FileWriter fw = new FileWriter(FILE_PATH);
+            FileWriter fileWriter = new FileWriter(FILE_PATH);
             for (Task task : tasks) {
-                fw.write(task.toFileFormat());
+                fileWriter.write(task.toFileFormat());
             }
-            fw.close();
+            fileWriter.close();
         } catch (IOException e) {
             System.out.print("\t(!) IOException Error : save the data to the file.\n" + breakLine());
         }

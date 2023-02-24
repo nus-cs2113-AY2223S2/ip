@@ -3,6 +3,8 @@ package duke.task;
 import jdk.jfr.Percentage;
 
 public class Task {
+    private final static String MARKED_ICON = "[/]";
+    private final static String UNMARKED_ICON = "[ ]";
     protected String description;
     protected boolean isMarked;
 
@@ -12,7 +14,8 @@ public class Task {
     }
 
     public String getStatusIcon() {
-        return (isMarked ? "[/]" : "[ ]");
+        String statusIcon = isMarked ? MARKED_ICON : UNMARKED_ICON;
+        return statusIcon;
     }
 
     public void mark() {
