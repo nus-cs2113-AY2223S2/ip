@@ -7,9 +7,18 @@ import duke.exception.InvalidIndexException;
 import duke.tasks.*;
 import duke.ui.Ui;
 
+/**
+ * Class containing method for parsing the commands.
+ */
 public class Parser {
     private static TaskList taskList = new TaskList();
 
+    /**
+     * A method that handles the user inputs by calling methods based on the command given.
+     *
+     * @param userInput A string that represents the user's input into the terminal.
+     * @throws InvalidCommandException The exception thrown when user enters an invalid command.
+     */
     public static void handleUserInputs(String userInput) throws InvalidCommandException{
         String[] cases = userInput.split(" ", 2);
         String command = cases[0];
@@ -41,6 +50,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Creates a new todo task which will be added to the task list and database.
+     *
+     * @param cases An array of string that contains the todo command and description.
+     * @throws EmptyCommandException The exception thrown when user enters a command with no description.
+     */
     private static void createTodo(String[] cases) throws EmptyCommandException{
         if (cases.length == 1) {
             throw new EmptyCommandException();
@@ -51,6 +66,12 @@ public class Parser {
         Ui.printAddedTaskCommand(taskList);
     }
 
+    /**
+     * Creates a new deadline task which will be added to the task list and database.
+     *
+     * @param cases An array of string that contains the deadline command, description and due time.
+     * @throws EmptyCommandException The exception thrown when user only inputs the command
+     */
     private static void createDeadline(String[] cases) throws EmptyCommandException {
         if (cases.length == 1) {
             throw new EmptyCommandException();
@@ -64,6 +85,12 @@ public class Parser {
         Ui.printAddedTaskCommand(taskList);
     }
 
+    /**
+     * Creates a new event task which will be added to the task list and database.
+     *
+     * @param cases An array of string that contains the deadline command, description and due time.
+     * @throws EmptyCommandException The exception thrown when user only inputs the command.
+     */
     private static void createEvent(String[] cases) throws EmptyCommandException {
         if (cases.length == 1) {
             throw new EmptyCommandException();
@@ -78,6 +105,9 @@ public class Parser {
         Ui.printAddedTaskCommand(taskList);
     }
 
+    /**
+     * Method used to print out the task list.
+     */
     private static void printList() {
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < taskList.listCount(); ++i) {
@@ -86,6 +116,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Marks the task as done.
+     *
+     * @param input The index of the task to be marked as done.
+     * @throws InvalidIndexException The exception thrown when user enters an invalid index.
+     */
     private static void markTask(String input) throws InvalidIndexException {
         int index = Integer.parseInt(input) - 1;
         if (index >= taskList.listCount()) {
@@ -95,6 +131,12 @@ public class Parser {
         Ui.markDoneMessage(taskList, index);
     }
 
+    /**
+     * Marks the task as not done.
+     *
+     * @param input The index of the task to be unmarked.
+     * @throws InvalidIndexException The exception thrown when user enters an invalid index.
+     */
     private static void unmarkTask(String input) throws InvalidIndexException {
         int index = Integer.parseInt(input) - 1;
         if (index >= taskList.listCount()) {
@@ -104,6 +146,12 @@ public class Parser {
         Ui.markUndoneMessage(taskList, index);
     }
 
+    /**
+     * Deletes a task from the task list
+     *
+     * @param input The index of the task to be removed from the task list
+     * @throws InvalidIndexException The exception thrown when user enters an invalid index.
+     */
     private static void deleteTask(String input) throws InvalidIndexException {
         int index = Integer.parseInt(input) - 1;
         if (index >= taskList.listCount()) {
