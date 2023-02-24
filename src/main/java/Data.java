@@ -30,13 +30,16 @@ public class Data {
             FileWriter myWriter = new FileWriter("data/data.txt");
             for (Task task : taskManager) {
                 if (task.getType().equals("T")) {
-                    myWriter.write(task.getType() + "%" + task.getStatusIcon() + "%" + task.getDescription() + '\n');
+                    myWriter.write(task.getType() + "%" + task.getStatusIcon()
+                                    + "%" + task.getDescription() + '\n');
                 } else if (task.getType().equals("D")) {
                     Deadline obj = (Deadline) task;
-                    myWriter.write(task.getType() + "%" + task.getStatusIcon() + "%" + task.getDescription() + "%" + obj.by + '\n');
+                    myWriter.write(task.getType() + "%" + task.getStatusIcon()
+                                    + "%" + task.getDescription() + "%" + obj.by + '\n');
                 } else if (task.getType().equals("E")) {
                     Event obj = (Event) task;
-                    myWriter.write(task.getType() + "%" + task.getStatusIcon() + "%" + task.getDescription() + "%" + obj.start + "%" + obj.end + '\n');
+                    myWriter.write(task.getType() + "%" + task.getStatusIcon() + "%"
+                                    + task.getDescription() + "%" + obj.start + "%" + obj.end + '\n');
                 }
             }
             myWriter.close();
