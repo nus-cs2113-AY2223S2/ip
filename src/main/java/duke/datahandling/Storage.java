@@ -45,7 +45,7 @@ public class Storage {
             File newFile = new File("docs");
             boolean directoryCreated = newFile.mkdirs();
             boolean fileCreated = database.createNewFile();
-            if (directoryCreated && fileCreated) {
+            if (directoryCreated || fileCreated) {
                 dukeUserInterface.printFileCreationStatus(database.getAbsolutePath());
             }
         }
