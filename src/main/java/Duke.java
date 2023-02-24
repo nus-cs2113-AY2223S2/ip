@@ -1,226 +1,48 @@
+import Ui.Print;
 import duke.Task;
-import duke.Deadline;
-import duke.Todo;
-import duke.Event;
-import duke.DukeException;
+import Parser.Parser;
 import java.util.ArrayList;
-import java.io.*;
 import java.util.Scanner;
+import Storage.Storage;
+
+import javax.annotation.processing.Processor;
 
 public class Duke {
-    private static void appendToFile(String filePath, String textToAppend) throws IOException {
-        FileWriter fw = new FileWriter(filePath, true); // create a FileWriter in append mode
-        fw.write(textToAppend);
-        fw.close();
-    }
-
-    private static void writeToFile(String filePath, String textToAdd) throws IOException {
-        FileWriter fw = new FileWriter(filePath);
-        fw.write(textToAdd);
-        fw.close();
-    }
-
 
     public static void main(String[] args) throws Exception {
 
         ArrayList<Task> tasks = new ArrayList<>();
-        //scan for duke.txt file and add as input first
+
+        //If file exists, load file contents into the session
+
         int i = 0;
-
-        File duke=new File("Duke.txt");
-        if(duke.exists())
-        {
-            Scanner s = new Scanner(duke); // create a Scanner using the File as the source
-            while (s.hasNextLine()) {
-                String currentLine=s.nextLine();
-                Character taskLetter= currentLine.charAt(1);
-                Character tick=currentLine.charAt(4);
+        String filePath = "Duke.txt";
+        Storage Storage;
+        Storage = new Storage(filePath);
+        i=Storage.createFile(tasks,filePath, i);
 
 
-                if(taskLetter=='T') {
-                    String taskToDo=currentLine.substring(7,currentLine.length());
-                    tasks.add(new Todo(taskToDo,2));
-                } else if (taskLetter=='D') {
-                    String[] ToSplitDeadline = currentLine.split("by:");
+        Print Print = new Print("");
+        Print.Greeting();
 
-                    String DeadlineTask = ToSplitDeadline[0].substring(7,ToSplitDeadline[0].length()-1);
-                    String date =ToSplitDeadline[1].substring(0,ToSplitDeadline[1].length()-1);
-                    tasks.add(new Deadline(DeadlineTask, date));
-
-                } else if(taskLetter=='E') {
-                    String[] ToSplitEvent = currentLine.split("from:");
-                    String EventTask = ToSplitEvent[0].substring(7,ToSplitEvent[0].length()-1);
-                    String[] date= ToSplitEvent[1].split("to:");
-                    tasks.add(new Event(EventTask,date[0], date[1]));
-                }
-                i+=1;
-
-                if(tick=='X') {
-                    tasks.get(i-1).markAsDone();
-                }
-
-
-            }
-        }
-
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);
-
-
-        String greeting = "____________________________________________________________\n"
-                + " Hello! I'm Duke\n"
-                + " What can I do for you?\n"
-                + "____________________________________________________________\n";
-
-        System.out.println(greeting);
         Scanner in = new Scanner(System.in);
-        int index_for_mark= 1;
+        int index_for_mark = 1;
 
         while (true) {
 
             String line = in.nextLine();
-            //if bye
+
             if (line.equalsIgnoreCase("bye")) {
+                Print.Bye();
                 break;
             }
+            //Obtaining the index for commands that edit tasks like mark and delete
 
-            //getting index for mark and delete
-            String[] find_index = line.split(" ");
-
-            //Task description
-            String desc;
-            desc = line;
-            Task t = new Task(desc);
-
-            if (line.toLowerCase().contains("unmark") || (line.toLowerCase().contains("mark")) || line.toLowerCase().contains("delete"))
-            {
-                if (line.toLowerCase().contains("unmark")) {
-                    index_for_mark = Integer.parseInt(find_index[1]);
-                    tasks.get(index_for_mark - 1).markAsUnDone();
-
-                    System.out.println("____________________________________________________________\n"
-                            + "OK, I've marked this task as not done yet:\n"
-                            + tasks.get(index_for_mark - 1) + "\n"
-                            + "____________________________________________________________\n");
+            i=Parser.Processor(filePath,line,tasks, i);
 
 
-                } else if (line.toLowerCase().contains("mark")) {
-                    index_for_mark = Integer.parseInt(find_index[1]);
-                    tasks.get(index_for_mark - 1).markAsDone();
-                    System.out.println("____________________________________________________________\n"
-                            + "Nice! I've marked this task as done:\n"
-                            + tasks.get(index_for_mark - 1) + "\n"
-                            + "____________________________________________________________\n");
-
-
-                } else if (line.toLowerCase().contains("delete")) {
-                    int index_for_delete = Integer.parseInt(find_index[1]);
-                    System.out.println("____________________________________________________________\n"
-                            + " Noted. I've removed this task:\n" +
-                            "  " + tasks.get(index_for_delete - 1) + "\n" +
-                            "Now you have " + (i - 1) + " tasks in the list.\n"
-                            + "____________________________________________________________\n");
-                    i -= 1;
-                    tasks.remove(tasks.get(index_for_delete - 1));
-
-                }
-                String newString = "";
-                String filePath = "Duke.txt";
-
-                for (int m = 0; m < i; m += 1) {
-                    int index = m + 1;
-                    newString += (tasks.get(m) + "\n");
-                }
-
-
-                try {
-                    writeToFile("Duke.txt", newString);
-                } catch (IOException e) {
-                    System.out.println("Something went wrong\n"
-                            + "____________________________________________________________");
-                }
-            }
-
-            else if (line.toLowerCase().contains("todo") || line.toLowerCase().contains("deadline") || line.toLowerCase().contains("event")) {
-
-                boolean empty;
-                empty = false;
-
-                if (line.toLowerCase().contains("todo")) {
-                    String[] ToSplitTodo = line.split(" ");
-                    try {
-
-                        String TodoTask = line.toLowerCase().replaceAll("todo","");
-                        tasks.add(new Todo(TodoTask,ToSplitTodo.length));
-
-
-                    } catch (DukeException ex) {
-                        empty = true;
-                        System.out.println("____________________________________________________________\n"
-                                + "OOPS!!! The description of a todo cannot be empty.\n"
-                                + "____________________________________________________________\n");
-                    }
-
-                    //sample : deadline return book /by Sunday
-                } else if (line.toLowerCase().contains("deadline")) {
-                    String[] ToSplitDeadline = line.split("/");
-                    String DeadlineTask = ToSplitDeadline[0].toLowerCase().substring(9, ToSplitDeadline[0].length() - 1);
-                    tasks.add(new Deadline(DeadlineTask, ToSplitDeadline[1].substring(3, ToSplitDeadline[1].length())));
-
-                    //sample:event project meeting /from Mon 2pm /to 4pm
-                } else if (line.toLowerCase().contains("event")) {
-                    String[] ToSplitEvent = line.split("/");
-                    String EventTask = ToSplitEvent[0].toLowerCase().substring(6, ToSplitEvent[0].length());
-                    tasks.add(new Event(EventTask, ToSplitEvent[1].substring(5, ToSplitEvent[1].length()), ToSplitEvent[2].substring(3, ToSplitEvent[2].length())));
-
-                }
-
-                if(!empty) {
-                    System.out.println("____________________________________________________________\n"
-                            +"Got it. I've added this task:\n" +
-                            "  " + tasks.get(i) + "\n" +
-                            "Now you have " + (i + 1) + " tasks in the list.\n"
-                            + "____________________________________________________________\n");
-                    i += 1;
-
-                    try {
-                        appendToFile("Duke.txt",  tasks.get(i - 1).toString() + "\n");
-                    } catch (IOException e) {
-                        System.out.println("Something went wrong\n"
-                                + "____________________________________________________________");
-                    }
-                }
-
-            } else if (line.equalsIgnoreCase("list")) {
-
-                System.out.println("____________________________________________________________\n" +
-                        "Here are the tasks in your list:");
-
-                for (int m = 0; m < i; m += 1) {
-                    int index = m + 1;
-
-                    System.out.println(index + "." + tasks.get(m));
-
-                }
-                System.out.println("____________________________________________________________");
-
-            } else {
-                System.out.println("____________________________________________________________\n"
-                        + "OOPS!!! The description of a todo cannot be empty.\n"
-                        + "____________________________________________________________\n");
-            }
 
         }
-
-
-        System.out.println("____________________________________________________________\n"
-                + " Bye. Hope to see you again soon!\n"
-                + "____________________________________________________________\n");
-
 
     }
 }
