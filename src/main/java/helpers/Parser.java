@@ -16,7 +16,7 @@ public class Parser {
 
     public String[] getEvent(String userInput) {
         String intermediateStage = userInput.replace("event ", "");
-        String[] eventDescription = intermediateStage.split("/from | /to");
+        String[] eventDescription = intermediateStage.split("/from | /to ");
         return eventDescription;
     }
 

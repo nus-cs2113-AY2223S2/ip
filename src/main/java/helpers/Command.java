@@ -10,6 +10,7 @@ import dataypes.Todos;
 import exceptions.*;
 
 import java.io.IOException;
+import java.time.format.DateTimeParseException;
 
 public class Command {
     protected Parser parser = new Parser();
@@ -32,7 +33,7 @@ public class Command {
         fileObject.addToFile(taskList.getTask(taskList.getSize()-1).enCode() + System.lineSeparator());
         ui.printTaskEnding(taskList);
     }
-    public void commandDeadline(String userInput, TaskList taskList, FileHandler fileObject) throws EmptyDeadline, DeadlineMissingPhrase, DeadlineIsBlank, IOException {
+    public void commandDeadline(String userInput, TaskList taskList, FileHandler fileObject) throws EmptyDeadline, DeadlineMissingPhrase, DeadlineIsBlank, IOException, DateTimeParseException, WrongChrono {
         String[] deadlineAndDescription = parser.getDeadline(userInput);
         exceptionGenerator.deadlineExceptionGenerator(deadlineAndDescription, userInput);
         ui.printLine();
@@ -42,7 +43,7 @@ public class Command {
         ui.printTaskEnding(taskList);
     }
 
-    public void commandEvent(String userInput, TaskList taskList, FileHandler fileObject) throws EmptyEvent, EventMissingBothPhrases, EventMissingToPhrase, EventMissingFromPhrase, EventFromIsBlank, EventToIsBlank, IOException {
+    public void commandEvent(String userInput, TaskList taskList, FileHandler fileObject) throws EmptyEvent, EventMissingBothPhrases, EventMissingToPhrase, EventMissingFromPhrase, EventFromIsBlank, EventToIsBlank, IOException, DateTimeParseException, FromAfterTo, WrongChrono {
         String [] eventDescription = parser.getEvent(userInput);
         exceptionGenerator.eventExceptionGenerator(eventDescription, userInput);
         ui.printLine();
