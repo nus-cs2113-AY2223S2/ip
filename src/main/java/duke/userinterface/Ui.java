@@ -7,9 +7,7 @@ import java.util.ArrayList;
 
 public class Ui {
 
-    /**
-     * Generates strings to greet the user and welcome them to the program.
-     */
+    /** Generates strings to greet the user and welcome them to the program. */
     public void greetUser() {
         printLineSeparator();
         System.out.println("Hello! I'm Duke");
@@ -17,16 +15,12 @@ public class Ui {
         printLineSeparator();
     }
 
-    /**
-     * Prints a long string of lines ("___") to separate the outputs.
-     */
+    /** Prints a long string of lines ("___") to separate the outputs. */
     public void printLineSeparator() {
         System.out.println("___________________________________________________________________________________");
     }
 
-    /**
-     * Prints a string to inform the user about an invalid command entered as the input.
-     */
+    /** Prints a string to inform the user about an invalid command entered as the input. */
     public void printInvalidCommandError() {
         printLineSeparator();
         System.out.println("OOPS!!! I'm sorry, but I don't know what that means :-(");
@@ -43,9 +37,7 @@ public class Ui {
         printLineSeparator();
     }
 
-    /**
-     * Prints a string to inform the user to retype a valid task number.
-     */
+    /** Prints a string to inform the user to retype a valid task number. */
     public void printInvalidInputError() {
         printLineSeparator();
         System.out.println("OOPS!!! Please key in a valid task number!");
@@ -59,6 +51,18 @@ public class Ui {
     public void printMissingFileError() {
         printLineSeparator();
         System.out.println("File cannot be found! Creating new file for data storage...");
+        printLineSeparator();
+    }
+
+    /**
+     * Informs the user on the successful creation of a .txt file for data storage, as well as the
+     * location of the file on his/her computer.
+     *
+     * @param filePath The string containing the location of the file on the computer.
+     */
+    public void printFileCreationStatus(String filePath) {
+        printLineSeparator();
+        System.out.println("File Created Successfully! File stored at: " + filePath);
         printLineSeparator();
     }
 

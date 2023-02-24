@@ -10,10 +10,6 @@ import java.util.ArrayList;
 
 public class TaskList extends Storage {
 
-    public TaskList(ArrayList<Task> list, int listSize) {
-        super(list, listSize);
-    }
-
     /**
      * Creates a new "to-do" task in the "list" arrayList by determining what is typed after the spacing
      * between the "to-do" command and the task to the right of the spacing.

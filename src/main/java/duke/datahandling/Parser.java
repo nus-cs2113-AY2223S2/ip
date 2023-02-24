@@ -8,10 +8,6 @@ import java.util.Scanner;
 
 public class Parser extends TaskList {
 
-    public Parser(ArrayList<Task> list, int listSize) {
-        super(list, listSize);
-    }
-
     /**
      * Obtains user inputs and push them into another function to process what the user has typed.
      * Stores or deletes tasks that are stores in the ArrayList "list", according to what the user

@@ -14,28 +14,11 @@ import java.util.Scanner;
 
 public class Storage {
 
-    /**Constant to store location of the file used for writing/storing of data.*/
+    /** Constant to store location of the file used for writing/storing of data. */
     public final String FILE_LOCATION = "duke.txt";
 
-    /**ArrayList used to store tasks.*/
-    protected ArrayList<Task> list;
-
-    /**Variable to store size of the ArrayList.*/
-    protected int listSize;
-
-    /**Instance of Ui class for User Interface operations.*/
+    /** Instance of Ui class for User Interface operations. */
     public static final Ui dukeUserInterface = new Ui();
-
-    /**
-     * Creates a new "Storage" to store both the ArrayList size and the ArrayList itself.
-     *
-     * @param list The ArrayList used to store all the information found in the .txt file.
-     * @param listSize The size of the ArrayList "list".
-     */
-    public Storage(ArrayList<Task> list, int listSize) {
-        this.list = list;
-        this.listSize = listSize;
-    }
 
     /**
      * Reads the strings that are stored in the .txt file and converts them into editable data
@@ -60,8 +43,11 @@ public class Storage {
         } else {
             dukeUserInterface.printMissingFileError();
             File newFile = new File("docs");
-            newFile.mkdirs();
-            database.createNewFile();
+            boolean directoryCreated = newFile.mkdirs();
+            boolean fileCreated = database.createNewFile();
+            if (directoryCreated && fileCreated) {
+                dukeUserInterface.printFileCreationStatus(database.getAbsolutePath());
+            }
         }
         return list.size();
     }
