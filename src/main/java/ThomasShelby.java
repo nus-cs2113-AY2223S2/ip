@@ -1,6 +1,17 @@
-import java.io.IOException;
 import java.util.Scanner;
+import java.io.IOException;
 
+/**
+ * This <code>ThomasShelby</code> class is used to run the entire ThomasShelby bot application.
+ * It calls methods from various classes (TaskManager, Ui, Parser, and Data) to provide full feature functionality
+ * @version v0.2
+ * @since 2023-02-24
+ *
+ * @see TaskManager
+ * @see Ui
+ * @see Parser
+ * @see Data
+ */
 public class ThomasShelby {
     public static void main(String[] args) throws IOException {
         Ui.printWelcomeMessage();
@@ -9,7 +20,7 @@ public class ThomasShelby {
         while (true) {
             try {
                 String command = in.nextLine();
-                String[] parsedCommand = Parser.parseCommand(command); // user input split into individual words
+                String[] parsedCommand = Parser.parseCommand(command);
                 switch (parsedCommand[0]) {
                 case "bye":
                     Data.saveData(TaskManager.taskManager);
@@ -45,7 +56,7 @@ public class ThomasShelby {
             } catch (ArrayIndexOutOfBoundsException e) {
                 Ui.printArrayIndexOutOfBoundsExceptionErrorMessage(e);
             } catch (IncompleteTaskException e) {
-                Ui.printIncompleteTaskExceptionErrorMessage(e);
+                Ui.printIncompleteTaskExceptionErrorMessage();
             }
         }
     }
