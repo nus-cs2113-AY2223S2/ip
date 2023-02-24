@@ -39,15 +39,19 @@ public class ExceptionGenerator {
         }
     }
 
-    public void markExceptionGenerator(String userInput, TaskList taskList) throws MarkQualityException, NumberFormatException {
+    public void markExceptionGenerator(String userInput, TaskList taskList) throws MarkQualityException, NumberFormatException, TaskMarked {
         if(parser.isInRange(userInput, taskList)==false) {
             throw new MarkQualityException();
+        } else if(taskList.getTask(Integer.parseInt(userInput.split(" ")[1]) - 1).getStatus()==true) {
+            throw new TaskMarked();
         }
     }
 
-    public void unMarkExceptionGenerator(String userInput, TaskList taskList) throws UnmarkQualityException, NumberFormatException {
+    public void unMarkExceptionGenerator(String userInput, TaskList taskList) throws UnmarkQualityException, NumberFormatException, TaskUnMarked {
         if(parser.isInRange(userInput, taskList)==false) {
             throw new UnmarkQualityException();
+        } else if(taskList.getTask(Integer.parseInt(userInput.split(" ")[1]) - 1).getStatus()==false) {
+            throw new TaskUnMarked();
         }
     }
 }
