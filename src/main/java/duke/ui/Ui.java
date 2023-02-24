@@ -87,7 +87,7 @@ public class Ui {
         System.out.println("OK, I've marked this task as not done yet:");
         System.out.println(taskList.getTask(index).toString());
     }
-    
+
     /**
      * Displays an opening message when user inputs  'list'.
      */
