@@ -11,54 +11,43 @@ import java.util.Scanner;
  */
 public class Duke {
 
-    public static void printLine() {
-        System.out.println("\t---------------------------------------------------------------------------------");
-    }
-    public static void listTasks(int currentIndex, ArrayList<Task> taskList) {
-        for(int i = 0; i<currentIndex;i+=1) {
-            System.out.println('\t' + Integer.toString(i+1) + "." + taskList.get(i).getStatusAndDescription());
-            // can be further optimized.
-        }
-    }
+    //Need to uncomment whatever is written down here, ordinally you can use this but since main is static cannot run this
+    //private Ui ui;
 
+//    public Duke() {
+//        ui = new Ui();
+//    }
+
+    //This can go in the UI Class
+//    public static void ui.printLine() {
+//        System.out.println("\t---------------------------------------------------------------------------------");
+//    }
+
+    //This can go in the UI Class
+
+
+    //This goes in the parser class
     public static boolean isTheSame(String userInput, String toCompare) {
         return userInput.split(" ")[0].equals(toCompare);
     }
     
 
-    public static boolean isInRange(String userInput, int currentIndex) {
+    //This goes in the parser class
+    public static boolean isInRange(String userInput, ArrayList<Task> taskList) {
         boolean isReturn = false;
         try {
-            isReturn = Integer.parseInt(userInput.split(" ")[1])>0 && Integer.parseInt(userInput.split(" ")[1])<currentIndex+1;
+            isReturn = Integer.parseInt(userInput.split(" ")[1])>0 && Integer.parseInt(userInput.split(" ")[1])<taskList.size()+1;
         } catch (NumberFormatException e) {
             System.out.println("\tWhoops, need to ensure that your inputs are numbers! BUT a");
         }
         return (isReturn);
     }
 
-    public static void printMarkedTask(String userInput, ArrayList<Task> taskList) {
-//        try {
-//            taskList.get(Integer.parseInt(userInput.split(" ")[1]) - 1).markTask();
-//        } catch (NumberFormatException e) {
-//            printLine();
-//            System.out.println("\tWhoops inputs must be numbers");
-//            printLine();
-//        } catch (IndexOutOfBoundsException e) {
-//            printLine();
-//            System.out.println("\tWhoops inputs must be valid");
-//            printLine();
-//        }
-        System.out.println("\tNice! I've marked this task as done:");
-        taskList.get(Integer.parseInt(userInput.split(" ")[1]) - 1).markTask();
-        try {
-            fileObject.populateFile(taskList);
-        } catch (IOException e) {
-            System.out.println("WHoops");
-        }
-        System.out.println("\t\t" + taskList.get(Integer.parseInt(userInput.split(" ")[1]) - 1).getStatusAndDescription());
-    }
+    //This goes in the UI Class
 
-    public static void deleteTask() throws IndexOutOfBoundsException, NumberFormatException{
+
+    //This goes in the TaskList Class
+    public static void deleteTask(String userInput, ArrayList<Task> taskList) throws IndexOutOfBoundsException, NumberFormatException{
         Task item = new Task();
         try {
              item = taskList.get(Integer.parseInt(userInput.split(" ")[1]) - 1);
@@ -67,13 +56,12 @@ public class Duke {
         } catch (NumberFormatException e) {
             throw new NumberFormatException();
         }
-        printLine();
+        ui.printLine();
         System.out.println("\tNoted! I've removed this task!");
         System.out.println("\t\t" + taskList.get(Integer.parseInt(userInput.split(" ")[1]) - 1).getStatusAndDescription());
         taskList.remove(Integer.parseInt(userInput.split(" ")[1]) - 1);
-        currentIndex-=1;
-        printNoTasks(currentIndex);
-        printLine();
+        ui.printNoTasks(taskList.size());
+        ui.printLine();
         try {
             fileObject.populateFile(taskList);
         } catch (IOException e) {
@@ -82,181 +70,101 @@ public class Duke {
 
     }
 
-    public static void printUnmarkedTask(String userInput, ArrayList<Task> taskList) {
-        System.out.println("\tNice! I've marked this task as not done:");
-        taskList.get(Integer.parseInt(userInput.split(" ")[1]) - 1).unMarkTask();
-        try {
-            fileObject.populateFile(taskList);
-        } catch (IOException e) {
-            System.out.println("WHoops");
-        }
-        System.out.println("\t\t" + taskList.get(Integer.parseInt(userInput.split(" ")[1]) - 1).getStatusAndDescription());
-    }
-    public static String[] getDeadline(String userInput) {
-        String intermediateStage = userInput.replace("deadline ", "");
-        String[] deadlineAndDescription = intermediateStage.split("/by ");
-        return deadlineAndDescription;
+    //This goes in the UI Class
 
-    }
-    public static String[] getEvent(String userInput) {
-        String intermediateStage = userInput.replace("event ", "");
-        String[] eventDescription = intermediateStage.split("/from | /to");
-        return eventDescription;
-    }
-    public static void printNoTasks(int currentIndex) {
-        if(currentIndex==1) {
-            System.out.println("\tNow you have " + Integer.toString(currentIndex) + " task in the list");
-        } else {
-            System.out.println("\tNow you have " + Integer.toString(currentIndex) + " tasks in the list");
-        }
-    }
 
-    public static void printTodo(String userInput) throws EmptyTodo {
-        String[] holder = userInput.split(" ");
-        if(holder.length<2)
-        {
-            throw new EmptyTodo();
-        }
-        printLine();
-        String input = userInput.replace("todo ", "");
-        Todos temp = new Todos(input);
-        taskList.add(temp);
-        currentIndex+=1;
-        printNoTasks(currentIndex);
-        printLine();
-    }
-    public static void printDeadline(String userInput) throws EmptyDeadline, DeadlineMissingPhrase, DeadlineIsBlank {
-        printLine();
-        String[] deadlineAndDescription = getDeadline(userInput);
-        if(!userInput.contains("/by ") && userInput.split(" ").length>1) {
-            throw new DeadlineMissingPhrase();
-        } else if(deadlineAndDescription.length==1) {
-            throw new EmptyDeadline();
-        } else if(deadlineAndDescription[1].isBlank()) {
-            throw new DeadlineIsBlank();
-        }
-        Deadlines temp = new Deadlines(deadlineAndDescription[0], deadlineAndDescription[1]);
-        taskList.add(temp);
-        currentIndex+=1;
-        printNoTasks(currentIndex);
-        printLine();
-    }
+    //This goes in the parser class
 
-    public static void printEvent(String userInput) throws EmptyEvent, EventMissingBothPhrases, EventMissingToPhrase, EventMissingFromPhrase, EventFromIsBlank, EventToIsBlank {
-        printLine();
-        String [] eventDescription = getEvent(userInput);
-        if(!userInput.contains("/from") && userInput.split(" ").length>1) {
-            throw new EventMissingFromPhrase();
-        } else if(!userInput.contains("/to") && userInput.split(" ").length>1) {
-            throw new EventMissingToPhrase();
-        } else if(!(userInput.contains("/from") || userInput.contains("/to")) && userInput.split(" ").length>1) {
-            throw new EventMissingFromPhrase();
-        } else if (eventDescription.length==1) {
-            throw new EmptyEvent();
-        }else if(eventDescription[1].isBlank()) {
-            throw new EventFromIsBlank();
-        } else if(eventDescription[2].isBlank()) {
-            throw new EventToIsBlank();
-        }
-        Events temp = new Events(eventDescription[0], eventDescription[1], eventDescription[2]);
-        taskList.add(temp);
-        currentIndex+=1;
-        printNoTasks(currentIndex);
-        printLine();
-    }
+
+    //This goes in the parser class
+
+
+
+
+    // This goes into the UI Class
+    
+
+    //This goes into the UI Class
+
+
+    //this goes into the UI class
+
+
+    //this goes into the UI Class
+
 //    public static void printTask(String userInput) {
-//        printLine();
+//        ui.printLine();
 //        Task temp = new Task(userInput); // set the description
 //        taskList.add(temp);
-//        currentIndex+=1;
 //        System.out.println("\tadded: " + userInput);
-//        printLine();
+//        ui.printLine();
 //    }
-    public static void sayBye() {
-        printLine();
-        System.out.println("\tBye. Hope to see you again soon!");
-        printLine();
-    }
 
-    public static void displayHelper() {
-        printLine();
-        System.out.println("\tHi! These are the commands which duke understands!");
-        printLine();
-        System.out.println("\ttodo - Creates a todo, use it by adding 'todo' and some description. An example is listed below:");
-        System.out.println("\t\t'todo get milk'");
-        printLine();
-        System.out.println("\tdeadline - Creates a deadline, use it by adding 'deadline' followed by some description and a deadline which follows '/by'");
-        System.out.println("\t\t'deadline get milk /by tomorrow'");
-        printLine();
-        System.out.println("\tevent - Creates an event, use it by adding 'event' ,some description, a start date followed by '/from' and an end date followed by '/to'");
-        System.out.println("\t\t'event get some milk /from today /to tomorrow");
-        printLine();
-        System.out.println("\tbye - to exit the program!");
-        printLine();
-    }
+    //This goes into the UI Class
 
-    public static void deadlineExceptionHandler() {
+
+    public static void deadlineExceptionHandler(String userInput, ArrayList<Task> taskList) {
         try {
-            printDeadline(userInput);
+            ui.printDeadline(userInput, taskList);
             fileObject.addToFile(taskList.get(taskList.size()-1).enCode() + System.lineSeparator());
         } catch (EmptyDeadline e) {
-            printLine();
+            ui.printLine();
             System.out.println("\tPlease ensure that the deadline isn't empty!");
-            printLine();
+            ui.printLine();
         } catch (DeadlineMissingPhrase e) {
-            printLine();
+            ui.printLine();
             System.out.println("\tPlease ensure that you include the '/by' phrase to indicate the deadline!");
-            printLine();
+            ui.printLine();
         } catch (DeadlineIsBlank e) {
-            printLine();
+            ui.printLine();
             System.out.println("\tPlease ensure that the deadline is not composed of solely white spaces!");
-            printLine();
+            ui.printLine();
         } catch (IOException e) {
             System.out.println("unable to write");
         }
     }
 
-    public static void eventExceptionHandler() {
+    public static void eventExceptionHandler(String userInput, ArrayList<Task> taskList) {
         try {
-            printEvent(userInput);
+            ui.printEvent(userInput, taskList);
             fileObject.addToFile(taskList.get(taskList.size()-1).enCode() + System.lineSeparator());
         } catch (EmptyEvent e) {
-            printLine();
+            ui.printLine();
             System.out.println("\tPlease ensure that the event isn't empty!");
-            printLine();
+            ui.printLine();
         } catch (EventMissingFromPhrase e) {
-            printLine();
+            ui.printLine();
             System.out.println("\tPlease ensure that you include the '/from' phrase to indicate the start of the event!");
-            printLine();
+            ui.printLine();
         } catch (EventMissingToPhrase e) {
-            printLine();
+            ui.printLine();
             System.out.println("\tPlease ensure that you include the '/to' phrase to indicate the end of the event!");
-            printLine();
+            ui.printLine();
         } catch (EventMissingBothPhrases e) {
-            printLine();
+            ui.printLine();
             System.out.println("\tPlease ensure that you include the '/from' and '/to' phrase to indicate the start and end of the event!");
-            printLine();
+            ui.printLine();
         } catch (EventFromIsBlank e) {
-            printLine();
+            ui.printLine();
             System.out.println("\tPlease ensure that the event has a valid start time period");
-            printLine();
+            ui.printLine();
         } catch (EventToIsBlank e) {
-            printLine();
+            ui.printLine();
             System.out.println("\tPlease ensure that the event has a valid end time period");
-            printLine();
+            ui.printLine();
         } catch (IOException e) {
             System.out.println("unable to write");
         }
     }
 
-    public static void todoExceptionHandler() {
+    public static void todoExceptionHandler(String userInput, ArrayList<Task> arrayList) {
         try {
-            printTodo(userInput);
+            ui.printTodo(userInput, taskList);
         }
         catch (EmptyTodo e) {
-            printLine();
+            ui.printLine();
             System.out.println("\tPlease ensure that the todo has a description!");
-            printLine();
+            ui.printLine();
         }
         try {
             fileObject.addToFile(taskList.get(taskList.size()-1).enCode() + System.lineSeparator());
@@ -265,17 +173,17 @@ public class Duke {
         }
     }
 
-    public static void deleteExceptionHandler() {
+    public static void deleteExceptionHandler(String userInput, ArrayList<Task> arrayList) {
         try {
-            deleteTask();
+            deleteTask(userInput, arrayList);
         } catch (IndexOutOfBoundsException e) {
-            printLine();
+            ui.printLine();
             System.out.println("\tEnter a valid index to delete");
-            printLine();
+            ui.printLine();
         } catch (NumberFormatException e) {
-            printLine();
+            ui.printLine();
             System.out.println("\tEnter a valid number to delete");
-            printLine();
+            ui.printLine();
         }
     }
 
@@ -284,13 +192,16 @@ public class Duke {
 
 //    final static int MAXTASKS = 100;
 //    public static Task[] taskList = new Task[MAXTASKS];
-    public static  ArrayList<Task> taskList = new ArrayList<>();
-
-    public static int currentIndex = 0;
+    public static  ArrayList<Task> taskList = new ArrayList<Task>();
+    public static Ui ui = new Ui();
     public static Scanner in = new Scanner(System.in);
-    public static String userInput;
+    //public static String userInput;
     //public static exceptions.DukeException exceptionHandler;
     public static FileHandler fileObject = new FileHandler(System.getProperty("user.dir") + "/dukeData.txt");
+
+    public static Boolean isExit = false;
+
+
     public static void main(String[] args) {
         try {
             fileObject.createFile();
@@ -299,73 +210,61 @@ public class Duke {
         } catch (IOException e) {
             System.out.println("Unable to write to file");
         }
-        currentIndex = taskList.size();
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);
-        System.out.println("---------------------------------------------------------------------------------");
-        System.out.println("Hello! I'm Duke");
-        System.out.println("What can I do for you?");
-        System.out.println("If you are unsure of the commands, type 'help'");
-        System.out.println("---------------------------------------------------------------------------------");
-        userInput = in.nextLine();
-        while (true) { // ensure that the loop can stay on forever if needed.
-            while(userInput.equals("") || userInput.equals(" ")) {
-                printLine();
+        ui.showWelcome();
+        //ui.readCommand();     //Make user Input a member of the UI Class also
+        while (!isExit) { // ensure that the loop can stay on forever if needed.
+            ui.readCommand();
+
+            while(ui.getUserInput().equals("") || ui.getUserInput().equals(" ")) {
+                ui.printLine();
                 System.out.println("\tSorry please enter a valid input ");
-                printLine();
-                userInput = in.nextLine();
+                ui.printLine();
+                ui.readCommand();
             }
-            if(userInput.equals("bye")) { // exit command
-                break;
-            } else if(userInput.equals("list")) { //displays the list if needed
-                printLine();
+
+            if(ui.getUserInput().equals("bye")) { // exit command
+                isExit=true;
+            } else if(ui.getUserInput().equals("list")) { //displays the list if needed
+                ui.printLine();
                 System.out.println("\tHere are the tasks in your list:");
-                listTasks(currentIndex, taskList);
-                printLine();
-            } else if (isTheSame(userInput, "mark")) { //mark the task in
-                if(isInRange(userInput, currentIndex)==false) {
-                    printLine();
+                ui.listTasks(taskList);
+                ui.printLine();
+            } else if (isTheSame(ui.getUserInput(), "mark")) { //mark the task in
+                if(isInRange(ui.getUserInput(), taskList)==false) {
+                    ui.printLine();
                     System.out.println("\tNice try, enter a valid index to mark:");
-                    printLine();
+                    ui.printLine();
                 } else {
-                    printLine();
-                    printMarkedTask(userInput, taskList);
-                    printLine();
+                    ui.printMarkedTask(ui.getUserInput(), taskList, fileObject);
                 }
-                //printMarkedTask(userInput, taskList);
-            } else if (isTheSame(userInput, "unmark")) {//unmark the task
-                if(isInRange(userInput, currentIndex)==false) {
-                    printLine();
+                //printMarkedTask(ui.getUserInput(), taskList);
+            } else if (isTheSame(ui.getUserInput(), "unmark")) {//unmark the task
+                if(isInRange(ui.getUserInput(), taskList)==false) {
+                    ui.printLine();
                     System.out.println("\tNice try, enter a valid index to unmark:");
-                    printLine();
+                    ui.printLine();
                 } else {
-                    printLine();
-                    printUnmarkedTask(userInput, taskList);
-                    printLine();
+                    ui.printUnmarkedTask(ui.getUserInput(), taskList, fileObject);
                 }
-            } else if(isTheSame(userInput, "todo")) {
-                todoExceptionHandler();
+            } else if(isTheSame(ui.getUserInput(), "todo")) {
+                todoExceptionHandler(ui.getUserInput(), taskList);
                 //leave this for the final refactoring
-            } else if(isTheSame(userInput, "deadline")) {
-                deadlineExceptionHandler();
-            } else if(isTheSame(userInput, "event")) {
-                eventExceptionHandler();
-            } else if(isTheSame(userInput, "delete")) {
-                deleteExceptionHandler();
-            }  else if (isTheSame(userInput,"help")) {
-                displayHelper();
+            } else if(isTheSame(ui.getUserInput(), "deadline")) {
+                deadlineExceptionHandler(ui.getUserInput(), taskList);
+            } else if(isTheSame(ui.getUserInput(), "event")) {
+                eventExceptionHandler(ui.getUserInput(), taskList);
+            } else if(isTheSame(ui.getUserInput(), "delete")) {
+                deleteExceptionHandler(ui.getUserInput(), taskList);
+            }  else if (isTheSame(ui.getUserInput(),"help")) {
+                ui.displayHelper();
             } else { // tells the user that we have added the task in
-                //printTask(userInput); // could remove this and ensure that only specific tasks can be entered!
-                printLine();
+                //printTask(ui.getUserInput()); // could remove this and ensure that only specific tasks can be entered!
+                ui.printLine();
                 System.out.println("\tPlease enter a valid input");
-                printLine();
+                ui.printLine();
             }
-            userInput = in.nextLine();
+            //ui.readCommand(); moved to the top
         }
-       sayBye();
+      ui.sayBye();
     }
 }
