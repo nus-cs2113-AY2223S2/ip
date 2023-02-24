@@ -20,20 +20,108 @@ public class FileHandler {
         try {
             dukeFile.createNewFile();
         } catch (IOException e) {
-            System.out.println("Whoops, couldnt create/locate file");
+            System.out.println("Whoops, couldn't create/locate file");
+        }
+        try {
+            System.out.print("\033\143");
+            Thread.sleep(250);
+            System.out.println("Initializing Data collection sites......................");
+            Thread.sleep(250);
+            System.out.println("Initializing Duke packages..............................");
+            Thread.sleep(250);
+            System.out.println("Initializing corefunctioanlities........................");
+            Thread.sleep(250);
+            System.out.println("Initializing Duke.......................................");
+            Thread.sleep(250);
+            System.out.println("Initializing ExceptionHandler...........................");
+            Thread.sleep(250);
+            System.out.println("Initializing TaskList...................................");
+            Thread.sleep(250);
+            System.out.println("Initializing Ui.........................................");
+            Thread.sleep(250);
+            System.out.println("corefunctionalities complete............................");
+            Thread.sleep(250);
+            System.out.println("Initializing datatypes..................................");
+            Thread.sleep(250);
+            System.out.println("Initializing Tasks......................................");
+            Thread.sleep(250);
+            System.out.println("Initializing Events.....................................");
+            Thread.sleep(250);
+            System.out.println("Initializing Deadlines..................................");
+            Thread.sleep(250);
+            System.out.println("Initializing Todos......................................");
+            Thread.sleep(250);
+            System.out.println("Initializing TaskFileHandler............................");
+            Thread.sleep(250);
+            System.out.println("datatypes complete......................................");
+            Thread.sleep(250);
+            System.out.println("Initializing exceptions.................................");
+            Thread.sleep(250);
+            System.out.println("Initializing DeadlineIsBlank.................................");
+            Thread.sleep(100);
+            System.out.println("Initializing DeadlineMissingPhrase.................................");
+            Thread.sleep(100);
+            System.out.println("Initializing DukeException.................................");
+            Thread.sleep(100);
+            System.out.println("Initializing EmptyDeadline.................................");
+            Thread.sleep(100);
+            System.out.println("Initializing EmptyEvent.................................");
+            Thread.sleep(100);
+            System.out.println("Initializing EmptyTodo.................................");
+            Thread.sleep(100);
+            System.out.println("Initializing EventFromIsBlank.................................");
+            Thread.sleep(100);
+            System.out.println("Initializing EventMissingBothPhrases.................................");
+            Thread.sleep(100);
+            System.out.println("Initializing EventMissingForPhrase.................................");
+            Thread.sleep(100);
+            System.out.println("Initializing EventMissingToPhrase.................................");
+            Thread.sleep(100);
+            System.out.println("Initializing EventToIsBlank.................................");
+            Thread.sleep(100);
+            System.out.println("Initializing FromAfterTo.................................");
+            Thread.sleep(100);
+            System.out.println("Initializing MarkQualityException.................................");
+            Thread.sleep(100);
+            System.out.println("Initializing UnmarkQualityException.................................");
+            Thread.sleep(100);
+            System.out.println("Initializing WrongChrono.................................");
+            Thread.sleep(100);
+            System.out.println("exceptions complete.....................................");
+            Thread.sleep(250);
+            System.out.println("Initializing helpers....................................");
+            Thread.sleep(250);
+            System.out.println("Initializing Command....................................");
+            Thread.sleep(250);
+            System.out.println("Initializing ExceptionGenerator.........................");
+            Thread.sleep(250);
+            System.out.println("Initializing Parser.....................................");
+            Thread.sleep(250);
+            System.out.println("helpers complete........................................");
+            Thread.sleep(250);
+            System.out.println("........................................................");
+            Thread.sleep(250);
+            System.out.println("........................................................");
+            Thread.sleep(250);
+            System.out.println("You're all set to go!!\n");
+            Thread.sleep(1000);
+            System.out.print("\033\143");
+            System.out.flush();
+        } catch (InterruptedException ie) {
+            Thread.currentThread().interrupt();
         }
     }
-    public void createFile() throws IOException{
-//        if(this.dukeFile.exists()==false) {
-////            FileWriter fw = new FileWriter(this.filePath); //handle the exception here
-////            fw.close();
-//            dukeFile.createNewFile();
-//        }
-//        if(dukeFile.exists()==false) {
-//            dukeFile.mkdir();
-//        }
-        dukeFile.createNewFile();
-    }
+//    public void createFile() throws IOException{
+////        if(this.dukeFile.exists()==false) {
+//////            FileWriter fw = new FileWriter(this.filePath); //handle the exception here
+//////            fw.close();
+////            dukeFile.createNewFile();
+////        }
+////        if(dukeFile.exists()==false) {
+////            dukeFile.mkdir();
+////        }
+//        dukeFile.createNewFile();
+//    }
 //    public void makeNewDirectory() throws IOException {
 //        if(!dukeFile.exists()) {
 //            dukeFile.mkdir();

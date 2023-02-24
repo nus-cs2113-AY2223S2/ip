@@ -5,6 +5,7 @@ import helpers.Command;
 import helpers.Parser;
 
 import java.io.IOException;
+import java.time.format.DateTimeParseException;
 
 public class ExceptionHandler {
     protected Ui ui = new Ui();
@@ -28,6 +29,14 @@ public class ExceptionHandler {
             ui.printLine();
         } catch (IOException e) {
             System.out.println("unable to write");
+        } catch (DateTimeParseException e) {
+            ui.printLine();
+            System.out.println("\tPlease ensure that the deadline follows the following format: yyyy-mm-dd.");
+            ui.printLine();
+        } catch (WrongChrono e) {
+            ui.printLine();
+            System.out.println("\tPlease ensure that the deadline isn't before the current date");
+            ui.printLine();
         }
     }
 
@@ -60,6 +69,20 @@ public class ExceptionHandler {
             ui.printLine();
         } catch (IOException e) {
             System.out.println("unable to write");
+        } catch (DateTimeParseException e) {
+            ui.printLine();
+            System.out.println("\tPlease ensure that the from and to dates follow the following format: yyyy-mm-dd.");
+            ui.printLine();
+        } catch (WrongChrono e) {
+            ui.printLine();
+            System.out.println("\tPlease ensure that the from and to dates aren't in the past...");
+            ui.printLine();
+        }
+        catch (FromAfterTo e) {
+            ui.printLine();
+            System.out.println("\tPlease ensure that your dates are chronologically appropriate...");
+            System.out.println("\tThe from date cannot be after the to date");
+            ui.printLine();
         }
     }
 
