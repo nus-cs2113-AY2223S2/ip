@@ -7,56 +7,14 @@ import java.io.IOException;
 
 
 public class Duke {
+    static TaskList tasks = new TaskList();
 
-    public static ArrayList<Task> tasks = new ArrayList<>();
-
-    //public static int tasksLength = 0;
-
-    public static void printTasks() {
-        Greeting.printSeperator();
-        System.out.println("\tHere are the tasks in your list:");
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println("\t" + (i+1) + "." + tasks.get(i).printTask());
-        }
-        Greeting.printSeperator();
-    }
-
-    public static void printNewTask(int taskNumber) {
-        Greeting.printSeperator();
-        System.out.println("\tGot it. I've added this task: \n"+ "\t\t" + tasks.get(tasks.size()-1).printTask());
-        //tasksLength ++;
-        System.out.println("\tNow you have " + tasks.size() + " tasks in the list.");
-        Greeting.printSeperator();
-    }
-
-    public static void mark(String userInput) {
-        int taskNumber = Integer.parseInt(userInput);
-        tasks.get(taskNumber - 1).MarkStatusDone();
-        Greeting.printSeperator();
-        System.out.println("\tNice! I've marked this task as done:\n" +
-                "\t\t" + tasks.get(taskNumber - 1).printTask());
-        Greeting.printSeperator();
-    }
-
-    public static void unmark(String userInput) {
-        int taskNumber = Integer.parseInt(userInput);
-        tasks.get(taskNumber - 1).MarkStatusUndone();
-        Greeting.printSeperator();
-        System.out.println("\tOK, I've marked this task as not done yet:\n" +
-
-                "\t\t" + tasks.get(taskNumber - 1).printTask());
-        Greeting.printSeperator();
-    }
-
-    public static void deleteTask(String userInput) {
-        int taskNumber = Integer.parseInt(userInput);
-        Task taskToBeRemoved = tasks.get(taskNumber - 1);
-        tasks.remove(taskNumber - 1);
-        Greeting.printSeperator();
-        System.out.println("\tNoted. I've removed this task:\n" +
-                "\t\t" + taskToBeRemoved.printTask());
-        Greeting.printSeperator();
-    }
+    /*
+     * =================================================================================
+     *                                Polling of commands
+     *                                      vvvvvvvvvv
+     * =================================================================================
+     */
 
     public static void ChatPolling() {
         String userInput;
@@ -67,28 +25,28 @@ public class Duke {
         while (!inputType[0].equals("bye")) {
             switch (inputType[0]) {
             case "list":
-                printTasks();
+                tasks.printTasks();
                 break;
 
             case "unmark":
                 String taskNumberUnmark = userInput.substring(7);
-                unmark(taskNumberUnmark);
+                tasks.unmark(taskNumberUnmark);
                 break;
 
             case "mark":
                 String taskNumberMark = userInput.substring(5);
-                mark(taskNumberMark);
+                tasks.mark(taskNumberMark);
                 break;
 
             case "delete":
                 String taskNumberDelete = userInput.substring(7);
-                deleteTask(taskNumberDelete);
+                tasks.deleteTask(taskNumberDelete);
                 break;
 
             case "todo":
                 try {
                     addTodo(userInput);
-                    printNewTask(tasks.size());
+                    tasks.printNewTask(tasks.getSize());
                 } catch (IllegalInputException e){
                     Greeting.printEmptyTask();
                 }
@@ -97,7 +55,7 @@ public class Duke {
             case "deadline":
                 try {
                     addDeadline(userInput);
-                    printNewTask(tasks.size());
+                    tasks.printNewTask(tasks.getSize());
                 } catch (IllegalInputException e){
                     Greeting.printEmptyTask();
                 } catch (MissingCommandException e) {
@@ -110,7 +68,7 @@ public class Duke {
             case "event":
                 try {
                     addEvent(userInput);
-                    printNewTask(tasks.size());
+                    tasks.printNewTask(tasks.getSize());
                 } catch (IllegalInputException e){
                     Greeting.printEmptyTask();
                 } catch (MissingCommandException e) {
@@ -135,53 +93,22 @@ public class Duke {
         updateFile();
     }
 
-    private static void updateFile() {
-        for (int i = 0; i < tasks.size(); i++) {
-            Task currentTask = tasks.get(i);
-            String taskStatus = currentTask.getStatusIcon();
-            String taskType = currentTask.getTaskIcon();
-            String taskName = currentTask.getTask();
-            String taskStatusBinary = (taskStatus == "X") ? "1" : "0";
 
-            switch (taskType) {
-            case "T":
-                try {
-                    writeToFile("T:"+taskStatusBinary+":"+taskName);
-                } catch (IOException e){
-                    System.out.println(e);
-                }
-                break;
-            case "D":
-                String deadlineDay = currentTask.getBy();
-                try {
-                    writeToFile("T:"+taskStatusBinary+":"+taskName+":"+deadlineDay);
-                } catch (IOException e){
-                    System.out.println(e);
-                }
-                break;
-            case "E":
-                String eventFrom = currentTask.getFrom();
-                String eventTo = currentTask.getTo();
-                try {
-                    writeToFile("T:"+taskStatusBinary+":"+taskName+":"+eventTo+":"+eventFrom);
-                } catch (IOException e){
-                    System.out.println(e);
-                }
-                break;
-            default:
-                Greeting.printHelp();
-            }
-        }
-    }
 
-     
+    /*
+     * =================================================================================
+     *                      Adding of New Tasks (Todo/ Deadline/ Event)
+     *                                      vvvvvvvvvv
+     * =================================================================================
+     */
+
     private static void addTodo(String userInput) throws IllegalInputException {
 
         String todoTask = userInput.substring(4).trim();
         if (todoTask == "") {
             throw new IllegalInputException();
         }
-        tasks.add(new Todo (todoTask));
+        tasks.addTask(new Todo (todoTask));
 
         return;
     }
@@ -199,7 +126,7 @@ public class Duke {
         if (deadlineDay == "") {
             throw new IllegalDayException();
         }
-        tasks.add(new Deadline(deadlineTask, deadlineDay));
+        tasks.addTask(new Deadline(deadlineTask, deadlineDay));
 
         try {
             writeToFile("T:0:"+deadlineTask+":"+deadlineDay);
@@ -224,7 +151,7 @@ public class Duke {
         if (eventFrom == "" || eventTo == "") {
             throw new IllegalDayException();
         }
-        tasks.add(new Event(eventTask, eventFrom, eventTo));
+        tasks.addTask(new Event(eventTask, eventFrom, eventTo));
 
         try {
             writeToFile("T:0:"+eventTask+":"+eventFrom+":"+eventTo);
@@ -234,6 +161,15 @@ public class Duke {
 
         return;
     }
+
+
+
+    /*
+     * =================================================================================
+     *                                File Reading/ Writing
+     *                                      vvvvvvvvvv
+     * =================================================================================
+     */
 
     private static void readFileContents(String filePath) throws FileNotFoundException {
         File f = new File(filePath); // create a File for the given file path
@@ -246,22 +182,61 @@ public class Duke {
 
             switch (taskType) {
             case "T":
-                tasks.add(new Todo (taskName));
+                tasks.addTask(new Todo (taskName));
                 break;
             case "D":
                 String deadlineDay = newInput[3];
-                tasks.add(new Deadline(taskName, deadlineDay));
+                tasks.addTask(new Deadline(taskName, deadlineDay));
                 break;
             case "E":
                 String eventFrom = newInput[3];
                 String eventTo = newInput[4];
-                tasks.add(new Event(taskName, eventFrom, eventTo));
+                tasks.addTask(new Event(taskName, eventFrom, eventTo));
                 break;
             default:
                 Greeting.printHelp();
             }
             if (newInput[1].equals("1")) {
-                tasks.get(tasks.size() - 1).MarkStatusDone();
+                tasks.MarkStatusAsDone(tasks.getSize() - 1);
+            }
+        }
+    }
+
+    private static void updateFile() {
+        for (int i = 0; i < tasks.getSize(); i++) {
+            Task currentTask = tasks.getTask(i);
+            String taskStatus = currentTask.getStatusIcon();
+            String taskType = currentTask.getTaskIcon();
+            String taskName = currentTask.getTask();
+            String taskStatusBinary = (taskStatus == "X") ? "1" : "0";
+
+            switch (taskType) {
+            case "T":
+                try {
+                    writeToFile("T:"+taskStatusBinary+":"+taskName);
+                } catch (IOException e){
+                    System.out.println(e);
+                }
+                break;
+            case "D":
+                String deadlineDay = currentTask.getBy();
+                try {
+                    writeToFile("D:"+taskStatusBinary+":"+taskName+":"+deadlineDay);
+                } catch (IOException e){
+                    System.out.println(e);
+                }
+                break;
+            case "E":
+                String eventFrom = currentTask.getFrom();
+                String eventTo = currentTask.getTo();
+                try {
+                    writeToFile("E:"+taskStatusBinary+":"+taskName+":"+eventTo+":"+eventFrom);
+                } catch (IOException e){
+                    System.out.println(e);
+                }
+                break;
+            default:
+                Greeting.printHelp();
             }
         }
     }
@@ -278,9 +253,20 @@ public class Duke {
         fw.close();
     }
 
+
+
+
+    /*
+     * =================================================================================
+     *                                         Main
+     *                                      vvvvvvvvvv
+     * =================================================================================
+     */
     public static void main (String[]args){
+
         try {
             readFileContents("duke.txt");
+            System.out.println("Data load successfull");
         } catch (FileNotFoundException e) {
             System.out.println("No Past Data Found. Will create a new data file after ending the Bot...");
             Greeting.printSeperator();
