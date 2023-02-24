@@ -8,7 +8,6 @@ import tasks.*;
 
 /**
  * This <code>Data</code> class handles the creation, saving and loading of data on the users local machine.
- *
  * @version v0.2
  * @since 2023-02-24
  */
@@ -33,9 +32,8 @@ public class Data {
      * Saves all the tasks in the task manager to a text file.
      *
      * @param taskManager The task manager containing the list of tasks to be saved.
-     * @throws IOException If there is an error saving the data to the file.
      */
-    public static void saveData(ArrayList<Task> taskManager) throws IOException {
+    public static void saveData(ArrayList<Task> taskManager) {
         try {
             createFile();
         } catch (IOException e) {

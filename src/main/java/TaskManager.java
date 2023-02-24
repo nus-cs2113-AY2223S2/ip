@@ -8,9 +8,9 @@ import static java.util.stream.Collectors.toList;
 /**
  * This <code>TaskManager</code> class is used to manage a list of <code>Task</code> objects.
  * It provides methods to list, add, mark, unmark, delete, and find tasks by keyword.
- *
  * @version v0.2
  * @since 2023-02-24
+ *
  * @see ThomasShelby
  * @see Ui
  */

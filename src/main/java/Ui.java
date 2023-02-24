@@ -9,6 +9,7 @@ import tasks.Event;
  * and error handling for ArrayIndexOutOfBoundsException and IncompleteTaskException
  * @version v0.2
  * @since 2023-02-24
+ *
  * @see TaskManager
  * @see Task
  * @see ToDo
