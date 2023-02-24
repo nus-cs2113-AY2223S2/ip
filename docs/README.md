@@ -40,17 +40,21 @@ You can add three types of tasks:
 - Deadline: A task containing a deadline
 - Event: A task containing a start and end datetime
 
+Go to [Adding Tasks](AddingTasks.md)
+
 ### Feature-Modifiers
 
 Ability to interact with the tasks:
-
-Go to [Adding Tasks](AddingTasks.md)
 
 - Delete a task
 - Mark a task as done
 - Mark a task as undone
 
+Go to [ModifyingTasks](ModifyingTasks.md)
+
 ### Feature-User Interface
 
 - Ability to list all current tasks
 - Sort and display tasks according to deadline
+
+Go to [ListingTasks](ListingTasks.md)
