@@ -46,7 +46,12 @@ public class Deadline extends Task {
 
     @Override
     public Boolean isOnDate(LocalDate date) {
-        return by != null && date.isEqual(by.toLocalDate());
+        boolean byExists = (by != null);
+        LocalDate byDate = null;
+        if (byExists) {
+            byDate = by.toLocalDate();
+        }
+        return byExists && date.isEqual(byDate);
     }
 
     @Override

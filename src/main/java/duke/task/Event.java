@@ -70,18 +70,21 @@ public class Event extends Task {
 
     @Override
     public Boolean isOnDate(LocalDate date) {
-        if (from != null) {
-            if (date.isEqual(from.toLocalDate())) {
-                return true;
-            }
-            if (date.isBefore(from.toLocalDate())) {
-                return false;
-            }
-            if (to != null && date.isBefore(to.toLocalDate())) {
-                return true;
-            }
+        boolean fromExists = (from != null);
+        boolean toExists = (to != null);
+        LocalDate fromDate = null;
+        LocalDate toDate = null;
+        if (fromExists) {
+            fromDate = from.toLocalDate();
         }
-        return to != null && date.isEqual(to.toLocalDate());
+        if (toExists) {
+            toDate = to.toLocalDate();
+        }
+        boolean isOnFrom = fromExists && date.isEqual(fromDate);
+        boolean isOnTo = toExists && date.isEqual(toDate);
+        boolean isBetween = fromExists && toExists && date.isAfter(fromDate) && date.isBefore(toDate);
+
+        return isOnFrom || isOnTo || isBetween;
     }
 
     @Override
