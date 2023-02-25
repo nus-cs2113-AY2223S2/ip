@@ -82,6 +82,12 @@ public class Ui {
      * @param userCommandKeyword Command keyword given by user, etc. mark, unmark, find etc.
      * @return Event object created according to userInput
      * @throws DukeException Thrown by getTaskString, getEventTaskName, getEventStartDate, getEventEndDate
+     * getTaskString: If the task description extracted is empty, length of userInput <= length of userCommand
+     * getEventTaskName: If taskString does not contain "/from" format keyword OR If task name extracted is empty string
+     * getEventStartDate: If taskString is missing /from or /to (detected from looking at length of String[] taskStringPartsSplitByTo)
+     * OR If start date extracted is empty
+     * getEventEndDate: If taskString is missing /from or /to (detected from looking at length of String[] taskStringPartsSplitByTo)
+     * OR If end date extracted is empty.
      */
     private static Event getNewEventTask(String userInput, String userCommandKeyword) throws DukeException {
         String taskString = Parser.getTaskString(userInput, userCommandKeyword);
@@ -114,6 +120,9 @@ public class Ui {
      * @param userCommandKeyword Command keyword given by user, etc. mark, unmark, find etc.
      * @return Deadline object created according to userInput
      * @throws DukeException Thrown by getTaskString, getDeadlineTaskName, getDeadlineDueDateString.
+     * getTaskString: If the task description extracted is empty, length of userInput <= length of userCommand
+     * getDeadlineTaskName: If taskString does not contain "/by" format keyword OR If task name extracted is empty string
+     * getDeadlineDueDateString: If taskString is missing /by (detected from looking at length of String[] taskStringParts)
      */
     private static Deadline getNewDeadlineTask(String userInput, String userCommandKeyword) throws DukeException {
         String taskString = Parser.getTaskString(userInput, userCommandKeyword);
@@ -145,6 +154,8 @@ public class Ui {
      * @param userCommandKeyword Command keyword given by user, etc. mark, unmark, find etc.
      * @return Todo object created according to userInput
      * @throws DukeException Thrown by getTaskString, getTodoTaskName.
+     * getTaskString: If the task description extracted is empty, length of userInput <= length of userCommand.
+     * getTodoTaskName: If taskString is an empty string.
      */
     private static Todo getNewTodoTask (String userInput, String userCommandKeyword) throws DukeException{
         String taskString = Parser.getTaskString(userInput, userCommandKeyword);

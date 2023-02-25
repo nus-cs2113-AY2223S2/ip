@@ -24,6 +24,8 @@ public class Parser {
      * @param userCommandKeyword Command keyword given by user, etc. mark, unmark, find etc.
      * @return Task name of Todo task
      * @throws DukeException Thrown by getTaskString or getTodoTaskName.
+     * getTaskString: If the task description extracted is empty, length of userInput <= length of userCommand.
+     * getTodoTaskName: If taskString is an empty string.
      */
     public static Todo getNewTodoTask (String userInput, String userCommandKeyword) throws DukeException {
         String taskString = getTaskString(userInput, userCommandKeyword);
