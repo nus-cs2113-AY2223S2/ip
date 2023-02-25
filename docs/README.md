@@ -36,16 +36,20 @@ WELCOME
 
 ### Feature 2: todo Task
 
-If you have a task that does not have any start or end date, you may save it in the following format. `todo <Task Name>`. Here is the expected input and output where `<>` represents the variable data to be keyed in by the user..
+If you have a task that does not have any start or end date, you may save it in the following format `todo <Task Name>`.
 
 ```bash
-# Instructions
->>> todo <Task Name>
+# todo <Task Name>
+todo complete my homework
 
-# Response by the chat bot
->>> Got it. I\'ve added this task:
->>> [T][ ] <Task Name>
->>> Now you have <X> tasks in the list.
+```
+
+The expected output will be as such.
+
+```bash
+Got it. I've added this task:
+[T][ ] complete my homework
+Now you have 1 tasks in the list.
 ```
 
 ### Feature-XYZ
