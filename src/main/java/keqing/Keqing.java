@@ -140,7 +140,7 @@ public class Keqing {
                 Task.setTaskCount(getTaskCount() - 1);
             }
             else {
-                throw new IllegalInputException("It's out of bound!!!");
+                throw new IllegalInputException("It's out of bound!!");
             }
         }
     }
