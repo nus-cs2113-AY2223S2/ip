@@ -102,7 +102,7 @@ public class ProcessLine {
 
             // Checks if the argument is empty
             try {
-                String TodoTask = line.toLowerCase().replaceAll("todo", "");
+                String TodoTask = line.substring(5,line.length());
                 tasks.add(new Todo(TodoTask, ToSplitTodo.length));
 
             } catch (DukeException ex) {
@@ -113,13 +113,13 @@ public class ProcessLine {
             //sample : deadline return book /by Sunday
         } else if (line.toLowerCase().contains("deadline")) {
             String[] ToSplitDeadline = line.split("/");
-            String DeadlineTask = ToSplitDeadline[0].toLowerCase().substring(9, ToSplitDeadline[0].length() - 1);
+            String DeadlineTask = ToSplitDeadline[0].substring(9, ToSplitDeadline[0].length() - 1);
             tasks.add(new Deadline(DeadlineTask, ToSplitDeadline[1].substring(3, ToSplitDeadline[1].length())));
 
             //sample:event project meeting /from Mon 2pm /to 4pm
         } else if (line.toLowerCase().contains("event")) {
             String[] ToSplitEvent = line.split("/");
-            String EventTask = ToSplitEvent[0].toLowerCase().substring(6, ToSplitEvent[0].length());
+            String EventTask = ToSplitEvent[0].substring(6, ToSplitEvent[0].length());
             tasks.add(new Event(EventTask, ToSplitEvent[1].substring(5, ToSplitEvent[1].length()),
                     ToSplitEvent[2].substring(3, ToSplitEvent[2].length())));
 
