@@ -26,6 +26,7 @@ Have you ever find it difficult to keep track of the many tasks at hand? Do you 
 6. Find tasks
 7. List tasks
 8. Mark/Unmark task as completed
+9. Terminate the program
 
 ### Feature 1: Greeting
 
@@ -155,3 +156,15 @@ If an invalid index has been provided, the following message will be shown:
 ```
 Invalid index provided.
 ```
+
+### Feature 9: Terminate the programme
+
+In the event that you are done for the day, you may terminate the programme with the following command `bye`.
+
+The expected outcome is as such:
+
+```
+Bye. Hope to see you again soon!
+```
+
+The tasks that you have previously saved will not be deleted as it is already saved in the data.json.
