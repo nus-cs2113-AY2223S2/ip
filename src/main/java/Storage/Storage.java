@@ -16,6 +16,7 @@ import java.util.Scanner;
 
 public class Storage {
     protected String filepath;
+    public final static String filePath = "Duke.txt";
 
     /**
      * Appends tasks to the file.
@@ -24,7 +25,7 @@ public class Storage {
      * @throws IOException Its thrown when an error occurred during an input-output operation
      */
     private static void appendToFile(String filePath, String textToAppend) throws IOException {
-        FileWriter fw = new FileWriter(filePath, true); // create a FileWriter in append mode
+        FileWriter fw = new FileWriter(filePath, true);
         fw.write(textToAppend);
         fw.close();
     }
@@ -46,7 +47,8 @@ public class Storage {
 
     }
 
-    public int createFile(ArrayList<Task> tasks,String filepath, int i) throws FileNotFoundException, DukeException {
+    public int createFile(ArrayList<Task> tasks,String filepath, int i)
+            throws FileNotFoundException, DukeException {
 
         File duke = new File(filepath);
         if (duke.exists()) {
@@ -60,6 +62,7 @@ public class Storage {
     }
 
     public int load(String currentLine, ArrayList<Task> tasks, int i) throws DukeException {
+
 
         Character taskLetter = currentLine.charAt(1);
         Character tick = currentLine.charAt(4);
@@ -95,7 +98,6 @@ public class Storage {
         ui=new Print("");
 
         String newString = "";
-        String filePath = "Duke.txt";
 
         for (int m = 0; m < i; m += 1) {
             int index = m + 1;
@@ -104,7 +106,7 @@ public class Storage {
 
         //Updates changes onto the file
         try {
-            writeToFile("Duke.txt", newString);
+            writeToFile(filePath, newString);
         } catch (IOException e) {
             ui.printException();
         }

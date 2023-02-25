@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import Ui.Print;
 
 public class ProcessLine {
+    public final static String filePath = "Duke.txt";
+
 
     /**
      * Appends tasks to the file.
@@ -46,8 +48,24 @@ public class ProcessLine {
         this.line = line;
         this.tasks = tasks;
     }
+    public void find (int i,String word) {
+        Print ui;
+        ui=new Print(line);
+        ArrayList<Task> foundTasks = new ArrayList<>();
+        int count=0;
 
-    //For "mark", "unmark", "delete"
+
+        for(int m=0;m<i;m+=1) {
+            String taskName=tasks.get(m).taskDescription();
+            if(taskName.toLowerCase().contains(word.toLowerCase())) {
+                foundTasks.add(tasks.get(m));
+                count+=1;
+            }
+        }
+        ui.printFind(foundTasks,count);
+    }
+
+
     public int editTask(String filepath, int index_for_edit, ArrayList<Task> tasks, int i) {
 
         Print ui;
@@ -80,8 +98,8 @@ public class ProcessLine {
         Print ui;
         ui = new Print(line);
 
-        boolean empty;
-        empty = false;
+        boolean isEmpty;
+        isEmpty = false;
 
         if (line.toLowerCase().contains("todo")) {
             String[] ToSplitTodo = line.split(" ");
@@ -92,7 +110,7 @@ public class ProcessLine {
                 tasks.add(new Todo(TodoTask, ToSplitTodo.length));
 
             } catch (DukeException ex) {
-                empty = true;
+                isEmpty = true;
                 ui.printEmpty();
             }
 
@@ -106,17 +124,18 @@ public class ProcessLine {
         } else if (line.toLowerCase().contains("event")) {
             String[] ToSplitEvent = line.split("/");
             String EventTask = ToSplitEvent[0].toLowerCase().substring(6, ToSplitEvent[0].length());
-            tasks.add(new Event(EventTask, ToSplitEvent[1].substring(5, ToSplitEvent[1].length()), ToSplitEvent[2].substring(3, ToSplitEvent[2].length())));
+            tasks.add(new Event(EventTask, ToSplitEvent[1].substring(5, ToSplitEvent[1].length()),
+                    ToSplitEvent[2].substring(3, ToSplitEvent[2].length())));
 
         }
 
-        if (!empty) {
+        if (!isEmpty) {
             ui.printTaskAdded(tasks, i);
             i += 1;
 
             //Updates changes onto the file
             try {
-                appendToFile("Duke.txt", tasks.get(i - 1).toString() + "\n");
+                appendToFile(filePath, tasks.get(i - 1).toString() + "\n");
             } catch (IOException e) {
                 ui.printException();
             }
