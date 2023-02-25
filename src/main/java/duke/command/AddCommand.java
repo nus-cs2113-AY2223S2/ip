@@ -9,6 +9,7 @@ import duke.exception.InvalidDeadline;
 import duke.exception.InvalidEvent;
 
 import java.io.IOException;
+import java.rmi.UnexpectedException;
 
 import static duke.Parser.COMMAND_DEADLINE_WORD;
 import static duke.Parser.COMMAND_EVENT_WORD;
@@ -61,7 +62,7 @@ public class AddCommand extends Command {
      * @param storage Gets updated after the Task has been added
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public void execute(TaskList tasks, Ui ui, Storage storage) throws UnexpectedException {
         switch(type) {
         case COMMAND_TODO_WORD:
             tasks.addToDo(desc);
@@ -77,6 +78,8 @@ public class AddCommand extends Command {
                 return;
             }
             break;
+        default:
+            throw new UnexpectedException("Adding Task");
         }
         ui.printAddMessage(tasks.allTasks.get(tasks.getSize() - 1));
         try {

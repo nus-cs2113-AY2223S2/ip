@@ -5,6 +5,7 @@ import duke.task.TaskList;
 import duke.Ui;
 
 import java.io.IOException;
+import java.rmi.UnexpectedException;
 
 import static duke.Parser.COMMAND_DELETE_WORD;
 import static duke.Parser.COMMAND_MARK_WORD;
@@ -25,8 +26,11 @@ public class ModifyCommand extends Command {
      * @param command Type of modification command being executed (mark, unmark, delete)
      * @param param Contains the index of the task to be modified
      */
-    public ModifyCommand(String command, String param) {
+    public ModifyCommand(String command, String param, int size) throws NumberFormatException {
         int idx = Integer.parseInt(param) - 1;
+        if (idx < 0 || idx >= size) {
+            throw new NumberFormatException();
+        }
         this.command = command;
         this.idx = idx;
     }
@@ -39,10 +43,7 @@ public class ModifyCommand extends Command {
      * @param storage Gets updated after the TaskList has been modified
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
-        if (idx < 0 || idx >= tasks.getSize()) {
-            throw new NumberFormatException();
-        }
+    public void execute(TaskList tasks, Ui ui, Storage storage) throws UnexpectedException {
         switch(command) {
         case COMMAND_MARK_WORD:
             tasks.markDone(idx);
@@ -56,6 +57,8 @@ public class ModifyCommand extends Command {
             ui.printDeleted(tasks.allTasks.get(idx), tasks.getSize());
             tasks.deleteTask(idx);
             break;
+        default:
+            throw new UnexpectedException("Modifying Task");
         }
         try {
             storage.update(tasks);

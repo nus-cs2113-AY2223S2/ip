@@ -1,15 +1,10 @@
 package duke;
 
 import duke.command.Command;
-import duke.exception.EmptyKeywordException;
-import duke.exception.EmptyTaskDescException;
-import duke.exception.IllegalCommandException;
-import duke.exception.InvalidDateTime;
-import duke.exception.InvalidDeadline;
-import duke.exception.InvalidEvent;
 import duke.task.TaskList;
 
 import java.io.IOException;
+import java.rmi.UnexpectedException;
 
 /**
  * Main class for running Duke
@@ -17,9 +12,9 @@ import java.io.IOException;
 public class Duke {
 
     public static final String FILE_PATH = "/Users/linshang/Documents/cs2113/ip/save.txt";
-    private Storage storage;
-    private TaskList tasks;
-    private Ui ui;
+    private static Storage storage;
+    private static TaskList tasks;
+    private static Ui ui;
 
     /**
      * Initialises Duke by loading in data from save file.
@@ -42,32 +37,17 @@ public class Duke {
     /**
      * Continuously reads, executes, and prints outputs of user commands until ExitCommand is called.
      */
-    public void run() {
+    public void run() throws UnexpectedException {
         boolean isExit = false;
         while (!isExit) {
-            try {
-                String fullCommand = ui.readCommand();
-                ui.showLine();
-                Command c = Parser.parseCommand(fullCommand);
+            String fullCommand = ui.readCommand();
+            ui.showLine();
+            Command c = Parser.getCommand(fullCommand, ui, tasks.getSize());
+            if (c != null) {
                 c.execute(tasks, ui, storage);
                 isExit = c.getExit();
-            } catch (IllegalCommandException e) {
-                ui.printInvalidCommand();
-            } catch (EmptyTaskDescException e) {
-                ui.printEmptyDescription();
-            } catch (EmptyKeywordException e) {
-                ui.printEmptyKeyword();
-            } catch (NumberFormatException e) {
-                ui.printErrorForIdx(tasks.getSize());
-            } catch (InvalidDeadline e) {
-                ui.printInvalidDeadline();
-            } catch (InvalidEvent e) {
-                ui.printInvalidEvent();
-            } catch (InvalidDateTime e) {
-                ui.printInvalidDateTime();
-            } finally {
-                ui.showLine();
             }
+            ui.showLine();
         }
     }
 
@@ -75,7 +55,11 @@ public class Duke {
      * Main method. Initialises and runs Duke
      */
     public static void main(String[] args) {
-        new Duke(FILE_PATH).run();
+        try {
+            new Duke(FILE_PATH).run();
+        } catch (UnexpectedException exception) {
+            ui.printUnexpectedException(exception);
+        }
         System.exit(0);
     }
 

@@ -2,6 +2,7 @@ package duke;
 
 import duke.task.Task;
 
+import java.rmi.UnexpectedException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -265,4 +266,8 @@ public class Ui {
         System.out.println("Oops, the start date for your event occurs after the end date!");
     }
 
+    public void printUnexpectedException(UnexpectedException exception) {
+        System.out.println("Oh no... Something went wrong while doing the following:  " + exception.getMessage() +
+                "\nExiting Duke...");
+    }
 }

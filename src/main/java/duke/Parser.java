@@ -43,16 +43,35 @@ public class Parser {
      * @return Corresponding Command class to user input
      * @throws EmptyTaskDescException If task description/keyword is left empty (for Add/Find commands respectively)
      * @throws IllegalCommandException If an unknown command is input by the user
+    public static Command getCommand(String userCommand, Ui ui, int size) {
+        final String[] split = userCommand.trim().split("\\s+", 2);
+        String command = split[0];
+        try {
+            return parseCommand(split, command, size);
+        } catch (IllegalCommandException e) {
+            ui.printInvalidCommand();
+        } catch (EmptyTaskDescException e) {
+            ui.printEmptyDescription();
+        } catch (EmptyKeywordException e) {
+            ui.printEmptyKeyword();
+        } catch (NumberFormatException e) {
+            ui.printErrorForIdx(size);
+        } catch (InvalidDeadline e) {
+            ui.printInvalidDeadline();
+        } catch (InvalidEvent e) {
+            ui.printInvalidEvent();
+        } catch (InvalidDateTime e) {
+            ui.printInvalidDateTime();
+        }
+        return null;
+    }
      * @throws NumberFormatException If the index is left empty (for Mark, Delete commands)
      * @throws InvalidDeadline If the input format for adding a deadline is wrong
      * @throws InvalidEvent If the input format for adding an event is wrong
      * @throws InvalidDateTime If the input format for a date and time is wrong
      */
-    public static Command parseCommand(String userCommand)
-            throws EmptyTaskDescException, IllegalCommandException, NumberFormatException,
-            EmptyKeywordException, InvalidDeadline, InvalidEvent, InvalidDateTime {
-        final String[] split = userCommand.trim().split("\\s+", 2);
-        String command = split[0];
+    private static Command parseCommand(String[] split, String command, int size) throws InvalidDateTime, EmptyKeywordException,
+            EmptyTaskDescException, InvalidDeadline, InvalidEvent, IllegalCommandException, NumberFormatException {
         switch (command) {
         case COMMAND_EXIT_WORD:
             return new ExitCommand();
@@ -76,7 +95,7 @@ public class Parser {
             if (split.length != 2) {
                 throw new NumberFormatException();
             }
-            return new ModifyCommand(command, split[1]);
+            return new ModifyCommand(command, split[1], size);
         case COMMAND_TODO_WORD:
         case COMMAND_DEADLINE_WORD:
         case COMMAND_EVENT_WORD:

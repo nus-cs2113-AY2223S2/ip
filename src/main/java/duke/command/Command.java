@@ -4,13 +4,15 @@ import duke.Storage;
 import duke.task.TaskList;
 import duke.Ui;
 
+import java.rmi.UnexpectedException;
+
 /**
  * Abstract class Command is the parent of all types of Commands
  */
 public abstract class Command {
 
     private Boolean isExit = false;
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public void execute(TaskList tasks, Ui ui, Storage storage) throws UnexpectedException {
     }
 
     /**
