@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 
+/**
+ * Contains interactions with the user
+ */
 public class Ui {
     private static final String LINE = "___________________________________________________";
     private static final String BYE_MESSAGE = "Bye. Hope to see you again soon!";
@@ -27,6 +30,11 @@ public class Ui {
         System.out.println(LINE);
     }
 
+    /**
+     * Iterate the list of tasks and print out to the user. Add 1 to the index as indexing for user
+     * interface starts from 1.
+     * @param tasks type and name of tasks.
+     */
     public void printList(ArrayList<Task> tasks) {
         System.out.println(LINE);
 
