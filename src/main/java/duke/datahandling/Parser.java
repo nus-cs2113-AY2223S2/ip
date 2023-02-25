@@ -99,7 +99,9 @@ public class Parser extends TaskList {
             dukeUserInterface.printDeadlineAdditionError();
             break;
         case "mark":
+            //fallthrough
         case "unmark":
+            //fallthrough
         case "delete":
             dukeUserInterface.printInvalidInputError();
             break;
