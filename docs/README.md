@@ -1,6 +1,20 @@
 # User Guide
 
-Have you ever find it difficult to keep track of the many tasks at hand? Fret not, Duke is here to save the day. Find out how you can use Duke to save the data.
+Have you ever find it difficult to keep track of the many tasks at hand? Do you ever wish for a personal assistant to help you record all of your tasks? Well, Duke is here to save the day. This user guide will provide a step-by-step guide on how you can use Duke to make your life easier.
+
+## Table of Contents
+
+1. Setup
+2. Features
+
+## Setup
+
+1. Install the jar file.
+2. Execute the following command to run the program. The jar file already contains the necessary dependencies. A `data.json` file will automatically be created in the same directory as the jar file if none exist, and you may start using the app as per your desire. A word of caution: **Please do not manually edit the data.json unless you know what you are doing, as it will lead to unexpected consequences.**
+
+```bash
+>>> java -jar duke.jar
+```
 
 ## Features
 
@@ -12,23 +26,12 @@ Have you ever find it difficult to keep track of the many tasks at hand? Fret no
 6. Find tasks
 7. Mark/Unmark task as completed
 
-## Setup
-
-The jar file already contains the necessary dependencies. Therefore, the only command that you would need to run is
-
-```bash
-java -jar duke.jar
-```
-
-It will automatically create a `data.json` file in the root directory of the jar file if none exist, and you may start using the app as per your desire. A word of caution: **_Do not try to manually edit the data.json file as it will lead to unexpected consequences. _**
-
 ### Feature 1: Greeting
 
-The Chatbot will greet you with the following message. Do note that this command will only run once.
+Upon starting up the app, the Chatbot will greet you with the following message.
 
 ```bash
->>> java -jar duke.jar # Command to run
-WELCOME # Chat bot response
+WELCOME
 ```
 
 ### Feature 2: todo Task
