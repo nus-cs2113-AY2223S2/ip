@@ -11,14 +11,27 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Manages the creation, loading and saving of data
+ */
 public class Storage {
 
     private String filePath;
 
+    /**
+     * Constructor for Storage class
+     *
+     * @param filePath the path of save file to be stored locally
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
 
+    /**
+     * Creates a new file if it does not exist in the current directory
+     *
+     * @throws IOException if there is an error while creating the file
+     */
     public void createSaveFile() throws IOException {
         File file = new File(filePath);
         if (!file.exists()) {
@@ -27,6 +40,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Updates task list with data from previous saved file
+     *
+     * @param tasks task list to be loaded with data
+     */
     public void loadSaveFile(TaskList tasks) {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(filePath));
@@ -60,6 +78,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Updates the saved file with data from current task list
+     *
+     * @param tasks task list to be read and transferred to the save file
+     * @throws IOException if there is an error during the transfer of data
+     */
     public void updateSaveFile(TaskList tasks) throws IOException {
         FileWriter fw = new FileWriter(filePath);
         for (int i = 0; i < tasks.sizeOfTaskList(); i++) {
