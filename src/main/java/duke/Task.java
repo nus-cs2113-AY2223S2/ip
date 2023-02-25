@@ -22,4 +22,11 @@ public class Task {
         }
         return "[" + done + "] " + description ;
     }
+    public String toStorage() {
+        String done = " ";
+        if (this.isDone) {
+            done = "X";
+        }
+        return "[" + done + "] " + description ;
+    }
 }
