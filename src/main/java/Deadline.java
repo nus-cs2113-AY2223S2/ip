@@ -1,9 +1,12 @@
+//A different kind of Task
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 
 class Deadline extends Task {
+    /** Date of the deadline stored as a LocalDate object */
     private final LocalDate date;
+    /** Time of deadline stored as a String */
     private final String time;
 
     Deadline(boolean isDone, String taskDescription, String deadline) {
@@ -19,16 +22,28 @@ class Deadline extends Task {
                 parameters[2], parameters[3]);
     }
 
+    /**
+     * Returns a new Task that is marked
+     */
     public Task mark() {
         return new Deadline(true, super.taskDescription,
             this.date + " " + this.time);
     }
 
+    /**
+     * Returns a new Task that is unmarked
+     */
     public Task unmark() {
         return new Deadline(false, super.taskDescription,
             this.date + " " + this.time);
     }
 
+    /**
+     * Extracts date information from user input
+     *
+     * @param data String that represents a date
+     * @return int[3] of {date, month, year}
+     */
     public int[] splitData(String data) {
         String[] deadlineArray = new String[3];
         if (data.contains("/")) {
@@ -53,6 +68,11 @@ class Deadline extends Task {
         return super.toString() + " " +formattedDeadline;
     }
 
+    /**
+     * Formats details of the Deadline Task to be stored in the database
+     *
+     * @return Formatted string that represents the Deadline
+     */
     public String toStringForDatabase() {
         return super.CommonFieldsFor_toStringForDatabase() + "," +
              this.date + " " + this.time;

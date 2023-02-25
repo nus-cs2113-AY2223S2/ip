@@ -1,3 +1,5 @@
+//class that is responsible for loading and saving the inputs keyed in by the user
+
 import java.io.IOException;
 import java.io.File;
 import java.io.FileWriter;
@@ -5,6 +7,13 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 class Storage {
+
+    /**
+     * Returns data from previous session as a TaskList Object.
+     * If data is not available, a new file is created.
+     *
+     * @return TaskList - Custom array of Task
+     */
     public static TaskList initialisation() {
         ArrayList<Task> taskList = new ArrayList<Task>();
 
@@ -35,6 +44,13 @@ class Storage {
         return new TaskList(taskList);
     }
 
+    /**
+     * Returns ArrayList of Task with the new Task added.
+     *
+     * @param input String to create a Task.
+     * @param database Current ArrayList of Task.
+     * @return ArrayList of Task
+     */
     public static ArrayList<Task> readAndUpdate(String[] input, ArrayList<Task> database) {
         if (input[0].equals("T")) {
             database.add(new ToDo(input));
@@ -46,9 +62,16 @@ class Storage {
         return database;
     }
 
+    /**
+     * Saves changes made by the user during the session
+     * in a .txt document.
+     *
+     * @param input the list of tasks provided by user.
+     */
     public static void updateStorage(TaskList input) {
         String currDir = System.getProperty("user.dir");
-        String databasePath = java.nio.file.Paths.get(currDir, "assets", "database.txt").toString();
+        String databasePath = java.nio.file.Paths.get(currDir,
+            "assets", "database.txt").toString();
         File database = new File(databasePath);
 
         try {
