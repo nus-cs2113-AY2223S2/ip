@@ -12,7 +12,10 @@ public class Deadline extends Todos {
         super(name, isMarked, type);
         this.dueBy = dueBy;
     }
-
+    /**
+     * checks what type of task item it is
+     * @return a string "[D]" indicating that it is an Deadline type
+     */
     public String getType() {
         return "[D]";
     }

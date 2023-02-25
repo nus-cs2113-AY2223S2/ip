@@ -13,10 +13,17 @@ import java.util.Arrays;
 public class Command {
     public String command;
 
+
     public Command(String command) {
         this.command = command;
     }
 
+    /**
+     * executes a command(mark, unmark, delete, list etc) based on user instrcution
+     *
+     * @param UserInput - string that contains the user instructions
+     * @param todoItems - an array that stores all the Todos Object
+     */
     public void executeCommand(String UserInput, ArrayList<Todos> todoItems) {
 
         switch (this.command) {

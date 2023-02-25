@@ -1,6 +1,12 @@
 package ErrorHandling;
 
 public class ErrorHandler {
+    /**
+     * parses the input string to see if a valid command is given with valid error handling.
+     *
+     * @param input - string which is the user input
+     * @return - boolean response of True when valid input and False when its not valid
+     */
     public static Boolean isInputValid(String input) {
 
         if (input.startsWith("event")) {

@@ -17,14 +17,24 @@ public class Todos {
         return "[T]";
     }
 
+    /**
+     * marks a task task as done
+     */
     public void setMark() {
         this.isMarked = true;
     }
 
+    /**
+     * unmarks a task if undone
+     */
     public void unMark() {
         this.isMarked = false;
     }
 
+    /**
+     * checks if a task is marked or not
+     * @return True if marked and false if unmarked
+     */
     public boolean is_marked() {
         return isMarked;
     }
