@@ -46,7 +46,7 @@ _Duke_ is a Personal Assistant Chatbot that helps a person to keep track of vari
       
       EXAMPLE: todo borrow book
 
-Expected Outcome:<br>
+Expected Outcome:<br/>
 
 ```Got it. I've added this task:``` <br/>
 ```[T][ ] borrow book``` <br/>
@@ -59,7 +59,7 @@ Expected Outcome:<br>
 
       EXAMPLE: deadline return book /by Sunday
 
-Expected Outcome:<br>
+Expected Outcome:<br/>
 
 ```Got it. I've added this task:``` <br/>
 ```[D][ ] return book (by: Sunday)``` <br/>
@@ -70,7 +70,7 @@ Expected Outcome:<br>
       
       EXAMPLE: event project meeting /from Mon 2pm /to 4pm
 
-Expected Outcome:<br>
+Expected Outcome:<br/>
 
 ```Got it. I've added this task:``` <br/>
 ```[E][ ] project meeting (from: Mon 2pm to: 4pm)``` <br/>
@@ -82,7 +82,7 @@ Expected Outcome:<br>
     Shows a list of all tasks
     Example: list
 
-Expected Outcome:<br>
+Expected Outcome:<br/>
 
 ```Here are the tasks in your list:``` <br/>
 ```1.[T][X] read book```<br/>
@@ -99,7 +99,7 @@ Expected Outcome:<br>
 
       EXAMPLE: find book
 
-Expected Outcome:<br>
+Expected Outcome:<br/>
 
 ```Here are the matching tasks in your list:```<br/>
 ```1.[T][X] read book```<br/>
@@ -113,7 +113,7 @@ Expected Outcome:<br>
       
       EXAMPLE: mark 1
 
-Expected Outcome:<br>
+Expected Outcome:<br/>
 
 ```Nice! I've marked this task as done:```<br/>
 ```[T][X] read book```
@@ -124,7 +124,7 @@ Expected Outcome:<br>
       
       EXAMPLE: unmark 4
 
-Expected Outcome:<br>
+Expected Outcome:<br/>
 
 ```OK, I've marked this task as not done yet:```<br/>
 ```[T][ ] join sports club```
@@ -135,7 +135,7 @@ Expected Outcome:<br>
       
       EXAMPLE: delete 5
 
-Expected Outcome:<br>
+Expected Outcome:<br/>
 
 ```Noted. I've removed this task:```<br/>
 ```Now you have 7 tasks in the list.```
@@ -145,7 +145,7 @@ Expected Outcome:<br>
       exits the programme
       Example: bye
 
-Expected Outcome:<br>
+Expected Outcome:<br/>
 
 ```Bye. Hope to see you again soon!```<br/>
 
