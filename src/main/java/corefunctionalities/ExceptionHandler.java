@@ -116,6 +116,10 @@ public class ExceptionHandler {
             System.out.println("\tPlease ensure that your dates are chronologically appropriate...");
             System.out.println("\tThe from date cannot be after the to date");
             ui.printLine();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            ui.printLine();
+            System.out.println("\tPlease ensure that the event is entered in the right format");
+            ui.printLine();
         }
     }
 
@@ -157,6 +161,10 @@ public class ExceptionHandler {
         } catch (IOException e) {
             ui.printLine();
             System.out.println("\tUnable to delete from the file");
+            ui.printLine();
+        } catch (EmptyList e) {
+            ui.printLine();
+            System.out.println("\tUnable to delete from an empty list!");
             ui.printLine();
         }
     }

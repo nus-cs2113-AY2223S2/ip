@@ -75,7 +75,7 @@ public class ExceptionGenerator {
      * @throws EventToIsBlank In the case the /to date is missing
      */
 
-    public void eventExceptionGenerator(String [] eventDescription, String userInput) throws EmptyEvent, EventMissingBothPhrases, EventMissingToPhrase, EventMissingFromPhrase, EventFromIsBlank, EventToIsBlank {
+    public void eventExceptionGenerator(String [] eventDescription, String userInput) throws EmptyEvent, EventMissingBothPhrases, EventMissingToPhrase, EventMissingFromPhrase, EventFromIsBlank, EventToIsBlank, ArrayIndexOutOfBoundsException {
         if(!userInput.contains("/from") && userInput.split(" ").length>1) {
             throw new EventMissingFromPhrase();
         } else if(!userInput.contains("/to") && userInput.split(" ").length>1) {

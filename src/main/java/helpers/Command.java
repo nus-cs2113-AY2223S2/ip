@@ -115,7 +115,7 @@ public class Command {
      * @throws FromAfterTo In case the /from date is after the /to date
      * @throws WrongChrono In case /from or /to dates are before the current date.
      */
-    public void commandEvent(String userInput, TaskList taskList, FileHandler fileObject) throws EmptyEvent, EventMissingBothPhrases, EventMissingToPhrase, EventMissingFromPhrase, EventFromIsBlank, EventToIsBlank, IOException, DateTimeParseException, FromAfterTo, WrongChrono {
+    public void commandEvent(String userInput, TaskList taskList, FileHandler fileObject) throws EmptyEvent, EventMissingBothPhrases, EventMissingToPhrase, EventMissingFromPhrase, EventFromIsBlank, EventToIsBlank, IOException, DateTimeParseException, FromAfterTo, WrongChrono, ArrayIndexOutOfBoundsException {
         String [] eventDescription = parser.getEvent(userInput);
         exceptionGenerator.eventExceptionGenerator(eventDescription, userInput);
         ui.printLine();
@@ -172,7 +172,10 @@ public class Command {
      * @throws IOException In case fileObject cannot write to the file
      */
 
-    public void commandDeleteTask(String userInput, TaskList taskList, FileHandler fileObject) throws IndexOutOfBoundsException, NumberFormatException, IOException{
+    public void commandDeleteTask(String userInput, TaskList taskList, FileHandler fileObject) throws IndexOutOfBoundsException, NumberFormatException, IOException, EmptyList{
+        if(taskList.getSize()==0) {
+            throw new EmptyList();
+        }
         Task item = new Task();
         item = taskList.getTask(Integer.parseInt(userInput.split(" ")[1]) - 1);
         taskList.removeTask(Integer.parseInt(userInput.split(" ")[1]) - 1);
