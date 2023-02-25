@@ -1,6 +1,5 @@
 package Storage;
 
-//Deals with loading tasks from the file and saving tasks in the file
 import duke.Deadline;
 import duke.Todo;
 import duke.Event;
@@ -15,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Storage {
-    protected String filepath;
     public final static String filePath = "Duke.txt";
 
     /**
@@ -42,26 +40,43 @@ public class Storage {
         fw.close();
     }
 
-    public Storage(String filepath){
-        this.filepath=filepath;
+    public Storage(){
 
     }
 
-    public int createFile(ArrayList<Task> tasks,String filepath, int i)
+    /**
+     * Loads data from Duke.txt file for the new session
+     * @param tasks is the arraylist of tasks
+     * @param i is the number of tasks in the task list currently
+     * @return the updated number of tasks in the task list currently
+     * @throws FileNotFoundException Its thrown when the file is not found
+     * @throws DukeException Its thrown when the user input is empty
+     */
+
+    public int loadFromFile(ArrayList<Task> tasks, int i)
             throws FileNotFoundException, DukeException {
 
-        File duke = new File(filepath);
+        File duke = new File(filePath);
         if (duke.exists()) {
             Scanner s = new Scanner(duke); // create a Scanner using the File as the source
             while (s.hasNextLine()) {
                 String currentLine = s.nextLine();
-                i=load(currentLine, tasks, i);
+                i=collect(currentLine, tasks, i);
             }
         }
        return i;
     }
 
-    public int load(String currentLine, ArrayList<Task> tasks, int i) throws DukeException {
+    /**
+     * Collects data from Duke.txt file for the new session
+     * @param currentLine it is the current string that we are collecting data of
+     * @param tasks is the arraylist of tasks
+     * @param i is the number of tasks in the task list currently
+     * @return the updated number of tasks in the task list currently
+     * @throws DukeException Its thrown when the user input is empty
+     */
+
+    public int collect(String currentLine, ArrayList<Task> tasks, int i) throws DukeException {
 
 
         Character taskLetter = currentLine.charAt(1);
@@ -93,9 +108,16 @@ public class Storage {
 
     }
 
-    public void saveInFile (ArrayList<Task> tasks, int i){
+    /**
+     * Saves changes of tasks made to the file
+     * @param tasks is the arraylist of tasks
+     * @param i is the number of tasks in the task list currently
+     */
+
+    public void saveChanges (ArrayList<Task> tasks, int i) {
+
         Print ui;
-        ui=new Print("");
+        ui=new Print();
 
         String newString = "";
 
@@ -107,6 +129,24 @@ public class Storage {
         //Updates changes onto the file
         try {
             writeToFile(filePath, newString);
+        } catch (IOException e) {
+            ui.printException();
+        }
+    }
+
+    /**
+     * Add tasks to the file
+     * @param tasks is the arraylist of tasks
+     * @param i is the number of tasks in the task list currently
+     */
+
+    public void addToFile (ArrayList<Task> tasks, int i) {
+
+        Print ui;
+        ui=new Print();
+
+        try {
+            appendToFile(filePath, tasks.get(i - 1).toString() + "\n");
         } catch (IOException e) {
             ui.printException();
         }

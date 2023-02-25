@@ -4,12 +4,19 @@ import duke.Task;
 import java.util.ArrayList;
 
 public class Print {
-    protected String description;
+
     public final static String lineBreak = "____________________________________________________________\n";
 
-    public Print (String description){
-        this.description=description;
+    public Print () {
+
     }
+
+    /**
+     * Displays the list of tasks
+     * @param tasks is the task list
+     * @param i is the number of tasks in the task list currently
+     */
+
     public void List (ArrayList<Task> tasks , int i) {
 
             System.out.println(lineBreak+ "Here are the tasks in your list:");
@@ -18,7 +25,6 @@ public class Print {
                 int index = m + 1;
 
                 System.out.println(index + "." + tasks.get(m));
-
             }
             System.out.println(lineBreak);
     }
@@ -49,6 +55,7 @@ public class Print {
 
     }
 
+    // If the description of the task is empty, it will display this error message
     public void printEmpty () {
 
         System.out.println(lineBreak
@@ -57,10 +64,17 @@ public class Print {
 
     }
 
+    // If there is an exception, it will display this error message
     public void printException () {
         System.out.println("Something went wrong\n"
                 + lineBreak);
     }
+
+    /**
+     * Displays a message to show the task added.
+     * @param tasks is the task list
+     * @param i is the number of tasks in the task list currently
+     */
 
     public void printTaskAdded (ArrayList<Task> tasks , int i) {
         System.out.println(lineBreak
@@ -70,36 +84,62 @@ public class Print {
                 + lineBreak);
     }
 
-    public void printUnMark(ArrayList<Task> tasks , int index_for_mark) {
+    /**
+     * Displays the tasks that has been chosen to be unmarked
+     * @param tasks is the task list
+     * @param indexToMark is the number of tasks in the task list currently
+     */
+
+    public void printUnMark(ArrayList<Task> tasks , int indexToMark) {
         System.out.println(lineBreak
                 + "OK, I've marked this task as not done yet:\n"
-                + tasks.get(index_for_mark - 1) + "\n"
+                + tasks.get(indexToMark - 1) + "\n"
                 + lineBreak);
     }
 
-    public void printMark (ArrayList<Task> tasks , int index_for_mark) {
+    /**
+     * Displays the tasks that has been chosen to be marked
+     * @param tasks is the task list
+     * @param indexToMark is the number of tasks in the task list currently
+     */
+
+    public void printMark (ArrayList<Task> tasks , int indexToMark) {
         System.out.println(lineBreak
                 + "Nice! I've marked this task as done:\n"
-                + tasks.get(index_for_mark - 1) + "\n"
+                + tasks.get(indexToMark - 1) + "\n"
                 + lineBreak);
     }
-    public void printDelete (ArrayList<Task> tasks , int index_for_delete, int i) {
+
+    /**
+     * Displays the tasks that has been chosen to be deleted
+     * @param tasks is the task list
+     * @param indexToDelete is the number of tasks in the task list currently
+     * @param i is the number of tasks in the task list currently
+     */
+
+    public void printDelete (ArrayList<Task> tasks , int indexToDelete, int i) {
         System.out.println(lineBreak
                 + " Noted. I've removed this task:\n" +
-                "  " + tasks.get(index_for_delete - 1) + "\n" +
+                "  " + tasks.get(indexToDelete - 1) + "\n" +
                 "Now you have " + (i - 1) + " tasks in the list.\n"
                 + lineBreak);
     }
-    public void printFind (ArrayList<Task> foundTasks,int count) {
+
+    /**
+     * Displays the tasks that match the keyword given
+     * @param foundTasks is the list of tasks that match the keyword given
+     * @param count is the number of tasks that match the keyword given
+     */
+    public void printFind (ArrayList<Task> foundTasks, int count) {
+
         System.out.println(lineBreak
                 + " Here are the matching tasks in your list: " );
 
         for (int m = 0; m < count; m += 1) {
             int index = m + 1;
-
             System.out.println(index + "." + foundTasks.get(m));
-
         }
+
         System.out.println(lineBreak);
     }
 }

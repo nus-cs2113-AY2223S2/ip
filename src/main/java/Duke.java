@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import Storage.Storage;
 
-import javax.annotation.processing.Processor;
-
 public class Duke {
     public final static String filePath = "Duke.txt";
 
@@ -15,18 +13,15 @@ public class Duke {
         ArrayList<Task> tasks = new ArrayList<>();
 
         //If file exists, load file contents into the session
-
         int i = 0;
         Storage Storage;
-        Storage = new Storage(filePath);
-        i=Storage.createFile(tasks,filePath, i);
+        Storage = new Storage();
+        i=Storage.loadFromFile(tasks, i);
 
-
-        Print Print = new Print("");
+        Print Print = new Print();
         Print.Greeting();
 
         Scanner in = new Scanner(System.in);
-        int index_for_mark = 1;
 
         while (true) {
 
@@ -37,10 +32,8 @@ public class Duke {
                 break;
             }
 
-            //process input and obtain current index
+            //Processes input and obtains the current index
             i=Parser.Processor(filePath,line,tasks, i);
-
-
 
         }
 

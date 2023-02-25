@@ -6,51 +6,34 @@ import duke.Todo;
 import duke.Event;
 import duke.DukeException;
 import duke.Task;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import Ui.Print;
 
 public class ProcessLine {
     public final static String filePath = "Duke.txt";
 
-
-    /**
-     * Appends tasks to the file.
-     *
-     * @param filePath     is the filepath of the file
-     * @param textToAppend is the tasks to append to the file
-     * @throws IOException Its thrown when an error occurred during an input-output operation
-     */
-    private static void appendToFile(String filePath, String textToAppend) throws IOException {
-        FileWriter fw = new FileWriter(filePath, true); // create a FileWriter in append mode
-        fw.write(textToAppend);
-        fw.close();
-    }
-
-    /**
-     * Writes tasks to the file when changes are made.
-     *
-     * @param filePath  is the filepath of the file
-     * @param textToAdd is the tasks to overwrite the file when editing the list
-     * @throws IOException Its thrown when an error occurred during an input-output operation
-     */
-    private static void writeToFile(String filePath, String textToAdd) throws IOException {
-        FileWriter fw = new FileWriter(filePath);
-        fw.write(textToAdd);
-        fw.close();
-    }
-
     protected String line;
     protected ArrayList<Task> tasks;
+
+    /**
+     * Breaks line down to segment into different types of tasks
+     * @param line is the user's input currently being analysed
+     * @param tasks is the arraylist of tasks
+     */
 
     public ProcessLine(String line, ArrayList<Task> tasks) {
         this.line = line;
         this.tasks = tasks;
     }
+
+    /**
+     * Finds the keyword among the task list and prints the tasks that match
+     * @param i is the number of tasks in the task list currently
+     * @param word is the keyword
+     */
     public void find (int i,String word) {
         Print ui;
-        ui=new Print(line);
+        ui=new Print();
         ArrayList<Task> foundTasks = new ArrayList<>();
         int count=0;
 
@@ -65,11 +48,17 @@ public class ProcessLine {
         ui.printFind(foundTasks,count);
     }
 
-
-    public int editTask(String filepath, int index_for_edit, ArrayList<Task> tasks, int i) {
+    /**
+     * Edits the task in the task list depending on command given
+     * @param index_for_edit the index that is given in the command on which task to edit
+     * @param tasks is the arraylist of tasks
+     * @param i is the number of tasks in the task list currently
+     * @return the updated number of tasks in the task list currently
+     */
+    public int editTask( int index_for_edit, ArrayList<Task> tasks, int i) {
 
         Print ui;
-        ui = new Print(line);
+        ui = new Print();
 
         if (line.toLowerCase().contains("unmark")) {
             tasks.get(index_for_edit - 1).markAsUnDone();
@@ -87,16 +76,23 @@ public class ProcessLine {
         }
 
         Storage Storage;
-        Storage = new Storage(filepath);
-        Storage.saveInFile(tasks, i);
+        Storage = new Storage();
+        Storage.saveChanges(tasks, i);
         return i;
 
     }
 
-
+    /**
+     * Creates the task in the task list depending on command given and
+     * adds the new task to the file
+     *
+     * @param i is the number of tasks in the task list currently
+     * @param line is the current command to follow when adding tasks
+     * @return the updated number of tasks in the task list currently
+     */
     public int createTask(int i, String line) {
         Print ui;
-        ui = new Print(line);
+        ui = new Print();
 
         boolean isEmpty;
         isEmpty = false;
@@ -134,11 +130,10 @@ public class ProcessLine {
             i += 1;
 
             //Updates changes onto the file
-            try {
-                appendToFile(filePath, tasks.get(i - 1).toString() + "\n");
-            } catch (IOException e) {
-                ui.printException();
-            }
+            Storage Storage;
+            Storage = new Storage();
+            Storage.addToFile(tasks, i);
+
         }
         return i;
     }
