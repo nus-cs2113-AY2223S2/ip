@@ -34,7 +34,11 @@ public class Storage {
    */
   protected static void createFileIfNotExist() {
     try {
-      file.createNewFile();
+      if (!file.createNewFile()) {
+        FileWriter writer = new FileWriter(FILE_NAME);
+        writer.write("[]");
+        writer.close();
+      }
     } catch (IOException e) {
       ui.printMessage("An IO Exception occured");
       e.printStackTrace();
