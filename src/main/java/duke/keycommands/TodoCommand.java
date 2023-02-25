@@ -43,7 +43,7 @@ public class TodoCommand {
         Task task = new ToDo(content);
         Common.tasks.add(task);
         System.out.println(ADDING_TASK);
-        System.out.println("[T][] " + content);
+        task.printTask();
         System.out.println("Now you have " + Common.tasks.size() + " tasks in the list.");
         Common.dataFile.appendTaskToDataFile(task.putInputToDataFile());
     }

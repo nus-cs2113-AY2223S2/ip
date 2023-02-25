@@ -44,7 +44,7 @@ public class DeadlineCommand {
             Task task = new Deadline(taskName,date);
             Common.tasks.add(task);
             System.out.println(ADDING_TASK);
-            System.out.println("[D][] " + taskName + " (by: " + date + ")");
+            task.printTask();
             System.out.println("Now you have " + Common.tasks.size() + " tasks in the list.");
             Common.dataFile.appendTaskToDataFile(task.putInputToDataFile());
         } else {

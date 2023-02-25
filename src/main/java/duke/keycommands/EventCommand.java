@@ -53,7 +53,7 @@ public class EventCommand {
             Task task = new Event(taskName,beginDate,endDate);
             Common.tasks.add(task);
             System.out.println(ADDING_TASK);
-            System.out.println("[E][] " + taskName + " (from: " + beginDate + " to: " + endDate + ")");
+            task.printTask();
             System.out.println("Now you have " + Common.tasks.size() + " tasks in the list.");
             Common.dataFile.appendTaskToDataFile(task.putInputToDataFile());
         } else {
