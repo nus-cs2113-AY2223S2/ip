@@ -42,21 +42,17 @@ public class Command {
                 break;
             }
             case "event": {
-//            int count = new_tasks + 1;
                 UserInput = parseEventString.parseString(UserInput);
                 UI.addEvent(UserInput, todoItems);
                 DukeFile.WriteToFile(todoItems);
-//            new_tasks++;
                 break;
             }
             case "deadline": {
-//            int count = new_tasks + 1;
                 UI.Deadline(UserInput, todoItems);
                 LocalDate dueBy = handleDate.getDate(UserInput);
                 Deadline Item = new Deadline(UserInput, false, "D", dueBy);
                 todoItems.add(Item);
                 DukeFile.WriteToFile(todoItems);
-//            new_tasks++;
                 break;
             }
             case "todo": {
@@ -64,7 +60,6 @@ public class Command {
                 todoItems.add(Item);
                 UI.addTodo(todoItems, UserInput);
                 DukeFile.WriteToFile(todoItems);
-//            new_tasks++;
                 break;
             }
             case "delete": {
