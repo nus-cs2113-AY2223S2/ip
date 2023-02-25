@@ -2,11 +2,11 @@ import genesis.Genesis;
 
 import java.util.Scanner;
 
-import utility.ConsolePrinter;
+import utility.Ui;
 
 public class Main {
     public static void main(String[] args) {
-        ConsolePrinter.greet();
+        Ui.greet();
 
         Genesis genesis = new Genesis();
         Scanner sc = new Scanner(System.in);
@@ -16,8 +16,8 @@ public class Main {
 
             if (userInput.isEmpty()) {
                 System.out.println("Please enter one of the available command");
-                ConsolePrinter.helpAll();
-                ConsolePrinter.breakLine();
+                Ui.helpAll();
+                Ui.breakLine();
                 continue;
             }
 
@@ -29,6 +29,6 @@ public class Main {
             genesis.askGenesis(userInput);
         }
 
-        ConsolePrinter.goodbye();
+        Ui.goodbye();
     }
 }

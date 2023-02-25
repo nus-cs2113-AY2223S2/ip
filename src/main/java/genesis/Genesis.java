@@ -1,101 +1,83 @@
 package genesis;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
-import task.Task;
+import exception.EmptyListException;
+import exception.InvalidArgumentException;
+import task.TaskList;
+import utility.Ui;
+import utility.Storage;
 
-import utility.ConsolePrinter;
-import utility.FileHandler;
-
-import exception.GenesisException;
 import exception.UnknownCommandException;
 
 public class Genesis {
 
-    private ArrayList<Task> tasks;
+    private TaskList tasks;
 
     public Genesis() {
-        try {
-            this.tasks = FileHandler.loadFromFile();
-            System.out.println("Task list loaded successfully.");
-        } catch (IOException e) {
-            this.tasks = new ArrayList<>();
-            System.out.println("There is no existing task list found. Initializing new task list.");
-        } catch (IndexOutOfBoundsException | GenesisException e) {
-            this.tasks = new ArrayList<>();
-            System.out.println("Task list is corrupted. Initializing new task list.");
-        } finally {
-            ConsolePrinter.breakLine();
-        }
-    }
-
-    private void validateIndex(String[] contentArr) throws GenesisException {
-        if (contentArr.length < 2) {
-            throw new GenesisException("Index cannot be empty");
-        }
-    }
-
-    private void validateDescription(String[] contentArr) throws GenesisException {
-        if (contentArr.length < 2 || contentArr[1].isBlank()) {
-            throw new GenesisException("The description cannot be empty.");
-        }
+        this.tasks = new TaskList();
     }
 
     public void askGenesis(String userInput) {
+        Validator validator = new Validator();
+
         try {
-            ConsolePrinter.breakLine();
+            Ui.breakLine();
 
             String[] contentArr = userInput.split(" ", 2);
             String command = contentArr[0];
 
             switch (command) {
             case "list":
-                CommandHandler.handleListTasks(tasks);
+                tasks.list();
                 return;
 
             case "mark":
-                validateIndex(contentArr);
-                CommandHandler.handleMarkTask(contentArr[1], tasks);
+                validator.validateIndex(contentArr);
+                tasks.markTask(contentArr[1]);
                 break;
 
             case "unmark":
-                validateIndex(contentArr);
-                CommandHandler.handleUnmarkTask(contentArr[1], tasks);
+                validator.validateIndex(contentArr);
+                tasks.unmarkTask(contentArr[1]);
                 break;
 
             case "todo":
-                validateDescription(contentArr);
-                CommandHandler.handleTodo(contentArr[1], tasks);
+                validator.validateDescription(contentArr);
+                tasks.addTodo(contentArr[1]);
                 break;
 
             case "deadline":
-                validateDescription(contentArr);
-                CommandHandler.handleDeadline(contentArr[1], tasks);
+                validator.validateDescription(contentArr);
+                tasks.addDeadline(contentArr[1]);
                 break;
 
             case "event":
-                validateDescription(contentArr);
-                CommandHandler.handleEvent(contentArr[1], tasks);
+                validator.validateDescription(contentArr);
+                tasks.addEvent(contentArr[1]);
                 break;
 
             case "delete":
-                validateIndex(contentArr);
-                CommandHandler.handleDelete(contentArr[1], tasks);
+                validator.validateIndex(contentArr);
+                tasks.deleteTask(contentArr[1]);
                 break;
-
             default:
-                throw new UnknownCommandException("I'm sorry, but I don't know what that means :-(");
+                throw new UnknownCommandException();
             }
 
-            FileHandler.saveToFile(tasks);
+            Storage.saveToFile(tasks);
 
-        } catch (GenesisException e) {
+        }
+        catch (InvalidArgumentException e){
             System.out.println(e.getMessage());
-        } catch (UnknownCommandException e) {
-            System.out.println(e.getMessage());
+        }
+        catch(EmptyListException e){
+            System.out.println("☹ OOPS!!! List is empty, nothing to show");
+        }
+        catch (UnknownCommandException e) {
+            System.out.println("I'm sorry, but I don't know what that means :-(");
             System.out.println("Please use one of the predefined command");
-            ConsolePrinter.helpAll();
+            Ui.helpAll();
         } catch (NumberFormatException e) {
             System.out.println("☹ OOPS!!! Index is not a number");
         } catch (IndexOutOfBoundsException e) {
@@ -103,7 +85,7 @@ public class Genesis {
         } catch (IOException e) {
             System.out.println("☹ OOPS!!! Failed to update to local file storage");
         } finally {
-            ConsolePrinter.breakLine();
+            Ui.breakLine();
         }
     }
 }

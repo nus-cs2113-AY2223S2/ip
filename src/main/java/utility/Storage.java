@@ -12,38 +12,39 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 
+import exception.CorruptedStoreException;
 import task.Task;
+import task.TaskList;
 import task.Todo;
 import task.Deadline;
 import task.Event;
 
-import exception.GenesisException;
-
-public class FileHandler {
+public class Storage {
     final static String CONFIG_FILE_PATH = "src/config.properties";
 
-    public static void saveToFile(ArrayList<Task> tasks) throws IOException {
+    public static void saveToFile(TaskList tasks) throws IOException {
 
         FileInputStream propsInput = new FileInputStream(CONFIG_FILE_PATH);
         Properties prop = new Properties();
         prop.load(propsInput);
 
-        String filePath = prop.getProperty("GENESIS_STORE_FILE");
-        String dirPath = prop.getProperty("GENESIS_STORE_DIR");
+        String filePath = prop.getProperty("GENESIS_STORE_FILE_PATH");
+        String dirPath = prop.getProperty("GENESIS_STORE_DIR_PATH");
 
         Files.createDirectories(Paths.get(dirPath));
         File file = new File(filePath);
         FileWriter fw = new FileWriter(file);
 
-        for (Task task : tasks) {
+        for (Task task : tasks.getTasks()) {
             fw.write(task.toString() + '\n');
         }
 
         fw.flush();
         fw.close();
+        propsInput.close();
     }
 
-    public static ArrayList<Task> loadFromFile() throws IOException, IndexOutOfBoundsException, GenesisException {
+    public static ArrayList<Task> loadFromFile() throws IOException, IndexOutOfBoundsException, CorruptedStoreException {
 
         ArrayList<Task> tasks = new ArrayList<>();
 
@@ -51,7 +52,7 @@ public class FileHandler {
         Properties prop = new Properties();
         prop.load(propsInput);
 
-        String filePath = prop.getProperty("GENESIS_STORE_FILE");
+        String filePath = prop.getProperty("GENESIS_STORE_FILE_PATH");
 
         File file = new File(filePath);
         Scanner sc = new Scanner(file);
@@ -74,11 +75,12 @@ public class FileHandler {
                 tasks.add(event);
                 break;
             default:
-                throw new GenesisException("Type does not exist");
+                throw new CorruptedStoreException();
             }
         }
 
         sc.close();
+        propsInput.close();
 
         return tasks;
     }

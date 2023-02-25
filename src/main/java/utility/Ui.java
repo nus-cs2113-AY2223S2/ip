@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import task.Task;
 
-public class ConsolePrinter {
+public class Ui {
     final static String HORIZONTAL_RULE = "____________________________________________________________\n";
 
     public static void breakLine() {
