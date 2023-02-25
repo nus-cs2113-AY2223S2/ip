@@ -31,6 +31,7 @@ public class Duke {
         index = dictionary.get("index");
         position = Integer.parseInt(index) - 1;
         controller.deleteTask(position);
+        ui.printMessage("Task successfully deleted");
         break;
       case Command.LIST:
         controller.listTasks();
