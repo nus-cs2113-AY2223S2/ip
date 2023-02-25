@@ -50,18 +50,14 @@ public class Duke {
         String listMessage = DIVIDER + System.lineSeparator() + "Here are the tasks in your list:";
         System.out.println(listMessage);
         for (int i = 0; i < taskSum; i++) {
-            //System.out.println((i+1) + "." + list[i].toString());
             System.out.println((i+1) + "." + list.get(i).toString());
         }
         System.out.println(DIVIDER);
     }
 
     public static void markTask(int taskNum) {
-        //list[taskNum-1].markAsDone();
         list.get(taskNum-1).markAsDone();
         System.out.println("Nice! I've marked this task as done:");
-        //System.out.println(DIVIDER + System.lineSeparator() + list[taskNum-1].toString()
-        //        + System.lineSeparator() + DIVIDER);
         System.out.println(DIVIDER + System.lineSeparator() + list.get(taskNum-1).toString()
                 + System.lineSeparator() + DIVIDER);
     }
