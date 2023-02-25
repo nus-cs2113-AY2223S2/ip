@@ -8,6 +8,8 @@ import tasks.Task;
 import tasks.Todo;
 import userInterface.Print;
 import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Tasklist {
 
@@ -33,7 +35,7 @@ public class Tasklist {
                 containsTo = true;
             }
         }
-        String[] eventDetails = userInputArray[1].split("/from | /to");
+        String[] eventDetails = userInputArray[1].split("/from | /to ");
         if (eventDetails.length == 3){
             containsDescriptionAndDates = true;
         }
@@ -52,7 +54,7 @@ public class Tasklist {
                 byExists = true;
             }
         }
-        String[] datelineDetails = userInputArray[1].split("/by");
+        String[] datelineDetails = userInputArray[1].split(" /by");
         if (datelineDetails.length == 2){
             descriptionAndDatesExists = true;           //descriptionAndDateExists = false if parameter is missing
         }
@@ -70,14 +72,20 @@ public class Tasklist {
         tasksList.add(new Event(eventDescription, startTime, endTime));
         Print.printTaskDescription(eventDescription);
     } 
+
+    public static LocalDate convertStringToDate(String deadlineDate){
+        DateTimeFormatter dateFormatter= DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(deadlineDate, dateFormatter);
+        return date;
+    }
     
     public static void addDeadline(String[] userInputArray) throws InvalidAddTaskException{
         if (!isDatelineValid(userInputArray)){
             throw new InvalidAddTaskException();
         }
-        String[] deadlineDetails = userInputArray[1].split(" /by",2);
+        String[] deadlineDetails = userInputArray[1].split(" /by ",2);
         String deadlineDescription = deadlineDetails[0];
-        String deadlineDate = deadlineDetails[1];
+        LocalDate deadlineDate = convertStringToDate(deadlineDetails[1]);
         tasksList.add(new Deadline(deadlineDescription, deadlineDate));
         Print.printTaskDescription(deadlineDescription);
     }
