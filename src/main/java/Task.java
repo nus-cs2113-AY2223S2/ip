@@ -91,6 +91,10 @@ public class Task{
                 }
                 fw.close();
             }
+            if(Task.lastIndex==0){
+                FileWriter fw = new FileWriter(f);
+                fw.close();
+            }
             System.out.println(DASH+"\nSaved!\n"+DASH);
 
         }
@@ -101,11 +105,16 @@ public class Task{
 
     public static void deleteFromTaskArray(int indexToDelete){
         System.out.println(DASH+"\n Bye Bye task! It was nice meeting you :)\n"+taskArray[indexToDelete-1].description);
-
-        for(int index = indexToDelete-1;index<lastIndex-1;index++){
-            taskArray[index] = taskArray[index+1];
-            taskArray[index].taskNumber -=1;
+        if(lastIndex>1){
+            for(int index = indexToDelete-1;index<lastIndex-1;index++){
+                taskArray[index] = taskArray[index+1];
+                taskArray[index].taskNumber -=1;
+            }
         }
+        if(lastIndex==1){
+            taskArray[0]=null;
+        }
+
         lastIndex--;
         taskArray[lastIndex]=null;
 

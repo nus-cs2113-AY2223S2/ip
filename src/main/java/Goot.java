@@ -9,7 +9,7 @@ public class Goot {
     String DASH = "__________________________________";
     String greet = DASH + "\nI'm Goot :3\nWhat's up?\n" + DASH;
     System.out.println(greet);
-    File f = new File("data.txt");
+    File f = new File("C:\\Users\\leong\\Desktop\\Comp_eng\\Y2S2\\CS2113\\Duke\\ip\\src\\data.txt");
     try{
         Task.loadFileContentsToTaskArray(f);
     }
