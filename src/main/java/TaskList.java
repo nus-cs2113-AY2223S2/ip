@@ -5,7 +5,9 @@ import java.util.ArrayList;
 
 public class TaskList {
     private ArrayList<Task> taskList;
-
+    public ArrayList<Task> getTaskList() {
+        return taskList;
+    }
     public TaskList() {
         this.taskList = new ArrayList<>();
     }
@@ -42,5 +44,9 @@ public class TaskList {
         } catch (IndexOutOfBoundsException exception) {
             Messages.invalidTaskMessage();
         }
+    }
+
+    public Task getTask(int index) {
+        return taskList.get(index);
     }
 }
