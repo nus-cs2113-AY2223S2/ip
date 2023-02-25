@@ -5,19 +5,19 @@ _Duke_ is a Personal Assistant Chatbot that helps a person to keep track of vari
 <!-- TOC -->
 * [Duke Project User Guide](#duke-project-user-guide)
   * [Quick Start](#quick-start)
+  * [Notes about command format](#notes-about-command-format-)
   * [Features](#features)
-  * [Notes about command format:](#notes-about-command-format-)
-    * [ADD AN ENTRY: ```todo``` ```deadline``` ```event```](#add-an-entry--todo-deadline-event)
-      * [There are 3 ways to add an entry depending on the type of your task](#there-are-3-ways-to-add-an-entry-depending-on-the-type-of-your-task)
-        * [Todo Tasks: ```todo```](#todo-tasks--todo)
-        * [Deadline Tasks: ```deadline```](#deadline-tasks--deadline)
-        * [Event Tasks: ```event```](#event-tasks--event)
-    * [SHOW FULL LIST OF TASKS: ```list```](#show-full-list-of-tasks--list)
-    * [SHOW LIST OF TASKS THAT CONTAINS KEYWORD(S): ```find```](#show-list-of-tasks-that-contains-keyword--s---find)
-    * [MARK A TASK AS DONE: ```mark```](#mark-a-task-as-done--mark)
-    * [UNMARK A TASK: ```unmark```](#unmark-a-task--unmark)
-    * [DELETE AN ENTRY: ```delete```](#delete-an-entry--delete)
-    * [EXIT DUKE: ```bye```](#exit-duke--bye)
+    * [ADD AN ENTRY ```todo``` ```deadline``` ```event```](#add-an-entry--todo-deadline-event)
+      * [3 ways to add an entry depending on the type of your task](#there-are-3-ways-to-add-an-entry-depending-on-the-type-of-your-task)
+        * [Todo Tasks ```todo```](#todo-tasks--todo)
+        * [Deadline Tasks ```deadline```](#deadline-tasks--deadline)
+        * [Event Tasks ```event```](#event-tasks--event)
+    * [SHOW FULL LIST OF TASKS ```list```](#show-full-list-of-tasks--list)
+    * [SHOW LIST OF TASKS THAT CONTAINS KEYWORD(S) ```find```](#show-list-of-tasks-that-contains-keyword--s---find)
+    * [MARK A TASK AS DONE ```mark```](#mark-a-task-as-done--mark)
+    * [UNMARK A TASK ```unmark```](#unmark-a-task--unmark)
+    * [DELETE AN ENTRY ```delete```](#delete-an-entry--delete)
+    * [EXIT DUKE ```bye```](#exit-duke--bye)
   * [Command Summary](#command-summary)
 <!-- TOC -->
 
@@ -29,14 +29,13 @@ _Duke_ is a Personal Assistant Chatbot that helps a person to keep track of vari
 4. Copy the file to the desired folder as the home folder for the program.
 5. Open the command terminal, cd into the home folder of the program and use command java -jar ip.jar to run the application.
 
-## Features
 
 ## Notes about command format:
 
 1. Words in UPPER_CASE are the parameters to be supplied by the user.
 2. TASK_NUMBER **must be a positive integer** 1,2,3,...
 
-
+## Features
 ### ADD AN ENTRY: ```todo``` ```deadline``` ```event```
 
 #### There are 3 ways to add an entry depending on the type of your task
