@@ -2,7 +2,9 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-
+/**
+ * Main class of Duke that calls the various functionalities of Duke
+ */
 public class Duke {
 
     private static final String BYE_MESSAGE = "Bye. Hope to see you again soon!";
@@ -26,7 +28,11 @@ public class Duke {
     private TaskList tasks;
     private Parser parser;
 
-
+    /**
+     * Read file from the filepath and load it to the list. Takes in and process user inputs before
+     * storing into lists.
+     * @param filepath path of the file that stores user inputs.
+     */
     public Duke (String filepath){
         ui = new Ui();
         storage = new Storage(filepath);
@@ -43,7 +49,8 @@ public class Duke {
             processUserInput(userInput,true);
         }
     }
-    public void storeTasksInList(ArrayList<String> commandsFromFile){
+
+    private void storeTasksInList(ArrayList<String> commandsFromFile){
         for(String s: commandsFromFile){
             processUserInput(s,false);
         }
