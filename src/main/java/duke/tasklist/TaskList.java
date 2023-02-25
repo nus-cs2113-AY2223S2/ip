@@ -45,6 +45,10 @@ public class TaskList implements Iterable<Task> {
         taskList.addAll(other.taskList);
     }
 
+    public int size() {
+        return taskList.size();
+    }
+
     public List<Task> immutableList() {
         return Collections.unmodifiableList(taskList);
     }
