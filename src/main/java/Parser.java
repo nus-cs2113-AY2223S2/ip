@@ -3,7 +3,6 @@ public class Parser {
     final static int ONE_INDEX = 1;
     final static int ERROR_NEGATIVE_ONE_RETURNED = -1;
 
-
     /**
      * Returns the task name for the Todo task type
      * @param taskString Task description extracted from the userinput excluding the user command keyword.
@@ -87,6 +86,10 @@ public class Parser {
      */
     public static String getEventStartDate(String taskString) throws DukeException {
         String[] taskStringPartsSplitByFrom = taskString.split("/from");
+        if (taskStringPartsSplitByFrom.length <= 1) {
+            System.out.println("Invalid Event String formatting");
+            throw new DukeException();
+        }
         String[] taskStringPartsSplitByTo = taskStringPartsSplitByFrom[ONE_INDEX].split("/to");
         if (taskStringPartsSplitByTo.length <= 1) {
             System.out.println("Invalid Event String formatting");
@@ -109,6 +112,10 @@ public class Parser {
      */
     public static String getEventEndDate(String taskString) throws DukeException {
         String[] taskStringPartsSplitByFrom = taskString.split("/from");
+        if (taskStringPartsSplitByFrom.length <= 1) {
+            System.out.println("Invalid Event String formatting");
+            throw new DukeException();
+        }
         String[] taskStringPartsSplitByTo = taskStringPartsSplitByFrom[ONE_INDEX].split("/to");
         if (taskStringPartsSplitByTo.length <= 1) {
             System.out.println("Invalid Event String formatting: Either /to is missing or no description after /to");
