@@ -14,6 +14,7 @@ public class Messages {
     public static final String MESSAGE_EMPTY_UNMARK = "☹ OOPS!!! The description of unmark cannot be empty";
     public static final String MESSAGE_INVALID_UNMARK = "☹ OOPS!!! The description of unmark is invalid";
     public static final String MESSAGE_NOT_NUMBER_UNMARK = "☹ OOPS!!! The description of unmark is not a number";
+    public static final String MESSAGE_EMPTY_FIND = "☹ OOPS!!! The description of find cannot be empty";
 
     public static void invalidTaskMessage() {
         System.out.println(MESSAGE_DOTTED_LINE);
@@ -96,6 +97,12 @@ public class Messages {
     public static void notNumberUnmarkMessage() {
         System.out.println(MESSAGE_DOTTED_LINE);
         System.out.println(MESSAGE_NOT_NUMBER_UNMARK);
+        System.out.println(MESSAGE_DOTTED_LINE);
+    }
+
+    public static void emptyFindMessage() {
+        System.out.println(MESSAGE_DOTTED_LINE);
+        System.out.println(MESSAGE_EMPTY_FIND);
         System.out.println(MESSAGE_DOTTED_LINE);
     }
 
