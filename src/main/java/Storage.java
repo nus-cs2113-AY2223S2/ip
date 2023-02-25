@@ -54,6 +54,8 @@ public class Storage {
     * @see TaskList
     */
     public static void updateFile(TaskList tasks) {
+        Greeting.printSeperator();
+        System.out.println("Saving files...");
         for (int i = 0; i < tasks.getSize(); i++) {
             Task currentTask = tasks.getTask(i);
             String taskStatus = currentTask.getStatusIcon();
@@ -90,6 +92,7 @@ public class Storage {
                 Greeting.printHelp();
             }
         }
+        System.out.println("...done");
     }
 
     /**
