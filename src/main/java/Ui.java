@@ -49,6 +49,9 @@ public class Ui {
             case "delete":
                 userCommandDelete(taskList, userInputWords);
                 break;
+            case "find":
+                userCommandFind(taskList, userCommandKeyword, userInput);
+                break;
             default:
                 userCommandDefault();
                 break;
@@ -61,14 +64,14 @@ public class Ui {
         return toContinue;
     }
 
-    private static void userCommandEvent(TaskList taskList, String userCommand, String userInput) throws DukeException {
-        Event newEventTask = getNewEventTask(userInput, userCommand);
+    private static void userCommandEvent(TaskList taskList, String userCommandKeyword, String userInput) throws DukeException {
+        Event newEventTask = getNewEventTask(userInput, userCommandKeyword);
         taskList.addUserTask(newEventTask);
         printAddedNewTask(taskList);
     }
 
-    private static Event getNewEventTask(String userInput, String userCommand) throws DukeException {
-        String taskString = Parser.getTaskString(userInput, userCommand);
+    private static Event getNewEventTask(String userInput, String userCommandKeyword) throws DukeException {
+        String taskString = Parser.getTaskString(userInput, userCommandKeyword);
         String taskName = Parser.getEventTaskName(taskString);
         String eventFromDate = Parser.getEventFromDate(taskString);
         String eventToDate = Parser.getEventToDate(taskString);
@@ -76,28 +79,28 @@ public class Ui {
         return newEventTask;
     }
 
-    private static void userCommandDeadline(TaskList taskList, String userCommand, String userInput) throws DukeException {
-        Deadline newDeadlineTask = getNewDeadlineTask(userInput, userCommand);
+    private static void userCommandDeadline(TaskList taskList, String userCommandKeyword, String userInput) throws DukeException {
+        Deadline newDeadlineTask = getNewDeadlineTask(userInput, userCommandKeyword);
         taskList.addUserTask(newDeadlineTask);
         printAddedNewTask(taskList);
     }
 
-    private static Deadline getNewDeadlineTask(String userInput, String userCommand) throws DukeException {
-        String taskString = Parser.getTaskString(userInput, userCommand);
+    private static Deadline getNewDeadlineTask(String userInput, String userCommandKeyword) throws DukeException {
+        String taskString = Parser.getTaskString(userInput, userCommandKeyword);
         String taskName = Parser.getDeadlineTaskName(taskString);
         String deadlineDueDate = Parser.getDeadlineDueDateString(taskString);
         Deadline newDeadlineTask = new Deadline(taskName, deadlineDueDate);
         return newDeadlineTask;
     }
 
-    private static void userCommandTodo(TaskList taskList, String userCommand, String userInput) throws DukeException {
-        Todo newToDoTask = getNewTodoTask(userInput, userCommand);
+    private static void userCommandTodo(TaskList taskList, String userCommandKeyword, String userInput) throws DukeException {
+        Todo newToDoTask = getNewTodoTask(userInput, userCommandKeyword);
         taskList.addUserTask(newToDoTask);
         printAddedNewTask(taskList);
     }
 
-    private static Todo getNewTodoTask (String userInput, String userCommand) throws DukeException{
-        String taskString = Parser.getTaskString(userInput, userCommand);
+    private static Todo getNewTodoTask (String userInput, String userCommandKeyword) throws DukeException{
+        String taskString = Parser.getTaskString(userInput, userCommandKeyword);
         String taskName = Parser.getTodoTaskName(taskString);
         Todo newTodoTask = new Todo(taskName);
         return newTodoTask;
@@ -182,5 +185,19 @@ public class Ui {
 
     public static void executeListCommand(TaskList taskList) {
         userCommandList(taskList);
+    }
+
+    private static void userCommandFind(TaskList taskList, String userCommandKeyword, String userInput) throws DukeException {
+        String taskName = Parser.getTaskString(userInput, userCommandKeyword);
+        ArrayList<Integer> tasksIndexWithSimilarName = taskList.findTasksBasedOnName(taskName);
+        int numberOfTasksToPrint = tasksIndexWithSimilarName.size();
+        if (numberOfTasksToPrint == 0) {
+            System.out.println("No tasks with entered keyword found");
+        }
+        for(int i = 0; i < numberOfTasksToPrint; i++) {
+            int currentTaskIndex = tasksIndexWithSimilarName.get(i);
+            Task currentTask = taskList.getUserTask(currentTaskIndex);
+            System.out.println((i + 1) + ". " + currentTask);
+        }
     }
 }
