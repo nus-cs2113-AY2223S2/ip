@@ -3,15 +3,30 @@ import duke.task.Task;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Represents UI object that handles all interactions with the user
+ */
 public class UI {
+    /**
+     * Gets the input commands from the user
+     *
+     * @return the full input command
+     */
     public String getInput() {
         Scanner in = new Scanner(System.in);
         String input = in.nextLine();
         return input;
     }
+
     public void printDottedLine() {
         System.out.println("____________________________________________________________");
     }
+
+    /**
+     * Prints all current tasks in task list
+     *
+     * @param tasks the task list to be printed
+     */
     public void printAllTasks(TaskList tasks) {
         printDottedLine();
         int counter = 1;
@@ -26,6 +41,9 @@ public class UI {
         printDottedLine();
     }
 
+    /**
+     * Print hello statement when user starts up programme
+     */
     public void printHelloStatement() {
         printDottedLine();
         System.out.println(" Hello! I'm Duke");
@@ -33,12 +51,21 @@ public class UI {
         printDottedLine();
     }
 
+    /**
+     * Print bye statement when user ends programme
+     */
     public void printByeStatement() {
         printDottedLine();
         System.out.println(" Bye. Hope to see you again soon!");
         printDottedLine();
     }
 
+    /**
+     * Prints the task that has been marked or unmarked by user
+     *
+     * @param curTask the task to be marked or unmarked
+     * @param status  the current status of the task
+     */
     public void printTaskStatusStatement(Task curTask, String status) {
         printDottedLine();
         if (status.equals("mark")) {
@@ -50,6 +77,13 @@ public class UI {
         printDottedLine();
     }
 
+    /**
+     * Prints the task that had been most recently added by the user, and the current number
+     * of tasks in the task list
+     *
+     * @param tasks the current task list
+     * @param task  the task that had been added
+     */
     public void printTaskAddedStatement(TaskList tasks, Task task) {
         printDottedLine();
         System.out.println(" Got it. I've added this task:");
@@ -62,6 +96,13 @@ public class UI {
         printDottedLine();
     }
 
+    /**
+     * Prints the task that had been most recently deleted by the user, and the current number
+     * of tasks in the task list
+     *
+     * @param tasks the current task list
+     * @param task  the task that had been deleted
+     */
     public void printTaskDeletedStatement(TaskList tasks, Task task) {
         printDottedLine();
         System.out.println(" Noted. I've removed this task:");

@@ -1,3 +1,6 @@
+/**
+ * General messages to be printed when there are errors
+ */
 public class Messages {
     public static final String MESSAGE_DOTTED_LINE = "____________________________________________________________";
     public static final String MESSAGE_INVALID_TASK = "☹ OOPS!!! The task index provided is invalid";
