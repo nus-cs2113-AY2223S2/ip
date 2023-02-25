@@ -1,28 +1,26 @@
 package duke.command;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
-import duke.tasklist.task.Task;
-
 public class CommandResult {
-    private final String feedback;
-    private final List<Task> relevantTasks;
+    private final List<String> resultMessages = new ArrayList<>();
 
-    public CommandResult(String feedback) {
-        this(feedback, null);
+    public CommandResult(String resultMessage) {
+        resultMessages.add(resultMessage);
     }
 
-    public CommandResult(String feedback, List<Task> relevantTasks) {
-        this.feedback = feedback;
-        this.relevantTasks = relevantTasks;
+    public CommandResult(Collection<String> resultMessages) {
+        this.resultMessages.addAll(resultMessages);
     }
 
-
-    public String getFeedback() {
-        return feedback;
+    public CommandResult(String... resultMessages) {
+        this.resultMessages.addAll(Arrays.asList(resultMessages));
     }
 
-    public List<Task> getRelevantTasks() {
-        return relevantTasks;
+    public List<String> getResultMessages() {
+        return resultMessages;
     }
 }

@@ -1,13 +1,11 @@
 package duke.common;
 
 public class Messages {
-    private static final String LOGO = """
-             ____        _       \s
-            |  _ \\ _   _| | _____\s
-            | | | | | | | |/ / _ \\
-            | |_| | |_| |   <  __/
-            |____/ \\__,_|_|\\_\\___|
-            """;
+    public static final String LOGO = " ____        _        \n"
+            + "|  _ \\ _   _| | _____ \n"
+            + "| | | | | | | |/ / _ \\\n"
+            + "| |_| | |_| |   <  __/\n"
+            + "|____/ \\__,_|_|\\_\\___|\n";
     public static final String SPACER = "\t ";
     public static final String DIVIDER = "____________________________________________________________";
     public static final String MSG_GREETINGS = "Hello from\n" + LOGO;

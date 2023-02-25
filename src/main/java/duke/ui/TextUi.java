@@ -4,6 +4,7 @@ import duke.command.CommandResult;
 import duke.common.Messages;
 
 import java.util.Scanner;
+import java.util.List;
 
 public class TextUi {
     private static final Scanner scanner = new Scanner(System.in);
@@ -31,9 +32,19 @@ public class TextUi {
         System.out.println(Messages.SPACER + msg);
     }
 
-    public void printResult(CommandResult result) {
-        System.out.println(result.getFeedback());
+    public void printMultiMessage(String... messages) {
+        for (String msg : messages) {
+            System.out.println(Messages.SPACER + msg);
+        }
     }
+
+    public void printResult(CommandResult result) {
+        List<String> resultMessages = result.getResultMessages();
+        for (String msg : resultMessages) {
+            System.out.println(Messages.SPACER + msg);
+        }
+    }
+
     public String getUserCommand() {
         System.out.println(Messages.SPACER + "Enter command: ");
         String input = scanner.nextLine().trim();
