@@ -1,4 +1,6 @@
 public class Task {
+    public static final String markedStatusIcon = "X";
+    public static final String unmarkedStatusIcon = "_";
     /** The description of the task entered by the user. */
     protected String description;
     /** The state of the task, whether it is done or not. */
@@ -7,6 +9,7 @@ public class Task {
      * Possible values: TODO, DEADLINE, EVENT
      * */
     protected TypeOfTask typeOfTask;
+
 
     public Task(TypeOfTask typeOfTask, boolean isDone, String description) {
         this.description = description;
@@ -19,7 +22,7 @@ public class Task {
      * @return The symbol whether the task is done or not.
      */
     public String getStatusIcon() {
-        return (isDone ? "X" : "_"); // mark done task with X
+        return (isDone ? markedStatusIcon : unmarkedStatusIcon); // mark done task with X
     }
 
     /**
@@ -73,5 +76,6 @@ public class Task {
                 "[" + this.getStatusIcon() + "] " +
                 this.getDescription());
     }
+
 }
 

@@ -27,13 +27,16 @@ public class Duke {
     public static final int COMMAND_BUFFER = 1;
     /** The return result when a substring is not found */
     public static final int OUT_OF_BOUNDS = -1;
+    /** Name of the text file that stores all the list of tasks */
     public static final String STORAGE_INFO_TXT = "storage-info.txt";
+    /** Name of the folder that stores the text file that stores all the list of tasks */
     public static final String STORE_DIR = "store";
+    /** The buffer used to separate the various information containing in a task */
     public static final String STORAGE_BUFFER = "~;~";
 
     /** Language state of the program. */
     public static boolean isSinglish = false;
-    /** A fixed sized array to store all the tasks entered from the user. */
+    /** A resizeable array to store all the tasks entered from the user. */
     public static ArrayList<Task> tasks = new ArrayList<>();
 
     /**
@@ -135,7 +138,12 @@ public class Duke {
         Greeting.printHorizontalLines(isSinglish);
     }
 
-    public static void updateList(Path storageFilePath) throws IOException {
+    /**
+     * Updates the list of tasks stored in the text file.
+     * @param storageFilePath The file path of the text file where the list of tasks is stored.
+     * @throws IOException when the text file is corrupted.
+     */
+    public static void updateTasksSaved(Path storageFilePath) throws IOException {
         try (BufferedWriter bufferedWriter = new BufferedWriter(
                 (new FileWriter(storageFilePath.toFile())))) {
             for (Task task : tasks) {
@@ -164,7 +172,13 @@ public class Duke {
         }
     }
 
-    public static void readAndStoreList(Path storageFilePath) throws IOException {
+    /**
+     * Initializes the program's list with previously saved tasks.
+     * Does nothing if the text file is empty.
+     * @param storageFilePath The file path of the text file where the list of tasks is stored.
+     * @throws IOException when the text file is corrupted.
+     */
+    public static void initializeListWithSavedTasks(Path storageFilePath) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(storageFilePath.toFile()))) {
             String line;
             line = reader.readLine();
@@ -173,15 +187,15 @@ public class Duke {
                 String[] commands = line.split(STORAGE_BUFFER);
                 System.out.print(index);
                 if (commands[0].equals(TypeOfTask.TODO.toString())) {
-                    Todo todo = new Todo((commands[1].equals("X")), commands[2]);
+                    Todo todo = new Todo((commands[1].equals(Task.markedStatusIcon)), commands[2]);
                     todo.printTask();
                     tasks.add(todo);
                 } else if (commands[0].equals(TypeOfTask.DEADLINE.toString())) {
-                    Deadline deadline = new Deadline((commands[1].equals("X")), commands[2], commands[3]);
+                    Deadline deadline = new Deadline((commands[1].equals(Task.markedStatusIcon)), commands[2], commands[3]);
                     deadline.printTask();
                     tasks.add(deadline);
                 } else if (commands[0].equals(TypeOfTask.EVENT.toString())) {
-                    Event event = new Event((commands[1].equals("X")), commands[2], commands[3], commands[4]);
+                    Event event = new Event((commands[1].equals(Task.markedStatusIcon)), commands[2], commands[3], commands[4]);
                     event.printTask();
                     tasks.add(event);
                 }
@@ -197,9 +211,11 @@ public class Duke {
         Greeting.sayHello(isSinglish);
 
         Path storageFilePath = loadStorageFolderAndFile();
-        readAndStoreList(storageFilePath);
+        initializeListWithSavedTasks(storageFilePath);
 
-        while (true) {
+        boolean isQuit = false;
+
+        while (!isQuit) {
             Scanner in = new Scanner(System.in);
             String line = in.nextLine();
 
@@ -216,6 +232,7 @@ public class Duke {
             try {
                 if (isBye) {
                     Greeting.sayGoodbye(isSinglish);
+                    isQuit = true;
                     break;
                 } else if (isValidChangeLangCommand) {
                     changeLanguage();
@@ -223,19 +240,19 @@ public class Duke {
                     printList();
                 } else if (isValidMarkOrUnmarkCommand) {
                     checkAndMarkTask(commands);
-                    updateList(storageFilePath);
+                    updateTasksSaved(storageFilePath);
                 } else if (isValidDeleteCommand) {
                     checkAndDeleteTask(commands);
-                    updateList(storageFilePath);
+                    updateTasksSaved(storageFilePath);
                 } else if (isTodo) {
                     addTodo(line);
-                    updateList(storageFilePath);
+                    updateTasksSaved(storageFilePath);
                 } else if (isDeadline) {
                     addDeadline(line);
-                    updateList(storageFilePath);
+                    updateTasksSaved(storageFilePath);
                 } else if (isEvent) {
                     addEvent(line);
-                    updateList(storageFilePath);
+                    updateTasksSaved(storageFilePath);
                 } else {
                     throw new IllegalAccessException();
                 }
@@ -253,6 +270,13 @@ public class Duke {
         }
     }
 
+    /**
+     * Creates the storage folder and the respective text file to store the tasks.
+     * If the folder and/or the text file exists, it will only create what is missing and not overwrite any existing
+     * folder/file.
+     * It also prints a message stating the location of the text file.
+     * @return storageFilePath The file path where the text file containing the list of tasks is stored.
+     */
     private static Path loadStorageFolderAndFile() {
         new File("store").mkdirs();
         String ipFolderPath = System.getProperty("user.dir");
@@ -326,14 +350,14 @@ public class Duke {
     }
 
     /**
-     * Checks the validity of the deadline command.
-     * adds the deadline to the list if command has the right syntax.
+     * Checks the validity of the todo command.
+     * adds the todo task to the list if command has the right syntax.
      * otherwise, it informs the user that it has a wrong syntax.
      *
      * @param line String entered by the user.
      */
     private static void addTodo(String line) {
-        // +6 for "deadline " length
+        // +5 for "todo " length
         String desc = line.substring(TODO_COMMAND.length() + COMMAND_BUFFER);
         addToList(desc, TypeOfTask.TODO, null, null);
     }
