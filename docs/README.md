@@ -21,6 +21,7 @@ NakiriAyame filters and returns your Tasks by any keyword in O(1)! (Trust me, I 
 ### Ascii Art of Nakiri Ayame!
 
 ![Yammers](../assets/yammers.png)
+
 if you find it, that is.
 
 ## Usage

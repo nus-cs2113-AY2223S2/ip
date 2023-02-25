@@ -157,7 +157,7 @@ public class UI {
      */
     public static void printGoodbyeMessage(boolean didSomethingUseful, int sizeOfTaskList) {
         if (!didSomethingUseful) {
-            System.out.println(NAKIRI_AYAME + GOODBYE_WITH_NOTHING_DONE);
+            System.out.println(GOODBYE_WITH_NOTHING_DONE);
         } else if (sizeOfTaskList > 20) {
             System.out.println(GOODBYE_WITH_TOO_MUCH_TASKS);
         } else {

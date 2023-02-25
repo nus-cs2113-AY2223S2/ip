@@ -6,8 +6,8 @@ import tasks.Task;
 import tasks.Todo;
 import todolist.TaskList;
 
-import java.io.File;
-import java.io.FileWriter;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 import static ui.UI.NAKIRI_AYAME;
@@ -47,7 +47,7 @@ public class StorageFile {
                     String[] inputMessage = parser.Parser.processInputMessage(in);
                     boolean fileIsBroken = processDataFile(inputMessage, taskList);
                     if (fileIsBroken) {
-                        System.out.println(NAKIRI_AYAME + ERROR_LOADING_FILE);
+                        System.out.println(ERROR_LOADING_FILE);
                         destroyData(data);
                         java.lang.System.exit(0);
                     }
@@ -162,7 +162,7 @@ public class StorageFile {
      */
     private static void destroyData(File data) {
         try {
-            FileWriter writer = new FileWriter(data);
+            FileWriter writer = new FileWriter(data, StandardCharsets.UTF_8);
             writer.write(NAKIRI_AYAME);
             writer.close();
         }
