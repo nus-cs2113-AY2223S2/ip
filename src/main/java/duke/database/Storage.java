@@ -12,20 +12,20 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Storage {
-    public ArrayList<Task> taskList;
+    public ArrayList<Task> tasks;
     public static final String FILE_PATH = "data/duke.txt";
     public static final String BORDER = "//";
 
     public Storage() throws IOException {
         File f = new File(FILE_PATH);
-        this.taskList = new ArrayList<>();
+        this.tasks = new ArrayList<>();
 
         if (f.exists()) {
             Scanner sc = new Scanner(f);
             while (sc.hasNextLine()) {
                 String taskString = sc.nextLine();
                 Task currTask = parseToTask(taskString);
-                this.taskList.add(currTask);
+                this.tasks.add(currTask);
             }
         } else {
             File dir = new File("data");
