@@ -18,10 +18,10 @@ a Graphical User Interface(GUI) for users who can type fast.
     8. Create an "event" task: `event`
     9. Terminate program:`bye`
     10. Saving the data
-3. Command Summary
 
 ## Quick Start
 
+Note: Ensure that you have `Java 11` installed on your computer. you can check by typing `java --version` in the command prompt.
 1. Upon downloading `duke.jar`, transfer the `duke.jar` file to an empty folder in your computer using **File Explorer**.
 2. While viewing `duke.jar` inside its own folder, go to the **Address Bar** of the **File Explorer Tab** and type `cmd`
    to open the command prompt.
@@ -159,18 +159,6 @@ Data is automatically saved upon successful termination of the program using the
 the **Duke** program is abruptly terminated, current progress **will not** be saved and will **revert** to the previous
 version of the task list, if any.
 
-## Command Summary
-| Command    | Format                                                                                                     |
-|:-----------|:-----------------------------------------------------------------------------------------------------------|
-| `list`     | `list`                                                                                                     |
-| `find`     | `find INDEX`<br/>e.g., `find 3`                                                                            |
-| `mark`     | `mark INDEX`<br/>e.g, `mark 1`                                                                             |
-| `unmark`   | `unmark INDEX`<br/>e.g., `unmark 5`                                                                        |
-| `delete`   | `delete INDEX`<br/>e.g., `delete 2`                                                                        |
-| `todo`     | `todo DESCRIPTION`<br/>e.g., `todo sleep`                                                                  |
-| `deadline` | `deadline DESCRIPTION /by DUEDATE`<br/>e.g., `deadline Do CS2113 Assignment /by 1st March 2023`            |
-| `event`    | `event DESCRIPTION /from STARTDATE /to ENDDATE`<br/>e.g., `event Attend John's Birthday /from 6pm /to 9pm` |
-| `bye`      | `bye`                                                                                                      |
 
 
 
