@@ -38,7 +38,9 @@ _Duke_ is a Personal Assistant Chatbot that helps a person to keep track of vari
 
 
 ### ADD AN ENTRY: ```todo``` ```deadline``` ```event```
+
 #### There are 3 ways to add an entry depending on the type of your task
+
 ##### Todo Tasks: ```todo```
       todo TASK_DESCRIPTION
       
@@ -76,8 +78,10 @@ Expected Outcome:<br>
 
 
 ### SHOW FULL LIST OF TASKS: ```list```
+
     Shows a list of all tasks
     Example: list
+
 Expected Outcome:<br>
 
 ```Here are the tasks in your list:``` <br/>
@@ -96,6 +100,7 @@ Expected Outcome:<br>
       EXAMPLE: find book
 
 Expected Outcome:<br>
+
 ```Here are the matching tasks in your list:```<br/>
 ```1.[T][X] read book```<br/>
 ```2.[D][X] return book (by: June 6th)```<br/>
@@ -109,6 +114,7 @@ Expected Outcome:<br>
       EXAMPLE: mark 1
 
 Expected Outcome:<br>
+
 ```Nice! I've marked this task as done:```<br/>
 ```[T][X] read book```
 
@@ -119,6 +125,7 @@ Expected Outcome:<br>
       EXAMPLE: unmark 4
 
 Expected Outcome:<br>
+
 ```OK, I've marked this task as not done yet:```<br/>
 ```[T][ ] join sports club```
 
@@ -129,6 +136,7 @@ Expected Outcome:<br>
       EXAMPLE: delete 5
 
 Expected Outcome:<br>
+
 ```Noted. I've removed this task:```<br/>
 ```Now you have 7 tasks in the list.```
 
@@ -138,6 +146,7 @@ Expected Outcome:<br>
       Example: bye
 
 Expected Outcome:<br>
+
 ```Bye. Hope to see you again soon!```<br/>
 
 ## Command Summary
