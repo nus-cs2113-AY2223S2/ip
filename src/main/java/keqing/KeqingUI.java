@@ -1,5 +1,7 @@
 package keqing;
 
+import static keqing.tasks.Task.getTaskCount;
+
 public class KeqingUI {
     public static final String LINE = "____________________________________________________________\n";
 
@@ -60,4 +62,19 @@ public class KeqingUI {
         System.out.println(LINE);
     }
 
+    public static void echoAdd() {
+        System.out.println(LINE);
+        System.out.println("Got it. I've added this task:");
+        System.out.println("  added: " + KeqingArrayList.tasks.get(getTaskCount() - 1).toString());
+        System.out.println("Now you have " + getTaskCount() + " tasks in your list.");
+        System.out.println(LINE);
+    }
+
+    public static void echoDelete(int index) {
+        System.out.println(LINE);
+        System.out.println("Got it. I've deleted this task:");
+        System.out.println("  deleted: " + KeqingArrayList.tasks.get(index).toString());
+        System.out.println("Now you have " + getTaskCount() + " tasks in your list.");
+        System.out.println(LINE);
+    }
 }

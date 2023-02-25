@@ -1,0 +1,57 @@
+package keqing;
+
+import keqing.exceptions.IllegalInputException;
+
+import java.io.IOException;
+
+public class KeqingParser {
+    public static void doCommand(String text) throws IllegalInputException {
+        String[] splittedText = text.split(" ", 2);
+        String command = splittedText[0];
+        String content = splittedText[splittedText.length - 1];
+        switch (command) {
+        case "list":
+            KeqingArrayList.printTaskList();
+            break;
+        case "menu":
+            KeqingUI.printMenu();
+            break;
+        case "mark":
+            //Fallthrough
+        case "unmark":
+            int currentID = Integer.parseInt(text.substring(text.length() - 1)) - 1;
+            boolean isDone;
+            isDone = !text.contains("unmark");
+            KeqingArrayList.markTask(currentID, isDone);
+            break;
+        case "todo":
+            KeqingArrayList.readToDo(content);
+            break;
+        case "deadline":
+            KeqingArrayList.readDeadline(content);
+            break;
+        case "event":
+            KeqingArrayList.readEvent(content);
+            break;
+        case "delete":
+            KeqingArrayList.deleteTask(content);
+            break;
+        default:
+            throw new IllegalInputException("Keqing doesn't understand your input...?");
+        }
+        try {
+            KeqingStorage.updateFile(KeqingArrayList.tasks);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static boolean isNumeric(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
+    }
+}
