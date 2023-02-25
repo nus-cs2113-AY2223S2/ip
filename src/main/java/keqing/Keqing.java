@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Keqing {
 
     public static final String LINE = "____________________________________________________________\n";
-
+    
     /**
      * Loops the user commands until the user types "bye".
      */
