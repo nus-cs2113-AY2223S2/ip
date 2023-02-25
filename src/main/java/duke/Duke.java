@@ -23,6 +23,9 @@ public class Duke {
     }
 
 
+    /**
+     * Show a short user guide to user. Including the usage of different comments.
+     */
     public static void info() {
         printLine();
         System.out.println("This command is not valid, please read through the info and try again :)");
@@ -36,6 +39,10 @@ public class Duke {
         printLine();
     }
 
+    /**
+     * @param s The text entered by the user
+     * @throws InvalidCommandException The exception will be thrown if the command doesn't any duke command.
+     */
     public static void process(String s) throws InvalidCommandException {
         final String[] commandTypeAndParams = new Parser().parseCommand(s);
         final String commandType = commandTypeAndParams[0];
@@ -131,6 +138,9 @@ public class Duke {
 
     }
 
+    /**
+     * @return The string that the user entered
+     */
     private static String inputCommand() {
         Scanner scan = new Scanner(System.in);
         String s;
