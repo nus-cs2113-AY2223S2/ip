@@ -48,6 +48,9 @@ public class Ui {
             case "delete":
                 userCommandDelete(taskList, userInputWords);
                 break;
+            case "find":
+                userCommandFind(taskList, userCommandKeyword, userInput);
+                break;
             default:
                 userCommandDefault();
                 break;
@@ -287,5 +290,28 @@ public class Ui {
      */
     public static void executeListCommand(TaskList taskList) {
         userCommandList(taskList);
+    }
+
+    /**
+     * Searches userTasks in taskList according to the find keyword given by user.
+     * Prints out every user task that contains the given keyword.
+     * @param taskList TaskList object containing the user tasks.
+     * @param userCommandKeyword Command keyword given by user, etc. mark, unmark, find etc.
+     * @param userInput Line inputted from user.
+     * @throws DukeException Thrown by getTaskString.
+     * getTaskString: If the task description extracted is empty, length of userInput <= length of userCommand.
+     */
+    private static void userCommandFind(TaskList taskList, String userCommandKeyword, String userInput) throws DukeException {
+        String taskName = Parser.getTaskString(userInput, userCommandKeyword);
+        ArrayList<Integer> tasksIndexWithSimilarName = taskList.findTasksBasedOnName(taskName);
+        int numberOfTasksToPrint = tasksIndexWithSimilarName.size();
+        if (numberOfTasksToPrint == 0) {
+            System.out.println("No tasks with entered keyword found");
+        }
+        for(int i = 0; i < numberOfTasksToPrint; i++) {
+            int currentTaskIndex = tasksIndexWithSimilarName.get(i);
+            Task currentTask = taskList.getUserTask(currentTaskIndex);
+            System.out.println((i + 1) + ". " + currentTask);
+        }
     }
 }
