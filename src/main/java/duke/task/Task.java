@@ -22,11 +22,11 @@ public class Task {
         return (isDone ? "[X] " : "[ ] "); // mark done task with X
     }
 
-    public void markAsDone() {
+    public void setAsDone() {
         this.isDone = true;
     }
 
-    public void unmarkAsDone() {
+    public void setAsUndone() {
         this.isDone = false;
     }
 
