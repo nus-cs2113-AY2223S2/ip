@@ -4,38 +4,24 @@ package inu.commons;
  * Container for messages shown to user.
  */
 public class Messages {
-
     public static final String MESSAGE_GREETING = " Woof Woof! I'm Inu! Your personal Shib-Assistant ^.^";
-
     public static final String MESSAGE_PROMPT = " What can I do for you today?";
-
     public static final String MESSAGE_EXIT = " Woof! Saving your task list before exiting...";
-
     public static final String MESSAGE_FAREWELL = " Bye. Hope to see you again soon ^.^!";
-
     public static final String MESSAGE_LIST_HEADER = " Woof! Here are your current tasks ^.^:";
-
     public static final String MESSAGE_MARK_TASK = " Woof! I've marked this task as completed for you:";
-
     public static final String MESSAGE_UNMARK_TASK = " Woof! I've marked this task as incompleted for you:";
-
     public static final String MESSAGE_DIVIDER = "___________________________________________________________________";
-
     public static final String MESSAGE_INVALID = " Sorry! Please type a valid command! ^.^";
-
-    public static final String MESSAGE_PROMPT_VALID_STRING_INPUT = " Sorry! "
-            + " You need a space between your command and task input!" + "\n"
-            + " Please enter your task as such: <todo/deadline/event> <your task> ^.^";
-
     public static final String MESSAGE_PROMPT_VALID_DEADLINE = " Sorry! Please follow the deadline format!"
             + "\n" + " Format: " + "\n"
             + " deadline <your deadline> /by <due date and time in DD/MM/YYYY HH:MM (24HR clock)";
-
     public static final String MESSAGE_PROMPT_VALID_EVENT = " Sorry! Please follow the event format!"
             + "\n" + " Format: " + "\n"
             + " event <My Task> "
-            + "/from <start date in DD/MM/YYYY HH:MM (24HR clock)> /to <end date in DD/MM/YYYY HH:MM (24HR clock)>";
-
+            + "/from <start date in DD/MM/YYYY HH:MM (24HR clock)> /to <end date in DD/MM/YYYY HH:MM (24HR clock)>"
+            + "\n" + "\n"
+            + "your from date and time must be before the to date and time";
     public static final String MESSAGE_PROMPT_VALID_TODO = " Sorry! Please follow the todo format!"
             + "\n" + " Format: " + "\n"
             + " todo <your task description>";

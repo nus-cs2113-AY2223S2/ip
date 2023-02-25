@@ -20,45 +20,27 @@ import inu.task.Task;
 import inu.task.Todo;
 import inu.task.TaskList;
 import inu.commons.Util;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
-
 public class Parser {
 
-    public static Scanner input = new Scanner(System.in);
-
-    public static String[] userString;
-
-    public static String command;
-
-    public static final int INDEX_COMMAND = 0;
-
-    public static final int INDEX_ENTRY = 1;
-
-    public static final int USER_STRING_SPLIT_LIMIT = 2;
-
-    protected static final int DECODED_TASK_TYPE = 0;
-
-    protected static final int DECODED_MARK = 1;
-
-    protected static final int DECODED_TASK = 2;
-
-    protected static final int DECODED_DUE_DATE = 3;
-
-    protected static final int DECODED_FROM_DATE = 3;
-
-    protected static final int DECODED_TO_DATE = 4;
-
-    protected static final String DECODE_TODO = "T";
-
-    protected static final String DECODE_DEADLINE = "D";
-
-    protected static final String DECODE_EVENT = "E";
-
-    protected static final String DECODE_MARKED = "[X]";
+    private static final Scanner input = new Scanner(System.in);
+    private static String[] userString;
+    private static final int INDEX_COMMAND = 0;
+    private static final int INDEX_ENTRY = 1;
+    private static final int USER_STRING_SPLIT_LIMIT = 2;
+    private static final int DECODED_TASK_TYPE = 0;
+    private static final int DECODED_MARK = 1;
+    private static final int DECODED_TASK = 2;
+    private static final int DECODED_DUE_DATE = 3;
+    private static final int DECODED_FROM_DATE = 3;
+    private static final int DECODED_TO_DATE = 4;
+    private static final String DECODE_TODO = "T";
+    private static final String DECODE_DEADLINE = "D";
+    private static final String DECODE_EVENT = "E";
+    private static final String DECODE_MARKED = "[X]";
 
     /**
      * Reads user input as a string and converts it into an array.
@@ -81,33 +63,31 @@ public class Parser {
      * @return the command based on the user input.
      */
     public static Command parseCommand(TaskList taskList) {
+        userString = readCommand();
+        String command = userString[INDEX_COMMAND];
 
-            userString = readCommand();
-            command = userString[INDEX_COMMAND];
-
-            switch (command) {
-            case TodoCommand.COMMAND_WORD:
-                return runTodo();
-            case DeadlineCommand.COMMAND_WORD:
-                return runDeadline();
-            case EventCommand.COMMAND_WORD:
-                return runEvent();
-            case DeleteCommand.COMMAND_WORD:
-                return runDelete(taskList);
-            case ListWithDateCommand.COMMAND_WORD:
-                return runListWithDate();
-            case FindCommand.COMMAND_WORD:
-                return runFindCommand();
-            case MarkCommand.COMMAND_WORD:
-                return runMark(taskList);
-            case UnMarkCommand.COMMAND_WORD:
-                return runUnmark(taskList);
-            case ExitCommand.COMMAND_WORD:
-                return new ExitCommand();
-            default:
-                return new InvalidCommand(Messages.MESSAGE_INVALID);
-            }
-
+        switch (command) {
+        case TodoCommand.COMMAND_WORD:
+            return runTodo();
+        case DeadlineCommand.COMMAND_WORD:
+            return runDeadline();
+        case EventCommand.COMMAND_WORD:
+            return runEvent();
+        case DeleteCommand.COMMAND_WORD:
+            return runDelete(taskList);
+        case ListWithDateCommand.COMMAND_WORD:
+            return runListWithDate();
+        case FindCommand.COMMAND_WORD:
+            return runFindCommand();
+        case MarkCommand.COMMAND_WORD:
+            return runMark(taskList);
+        case UnMarkCommand.COMMAND_WORD:
+            return runUnmark(taskList);
+        case ExitCommand.COMMAND_WORD:
+            return new ExitCommand();
+        default:
+            return new InvalidCommand(Messages.MESSAGE_INVALID);
+        }
     }
 
     /**
@@ -160,8 +140,10 @@ public class Parser {
             String from = Util.fetchFrom(description);
             String to = Util.fetchTo(description);
             ExceptionManager.checkEmptyString(task, from, to);
+            ExceptionManager.checkValidFromAndToDate(Util.parseDateTime(from), Util.parseDateTime(to));
             return new EventCommand(task, Util.parseDateTime(from), Util.parseDateTime(to));
-        } catch (IndexOutOfBoundsException| EmptyStringException | InvalidDateTimeFormat e) {
+        } catch (IndexOutOfBoundsException| EmptyStringException | InvalidDateTimeFormat
+                 | InvalidEventFromAndToDate e) {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_EVENT);
         }
     }

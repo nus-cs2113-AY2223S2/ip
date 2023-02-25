@@ -2,6 +2,8 @@ package inu.exceptionhandling;
 
 import inu.task.TaskList;
 
+import java.time.LocalDateTime;
+
 /**
  * Represents methods to throw custom exceptions.
  */
@@ -27,9 +29,9 @@ public class ExceptionManager {
      * @param taskList the tasklist to be checked
      * @throws EmptyTaskListException when the task list is empty.
      */
-    public static void checkEmptyTaskList(TaskList taskList) throws EmptyTaskListException {
-        if (taskList.getTaskListSize() == 0) {
-            throw new EmptyTaskListException();
+    public static void checkValidFromAndToDate(LocalDateTime from, LocalDateTime to) throws InvalidEventFromAndToDate {
+        if (from.isAfter(to)) {
+            throw new InvalidEventFromAndToDate();
         }
     }
 
