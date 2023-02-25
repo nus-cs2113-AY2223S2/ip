@@ -92,7 +92,7 @@ Auntie show you ah... all this are your tasks:
     3.[E] [ ] description (from: day to: day)
 ```
 
-### `mark`/ 'unmark' - mark a task as done /not done.
+### `mark`/ `unmark` - mark a task as done /not done.
 
 Example of usage: 
 
@@ -107,7 +107,7 @@ Very good... finish more task next time more successfull than me okay
     [T] [X] description
 ```
 
-### `delete' - delete a task from the task list
+### `delete` - delete a task from the task list
 
 Example of usage: 
 
@@ -122,7 +122,7 @@ Always so lazy... Okay Auntie remove this one for you:
     [T] [X] description
 ```
 
-### `bye' - Saves current task list and ends the bot
+### `bye` - Saves current task list and ends the bot
 
 Example of usage: 
 
