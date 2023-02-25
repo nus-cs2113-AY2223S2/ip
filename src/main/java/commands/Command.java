@@ -2,135 +2,57 @@ package commands;
 import exceptions.InvalidAddTaskException;
 import exceptions.InvalidCommandException;
 import exceptions.TaskListOutofBoundsException;
-import tasks.Deadline;
-import tasks.Event;
-import tasks.Task;
-import tasks.Todo;
 import userInterface.Print;
-import duke.Duke;
+import file.FileManager;
+import tasklist.Tasklist;
+import java.io.IOException;
 
 public class Command {
 
-    public static void throwInvalidCommand() throws InvalidCommandException{
-        throw new InvalidCommandException();
-    }
-
-    public static boolean isEventValid(String[] userInputArray){
-        if (userInputArray.length == 1){
-            return false;           //return false if task is empty
-        }
-        boolean containsFrom = false;
-        boolean containsTo = false;
-        boolean containsDescriptionAndDates = false;
-        String[] allDetails = userInputArray[1].split(" ");     // fromExists or toExists remains false if "/from" or /"to" doesnt exist
-        for (String i : allDetails){
-            if (i.equals("/from")){
-                containsFrom = true;
+    public static void runCommand(String userInput){
+        String [] userInputArray = userInput.split(" ",2);
+        String command = Tasklist.retrieveCommand(userInputArray);
+        try{
+            switch (command){
+            case "bye": 
+                Print.printGoodbye();
+                FileManager.saveFile();
+                System.exit(0);
+            case "list":
+                Tasklist.displayTaskList();
+                break;
+            case "mark":
+                Tasklist.markTask(Tasklist.retrieveMarkIndex(userInputArray));
+                break;
+            case "unmark":
+                Tasklist.unmarkTask(Tasklist.retrieveMarkIndex(userInputArray));
+                break;
+            case "delete":
+                Tasklist.deleteTask(Tasklist.retrieveMarkIndex(userInputArray));
+                break;    
+            case "todo":
+                Tasklist.addTodo(userInputArray);
+                break;
+            case "deadline":
+                Tasklist.addDeadline(userInputArray);
+                break;
+            case "event":
+                Tasklist.addEvent(userInputArray);
+                break;
+            default:
+                Tasklist.throwInvalidCommand();
+                break;
             }
-            if (i.equals("/to")){
-                containsTo = true;
-            }
+        } catch (NumberFormatException e){
+            System.out.println("Please type an integer behind mark/unmark/delete!");
+        } catch (TaskListOutofBoundsException e){
+            System.out.println(TaskListOutofBoundsException.taskListOutOfBoundsMessage);
+        } catch (InvalidCommandException e){
+            System.out.println(InvalidCommandException.invalidCommandMessage);
+        } catch (InvalidAddTaskException e){
+            System.out.println(InvalidAddTaskException.invalidAddTaskMessage);
+        } catch (IOException e){
+            System.out.println("File Write Error");
         }
-        String[] eventDetails = userInputArray[1].split("/from | /to");
-        if (eventDetails.length == 3){
-            containsDescriptionAndDates = true;
-        }
-        return containsFrom && containsTo && containsDescriptionAndDates;
-    }
-
-    public static boolean isDatelineValid(String[] userInputArray){
-        if (userInputArray.length ==1){         //return false if task is empty
-            return false;
-        }
-        boolean byExists = false;
-        boolean descriptionAndDatesExists = false;
-        String[] allDetails = userInputArray[1].split(" ");
-        for (String i : allDetails){            //byExists equals false if "/by" does not exist
-            if (i.equals("/by")){
-                byExists = true;
-            }
-        }
-        String[] datelineDetails = userInputArray[1].split("/by");
-        if (datelineDetails.length == 2){
-            descriptionAndDatesExists = true;           //descriptionAndDateExists = false if parameter is missing
-        }
-        return byExists && descriptionAndDatesExists;
-    }
-    
-    public static void addEvent(String[] userInputArray) throws InvalidAddTaskException{
-        if (!isEventValid(userInputArray)){
-            throw new InvalidAddTaskException();
-        }
-        String[] eventDetails = userInputArray[1].split("/from | /to");
-        String eventDescription = eventDetails[0];
-        String startTime = eventDetails[1];
-        String endTime = eventDetails[2];
-        Duke.tasksList.add(new Event(eventDescription, startTime, endTime));
-        Print.printTaskDescription(eventDescription);
-    } 
-
-    public static void addDeadline(String[] userInputArray) throws InvalidAddTaskException{
-        if (!isDatelineValid(userInputArray)){
-            throw new InvalidAddTaskException();
-        }
-        String[] deadlineDetails = userInputArray[1].split(" /by",2);
-        String deadlineDescription = deadlineDetails[0];
-        String deadlineDate = deadlineDetails[1];
-        Duke.tasksList.add(new Deadline(deadlineDescription, deadlineDate));
-        Print.printTaskDescription(deadlineDescription);
-    }
-
-    public static void addTodo(String[] userInputArray) throws InvalidAddTaskException{
-        if (userInputArray.length == 1){
-            throw new InvalidAddTaskException();
-        }
-        String todoDescription = userInputArray[1];
-        Duke.tasksList.add(new Todo(todoDescription));
-        Print.printTaskDescription(todoDescription); 
-    }
-
-    public static void displayTaskList(){
-        Print.printLine();
-        for (int i = 0; i < Duke.tasksList.size(); i++){
-            String taskNumber = Integer.toString(i+1);
-            Task currentTask = Duke.tasksList.get(i);      
-            System.out.println("\t" + taskNumber + "." + currentTask.getStatusIcon() + currentTask.printTask());
-        }
-        Print.printLine();
-    }
-
-    public static void deleteTask(int index){
-        Task currentTask = Duke.tasksList.get(index-1); 
-        System.out.println("\t" + "Noted. I have removed this task: " + currentTask.getStatusIcon() + currentTask.printTask());
-        Duke.tasksList.remove(currentTask);
-    }
-
-    public static void markTask(int index){
-        Task currentTask = Duke.tasksList.get(index-1); 
-        currentTask.markAsDone();
-        Print.printLine();
-        System.out.println("\t" + '"' + currentTask.description + '"' + " is marked as done! Good Job :)");
-        Print.printLine();
-    }
-
-    public static void unmarkTask(int index){
-        Task currentTask = Duke.tasksList.get(index-1); 
-        currentTask.markAsUndone();
-        Print.printLine();
-        System.out.println("\t" + '"' + currentTask.description + '"' + " is marked as undone. Jiayou!");
-        Print.printLine();
-    }
-
-    public static String retrieveCommand(String[] userInputArray){
-        String command = userInputArray[0];
-        return command;
-    }
-
-    public static int retrieveMarkIndex(String[] userInputArray) throws TaskListOutofBoundsException{
-        int markIndex = Integer.parseInt(userInputArray[1]);
-        if (markIndex == 0 || markIndex > Duke.tasksList.size()){
-            throw new TaskListOutofBoundsException();
-        }
-        return markIndex;
     }
 }

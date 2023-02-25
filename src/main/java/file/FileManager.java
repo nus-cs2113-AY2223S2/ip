@@ -2,17 +2,18 @@ package file;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-import duke.Duke;
 import tasks.Deadline;
 import tasks.Event;
 import tasks.Task;
 import tasks.Todo;
 import java.io.FileWriter;
 import java.io.IOException;
+import tasklist.Tasklist;
 
 public class FileManager {
+    
     public static File f = new File("duke.txt");
-
+    
     public static void readIntoList()throws FileNotFoundException, IOException {
         if (!f.exists()){
             f.createNewFile();
@@ -25,20 +26,20 @@ public class FileManager {
             String eventDesc = currentLineArray [2];
             switch(taskType){
             case "todo":
-                Duke.tasksList.add(new Todo(eventDesc));
+                Tasklist.tasksList.add(new Todo(eventDesc));
                 break;
             case "deadline":
                 String deadlineDate = currentLineArray[3];
-                Duke.tasksList.add(new Deadline(eventDesc, deadlineDate));
+                Tasklist.tasksList.add(new Deadline(eventDesc, deadlineDate));
                 break;
             case "event":
                 String startTime = currentLineArray[3];
                 String endTime = currentLineArray[4];
-                Duke.tasksList.add(new Event(eventDesc, startTime, endTime));
+                Tasklist.tasksList.add(new Event(eventDesc, startTime, endTime));
                 break;
             }
             if (markStatus.equals("1")){
-                Task currentTask = Duke.tasksList.get(Duke.tasksList.size()-1); 
+                Task currentTask = Tasklist.tasksList.get(Tasklist.tasksList.size()-1); 
                 currentTask.markAsDone();
             }
         }
@@ -47,10 +48,20 @@ public class FileManager {
 
     public static void saveFile()throws IOException{
         FileWriter fw = new FileWriter(f);
-        for (int i = 0; i < Duke.tasksList.size(); i++){
-            Task currentTask = Duke.tasksList.get(i);
+        for (int i = 0; i < Tasklist.tasksList.size(); i++){
+            Task currentTask = Tasklist.tasksList.get(i);
             fw.write(currentTask.encode() + System.lineSeparator());
         }
         fw.close();
+    }
+
+    public static void initialise(){
+        try{
+            readIntoList();
+        } catch (FileNotFoundException e){
+            System.out.println("File Not Found");
+        } catch (IOException e){
+            System.out.println("IO Error");
+        }
     }
 }
