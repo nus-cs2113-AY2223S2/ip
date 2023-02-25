@@ -29,7 +29,7 @@ When run correctly, you should see something like this below as the output:
 
 ## Features
 This section includes the functionalities of Duke, as well as the commands' formats.
-### Adding a task```todo```
+### Adding a task `todo`
 
 The ```todo``` command allows you to add in tasks that do not have a deadline or duration.
 
