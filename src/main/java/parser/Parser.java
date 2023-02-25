@@ -1,17 +1,13 @@
 package parser;
 
 import command.*;
-import exception.InvalidIndexException;
 import exception.InvalidInputException;
 import task.Deadline;
 import exception.IncompleteInputException;
 import task.Event;
 import task.Task;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Arrays;
+
 
 
 public class Parser {
@@ -55,17 +51,15 @@ public class Parser {
         if (taskType.equals(Input.TODO.input)) {
             newTask = new Task(commandInfo);
         }
-
         else if (taskType.equals(Input.DEADLINE.input)) {
             String[] infoArr = commandInfo.split("/by");
             if (infoArr.length != 2 ) {
-                throw new IncompleteInputException ("Please specify your deadline");
+                throw new IncompleteInputException ("Please specify your deadline string /by YYYY-MM-DD HH:MM");
             }
 
             //infoArr contains descStr and deadlineStr respectively
             newTask = new Deadline(infoArr[0].trim(), infoArr[1].trim());
         }
-
         else if (taskType.equals(Input.EVENT.input)) {
             String[] infoArr = commandInfo.split("/from|/to");
             if (infoArr.length !=3 ) {
@@ -75,8 +69,20 @@ public class Parser {
             newTask = new Event(infoArr[0].trim(), infoArr[1].trim(), infoArr[2].trim());
 
         }
-
         return newTask;
+    }
+
+    public Command handleEditTask(String command, String idxToEdit) {
+        if (command.equals(Input.MARK.input)) {
+            int indexToMark = Integer.parseInt(idxToEdit) - 1; //turn it into 0-based
+            return new MarkCommand(indexToMark);
+        } else if (command.equals(Input.UNMARK.input)) {
+            int indexToUnmark = Integer.parseInt(idxToEdit) - 1;
+            return new UnmarkCommand(indexToUnmark);
+        } else {
+            int indexToRemove = Integer.parseInt(idxToEdit)-1;
+            return new RemoveCommand(indexToRemove);
+        }
     }
 
     public Command parse (String inputLine) throws IncompleteInputException, InvalidInputException ,NumberFormatException {
@@ -91,33 +97,14 @@ public class Parser {
         else if (command.equals(Input.LIST.input)) {
            return new ListCommand();
         }
-        else if (command.equals(Input.MARK.input)) {
+        else if (command.matches(Input.MARK.input + "|" + Input.UNMARK.input + "|" + Input.DELETE.input)) {
             //inputWords[1] is string that no longer contains the command string
             if (inputWords.length < 2) {
-                throw new IncompleteInputException ("Please specify which task you wish to mark");
+                throw new IncompleteInputException ("Please specify which task you wish to edit");
             } else {
-                    int indexToMark = Integer.parseInt(inputWords[1]) - 1; //turn it into 0-based
-                    return new MarkCommand(indexToMark);
+                return handleEditTask(command, inputWords[1]);
             }
         }
-        else if (command.equals(Input.UNMARK.input)) {
-            if (inputWords.length < 2) {
-                throw new InvalidInputException("Please specify which task you wish to unmark");
-            } else {
-                int indexToUnmark = Integer.parseInt(inputWords[1]) - 1;
-                return new UnmarkCommand(indexToUnmark);
-            }
-        }
-
-        else if(command.equals(Input.DELETE.input)) {
-            if(inputWords.length < 2) {
-                throw new IncompleteInputException ("Please specify which task you wish to delete");
-            } else {
-                int indexToRemove = Integer.parseInt(inputWords[1])-1;
-                return new RemoveCommand(indexToRemove);
-            }
-        }
-
         //check if command string matches either of todo,deadline,event
         else if (command.matches(Input.TODO.input + "|" + Input.DEADLINE.input + "|" + Input.EVENT.input)) {
             if (inputWords.length < 2) {
@@ -125,8 +112,28 @@ public class Parser {
             }
             Task taskToAdd = handleAddTask(command, inputWords[1]);
             return new AddTaskCommand(taskToAdd);
-        } else {
+        }
+        else {
             throw new InvalidInputException ("fsgfsuygu I don't know what that means :(");
         }
     }
 }
+
+//
+// else if (command.equals(Input.UNMARK.input)) {
+//         if (inputWords.length < 2) {
+//        throw new InvalidInputException("Please specify which task you wish to unmark");
+//        } else {
+//        int indexToUnmark = Integer.parseInt(inputWords[1]) - 1;
+//        return new UnmarkCommand(indexToUnmark);
+//        }
+//        }
+//
+//        else if(command.equals(Input.DELETE.input)) {
+//        if(inputWords.length < 2) {
+//        throw new IncompleteInputException ("Please specify which task you wish to delete");
+//        } else {
+//        int indexToRemove = Integer.parseInt(inputWords[1])-1;
+//        return new RemoveCommand(indexToRemove);
+//        }
+//        }
