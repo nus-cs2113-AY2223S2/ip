@@ -1,14 +1,11 @@
-package duke;
+package task;
 
 public class Task {
     protected String description;
     protected boolean isDone;
 
-    static int totalNumberOfTasks = 0;
-
     public Task(String description) {
         this.description = description;
-        totalNumberOfTasks++;
         this.isDone = false;
     }
 
@@ -24,8 +21,8 @@ public class Task {
         this.isDone = false;
     }
 
+    @Override
     public String toString() {
-      return "[T][" + this.getStatusIcon()+ "] " + description;
+        return "[T][" + this.getStatusIcon()+ "] " + description;
     }
 }
-

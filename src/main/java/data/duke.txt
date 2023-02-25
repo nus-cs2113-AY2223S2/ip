@@ -1,3 +1,4 @@
-[T][ ] 1
-[T][ ] 2
-[T][ ] 3
+[T][X] hmm
+[T][ ] play game
+[D][X] submit hw (by: monday)
+[T][ ] hmm
