@@ -53,6 +53,14 @@ public class Command {
         }
         printLine();
     }
+    public static void find(ArrayList<Task> tasks, String keyword) {
+        for (int i = 0; i < tasks.size(); i += 1) {
+            if (tasks.get(i).description.contains(keyword)) {
+                System.out.println(tasks.get(i).toString());
+            }
+        }
+        printLine();
+    }
     public static void unmarkTask(ArrayList<Task> tasks, String commandArgs) throws NoDescriptionException, IndexOutOfBoundsException {
         if (commandArgs.trim().length() == 0) {
             throw new NoDescriptionException();

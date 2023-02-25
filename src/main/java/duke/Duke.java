@@ -122,6 +122,9 @@ public class Duke {
                 printLine();
             }
             break;
+        case "find":
+            command.find(tasks, commandArgs);
+            break;
         case "help":
             info();
             break;
