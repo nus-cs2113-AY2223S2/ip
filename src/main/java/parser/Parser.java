@@ -1,8 +1,10 @@
 package parser;
 
 import command.*;
+import exception.InvalidIndexException;
+import exception.InvalidInputException;
 import task.Deadline;
-import exception.DukeException;
+import exception.IncompleteInputException;
 import task.Event;
 import task.Task;
 
@@ -14,16 +16,6 @@ import java.util.Arrays;
 
 public class Parser {
     private boolean isExecuting;
-    private static final String TODO_STRING = "todo";
-    private static final String DEADLINE_STRING = "deadline";
-    private static final String EVENT_STRING = "event";
-
-    private static final String LINE = "___________________________________________";
-    private static final String EXIT_STRING = "bye";
-    private static final String LIST_STRING = "list";
-    private static final String MARK_STRING = "mark";
-    private static final String UNMARK_STRING = "unmark";
-    private static final String DELETE_STRING = "delete";
 
     public Parser() {
         isExecuting = true;
@@ -33,20 +25,20 @@ public class Parser {
         return this.isExecuting;
     }
 
-    public static Task processSavedInput (String input) throws DukeException {
+    public static Task processSavedInput (String input) throws IncompleteInputException {
         String taskType = "", commandInfo = "";
         switch (input.charAt(1)) {
             case 'T' :
-                taskType = TODO_STRING;
+                taskType = Input.TODO.input;
                 commandInfo = input.substring(7);
                 break;
             case 'D' :
-                taskType = DEADLINE_STRING;
+                taskType = Input.DEADLINE.input;
                 commandInfo = input.substring(7).replace("(by:","/by").replace(")","");
 
                 break;
             case 'E' :
-                taskType = EVENT_STRING;
+                taskType = Input.EVENT.input;
                 commandInfo = input.substring(7).replace("(from:","/from").replace("to:","/to").replace(")","");
                 break;
         }
@@ -58,92 +50,83 @@ public class Parser {
     }
 
 
-    public static Task handleAddTask(String taskType, String commandInfo) throws DukeException {
+    public static Task handleAddTask(String taskType, String commandInfo) throws IncompleteInputException, DateTimeParseException {
         Task newTask = null;
-        if (taskType.equals(TODO_STRING)) {
+        if (taskType.equals(Input.TODO.input)) {
             newTask = new Task(commandInfo);
         }
 
-        else if (taskType.equals(DEADLINE_STRING)) {
+        else if (taskType.equals(Input.DEADLINE.input)) {
             String[] infoArr = commandInfo.split("/by");
             if (infoArr.length != 2 ) {
-                throw new DukeException("Please specify your deadline");
+                throw new IncompleteInputException ("Please specify your deadline");
             }
 
-            try {
-                //infoArr contains descStr and deadlineStr respectively
-                newTask = new Deadline(infoArr[0].trim(), infoArr[1].trim());
-            } catch (DateTimeParseException ex) {
-                System.out.println("Exception occured : " +ex);
-                System.out.println("Please enter the deadline in YYYY-MM-DD  HH: mm format");
-            }
-
+            //infoArr contains descStr and deadlineStr respectively
+            newTask = new Deadline(infoArr[0].trim(), infoArr[1].trim());
         }
 
-        else if (taskType.equals(EVENT_STRING)) {
+        else if (taskType.equals(Input.EVENT.input)) {
             String[] infoArr = commandInfo.split("/from|/to");
             if (infoArr.length !=3 ) {
-                throw new DukeException("Please specify the starting and ending time of your event");
+                throw new IncompleteInputException ("Please specify the starting and ending time of your event");
             }
-            try {
-                //infoArr contains descStr, fromStr, and toStr respectively
-                newTask = new Event(infoArr[0].trim(), infoArr[1].trim(), infoArr[2].trim());
-            } catch (DateTimeParseException ex) {
-                System.out.println("Exception occured : " +ex);
-                System.out.println("Please enter the starting and ending time in YYYY-MM-DD HH:mm format");
-            }
+            //infoArr contains descStr, fromStr, and toStr respectively
+            newTask = new Event(infoArr[0].trim(), infoArr[1].trim(), infoArr[2].trim());
+
         }
 
         return newTask;
     }
 
-    public Command parse (String inputLine) throws DukeException, NumberFormatException {
+    public Command parse (String inputLine) throws IncompleteInputException, InvalidInputException ,NumberFormatException {
         //splits input based on one or more whitespaces into two words
         String[] inputWords = inputLine.split("\\s+", 2);
         String command = inputWords[0];
 
-        if (command.equals(EXIT_STRING)) {
+        if (command.equals(Input.BYE.input)) {
             isExecuting = false;
             return new ExitCommand();
         }
-        else if (command.equals(LIST_STRING)) {
+        else if (command.equals(Input.LIST.input)) {
            return new ListCommand();
         }
-        else if (command.equals(MARK_STRING)) {
+        else if (command.equals(Input.MARK.input)) {
             //inputWords[1] is string that no longer contains the command string
             if (inputWords.length < 2) {
-                throw new DukeException("Please specify which task you wish to mark");
+                throw new IncompleteInputException ("Please specify which task you wish to mark");
             } else {
                     int indexToMark = Integer.parseInt(inputWords[1]) - 1; //turn it into 0-based
                     return new MarkCommand(indexToMark);
             }
         }
-        else if (command.equals(UNMARK_STRING)) {
+        else if (command.equals(Input.UNMARK.input)) {
             if (inputWords.length < 2) {
-                throw new DukeException("Please specify which task you wish to unmark");
+                throw new InvalidInputException("Please specify which task you wish to unmark");
             } else {
                 int indexToUnmark = Integer.parseInt(inputWords[1]) - 1;
                 return new UnmarkCommand(indexToUnmark);
             }
         }
 
-        else if(command.equals(DELETE_STRING)) {
+        else if(command.equals(Input.DELETE.input)) {
             if(inputWords.length < 2) {
-                throw new DukeException("Please specify which task you wish to delete");
+                throw new IncompleteInputException ("Please specify which task you wish to delete");
             } else {
                 int indexToRemove = Integer.parseInt(inputWords[1])-1;
                 return new RemoveCommand(indexToRemove);
             }
         }
-        //check if command string matches either of the string
-        else if (command.matches("todo|deadline|event")) {
+
+        //check if command string matches either of todo,deadline,event
+        else if (command.matches(Input.TODO.input + "|" + Input.DEADLINE.input + "|" + Input.EVENT.input)) {
             if (inputWords.length < 2) {
-                throw new DukeException("Please specify the description to the task that you wish to add");
+                throw new IncompleteInputException ("Please specify the description to the task that you wish to add");
             }
             Task taskToAdd = handleAddTask(command, inputWords[1]);
             return new AddTaskCommand(taskToAdd);
         } else {
-            throw new DukeException("fsgfsuygu I don't know what that means :(");
+            throw new InvalidInputException ("fsgfsuygu I don't know what that means :(");
         }
     }
 }

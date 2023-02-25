@@ -1,7 +1,7 @@
 package ui;
 
 
-import exception.DukeException;
+import exception.IncompleteInputException;
 import task.Task;
 
 import java.util.ArrayList;

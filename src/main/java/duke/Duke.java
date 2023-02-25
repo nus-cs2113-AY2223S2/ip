@@ -5,9 +5,10 @@ import parser.Parser;
 import storage.TaskStorage;
 import ui.UI;
 import task.TaskList;
-import exception.DukeException;
-import exception.InvalidIndexException;
+import exception.IncompleteInputException;
+import exception.InvalidInputException;
 
+import java.time.format.DateTimeParseException;
 
 
 public class Duke {
@@ -25,7 +26,7 @@ public class Duke {
         storage = new TaskStorage(filePath);
         try {
             tempTasks = new TaskList(storage.load());
-        } catch (DukeException ex) {
+        } catch (IncompleteInputException ex) {
             ui.printError(ex);
             tempTasks= new TaskList();
         }
@@ -39,10 +40,15 @@ public class Duke {
             try {
                 Command cmd = parser.parse(fullCommand);
                 cmd.execute(tasks, storage, ui);
-            } catch (DukeException e) {
-                ui.printError(e);
-            } catch (NumberFormatException e) {
-                ui.printError(e);
+            } catch (IncompleteInputException ex) {
+                ui.printError(ex);
+            } catch(InvalidInputException ex) {
+                ui.printError(ex);
+            } catch (NumberFormatException ex) {
+                ui.printError(ex);
+            } catch (DateTimeParseException ex) {
+                System.out.println("Exception occurred : " +ex);
+                System.out.println("Please enter the  time in YYYY-MM-DD HH:mm format");
             }
         }
     }
