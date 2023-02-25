@@ -54,9 +54,9 @@ public class Storage {
                 }
             }
         } catch (IOException exception) {
-            System.out.println("☹ OOPS!!! An error occurred");
+            System.out.println("☹ OOPS!!! The file is corrupted");
         } catch (Exception exception) {
-            System.out.println("☹ OOPS!!! An error occurred 2");
+            System.out.println("☹ OOPS!!! An error occurred while loading the file");
         }
     }
 

@@ -27,7 +27,7 @@ public class Duke {
         try {
             storage.createSaveFile();
         } catch (IOException exception) {
-            System.out.println("Error Loading file!");
+            System.out.println("☹ OOPS!!! An error has occurred while loading the save file");
         }
         storage.loadSaveFile(tasks);
         ui.printHelloStatement();
