@@ -9,12 +9,17 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Storage {
 
-    public static String filePath;
+    private String filePath;
 
-    public static void createSaveFile() throws IOException {
+    public Storage(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public void createSaveFile() throws IOException {
         File file = new File(filePath);
         if (!file.exists()) {
             file.createNewFile();
@@ -22,7 +27,7 @@ public class Storage {
         }
     }
 
-    public static void loadSaveFile(ArrayList<Task> tasks) {
+    public void loadSaveFile(TaskList tasks) {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(filePath));
             String line;
@@ -31,21 +36,21 @@ public class Storage {
                 if (line.startsWith("T")) {
                     ToDo todo = new ToDo(args[2]);
                     if (args[2].equals("X")) {
-                        todo.markAsDone();
+                        todo.setAsDone();
                     }
-                    tasks.add(todo);
+                    tasks.addTask(todo);
                 } else if (line.startsWith("D")) {
                     Deadline deadline = new Deadline(args[2], args[3]);
                     if (args[2].equals("X")) {
-                        deadline.markAsDone();
+                        deadline.setAsDone();
                     }
-                    tasks.add(deadline);
+                    tasks.addTask(deadline);
                 } else {
                     Event event = new Event(args[2], args[3], args[4]);
                     if (args[2].equals("X")) {
-                        event.markAsDone();
+                        event.setAsDone();
                     }
-                    tasks.add(event);
+                    tasks.addTask(event);
                 }
             }
         } catch (IOException exception) {
@@ -55,10 +60,10 @@ public class Storage {
         }
     }
 
-    public static void updateSaveFile(ArrayList<Task> tasks) throws IOException {
+    public void updateSaveFile(TaskList tasks) throws IOException {
         FileWriter fw = new FileWriter(filePath);
-        for (int i = 0; i < tasks.size(); i++) {
-            Task currentTask = tasks.get(i);
+        for (int i = 0; i < tasks.sizeOfTaskList(); i++) {
+            Task currentTask = tasks.getTask(i);
             String type;
             String description = currentTask.getDescription();
             String done = currentTask.isDone() ? "X" : " ";
