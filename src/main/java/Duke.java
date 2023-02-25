@@ -8,6 +8,7 @@ import Storage.Storage;
 import javax.annotation.processing.Processor;
 
 public class Duke {
+    public final static String filePath = "Duke.txt";
 
     public static void main(String[] args) throws Exception {
 
@@ -16,7 +17,6 @@ public class Duke {
         //If file exists, load file contents into the session
 
         int i = 0;
-        String filePath = "Duke.txt";
         Storage Storage;
         Storage = new Storage(filePath);
         i=Storage.createFile(tasks,filePath, i);
@@ -36,8 +36,8 @@ public class Duke {
                 Print.Bye();
                 break;
             }
-            //Obtaining the index for commands that edit tasks like mark and delete
 
+            //process input and obtain current index
             i=Parser.Processor(filePath,line,tasks, i);
 
 

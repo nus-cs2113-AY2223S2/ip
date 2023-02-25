@@ -27,6 +27,10 @@ public class Parser {
 
       i=ProcessLine.createTask(i,line);
 
+    } else if(line.toLowerCase().contains("find")) {
+      String[] findWord=line.split(" ");
+      ProcessLine.find(i,findWord[1]);
+
     } else if(line.equalsIgnoreCase("list")){
 
       Print ui;
