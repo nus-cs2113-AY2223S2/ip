@@ -11,9 +11,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * This class handles all the functions dealing with any operation on files. Contains instances of {@link File}
+ *
+ * @author Muthya Narayanachary Akhil
+ */
 public class FileHandler {
     public String filePath;
     public File dukeFile;
+
+    /**
+     * Constructor for a FileHandler object, creates a new file (if needed) and a new file object to read/write to the
+     * file. Prints the initialization sequence for Duke.
+     *
+     * @param filePath specifies the path to read/write/create the file at.
+     */
     public FileHandler(String filePath){
         this.filePath = filePath;
         this.dukeFile = new File(filePath); //just creates a new file object, not a new file
@@ -111,38 +123,52 @@ public class FileHandler {
             Thread.currentThread().interrupt();
         }
     }
-//    public void createFile() throws IOException{
-////        if(this.dukeFile.exists()==false) {
-//////            FileWriter fw = new FileWriter(this.filePath); //handle the exception here
-//////            fw.close();
-////            dukeFile.createNewFile();
-////        }
-////        if(dukeFile.exists()==false) {
-////            dukeFile.mkdir();
-////        }
-//        dukeFile.createNewFile();
-//    }
-//    public void makeNewDirectory() throws IOException {
-//        if(!dukeFile.exists()) {
-//            dukeFile.mkdir();
-//        }
-//    }
+
+    /**
+     * Adds new data to a file, based on the value of <code>toAdd</code>. Makes use of a {@link FileWriter} instance
+     * in append mode. Used by {@link helpers.Command} to append new <code>Tasks</code> to the file.
+     *
+     * @param toAdd A string that dictates what needs to be added to the file.
+     * @throws IOException In the event {@link FileHandler#addToFile(String)} is unable to write to the file.
+     */
     public void addToFile(String toAdd) throws IOException {
         FileWriter fw = new FileWriter(filePath, true);
         fw.write(toAdd);
         fw.close();
     }
+
+    /**
+     * Clears the existing file by rewriting the whole file with "". This method is called by {@link FileHandler#populateFile(TaskList)}
+     * in the process of updating data in the file.
+     *
+     * @throws IOException In the event {@link FileHandler#clearFile()} is unable to write to the file.
+     */
     public void clearFile() throws IOException {
         FileWriter fw = new FileWriter(filePath);
         fw.write("");
         fw.close();
     }
 
+    /**
+     * Draws upon elements of <code>taskList</code> to populate the file. Makes use of {@link FileHandler#clearFile()}
+     * to clear the file and {@link TaskList#addTaskListFile(FileHandler)} to update data in the file.
+     *
+     * @param taskList Represents the data which needs to be updated in the file
+     * @throws IOException In the event {@link FileHandler#populateFile(TaskList)} is unable to write to the file.
+     */
     public void populateFile(TaskList taskList) throws IOException {
         clearFile();
         taskList.addTaskListFile(this);
     }
 
+    /**
+     * Reads data from the file and converts each line into an instance of {@link Task}. Updates the {@link ArrayList<Task>}
+     * and returns it. Used by the <code>constructor</code> of {@link TaskList}
+     *
+     * @return An {@link ArrayList<Task>} containing processed data from the file (if any). If the file is empty,
+     * returns an empty {@link ArrayList<Task>}
+     * @throws IOException In the event {@link FileHandler#readFile()} is unable to write to the file.
+     */
     public ArrayList<Task> readFile() throws IOException{
         ArrayList<Task> arrayList = new ArrayList<Task>();
         if(dukeFile.createNewFile()==true) {
