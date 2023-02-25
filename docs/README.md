@@ -69,7 +69,7 @@ Nice! I've marked this task as done!
 
 ### `unmark [Index]` - Mark a Task as incomplete
 
-Example of usage:  `mark 2`
+Example of usage:  `unmark 2`
 
 Expected outcome: Mark a task as incomplete (Note the [ ] to denote an uncompleted Task)
 
