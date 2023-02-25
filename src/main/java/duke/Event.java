@@ -1,11 +1,15 @@
 package duke;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.text.DateFormat;
+
 public class Event extends Task {
 
-    protected String from;
-    protected String to;
+    protected Date from;
+    protected Date to;
 
-    public Event(String description, String from, String to) {
+    public Event(String description, Date from, Date to) {
         super(description);
         this.from = from;
         this.to = to;
@@ -13,6 +17,13 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from:" + from + " to:" + to + ") ";
+        final DateFormat dateFormat = new SimpleDateFormat("MMM dd yyyy");
+        return "[E]" + super.toString() +
+                " (from: " + dateFormat.format(from) + ", to: " + dateFormat.format(to) + ") ";
+    }
+    public String toStorage() {
+        final DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+        return "[E]" + super.toStorage() + " from: " + dateFormat.format(from)
+                + " to: " + dateFormat.format(to);
     }
 }
