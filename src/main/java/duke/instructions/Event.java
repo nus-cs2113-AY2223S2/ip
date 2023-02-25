@@ -42,4 +42,17 @@ public class Event extends Task{
     public void setTaskType(String taskType) {
         this.taskType = taskType;
     }
+
+    @Override
+    public String getTaskList(){
+
+        String wholeArrayOfEvent = this.description.substring(description.indexOf(" ") + 1);
+        String[] arrayOfEvent = wholeArrayOfEvent.split("/from");
+        String eventStart = arrayOfEvent[1].split("/to")[0].trim();
+        String eventEnd = arrayOfEvent[1].split("/to")[1].trim();
+
+        return arrayOfEvent[0] +
+                " | " + eventStart + "-"
+                + eventEnd + System.lineSeparator();
+    }
 }

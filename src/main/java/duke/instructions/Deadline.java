@@ -6,7 +6,7 @@ public class Deadline extends Task{
     public Deadline(String input) {
         super(input);
         this.input = input;
-        this.taskType = "D";
+
     }
 
     @Override
@@ -28,6 +28,15 @@ public class Deadline extends Task{
         return "      [D]" + "[" + getStatusIcon() + "]" +  " "
                 + eventName[0] + " (" + showDeadline + ")"
                 + System.lineSeparator();
+    }
+
+    @Override
+    public String getTaskList(){
+        String deadline = input.substring(input.indexOf(' ') + 1);
+        String[] newDeadline = deadline.split("/by");
+        return newDeadline[0] + " | " + newDeadline[1];
+
+
     }
 
     @Override

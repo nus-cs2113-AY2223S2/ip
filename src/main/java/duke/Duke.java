@@ -55,7 +55,7 @@ public class Duke {
             eventMain(input);
             break;
         case "delete":
-            deleteMain(input, command);
+            deleteMain(input);
             break;
         default:
             throw new DukeException(UNRECOGNISED_INPUT);
@@ -63,8 +63,8 @@ public class Duke {
         }
     }
 
-    public static void listMain(String input) {
-        Task task = new Task(input);
+    public static void listMain(String command) {
+        Task task = new Task(command);
         System.out.println(LINE);
         System.out.print(task.guideline());
         for (int indexOfInstruction = 0; indexOfInstruction < taskNameList.size(); indexOfInstruction++) {
@@ -127,10 +127,10 @@ public class Duke {
 
     }
 
-    public static void deadlineMain(String input) {
-        Deadline deadLine = new Deadline(input);
+    public static void deadlineMain(String command) {
+        Deadline deadLine = new Deadline(command);
         deadLine.setTaskType("D");
-        Task task = new Task(input);
+        Task task = new Task(command);
         System.out.println(LINE);
         taskNameList.add(deadLine);
         String outputForDeadline = deadLine.guideline()
@@ -140,9 +140,9 @@ public class Duke {
         System.out.println(LINE);
 
     }
-    public static void deleteMain(String input, String[] command){
-        int indexTask = Integer.parseInt(command[1]);
-        Task task = new Task(input);
+    public static void deleteMain(String command){
+        int indexTask = Integer.parseInt(command);
+        Task task = new Task(command);
         System.out.println(LINE);
         System.out.print("     Noted. I've removed this task:"
                 + System.lineSeparator()
@@ -183,26 +183,25 @@ public class Duke {
         try{
             File savedFile = new File(FILE_PATH);
             FileWriter writeFile = new FileWriter(savedFile);
-/*
-            for (int indexOfInstruction = 0; indexOfInstruction < taskNameList.size(); indexOfInstruction++) {
-                if(taskNameList.get(indexOfInstruction).getState().trim().contains("D")){
-                    Deadline newDeadline = (Deadline) taskNameList[];
-                    writeFile.write("D | " + newDeadline.getStatusIcon() + " | " + newDeadline.getState().eventName[0]);
-
-                }*/
             for(Task tasks : taskNameList){
                 String typeOfTask = tasks.getTaskType();
                switch(typeOfTask){
                case "D":
                    Deadline newDeadline = (Deadline) tasks;
-                   writeFile.write("D | " + newDeadline.getStatusIcon() + " | ");
+                   writeFile.write("D | " + newDeadline.getStatusIcon() + " | " + newDeadline.getTaskList());
                    break;
                case "E":
+                   Event newEvent = (Event) tasks;
+                   writeFile.write("E | " + newEvent.getStatusIcon() + " | " + newEvent.getTaskList());
                    break;
                case "T":
+                   Todo newToDo = (Todo) tasks;
+                   writeFile.write("E | " + newToDo.getStatusIcon() + " | " + newToDo.getTaskList());
                    break;
                default:
+                   System.out.println("Invalid inout, please enetr a valid command");
                }
+
 
             }
 

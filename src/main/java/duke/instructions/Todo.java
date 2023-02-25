@@ -27,6 +27,13 @@ public class Todo extends Task{
         this.taskType = taskType;
     }
 
+   @Override
+    public String getTaskList(){
+       String arrayOfTodo = this.description.substring(description.indexOf(" ") + 1);
+        return arrayOfTodo;
+   }
+
 }
+
 
 

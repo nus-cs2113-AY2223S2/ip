@@ -8,6 +8,7 @@ public class Task {
     protected String checkComplete;
     protected String taskType;
 
+    protected String taskList;
     public Task(String description) {
         this.description = description;
     }
@@ -30,6 +31,9 @@ public class Task {
     }
     public String getState(){
         return state;
+    }
+    public String getTaskList(){
+        return taskList;
     }
     public String getTaskType(){
         return taskType;
