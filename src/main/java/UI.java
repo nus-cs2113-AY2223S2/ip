@@ -1,5 +1,6 @@
 import duke.task.Task;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -70,6 +71,20 @@ public class UI {
             System.out.println(" Now you have " + (tasks.sizeOfTaskList() - 1) + " task in the list.");
         } else {
             System.out.println(" Now you have " + (tasks.sizeOfTaskList() - 1) + " tasks in the list.");
+        }
+        printDottedLine();
+    }
+
+    public void findTask(TaskList tasks, String input) {
+        printDottedLine();
+        ArrayList<Task> taskList = tasks.getTaskList();
+        int index = 1;
+        System.out.println("Here are the matching tasks in your list:");
+        for (Task task : taskList) {
+            if (task.getDescription().contains(input)){
+                System.out.println(index + "." + task);
+                index++;
+            }
         }
         printDottedLine();
     }
