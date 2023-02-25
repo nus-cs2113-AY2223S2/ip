@@ -165,7 +165,7 @@ public class Duke {
         String deletedTask = tasks.deleteTaskAtIndex(index);
         io.printDeleted(tasks.getTasks(), deletedTask);
     }
-    private void executeFindAction(String description){
+    private void executeFindAction(String description) {
         ArrayList<Task> foundTasks = tasks.findTasks(description);
         io.printFind();
         io.printList(foundTasks);
