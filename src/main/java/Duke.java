@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Duke {
     public static final String DIVIDER  = "______________________________";
@@ -11,12 +12,15 @@ public class Duke {
     static final String COMMAND_TODO = "todo";
     static final String COMMAND_DEADLINE = "deadline";
     static final String COMMAND_EVENT = "event";
+    static final String COMMAND_DELETE = "delete";
+
     static final String COMMAND_BY = "/by";
     static final String COMMAND_FROM = "/from";
     static final String COMMAND_TO = "/to";
 
     //Data
-    static Task[] list = new Task[100];
+    //static Task[] list = new Task[100];
+    static ArrayList<Task> list = new ArrayList<>();
     static int taskSum = 0;
 
     public static void printLogo() {
@@ -46,32 +50,44 @@ public class Duke {
         String listMessage = DIVIDER + System.lineSeparator() + "Here are the tasks in your list:";
         System.out.println(listMessage);
         for (int i = 0; i < taskSum; i++) {
-            System.out.println((i+1) + "." + list[i].toString());
+            //System.out.println((i+1) + "." + list[i].toString());
+            System.out.println((i+1) + "." + list.get(i).toString());
         }
         System.out.println(DIVIDER);
     }
 
     public static void markTask(int taskNum) {
-        list[taskNum-1].markAsDone();
+        //list[taskNum-1].markAsDone();
+        list.get(taskNum-1).markAsDone();
         System.out.println("Nice! I've marked this task as done:");
-        System.out.println(DIVIDER + System.lineSeparator() + list[taskNum-1].toString()
+        //System.out.println(DIVIDER + System.lineSeparator() + list[taskNum-1].toString()
+        //        + System.lineSeparator() + DIVIDER);
+        System.out.println(DIVIDER + System.lineSeparator() + list.get(taskNum-1).toString()
                 + System.lineSeparator() + DIVIDER);
     }
 
     public static void unmarkTask(int taskNum) {
-        list[taskNum-1].markAsNotDone();
+        list.get(taskNum-1).markAsNotDone();
         System.out.println("OK, I've marked this task as not done yet:");
-        System.out.println(DIVIDER + System.lineSeparator() + list[taskNum-1].toString()
+        System.out.println(DIVIDER + System.lineSeparator() + list.get(taskNum-1).toString()
                 + System.lineSeparator() + DIVIDER);
     }
 
     public static void acknowledgementMessage(int taskSum) {
         String acknowledgement = DIVIDER + System.lineSeparator()
                 + "Got it. I've added this task: " + System.lineSeparator()
-                + list[taskSum].toString();
+                + list.get(taskSum).toString();
         System.out.println(acknowledgement);
         System.out.println("Now you have " + (taskSum+1) + " task(s) in the list."
                 + System.lineSeparator() + DIVIDER);
+    }
+
+    public static void deleteTask(int taskNum) {
+        String acknowledge = DIVIDER + System.lineSeparator() + "Noted. I've removed this task: "
+                + System.lineSeparator() + list.get(taskNum-1).toString() + System.lineSeparator()
+                + "Now you have " + (taskSum-1) + " tasks in the list." + System.lineSeparator() + DIVIDER;
+        System.out.println(acknowledge);
+        list.remove(taskNum-1);
     }
 
     public static void taskManager() {
@@ -98,33 +114,43 @@ public class Duke {
                 break;
             case COMMAND_MARK:
                 try {
+                    if (taskDesc.length() == 0) {
+                        throw new EmptyDescriptionException();
+                    }
                     taskNum = Integer.parseInt(inputText[1]);
+                    if (taskNum > list.size() || taskNum <= 0) {
+                        throw new ArrayIndexOutOfBoundsException();
+                    }
                     markTask(taskNum);
+                } catch (EmptyDescriptionException e) {
+                    e.emptyDescriptionNumber();
                 } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println(DIVIDER + System.lineSeparator()
-                            + "Please key in a task number to mark!" + System.lineSeparator() + DIVIDER);
+                            + "Unable to mark task as task does not exist!" + System.lineSeparator() + DIVIDER);
                 } catch (NumberFormatException e) {
                     System.out.println(DIVIDER + System.lineSeparator()
-                            + "Please key in a valid task number to mark!" + System.lineSeparator() + DIVIDER);
-                } catch (NullPointerException e) {
-                    System.out.println(DIVIDER + System.lineSeparator()
-                            + "Unable to mark task as done since the task does not exist!"
+                            + "You did not key in a task number. Please key in a valid task number to mark!"
                             + System.lineSeparator() + DIVIDER);
                 }
                 break;
             case COMMAND_UNMARK:
                 try {
+                    if (taskDesc.length() == 0) {
+                        throw new EmptyDescriptionException();
+                    }
                     taskNum = Integer.parseInt(inputText[1]);
+                    if (taskNum > list.size() || taskNum <= 0) {
+                        throw new ArrayIndexOutOfBoundsException();
+                    }
                     unmarkTask(taskNum);
+                } catch (EmptyDescriptionException e) {
+                    e.emptyDescriptionNumber();
                 } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println(DIVIDER + System.lineSeparator()
-                            + "Please key in a task number to unmark!" + System.lineSeparator() + DIVIDER);
+                            + "Unable to unmark task as task does not exist!" + System.lineSeparator() + DIVIDER);
                 } catch (NumberFormatException e) {
                     System.out.println(DIVIDER + System.lineSeparator()
-                            + "Please key in a valid task number to unmark!" + System.lineSeparator() + DIVIDER);
-                } catch (NullPointerException e) {
-                    System.out.println(DIVIDER + System.lineSeparator()
-                            + "Unable to mark task as not done since the task does not exist!"
+                            + "You did not key in a task number. Please key in a valid task number to unmark!"
                             + System.lineSeparator() + DIVIDER);
                 }
                 break;
@@ -133,7 +159,7 @@ public class Duke {
                     if (taskDesc.length() == 0) {
                         throw new EmptyDescriptionException();
                     }
-                    list[taskSum] = new Todo(taskDesc);
+                    list.add(new Todo(taskDesc));
                     acknowledgementMessage(taskSum);
                     taskSum++;
                 } catch (EmptyDescriptionException e) {
@@ -153,7 +179,7 @@ public class Duke {
                     String[] eventStartAndEnd = eventDuration.split(COMMAND_TO);
                     String eventStart = eventStartAndEnd[0];
                     String eventEnd = eventStartAndEnd[1];
-                    list[taskSum] = new Event(eventTaskDesc, eventStart, eventEnd);
+                    list.add(new Event(eventTaskDesc, eventStart, eventEnd));
                     acknowledgementMessage(taskSum);
                     taskSum++;
                 } catch (EmptyDescriptionException e) {
@@ -174,7 +200,7 @@ public class Duke {
                     //split into task description and duration
                     String deadlineTaskDesc = deadlineInput[0];
                     String deadlineDuration = deadlineInput[1];
-                    list[taskSum] = new Deadline(deadlineTaskDesc, deadlineDuration);
+                    list.add(new Deadline(deadlineTaskDesc, deadlineDuration));
                     acknowledgementMessage(taskSum);
                     taskSum++;
                 } catch (EmptyDescriptionException e) {
@@ -183,6 +209,28 @@ public class Duke {
                     System.out.println(DIVIDER + System.lineSeparator()
                             + "The deadline you keyed in was invalid!" + System.lineSeparator()
                             + "Please key in a valid deadline!" + System.lineSeparator() + DIVIDER);
+                }
+                break;
+            case COMMAND_DELETE:
+                try {
+                    if (taskDesc.length() == 0) {
+                        throw new EmptyDescriptionException();
+                    }
+                    taskNum = Integer.parseInt(inputText[1]);
+                    if (taskNum > list.size() || taskNum <= 0) {
+                        throw new ArrayIndexOutOfBoundsException();
+                    }
+                    deleteTask(taskNum);
+                    taskSum--;
+                } catch (EmptyDescriptionException e) {
+                    e.emptyDescriptionNumber();
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println(DIVIDER + System.lineSeparator()
+                            + "Unable to delete task as task does not exist!" + System.lineSeparator() + DIVIDER);
+                } catch (NumberFormatException e) {
+                    System.out.println(DIVIDER  + System.lineSeparator()
+                    + "You did not key in a task number. Please key in a valid task number to delete!"
+                            + System.lineSeparator() + DIVIDER);
                 }
                 break;
             default:
