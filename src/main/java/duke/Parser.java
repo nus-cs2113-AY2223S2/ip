@@ -48,7 +48,8 @@ public class Parser {
 
         if (splittedDiscription.length == 1 || splittedDiscription[1].equals("")) {
             throw new LackOfTaskDetail(
-                    "    > please enter with a time of deadline/event" + System.lineSeparator() + ": ");
+                    "    > please enter with compelete event/deadline (description /at(or /by) time)"
+                            + System.lineSeparator() + ": ");
         }
 
         return splittedDiscription;
