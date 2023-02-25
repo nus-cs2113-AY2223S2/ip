@@ -36,7 +36,7 @@ _Duke_ is a Personal Assistant Chatbot that helps a person to keep track of vari
 1. Words in UPPER_CASE are the parameters to be supplied by the user.
 2. TASK_NUMBER **must be a positive integer** 1,2,3,...
 
-### ADD AN ENTRY:
+### ADD AN ENTRY: ```todo``` ```deadline``` ```event```
 #### There are 3 ways to add an entry depending on the type of your task
 ##### Todo Tasks: ```todo```
       todo TASK_DESCRIPTION
