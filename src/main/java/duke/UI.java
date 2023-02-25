@@ -1,5 +1,8 @@
 package duke;
 
+import duke.commands.Task;
+import java.util.ArrayList;
+
 public class Ui {
     protected static final String LINE = "---------------------------------------------------------";
     protected static final String KEQING = """
@@ -46,14 +49,19 @@ public class Ui {
 
     public static void printNoCommand() {
         System.out.println(LINE);
-        System.out.println("   > Sorry, command not found");
+        System.out.print("   > Sorry, command not found" + System.lineSeparator() + "enter again: ");
         System.out.println(LINE);
     }
 
-    public static void listTasks(TaskList tasks) {
+    public static void listTasks(ArrayList<Task> tasks) {
         System.out.println(LINE);
-        for (int i = 0; i < tasks.getSize(); i++) {
-            System.out.println("   > " + Integer.toString(i + 1) + "." + tasks.getDescription(i));
+        if (tasks.size() == 0) {
+            System.out.println("No task");
+            System.out.println(LINE);
+            return;
+        }
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println("   > " + Integer.toString(i + 1) + "." + tasks.get(i).toString());
         }
         System.out.println(LINE);
     }
