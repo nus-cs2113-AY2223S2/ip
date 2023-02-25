@@ -4,7 +4,8 @@
 
 ### Feature- Add Tasks
 
-With the command: "**todo** Laundry"/n
+With the command: "**todo** Laundry"
+
 The task "Laundry" is added to a task list.
 
 Expected Output: 
@@ -19,6 +20,7 @@ ____________________________________________________________
 ```
 
 With the command: "**deadline** return book **/by** Sunday"
+
 The task "return book" is added to a task list with the deadline "Sunday". 
 
 Expected Output: 
@@ -33,6 +35,7 @@ ____________________________________________________________
 ```
 
 With the command: "**event** project meeting **/from** Mon 2pm **/to** 4pm"
+
 The task "project meeting" is added to a task list with the beginning of the event "Mon 2pm" and the end as "4pm".
 
 Expected Output: 
@@ -49,6 +52,7 @@ ____________________________________________________________
 ### Feature- Delete Tasks
 
 With the command: "**delete** 1" 
+
 The first task is deleted, as the number 1 represents the index of the task to delete.
 
 Expected Outcome:
@@ -65,6 +69,7 @@ ____________________________________________________________
 ### Feature- Mark/Unmark Tasks
 
 With the command: "**mark** 1" 
+
 The first task is marked, as the number 1 represents the index of the task to mark.
 
 Expected Outcome:
@@ -78,6 +83,7 @@ ____________________________________________________________
 ```
 
 With the command: "**unmark** 1" 
+
 The first task is unmarked, as the number 1 represents the index of the task to unmark.
 
 Expected Outcome:
@@ -93,6 +99,7 @@ ____________________________________________________________
 ### Feature- Find Tasks with a keyword
 
 With the command: "**find** book" 
+
 Tasks with the word "book" will be listed. 
 
 Expected Outcome:
@@ -107,6 +114,7 @@ ____________________________________________________________
 ### Feature- Display Task list
 
 With the command: "**list**" 
+
 The task list will be displayed
 
 Expected Outcome:
@@ -123,6 +131,7 @@ ____________________________________________________________
 ### Feature- To end the program
 
 With the command: "**bye**"
+
 The program will end. 
 
 Expected Outcome:
