@@ -86,6 +86,11 @@ public class Max {
             ui.printMessage("MAX is now in debug mode. No data will be saved or loaded from disk.");
             ui.printMessage("To exit debug mode, restart MAX.");
             break;
+        case FIND:
+        case FETCH:
+            // Fetch is used as an alias for find for thematic consistency with MAX
+            taskManager.findTasks(commandPayload);
+            break;
         default:
             // { CommandType.UNKNOWN_COMMAND }
             ui.printMessage("Awoo? I don't understand that command.");
