@@ -321,8 +321,8 @@ Description of the outcome.
 ````
 ____________________________________________________________
 [Luke]: Printing matching tasks...
-1. [T][ ] keyword3 keyword2
-2. [E][ ] keyword3 keyword1 (From: start to: end)
+5. [T][ ] keyword3 keyword2
+6. [E][ ] keyword3 keyword1 (From: Dec 18 2023 06 00 AM to: Dec 18 2023 04 00 PM)
 ____________________________________________________________
 ````
 ### `bye` - Quits the Program
