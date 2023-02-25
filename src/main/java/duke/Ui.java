@@ -4,6 +4,18 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Ui {
+    public static void showHelpMessage() {
+        printLine();
+        System.out.println("This command is not valid, please read through the info and try again :)");
+        System.out.println("Type: [todo] [something], and the system will add a new todo item to your list");
+        System.out.println("Type: [event] [something] from: [when] to: [when], and the system will add an event and the timing");
+        System.out.println("Type: [deadline] [something] by: [when], and the system will add a deadline");
+        System.out.println("Type: [mark] [number], and the system will mark the item of the number as done");
+        System.out.println("Type: [unmark] [number], and the system will unmark the item of the number.");
+        System.out.println("Type: bye, to say goodbye to Duke!");
+        System.out.println("Hope it helps!! woof a nice day ੯•໒꒱❤︎");
+        printLine();
+    }
     public static void printLine() {
         System.out.println("____________________________________________________________");
     }

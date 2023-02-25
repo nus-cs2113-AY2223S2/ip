@@ -1,9 +1,6 @@
 package duke;
 
-import duke.exceptions.FormatException;
 import duke.exceptions.InvalidCommandException;
-import duke.exceptions.NoDescriptionException;
-
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -44,98 +41,8 @@ public class Duke {
      * @throws InvalidCommandException The exception will be thrown if the command doesn't any duke command.
      */
     public static void process(String s) throws InvalidCommandException {
-        final String[] commandTypeAndParams = new Parser().parseCommand(s);
-        final String commandType = commandTypeAndParams[0];
-        final String commandArgs = commandTypeAndParams[1];
         Command command = new Command();
-        switch (commandType) {
-        case "list":
-            command.printListOfTasks(tasks);
-            break;
-        case "todo":
-            try {
-                command.addTodo(tasks, commandArgs);
-                Ui.showAddTaskMessage(tasks);
-            } catch (NoDescriptionException e) {
-                System.out.println("WOOFS!!! The description of a todo cannot be empty.");
-                System.out.println("Please try to add todo again υ´• ﻌ •`υ");
-                printLine();
-            }
-            break;
-        case "deadline":
-            try {
-                command.addDeadline(tasks, commandArgs);
-                Ui.showAddTaskMessage(tasks);
-            } catch (NoDescriptionException e) {
-                System.out.println("WOOFS!!! The description of a deadline cannot be empty.");
-                System.out.println("Please try to add deadline again υ´• ﻌ •`υ");
-                printLine();
-            } catch (FormatException e) {
-                System.out.println("WOOFS!!! The format of entering deadline is incorrect.");
-                System.out.println("Please try to add deadline again υ´• ﻌ •`υ");
-                printLine();
-            }
-            break;
-        case "event":
-            try {
-                command.addEvent(tasks, commandArgs);
-                Ui.showAddTaskMessage(tasks);
-            } catch (NoDescriptionException e) {
-                System.out.println("WOOFS!!! The description of a event cannot be empty.");
-                System.out.println("Please try to add event again υ´• ﻌ •`υ");
-                printLine();
-            } catch (FormatException e) {
-                System.out.println("WOOFS!!! The format of entering event is incorrect.");
-                System.out.println("Please try to add event again υ´• ﻌ •`υ");
-                printLine();
-            }
-            break;
-        case "mark":
-            try {
-                command.markTask(tasks, commandArgs);
-            } catch (NoDescriptionException e) {
-                System.out.println("WOOFS!!! The index of entering task must be stated.");
-                System.out.println("Please try to mark task again υ´• ﻌ •`υ");
-                printLine();
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("WOOFS!!! The index of entering task is not valid.");
-                System.out.println("Please try to mark task again υ´• ﻌ •`υ");
-                printLine();
-            }
-            break;
-        case "unmark":
-            try {
-                command.unmarkTask(tasks, commandArgs);
-            } catch (NoDescriptionException e) {
-                System.out.println("WOOFS!!! The index of entering task must be stated.");
-                System.out.println("Please try to mark task again υ´• ﻌ •`υ");
-                printLine();
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("WOOFS!!! The index of entering task is not valid.");
-                System.out.println("Please try to mark task again υ´• ﻌ •`υ");
-                printLine();
-            }
-            break;
-        case "delete":
-            try {
-                TaskList.deleteTask(tasks, commandArgs);
-            } catch (NoDescriptionException e) {
-                System.out.println("WOOFS!!! The index of entering task must be stated.");
-                System.out.println("Please try to delete task again υ´• ﻌ •`υ");
-                printLine();
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("WOOFS!!! The index of entering task is not valid.");
-                System.out.println("Please try to delete task again υ´• ﻌ •`υ");
-                printLine();
-            }
-            break;
-        case "help":
-            info();
-            break;
-        default:
-            throw new InvalidCommandException();
-        }
-
+        command.execute(tasks, s);
     }
 
     /**
@@ -152,15 +59,15 @@ public class Duke {
     }
 
 
-
     private void start() {
         this.ui = new Ui();
         this.storage = new Storage();
+        Parser.setKnownPatterns();
+        ui.showWelcomeMessage();
+        storage.initializeStorage(tasks, FILEPATH);
     }
     public void run() {
         start();
-        ui.showWelcomeMessage();
-        storage.initializeStorage(tasks, FILEPATH);
         String s = ui.getUserCommand();
         while (!s.equals("bye")) {
             try {
@@ -174,7 +81,6 @@ public class Duke {
         ui.showGoodByeMessage();
         storage.storeChanges(FILEPATH, tasks);
     }
-
 
     public static void main(String[] args) {
         new Duke().run();

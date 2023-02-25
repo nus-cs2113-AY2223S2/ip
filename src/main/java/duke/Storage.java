@@ -4,6 +4,7 @@ import duke.exceptions.FormatException;
 import duke.exceptions.NoDescriptionException;
 
 import java.io.*;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -29,7 +30,7 @@ public class Storage {
         BufferedWriter outputWriter;
         outputWriter = new BufferedWriter(new FileWriter(filePath));
         for (int i = 0; i < tasks.size(); i += 1) {
-            outputWriter.write(tasks.get(i).toString() + System.lineSeparator());
+            outputWriter.write(tasks.get(i).toStorage() + System.lineSeparator());
         }
         outputWriter.flush();
         outputWriter.close();
@@ -52,7 +53,7 @@ public class Storage {
             System.out.println(task);
             String type = task.substring(1,2);
             final int descriptionId = task.lastIndexOf("]");
-            String taskDescription = task.substring(descriptionId+1).trim().replace("(", "").replace(")", "");
+            String taskDescription = task.substring(descriptionId+1).trim();
             final int doneId = task.indexOf("[X]");
             switch(type) {
             case "T":
@@ -72,7 +73,7 @@ public class Storage {
                     if (doneId != -1) {
                         tasks.get(tasks.size()-1).markAsDone();
                     }
-                } catch (NoDescriptionException | FormatException e) {
+                } catch (NoDescriptionException | FormatException | ParseException e) {
                     System.out.println("WOOFS!!! Something went wrong");
                     printLine();
                 }
@@ -83,7 +84,7 @@ public class Storage {
                     if (doneId != -1) {
                         tasks.get(tasks.size()-1).markAsDone();
                     }
-                } catch (NoDescriptionException | FormatException e) {
+                } catch (NoDescriptionException | FormatException | ParseException e) {
                     System.out.println("WOOFS!!! Something went wrong");
                     printLine();
                 }
