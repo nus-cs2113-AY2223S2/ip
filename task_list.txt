@@ -1,3 +1,5 @@
 T |   | running
-T |   | A todo
-T |   | buying
+T | X | A todo
+T | X | buying
+T |   | dlskfj
+D |   | rtlkjs  | hdjf
