@@ -7,34 +7,14 @@ import java.util.ArrayList;
 public class Duke {
     private Ui ui;
     private Storage storage;
-    private TaskList taskList;
     static String FILEPATH = "duke.txt";
     static ArrayList <Task> tasks = new ArrayList<>();
 
-    public static void addTask(Task t) {
-        tasks.add(t);
-    }
 
     public static void printLine() {
         System.out.println("____________________________________________________________");
     }
-
-
-    /**
-     * Show a short user guide to user. Including the usage of different comments.
-     */
-    public static void info() {
-        printLine();
-        System.out.println("This command is not valid, please read through the info and try again :)");
-        System.out.println("Type: [todo] [something], and the system will add a new todo item to your list");
-        System.out.println("Type: [event] [something] from: [when] to: [when], and the system will add an event and the timing");
-        System.out.println("Type: [deadline] [something] by: [when], and the system will add a deadline");
-        System.out.println("Type: [mark] [number], and the system will mark the item of the number as done");
-        System.out.println("Type: [unmark] [number], and the system will unmark the item of the number.");
-        System.out.println("Type: bye, to say goodbye to Duke!");
-        System.out.println("Hope it helps!! woof a nice day ੯•໒꒱❤︎");
-        printLine();
-    }
+    
 
     /**
      * @param s The text entered by the user
