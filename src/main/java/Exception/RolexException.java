@@ -1,4 +1,4 @@
-package exception;
+package Exception;
 
 public class RolexException {
 
@@ -20,6 +20,8 @@ public class RolexException {
             runUnmarkError();
         } else if(userInput.startsWith("list")){
             runListError();
+        } else if(userInput.startsWith("bye")){
+            return;
         } else{
             System.out.println("OOPS!! I cannot understand the input! ☹ ");
         }
