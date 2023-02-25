@@ -10,6 +10,7 @@ public class DateParser {
     private static DateTimeFormatter outputDateFormat = DateTimeFormatter.ofPattern("MMM dd HHmm, yyyy");
     private static String INPUT_FORMAT_HINT = "Max only accepts dates of format: yyyy-MM-dd HHmm";
     private static String INVALID_TO_FROM_MESSAGE = "Your --from date must be before the --to date!";
+
     public DateParser() {
 
     }
@@ -35,10 +36,10 @@ public class DateParser {
         return dateToString(dateTime);
     }
 
-    public void validateToFromDates(String toString, String fromString) throws TaskException{
+    public void validateToFromDates(String toString, String fromString) throws TaskException {
         LocalDateTime to = parseDate(toString);
         LocalDateTime from = parseDate(fromString);
-        if(from.isAfter(to)){
+        if (from.isAfter(to)) {
             throw new TaskException(INVALID_TO_FROM_MESSAGE);
         }
     }
