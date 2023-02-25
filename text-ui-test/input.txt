@@ -1,0 +1,55 @@
+testing_mode
+list
+find keyword1
+add todo todoTask1
+list
+add todo
+add deadline deadlineTask1 | 2023-12-18 06:00
+list
+mark 1
+add deadline errorDeadlineTask1
+add event eventTask1 | 2023-12-18 06:00 | 2023-12-18 16:00
+list
+mark 2
+unmark 1
+list
+mark 1
+mark 3
+list
+add todo todoDelete1
+list
+add deadline deadlineDelete1 | 2023-12-18 16:00
+list
+delete
+add event eventDelete1 | 2023-12-18 06:00 | 2023-12-18 16:00
+list
+mark 5
+list
+delete 4
+list
+delete 4
+list
+delete 5
+delete 4
+list
+mark a
+unmark b
+delete c
+add deadline keyword1 keyword2 | 2023-12-18 06:00
+add todo keyword3 keyword2
+add event keyword3 keyword1 | 2023-12-18 06:00 | 2023-12-18 16:00
+find keyword1
+find keyword2
+find keyword3
+find keyword4
+find keyword1 keyword2
+add deadline No Time | 2023-12-18
+add deadline Wrong Date No Time | ghgfh 06:00
+add deadline Date Fail Time | 2023-12-18 dfds
+list
+add event No time | 2023-12-18 | 2023-12-18
+add event No Date | 2023-12-18 06:00 | 16:00
+add event Fail Date | 2023-12-18 06:00 | 2023-30-18 16:00
+add event Fail Time | 2023-12-18 26:00 | 2023-30-18 06:00
+list
+bye
