@@ -1,5 +1,8 @@
-T |   | running
+T | X | running
 T | X | A todo
 T | X | buying
 T |   | dlskfj
-D |   | rtlkjs  | hdjf
+D |   | rtlkjs | hdjf
+T |   | reading books
+T |   | watching a movie called birds
+T |   | reading

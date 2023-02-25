@@ -10,6 +10,7 @@ import parser.Parser;
 
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class TaskList {
 
@@ -88,13 +89,35 @@ public class TaskList {
     }
 
     public void deleteTask(String input) throws IndexOutOfBoundsException {
-        int index = Integer.parseInt(input.substring(6).trim());
+        int index = parser.deleteTaskIndex(input);
+        int zeroBaseIndex = index - 1;
         if (index >= 1 && index <= tasks.size()) {
             System.out.println(Messages.LINE + "I've removed task " + index + ":\n" + "   " + tasks.get(index - 1).printTask());
-            tasks.remove(index - 1); // change to 0-base indexing
+            tasks.remove(zeroBaseIndex);
             System.out.println("Now you have " + tasks.size() + " task(s) in the list.\n" + Messages.LINE);
         } else {
             System.out.println("Task " + index + " not found. Please try again.\n" + Messages.LINE);
         }
     }
+
+    public void findTask(String input) throws IndexOutOfBoundsException {
+        String keyWord = parser.searchKeyWord(input);
+        if (keyWord.equals("")) {
+            System.out.println("No keyword found.\n" + Messages.LINE);
+        } else {
+            int taskIndex = 1;
+            int zeroBaseIndex = 0;
+            System.out.println(Messages.LINE + "Here are the matching tasks in your list:\n");
+            for (Task t : tasks) {
+                if (t.getDescription().contains(keyWord)) {
+                    System.out.println(taskIndex + ". " + tasks.get(zeroBaseIndex).printTask());
+                }
+                taskIndex++;
+                zeroBaseIndex++;
+            }
+            System.out.println(Messages.LINE);
+        }
+    }
+
+
 }
