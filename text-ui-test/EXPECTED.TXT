@@ -36,14 +36,14 @@ Here are the tasks in your list:
 3.[E][X] project meeting Aug 6th (from: 2pm to: 4pm)
 ____________________________________________________________
 ____________________________________________________________
-Oops! The description cannot be empty.
+Oops! The description of a task cannot be empty.
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this todo:
   [T][ ] eat lunch
 ____________________________________________________________
 ____________________________________________________________
-Oops! The description cannot be empty.
+Oops! The description of a task cannot be empty.
 ____________________________________________________________
 ____________________________________________________________
 Please enter deadline as "deadline [task] /by [date]".
@@ -53,7 +53,7 @@ Got it. I've added this deadline:
   [D][ ] submit tutorial (by: Mar 03 2023, 11:59PM)
 ____________________________________________________________
 ____________________________________________________________
-Oops! The description cannot be empty.
+Oops! The description of a task cannot be empty.
 ____________________________________________________________
 ____________________________________________________________
 Please enter event as "event [task] /from [date] /to [date]".
@@ -138,7 +138,7 @@ Here are the tasks happening on Mar 03 2023:
 2.[E][ ] holiday (from: Feb 25 2023, 12:00AM to: Mar 04 2023, 11:59PM)
 ____________________________________________________________
 ____________________________________________________________
-Oops! The description cannot be empty.
+Please specify a keyword to do the search with!
 ____________________________________________________________
 ____________________________________________________________
 There are no matching tasks!

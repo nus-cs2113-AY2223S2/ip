@@ -8,7 +8,8 @@ import duke.command.FindCommand;
 import duke.command.HelpCommand;
 import duke.command.ListCommand;
 import duke.command.ModifyCommand;
-import duke.exception.EmptyDescException;
+import duke.exception.EmptyKeywordException;
+import duke.exception.EmptyTaskDescException;
 import duke.exception.IllegalCommandException;
 import duke.exception.InvalidDateTime;
 import duke.exception.InvalidDeadline;
@@ -40,7 +41,7 @@ public class Parser {
      *
      * @param userCommand Command line input from user
      * @return Corresponding Command class to user input
-     * @throws EmptyDescException If task description/keyword is left empty (for Add/Find commands respectively)
+     * @throws EmptyTaskDescException If task description/keyword is left empty (for Add/Find commands respectively)
      * @throws IllegalCommandException If an unknown command is input by the user
      * @throws NumberFormatException If the index is left empty (for Mark, Delete commands)
      * @throws InvalidDeadline If the input format for adding a deadline is wrong
@@ -48,8 +49,8 @@ public class Parser {
      * @throws InvalidDateTime If the input format for a date and time is wrong
      */
     public static Command parseCommand(String userCommand)
-            throws EmptyDescException, IllegalCommandException, NumberFormatException,
-            InvalidDeadline, InvalidEvent, InvalidDateTime {
+            throws EmptyTaskDescException, IllegalCommandException, NumberFormatException,
+            EmptyKeywordException, InvalidDeadline, InvalidEvent, InvalidDateTime {
         final String[] split = userCommand.trim().split("\\s+", 2);
         String command = split[0];
         switch (command) {
@@ -66,7 +67,7 @@ public class Parser {
             return new DateCommand(split[1]);
         case COMMAND_FIND_WORD:
             if (split.length != 2) {
-                throw new EmptyDescException();
+                throw new EmptyKeywordException();
             }
             return new FindCommand(split[1]);
         case COMMAND_MARK_WORD:
@@ -80,7 +81,7 @@ public class Parser {
         case COMMAND_DEADLINE_WORD:
         case COMMAND_EVENT_WORD:
             if (split.length != 2) {
-                throw new EmptyDescException();
+                throw new EmptyTaskDescException();
             }
             return new AddCommand(command, split[1]);
         default:
