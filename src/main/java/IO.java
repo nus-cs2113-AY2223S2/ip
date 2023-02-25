@@ -42,6 +42,9 @@ public class IO {
 			System.out.println("Now you have " + tasks.size() + " tasks in the list.");
 		}
 	}
+	public void printFind() {
+		System.out.println("Here are the matching tasks in your list:");
+	}
 	public void showCannotEditFile(){
 		System.out.println("Unable to write/append to file.");
 	}

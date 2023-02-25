@@ -78,6 +78,9 @@ public class Duke {
             case "delete":
                 executeDeleteAction(description);
                 break;
+            case "find":
+                executeFindAction(description);
+                break;
             default:
                 io.showInvalidCommand();
             }
@@ -161,5 +164,10 @@ public class Duke {
         Integer index = Integer.parseInt(description) - 1;
         String deletedTask = tasks.deleteTaskAtIndex(index);
         io.printDeleted(tasks.getTasks(), deletedTask);
+    }
+    private void executeFindAction(String description){
+        ArrayList<Task> foundTasks = tasks.findTasks(description);
+        io.printFind();
+        io.printList(foundTasks);
     }
 }
