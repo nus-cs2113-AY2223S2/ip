@@ -101,10 +101,12 @@ public class TaskManager {
                 case "deadline":
                     addNew(new Deadline((userCommand.getDetails()), userCommand.getDue()));
                     continue;
+                case "find":
+                    Output.printSearchResults(stash, userCommand.getDetails());
+                    continue;
                 case "done":
                     System.out.println("Bye bye, hope to see you some time soon!");
                     return;
-
                 case "timer":
                     timerModule();
                     continue;

@@ -59,4 +59,12 @@ public class Stash {
         Storage.saveTasks(saveTasks.stream().map(Save::bucketConverter).collect(Collectors.toCollection(ArrayList::new)));
     }
 
+    public void searchTask(String keyword){
+        for (Task task: tasks){
+            if (task.getDescription().contains(keyword)){
+                System.out.printf(" %s", task.toString());
+            }
+        }
+    }
+
 }

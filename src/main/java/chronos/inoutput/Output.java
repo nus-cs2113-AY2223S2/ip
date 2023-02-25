@@ -66,5 +66,12 @@ public class Output {
         System.out.printf("You now have %d task(s) in the list.", stashSize);
         System.out.print("\n");
     }
+    public static void printSearchResults(Stash stash, String keyword){
+        String searchBreak = "----------------------------------------------------";
+        System.out.println(searchBreak);
+        System.out.println("Here are the tasks matching the keyword you have input\n");
+        stash.searchTask(keyword);
+        System.out.println(searchBreak);
+    }
 
 }
