@@ -24,52 +24,63 @@ Have you ever find it difficult to keep track of the many tasks at hand? Do you 
 4. Save a deadline task
 5. Delete tasks
 6. Find tasks
-7. Mark/Unmark task as completed
+7. List tasks
+8. Mark/Unmark task as completed
 
 ### Feature 1: Greeting
 
 Upon starting up the app, the Chatbot will greet you with the following message.
 
-```bash
+```
 WELCOME
 ```
 
-### Feature 2: todo Task
+### Feature 2: Save a todo task
 
 If you have a task that does not have any start or end date, you may save it in the following format `todo <Task Name>`.
 
-```bash
+```
 # todo <Task Name>
-todo complete my homework
+todo Kiss my girlfriend
 
 ```
 
-The expected output will be as such.
+The expected outcome will be as such.
 
-```bash
+```
 Got it. I've added this task:
-[T][ ] complete my homework
+[T][ ] Kiss my girlfriend
 Now you have 1 tasks in the list.
 ```
 
-### Feature-XYZ
+### Feature 3: Save an event task
 
-Description of the feature.
-
-## Usage
-
-### `Keyword` - Describe action
-
-Describe the action and its outcome.
-
-Example of usage:
-
-`keyword (optional arguments)`
-
-Expected outcome:
-
-Description of the outcome.
+If you are attending an event with a start and end date, you may save it in the following format `event <description> /from <start> /to <end>`
 
 ```
-expected output
+event attend my wedding /from 12 PM /to 6 PM
+```
+
+The expected outcome will be as such.
+
+```
+Got it. I've added this task:
+[E][ ] attend my wedding (from: 12 PM to: 6 PM)
+Now you have 1 tasks in the list.
+```
+
+### Feature 4: Save a deadline task
+
+If the task is a deadline task, you may save it in the following format `deadline <description> /by <deadline>`
+
+```
+deadline RSVP /by tomorrow
+```
+
+The expected outcome will be as such.
+
+```
+Got it. I've added this task:
+[D][ ] RSVP (by: tomorrow)
+Now you have 2 tasks in the list.
 ```
