@@ -1,4 +1,2 @@
 T|true|this
 T|true|that
-E|true| this |e |t
-D|false| d1 |gbesadf

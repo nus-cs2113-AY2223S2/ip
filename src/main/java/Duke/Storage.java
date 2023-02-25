@@ -77,35 +77,39 @@ public class Storage {
         }
 
         Scanner s = new Scanner(new FileInputStream((filePath)));
-        while (s.hasNext()) {
-            String command = s.nextLine();
-            String[] inputCommands = command.split("\\|");
-            String fileType = inputCommands[0];
-            boolean isCompleted = true;
-            if (Objects.equals(inputCommands[1], "false")) {
-                isCompleted = false;
+        try {
+            while (s.hasNext()) {
+                String command = s.nextLine();
+                String[] inputCommands = command.split("\\|");
+                String fileType = inputCommands[0];
+                boolean isCompleted = true;
+                if (Objects.equals(inputCommands[1], "false")) {
+                    isCompleted = false;
+                }
+
+
+                if (Objects.equals(fileType, "D")) {
+                    Deadline newDeadline = new Deadline(inputCommands[2]);
+                    newDeadline.setAsDeadline();
+                    newDeadline.setTaskProgress(isCompleted);
+                    newDeadline.setEndTime(inputCommands[3]);
+                    list.add(newDeadline);
+                } else if (Objects.equals(fileType, "E")) {
+                    Event newEvent = new Event(inputCommands[2]);
+                    newEvent.setAsEvent();
+                    newEvent.setTaskProgress(isCompleted);
+                    newEvent.setStartTime(inputCommands[3]);
+                    newEvent.setEndTime(inputCommands[4]);
+                    list.add(newEvent);
+                } else if (Objects.equals(fileType, "T")) {
+                    Task newTask = new Task(inputCommands[2]);
+                    newTask.setTaskProgress(isCompleted);
+                    list.add(newTask);
+                } else
+                    throw new FileNotFoundException();
             }
-
-
-            if (Objects.equals(fileType, "D")) {
-                Deadline newDeadline = new Deadline(inputCommands[2]);
-                newDeadline.setAsDeadline();
-                newDeadline.setTaskProgress(isCompleted);
-                newDeadline.setEndTime(inputCommands[3]);
-                list.add(newDeadline);
-            } else if (Objects.equals(fileType, "E")) {
-                Event newEvent = new Event(inputCommands[2]);
-                newEvent.setAsEvent();
-                newEvent.setTaskProgress(isCompleted);
-                newEvent.setStartTime(inputCommands[3]);
-                newEvent.setEndTime(inputCommands[4]);
-                list.add(newEvent);
-            } else if (Objects.equals(fileType, "T")) {
-                Task newTask = new Task(inputCommands[2]);
-                newTask.setTaskProgress(isCompleted);
-                list.add(newTask);
-            } else
-                throw new FileNotFoundException();
+        }catch (ArrayIndexOutOfBoundsException e){
+            System.out.println("Tasklist.txt file has been corrupted!");
         }
     }
 }
