@@ -32,11 +32,9 @@ public class Duke {
      */
     public static void findEntry(ArrayList<Task> listOfTasks, int currentNumberIndex, String keyWord) {
         System.out.println("     Here are the matching tasks in your list:");
-        int counter = 0;
         for (int i = 0; i < currentNumberIndex; ++i) {
             if (listOfTasks.get(i).taskLabel.contains(keyWord) || listOfTasks.get(i).description.contains(keyWord)) {
-                counter++;
-                System.out.print("     " + counter + "." + listOfTasks.get(i).taskLabel
+                System.out.print("     " + i+1 + "." + listOfTasks.get(i).taskLabel
                         + listOfTasks.get(i).getStatusIcon() + " ");
                 System.out.println(listOfTasks.get(i).description);
             }
@@ -94,7 +92,7 @@ public class Duke {
      * @throws InvalidCommand if isEmptyCommand is true.
      */
     public static void checkIfEmpty(String[] lineComponents) throws InvalidCommand {
-        boolean isEmptyCommand = (taskTypes.contains(lineComponents[0]) && lineComponents.length == 1);
+        boolean isEmptyCommand = (taskTypes.contains(lineComponents[0]) && (lineComponents.length == 1 || lineComponents[1].equals("")));
         if (isEmptyCommand) {
             throw new InvalidCommand();
         }
