@@ -59,5 +59,4 @@ public class Stash {
         Storage.saveTasks(saveTasks.stream().map(Save::bucketConverter).collect(Collectors.toCollection(ArrayList::new)));
     }
 
-
 }

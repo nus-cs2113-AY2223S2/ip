@@ -1,5 +1,10 @@
 package chronos.commandhandler;
 
+/**
+ * Represents all user commands, which is broken down into action, details of task added. In the case of an 'event'
+ * the user command will contain the respective start and end times/date. In the case of a 'deadline, the user command
+ * will contain the due date/time
+ */
 public class Command {
     private String action;
     private String details;
@@ -9,12 +14,13 @@ public class Command {
 
     /**
      * Constructs a Command object with the given action, details, start time, end time, and due time.
+     * This will be parsed in InputParser
      *
-     * @param action The action of the command
-     * @param details The details of the command
-     * @param start The start time of the command
-     * @param end The end time of the command
-     * @param time The due time of the command
+     * @param action  The action of the user command
+     * @param details The details of the user command
+     * @param start   The start time of the user command in the case of an event type task
+     * @param end     The end time of the command in the case of an event type task
+     * @param time    The due time of the command in the case of a deadline type task
      */
     public Command(String action, String details, String start, String end, String time) {
         this.action = action;

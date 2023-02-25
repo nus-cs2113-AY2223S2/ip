@@ -1,8 +1,12 @@
 package chronos.tasktype;
 
 import chronos.savehandler.Save;
+import chronos.DateTimeParser;
 
-//simple inheritance, that's all
+
+/**
+ * Represents the Deadline type task
+ */
 public class Deadline extends Task {
     private String due;
 
@@ -13,6 +17,7 @@ public class Deadline extends Task {
         }
         this.due = due;
     }
+
     public Deadline(String description, String due, boolean isDone) {
         super(isDone, description);
         if (due == null) {
@@ -21,7 +26,6 @@ public class Deadline extends Task {
         this.due = due;
     }
 
-    //second constructor
 
     public String getDue() {
         return due;

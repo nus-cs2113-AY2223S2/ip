@@ -1,8 +1,9 @@
 package chronos.commandhandler;
+
 /**
  * The InputParser class contains a single public static method named parseInput.
- * This method is used to parse the input string into a Command object.
- *
+ * This method is used to parse the input string into a Command object so that it can
+ * be more easily handled by the machine.
  */
 public class InputParser {
     //takes from command and splits it into its components mainly
@@ -15,7 +16,7 @@ public class InputParser {
      * Parses the input string into a Command object.
      *
      * @param input The input string to be parsed
-     * @return The Command object created from the input string
+     * @return The Command object created from the input string that has been parsed
      */
     public static Command parseInput(String input) {
         String[] parts = input.split(" /");
@@ -44,9 +45,12 @@ public class InputParser {
             case "due":
                 due = optionValue;
                 break;
+            default:
+                System.err.println("INVALID COMMAND");
             }
         }
 
+        //for each component, eliminate trailing white spaces for easier processing
         if (action != null) {
             action = action.trim();
         }

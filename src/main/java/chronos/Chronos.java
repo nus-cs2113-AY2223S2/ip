@@ -32,27 +32,10 @@ public class Chronos {
     }
 
     private static void fileInit() {
-        String jarPath = System.getProperty("java.class.path");
-        File jarFile = new File(jarPath);
-        String jarDirectory = jarFile.getParent();
-        File chronosDirectory = new File(jarDirectory + File.separator + ".Chronos");
-
-        if (!chronosDirectory.exists()){
-            if (!chronosDirectory.mkdir()){
-                System.err.println("Failed to create directory");
-                return;
-            }
-        }
-        File listFile = new File(chronosDirectory.getPath() + File.separator+ "taskList.txt");
+        File file = new File("src/main/java/chronos/taskList.txt");
         try {
-            if(listFile.createNewFile()){
-                System.out.println("Created taskList.txt file");
-            }
-            else {
-                System.err.println("taskList.txt file already exists");
-            }
+            file.createNewFile();
         } catch (IOException e) {
-            System.err.println("Failed to create taskList.txt file: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -65,4 +48,3 @@ public class Chronos {
         });
     }
 }
-
