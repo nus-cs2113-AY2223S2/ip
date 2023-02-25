@@ -1,16 +1,16 @@
 package duke.task;
 
 public class Deadline extends Task{
-    protected String by;
+    protected String dueDate;
 
     public Deadline(String description, String type, String by) {
         super(description, type);
-        this.by = by;
+        this.dueDate = by;
     }
 
     @Override
     public String toString() {
-        return super.toString() + " by: " + this.by;
+        return super.toString() + " by: " + this.dueDate;
     }
 
 }

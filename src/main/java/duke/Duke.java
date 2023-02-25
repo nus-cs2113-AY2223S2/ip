@@ -25,6 +25,11 @@ public class Duke {
             "     Enter \"unmark 'task-index'\" to mark a task as not done yet.\n" +
             "     Enter \"delete 'task-index'\" to delete a task from the list.\n" +
             "     Enter \"list\" to obtain a list of all your tasks!.\n";
+    public static final String LOGO =
+              "|  _ \\ _   _| | _____ \n"
+            + "| | | | | | | |/ / _ \\\n"
+            + "| |_| | |_| |   <  __/\n"
+            + "|____/ \\__,_|_|\\_\\___|\n";
     public static final String BYE = "     Bye. Hope to see you again soon!\n";
     public static final String NOT_DONE = "    OK :(, I've marked this task as not done yet: \n    ";
     public static final String DONE = "    Nice! I've marked this task as done: \n    ";
@@ -191,7 +196,7 @@ public class Duke {
         String line;
         File f = new File(FILEPATH);
         Scanner s = new Scanner(f);
-        int count = 0;
+        int taskCount = 0;
         while (s.hasNext()) {
             line = s.nextLine();
             String[] words = line.split("] ", 2);
@@ -214,9 +219,9 @@ public class Duke {
                         "please edit it first." + LINE);
             }
             if (command.contains("X")) {
-                tasks.get(count).setDone(true);
+                tasks.get(taskCount).setDone(true);
             }
-            count ++;
+            taskCount ++;
         }
     }
     private static void createFile() throws IOException {
@@ -229,7 +234,8 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-        System.out.print(LINE + GREET + LINE);
+        System.out.print(LINE + LOGO + GREET + LINE);
+        storage = new Storage(FILEPATH);
         try {
             createFile();
             readFile();
