@@ -19,23 +19,23 @@ public class Command {
         if (userInputArray.length == 1){
             return false;           //return false if task is empty
         }
-        boolean fromExists = false;
-        boolean toExists = false;
-        boolean descriptionAndDatesExists = false;
+        boolean containsFrom = false;
+        boolean containsTo = false;
+        boolean containsDescriptionAndDates = false;
         String[] allDetails = userInputArray[1].split(" ");     // fromExists or toExists remains false if "/from" or /"to" doesnt exist
         for (String i : allDetails){
             if (i.equals("/from")){
-                fromExists = true;
+                containsFrom = true;
             }
             if (i.equals("/to")){
-                toExists = true;
+                containsTo = true;
             }
         }
         String[] eventDetails = userInputArray[1].split("/from | /to");
         if (eventDetails.length == 3){
-            descriptionAndDatesExists = true;
+            containsDescriptionAndDates = true;
         }
-        return fromExists && toExists && descriptionAndDatesExists;
+        return containsFrom && containsTo && containsDescriptionAndDates;
     }
 
     public static boolean isDatelineValid(String[] userInputArray){

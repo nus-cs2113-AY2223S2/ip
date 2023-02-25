@@ -64,11 +64,11 @@ public class Duke {
         } catch (NumberFormatException e){
             System.out.println("Please type an integer behind mark/unmark/delete!");
         } catch (TaskListOutofBoundsException e){
-            System.out.println("The task you want to mark/unmark/delete is not found!");
+            System.out.println(TaskListOutofBoundsException.taskListOutOfBoundsMessage);
         } catch (InvalidCommandException e){
-            System.out.println("Please input a valid command!");
+            System.out.println(InvalidCommandException.invalidCommandMessage);
         } catch (InvalidAddTaskException e){
-            System.out.println("Please the input correct task parameters!");
+            System.out.println(InvalidAddTaskException.invalidAddTaskMessage);
         } catch (IOException e){
             System.out.println("File Write Error");
         }
