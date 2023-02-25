@@ -1,4 +1,4 @@
-public class Task {
+public abstract class Task {
     public static final String markedStatusIcon = "X";
     public static final String unmarkedStatusIcon = "_";
     /** The description of the task entered by the user. */

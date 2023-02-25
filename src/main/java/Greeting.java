@@ -141,5 +141,12 @@ public class Greeting {
     }
 
 
-
+    /**
+     * Toggles the language setting between normal and Singlish mode.
+     * Prints to the output the changes made.
+     */
+    public static void changeLanguage() {
+        Duke.isSinglish = !Duke.isSinglish;
+        sayChangeLanguage(Duke.isSinglish);
+    }
 }
