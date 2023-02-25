@@ -15,6 +15,7 @@ public class Duke {
     private static final String COMMAND_MARK = "mark";
     private static final String COMMAND_UNMARK = "unmark";
     private static final String COMMAND_DELETE = "delete";
+    private static final String COMMAND_FIND = "find";
 
     private static final int REMOVE_FROM = 5;
     private static final int REMOVE_TO = 3;
@@ -98,6 +99,9 @@ public class Duke {
                 case COMMAND_DELETE:
                     executeDeleteCommand(description);
                     break;
+                case COMMAND_FIND:
+                    executeFindCommand(description);
+                    break;
                 default:
                     ui.showInvalidCommand();
             }
@@ -114,6 +118,12 @@ public class Duke {
         if(canPrintFeedback) {
             ui.printUnmarkFeedback(tasks.getTasks(), index);
         }
+    }
+    private void executeFindCommand(String description){
+        ArrayList<Task> foundTasks = new ArrayList<>();
+        foundTasks = tasks.findTasks(description);
+        System.out.println("Tasks found:");
+        ui.printList(foundTasks);
     }
 
     private  void executeDeleteCommand(String description){
@@ -184,10 +194,6 @@ public class Duke {
         }
 
     }
-
-
-
-
 
     private static String[] splitDescriptionEvent(String description) throws DukeException {
         String[] indexArr = description.split("/", 3);

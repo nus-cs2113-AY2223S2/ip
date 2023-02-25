@@ -38,4 +38,14 @@ public class TaskList {
         tasks.remove((int)index);
         return nameOfToBeDeletedTask;
     }
+
+    public ArrayList<Task> findTasks(String description){
+        ArrayList<Task> matchedTasks = new ArrayList<>();
+        for(Task s:tasks){
+            if (s.name.contains(description)){
+                matchedTasks.add(s);
+            }
+        }
+        return matchedTasks;
+    }
 }
