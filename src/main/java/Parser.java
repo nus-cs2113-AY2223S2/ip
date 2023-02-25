@@ -1,58 +1,52 @@
-import duke.task.Task;
-
 public class Parser {
-    private String input;
+    private final String input;
 
     public Parser(String input) {
         this.input = input;
     }
+
     private String getCommand() {
-        try {
-            String[] temp = input.split(" ", 2);
-            return temp[0];
-        } catch (ArrayIndexOutOfBoundsException exception){
-            Messages.emptyCommandMessage();
-        }
-        return input;
+        String[] temp = input.split(" ", 2);
+        return temp[0];
     }
 
     public void handleCommand(TaskList tasks, UI ui) {
         String command = getCommand();
         Command curCommand;
-        switch(command) {
-        case "bye" :
+        switch (command) {
+        case "bye":
             ui.printByeStatement();
             Duke.isEnd = true;
             break;
-        case "list" :
+        case "list":
             curCommand = new ListCommand();
             curCommand.runCommand(input, tasks, ui);
             break;
-        case "mark" :
+        case "mark":
             curCommand = new MarkCommand();
             curCommand.runCommand(input, tasks, ui);
             break;
-        case "unmark" :
+        case "unmark":
             curCommand = new UnmarkCommand();
             curCommand.runCommand(input, tasks, ui);
             break;
-        case "delete" :
+        case "delete":
             curCommand = new DeleteCommand();
             curCommand.runCommand(input, tasks, ui);
             break;
-        case "todo" :
+        case "todo":
             curCommand = new ToDoCommand();
             curCommand.runCommand(input, tasks, ui);
             break;
-        case "deadline" :
+        case "deadline":
             curCommand = new DeadlineCommand();
             curCommand.runCommand(input, tasks, ui);
             break;
-        case "event" :
+        case "event":
             curCommand = new EventCommand();
             curCommand.runCommand(input, tasks, ui);
             break;
-        default :
+        default:
             Messages.unknownCommandMessage();
         }
     }
