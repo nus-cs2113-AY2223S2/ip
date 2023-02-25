@@ -11,6 +11,10 @@ import utility.Storage;
 
 import exception.UnknownCommandException;
 
+/**
+ * The Genesis class handles the main functionality of the chatbot program. It processes user inputs and
+ * calls the appropriate methods to execute the corresponding actions.
+ */
 public class Genesis {
 
     private TaskList tasks;
@@ -19,6 +23,11 @@ public class Genesis {
         this.tasks = new TaskList();
     }
 
+    /**
+     * Processes user input and calls the corresponding methods to execute the corresponding actions.
+     *
+     * @param userInput the user input string to process
+     */
     public void askGenesis(String userInput) {
         Validator validator = new Validator();
 

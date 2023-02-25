@@ -19,9 +19,19 @@ import task.Todo;
 import task.Deadline;
 import task.Event;
 
+/**
+ * The Storage class provides functionality to read from and write to a file containing a list of tasks.
+ * * Tasks are represented by the Task class and its subclasses.
+ */
 public class Storage {
     final static String CONFIG_FILE_PATH = "src/config.properties";
 
+    /**
+     * Saves the specified TaskList to the file specified in the configuration file.
+     *
+     * @param tasks the TaskList to save to the file
+     * @throws IOException if there is an I/O error
+     */
     public static void saveToFile(TaskList tasks) throws IOException {
 
         FileInputStream propsInput = new FileInputStream(CONFIG_FILE_PATH);
@@ -44,6 +54,14 @@ public class Storage {
         propsInput.close();
     }
 
+    /**
+     * Loads a list of tasks from the file specified in the configuration file.
+     *
+     * @return an ArrayList of Task objects
+     * @throws IOException               if there is an I/O error
+     * @throws IndexOutOfBoundsException if the file is empty or has an invalid format
+     * @throws CorruptedStoreException   if the file is corrupted and cannot be read
+     */
     public static ArrayList<Task> loadFromFile() throws IOException, IndexOutOfBoundsException, CorruptedStoreException {
 
         ArrayList<Task> tasks = new ArrayList<>();
