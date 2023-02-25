@@ -2,20 +2,20 @@ package duke.task;
 
 import java.time.LocalDateTime;
 
-import duke.utils.Output;
-
 public class Deadline extends Task {
 
-    private LocalDateTime by;
+    private LocalDateTime endDate;
 
-    public Deadline(String description, LocalDateTime by) {
+
+    public Deadline(String description, LocalDateTime endDate) {
         super(description);
-        this.by = by;
+        this.endDate = endDate;
     }
 
     @Override
     public String toString() {
-        return "[" + getTaskType() + "]" + super.toString() + " (by: " + Output.dateFormatter(by) + ")";
+        return "[" + getTaskType() + "]" + super.toString()
+                + " (by: " + ui.getShowDateFormat(endDate) + ")";
     }
 
     @Override
@@ -24,6 +24,6 @@ public class Deadline extends Task {
     }
 
     public LocalDateTime getEndTime() {
-        return by;
+        return endDate;
     }
 }

@@ -1,35 +1,28 @@
 package duke.task;
 
+import duke.ui.TextUi;
+
 public abstract class Task {
-    private static int numTask;
-    private String desciption;
     private boolean isDone;
+    private String desciption;
+
+    protected TextUi ui = new TextUi();
 
     public Task(String desciption) {
         this.desciption = desciption;
         this.isDone = false;
-        numTask++;
-    }
-
-    public static int getNumTask() {
-        return numTask;
-    }
-
-    public static void setNumTask(int number) {
-        numTask = number;
     }
 
     public String getTaskDescription() {
         return desciption;
     }
 
+    public boolean getStatus() {
+        return isDone;
+    }
 
     public String getStatusIcon() {
         return (isDone ? "X" : " "); // mark done task with X
-    }
-
-    public boolean getStatus() {
-        return isDone;
     }
 
     public void setStatus(boolean status) {

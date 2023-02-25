@@ -1,138 +1,49 @@
 package duke;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 
-import duke.exception.ArgumentNotValidException;
-import duke.exception.PromptCannotBeEmptyException;
-import duke.storage.StorageManager;
-import duke.task.Deadline;
-import duke.task.Event;
-import duke.task.Task;
-import duke.task.Todo;
-import duke.utils.Input;
-import duke.utils.Output;
+import duke.commands.Command;
+import duke.parser.Parser;
+import duke.storage.Storage;
+import duke.tasklist.TaskList;
+import duke.ui.TextUi;
 
 public class Duke {
-    public static void main(String[] args) throws ArgumentNotValidException, PromptCannotBeEmptyException, IOException {
-        ArrayList<Task> tasks = StorageManager.readFileContents();
-        int indexTask;
-        Task newTask;
+	private Storage storage;
+    private TaskList tasks;
+    private TextUi ui;
 
-        String[] parsedString;
-        String taskName = "";
-        String description;
-        String prompt;
-        LocalDateTime by;
-        LocalDateTime from;
-        LocalDateTime to;
+    public Duke(String filePath){
+        ui = new TextUi();
+        storage = new Storage(filePath);
+        try {
+			tasks = new TaskList(storage.readFileContents());
+		} catch (IOException e) {
+			ui.showLoadingError();
+            tasks = new TaskList();
+		}
+    }
 
-        Output.printIntroduction();
-
-        while (!taskName.equals("bye")) {
-            taskName = Input.scanWord();
+    public void run() {
+    	ui.showIntroduction();
+        boolean isExit = false;
+        while (!isExit) {
+            String fullCommand = ui.scanLine();
+            Command c = Parser.parseCommand(fullCommand);
+            c.execute(tasks, ui, storage);
+                
             try {
-                switch (taskName) {
-                case "list":
-                    Output.printTaskList(tasks);
-                    break;
-
-                case "todo":
-                    prompt = Input.scanPrompt("todo");
-                    if (prompt != null) {
-                        newTask = new Todo(prompt.trim());
-                        tasks.add(newTask);
-                        Output.printNewTaskMessage(newTask);
-                    }
-
-                    break;
-
-                case "deadline":
-                    prompt = Input.scanPrompt("deadline");
-                    if (prompt != null) {
-                        parsedString = Input.parseDeadline(prompt);
-                        if (parsedString != null) {
-                            description = parsedString[0];
-                            by = Input.parseDate(parsedString[1]);
-                            if (by != null) {
-                                newTask = new Deadline(description, by);
-                                tasks.add(newTask);
-                                Output.printNewTaskMessage(newTask);
-                            }
-                        }
-
-                    }
-
-                    break;
-
-                case "event":
-                    prompt = Input.scanPrompt("event");
-                    if (prompt != null) {
-                        parsedString = Input.parseEvent(prompt);
-                        if (parsedString != null) {
-                            description = parsedString[0];
-                            from = Input.parseDate(parsedString[1]);
-                            to = Input.parseDate(parsedString[2]);
-                            if (from != null && to != null) {
-                                newTask = new Event(description, from, to);
-                                tasks.add(newTask);
-                                Output.printNewTaskMessage(newTask);
-                            }
-                        }
-                    }
-                    break;
-
-                case "mark":
-                    indexTask = Input.scanTaskIndex(tasks.size());
-                    if (indexTask != -1) {
-                        tasks.get(indexTask).setStatus(true);
-                        Output.printTaskStatus(tasks.get(indexTask));
-                    }
-                    break;
-
-                case "unmark":
-                    indexTask = Input.scanTaskIndex(tasks.size());
-                    if (indexTask != -1) {
-                        tasks.get(indexTask).setStatus(false);
-                        Output.printTaskStatus(tasks.get(indexTask));
-                    }
-                    break;
-
-                case "delete":
-                    indexTask = Input.scanTaskIndex(tasks.size());
-                    if (indexTask != -1) {
-                        Task.setNumTask(Task.getNumTask() - 1);
-                        Output.printDeleteTaskMessage(tasks.get(indexTask));
-                        tasks.remove(tasks.get(indexTask));
-                    }
-                    break;
-
-                case "find-date":
-                    LocalDateTime date = Input.scanDate();
-                    if (date != null) {
-                        Output.printTaskByDate(tasks, date);
-                    }
-                    break;
-
-                case "find":
-                    String keyword;
-                    keyword = Input.scanLine().trim();
-                    Output.printMatchingTask(tasks, keyword);
-
-                case "bye":
-                    break;
-
-                default:
-                    throw new ArgumentNotValidException();
-                }
-
-            } catch (ArgumentNotValidException e) {
-                Output.printArgumentNullError();
-            }
-
+    			storage.writeToFile(tasks);
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+            
+            isExit = c.isExit(); 
         }
-        StorageManager.writeToFile(tasks);
-        Output.printGoodbye();
+    }
+
+    public static void main(String[] args){
+        new Duke("data.txt").run();
     }
 }

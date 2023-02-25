@@ -2,21 +2,21 @@ package duke.task;
 
 import java.time.LocalDateTime;
 
-import duke.utils.Output;
-
 public class Event extends Task {
-    private LocalDateTime from;
-    private LocalDateTime to;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 
-    public Event(String desciption, LocalDateTime from, LocalDateTime to) {
+    public Event(String desciption, LocalDateTime startTime, LocalDateTime endTime) {
         super(desciption);
-        this.from = from;
-        this.to = to;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     @Override
     public String toString() {
-        return "[" + getTaskType() + "]" + super.toString() + " (from: " + Output.dateFormatter(from) + " to: " + Output.dateFormatter(to) + ")";
+        return "[" + getTaskType() + "]" + super.toString()
+                + " (from: " + ui.getShowDateFormat(startTime)
+                + " to: " + ui.getShowDateFormat(endTime) + ")";
     }
 
     @Override
@@ -25,10 +25,10 @@ public class Event extends Task {
     }
 
     public LocalDateTime getStartTime() {
-        return from;
+        return startTime;
     }
 
     public LocalDateTime getEndTime() {
-        return to;
+        return endTime;
     }
 }
