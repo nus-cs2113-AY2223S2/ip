@@ -6,8 +6,6 @@ import keqing.tasks.Event;
 import keqing.tasks.Task;
 import keqing.tasks.ToDo;
 
-import keqing.KeqingStorage;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.FileStore;
@@ -75,17 +73,6 @@ public class Keqing {
         System.out.println(LINE);
     }
 
-    public static void printMenu() {
-        System.out.println(LINE);
-        System.out.println("Try the following commands:");
-        System.out.println("1. list: show the list of tasks;");
-        System.out.println("2. todo: add a task without starting time/deadline to the list;");
-        System.out.println("3. deadline: add a task with deadline to the list;");
-        System.out.println("4. event: add a task with specific starting and ending time");
-        System.out.println("5, mark: mark a task as 'done' state;");
-        System.out.println("6. unmark: unmark a task from 'done' state;");
-        System.out.println(LINE);
-    }
 
     public static void readToDo(String content) throws IllegalInputException {
         if (content.equals("todo")) {
@@ -98,12 +85,19 @@ public class Keqing {
         }
     }
 
+    /**
+     * Read the deadline tasks using respective format
+     *
+     * @param content
+     * @throws IllegalInputException
+     */
     public static void readDeadline(String content) throws IllegalInputException {
         if (content.contains("/by")) {
             int indexOfBy = content.indexOf("/by");
             if (indexOfBy + 3 < content.length()) {
+                String description = content.substring(0, indexOfBy).trim();
                 String by = content.substring(indexOfBy + 3).trim();
-                Deadline deadlineTask = new Deadline(content, by);
+                Deadline deadlineTask = new Deadline(description, by);
                 tasks.add(deadlineTask);
                 echoAdd();
             }
@@ -121,9 +115,10 @@ public class Keqing {
             int indexOfFrom = content.indexOf("/from");
             int indexOfTo = content.indexOf("/to");
             if (indexOfFrom < indexOfTo) {
+                String description = content.substring(0, indexOfFrom).trim();
                 String from = content.substring(indexOfFrom + 5, indexOfTo).trim();
                 String to = content.substring(indexOfTo + 3).trim();
-                Event eventTask = new Event(content, from, to);
+                Event eventTask = new Event(description, from, to);
                 tasks.add(eventTask);
                 echoAdd();
             }
@@ -159,7 +154,7 @@ public class Keqing {
             printTaskList();
             break;
         case "menu":
-            printMenu();
+            KeqingUI.printMenu();
             break;
         case "mark":
             //Fallthrough
@@ -204,47 +199,20 @@ public class Keqing {
             text = in.nextLine();
         }
     }
-    public static ArrayList<Task> tasks = new ArrayList<Task>();
-    public static void main(String[] args) throws IOException {
-        String logo = "                    /                                       /                   \n"
-                + "                    ////(                              .(////                   \n" +
-                "                    *///*(//.    .*((//((///(/,   .**/////*/,                   \n" +
-                "                    .(((//((/%//////(////////////*#((*(////(.                   \n" +
-                "                    ./*/*&(/////////////////(*////*/*%%*(//*.                   \n" +
-                "                     .(/*#///////////////////(//(/(////#(((.                    \n" +
-                "                     .@%//////////////////////#///(#////#%/**                   \n" +
-                "                    ,&&//**//(*/////*/////////#*/(((/****#(//                   \n" +
-                "                   .,#/(//////////#///////////#*//#(%///*(*(#*                  \n" +
-                "                   *//(/////(//*/#////#(////(*,..#*%/////(/#,.                  \n" +
-                "              .((((/*#(/////((//((//%,/////#(/. . **(//////,.                   \n" +
-                "               ..,,,,((*////#(# #*#(,(#///(#((... .*/////((.                    \n" +
-                "                    ./(//#//%%@&@@@%*#//*.( *@@@@@@(&///*%#*                    \n" +
-                "                     /%(//#/(#,((#*/./...... (/(/#**/(///#//                    \n" +
-                "                    (//&//((%/..................../ %///((//(                   \n" +
-                "                   ////##///&,.*,...... ...........&#//((#/*//                  \n" +
-                "                  //*//((#/(#((........ .........,*#*//(((*///(                 \n" +
-                "                 /*///#(**#/((,**/....   ....../,,,//(%//(#*//*/                \n" +
-                "               .***////*/(/(/(*/*@&#//,.. /(*@&%. (*%/(//*////***.              \n" +
-                "              /**(***/*/*(((*,(/#&&&%//%%//(@&&&(/,,,((#***/***#**/             \n" +
-                "            /**#****/***#/((..,,,,&&@&*%#(/@&&(*,,...(/(#********#**/           \n" +
-                "          (*,((***/****/*/(, .#&%%%%%%&/ %%%%%&#%%,  ,(/*/****/***(/,*/         \n" +
-                "        ,,**#,***#*@****(*..&%%#..,%/&&##(%#(//**&%%(. /#***#@,%**,,(**,,       \n" +
-                "       (,*,,,,*,/(/&@@  ...,%%&****/%&*//#(%&*...*%%%.....,@@//(/,**,*,*,/      \n" +
-                "      ,(,*,,*,///*((&@@....#%&,***...((///&/.,***./%&... (@@%/(/*//,,*,*,(,     \n" +
-                "    .*/,,,*,,*/##/(//%&@. /&&...****.(*///#********/%,..#@%&((/(#(/**,*,,,/,    \n" +
-                "    *,*./,,(*,/,(((##(*(@,(%(@/.*/..//%##%,...../***,#.,@/,%#/#(,*(/,/,,/.*,*   \n" +
-                "   ,*,*#,,(/%#(#*(#,%###%#&&#%(%&(%#..........*********@%####*%///###/(,,#*,,,  \n" +
-                "   /,,/*,(/*#*#*(######&%&(@(%#%##&%/*.%...........,/**&%%######(/#/#*/(,,/,,,  \n";
 
-        System.out.println("Hello from\n" + logo);
-        System.out.println(LINE);
-        System.out.println("Hello! I'm Keqin");
-        System.out.println("What can I do for you?" + System.lineSeparator() + "Type 'menu' to know the commands.");
-        System.out.println(LINE);
-        tasks = KeqingStorage.loadFile();
+    public static ArrayList<Task> tasks = new ArrayList<Task>();
+
+    public static void main(String[] args) throws IOException {
+        KeqingUI.printStartingGreet();
+        try {
+            tasks = KeqingStorage.loadFile();
+        } catch (IOException e) {
+            System.out.println(LINE + System.lineSeparator() + e + System.lineSeparator());
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println(LINE + System.lineSeparator() + e + System.lineSeparator());
+            KeqingStorage.deleteStorage();
+        }
         loopCommand();
-        System.out.println(LINE);
-        System.out.println("Bye. Hope to see you again soon!");
-        System.out.println(LINE);
+        KeqingUI.printExitingGreet();
     }
 }

@@ -1,5 +1,7 @@
 package keqing.tasks;
 
+import java.util.ArrayList;
+
 public class Event extends Task {
     protected String from;
     protected String to;
@@ -21,5 +23,13 @@ public class Event extends Task {
     @Override
     public String toString() {
         return "[E]" + super.toString() + " (from: " + from + " to: " + to + ")";
+    }
+
+    @Override
+    public ArrayList<String> returnAttribute() {
+        ArrayList<String> attributes = new ArrayList<>();
+        attributes.add(from);
+        attributes.add(to);
+        return attributes;
     }
 }

@@ -1,5 +1,7 @@
 package keqing.tasks;
 
+import java.util.ArrayList;
+
 public class Task {
     protected String description;
     protected static int taskCount = 0;
@@ -44,6 +46,10 @@ public class Task {
         else{
             return "[ ] " +  description;
         }
+    }
+
+    public ArrayList<String> returnAttribute() {
+        return null;
     }
 
     public boolean getStatus() {

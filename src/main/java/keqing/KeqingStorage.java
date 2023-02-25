@@ -6,20 +6,26 @@ import keqing.tasks.Task;
 import keqing.tasks.ToDo;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class KeqingStorage {
-    private static String filePath = "data/Keqing.txt";
-    private static final String LINESEPARATER = " ";
+    private static final String filePath = "./data/Keqing.txt";
+    private static final String SEPERATOR = " ";
 
-    public static Task appendTask(String line) {
+    public static void deleteStorage() {
+        File f = new File(filePath);
+        if (f.delete()) {
+            System.out.println("file deleted successfully");
+        };
+    }
+
+    public static Task appendTask(String line) throws IOException{
         Task newTask = new Task();
         String[] currentTaskInfo;
-        currentTaskInfo = line.split(LINESEPARATER, 3);
+        currentTaskInfo = line.split(SEPERATOR, 3);
         boolean isDone;
         isDone = Integer.parseInt(currentTaskInfo[1]) == 1;
         switch (currentTaskInfo[0]) {
@@ -35,7 +41,7 @@ public class KeqingStorage {
             break;
         case "D":
             String[] DeadlineContent = new String[2];
-            DeadlineContent = currentTaskInfo[2].split(LINESEPARATER, 2);
+            DeadlineContent = currentTaskInfo[2].split(SEPERATOR, 2);
             Deadline currentDeadline = new Deadline(DeadlineContent[0], DeadlineContent[1]);
             if (isDone) {
                 currentDeadline.setDone();
@@ -46,7 +52,7 @@ public class KeqingStorage {
             break;
         case "E":
             String[] EventContent = new String[3];
-            EventContent = currentTaskInfo[2].split(LINESEPARATER, 3);
+            EventContent = currentTaskInfo[2].split(SEPERATOR, 3);
             Event currentEvent = new Event(EventContent[0], EventContent[1], EventContent[2]);
             if (isDone) {
                 currentEvent.setDone();
@@ -67,14 +73,23 @@ public class KeqingStorage {
         for (int i = 0; i < taskList.size(); i ++) {
             Task currentTask = taskList.get(i);
             content += currentTask.getTaskType();
-            content += (LINESEPARATER);
+            content += (SEPERATOR);
             if (currentTask.getStatus()) {
                 content += "1";
             }
             else {
                 content += "0";
             }
-            content += (LINESEPARATER + currentTask.getDescription() + System.lineSeparator());
+            content += (SEPERATOR + currentTask.getDescription() + SEPERATOR);
+            ArrayList<String> attributes = new ArrayList<>();
+            attributes = currentTask.returnAttribute();
+            if (currentTask.getTaskType().equals("D")) {
+                content += (attributes.get(0));
+            }
+            if (currentTask.getTaskType().equals("E")) {
+                content += (attributes.get(0) + SEPERATOR + attributes.get(1));
+            }
+            content += (System.lineSeparator());
         }
         return content;
     }
@@ -85,7 +100,7 @@ public class KeqingStorage {
         writer.close();
     }
 
-    public static ArrayList<Task> loadFile() throws IOException {
+    public static ArrayList<Task> loadFile() throws IOException, ArrayIndexOutOfBoundsException {
         ArrayList<Task> copyList = new ArrayList<Task>();
         File f = new File(filePath);
         if (!f.getParentFile().exists()) {

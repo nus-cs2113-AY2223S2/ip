@@ -1,5 +1,7 @@
 package keqing.tasks;
 
+import java.util.ArrayList;
+
 public class Deadline extends Task {
     protected String by;
 
@@ -19,5 +21,11 @@ public class Deadline extends Task {
     @Override
     public String toString() {
         return "[D]" + super.toString() + " (by: " + by + ")";
+    }
+
+    public ArrayList<String> returnAttribute() {
+        ArrayList<String> attributes = new ArrayList<>();
+        attributes.add(by);
+        return attributes;
     }
 }
