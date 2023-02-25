@@ -24,7 +24,7 @@ public class Messages {
     public static final String EVENT_TIMING_EXCEPTION_ERROR =
             "Starting and ending time for event are in the wrong order. " + "Please try again.\n" + LINE;
 
-    public static final String INSUFFICIENT_INPUT_ERROR = "Insufficient input. Adding task failed." + LINE;
+    public static final String INSUFFICIENT_INPUT_ERROR = "Insufficient input. Adding task failed.\n" + LINE;
     public static final String NUMBER_FORMAT_EXCEPTION_ERROR =
             "Task number not specified. Please try again.\n" + LINE;
 }

@@ -86,6 +86,9 @@ public class Duke extends TaskList {
                 case "delete":
                     taskList.deleteTask(userInput);
                     break;
+                case "find":
+                    taskList.findTask(userInput);
+                    break;
                 default:
                     throw new TaskTypeException();
                 }
