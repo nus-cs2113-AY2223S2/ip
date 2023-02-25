@@ -303,6 +303,7 @@ public class Ui {
      */
     private static void userCommandFind(TaskList taskList, String userCommandKeyword, String userInput) throws DukeException {
         String taskName = Parser.getTaskString(userInput, userCommandKeyword);
+        taskName = taskName.trim();
         ArrayList<Integer> tasksIndexWithSimilarName = taskList.findTasksBasedOnName(taskName);
         int numberOfTasksToPrint = tasksIndexWithSimilarName.size();
         if (numberOfTasksToPrint == 0) {

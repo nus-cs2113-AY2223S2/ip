@@ -73,7 +73,7 @@ public class TaskList {
         for(int i = 0; i < userTasks.size(); i++) {
             String taskName = userTasks.get(i).getTaskName();
             taskName = taskName.toLowerCase();
-            int indexOfSearchedName = taskName.indexOf(name);
+            int indexOfSearchedName = taskName.indexOf(name.toLowerCase());
             if (indexOfSearchedName != -1) {
                 tasksIndexWithSimilarName.add(i);
             }
