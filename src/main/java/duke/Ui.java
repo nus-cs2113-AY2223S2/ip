@@ -24,10 +24,16 @@ public class Ui {
         return in.nextLine();
     }
 
+    /**
+     * Prints out a line divider.
+     */
     public void showLine() {
         System.out.println("____________________________________________________________");
     }
 
+    /**
+     * Prints the welcome message.
+     */
     public void printWelcomeMessage() {
         showLine();
         System.out.println("Hello from\n" +
@@ -159,43 +165,77 @@ public class Ui {
         }
     }
 
+    /**
+     * Prints the exit message.
+     */
     public void printExitMessage() {
         System.out.println("Bye. Hope to see you again soon!");
     }
 
     // error messages
+
+    /**
+     * Prints error message if the index entered does not fit the format.
+     *
+     * @param size Number of tasks within the current TaskList
+     */
     public void printErrorForIdx(int size) {
-        if (size != 0) {
+        boolean isEmptyTaskList = (size == 0);
+        if (!isEmptyTaskList) {
             System.out.println("Please enter [idx] in the form of an integer from 1 to " + size);
         } else {
             System.out.println("There are no tasks in your list!");
         }
     }
 
+    /**
+     * Prints error message if reading or writing to the hard disk throws an IO error.
+     */
     public void printErrorForIO() {
         System.out.println("Something went wrong with the hard disk :(");
     }
 
+    /**
+     * Prints error message if the local save file cannot be found at the filepath.
+     */
     public void printErrorFileNotFound() {
         System.out.println("Save file not found, initialising empty list...");
     }
 
+    /**
+     * Prints error message if the deadline entered does not fit the format.
+     */
     public void printInvalidDeadline() {
         System.out.println("Please enter deadline as \"deadline [task] /by [date]\".");
     }
 
+    /**
+     * Prints error message if the event entered does not fit the format.
+     */
     public void printInvalidEvent() {
         System.out.println("Please enter event as \"event [task] /from [date] /to [date]\".");
     }
 
+    /**
+     * Prints error message if the date entered does not fit the format.
+     */
     public void printInvalidDateTime() {
         System.out.println("Please enter date in the format of yyyy-MM-dd.");
     }
 
+    /**
+     * Prints error message if the command entered is not understood by Duke.
+     */
     public void printInvalidCommand() {
         System.out.println("Sorry, but I don't know what that means :(");
     }
 
+    /**
+     * Prints error message if there is corrupted data in the save file when initially reading from it.
+     *
+     * @param counter Index of the line of the save file that is corrupted
+     * @param filePath The location at which the save file is stored
+     */
     public void printInvalidSaveFile(int counter, String filePath) {
         showLine();
         System.out.println("There is an error in save.txt at line " + (counter + 1) + "\n" +
@@ -204,10 +244,23 @@ public class Ui {
         showLine();
     }
 
+    /**
+     * Prints error message if the user does not specify the description of a task
+     */
     public void printEmptyDescription() {
-        System.out.println("Oops! The description cannot be empty.");
+        System.out.println("Oops! The description of a task cannot be empty.");
     }
 
+    /**
+     * Prints error message if the user does not specify the keyword of a search
+     */
+    public void printEmptyKeyword() {
+        System.out.println("Please specify a keyword to do the search with!");
+    }
+
+    /**
+     * Prints error message if the start date of an even occurs after the end date.
+     */
     public void printDateOrderException() {
         System.out.println("Oops, the start date for your event occurs after the end date!");
     }
