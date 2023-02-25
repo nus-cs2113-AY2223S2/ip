@@ -3,6 +3,7 @@ package task;
 import exception.CorruptedStoreException;
 import exception.EmptyListException;
 import exception.InvalidArgumentException;
+import exception.KeywordNotFoundException;
 import utility.Storage;
 import genesis.Parser;
 import utility.Ui;
@@ -68,13 +69,6 @@ public class TaskList {
         Ui.onTaskAdded(event.getListDescription(), tasks.size());
     }
 
-    public void deleteTask(String content) {
-        int index = Parser.extractIndex(content);
-        Task task = tasks.remove(index);
-
-        Ui.onTaskDelete(task.getListDescription(), tasks.size());
-    }
-
     public void markTask(String content) {
         int index = Parser.extractIndex(content);
         Task task = tasks.get(index);
@@ -90,6 +84,41 @@ public class TaskList {
         task.setIsDone(false);
 
         Ui.onTaskUnmarked(task.getListDescription());
+    }
+
+
+    public void deleteTask(String content) {
+        int index = Parser.extractIndex(content);
+        Task task = tasks.remove(index);
+
+        Ui.onTaskDelete(task.getListDescription(), tasks.size());
+    }
+
+    public void findTask(String keyword) throws EmptyListException, KeywordNotFoundException {
+
+        boolean found = false;
+
+        if (tasks.size() < 1) {
+            throw new EmptyListException();
+        }
+
+        for (int i = 0; i < tasks.size(); i++) {
+            Task task = tasks.get(i);
+            if (task.toString().contains(keyword)) {
+
+                if (!found) {
+                    System.out.println("Here are the matching tasks in your list:");
+                    found = true;
+                }
+
+                System.out.println((i + 1) + ". " + task.getListDescription());
+            }
+        }
+
+        if (!found) {
+            throw new KeywordNotFoundException();
+        }
+
     }
 
     public ArrayList<Task> getTasks() {

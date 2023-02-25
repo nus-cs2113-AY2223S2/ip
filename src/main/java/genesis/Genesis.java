@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import exception.EmptyListException;
 import exception.InvalidArgumentException;
+import exception.KeywordNotFoundException;
 import task.TaskList;
 import utility.Ui;
 import utility.Storage;
@@ -61,23 +62,25 @@ public class Genesis {
                 validator.validateIndex(contentArr);
                 tasks.deleteTask(contentArr[1]);
                 break;
+            case "find":
+                tasks.findTask(contentArr[1]);
+                break;
             default:
                 throw new UnknownCommandException();
             }
 
             Storage.saveToFile(tasks);
 
-        }
-        catch (InvalidArgumentException e){
+        } catch (InvalidArgumentException e) {
             System.out.println(e.getMessage());
-        }
-        catch(EmptyListException e){
+        } catch (EmptyListException e) {
             System.out.println("☹ OOPS!!! List is empty, nothing to show");
-        }
-        catch (UnknownCommandException e) {
+        } catch (UnknownCommandException e) {
             System.out.println("I'm sorry, but I don't know what that means :-(");
             System.out.println("Please use one of the predefined command");
             Ui.helpAll();
+        } catch (KeywordNotFoundException e) {
+            System.out.println("☹ OOPS!!! The keyword you searched does not match any of the entries");
         } catch (NumberFormatException e) {
             System.out.println("☹ OOPS!!! Index is not a number");
         } catch (IndexOutOfBoundsException e) {
