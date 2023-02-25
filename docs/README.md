@@ -115,7 +115,7 @@ ____________________________________________________________
 
 With the command: "**list**" 
 
-The task list will be displayed
+The entire task list will be displayed.
 
 Expected Outcome:
 
