@@ -1,24 +1,26 @@
 package dataypes;
 
+/**
+ * A Class that is an extension of the {@link Task}, by creating different types of tasks.
+ *
+ * @author Muthya Narayanachary Akhil
+ */
 public class Todos extends Task implements TaskFileHandler {
+    /**
+     * The constructor sets the description.
+     * @param description The description of the {@link Todos} object.
+     */
     public Todos(String description) {
         super(description);
         System.out.println("\tGot it. I've added this task:");
         System.out.println("\t\t" + getStatusAndDescription());
     }
 
+    /**
+     * An emmpty constructor to initialize the Todos Class
+     */
     public Todos () {}
 
-
-    /**
-     * Do not have to worry about
-     * 1. Lines.
-     * 2. Number of variables in the list.
-     */
-//    public void printAddedTodo() {
-//        System.out.println("\tGot it. I've added this task:");
-//        System.out.println("\t\t" + getStatusAndDescription());
-//    }
 
     @Override
     public String getStatusAndDescription() {
