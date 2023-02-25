@@ -8,7 +8,7 @@ _Duke_ is a Personal Assistant Chatbot that helps a person to keep track of vari
   * [Features](#features)
   * [Notes about command format:](#notes-about-command-format-)
     * [ADD AN ENTRY: ```todo``` ```deadline``` ```event```](#add-an-entry--todo-deadline-event)
-      * [3 ways to add an entry depending on the type of your task](#there-are-3-ways-to-add-an-entry-depending-on-the-type-of-your-task)
+      * [There are 3 ways to add an entry depending on the type of your task](#there-are-3-ways-to-add-an-entry-depending-on-the-type-of-your-task)
         * [Todo Tasks: ```todo```](#todo-tasks--todo)
         * [Deadline Tasks: ```deadline```](#deadline-tasks--deadline)
         * [Event Tasks: ```event```](#event-tasks--event)
@@ -117,6 +117,7 @@ Expected Outcome:<br>
       unmark TASK_NUMBER
       
       EXAMPLE: unmark 4
+
 Expected Outcome:<br>
 ```OK, I've marked this task as not done yet:```<br/>
 ```[T][ ] join sports club```
@@ -126,6 +127,7 @@ Expected Outcome:<br>
     delete TASK_NUMBER
       
       EXAMPLE: delete 5
+
 Expected Outcome:<br>
 ```Noted. I've removed this task:```<br/>
 ```Now you have 7 tasks in the list.```
