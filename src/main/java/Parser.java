@@ -60,6 +60,10 @@ public class Parser {
             curCommand = new EventCommand();
             curCommand.runCommand(input, tasks, ui);
             break;
+        case "find":
+            curCommand = new FindCommand();
+            curCommand.runCommand(input, tasks, ui);
+            break;
         default:
             Messages.unknownCommandMessage();
         }
