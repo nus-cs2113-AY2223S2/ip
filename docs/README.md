@@ -4,7 +4,7 @@
 is used specifically via a **Command Line Interface(CLI)** and thus may work better than applications that uses
 a Graphical User Interface(GUI) for users who can type fast.
 
-### Table of Contents:
+## Table of Contents:
 
 1. Quick Start
 2. Features
