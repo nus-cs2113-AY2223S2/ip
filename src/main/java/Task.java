@@ -26,7 +26,6 @@ public abstract class Task {
     public Task() {
     }
 
-    ;
 
     public String getStatusIcon() {
         return (isDone ? doneStatusLabel : notDoneStatusLabel);
