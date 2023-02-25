@@ -1,5 +1,8 @@
 package duke.task;
 
+/**
+ * ToDos are a type of Task that have only the default description and status.
+ */
 public class ToDo extends Task {
 
     public static final String TODO_LABEL = "T";
@@ -13,11 +16,17 @@ public class ToDo extends Task {
         super(description);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getType() {
         return "todo";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return "[" + TODO_LABEL + "][" + getStatus() + "] " + description;

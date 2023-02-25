@@ -7,6 +7,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Deadlines are a type of Task that have a set due date,
+ * along with the default description and status.
+ */
 public class Deadline extends Task {
 
     public static final String DEADLINE_LABEL = "D";
@@ -39,11 +43,17 @@ public class Deadline extends Task {
         return Parser.parseDateTime(by, byString, pattern);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getType() {
         return "deadline";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Boolean isOnDate(LocalDate date) {
         boolean byExists = (by != null);
@@ -54,6 +64,9 @@ public class Deadline extends Task {
         return byExists && date.isEqual(byDate);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return "[" + DEADLINE_LABEL + "][" + getStatus() + "] " + description + " (by: " + getBy(printPattern) + ")";

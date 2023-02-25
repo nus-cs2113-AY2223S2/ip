@@ -45,6 +45,8 @@ public class Storage {
 
     /**
      * Initialise Storage class, set filePath.
+     *
+     * @param filePath The filePath declared in Duke to be the location of the save file
      */
     public Storage(String filePath) {
         Storage.filePath = filePath;
@@ -53,6 +55,7 @@ public class Storage {
     /**
      * Overwrites the existing save file based on the current ArrayList of Tasks allTasks.
      *
+     * @param tasks Contains all tasks that are currently stored in the TaskList
      * @throws IOException If something goes wrong during the overwriting process
      */
     public void update(TaskList tasks) throws IOException {
@@ -85,6 +88,7 @@ public class Storage {
      * Loads data from the save file and initialises it into a new ArrayList.
      * If save file is not found, create a new save file and return an empty ArrayList.
      *
+     * @param ui Prints error messages to user
      * @return ArrayList of Tasks (either containing data in save file or empty)
      * @throws IOException If save file is not found, and a new one cannot be created
      */

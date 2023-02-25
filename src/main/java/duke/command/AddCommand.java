@@ -17,7 +17,7 @@ import static duke.Parser.COMMAND_TODO_WORD;
 
 /**
  * Add Command class that adds a Task to the existing TaskList tasks.
- * Handles <code>todo</code>, <code>deadline</code>, and <code>event</code> commands.
+ * Handles {@code todo}, {@code deadline}, and {@code event} commands.
  */
 public class AddCommand extends Command {
 
@@ -60,6 +60,7 @@ public class AddCommand extends Command {
      * @param tasks The TaskList to be added to
      * @param ui Prints success or error message to user
      * @param storage Gets updated after the Task has been added
+     * @throws UnexpectedException If the command stored is not recognised
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws UnexpectedException {

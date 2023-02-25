@@ -112,6 +112,7 @@ public class TaskList {
      * Adds a Deadline to the TaskList.
      *
      * @param param String describing the Deadline
+     * @param by String describing due date
      */
     public void addDeadline(String param, String by) {
         allTasks.add(new Deadline(param, by));
@@ -121,6 +122,8 @@ public class TaskList {
      * Adds an Event to the TaskList.
      *
      * @param param String describing the Event
+     * @param from String describing start date
+     * @param to String describing end date
      * @throws DateOrderException If the end date occurs before the start date
      */
     public void addEvent(String param, String from, String to) throws DateOrderException {

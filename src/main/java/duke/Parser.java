@@ -37,12 +37,13 @@ public class Parser {
     public static final String COMMAND_EVENT_WORD = "event";
 
     /**
-     * Returns a different type of Command class depending on the type of command input by the user.
+     * Reads in user input and returns a different type of Command based on that.
      *
      * @param userCommand Command line input from user
+     * @param ui Prints out error messages if command cannot be parsed
+     * @param size Number of tasks saved in TaskList
      * @return Corresponding Command class to user input
-     * @throws EmptyTaskDescException If task description/keyword is left empty (for Add/Find commands respectively)
-     * @throws IllegalCommandException If an unknown command is input by the user
+     */
     public static Command getCommand(String userCommand, Ui ui, int size) {
         final String[] split = userCommand.trim().split("\\s+", 2);
         String command = split[0];
@@ -65,10 +66,21 @@ public class Parser {
         }
         return null;
     }
+
+    /**
+     * Takes data from the user input and puts it into the relevant Command class that is returned.
+     *
+     * @param split Truncated part of user input containing other instructions
+     * @param command Truncated part of user input containing command
+     * @param size Number of tasks saved in TaskList
+     * @return Command class with data input
+     * @throws InvalidDateTime If the input format for a date and time is wrong
+     * @throws EmptyKeywordException If keyword is left empty (for Find command)
      * @throws NumberFormatException If the index is left empty (for Mark, Delete commands)
+     * @throws EmptyTaskDescException If task description is left empty (for Add command)
      * @throws InvalidDeadline If the input format for adding a deadline is wrong
      * @throws InvalidEvent If the input format for adding an event is wrong
-     * @throws InvalidDateTime If the input format for a date and time is wrong
+     * @throws IllegalCommandException If an unknown command is input by the user
      */
     private static Command parseCommand(String[] split, String command, int size) throws InvalidDateTime, EmptyKeywordException,
             EmptyTaskDescException, InvalidDeadline, InvalidEvent, IllegalCommandException, NumberFormatException {

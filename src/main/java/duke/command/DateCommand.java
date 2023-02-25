@@ -18,7 +18,7 @@ public class DateCommand extends Command {
     /**
      * Initialises the class with the given date to shortlist for.
      *
-     * @param dateString User input of the date from the CLI, should be in format <code>yyyy-MM-dd</code>
+     * @param dateString User input of the date from the CLI, should be in format {@code yyyy-MM-dd}
      * @throws InvalidDateTime If the input date does not fit the above format
      */
     public DateCommand (String dateString) throws InvalidDateTime {

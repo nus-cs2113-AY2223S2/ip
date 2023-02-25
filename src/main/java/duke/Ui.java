@@ -48,7 +48,7 @@ public class Ui {
     }
 
     /**
-     * For <code>help</code> command.
+     * For {@code help} command.
      * Prints out a list of all available commands.
      */
     public void printHelpMessage() {
@@ -69,7 +69,7 @@ public class Ui {
     }
 
     /**
-     * For <code>list</code> command.
+     * For {@code list} command.
      * Prints all Tasks within the ArrayList given.
      *
      * @param allTasks ArrayList of Tasks
@@ -86,7 +86,7 @@ public class Ui {
     }
 
     /**
-     * For <code>todo</code>, <code>deadline</code>, and <code>event</code> commands.
+     * For {@code todo}, {@code deadline}, and {@code event} commands.
      * Prints out message for successful adding of Task.
      *
      * @param newTask Task that has just been added
@@ -97,7 +97,7 @@ public class Ui {
     }
 
     /**
-     * For <code>mark</code> command.
+     * For {@code mark} command.
      * Prints out message for successful marking of Task as done.
      *
      * @param doneTask Task that has just been marked as done
@@ -108,7 +108,7 @@ public class Ui {
     }
 
     /**
-     * For <code>unmark</code> command.
+     * For {@code unmark} command.
      * Prints out message for successful marking of Task as not done.
      *
      * @param notDoneTask Task that has just been marked as not done
@@ -119,7 +119,7 @@ public class Ui {
     }
 
     /**
-     * For <code>delete</code> command.
+     * For {@code delete} command.
      * Prints out message for successful deletion of Task.
      *
      * @param deletedTask Task that will be deleted
@@ -132,7 +132,7 @@ public class Ui {
     }
 
     /**
-     * For <code>find</code> command.
+     * For {@code find} command.
      * Prints all Tasks within the ArrayList given, all containing a certain keyword.
      *
      * @param foundTasks ArrayList of Tasks containing a keyword
@@ -149,10 +149,11 @@ public class Ui {
     }
 
     /**
-     * For <code>date</code> command.
+     * For {@code date} command.
      * Prints all Tasks within the ArrayList given, all happening on a certain date.
      *
      * @param happeningTasks ArrayList of Tasks happening on a date
+     * @param date Date that was used to shortlist the tasks
      */
     public void printDateList(ArrayList<Task> happeningTasks, LocalDate date) {
         String dateString = date.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
@@ -266,6 +267,11 @@ public class Ui {
         System.out.println("Oops, the start date for your event occurs after the end date!");
     }
 
+    /**
+     * Prints error message if an unexpected error occurs.
+     *
+     * @param exception Contains detail message saying where error occurred
+     */
     public void printUnexpectedException(UnexpectedException exception) {
         System.out.println("Oh no... Something went wrong while doing the following:  " + exception.getMessage() +
                 "\nExiting Duke...");

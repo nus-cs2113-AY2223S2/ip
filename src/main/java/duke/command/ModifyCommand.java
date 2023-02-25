@@ -13,7 +13,7 @@ import static duke.Parser.COMMAND_UNMARK_WORD;
 
 /**
  * Mark and Delete Command class that modifies an existing Task from the TaskList tasks.
- * Handles <code>mark</code>, <code>unmark</code>, and <code>delete</code> commands.
+ * Handles {@code mark}, {@code unmark}, and {@code delete} commands.
  */
 public class ModifyCommand extends Command {
 
@@ -25,6 +25,8 @@ public class ModifyCommand extends Command {
      *
      * @param command Type of modification command being executed (mark, unmark, delete)
      * @param param Contains the index of the task to be modified
+     * @param size Current number of tasks in TaskList
+     * @throws NumberFormatException If idx cannot be parsed, or is outside the current range of tasks
      */
     public ModifyCommand(String command, String param, int size) throws NumberFormatException {
         int idx = Integer.parseInt(param) - 1;
@@ -41,6 +43,7 @@ public class ModifyCommand extends Command {
      * @param tasks The TaskList of existing Tasks
      * @param ui Prints success or error message to user
      * @param storage Gets updated after the TaskList has been modified
+     * @throws UnexpectedException If the command stored is not recognised
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws UnexpectedException {

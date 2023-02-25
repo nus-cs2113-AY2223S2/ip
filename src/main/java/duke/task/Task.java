@@ -4,7 +4,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Abstract class Task is the parent of all types of Tasks
+ * Abstract class Task is the parent of all types of Tasks.
+ * Contains the Task's description and status
  */
 public abstract class Task {
 
@@ -46,7 +47,7 @@ public abstract class Task {
     /**
      * Check if the Task has been done.
      *
-     * @return <code>true</code> if the Task is done, <code>false</code> otherwise
+     * @return {@code true} if the Task is done, {@code false} otherwise
      */
     public boolean isDone() {
         return isDone;
@@ -74,7 +75,7 @@ public abstract class Task {
      * Given a date, determine if it occurs during the duration of the Task.
      *
      * @param date Date to be checked
-     * @return <code>true</code> if there is overlap, <code>false</code> otherwise
+     * @return {@code true} if there is overlap, {@code false} otherwise
      */
     public Boolean isOnDate(LocalDate date) {
         return false;

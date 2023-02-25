@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.rmi.UnexpectedException;
 
 /**
- * Main class for running Duke
+ * Main class for running Duke.
  */
 public class Duke {
 
@@ -36,6 +36,8 @@ public class Duke {
 
     /**
      * Continuously reads, executes, and prints outputs of user commands until ExitCommand is called.
+     *
+     * @throws UnexpectedException If command cannot be executed for an unexpected reason
      */
     public void run() throws UnexpectedException {
         boolean isExit = false;

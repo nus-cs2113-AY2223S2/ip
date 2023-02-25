@@ -8,6 +8,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Events are a type of Task that have a set start date and end date,
+ * along with the default description and status.
+ */
 public class Event extends Task {
     public static final String EVENT_LABEL = "E";
     protected LocalDateTime from;
@@ -63,11 +67,17 @@ public class Event extends Task {
         return Parser.parseDateTime(to, toString, pattern);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getType() {
         return "event";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Boolean isOnDate(LocalDate date) {
         boolean fromExists = (from != null);
@@ -87,6 +97,9 @@ public class Event extends Task {
         return isOnFrom || isOnTo || isBetween;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return "[" + EVENT_LABEL + "][" + getStatus() + "] " + description +
