@@ -95,9 +95,9 @@ public class Parser {
             case DeleteCommand.COMMAND_WORD:
                 return runDelete(taskList);
             case ListWithDateCommand.COMMAND_WORD:
-                return runListWithDate(taskList);
+                return runListWithDate();
             case FindCommand.COMMAND_WORD:
-                return runFindCommand(taskList);
+                return runFindCommand();
             case MarkCommand.COMMAND_WORD:
                 return runMark(taskList);
             case UnMarkCommand.COMMAND_WORD:
@@ -122,10 +122,8 @@ public class Parser {
             String description = userString[INDEX_ENTRY].trim();
             ExceptionManager.checkEmptyString(description);
             return new TodoCommand(description);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_STRING_INPUT);
-        } catch (EmptyStringException e) {
-            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_TASK_ENTRY);
+        } catch (ArrayIndexOutOfBoundsException | EmptyStringException e) {
+            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_TODO);
         }
     }
 
@@ -143,14 +141,8 @@ public class Parser {
             String by = Util.fetchBy(description);
             ExceptionManager.checkEmptyString(task, by);
             return new DeadlineCommand(task, Util.parseDateTime(by));
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_STRING_INPUT);
-        } catch (StringIndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException| EmptyStringException | InvalidDateTimeFormat e) {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_DEADLINE);
-        } catch (EmptyStringException e) {
-            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_BY_DATE_ENTRY_AFTER_SLASH);
-        } catch (InvalidDateTimeFormat e) {
-            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_DATE_TIME);
         }
     }
 
@@ -169,14 +161,8 @@ public class Parser {
             String to = Util.fetchTo(description);
             ExceptionManager.checkEmptyString(task, from, to);
             return new EventCommand(task, Util.parseDateTime(from), Util.parseDateTime(to));
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_STRING_INPUT);
-        } catch (StringIndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException| EmptyStringException | InvalidDateTimeFormat e) {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_EVENT);
-        } catch (EmptyStringException e) {
-            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_FROM_AND_TO_ENTRY_AFTER_SLASH);
-        } catch (InvalidDateTimeFormat e) {
-            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_DATE_TIME);
         }
     }
 
@@ -190,18 +176,12 @@ public class Parser {
      */
     public static Command runDelete(TaskList taskList) {
         try {
-            String taskNumber = userString[INDEX_ENTRY].trim();
-            ExceptionManager.checkEmptyString(taskNumber);
-            int targetIndex = Util.fetchIndexFromString(taskList, taskNumber);
+            String description = userString[INDEX_ENTRY].trim();
+            ExceptionManager.checkEmptyString(description);
+            int targetIndex = Util.fetchIndexFromString(taskList, description);
             return new DeleteCommand(targetIndex);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_INTEGER_INPUT);
-        } catch (EmptyStringException e) {
-            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_DELETE_ENTRY);
-        } catch (IndexOutOfBoundsException e) {
-            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_TASK_INDEX);
-        } catch (NumberFormatException e) {
-            return new InvalidCommand(Messages.MESSAGE_PROMPT_FOR_INDEX_INPUT);
+        } catch (IndexOutOfBoundsException | EmptyStringException | NumberFormatException e) {
+            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_DELETE);
         }
     }
 
@@ -215,18 +195,12 @@ public class Parser {
      */
     public static Command runMark(TaskList taskList) {
         try {
-            String taskNumber = userString[INDEX_ENTRY].trim();
-            ExceptionManager.checkEmptyString(taskNumber);
-            int targetIndex = Util.fetchIndexFromString(taskList, taskNumber);
+            String description = userString[INDEX_ENTRY].trim();
+            ExceptionManager.checkEmptyString(description);
+            int targetIndex = Util.fetchIndexFromString(taskList, description);
             return new MarkCommand(targetIndex);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_INTEGER_INPUT);
-        } catch (IndexOutOfBoundsException e) {
-            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_TASK_INDEX);
-        } catch (EmptyStringException e) {
-            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_MARK_ENTRY);
-        } catch (NumberFormatException e) {
-            return new InvalidCommand(Messages.MESSAGE_PROMPT_FOR_INDEX_INPUT);
+        } catch (IndexOutOfBoundsException | EmptyStringException | NumberFormatException e) {
+            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_MARK);
         }
     }
 
@@ -240,18 +214,12 @@ public class Parser {
      */
     public static Command runUnmark(TaskList taskList) {
         try {
-            String taskNumber = userString[INDEX_ENTRY].trim();
-            ExceptionManager.checkEmptyString(taskNumber);
-            int targetIndex = Util.fetchIndexFromString(taskList, taskNumber);
+            String description = userString[INDEX_ENTRY].trim();
+            ExceptionManager.checkEmptyString(description);
+            int targetIndex = Util.fetchIndexFromString(taskList, description);
             return new UnMarkCommand(targetIndex);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_INTEGER_INPUT);
-        } catch (IndexOutOfBoundsException e) {
-            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_TASK_INDEX);
-        } catch (EmptyStringException e) {
-            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_UN_MARK_ENTRY);
-        } catch (NumberFormatException e) {
-            return new InvalidCommand(Messages.MESSAGE_PROMPT_FOR_INDEX_INPUT);
+        } catch (IndexOutOfBoundsException | EmptyStringException | NumberFormatException e) {
+            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_UNMARK);
         }
     }
 
@@ -264,17 +232,14 @@ public class Parser {
      * @return the {@code ListWithDateCommand} with the user input as the date to query.
      * If there is no date provided, {@code ListDefaultCommand} is returned instead.
      */
-    public static Command runListWithDate(TaskList taskList) {
+    public static Command runListWithDate() {
         try {
             String dateString = userString[INDEX_ENTRY].trim();
             ExceptionManager.checkEmptyString(dateString);
-            ExceptionManager.checkEmptyTaskList(taskList);
             LocalDate date = Util.parseDate(dateString);
             return new ListWithDateCommand(date);
         } catch (ArrayIndexOutOfBoundsException | EmptyStringException e) {
             return new ListDefaultCommand();
-        } catch (EmptyTaskListException e) {
-            return new InvalidCommand(Messages.MESSAGE_PROMPT_EMPTY_TASK_LIST);
         } catch (InvalidDateFormat e) {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_DATE);
         }
@@ -287,18 +252,13 @@ public class Parser {
      * @param taskList the task list to containing the tasks to be displayed.
      * @return the {@code FindCommand} with the user input as the key word to query.
      */
-    public static Command runFindCommand(TaskList taskList) {
+    public static Command runFindCommand() {
         try {
             String keyword = userString[INDEX_ENTRY].trim();
             ExceptionManager.checkEmptyString(keyword);
-            ExceptionManager.checkEmptyTaskList(taskList);
             return new FindCommand(keyword);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_STRING_INPUT);
-        } catch (EmptyStringException e) {
-            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_KEYWORD);
-        } catch (EmptyTaskListException e) {
-            return new InvalidCommand(Messages.MESSAGE_PROMPT_EMPTY_TASK_LIST);
+        } catch (ArrayIndexOutOfBoundsException | EmptyStringException e) {
+            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_FIND);
         }
     }
 
