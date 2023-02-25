@@ -2,9 +2,10 @@ public class Deadline extends Task {
     protected String deadline;
 
     /**
-     * Constructor for Deadline task
-     * @param taskName name of Deadline task
-     * @param deadline deadline date of task
+     * Constructor for Deadline task.
+     *
+     * @param taskName name of Deadline task.
+     * @param deadline deadline date of task.
      */
     public Deadline(String taskName, String deadline) {
         super(taskName);
@@ -13,6 +14,7 @@ public class Deadline extends Task {
 
     /**
      * Overrides toString() of Object class.
+     *
      * @return String indication of task type + whether task is done + task name.
      */
     @Override

@@ -4,7 +4,8 @@ public class Parser {
     final static int ERROR_NEGATIVE_ONE_RETURNED = -1;
 
     /**
-     * Returns the task name for the Todo task type
+     * Returns the task name for the Todo task type.
+     *
      * @param taskString Task description extracted from the userinput excluding the user command keyword.
      * @return Task name of Todo task.
      * @throws DukeException If taskString is an empty string.
@@ -18,7 +19,8 @@ public class Parser {
     }
 
     /**
-     * Returns the task name for the Todo task type
+     * Returns the task name for the Todo task type.
+     *
      * @param userInput Line of String containing the user input.
      * @param userCommandKeyword Command keyword given by user, etc. mark, unmark, find etc.
      * @return Task name of Todo task
@@ -34,8 +36,9 @@ public class Parser {
     }
 
     /**
-     * Returns the task name for the Deadline task type
-     * String for task name is trimmed using .trim() function
+     * Returns the task name for the Deadline task type.
+     * String for task name is trimmed using .trim() function.
+     *
      * @param taskString Task description extracted from the userinput excluding the user command keyword.
      * @return Task name of Deadline task.
      * @throws DukeException If taskString does not contain "/by" format keyword OR If task name extracted is empty string
@@ -56,8 +59,9 @@ public class Parser {
     }
 
     /**
-     * Returns the task name for the Event task type
-     * String for task name is trimmed using .trim() function
+     * Returns the task name for the Event task type.
+     * String for task name is trimmed using .trim() function.
+     *
      * @param taskString Task description extracted from the userinput excluding the user command keyword.
      * @return Task name of Event task.
      * @throws DukeException If taskString does not contain "/from" format keyword OR If task name extracted is empty string
@@ -78,7 +82,8 @@ public class Parser {
     }
 
     /**
-     * Returns the start date extracted from a task description for the Event task type
+     * Returns the start date extracted from a task description for the Event task type.
+     *
      * @param taskString Task description extracted from the userinput excluding the user command keyword.
      * @return start date of Event task in String form.
      * @throws DukeException If taskString is missing /from or /to (detected from looking at length of String[] taskStringPartsSplitByTo)
@@ -104,7 +109,8 @@ public class Parser {
     }
 
     /**
-     * Returns the end date extracted from a task description for the Event task type
+     * Returns the end date extracted from a task description for the Event task type.
+     *
      * @param taskString Task description extracted from the userinput excluding the user command keyword.
      * @return end date of Event task in String form.
      * @throws DukeException If taskString is missing /from or /to (detected from looking at length of String[] taskStringPartsSplitByTo)
@@ -130,7 +136,8 @@ public class Parser {
     }
 
     /**
-     * Returns the deadline date extracted from a task description for the Deadline task type
+     * Returns the deadline date extracted from a task description for the Deadline task type.
+     *
      * @param taskString Task description extracted from the userinput excluding the user command keyword.
      * @return deadline date of Deadline task in a form of a string.
      * @throws DukeException If taskString is missing /by (detected from looking at length of String[] taskStringParts)
@@ -146,6 +153,7 @@ public class Parser {
 
     /**
      * Returns Task description, extracted from userInput with the knowledge of knowing the user command keyword.
+     *
      * @param userInput Line inputted from user.
      * @param userCommand user command keyword inputted from user.
      * @return taskString Task description extracted from the userinput excluding the user command keyword.

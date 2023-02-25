@@ -22,7 +22,8 @@ public class Storage {
     /**
      * Saves the userTasks in taskList to a given directory and file.
      * Each task is saved according to the following format
-     * [TaskType],TaskName,Boolean (whether task is done),date information
+     * [TaskType],TaskName,Boolean (whether task is done),date information.
+     *
      * @param taskList TaskList object containing the user tasks.
      * @throws IOException If directory path or file path is not present, and program fails
      * to create a new directory or file path.
@@ -52,7 +53,8 @@ public class Storage {
     }
 
     /**
-     * Writes given string to a given file location
+     * Writes given string to a given file location.
+     *
      * @param filePath file path of save file relative to project location.
      * @param textToAdd string of text to be added to save file.
      * @param isAppendMode Boolean variable to use to indicate whether appendmode for FileWriter is used to overwrite existing data.
@@ -67,7 +69,8 @@ public class Storage {
     /**
      * Retrieve existing user tasks in the form of a TaskList object from a given save file.
      * Reads and processes user tasks from save file according to the following format:
-     * [TaskType],TaskName,Boolean (whether task is done),date information
+     * [TaskType],TaskName,Boolean (whether task is done),date information.
+     *
      * @param filePath file path of save file relative to project location.
      * @return TaskList object containing userTasks.
      * @throws FileNotFoundException If file does not exist at the given file path.
@@ -94,6 +97,7 @@ public class Storage {
 
     /**
      * Processes and returns Event task type from a given array of string.
+     *
      * @param taskList TaskList object containing the user tasks.
      * @param taskInformationWords Array of String containing Event task information.
      */
@@ -112,6 +116,7 @@ public class Storage {
 
     /**
      * Processes and returns Deadline task type from a given array of string.
+     *
      * @param taskList TaskList object containing the user tasks.
      * @param taskInformationWords Array of String containing Deadline task information.
      */
@@ -129,6 +134,7 @@ public class Storage {
 
     /**
      * Processes and returns Todo task type from a given array of string.
+     *
      * @param taskList TaskList object containing the user tasks.
      * @param taskInformationWords Array of String containing Todo task information.
      */
@@ -145,6 +151,7 @@ public class Storage {
 
     /**
      * Checks whether a given save directory exists.
+     *
      * @param DIRECTORY_PATH path of directory containing save file.
      * @return Returns true if directory exists in the given directory path, False otherwise.
      */
@@ -158,6 +165,7 @@ public class Storage {
 
     /**
      * Creates directory at a given directory path.
+     *
      * @param DIRECTORY_PATH path of directory containing save file.
      */
     public static void createSaveFileDirectory(String DIRECTORY_PATH) {
@@ -172,6 +180,7 @@ public class Storage {
 
     /**
      * Saves user tasks from taskList into the save file at the directory path and file path.
+     *
      * @param DIRECTORY_PATH path of directory containing save file.
      * @param FILE_PATH file path of save file relative to project location.
      * @param taskList TaskList object containing the user tasks.

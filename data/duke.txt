@@ -1,6 +1,2 @@
-T , asd , false
-D , asd , true , asd
-E , run , false , 2pm , 4pm
-E , asd , true , 12 , 24
-E , asd , false , 2pm , 123
-D , asd , false , 2
+T , EE2211 , false
+T , CS2113 Lecture , false

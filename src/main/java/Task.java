@@ -12,6 +12,7 @@ public class Task {
 
     /**
      * Constructor for Task Object using taskName.
+     *
      * @param taskName name of new task.
      */
     public Task(String taskName) {
@@ -21,6 +22,7 @@ public class Task {
 
     /**
      * Getter function for task name.
+     *
      * @return task name of current task object.
      */
     public String getTaskName() {
@@ -29,6 +31,7 @@ public class Task {
 
     /**
      * Getter function for isDone boolean variable of task.
+     *
      * @return True if task is done, False otherwise.
      */
     public Boolean getisDone() {
@@ -37,6 +40,7 @@ public class Task {
 
     /**
      * Setter function to set task name.
+     *
      * @param taskName new task name for task.
      */
     public void setTaskName (String taskName) {
@@ -45,6 +49,7 @@ public class Task {
 
     /**
      * Setter function for isDone boolean variable of task.
+     *
      * @param isDone boolean input for isDone of task.
      */
     public void setisDone(Boolean isDone) {
@@ -53,6 +58,7 @@ public class Task {
 
     /**
      * Overides toString() of Object class.
+     *
      * @return String indication of whether task is done + task name.
      */
     @Override

@@ -3,8 +3,9 @@ import java.util.ArrayList;
 public class TaskList {
 
     /**
-     * Constructor for TaskList Class
-     * @param userTasks ArrayList<Task> which contains user tasks
+     * Constructor for TaskList Class.
+     *
+     * @param userTasks ArrayList<Task> which contains user tasks.
      */
     public TaskList(ArrayList<Task> userTasks) {
         this.userTasks = userTasks;
@@ -12,8 +13,9 @@ public class TaskList {
     private ArrayList<Task> userTasks;
 
     /**
-     * Getter function for ArrayList<Task> userTasks
-     * @return ArrayList<Task> userTasks
+     * Getter function for ArrayList<Task> userTasks.
+     *
+     * @return ArrayList<Task> userTasks.
      */
     public ArrayList<Task> getUserTasksArrayList() {
         return userTasks;
@@ -21,15 +23,17 @@ public class TaskList {
 
     /**
      * Getter function for task in userTasks using index.
-     * @param index index of task to return
-     * @return Task at the given index
+     *
+     * @param index index of task to return.
+     * @return Task at the given index.
      */
     public Task getUserTask(int index) {
         return userTasks.get(index);
     }
 
     /**
-     * Adds new task into userTasks ArrayList
+     * Adds new task into userTasks ArrayList.
+     *
      * @param newTask Task to be added.
      */
     public void addUserTask(Task newTask) {
@@ -37,37 +41,47 @@ public class TaskList {
     }
 
     /**
-     * Removes task at given index from userTasks ArrayList
-     * @param index index of task to be removed
+     * Removes task at given index from userTasks ArrayList.
+     *
+     * @param index index of task to be removed.
      */
     public void removeUserTask(int index) {
         userTasks.remove(index);
     }
 
     /**
-     * Returns number of user tasks currently present in ArrayList<Task> userTasks
-     * @return number of user tasks
+     * Returns number of user tasks currently present in ArrayList<Task> userTasks.
+     *
+     * @return number of user tasks.
      */
     public int getNumberOfUserTasks() {
         return userTasks.size();
     }
 
     /**
-     * Setter function to set task as done at given index
-     * @param index index of task to be set as done
+     * Setter function to set task as done at given index.
+     *
+     * @param index index of task to be set as done.
      */
     public void setTaskDone(int index) {
         userTasks.get(index).setisDone(true);
     }
 
     /**
-     * Setter function to set task as not done at given index
-     * @param index index of task to be set as not done
+     * Setter function to set task as not done at given index.
+     *
+     * @param index index of task to be set as not done.
      */
     public void setTaskNotDone(int index) {
         userTasks.get(index).setisDone(false);
     }
 
+    /**
+     * Finds and returns tasks based on keyword name given.
+     *
+     * @param name String keyword to search for.
+     * @return ArrayList<Integer> of task indexes which contained keyword given.
+     */
     public ArrayList<Integer> findTasksBasedOnName(String name) {
         ArrayList<Integer> tasksIndexWithSimilarName = new ArrayList<>();
         for(int i = 0; i < userTasks.size(); i++) {

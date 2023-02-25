@@ -12,6 +12,7 @@ public class Ui {
      * Executes user command based on the given user input
      * user command keyword is extracted using .split() function and passed on to various functions
      * toContinue boolean variable is returned to Duke class, to indicate whether user wants to end Duke program
+     *
      * @param taskList TaskList object containing the user tasks.
      * @param userInput Line inputted from user.
      * @return toContinue Boolean variable returned to Duke class.
@@ -68,6 +69,7 @@ public class Ui {
      * 1. Creates new event task
      * 2. Add new event task to taskList
      * 3. Print out description of newly added task and current number of tasks
+     *
      * @param taskList TaskList object containing the user tasks.
      * @param userCommandKeyword Command keyword given by user, etc. mark, unmark, find etc.
      * @param userInput Line inputted from user.
@@ -85,6 +87,7 @@ public class Ui {
      * @param userCommandKeyword Command keyword given by user, etc. mark, unmark, find etc.
      * @return Event object created according to userInput
      * @throws DukeException Thrown by getTaskString, getEventTaskName, getEventStartDate, getEventEndDate
+     *
      * getTaskString: If the task description extracted is empty, length of userInput <= length of userCommand
      * getEventTaskName: If taskString does not contain "/from" format keyword OR If task name extracted is empty string
      * getEventStartDate: If taskString is missing /from or /to (detected from looking at length of String[] taskStringPartsSplitByTo)
@@ -106,6 +109,7 @@ public class Ui {
      * 1. Creates new deadline task
      * 2. Add new deadline task to taskList
      * 3. Print out description of newly added task and current number of tasks
+     *
      * @param taskList TaskList object containing the user tasks.
      * @param userCommandKeyword Command keyword given by user, etc. mark, unmark, find etc.
      * @param userInput Line inputted from user.
@@ -119,6 +123,7 @@ public class Ui {
 
     /**
      * Returns a newly created deadline task.
+     *
      * @param userInput Line inputted from user.
      * @param userCommandKeyword Command keyword given by user, etc. mark, unmark, find etc.
      * @return Deadline object created according to userInput
@@ -140,6 +145,7 @@ public class Ui {
      * 1. Creates new Todo task
      * 2. Add new Todo task to taskList
      * 3. Print out description of newly added task and current number of tasks
+     *
      * @param taskList TaskList object containing the user tasks.
      * @param userCommandKeyword Command keyword given by user, etc. mark, unmark, find etc.
      * @param userInput Line inputted from user.
@@ -153,6 +159,7 @@ public class Ui {
 
     /**
      * Returns a newly created Todo task.
+     *
      * @param userInput Line inputted from user.
      * @param userCommandKeyword Command keyword given by user, etc. mark, unmark, find etc.
      * @return Todo object created according to userInput
@@ -168,7 +175,8 @@ public class Ui {
     }
 
     /**
-     * Unmarks task according to task index extracted from user input
+     * Unmarks task according to task index extracted from user input.
+     *
      * @param taskList TaskList object containing the user tasks.
      * @param userInputWords Array of strings split by " " from userInput line.
      * @throws DukeException If taskIndex is greater than number of tasks in taskList, taskIndex >= number of user tasks OR
@@ -191,7 +199,8 @@ public class Ui {
     }
 
     /**
-     * Marks task according to task index extracted from user input
+     * Marks task according to task index extracted from user input.
+     *
      * @param taskList TaskList object containing the user tasks.
      * @param userInputWords Array of strings split by " " from userInput line.
      * @throws DukeException If taskIndex is greater than number of tasks in taskList, taskIndex >= number of user tasks OR
@@ -214,7 +223,8 @@ public class Ui {
     }
 
     /**
-     * Lists out every task present in userTasks from taskList
+     * Lists out every task present in userTasks from taskList.
+     *
      * @param taskList TaskList object containing the user tasks.
      */
     private static void userCommandList(TaskList taskList) {
@@ -230,6 +240,7 @@ public class Ui {
 
     /**
      * Saves the userTasks in taskList to a given directory and file.
+     *
      * @param taskList TaskList object containing the user tasks.
      * @throws IOException If directory path or file path is not present, and program fails
      * to create a new directory or file path.
@@ -241,6 +252,7 @@ public class Ui {
 
     /**
      * Throws a DukeException, informing that user inputted an invalid line format
+     *
      * @throws DukeException Always throws DukeException.
      */
     private static void userCommandDefault() throws DukeException {
@@ -249,8 +261,9 @@ public class Ui {
     }
 
     /**
-     * Deletes task according to task index extracted from user input
+     * Deletes task according to task index extracted from user input.
      * If task is deleted successfully, prints out deleted task description and shows number of user tasks remaining.
+     *
      * @param taskList TaskList object containing the user tasks.
      * @param userInputWords Array of strings split by " " from userInput line.
      * @throws DukeException If taskIndex is greater than number of tasks in taskList, taskIndex >= number of user tasks OR
@@ -275,6 +288,7 @@ public class Ui {
 
     /**
      * Prints out last added task and number of user tasks remaining.
+     *
      * @param taskList TaskList object containing the user tasks.
      */
     private static void printAddedNewTask(TaskList taskList) {
@@ -286,6 +300,7 @@ public class Ui {
 
     /**
      * Getter function for userCommandList function.
+     *
      * @param taskList TaskList object containing the user tasks.
      */
     public static void executeListCommand(TaskList taskList) {
@@ -295,6 +310,7 @@ public class Ui {
     /**
      * Searches userTasks in taskList according to the find keyword given by user.
      * Prints out every user task that contains the given keyword.
+     *
      * @param taskList TaskList object containing the user tasks.
      * @param userCommandKeyword Command keyword given by user, etc. mark, unmark, find etc.
      * @param userInput Line inputted from user.
