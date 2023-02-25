@@ -1,14 +1,19 @@
+//runs the entire Duke service
+
 import java.util.Scanner;
 import java.util.ArrayList;
 
-//printing when there are errors
 class DukeManager {
+    /** Custom array of Task*/
     private final TaskList taskList;
 
     DukeManager(TaskList taskList) {
         this.taskList = taskList;
     }
 
+    /**
+     * Executes the Duke service
+     */
     public void run() {
         Scanner io = new Scanner(System.in);
         ArrayList<String> responseList = new ArrayList<String>();

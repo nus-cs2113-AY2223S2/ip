@@ -1,25 +1,48 @@
 //to handle all changes made to list of tasks during run time
 import java.util.ArrayList;
-import java.util.Arrays;
 public class TaskList {
 
+    /** Starting index for task description for ToDo */
     private static final int TODO = 5;
+    /** Starting index for task description for Deadline */
     private static final int DEADLINE = 9;
+    /** Starting index for task description for Event */
     private static final int EVENT = 6;
+    /** An array of Task that has not been deleted since initialisation */
     private ArrayList<Task> taskList;
 
     TaskList(ArrayList<Task> taskList) {
         this.taskList = taskList;
     }
 
+    /**
+     * Returns Task at the index of interest
+     *
+     * @param index Position of Task in the ArrayList.
+     * @return Task
+     */
     public Task get(int index) {
         return this.taskList.get(index);
     }
 
+    /**
+     * Returns the number of Task that have not been deleted thus far
+     *
+     * @return size of the taskList ArrayList as int
+     */
     public int size() {
         return this.taskList.size();
     }
 
+    /**
+     * Returns a new ArrayList of Task with
+     * the task of interest marked or unmarked.
+     * If the Task cannot be found, an error is thrown
+     *
+     * @param input details of Task to be marked or unmarked.
+     * @return Updated ArrayList of Task
+     * @throws IncorrectParameterException If the Task cannot be found
+     */
     public ArrayList<String> markTask(String input) throws IncorrectParameterException {
         ArrayList<String> responseList = new ArrayList<String>();
         int index = Integer.parseInt(input.split(" ")[1]) - 1;
@@ -39,6 +62,15 @@ public class TaskList {
         return responseList;
     }
 
+    /**
+     * Returns a new ArrayList of Task with
+     * the task of interest removed.
+     * If the Task cannot be found, an error is thrown
+     *
+     * @param input details of Task to be deleted.
+     * @return Updated ArrayList of Task
+     * @throws MissingFieldException If there are missing fields
+     */
     public ArrayList<String> deleteTask(String input) throws MissingFieldException {
         ArrayList<String> responseList = new ArrayList<String>();
         String[] inputArray = input.split(" ");
@@ -60,6 +92,13 @@ public class TaskList {
         return responseList;
     }
 
+    /**
+     * Determine the type of Task to create
+     *
+     * @param input details of input by user
+     * @throws Exception If any error is encountered in the
+     * process of creating a Task
+     */
     public ArrayList<String> createTask(String input) throws Exception{
         ArrayList<String> responseList = new ArrayList<String>();
         if (Parser.parse(input, "todo")) {
@@ -75,6 +114,13 @@ public class TaskList {
         return responseList;
     }
 
+    /**
+     * Adds a new ToDo Task to the current ArrayList of Task.
+     * If there are missing fields, an error is thrown
+     *
+     * @param input details of Task to be created.
+     * @throws MissingFieldException If there are missing fields
+     */
     public void createToDo(String input) throws MissingFieldException {
         String description = input.substring(TODO, input.length());
         if (description.length() < 1) {
@@ -84,6 +130,13 @@ public class TaskList {
         this.taskList.add(toDo);
     }
 
+    /**
+     * Adds a new Deadline Task to the current ArrayList of Task.
+     * If there are missing fields, an error is thrown
+     *
+     * @param input details of Task to be created.
+     * @throws MissingFieldException If there are missing fields
+     */
     public void createDeadline(String input) throws MissingFieldException {
         try {
             String[] inputArray = input.split("/by ");
@@ -97,6 +150,13 @@ public class TaskList {
         }
     }
 
+    /**
+     * Adds a new Event Task to the current ArrayList of Task.
+     * If there are missing fields, an error is thrown
+     *
+     * @param input details of Task to be created
+     * @throws MissingFieldException If there are missing fields
+     */
     public void createEvent(String input) throws MissingFieldException {
         try {
             String[] inputArray = input.split("/from ");
@@ -113,6 +173,13 @@ public class TaskList {
         }
     }
 
+    /**
+     * Finds all Task that contains the substring.
+     *
+     * @param input keyword to be found
+     * @return toString() representation of all Task
+     * that contain the keyword
+     */
     public ArrayList<String> findTasks(String input) {
         String keyword = input.substring(5, input.length());
         ArrayList<String> matchingTasks = new ArrayList<String>();
@@ -131,6 +198,13 @@ public class TaskList {
         return matchingTasks;
     }
 
+    /**
+     * Return ArrayList<Task> that contains all Task
+     * that are not deleted thus far
+     *
+     * @return  toString() representation of Task in the form of
+     * an ArrayList
+     */
     public ArrayList<String> printTasks() {
         ArrayList<String> responseList = new ArrayList<String>();
         responseList.add("Here are the tasks in your list:");
