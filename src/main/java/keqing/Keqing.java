@@ -1,23 +1,17 @@
 package keqing;
 
 import keqing.exceptions.IllegalInputException;
-import keqing.tasks.Deadline;
-import keqing.tasks.Event;
-import keqing.tasks.Task;
-import keqing.tasks.ToDo;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.FileStore;
-import java.util.ArrayList;
 import java.util.Scanner;
-
-import static keqing.tasks.Task.getTaskCount;
 
 public class Keqing {
 
     public static final String LINE = "____________________________________________________________\n";
 
+    /**
+     * Loops the user commands until the user types "bye".
+     */
     public static void loopCommand() {
         Scanner in = new Scanner(System.in);
         String text = in.nextLine();
@@ -33,6 +27,12 @@ public class Keqing {
     }
 
 
+    /**
+     * The main method that drives Keqing.
+     *
+     * @param args
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException {
         KeqingUI.printStartingGreet();
         try {

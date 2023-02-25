@@ -17,6 +17,9 @@ import static keqing.tasks.Task.getTaskCount;
 public class KeqingArrayList {
     public static ArrayList<Task> tasks = new ArrayList<Task>();
 
+    /**
+     * Prints the current tasks list.
+     */
     public static void printTaskList() {
         System.out.println(LINE);
         if (getTaskCount() == 0) {
@@ -30,7 +33,7 @@ public class KeqingArrayList {
     }
 
     /**
-     * to mark a task as done or unfinished
+     * To mark a task as done or unfinished.
      *
      * @param currentID the ID of the task that is currently on
      * @param isDone the checker for the task status
@@ -46,7 +49,7 @@ public class KeqingArrayList {
             System.out.println("   " + tasks.get(currentID).toString());
         }
         else {
-            tasks.get(currentID).setUndone();
+            tasks.get(currentID).setNotDone();
             System.out.println("OK, I've marked this task as not done yet:");
             System.out.println("   " + tasks.get(currentID).toString());
         }
@@ -54,7 +57,7 @@ public class KeqingArrayList {
     }
 
     /**
-     * Read the toTo tasks using respective format
+     * Reads the toTo tasks using respective format.
      *
      * @param content Content from the user input
      * @throws IllegalInputException
@@ -71,7 +74,7 @@ public class KeqingArrayList {
     }
 
     /**
-     * Read the deadline tasks using respective format
+     * Reads the deadline tasks using respective format.
      *
      * @param content Content from the user input
      * @throws IllegalInputException
@@ -96,7 +99,7 @@ public class KeqingArrayList {
     }
 
     /**
-     * Read the event tasks using respective format
+     * Reads the event tasks using respective format.
      *
      * @param content Content from the user input
      * @throws IllegalInputException
@@ -123,8 +126,9 @@ public class KeqingArrayList {
     }
 
     /**
-     * 
-     * @param content
+     * To delete a certain task.
+     *
+     * @param content Content from the user input, would be a number if the user is not trolling
      * @throws IllegalInputException
      */
     public static void deleteTask(String content) throws IllegalInputException {

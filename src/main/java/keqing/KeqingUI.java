@@ -36,6 +36,9 @@ public class KeqingUI {
             "   ,*,*#,,(/%#(#*(#,%###%#&&#%(%&(%#..........*********@%####*%///###/(,,#*,,,  \n" +
             "   /,,/*,(/*#*#*(######&%&(@(%#%##&%/*.%...........,/**&%%######(/#/#*/(,,/,,,  \n";
 
+    /**
+     * To print the greeting message at the start.
+     */
     public static void printStartingGreet() {
         System.out.println("Hello from\n" + logo);
         System.out.println(LINE);
@@ -44,12 +47,18 @@ public class KeqingUI {
         System.out.println(LINE);
     }
 
+    /**
+     * To print the greeting message at the end.
+     */
     public static void printExitingGreet() {
         System.out.println(LINE);
         System.out.println("Bye. Hope to see you again soon!");
         System.out.println(LINE);
     }
 
+    /**
+     * To print the menu of simple instructions.
+     */
     public static void printMenu() {
         System.out.println(LINE);
         System.out.println("Try the following commands:");
@@ -62,6 +71,9 @@ public class KeqingUI {
         System.out.println(LINE);
     }
 
+    /**
+     * To echo the command after successfully adding a task.
+     */
     public static void echoAdd() {
         System.out.println(LINE);
         System.out.println("Got it. I've added this task:");
@@ -70,6 +82,10 @@ public class KeqingUI {
         System.out.println(LINE);
     }
 
+    /**
+     * To echo the command after successfully deleting a task.
+     * @param index the index of the task being deleted
+     */
     public static void echoDelete(int index) {
         System.out.println(LINE);
         System.out.println("Got it. I've deleted this task:");
