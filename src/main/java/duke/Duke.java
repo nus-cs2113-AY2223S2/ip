@@ -7,10 +7,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import duke.task.Task;
-import duke.task.Todo;
-import duke.task.Deadline;
-import duke.task.Event;
+import duke.tasklist.task.Task;
+import duke.tasklist.task.Todo;
+import duke.tasklist.task.Deadline;
+import duke.tasklist.task.Event;
 
 public class Duke {
     private static final Scanner scanner = new Scanner(System.in);
@@ -227,12 +227,10 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);
+        run(args);
+    }
+
+    public static void run(String[] args) {
 
         try {
             readData(DATA_PATH + "/" + DATA_FILE);
