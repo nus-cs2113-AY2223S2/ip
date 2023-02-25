@@ -1,0 +1,6 @@
+T , asd , false
+T , asdf , false
+E , asd , true , 1234 , 123
+T , a , true
+D , asd , true , asd
+E , run , false , 2pm , 4pm
