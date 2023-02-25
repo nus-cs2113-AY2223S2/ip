@@ -1,7 +1,10 @@
 package app.exceptions;
 
 public class IncompleteCommandException extends DukeException{
-    public void printErrorMessage(String commandWord) {
-        System.out.printf("ONO! The description of %s cannot be empty.%n", commandWord);
+    public IncompleteCommandException(String commandWord) {
+        super("ONO! The description of '" + commandWord + "' cannot be empty.");
+    }
+    public IncompleteCommandException(){
+        super("ONO! The description of this command cannot be empty.");
     }
 }

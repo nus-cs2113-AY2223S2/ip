@@ -1,67 +1,48 @@
 package app;
 
-import app.exceptions.InvalidCommandException;
-import app.save.FileManager;
-import app.tasks.Deadline;
-import app.tasks.Event;
-import app.tasks.Task;
-import app.tasks.ToDo;
-import app.ui.Greetings;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Scanner;
+import app.commands.Command;
+import app.exceptions.DukeException;
+import app.parser.Parser;
+import app.tasks.TaskList;
+import app.ui.Ui;
+import app.save.Storage;
 
 public class Duke {
-    public static final String line = ("─".repeat(50));
-    private static final String filePath = "data/duke.txt";
-    public static void main(String[] args) {
 
-        ArrayList<Task> tasks = null;
+    private Storage storage;
+    private TaskList tasks;
+    private Ui ui;
+
+    public Duke (String filePath) {
+        ui = new Ui();
+        storage = new Storage(filePath);
         try {
-            tasks = FileManager.loadTasks(filePath);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            tasks = new TaskList(storage.load());
+        } catch (DukeException e) {
+            ui.showLoadingError();
+            tasks = new TaskList();
         }
-        Greetings.printHelloMessage();
-        Scanner myObj = new Scanner(System.in);
+    }
 
-        while (true) {
-            String userInput = myObj.nextLine();
-            String[] userInputArray = userInput.split(" ");
-            String commandWord = userInputArray[0];
-            String commandDescriptor = userInput.substring(commandWord.length()).trim();
+    public void run() {
+        ui.showWelcome();
+        boolean isExit = false;
+        while (!isExit) {
             try {
-                switch (commandWord) {
-                case "bye":
-                    Greetings.printByeMessage();
-                    return;
-                case "list":
-                    Task.printTasks(tasks);
-                    break;
-                case "delete":
-                    Task.deleteTask(tasks, commandDescriptor);
-                    break;
-                case "todo":
-                    ToDo.todoHandler(tasks, commandDescriptor);
-                    break;
-                case "deadline":
-                    Deadline.deadlineHandler(tasks, commandDescriptor);
-                    break;
-                case "event":
-                    Event.eventHandler(tasks, commandDescriptor);
-                    break;
-                case "mark":
-                case "unmark":
-                    Task.taskStatusHandler(tasks, commandWord, commandDescriptor);
-                    break;
-                default:
-                    throw new InvalidCommandException();
-                }
-            } catch (InvalidCommandException e) {
-                e.printErrorMessage(commandWord);
-                System.out.println(line);
+                String fullCommand = ui.readCommand();
+                ui.showLine(); // show the divider line ("_______")
+                Command c = Parser.parse(fullCommand);
+                c.execute(tasks, ui, storage);
+                isExit = c.isExit();
+            } catch (DukeException e) {
+                ui.showError(e.getMessage());
+            } finally {
+                ui.showLine();
             }
         }
+    }
+
+    public static void main(String[] args) {
+        new Duke("data/tasks.txt").run();
     }
 }
