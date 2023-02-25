@@ -12,14 +12,97 @@ import java.util.ArrayList;
 
 public class Duke {
 
+    public static void taskPrinter(ArrayList<Task> taskArray, int index) {
+        if (taskArray.get(index) instanceof ToDo) {
+            System.out.println(index + ". " + ((ToDo) taskArray.get(index)).getToDo() + " " + taskArray.get(index).getDoneStatus()
+                    + " " + taskArray.get(index).getDescription());
+        }
+        if (taskArray.get(index) instanceof Deadline) {
+            System.out.println(index + ". " + ((Deadline) taskArray.get(index)).getDeadline() + " " + taskArray.get(index).getDoneStatus()
+                    + " " + taskArray.get(index).getDescription() + " (" + ((Deadline) taskArray.get(index)).getDate() + ")");
+        }
+        if (taskArray.get(index) instanceof Event) {
+            System.out.println(index + ". " + ((Event) taskArray.get(index)).getEvent() + " " + taskArray.get(index).getDoneStatus()
+                    + " " + taskArray.get(index).getDescription() + " (" + ((Event) taskArray.get(index)).getStartAndEnd() + ")");
+        }
+    }
+
+    public static void listPrinter(ArrayList<Task> taskArray, int taskIndex) {
+        for (int j = 0; j < taskIndex; ++j) {
+            taskPrinter(taskArray, j);
+        }
+    }
+
+    public static void UI(String ui, ArrayList<Task> taskArray, int taskIndex) {
+        switch (ui) {
+        case "welcome":
+            System.out.println("Good day. YodaBot, I am.");
+            System.out.println("Assistance, you need?");
+            break;
+        case "bye":
+            System.out.println("See you soon, I hope. Goodbye.");
+            break;
+        case "empty":
+            System.out.println("Empty, list is.");
+            break;
+        case "list":
+            System.out.println("As shown, list is:");
+            listPrinter(taskArray, taskIndex);
+            break;
+        case "marked":
+            System.out.println("Marked it, I have:");
+            taskPrinter(taskArray, taskIndex);
+            break;
+        case "unmarked":
+            System.out.println("Unmarked it, I have:");
+            taskPrinter(taskArray, taskIndex);
+            break;
+        case "notInList":
+            System.out.println("In list, it is not.");
+            break;
+        case "addTask":
+            System.out.println("Added, I have:");
+            taskPrinter(taskArray, taskIndex);
+            break;
+        case "delete":
+            System.out.println("Deleted, I have");
+            break;
+        case "wrongTodo":
+            System.out.println("Error: To do what, I ask?");
+            break;
+        case "generalError":
+            System.out.println("Understand, I do not.");
+            break;
+        default:
+            break;
+        }
+    }
+
+    public static String[] parser(String command) {
+        String firstWord;
+        String remainingWords;
+        String[] wordList = new String[2];
+        if (command.contains(" ")) {
+            int firstSpaceIndex = command.indexOf(" ");
+            firstWord = command.substring(0, firstSpaceIndex);
+            remainingWords = command.substring(firstSpaceIndex + 1, command.length());
+            wordList[0] = firstWord;
+            wordList[1] = remainingWords;
+        } else {
+            firstWord = command;
+            wordList[0] = firstWord;
+        }
+        return wordList;
+    }
+
     public static void main(String[] args) {
 
-        System.out.println("Good day. YodaBot, I am.");
-        System.out.println("Assistance, you need?");
         Scanner scanner = new Scanner(System.in);
+        String[] wordList = new String[2];
         ArrayList<Task> taskArray = new ArrayList<Task>();
         ArrayList<String> fileList = new ArrayList<String>();
         int taskIndex = 0;
+        UI("welcome", taskArray, taskIndex);
 
         try {
             File file = new File("duke.txt");
@@ -76,135 +159,84 @@ public class Duke {
 
         while (true) {
             String command = scanner.nextLine(); //reads in input
-            //if command is bye, end program
-            if (command.equals("bye")) {
-                System.out.println("See you soon, I hope. Goodbye.");
+            wordList = parser(command);
+            if (wordList[0].equals("bye")) {
+                UI("bye", taskArray, taskIndex);
                 break;
             }
-            String firstWord;
-            String remainingWords;
-            if (command.contains(" ")) {
-                int firstSpaceIndex = command.indexOf(" ");
-                firstWord = command.substring(0, firstSpaceIndex);
-                remainingWords = command.substring(firstSpaceIndex + 1, command.length());
-            } else {
-                firstWord = command;
-                remainingWords = null;
-            }
-            switch (firstWord) {
+            switch (wordList[0]) {
             //if command is list, either display empty or display list
             case "List":
                 if (taskIndex == 0) {
-                    System.out.println("Empty, list is.");
+                    UI("empty", taskArray, taskIndex);
                 } else {
-                    System.out.println("As shown, list is:");
-                    for (int j = 0; j < taskIndex; ++j) {
-                        if (taskArray.get(j) instanceof ToDo) {
-                            System.out.println(j + ". " + ((ToDo) taskArray.get(j)).getToDo() + " " + taskArray.get(j).getDoneStatus()
-                                    + " " + taskArray.get(j).getDescription());
-                        }
-                        if (taskArray.get(j) instanceof Deadline) {
-                            System.out.println(j + ". " + ((Deadline) taskArray.get(j)).getDeadline() + " " + taskArray.get(j).getDoneStatus()
-                                    + " " + taskArray.get(j).getDescription() + " (" + ((Deadline) taskArray.get(j)).getDate() + ")");
-                        }
-                        if (taskArray.get(j) instanceof Event) {
-                            System.out.println(j + ". " + ((Event) taskArray.get(j)).getEvent() + " " + taskArray.get(j).getDoneStatus()
-                                    + " " + taskArray.get(j).getDescription() + " (" + ((Event) taskArray.get(j)).getStartAndEnd() + ")");
-                        }
-                    }
+                    UI("list", taskArray, taskIndex);
                 }
                 break;
             //if command is mark, mark the appropriate entry in the list
             case "Mark":
-                int indexToMark = Integer.parseInt(remainingWords);
+                int indexToMark = Integer.parseInt(wordList[1]);
                 if (taskIndex == 0 || indexToMark > taskIndex) {
-                    System.out.println("In list, it is not.");
+                    UI("notInList", taskArray, taskIndex);
                 } else {
                     taskArray.get(indexToMark).isDone = true;
-                    System.out.println("Marked it, I have:");
-                    if (taskArray.get(indexToMark) instanceof ToDo) {
-                        System.out.println(indexToMark + ". " + ((ToDo) taskArray.get(indexToMark)).getToDo() + " " + taskArray.get(indexToMark).getDoneStatus()
-                                + " " + taskArray.get(indexToMark).getDescription());
-                    }
-                    if (taskArray.get(indexToMark) instanceof Deadline) {
-                        System.out.println(indexToMark + ". " + ((Deadline) taskArray.get(indexToMark)).getDeadline() + " " + taskArray.get(indexToMark).getDoneStatus()
-                                + " " + taskArray.get(indexToMark).getDescription() + "(" + ((Deadline) taskArray.get(indexToMark)).getDate() + ")");
-                    }
-                    if (taskArray.get(indexToMark) instanceof Event) {
-                        System.out.println(indexToMark + ". " + ((Event) taskArray.get(indexToMark)).getEvent() + " " + taskArray.get(indexToMark).getDoneStatus()
-                                + " " + taskArray.get(indexToMark).getDescription() + " (" + ((Event) taskArray.get(indexToMark)).getStartAndEnd() + ")");
-                    }
+                    taskPrinter(taskArray, indexToMark);
                 }
                 break;
             //if command is unmark, unmark the appropriate entry in the list
             case "Unmark":
-                int indexToUnmark = Integer.parseInt(remainingWords);
+                int indexToUnmark = Integer.parseInt(wordList[1]);
                 if (taskIndex == 0 || indexToUnmark > taskIndex) {
                     System.out.println("In list, it is not.");
                     break;
                 } else {
                     taskArray.get(indexToUnmark).isDone = false;
-                    System.out.println("Unmarked it, I have:");
-                    if (taskArray.get(indexToUnmark) instanceof ToDo) {
-                        System.out.println(indexToUnmark + ". " + ((ToDo) taskArray.get(indexToUnmark)).getToDo() + " " + taskArray.get(indexToUnmark).getDoneStatus()
-                                + " " + taskArray.get(indexToUnmark).getDescription());
-                    }
-                    if (taskArray.get(indexToUnmark) instanceof Deadline) {
-                        System.out.println(indexToUnmark + ". " + ((Deadline) taskArray.get(indexToUnmark)).getDeadline() + " " + taskArray.get(indexToUnmark).getDoneStatus()
-                                + " " + taskArray.get(indexToUnmark).getDescription() + " (" + ((Deadline) taskArray.get(indexToUnmark)).getDate() + ")");
-                    }
-                    if (taskArray.get(indexToUnmark) instanceof Event) {
-                        System.out.println(indexToUnmark + ". " + ((Event) taskArray.get(indexToUnmark)).getEvent() + " " + taskArray.get(indexToUnmark).getDoneStatus()
-                                + " " + taskArray.get(indexToUnmark).getDescription() + " (" + ((Event) taskArray.get(indexToUnmark)).getStartAndEnd() + ")");
-                    }
+                    taskPrinter(taskArray, indexToUnmark);
                 }
                 break;
             //if command is todo, prompt for task and add into list
             case "Todo":
                 try {
-                    if (remainingWords == null) {
+                    if (wordList[1] == null) {
                         throw new IllegalCommandException();
                     }
-                    Task newTask = new ToDo(remainingWords, false, "[T]");
+                    Task newTask = new ToDo(wordList[1], false, "[T]");
                     taskArray.add(newTask);
-                    System.out.println(taskIndex + ". " + ((ToDo) taskArray.get(taskIndex)).getToDo() + " " + taskArray.get(taskIndex).getDoneStatus()
-                            + " " + taskArray.get(taskIndex).getDescription() + " - Added, I have");
+                    UI("addTask", taskArray, taskIndex);
                     ++taskIndex;
                 } catch (IllegalCommandException e) {
-                    System.out.println("Error: To do what, I ask?");
+                    UI("wrongTodo", taskArray, taskIndex);
                     break;
                 }
                 break;
             //if command is Deadline, prompt for task then deadline and add into list
             case "Deadline":
-                int demarcator = remainingWords.indexOf("/");
-                String work = remainingWords.substring(0, demarcator - 1);
-                String date = remainingWords.substring(demarcator + 1, remainingWords.length());
+                int demarcator = wordList[1].indexOf("/");
+                String work = wordList[1].substring(0, demarcator - 1);
+                String date = wordList[1].substring(demarcator + 1, wordList[1].length());
                 Task newTask = new Deadline(work, false, "[D]", date);
                 taskArray.add(newTask);
-                System.out.println(taskIndex + ". " + ((Deadline) taskArray.get(taskIndex)).getDeadline() + " " + taskArray.get(taskIndex).getDoneStatus()
-                        + " " + taskArray.get(taskIndex).getDescription() + " " + ((Deadline) taskArray.get(taskIndex)).getDate() + " - Added, I have");
+                UI("addTask", taskArray, taskIndex);
                 ++taskIndex;
                 break;
             //if command is Event, prompt for event, then prompt for start and end date
             case "Event":
-                demarcator = remainingWords.indexOf("/");
-                work = remainingWords.substring(0, demarcator - 1);
-                date = remainingWords.substring(demarcator + 1, remainingWords.length());
+                demarcator = wordList[1].indexOf("/");
+                work = wordList[1].substring(0, demarcator - 1);
+                date = wordList[1].substring(demarcator + 1, wordList[1].length());
                 Task newTask1 = new Event(work, false, "[E]", date);
                 taskArray.add(newTask1);
-                System.out.println(taskIndex + ". " + ((Event) taskArray.get(taskIndex)).getEvent() + " " + taskArray.get(taskIndex).getDoneStatus()
-                        + " " + taskArray.get(taskIndex).getDescription() + " " + ((Event) taskArray.get(taskIndex)).getStartAndEnd() + " - Added, I have");
+                UI("addTask", taskArray, taskIndex);
                 ++taskIndex;
                 break;
             case "Delete":
-                int indexToDelete = Integer.parseInt(remainingWords);
+                int indexToDelete = Integer.parseInt(wordList[1]);
                 if (taskIndex == 0 || indexToDelete > taskIndex) {
-                    System.out.println("In list, it is not.");
+                    UI("notInList", taskArray, taskIndex);
                 } else {
                     taskArray.remove(indexToDelete);
                     taskIndex -= 1;
-                    System.out.println("Deleted, I have");
+                    UI("delete", taskArray, taskIndex);
                 }
                 break;
             //throws IllegalCommandException if the input is not one of the above cases
@@ -212,7 +244,7 @@ public class Duke {
                 try {
                     throw new IllegalCommandException();
                 } catch (IllegalCommandException e1) {
-                    System.out.println("Error: Understand, I do not.");
+                    UI("generalError", taskArray, taskIndex);
                 }
             }
         }
