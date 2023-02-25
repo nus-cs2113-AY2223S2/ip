@@ -41,7 +41,7 @@ public class TaskStorage {
 
         FileWriter fw = new FileWriter("data/duke.txt");
         for (Task t: tasks) {
-            fw.write(t.toString() + System.lineSeparator());
+            fw.write(t.toSaveString() + System.lineSeparator());
         }
 
         fw.close();

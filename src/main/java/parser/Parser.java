@@ -6,6 +6,11 @@ import exception.DukeException;
 import task.Event;
 import task.Task;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Arrays;
+
 
 public class Parser {
     private boolean isExecuting;
@@ -19,7 +24,6 @@ public class Parser {
     private static final String MARK_STRING = "mark";
     private static final String UNMARK_STRING = "unmark";
     private static final String DELETE_STRING = "delete";
-
 
     public Parser() {
         isExecuting = true;
@@ -54,26 +58,42 @@ public class Parser {
     }
 
 
-
     public static Task handleAddTask(String taskType, String commandInfo) throws DukeException {
         Task newTask = null;
         if (taskType.equals(TODO_STRING)) {
             newTask = new Task(commandInfo);
-        } else if (taskType.equals(DEADLINE_STRING)) {
+        }
+
+        else if (taskType.equals(DEADLINE_STRING)) {
             String[] infoArr = commandInfo.split("/by");
             if (infoArr.length != 2 ) {
                 throw new DukeException("Please specify your deadline");
             }
-            //infoArr contains descStr and deadlineStr respectively
-            newTask = new Deadline(infoArr[0].trim(), infoArr[1].trim());
-        } else if (taskType.equals(EVENT_STRING)) {
+
+            try {
+                //infoArr contains descStr and deadlineStr respectively
+                newTask = new Deadline(infoArr[0].trim(), infoArr[1].trim());
+            } catch (DateTimeParseException ex) {
+                System.out.println("Exception occured : " +ex);
+                System.out.println("Please enter the deadline in YYYY-MM-DD  HH: mm format");
+            }
+
+        }
+
+        else if (taskType.equals(EVENT_STRING)) {
             String[] infoArr = commandInfo.split("/from|/to");
             if (infoArr.length !=3 ) {
                 throw new DukeException("Please specify the starting and ending time of your event");
             }
-            //infoArr contains descStr, fromStr, and toStr respectively
-            newTask = new Event(infoArr[0].trim(), infoArr[1].trim(), infoArr[2].trim());
+            try {
+                //infoArr contains descStr, fromStr, and toStr respectively
+                newTask = new Event(infoArr[0].trim(), infoArr[1].trim(), infoArr[2].trim());
+            } catch (DateTimeParseException ex) {
+                System.out.println("Exception occured : " +ex);
+                System.out.println("Please enter the starting and ending time in YYYY-MM-DD HH:mm format");
+            }
         }
+
         return newTask;
     }
 

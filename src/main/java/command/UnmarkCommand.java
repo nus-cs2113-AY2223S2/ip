@@ -18,7 +18,7 @@ public class UnmarkCommand extends SaveCommand {
         try {
             Task taskToUnmark = tasks.getTask(taskIdx);
             taskToUnmark.markAsUndone();
-            ui.printMarkSuccess(taskToUnmark);
+            ui.printUnmarkSuccess(taskToUnmark);
             super.execute(tasks,storage,ui);
         } catch (InvalidIndexException ex) {
             System.out.println("Exception occured : " + ex);
