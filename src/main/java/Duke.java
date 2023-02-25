@@ -33,8 +33,9 @@ public class Duke {
     public static void findEntry(ArrayList<Task> listOfTasks, int currentNumberIndex, String keyWord) {
         System.out.println("     Here are the matching tasks in your list:");
         for (int i = 0; i < currentNumberIndex; ++i) {
+            int indexInList = i+1;
             if (listOfTasks.get(i).taskLabel.contains(keyWord) || listOfTasks.get(i).description.contains(keyWord)) {
-                System.out.print("     " + i+1 + "." + listOfTasks.get(i).taskLabel
+                System.out.print("     " + indexInList + "." + listOfTasks.get(i).taskLabel
                         + listOfTasks.get(i).getStatusIcon() + " ");
                 System.out.println(listOfTasks.get(i).description);
             }
