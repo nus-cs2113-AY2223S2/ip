@@ -4,7 +4,10 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.IOException;
-import tasks.*;
+import tasks.Task;
+import tasks.ToDo;
+import tasks.Deadline;
+import tasks.Event;
 
 /**
  * This <code>Data</code> class handles the creation, saving and loading of data on the users local machine.

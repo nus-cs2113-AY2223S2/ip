@@ -1,6 +1,8 @@
 D%[ ]%ee2211 as2 %march 17
 E%[ ]%spend time with habibi %fri night %sat morning
-D%[ ]%OBX SZN 4 %march 20
 T%[X]%get lunch
-T%[ ]%refill bottle
+T%[X]%refill bottle
 E%[ ]%parents' anniversary %march 10 evening %march 10 night
+T%[ ]%get flowers
+D%[ ]%lab submission %sunday 2359
+E%[ ]%jetbrains hackathon %3 march %7 march
