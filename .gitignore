@@ -3,6 +3,9 @@
 /out/
 /*.iml
 
+# ctags files
+tags
+
 # Gradle build files
 /.gradle/
 /build/
