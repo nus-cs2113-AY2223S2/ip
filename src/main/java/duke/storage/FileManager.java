@@ -1,5 +1,6 @@
 package duke.storage;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -77,10 +78,15 @@ public class FileManager {
             decoded = new Todo(description);
             break;
         case "event":
-            decoded = new Event(description, components[3], components[4]);
+            LocalDateTime from = LocalDateTime.parse(components[3]);
+            LocalDateTime to = LocalDateTime.parse(components[4]);
+
+            decoded = new Event(description, from, to);
             break;
         case "deadline":
-            decoded = new Deadline(description, components[3]);
+            LocalDateTime by = LocalDateTime.parse(components[3]);
+
+            decoded = new Deadline(description, by);
             break;
         default:
             break;

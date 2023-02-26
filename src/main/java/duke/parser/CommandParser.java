@@ -5,6 +5,8 @@ import duke.exceptions.InvalidCommandException;
 import duke.exceptions.InvalidFormatException;
 import duke.exceptions.InvalidTaskException;
 import duke.exceptions.NoTasksException;
+import duke.exceptions.InvalidDateTimeException;
+
 import duke.tasks.Task;
 import duke.tasks.TaskList;
 import duke.commands.Command;
@@ -47,13 +49,17 @@ public class CommandParser {
         return index;
     }
 
-    public Command parseCommand(String[] inputArray) throws InvalidCommandException, InvalidTaskException, InvalidFormatException, NoTasksException {
+
+    public Command parseCommand(String[] inputArray) throws InvalidCommandException, InvalidTaskException, InvalidFormatException, InvalidDateTimeException, NoTasksException {
         String command = inputArray[0];
         
         switch (command) {
         case TODO:
         case DEADLINE:
         case EVENT:
+            if (inputArray.length == 1) {
+                throw new InvalidTaskException(command);
+            }
             Task toAdd = TaskParser.getTaskFromCommand(inputArray);
             return new AddCommand(toAdd, taskList);
 
@@ -82,7 +88,7 @@ public class CommandParser {
         }
     }
 
-    public void getInput() throws InvalidCommandException, InvalidTaskException, InvalidFormatException, NoTasksException {
+    public void getInput() throws InvalidCommandException, InvalidTaskException, InvalidFormatException, InvalidDateTimeException , NoTasksException {
         Scanner input = new Scanner(System.in);
         boolean isRunning = true;
         do {
@@ -101,6 +107,8 @@ public class CommandParser {
                 } catch (InvalidFormatException e) {
                     System.out.println(e.getMessage());
                 } catch (NoTasksException e) {
+                    System.out.println(e.getMessage());
+                } catch (InvalidDateTimeException e) {
                     System.out.println(e.getMessage());
                 }
             }
