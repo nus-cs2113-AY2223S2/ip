@@ -1,4 +1,8 @@
+package duke.command;
+
 import duke.task.Deadline;
+import duke.data.TaskList;
+import duke.ui.*;
 
 /**
  * Command to execute when adding new deadline object to task list

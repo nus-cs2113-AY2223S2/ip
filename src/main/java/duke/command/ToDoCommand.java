@@ -1,4 +1,8 @@
+package duke.command;
+
 import duke.task.ToDo;
+import duke.data.TaskList;
+import duke.ui.*;
 
 /**
  * Command to execute when adding new todo object to task list

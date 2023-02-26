@@ -1,5 +1,8 @@
-import duke.task.Event;
+package duke.command;
 
+import duke.task.Event;
+import duke.data.TaskList;
+import duke.ui.*;
 /**
  * Command to execute when adding new event object to task list
  */

@@ -1,10 +1,15 @@
+import duke.data.TaskList;
+import duke.parser.Parser;
+import duke.storage.Storage;
+import duke.ui.UI;
+
 import java.io.IOException;
 
 /**
  * Main class to manage all operations
  */
 public class Duke {
-    public static boolean isEnd = false;
+    public boolean isEnd = false;
     private Storage storage;
     private TaskList tasks;
     private UI ui;
@@ -13,7 +18,7 @@ public class Duke {
      * Start the duke programme
      * @throws IOException if an error occurred while loading save file
      */
-    public static void main() throws IOException {
+    public static void main(String[] args) throws IOException {
         new Duke("./taskSave.txt").run();
     }
 
@@ -44,6 +49,7 @@ public class Duke {
             Parser parser = new Parser(input);
             parser.handleCommand(tasks, ui);
             storage.updateSaveFile(tasks);
+            isEnd = parser.isByeCommand;
         }
     }
 }

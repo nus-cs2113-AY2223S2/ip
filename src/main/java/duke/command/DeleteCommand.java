@@ -1,3 +1,8 @@
+package duke.command;
+
+import duke.data.TaskList;
+import duke.ui.*;
+
 /**
  * Command to execute to delete a specified task in task list
  */

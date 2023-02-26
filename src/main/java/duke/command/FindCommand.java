@@ -1,3 +1,8 @@
+package duke.command;
+
+import duke.data.TaskList;
+import duke.ui.*;
+
 public class FindCommand extends Command{
     private String find;
     public void setFind(String input) {

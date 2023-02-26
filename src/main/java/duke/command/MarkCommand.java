@@ -1,4 +1,8 @@
+package duke.command;
+
 import duke.task.Task;
+import duke.data.TaskList;
+import duke.ui.*;
 
 /**
  * Command to execute to mark a specified task as done in task list
