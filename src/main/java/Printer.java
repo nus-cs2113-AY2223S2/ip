@@ -5,7 +5,7 @@ public class Printer {
      * @param task The Task to be printed out
      * @param index The index of the respective task
      */
-    public static void printTask(Task task, int index) {
+    public static void printWholeTask(Task task, int index) {
         System.out.print(index);
         task.printTask();
     }
@@ -16,7 +16,7 @@ public class Printer {
     public static void printList() {
         int index = 1;
         for (Task task : Duke.tasks) {
-            printTask(task, index);
+            printWholeTask(task, index);
             index++;
         }
         Greeting.printHorizontalLines(Duke.isSinglish);
