@@ -16,6 +16,7 @@ import duke.command.ListCommand;
 import duke.command.MarkCommand;
 import duke.command.TodoCommand;
 import duke.command.UnmarkCommand;
+import duke.command.FindCommand;
 
 public class CommandParser {
     private static final String OOPS = "☹ OOPS!!! ";
@@ -34,6 +35,8 @@ public class CommandParser {
             return parseEvent(args);
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
+        case FindCommand.COMMAND_WORD:
+            return parseFind(args);
         case MarkCommand.COMMAND_WORD:
             return parseMark(args);
         case UnmarkCommand.COMMAND_WORD:
@@ -151,6 +154,18 @@ public class CommandParser {
             throw new IllegalArgumentException("Invalid date time. Format: dd/mm/yyyy");
         }
 
+    }
+
+    private Command parseFind(String[] args) throws IllegalArgumentException {
+        assert args[0].equals(FindCommand.COMMAND_WORD);
+        if (args.length == 1) {
+            throw new IllegalArgumentException(OOPS + "Cannot find keyword to search.");
+        } else if (args.length > 2) {
+            throw new IllegalArgumentException(OOPS + "Can only search for one keyword.");
+        } else { //args.length == 2
+            String keyword = args[1];
+            return new FindCommand(keyword);
+        }
     }
 
     private Command parseMark(String[] args) throws IllegalArgumentException {

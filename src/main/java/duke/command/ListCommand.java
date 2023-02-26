@@ -1,5 +1,6 @@
 package duke.command;
 
+import duke.common.CommandReply;
 import duke.data.task.Task;
 
 import java.util.ArrayList;
@@ -10,7 +11,6 @@ public class ListCommand extends Command {
             + ": Display all tasks in the list with their indices";
 
     private static final String LIST_HEADER = "Here are the tasks in your list:\n";
-    private static final String LIST_ITEM_TEMPLATE = "- %d. %s";
 
     public ListCommand() {}
 
@@ -24,7 +24,7 @@ public class ListCommand extends Command {
         int cnt = 0;
         for (Task task : taskList) {
             cnt += 1;
-            replayMessages.add(String.format(LIST_ITEM_TEMPLATE, cnt, task.toString()));
+            replayMessages.add(String.format(CommandReply.LIST_ITEM_TEMPLATE, cnt, task.toString()));
         }
         return new CommandResult(replayMessages);
     }

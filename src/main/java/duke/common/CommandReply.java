@@ -14,5 +14,7 @@ public class CommandReply {
 
     public static final String DELETE_TASK_HEADER  = "Noted. I've removed this task:\n";
     public static final String DELETE_TASK_TAIL_F = "Now you have %d tasks in the list.";
+
+    public static final String LIST_ITEM_TEMPLATE = "- %d. %s";
 }
 

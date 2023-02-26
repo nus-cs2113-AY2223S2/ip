@@ -18,6 +18,7 @@ public class HelpCommand extends Command{
         usages.add(DeadlineCommand.COMMAND_USAGE);
         usages.add(EventCommand.COMMAND_USAGE);
         usages.add(ListCommand.COMMAND_USAGE);
+        usages.add(FindCommand.COMMAND_USAGE);
         usages.add(MarkCommand.COMMAND_USAGE);
         usages.add(UnmarkCommand.COMMAND_USAGE);
         usages.add(DeleteCommand.COMMAND_USAGE);
