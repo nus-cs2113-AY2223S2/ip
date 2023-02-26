@@ -13,4 +13,8 @@ public class Todo extends Task {
     public String encode() {
         return String.format("%s ### %s", "todo", super.encode());
     }
+
+    public String getType() {
+        return "todo";
+    }
 }

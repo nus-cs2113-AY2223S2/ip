@@ -1,5 +1,5 @@
 package duke.tasks;
-public class Task {
+public abstract class Task {
     protected String description;
     protected boolean isDone;
 
@@ -32,4 +32,6 @@ public class Task {
     public String encode() {
         return String.format("%s ### %s", this.isDone, this.description);
     }
+
+    public abstract String getType();
 }

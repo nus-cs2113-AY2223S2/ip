@@ -16,4 +16,8 @@ public class Deadline extends Task {
     public String encode() {
         return String.format("%s ### %s ### %s", "deadline", super.encode(), this.by);
     }
+
+    public String getType() {
+        return "deadline";
+    }
 }

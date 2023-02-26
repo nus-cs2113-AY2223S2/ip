@@ -18,4 +18,8 @@ public class Event extends Task {
     public String encode() {
         return String.format("%s ### %s ### %s ### %s", "event", super.encode(), this.from, this.to);
     }
+
+    public String getType() {
+        return "event";
+    }
 }
