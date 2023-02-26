@@ -12,6 +12,6 @@ public class ToDo extends Task{
 
     @Override
     public String putInputToDataFile() {
-        return "T | " + this.convertMarkingStatusToNumber() + " " + this.content + "\n";
+        return "T | " + this.convertMarkingStatusToNumber() + " | " + this.content + "\n";
     }
 }

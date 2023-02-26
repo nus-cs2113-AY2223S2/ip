@@ -1,14 +1,12 @@
-package duke;
+package duke.parser;
 
+import duke.common.Common;
 import duke.keycommands.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class CommandCenter {
-    private String userInput;
+public class Parser {
     private String[] separatedKeyWordAndContent;
     private String keyword;
+    private int taskNumber;
 
     public static final String BYE_COMMAND = "bye";
     public static final String HELP_COMMAND = "help";
@@ -20,19 +18,37 @@ public class CommandCenter {
     public static final String MARK_COMMAND = "mark";
     public static final String UNMARK_COMMAND = "unmark";
     public static final String INCORRECT_KEYWORD = "OOPS!!! I'm sorry, but I don't know what that means :-(";
-    public static final ArrayList<String> KEYWORDS = new ArrayList<>(
-            List.of(TODO_COMMAND, DEADLINE_COMMAND, EVENT_COMMAND, LIST_COMMAND,
-                    BYE_COMMAND, MARK_COMMAND, UNMARK_COMMAND, HELP_COMMAND, DELETE_COMMAND)
-    );
-    public CommandCenter() {
+    public Parser() {
     }
 
-    public void setVariables(String userInput) {
-        this.userInput = userInput;
+    public void splitKeywordAndContent(String userInput) {
         this.separatedKeyWordAndContent = userInput.split(" ", 2);
         this.keyword = separatedKeyWordAndContent[0];
     }
 
+    public boolean isLocateTaskNumberCommandInCorrectFormat() {
+        try{
+            taskNumber = Integer.parseInt(separatedKeyWordAndContent[1]);
+            return true;
+        } catch (NumberFormatException error) {
+            System.out.println(Common.INSTRUCTION + "\n" + keyword + ": Number");
+        } catch (IndexOutOfBoundsException error) {
+            System.out.println("Please give me some content for your command");
+        }
+        return false;
+    }
+
+    public void executeDeleteCommand() {
+        if (isLocateTaskNumberCommandInCorrectFormat()) {
+            new DeleteCommand(taskNumber);
+        }
+    }
+
+    public void executeChangeTaskStatusCommand() {
+        if (isLocateTaskNumberCommandInCorrectFormat()) {
+            new ChangeTaskStatusCommand(taskNumber, keyword);
+        }
+    }
     public void handleInput() {
         switch (this.keyword) {
         case BYE_COMMAND:
@@ -45,7 +61,7 @@ public class CommandCenter {
             new ListCommand();
             break;
         case DELETE_COMMAND:
-            new DeleteCommand(userInput,separatedKeyWordAndContent);
+            executeDeleteCommand();
             break;
         case TODO_COMMAND:
             new TodoCommand(separatedKeyWordAndContent);
@@ -57,10 +73,8 @@ public class CommandCenter {
             new EventCommand(separatedKeyWordAndContent);
             break;
         case MARK_COMMAND:
-            new ChangeTaskStatusCommand(userInput,separatedKeyWordAndContent,MARK_COMMAND);
-            break;
         case UNMARK_COMMAND:
-            new ChangeTaskStatusCommand(userInput,separatedKeyWordAndContent,UNMARK_COMMAND);
+            executeChangeTaskStatusCommand();
             break;
         default:
             System.out.println(INCORRECT_KEYWORD);

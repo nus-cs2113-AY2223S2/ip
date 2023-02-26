@@ -1,4 +1,4 @@
-package duke;
+package duke.common;
 import duke.file.FileClass;
 import duke.tasktypes.Task;
 

@@ -1,6 +1,6 @@
 package duke.keycommands;
 
-import duke.Common;
+import duke.common.Common;
 import duke.tasktypes.Deadline;
 import duke.tasktypes.Task;
 import duke.exception.EmptyDescription;

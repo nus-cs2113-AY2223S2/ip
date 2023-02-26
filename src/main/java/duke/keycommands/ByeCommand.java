@@ -1,6 +1,6 @@
 package duke.keycommands;
 
-import duke.Common;
+import duke.common.Common;
 
 public class ByeCommand {
     private static final String BYE_MESSAGE = "Bye. Hope to see you again soon!";

@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import duke.Common;
+import duke.common.Common;
 import duke.tasktypes.Deadline;
 import duke.tasktypes.Event;
 import duke.tasktypes.ToDo;
@@ -111,6 +111,16 @@ public class FileClass {
         }
         FileWriter fileWriter = new FileWriter(directory + "/" + filePath);
         fileWriter.write(newFileContent);
+        fileWriter.close();
+    }
+
+    public void updateTask(String filePath) throws IOException {
+        String updatedFileContent = "";
+        for (Task task : Common.tasks) {
+            updatedFileContent += task.putInputToDataFile();
+        }
+        FileWriter fileWriter = new FileWriter(directory + "/" + filePath);
+        fileWriter.write(updatedFileContent);
         fileWriter.close();
     }
 }

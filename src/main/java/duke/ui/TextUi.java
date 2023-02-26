@@ -1,7 +1,7 @@
 package duke.ui;
 
-import duke.CommandCenter;
-import duke.Common;
+import duke.common.Common;
+import duke.parser.Parser;
 
 import java.util.Scanner;
 
@@ -12,28 +12,27 @@ public class TextUi {
     private static final String ASKING_MESSAGE = "What can I do for you?";
     private String userInput;
     private Scanner in;
-    private CommandCenter commandCenter;
+    private Parser parser;
 
     public TextUi() {
         this.in = new Scanner(System.in);
-        this.commandCenter = new CommandCenter();
+        this.parser = new Parser();
     }
 
-    public void giveInputUntilExit() {
+    public void executeInputUntilExit() {
         while (true) {
-            userInput = getInput(in);
-            commandCenter.setVariables(userInput);
-            commandCenter.handleInput();
+            getInput();
+            String refinedUserInput = userInput.trim().replaceAll("\\s+", " ");
+            parser.splitKeywordAndContent(refinedUserInput);
+            parser.handleInput();
         }
     }
 
-    public String getInput(Scanner in) {
-        String userInput;
+    public void getInput() {
         System.out.println(Common.HORIZONTAL_LINE);
         System.out.println();
         userInput = in.nextLine();
         System.out.println(Common.HORIZONTAL_LINE);
-        return userInput;
     }
 
     public void showWelcomeMessage() {
