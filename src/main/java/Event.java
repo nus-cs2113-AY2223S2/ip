@@ -9,6 +9,7 @@ public class Event extends Task{
 
     /**
      * Returns the symbol for EVENT task
+     *
      * @return "E"
      */
     @Override
