@@ -31,7 +31,7 @@ public class FindCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Storage database) {
-        Ui.FindTaskByKeywordOpeningMessage();
+        Ui.findTaskByKeywordOpeningMessage();
         tasks.printTasksByKeyword(keyword);
         Ui.printLine();
     }

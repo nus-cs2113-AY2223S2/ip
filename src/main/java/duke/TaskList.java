@@ -68,7 +68,7 @@ public class TaskList {
     public void printTasksByKeyword(String keyword) {
         for (int i = 0; i < tasks.size(); ++i) {
             if (tasks.get(i).getDescription().contains(keyword)) {
-                System.out.println((i+1) + "." + tasks.get(i));
+                System.out.println((i + 1) + "." + tasks.get(i));
             }
         }
     }

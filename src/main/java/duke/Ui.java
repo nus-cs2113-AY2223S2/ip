@@ -35,7 +35,7 @@ public class Ui {
     /**
      * Outputs the find task command's opening message
      */
-    public static void FindTaskByKeywordOpeningMessage() {
+    public static void findTaskByKeywordOpeningMessage() {
         System.out.println(LINE + FIND_MESSAGE);
     }
 
@@ -129,8 +129,11 @@ public class Ui {
         System.out.print(LINE);
         if (command.startsWith("mark ")) {
             System.out.println(MARK_MESSAGE);
-        } else {
+        } else if (command.startsWith("unmark ")) {
             System.out.println(UNMARK_MESSAGE);
+        } else {
+            System.out.println("failed to mark");
+            return;
         }
         System.out.println("  " + tasks.getTaskFromIndex(indexOfMarking).toString() + LS + LINE);
     }
