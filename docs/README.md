@@ -129,6 +129,7 @@ Input Format: `mark TASK_INDEX`
 <u>Example of Usage</u>:
 
 Input: 
+
 `mark 1`
 
 Output:
@@ -148,6 +149,7 @@ Input Format: `unmark TASK_INDEX`
 <u>Example of Usage</u>:
 
 Input:
+
 `unmark 1`
 
 Output:
@@ -169,6 +171,7 @@ Input Format: `find DESCRIPTION`
 <u>Example of Usage</u>:
 
 Input:
+
 `find IP`
 
 Output:
@@ -180,13 +183,14 @@ Here are the matching task(s) in your list:
 ____________________________________________________________
 ```
 ---
-### Saying <code>**bye**</code>
+### Saying <code>**bye**</code> :sob:
 
 Exits the program.
 
 <u>Example of Usage</u>:
 
 Input:
+
 `bye`
 
 Output:
