@@ -52,6 +52,8 @@ To view all the tasks in the list, type `list`. DukeRunner will display all the 
 3. [E][ ] school carnival (from: Monday 9am to: 12pm)
 
 You have 3 tasks in the list.
+
+==============================
 ```
 
 ## Marking Tasks
@@ -91,4 +93,4 @@ DukeRunner automatically saves your tasks to a file on your local hard drive whe
 
 ## Conclusion
 
-Congratulations! You should now be able to use DukeRunner to manage your tasks more efficiently. If you have any further questions, please refer to the DukeRunner documentation or contact the DukeRunner support team.
+That's it! With DukeRunner, you can easily manage your tasks and never miss a deadline again.
