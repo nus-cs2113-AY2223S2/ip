@@ -17,4 +17,4 @@ bin/
 text-ui-test/EXPECTED-UNIX.TXT
 *.class
 src/main/java/META-INF/MANIFEST.MF
-src/main/java/data/duke.txt
+data/duke.txt
