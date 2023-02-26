@@ -8,8 +8,8 @@ import Handlers.StorageManager;
 public class DukeRunner {
 
     public static void main(String[] args) {
-        System.out.println("Hello! I'm Duke\nWhat can I do for you?\n");
-        System.out.println("==============================\n");
+        printHello();
+        printLineBreak();
         StorageManager.loadFileContents();
         Scanner in = new Scanner(System.in);
 
@@ -53,11 +53,23 @@ public class DukeRunner {
                 break;
             }
 
-            System.out.println("==============================\n");
+            printLineBreak();
         }
 
         in.close();
         StorageManager.saveFileContents();
+        printBye();
+    }
+
+    private static void printBye() {
         System.out.println("Bye. Hope to see you again soon!");
+    }
+
+    private static void printLineBreak() {
+        System.out.println("==============================\n");
+    }
+
+    private static void printHello() {
+        System.out.println("Hello! I'm Duke\nWhat can I do for you?\n");
     }
 }

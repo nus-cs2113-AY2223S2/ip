@@ -62,9 +62,9 @@ public class Parser {
         String deadlineLine = "";
         try {
             deadlineLine = getSecondWord(line);
-            int index = deadlineLine.indexOf("/");
-            String deadlineDescription = deadlineLine.substring(0, index - 1);
-            String deadlineDate = deadlineLine.substring(index + 4);
+            String[] deadlineDetails = deadlineLine.split("/by");
+            String deadlineDescription = deadlineDetails[0].trim();
+            String deadlineDate = deadlineDetails[1].trim();
             Deadline deadlineTask = new Deadline(deadlineDescription, deadlineDate);
             TaskManager.addTask(deadlineTask);
             System.out.println("Got it. I've added this task:\n" + deadlineTask.describeTask());
@@ -78,12 +78,11 @@ public class Parser {
         String eventLine = "";
         try {
             eventLine = getSecondWord(line);
-            int index2 = eventLine.indexOf("/");
-            String eventDescription = eventLine.substring(0, index2 - 1);
-            String eventDate = eventLine.substring(index2 + 4);
-            int index3 = eventDate.indexOf("/");
-            String eventFrom = eventDate.substring(2, index3 - 1);
-            String eventTo = eventDate.substring(index3 + 4);
+            String[] eventDetails = eventLine.split("/from");
+            String[] eventTiming = eventDetails[1].split("/to");
+            String eventDescription = eventDetails[0].trim();
+            String eventFrom = eventTiming[0].trim();
+            String eventTo = eventTiming[1].trim();
             Event eventTask = new Event(eventDescription, eventFrom, eventTo);
             TaskManager.addTask(eventTask);
             System.out.println("Got it. I've added this task:\n" + eventTask.describeTask());

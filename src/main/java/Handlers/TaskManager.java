@@ -57,13 +57,10 @@ public class TaskManager {
     }
 
     public static void readTaskFromFile(String line) {
-        // why do i need these backslashes?
         String[] taskDetails = line.split("\\|");
         String taskType = taskDetails[0].trim();
         String taskStatus = taskDetails[1].trim();
         String taskDescription = taskDetails[2].trim();
-        // System.out.println("taskDetails: " + taskDetails[0] + taskDetails[1] +
-        // taskDetails[2]);
 
         switch (taskType) {
         case "T":

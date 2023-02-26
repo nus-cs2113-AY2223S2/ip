@@ -45,7 +45,6 @@ public class StorageManager {
         Scanner s = new Scanner(f);
         while (s.hasNext()) {
             String nextLine = s.nextLine();
-            // System.out.println(nextLine);
             TaskManager.readTaskFromFile(nextLine);
         }
         s.close();
