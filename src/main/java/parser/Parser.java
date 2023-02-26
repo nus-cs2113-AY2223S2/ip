@@ -8,8 +8,6 @@ import task.Event;
 import task.Task;
 import java.time.format.DateTimeParseException;
 
-
-
 public class Parser {
     private boolean isExecuting;
 
@@ -95,8 +93,10 @@ public class Parser {
             return new ExitCommand();
         }
         else if (command.equals(Input.LIST.input)) {
-           return new ListCommand();
+            return new ListCommand();
         }
+
+
         else if (command.matches(Input.MARK.input + "|" + Input.UNMARK.input + "|" + Input.DELETE.input)) {
             //inputWords[1] is string that no longer contains the command string
             if (inputWords.length < 2) {
@@ -119,21 +119,3 @@ public class Parser {
     }
 }
 
-//
-// else if (command.equals(Input.UNMARK.input)) {
-//         if (inputWords.length < 2) {
-//        throw new InvalidInputException("Please specify which task you wish to unmark");
-//        } else {
-//        int indexToUnmark = Integer.parseInt(inputWords[1]) - 1;
-//        return new UnmarkCommand(indexToUnmark);
-//        }
-//        }
-//
-//        else if(command.equals(Input.DELETE.input)) {
-//        if(inputWords.length < 2) {
-//        throw new IncompleteInputException ("Please specify which task you wish to delete");
-//        } else {
-//        int indexToRemove = Integer.parseInt(inputWords[1])-1;
-//        return new RemoveCommand(indexToRemove);
-//        }
-//        }

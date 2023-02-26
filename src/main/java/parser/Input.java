@@ -5,6 +5,7 @@ public enum Input {
     DEADLINE("deadline"),
     EVENT("event"),
     LIST("list"),
+    FIND("find"),
     BYE("bye"),
     MARK("mark"),
     UNMARK("unmark"),

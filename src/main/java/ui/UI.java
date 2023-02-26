@@ -55,12 +55,21 @@ public class UI {
         printLine();
     }
 
+    public void printFoundTasks(ArrayList<Task> tasks) {
+        printLine();
+        if (tasks.size() ==0) {
+            System.out.println("\t There is no task matching your description");
+        } else {
+            System.out.println("\t Here are the matching tasks for your list: ");
+            int i =1;
+            for (Task t: tasks) {
+                System.out.println("\t " + i++ + "." + t.toString());
+            }
+        }
+        printLine();
+    }
+
     public void printMarkSuccess (Task task) {
-//        if (taskIndex < 0 || taskList.get(taskIndex) == null) {
-//            throw new DukeException("Please ensure that you enter the correct task number");
-//        }
-        //only gets executed if no exception is thrown
-//        taskList.get(taskIndex).isDone = true;
         printLine();
         System.out.println("\t Nice, I have marked this task as done: ");
         System.out.println("\t " + task);
@@ -68,10 +77,6 @@ public class UI {
     }
 
     public void printUnmarkSuccess (Task task)  {
-//        if (taskIndex < 0 || taskList.get(taskIndex) == null) {
-//            throw new DukeException("Please ensure that you enter the correct task number");
-//        }
-//        taskList.get(taskIndex).isDone = false;
         printLine();
         System.out.println("\t Ouch, I have unmarked this task: ");
         System.out.println("\t " + task);
