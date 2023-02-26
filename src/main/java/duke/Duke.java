@@ -20,6 +20,7 @@ public class Duke {
 
     private static final String FILE_PATH = "data/tasks.txt";
     protected static boolean isByeEnter = false;
+
     private static final ArrayList<Task> taskNameList = new ArrayList<>();
 
 
