@@ -29,13 +29,11 @@ public class Todo {
 
     public void mark() {
         this.isDone = true;
-        System.out.println("目標達成！- [" + this.getIsDone() + "] " + this.description);
 
     }
 
     public void unMark() {
         this.isDone = false;
-        System.out.println("ええ。。。噓つき。- [" + this.getIsDone() + "] " + this.description);
 
     }
 
