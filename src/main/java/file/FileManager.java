@@ -1,6 +1,5 @@
 package file;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Scanner;
 import tasks.Deadline;
 import tasks.Event;
@@ -10,11 +9,23 @@ import java.io.FileWriter;
 import java.io.IOException;
 import tasklist.Tasklist;
 
+/*
+ * Handles the reading and writing to and from the duke.txt file
+ * File f represents the duke.txt file
+ */
 public class FileManager {
     
     public static File f = new File("duke.txt");
     
-    public static void readIntoList()throws FileNotFoundException, IOException {
+    /*
+     * Reads the duke.txt file into the Tasklist taskslist
+     * Creates a new duke.txt if the file does not exist
+     * Scanner s represents the scanner used in reading the file
+     * 
+     * @throws IOException if there is an input/output error
+     * @see IOException
+     */
+    public static void readIntoList()throws IOException {
         if (!f.exists()){
             f.createNewFile();
         }
@@ -46,6 +57,13 @@ public class FileManager {
         s.close();
     }
 
+    /*
+     * Write the encoded tasks in taskslist into the file
+     * FileWriter fw represents the FileWriter used in writing the file
+     * 
+     * @throws IOException if there is an input/output error
+     * @see IOException
+     */
     public static void saveFile()throws IOException{
         FileWriter fw = new FileWriter(f);
         for (int i = 0; i < Tasklist.tasksList.size(); i++){
@@ -55,11 +73,13 @@ public class FileManager {
         fw.close();
     }
 
+    /*
+     * Initailises readIntoList() method when duke is started
+     * Catches the IOException throw by readIntoList()
+     */
     public static void initialise(){
         try{
             readIntoList();
-        } catch (FileNotFoundException e){
-            System.out.println("File Not Found");
         } catch (IOException e){
             System.out.println("IO Error");
         }
