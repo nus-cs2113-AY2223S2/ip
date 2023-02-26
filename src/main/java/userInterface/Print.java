@@ -24,4 +24,9 @@ public class Print {
         System.out.println("\tadded: " + description);
         printLine(); 
     }
+
+    public static void printMatchingTasks(){
+        System.out.println("\tHere are the matching tasks in your list!");
+        printLine();
+    }
 }

@@ -1,6 +1,7 @@
 package tasklist;
 import exceptions.InvalidAddTaskException;
 import exceptions.InvalidCommandException;
+import exceptions.InvalidFindTaskException;
 import exceptions.TaskListOutofBoundsException;
 import tasks.Deadline;
 import tasks.Event;
@@ -143,4 +144,20 @@ public class Tasklist {
         }
         return markIndex;
     }
+
+    public static void findTask(String[] userInputArray)throws InvalidFindTaskException{
+        if (userInputArray.length == 1){
+            throw new InvalidFindTaskException();
+        }
+        String taskName = userInputArray[1];
+        Print.printMatchingTasks();
+        for (int i = 0; i < tasksList.size(); i++){
+            Task currentTask = tasksList.get(i);
+            if (currentTask.description.contains(taskName)){
+                System.out.println("\t" + currentTask.getStatusIcon() + currentTask.printTask());
+            }
+        }
+        Print.printLine();
+    }
+
 }

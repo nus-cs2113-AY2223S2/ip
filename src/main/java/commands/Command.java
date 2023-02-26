@@ -1,6 +1,7 @@
 package commands;
 import exceptions.InvalidAddTaskException;
 import exceptions.InvalidCommandException;
+import exceptions.InvalidFindTaskException;
 import exceptions.TaskListOutofBoundsException;
 import userInterface.Print;
 import file.FileManager;
@@ -40,6 +41,9 @@ public class Command {
             case "event":
                 Tasklist.addEvent(userInputArray);
                 break;
+            case "find":
+                Tasklist.findTask(userInputArray);
+                break;
             default:
                 Tasklist.throwInvalidCommand();
                 break;
@@ -54,6 +58,8 @@ public class Command {
             System.out.println(InvalidAddTaskException.invalidAddTaskMessage);
         } catch (IOException e){
             System.out.println("File Write Error");
+        } catch (InvalidFindTaskException e){
+            System.out.println(InvalidFindTaskException.invalidFindTaskMessage);
         } catch (DateTimeParseException e){
             System.out.println("Pls enter the date in format yyyy-mm-dd!");
         }
