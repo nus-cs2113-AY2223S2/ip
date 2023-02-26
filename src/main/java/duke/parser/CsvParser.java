@@ -5,10 +5,10 @@ import java.util.UnknownFormatConversionException;
 import duke.command.TodoCommand;
 import duke.command.DeadlineCommand;
 import duke.command.EventCommand;
-import duke.tasklist.task.Deadline;
-import duke.tasklist.task.Event;
-import duke.tasklist.task.Task;
-import duke.tasklist.task.Todo;
+import duke.data.task.Deadline;
+import duke.data.task.Event;
+import duke.data.task.Task;
+import duke.data.task.Todo;
 
 
 public class CsvParser {

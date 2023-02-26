@@ -1,8 +1,8 @@
 package duke.command;
 
-import duke.tasklist.exception.DuplicateTaskException;
-import duke.tasklist.task.Task;
-import duke.tasklist.task.Event;
+import duke.data.exception.DuplicateTaskException;
+import duke.data.task.Task;
+import duke.data.task.Event;
 import duke.common.CommandReply;
 
 public class EventCommand extends Command {

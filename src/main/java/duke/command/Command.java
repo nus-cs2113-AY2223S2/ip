@@ -1,16 +1,11 @@
 package duke.command;
 
-import duke.tasklist.TaskList;
+import duke.data.TaskList;
 
 public abstract class Command {
     protected TaskList taskList;
-    protected int index = -1;
 
     public Command() {}
-
-    public Command(int index) {
-        this.index = index;
-    }
 
     public void setTaskList(TaskList taskList) {
         this.taskList = taskList;

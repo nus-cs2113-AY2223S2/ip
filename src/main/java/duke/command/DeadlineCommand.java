@@ -1,9 +1,9 @@
 package duke.command;
 
 import duke.common.CommandReply;
-import duke.tasklist.exception.DuplicateTaskException;
-import duke.tasklist.task.Task;
-import duke.tasklist.task.Deadline;
+import duke.data.exception.DuplicateTaskException;
+import duke.data.task.Task;
+import duke.data.task.Deadline;
 
 public class DeadlineCommand extends Command {
     public static final String COMMAND_WORD = "deadline";

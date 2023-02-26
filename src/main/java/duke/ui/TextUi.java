@@ -1,10 +1,10 @@
 package duke.ui;
 
-import duke.command.CommandResult;
-import duke.common.Messages;
-
 import java.util.Scanner;
 import java.util.List;
+
+import duke.command.CommandResult;
+import duke.common.Messages;
 
 public class TextUi {
     private static final Scanner scanner = new Scanner(System.in);
@@ -54,5 +54,4 @@ public class TextUi {
         }
         return input;
     }
-
 }

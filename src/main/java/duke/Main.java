@@ -1,18 +1,18 @@
 package duke;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import duke.command.Command;
 import duke.command.CommandResult;
 import duke.command.ExitCommand;
 import duke.parser.CommandParser;
 import duke.storage.StorageFile;
-import duke.tasklist.TaskList;
+import duke.data.TaskList;
 import duke.ui.TextUi;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 public class Main {
-    private static final String VERSION = "0.1";
+    private static final String VERSION = "0.2";
     private TextUi ui;
     private TaskList taskList;
     private StorageFile storageFile;
@@ -32,6 +32,7 @@ public class Main {
             this.ui = new TextUi();
             this.taskList = new TaskList();
             this.storageFile = new StorageFile();
+
             try {
                 int lines = storageFile.loadCsvLoad(taskList);
                 ui.printMessage(String.format("Load %d task(es) from file '%s'", lines, storageFile.getPath()));

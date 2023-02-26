@@ -1,12 +1,22 @@
 package duke.parser;
 
-import duke.command.*;
+import duke.command.Command;
+import duke.command.DeadlineCommand;
+import duke.command.DeleteCommand;
+import duke.command.EventCommand;
+import duke.command.ExitCommand;
+import duke.command.HelpCommand;
+import duke.command.ListCommand;
+import duke.command.MarkCommand;
+import duke.command.TodoCommand;
+import duke.command.UnmarkCommand;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CommandParser {
     private static final String OOPS = "☹ OOPS!!! ";
+
     public CommandParser() {}
 
     public Command parseCommand(String userInputCommand) throws IllegalArgumentException {

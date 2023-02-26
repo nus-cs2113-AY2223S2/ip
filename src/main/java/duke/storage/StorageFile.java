@@ -1,11 +1,5 @@
 package duke.storage;
 
-
-import duke.tasklist.TaskList;
-import duke.tasklist.exception.DuplicateTaskException;
-import duke.tasklist.task.Task;
-import duke.parser.CsvParser;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -13,6 +7,12 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
+
+import duke.data.task.Task;
+import duke.data.TaskList;
+import duke.data.exception.DuplicateTaskException;
+import duke.parser.CsvParser;
+
 
 public class StorageFile {
     private static final String DEFAULT_DIR = "data";

@@ -1,11 +1,11 @@
 package duke.command;
 
-import duke.common.CommandReply;
-import duke.tasklist.exception.DuplicateMarkException;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import duke.common.CommandReply;
+import duke.data.exception.DuplicateMarkException;
 
 public class MarkCommand extends Command{
     public static final String COMMAND_WORD = "mark";
