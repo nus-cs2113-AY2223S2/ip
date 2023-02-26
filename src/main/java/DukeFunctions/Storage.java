@@ -14,12 +14,23 @@ public class Storage {
 
     private File f;
 
+    /**
+     * Creates a new Storage object with the specified file path.
+     *
+     * @param filePath Path of the file to be read from and written to.
+     */
     public Storage(String filePath) {
         f = new File(filePath);
 
 
     }
 
+    /**
+     * Saves the taskList tasks to the file
+     *
+     * @param tasks The taskList to be saved.
+     * @throws DukeError If there is an error writing to the file.
+     */
     public void save(TaskList tasks) throws DukeError {
         try {
 
@@ -42,6 +53,12 @@ public class Storage {
 
     }
 
+    /**
+     * Loads the list of tasks from the file.
+     *
+     * @return the TaskList loaded from the file.
+     * @throws DukeError If there is an error reading from the file.
+     */
     public ArrayList<Todo> load() throws DukeError {
 
         ArrayList<Todo> tasks = new ArrayList<>();

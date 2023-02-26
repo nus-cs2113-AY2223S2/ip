@@ -3,7 +3,9 @@ package DukeFunctions;
 import Exceptions.DukeError;
 import Exceptions.MissingInputException;
 
-
+/**
+ * Takes in a string input and execute the command within it.
+ */
 public class Parser { //takes in a string input and executes the command within it
 
 
@@ -13,6 +15,14 @@ public class Parser { //takes in a string input and executes the command within 
 
     public boolean isExit = false;
 
+    /**
+     * Parses the given input command and executes the appropriate action.
+     *
+     * @param input The input command to parse.
+     * @param tasks The list of tasks to modify based on the command.
+     * @param ui    The user interface to display output.
+     * @throws DukeError If there is an error parsing or executing the command.
+     */
     public void parseCommand(String input, TaskList tasks, Ui ui) throws DukeError {
         String[] words = input.split(" ");
         String command = words[0];
