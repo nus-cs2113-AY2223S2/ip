@@ -18,13 +18,13 @@
 	  [D][ ] return book (by: Monday)
 	Now you have 2 tasks in the list.
 	____________________________________
-	Duke Error: Wrong format! Please include [Ljava.lang.String;@9f70c54
+	Duke Error: Wrong format! Please include /from and /to
 	____________________________________
 	Got it. I've added this task:
 	  [E][ ] project meeting (from: Monday 4pm to: Monday 6pm)
 	Now you have 3 tasks in the list.
 	____________________________________
-	No such task exists! Please try again
+	Duke Error: No such task exists! Please try again
 	____________________________________
 	Nice! I've marked this task as done:
 	  [T][X] read a book
@@ -54,7 +54,7 @@
 	  [D][ ] return book (by: Monday)
 	Now you have 2 tasks in the list.
 	____________________________________
-	No such task exists! Please try again
+	Duke Error: No such task exists! Please try again
 	____________________________________
 	Saving tasks... Hope to see you again soon!
 	____________________________________
