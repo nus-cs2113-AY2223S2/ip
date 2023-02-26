@@ -4,6 +4,12 @@ import Ui.Ui;
 
 public class RolexException {
 
+    /**
+     * This method takes in the user input and detects the respective error to be displayed
+     * on the terminal.
+     *
+     * @param userInput: input entered by user
+     */
     public static void detectError(String userInput){
         Ui.printLines();
         if(userInput.startsWith("todo")){
@@ -32,6 +38,10 @@ public class RolexException {
         System.out.println("OOPS!! The description of find cannot be empty!☹");
     }
 
+    public static void runListError(){
+        System.out.println("OOPS!! There are no tasks for me to list!☹");
+    }
+
     public static void runTodoError(){
         System.out.println("OOPS!! The description of todo cannot be empty!☹");
     }
@@ -52,8 +62,5 @@ public class RolexException {
         System.out.println("OOPS!! I don't know what to unmark!☹");
     }
 
-    public static void runListError(){
-        System.out.println("OOPS!! There are no tasks for me to list!☹");
-    }
 
 }

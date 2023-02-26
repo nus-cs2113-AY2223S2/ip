@@ -21,6 +21,68 @@ public class Command {
         return task;
     }
 
+
+    /***
+     * This method takes in the user input and extracts the information from
+     * task 'TODO'.
+     * It then creates an object of class type Todo.
+     *
+     * @param userInput: the input from user
+     */
+    public static void inputIsTodo(String userInput) {
+        if (userInput.startsWith("todo") && userInput.length() <= 5) {
+            RolexException.detectError(userInput);
+        } else {
+            String todoName = Parser.taskName(userInput, 5);
+            Task.addPrintTask(new Todo(todoName), task);
+        }
+    }
+
+
+    /***
+     * This method takes in the user input and extracts the information from
+     * task 'DEADLINE'.
+     * It then creates an object of class type Deadline.
+     *
+     * @param userInput: the input from user
+     */
+    public static void inputIsDeadline(String userInput) {
+        int indexOfBy = Parser.indexOfSubstring(userInput, "/by");
+        if (indexOfBy == -1) {
+            RolexException.detectError(userInput);
+        } else {
+            String deadlineName = Parser.taskName(userInput, 9, indexOfBy - 1);
+            String by = Parser.taskName(userInput, indexOfBy + 4);
+            by = Parser.deadlineDate(by);
+            Task.addPrintTask(new Deadline(deadlineName, by), task);
+        }
+    }
+
+
+    /***
+     * This method takes in the user input and extracts the information from
+     * task 'EVENT'.
+     * It then creates an object of class type Event.
+     *
+     * @param userInput: the input from user
+     */
+    public static void inputIsEvent(String userInput) {
+        int indexOfFrom = Parser.indexOfSubstring(userInput, "/from");
+        int indexOfTo = Parser.indexOfSubstring(userInput, "/to");
+        if (indexOfFrom == -1 || indexOfTo == -1) {
+            RolexException.detectError(userInput);
+        } else {
+            String eventName = Parser.taskName(userInput, 6, indexOfFrom - 1);
+            String startTime = Parser.taskName(userInput, indexOfFrom + 6, indexOfTo - 1);
+            String endTime = Parser.taskName(userInput, indexOfTo + 4);
+            Task.addPrintTask(new Event(eventName, startTime, endTime), task);
+        }
+    }
+
+
+    /***
+     * This method is designed to list all the tasks entered by the user
+     */
     public static void inputIsList() {
         if (task.size() >= 1) {
             Ui.printLines();
@@ -36,6 +98,13 @@ public class Command {
         }
     }
 
+
+    /**
+     * This method is designed to display all the tasks that match to a
+     * particular keyword entered by the user.
+     *
+     * @param userInput: the input entered by user
+     */
     public static void inputIsFind(String userInput){
         if(userInput.startsWith("find") && userInput.length() <= 5) {
             RolexException.detectError(userInput);
@@ -66,6 +135,12 @@ public class Command {
         }
     }
 
+
+    /**
+     * This method is designed to mark a task.
+     *
+     * @param userInput: input entered by user
+     */
     public static void inputIsMark(String userInput) {
         int index = Parser.taskIndex(userInput, 5);
         if (index > 0 && index <= task.size()) {
@@ -75,6 +150,12 @@ public class Command {
         }
     }
 
+
+    /**
+     * This method is designed to unmark a task.
+     *
+     * @param userInput: input entered by user
+     */
     public static void inputIsUnmark(String userInput) {
         int index = Parser.taskIndex(userInput, 7);
         if (index > 0 && index <= task.size()) {
@@ -84,15 +165,12 @@ public class Command {
         }
     }
 
-    public static void inputIsTodo(String userInput) {
-        if (userInput.startsWith("todo") && userInput.length() <= 5) {
-            RolexException.detectError(userInput);
-        } else {
-            String todoName = Parser.taskName(userInput, 5);
-            Task.addPrintTask(new Todo(todoName), task);
-        }
-    }
 
+    /**
+     * This method is designed to delete a task.
+     *
+     * @param userInput: input entered by user
+     */
     public static void inputIsDelete(String userInput) {
         if (userInput.equalsIgnoreCase("delete")) {
             RolexException.detectError(userInput);
@@ -106,31 +184,6 @@ public class Command {
             } else {
                 Ui.printInvalidNumber();
             }
-        }
-    }
-
-    public static void inputIsDeadline(String userInput) {
-        int indexOfBy = Parser.indexOfSubstring(userInput, "/by");
-        if (indexOfBy == -1) {
-            RolexException.detectError(userInput);
-        } else {
-            String deadlineName = Parser.taskName(userInput, 9, indexOfBy - 1);
-            String by = Parser.taskName(userInput, indexOfBy + 4);
-            by = Parser.deadlineDate(by);
-            Task.addPrintTask(new Deadline(deadlineName, by), task);
-        }
-    }
-
-    public static void inputIsEvent(String userInput) {
-        int indexOfFrom = Parser.indexOfSubstring(userInput, "/from");
-        int indexOfTo = Parser.indexOfSubstring(userInput, "/to");
-        if (indexOfFrom == -1 || indexOfTo == -1) {
-            RolexException.detectError(userInput);
-        } else {
-            String eventName = Parser.taskName(userInput, 6, indexOfFrom - 1);
-            String startTime = Parser.taskName(userInput, indexOfFrom + 6, indexOfTo - 1);
-            String endTime = Parser.taskName(userInput, indexOfTo + 4);
-            Task.addPrintTask(new Event(eventName, startTime, endTime), task);
         }
     }
 
