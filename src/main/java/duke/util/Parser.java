@@ -6,12 +6,43 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.Todo;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
 
+/**
+ * A <code>Parser</code> object takes care of the processing of user
+ * inputs and registering tasks from any pre-existing Duke files.
+ */
 public class Parser {
 
     private static Ui ui;
     private static boolean isExit = false;
 
+    /**
+     * Checks for input from user via command line.
+     *
+     * @return String containing user input.
+     * @throws NoSuchElementException when program is closed.
+     */
+    public static String getInput() throws NoSuchElementException {
+        Scanner in = new Scanner(System.in);
+        String line = "";
+        try {
+            line = in.nextLine();
+        } catch (NoSuchElementException e) {
+            ui.printExiting();
+        }
+        return line;
+    }
+
+    /**
+     * Processes input from user given by ui function.
+     * Calls different functions based on the given commands.
+     *
+     * @param line String containing user input
+     * @param taskList List to store all tasks listed.
+     * @throws DukeException If no keywords are found.
+     */
     public static void processInput(String line, TaskList taskList) throws DukeException {
         try {
                 String[] words = line.split(" ");
@@ -39,6 +70,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Registers task found in pre-existing Duke data file on system.
+     *
+     * @param lists List to store all tasks.
+     * @param inputLines Divided strings from user input
+     * @return List containing all tasks.
+     */
     public static ArrayList<Task> registerDukeFileTasks (ArrayList<Task> lists, String[] inputLines) {
         String type = inputLines[0].strip();
         boolean isDone = (inputLines[1].equals("1")) ? true : false;
@@ -62,18 +100,27 @@ public class Parser {
         return lists;
     }
 
-    public static void registerTodo(ArrayList<Task> lists, String line) throws IndexOutOfBoundsException {
-        try {
-            String[] inputLine = line.split(" ", 2);
-            Task item = new Todo(inputLine[1]);
-            lists.add(item);
-            ui.printAddTask(item);
-            ui.printListSize(lists.size());
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("Your deadline must be of the following format: deadline (deadline name) /by (date)");
-        }
+    /**
+     * Register a to-do task.
+     *
+     * @param lists List to store all tasks.
+     * @param line String containing task description.
+     */
+    public static void registerTodo(ArrayList<Task> lists, String line){
+        String[] inputLine = line.split(" ", 2);
+        Task item = new Todo(inputLine[1]);
+        lists.add(item);
+        ui.printAddTask(item);
+        ui.printListSize(lists.size());
     }
 
+    /**
+     * Register a deadline task.
+     *
+     * @param lists List to store all tasks.
+     * @param line String containing task description.
+     * @throws IndexOutOfBoundsException If no deadline is provided after description.
+     */
     public static void registerDeadline(ArrayList<Task> lists, String line) throws IndexOutOfBoundsException {
         try {
             String[] inputLines = line.split(" ", 2);
@@ -89,6 +136,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Register an event task.
+     *
+     * @param lists List to store all tasks.
+     * @param line String containing task description.
+     * @throws IndexOutOfBoundsException If no event start and/or end date is provided after description.
+     */
     public static void registerEvent(ArrayList<Task> lists, String line) throws IndexOutOfBoundsException {
         try {
             String[] inputLines = line.split(" ", 2);

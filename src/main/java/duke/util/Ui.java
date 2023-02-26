@@ -1,11 +1,12 @@
 package duke.util;
 
 import duke.task.Task;
-
 import java.util.ArrayList;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
 
+/**
+ * A <code>UI</code> object takes care of the printing of statuses
+ * and results after each operation is performed.
+ */
 public class Ui {
     public Ui() {
     }
@@ -58,17 +59,6 @@ public class Ui {
             itemNumber++;
         }
         printLine();
-    }
-
-    public static String getInput() throws NoSuchElementException {
-        Scanner in = new Scanner(System.in);
-        String line = "";
-        try {
-            line = in.nextLine();
-        } catch (NoSuchElementException e) {
-            printExiting();
-        }
-        return line;
     }
 }
 

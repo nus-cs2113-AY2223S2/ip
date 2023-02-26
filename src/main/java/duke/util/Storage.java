@@ -10,6 +10,10 @@ import java.util.Scanner;
 import java.util.StringJoiner;
 import java.util.ArrayList;
 
+/**
+ * A <code>Storage</code> object takes care of the reading and
+ * writing of the current task list into the exported file.
+ */
 public class Storage {
     private static String filePath;
     private static String fileFolder;

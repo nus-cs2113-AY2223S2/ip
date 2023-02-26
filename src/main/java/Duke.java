@@ -28,11 +28,15 @@ public class Duke {
         }
     }
 
+    /**
+     * Takes in user inputs from the command line.
+     * Program is exited if isExit is true.
+     */
     public static void run() throws DukeException {
         ui.printIntro();
         boolean isExit = false;
         while (!isExit) {
-            String fullCommand = ui.getInput();
+            String fullCommand = parser.getInput();
             ui.printLine(); // show the divider line ("_______")
             parser.processInput(fullCommand, tasks);
             isExit = Parser.toExit();
