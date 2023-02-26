@@ -22,7 +22,7 @@ public class Duke {
         try {
             tasks = new TaskList(storage.readDukeFile());
         } catch (FileNotFoundException e) {
-            ui.showLoadingError();
+            ui.printLoadingError();
             storage.makeDukeDataDirectory();
             tasks = new TaskList(new ArrayList<Task>());
         }

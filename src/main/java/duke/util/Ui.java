@@ -1,6 +1,8 @@
 package duke.util;
 
 import duke.task.Task;
+
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -43,8 +45,19 @@ public class Ui {
         System.out.println("You chose a task that does not exist!");
     }
 
-    public static void showLoadingError() {
+    public static void printLoadingError() {
         System.out.println("New directory has been made. Please provide some data to be written to the file.");
+    }
+
+    public static void printSearchResults(ArrayList<Task> searchResults) {
+        int itemNumber = 1;
+        System.out.println("Here are the matching tasks in your list:");
+        for (Task item : searchResults) {
+            System.out.println(itemNumber + ". " + item.getTypeIcon()
+                    + item.getStatusIcon() + item.description);
+            itemNumber++;
+        }
+        printLine();
     }
 
     public static String getInput() throws NoSuchElementException {
