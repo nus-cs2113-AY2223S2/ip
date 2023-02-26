@@ -7,6 +7,7 @@ import duke.exception.IllegalCommandException;
 import duke.task.Task;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class TaskList {
@@ -23,7 +24,7 @@ public class TaskList {
                 // empty list -> print help
                 Ui.printException("There is nothing in your list right now.");
             } else {
-                printList();
+                printList(tasks);
             }
             return;
         }
@@ -53,6 +54,15 @@ public class TaskList {
             case HELP:
                 System.out.println(Ui.HELP_PAGE);
                 break;
+            case FIND:
+                ArrayList<Task> matchTasks = new ArrayList<>();
+                for (Task t : tasks) {
+                    if (t.getTaskDescription().contains(inputLine[1])) {
+                        matchTasks.add(t);
+                    }
+                }
+                printList(matchTasks);
+                break;
             default:
                 throw new IllegalCommandException(command);
             }
@@ -62,13 +72,13 @@ public class TaskList {
         }
     }
 
-    public static void printList() {
+    public static void printList(ArrayList<Task> printTask) {
         System.out.println(Ui.LINE_BREAK);
         Ui.printlnWithIndentation("Here are the tasks in your list: ");
-        for (int i = 0; i < tasks.size(); ++i) {
+        for (int i = 0; i < printTask.size(); ++i) {
             int taskNumber = i + 1;
             System.out.println(Ui.INDENTATION + taskNumber + "." +
-                    tasks.get(i).toString());
+                    printTask.get(i).toString());
         }
         System.out.println(Ui.LINE_BREAK);
     }
