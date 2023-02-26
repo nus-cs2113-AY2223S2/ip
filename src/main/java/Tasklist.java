@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 public class Tasklist {
     //class level attributes
     private static Tasklist[] taskArray = new Tasklist[100];
@@ -30,6 +31,16 @@ public class Tasklist {
 
     public static Tasklist get(int index) {
         return taskArray[index];
+    }
+
+    public static ArrayList<String> find(String queryString){
+        ArrayList<String> foundTaskList = new ArrayList<String>();
+        for(int index=0;index<lastIndex;index++){
+            if(taskArray[index].taskName.contains(queryString)){
+                foundTaskList.add(taskArray[index].description);
+            }
+        }
+        return foundTaskList;
     }
 
     //file I/O

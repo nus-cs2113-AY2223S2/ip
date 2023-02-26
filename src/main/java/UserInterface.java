@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 public class UserInterface {
     private static String DASH = "__________________________________";
 
@@ -36,5 +37,14 @@ public class UserInterface {
         String totalNumberOfTasks=Integer.toString(Tasklist.lastIndex);
         System.out.println(DASH+"\nGot it. I've added this task:\n"+latestTask.description+"\nNow you have "+
                 totalNumberOfTasks+" tasks in the list.\n"+DASH);
+    }
+
+    public static void printFoundList(ArrayList<String> foundTasks){
+        System.out.println(DASH+"\nI found these!");
+        for(int index = 0;index<foundTasks.size();index++){
+            String taskDescription = Integer.toString(index+1)+"."+foundTasks.get(index).trim();
+            System.out.println(taskDescription);
+        }
+        System.out.println(DASH);
     }
 }
