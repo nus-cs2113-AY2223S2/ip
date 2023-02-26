@@ -14,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.Scanner;
+import java.util.ArrayList;
 public class FileManager {
     private static final String DIR_NAME = "data";
     private static final String FILE_NAME = "tusky.txt";
@@ -23,17 +24,15 @@ public class FileManager {
     public static String getPath(){
         return DIR_NAME + "/" + FILE_NAME;
     }
-    public static Task[] readFile () throws FileNotFoundException, NoSuchFileException {
+    public static ArrayList<Task> readFile () throws FileNotFoundException, NoSuchFileException {
         File f = new File(getPath()); // create a File for the given file path
         try {
             Scanner s = new Scanner(f);
 //            Reader br = Files.newBufferedReader(Paths.get(getPath()));
 //            Task[] tasks = gson.fromJson(br, Task[].class);
-            Task[] tasks = new Task[100];
-            int taskCount = 0;
+            ArrayList<Task> tasks = new ArrayList<>();
             while(s.hasNext()){
-                tasks[taskCount] = parseTask(s.nextLine().trim());
-                taskCount++;
+                tasks.add(parseTask(s.nextLine().trim()));
             }
             s.close();
             return tasks;
@@ -76,7 +75,7 @@ public class FileManager {
 
     }
 
-    public static void writeFile(Task[] tasks) {
+    public static void writeFile(ArrayList<Task> tasks) {
 
 
         File directory = new File(DIR_NAME);

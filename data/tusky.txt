@@ -1,2 +1,1 @@
-E|false|Benjamin attend CS2113 Lecture Friday 17 Feb|4|6pm
-D|false|Benjamin submit UG draft|today 2359
+E|false|Benjamin attend CS2113 Lecture Friday 17 Feb 2023|4|6pm

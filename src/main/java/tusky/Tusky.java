@@ -3,6 +3,7 @@ package tusky;
 import tusky.io.KeyNotFoundException;
 import tusky.io.Messages;
 import tusky.io.Parser;
+import tusky.repository.FileManager;
 
 import tusky.tasks.ToDo;
 import tusky.tasks.Task;
@@ -11,8 +12,11 @@ import tusky.tasks.Event;
 import tusky.tasks.Deadline;
 import tusky.tasks.EmptyDescriptionException;
 
+import java.nio.file.NoSuchFileException;
 import java.util.Scanner;
 import java.util.ArrayList;
+
+import java.io.FileNotFoundException;
 
 public class Tusky {
     static ArrayList<Task> tasks = new ArrayList<>();
@@ -24,6 +28,7 @@ public class Tusky {
         printf("   %s\n", task.getDetailedString());
         printf(Messages.TASK_COUNT.toString(), tasks.size());
         println(Messages.LINE.toString());
+        FileManager.writeFile(tasks);
     }
 
     public static void listTasks () {
@@ -43,6 +48,7 @@ public class Tusky {
             tasks.get(index).setDone(true);
             println(Messages.TASK_MARKED.toString());
             printf("   %s\n", tasks.get(index).getDetailedString());
+            FileManager.writeFile(tasks);
         }
         println(Messages.LINE.toString());
     }
@@ -55,6 +61,7 @@ public class Tusky {
             tasks.get(index).setDone(false);
             println(Messages.TASK_UNMARKED.toString());
             printf("   %s\n", tasks.get(index).getDetailedString());
+            FileManager.writeFile(tasks);
         }
         println(Messages.LINE.toString());
     }
@@ -69,6 +76,7 @@ public class Tusky {
             println(Messages.TASK_DELETED.toString());
             printf("   %s\n", t.getDetailedString());
             printf(Messages.TASK_COUNT.toString(), tasks.size());
+            FileManager.writeFile(tasks);
         }
         println(Messages.LINE.toString());
     }
@@ -106,7 +114,7 @@ public class Tusky {
                     break;
                 case "todo":
                     try{
-                        addTask(new ToDo("false", parser.getBody()));
+                        addTask(new ToDo("false",parser.getBody()));
                     } catch (EmptyDescriptionException e){
                         println(Messages.LINE.toString());
                         printf(Messages.ERR_EMPTY_TASK_DESCRIPTION.toString(), TaskType.TODO);
@@ -115,7 +123,7 @@ public class Tusky {
                     break;
                 case "event":
                     try{
-                        addTask(new Event("false", parser.getBody(), parser.get("from"), parser.get("to")));
+                        addTask(new Event("false",parser.getBody(), parser.get("from"), parser.get("to")));
                     } catch (EmptyDescriptionException e){
                         println(Messages.LINE.toString());
                         printf(Messages.ERR_EMPTY_TASK_DESCRIPTION.toString(), TaskType.EVENT);
@@ -124,7 +132,7 @@ public class Tusky {
                     break;
                 case "deadline":
                     try{
-                        addTask(new Deadline("false", parser.getBody(), parser.get("by")));
+                        addTask(new Deadline("false",parser.getBody(), parser.get("by")));
                     } catch (EmptyDescriptionException e){
                         println(Messages.LINE.toString());
                         printf(Messages.ERR_EMPTY_TASK_DESCRIPTION.toString(), TaskType.DEADLINE);
@@ -172,6 +180,22 @@ public class Tusky {
 
         println(Messages.LINE.toString());
         println(Messages.WELCOME.toString());
+
+        try{
+            tasks = FileManager.readFile();
+            if(tasks != null){
+                println(Messages.FILE_LOADED.toString());
+            } else {
+                println(Messages.FILE_CREATED.toString());
+                tasks = new ArrayList<>();
+                FileManager.writeFile(tasks);
+            }
+        } catch (FileNotFoundException | NoSuchFileException e){
+            println(Messages.FILE_CREATED.toString());
+            tasks = new ArrayList<>();
+            FileManager.writeFile(tasks);
+
+        }
         println(Messages.LINE.toString());
 
         beginInputLoop();
