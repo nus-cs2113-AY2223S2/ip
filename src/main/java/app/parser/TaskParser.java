@@ -6,7 +6,16 @@ import app.tasks.Event;
 import app.tasks.Task;
 import app.tasks.ToDo;
 
+/**
+ * Used to convert existing tasks in task-list to text for storage in text file.
+ */
 public class TaskParser {
+    /**
+     * Method used to convert a particular task into a string with the correct format.
+     * @param task The Task to be represented as a string.
+     * @return A string containing all the attributes of the Task.
+     * @throws DukeException If error occurs when processing a Task in the Task-list.
+     */
     public static String convertTaskToString(Task task) throws DukeException {
         String outputString;
         String delimiter = " | ";

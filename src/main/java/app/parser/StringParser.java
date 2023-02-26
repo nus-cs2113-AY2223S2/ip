@@ -6,7 +6,16 @@ import app.tasks.Event;
 import app.tasks.Task;
 import app.tasks.ToDo;
 
+/**
+ * Used to load existing tasks into a Task-list when Duke is first run.
+ */
 public class StringParser {
+    /**
+     * Method used to reconstruct a task from a given line in the text file.
+     * @param line The string containing all the relevant information about a task.
+     * @return A new task to be added to a task-list.
+     * @throws DukeException If there was an error in processing string and returning task.
+     */
     public static Task convertStringToTask(String line) throws DukeException {
         Task task;
         String delimiter = "\\|";

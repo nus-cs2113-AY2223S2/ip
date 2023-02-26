@@ -13,6 +13,10 @@ public class Duke {
     private TaskList tasks;
     private Ui ui;
 
+    /**
+     * Constructor for Duke
+     * @param filePath The address for storage to memory.
+     */
     public Duke (String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -24,13 +28,17 @@ public class Duke {
         }
     }
 
+    /**
+     * Method to initialise Duke, and execute commands based on user
+     * input until exit condition is met.
+     */
     public void run() {
         ui.showWelcome();
         boolean isExit = false;
         while (!isExit) {
             try {
                 String fullCommand = ui.readCommand();
-                ui.showLine(); // show the divider line ("_______")
+                ui.showLine();
                 Command c = Parser.parse(fullCommand);
                 c.execute(tasks, ui, storage);
                 isExit = c.isExit();

@@ -13,8 +13,19 @@ import app.commands.AddEvent;
 import app.exceptions.DukeException;
 import app.exceptions.InvalidCommandException;
 
+/**
+ * Represents Duke's main parser used to distinguish the
+ * main command of the user input.
+ */
 public class Parser {
 
+    /**
+     * Method used to enter various cases and assign
+     * command type based on user input.
+     * @param input The entire user input.
+     * @return The type of command that the user input.
+     * @throws DukeException If input is invalid or error in processing new command.
+     */
     public static Command parse(String input) throws DukeException {
         String[] userInputArray = input.split(" ");
         String commandWord = userInputArray[0];
