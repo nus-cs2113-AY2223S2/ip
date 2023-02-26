@@ -34,6 +34,7 @@ public class FindCommand extends Command {
         Ui.findTaskByKeywordOpeningMessage();
         tasks.printTasksByKeyword(keyword);
         Ui.printLine();
+        System.out.println(); // add one line of separation
     }
 
 }
