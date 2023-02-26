@@ -16,6 +16,12 @@ public class Storage {
     public static final String FILE_PATH = "data/duke.txt";
     public static final String BORDER = "//";
 
+    /**
+     * Constructor of Storage class that creates a new ArrayList of tasks and locates the txt file.
+     * If txt file is not located, create a new txt file.
+     *
+     * @throws IOException
+     */
     public Storage() throws IOException {
         File f = new File(FILE_PATH);
         this.tasks = new ArrayList<>();
@@ -34,14 +40,24 @@ public class Storage {
         }
     }
 
-    /** Overwriting the txt file */
+    /**
+     * Overwriting the database.
+     *
+     * @param textToAdd the text to be added into txt file.
+     * @throws IOException
+     */
     public static void writeToFile(String textToAdd) throws IOException {
         FileWriter fw = new FileWriter(FILE_PATH);
         fw.write(textToAdd);
         fw.close();
     }
 
-    /** Converts string to respective task type */
+    /**
+     * Converts string to respective task type.
+     *
+     * @param str the string to be converted
+     * @return the respective task type
+     */
     public Task parseToTask(String str) {
         Task currTask;
         String[] stringArr = str.split("//");
@@ -61,7 +77,11 @@ public class Storage {
         return currTask;
     }
 
-    /** Updates an individual task to database*/
+    /**
+     * Updates an individual task to database.
+     *
+     * @param taskToAdd the task to be added into the txt file
+     */
     public static void addTaskToDatabase(Task taskToAdd) {
         try {
             FileWriter f = new FileWriter(FILE_PATH, true);
@@ -73,7 +93,13 @@ public class Storage {
         }
     }
 
-    /** Converts Task to StringBuilder to be passed as string */
+    /**
+     * Converts Task to StringBuilder to be passed as string for preparation to add into
+     * txt file.
+     *
+     * @param taskToAddToDatabaseList the task to be added into the txt file
+     * @return the task in StringBuilder type
+     */
     public static StringBuilder stringToWrite(Task taskToAddToDatabaseList) {
         StringBuilder sb = new StringBuilder();
 

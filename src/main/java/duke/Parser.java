@@ -13,7 +13,13 @@ import java.util.Arrays;
 
 public class Parser {
 
-    /** Marks task as done or undone and updates database */
+    /**
+     * Marks task as done or undone and updates database.
+     *
+     * @param command  the input command given by user
+     * @param myList   the current list of tasks
+     * @param database the list of tasks stored in txt file
+     */
     public static void markDoneOrUndone(String command, TaskList myList, Storage database) {
         try {
             String[] words = command.split(" ");
@@ -34,10 +40,10 @@ public class Parser {
     }
 
     /**
-     * Adds the input text and makes the task as a todo type and updates database
+     * Adds the input text and makes the task as a todo type and updates database.
      *
-     * @param command
-     * @param myList
+     * @param command the input command given by user
+     * @param myList  the current list of tasks
      */
     public static void makeToDoFunction(String command, TaskList myList) throws EmptyInputException {
         String[] newTask = command.split(" ", 2);
@@ -51,10 +57,10 @@ public class Parser {
     }
 
     /**
-     * Adds the input text and makes the task as a Deadline type and updates database
+     * Adds the input text and makes the task as a Deadline type and updates database.
      *
-     * @param command
-     * @param myList
+     * @param command the input command given by user
+     * @param myList  the current list of tasks
      */
     public static void makeDeadlinesFunction(String command, TaskList myList)
             throws EmptyInputException, IllegalInputException {
@@ -77,10 +83,10 @@ public class Parser {
     }
 
     /**
-     * Adds the input text and makes task as an Event type and updates database
+     * Adds the input text and makes task as an Event type and updates database.
      *
-     * @param command
-     * @param myList
+     * @param command the input command given by user
+     * @param myList  the current list of tasks
      */
     public static void makeEventFunction(String command, TaskList myList)
             throws EmptyInputException, IllegalInputException {
@@ -101,57 +107,96 @@ public class Parser {
         }
     }
 
-    public static void handleMarkUnmark(String currTask, TaskList myList, Storage database) {
+    /**
+     * Initialises check for empty input function and marks/un-marks the task accordingly.
+     *
+     * @param command  the input command given by user
+     * @param myList   the current list of tasks
+     * @param database the list of tasks stored in txt file
+     */
+    public static void handleMarkUnmark(String command, TaskList myList, Storage database) {
         try {
-            checkMarkUnmark(currTask);
-            markDoneOrUndone(currTask, myList, database);
+            checkMarkUnmark(command);
+            markDoneOrUndone(command, myList, database);
         } catch (EmptyInputException e) {
-            Ui.printEmptyInputMessage(currTask);
+            Ui.printEmptyInputMessage(command);
         } catch (NumberFormatException e) {
             Ui.printIllegalInputMessage();
         }
     }
 
-    public static void handleToDo(String currTask, TaskList myList) {
+    /**
+     * Initialises ToDo type task.
+     * If error is encountered, error message is printed.
+     *
+     * @param command the input command given by user
+     * @param myList  the current list of tasks
+     */
+    public static void handleToDo(String command, TaskList myList) {
         try {
-            makeToDoFunction(currTask, myList);
+            makeToDoFunction(command, myList);
         } catch (ArrayIndexOutOfBoundsException e) {
-            Ui.printEmptyInputMessage(currTask);
+            Ui.printEmptyInputMessage(command);
         } catch (EmptyInputException e) {
-            Ui.printEmptyInputMessage(currTask.trim());
+            Ui.printEmptyInputMessage(command.trim());
         }
     }
 
-    public static void handleDeadline(String currTask, TaskList myList) {
+    /**
+     * Initialises Deadline type task.
+     * If error is encountered, error message is printed.
+     *
+     * @param command the input command given by user
+     * @param myList  the current list of tasks
+     */
+    public static void handleDeadline(String command, TaskList myList) {
         try {
-            makeDeadlinesFunction(currTask, myList);
+            makeDeadlinesFunction(command, myList);
         } catch (EmptyInputException e) {
-            Ui.printEmptyInputMessage(currTask.trim());
+            Ui.printEmptyInputMessage(command.trim());
         } catch (IllegalInputException e) {
             Ui.printIllegalInputMessage();
         }
     }
 
-    public static void handleEvent(String currTask, TaskList myList) {
+    /**
+     * Initialises Event type task.
+     * If error is encountered, error message is printed.
+     *
+     * @param command the input command given by user
+     * @param myList  the current list of tasks
+     */
+    public static void handleEvent(String command, TaskList myList) {
         try {
-            makeEventFunction(currTask, myList);
+            makeEventFunction(command, myList);
         } catch (EmptyInputException e) {
-            Ui.printEmptyInputMessage(currTask.trim());
+            Ui.printEmptyInputMessage(command.trim());
         } catch (IllegalInputException e) {
             Ui.printIllegalInputMessage();
         }
     }
 
-    public static void checkMarkUnmark(String currTask) throws EmptyInputException {
-        String[] list = currTask.split(" ");
+    /**
+     * Checks if Mark or Unmark input is empty
+     *
+     * @param command
+     * @throws EmptyInputException
+     */
+    public static void checkMarkUnmark(String command) throws EmptyInputException {
+        String[] list = command.split(" ");
         if (list.length < 2) {
-            if (list[0].equals("mark") || list[0].equals("unmark")) {
-                throw new EmptyInputException();
-            }
+            throw new EmptyInputException();
         }
     }
 
-    /** Deletes the specific task by index */
+    /**
+     * Deletes the specific task by index and updates database.
+     *
+     * @param command  the input command given by user
+     * @param myList   the current list of tasks
+     * @param database the list of tasks stored in txt file
+     * @throws IllegalInputException if format of input is wrong
+     */
     public static void deleteTask(String command, TaskList myList, Storage database) throws IllegalInputException {
         String[] list = command.split(" ");
         if (isNumeric(list[1]) && list.length == 2) {
@@ -173,10 +218,17 @@ public class Parser {
         }
     }
 
-    /** Initialises delete task */
-    public static void handleDeleteTask(String currTask, TaskList myList, Storage database) {
+    /**
+     * Initialises delete function.
+     * If error encountered, error message is printed.
+     *
+     * @param command  the input command given by user
+     * @param myList   the current list of tasks
+     * @param database the list of tasks stored in txt file
+     */
+    public static void handleDeleteTask(String command, TaskList myList, Storage database) {
         try {
-            deleteTask(currTask, myList, database);
+            deleteTask(command, myList, database);
         } catch (IllegalInputException e) {
             Ui.printIllegalInputMessage();
         } catch (IndexOutOfBoundsException e) {
@@ -184,6 +236,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Search for the task that was inputted by user in the task list.
+     *
+     * @param command   the input command given by user
+     * @param myList    the current list of tasks
+     */
     public static void findTask(String command, TaskList myList) {
         String[] commandList = command.split(" ");
         String taskToFind = commandList[1];
@@ -202,7 +260,12 @@ public class Parser {
         Ui.printLine();
     }
 
-    /** Checks if given string is a number */
+    /**
+     * Checks if given string is a number.
+     *
+     * @param s string to check
+     * @return true if string is a number
+     */
     public static boolean isNumeric(String s) {
         try {
             Double.parseDouble(s);
