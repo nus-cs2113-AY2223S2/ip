@@ -1,4 +1,3 @@
-[T][X] hmm
-[T][ ] play game
-[D][X] submit hw (by: monday)
-[T][ ] hmm
+[T][ ] eat
+[D][X] submit hw (by: 2022-01-12 14:54)
+[E][ ] party w friends (from: 2022-01-02 23:34 to: 2022-05-04 23:54)

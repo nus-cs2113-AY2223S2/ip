@@ -1,13 +1,10 @@
 package storage;
 
-import command.Command;
 import parser.Parser;
 import task.Task;
-import task.TaskList;
-import exception.DukeException;
+import exception.IncompleteInputException;
 
 import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import java.io.File;
@@ -41,13 +38,13 @@ public class TaskStorage {
 
         FileWriter fw = new FileWriter("data/duke.txt");
         for (Task t: tasks) {
-            fw.write(t.toString() + System.lineSeparator());
+            fw.write(t.toSaveString() + System.lineSeparator());
         }
 
         fw.close();
     }
 
-    public ArrayList<Task> load() throws DukeException {
+    public ArrayList<Task> load() throws IncompleteInputException {
         ArrayList<Task> tasks = new ArrayList<>();
         File f = new File("data/duke.txt");
         if (f.exists()) {
