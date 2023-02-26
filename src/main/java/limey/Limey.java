@@ -9,6 +9,7 @@ import limey.exception.invalidDateException;
 import limey.iohandler.Parser;
 import limey.iohandler.Speech;
 
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 import limey.iohandler.FileHandler;
@@ -81,8 +82,8 @@ public class Limey {
         case "deadline":
             try {
                 taskIn = new Deadline(inLine);
-            } catch (invalidDateException | StringIndexOutOfBoundsException e) {
-                Speech.invalidMessage("Invalid deadline date");
+            } catch (invalidDateException | StringIndexOutOfBoundsException | DateTimeParseException e) {
+                Speech.invalidMessage("Invalid deadline date, please format date as /by yyyy-mm-ddTHH:MM\n\tExample to set assignment deadline on 8th Feb 2023 at 11:59pm input the following \"deadline assignment /by 2023-02-08T23:59\"");
                 return;
             }
             break;
@@ -90,7 +91,7 @@ public class Limey {
             try {
                 taskIn = new Event(inLine);
             } catch (invalidDateException | StringIndexOutOfBoundsException e) {
-                Speech.invalidMessage("Invalid event date");
+                Speech.invalidMessage("Invalid event date, please format date as /by yyyy-mm-ddTHH:MM\n\tExample to set exam on 8th Feb 2023 2:00-3:30pm, input the following \"event exam /from 2023-02-08T14:00 /to 2023-02-08T15:30\"");
                 return;
             }
             break;

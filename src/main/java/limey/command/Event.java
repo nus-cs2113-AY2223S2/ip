@@ -1,13 +1,21 @@
 package limey.command;
 import limey.exception.invalidDateException;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 public class Event extends Task{
-    private String fromDate;
-    private String toDate;
+    private java.time.LocalDateTime fromDate;
+    private java.time.LocalDateTime toDate;
+    private String inFromDate;
+    private String inToDate;
     public void setFromDate(String fromDate) {
-        this.fromDate= fromDate;
+        this.fromDate= LocalDateTime.parse(fromDate.trim());
     }
+
     public void setToDate(String toDate) {
-        this.toDate= toDate;
+        this.toDate= LocalDateTime.parse(toDate.trim());
     }
     public Event(String inLine) throws invalidDateException{
             super(inLine);
@@ -16,8 +24,14 @@ public class Event extends Task{
             }
             int indexOfFrom = inLine.indexOf("/from");
             int indexOfTo =  inLine.indexOf("/to");
-            fromDate = inLine.substring(indexOfFrom + 5, indexOfTo);
-            toDate = inLine.substring(indexOfTo + 3);
+            inFromDate = inLine.substring(indexOfFrom + 5, indexOfTo).trim();
+            inToDate = inLine.substring(indexOfTo + 3).trim();
+            try{
+                setToDate(inToDate);
+                setFromDate(inFromDate);
+            } catch (DateTimeParseException e) {
+                throw new invalidDateException();
+            }
             setTaskName(getTaskName() + " (from " + getFromDate() + " to " + getToDate() + ")");
         }
     @Override
@@ -25,10 +39,18 @@ public class Event extends Task{
         String eventSymbol = "[E]";
         return eventSymbol + super.getTaskIdentity();
     }
+    @Override
+    public String getInFromDate(){
+        return inFromDate;
+    }
+    @Override
+    public String getInToDate(){
+        return inToDate;
+    }
     public String getFromDate(){
-        return fromDate.trim();
+        return fromDate.format(DateTimeFormatter.ofPattern("dd MMM yyyy h:mm a"));
     }
     public String getToDate(){
-        return toDate.trim();
+        return toDate.format(DateTimeFormatter.ofPattern("dd MMM yyyy h:mm a"));
     }
 }

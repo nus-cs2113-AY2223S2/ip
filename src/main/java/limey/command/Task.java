@@ -4,15 +4,17 @@ public class Task {
     private String taskName;
     private boolean isDone = false;
     public static int numTasks = 0;
+
     public Task(String inLine) {
         //int firstSpace = inLine.indexOf(" ");
-        if (inLine.contains("/")){
+        if (inLine.contains("/")) {
             int firstSlash = inLine.indexOf("/");
             this.taskName = inLine.substring(0, firstSlash).trim();
         } else {
             this.taskName = inLine;
         }
     }
+
     public String getTaskName() {
         return taskName;
     }
@@ -21,14 +23,15 @@ public class Task {
      * Returns identity of the current task including the following
      * - [X] or [ ] for marked or unmarked tasks
      * - task name
+     *
      * @return tasks identity.
      */
-    public String getTaskIdentity(){
+    public String getTaskIdentity() {
         String taskIdentity;
-        if(isDone){
+        if (isDone) {
             taskIdentity = "[X] " + taskName;
         } else {
-            taskIdentity ="[ ] " + taskName;
+            taskIdentity = "[ ] " + taskName;
         }
         return taskIdentity;
     }
@@ -50,6 +53,18 @@ public class Task {
     }
 
     public String getToDate() {
+        return "";
+    }
+
+    public String getInDate() {
+        return "";
+    }
+
+    public String getInFromDate() {
+        return "";
+    }
+
+    public String getInToDate() {
         return "";
     }
 }

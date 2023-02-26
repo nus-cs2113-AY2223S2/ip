@@ -1,26 +1,45 @@
 package limey.command;
+
 import limey.exception.invalidDateException;
-public class Deadline extends Task{
-    public void setDueDate(String dueDate) {
-        this.dueDate = dueDate;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
+public class Deadline extends Task {
+
+    private java.time.LocalDateTime dueDate;
+    private String inDate;
+
+    public String getDueDate() {
+        return dueDate.format(DateTimeFormatter.ofPattern("dd MMM yyyy"));
+    }
+    public String getInDate() {
+        return inDate;
+    }
+    public void setDueDate(String byDate) throws DateTimeParseException {
+        this.dueDate = LocalDateTime.parse(byDate.trim());
     }
 
-    private String dueDate;
-    public Deadline(String inLine) throws invalidDateException{
+    public Deadline(String inLine) throws invalidDateException {
         super(inLine);
-        if(!inLine.contains("/by")) {
+        if (!inLine.contains("/by")) {
             throw new invalidDateException();
         }
         int indexOfBy = inLine.indexOf("/by");
-        dueDate = inLine.substring(indexOfBy + 3);
-        setTaskName(super.getTaskName() + " (by: " + getDueDate() +")");
+        inDate = inLine.substring(indexOfBy + 3);
+        try {
+            setDueDate(inDate);
+        } catch (DateTimeParseException e) {
+            throw new invalidDateException();
+        }
+        setTaskName(super.getTaskName() + " (by: " + getDueDate() + ")");
     }
     @Override
     public String getTaskIdentity() {
         String todoSymbol = "[D]";
         return todoSymbol + super.getTaskIdentity();
     }
-    public String getDueDate(){
-        return dueDate.trim();
-    }
+
 }

@@ -29,13 +29,13 @@ public class FileHandler {
             case ('D'): //deadline
                 taskNameWODates = tasks.get(i).getTaskName().substring(0,tasks.get(i).getTaskName().indexOf("(by:"));
                 fw.write(taskType.toString() + markIcon.toString() + taskNameWODates);
-                fw.write("/by " + tasks.get(i).getDueDate());
+                fw.write("/by " + tasks.get(i).getInDate());
                 break;
             case ('E'): //Event
                 taskNameWODates = tasks.get(i).getTaskName().substring(0,tasks.get(i).getTaskName().indexOf("(from"));
                 fw.write(taskType.toString() + markIcon.toString() + taskNameWODates);
-                fw.write("/from " + tasks.get(i).getFromDate());
-                fw.write("/to " + tasks.get(i).getToDate());
+                fw.write("/from " + tasks.get(i).getInFromDate());
+                fw.write("/to " + tasks.get(i).getInToDate());
                 break;
             default: //todo no additional string required
                 fw.write(taskType.toString() + markIcon.toString() + tasks.get(i).getTaskName());
