@@ -4,7 +4,9 @@ import java.util.Scanner;
 import duke.exceptions.InvalidCommandException;
 import duke.exceptions.InvalidFormatException;
 import duke.exceptions.InvalidTaskException;
+import duke.exceptions.NoTasksException;
 import duke.exceptions.InvalidDateTimeException;
+
 import duke.tasks.Task;
 import duke.tasks.TaskList;
 import duke.commands.Command;
@@ -13,6 +15,7 @@ import duke.commands.ListCommand;
 import duke.commands.DeleteCommand;
 import duke.commands.MarkCommand;
 import duke.commands.UnmarkCommand;
+import duke.commands.FindCommand;
 
 public class CommandParser {
     private static final String LIST = "list";
@@ -20,6 +23,7 @@ public class CommandParser {
     private static final String MARK = "mark";
     private static final String UNMARK = "unmark";
     private static final String DELETE = "delete";
+    private static final String FIND = "find";
     private static final String TODO = "todo";
     private static final String DEADLINE = "deadline";
     private static final String EVENT = "event";
@@ -45,7 +49,8 @@ public class CommandParser {
         return index;
     }
 
-    public Command parseCommand(String[] inputArray) throws InvalidCommandException, InvalidTaskException, InvalidFormatException, InvalidDateTimeException {
+
+    public Command parseCommand(String[] inputArray) throws InvalidCommandException, InvalidTaskException, InvalidFormatException, InvalidDateTimeException, NoTasksException {
         String command = inputArray[0];
         
         switch (command) {
@@ -70,13 +75,20 @@ public class CommandParser {
         case DELETE:
             int deleteIndex = getValidIndex(inputArray, command);
             return new DeleteCommand(taskList, deleteIndex);
+
+        case FIND:
+            if (inputArray.length == 1) {
+                throw new InvalidTaskException(command);
+            }
+            String keyword = inputArray[1];
+            return new FindCommand(taskList, keyword);
             
         default:
             throw new InvalidCommandException();
         }
     }
 
-    public void getInput() throws InvalidCommandException, InvalidTaskException, InvalidFormatException, InvalidDateTimeException {
+    public void getInput() throws InvalidCommandException, InvalidTaskException, InvalidFormatException, InvalidDateTimeException , NoTasksException {
         Scanner input = new Scanner(System.in);
         boolean isRunning = true;
         do {
@@ -93,6 +105,8 @@ public class CommandParser {
                 } catch (InvalidCommandException e) {
                     System.out.println(e.getMessage());
                 } catch (InvalidFormatException e) {
+                    System.out.println(e.getMessage());
+                } catch (NoTasksException e) {
                     System.out.println(e.getMessage());
                 } catch (InvalidDateTimeException e) {
                     System.out.println(e.getMessage());
