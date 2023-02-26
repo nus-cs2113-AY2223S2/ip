@@ -8,9 +8,9 @@ import duke.functionalities.Ui;
 
 public class Duke {
 
-    private final Storage storage;
+    private final Storage STORAGE;
     private TaskList tasks;
-    private final Ui ui;
+    private final Ui UI;
 
     /**
      * Loads the Stored Data into the Duke Task List
@@ -18,14 +18,14 @@ public class Duke {
      * @param filePath The Path of Duke Data File
      * */
     public Duke(String filePath) {
-        ui = new Ui();
-        storage = new Storage(filePath, ui);
+        UI = new Ui();
+        STORAGE = new Storage(filePath, UI);
         try {
-            ui.showLine();
-            tasks = new TaskList(storage.load(), ui);
-            ui.showLine();
+            UI.showLine();
+            tasks = new TaskList(STORAGE.load(), UI);
+            UI.showLine();
         } catch (DukeException e) {
-            ui.showLoadingError();
+            UI.showLoadingError();
         }
     }
 
@@ -37,19 +37,19 @@ public class Duke {
      * This method executes the Duke Task Operations
      * */
     public void run() {
-        ui.showWelcomeMessage();
+        UI.showWelcomeMessage();
         boolean isExit = false;
         while (!isExit) {
             try {
-                String fullCommand = ui.readUserCommand();
-                ui.showLine();
+                String fullCommand = UI.readUserCommand();
+                UI.showLine();
                 Command c = Parser.parse(fullCommand);
-                c.executeDukeCommands(tasks, ui, storage);
+                c.executeDukeCommands(tasks, UI, STORAGE);
                 isExit = c.isExit();
             } catch (DukeException | NullPointerException e) {
-                ui.showErrorMessage();
+                UI.showErrorMessage();
             } finally {
-                ui.showLine();
+                UI.showLine();
             }
         }
     }

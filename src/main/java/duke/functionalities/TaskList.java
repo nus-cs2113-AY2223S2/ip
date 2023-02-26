@@ -14,7 +14,7 @@ import duke.tasks.Todo;
 public class TaskList {
 
     protected ArrayList<Task> tasks;
-    private final Ui ui;
+    private final Ui UI;
 
     /**
      * Retrieves the stored Task List from Duke Data File
@@ -24,7 +24,7 @@ public class TaskList {
      * */
     public TaskList(ArrayList<Task> tasks, Ui ui) {
         this.tasks = tasks;
-        this.ui = ui;
+        this.UI = ui;
     }
 
     /**
@@ -35,7 +35,7 @@ public class TaskList {
     public void addTodo(String todo) {
         tasks.add(new Todo(todo));
         int taskCount = getTaskIndex(todo);
-        ui.showTaskAdded(tasks, taskCount);
+        UI.showTaskAdded(tasks, taskCount);
     }
 
     /**
@@ -48,7 +48,7 @@ public class TaskList {
     public void addEvent(String event, String eventStart, String eventEnd) {
         tasks.add(new Event(event, eventStart, eventEnd));
         int taskCount = getTaskIndex(event);
-        ui.showTaskAdded(tasks, taskCount);
+        UI.showTaskAdded(tasks, taskCount);
     }
 
     /**
@@ -60,7 +60,7 @@ public class TaskList {
     public void addDeadline(String deadline, String dueDate) {
         tasks.add(new Deadline(deadline, dueDate));
         int taskCount = getTaskIndex(deadline);
-        ui.showTaskAdded(tasks, taskCount);
+        UI.showTaskAdded(tasks, taskCount);
     }
 
     /**
@@ -73,7 +73,7 @@ public class TaskList {
         try {
             int index = Integer.parseInt(task);
             String description = tasks.get(index - 1).toString();
-            ui.showTaskDeleted(tasks, description);
+            UI.showTaskDeleted(tasks, description);
             tasks.remove(index - 1);
         } catch (IndexOutOfBoundsException e) {
             throw new DukeException(" Task to delete is not recognized!");
@@ -103,10 +103,10 @@ public class TaskList {
      * Prints all the Tasks in the Task List
      * */
     public void printAllTasks() {
-        ui.showUserMessage(" Here are the tasks in your list:");
+        UI.showUserMessage(" Here are the tasks in your list:");
         int index = 1;
         for (Task userTask : tasks) {
-            ui.showUserMessage("  " + index + "." + userTask.toString());
+            UI.showUserMessage("  " + index + "." + userTask.toString());
             index++;
         }
     }
@@ -121,8 +121,8 @@ public class TaskList {
         try {
             int index = Integer.parseInt(task);
             tasks.get(index - 1).setTaskStatus(false);
-            ui.showUserMessage(" Okay, I've marked this task as not done yet:");
-            ui.showUserMessage(tasks.get(index - 1).toString());
+            UI.showUserMessage(" Okay, I've marked this task as not done yet:");
+            UI.showUserMessage(tasks.get(index - 1).toString());
         } catch (IndexOutOfBoundsException e) {
             throw new DukeException(" Task to unmark is not recognized!");
         } catch (NumberFormatException e) {
@@ -140,8 +140,8 @@ public class TaskList {
         try {
             int index = Integer.parseInt(task);
             tasks.get(index - 1).setTaskStatus(true);
-            ui.showUserMessage(" Nice! I've marked this task as done:");
-            ui.showUserMessage(tasks.get(index - 1).toString());
+            UI.showUserMessage(" Nice! I've marked this task as done:");
+            UI.showUserMessage(tasks.get(index - 1).toString());
         } catch (IndexOutOfBoundsException e) {
             throw new DukeException(" Task to mark is not recognized!");
         } catch (NumberFormatException e) {
@@ -155,11 +155,12 @@ public class TaskList {
      * @param keyword The Keyword
      * */
     public void findTask(String keyword) {
-        ui.showUserMessage(" Here are the matching tasks in your list:");
+        UI.showUserMessage(" Here are the matching tasks in your list:");
         int index = 1;
+        String searchKeyword = keyword.toLowerCase();
         for (Task userTask : tasks) {
-            if (userTask.toString().contains(keyword)) {
-                ui.showUserMessage("  " + index + "." + userTask);
+            if (userTask.toString().contains(searchKeyword)) {
+                UI.showUserMessage("  " + index + "." + userTask);
                 index++;
             }
         }
