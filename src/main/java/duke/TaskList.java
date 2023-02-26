@@ -96,6 +96,7 @@ public class TaskList {
                     + UI.HorizontalLine);
         }
     }
+
     /** Deletes the task of the task number specified from the list **/
     public void deleteTask(String[] inputWords) throws ArrayIndexOutOfBoundsException, InsufficientInputException{
         if (inputWords.length < INPUT_LENGTH || inputWords[1].trim().equals("")) {
@@ -116,7 +117,7 @@ public class TaskList {
             throw new InsufficientInputException("Please specify a keyword");
         }
         System.out.println(UI.HorizontalLine + "Tasks with matching keywords:\n");
-        String keyword = inputWords[1];
+        String keyword = inputWords[1].trim();
         for(int i = 0; i < Task.maxTaskNumber; i ++) {
             String taskName = taskListArray.get(i).getTaskName();
             if(taskName.contains(keyword)) {
