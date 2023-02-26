@@ -1,4 +1,4 @@
-package duke.SaveManager;
+package duke.Storage;
 
 /*
  * Copyright (C) 2011 Google Inc.

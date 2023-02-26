@@ -4,6 +4,9 @@ import duke.task.TaskList;
 import duke.exception.EmptyTaskException;
 import duke.ui.Ui;
 
+/**
+ * Processes the user's input into valid commands.
+ */
 public class Parser {
     private static Ui ui;
     private static final int OFFSET = -1;
@@ -32,6 +35,12 @@ public class Parser {
         return userInput.length()>6 && Command.equalsIgnoreCase("event");
     }
 
+    /**
+     * Checks the user's input and applies the appropriate command, given that a valid command was given.
+     * Also prints feedback to the user if valid or invalid command is given.
+     * @param userInput The input string as written by the user through the Command Line Interface.
+     * @param taskList The list of Task(s) and its child classes (ToDo, Deadline, Event).
+     */
     public static void parseInput(String userInput, TaskList taskList){
         userInput = userInput.trim(); //removes excess whitespace in front and back of command
         String[] commandLine = userInput.split(" "); //split substrings by whitespaces

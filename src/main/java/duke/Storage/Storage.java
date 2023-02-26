@@ -14,6 +14,9 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
+/**
+ * Loads and saves TaskList from or to a file.
+ */
 public class Storage {
     private final Ui ui = new Ui();
     private static final String saveLocation = System.getProperty("user.dir")+"/save.json";
@@ -25,6 +28,11 @@ public class Storage {
     GsonBuilder builder = new GsonBuilder().setPrettyPrinting().registerTypeAdapterFactory(adapter);
     Gson gson = builder.create();
 
+    /**
+     * Serializes the TaskList in JSON format and saves it to a file.
+     * @param taskList the list of tasks.
+     * @exception IOException If there is an error saving the object to file.
+     */
     public void saveToFile(ArrayList<Task> taskList){
         File saveFile = new File(saveLocation);
         String gsonData = gson.toJson(taskList);
@@ -46,6 +54,11 @@ public class Storage {
             System.out.println("IOException");
         }
     }
+
+    /**
+     * Deserializes the list of tasks from JSON to ArrayList and returns it.
+     * @return ArrayList This returns the saved list of tasks.
+     */
     public ArrayList<Task> loadTasks(){
         File saveFile = new File(saveLocation);
         ArrayList<Task> savedList = new ArrayList<>();
