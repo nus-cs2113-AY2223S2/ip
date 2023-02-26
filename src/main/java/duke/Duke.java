@@ -14,9 +14,10 @@ public class Duke {
     public static void printLine() {
         System.out.println("____________________________________________________________");
     }
-    
+
 
     /**
+     * This function will start process user input and perform task correspondingly.
      * @param s The text entered by the user
      * @throws InvalidCommandException The exception will be thrown if the command doesn't any duke command.
      */
@@ -26,6 +27,8 @@ public class Duke {
     }
 
     /**
+     * Scan in the user input and trim extra white space.
+     * If there is no input, continue to scan the next line for input.
      * @return The string that the user entered
      */
     private static String inputCommand() {
@@ -39,6 +42,10 @@ public class Duke {
     }
 
 
+    /**
+     * Initialize essential class for the program to start.
+     * Including Ui Class, Storage CLass, and setting patterns for Parser Class.
+     */
     private void start() {
         this.ui = new Ui();
         this.storage = new Storage();
@@ -46,6 +53,12 @@ public class Duke {
         ui.showWelcomeMessage();
         storage.initializeStorage(tasks, FILEPATH);
     }
+
+    /**
+     * Run the program after initialization,
+     * it will continue to get user input until the target word trigger the program to end.
+     *
+     */
     public void run() {
         start();
         String s = ui.getUserCommand();

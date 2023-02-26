@@ -6,13 +6,29 @@ import java.util.Scanner;
 public class Ui {
     public static void showHelpMessage() {
         printLine();
-        System.out.println("This command is not valid, please read through the info and try again :)");
-        System.out.println("Type: [todo] [something], and the system will add a new todo item to your list");
-        System.out.println("Type: [event] [something] from: [when] to: [when], and the system will add an event and the timing");
-        System.out.println("Type: [deadline] [something] by: [when], and the system will add a deadline");
-        System.out.println("Type: [mark] [number], and the system will mark the item of the number as done");
-        System.out.println("Type: [unmark] [number], and the system will unmark the item of the number.");
-        System.out.println("Type: bye, to say goodbye to Duke!");
+        System.out.println("First time using Duke?\n" + "No worries! Here is a simple guide for you to get familiar with Duke :)");
+        System.out.println("Format: \n" + ">> [todo] <something>, and the system will add a new todo to your list");
+        System.out.println("Example: \n" + ">> todo read book\n" + ">> Got it. I've added this task: read book");
+        System.out.println("Format: \n" + ">> [event] <something> [from:] <when> [to:] <when>, and the system will add a new event to your list");
+        System.out.println("Example: \n" + ">> event read book from: 2022-02-02 to: 2022-02-03\n"
+                + ">> Got it. I've added this task: read book (from: 2022-02-02, to: 2022-02-03)");
+        System.out.println("Format: \n" + ">> [deadline] <something> [by:] <when>, and the system will add a new deadline to your list");
+        System.out.println("Example: \n" + ">> deadline read book by: 2022-02-02\n"
+                + ">> Got it. I've added this task: read book (by: 2022-02-02)");
+        System.out.println("Format: \n" + ">> [find] <keyword>, and the system will list all items containing keyword in your list");
+        System.out.println("Example: \n" + ">> find book\n"
+                + ">>  Below are the tasks containing book ...");
+        System.out.println("Format: \n" + ">> [mark] <index>, and the system will mark the item with the index in list");
+        System.out.println("Example: \n" + ">> mark 1 \n"
+                + ">> I've marked this task as done ੯•໒꒱❤︎:");
+        System.out.println("Format: \n" + ">> [unmark] <index>, and the system will unmark the item with the index in list");
+        System.out.println("Example: \n" + ">> unmark 1 \n"
+                + ">> I've unmarked this task ∪･ω･∪:");
+        System.out.println("Format: \n" + ">> [delete] <index>, and the system will delete the item with the index in list");
+        System.out.println("Example: \n" + ">> delete 1 \n"
+                + ">> I've deleted this task ∪･ω･∪:");
+        System.out.println("Format: \n" + ">> [bye], and then Duke will say goodbye to you and close the program.");
+        System.out.println("Example: \n" + ">> bye \n" + ">> Bye. Hope to see you again soon!ﾉ~");
         System.out.println("Hope it helps!! woof a nice day ੯•໒꒱❤︎");
         printLine();
     }
@@ -46,12 +62,6 @@ public class Ui {
             s = scan.nextLine();
         }
         return s;
-    }
-    public static void showResult(ArrayList<Task> tasks, int taskCount) {
-        printLine();
-        System.out.println("Got it. I've added this task: \n" + tasks.get(taskCount-1));
-        System.out.println("Now you have " + taskCount + " tasks in your list.");
-        printLine();
     }
     public static void showAddTaskMessage(ArrayList<Task> tasks) {
         printLine();

@@ -18,7 +18,7 @@ public class Storage {
         try {
             printFileContents(tasks, filepath);
         } catch (FileNotFoundException e) {
-            System.out.println("No previous file, Duke will try to create a file to store your data.");
+            Ui.showInitErrorMessage();
             try {
                 new File(filepath).createNewFile();
             } catch (IOException ioe) {

@@ -100,6 +100,9 @@ public class Command {
         case "help":
             Ui.showHelpMessage();
             break;
+        case "find":
+            find(tasks, commandArgs);
+            break;
         default:
             throw new InvalidCommandException();
         }
@@ -155,6 +158,7 @@ public class Command {
         printLine();
     }
     public static void find(ArrayList<Task> tasks, String keyword) {
+        System.out.println("Below are the tasks that contains " + keyword + ": ");
         for (int i = 0; i < tasks.size(); i += 1) {
             if (tasks.get(i).description.contains(keyword)) {
                 System.out.println(tasks.get(i).toString());
