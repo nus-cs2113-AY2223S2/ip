@@ -6,6 +6,7 @@ import duke.command.HelpCommand;
 import duke.command.ListCommand;
 import duke.command.TodoCommand;
 import duke.command.DeadlineCommand;
+import duke.command.EventCommand;
 
 public class Parser {
     private static final String OOPS = "☹ OOPS!!! ";
@@ -19,6 +20,8 @@ public class Parser {
             return parseTodo(args);
         case DeadlineCommand.COMMAND_WORD:
             return parseDeadline(args);
+        case EventCommand.COMMAND_WORD:
+            return parseEvent(args);
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
         case ListCommand.COMMAND_WORD:
@@ -79,5 +82,46 @@ public class Parser {
         String by = bySb.toString().trim();
 
         return new DeadlineCommand(content, by);
+    }
+
+    private Command parseEvent(String[] args) throws IllegalArgumentException{
+        assert args[0].equals("event");
+        StringBuilder contentSb = new StringBuilder();
+        StringBuilder fromSb = new StringBuilder();
+        StringBuilder toSb = new StringBuilder();
+
+        int fromIndex = -1;
+        int toIndex = -1;
+        for (int i = 0; i < args.length; ++i) {
+            if (args[i].equals("/from")) {
+                fromIndex = i;
+            } else if (args[i].equals("/to")) {
+                toIndex = i;
+            }
+        }
+
+        if (fromIndex == -1 || toIndex == -1) {
+            throw new IllegalArgumentException("☹ OOPS!!! Cannot find from or to time of the event!");
+        }
+
+        for (int i = 1; i < args.length; ++i) {
+            if (i < fromIndex) {
+                contentSb.append(args[i]).append(" ");
+            } else if (i > fromIndex && i < toIndex) {
+                fromSb.append(args[i]).append(" ");
+            } else if (i > toIndex) {
+                toSb.append(args[i]).append(" ");
+            }
+        }
+
+        if (contentSb.toString().isEmpty() || fromSb.toString().isEmpty() || toSb.toString().isEmpty()) {
+            throw new IllegalArgumentException("☹ OOPS!!! The content/from/to of an event cannot be empty!");
+        }
+
+        String content = contentSb.toString().trim();
+        String from = fromSb.toString().trim();
+        String to = toSb.toString().trim();
+
+        return new EventCommand(content, from, to);
     }
 }

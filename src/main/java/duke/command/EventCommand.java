@@ -1,26 +1,27 @@
 package duke.command;
 
-import duke.common.AddTaskCommandReply;
 import duke.tasklist.exception.DuplicateTaskException;
 import duke.tasklist.task.Task;
-import duke.tasklist.task.Deadline;
+import duke.tasklist.task.Event;
+import duke.common.AddTaskCommandReply;
 
-public class DeadlineCommand extends Command {
-    public static final String COMMAND_WORD = "deadline";
+public class EventCommand extends Command {
+    public static final String COMMAND_WORD = "event";
     public static final String COMMAND_USAGE = COMMAND_WORD
-            + ": add a deadline task with by time";
-
+            + ": add an event task with start and to time";
     private final String content;
-    private final String byTime;
+    private final String from;
+    private final String to;
 
-    public DeadlineCommand(String content, String byTime) {
+    public EventCommand (String content, String from, String to) {
         this.content = content;
-        this.byTime = byTime;
+        this.from = from;
+        this.to = to;
     }
 
     @Override
     public CommandResult execute() {
-        Task task = new Deadline(content, byTime);
+        Task task = new Event(content, from, to);
         try {
             taskList.addTask(task);
         } catch (DuplicateTaskException e) {
