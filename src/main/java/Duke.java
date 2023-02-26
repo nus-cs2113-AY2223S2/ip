@@ -22,25 +22,33 @@ public class Duke {
         run(database, tasks);
     }
 
+    /**
+     * Function to run the program by reading in inputs from user and calling the respective functions.
+     *
+     * @param database  the data stored in txt file
+     * @param myList    the list of tasks
+     */
     public void run(Storage database, TaskList myList) {
         Ui.printGreetMessage();
         while (!canExit) {
             Scanner in = new Scanner(System.in);
             String s = in.nextLine();
-            if (s.toLowerCase().equals("bye")) {
+            String command = s.toLowerCase();
+
+            if (command.equals("bye")) {
                 Ui.printByeMessage();
                 canExit = true;
-            } else if (s.toLowerCase().equals("list")) {
+            } else if (command.equals("list")) {
                 Ui.printList(myList);
-            } else if (s.toLowerCase().startsWith("mark") || s.toLowerCase().startsWith("unmark")) {
+            } else if (command.startsWith("mark") || command.startsWith("unmark")) {
                 Parser.handleMarkUnmark(s, myList, database);
-            } else if (s.toLowerCase().startsWith("todo")) {
+            } else if (command.startsWith("todo")) {
                 Parser.handleToDo(s, myList);
-            } else if (s.toLowerCase().startsWith("deadline")) {
+            } else if (command.startsWith("deadline")) {
                 Parser.handleDeadline(s, myList);
-            } else if (s.toLowerCase().startsWith("event")) {
+            } else if (command.startsWith("event")) {
                 Parser.handleEvent(s, myList);
-            } else if (s.toLowerCase().startsWith("delete")) {
+            } else if (command.startsWith("delete")) {
                 Parser.handleDeleteTask(s, myList, database);
             } else {
                 Ui.printIllegalInputMessage();
@@ -49,6 +57,6 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-            new Duke();
+        new Duke();
     }
 }
