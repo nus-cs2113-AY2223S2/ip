@@ -1,8 +1,4 @@
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Arrays;
-
-public class Event extends Task{
+public class Event extends Tasklist{
     private String from=new String();
     private String to=new String();
     public Event(String taskName,int taskNumber,String from,String to,String type){
@@ -40,13 +36,6 @@ public class Event extends Task{
     }
 
     public String createEntry(){
-//        try{
-//            fw.append(Integer.toString(this.taskNumber)+"."+this.type+"."+this.getDoneString()+"."+
-//                    this.taskName+"."+this.from+"."+this.to+"\n");
-//        }
-//        catch (IOException e){
-//            e.printStackTrace();
-//        }
         return Integer.toString(this.taskNumber)+"."+this.type+"."+this.getDoneString()+
                 "."+ this.taskName+"."+this.from+"."+this.to+"\n";
     }

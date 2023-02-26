@@ -10,6 +10,10 @@ public class GootExceptionHandler {
         System.out.println("Events can only contain TWO \'/\' in the form of \'/from\' and  \'/to\'");
     }
 
+    public static void fileNotFound(){
+        System.out.println("I can't find the file :((");
+    }
+
 
     public static void validateDeadline (String[] inputArray)throws GootExceptions{
         if (inputArray.length!=2 || !(inputArray[1].contains("by"))){
