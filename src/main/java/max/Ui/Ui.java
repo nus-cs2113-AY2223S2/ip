@@ -12,6 +12,10 @@ public class Ui {
             "|__/     |__/|__/  |__/|__/  |__/     V__)  ||";
     private static final String BORDER = "────────────────────────────────────────────────────────────";
     private static final String CMD_PROMPT = "~$ ";
+    private static final String MESSAGE_GREET = "Hello! I'm Max, your PAWsonal productivity assistant";
+    private static final String MESSAGE_GREET_1 = "What can I do for you to MAXimize your day?";
+    private static final String MESSAGE_IMPORTANT = "--- BORK BORK ---- THIS IS IMPORTANT! ---- BORK BORK ---";
+    private static final String MESSAGE_ERROR = "Awoo? Max dug up an error:";
 
     public Ui() {
 
@@ -44,17 +48,17 @@ public class Ui {
 
     public void greet() {
         printMessage(LOGO);
-        printMessage("Hello! I'm Max, your PAWsonal productivity assistant");
-        printMessage("What can I do for you to MAXimize your day?");
+        printMessage(MESSAGE_GREET);
+        printMessage(MESSAGE_GREET_1);
         printBorder();
     }
 
     public void notifyImportant() {
-        printMessage("--- BORK BORK ---- THIS IS IMPORTANT! ---- BORK BORK ---");
+        printMessage(MESSAGE_IMPORTANT);
     }
 
     public void notifyError() {
-        printMessage("Awoo? Max dug up an error:");
+        printMessage(MESSAGE_ERROR);
     }
 
 }
