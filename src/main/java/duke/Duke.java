@@ -23,7 +23,7 @@ public class Duke {
      * @param filePath The path of the file to load from (if any).
      */
     public Duke (String filePath) {
-        TaskList tempTasks;
+        TaskList tempTasks = new TaskList();
         ui = new UI();
         parser = new Parser();
         storage = new TaskStorage(filePath);
@@ -31,10 +31,10 @@ public class Duke {
             tempTasks = new TaskList(storage.loadTasks());
         } catch (IncompleteInputException ex) {
             ui.printError(ex);
-            tempTasks= new TaskList();
         } catch (DateTimeParseException ex) {
             ui.printError(ex);
-            tempTasks = new TaskList();
+        } catch (java.io.IOException ex) {
+            ui.printError(ex);
         }
         tasks = tempTasks;
     }

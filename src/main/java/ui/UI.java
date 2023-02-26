@@ -34,7 +34,7 @@ public class UI {
      */
     public void printGreeting() {
         printLine();
-        System.out.println("\t Hello I'm duke.Duke, your personal chatbot.");
+        System.out.println("\t Hello I'm Duke, your personal chatbot.");
         System.out.println("\t Is there anything I can do for you");
         printLine();
     }
@@ -48,7 +48,7 @@ public class UI {
         printLine();
         System.out.println("\t Got it. I've added this task:");
         System.out.println("\t  " + task);
-        System.out.println("\t Now you have " + taskCount + " tasks in your list.");
+        System.out.println("\t Now you have " + taskCount + " task(s) in your list.");
         printLine();
     }
 
@@ -61,7 +61,7 @@ public class UI {
         printLine();
         System.out.println("\t Noted. I've removed this task: ");
         System.out.println("\t " + task);
-        System.out.println("\t Now you have " + taskCount + " tasks in your list");
+        System.out.println("\t Now you have " + taskCount + " task(s) in your list");
         printLine();
     }
 

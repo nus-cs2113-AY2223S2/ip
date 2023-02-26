@@ -31,26 +31,10 @@ public class TaskStorage {
      * This method is called by {@link command.SaveCommand#execute}
      *
      * @param tasks The entire ArrayList<Task> to be saved into the ./data/duke.txt file
-     * @throws java.io.IOException If an I/O error occurred either in the creation or writing to the file.
+     * @throws java.io.IOException If an I/O error occurred either in the writing to the file.
      */
     public void saveTasks(ArrayList<Task> tasks) throws java.io.IOException {
-        File dir = new File("data");
         File f = new File("data/duke.txt");
-        if (!dir.exists()) {
-            System.out.println("Directory does not exist, creating a directory called data...");
-            boolean success = dir.mkdir();
-            if (success) {
-                System.out.println("Directory data has been successfully created");
-            }
-        }
-        if (!f.exists()) {
-            System.out.println("File does not exist, creating a new file ./data/duke.txt");
-           boolean success = f.createNewFile();
-           if (success) {
-               System.out.println("File duke.txt has been successfully created");
-           }
-        }
-
         FileWriter fw = new FileWriter("data/duke.txt");
         for (Task t: tasks) {
             fw.write(t.toSaveString() + System.lineSeparator());
@@ -64,11 +48,27 @@ public class TaskStorage {
      * @return ArrayList<Task> containing the task in the .txt file
      * @throws IncompleteInputException If the data stored in the .txt file has incomplete information
      * @throws DateTimeParseException If the Time specified for {@link Deadline} and {@link Event} does not follow the YYYY-MM-DD HH:mm format
+     * @throws java.io.IOException If an I/O error occurred in the creation or reading of the file
      */
-    public ArrayList<Task> loadTasks() throws IncompleteInputException, DateTimeParseException {
+    public ArrayList<Task> loadTasks() throws IncompleteInputException, DateTimeParseException, java.io.IOException {
         ArrayList<Task> tasks = new ArrayList<>();
         File f = new File("data/duke.txt");
-        if (f.exists()) {
+        File dir = new File("data");
+
+        if (!dir.exists()) {
+            System.out.println("Directory does not exist, creating a directory called data...");
+            boolean success = dir.mkdir();
+            if (success) {
+                System.out.println("Directory data has been successfully created");
+            }
+        }
+        if (!f.exists()) {
+            System.out.println("File does not exist, creating a new file ./data/duke.txt...");
+            boolean success = f.createNewFile();
+            if (success) {
+                System.out.println("File duke.txt has been successfully created");
+            }
+        } else {
             try {
                 Scanner s = new Scanner(f);
                 while (s.hasNext()) {
