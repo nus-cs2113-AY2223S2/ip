@@ -1,32 +1,3 @@
-# User Guide
-
-## Features 
-
-### Feature-ABC
-
-Description of the feature.
-
-### Feature-XYZ
-
-Description of the feature.
-
-## Usage
-
-### `Keyword` - Describe action
-
-Describe the action and its outcome.
-
-Example of usage: 
-
-`keyword (optional arguments)`
-
-Expected outcome:
-
-Description of the outcome.
-
-```
-expected output
-```
 # Goot User Guide
 Goot is a virtual list that allows users to record,delete and mark tasks such as 
 deadlines, events and to-dos.
