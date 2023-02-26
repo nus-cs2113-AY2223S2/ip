@@ -1,6 +1,11 @@
 import java.util.ArrayList;
 
 public class Finder {
+    /**
+     * Finds and prints out the list of tasks that contains the keyword
+     *
+     * @param commands The commands keyed in to find tasks; contains the keyword
+     */
     static void findTasks(String[] commands) {
         ArrayList<Task> listOfTasksMatchingKeyword = new ArrayList<>();
         ArrayList<Integer> indexes = new ArrayList<Integer>();
