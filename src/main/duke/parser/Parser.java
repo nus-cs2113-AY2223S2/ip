@@ -101,6 +101,7 @@ public class Parser {
         switch (cmd) {
         case "list":
         case "clear":
+            ignoreLine();
             break;
         case "mark":
         case "unmark":
