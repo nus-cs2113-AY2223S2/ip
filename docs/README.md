@@ -145,6 +145,8 @@ event play /from 2023-12-12 /to next decade
 > **WARNING :** Leaving fields blank is accepted but removes `find` and `date` functionality
 > *_Applies for **ALL** `todo`, `deadline`, `event`_
 
+> **WARNING :** Leading and trailing whitespaces are **discarded**
+
 <br />
 
 ### Listing all `tasks`
