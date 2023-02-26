@@ -15,7 +15,7 @@ import java.util.Scanner;
  * Serializes and deserializes tasks using the Gson library.
  */
 public class JsonParser {
-    private static final GsonBuilder builder = new GsonBuilder()
+    private static final GsonBuilder GSON_BUILDER = new GsonBuilder()
             .registerTypeAdapter(LocalDateTime.class,
                                  (JsonSerializer<LocalDateTime>) (json, type, jsonDeserializationContext)
                                          -> new JsonPrimitive(json.format(DateTimeParser.getFormatter())))
@@ -24,7 +24,7 @@ public class JsonParser {
                                          -> LocalDateTime.parse(json.getAsJsonPrimitive().getAsString(),
                                                                 DateTimeParser.getFormatter()))
             .create().newBuilder();
-    static final Gson gson = builder.create();
+    static final Gson GSON = GSON_BUILDER.create();
     private static final String TASK_DEADLINE = "DEADLINE";
     private static final String TASK_EVENT = "EVENT";
     private static final String TASK_TODO = "TODO";
@@ -36,21 +36,21 @@ public class JsonParser {
      * @return Task object corresponding to the JSON string
      */
     public static Task deserializeJSON(String json) {
-        JsonObject j = gson.fromJson(json, JsonObject.class);
+        JsonObject j = GSON.fromJson(json, JsonObject.class);
         Task t;
         String taskType = j.get("type").getAsString();
         switch (taskType) {
         case TASK_TODO:
-            t = gson.fromJson(j, ToDo.class);
+            t = GSON.fromJson(j, ToDo.class);
             break;
         case TASK_EVENT:
-            t = gson.fromJson(j, Event.class);
+            t = GSON.fromJson(j, Event.class);
             break;
         case TASK_DEADLINE:
-            t = gson.fromJson(j, Deadline.class);
+            t = GSON.fromJson(j, Deadline.class);
             break;
         default:
-            t = gson.fromJson(j, Task.class);
+            t = GSON.fromJson(j, Task.class);
         }
         return t;
     }
@@ -80,7 +80,7 @@ public class JsonParser {
     public static String toJson(ArrayList<Task> tasks) {
         StringBuilder saveData = new StringBuilder();
         for (Task t : tasks) {
-            String json = gson.toJson(t);
+            String json = GSON.toJson(t);
             saveData.append(json);
             saveData.append(System.lineSeparator());
         }

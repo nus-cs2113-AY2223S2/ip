@@ -4,7 +4,7 @@ package duke.tasks;
  * Parent class for all tasks created. Can be initialised as a generic task
  */
 public class Task {
-    private static final String checkbox = "X";
+    private static final String MARKER = "X";
     private boolean isCompleted;
     private final String name;
     private final TaskEnum type;
@@ -37,7 +37,7 @@ public class Task {
      * @return String visualising if the task is checked [X] or not [ ]
      */
     public static String getCheckbox(boolean checked) {
-        return "[" + (checked ? checkbox : " ") + "]";
+        return "[" + (checked ? MARKER : " ") + "]";
     }
 
     /**

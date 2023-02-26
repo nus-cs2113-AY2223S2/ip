@@ -11,8 +11,8 @@ import java.io.IOException;
  * Used for read/write operations to the default save directory: {projectDir}/data/save.txt
  */
 public class Storage {
-    private static final String home = System.getProperty("user.dir");
-    private static final Path SAVE_DIR = Paths.get(home, "data");
+    private static final String HOME = System.getProperty("user.dir");
+    private static final Path SAVE_DIR = Paths.get(HOME, "data");
     private static final Path SAVE_FILE = Paths.get(SAVE_DIR.toString(), "save.txt");
 
     /**

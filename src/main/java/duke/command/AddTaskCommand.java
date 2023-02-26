@@ -8,7 +8,7 @@ import duke.ui.UI;
  * Adds a new task to the list.
  */
 public class AddTaskCommand extends Command {
-    private Task taskObj;
+    private final Task taskObj;
 
     public AddTaskCommand(Task taskObj) {
         this.taskObj = taskObj;
