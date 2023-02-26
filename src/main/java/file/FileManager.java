@@ -8,6 +8,8 @@ import tasks.Task;
 import tasks.Todo;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
+
 import tasklist.Tasklist;
 
 public class FileManager {
@@ -29,7 +31,7 @@ public class FileManager {
                 Tasklist.tasksList.add(new Todo(eventDesc));
                 break;
             case "deadline":
-                String deadlineDate = currentLineArray[3];
+                LocalDate deadlineDate = Tasklist.convertStringToDate(currentLineArray[3]);
                 Tasklist.tasksList.add(new Deadline(eventDesc, deadlineDate));
                 break;
             case "event":

@@ -7,6 +7,7 @@ import userInterface.Print;
 import file.FileManager;
 import tasklist.Tasklist;
 import java.io.IOException;
+import java.time.format.DateTimeParseException;
 
 public class Command {
 
@@ -59,6 +60,8 @@ public class Command {
             System.out.println("File Write Error");
         } catch (InvalidFindTaskException e){
             System.out.println(InvalidFindTaskException.invalidFindTaskMessage);
+        } catch (DateTimeParseException e){
+            System.out.println("Pls enter the date in format yyyy-mm-dd!");
         }
     }
 }
