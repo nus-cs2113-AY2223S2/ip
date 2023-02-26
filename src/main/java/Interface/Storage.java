@@ -97,6 +97,5 @@ public class Storage {
         } catch (IOException e) {
             System.out.println("Error writing to save file");
         }
-
     }
 }
