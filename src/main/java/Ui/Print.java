@@ -142,6 +142,13 @@ public class Print {
 
         System.out.println(lineBreak);
     }
+
+    // If the user input is invalid, it will display this error message
+    public void wrongInput () {
+        System.out.println(lineBreak
+        + "OOPS!!! I'm sorry, but I don't know what that means :-(\n"
+        + lineBreak);
+    }
 }
 
 

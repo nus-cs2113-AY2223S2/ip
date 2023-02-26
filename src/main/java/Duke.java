@@ -6,7 +6,6 @@ import java.util.Scanner;
 import Storage.Storage;
 
 public class Duke {
-    public final static String filePath = "Duke.txt";
 
     public static void main(String[] args) throws Exception {
 
@@ -33,7 +32,7 @@ public class Duke {
             }
 
             //Processes input and obtains the current index
-            i=Parser.Processor(filePath,line,tasks, i);
+            i=Parser.Processor(line,tasks, i);
 
         }
 

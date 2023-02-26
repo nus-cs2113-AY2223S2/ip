@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import Ui.Print;
 
 public class ProcessLine {
-    public final static String filePath = "Duke.txt";
-
     protected String line;
     protected ArrayList<Task> tasks;
 
@@ -114,14 +112,14 @@ public class ProcessLine {
         } else if (line.toLowerCase().contains("deadline")) {
             String[] ToSplitDeadline = line.split("/");
             String DeadlineTask = ToSplitDeadline[0].substring(9, ToSplitDeadline[0].length() - 1);
-            tasks.add(new Deadline(DeadlineTask, ToSplitDeadline[1].substring(3, ToSplitDeadline[1].length())));
+            tasks.add(new Deadline(DeadlineTask, ToSplitDeadline[1].substring(3)));
 
             //sample:event project meeting /from Mon 2pm /to 4pm
         } else if (line.toLowerCase().contains("event")) {
             String[] ToSplitEvent = line.split("/");
-            String EventTask = ToSplitEvent[0].substring(6, ToSplitEvent[0].length());
-            tasks.add(new Event(EventTask, ToSplitEvent[1].substring(5, ToSplitEvent[1].length()),
-                    ToSplitEvent[2].substring(3, ToSplitEvent[2].length())));
+            String EventTask = ToSplitEvent[0].substring(6);
+            tasks.add(new Event(EventTask, ToSplitEvent[1].substring(5),
+                    ToSplitEvent[2].substring(3)));
 
         }
 

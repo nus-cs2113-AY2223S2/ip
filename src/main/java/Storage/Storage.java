@@ -122,7 +122,6 @@ public class Storage {
         String newString = "";
 
         for (int m = 0; m < i; m += 1) {
-            int index = m + 1;
             newString += (tasks.get(m) + "\n");
         }
 
@@ -144,9 +143,11 @@ public class Storage {
 
         Print ui;
         ui=new Print();
+        String toAppend="";
+        toAppend += (tasks.get(i-1)+ "\n");
 
         try {
-            appendToFile(filePath, tasks.get(i - 1).toString() + "\n");
+            appendToFile(filePath, toAppend);
         } catch (IOException e) {
             ui.printException();
         }
