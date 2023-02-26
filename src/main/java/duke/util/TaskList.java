@@ -47,7 +47,7 @@ public class TaskList {
             } else if (line.startsWith("unmark")) {
                 lists.get(itemNumber - 1).markAsUndone();
             } else {
-                DeleteTask(itemNumber);
+                deleteTask(itemNumber);
             }
             Storage.saveDataFromInput(lists);
         } catch (IndexOutOfBoundsException e) {
@@ -60,11 +60,27 @@ public class TaskList {
      *
      * @param itemNumber Item number of task for deletion.
      */
-    public void DeleteTask(int itemNumber) {
+    public void deleteTask(int itemNumber) {
         int index = itemNumber - 1;
         Task item = lists.get(index);
         ui.printRemoveTask(item);
         lists.remove(index);
         ui.printListSize(lists.size());
+    }
+
+    public void searchForTask(String inputLine) throws IndexOutOfBoundsException {
+        try {
+            String[] lines = inputLine.split(" ", 2);
+            String searchTerm = lines[1];
+            ArrayList<Task> searchResults = new ArrayList<>();
+            for (Task item : lists) {
+                if (item.description.contains(searchTerm)) {
+                    searchResults.add(item);
+                }
+            }
+            ui.printSearchResults(searchResults);
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("You must include a search term for your search.");
+        }
     }
 }
