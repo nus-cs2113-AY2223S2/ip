@@ -21,10 +21,12 @@ public class Parser {
                     registerDeadline(taskList.lists, line);
                 } else if (line.startsWith("event")) {
                     registerEvent(taskList.lists, line);
-                } else if (line.contains("list")) {
+                } else if (line.startsWith("list")) {
                     taskList.listTasks();
                 } else if (line.startsWith("mark") || line.startsWith("unmark") || line.startsWith("delete")) {
                     taskList.markOrDeleteTask(words, line);
+                } else if (line.startsWith("find")) {
+                    taskList.searchForTask(line);
                 } else if (line.equals("bye")) {
                     ui.printExiting();
                     isExit = true;
