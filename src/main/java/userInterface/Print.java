@@ -1,5 +1,8 @@
 package userInterface;
 
+/*
+ * Stores the methods to print default messages in the CLI
+ */
 public class Print {
     public static void printLine(){
         String horizontalLine = "\t――――――――――――――――――――――――――――――――――――――――――";

@@ -9,8 +9,17 @@ import tasklist.Tasklist;
 import java.io.IOException;
 import java.time.format.DateTimeParseException;
 
+/*
+ * Handles the execution of the command specified by the user's input
+ */
 public class Command {
 
+    /*
+     * Executes the corresponding methods to the user's input command 
+     * Catches the exceptions thrown from the corresponding methods
+     * 
+     * @param String userInput from user
+     */
     public static void runCommand(String userInput){
         String [] userInputArray = userInput.split(" ",2);
         String command = Tasklist.retrieveCommand(userInputArray);
