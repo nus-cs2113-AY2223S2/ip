@@ -8,17 +8,21 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 public class Command {
-    public static void printLine() {
-        System.out.println("____________________________________________________________");
-    }
+    /**
+     * The function will check for the command entered by the user and chexk whether it is valid.
+     * It will then call the corresponding methods to execute the command.
+     *
+     * @param tasks The list containing the user's tasks.
+     * @param userInput The command entered by the user.
+     * @throws InvalidCommandException If the command entered is not found, the exception will be thrown.
+     */
     public static void execute(ArrayList<Task> tasks, String userInput) throws InvalidCommandException {
         final String[] commandTypeAndParams = new Parser().parseCommand(userInput);
         final String commandType = commandTypeAndParams[0];
         final String commandArgs = commandTypeAndParams[1];
-        Command command = new Command();
         switch (commandType) {
         case "list":
-            printListOfTasks(tasks);
+            Ui.printListOfTasks(tasks);
             break;
         case "todo":
             try {
@@ -27,7 +31,7 @@ public class Command {
             } catch (NoDescriptionException e) {
                 System.out.println("WOOFS!!! The description of a todo cannot be empty.");
                 System.out.println("Please try to add todo again υ´• ﻌ •`υ");
-                printLine();
+                Ui.printLine();
             }
             break;
         case "deadline":
@@ -37,11 +41,11 @@ public class Command {
             } catch (NoDescriptionException e) {
                 System.out.println("WOOFS!!! The description of a deadline cannot be empty.");
                 System.out.println("Please try to add deadline again υ´• ﻌ •`υ");
-                printLine();
+                Ui.printLine();
             } catch (FormatException | ParseException e) {
                 System.out.println("WOOFS!!! The format of entering deadline is incorrect.");
                 System.out.println("Please try to add deadline again υ´• ﻌ •`υ");
-                printLine();
+                Ui.printLine();
             }
             break;
         case "event":
@@ -51,11 +55,11 @@ public class Command {
             } catch (NoDescriptionException e) {
                 System.out.println("WOOFS!!! The description of a event cannot be empty.");
                 System.out.println("Please try to add event again υ´• ﻌ •`υ");
-                printLine();
+                Ui.printLine();
             } catch (FormatException | ParseException e) {
                 System.out.println("WOOFS!!! The format of entering event is incorrect.");
                 System.out.println("Please try to add event again υ´• ﻌ •`υ");
-                printLine();
+                Ui.printLine();
             }
             break;
         case "mark":
@@ -64,11 +68,11 @@ public class Command {
             } catch (NoDescriptionException e) {
                 System.out.println("WOOFS!!! The index of entering task must be stated.");
                 System.out.println("Please try to mark task again υ´• ﻌ •`υ");
-                printLine();
+                Ui.printLine();
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("WOOFS!!! The index of entering task is not valid.");
                 System.out.println("Please try to mark task again υ´• ﻌ •`υ");
-                printLine();
+                Ui.printLine();
             }
             break;
         case "unmark":
@@ -77,11 +81,11 @@ public class Command {
             } catch (NoDescriptionException e) {
                 System.out.println("WOOFS!!! The index of entering task must be stated.");
                 System.out.println("Please try to mark task again υ´• ﻌ •`υ");
-                printLine();
+                Ui.printLine();
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("WOOFS!!! The index of entering task is not valid.");
                 System.out.println("Please try to mark task again υ´• ﻌ •`υ");
-                printLine();
+                Ui.printLine();
             }
             break;
         case "delete":
@@ -90,11 +94,11 @@ public class Command {
             } catch (NoDescriptionException e) {
                 System.out.println("WOOFS!!! The index of entering task must be stated.");
                 System.out.println("Please try to delete task again υ´• ﻌ •`υ");
-                printLine();
+                Ui.printLine();
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("WOOFS!!! The index of entering task is not valid.");
                 System.out.println("Please try to delete task again υ´• ﻌ •`υ");
-                printLine();
+                Ui.printLine();
             }
             break;
         case "help":
@@ -149,22 +153,16 @@ public class Command {
         Date formattedDeadline = Parser.parseDate(deadline);
         TaskList.addTask(tasks, new Deadline(deadlineDescription, formattedDeadline));
     }
-    public static void printListOfTasks(ArrayList<Task> tasks) {
-        for (int i = 0; i < tasks.size(); i += 1) {
-            System.out.print(i + 1);
-            System.out.print(". ");
-            System.out.println(tasks.get(i));
-        }
-        printLine();
-    }
     public static void find(ArrayList<Task> tasks, String keyword) {
         System.out.println("Below are the tasks that contains " + keyword + ": ");
         for (int i = 0; i < tasks.size(); i += 1) {
             if (tasks.get(i).description.contains(keyword)) {
+                System.out.print(i);
+                System.out.print(". ");
                 System.out.println(tasks.get(i).toString());
             }
         }
-        printLine();
+        Ui.printLine();
     }
     public static void unmarkTask(ArrayList<Task> tasks, String commandArgs) throws NoDescriptionException, IndexOutOfBoundsException {
         if (commandArgs.trim().length() == 0) {
@@ -181,7 +179,7 @@ public class Command {
             System.out.println("I've unmarked this task ∪･ω･∪:");
             System.out.println(tasks.get(unmarkId));
         }
-        printLine();
+        Ui.printLine();
     }
     public static void markTask(ArrayList<Task> tasks, String commandArgs) throws NoDescriptionException, IndexOutOfBoundsException {
         if (commandArgs.trim().length() == 0) {
@@ -198,6 +196,6 @@ public class Command {
             System.out.println("I've marked this task as done ੯•໒꒱❤︎:");
             System.out.println(tasks.get(markId));
         }
-        printLine();
+        Ui.printLine();
     }
 }

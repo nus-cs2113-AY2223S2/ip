@@ -69,4 +69,12 @@ public class Ui {
         System.out.println("Now you have " + tasks.size() + " tasks in your list. ^ ^");
         printLine();
     }
+    public static void printListOfTasks(ArrayList<Task> tasks) {
+        for (int i = 0; i < tasks.size(); i += 1) {
+            System.out.print(i + 1);
+            System.out.print(". ");
+            System.out.println(tasks.get(i));
+        }
+        printLine();
+    }
 }
