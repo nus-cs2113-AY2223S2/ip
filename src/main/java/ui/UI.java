@@ -14,10 +14,24 @@ public class UI {
         scanner = new Scanner(System.in);
     }
 
+    /**
+     * Gets the user command from the terminal
+     * @return The complete input line
+     */
+    public String getCommand() {
+        return scanner.nextLine();
+    }
+
+    /**
+     * Prints a line with a length of LINE_LENGTH
+     */
     public void printLine() {
         System.out.println("\t " + "_".repeat(LINE_LENGTH));
     }
 
+    /**
+     * Prints the greeting at the start of the program
+     */
     public void printGreeting() {
         printLine();
         System.out.println("\t Hello I'm duke.Duke, your personal chatbot.");
@@ -25,6 +39,11 @@ public class UI {
         printLine();
     }
 
+    /**
+     * Prints the task that has been successfully added and the current total number of tasks
+     * @param task The task that has been added
+     * @param taskCount The total number of tasks
+     */
     public void printAddTaskSuccess(Task task, int taskCount) {
         printLine();
         System.out.println("\t Got it. I've added this task:");
@@ -33,6 +52,11 @@ public class UI {
         printLine();
     }
 
+    /**
+     * Prints the task that has been successfully removed and the current total number of tasks
+     * @param task The task that has been removed
+     * @param taskCount The total number of tasks
+     */
     public void printRemoveTaskSuccess(Task task, int taskCount) {
         printLine();
         System.out.println("\t Noted. I've removed this task: ");
@@ -41,6 +65,10 @@ public class UI {
         printLine();
     }
 
+    /**
+     * Prints all the tasks that is being specified
+     * @param tasks The tasks to be printed
+     */
     public void printList(ArrayList<Task> tasks) {
         printLine();
         if (tasks.size() ==0) {
@@ -55,6 +83,10 @@ public class UI {
         printLine();
     }
 
+    /**
+     * Prints all the found tasks specified
+     * @param tasks The found tasks to be printed
+     */
     public void printFoundTasks(ArrayList<Task> tasks) {
         printLine();
         if (tasks.size() ==0) {
@@ -69,6 +101,10 @@ public class UI {
         printLine();
     }
 
+    /**
+     * Prints the task that has just been successfully marked.
+     * @param task The marked task
+     */
     public void printMarkSuccess (Task task) {
         printLine();
         System.out.println("\t Nice, I have marked this task as done: ");
@@ -76,6 +112,10 @@ public class UI {
         printLine();
     }
 
+    /**
+     * Prints the task that has just been successfully unmarked.
+     * @param task The unmarked task
+     */
     public void printUnmarkSuccess (Task task)  {
         printLine();
         System.out.println("\t Ouch, I have unmarked this task: ");
@@ -83,12 +123,19 @@ public class UI {
         printLine();
     }
 
+    /**
+     * Prints goodbye line when user exits the program
+     */
     public void printBye() {
         printLine();
         System.out.println("\t Bye! Do let me know if you need any further assistance");
         printLine();
     }
 
+    /**
+     * Prints error associated with saving
+     * @param ex The IOException to be printed
+     */
     public void printSavingError(java.io.IOException ex) {
         printLine();
         System.out.println("Exception Occured: " + ex);
@@ -96,14 +143,16 @@ public class UI {
         printLine();
     }
 
+    /**
+     * Prints the error
+     * @param ex The Exception to be printed
+     */
     public void printError(Exception ex) {
         printLine();
         System.out.println("Exception Occured: " + ex);
         printLine();
     }
 
-    public String getCommand() {
-        return scanner.nextLine();
-    }
+
 
 }

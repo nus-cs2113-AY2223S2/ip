@@ -17,22 +17,32 @@ public class Duke {
     private final UI ui;
     private final Parser parser;
 
-
-
+    /**
+     * Initializes the ui,parser and storage object to be used later and load the existing task in filePath.
+     * All exceptions have been handled in this function and will be printed out accordingly
+     * @param filePath The path of the file to load from (if any).
+     */
     public Duke (String filePath) {
         TaskList tempTasks;
         ui = new UI();
         parser = new Parser();
         storage = new TaskStorage(filePath);
         try {
-            tempTasks = new TaskList(storage.load());
+            tempTasks = new TaskList(storage.loadTasks());
         } catch (IncompleteInputException ex) {
             ui.printError(ex);
             tempTasks= new TaskList();
+        } catch (DateTimeParseException ex) {
+            ui.printError(ex);
+            tempTasks = new TaskList();
         }
         tasks = tempTasks;
     }
 
+    /**
+     * Runs the parser whenever the user has not exited the program, parse the input and execute the appropriate commands
+     * using the tasks storage and ui which have been initialized in {@link #Duke} and finally print out the errors if any.
+     */
     public void run() {
         ui.printGreeting();
         while(parser.isExecuting()) {

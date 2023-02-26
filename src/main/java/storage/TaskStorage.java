@@ -1,16 +1,23 @@
 package storage;
 
 import parser.Parser;
+import task.Deadline;
+import task.Event;
 import task.Task;
 import exception.IncompleteInputException;
 
 import java.io.FileNotFoundException;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.util.Scanner;
 
+/**
+ * Represents a Storage class that is used to save and load ArrayList<Task> to and from the
+ * ./data/duke.txt file.
+ */
 public class TaskStorage {
     private final String filePath;
 
@@ -18,6 +25,14 @@ public class TaskStorage {
         this.filePath = filePath;
     }
 
+    /**
+     * Save the given ArrayList<Task> into lines of String in the ./data/duke.txt file
+     * If the directory and file does not exist, it will create the data/duke.txt in the current working directory
+     * This method is called by {@link command.SaveCommand#execute}
+     *
+     * @param tasks The entire ArrayList<Task> to be saved into the ./data/duke.txt file
+     * @throws java.io.IOException If an I/O error occurred either in the creation or writing to the file.
+     */
     public void saveTasks(ArrayList<Task> tasks) throws java.io.IOException {
         File dir = new File("data");
         File f = new File("data/duke.txt");
@@ -44,7 +59,13 @@ public class TaskStorage {
         fw.close();
     }
 
-    public ArrayList<Task> load() throws IncompleteInputException {
+    /**
+     * Loads the content from the ./data/duke.txt file and process into ArrayList<Task> if it exists
+     * @return ArrayList<Task> containing the task in the .txt file
+     * @throws IncompleteInputException If the data stored in the .txt file has incomplete information
+     * @throws DateTimeParseException If the Time specified for {@link Deadline} and {@link Event} does not follow the YYYY-MM-DD HH:mm format
+     */
+    public ArrayList<Task> loadTasks() throws IncompleteInputException, DateTimeParseException {
         ArrayList<Task> tasks = new ArrayList<>();
         File f = new File("data/duke.txt");
         if (f.exists()) {

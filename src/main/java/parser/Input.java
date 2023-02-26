@@ -1,5 +1,8 @@
 package parser;
 
+/**
+ * Represents an enumeration for the CONSTANT valid String that the user can input.
+ */
 public enum Input {
     TODO("todo"),
     DEADLINE("deadline"),
