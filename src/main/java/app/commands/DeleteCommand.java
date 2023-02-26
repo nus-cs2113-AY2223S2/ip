@@ -8,8 +8,17 @@ import app.tasks.Task;
 import app.tasks.TaskList;
 import app.ui.Ui;
 
+/**
+ * Represents a command to delete a task from Task-list.
+ */
 public class DeleteCommand extends Command{
     private int index;
+
+    /**
+     * Constructor to delete a task.
+     * @param commandDescriptor Contains information about which task to delete.
+     * @throws DukeException If error in parsing the input.
+     */
     public DeleteCommand(String commandDescriptor) throws DukeException {
         parseInput(commandDescriptor);
     }

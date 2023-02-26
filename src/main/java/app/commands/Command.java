@@ -4,6 +4,10 @@ import app.exceptions.DukeException;
 import app.save.Storage;
 import app.ui.Ui;
 import app.tasks.TaskList;
+
+/**
+ * Represents the command class to be used by different user commands.
+ */
 public abstract class Command {
     private boolean isExit;
 
