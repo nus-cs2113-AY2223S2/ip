@@ -1,10 +1,8 @@
 package app.commands;
 
 import app.exceptions.DukeException;
-import app.exceptions.IncompleteCommandException;
-import app.exceptions.InvalidCommandException;
+import app.parser.AddTaskParser;
 import app.save.Storage;
-import app.tasks.Event;
 import app.tasks.Task;
 import app.tasks.TaskList;
 import app.ui.Ui;
@@ -22,7 +20,7 @@ public class AddEvent extends Command {
      * @throws DukeException If error in parsing the input.
      */
     public AddEvent(String commandWord, String commandDescriptor) throws DukeException {
-        parseInput(commandWord, commandDescriptor);
+        this.newTask = AddTaskParser.parseCommand(commandWord, commandDescriptor);
     }
 
     /**
@@ -36,22 +34,6 @@ public class AddEvent extends Command {
         tasks.addTask(newTask);
         ui.newTaskAddedMessage(newTask, tasks.getTasksCount());
         storage.write(tasks);
-    }
-
-    public void parseInput(String commandWord, String commandDescriptor) throws DukeException {
-        if (commandDescriptor.length() == 0) {
-            throw new IncompleteCommandException(commandWord);
-        }
-        try {
-            String[] fromParts = commandDescriptor.split("/from");
-            String taskDescription = fromParts[0].trim();
-            String[] toParts = fromParts[1].split("/to");
-            String startTime = toParts[0].trim();
-            String endTime = toParts[1].trim();
-            this.newTask = new Event(taskDescription, false, startTime, endTime);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            throw new InvalidCommandException();
-        }
     }
 }
 

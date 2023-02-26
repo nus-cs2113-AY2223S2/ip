@@ -92,4 +92,14 @@ public class TaskList {
         unmarkedTask.setDone(false);
         return unmarkedTask;
     }
+
+    public ArrayList<Task> getTasksWithKeyword(TaskList tasks, String keyword) {
+        ArrayList<Task> tasksWithKeyword = new ArrayList<>();
+        for (Task t : tasks.getTasks()) {
+            if (t.getTaskDescription().toLowerCase().contains(keyword.toLowerCase())) {
+                tasksWithKeyword.add(t);
+            }
+        }
+        return tasksWithKeyword;
+    }
 }

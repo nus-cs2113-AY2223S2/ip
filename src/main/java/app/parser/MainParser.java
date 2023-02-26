@@ -1,6 +1,5 @@
 package app.parser;
 
-
 import app.commands.Command;
 import app.commands.DeleteCommand;
 import app.commands.ExitCommand;
@@ -10,6 +9,7 @@ import app.commands.UnmarkCommand;
 import app.commands.AddDeadline;
 import app.commands.AddTodo;
 import app.commands.AddEvent;
+import app.commands.FindCommand;
 import app.exceptions.DukeException;
 import app.exceptions.InvalidCommandException;
 
@@ -17,11 +17,12 @@ import app.exceptions.InvalidCommandException;
  * Represents Duke's main parser used to distinguish the
  * main command of the user input.
  */
-public class Parser {
+public class MainParser {
 
     /**
      * Method used to enter various cases and assign
      * command type based on user input.
+     *
      * @param input The entire user input.
      * @return The type of command that the user input.
      * @throws DukeException If input is invalid or error in processing new command.
@@ -30,7 +31,6 @@ public class Parser {
         String[] userInputArray = input.split(" ");
         String commandWord = userInputArray[0];
         String commandDescriptor = input.substring(commandWord.length()).trim();
-
         Command c;
 
         switch (commandWord) {
@@ -58,9 +58,14 @@ public class Parser {
         case "unmark":
             c = new UnmarkCommand(commandDescriptor);
             break;
+        case "find":
+            c = new FindCommand(commandDescriptor);
+            break;
         default:
             throw new InvalidCommandException();
         }
         return c;
     }
 }
+
+

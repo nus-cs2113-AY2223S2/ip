@@ -1,10 +1,10 @@
 package app.ui;
 
 import app.exceptions.DukeException;
-import app.parser.Parser;
 import app.tasks.Task;
 import app.tasks.TaskList;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -79,6 +79,9 @@ public class Ui {
      * @throws DukeException If there is an error in accessing a specific index.
      */
     public void printTasks(TaskList tasks) throws DukeException {
+        if (tasks.getTasksCount() == 0){
+            System.out.println("There are no tasks in your task list.");
+        }
         for (int i = 0; i < tasks.getTasksCount(); i++) {
             String taskDescription = tasks.getTask(i).toString();
             System.out.println((i + 1) + ". " + taskDescription);
@@ -111,5 +114,18 @@ public class Ui {
     public void taskUnmarkedMessage(Task unmarkedTask) {
         System.out.println("OK! I've marked this task as not done yet:\n" +
                 unmarkedTask.toString());
+    }
+
+    public void printTasksWithKeyword(ArrayList<Task> tasksWithKeyword) {
+        if (tasksWithKeyword.size() == 0){
+            System.out.println("There are no tasks containing that keyword.");
+        }
+        else {
+            System.out.println("Here are the matching tasks in your list:");
+            for (int i = 0; i < tasksWithKeyword.size(); i++) {
+                String taskDescription = tasksWithKeyword.get(i).toString();
+                System.out.println((i + 1) + ". " + taskDescription);
+            }
+        }
     }
 }

@@ -1,11 +1,10 @@
 package app.commands;
 
 import app.exceptions.DukeException;
-import app.exceptions.IncompleteCommandException;
+import app.parser.AddTaskParser;
 import app.save.Storage;
 import app.tasks.Task;
 import app.tasks.TaskList;
-import app.tasks.ToDo;
 import app.ui.Ui;
 
 /**
@@ -21,7 +20,7 @@ public class AddTodo extends Command {
      * @throws DukeException If error in parsing the input.
      */
     public AddTodo(String commandWord, String commandDescriptor) throws DukeException {
-        parseInput(commandWord, commandDescriptor);
+        this.newTask = AddTaskParser.parseCommand(commandWord, commandDescriptor);
     }
 
     /**
@@ -35,12 +34,5 @@ public class AddTodo extends Command {
         tasks.addTask(newTask);
         ui.newTaskAddedMessage(newTask, tasks.getTasksCount());
         storage.write(tasks);
-    }
-
-    public void parseInput(String commandWord, String commandDescriptor) throws DukeException{
-        if (commandDescriptor.length() == 0) {
-            throw new IncompleteCommandException(commandWord);
-        }
-        this.newTask = new ToDo(commandDescriptor, false);
     }
 }
