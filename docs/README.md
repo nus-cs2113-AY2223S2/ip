@@ -1,19 +1,19 @@
 # Duke User Guide
 
-* [What is Duke?](https://github.com/MustafaAH10/ip/edit/master/docs/README.md#what-is-duke) 
-* [Setting up Duke for use](https://github.com/MustafaAH10/ip/edit/master/docs/README.md#setting-up-duke-for-use)
-* [Features](https://github.com/MustafaAH10/ip/edit/master/docs/README.md#features) 
-  * [Adding a new task](https://github.com/MustafaAH10/ip/edit/master/docs/README.md#adding-a-new-task)
-    * [Adding a Todo](https://github.com/MustafaAH10/ip/edit/master/docs/README.md#add-a-new-todo-todo)
-    * [Adding a Deadline](https://github.com/MustafaAH10/ip/edit/master/docs/README.md#add-a-new-deadline-deadline)
-    * [Adding an Event](https://github.com/MustafaAH10/ip/edit/master/docs/README.md#add-a-new-event-event)
-  * [Deleting a task](https://github.com/MustafaAH10/ip/edit/master/docs/README.md#deleting-a-task-delete)
-  * [Viewing all tasks](https://github.com/MustafaAH10/ip/edit/master/docs/README.md#viewing-all-tasks-list)
-  * [Finding all tasks containing a keyword](https://github.com/MustafaAH10/ip/edit/master/docs/README.md#finding-all-tasks-containing-a-keyword-find)
-  * [Marking a task as done](https://github.com/MustafaAH10/ip/edit/master/docs/README.md#marking-a-task-as-done-mark)
-  * [Unmarking a task as not done](https://github.com/MustafaAH10/ip/edit/master/docs/README.md#unmarking-a-task-as-not-done-unmark)
+* [What is Duke?](https://mustafaah10.github.io/ip/#what-is-duke) 
+* [Setting up Duke for use](https://mustafaah10.github.io/ip/#setting-up-duke-for-use)
+* [Features](https://mustafaah10.github.io/ip/#features) 
+  * [Adding a new task](https://mustafaah10.github.io/ip/#adding-a-new-task)
+    * [Adding a Todo](https://mustafaah10.github.io/ip/#add-a-new-todo-todo)
+    * [Adding a Deadline](https://mustafaah10.github.io/ip/#add-a-new-deadline-deadline)
+    * [Adding an Event](https://mustafaah10.github.io/ip/#add-a-new-event-event)
+  * [Deleting a task](https://mustafaah10.github.io/ip/#deleting-a-task-delete)
+  * [Viewing all tasks](https://mustafaah10.github.io/ip/#viewing-all-tasks-list)
+  * [Finding all tasks containing a keyword](https://mustafaah10.github.io/ip/#finding-all-tasks-containing-a-keyword-find)
+  * [Marking a task as done](https://mustafaah10.github.io/ip/#marking-a-task-as-done-mark)
+  * [Unmarking a task as not done](https://mustafaah10.github.io/ip/#unmarking-a-task-as-not-done-unmark)
 * Command Summary
-* [FAQ](https://github.com/MustafaAH10/ip/edit/master/docs/README.md#faq)
+* [FAQ](https://mustafaah10.github.io/ip/#faq)
   
 ## What is Duke?
 
