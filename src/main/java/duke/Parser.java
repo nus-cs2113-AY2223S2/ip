@@ -9,6 +9,7 @@ import duke.task.ToDo;
 import duke.database.Storage;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class Parser {
 
@@ -236,10 +237,34 @@ public class Parser {
     }
 
     /**
+     * Search for the task that was inputted by user in the task list.
+     *
+     * @param command   the input command given by user
+     * @param myList    the current list of tasks
+     */
+    public static void findTask(String command, TaskList myList) {
+        String[] commandList = command.split(" ");
+        String taskToFind = commandList[1];
+        int numberOfMatchingTasks = 0;
+        Ui.printFindMessage();
+        for (Task task : myList.tasks) {
+            String[] taskDescriptionArray = task.getDescription().split(" ");
+            if (Arrays.asList(taskDescriptionArray).contains(taskToFind)) {
+                numberOfMatchingTasks++;
+                System.out.println(numberOfMatchingTasks + "." + task.toString());
+            }
+        }
+        if (numberOfMatchingTasks == 0) {
+            Ui.printFoundNothingMessage();
+        }
+        Ui.printLine();
+    }
+
+    /**
      * Checks if given string is a number.
      *
      * @param s string to check
-     * @return true if string is a number.
+     * @return true if string is a number
      */
     public static boolean isNumeric(String s) {
         try {
