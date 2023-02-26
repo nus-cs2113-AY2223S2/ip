@@ -1,6 +1,9 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.File;
 
 public class Duke {
     static final int COMMAND_INDEX = 0;
@@ -8,12 +11,29 @@ public class Duke {
     static final int DESCRIPTION_INDEX = 1;
     static final int STARTDATE_INDEX = 0;
     static final int ENDDATE_INDEX = 1;
+    public static final String TASKLIST_EXPORT_PATH = "C:\\Users\\lhyao\\Desktop\\tasks.txt";
 
     public static void exitMessage() {
         System.out.println("Go away Anna");
         System.out.println("O-kay bye......");
     }
 
+    public static void writeToTaskList() {
+        File exportTaskList = new File (TASKLIST_EXPORT_PATH);
+        try {
+            FileWriter writeTaskList = new FileWriter(TASKLIST_EXPORT_PATH);
+            int numTasks = TaskList.getNumItems();
+            for (int i = 0; i < numTasks; ++i) {
+                writeTaskList.write(TaskList.getItem(i).getTask());
+                writeTaskList.write(System.lineSeparator());
+            }
+            writeTaskList.close();
+            System.out.println("Successfully exported TaskList!");
+            System.out.println("Written to: " + TASKLIST_EXPORT_PATH);
+        } catch (IOException e) {
+            System.out.println("Error occurred while writing to tasks.txt");
+        }
+    }
     public static String getItemDescription(String userInput) {
         Scanner in = new Scanner(System.in);
         String description;
@@ -102,6 +122,11 @@ public class Duke {
                 String itemDescription = getItemDescription(userInput);
                 Task newTask = new Task(itemDescription);
                 TaskList.addItem(newTask);
+                break;
+            }
+
+            case "save": {
+                writeToTaskList();
                 break;
             }
 
