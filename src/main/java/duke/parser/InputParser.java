@@ -5,16 +5,10 @@ import duke.exceptions.InvalidCommandException;
 import duke.exceptions.InvalidDateTimeException;
 import duke.exceptions.InvalidInputIDException;
 import duke.exceptions.InvalidTaskFormatException;
-import duke.tasks.Deadline;
-import duke.tasks.Event;
 import duke.tasks.Task;
 import duke.tasks.TaskEnum;
-import duke.tasks.ToDo;
 
-import java.time.LocalDateTime;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Processes user input
@@ -30,18 +24,6 @@ public class InputParser {
     private static final String COMMAND_MARK = "mark";
     private static final String COMMAND_TODO = "todo";
     private static final String COMMAND_UNMARK = "unmark";
-    private static final String KEYWORD_BY = "/by";
-    private static final String KEYWORD_FROM = "/from";
-    private static final String KEYWORD_TO = "/to";
-    private static final Pattern patternToDo = Pattern.compile(
-            "^(\\S+[\\S\\s]*)$",
-            Pattern.CASE_INSENSITIVE);
-    private static final Pattern patternDeadline = Pattern.compile(
-            "^(\\S+[\\S\\s]*)(\\s+/by\\s+)(\\S+[\\S\\s]*)$",
-            Pattern.CASE_INSENSITIVE);
-    private static final Pattern patternEvent = Pattern.compile(
-            "^(\\S+[\\S\\s]*)(\\s+/from\\s+)(\\S+[\\S\\s]*)(\\s+/to\\s+)(\\S+[\\S\\s]*)$",
-            Pattern.CASE_INSENSITIVE);
 
     /**
      * Reads the task ID input by the user.
@@ -55,39 +37,6 @@ public class InputParser {
             throw new InvalidInputIDException();
         }
         return scanner.nextInt();
-    }
-
-    public static void checkValidInput(String input, Pattern pattern, TaskEnum taskType) throws InvalidTaskFormatException {
-        Matcher matcher = pattern.matcher(input.trim());
-        if (input.trim().isEmpty() || !matcher.find()) {
-            throw new InvalidTaskFormatException(taskType);
-        }
-    }
-
-    private static ToDo parseToDoInput(String input) throws InvalidTaskFormatException {
-        checkValidInput(input, patternToDo, TaskEnum.TODO);
-        return new ToDo(input);
-    }
-
-    private static Event parseEventInput(String input) throws InvalidTaskFormatException, InvalidDateTimeException {
-        checkValidInput(input, patternEvent, TaskEnum.EVENT);
-        int fromStartIndex = input.indexOf(KEYWORD_FROM);
-        int toStartIndex = input.indexOf(KEYWORD_TO);
-        String description = input.substring(0, fromStartIndex).trim();
-        String fromString = input.substring(fromStartIndex + KEYWORD_FROM.length(), toStartIndex).trim();
-        String toString = input.substring(toStartIndex + KEYWORD_TO.length()).trim();
-        LocalDateTime fromDateTime = DateTimeParser.parse(fromString);
-        LocalDateTime toDateTime = DateTimeParser.parse(toString);
-        return new Event(description, fromDateTime, toDateTime);
-    }
-
-    private static Deadline parseDeadlineInput(String input) throws InvalidTaskFormatException, InvalidDateTimeException {
-        checkValidInput(input, patternDeadline, TaskEnum.DEADLINE);
-        int byStartIndex = input.indexOf(KEYWORD_BY);
-        String description = input.substring(0, byStartIndex).trim();
-        String byString = input.substring(byStartIndex + KEYWORD_BY.length()).trim();
-        LocalDateTime byDateTime = DateTimeParser.parse(byString);
-        return new Deadline(description, byDateTime);
     }
 
     /**
@@ -109,13 +58,16 @@ public class InputParser {
         Task task;
         switch (type) {
         case TODO:
-            task = parseToDoInput(taskDetails);
+            ToDoParser todoParser = new ToDoParser();
+            task = todoParser.parseInput(taskDetails);
             break;
         case EVENT:
-            task = parseEventInput(taskDetails);
+            EventParser eventParser = new EventParser();
+            task = eventParser.parseInput(taskDetails);
             break;
         case DEADLINE:
-            task = parseDeadlineInput(taskDetails);
+            DeadlineParser deadlineParser = new DeadlineParser();
+            task = deadlineParser.parseInput(taskDetails);
             break;
         default:
             if (taskDetails.isEmpty()) {
