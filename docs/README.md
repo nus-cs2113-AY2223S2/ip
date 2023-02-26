@@ -3,14 +3,18 @@
 ## Setting up Duke
 
 1. Ensure you have Java 11 or above
-2. Download the latest copy of Duke.jar [here]()
+2. Download the latest copy of Duke.jar [here](https://github.com/cleoncheng2000/ip/releases)
 3. Move the file to a folder where you want to run Duke
 4. Open the command terminal in that same folder
 5. Use the following command to run the programme:
 `java -jar duke.jar`
 6. If duke runs successfully, you will see the following welcome message:
-` Hello! I'm Duke
-   What can I do for you?`
+
+```
+ Hello! I'm Duke
+ What can I do for you?
+```
+
 ## Features 
 
 ### Add Task
