@@ -112,14 +112,33 @@ public class Command {
             throw new InvalidCommandException();
         }
     }
+
+    /**
+     * Add a new todo to the tasks list.
+     *
+     * @param tasks The list containing the user's tasks
+     * @param commandArgs The task description entered by the user
+     * @throws NoDescriptionException If the description is empty, the exception will be thrown.
+     */
     public static void addTodo(ArrayList<Task> tasks, String commandArgs) throws NoDescriptionException {
-        final String taskName = commandArgs.trim();
-        if (taskName.length() == 0) {
+        final String taskDescription = commandArgs.trim();
+        if (taskDescription.length() == 0) {
             throw new NoDescriptionException();
         }
         TaskList.addTask(tasks, new Todo(commandArgs));
     }
-    public static void addEvent(ArrayList<Task> tasks, String commandArgs) throws NoDescriptionException, FormatException, ParseException {
+
+    /**
+     * Add a new event item to the task list.
+     *
+     * @param tasks The list containing the user's tasks.
+     * @param commandArgs The event description entered by the user.
+     * @throws NoDescriptionException If the description is empty, the exception will be thrown.
+     * @throws FormatException If the format of entering event description is wrong, the exception will be thrown.
+     * @throws ParseException If the event date couldn't be parse into date type, the exceptino will be thrown.
+     */
+    public static void addEvent(ArrayList<Task> tasks, String commandArgs)
+            throws NoDescriptionException, FormatException, ParseException {
         final int indexOfFrom = commandArgs.indexOf("from:");
         final int indexOfTo = commandArgs.indexOf("to:");
         if (indexOfTo == -1 || indexOfFrom == -1) {
@@ -138,7 +157,18 @@ public class Command {
         }
         TaskList.addTask(tasks, new Event(eventDescription, formattedFrom, formattedTo));
     }
-    public static void addDeadline(ArrayList<Task> tasks, String commandArgs) throws NoDescriptionException, FormatException, ParseException {
+
+    /**
+     * Add a new deadline item to the user's task list.
+     *
+     * @param tasks The list containing the user's tasks.
+     * @param commandArgs The deadline description entered by the user.
+     * @throws NoDescriptionException If the description is empty, the exception will be thrown.
+     * @throws FormatException If format of entering deadline description is wrong, the exception will be thrown.
+     * @throws ParseException If the event date couldn't be parse into date type, the exception will be thrown.
+     */
+    public static void addDeadline(ArrayList<Task> tasks, String commandArgs)
+            throws NoDescriptionException, FormatException, ParseException {
         final int indexOfDeadline = commandArgs.indexOf("by:");
         if (indexOfDeadline == -1) {
             throw new FormatException();
@@ -154,6 +184,14 @@ public class Command {
         Date formattedDeadline = Parser.parseDate(deadline);
         TaskList.addTask(tasks, new Deadline(deadlineDescription, formattedDeadline));
     }
+
+    /**
+     * The function will go through all the tasks to find
+     * and print out the task description containing keyword.
+     *
+     * @param tasks The list containing the user's tasks.
+     * @param keyword The keyword that the user want to search for.
+     */
     public static void find(ArrayList<Task> tasks, String keyword) {
         System.out.println("Below are the tasks that contains " + keyword + ": ");
         for (int i = 0; i < tasks.size(); i += 1) {
@@ -165,7 +203,19 @@ public class Command {
         }
         Ui.printLine();
     }
-    public static void unmarkTask(ArrayList<Task> tasks, String commandArgs) throws NoDescriptionException, IndexOutOfBoundsException, FormatException {
+
+    /**
+     * Unmark the task index entered by the user.
+     * If the task have not been marked, it will prompt the user about it.
+     *
+     * @param tasks The list containing the user's task.
+     * @param commandArgs The index description entered by the user.
+     * @throws NoDescriptionException If the index description is empty, the exception will be thrown
+     * @throws IndexOutOfBoundsException If the index is not within the size of the list, the exception will be thrown.
+     * @throws FormatException If the index is not an integer, the exception will be thrown.
+     */
+    public static void unmarkTask(ArrayList<Task> tasks, String commandArgs)
+            throws NoDescriptionException, IndexOutOfBoundsException, FormatException {
         if (commandArgs.trim().length() == 0) {
             throw new NoDescriptionException();
         }
@@ -182,7 +232,18 @@ public class Command {
         }
         Ui.printLine();
     }
-    public static void markTask(ArrayList<Task> tasks, String commandArgs) throws NoDescriptionException, IndexOutOfBoundsException, FormatException {
+
+    /**
+     * Mark the task index entered by the user.
+     * If the task have been marked, it will prompt the user about it.
+     * @param tasks The list containing the user's tasks.
+     * @param commandArgs The index description entered by the user.
+     * @throws NoDescriptionException If the index description is empty, the exception will be thrown
+     * @throws IndexOutOfBoundsException If the index is not within the size of the list, the exception will be thrown
+     * @throws FormatException If the index is not an integer, the exception will be thrown.
+     */
+    public static void markTask(ArrayList<Task> tasks, String commandArgs)
+            throws NoDescriptionException, IndexOutOfBoundsException, FormatException {
         if (commandArgs.trim().length() == 0) {
             throw new NoDescriptionException();
         }
