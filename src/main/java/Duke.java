@@ -56,7 +56,8 @@ public class Duke {
                                              + "Try typing \"help\" to see the valid commands you can use!\n";
     final static String PREFIX_MISSING_INPUTS_ERROR = "\n\uD83D\uDE13 OOPS!!! The description of ";
     final static String SUFFIX_MISSING_INPUTS_ERROR = " cannot be empty.\n";
-    final static String PREFIX_EMPTY_LIMIT_LIST_ERROR = "\n\uD83D\uDE20 HELLOO???!!! Your list is either EMPTY or does not contain tasks up to the index you inputted yet, so you cannot use ";
+    final static String PREFIX_EMPTY_LIMIT_LIST_ERROR = "\n\uD83D\uDE20 HELLOO???!!! Your list is either EMPTY or does not contain tasks up to the index you inputted yet,\n"
+                                                      + " so you cannot use ";
     final static String SUFFIX_EMPTY_LIMIT_LIST_ERROR = " command yet!! Try filling up the list first!\n";
 
 //    final static String PREFIX_LIST_LIMIT_ERROR = "\n\uD83D\uDE05 SORRY MATE!!! I can only take in up to 100 tasks for now... \uD83D\uDE47 So please only ";
@@ -105,6 +106,11 @@ public class Duke {
         System.out.println("  " + task.toString());
         System.out.println("Now you have " + taskSize + " tasks in the list." + '\n');
     }
+    public static void printDeleted(Task task, int taskSize) {
+        System.out.println('\n' + "Noted. I've removed this task:");
+        System.out.println("  " + task.toString());
+        System.out.println("Now you have " + taskSize + " tasks in the list." + '\n');
+    }
 
     public static String[] parseCommands(String line) {
         String[] lineSpaced = line.split(" ");
@@ -150,6 +156,7 @@ public class Duke {
         Scanner in = new Scanner(System.in);
         String line, commandWord, description, deadlineBy, eventFrom, eventTo;
         int taskListIndex, currTaskNumber;
+        Task tempTask;
         String[] lineSpaced;
         boolean isChanged = false;
 
@@ -249,6 +256,27 @@ public class Duke {
                     System.out.println("Exception occurred: " + inc);
                 } catch (StringIndexOutOfBoundsException st) {
                     System.out.println(PREFIX_MISSING_DESCRIPTION_ERROR + commandWord +SUFFIX_MISSING_DESCRIPTION_ERROR);
+                }
+                break;
+            case "delete" :
+                try {
+                    description = lineSpaced[1];
+                } catch (ArrayIndexOutOfBoundsException ex) {
+                    System.out.println(PREFIX_MISSING_INPUTS_ERROR + commandWord + SUFFIX_MISSING_INPUTS_ERROR);
+                    break;
+                }
+                try {
+                    taskListIndex = Integer.parseInt(description) - 1;
+                    if (tasksList.isEmpty()) {
+                        System.out.println(PREFIX_EMPTY_LIMIT_LIST_ERROR + commandWord + SUFFIX_EMPTY_LIMIT_LIST_ERROR);
+                    } else {
+                        tempTask = tasksList.get(taskListIndex);
+                        tasksList.remove(taskListIndex);
+                        currTaskNumber--;
+                        printDeleted(tempTask, currTaskNumber);
+                    }
+                } catch (IndexOutOfBoundsException inc) {
+                    System.out.println(PREFIX_EMPTY_LIMIT_LIST_ERROR + commandWord + SUFFIX_EMPTY_LIMIT_LIST_ERROR);
                 }
                 break;
             case "help" :
