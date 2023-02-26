@@ -17,5 +17,4 @@ public class Parser {
     public static int indexOfSubstring(String userInput, String subString){
         return userInput.indexOf(subString);
     }
-
 }

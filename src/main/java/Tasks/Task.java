@@ -19,7 +19,6 @@ public class Task {
             this.isDone = true;
             System.out.println("Well Done. This task is marked as done:");
             System.out.println(this);
-            //System.out.println(this.taskSign + "[" +this.isDone+ "] " + this.taskName);
         }
         Ui.printLines();
     }
@@ -30,7 +29,6 @@ public class Task {
             this.isDone = false;
             System.out.println("Oh no, I've unmarked this task as it is not done:");
             System.out.println(this);
-            //System.out.println(this.taskSign + "[" +this.isDone+ "] " + this.taskName);
         } else{
             System.out.println("Task is already unmarked.");
         }
