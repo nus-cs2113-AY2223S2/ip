@@ -80,20 +80,20 @@ public class FileClass {
         }
     }
 
-    public void appendToFile(String filePath, String textToAppend) throws IOException {
-        FileWriter fileWriter = new FileWriter(directory + "/" + filePath, true);
+    public void appendToFile(String textToAppend) throws IOException {
+        FileWriter fileWriter = new FileWriter(directory + "/" + FILE_PATH, true);
         fileWriter.write(textToAppend);
         fileWriter.close();
     }
 
     public void appendTaskToDataFile(String inputToDataFile) {
         try {
-            Common.dataFile.appendToFile(FILE_PATH, inputToDataFile);
+            Common.dataFile.appendToFile(inputToDataFile);
         } catch (IOException e) {
             System.out.println(WRITEFILE_EXCEPTION_MESSAGE);
         }
     }
-    public void deleteTask(String filePath, int lineNumber) throws IOException {
+    public void deleteTask(int lineNumber) throws IOException {
         Scanner s = new Scanner(file); // create a Scanner using the File as the source
         ArrayList<String> extractedTasks = new ArrayList<>();
         int lineCount = 0;
@@ -109,17 +109,17 @@ public class FileClass {
         for (String line : extractedTasks) {
             newFileContent += (line + "\n");
         }
-        FileWriter fileWriter = new FileWriter(directory + "/" + filePath);
+        FileWriter fileWriter = new FileWriter(directory + "/" + FILE_PATH);
         fileWriter.write(newFileContent);
         fileWriter.close();
     }
 
-    public void updateTask(String filePath) throws IOException {
+    public void updateTask() throws IOException {
         String updatedFileContent = "";
         for (Task task : Common.tasks) {
             updatedFileContent += task.putInputToDataFile();
         }
-        FileWriter fileWriter = new FileWriter(directory + "/" + filePath);
+        FileWriter fileWriter = new FileWriter(directory + "/" + FILE_PATH);
         fileWriter.write(updatedFileContent);
         fileWriter.close();
     }

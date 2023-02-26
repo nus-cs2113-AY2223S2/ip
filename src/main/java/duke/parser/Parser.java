@@ -25,6 +25,13 @@ public class Parser {
         this.separatedKeyWordAndContent = userInput.split(" ", 2);
         this.keyword = separatedKeyWordAndContent[0];
     }
+    public boolean isOneWordInputInCorrectFormat() {
+        if (separatedKeyWordAndContent.length > 1) {
+            System.out.println("I don't know the meaning after the keyword");
+            return false;
+        }
+        return true;
+    }
 
     public boolean isLocateTaskNumberCommandInCorrectFormat() {
         try{
@@ -49,16 +56,33 @@ public class Parser {
             new ChangeTaskStatusCommand(taskNumber, keyword);
         }
     }
+    public void executeByeCommand() {
+        if (isOneWordInputInCorrectFormat()) {
+            new ByeCommand();
+        }
+    }
+
+    public void executeHelpCommand() {
+        if (isOneWordInputInCorrectFormat()) {
+            new HelpCommand();
+        }
+    }
+
+    public void executeListCommand() {
+        if (isOneWordInputInCorrectFormat()) {
+            new ListCommand();
+        }
+    }
     public void handleInput() {
         switch (this.keyword) {
         case BYE_COMMAND:
-            new ByeCommand();
+            executeByeCommand();
             break;
         case HELP_COMMAND:
-            new HelpCommand();
+            executeHelpCommand();
             break;
         case LIST_COMMAND:
-            new ListCommand();
+            executeListCommand();
             break;
         case DELETE_COMMAND:
             executeDeleteCommand();

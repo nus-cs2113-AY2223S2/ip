@@ -26,7 +26,7 @@ public class DeleteCommand {
         Common.tasks.remove(taskNumber - 1);
         System.out.println("Now you have " + Common.tasks.size() + " tasks in the list");
         try {
-            Common.dataFile.deleteTask(Common.FILE_PATH, taskNumber);
+            Common.dataFile.deleteTask(taskNumber);
         } catch (IOException error) {
             System.out.println(Common.WRITEFILE_EXCEPTION_MESSAGE);
         }

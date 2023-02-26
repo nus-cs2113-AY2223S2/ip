@@ -36,7 +36,7 @@ public class ChangeTaskStatusCommand {
         System.out.println(taskNumber + ". " + Common.tasks.get(taskNumber - 1).getMarkingStatus()
                 + " " + Common.tasks.get(taskNumber - 1).getContent());
         try {
-            Common.dataFile.updateTask(Common.FILE_PATH);
+            Common.dataFile.updateTask();
         } catch (IOException error) {
             System.out.println(Common.WRITEFILE_EXCEPTION_MESSAGE);
         }
