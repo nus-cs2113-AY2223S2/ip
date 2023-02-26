@@ -11,6 +11,9 @@ import static duke.constants.Constants.LINEBREAK;
 
 public class ListCommand extends Command {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void handleCommand(String line, TaskList tasks, Storage storage) {
         try {

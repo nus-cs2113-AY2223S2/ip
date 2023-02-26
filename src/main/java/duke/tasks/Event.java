@@ -58,6 +58,9 @@ public class Event extends ToDo {
         return this.end.toString();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return checkBoxOutput() + this.taskName + " (from: " + this.formatStart() + " to: " + this.formatEnd() + ")";

@@ -17,6 +17,12 @@ public class TaskList extends ArrayList<Task> {
         System.out.println(LINEBREAK);
     }
 
+    /**
+     * Loads a task from the save file.
+     *
+     * @param i The index of the Task to be loaded.
+     * @param taskToAdd The Task to be loaded.
+     */
     public void loadTask(int i, Task taskToAdd) {
         this.add(taskToAdd);
     }

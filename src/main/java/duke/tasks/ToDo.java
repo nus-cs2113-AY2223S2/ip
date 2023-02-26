@@ -12,6 +12,9 @@ public class ToDo extends Task {
         super.type = "[T]";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return checkBoxOutput() + this.taskName;

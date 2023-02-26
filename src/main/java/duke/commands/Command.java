@@ -21,10 +21,11 @@ public abstract class Command {
     }
 
     /**
-     * Handles the command based on user input.
+     * Handles the command given by the user.
      *
-     * @param line User input represented as a String.
-     * @param taskList List containing the tasks input by user.
+     * @param line User input into the system.
+     * @param taskList List of tasks.
+     * @param storage Storage object to save the tasks to the hard disk.
      */
     public abstract void handleCommand(String line, TaskList taskList, Storage storage);
 }

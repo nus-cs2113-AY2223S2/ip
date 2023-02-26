@@ -13,6 +13,9 @@ import static duke.constants.Constants.LINEBREAK;
 
 public class MarkCommand extends Command {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void handleCommand(String line, TaskList tasks, Storage storage) {
         int indexCount = Task.getIndexCount();

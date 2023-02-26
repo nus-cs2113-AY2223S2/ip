@@ -37,6 +37,9 @@ public class Deadline extends ToDo {
         return this.deadline.toString();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return checkBoxOutput() + this.taskName + " (by: " + this.formatDeadline() + ")";

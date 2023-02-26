@@ -9,6 +9,9 @@ import static duke.constants.Constants.MESSAGE_HELP;
 
 public class HelpCommand extends Command {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void handleCommand(String line, TaskList tasks, Storage storage) {
         try {
