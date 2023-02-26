@@ -1,5 +1,8 @@
 package duke.tasklist.task;
 
+import duke.tasklist.exception.DuplicateMarkException;
+import duke.tasklist.exception.DuplicateTaskException;
+
 /**
  * The Task class represents real-world tasks with content and marking status.
  */
@@ -59,13 +62,11 @@ public abstract class Task {
      * Prints a reply message after successfully mark the task.
      * Prints an error message if the task is already marked.
      */
-    public void mark() {
+    public void mark() throws DuplicateMarkException {
         if (!isMarked) {
             isMarked = true;
-            System.out.println("\t Nice! I've marked this task as done:");
-            System.out.println("\t " + this);
         } else {
-            System.err.println("\t The task is already marked!");
+            throw new DuplicateMarkException();
         }
     }
 
@@ -74,13 +75,11 @@ public abstract class Task {
      * Prints a reply message after successfully unmark the task.
      * Prints an error message if the task is already unchecked.
      */
-    public void unmark() {
+    public void unmark() throws DuplicateMarkException {
         if (isMarked) {
             isMarked = false;
-            System.out.println("\t OK, I've marked this task as not done yet:");
-            System.out.println("\t " + this);
         } else {
-            System.err.println("\t This task is already not marked!");
+            throw new DuplicateMarkException();
         }
     }
 

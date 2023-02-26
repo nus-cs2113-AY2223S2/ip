@@ -74,7 +74,7 @@ public class Duke {
         if (index < 0 || index >= taskList.size()) {
             System.err.println(spacer + "Index out of range!");
         } else {
-            taskList.get(index).mark();
+            // taskList.get(index).mark();
         }
     }
 
@@ -87,7 +87,7 @@ public class Duke {
         if (index < 0 || index >= taskList.size()) {
             System.err.println(spacer + "Index out of range!");
         } else {
-            taskList.get(index).unmark();
+            // taskList.get(index).unmark();
         }
     }
 

@@ -1,12 +1,9 @@
 package duke.parser;
 
-import duke.command.Command;
-import duke.command.ExitCommand;
-import duke.command.HelpCommand;
-import duke.command.ListCommand;
-import duke.command.TodoCommand;
-import duke.command.DeadlineCommand;
-import duke.command.EventCommand;
+import duke.command.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Parser {
     private static final String OOPS = "☹ OOPS!!! ";
@@ -22,10 +19,14 @@ public class Parser {
             return parseDeadline(args);
         case EventCommand.COMMAND_WORD:
             return parseEvent(args);
-        case ExitCommand.COMMAND_WORD:
-            return new ExitCommand();
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
+        case MarkCommand.COMMAND_WORD:
+            return parseMark(args);
+        case UnmarkCommand.COMMAND_WORD:
+            return parseUnmark(args);
+        case ExitCommand.COMMAND_WORD:
+            return new ExitCommand();
         case HelpCommand.COMMAND_WORD: //fall through
         default:
             return new HelpCommand();
@@ -101,7 +102,7 @@ public class Parser {
         }
 
         if (fromIndex == -1 || toIndex == -1) {
-            throw new IllegalArgumentException("☹ OOPS!!! Cannot find from or to time of the event!");
+            throw new IllegalArgumentException(OOPS + "Cannot find from or to time of the event!");
         }
 
         for (int i = 1; i < args.length; ++i) {
@@ -115,7 +116,7 @@ public class Parser {
         }
 
         if (contentSb.toString().isEmpty() || fromSb.toString().isEmpty() || toSb.toString().isEmpty()) {
-            throw new IllegalArgumentException("☹ OOPS!!! The content/from/to of an event cannot be empty!");
+            throw new IllegalArgumentException(OOPS + "The content/from/to of an event cannot be empty!");
         }
 
         String content = contentSb.toString().trim();
@@ -123,5 +124,48 @@ public class Parser {
         String to = toSb.toString().trim();
 
         return new EventCommand(content, from, to);
+    }
+
+    private Command parseMark(String[] args) throws IllegalArgumentException {
+        assert args[0].equals("mark");
+        if (args.length == 1) {
+            throw new IllegalArgumentException(OOPS + "Cannot find task to mark.");
+        }
+        if (args.length == 2) {
+            try {
+                return new MarkCommand(Integer.parseInt(args[1]));
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException(OOPS + args[1] + " is not a valid number!");
+            }
+        } else {
+            return new MarkCommand(parseArgsToInt(args, 1));
+        }
+    }
+    private List<Integer> parseArgsToInt(String[] args, int startId) {
+        List<Integer> toParse = new ArrayList<>();
+        for (int i = startId; i < args.length; ++i) {
+            try {
+                int id = Integer.parseInt(args[i]);
+                toParse.add(id);
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException(OOPS + args[i] + " is not a valid number!");
+            }
+        }
+        return toParse;
+    }
+    private Command parseUnmark(String[] args) throws IllegalArgumentException {
+        assert args[0].equals("unmark");
+        if (args.length == 1) {
+            throw new IllegalArgumentException(OOPS + "Cannot find task to mark.");
+        }
+        if (args.length == 2) {
+            try {
+                return new UnmarkCommand(Integer.parseInt(args[1]));
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException(OOPS + args[1] + " is not a valid number!");
+            }
+        } else {
+            return new UnmarkCommand(parseArgsToInt(args, 1));
+        }
     }
 }

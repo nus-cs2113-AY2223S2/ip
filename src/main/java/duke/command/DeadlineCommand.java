@@ -1,6 +1,6 @@
 package duke.command;
 
-import duke.common.AddTaskCommandReply;
+import duke.common.CommandReply;
 import duke.tasklist.exception.DuplicateTaskException;
 import duke.tasklist.task.Task;
 import duke.tasklist.task.Deadline;
@@ -24,12 +24,12 @@ public class DeadlineCommand extends Command {
         try {
             taskList.addTask(task);
         } catch (DuplicateTaskException e) {
-            return new CommandResult(AddTaskCommandReply.REPLY_DUPLICATE);
+            return new CommandResult(CommandReply.ADD_TASK_DUPLICATE);
         }
         return new CommandResult(
-                AddTaskCommandReply.REPLY_HEADER,
+                CommandReply.ADD_TASK_HEADER,
                 task + "\n",
-                String.format(AddTaskCommandReply.REPLY_TAIL_FORMAT, taskList.size())
+                String.format(CommandReply.ADD_TASK_TAIL_F, taskList.size())
         );
     }
 }

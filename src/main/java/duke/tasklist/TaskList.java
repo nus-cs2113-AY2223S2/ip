@@ -1,5 +1,6 @@
 package duke.tasklist;
 
+import duke.tasklist.exception.DuplicateMarkException;
 import duke.tasklist.task.Task;
 import duke.tasklist.exception.TaskNotFoundException;
 import duke.tasklist.exception.DuplicateTaskException;
@@ -62,6 +63,14 @@ public class TaskList implements Iterable<Task> {
         return false;
     }
 
+    public Task getTask(int listIndex) throws IndexOutOfBoundsException{
+        int index = listIndex - 1;
+        if (index < 0 || index >= taskList.size()) {
+            throw new IndexOutOfBoundsException();
+        }
+        return taskList.get(index);
+    }
+
     public void addTask(Task toAdd) throws DuplicateTaskException {
         if (containsTask(toAdd)) {
             throw new DuplicateTaskException();
@@ -74,6 +83,22 @@ public class TaskList implements Iterable<Task> {
         if (!deleted) {
             throw new TaskNotFoundException();
         }
+    }
+
+    public void markTask(int listIndex) throws IndexOutOfBoundsException, DuplicateMarkException {
+        int index = listIndex - 1;
+        if (index < 0 || index >= taskList.size()) {
+            throw new IndexOutOfBoundsException();
+        }
+        taskList.get(index).mark();
+    }
+
+    public void unmarkTask(int listIndex) throws IndexOutOfBoundsException, DuplicateMarkException {
+        int index = listIndex - 1;
+        if (index < 0 || index >= taskList.size()) {
+            throw new IndexOutOfBoundsException();
+        }
+        taskList.get(index).unmark();
     }
 
     public void clear() {

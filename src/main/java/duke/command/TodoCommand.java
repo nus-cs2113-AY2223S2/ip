@@ -3,7 +3,7 @@ package duke.command;
 import duke.tasklist.exception.DuplicateTaskException;
 import duke.tasklist.task.Task;
 import duke.tasklist.task.Todo;
-import duke.common.AddTaskCommandReply;
+import duke.common.CommandReply;
 
 public class TodoCommand extends Command {
     public static final String COMMAND_WORD = "todo";
@@ -25,9 +25,9 @@ public class TodoCommand extends Command {
             return new CommandResult("This task is already added in the list.");
         }
         return new CommandResult(
-                AddTaskCommandReply.REPLY_HEADER,
+                CommandReply.ADD_TASK_HEADER,
                 task + "\n",
-                String.format(AddTaskCommandReply.REPLY_TAIL_FORMAT, taskList.size())
+                String.format(CommandReply.ADD_TASK_TAIL_F, taskList.size())
         );
     }
 }
