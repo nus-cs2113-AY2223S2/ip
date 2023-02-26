@@ -234,18 +234,18 @@ public class TaskData {
         try {
             String[] eventTime = eventName[1].split("/to", 2);
             try {
-                localByDate = parser.processDate(eventTime[0].trim());
-                eventTime[0] = localByDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                localFromDate = parser.processDate(eventTime[0].trim());
+                eventTime[0] = localFromDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             } catch (DukeException e) {
-                localByDate = null;
+                localFromDate = null;
             } catch (ArrayIndexOutOfBoundsException e) {
                 throw new DukeException();
             }
             try {
-                localFromDate = parser.processDate(eventTime[1].trim());
-                eventTime[1] = localFromDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                localByDate = parser.processDate(eventTime[1].trim());
+                eventTime[1] = localByDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             } catch (DukeException e) {
-                localFromDate = null;
+                localByDate = null;
             } catch (ArrayIndexOutOfBoundsException e) {
                 throw new DukeException();
             }

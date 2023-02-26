@@ -59,7 +59,7 @@ public class DateData {
         if (dateTable.get(fromDate) == null) {
             LinkedHashSet<Integer> temp = new LinkedHashSet<>();
             temp.add(taskCount);
-            dateTable.put(byDate, temp);
+            dateTable.put(fromDate, temp);
         } else {
             dateTable.get(fromDate).add(taskCount);
         }
