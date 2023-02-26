@@ -1,4 +1,4 @@
-package duke.command;
+package command;
 
 public class Command {
     public static final String COMMAND_BYE = "bye";

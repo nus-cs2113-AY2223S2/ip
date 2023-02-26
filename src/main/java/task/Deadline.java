@@ -1,4 +1,4 @@
-package duke.task;
+package task;
 
 public class Deadline extends Task {
     private String byDate;
@@ -15,6 +15,6 @@ public class Deadline extends Task {
 
     @Override
     public String printToFile() {
-        return "D | " + this.getStatusIcon() + " | " + description + " | " + byDate;
+        return "D | " + this.saveStatusIcon() + " | " + description + " | " + byDate;
     }
 }

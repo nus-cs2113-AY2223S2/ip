@@ -1,4 +1,4 @@
-package duke.task;
+package task;
 
 public class Event extends Task {
     private String fromDate;
@@ -17,6 +17,6 @@ public class Event extends Task {
 
     @Override
     public String printToFile() {
-        return "E | " + this.getStatusIcon() + " | " + description + " | " + fromDate + "-" + toDate;
+        return "E | " + this.saveStatusIcon() + " | " + description + " | " + fromDate + "-" + toDate;
     }
 }

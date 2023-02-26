@@ -1,14 +1,14 @@
 package duke;
 
-import duke.command.Command;
-import duke.exception.CommandNotRecognisedException;
-import duke.exception.IllegalCharacterException;
-import duke.exception.InvalidTaskNumberException;
-import duke.task.Deadline;
-import duke.task.Event;
-import duke.task.Task;
-import duke.task.ToDo;
-import duke.storage.FileManager;
+import command.Command;
+import exception.CommandNotRecognisedException;
+import exception.EmptyTaskException;
+import exception.IllegalCharacterException;
+import exception.InvalidTaskNumberException;
+import task.Deadline;
+import task.Event;
+import task.Task;
+import task.ToDo;
 
 
 import java.util.Scanner;
@@ -50,7 +50,11 @@ public class Duke {
 
         switch(task[0].trim()) {
         case "T":
-            addTodoTask(task[2].trim());
+            try {
+                addTodoTask(task[2].trim());
+            } catch (EmptyTaskException e) {
+                System.out.println("This shouldn't be happening :O");
+            }
             break;
         case "D":
             addDeadlineTask(task[2].trim(), task[3].trim());
@@ -139,10 +143,10 @@ public class Duke {
             break;
         case Command.COMMAND_TODO:
             try {
-                //addTodoTask(input.substring(Command.COMMAND_TODO.length()).trim());
-                addTodoTask(input.split(" ")[1].trim());
+                addTodoTask(input.substring(Command.COMMAND_TODO.length()).trim());
+                //addTodoTask(input.split(" ")[1].trim());
                 printTaskAdded();
-            } catch (IndexOutOfBoundsException e) {
+            } catch (EmptyTaskException e) {
                 System.out.println("☹ OOPS!!! The description of 'todo' cannot be empty.");
             }
             printDivider();
@@ -220,8 +224,12 @@ public class Duke {
     }
 
 
-    private static void addTodoTask(String task) {
-        tasks.add(new ToDo(task));
+    private static void addTodoTask(String task) throws EmptyTaskException {
+        if (task.equals("")) {
+                throw new EmptyTaskException();
+        } else {
+            tasks.add(new ToDo(task));
+        }
     }
 
 

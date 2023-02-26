@@ -1,4 +1,4 @@
-package duke.task;
+package task;
 
 public class ToDo extends Task {
     public ToDo(String description) {
@@ -11,6 +11,6 @@ public class ToDo extends Task {
     }
     @Override
     public String printToFile() {
-        return "T | " + this.getStatusIcon() + " | " + description;
+        return "T | " + this.saveStatusIcon() + " | " + description;
     }
 }

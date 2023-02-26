@@ -1,6 +1,4 @@
-package duke.exception;
-
-import duke.exception.DukeException;
+package exception;
 
 public class InvalidTaskNumberException extends DukeException {
 }
