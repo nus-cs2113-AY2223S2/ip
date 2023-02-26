@@ -14,8 +14,6 @@ public class FindCommand extends Command {
     @Override
     public void executor(TaskList tasks, UI ui) throws NoTaskException {
         String result = tasks.find(keyword);
-        ui.print("Showing matches for keyword: " + keyword + "\n");
-        ui.print(result);
-        ui.printLine();
+        ui.printTasksFound(keyword, result);
     }
 }

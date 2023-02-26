@@ -76,4 +76,15 @@ public class UI {
         print(output);
         printLine();
     }
+
+    /**
+     * Prints the message when there are matches for the query by the user.
+     * @param query The keyword or regex queried by the user
+     * @param tasks The matching tasks
+     */
+    public void printTasksFound(String query, String tasks) {
+        print("Showing matches for query: " + query + "\n");
+        print(tasks);
+        printLine();
+    }
 }
