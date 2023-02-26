@@ -1,16 +1,15 @@
-package duke;
+package duke.tasks;
 
 public class Task {
     protected String description;
     protected boolean isDone;
-    protected String taskType;
+    protected TaskType type;
 
 
-    public Task(String description, String taskType) {
+    public Task(String description, TaskType type) {
         this.description = description;
-        this.taskType = taskType;
         this.isDone = false;
-        this.taskType = taskType;
+        this.type = type;
     }
     public void markAsDone() {
         isDone = true;
@@ -26,13 +25,14 @@ public class Task {
 
     public String toString(){
 
-        return  "[" + getStatusIcon() + "]"  + description;
+        return String.format("[%s][%s] %s", this.type.getAbbreviation(),
+                this.getStatusIcon(), this.description);
     }
 
 
     public String saveText() {
-
-        return "";
+        return String.format("%s | %d | %s", this.type.getAbbreviation(),
+                this.isDone ? 1 : 0, this.description);
     }
 
 }
