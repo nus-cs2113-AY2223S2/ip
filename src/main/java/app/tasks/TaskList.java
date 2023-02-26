@@ -5,6 +5,9 @@ import app.exceptions.InvalidTaskException;
 
 import java.util.ArrayList;
 
+/**
+ * Class to store the current tasks and useful functions related to the Task-list.
+ */
 public class TaskList {
 
     private ArrayList<Task> tasks;
@@ -25,6 +28,12 @@ public class TaskList {
         return this.tasks;
     }
 
+    /**
+     * Returns a specific Task using a given index.
+     * @param index The index of the Task that needs to be obtained.
+     * @return The specified Task
+     * @throws DukeException If index is outside the range of the current valid indexes.
+     */
     public Task getTask(int index) throws DukeException {
         try {
             return tasks.get(index);
@@ -33,25 +42,51 @@ public class TaskList {
         }
     }
 
+    /**
+     * Method to add a Task to the existing Task-list.
+     * @param task The Task to be added to the Task-list.
+     */
     public void addTask(Task task) {
         tasks.add(task);
     }
 
+    /**
+     * Method to get the current number of Tasks.
+     * @return The size of the current Task-list.
+     */
     public int getTasksCount() {
         return tasks.size();
     }
 
-    public Task deleteTask(int index) throws DukeException {
+    /**
+     * Method to remove a Task from the existing Task-list.
+     * @param index The index of the Task to be deleted from the Task-list.
+     * @return The Task that was deleted from the Task-list.
+     * @throws DukeException If index is outside the range of the current valid indexes.
+     */
+    public Task deleteTask(int index) throws DukeException{
         Task taskToDelete = getTask(index - 1);
         return tasks.remove(index - 1);
     }
 
+    /**
+     * Method to mark a Task status.
+     * @param index The index of the Task to be marked as done.
+     * @return The Task that was marked as done.
+     * @throws DukeException If index is outside the range of the current valid indexes.
+     */
     public Task markTask(int index) throws DukeException {
         Task markedTask = getTask(index - 1);
         markedTask.setDone(true);
         return markedTask;
     }
 
+    /**
+     * Method to unmark a Task status.
+     * @param index The index of the Task to be marked as not done.
+     * @return The Task that was marked as not done.
+     * @throws DukeException If index is outside the range of the current valid indexes.
+     */
     public Task unmarkTask(int index) throws DukeException {
         Task unmarkedTask = getTask(index - 1);
         unmarkedTask.setDone(false);
