@@ -1,8 +1,11 @@
+/**
+ * this class provides methods to read,add,delete and update tasks from the taskArray
+ * it is the superclass of event, todo and deadline
+ */
 public class Tasklist {
     //class level attributes
     private static Tasklist[] taskArray = new Tasklist[100];
     public static int lastIndex = 0;
-    public static String DASH = "__________________________________";
 
     //instance level attributes
     protected boolean isDone=false;
@@ -21,6 +24,11 @@ public class Tasklist {
         lastIndex++;
     }
 
+    /**
+     * this function toggles the isDone status of tasks
+     * @param taskIndex the identifying number of the task to be marked (or unmarked)
+     * it is used to load updated isDone status from file to taskArray whenever the program runs
+     */
     public static void markOrUnmark(int taskIndex){
         taskArray[taskIndex-1].isDone = (!taskArray[taskIndex - 1].isDone);
         taskArray[taskIndex-1].updateTaskDescription();
@@ -32,10 +40,6 @@ public class Tasklist {
         return taskArray[index];
     }
 
-    //file I/O
-    public String createEntry(){
-        return Integer.toString(this.taskNumber)+(".")+this.type+"."+this.getDoneString()+"."+(this.taskName)+"\n";
-    }
 
 
     public static void deleteFromTaskArray(int indexToDelete){
@@ -55,12 +59,29 @@ public class Tasklist {
         UserInterface.deleteMessage(indexToDelete);
     }
 
+    /**
+     * @return either returns "[X]" or "[ ]" string depends on the isDone status of the task.
+     */
     public String getDoneString(){
         return this.isDone?"[X]":"[ ]";
     }
 
-    //to be overridden by subclasses
+    /**
+     * this method is used to update the task description string of all subclasses (todo,deadline,event) of TaskList.
+     * it is called whenever entries in the file is loaded into the taskArray, and whenever the isDone status of a -
+     * task is toggled.
+     */
     public void updateTaskDescription(){
+    }
+
+    //file I/O
+
+    /**
+     * this method helps save
+     * @return a string in the format of taskNumber.taskType.isDone.taskName.otherTaskDetails
+     */
+    public String createEntry(){
+        return Integer.toString(this.taskNumber)+(".")+this.type+"."+this.getDoneString()+"."+(this.taskName)+"\n";
     }
 
 }
