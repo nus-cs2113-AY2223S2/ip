@@ -1,24 +1,57 @@
-# Duke project template
+# Duke Task Manager
+Duke is a task manager that helps users keep track of their daily tasks. Users can add, edit, delete, and search for tasks using the command-line interface. Duke uses a simple text file to store the tasks.
+This guide will help you get started.
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+## Prerequisites
+Before using Duke, please ensure that you have the following:
+- Java 11 or later installed on your computer
+- The Duke.jar file downloaded on your computer
 
-## Setting up in Intellij
+## Getting Started
+1. Download the Duke.jar file to your computer.
+2. Open a terminal or command prompt and navigate to the directory where the Duke.jar file is located.
+3. Run the following command to start Duke:
 
-Prerequisites: JDK 11, update Intellij to the most recent version.
+java -jar Duke.jar
+4. If Duke is running properly, you should see a welcome message.
 
-1. Open Intellij (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project first)
-1. Open the project into Intellij as follows:
-   1. Click `Open`.
-   1. Select the project directory, and click `OK`.
-   1. If there are any further prompts, accept the defaults.
-1. Configure the project to use **JDK 11** (not other versions) as explained in [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).<br>
-   In the same dialog, set the **Project language level** field to the `SDK default` option.
-3. After that, locate the `src/main/java/Duke.java` file, right-click it, and choose `Run Duke.main()` (if the code editor is showing compile errors, try restarting the IDE). If the setup is correct, you should see something like the below as the output:
-   ```
-   Hello from
-    ____        _        
-   |  _ \ _   _| | _____ 
-   | | | | | | | |/ / _ \
-   | |_| | |_| |   <  __/
-   |____/ \__,_|_|\_\___|
-   ```
+## Features
+Duke currently supports the following features:
+
+### Adding Tasks
+To add a task, type one of the following commands followed by the task description:
+- todo: adds a new todo task
+- event: adds a new event task
+- deadline: adds a new deadline task
+For example:
+todo buy groceries
+event attend meeting /at 2022-03-01 10:00-12:00
+deadline submit report /by 2022-03-05 23:59
+
+### Listing Tasks
+To list all the tasks currently in Duke, type the command list.
+
+### Marking Tasks
+To mark a task as done, type the command mark followed by the task number. For example:
+mark 2
+
+### Unmarking Tasks
+To unmark a task as done, type the command unmark followed by the task number. 
+For example:
+unmark 2
+
+### Deleting Tasks
+To delete a task, type the command delete followed by the task number. For example:
+delete 2
+
+### Finding Tasks
+To find tasks containing a specific keyword, type the command find followed by the keyword. For example:
+find groceries
+
+### Exiting Duke
+To exit Duke, type the command bye.
+
+## Notes
+- All tasks added to Duke are automatically saved to a file named "Duke.txt" in the same directory as the Duke.jar file.
+- If the Duke.txt file already exists, Duke will load the tasks from the file when it starts.
+- If an error occurs while Duke is running, an error message will be displayed.
