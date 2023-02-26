@@ -28,7 +28,7 @@ public class Deleter {
             throw new IndexOutOfBoundsException();
         } else {
             Greeting.sayDeleteTaskFromList(Duke.isSinglish);
-            Printer.printTask(Duke.tasks.get(index), index + 1);
+            Printer.printWholeTask(Duke.tasks.get(index), index + 1);
             Duke.tasks.remove(index);
         }
         Greeting.printHorizontalLines(Duke.isSinglish);
