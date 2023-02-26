@@ -13,7 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-public class FileManager {
+public class Storage {
 
     public static final File FILE_PATH = new File("./data/duke.txt");
     public static final File FILE_DIR = new File("./data");

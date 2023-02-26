@@ -21,27 +21,24 @@ public class Duke {
 
     public static void main(String[] args) {
 
-        FileManager.openFile();
-        printStartMessage();
+        Storage.openFile();
+        Ui.printStartMessage();
 
-        String input;
-        Scanner in = new Scanner(System.in);
-
+        String userInput;
         do {
-            input = in.nextLine();
+            userInput = Ui.getUserInput();
             try {
-                processCommand(input);
+                processCommand(userInput);
             } catch (CommandNotRecognisedException e) {
                 System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
-                printDivider();
+                Ui.printDivider();
             } catch (IllegalCharacterException e) {
                 System.out.println("☹ OOPS!!! Input should not contain '|' or '-'.");
-                printDivider();
+                Ui.printDivider();
             }
-        } while (!input.equals(Command.COMMAND_BYE));
+        } while (!userInput.equals(Command.COMMAND_BYE));
 
-
-        FileManager.writeToFile(tasks);
+        Storage.writeToFile(tasks);
     }
 
 
@@ -69,37 +66,18 @@ public class Duke {
                 markTaskDone(tasks.size()-1);
             } catch (NumberFormatException e) {
                 System.out.println("☹ OOPS!!! Task number should be an integer.");
-                printDivider();
+                Ui.printDivider();
             } catch (InvalidTaskNumberException e) {
                 System.out.println("☹ OOPS!!! The task specified does not exist in the task list.");
-                printDivider();
+                Ui.printDivider();
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("☹ OOPS!!! The description of 'mark' cannot be empty.");
-                printDivider();
+                Ui.printDivider();
             }
         }
     }
 
-    public static void printDivider () {
-        System.out.println("____________________________________________________________");
-    }
 
-    public static void printStartMessage() {
-        String logo = " ____\n"
-                + "|    \\ ___ _ _ ___\n"
-                + "|  |  | .'| | | -_|\n"
-                + "|____/|__,|\\_/|___|\n";
-
-        printDivider();
-        System.out.println("List Summary:");
-        printTaskList();
-        System.out.print(logo);
-        System.out.println("Hi, I'm Dave!\n"
-                + "What can I do for you?");
-        printDivider();
-    }
-
-    //Problem here: somehow accept empty task :(
     public static void processCommand (String input) throws CommandNotRecognisedException, IllegalCharacterException {
         if (input.contains("|") || input.contains("-")) {
             throw new IllegalCharacterException();
@@ -110,7 +88,7 @@ public class Duke {
 
         switch (action) {
         case Command.COMMAND_BYE:
-            printBye();
+            Ui.printBye();
             break;
         case Command.COMMAND_LIST:
             printTaskList();
@@ -126,7 +104,7 @@ public class Duke {
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("☹ OOPS!!! The description of 'mark' cannot be empty.");
             }
-            printDivider();
+            Ui.printDivider();
             break;
         case Command.COMMAND_UNMARK:
             try {
@@ -139,7 +117,7 @@ public class Duke {
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("☹ OOPS!!! The description of 'unmark' cannot be empty.");
             }
-            printDivider();
+            Ui.printDivider();
             break;
         case Command.COMMAND_TODO:
             try {
@@ -149,7 +127,7 @@ public class Duke {
             } catch (EmptyTaskException e) {
                 System.out.println("☹ OOPS!!! The description of 'todo' cannot be empty.");
             }
-            printDivider();
+            Ui.printDivider();
             break;
         case Command.COMMAND_DEADLINE:
             try {
@@ -159,7 +137,7 @@ public class Duke {
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("☹ OOPS!!! The description of 'deadline' should include a task and deadline.");
             }
-            printDivider();
+            Ui.printDivider();
             break;
         case Command.COMMAND_EVENT:
             try {
@@ -170,7 +148,7 @@ public class Duke {
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("☹ OOPS!!! The description of 'event' should include a task and time period.");
             }
-            printDivider();
+            Ui.printDivider();
             break;
         case Command.COMMAND_DELETE:
             try {
@@ -181,19 +159,14 @@ public class Duke {
                 System.out.println("☹ OOPS!!! The task specified does not exist in the task list.");
 
             }
-            printDivider();
+            Ui.printDivider();
             break;
         default:
             throw new CommandNotRecognisedException();
         }
     }
 
-    public static void printBye() {
-        System.out.println("Bye. Hope to see you again soon!");
-        printDivider();
-    }
-
-    private static void printTaskList() {
+    public static void printTaskList() {
         if (tasks.size() == 0) {
             System.out.println("You are free today :)");
         } else {
@@ -202,7 +175,7 @@ public class Duke {
                 System.out.println(tasks.get(i));
             }
         }
-        printDivider();
+        Ui.printDivider();
     }
 
 
