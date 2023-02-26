@@ -91,7 +91,7 @@ public class Adder {
             Duke.tasks.add(item);
         }
         Greeting.sayAddToList(Duke.isSinglish);
-        Printer.printTask(Duke.tasks.get(Duke.tasks.size() - 1), Duke.tasks.size());
+        Printer.printWholeTask(Duke.tasks.get(Duke.tasks.size() - 1), Duke.tasks.size());
         Greeting.printHorizontalLines(Duke.isSinglish);
     }
 }

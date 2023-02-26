@@ -34,7 +34,7 @@ public class Marker {
                 Duke.tasks.get(index).switchIsDone();
             }
             Greeting.sayUpdatedTask(Duke.isSinglish);
-            Printer.printTask(Duke.tasks.get(index), index + 1);
+            Printer.printWholeTask(Duke.tasks.get(index), index + 1);
         }
         Greeting.printHorizontalLines(Duke.isSinglish);
     }

@@ -57,6 +57,8 @@ public class Duke {
                 } else if (isEvent) {
                     Adder.addEvent(line);
                     Storage.updateTasksSaved(storageFilePath);
+                } else if (commands[0].equals("find") && commands.length == 2) {
+                    Finder.findTasks(commands);
                 } else {
                     throw new IllegalAccessException();
                 }
