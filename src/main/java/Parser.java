@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 public class Parser {
     /**
      *this function is in charge of reading user inputs, storing and reading from a text file and generating responses
@@ -52,6 +53,10 @@ public class Parser {
         else if (inputSplitBySpace[0].equals("delete")&&inputSplitBySpace.length==2){
             Tasklist.deleteFromTaskArray(Integer.parseInt(inputSplitBySpace[1]));
             Storage.save();
+        }
+        else if(inputSplitBySpace[0].equals("find")){
+            ArrayList<String> listOfTasksFound = Tasklist.find(input.substring(5));
+            UserInterface.printFoundList(listOfTasksFound);
         }
         else{
             GootExceptionHandler.unidentifiedKeyword();

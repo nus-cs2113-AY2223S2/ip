@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 /**
  * this class provides methods to read,add,delete and update tasks from the taskArray
  * it is the superclass of event, todo and deadline
@@ -40,7 +41,15 @@ public class Tasklist {
         return taskArray[index];
     }
 
-
+    public static ArrayList<String> find(String queryString){
+        ArrayList<String> foundTaskList = new ArrayList<String>();
+        for(int index=0;index<lastIndex;index++){
+            if(taskArray[index].taskName.contains(queryString)){
+                foundTaskList.add(taskArray[index].description);
+            }
+        }
+        return foundTaskList;
+    }
 
     public static void deleteFromTaskArray(int indexToDelete){
 
@@ -74,10 +83,8 @@ public class Tasklist {
     public void updateTaskDescription(){
     }
 
-    //file I/O
-
     /**
-     * this method helps save
+     * this method converts TaskList objects into text file formats that can be saved into the file
      * @return a string in the format of taskNumber.taskType.isDone.taskName.otherTaskDetails
      */
     public String createEntry(){

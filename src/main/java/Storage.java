@@ -60,7 +60,8 @@ public class Storage {
             if(Tasklist.lastIndex>0){
                 FileWriter fileWriter = new FileWriter(file);
                 for(int index=0;index<Tasklist.lastIndex;index++){
-                    fileWriter.append((Tasklist.get(index)).createEntry());
+                    Tasklist task = Tasklist.get(index);
+                    fileWriter.append(task.createEntry());
                 }
                 fileWriter.close();
             }
