@@ -62,6 +62,8 @@ public class Task {
             Command.inputIsEvent(userInput);
         } else if(userInput.startsWith("delete")) {
             Command.inputIsDelete(userInput);
+        } else if(userInput.startsWith("find")){
+            Command.inputIsFind(userInput);
         } else{
             RolexException.detectError(userInput);
         }

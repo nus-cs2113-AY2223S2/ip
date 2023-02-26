@@ -20,10 +20,16 @@ public class RolexException {
             runListError();
         } else if(userInput.startsWith("bye")){
             return;
+        } else if(userInput.startsWith("find")){
+            runFindError();
         } else{
             System.out.println("OOPS!! I cannot understand the input!☹ ");
         }
         Ui.printLines();
+    }
+
+    private static void runFindError() {
+        System.out.println("OOPS!! The description of find cannot be empty!☹");
     }
 
     public static void runTodoError(){

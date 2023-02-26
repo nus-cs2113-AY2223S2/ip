@@ -36,6 +36,36 @@ public class Command {
         }
     }
 
+    public static void inputIsFind(String userInput){
+        if(userInput.startsWith("find") && userInput.length() <= 5) {
+            RolexException.detectError(userInput);
+        } else if(task.size() >= 1){
+            Ui.printLines();
+            int indexNum = 1;
+            int flag = 0;
+            String keyword = Parser.taskName(userInput,5);
+            for(Task value: task){
+                if(value.giveTaskName().contains(keyword)){
+                    flag += 1;
+                    if(indexNum == 1){
+                        System.out.println("Here are the matching tasks in your list:");
+                        indexNum += 1;
+                    }
+                        System.out.println(indexNum + ". " + value);
+                }
+            }
+            Ui.printLines();
+            if(flag==0){
+                System.out.println("No such tasks with matching keyword: " + keyword + " !");
+            }
+
+        } else{
+            Ui.printLines();
+            System.out.println("There are no tasks for me to list!☹");
+            Ui.printLines();
+        }
+    }
+
     public static void inputIsMark(String userInput) {
         int index = Parser.taskIndex(userInput, 5);
         if (index > 0 && index <= task.size()) {
