@@ -4,6 +4,9 @@ import java.util.Scanner;
 
 public class Ui {
 
+    /**
+     * Prints the welcome message
+     */
     private static void printHello() {
         System.out.println("________         __         __________");
         System.out.println("\\______ \\  __ __|  | __ ____\\______   \\__ __  ____   ____   ___________ ");
@@ -14,10 +17,16 @@ public class Ui {
         System.out.println("Hello! I'm DukeRunner\nWhat can I do for you?\n");
     }
 
+    /**
+     * Prints the goodbye message
+     */
     private static void printBye() {
         System.out.println("Bye. Hope to see you again soon!");
     }
 
+    /**
+     * Prints a line break
+     */
     private static void printLineBreak() {
         System.out.println("==============================\n");
     }

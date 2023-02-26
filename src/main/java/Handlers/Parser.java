@@ -12,11 +12,11 @@ public class Parser {
     /** 
      * Extracts the first word of the user input
      * 
-     * @param s the user input
+     * @param line the user input
      * @return the first word of the user input
      */
-    public static String getFirstWord(String s) {
-        String[] words = s.split(" ");
+    public static String getFirstWord(String line) {
+        String[] words = line.split(" ");
         return words[0];
     }
 
@@ -24,17 +24,17 @@ public class Parser {
     /** 
      * Extracts the second word of the user input
      * 
-     * @param s the user input
+     * @param line the user input
      * @return String the second word of the user input
      * @throws TaskManagerException if the user input does not contain a second word
      */
-    public static String getSecondWord(String s) throws TaskManagerException {
-        String[] words = s.split("\\s+");
+    public static String getSecondWord(String line) throws TaskManagerException {
+        String[] words = line.split("\\s+");
         if (words.length < 2) {
             throw new TaskManagerException();
         }
-        int index = s.indexOf(" ");
-        String sub = s.substring(index + 1);
+        int index = line.indexOf(" ");
+        String sub = line.substring(index + 1);
         return sub;
     }
 

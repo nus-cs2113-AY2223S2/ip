@@ -40,7 +40,7 @@ public abstract class Task {
     }
 
     /**
-     * Getter for the description of the task.
+     * Getter for the description of the task for user to read.
      * 
      * @return String the description of the task
      */

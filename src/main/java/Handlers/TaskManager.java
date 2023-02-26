@@ -11,10 +11,20 @@ public class TaskManager {
         return taskList;
     }
 
+    /**
+     * Adds a task to the taskList Array
+     * 
+     * @param t the task to be added
+     */
     public static void addTask(Task t) {
         taskList.add(t);
     }
 
+    /**
+     * Deletes a task from the taskList Array
+     * 
+     * @param index
+     */
     public static void deleteTask(int index) {
         System.out.println("Noted. I've removed this task:\n" + taskList.get(index - 1).describeTask() + "\n");
         taskList.remove(index - 1);
@@ -24,6 +34,9 @@ public class TaskManager {
         return taskList.size();
     }
 
+    /**
+     * Prints out all tasks in the taskList Array for the user to read.
+     */
     public static void listTask() {
         if (taskList.isEmpty()) {
             System.out.println("You have no tasks in your list yet!");
@@ -39,6 +52,12 @@ public class TaskManager {
         System.out.println("\nYou have " + getTaskCount() + " tasks in the list.\n");
     }
 
+    /**
+     * Takes in the user input index, converts to the index of the task in the taskList Array and
+     * marks it as done.
+     * 
+     * @param index the index of the task in the taskList Array
+     */
     public static void markTask(int index) {
         if (index > 0 && index <= getTaskCount()) {
             ArrayList<Task> list = getTaskList();
@@ -48,6 +67,12 @@ public class TaskManager {
         }
     }
 
+    /**
+     * Takes in the user input index, converts to the index of the task in the taskList Array and
+     * marks it as not done.
+     * 
+     * @param index the index of the task in the taskList Array
+     */
     public static void unmarkTask(int index) {
         if (index > 0 && index <= getTaskCount()) {
             ArrayList<Task> list = getTaskList();
@@ -76,7 +101,8 @@ public class TaskManager {
 
     
     /**
-     * Reads a single task from the file and adds it to the task list. 
+     * Reads a single task from the file and adds it to the task list 
+     * and input the relevant details depending on the task type.
      * 
      * @param line the line of text from the file
      */
