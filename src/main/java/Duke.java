@@ -38,7 +38,8 @@ public class Duke {
                 && (!Objects.equals(commands[0], "deadline"))
                 && (!Objects.equals(commands[0], "mark"))
                 && (!Objects.equals(commands[0], "unmark"))
-                && (!Objects.equals(commands[0], "delete"))) {
+                && (!Objects.equals(commands[0], "delete"))
+                && (!Objects.equals(commands[0], "find"))) {
             throw new DukeException.InvalidInputException("I'm sorry, but I don't know what that means :-(");
         } else if ((commands.length == 1)
                 && ((!Objects.equals(commands[0], "list")
@@ -49,72 +50,34 @@ public class Duke {
 
         switch (command) {
         case "bye":
-            handleBye();
+            Parser.handleBye();
             break;
         case "list":
-            handleList();
+            Parser.handleList();
             break;
         case "mark":
-            handleMark(commands[1]);
+            Parser.handleMark(commands[1]);
             break;
         case "unmark":
-            handleUnmark(commands[1]);
+            Parser.handleUnmark(commands[1]);
             break;
         case "delete":
-            handleDelete(commands[1]);
+            Parser.handleDelete(commands[1]);
             break;
         case "todo":
-            handleTodo(commands[1]);
+            Parser.handleTodo(commands[1]);
             break;
         case "deadline":
-            handleDeadline(commands[1]);
+            Parser.handleDeadline(commands[1]);
             break;
         case "event":
-            handleEvent(commands[1]);
+            Parser.handleEvent(commands[1]);
             break;
+        case "find":
+            Parser.handleFind(commands[1]);
 
         }
     }
-
-        private static void handleBye () {
-            UI.printBye();
-            System.exit(0);
-        }
-
-        private static void handleList () {
-            TasksList.processList();
-        }
-
-        static void handleMark (String remainingWords){
-
-            int i = Integer.parseInt(remainingWords) - 1;
-            TasksList.addMark(remainingWords, i);
-        }
-
-        static void handleUnmark (String remainingWords){
-
-            int i = Integer.parseInt(remainingWords) - 1;
-            TasksList.unMark(remainingWords, i);
-        }
-
-        static void handleDelete (String remainingWords){
-            int i = Integer.parseInt(remainingWords) - 1;
-            TasksList.deleteTask(i);
-        }
-
-        static void handleTodo (String remainingWords){
-            TasksList.addTask(new Todo(remainingWords));
-        }
-
-        static void handleDeadline (String remainingWords){
-            String[] parts = remainingWords.split("/");
-            TasksList.addTask(new Deadline(parts[0], parts[1]));
-        }
-
-        static void handleEvent (String remainingWords){
-            String[] parts = remainingWords.split("/");
-            TasksList.addTask(new Event(parts[0], parts[1], parts[2]));
-        }
 
     public static void main(String[] args) {
         new Duke().run();

@@ -3,7 +3,6 @@ import java.util.Scanner;
 public class UI {
 
 
-
     private Scanner scanner;
 
     public UI() {
@@ -31,21 +30,22 @@ public class UI {
     static void printAddMark() {
         System.out.println("You are crushing it,1 task down!");
     }
-    static void printUnmark(){
+
+    static void printUnmark() {
         System.out.println("I have unchecked it for you");
     }
-    static void printDeleteMessage(){
+
+    static void printDeleteMessage() {
         System.out.println("Noted. I've removed this task:");
     }
 
-     static void printMarking(int i) {
+    static void printMarking(int i) {
         System.out.println(String.format(" [%s] [%s] %s",
                 TasksList.tasks.get(i).getTypeIcon(), TasksList.tasks.get(i).getStatusIcon(), TasksList.tasks.get(i).getDescription()));
     }
 
 
-
-    static void printBye(){
+    static void printBye() {
         System.out.println("Bye see you again!");
     }
 
