@@ -1,3 +1,1 @@
-T | true | some_todo
-D | true | some_deadline | some_date
-E | true | some_event | start_date | end_date
+T | true | askdl

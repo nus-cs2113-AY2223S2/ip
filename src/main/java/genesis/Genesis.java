@@ -25,8 +25,11 @@ public class Genesis {
         try {
             Ui.breakLine();
 
-            String[] contentArr = userInput.split(" ", 2);
-            String command = contentArr[0];
+            String[] contents = userInput.split(" ", 2);
+            String command = contents[0];
+
+            Boolean isList = command.equals("list");
+            String argument = !isList ? contents[1] : "";
 
             switch (command) {
             case "list":
@@ -34,36 +37,37 @@ public class Genesis {
                 return;
 
             case "mark":
-                validator.validateIndex(contentArr);
-                tasks.markTask(contentArr[1]);
+                validator.validateIndex(contents);
+                tasks.markTask(argument);
                 break;
 
             case "unmark":
-                validator.validateIndex(contentArr);
-                tasks.unmarkTask(contentArr[1]);
+                validator.validateIndex(contents);
+                tasks.unmarkTask(argument);
                 break;
 
             case "todo":
-                validator.validateDescription(contentArr);
-                tasks.addTodo(contentArr[1]);
+                validator.validateDescription(contents);
+                tasks.addTodo(argument);
                 break;
 
             case "deadline":
-                validator.validateDescription(contentArr);
-                tasks.addDeadline(contentArr[1]);
+                validator.validateDescription(contents);
+                tasks.addDeadline(argument);
                 break;
 
             case "event":
-                validator.validateDescription(contentArr);
-                tasks.addEvent(contentArr[1]);
+                validator.validateDescription(contents);
+                tasks.addEvent(argument);
                 break;
 
             case "delete":
-                validator.validateIndex(contentArr);
-                tasks.deleteTask(contentArr[1]);
+                validator.validateIndex(contents);
+                tasks.deleteTask(argument);
                 break;
             case "find":
-                tasks.findTask(contentArr[1]);
+                validator.validateKeyword(contents);
+                tasks.findTask(argument);
                 break;
             default:
                 throw new UnknownCommandException();

@@ -94,7 +94,7 @@ public class TaskList {
         Ui.onTaskDelete(task.getListDescription(), tasks.size());
     }
 
-    public void findTask(String keyword) throws EmptyListException, KeywordNotFoundException {
+    public void findTask(String keyword) throws EmptyListException, KeywordNotFoundException, InvalidArgumentException {
 
         boolean found = false;
 

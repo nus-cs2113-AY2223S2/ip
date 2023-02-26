@@ -80,6 +80,8 @@ public class Ui {
         helpUnark();
         System.out.print("  ");
         helpDelete();
+        System.out.print("  ");
+        helpFind();
         System.out.println("  bye");
     }
 
@@ -105,5 +107,9 @@ public class Ui {
 
     public static void helpDelete() {
         System.out.println("delete <index>");
+    }
+
+    public static void helpFind() {
+        System.out.println("find <keyword>");
     }
 }
