@@ -19,6 +19,7 @@ public abstract class Task {
 
     /**
      * Returns the symbol to be printed depends on whether the task is marked as done or not.
+     *
      * @return The symbol whether the task is done or not.
      */
     public String getStatusIcon() {
@@ -27,6 +28,7 @@ public abstract class Task {
 
     /**
      * Returns the state of the task: whether is it done or not.
+     *
      * @return isDone The state of the task.
      */
     public boolean getIsDone() {
@@ -43,6 +45,7 @@ public abstract class Task {
 
     /**
      * Returns the description of the task that the user entered.
+     *
      * @return description The description of the task.
      */
     public String getDescription() {
@@ -51,13 +54,16 @@ public abstract class Task {
 
     /**
      * Returns the type of task
+     *
      * @return typeOfTask
      */
     public TypeOfTask getTypeOfTask() {
         return typeOfTask;
     }
 
-    /** Returns the symbol to be printed based on the type of task
+    /**
+     * Returns the symbol to be printed based on the type of task
+     *
      * @return The symbol depending on whether it's a TODO, DEADLINE, or EVENT task
      */
     public String getStatusForTypeOfTask() {

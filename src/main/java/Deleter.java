@@ -20,7 +20,7 @@ public class Deleter {
      * If the user gives an invalid index, informs the user about it.
      *
      * @param index The index of the task to be deleted
-     * @throws IndexOutOfBoundsException yyWhen the user keys an index that is out of bounds.
+     * @throws IndexOutOfBoundsException When the user keys an index that is out of bounds.
      */
     public static void deleteTask(int index) {
         index--;
