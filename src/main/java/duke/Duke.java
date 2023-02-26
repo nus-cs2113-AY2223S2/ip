@@ -4,18 +4,18 @@ import duke.exceptions.DukeException;
 import duke.ui.Ui;
 import duke.storage.FileManager;
 import duke.tasks.TaskList;
-import duke.commands.Command;
+import duke.parser.CommandParser;
 
 public class Duke {
     public static void main(String[] args) {
         
         FileManager fileManager = new FileManager();
         TaskList taskList = new TaskList(fileManager.retrieve());
-        Command commands = new Command(taskList);
+        CommandParser parser = new CommandParser(taskList);
 
         Ui.printWelcome();
         try {
-            commands.getInput();
+            parser.getInput();
             fileManager.save(taskList);
             Ui.printExit();
         } catch (DukeException e) {
