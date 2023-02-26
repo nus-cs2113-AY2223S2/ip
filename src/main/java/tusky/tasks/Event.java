@@ -4,14 +4,14 @@ import tusky.tasks.Task;
 import tusky.tasks.TaskType;
 
 public class Event extends Task {
-    protected TaskType taskType = TaskType.EVENT;
 
     protected String from; // datetime as a string
     protected String to; // datetime as a string
-    public Event(String description, String from, String to) throws EmptyDescriptionException {
-        super(description);
+    public Event(String isDone, String description, String from, String to) throws EmptyDescriptionException {
+        super(isDone, description);
         this.from = from;
         this.to = to;
+        this.taskType = TaskType.EVENT;
     }
 
     public String getFrom() {

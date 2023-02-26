@@ -106,7 +106,7 @@ public class Tusky {
                     break;
                 case "todo":
                     try{
-                        addTask(new ToDo(parser.getBody()));
+                        addTask(new ToDo("false", parser.getBody()));
                     } catch (EmptyDescriptionException e){
                         println(Messages.LINE.toString());
                         printf(Messages.ERR_EMPTY_TASK_DESCRIPTION.toString(), TaskType.TODO);
@@ -115,7 +115,7 @@ public class Tusky {
                     break;
                 case "event":
                     try{
-                        addTask(new Event(parser.getBody(), parser.get("from"), parser.get("to")));
+                        addTask(new Event("false", parser.getBody(), parser.get("from"), parser.get("to")));
                     } catch (EmptyDescriptionException e){
                         println(Messages.LINE.toString());
                         printf(Messages.ERR_EMPTY_TASK_DESCRIPTION.toString(), TaskType.EVENT);
@@ -124,7 +124,7 @@ public class Tusky {
                     break;
                 case "deadline":
                     try{
-                        addTask(new Deadline(parser.getBody(), parser.get("by")));
+                        addTask(new Deadline("false", parser.getBody(), parser.get("by")));
                     } catch (EmptyDescriptionException e){
                         println(Messages.LINE.toString());
                         printf(Messages.ERR_EMPTY_TASK_DESCRIPTION.toString(), TaskType.DEADLINE);

@@ -4,12 +4,12 @@ import tusky.tasks.Task;
 import tusky.tasks.TaskType;
 
 public class Deadline extends Task {
-    protected TaskType taskType = TaskType.DEADLINE;
 
     protected String by;
-    public Deadline(String description, String by) throws EmptyDescriptionException{
-        super(description);
+    public Deadline(String isDone, String description, String by) throws EmptyDescriptionException{
+        super(isDone, description);
         this.by = by;
+        this.taskType = TaskType.DEADLINE;
     }
 
 
