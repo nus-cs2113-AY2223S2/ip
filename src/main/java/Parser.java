@@ -12,6 +12,7 @@ public class Parser {
             Tasklist.addToTaskArrayList(todo);
             UserInterface.acknowledgeTaskAdded();
             Storage.save();
+            UserInterface.savedMessage();
         }
         else if(inputSplitBySpace[0].equals("deadline")){
             try{
@@ -21,6 +22,7 @@ public class Parser {
                 Tasklist.addToTaskArrayList(deadline);
                 UserInterface.acknowledgeTaskAdded();
                 Storage.save();
+                UserInterface.savedMessage();
             }
             catch(GootExceptions e){
                 GootExceptionHandler.wrongNumberOfSlashesDeadline();
@@ -37,6 +39,7 @@ public class Parser {
                 Tasklist.addToTaskArrayList(event);
                 UserInterface.acknowledgeTaskAdded();
                 Storage.save();
+                UserInterface.savedMessage();
             }
             catch(GootExceptions e){
                 GootExceptionHandler.wrongNumberOfSlashesEvent();
@@ -46,6 +49,8 @@ public class Parser {
         else if(inputSplitBySpace[0].equals("mark")|inputSplitBySpace[0].equals("unmark")){
             int indexToMark = Integer.parseInt(inputSplitBySpace[1]);
             Tasklist.markOrUnmark(indexToMark);
+            Storage.save();
+            UserInterface.savedMessage();
         }
         else if (input.equals("list")) {
             UserInterface.printList();
@@ -53,6 +58,7 @@ public class Parser {
         else if (inputSplitBySpace[0].equals("delete")&&inputSplitBySpace.length==2){
             Tasklist.deleteFromTaskArray(Integer.parseInt(inputSplitBySpace[1]));
             Storage.save();
+            UserInterface.savedMessage();
         }
         else if(inputSplitBySpace[0].equals("find")){
             ArrayList<String> listOfTasksFound = Tasklist.find(input.substring(5));

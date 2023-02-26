@@ -69,7 +69,6 @@ public class Storage {
                 FileWriter fw = new FileWriter(file);
                 fw.close();
             }
-            UserInterface.savedMessage();
         }
         catch (IOException e){
             e.printStackTrace();

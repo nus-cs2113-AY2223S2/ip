@@ -33,7 +33,6 @@ public class Tasklist {
     public static void markOrUnmark(int taskIndex){
         taskArray[taskIndex-1].isDone = (!taskArray[taskIndex - 1].isDone);
         taskArray[taskIndex-1].updateTaskDescription();
-        Storage.save();
         UserInterface.markMessage(taskIndex);
     }
 
