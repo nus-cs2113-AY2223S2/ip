@@ -3,7 +3,7 @@ package tusky;
 import tusky.io.KeyNotFoundException;
 import tusky.io.Messages;
 import tusky.io.Parser;
-import tusky.repository.FileManager;
+import tusky.storage.Storage;
 
 import tusky.tasks.ToDo;
 import tusky.tasks.Task;
@@ -21,6 +21,8 @@ import java.io.FileNotFoundException;
 public class Tusky {
     static ArrayList<Task> tasks = new ArrayList<>();
 
+    private static Storage storage;
+
     public static void addTask (Task task) {
         tasks.add(task);
         println(Messages.LINE.toString());
@@ -28,7 +30,7 @@ public class Tusky {
         printf("   %s\n", task.getDetailedString());
         printf(Messages.TASK_COUNT.toString(), tasks.size());
         println(Messages.LINE.toString());
-        FileManager.writeFile(tasks);
+        storage.writeFile(tasks);
     }
 
     public static void listTasks () {
@@ -48,7 +50,7 @@ public class Tusky {
             tasks.get(index).setDone(true);
             println(Messages.TASK_MARKED.toString());
             printf("   %s\n", tasks.get(index).getDetailedString());
-            FileManager.writeFile(tasks);
+            storage.writeFile(tasks);
         }
         println(Messages.LINE.toString());
     }
@@ -61,7 +63,7 @@ public class Tusky {
             tasks.get(index).setDone(false);
             println(Messages.TASK_UNMARKED.toString());
             printf("   %s\n", tasks.get(index).getDetailedString());
-            FileManager.writeFile(tasks);
+            storage.writeFile(tasks);
         }
         println(Messages.LINE.toString());
     }
@@ -76,7 +78,7 @@ public class Tusky {
             println(Messages.TASK_DELETED.toString());
             printf("   %s\n", t.getDetailedString());
             printf(Messages.TASK_COUNT.toString(), tasks.size());
-            FileManager.writeFile(tasks);
+            storage.writeFile(tasks);
         }
         println(Messages.LINE.toString());
     }
@@ -180,20 +182,21 @@ public class Tusky {
 
         println(Messages.LINE.toString());
         println(Messages.WELCOME.toString());
+        storage = new Storage("data/tusky.json");
 
         try{
-            tasks = FileManager.readFile();
+            tasks = storage.readFile();
             if(tasks != null){
                 println(Messages.FILE_LOADED.toString());
             } else {
                 println(Messages.FILE_CREATED.toString());
                 tasks = new ArrayList<>();
-                FileManager.writeFile(tasks);
+                storage.writeFile(tasks);
             }
         } catch (FileNotFoundException | NoSuchFileException e){
             println(Messages.FILE_CREATED.toString());
             tasks = new ArrayList<>();
-            FileManager.writeFile(tasks);
+            storage.writeFile(tasks);
 
         }
         println(Messages.LINE.toString());

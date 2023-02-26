@@ -1,10 +1,10 @@
 package tusky.tasks;
 
 public enum TaskType {
-    TASK("task"),
-    EVENT("event"),
-    TODO("todo"),
-    DEADLINE("deadline");
+    TASK("TASK"),
+    EVENT("EVENT"),
+    TODO("TODO"),
+    DEADLINE("DEADLINE");
 
     private final String code;
 
