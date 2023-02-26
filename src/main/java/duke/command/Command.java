@@ -11,12 +11,12 @@ import duke.ui.UI;
 public class Command {
     public boolean isExitCommand = false;
 
-    public void executor(TaskList tasks, UI ui) throws Exception {
-    }
-
     public void execute(TaskList tasks, UI ui, Storage storage) throws Exception {
         executor(tasks, ui);
         storage.save(tasks.toJson());
+    }
+
+    public void executor(TaskList tasks, UI ui) throws Exception {
     }
 
     public boolean isExit() {

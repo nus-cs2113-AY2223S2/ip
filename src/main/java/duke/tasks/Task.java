@@ -4,10 +4,10 @@ package duke.tasks;
  * Parent class for all tasks created. Can be initialised as a generic task
  */
 public class Task {
-    private final String name;
-    private boolean isCompleted;
-    private final TaskEnum type;
     private static final String checkbox = "X";
+    private boolean isCompleted;
+    private final String name;
+    private final TaskEnum type;
 
     /**
      * Initialise the Task object.
@@ -22,12 +22,12 @@ public class Task {
     }
 
     /**
-     * Set whether the task is completed or not.
+     * Describes the task with its status and description.
      *
-     * @param state true if task is completed, false otherwise
+     * @return String describing the task
      */
-    public void setIsCompleted(boolean state) {
-        isCompleted = state;
+    public String describe() {
+        return getCheckbox(isCompleted) + " " + name;
     }
 
     /**
@@ -53,11 +53,11 @@ public class Task {
     }
 
     /**
-     * Describes the task with its status and description.
+     * Set whether the task is completed or not.
      *
-     * @return String describing the task
+     * @param state true if task is completed, false otherwise
      */
-    public String describe() {
-        return getCheckbox(isCompleted) + " " + name;
+    public void setIsCompleted(boolean state) {
+        isCompleted = state;
     }
 }

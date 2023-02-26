@@ -7,8 +7,8 @@ import duke.ui.UI;
  * Updates the status of a task in the list.
  */
 public class CommandMarking extends Command {
-    private final int taskNum;
     private final boolean isMark;
+    private final int taskNum;
 
     public CommandMarking(int taskNum, boolean isMark) {
         this.taskNum = taskNum;

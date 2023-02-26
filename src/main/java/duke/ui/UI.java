@@ -17,6 +17,11 @@ public class UI {
     private static final String MESSAGE_GREET = "Hello! I'm Duke\nWhat can I do for you?";
     private static final String MESSAGE_LOGO = "Hello from";
 
+    public void greet() {
+        print(MESSAGE_GREET);
+        printLine();
+    }
+
     /**
      * Prints the given string with indentation.
      *
@@ -30,8 +35,8 @@ public class UI {
         scan.close();
     }
 
-    public void printLogo() {
-        print(MESSAGE_LOGO + System.lineSeparator() + LOGO);
+    public void printExit() {
+        print(MESSAGE_EXIT);
         printLine();
     }
 
@@ -39,8 +44,8 @@ public class UI {
         print(LINE + "\n");
     }
 
-    public void greet() {
-        print(MESSAGE_GREET);
+    public void printLogo() {
+        print(MESSAGE_LOGO + System.lineSeparator() + LOGO);
         printLine();
     }
 
@@ -69,11 +74,6 @@ public class UI {
                 + INDENT + description + "\n"
                 + "Now you have " + numTasks + " tasks in the list.";
         print(output);
-        printLine();
-    }
-
-    public void printExit() {
-        print(MESSAGE_EXIT);
         printLine();
     }
 }

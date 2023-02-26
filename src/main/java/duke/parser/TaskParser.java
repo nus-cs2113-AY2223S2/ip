@@ -9,14 +9,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public interface TaskParser {
-    Pattern PATTERN_TODO = Pattern.compile(
-            "^(\\S+[\\S\\s]*)$",
-            Pattern.CASE_INSENSITIVE);
     Pattern PATTERN_DEADLINE = Pattern.compile(
             "^(\\S+[\\S\\s]*)(\\s+/by\\s+)(\\S+[\\S\\s]*)$",
             Pattern.CASE_INSENSITIVE);
     Pattern PATTERN_EVENT = Pattern.compile(
             "^(\\S+[\\S\\s]*)(\\s+/from\\s+)(\\S+[\\S\\s]*)(\\s+/to\\s+)(\\S+[\\S\\s]*)$",
+            Pattern.CASE_INSENSITIVE);
+    Pattern PATTERN_TODO = Pattern.compile(
+            "^(\\S+[\\S\\s]*)$",
             Pattern.CASE_INSENSITIVE);
 
     /**

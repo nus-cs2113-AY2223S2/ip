@@ -1,5 +1,5 @@
 package duke.tasks;
 
 public enum TaskEnum {
-    TODO, DEADLINE, EVENT, UNDEFINED
+    DEADLINE, EVENT, TODO, UNDEFINED
 }

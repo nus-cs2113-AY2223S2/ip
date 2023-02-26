@@ -27,20 +27,6 @@ public class Storage {
     }
 
     /**
-     * Writes the given string to the path provided. Overwrites the file if already existing.
-     *
-     * @param filePath  Path of the destination file
-     * @param textToAdd String to be written in the file
-     * @throws IOException If the write operation fails
-     */
-    private static void writeToFile(String filePath, String textToAdd) throws IOException {
-        checkSaveDir();
-        FileWriter fw = new FileWriter(filePath);
-        fw.write(textToAdd);
-        fw.close();
-    }
-
-    /**
      * Reads the save data from the default save directory
      *
      * @return String containing JSON data of the saved items. Empty string if no data is saved.
@@ -62,5 +48,19 @@ public class Storage {
      */
     public void save(String saveData) throws IOException {
         writeToFile(SAVE_FILE.toString(), saveData);
+    }
+
+    /**
+     * Writes the given string to the path provided. Overwrites the file if already existing.
+     *
+     * @param filePath  Path of the destination file
+     * @param textToAdd String to be written in the file
+     * @throws IOException If the write operation fails
+     */
+    private static void writeToFile(String filePath, String textToAdd) throws IOException {
+        checkSaveDir();
+        FileWriter fw = new FileWriter(filePath);
+        fw.write(textToAdd);
+        fw.close();
     }
 }

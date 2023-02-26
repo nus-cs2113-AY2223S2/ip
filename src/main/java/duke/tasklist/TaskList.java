@@ -12,9 +12,9 @@ import java.util.regex.Pattern;
  * A list used to store and access all tasks created.
  */
 public class TaskList {
+    private static final String MESSAGE_TASKS_AVAILABLE = "Here are the tasks in your list:";
     private static final String MESSAGE_TASKS_MARKED = "Nice! I've marked this task as done:";
     private static final String MESSAGE_TASKS_UNMARKED = "OK, I've marked this task as not done yet:";
-    private static final String MESSAGE_TASKS_AVAILABLE = "Here are the tasks in your list:";
     private static ArrayList<Task> tasks = new ArrayList<>();
 
     /**
@@ -36,15 +36,6 @@ public class TaskList {
     }
 
     /**
-     * Get the size of the list.
-     *
-     * @return Integer
-     */
-    public int size() {
-        return tasks.size();
-    }
-
-    /**
      * Delete a task from the list.
      *
      * @param id 1-based ID corresponding to the task
@@ -61,28 +52,27 @@ public class TaskList {
     }
 
     /**
-     * Set the completion status of a task
+     * Searches for the keyword specified by the user.
      *
-     * @param id          1-based ID corresponding to the task
-     * @param isCompleted The completion status
-     * @return String describing the action completed and task changed
-     * @throws NoTaskException         If the list is empty
-     * @throws InvalidInputIDException If the given ID is invalid
+     * @param keyword The string to be searched (Supports RegEx format, search is case-insensitive)
+     * @return String containing matching tasks
+     * @throws NoTaskException If there are no tasks in the list
      */
-    public String setStatus(int id, boolean isCompleted) throws NoTaskException, InvalidInputIDException {
-        try {
-            if (tasks.size() == 0) {
-                throw new NoTaskException();
+    public String find(String keyword) throws NoTaskException {
+        ArrayList<Task> matchingTasks = new ArrayList<>();
+        Pattern pattern = Pattern.compile(keyword, Pattern.CASE_INSENSITIVE);
+        for (Task task : tasks) {
+            Matcher matcher = pattern.matcher(task.describe());
+            if (matcher.find()) {
+                matchingTasks.add(task);
             }
-            tasks.get(id).setIsCompleted(isCompleted);
-            String output = isCompleted
-                            ? MESSAGE_TASKS_MARKED + "\n"
-                            : MESSAGE_TASKS_UNMARKED + "\n";
-            output += tasks.get(id).describe();
-            return output;
-        } catch (IndexOutOfBoundsException e) {
-            throw new InvalidInputIDException();
         }
+
+        if (matchingTasks.size() == 0) {
+            throw new NoTaskException();
+        }
+
+        return listAll(matchingTasks);
     }
 
     /**
@@ -123,27 +113,37 @@ public class TaskList {
     }
 
     /**
-     * Searches for the keyword specified by the user.
+     * Set the completion status of a task
      *
-     * @param keyword The string to be searched (Supports RegEx format, search is case-insensitive)
-     * @return String containing matching tasks
-     * @throws NoTaskException If there are no tasks in the list
+     * @param id          1-based ID corresponding to the task
+     * @param isCompleted The completion status
+     * @return String describing the action completed and task changed
+     * @throws NoTaskException         If the list is empty
+     * @throws InvalidInputIDException If the given ID is invalid
      */
-    public String find(String keyword) throws NoTaskException {
-        ArrayList<Task> matchingTasks = new ArrayList<>();
-        Pattern pattern = Pattern.compile(keyword, Pattern.CASE_INSENSITIVE);
-        for (Task task : tasks) {
-            Matcher matcher = pattern.matcher(task.describe());
-            if (matcher.find()) {
-                matchingTasks.add(task);
+    public String setStatus(int id, boolean isCompleted) throws NoTaskException, InvalidInputIDException {
+        try {
+            if (tasks.size() == 0) {
+                throw new NoTaskException();
             }
+            tasks.get(id).setIsCompleted(isCompleted);
+            String output = isCompleted
+                            ? MESSAGE_TASKS_MARKED + "\n"
+                            : MESSAGE_TASKS_UNMARKED + "\n";
+            output += tasks.get(id).describe();
+            return output;
+        } catch (IndexOutOfBoundsException e) {
+            throw new InvalidInputIDException();
         }
+    }
 
-        if (matchingTasks.size() == 0) {
-            throw new NoTaskException();
-        }
-
-        return listAll(matchingTasks);
+    /**
+     * Get the size of the list.
+     *
+     * @return Integer
+     */
+    public int size() {
+        return tasks.size();
     }
 
     /**

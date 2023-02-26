@@ -57,17 +57,17 @@ public class InputParser {
 
         Task task;
         switch (type) {
-        case TODO:
-            ToDoParser todoParser = new ToDoParser();
-            task = todoParser.parseInput(taskDetails);
+        case DEADLINE:
+            DeadlineParser deadlineParser = new DeadlineParser();
+            task = deadlineParser.parseInput(taskDetails);
             break;
         case EVENT:
             EventParser eventParser = new EventParser();
             task = eventParser.parseInput(taskDetails);
             break;
-        case DEADLINE:
-            DeadlineParser deadlineParser = new DeadlineParser();
-            task = deadlineParser.parseInput(taskDetails);
+        case TODO:
+            ToDoParser todoParser = new ToDoParser();
+            task = todoParser.parseInput(taskDetails);
             break;
         default:
             if (taskDetails.isEmpty()) {
@@ -103,29 +103,29 @@ public class InputParser {
 
         Command result;
         switch (command) {
+        case COMMAND_DEADLINE:
+            result = new AddTaskCommand(getTaskFromInput(scanner, TaskEnum.DEADLINE));
+            break;
+        case COMMAND_DELETE:
+            result = new DeleteCommand(getID(scanner));
+            break;
+        case COMMAND_EVENT:
+            result = new AddTaskCommand(getTaskFromInput(scanner, TaskEnum.EVENT));
+            break;
+        case COMMAND_FIND:
+            result = new FindCommand(scanner.nextLine());
+            break;
         case COMMAND_LIST:
             result = new ListCommand();
             break;
         case COMMAND_MARK:
             result = new MarkCommand(getID(scanner));
             break;
-        case COMMAND_UNMARK:
-            result = new UnmarkCommand(getID(scanner));
-            break;
         case COMMAND_TODO:
             result = new AddTaskCommand(getTaskFromInput(scanner, TaskEnum.TODO));
             break;
-        case COMMAND_DEADLINE:
-            result = new AddTaskCommand(getTaskFromInput(scanner, TaskEnum.DEADLINE));
-            break;
-        case COMMAND_EVENT:
-            result = new AddTaskCommand(getTaskFromInput(scanner, TaskEnum.EVENT));
-            break;
-        case COMMAND_DELETE:
-            result = new DeleteCommand(getID(scanner));
-            break;
-        case COMMAND_FIND:
-            result = new FindCommand(scanner.nextLine());
+        case COMMAND_UNMARK:
+            result = new UnmarkCommand(getID(scanner));
             break;
         default:
             throw new InvalidCommandException();
