@@ -14,6 +14,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FileHandler {
+    public static void clearFile(String filePath) throws IOException {
+        FileWriter fw = new FileWriter(filePath);
+        fw.write(System.lineSeparator());
+        fw.close();
+    }
     public static void writeToFile(String filePath, ArrayList<Task> tasks) throws IOException {
         FileWriter fw = new FileWriter(filePath);
         for (Integer i = 0; i < Task.numTasks; i++) {

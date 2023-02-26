@@ -8,21 +8,26 @@ import limey.exception.commandNotFoundException;
 import limey.exception.invalidDateException;
 import limey.iohandler.Parser;
 import limey.iohandler.Speech;
+
 import java.util.ArrayList;
+
 import limey.iohandler.FileHandler;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
+
+import static limey.iohandler.FileHandler.clearFile;
 
 public class Limey {
 
     public static void main(String[] args) {
         ArrayList<Task> tasks = new ArrayList<>();
         //initialise variables
-        String filePath = "C:\\Users\\sunil\\desktop\\NUS\\CS2113\\Indiv Project\\src\\main\\SavedList";
+        String filePath = "C:\\Users\\sunil\\desktop\\NUS\\CS2113\\Indiv_Project\\src\\main\\SavedList";
         File f = new File(filePath);
-        if(f.exists() && !f.isDirectory()){
+        if (f.exists() && !f.isDirectory()) {
             retrieveSavedList(tasks);
         }
         String inLine;
@@ -42,7 +47,7 @@ public class Limey {
 
     private static void retrieveSavedList(ArrayList<Task> tasks) {
         try {
-            String filePath = "C:\\Users\\sunil\\desktop\\NUS\\CS2113\\Indiv Project\\src\\main\\SavedList";
+            String filePath = "C:\\Users\\sunil\\desktop\\NUS\\CS2113\\Indiv_Project\\src\\main\\SavedList";
             FileHandler.readFileToTasks(filePath, tasks);
         } catch (FileNotFoundException e) {
             Speech.invalidMessage("File not found");
@@ -50,11 +55,17 @@ public class Limey {
     }
 
     private static void exitLimey(ArrayList<Task> tasks) {
-        if(Task.numTasks>0) {
+        String filePath = "C:\\Users\\sunil\\desktop\\NUS\\CS2113\\Indiv_Project\\src\\main\\SavedList";
+        File tempDir = new File(filePath);
+        if (Task.numTasks == 0 & tempDir.exists()) {
             try {
-                String filePath = "C:\\Users\\sunil\\desktop\\NUS\\CS2113\\Indiv Project\\src\\main\\SavedList";
+                clearFile(filePath);
+            } catch (IOException e) {
+                Speech.invalidMessage("File cannot be cleared properly");
+            }
+        } else {
+            try {
                 FileHandler.writeToFile(filePath, tasks);
-
             } catch (IOException e) {
                 Speech.invalidMessage("File not found");
             }
@@ -63,14 +74,14 @@ public class Limey {
     }
 
 
-    private static void makeNewTask (ArrayList<Task> tasks, String inLine, String firstWord) throws commandNotFoundException {
+    private static void makeNewTask(ArrayList<Task> tasks, String inLine, String firstWord) throws commandNotFoundException {
         Task taskIn;
-        inLine = inLine.substring(inLine.indexOf(" ") +1);
+        inLine = inLine.substring(inLine.indexOf(" ") + 1);
         switch (firstWord) {
         case "deadline":
             try {
                 taskIn = new Deadline(inLine);
-            } catch (invalidDateException | StringIndexOutOfBoundsException e){
+            } catch (invalidDateException | StringIndexOutOfBoundsException e) {
                 Speech.invalidMessage("Invalid deadline date");
                 return;
             }
@@ -78,7 +89,7 @@ public class Limey {
         case "event":
             try {
                 taskIn = new Event(inLine);
-            } catch (invalidDateException | StringIndexOutOfBoundsException e){
+            } catch (invalidDateException | StringIndexOutOfBoundsException e) {
                 Speech.invalidMessage("Invalid event date");
                 return;
             }
@@ -95,18 +106,16 @@ public class Limey {
     }
 
 
-//=======
-    private static void initialiseLimey(String firstWord, ArrayList<Task> tasks, String[] wordList, String inLine,  Scanner in) {
+    private static void initialiseLimey(String firstWord, ArrayList<Task> tasks, String[] wordList, String inLine, Scanner in) {
         while (!firstWord.equals("bye")) { //loop until input 'bye'
             switch (firstWord) { //switch case to decide what to do
-//>>>>>>> branch-Level-7
             case "list":
                 try {
                     Speech.printTaskList(tasks, Task.numTasks);
-                } catch (IndexOutOfBoundsException e){
+                } catch (IndexOutOfBoundsException e) {
                     Speech.invalidMessage("Invalid Index");
                 }
-                    break;
+                break;
             case "mark":
                 printMarkTask(tasks, wordList);
                 break;
@@ -117,11 +126,11 @@ public class Limey {
                 printDeleteTask(tasks, wordList);
                 break;
             default:
-                try{
+                try {
                     makeNewTask(tasks, inLine.trim(), firstWord);
-                } catch (commandNotFoundException e){
+                } catch (commandNotFoundException e) {
                     Speech.invalidMessage("Invalid Command");
-                } catch (StringIndexOutOfBoundsException e){
+                } catch (StringIndexOutOfBoundsException e) {
                     Speech.invalidMessage("String Index out of bounds");
                 }
                 break;
@@ -161,7 +170,7 @@ public class Limey {
         }
     }
 
-    private static void printDeleteTask(ArrayList<Task> tasks,String[] wordList) {
+    private static void printDeleteTask(ArrayList<Task> tasks, String[] wordList) {
         try {
             deleteTask(tasks, wordList);
         } catch (NullPointerException | IndexOutOfBoundsException e) {
@@ -170,7 +179,8 @@ public class Limey {
             Speech.invalidMessage("Index given is not a number.");
         }
     }
-    private static void deleteTask(ArrayList<Task> tasks,String[] wordList) {
+
+    private static void deleteTask(ArrayList<Task> tasks, String[] wordList) {
         String inLine;
         int taskIndex;
         inLine = wordList[1];
@@ -179,6 +189,7 @@ public class Limey {
         tasks.remove(taskIndex);
         Task.numTasks--;
     }
+
     private static void markTask(ArrayList<Task> tasks, String[] wordList) {
         int taskIndex;
         String inLine;
