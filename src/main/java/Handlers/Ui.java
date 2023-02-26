@@ -19,22 +19,20 @@ public class Ui {
     public static void takeUserInputs() {
 
         boolean isComplete = false;
+        Scanner in = new Scanner(System.in);
 
         while (!isComplete) {
 
-            Scanner in = new Scanner(System.in);
 
             String line = in.nextLine();
             String firstWord = Parser.getFirstWord(line);
 
             switch (firstWord) {
             case "mark":
-                int taskNumberMark = Parser.getTaskNumber(line);
-                TaskManager.markTask(taskNumberMark);
+                TaskManager.markTask(Parser.getTaskNumber(line));
                 break;
             case "unmark":
-                int taskNumberUnmark = Parser.getTaskNumber(line);
-                TaskManager.unmarkTask(taskNumberUnmark);
+                TaskManager.unmarkTask(Parser.getTaskNumber(line));
                 break;
             case "delete":
                 int taskNumberDelete = Parser.getTaskNumber(line);
@@ -52,6 +50,9 @@ public class Ui {
             case "event":
                 Parser.getEventDetails(line);
                 break;
+            case "find":
+                TaskManager.findTask(Parser.getTaskDescription(line));
+                break;
             case "bye":
                 isComplete = true;
                 break;
@@ -63,5 +64,6 @@ public class Ui {
             Ui.printLineBreak();
         }
 
+        in.close();
     }
 }
