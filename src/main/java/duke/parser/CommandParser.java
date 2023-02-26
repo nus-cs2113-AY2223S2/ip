@@ -5,9 +5,9 @@ import duke.command.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Parser {
+public class CommandParser {
     private static final String OOPS = "☹ OOPS!!! ";
-    public  Parser() {}
+    public CommandParser() {}
 
     public Command parseCommand(String userInputCommand) throws IllegalArgumentException {
         String[] args = userInputCommand.split(" ");
