@@ -96,7 +96,13 @@ public class Parser {
             return new ListCommand();
         }
 
-
+        else if(command.equals(Input.FIND.input)){
+            if (inputWords.length < 2) {
+                throw new IncompleteInputException ("Please specify which task you wish to edit");
+            } else {
+                return new FindCommand(inputWords[1]);
+            }
+        }
         else if (command.matches(Input.MARK.input + "|" + Input.UNMARK.input + "|" + Input.DELETE.input)) {
             //inputWords[1] is string that no longer contains the command string
             if (inputWords.length < 2) {
