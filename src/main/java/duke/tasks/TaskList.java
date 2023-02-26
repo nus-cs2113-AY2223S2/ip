@@ -2,6 +2,8 @@ package duke.tasks;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import duke.exceptions.NoTasksException;
 import duke.ui.Ui;
 
 public class TaskList {
@@ -33,7 +35,7 @@ public class TaskList {
     
     /**
      * Gets the list of tasks.
-     * @return List of tasks.
+     * @return List of tasks inline separated by commas
      */
     public List<Task> getTasks() {
         return this.tasks;
@@ -130,6 +132,35 @@ public class TaskList {
             messagePacket[messageCount++] = line;
         }
         Ui.printMessage(messagePacket);
+    }
+
+    /**
+     * Displays all tasks filtered by a keyword
+     * @param filter the keyword to filter the tasks by
+     */
+    public void printFilteredTasks(String filter) throws NoTasksException {
+        List<Task> taskList = getTasks();
+        ArrayList<String> messagePacket = new ArrayList<String>();
+
+        messagePacket.add(String.format("\tHere are the tasks matching %s:", filter));
+
+        //convert list of tasks to list of strings
+        List<String> stringList = taskList.stream()
+                .map(task -> "\t  " + task.toString())
+                .collect(Collectors.toList());
+
+        //filter tasks by keyword
+        List<String> filteredTasks = stringList.stream()
+                .filter(task -> task.toLowerCase().contains(filter.toLowerCase()))
+                .collect(Collectors.toList());
+
+        if (filteredTasks.size() == 0) {
+            throw new NoTasksException(filter);
+        }
+
+        messagePacket.addAll(filteredTasks);
+
+        Ui.printMessage(messagePacket.toArray(String[] ::new));
     }
 
 }
