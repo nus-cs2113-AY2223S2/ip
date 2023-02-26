@@ -8,7 +8,6 @@ public class Duke {
     public static void main(String[] args) {
         new Duke("DUKE/Duke.txt");
     }
-
     private Memory memory;
     private IO io;
     private TaskList tasks;
@@ -74,50 +73,50 @@ public class Duke {
         String description = actionAndDescription[1];
         try {
             switch (action) {
-            case "bye":
-                io.printBye();
-                break;
-            case "list":
-                executeListAction(fileDoesExist);
-                break;
-            case "mark":
-                executeMarkAction(description, fileDoesExist);
-                if (fileDoesExist) {
-                    memory.writeToFile();
-                }
-                break;
+                case "bye":
+                    io.printBye();
+                    break;
+                case "list":
+                    executeListAction(fileDoesExist);
+                    break;
+                case "mark":
+                    executeMarkAction(description, fileDoesExist);
+                        if (fileDoesExist) {
+                            memory.writeToFile();
+                        }
+                    break;
             case "unmark":
-                executeUnmarkAction(description, fileDoesExist);
-                if (fileDoesExist) {
-                    memory.writeToFile();
-                }
-                break;
+                    executeUnmarkAction(description, fileDoesExist);
+                        if (fileDoesExist) {
+                            memory.writeToFile();
+                    }
+                    break;
             case "todo":
-                executeTodoAction(description, fileDoesExist);
-                if (fileDoesExist) {
-                    memory.appendToFile(userInput);
-                }
-                break;
+                    executeTodoAction(description, fileDoesExist);
+                        if (fileDoesExist) {
+                            memory.appendToFile(userInput);
+                        }
+                    break;
             case "event":
-                executeEventAction(description, fileDoesExist);
-                if (fileDoesExist) {
-                    memory.appendToFile(userInput);
-                }
-                break;
+                    executeEventAction(description, fileDoesExist);
+                        if (fileDoesExist) {
+                            memory.appendToFile(userInput);
+                        }
+                    break;
             case "deadline":
-                executeDeadlineAction(description, fileDoesExist);
-                if (fileDoesExist) {
-                    memory.appendToFile(userInput);
-                }
-                break;
+                    executeDeadlineAction(description, fileDoesExist);
+                        if (fileDoesExist) {
+                            memory.appendToFile(userInput);
+                        }
+                    break;
             case "delete":
-                executeDeleteAction(description);
-                break;
+                    executeDeleteAction(description);
+                    break;
             case "find":
-                executeFindAction(description);
-                break;
+                    executeFindAction(description);
+                    break;
             default:
-                io.showInvalidCommand();
+                    io.showInvalidCommand();
             }
         } catch (IOException e) {
             io.showCannotEditFile();
