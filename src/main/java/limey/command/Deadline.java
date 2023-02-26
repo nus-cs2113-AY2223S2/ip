@@ -13,7 +13,7 @@ public class Deadline extends Task {
     private String inDate;
 
     public String getDueDate() {
-        return dueDate.format(DateTimeFormatter.ofPattern("dd MMM yyyy"));
+        return dueDate.format(DateTimeFormatter.ofPattern("dd MMM yyyy h:mm a"));
     }
     public String getInDate() {
         return inDate;

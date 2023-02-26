@@ -18,8 +18,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
-import static limey.iohandler.FileHandler.clearFile;
+
 
 public class Limey {
 
@@ -60,7 +61,7 @@ public class Limey {
         File tempDir = new File(filePath);
         if (Task.numTasks == 0 & tempDir.exists()) {
             try {
-                clearFile(filePath);
+                FileHandler.clearFile(filePath);
             } catch (IOException e) {
                 Speech.invalidMessage("File cannot be cleared properly");
             }
@@ -110,6 +111,20 @@ public class Limey {
     private static void initialiseLimey(String firstWord, ArrayList<Task> tasks, String[] wordList, String inLine, Scanner in) {
         while (!firstWord.equals("bye")) { //loop until input 'bye'
             switch (firstWord) { //switch case to decide what to do
+            case "find":
+                    String searchTerm = inLine.trim().substring(4).trim();
+                    ArrayList<Task> listFound = new ArrayList<>(tasks.stream()
+                            .filter(t -> t.getTaskIdentity().contains(searchTerm))
+                            .collect(Collectors.toList()));
+                    if(listFound.isEmpty()){
+                        Speech.printNoFoundTask(searchTerm);
+                        break;
+                    } else if (searchTerm.equals("")) {
+                        Speech.invalidMessage("Empty Search term");
+                        break;
+                    }
+                    Speech.printTaskList(listFound, listFound.size());
+                break;
             case "list":
                 try {
                     Speech.printTaskList(tasks, Task.numTasks);

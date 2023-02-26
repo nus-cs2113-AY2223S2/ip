@@ -67,4 +67,9 @@ public class Speech {
         System.out.println("\t" + task.getTaskIdentity());
         printLine();
     }
+    public static void printNoFoundTask(String searchTerm) {
+        printLine();
+        System.out.println("\t" + "No task name found containing "+ searchTerm);
+        printLine();
+    }
 }
