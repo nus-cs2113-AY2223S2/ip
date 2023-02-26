@@ -1,4 +1,6 @@
-package tusky.io;
+package tusky.exceptions;
+
+import tusky.constants.Messages;
 
 public class KeyNotFoundException extends Exception{
     public KeyNotFoundException(String key){

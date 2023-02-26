@@ -1,7 +1,6 @@
 package tusky.tasks;
 
-import tusky.tasks.Task;
-import tusky.tasks.TaskType;
+import tusky.exceptions.EmptyDescriptionException;
 
 public class Event extends Task {
 

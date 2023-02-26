@@ -1,7 +1,7 @@
-package tusky.tasks;
+package tusky.exceptions;
 
 public class EmptyDescriptionException extends Exception {
-    EmptyDescriptionException (String message) {
+    public EmptyDescriptionException (String message) {
         super(message);
     }
 }

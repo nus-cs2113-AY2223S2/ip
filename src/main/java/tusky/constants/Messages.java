@@ -1,7 +1,9 @@
-package tusky.io;
+package tusky.constants;
 
 public enum Messages {
     LINE("____________________________________________________________"),
+    LARGE_INDENT("    "),
+    SMALL_INDENT("   "),
     WELCOME(" Hello! I'm Tusky the Walrus"),
     GOODBYE(" Bye. Hope to see you again soon!"),
     TASK_ADDED(" Got it. I've added this task:\n"),
@@ -16,7 +18,6 @@ public enum Messages {
     FILE_CREATED(" A new customer, what can I do for you?"),
 
     // Errors
-    ERR_MAX_TASKS_EXCEEDED(" Too many tasks!"),
     ERR_INVALID_INDEX(" Invalid index!"),
     ERR_KEY_NOT_FOUND(" You missed out your \"%s\" argument!"),
     ERR_UNKNOWN_COMMAND(" Sorry I don't recognise that command."),

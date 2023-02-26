@@ -1,7 +1,6 @@
 package tusky.tasks;
 
-import tusky.tasks.TaskType;
-import tusky.tasks.EmptyDescriptionException;
+import tusky.exceptions.EmptyDescriptionException;
 public class Task {
 
     protected TaskType taskType = TaskType.TASK;

@@ -2,11 +2,7 @@ package tusky.storage;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-import tusky.tasks.Task;
-import tusky.tasks.TaskType;
-import tusky.tasks.Event;
-import tusky.tasks.Deadline;
-import tusky.tasks.ToDo;
+import tusky.tasks.*;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -62,6 +58,12 @@ public class Storage {
         return filePath;
     }
 
+    /**
+     *
+     * @return
+     * @throws FileNotFoundException
+     * @throws NoSuchFileException
+     */
     public ArrayList<Task> readFile () throws FileNotFoundException, NoSuchFileException {
         try {
             Reader br = Files.newBufferedReader(Paths.get(getFilePath()));
@@ -75,14 +77,18 @@ public class Storage {
         return null;
     }
 
-    public void writeFile (ArrayList<Task> tasks) {
+    /**
+     *
+     * @param tasks
+     */
+    public void writeFile (TaskList tasks) {
         File file = new File(getFilePath());
         try {
             if (!file.getParentFile().exists()) {
                 file.getParentFile().mkdirs();
             }
             FileWriter fw = new FileWriter(file);
-            gson.toJson(tasks, fw);
+            gson.toJson(tasks.getTasks(), fw);
             fw.flush();
             fw.close();
         } catch (IOException e) {

@@ -1,5 +1,7 @@
 package tusky.tasks;
 
+import tusky.exceptions.EmptyDescriptionException;
+
 public class ToDo extends Task {
 
     public ToDo(String isDone, String description) throws EmptyDescriptionException {
