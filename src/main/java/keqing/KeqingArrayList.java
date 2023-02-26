@@ -17,6 +17,26 @@ import static keqing.tasks.Task.getTaskCount;
 public class KeqingArrayList {
     public static ArrayList<Task> tasks = new ArrayList<Task>();
 
+    public static void findTask(String keyword) {
+        System.out.println(LINE);
+        if (getTaskCount() == 0) {
+            System.out.println("The list is empty...!");
+        }
+        System.out.println("Keqing tried very hard! Here are the matching tasks in your list:");
+        int count = 0;
+        for (int i = 0; i < getTaskCount(); i++) {
+            if (tasks.get(i).getDescription().contains(keyword)) {
+                System.out.print((i + 1) + ".");
+                System.out.println(tasks.get(i).toString());
+                count += 1;
+            }
+        }
+        if (count == 0) {
+            System.out.println("Wait...There is no matching task in the list...!");
+        }
+        System.out.println(LINE);
+    }
+
     /**
      * Prints the current tasks list.
      */
@@ -57,12 +77,12 @@ public class KeqingArrayList {
     }
 
     /**
-     * Reads the toTo tasks using respective format.
+     * Reads the toTo tasks using respective format and adds to the tasks list.
      *
      * @param content Content from the user input
      * @throws IllegalInputException
      */
-    public static void readToDo(String content) throws IllegalInputException {
+    public static void addToDo(String content) throws IllegalInputException {
         if (content.equals("todo")) {
             throw new IllegalInputException("Keqing doesn't understand what you actually want to do...");
         }
@@ -74,12 +94,12 @@ public class KeqingArrayList {
     }
 
     /**
-     * Reads the deadline tasks using respective format.
+     * Reads the deadline tasks using respective format and adds to the tasks list.
      *
      * @param content Content from the user input
      * @throws IllegalInputException
      */
-    public static void readDeadline(String content) throws IllegalInputException {
+    public static void addDeadline(String content) throws IllegalInputException {
         if (content.contains("/by")) {
             int indexOfBy = content.indexOf("/by");
             if (indexOfBy + 3 < content.length()) {
@@ -99,12 +119,12 @@ public class KeqingArrayList {
     }
 
     /**
-     * Reads the event tasks using respective format.
+     * Reads the event tasks using respective format and adds to the tasks list.
      *
      * @param content Content from the user input
      * @throws IllegalInputException
      */
-    public static void readEvent(String content) throws IllegalInputException {
+    public static void addEvent(String content) throws IllegalInputException {
         if (content.contains("/from") && content.contains("/to")) {
             int indexOfFrom = content.indexOf("/from");
             int indexOfTo = content.indexOf("/to");

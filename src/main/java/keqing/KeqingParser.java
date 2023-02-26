@@ -31,16 +31,19 @@ public class KeqingParser {
             KeqingArrayList.markTask(currentID, isDone);
             break;
         case "todo":
-            KeqingArrayList.readToDo(content);
+            KeqingArrayList.addToDo(content);
             break;
         case "deadline":
-            KeqingArrayList.readDeadline(content);
+            KeqingArrayList.addDeadline(content);
             break;
         case "event":
-            KeqingArrayList.readEvent(content);
+            KeqingArrayList.addEvent(content);
             break;
         case "delete":
             KeqingArrayList.deleteTask(content);
+            break;
+        case "find":
+            KeqingArrayList.findTask(content);
             break;
         default:
             throw new IllegalInputException("Keqing doesn't understand your input...?");
