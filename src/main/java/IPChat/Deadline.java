@@ -15,4 +15,13 @@ public class Deadline extends Task {
     public String toString() {
         return "[D][" + super.getStatusIcon() + "] " + super.toString() + "(by: " + by + ")";
     }
+
+    @Override
+    public String saveStuff () {
+        int save = 0;
+        if (this.isDone) {
+            save = 1;
+        }
+        return "deadline" + description + "/by" + by + " | " + save;
+    }
 }

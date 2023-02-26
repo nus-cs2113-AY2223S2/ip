@@ -10,4 +10,13 @@ public class ToDo extends Task{
     public String toString() {
         return "[T][" + super.getStatusIcon() + "] " + super.toString();
     }
+
+    @Override
+    public String saveStuff () {
+        int save = 0;
+        if (this.isDone) {
+            save = 1;
+        }
+        return "todo" + description + " | " + save;
+    }
 }
