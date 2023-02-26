@@ -4,6 +4,7 @@ import Tasks.Event;
 import Tasks.Task;
 import Tasks.ToDo;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
@@ -55,24 +56,29 @@ public class Duke {
                                              + "Try typing \"help\" to see the valid commands you can use!\n";
     final static String PREFIX_MISSING_INPUTS_ERROR = "\n\uD83D\uDE13 OOPS!!! The description of ";
     final static String SUFFIX_MISSING_INPUTS_ERROR = " cannot be empty.\n";
-    final static String PREFIX_EMPTY_LIST_ERROR = "\n\uD83D\uDE20 HELLOO???!!! Your list is either EMPTY or does not contain tasks up to the index you inputted yet, so you cannot use ";
-    final static String SUFFIX_EMPTY_LIST_ERROR = " command yet!! Try filling up the list first!\n";
-    final static String PREFIX_LIST_LIMIT_ERROR = "\n\uD83D\uDE05 SORRY MATE!!! I can only take in up to 100 tasks for now... \uD83D\uDE47 So please only ";
-    final static String SUFFIX_LIST_LIMIT_ERROR = " up to that amount and not anything more!\n";
+    final static String PREFIX_EMPTY_LIMIT_LIST_ERROR = "\n\uD83D\uDE20 HELLOO???!!! Your list is either EMPTY or does not contain tasks up to the index you inputted yet, so you cannot use ";
+    final static String SUFFIX_EMPTY_LIMIT_LIST_ERROR = " command yet!! Try filling up the list first!\n";
+
+//    final static String PREFIX_LIST_LIMIT_ERROR = "\n\uD83D\uDE05 SORRY MATE!!! I can only take in up to 100 tasks for now... \uD83D\uDE47 So please only ";
+//    final static String SUFFIX_LIST_LIMIT_ERROR = " up to that amount and not anything more!\n";
+
     final static String FORMAT_CONVERT_ERROR = "\n\uD83D\uDE31 MATE!!! Either you are giving me too big of a number for me to handle or putting words when I am expecting a number.\n"
                                              + "If it is the former I can only count up to 2147483647 for now... Please lower your expectations! \uD83D\uDE29 \n"
                                              + "As for the latter, please give me proper inputs so that I can work things out for you okay? \uD83D\uDE11 \n";
-
-    public static void printList(Task[] l1, int currListIndex) {
+    final static String PREFIX_MISSING_DESCRIPTION_ERROR = "\nError in inputs!\n"
+                                                         + "Exception occurred: java.lang.StringIndexOutOfBoundsException: ";
+    final static String SUFFIX_MISSING_DESCRIPTION_ERROR = " is missing the task description!\n";
+    public static void printList(ArrayList<Task> l1, int currListIndex) {
         int index;
-        if (l1[0] == null) {
+        if (l1.size() == 0) {
             System.out.println('\n' + "MATE! \uD83D\uDE24 Your list is empty!" + '\n');
             return;
         }
         System.out.println("\nTASKS LIST\n");
-        for (int i = 0; i < currListIndex; i += 1) {
-            index = i + 1;
-            System.out.println(index + ". " + l1[i].toString());
+        int i = 1;
+        for (Task t : l1) {
+            System.out.println(i + ". " + t.toString());
+            i += 1;
         }
         System.out.println();
     }
@@ -109,8 +115,8 @@ public class Duke {
     }
     public static String[] parseDeadline(String description) throws IncompleteInputException {
         String[] parsed = description.split(" /by");
-        if (parsed.length < 2) {
-            throw new IncompleteInputException("Deadline is missing \"BY\"!\n");
+        if (parsed.length < 2 || parsed[1].isEmpty()) {
+            throw new IncompleteInputException("deadline is missing \"BY\"!\n");
         }
         return parsed;
     }
@@ -118,10 +124,16 @@ public class Duke {
     public static String[] parseEvent(String description) throws IncompleteInputException {
         String[] parsed = description.split(" /", 3);
         if (parsed.length < 3) {
-            throw new IncompleteInputException("Event is missing either \"FROM\" or \"TO\"!\n");
+            throw new IncompleteInputException("event is missing either \"FROM\" or \"TO\"!\n");
         }
         parsed[1] = parsed[1].substring(4);
+        if (parsed[1].isEmpty()) {
+            throw new IncompleteInputException("event is missing \"FROM\"!\n");
+        }
         parsed[2] = parsed[2].substring(2);
+        if (parsed[2].isEmpty()) {
+            throw new IncompleteInputException("event is missing \"TO\"!\n");
+        }
         return parsed;
     }
 
@@ -134,9 +146,9 @@ public class Duke {
     public static void main(String[] args) {
 
         System.out.println(WELCOME_MESSAGE);
-        Task[] tasksList = new Task[100];
+        ArrayList<Task> tasksList = new ArrayList<>();
         Scanner in = new Scanner(System.in);
-        String line, commandWord, description;
+        String line, commandWord, description, deadlineBy, eventFrom, eventTo;
         int taskListIndex, currTaskNumber;
         String[] lineSpaced;
         boolean isChanged = false;
@@ -160,15 +172,15 @@ public class Duke {
                 try {
                     taskListIndex = Integer.parseInt(description) - 1;
                     isChanged = false;
-                    if (!tasksList[taskListIndex].getIsDone()) {
-                        tasksList[taskListIndex].markAsDone();
+                    if (!tasksList.get(taskListIndex).getIsDone()) {
+                        tasksList.get(taskListIndex).markAsDone();
                         isChanged = true;
                     }
-                    printMarked(isChanged, tasksList[taskListIndex].getStatusIcon(), tasksList[taskListIndex].getDescription());
+                    printMarked(isChanged, tasksList.get(taskListIndex).getStatusIcon(), tasksList.get(taskListIndex).getDescription());
                 } catch (NullPointerException nu) {
-                    System.out.println(PREFIX_EMPTY_LIST_ERROR + commandWord + SUFFIX_EMPTY_LIST_ERROR);
-                } catch (ArrayIndexOutOfBoundsException ex) {
-                    System.out.println(PREFIX_LIST_LIMIT_ERROR + commandWord + SUFFIX_LIST_LIMIT_ERROR);
+                    System.out.println(PREFIX_EMPTY_LIMIT_LIST_ERROR + commandWord + SUFFIX_EMPTY_LIMIT_LIST_ERROR);
+                } catch (IndexOutOfBoundsException ex) {
+                    System.out.println(PREFIX_EMPTY_LIMIT_LIST_ERROR + commandWord + SUFFIX_EMPTY_LIMIT_LIST_ERROR);
                 } catch (NumberFormatException fe) {
                     System.out.println(FORMAT_CONVERT_ERROR);
                 }
@@ -183,15 +195,15 @@ public class Duke {
                 try {
                     taskListIndex = Integer.parseInt(description) - 1;
                     isChanged = false;
-                    if (tasksList[taskListIndex].getIsDone()) {
-                        tasksList[taskListIndex].markAsUndone();
+                    if (tasksList.get(taskListIndex).getIsDone()) {
+                        tasksList.get(taskListIndex).markAsUndone();
                         isChanged = true;
                     }
-                    printUnmarked(isChanged, tasksList[taskListIndex].getStatusIcon(), tasksList[taskListIndex].getDescription());
+                    printUnmarked(isChanged, tasksList.get(taskListIndex).getStatusIcon(), tasksList.get(taskListIndex).getDescription());
                 } catch (NullPointerException nu) {
-                    System.out.println(PREFIX_EMPTY_LIST_ERROR + commandWord + SUFFIX_EMPTY_LIST_ERROR);
-                } catch (ArrayIndexOutOfBoundsException ex) {
-                    System.out.println(PREFIX_LIST_LIMIT_ERROR + commandWord + SUFFIX_LIST_LIMIT_ERROR);
+                    System.out.println(PREFIX_EMPTY_LIMIT_LIST_ERROR + commandWord + SUFFIX_EMPTY_LIMIT_LIST_ERROR);
+                } catch (IndexOutOfBoundsException ex) {
+                    System.out.println(PREFIX_EMPTY_LIMIT_LIST_ERROR + commandWord + SUFFIX_EMPTY_LIMIT_LIST_ERROR);
                 } catch (NumberFormatException fe) {
                     System.out.println(FORMAT_CONVERT_ERROR);
                 }
@@ -199,35 +211,44 @@ public class Duke {
             case "todo":
                 try {
                     description = lineSpaced[1];
-                    tasksList[currTaskNumber] = new ToDo(description);
-                    printAdded(tasksList[currTaskNumber], currTaskNumber + 1);
+                    tasksList.add(new ToDo(description));
+                    printAdded(tasksList.get(currTaskNumber), currTaskNumber + 1);
                     currTaskNumber++;
-                } catch (ArrayIndexOutOfBoundsException ex) {
+                } catch (IndexOutOfBoundsException ex) {
                     System.out.println(PREFIX_MISSING_INPUTS_ERROR + commandWord + SUFFIX_MISSING_INPUTS_ERROR);
                 } catch (NullPointerException nu) {
-                    System.out.println(PREFIX_EMPTY_LIST_ERROR + commandWord + SUFFIX_EMPTY_LIST_ERROR);
+                    System.out.println(PREFIX_EMPTY_LIMIT_LIST_ERROR + commandWord + SUFFIX_EMPTY_LIMIT_LIST_ERROR);
                 }
                 break;
             case "deadline":
                 try {
                     lineSpaced = parseDeadline(line);
-                    tasksList[currTaskNumber] = new Deadline(lineSpaced[0].substring(commandWord.length()+1), lineSpaced[1]);
-                    printAdded(tasksList[currTaskNumber], currTaskNumber+1);
+                    description = lineSpaced[0].substring(commandWord.length()+1);
+                    deadlineBy = lineSpaced[1];
+                    tasksList.add(new Deadline(description, deadlineBy));
+                    printAdded(tasksList.get(currTaskNumber), currTaskNumber+1);
                     currTaskNumber++;
                 } catch (IncompleteInputException inc) {
                     System.out.println("\nError in inputs!");
                     System.out.println("Exception occurred: " + inc);
+                } catch (StringIndexOutOfBoundsException st) {
+                    System.out.println(PREFIX_MISSING_DESCRIPTION_ERROR + commandWord +SUFFIX_MISSING_DESCRIPTION_ERROR);
                 }
                 break;
             case "event":
                 try {
                     lineSpaced = parseEvent(line);
-                    tasksList[currTaskNumber] = new Event(lineSpaced[0].substring(commandWord.length()+1), lineSpaced[1],lineSpaced[2]);
-                    printAdded(tasksList[currTaskNumber], currTaskNumber+1);
+                    description = lineSpaced[0].substring(commandWord.length()+1);
+                    eventFrom = lineSpaced[1];
+                    eventTo = lineSpaced[2];
+                    tasksList.add(new Event(description, eventFrom, eventTo));
+                    printAdded(tasksList.get(currTaskNumber), currTaskNumber+1);
                     currTaskNumber++;
                 } catch (IncompleteInputException inc) {
                     System.out.println("\nError in inputs!");
                     System.out.println("Exception occurred: " + inc);
+                } catch (StringIndexOutOfBoundsException st) {
+                    System.out.println(PREFIX_MISSING_DESCRIPTION_ERROR + commandWord +SUFFIX_MISSING_DESCRIPTION_ERROR);
                 }
                 break;
             case "help" :
