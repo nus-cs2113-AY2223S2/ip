@@ -50,6 +50,12 @@ public class Ui {
         System.out.println("New directory has been made. Please provide some data to be written to the file.");
     }
 
+    /**
+     * Prints all search results collated in ArrayList searchResults.
+     * If empty, only end line is printed.
+     *
+     * @param searchResults ArrayList containing all related search results.
+     */
     public static void printSearchResults(ArrayList<Task> searchResults) {
         int itemNumber = 1;
         System.out.println("Here are the matching tasks in your list:");

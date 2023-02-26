@@ -68,6 +68,13 @@ public class TaskList {
         ui.printListSize(lists.size());
     }
 
+    /**
+     * Searches through list given and checks for those with descriptions matching search terms.
+     * Appends all relevant search results to searchResults.
+     *
+     * @param inputLine User input - provides search term.
+     * @throws IndexOutOfBoundsException If search term is not provided.
+     */
     public void searchForTask(String inputLine) throws IndexOutOfBoundsException {
         try {
             String[] lines = inputLine.split(" ", 2);
