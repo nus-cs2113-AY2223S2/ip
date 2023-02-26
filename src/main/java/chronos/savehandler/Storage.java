@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class Storage {
     private static final Logger LOGGER = Logger.getLogger(Storage.class.getName());
-    private static final String FILE = "src/main/java/chronos/taskList.txt";
+    private static final String FILE = "./taskList.txt";
 
     private static void writeToFile(String path, String content) {
         try {

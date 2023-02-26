@@ -6,11 +6,6 @@ package chronos.commandhandler;
  * be more easily handled by the machine.
  */
 public class InputParser {
-    //takes from command and splits it into its components mainly
-    //action: what type of task the user wants to add
-    //detail: the description
-    //for deadline: due
-    //for event: start/end
 
     /**
      * Parses the input string into a Command object.
@@ -26,8 +21,9 @@ public class InputParser {
         //checks if there is anything after the action command 'todo' if there is nothing it is null
         String details = mainPart.length > 1 ? mainPart[1] : null;
 
-        String start = null;
         String end = null;
+        String start = null;
+
         String due = null;
 
         for (int i = 1; i < parts.length; i++) {
@@ -46,7 +42,7 @@ public class InputParser {
                 due = optionValue;
                 break;
             default:
-                System.err.println("INVALID COMMAND");
+                System.err.println("INVALID COMMAND FORMART");
             }
         }
 

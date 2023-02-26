@@ -2,10 +2,14 @@ package chronos.tasktype;
 
 import chronos.savehandler.Save;
 
+/**
+ * Represents an Event type task, a subclass of Task
+ */
 //more inheritance
 public class Event extends Task {
-    private String start;
-    private String end;
+
+    private String start; //start time of an event type task
+    private String end; //end time of an event type task
 
     public Event(String description, String start, String end) {
         super(description);

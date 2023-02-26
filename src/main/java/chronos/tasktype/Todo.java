@@ -2,7 +2,15 @@ package chronos.tasktype;
 
 import chronos.savehandler.Save;
 
+
+/**
+ * Represents a Todo type of task, subclass of Task
+ */
 public class Todo extends Task{
+    /**
+     * Constructs a new Todo object
+     * @param description The description of the task
+     */
     public Todo(String description) {
         super(description);
     }

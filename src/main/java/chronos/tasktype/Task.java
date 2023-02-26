@@ -1,15 +1,25 @@
 package chronos.tasktype;
 import chronos.savehandler.*;
 
+/**
+ *
+ */
 public class Task {
     private boolean isDone;
     private String description;
 
+    /**
+     * @param isDone
+     * @param description
+     */
     public Task(boolean isDone, String description) {
         this.isDone = isDone;
         this.description = description;
     }
 
+    /**
+     * @param description
+     */
     public Task(String description){
         if (description == null){
             throw new IllegalArgumentException("This field cannot be empty.");
@@ -30,6 +40,9 @@ public class Task {
         return isDone;
     }
 
+    /**
+     * @return
+     */
     public char setCheckMark() {
         char icon = '□';
         if (this.isDone == true) {
@@ -38,10 +51,16 @@ public class Task {
         return icon;
     }
 
+    /**
+     *
+     */
     public void toggleDone(){
         this.isDone = !this.isDone;
     }
 
+    /**
+     * @return
+     */
     @Override
     public String toString(){
         return String.format("%c %s", setCheckMark(), getDescription());

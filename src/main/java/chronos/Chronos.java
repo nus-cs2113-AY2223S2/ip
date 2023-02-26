@@ -32,7 +32,7 @@ public class Chronos {
     }
 
     private static void fileInit() {
-        File file = new File("src/main/java/chronos/taskList.txt");
+        File file = new File("./taskList.txt");
         try {
             file.createNewFile();
         } catch (IOException e) {
