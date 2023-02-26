@@ -78,7 +78,7 @@ public class DateData {
             for (int j : dateTable.get(i)) {
                 if (j > deletedIndex) {
                     dateTable.get(i).remove(j);
-                    dateTable.get(i).add(j + 1);
+                    dateTable.get(i).add(j - 1);
                 }
             }
         }

@@ -62,7 +62,7 @@ public class FindData {
             for (int i : findTable.get(str)) {
                 if (i > deletedIndex) {
                     findTable.get(str).remove(i);
-                    findTable.get(str).add(i + 1);
+                    findTable.get(str).add(i - 1);
                 }
             }
         }
