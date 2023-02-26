@@ -59,9 +59,15 @@ public class Storage {
         }
     }
 
+    /**
+     * Check if a file exists in the ./data directory <br>
+     * Notify the user via console on errors, if any. <br>
+     * Automatically create the file if the file does not exist.
+     *
+     * @param filename Filename to check
+     * @return True if file exists, else False
+     */
     private boolean doesFileExist(String filename) {
-        // Check if file exists
-        // If it doesn't exist, then create it but return does not exist
         Path pathToFilename = maxDataDirectory.resolve(filename + TASK_FILE_EXT);
         File maxDataFile = new File(pathToFilename.toUri());
         boolean isDataExist = maxDataFile.exists();
@@ -77,14 +83,22 @@ public class Storage {
         return isDataExist;
     }
 
-    private String tokenizeTasks(ArrayList<Task> arrayList) {
+    /**
+     * Takes in a list of Tasks to tokenize into a string <br>
+     *
+     * Each task will be tokenized in this format: <br>
+     * {Label} -- {isDone} -- {description} { -- [otherArgs] ...} <br>
+     *
+     * The command validator filters out rogue usage of '--' between words. <br>
+     * This guarantees that all our task inputs can be properly delimited by '--' <br>
+     *
+     * @param taskList
+     * @return string of all the tokenized tasks
+     */
+    private String tokenizeTasks(ArrayList<Task> taskList) {
         String tokenizedString = "";
-        // Each task will be tokenized in this format:
-        // <Label> -- <isDone> -- <description> [ -- <otherArgs> ...]\n
-        // The command validator filters our rogue usage of '--' between words
-        // This guarantees that all our task inputs can be properly delimited by '--'
-        // Hence, the choosing of '--' to delimit the persistent data
-        for (Task task : arrayList) {
+
+        for (Task task : taskList) {
             String taskString = task.getTaskLabel() + DELIMITER;
             String isDone = task.isDone() ? TASK_DONE_TOKEN : TASK_UNDONE_TOKEN;
             taskString += isDone + DELIMITER;
@@ -124,10 +138,18 @@ public class Storage {
         return errorMessage;
     }
 
+    /**
+     * Processes a tokenized string and formats it into a list of Tasks <br>
+     *
+     * The Tasks will be loaded on a best-effort basis. <br>
+     * Instead of throwing an exception, problematic taskStrings will be <i>skipped</i>. <br>
+     * All problematic tokens will be printed afterwards for the user's information.
+     *
+     * @param tokenizedString tokenized string format of the tasks
+     * @return List of Tasks that were successfully detokenized
+     */
     private ArrayList<Task> detokenizeTasks(String tokenizedString) {
-        // detokenizeTasks will try to load the Tasks by best-effort
-        // Instead of throwing an exception, problematic taskStrings will be skipped
-        // All problematic lines will be printed afterwards
+
         ArrayList<Task> taskArrayList = new ArrayList<>();
         String[] tasks = tokenizedString.split(TASK_NEWLINE_TOKEN);
 
@@ -230,11 +252,22 @@ public class Storage {
         return data.toString();
     }
 
+    /**
+     * Takes in a list of tasks to save on the user's hard-drive
+     *
+     * @param taskList list of tasks to be saved to disk
+     */
     public void saveTasksToDisk(ArrayList<Task> taskList) {
         String tokenizedTasks = tokenizeTasks(taskList);
         writeToDisk(tokenizedTasks, TASK_FILENAME);
     }
 
+    /**
+     * Returns a list of tasks that exist on the user's hard-drive
+     *
+     * @return A list of successfully loaded tasks from the disk,
+     * or an empty list if no task data file was found
+     */
     public ArrayList<Task> loadTasksFromDisk() {
         ArrayList<Task> processedTaskData;
         if (doesFileExist(TASK_FILENAME)) {
