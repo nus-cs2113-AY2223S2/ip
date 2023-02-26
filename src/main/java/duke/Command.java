@@ -4,6 +4,7 @@ import duke.exceptions.FormatException;
 import duke.exceptions.InvalidCommandException;
 import duke.exceptions.NoDescriptionException;
 
+import java.text.Normalizer;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -69,7 +70,7 @@ public class Command {
                 System.out.println("WOOFS!!! The index of entering task must be stated.");
                 System.out.println("Please try to mark task again υ´• ﻌ •`υ");
                 Ui.printLine();
-            } catch (IndexOutOfBoundsException e) {
+            } catch (IndexOutOfBoundsException | FormatException e) {
                 System.out.println("WOOFS!!! The index of entering task is not valid.");
                 System.out.println("Please try to mark task again υ´• ﻌ •`υ");
                 Ui.printLine();
@@ -82,7 +83,7 @@ public class Command {
                 System.out.println("WOOFS!!! The index of entering task must be stated.");
                 System.out.println("Please try to mark task again υ´• ﻌ •`υ");
                 Ui.printLine();
-            } catch (IndexOutOfBoundsException e) {
+            } catch (IndexOutOfBoundsException | FormatException e) {
                 System.out.println("WOOFS!!! The index of entering task is not valid.");
                 System.out.println("Please try to mark task again υ´• ﻌ •`υ");
                 Ui.printLine();
@@ -95,7 +96,7 @@ public class Command {
                 System.out.println("WOOFS!!! The index of entering task must be stated.");
                 System.out.println("Please try to delete task again υ´• ﻌ •`υ");
                 Ui.printLine();
-            } catch (IndexOutOfBoundsException e) {
+            } catch (IndexOutOfBoundsException | FormatException e) {
                 System.out.println("WOOFS!!! The index of entering task is not valid.");
                 System.out.println("Please try to delete task again υ´• ﻌ •`υ");
                 Ui.printLine();
@@ -164,11 +165,11 @@ public class Command {
         }
         Ui.printLine();
     }
-    public static void unmarkTask(ArrayList<Task> tasks, String commandArgs) throws NoDescriptionException, IndexOutOfBoundsException {
+    public static void unmarkTask(ArrayList<Task> tasks, String commandArgs) throws NoDescriptionException, IndexOutOfBoundsException, FormatException {
         if (commandArgs.trim().length() == 0) {
             throw new NoDescriptionException();
         }
-        final int unmarkId = Integer.parseInt(commandArgs) - 1;
+        final int unmarkId = Parser.parseIndex(commandArgs) - 1;
         if (unmarkId < 0 || unmarkId >= tasks.size()) {
             throw new IndexOutOfBoundsException();
         }
@@ -181,11 +182,11 @@ public class Command {
         }
         Ui.printLine();
     }
-    public static void markTask(ArrayList<Task> tasks, String commandArgs) throws NoDescriptionException, IndexOutOfBoundsException {
+    public static void markTask(ArrayList<Task> tasks, String commandArgs) throws NoDescriptionException, IndexOutOfBoundsException, FormatException {
         if (commandArgs.trim().length() == 0) {
             throw new NoDescriptionException();
         }
-        final int markId = Integer.parseInt(commandArgs) - 1;
+        final int markId = Parser.parseIndex(commandArgs) - 1;
         if (markId < 0 || markId >= tasks.size()) {
             throw new IndexOutOfBoundsException();
         }

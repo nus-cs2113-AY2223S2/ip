@@ -1,6 +1,8 @@
 package duke;
 
 
+import duke.exceptions.FormatException;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -34,5 +36,13 @@ public class Parser {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date time = dateFormat.parse(userInputDate);
         return time;
+    }
+    public static Integer parseIndex(String userInputIndex) throws FormatException{
+        try {
+            return Integer.parseInt(userInputIndex) - 1;
+        } catch (NumberFormatException e) {
+            System.out.println("OOPS, the index must be an number!");
+        }
+        return -1;
     }
 }
