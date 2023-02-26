@@ -101,6 +101,14 @@ public class TaskList implements Iterable<Task> {
         taskList.get(index).unmark();
     }
 
+    public void deleteTask(int listIndex) throws IndexOutOfBoundsException {
+        int index = listIndex - 1;
+        if (index < 0 || index >= taskList.size()) {
+            throw new IndexOutOfBoundsException();
+        }
+        taskList.remove(index);
+    }
+
     public void clear() {
         taskList.clear();
     }

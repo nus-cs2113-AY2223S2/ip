@@ -25,6 +25,8 @@ public class Parser {
             return parseMark(args);
         case UnmarkCommand.COMMAND_WORD:
             return parseUnmark(args);
+        case DeleteCommand.COMMAND_WORD:
+            return parseDelete(args);
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
         case HelpCommand.COMMAND_WORD: //fall through
@@ -161,6 +163,22 @@ public class Parser {
         if (args.length == 2) {
             try {
                 return new UnmarkCommand(Integer.parseInt(args[1]));
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException(OOPS + args[1] + " is not a valid number!");
+            }
+        } else {
+            return new UnmarkCommand(parseArgsToInt(args, 1));
+        }
+    }
+
+    private Command parseDelete(String[] args) throws IllegalArgumentException {
+        assert args[0].equals(DeleteCommand.COMMAND_WORD);
+        if (args.length == 1) {
+            throw new IllegalArgumentException(OOPS + "Cannot find task to delete.");
+        }
+        if (args.length == 2) {
+            try {
+                return new DeleteCommand(Integer.parseInt(args[1]));
             } catch (NumberFormatException e) {
                 throw new IllegalArgumentException(OOPS + args[1] + " is not a valid number!");
             }
