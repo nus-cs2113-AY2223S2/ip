@@ -21,6 +21,7 @@ import static duke.command.AddCommand.*;
 import static duke.command.ChangeStatusCommand.markTask;
 import static duke.command.ChangeStatusCommand.unmarkTask;
 import static duke.command.DeleteCommand.deleteTask;
+import static duke.command.FindCommand.findTask;
 import static duke.parser.Parser.*;
 import static duke.storage.Storage.readFileData;
 import static duke.storage.Storage.writeToFile;
@@ -116,6 +117,11 @@ public class Duke {
                             System.out.println("Error! Specify a valid task index!");
                             printBorder();
                         }
+                        break;
+
+                    case "find":
+                        String keyword = inputArguments[1];
+                        findTask(tasks, keyword);
                         break;
 
                     case "bye":
