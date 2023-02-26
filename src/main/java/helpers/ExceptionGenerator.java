@@ -55,7 +55,7 @@ public class ExceptionGenerator {
     public void deadlineExceptionGenerator(String[]  deadlineAndDescription, String userInput) throws EmptyDeadline, DeadlineMissingPhrase, DeadlineIsBlank{
         if(!userInput.contains("/by ") && userInput.split(" ").length>1) {
             throw new DeadlineMissingPhrase();
-        } else if(deadlineAndDescription.length==1) {
+        } else if(deadlineAndDescription.length==1 || deadlineAndDescription[0].isBlank()) {
             throw new EmptyDeadline();
         } else if(deadlineAndDescription[1].isBlank()) {
             throw new DeadlineIsBlank();
@@ -84,7 +84,7 @@ public class ExceptionGenerator {
             throw new EventMissingFromPhrase();
         } else if(!(userInput.contains("/from") || !userInput.contains("/to")) && userInput.split(" ").length>1) {
             throw new EventMissingBothPhrases();
-        }  else if (eventDescription.length==1) {
+        }  else if (eventDescription.length==1 || eventDescription[0].isBlank()) {
             throw new EmptyEvent();
         }else if(eventDescription[1].isBlank()) {
             throw new EventFromIsBlank();
