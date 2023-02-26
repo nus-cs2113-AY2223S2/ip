@@ -1,4 +1,8 @@
 public class Parser {
+    /**
+     *this function is in charge of reading user inputs, storing and reading from a text file and generating responses
+     * @param input is a string containing a keyword,taskName and task details.Eg: event orientation /from now /to later
+     */
     public static void interpretInput(String input){
         String[] inputSplitBySpace = input.split(" ");
 
@@ -11,7 +15,8 @@ public class Parser {
         else if(inputSplitBySpace[0].equals("deadline")){
             try{
                 GootExceptionHandler.validateDeadline(input.split("/"));
-                Deadline deadline = new Deadline(Deadline.readName(input),Tasklist.lastIndex+1,Deadline.readBy(input),"D");
+                int taskNumber = Tasklist.lastIndex+1;
+                Deadline deadline = new Deadline(Deadline.readName(input),taskNumber,Deadline.readBy(input),"D");
                 Tasklist.addToTaskArrayList(deadline);
                 UserInterface.acknowledgeTaskAdded();
                 Storage.save();
@@ -26,7 +31,8 @@ public class Parser {
                 GootExceptionHandler.validateEvent(input.split("/"));
                 String fromString = Event.readFromTo(input)[0];
                 String toString = Event.readFromTo(input)[1];
-                Event event = new Event(Event.readName(input),Tasklist.lastIndex+1,fromString,toString,"E");
+                int taskNumber = Tasklist.lastIndex+1;
+                Event event = new Event(Event.readName(input),taskNumber,fromString,toString,"E");
                 Tasklist.addToTaskArrayList(event);
                 UserInterface.acknowledgeTaskAdded();
                 Storage.save();
