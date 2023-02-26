@@ -15,6 +15,7 @@ public class HelpCommand extends Command{
         List<String> usages = new ArrayList<>();
         usages.add(HEADER);
         usages.add(TodoCommand.COMMAND_USAGE);
+        usages.add(DeadlineCommand.COMMAND_USAGE);
         usages.add(ListCommand.COMMAND_USAGE);
         usages.add(HelpCommand.COMMAND_USAGE);
         usages.add(ExitCommand.COMMAND_USAGE);
