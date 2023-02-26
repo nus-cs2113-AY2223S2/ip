@@ -11,6 +11,5 @@ public class TaskToMarkDoesNotExistException extends Exception {
 
     public void printErrorMessage() {
         System.out.println("You can only " + command + " tasks that are currently in the list!");
-        System.out.println("You only have " + Task.numberOfTasks + " tasks in your list.");
     }
 }
