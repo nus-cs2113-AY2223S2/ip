@@ -1,11 +1,4 @@
-import duke.task.Deadline;
-import duke.task.Event;
-import duke.task.Task;
-import duke.task.ToDo;
-
-import java.util.ArrayList;
 import java.io.IOException;
-import java.util.Scanner;
 
 /**
  * Main class to manage all operations
@@ -18,10 +11,9 @@ public class Duke {
 
     /**
      * Start the duke programme
-     * @param args
      * @throws IOException if an error occurred while loading save file
      */
-    public static void main(String[] args) throws IOException {
+    public static void main() throws IOException {
         new Duke("./taskSave.txt").run();
     }
 
