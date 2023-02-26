@@ -22,13 +22,13 @@ DukeRunner is a simple task manager that allows you to add, view, and manage you
 
 ## Adding Tasks
 To add a task, type the type of task followed by the description. For example, to add a todo, type `todo` followed by the description of the task:
-`todo math homework`
+```todo math homework```
 
 To add a deadline, type `deadline` followed by the description and `/by` followed by the due date:
-`deadline do science homework /by monday`
+```deadline do science homework /by monday```
 
 To add an event, type `event` followed by the description, `/from` followed by the start time, and `/to` followed by the end time:
-`event school carnival /from Monday 9am /to 12pm`
+```event school carnival /from Monday 9am /to 12pm```
 
 ## Viewing Tasks
 To view all the tasks in the list, type `list`. DukeRunner will display all the tasks in the order they were added.
