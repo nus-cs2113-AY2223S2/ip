@@ -12,7 +12,6 @@ public class StorageManager {
 
     public static void loadFileContents() {
 
-        // Create data folder if it does not exist
         new File("./data").mkdir();
 
         File f = new File(FILE_PATH);

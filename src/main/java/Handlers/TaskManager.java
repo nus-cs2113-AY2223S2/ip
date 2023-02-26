@@ -56,6 +56,11 @@ public class TaskManager {
         }
     }
 
+    
+    /** 
+     * Prints out all tasks that contain the given description.
+     * @param description the description to be searched for
+     */
     public static void findTask(String description) {
         ArrayList<Task> list = getTaskList();
         int existingTaskCount = 1;
@@ -67,6 +72,11 @@ public class TaskManager {
         }
     }
 
+    
+    /**
+     * Reads a single task from the file and adds it to the task list. 
+     * @param line the line of text from the file
+     */
     public static void readTaskFromFile(String line) {
         String[] taskDetails = line.split("\\|");
         String taskType = taskDetails[0].trim();
