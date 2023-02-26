@@ -10,9 +10,15 @@ public class StorageManager {
 
     private static final String FILE_PATH = "./data/duke.txt";
 
+    /**
+     * Creates a new file if it does not exist and loads the tasks in the file into
+     * the taskList in TaskManager
+     * 
+     * @throws FileNotFoundException if the file is not found
+     * @throws IOException           if there is an error reading the file
+     */
     public static void loadFileContents() {
 
-        // Create data folder if it does not exist
         new File("./data").mkdir();
 
         File f = new File(FILE_PATH);
@@ -32,6 +38,11 @@ public class StorageManager {
         }
     }
 
+    /**
+     * Saves the tasks in the taskList in TaskManager into the file
+     * 
+     * @throws IOException if there is an error writing to the file
+     */
     public static void saveFileContents() {
 
         try {
@@ -41,6 +52,12 @@ public class StorageManager {
         }
     }
 
+    /**
+     * Reads the file data and load the tasks into the taskList in TaskManager
+     * 
+     * @param f the file to be read
+     * @throws FileNotFoundException if the file is not found
+     */
     private static void writeToTaskManager(File f) throws FileNotFoundException {
         Scanner s = new Scanner(f);
         while (s.hasNext()) {
@@ -50,6 +67,11 @@ public class StorageManager {
         s.close();
     }
 
+    /**
+     * Writes the tasks in the taskList in TaskManager into the file
+     * 
+     * @throws IOException if there is an error writing to the file
+     */
     public static void writeToFile() throws IOException {
         FileWriter fw = new FileWriter(FILE_PATH);
         for (int i = 0; i < TaskManager.getTaskCount(); i++) {

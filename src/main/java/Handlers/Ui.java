@@ -4,22 +4,28 @@ import java.util.Scanner;
 
 public class Ui {
 
-    public static void printHello() {
+    private static void printHello() {
         System.out.println("Hello! I'm DukeRunner\nWhat can I do for you?\n");
     }
 
-    public static void printBye() {
+    private static void printBye() {
         System.out.println("Bye. Hope to see you again soon!");
     }
 
-    public static void printLineBreak() {
+    private static void printLineBreak() {
         System.out.println("==============================\n");
     }
 
+    /**
+     * Takes in user inputs, extracts the command and calls the relevant methods in TaskManager
+     */
     public static void takeUserInputs() {
 
         boolean isComplete = false;
         Scanner in = new Scanner(System.in);
+
+        printHello();
+        printLineBreak();
 
         while (!isComplete) {
 
@@ -64,6 +70,7 @@ public class Ui {
             Ui.printLineBreak();
         }
 
+        printBye();
         in.close();
     }
 }
