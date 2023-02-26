@@ -8,7 +8,6 @@ public class TasksList {
     }
 
 
-
     static void processList() {
         if (tasks.size() == 0) {
             System.out.println("Nothing to do for now!Take a break!");
@@ -22,31 +21,42 @@ public class TasksList {
         }
     }
 
-        public static void addTask(Task task) {
-            tasks.add(task);
-            Storage.writeToFile();
-            UI.printSize();
+    static void findTasks(String words) {
+        for (int i = 0; i < tasks.size(); i++) {
+            if (tasks.get(i).getDescription().contains(words)) {
+                System.out.println("Here are the matching tasks in your list:");
+                System.out.println(String.format("%d.[%s] [%s] %s ", i + 1,
+                        tasks.get(i).getTypeIcon(), tasks.get(i).getStatusIcon(), tasks.get(i).getDescription()));
+            }
+
         }
+    }
 
-        public static void deleteTask(int index) {
-                UI.printDeleteMessage();
-                UI.printMarking(index);
-                tasks.remove(index);
-                UI.printSize();
-                Storage.writeToFile();
+    public static void addTask(Task task) {
+        tasks.add(task);
+        Storage.writeToFile();
+        UI.printSize();
+    }
 
-            
-        }
+    public static void deleteTask(int index) {
+        UI.printDeleteMessage();
+        UI.printMarking(index);
+        tasks.remove(index);
+        UI.printSize();
+        Storage.writeToFile();
 
 
-    public static void addMark(String remainingWords,int i) {
+    }
+
+
+    public static void addMark(String remainingWords, int i) {
         UI.printAddMark();
         Task.markAsDone(tasks.get(Integer.parseInt(remainingWords) - 1));
         UI.printMarking(i);
         Storage.writeToFile();
     }
 
-    public static void unMark(String remainingWords,int i) {
+    public static void unMark(String remainingWords, int i) {
         UI.printUnmark();
         Task.markAsNotDone(tasks.get(Integer.parseInt(remainingWords) - 1));
         UI.printMarking(i);
