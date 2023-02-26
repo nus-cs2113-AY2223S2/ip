@@ -142,6 +142,11 @@ event play /from 2023-12-12 /to next decade
 
 <br />
 
+> **WARNING :** Leaving fields blank is accepted but removes `find` and `date` functionality
+> *_Applies for **ALL** `todo`, `deadline`, `event`_
+
+<br />
+
 ### Listing all `tasks`
 
 _Shows a list of all `tasks` recorded in the application_
