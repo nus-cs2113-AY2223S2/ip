@@ -1,9 +1,11 @@
 package duke.util;
 
 import duke.task.Task;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
 
+/**
+ * A <code>UI</code> object takes care of the printing of statuses
+ * and results after each operation is performed.
+ */
 public class Ui {
     public Ui() {
     }
@@ -47,15 +49,6 @@ public class Ui {
         System.out.println("New directory has been made. Please provide some data to be written to the file.");
     }
 
-    public static String getInput() throws NoSuchElementException {
-        Scanner in = new Scanner(System.in);
-        String line = "";
-        try {
-            line = in.nextLine();
-        } catch (NoSuchElementException e) {
-            printExiting();
-        }
-        return line;
-    }
+
 }
 

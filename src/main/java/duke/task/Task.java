@@ -2,6 +2,10 @@ package duke.task;
 
 import java.util.StringJoiner;
 
+/**
+ * Represents a task element to be in the list. A <code>Task</code> object corresponds to
+ * any of these 3 types of tasks. (To-do, Deadline, Event)
+ */
 public class Task {
     public static final String LINE_BREAK = "---------------------------------------------";
     public String description;
