@@ -2,7 +2,7 @@ package app;
 
 import app.commands.Command;
 import app.exceptions.DukeException;
-import app.parser.Parser;
+import app.parser.MainParser;
 import app.tasks.TaskList;
 import app.ui.Ui;
 import app.save.Storage;
@@ -30,8 +30,8 @@ public class Duke {
         while (!isExit) {
             try {
                 String fullCommand = ui.readCommand();
-                ui.showLine(); // show the divider line ("_______")
-                Command c = Parser.parse(fullCommand);
+                ui.showLine();
+                Command c = MainParser.parse(fullCommand);
                 c.execute(tasks, ui, storage);
                 isExit = c.isExit();
             } catch (DukeException e) {

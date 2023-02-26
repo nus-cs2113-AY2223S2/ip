@@ -21,16 +21,16 @@ public class Storage {
 
     public ArrayList<Task> load() throws DukeException {
         try {
-            Scanner s = new Scanner(taskFile);
+            Scanner scanner = new Scanner(taskFile);
             ArrayList<Task> savedTasks = new ArrayList<>();
 
-            while (s.hasNext()) {
-                Task currentTask = StringParser.convertStringToTask(s.nextLine());
+            while (scanner.hasNext()) {
+                Task currentTask = StringParser.convertStringToTask(scanner.nextLine());
                 if (currentTask != null) {
                     savedTasks.add(currentTask);
                 }
             }
-            s.close();
+            scanner.close();
             return savedTasks;
         } catch (FileNotFoundException e) {
             throw new DukeException("You do not have an existing task list.\n Initialising a new one.");

@@ -41,7 +41,7 @@ public class TaskList {
         return tasks.size();
     }
 
-    public Task deleteTask(int index) throws DukeException{
+    public Task deleteTask(int index) throws DukeException {
         Task taskToDelete = getTask(index - 1);
         return tasks.remove(index - 1);
     }
@@ -56,5 +56,15 @@ public class TaskList {
         Task unmarkedTask = getTask(index - 1);
         unmarkedTask.setDone(false);
         return unmarkedTask;
+    }
+
+    public ArrayList<Task> getTasksWithKeyword(TaskList tasks, String keyword) {
+        ArrayList<Task> tasksWithKeyword = new ArrayList<>();
+        for (Task t : tasks.getTasks()) {
+            if (t.getTaskDescription().toLowerCase().contains(keyword.toLowerCase())) {
+                tasksWithKeyword.add(t);
+            }
+        }
+        return tasksWithKeyword;
     }
 }
