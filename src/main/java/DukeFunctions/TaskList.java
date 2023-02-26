@@ -1,6 +1,5 @@
 package DukeFunctions;
 
-import DukeFunctions.Todo;
 
 import java.util.ArrayList;
 
@@ -36,6 +35,17 @@ public class TaskList {
 
     public void remove(int i) {
         TodoList.remove(i);
+    }
+
+    public void find(Ui ui, String keyword) {
+
+        TaskList searchResults = new TaskList();
+        this.TodoList.forEach(todo -> {
+            if (todo.description.contains(keyword)) {
+                searchResults.add(todo);
+            }
+        });
+        ui.printSearchResults(searchResults);
     }
 
 }
