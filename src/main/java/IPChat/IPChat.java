@@ -2,10 +2,10 @@ package IPChat;
 
 import ipchatExceptions.IPChatExceptions;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class IPChat {
-
-    public static Task[] tasks = new Task[100];
+    public static ArrayList<Task> tasks = new ArrayList<>();
     public static int tasksCount = 0; // used camelCase
     private static int checkInput = 0;
 
@@ -30,17 +30,15 @@ public class IPChat {
 
     // Create a list of the task
     public static void listTasks(String statements) throws IPChatExceptions {
-        if (statements.length() == 5) {
+        if (statements.length() == 4) {
             if (tasksCount > 0) {
                 System.out.println("------------------------------------------");
                 System.out.println("Here is the list of tasks for the day! All the best :) \n");
                 for (int i = 0; i < tasksCount; i += 1) {
-                    System.out.println((i + 1) + "." + "[" + tasks[i].getStatusIcon() + "] " + tasks[i].toString());
+                    System.out.println((i + 1) + "." + "[" + tasks.get(i).getStatusIcon() + "] " + tasks.get(i).toString());
                 }
                 System.out.println("------------------------------------------");
             }
-        } else {
-            throw new IPChatExceptions("Please provide a valid input");
         }
     }
 
@@ -49,7 +47,7 @@ public class IPChat {
         if (tasksCount != 0) {
             try {
                 int taskIndex = Integer.parseInt(statements.substring(statements.length() - 1)) - 1; // changed index to taskIndex
-                tasks[taskIndex].markAsDone();
+                tasks.get(taskIndex).markAsDone();
                 System.out.println("I have marked the task as done");
                 System.out.println("------------------------------------------");
             } catch (NullPointerException e) {
@@ -67,9 +65,9 @@ public class IPChat {
         } else {
             int todoLength = statements.length();
             String todoName = statements.substring(5, todoLength);
-            tasks[tasksCount] = new ToDo(todoName);
+            tasks.add(tasksCount, new ToDo(todoName));
             System.out.println("------------------------------------------");
-            System.out.println("Got it. I've added this task:\n" + tasks[tasksCount].toString() + "\n");
+            System.out.println("Got it. I've added this task:\n" + tasks.get(tasksCount).toString() + "\n");
             tasksCount += 1;
             System.out.println("Now you have " + tasksCount + " tasks in the list.\n");
             System.out.println("------------------------------------------");
@@ -86,9 +84,9 @@ public class IPChat {
             int deadlineLength = statements.length();
             String deadlineName = statements.substring(9, statements.lastIndexOf("/"));
             String by = statements.substring((statements.lastIndexOf("/") + 4), deadlineLength);
-            tasks[tasksCount] = new Deadline(deadlineName, by);
+            tasks.add(tasksCount, new Deadline(deadlineName, by));
             System.out.println("------------------------------------------");
-            System.out.println("Got it. I've added this task:\n" + tasks[tasksCount].toString() + "\n");
+            System.out.println("Got it. I've added this task:\n" + tasks.get(tasksCount).toString() + "\n");
             tasksCount += 1;
             System.out.println("Now you have " + tasksCount + " tasks in the list.\n");
             System.out.println("------------------------------------------");
@@ -106,12 +104,32 @@ public class IPChat {
             String eventName = statements.substring(6, statements.lastIndexOf("/"));
             int index = statements.lastIndexOf("/") + 4;
             String to = statements.substring(index, eventLength);
-            tasks[tasksCount] = new Event(eventName, to);
+            tasks.add(tasksCount, new Event(eventName, to));
             System.out.println("------------------------------------------");
-            System.out.println("Got it. I've added this task:\n" + tasks[tasksCount].toString() + "\n");
+            System.out.println("Got it. I've added this task:\n" + tasks.get(tasksCount).toString() + "\n");
             tasksCount += 1;
             System.out.println("Now you have " + tasksCount + " tasks in the list.\n");
             System.out.println("------------------------------------------");
+        }
+    }
+
+    // Delete a task
+    public static void deleteTasks(String statements) throws IPChatExceptions {
+        if (tasksCount != 0) {
+            try {
+                int finalNum = Integer.parseInt(statements.substring(statements.lastIndexOf(" ") + 1)) - 1;
+                Task removeTask = tasks.get(finalNum);
+                tasks.remove(finalNum);
+                tasksCount--;
+                System.out.println("------------------------------------------");
+                System.out.println("Deleting the following items");
+                System.out.println("  " + removeTask.toString() + "\n" + "\nYou now have " + tasksCount + " tasks left.\n");
+                System.out.println("------------------------------------------");
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Invalid Task number !!");
+            }
+        } else {
+            throw new IPChatExceptions("Please give tasks to delete!");
         }
     }
 
@@ -139,6 +157,9 @@ public class IPChat {
                 break;
             case "event":
                 eventTasks(statements);
+                break;
+            case "delete":
+                deleteTasks(statements);
                 break;
             default:
                 System.out.println("------------------------------------------");
