@@ -1,5 +1,7 @@
 package duke.command;
 
+import java.time.LocalDate;
+
 import duke.common.CommandReply;
 import duke.data.exception.DuplicateTaskException;
 import duke.data.task.Task;
@@ -11,9 +13,9 @@ public class DeadlineCommand extends Command {
             + ": add a deadline task with by time";
 
     private final String content;
-    private final String byTime;
+    private final LocalDate byTime;
 
-    public DeadlineCommand(String content, String byTime) {
+    public DeadlineCommand(String content, LocalDate byTime) {
         this.content = content;
         this.byTime = byTime;
     }
