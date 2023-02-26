@@ -2,7 +2,7 @@ package duke;
 
 public class Parser {
     public enum taskType {
-        TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, HELP, INVALID
+        TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, HELP, INVALID, FIND
     }
 
     public static taskType getTaskType (String getCommand) {
@@ -22,6 +22,8 @@ public class Parser {
             return taskType.DELETE;
         case "help":
             return taskType.HELP;
+        case "find":
+            return taskType.FIND;
         default: return taskType.INVALID;
         }
     }
