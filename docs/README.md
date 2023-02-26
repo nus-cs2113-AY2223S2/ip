@@ -25,9 +25,9 @@ To add a task, type one of the following commands followed by the task descripti
 - deadline: adds a new deadline task
 
 For example:
-todo buy groceries
-event attend meeting /at 2022-03-01 10:00-12:00
-deadline submit report /by 2022-03-05 23:59
+todo borrow book
+event project meeting /from Mon 2pm /to 4pm
+deadline return book /by Sunday
 
 ### Listing Tasks
 To list all the tasks currently in Duke, type the command list.
