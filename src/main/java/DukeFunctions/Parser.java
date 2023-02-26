@@ -26,9 +26,9 @@ public class Parser { //takes in a string input and executes the command within 
                         ui.listEmpty();
 
                     } else {
-                        for (int i = 0; i < tasks.size(); i++) {
-                            System.out.println(i + 1 + ". [" + tasks.get(i).getType() + "]" + "[" + tasks.get(i).getIsDone() + "] " + tasks.get(i).toString());
-                        }
+
+                        ui.listTasks(tasks);
+
                     }
                     break;
                 case "mark":
@@ -87,6 +87,13 @@ public class Parser { //takes in a string input and executes the command within 
                     } else {
                         ui.doesNotExist();
                     }
+                    break;
+                case "find":
+
+                    String keyword = words[1];
+                    tasks.find(ui, keyword);
+
+
                     break;
                 case "clearlist":
                     tasks.clear();

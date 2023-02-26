@@ -77,5 +77,17 @@ public class Ui {
 
     }
 
+    public void listTasks(TaskList tasks) {
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println(i + 1 + ". [" + tasks.get(i).getType() + "]" + "[" + tasks.get(i).getIsDone() + "] " + tasks.get(i).toString());
+        }
+    }
+
+    public void printSearchResults(TaskList searchResults) {
+
+        System.out.println("Here are the matching tasks: ");
+        listTasks(searchResults);
+    }
+
 
 }
