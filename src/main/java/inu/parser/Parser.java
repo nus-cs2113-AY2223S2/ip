@@ -119,10 +119,11 @@ public class Parser {
             String description = userString[INDEX_ENTRY].trim();
             String task = Util.fetchTask(description, Util.DELIMITER_DEADLINE_BY);
             String by = Util.fetchBy(description);
-            ExceptionManager.checkEmptyString(task, by);
             return new DeadlineCommand(task, Util.parseDateTime(by));
-        } catch (IndexOutOfBoundsException| EmptyStringException | InvalidDateTimeFormat e) {
+        } catch (IndexOutOfBoundsException | EmptyStringException e) {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_DEADLINE);
+        } catch (InvalidDateTimeFormat  | InvalidDate i) {
+            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_DEADLINE_DATE);
         }
     }
 
@@ -139,12 +140,11 @@ public class Parser {
             String task = Util.fetchTask(description, Util.DELIMITER_EVENT_FROM);
             String from = Util.fetchFrom(description);
             String to = Util.fetchTo(description);
-            ExceptionManager.checkEmptyString(task, from, to);
-            ExceptionManager.checkValidFromAndToDate(Util.parseDateTime(from), Util.parseDateTime(to));
             return new EventCommand(task, Util.parseDateTime(from), Util.parseDateTime(to));
-        } catch (IndexOutOfBoundsException| EmptyStringException | InvalidDateTimeFormat
-                 | InvalidEventFromAndToDate e) {
+        } catch (IndexOutOfBoundsException | EmptyStringException e) {
             return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_EVENT);
+        } catch (InvalidDateTimeFormat | InvalidDate | InvalidEventFromAndToDate i) {
+            return new InvalidCommand(Messages.MESSAGE_PROMPT_VALID_EVENT_DATE);
         }
     }
 
@@ -159,7 +159,6 @@ public class Parser {
     public static Command runDelete(TaskList taskList) {
         try {
             String description = userString[INDEX_ENTRY].trim();
-            ExceptionManager.checkEmptyString(description);
             int targetIndex = Util.fetchIndexFromString(taskList, description);
             return new DeleteCommand(targetIndex);
         } catch (IndexOutOfBoundsException | EmptyStringException | NumberFormatException e) {
@@ -178,7 +177,6 @@ public class Parser {
     public static Command runMark(TaskList taskList) {
         try {
             String description = userString[INDEX_ENTRY].trim();
-            ExceptionManager.checkEmptyString(description);
             int targetIndex = Util.fetchIndexFromString(taskList, description);
             return new MarkCommand(targetIndex);
         } catch (IndexOutOfBoundsException | EmptyStringException | NumberFormatException e) {
@@ -197,7 +195,6 @@ public class Parser {
     public static Command runUnmark(TaskList taskList) {
         try {
             String description = userString[INDEX_ENTRY].trim();
-            ExceptionManager.checkEmptyString(description);
             int targetIndex = Util.fetchIndexFromString(taskList, description);
             return new UnMarkCommand(targetIndex);
         } catch (IndexOutOfBoundsException | EmptyStringException | NumberFormatException e) {
@@ -210,14 +207,12 @@ public class Parser {
      * If a date is not provided, the method prepares {@code ListDefaultCommand} for execution.
      * This method handles empty user inputs.
      *
-     * @param taskList the task list to containing the tasks to be displayed.
      * @return the {@code ListWithDateCommand} with the user input as the date to query.
      * If there is no date provided, {@code ListDefaultCommand} is returned instead.
      */
     public static Command runListWithDate() {
         try {
             String dateString = userString[INDEX_ENTRY].trim();
-            ExceptionManager.checkEmptyString(dateString);
             LocalDate date = Util.parseDate(dateString);
             return new ListWithDateCommand(date);
         } catch (ArrayIndexOutOfBoundsException | EmptyStringException e) {
@@ -231,7 +226,6 @@ public class Parser {
      * Collects user input as a key word and prepares {@code FindCommand} for execution.
      * This method handles empty user inputs.
      *
-     * @param taskList the task list to containing the tasks to be displayed.
      * @return the {@code FindCommand} with the user input as the key word to query.
      */
     public static Command runFindCommand() {

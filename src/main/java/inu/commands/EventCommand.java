@@ -1,5 +1,8 @@
 package inu.commands;
 
+import inu.exceptionhandling.ExceptionManager;
+import inu.exceptionhandling.InvalidDate;
+import inu.exceptionhandling.InvalidEventFromAndToDate;
 import inu.task.Event;
 import inu.task.TaskList;
 
@@ -25,10 +28,13 @@ public class EventCommand extends Command {
      * @param eventFrom date and time the event begins.
      * @param eventTo date and time the event ends.
      */
-    public EventCommand(String eventDescription, LocalDateTime eventFrom, LocalDateTime eventTo) {
+    public EventCommand(String eventDescription, LocalDateTime eventFrom, LocalDateTime eventTo)
+            throws InvalidDate, InvalidEventFromAndToDate {
         this.eventDescription = eventDescription;
         this.eventFrom = eventFrom;
         this.eventTo = eventTo;
+        ExceptionManager.checkCorrectDate(eventFrom, eventTo);
+        ExceptionManager.checkValidFromAndToDate(eventFrom, eventTo);
     }
 
     public CommandResult execute(TaskList taskList) {

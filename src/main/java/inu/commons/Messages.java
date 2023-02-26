@@ -15,13 +15,11 @@ public class Messages {
     public static final String MESSAGE_INVALID = " Sorry! Please type a valid command! ^.^";
     public static final String MESSAGE_PROMPT_VALID_DEADLINE = " Sorry! Please follow the deadline format!"
             + "\n" + " Format: " + "\n"
-            + " deadline <your deadline> /by <due date and time in DD/MM/YYYY HH:MM (24HR clock)";
+            + " deadline <your deadline> /by <due date and time in DD/MM/YYYY HH:MM> (24HR clock)";
     public static final String MESSAGE_PROMPT_VALID_EVENT = " Sorry! Please follow the event format!"
             + "\n" + " Format: " + "\n"
             + " event <My Task> "
-            + "/from <start date in DD/MM/YYYY HH:MM (24HR clock)> /to <end date in DD/MM/YYYY HH:MM (24HR clock)>"
-            + "\n" + "\n"
-            + "your from date and time must be before the to date and time";
+            + "/from <start date in DD/MM/YYYY HH:MM (24HR clock)> /to <end date in DD/MM/YYYY HH:MM> (24HR clock)";
     public static final String MESSAGE_PROMPT_VALID_TODO = " Sorry! Please follow the todo format!"
             + "\n" + " Format: " + "\n"
             + " todo <your task description>";
@@ -40,9 +38,15 @@ public class Messages {
     public static final String MESSAGE_PROMPT_EMPTY_TASK_LIST = " Woof Woof! Your task list is empty! ^.^";
 
     public static final String MESSAGE_DELETE_TASK = " Woof! I've deleted this task for you:";
-
     public static final String MESSAGE_PROMPT_VALID_DATE = " Sorry! Please provide a valid date and time in "
             + "<DD/MM/YYYY>";
+    public static final String MESSAGE_PROMPT_VALID_DEADLINE_DATE = " Sorry! Please provide a valid date and time in "
+            + "<DD/MM/YYYY HH:mm>" + "\n" + "\n"
+            + " The date provided cannot be in the past!";
+    public static final String MESSAGE_PROMPT_VALID_EVENT_DATE = " Sorry! Please provide a valid date and time in "
+            + "<DD/MM/YYYY HH:mm>" + "\n" + "\n"
+            + " 1. The date provided cannot be in the past!" + "\n"
+            + " 2. The event's starting date cannot be after its ending date!";
     public static final String MESSAGE_LIST_HEADER_WITH_DATE = " Woof! Here are your current tasks occurring on: ";
     public static final String MESSAGE_LIST_HEADER_WITH_KEYWORD = " Woof! Here are your matching tasks with keyword:  ";
     public static final String MESSAGE_PROMPT_VALID_FIND = " Sorry! Please follow the find format!"

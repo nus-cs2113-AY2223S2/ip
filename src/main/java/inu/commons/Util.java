@@ -1,6 +1,7 @@
 package inu.commons;
 
 import inu.exceptionhandling.EmptyStringException;
+import inu.exceptionhandling.ExceptionManager;
 import inu.exceptionhandling.InvalidDateFormat;
 import inu.exceptionhandling.InvalidDateTimeFormat;
 import inu.task.TaskList;
@@ -30,7 +31,9 @@ public class Util {
 
     public static final String DELIMITER_EVENT_TO = " /to ";
 
-    public static int fetchIndexFromString(TaskList taskList, String userString) throws IndexOutOfBoundsException {
+    public static int fetchIndexFromString(TaskList taskList, String userString)
+            throws EmptyStringException, IndexOutOfBoundsException {
+        ExceptionManager.checkEmptyString(userString);
         int actualIndex = Integer.parseInt(userString) - INDEX_OFFSET_IN_COMMAND;
         int taskListSize = taskList.getTaskListSize();
         if (actualIndex < INDEX_BEGIN || actualIndex >= taskListSize) {
@@ -40,32 +43,32 @@ public class Util {
         }
     }
 
-    public static String fetchTask(String userString, String delimiter) {
+    public static String fetchTask(String userString, String delimiter) throws EmptyStringException {
         int indexOfFirstSlash = userString.indexOf(delimiter);
         String task = userString.substring(INDEX_BEGIN, indexOfFirstSlash);
+        ExceptionManager.checkEmptyString(task);
         return task;
     }
 
-    public static String fetchBy(String userString) {
+    public static String fetchBy(String userString) throws EmptyStringException {
         int firstSlashEntry = userString.indexOf(DELIMITER_DEADLINE_BY);
         String by = userString.substring(firstSlashEntry + INDEX_OFFSET_IN_BY_COMMAND);
+        ExceptionManager.checkEmptyString(by);
         return by;
     }
 
     public static String fetchFrom(String userString) throws EmptyStringException {
         int firstSlashEntry = userString.indexOf(DELIMITER_EVENT_FROM);
         int secondSlashEntry = userString.indexOf(DELIMITER_EVENT_TO);
-        if (firstSlashEntry == secondSlashEntry) {
-            throw new EmptyStringException();
-        } else {
-            String from = userString.substring(firstSlashEntry + INDEX_OFFSET_IN_FROM_COMMAND, secondSlashEntry);
-            return from;
-        }
+        String from = userString.substring(firstSlashEntry + INDEX_OFFSET_IN_FROM_COMMAND, secondSlashEntry);
+        ExceptionManager.checkEmptyString(from);
+        return from;
     }
 
-    public static String fetchTo(String userString) {
+    public static String fetchTo(String userString) throws EmptyStringException {
         int secondSlashEntry = userString.indexOf(DELIMITER_EVENT_TO);
         String to = userString.substring(secondSlashEntry + INDEX_OFFSET_IN_TO_COMMAND);
+        ExceptionManager.checkEmptyString(to);
         return to;
     }
 
@@ -75,8 +78,9 @@ public class Util {
      * @param localDate string to be converted to date (format: yyyy-MM-dd)
      * @return LocalDate converted from the given string
      */
-    public static LocalDate parseDate(String localDate) throws InvalidDateFormat {
+    public static LocalDate parseDate(String localDate) throws EmptyStringException, InvalidDateFormat {
         try {
+            ExceptionManager.checkEmptyString(localDate);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             return LocalDate.parse(localDate, formatter);
         } catch (DateTimeParseException ignored) {

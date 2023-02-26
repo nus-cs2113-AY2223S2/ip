@@ -1,5 +1,7 @@
 package inu.commands;
 
+import inu.exceptionhandling.ExceptionManager;
+import inu.exceptionhandling.InvalidDate;
 import inu.task.DeadLine;
 import inu.task.TaskList;
 
@@ -22,9 +24,10 @@ public class DeadlineCommand extends Command {
      * @param deadlineDescription description of the new deadline.
      * @param deadlineBy date and time the deadline is to be completed by.
      */
-    public DeadlineCommand(String deadlineDescription, LocalDateTime deadlineBy) {
+    public DeadlineCommand(String deadlineDescription, LocalDateTime deadlineBy) throws InvalidDate {
         this.deadlineDescription = deadlineDescription;
         this.deadlineBy = deadlineBy;
+        ExceptionManager.checkCorrectDate(deadlineBy);
     }
 
     @Override
