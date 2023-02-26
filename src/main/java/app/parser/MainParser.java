@@ -1,6 +1,5 @@
 package app.parser;
 
-
 import app.commands.Command;
 import app.commands.DeleteCommand;
 import app.commands.ExitCommand;
@@ -10,16 +9,16 @@ import app.commands.UnmarkCommand;
 import app.commands.AddDeadline;
 import app.commands.AddTodo;
 import app.commands.AddEvent;
+import app.commands.FindCommand;
 import app.exceptions.DukeException;
 import app.exceptions.InvalidCommandException;
 
-public class Parser {
+public class MainParser {
 
     public static Command parse(String input) throws DukeException {
         String[] userInputArray = input.split(" ");
         String commandWord = userInputArray[0];
         String commandDescriptor = input.substring(commandWord.length()).trim();
-
         Command c;
 
         switch (commandWord) {
@@ -47,9 +46,13 @@ public class Parser {
         case "unmark":
             c = new UnmarkCommand(commandDescriptor);
             break;
+        case "find":
+            c = new FindCommand(commandDescriptor);
+            break;
         default:
             throw new InvalidCommandException();
         }
         return c;
     }
 }
+
