@@ -33,6 +33,9 @@ public class Task {
     public String getStatusIcon() {
         return (isDone ? "X" : " ");
     }
+    public String saveStatusIcon() {
+        return (isDone ? "X" : "O");
+    }
 
     public String printToFile() {
         return "";

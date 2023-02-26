@@ -8,17 +8,9 @@ import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
+import duke.storage.FileManager;
 
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.File;
-import java.io.FileReader;
-import java.io.BufferedReader;
-import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.Path;
 import java.util.Scanner;
 
 import java.util.ArrayList;
@@ -29,7 +21,7 @@ public class Duke {
 
     public static void main(String[] args) {
 
-        openFile("./data/duke.txt");
+        FileManager.openFile();
         printStartMessage();
 
         String input;
@@ -48,67 +40,13 @@ public class Duke {
             }
         } while (!input.equals(Command.COMMAND_BYE));
 
-        File fileName = new File("./data/duke.txt");
-        writeToFile(fileName);
+
+        FileManager.writeToFile(tasks);
     }
 
-    public static void openFile(String input) {
-        File file = new File(input);
-        readFile(file);
-    }
 
-    public static void readFile(File file) {
-        try {
-            FileReader fr = new FileReader(file);
-            BufferedReader br = new BufferedReader(fr);
-
-            String line;
-            while((line=br.readLine())!=null) {
-                initialiseTaskList(line);
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("You have no pre-existing tasks :)");
-        }  catch (IOException e) {
-            System.out.println("Error reading file :(");
-        }
-    }
-
-    public static void writeToFile(File filePath) {
-        try {
-            PrintWriter pw = new PrintWriter(filePath);
-            writeTaskToFile(pw);
-
-        }  catch (FileNotFoundException e) {
-            File dir = new File("./data");
-            if (!dir.isDirectory()) {
-                System.out.println("Data directory not found. Creating new data directory");
-                Path path = Paths.get("./data");
-                try {
-                    Files.createDirectories(path);
-                } catch (IOException f) {
-                    System.out.println("Failed to create directory");
-                }
-            }
-            if (!filePath.isFile()) {
-                System.out.println("File not found. Creating new text file");
-                Path fileLoc = Paths.get("./data/duke.txt");
-                try {
-                    Files.createFile(fileLoc);
-                } catch (IOException f) {
-                    System.out.println("Failed to create file");
-                }
-            }
-        }
-    }
-
-    public static void writeTaskToFile(PrintWriter pw) {
-        for (int i = 0; i < tasks.size(); ++i) {
-            pw.println(tasks.get(i).printToFile());
-        }
-        pw.close();
-    }
     public static void initialiseTaskList(String line) {
-        String[] task = line.split("\\||-");
+        String[] task = line.split("[|\\-]");
 
         switch(task[0].trim()) {
         case "T":
@@ -157,6 +95,7 @@ public class Duke {
         printDivider();
     }
 
+    //Problem here: somehow accept empty task :(
     public static void processCommand (String input) throws CommandNotRecognisedException, IllegalCharacterException {
         if (input.contains("|") || input.contains("-")) {
             throw new IllegalCharacterException();
@@ -200,7 +139,8 @@ public class Duke {
             break;
         case Command.COMMAND_TODO:
             try {
-                addTodoTask(input.substring(Command.COMMAND_TODO.length()).trim());
+                //addTodoTask(input.substring(Command.COMMAND_TODO.length()).trim());
+                addTodoTask(input.split(" ")[1].trim());
                 printTaskAdded();
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("☹ OOPS!!! The description of 'todo' cannot be empty.");
