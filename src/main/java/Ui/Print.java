@@ -56,10 +56,28 @@ public class Print {
     }
 
     // If the description of the task is empty, it will display this error message
-    public void printEmpty () {
+    public void printTodoEmpty () {
 
         System.out.println(lineBreak
                 + "OOPS!!! The description of a todo cannot be empty.\n"
+                + lineBreak);
+
+    }
+
+    // If the description/date of the deadline is empty, it will display this error message
+    public void printDeadlineEmpty () {
+
+        System.out.println(lineBreak
+                + "OOPS!!! The description/date of a deadline cannot be empty.\n"
+                + lineBreak);
+
+    }
+
+    // If the description/date of the event is empty, it will display this error message
+    public void printEventEmpty () {
+
+        System.out.println(lineBreak
+                + "OOPS!!! The description/dates for the event cannot be empty.\n"
                 + lineBreak);
 
     }

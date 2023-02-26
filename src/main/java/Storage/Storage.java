@@ -91,13 +91,13 @@ public class Storage {
 
             String DeadlineTask = ToSplitDeadline[0].substring(7, ToSplitDeadline[0].length() - 1);
             String date = ToSplitDeadline[1].substring(0, ToSplitDeadline[1].length() - 1);
-            tasks.add(new Deadline(DeadlineTask, date));
+            tasks.add(new Deadline(DeadlineTask, date,5,5));
 
         } else if (taskLetter == 'E') {
             String[] ToSplitEvent = currentLine.split("from:");
             String EventTask = ToSplitEvent[0].substring(7, ToSplitEvent[0].length() - 1);
             String[] date = ToSplitEvent[1].split("to:");
-            tasks.add(new Event(EventTask, date[0], date[1]));
+            tasks.add(new Event(EventTask, date[0], date[1], 3,3,3));
         }
         i += 1;
 

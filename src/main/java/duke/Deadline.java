@@ -6,16 +6,31 @@ package duke;
  */
 
 public class Deadline extends Task {
+
+    protected String by;
+    protected int descExistence;
+    protected int dateExistence;
+
     /**
      * Creates a deadline task.
      * @param description is the task name
      * @param by is the date the task is due by
+     * @param descExistence is the number of arguments for the task description
+     * @param dateExistence is the number of arguments for the date of the event
+     * @throws DukeException Its thrown when the user input is empty
      */
-    protected String by;
 
-    public Deadline(String description, String by) {
+    public Deadline(String description, String by, int descExistence, int dateExistence)
+            throws DukeException {
+
         super(description);
         this.by = by;
+        this.descExistence=descExistence;
+        this.dateExistence=dateExistence;
+
+        if (descExistence<2 || dateExistence<2 ) {
+            throw new DukeException();
+        }
     }
 
     /**

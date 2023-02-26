@@ -100,29 +100,52 @@ public class ProcessLine {
 
             // Checks if the argument is empty
             try {
-                String TodoTask = line.substring(5,line.length());
+                String TodoTask = line.substring(4);
                 tasks.add(new Todo(TodoTask, ToSplitTodo.length));
 
             } catch (DukeException ex) {
                 isEmpty = true;
-                ui.printEmpty();
+                ui.printTodoEmpty();
             }
 
             //sample : deadline return book /by Sunday
+            //error if any field is missing: deadline __missing__ /by __missing__
+
         } else if (line.toLowerCase().contains("deadline")) {
             String[] ToSplitDeadline = line.split("/");
-            String DeadlineTask = ToSplitDeadline[0].substring(9, ToSplitDeadline[0].length() - 1);
-            tasks.add(new Deadline(DeadlineTask, ToSplitDeadline[1].substring(3)));
+            String[] checkDescription=ToSplitDeadline[0].split(" ");
+            String[] checkDate=ToSplitDeadline[1].split(" ");
+
+            try {
+                String DeadlineTask = ToSplitDeadline[0].substring(8);
+                tasks.add(new Deadline(DeadlineTask, ToSplitDeadline[1].substring(2),
+                        checkDescription.length,checkDate.length));
+
+            } catch (DukeException ex) {
+                isEmpty = true;
+                ui.printDeadlineEmpty();
+            }
 
             //sample:event project meeting /from Mon 2pm /to 4pm
+            //error if any field is missing: event __missing__ /from __missing__ /to __missing__
+
         } else if (line.toLowerCase().contains("event")) {
             String[] ToSplitEvent = line.split("/");
-            String EventTask = ToSplitEvent[0].substring(6);
-            tasks.add(new Event(EventTask, ToSplitEvent[1].substring(5),
-                    ToSplitEvent[2].substring(3)));
+            String[] checkDescription=ToSplitEvent[0].split(" ");
+            String[] checkFromDate=ToSplitEvent[1].split(" ");
+            String[] checkToDate=ToSplitEvent[2].split(" ");
 
+            try {
+                String EventTask = ToSplitEvent[0].substring(5);
+                tasks.add(new Event(EventTask, ToSplitEvent[1].substring(4),
+                        ToSplitEvent[2].substring(2),checkDescription.length,
+                        checkFromDate.length,checkToDate.length));
+
+            } catch (DukeException ex) {
+                isEmpty = true;
+                ui.printEventEmpty();
+            }
         }
-
         if (!isEmpty) {
             ui.printTaskAdded(tasks, i);
             i += 1;
