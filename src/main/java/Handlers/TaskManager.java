@@ -56,6 +56,17 @@ public class TaskManager {
         }
     }
 
+    public static void findTask(String description) {
+        ArrayList<Task> list = getTaskList();
+        int existingTaskCount = 1;
+        for (Task item : list) {
+            if (item.describeTask().contains(description)) {
+                System.out.println(existingTaskCount + ". " + item.describeTask());
+                existingTaskCount++;
+            }
+        }
+    }
+
     public static void readTaskFromFile(String line) {
         String[] taskDetails = line.split("\\|");
         String taskType = taskDetails[0].trim();

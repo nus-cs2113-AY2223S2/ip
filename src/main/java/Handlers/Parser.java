@@ -39,6 +39,16 @@ public class Parser {
         return index;
     }
 
+    public static String getTaskDescription(String line) {
+        String description = "";
+        try {
+            description = getSecondWord(line);
+        } catch (TaskManagerException e) {
+            System.out.println("task description for find function cannot be empty.");
+        }
+        return description;
+    }
+
     public static void isTaskNumberValid(int taskNumber) throws InvalidTypeException {
         if (taskNumber < 1 || taskNumber > TaskManager.getTaskCount()) {
             throw new InvalidTypeException();
