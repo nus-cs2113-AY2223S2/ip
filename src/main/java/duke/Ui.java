@@ -87,4 +87,15 @@ public class Ui {
                     + LINE);
         }
     }
+
+    public static void printFindMessage() {
+        System.out.println(LINE + "Here are the matching tasks in your list:\n");
+    }
+    public static void printFoundNothingMessage() {
+        System.out.println("Unable to find any matching task.");
+    }
+
+    public static void printLine() {
+        System.out.println(LINE);
+    }
 }

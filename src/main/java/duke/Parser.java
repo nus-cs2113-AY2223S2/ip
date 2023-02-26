@@ -9,6 +9,7 @@ import duke.task.ToDo;
 import duke.database.Storage;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class Parser {
 
@@ -35,11 +36,11 @@ public class Parser {
     /**
      * Adds the input text and makes the task as a todo type and updates database
      *
-     * @param currTask
+     * @param command
      * @param myList
      */
-    public static void makeToDoFunction(String currTask, TaskList myList) throws EmptyInputException {
-        String[] newTask = currTask.split(" ", 2);
+    public static void makeToDoFunction(String command, TaskList myList) throws EmptyInputException {
+        String[] newTask = command.split(" ", 2);
         if (newTask[1].isBlank()) {
             throw new EmptyInputException();
         }
@@ -52,13 +53,13 @@ public class Parser {
     /**
      * Adds the input text and makes the task as a Deadline type and updates database
      *
-     * @param currTask
+     * @param command
      * @param myList
      */
-    public static void makeDeadlinesFunction(String currTask, TaskList myList)
+    public static void makeDeadlinesFunction(String command, TaskList myList)
             throws EmptyInputException, IllegalInputException {
-        if (currTask.contains("/by")) {
-            String[] newTask = currTask.split(" ", 2);
+        if (command.contains("/by")) {
+            String[] newTask = command.split(" ", 2);
             if (newTask[1].isBlank()) {
                 throw new EmptyInputException();
             }
@@ -78,13 +79,13 @@ public class Parser {
     /**
      * Adds the input text and makes task as an Event type and updates database
      *
-     * @param currTask
+     * @param command
      * @param myList
      */
-    public static void makeEventFunction(String currTask, TaskList myList)
+    public static void makeEventFunction(String command, TaskList myList)
             throws EmptyInputException, IllegalInputException {
-        if (currTask.contains("/from") && currTask.contains("/to")) {
-            String[] newTask = currTask.split(" ", 2);
+        if (command.contains("/from") && command.contains("/to")) {
+            String[] newTask = command.split(" ", 2);
             if (newTask[1].isBlank()) {
                 throw new EmptyInputException();
             }
@@ -151,8 +152,8 @@ public class Parser {
     }
 
     /** Deletes the specific task by index */
-    public static void deleteTask(String currTask, TaskList myList, Storage database) throws IllegalInputException {
-        String[] list = currTask.split(" ");
+    public static void deleteTask(String command, TaskList myList, Storage database) throws IllegalInputException {
+        String[] list = command.split(" ");
         if (isNumeric(list[1]) && list.length == 2) {
             int indexToRemove = Integer.parseInt(list[1]) - 1;
             Ui.printDeletedMessage(myList, indexToRemove);
@@ -181,6 +182,24 @@ public class Parser {
         } catch (IndexOutOfBoundsException e) {
             Ui.printIllegalInputMessage();
         }
+    }
+
+    public static void findTask(String command, TaskList myList) {
+        String[] commandList = command.split(" ");
+        String taskToFind = commandList[1];
+        int numberOfMatchingTasks = 0;
+        Ui.printFindMessage();
+        for (Task task : myList.tasks) {
+            String[] taskDescriptionArray = task.getDescription().split(" ");
+            if (Arrays.asList(taskDescriptionArray).contains(taskToFind)) {
+                numberOfMatchingTasks++;
+                System.out.println(numberOfMatchingTasks + "." + task.toString());
+            }
+        }
+        if (numberOfMatchingTasks == 0) {
+            Ui.printFoundNothingMessage();
+        }
+        Ui.printLine();
     }
 
     /** Checks if given string is a number */

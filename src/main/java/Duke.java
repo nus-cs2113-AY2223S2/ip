@@ -42,6 +42,8 @@ public class Duke {
                 Parser.handleEvent(s, myList);
             } else if (s.toLowerCase().startsWith("delete")) {
                 Parser.handleDeleteTask(s, myList, database);
+            } else if (s.toLowerCase().startsWith("find")) {
+                Parser.findTask(s, myList);
             } else {
                 Ui.printIllegalInputMessage();
             }
@@ -49,6 +51,6 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-            new Duke();
+        new Duke();
     }
 }
