@@ -5,6 +5,12 @@ import java.util.Scanner;
 public class Ui {
 
     private static void printHello() {
+        System.out.println("________         __         __________");
+        System.out.println("\\______ \\  __ __|  | __ ____\\______   \\__ __  ____   ____   ___________ ");
+        System.out.println(" |    |  \\|  |  \\  |/ // __ \\|       _/  |  \\/    \\ /    \\_/ __ \\_  __ \\ ");
+        System.out.println(" |    `   \\  |  /    <\\  ___/|    |   \\  |  /   |  \\   |  \\  ___/|  | \\/ ");
+        System.out.println("/_______  /____/|__|_ \\\\___  >____|_  /____/|___|  /___|  /\\___  >__| ");
+        System.out.println("        \\/           \\/    \\/       \\/           \\/     \\/     \\/ ");
         System.out.println("Hello! I'm DukeRunner\nWhat can I do for you?\n");
     }
 
@@ -17,7 +23,8 @@ public class Ui {
     }
 
     /**
-     * Takes in user inputs, extracts the command and calls the relevant methods in TaskManager
+     * Takes in user inputs, extracts the command and calls the relevant methods in
+     * TaskManager
      */
     public static void takeUserInputs() {
 
@@ -28,7 +35,6 @@ public class Ui {
         printLineBreak();
 
         while (!isComplete) {
-
 
             String line = in.nextLine();
             String firstWord = Parser.getFirstWord(line);
