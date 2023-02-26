@@ -6,6 +6,7 @@ public class Todo extends Task {
 
     /**
      * Returns the symbol for TODO task
+     *
      * @return "T"
      */
     @Override

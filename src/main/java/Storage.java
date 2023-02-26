@@ -9,6 +9,7 @@ import java.nio.file.Path;
 public class Storage {
     /**
      * Updates the list of tasks stored in the text file.
+     *
      * @param storageFilePath The file path of the text file where the list of tasks is stored.
      * @throws IOException when the text file is corrupted.
      */
@@ -44,6 +45,7 @@ public class Storage {
     /**
      * Initializes the program's list with previously saved tasks.
      * Does nothing if the text file is empty.
+     *
      * @param storageFilePath The file path of the text file where the list of tasks is stored.
      * @throws IOException when the text file is corrupted.
      */
@@ -81,6 +83,7 @@ public class Storage {
      * If the folder and/or the text file exists, it will only create what is missing and not overwrite any existing
      * folder/file.
      * It also prints a message stating the location of the text file.
+     *
      * @return storageFilePath The file path where the text file containing the list of tasks is stored.
      */
     static Path loadStorageFolderAndFile() {
