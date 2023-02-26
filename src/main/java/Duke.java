@@ -12,6 +12,5 @@ public class Duke {
         }
         Ui.intro();
         Parser.runDude(true);
-
     }
 }

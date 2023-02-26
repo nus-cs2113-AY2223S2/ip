@@ -1,4 +1,5 @@
 package Interface;
+
 import Exceptions.DukeException;
 import Tasks.Deadline;
 import Tasks.Event;
@@ -7,9 +8,11 @@ import Tasks.Todo;
 
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import static java.util.stream.Collectors.toList;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+
 
 public class TaskList {
     private static ArrayList<Task> tasks = new ArrayList<>();
@@ -43,7 +46,12 @@ public class TaskList {
                 throw new DukeException("OOPS! Use case: event X /from Y /to Z");
             }
             addEvent(arrayOfWords);
-
+            break;
+        case "find":
+            if(arrayOfWords.length != 2) {
+                throw new DukeException("OOPS! Use case: find KEYWORD");
+            }
+            findTask(arrayOfWords[1]);
             break;
         default:
             throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
@@ -117,6 +125,23 @@ public class TaskList {
             Storage.writeToFile();
         } catch(Exception error) {
             throw new DukeException("Use case: delete ITEM_NUMBER");
+        }
+    }
+    public static void findTask(String keyword) throws DukeException {
+        try {
+            keyword = keyword.trim().toLowerCase();
+            String finalKeyword = keyword;
+            ArrayList<Task> filteredList = (ArrayList<Task>) tasks.stream()
+                    .filter(t -> t.getDescription().trim().toLowerCase().contains(finalKeyword))
+                    .collect(toList());
+            System.out.println("Here are the matching tasks in your list: ");
+            int i = 1;
+            for(Task t : filteredList) {
+                System.out.println((i) + ". " + t.fullDescription());
+                i += 1;
+            }
+        } catch(Exception error) {
+            throw new DukeException("Error searching for a match");
         }
     }
 }
