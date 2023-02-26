@@ -3,13 +3,73 @@ package IPChat;
 import ipchatExceptions.IPChatExceptions;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.io.*;
 
 public class IPChat {
     public static ArrayList<Task> tasks = new ArrayList<>();
     public static int tasksCount = 0; // used camelCase
     private static int checkInput = 0;
 
-    // Accepts the input of the user
+    // Saves
+    public static void saveContent(ArrayList<Task> tasks) {
+        String path = "C:\\Users\\deepa\\OneDrive\\Documents\\OneNote\\ip\\SaveInfo.txt";
+        try {
+            FileWriter fw = new FileWriter(path, false);
+            PrintWriter pw = new PrintWriter(fw, false);
+            pw.flush();
+            pw.close();
+            fw.close();
+            for (int i = 0; i < tasksCount; i += 1) {
+                String value = tasks.get(i).saveStuff() + "\n";
+                Files.write(Paths.get(path), value.getBytes(), StandardOpenOption.APPEND);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void loadContent() throws FileNotFoundException, IPChatExceptions {
+        File currFile = new File("C:\\Users\\deepa\\OneDrive\\Documents\\OneNote\\ip\\SaveInfo.txt");
+        Scanner input = new Scanner(currFile);
+        String taskCase;
+        String str;
+        int taskNum = 1;
+
+        while (input.hasNext()) {
+            String info = input.nextLine();
+            String[] arr1 = info.split(" \\| ");
+            String[] arr2 = arr1[0].split(" ");
+            taskCase = arr2[0];
+            str = Integer.toString(taskNum);
+
+            switch (taskCase) {
+            case "deadline":
+                deadlineTasks(arr1[0]);
+                if (arr1[1].equals("1")) {
+                    markDone(str);
+                }
+                break;
+            case "todo":
+                toDoTasks(arr1[0]);
+                if (arr1[1].equals("1")) {
+                    markDone(str);
+                }
+                break;
+            case "event":
+                eventTasks(arr1[0]);
+                if (arr1[1].equals("1")) {
+                    markDone(str);
+                }
+                break;
+            default:
+            }
+            taskNum += 1;
+        }
+        input.close();
+    }
 
     // Says bye to the user and exits the program
     public static void sayBye(String statements) throws IPChatExceptions {
@@ -106,7 +166,7 @@ public class IPChat {
             String to = statements.substring(index, eventLength);
             tasks.add(tasksCount, new Event(eventName, to));
             System.out.println("------------------------------------------");
-            System.out.println("Got it. I've added this task:\n" + tasks.get(tasksCount).toString() + "\n");
+            System.out.println("Got it. I'e added this task:\n" + tasks.get(tasksCount).toString() + "\n");
             tasksCount += 1;
             System.out.println("Now you have " + tasksCount + " tasks in the list.\n");
             System.out.println("------------------------------------------");
@@ -134,7 +194,7 @@ public class IPChat {
     }
 
     // Compilation
-    public static void mySequence() throws IPChatExceptions {
+    public static void mySequence() throws IPChatExceptions, IOException{
         while (checkInput == 0) {
             Scanner input = new Scanner(System.in);
             String statements = input.nextLine();
@@ -148,18 +208,23 @@ public class IPChat {
                 break;
             case "done":
                 markDone(statements);
+                saveContent(tasks);
                 break;
             case "todo":
                 toDoTasks(statements);
+                saveContent(tasks);
                 break;
             case "deadline":
                 deadlineTasks(statements);
+                saveContent(tasks);
                 break;
             case "event":
                 eventTasks(statements);
+                saveContent(tasks);
                 break;
             case "delete":
                 deleteTasks(statements);
+                saveContent(tasks);
                 break;
             default:
                 System.out.println("------------------------------------------");
@@ -168,7 +233,7 @@ public class IPChat {
         }
     }
 
-    public static void main(String[] args) throws IPChatExceptions {
+    public static void main(String[] args) throws IPChatExceptions , IOException{
         System.out.println("Hello I'm IPChat, What can I do for you");
         System.out.println("------------------------------------------");
         mySequence();

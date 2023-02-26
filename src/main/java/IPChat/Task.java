@@ -21,4 +21,11 @@ public class Task {
     public String toString() {
         return description;
     }
+    public String saveStuff() {
+        int save = 0;
+        if (this.isDone) {
+            save = 1;
+        }
+        return "taskType" + save +  " | " +  this.description + "\n";
+    }
 }
