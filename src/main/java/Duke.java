@@ -3,6 +3,12 @@ import Tasks.Deadline;
 import Tasks.Event;
 import Tasks.Task;
 import Tasks.ToDo;
+import java.io.FileNotFoundException;
+import java.io.File;
+import java.io.FileWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -59,10 +65,6 @@ public class Duke {
     final static String PREFIX_EMPTY_LIMIT_LIST_ERROR = "\n\uD83D\uDE20 HELLOO???!!! Your list is either EMPTY or does not contain tasks up to the index you inputted yet,\n"
                                                       + " so you cannot use ";
     final static String SUFFIX_EMPTY_LIMIT_LIST_ERROR = " command yet!! Try filling up the list first!\n";
-
-//    final static String PREFIX_LIST_LIMIT_ERROR = "\n\uD83D\uDE05 SORRY MATE!!! I can only take in up to 100 tasks for now... \uD83D\uDE47 So please only ";
-//    final static String SUFFIX_LIST_LIMIT_ERROR = " up to that amount and not anything more!\n";
-
     final static String FORMAT_CONVERT_ERROR = "\n\uD83D\uDE31 MATE!!! Either you are giving me too big of a number for me to handle or putting words when I am expecting a number.\n"
                                              + "If it is the former I can only count up to 2147483647 for now... Please lower your expectations! \uD83D\uDE29 \n"
                                              + "As for the latter, please give me proper inputs so that I can work things out for you okay? \uD83D\uDE11 \n";
