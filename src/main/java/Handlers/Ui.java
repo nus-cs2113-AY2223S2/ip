@@ -16,6 +16,9 @@ public class Ui {
         System.out.println("==============================\n");
     }
 
+    /**
+     * Takes in user inputs, extracts the command and calls the relevant methods in TaskManager
+     */
     public static void takeUserInputs() {
 
         boolean isComplete = false;

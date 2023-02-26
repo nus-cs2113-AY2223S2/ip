@@ -1,5 +1,6 @@
 package Tasks;
 public class Event extends Task {
+    
     protected String eventFrom;
     protected String eventTo;
 

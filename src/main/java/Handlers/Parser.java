@@ -8,11 +8,26 @@ import Tasks.Event;
 
 public class Parser {
 
+    
+    /** 
+     * Extracts the first word of the user input
+     * 
+     * @param s the user input
+     * @return the first word of the user input
+     */
     public static String getFirstWord(String s) {
         String[] words = s.split(" ");
         return words[0];
     }
 
+    
+    /** 
+     * Extracts the second word of the user input
+     * 
+     * @param s the user input
+     * @return String the second word of the user input
+     * @throws TaskManagerException if the user input does not contain a second word
+     */
     public static String getSecondWord(String s) throws TaskManagerException {
         String[] words = s.split("\\s+");
         if (words.length < 2) {
@@ -23,10 +38,16 @@ public class Parser {
         return sub;
     }
 
+    
+    /** 
+     * Gets the task number from the user input.
+     * 
+     * @param line the user input
+     * @return int the task number
+     */
     public static int getTaskNumber(String line) {
         int index = 0;
         try {
-            // is this the right way to check if the task number is valid?
             index = Integer.parseInt(getSecondWord(line));
             isTaskNumberValid(index);
         } catch (TaskManagerException e) {
@@ -39,6 +60,13 @@ public class Parser {
         return index;
     }
 
+    
+    /** 
+     * Gets the task description or task title from the user input.
+     * 
+     * @param line the user input
+     * @return String the task description or task title
+     */
     public static String getTaskDescription(String line) {
         String description = "";
         try {
@@ -49,12 +77,25 @@ public class Parser {
         return description;
     }
 
+    
+    /** 
+     * Checks if the task number is between 1 and the number of tasks in the task list.
+     * 
+     * @param taskNumber the task number taken from user input
+     * @throws InvalidTypeException if the task number does not meet above conditions
+     */
     public static void isTaskNumberValid(int taskNumber) throws InvalidTypeException {
         if (taskNumber < 1 || taskNumber > TaskManager.getTaskCount()) {
             throw new InvalidTypeException();
         }
     }
 
+    
+    /** 
+     * Gets the todo description from the user input then adds the event to the task list.
+     * 
+     * @param line the user input
+     */
     public static void getTodoDetails(String line) {
         String todoLine = "";
         try {
@@ -68,6 +109,12 @@ public class Parser {
         }
     }
 
+    
+    /** 
+     * Gets the deadline description and deadline date from the user input then adds the event to the task list.
+     * 
+     * @param line the user input
+     */
     public static void getDeadlineDetails(String line) {
         String deadlineLine = "";
         try {
@@ -84,6 +131,12 @@ public class Parser {
         }
     }
 
+    
+    /** 
+     * Gets the event description, event start date and event end date from the user input then adds the event to the task list.
+     * 
+     * @param line the user input
+     */
     public static void getEventDetails(String line) {
         String eventLine = "";
         try {
