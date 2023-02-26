@@ -7,6 +7,7 @@ import Exceptions.DukeError;
 
 import java.util.Scanner;
 
+//javadoc
 public class Duke {
 
     private Ui ui;
