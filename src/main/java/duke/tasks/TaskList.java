@@ -21,6 +21,15 @@ public class TaskList {
     public TaskList(List<Task> tasks) {
         this.tasks = tasks;
     }
+
+    /**
+     * Returns the number of tasks in the task list
+     *
+     * @return the number of tasks in the task list
+     */
+    public int size() {
+        return tasks.size();
+    }
     
     /**
      * Gets the list of tasks.
@@ -28,6 +37,16 @@ public class TaskList {
      */
     public List<Task> getTasks() {
         return this.tasks;
+    }
+
+    /**
+     * Gets a task from the task list by index
+     *
+     * @param index the index of the task
+     * @return the task with index `index`
+     */
+    public Task getTask(int index) {
+        return tasks.get(index);
     }
 
     /**
@@ -49,10 +68,6 @@ public class TaskList {
      * @param taskNum The number corresponding to the task to be deleted.
      */
     public void deleteTask(int deleteIndex) {
-        if (deleteIndex > this.tasks.size() || deleteIndex <= 0) {
-            System.out.println("\tNo such task exists! Please try again");
-            return;
-        }
         Task taskToDelete = this.tasks.get(deleteIndex-1);
         this.tasks.remove(taskToDelete);
 
@@ -78,10 +93,6 @@ public class TaskList {
      * @param taskNum The number corresponding to the task to be marked as completed.
      */
     public void markTask(int taskNum) {
-        if (taskNum > this.tasks.size() || taskNum <= 0) {
-            System.out.println("\tNo such task exists! Please try again");
-            return;
-        }
         Task currentTask = this.tasks.get(taskNum - 1);
         currentTask.markDone();
 
@@ -96,10 +107,6 @@ public class TaskList {
      * @param taskNum The number corresponding to the task to be unmarked.
      */
     public void unmarkTask(int taskNum) {
-        if (taskNum > this.tasks.size() || taskNum <= 0) {
-            System.out.println("\tNo such task exists! Please try again");
-            return;
-        }
         Task currentTask = this.tasks.get(taskNum - 1);
         currentTask.markUndone();
 
