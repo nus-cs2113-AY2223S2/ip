@@ -24,6 +24,7 @@ public class AddTodo extends Command {
     }
 
     /**
+     * Method to execute the AddTodo command.
      * @param tasks Task-list containing the existing tasks.
      * @param ui User interface to print message.
      * @param storage Saving of tasks to memory.

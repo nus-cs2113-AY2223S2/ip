@@ -29,6 +29,7 @@ public class AddDeadline extends Command {
     }
 
     /**
+     * Method to execute the AddDeadline command.
      * @param tasks Task-list containing the existing tasks.
      * @param ui User interface to print message.
      * @param storage Saving of tasks to memory.

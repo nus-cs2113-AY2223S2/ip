@@ -23,6 +23,12 @@ public class DeleteCommand extends Command{
         parseInput(commandDescriptor);
     }
 
+    /**
+     * Method to parse the input of user to get index of task to delete.
+     * @param commandDescriptor User input minus the first word.
+     * @throws DukeException If index is outside the range of the current valid indexes or
+     *                       command is incomplete.
+     */
     private void parseInput(String commandDescriptor) throws DukeException{
         if (commandDescriptor.length() == 0){
             throw new IncompleteCommandException();
@@ -34,6 +40,13 @@ public class DeleteCommand extends Command{
         }
     }
 
+    /**
+     * Method to execute the DeleteCommand command.
+     * @param tasks Task-list containing the existing tasks.
+     * @param ui User interface to print message.
+     * @param storage Saving of tasks to memory.
+     * @throws DukeException
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws DukeException {
         Task deletedTask = tasks.deleteTask(index);

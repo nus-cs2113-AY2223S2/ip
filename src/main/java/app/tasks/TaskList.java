@@ -12,10 +12,18 @@ public class TaskList {
 
     private ArrayList<Task> tasks;
 
+    /**
+     * Constructor to initialise a new Task-list.
+     */
     public TaskList() {
         tasks = new ArrayList<>();
     }
 
+    /**
+     * Constructor to initialise a new Task-list given an existing
+     * ArrayList with Tasks.
+     * @param tasks An ArrayList containing tasks.
+     */
     public TaskList(ArrayList<Task> tasks) {
         setTasks(tasks);
     }
@@ -24,6 +32,10 @@ public class TaskList {
         this.tasks = tasks;
     }
 
+    /**
+     * Getter to obtain all the existing Tasks.
+     * @return An ArrayList containing all the existing Tasks.
+     */
     public ArrayList<Task> getTasks() {
         return this.tasks;
     }
@@ -93,6 +105,13 @@ public class TaskList {
         return unmarkedTask;
     }
 
+    /**
+     * Method to get all the Tasks in the existing Task-list that contain a
+     * user-specified keyword in their Task description.
+     * @param tasks The Task-list containing all the Tasks from the most recent iteration of Duke.
+     * @param keyword The user-specified keyword used for filtering.
+     * @return An ArrayList containing all the Tasks whose task description contains the keyword.
+     */
     public ArrayList<Task> getTasksWithKeyword(TaskList tasks, String keyword) {
         ArrayList<Task> tasksWithKeyword = new ArrayList<>();
         for (Task t : tasks.getTasks()) {

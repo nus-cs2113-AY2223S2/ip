@@ -10,6 +10,7 @@ import app.tasks.ToDo;
  * Used to convert existing tasks in task-list to text for storage in text file.
  */
 public class TaskParser {
+
     /**
      * Method used to convert a particular task into a string with the correct format.
      * @param task The Task to be represented as a string.
@@ -19,7 +20,7 @@ public class TaskParser {
     public static String convertTaskToString(Task task) throws DukeException {
         String outputString;
         String delimiter = " | ";
-        String taskStatus = task.isDone() ? "1" : "0";
+        String taskStatus = (task.getStatusIcon() == "X" ? "1" : "0");
         String taskDescription = task.getTaskDescription();
 
         if (task instanceof ToDo) {

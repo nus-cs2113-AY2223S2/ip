@@ -8,9 +8,20 @@ import app.tasks.Event;
 import app.tasks.Task;
 import app.tasks.ToDo;
 
+/**
+ * Class to handle the parsing of commands to add a new Task to Task-list.
+ */
 public class AddTaskParser {
     private static Task newTask;
 
+    /**
+     * Method to deconstruct the user command to add any type of new Task and
+     * make it into the relevant Task type with its relevant attributes.
+     * @param commandWord The type of task to be added (first word in user input).
+     * @param commandDescriptor Details about the rest of the task (user input without the first word).
+     * @return A Task of the correct type with information about its relevant attributes.
+     * @throws DukeException If user input is in the incorrect format.
+     */
     public static Task parseCommand(String commandWord, String commandDescriptor) throws DukeException {
         if (commandDescriptor.length() == 0) {
             throw new IncompleteCommandException(commandWord);

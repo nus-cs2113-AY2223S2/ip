@@ -18,18 +18,34 @@ public abstract class Task {
         setDone(isDone);
     }
 
+    /**
+     * Setter to set the description of a Task.
+     * @param taskDescription The description of the Task.
+     */
     public void setTaskDescription(String taskDescription) {
         this.taskDescription = taskDescription;
     }
 
+    /**
+     * Getter to obtain the description of a Task.
+     * @return The description of the Task.
+     */
     public String getTaskDescription() {
         return taskDescription;
     }
 
+    /**
+     * Getter to obtain the completion status of a Task.
+     * @return A boolean value indicating if the Task is done or not.
+     */
     public boolean isDone() {
         return this.isDone;
     }
 
+    /**
+     * Setter to set the completion status of a Task.
+     * @param isDone A boolean value indicating if the Task is done or not.
+     */
     public void setDone(boolean isDone) {
         this.isDone = isDone;
     }
@@ -42,6 +58,10 @@ public abstract class Task {
         return (isDone() ? "X" : " "); //Marks a task done with an X
     }
 
+    /**
+     * Method to print a Task in string format.
+     * @return A string representation of a Task.
+     */
     public String toString() {
         return null;
     }

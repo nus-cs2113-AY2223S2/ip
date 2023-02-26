@@ -23,7 +23,7 @@ public class Event extends Task {
 
     /**
      * Getter to obtain starting time of an event.
-     * @return Starting time of the Event
+     * @return Starting time of the Event.
      */
     public String getStartTime() {
         return startTime;

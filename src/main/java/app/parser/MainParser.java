@@ -20,8 +20,8 @@ import app.exceptions.InvalidCommandException;
 public class MainParser {
 
     /**
-     * Method used to enter various cases and assign
-     * command type based on user input.
+     * Method first splits the user input into command word and rest of input.
+     * Then returns a command based on the command word and respective case entered.
      *
      * @param input The entire user input.
      * @return The type of command that the user input.
@@ -31,40 +31,40 @@ public class MainParser {
         String[] userInputArray = input.split(" ");
         String commandWord = userInputArray[0];
         String commandDescriptor = input.substring(commandWord.length()).trim();
-        Command c;
+        Command command;
 
         switch (commandWord) {
         case "bye":
-            c = new ExitCommand();
+            command = new ExitCommand();
             break;
         case "list":
-            c = new ListCommand();
+            command = new ListCommand();
             break;
         case "delete":
-            c = new DeleteCommand(commandDescriptor);
+            command = new DeleteCommand(commandDescriptor);
             break;
         case "todo":
-            c = new AddTodo(commandWord, commandDescriptor);
+            command = new AddTodo(commandWord, commandDescriptor);
             break;
         case "deadline":
-            c = new AddDeadline(commandWord, commandDescriptor);
+            command = new AddDeadline(commandWord, commandDescriptor);
             break;
         case "event":
-            c = new AddEvent(commandWord, commandDescriptor);
+            command = new AddEvent(commandWord, commandDescriptor);
             break;
         case "mark":
-            c = new MarkCommand(commandDescriptor);
+            command = new MarkCommand(commandDescriptor);
             break;
         case "unmark":
-            c = new UnmarkCommand(commandDescriptor);
+            command = new UnmarkCommand(commandDescriptor);
             break;
         case "find":
-            c = new FindCommand(commandDescriptor);
+            command = new FindCommand(commandDescriptor);
             break;
         default:
             throw new InvalidCommandException();
         }
-        return c;
+        return command;
     }
 }
 

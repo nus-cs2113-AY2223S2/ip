@@ -19,14 +19,19 @@ import java.util.Scanner;
 public class Storage {
     private File taskFile;
 
+    /**
+     * Constructor to initiate a new instance of Storage with the specified file path.
+     * @param filePath The path address for storage to memory.
+     */
     public Storage(String filePath) {
         this.taskFile = new File(filePath);
     }
 
     /**
-     * Method used to load tasks from memory and add them to a Task-list, if there are any.
+     * Method used to load tasks from memory and add them to a Task-list.
+     * Creates a new empty Task-list if there isn't an existing one.
      * @return An ArrayList containing all the Tasks currently in memory.
-     * @throws DukeException If text file containing Tasks does not exist.
+     * @throws DukeException If text file containing Tasks does not exist when it should.
      */
     public ArrayList<Task> load() throws DukeException {
         try {
@@ -47,21 +52,21 @@ public class Storage {
     }
 
     /**
-     * Method used to write tasks from the current iteration of Duke into a text file
+     * Method used to write Tasks from the current iteration of Duke into a text file
      * with the specified directory. Creates a folder and file if it doesn't yet exist.
-     * @param tasks The Task-list containing all the tasks from the most recent iteration of Duke.
-     * @throws DukeException If there was an error in writing tasks to the text file.
+     * @param tasks The Task-list containing all the Tasks from the most recent iteration of Duke.
+     * @throws DukeException If there was an error in writing Tasks to the text file.
      */
     public void write(TaskList tasks) throws DukeException {
         File folder = new File("data");
         File file = new File("data/tasks.txt");
-        FileWriter fw;
+
         try {
             if (!folder.exists() || !file.exists()){
                 folder.mkdir();
                 file.createNewFile();
             }
-            fw = new FileWriter(taskFile);
+            FileWriter fw = new FileWriter(taskFile);
             for (Task task : tasks.getTasks()) {
                 if (task == null) break;
                 fw.write(TaskParser.convertTaskToString(task));

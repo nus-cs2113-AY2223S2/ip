@@ -11,16 +11,16 @@ import java.util.Scanner;
  * Class to handle all interactions with the user.
  */
 public class Ui {
-    public static Scanner sc = new Scanner(System.in);
+    public static Scanner scanner = new Scanner(System.in);
 
     /**
-     * Method to take in the input from a user.
+     * Method to read in the input from a user.
      * @return The input from the user.
      */
     public String readCommand() {
         String command = "";
         while (command.length() == 0) {
-            command = sc.nextLine();
+            command = scanner.nextLine();
         }
         return command;
     }
@@ -35,7 +35,7 @@ public class Ui {
     }
 
     /**
-     * Method to print divider.
+     * Method to print the divider.
      */
     public void showLine() {
         Constants.printLine();
@@ -82,9 +82,12 @@ public class Ui {
         if (tasks.getTasksCount() == 0){
             System.out.println("There are no tasks in your task list.");
         }
-        for (int i = 0; i < tasks.getTasksCount(); i++) {
-            String taskDescription = tasks.getTask(i).toString();
-            System.out.println((i + 1) + ". " + taskDescription);
+        else {
+            System.out.println("Here are the tasks in your list:");
+            for (int i = 0; i < tasks.getTasksCount(); i++) {
+                String taskDescription = tasks.getTask(i).toString();
+                System.out.println((i + 1) + ". " + taskDescription);
+            }
         }
     }
 
@@ -116,6 +119,10 @@ public class Ui {
                 unmarkedTask.toString());
     }
 
+    /**
+     * Method to print all the Tasks in the Task-list that contain a specific keyword.
+     * @param tasksWithKeyword The filtered Task-list that contains Tasks with the keyword.
+     */
     public void printTasksWithKeyword(ArrayList<Task> tasksWithKeyword) {
         if (tasksWithKeyword.size() == 0){
             System.out.println("There are no tasks containing that keyword.");

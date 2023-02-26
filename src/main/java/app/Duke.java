@@ -7,6 +7,10 @@ import app.tasks.TaskList;
 import app.ui.Ui;
 import app.save.Storage;
 
+/**
+ * The main Duke program.
+ * @author Mustafa Anis Hussain
+ */
 public class Duke {
 
     private Storage storage;
@@ -14,8 +18,8 @@ public class Duke {
     private Ui ui;
 
     /**
-     * Constructor for Duke
-     * @param filePath The address for storage to memory.
+     * Constructor for Duke that accesses memory to check for previously added Tasks.
+     * @param filePath The path address for storage to memory.
      */
     public Duke (String filePath) {
         ui = new Ui();
@@ -30,7 +34,7 @@ public class Duke {
 
     /**
      * Method to initialise Duke, and execute commands based on user
-     * input until exit condition is met.
+     * input until the exit condition is met.
      */
     public void run() {
         ui.showWelcome();

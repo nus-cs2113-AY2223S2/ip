@@ -1,7 +1,7 @@
 package app.tasks;
 
 /**
- * Class used to represent a Deadline
+ * Class used to represent a Deadline.
  */
 public class Deadline extends Task{
     protected String deadline;

@@ -23,6 +23,12 @@ public class UnmarkCommand extends Command {
         parseInput(commandDescriptor);
     }
 
+    /**
+     * Method to parse the user input and get the index of the task to be unmarked.
+     * @param commandDescriptor User input minus the first word.
+     * @throws DukeException If index is outside the range of the current valid indexes or
+     *                       command is incomplete.
+     */
     private void parseInput(String commandDescriptor) throws DukeException {
         if (commandDescriptor.length() == 0) {
             throw new IncompleteCommandException();
@@ -35,6 +41,7 @@ public class UnmarkCommand extends Command {
     }
 
     /**
+     * Method to execute the UnmarkCommand command.
      * @param tasks Task-list containing the existing tasks.
      * @param ui User interface to print relevant information.
      * @param storage Saving of tasks to memory.
