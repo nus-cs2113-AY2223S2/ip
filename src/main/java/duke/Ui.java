@@ -20,9 +20,9 @@ public class Ui {
      */
     public static void printTaskMessage(TaskList tasks) {
         System.out.println(LINE
-                + "Got it. I've added this duke.task:\n"
+                + "Got it. I've added this task:\n"
                 + tasks.getTask(tasks.getTaskListSize() - 1) + "\n"
-                + "Now you have " + tasks.getTaskListSize() + " in the list.\n"
+                + "Now you have " + tasks.getTaskListSize() + " task(s) in the list.\n"
                 + LINE);
     }
 
@@ -109,20 +109,20 @@ public class Ui {
         if (command.equals("mark")) {
             tasks.getTask(indexToChange).setDone();
             System.out.println(LINE
-                    + "Nice! I've marked this duke.task as done:\n"
+                    + "Nice! I've marked this task as done:\n"
                     + tasks.getTask(indexToChange) + "\n"
                     + LINE);
         } else {
             tasks.getTask(indexToChange).setUndone();
             System.out.println(LINE
-                    + "OK, I've marked this duke.task as not done yet:\n"
+                    + "OK, I've marked this task as not done yet:\n"
                     + tasks.getTask(indexToChange) + "\n"
                     + LINE);
         }
     }
 
     public static void printFindMessage() {
-        System.out.println(LINE + "Here are the matching tasks in your list:\n");
+        System.out.println(LINE + "Here are the matching task(s) in your list:\n");
     }
     public static void printFoundNothingMessage() {
         System.out.println("Unable to find any matching task.");
