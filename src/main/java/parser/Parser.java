@@ -8,6 +8,10 @@ import task.Event;
 import task.Task;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Represents a Parser class that is used to process all the input from the User into the appropriate
+ * classes {@link Command} or {@link Task}
+ */
 public class Parser {
     private boolean isExecuting;
 
@@ -19,7 +23,15 @@ public class Parser {
         return this.isExecuting;
     }
 
-    public static Task processSavedInput (String input) throws IncompleteInputException {
+    /**
+     * Process the input line String that is in the duke.txt file into a {@link Task}
+     * This handler function will be called by {@link storage.TaskStorage#loadTasks}
+     * @param input The input line that is stored in the txt file on the local machine
+     * @return The appropriate {@link Task} complete with its description and state (marked or unmarked)
+     * @throws IncompleteInputException If user specifies incomplete input tied to the command type. For example, "todo" input should always be accompanied by a description string.
+     * @throws DateTimeParseException If the Time specified for {@link Deadline} and {@link Event} does not follow the YYYY-MM-DD HH:mm format
+     */
+    public static Task processSavedInput (String input) throws IncompleteInputException, DateTimeParseException {
         String taskType = "", commandInfo = "";
         switch (input.charAt(1)) {
             case 'T' :
@@ -43,7 +55,15 @@ public class Parser {
         return taskToAdd;
     }
 
-
+    /**
+     * Handler function that wraps the taskType and commandInfo into its respective class {@link Task}, {@link Deadline}, or {@link Event}.
+     * This handler function will be called by method {@link #parse} and {@link #processSavedInput}
+     * @param taskType  The type of the task to be added, which can only be "todo","deadline", or "event".
+     * @param commandInfo The description string for {@link Task}, {@link Deadline}, or {@link Event}
+     * @return The corresponding {@link Task} depending on the taskType.
+     * @throws IncompleteInputException If user specifies incomplete input tied to the command type. For example, "todo" input should always be accompanied by a description string.
+     * @throws DateTimeParseException If the Time specified for {@link Deadline} and {@link Event} does not follow the YYYY-MM-DD HH:mm format
+     */
     public static Task handleAddTask(String taskType, String commandInfo) throws IncompleteInputException, DateTimeParseException {
         Task newTask = null;
         if (taskType.equals(Input.TODO.input)) {
@@ -65,16 +85,24 @@ public class Parser {
             }
             //infoArr contains descStr, fromStr, and toStr respectively
             newTask = new Event(infoArr[0].trim(), infoArr[1].trim(), infoArr[2].trim());
-
         }
         return newTask;
     }
 
-    public Command handleEditTask(String command, String idxToEdit) {
-        if (command.equals(Input.MARK.input)) {
+    /**
+     * Handler function that converts the commandType and index to edit into {@link MarkCommand}, {@link UnmarkCommand}, or {@link RemoveCommand}.
+     * This handler function will be called by method {@link #parse} whenever the command type is either "mark","unmark" or "delete"
+     *
+     * @param commandType The command type specified by the user ("mark","unmark","delete").
+     * @param idxToEdit The 0-based index of the task that the user wishes to mark, unmark or delete.
+     * @return The appropriate {@link Command} depending on the commandType.
+     * @throws NumberFormatException If the idxToEdit cannot be parsed into an Integer.
+     */
+    public Command handleEditTask(String commandType, String idxToEdit) throws NumberFormatException {
+        if (commandType.equals(Input.MARK.input)) {
             int indexToMark = Integer.parseInt(idxToEdit) - 1; //turn it into 0-based
             return new MarkCommand(indexToMark);
-        } else if (command.equals(Input.UNMARK.input)) {
+        } else if (commandType.equals(Input.UNMARK.input)) {
             int indexToUnmark = Integer.parseInt(idxToEdit) - 1;
             return new UnmarkCommand(indexToUnmark);
         } else {
@@ -83,7 +111,17 @@ public class Parser {
         }
     }
 
-    public Command parse (String inputLine) throws IncompleteInputException, InvalidInputException ,NumberFormatException {
+    /**
+     * Parses user input into respective {@link Command} depending on the command type and description.
+     *
+     * @param inputLine The complete user input from the CLI.
+     * @return The appropriate {@link Command} that is associated with the inputLine.
+     * @throws IncompleteInputException If user specifies incomplete input tied to the command type. For example, "todo" input should always be accompanied by a description string.
+     * @throws InvalidInputException If user types in input other than "list","bye","mark","unmark", "find","todo","deadline","event".
+     * @throws NumberFormatException If the input following "mark","unmark","delete" cannot be parsed into an Integer.
+     * @throws DateTimeParseException If the Time specified for {@link Deadline} and {@link Event} does not follow the YYYY-MM-DD HH:mm format
+     */
+    public Command parse (String inputLine) throws IncompleteInputException, InvalidInputException ,NumberFormatException, DateTimeParseException {
         //splits input based on one or more whitespaces into two words
         String[] inputWords = inputLine.split("\\s+", 2);
         String command = inputWords[0];

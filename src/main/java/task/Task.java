@@ -1,5 +1,8 @@
 package task;
 
+/**
+ * Represents a class to hold the basic information about the Task such as the {@link #description}.
+ */
 public class Task {
     protected String description;
     protected boolean isDone;
