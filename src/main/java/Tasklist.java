@@ -1,6 +1,6 @@
 public class Tasklist {
     //class level attributes
-    public static Tasklist[] taskArray = new Tasklist[100];
+    private static Tasklist[] taskArray = new Tasklist[100];
     public static int lastIndex = 0;
     public static String DASH = "__________________________________";
 
@@ -28,7 +28,7 @@ public class Tasklist {
         UserInterface.markMessage(taskIndex);
     }
 
-    public static Tasklist get(int index){
+    public static Tasklist get(int index) {
         return taskArray[index];
     }
 
