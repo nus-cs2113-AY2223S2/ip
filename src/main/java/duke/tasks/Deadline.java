@@ -1,15 +1,21 @@
 package duke.tasks;
-public class Deadline extends Task {
-    protected String by;
 
-    public Deadline(String description, String by) {
+import java.time.LocalDateTime;
+
+import duke.parser.DateTimeParser;
+
+public class Deadline extends Task {
+    protected LocalDateTime by;
+
+    public Deadline(String description, LocalDateTime by) {
         super(description);
         this.by = by;
     }
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by + ")";
+        return "[D]" + super.toString() 
+                + " (by: " + by.format(DateTimeParser.getFormatter()) + ")";
     }
 
     @Override

@@ -1,9 +1,14 @@
 package duke.tasks;
-public class Event extends Task {
-    protected String from;
-    protected String to;
 
-    public Event(String description, String from, String to) {
+import java.time.LocalDateTime;
+
+import duke.parser.DateTimeParser;
+
+public class Event extends Task {
+    protected LocalDateTime from;
+    protected LocalDateTime to;
+
+    public Event(String description, LocalDateTime from, LocalDateTime to) {
         super(description);
         this.from = from;
         this.to = to;
@@ -11,7 +16,9 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + from + " to: " + to + ")";
+        return "[E]" + super.toString() 
+                + " (from: " + from.format(DateTimeParser.getFormatter()) 
+                + " to: " + to.format(DateTimeParser.getFormatter()) + ")";
     }
 
     @Override
