@@ -1,21 +1,17 @@
-import Tasks.TaskList;
-import UI.Conversation;
-import UI.FileAccess;
-
+import Interface.Parser;
+import Interface.Ui;
+import Interface.Storage;
 import java.io.IOException;
 
 public class Duke {
-    //run duke 1
     public static void main(String[] args) {
         try {
-            FileAccess.initFile();
+            Storage.initFile();
         } catch(IOException e) {
-            System.out.println("Error in accessing save file");
+            System.out.println("Error while trying to access save file");
         }
-
-        Conversation.intro();
-        boolean isContinue = true;
-        TaskList.runDuke(isContinue);
+        Ui.intro();
+        Parser.runDude(true);
 
     }
 }

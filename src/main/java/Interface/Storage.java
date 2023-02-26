@@ -1,33 +1,39 @@
-package UI;
+package Interface;
 
-import Tasks.*;
-
+import Tasks.Task;
+import Tasks.Todo;
+import Tasks.Event;
+import Tasks.Deadline;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-public class FileAccess {
-    private static String filePath = "data" ; //location of file to be read
-    private static String file = "data/duke.txt";
+
+public class Storage {
+    private static String FilePath = "data" ; //location of file to be read
+    private static String File = "data/duke.txt";
     public static void initFile() throws IOException {
-        File dir = new File(filePath);
+        File dir = new File(FilePath);
         if(!dir.exists()) {
             dir.mkdir();
+            Ui.makeDirectory();
         }
-        File f = new File(file);
+        File f = new File(File);
         if(!f.exists()) {
             f.createNewFile();
+            Ui.makeFile();
         }
         try {
             readFromFile();
+            Ui.loadFile();
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
     public static void readFromFile() throws IOException {
         ArrayList<Task> tasks = TaskList.getTasks();
-        File f = new File(file);
+        File f = new File(File);
         Scanner s = new Scanner(f);
         while(s.hasNext()) {
             String text = s.nextLine();
@@ -62,14 +68,14 @@ public class FileAccess {
                 tasks.add(newEvent);
                 break;
             default:
-                System.out.println("Failed to copy save file");
+                System.out.println("Failed to read from save file");
             }
         }
     }
     public static void writeToFile() {
         ArrayList<Task> tasks = TaskList.getTasks();
         try {
-            FileWriter fw = new FileWriter(file);
+            FileWriter fw = new FileWriter(File);
             for(int i = 0; i < tasks.size(); i += 1) {
                 Task currentTask = tasks.get(i);
                 String taskType = currentTask.getType();
@@ -84,12 +90,12 @@ public class FileAccess {
                     Event task = (Event) currentTask;
                     fw.write(taskType + ":" + isDone + ":" + description + ":" + task.getFrom() + ":" + task.getTo() + System.lineSeparator());
                 } else {
-                    System.out.println("Corrupted task detected");
+                    System.out.println("Corrupted task detected, unable to write to save file");
                 }
             }
             fw.close();
         } catch (IOException e) {
-            System.out.println("Error writing to file");
+            System.out.println("Error writing to save file");
         }
 
     }
