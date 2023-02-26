@@ -4,13 +4,20 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * converts tasks between the entry format (to be saved in the text file) and Object format (to be added to taskArray)
+ */
 public class Storage {
     private static File file;
 
     public Storage(){
         file =new File("C:\\Users\\leong\\Desktop\\Comp_eng\\Y2S2\\CS2113\\Duke\\ip\\src\\data.txt");
     }
-    //format of file = number.type.done.name.from.to
+
+    /**
+     * example of format for event entries in the file : taskNumber.taskType.taskIsDone.taskName.from.to
+     * @throws FileNotFoundException
+     */
     public static void loadFileContentsToTaskArray() throws FileNotFoundException {
         Scanner scanner = new Scanner(file); // create a Scanner using the File as the source
         while (scanner.hasNext()) {
@@ -43,12 +50,18 @@ public class Storage {
             e.printStackTrace();
         }
     }
+
+    /**
+     * this function converts the tasks in the taskArray into entry format (Eg:taskNumber.taskType.taskIsDone.taskName)
+     * and writes it to the text file
+     */
     public static void save(){
         try{
-            if(Tasklist.lastIndex>0){     //possible to use continue here instead?
+            if(Tasklist.lastIndex>0){
                 FileWriter fileWriter = new FileWriter(file);
                 for(int index=0;index<Tasklist.lastIndex;index++){
-                    fileWriter.append((Tasklist.get(index)).createEntry());
+                    Tasklist task = Tasklist.get(index);
+                    fileWriter.append(task.createEntry());
                 }
                 fileWriter.close();
             }
