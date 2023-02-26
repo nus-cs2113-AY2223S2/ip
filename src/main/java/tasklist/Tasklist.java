@@ -1,6 +1,7 @@
 package tasklist;
 import exceptions.InvalidAddTaskException;
 import exceptions.InvalidCommandException;
+import exceptions.InvalidFindTaskException;
 import exceptions.TaskListOutofBoundsException;
 import tasks.Deadline;
 import tasks.Event;
@@ -8,6 +9,8 @@ import tasks.Task;
 import tasks.Todo;
 import userInterface.Print;
 import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /*
  * Handles all the tasks methods
@@ -50,7 +53,7 @@ public class Tasklist {
                 containsTo = true;
             }
         }
-        String[] eventDetails = userInputArray[1].split("/from | /to");
+        String[] eventDetails = userInputArray[1].split("/from | /to ");
         if (eventDetails.length == 3){
             containsDescriptionAndDates = true;
         }
@@ -76,7 +79,7 @@ public class Tasklist {
                 byExists = true;
             }
         }
-        String[] datelineDetails = userInputArray[1].split("/by");
+        String[] datelineDetails = userInputArray[1].split(" /by");
         if (datelineDetails.length == 2){
             descriptionAndDatesExists = true;           
         }
@@ -102,6 +105,12 @@ public class Tasklist {
         Print.printTaskDescription(eventDescription);
     } 
 
+    public static LocalDate convertStringToDate(String deadlineDate){
+        DateTimeFormatter dateFormatter= DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(deadlineDate, dateFormatter);
+        return date;
+    }
+    
     /*
      * Splits the user's input into the separate Deadline parameters
      * Adds deadline into taskslist 
@@ -113,9 +122,9 @@ public class Tasklist {
         if (!isDatelineValid(userInputArray)){
             throw new InvalidAddTaskException();
         }
-        String[] deadlineDetails = userInputArray[1].split(" /by",2);
+        String[] deadlineDetails = userInputArray[1].split(" /by ",2);
         String deadlineDescription = deadlineDetails[0];
-        String deadlineDate = deadlineDetails[1];
+        LocalDate deadlineDate = convertStringToDate(deadlineDetails[1]);
         tasksList.add(new Deadline(deadlineDescription, deadlineDate));
         Print.printTaskDescription(deadlineDescription);
     }
@@ -210,4 +219,20 @@ public class Tasklist {
         }
         return markIndex;
     }
+
+    public static void findTask(String[] userInputArray)throws InvalidFindTaskException{
+        if (userInputArray.length == 1){
+            throw new InvalidFindTaskException();
+        }
+        String taskName = userInputArray[1];
+        Print.printMatchingTasks();
+        for (int i = 0; i < tasksList.size(); i++){
+            Task currentTask = tasksList.get(i);
+            if (currentTask.description.contains(taskName)){
+                System.out.println("\t" + currentTask.getStatusIcon() + currentTask.printTask());
+            }
+        }
+        Print.printLine();
+    }
+
 }
