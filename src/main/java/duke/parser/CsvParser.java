@@ -1,5 +1,7 @@
 package duke.parser;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.UnknownFormatConversionException;
 
 import duke.command.TodoCommand;
@@ -70,9 +72,12 @@ public class CsvParser {
             boolean isMarked = (Integer.parseInt(args[1]) == 1);
             String content = args[2];
             String byTime = args[3];
-            return new Deadline(content, byTime, isMarked);
+            LocalDate byDate = LocalDate.parse(byTime);
+            return new Deadline(content, byDate, isMarked);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Format conversion failed.");
+            throw new IllegalArgumentException("Number format conversion failed.");
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Date time format conversion failed.");
         }
     }
 
@@ -83,7 +88,9 @@ public class CsvParser {
             String content = args[2];
             String fromTime = args[3];
             String toTime = args[4];
-            return new Event(content, fromTime, toTime, isMarked);
+            LocalDate fromDate = LocalDate.parse(fromTime);
+            LocalDate toDate = LocalDate.parse(toTime);
+            return new Event(content, fromDate, toDate, isMarked);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Format conversion failed.");
         }

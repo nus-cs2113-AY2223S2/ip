@@ -1,5 +1,11 @@
 package duke.parser;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.List;
+
 import duke.command.Command;
 import duke.command.DeadlineCommand;
 import duke.command.DeleteCommand;
@@ -10,9 +16,6 @@ import duke.command.ListCommand;
 import duke.command.MarkCommand;
 import duke.command.TodoCommand;
 import duke.command.UnmarkCommand;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class CommandParser {
     private static final String OOPS = "☹ OOPS!!! ";
@@ -94,7 +97,12 @@ public class CommandParser {
         String content = contentSb.toString().trim();
         String by = bySb.toString().trim();
 
-        return new DeadlineCommand(content, by);
+        try {
+            LocalDate byDate = LocalDate.parse(by, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            return new DeadlineCommand(content, byDate);
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Invalid date time. Format: dd/mm/yyyy");
+        }
     }
 
     private Command parseEvent(String[] args) throws IllegalArgumentException{
@@ -135,7 +143,14 @@ public class CommandParser {
         String from = fromSb.toString().trim();
         String to = toSb.toString().trim();
 
-        return new EventCommand(content, from, to);
+        try {
+            LocalDate fromDate = LocalDate.parse(from, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            LocalDate toDate = LocalDate.parse(to, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            return new EventCommand(content, fromDate, toDate);
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Invalid date time. Format: dd/mm/yyyy");
+        }
+
     }
 
     private Command parseMark(String[] args) throws IllegalArgumentException {
