@@ -3,6 +3,7 @@ package Tasks;
 public class Event extends Task {
 
     protected String startTime;
+    
     protected String endTime;
 
     public Event(String taskName, String startTime, String endTime){

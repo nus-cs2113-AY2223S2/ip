@@ -21,33 +21,33 @@ public class RolexException {
         } else if(userInput.startsWith("bye")){
             return;
         } else{
-            System.out.println("OOPS!! I cannot understand the input! ☹ ");
+            System.out.println("OOPS!! I cannot understand the input!☹ ");
         }
         Ui.printLines();
     }
 
     public static void runTodoError(){
-        System.out.println("OOPS!! The description of todo cannot be empty! ☹");
+        System.out.println("OOPS!! The description of todo cannot be empty!☹");
     }
 
     public static void runEventError(){
-        System.out.println("OOPS!! The description of event cannot be empty! ☹");
+        System.out.println("OOPS!! The description of event cannot be empty!☹");
     }
 
     public static void runDeadlineError(){
-        System.out.println("OOPS!! The description of deadline cannot be empty! ☹");
+        System.out.println("OOPS!! The description of deadline cannot be empty!☹");
     }
 
     public static void runMarkError(){
-        System.out.println("OOPS!! I don't know what to mark! ☹");
+        System.out.println("OOPS!! I don't know what to mark!☹");
     }
 
     public static void runUnmarkError(){
-        System.out.println("OOPS!! I don't know what to unmark! ☹");
+        System.out.println("OOPS!! I don't know what to unmark!☹");
     }
 
     public static void runListError(){
-        System.out.println("OOPS!! There are no tasks for me to list! ☹");
+        System.out.println("OOPS!! There are no tasks for me to list!☹");
     }
 
 }

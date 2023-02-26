@@ -8,7 +8,9 @@ import java.util.ArrayList;
 public class Task {
 
     protected String taskSign;
+
     protected String taskName;
+
     protected boolean isDone;
 
     public void markTask(){

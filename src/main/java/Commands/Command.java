@@ -2,11 +2,11 @@ package Commands;
 
 import Ui.Ui;
 import Parser.Parser;
-import Exception.RolexException;
 import Tasks.Deadline;
 import Tasks.Event;
 import Tasks.Task;
 import Tasks.Todo;
+import Exception.RolexException;
 import java.util.ArrayList;
 
 public class Command {
@@ -85,7 +85,8 @@ public class Command {
             RolexException.detectError(userInput);
         } else {
             String deadlineName = Parser.taskName(userInput, 9, indexOfBy - 1);
-            String by = Parser.taskName(userInput, indexOfBy + 3);
+            String by = Parser.taskName(userInput, indexOfBy + 4);
+            by = Parser.deadlineDate(by);
             Task.addPrintTask(new Deadline(deadlineName, by), task);
         }
     }
