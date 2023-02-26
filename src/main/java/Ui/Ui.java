@@ -31,5 +31,4 @@ public class Ui {
         System.out.println("Invalid index. Please enter valid index number!");
         printLines();
     }
-
 }
