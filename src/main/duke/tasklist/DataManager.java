@@ -95,7 +95,7 @@ public class DataManager {
                 find.handleDelete(parser.getNum());
                 break;
             case "date":
-                LocalDate date = parser.processDate(next);
+                LocalDate date = parser.processDate(next.trim());
                 LinkedHashSet<Integer> list = dates.findDate(date);
                 tasks.printFromList(list);
                 break;
