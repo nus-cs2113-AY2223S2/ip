@@ -1,12 +1,13 @@
 # User Guide
-___
 
+<pre>
 ██████╗░██╗░░░██╗██╗░░██╗███████╗
 ██╔══██╗██║░░░██║██║░██╔╝██╔════╝
 ██║░░██║██║░░░██║█████═╝░█████╗░░
 ██║░░██║██║░░░██║██╔═██╗░██╔══╝░░
 ██████╔╝╚██████╔╝██║░╚██╗███████╗
 ╚═════╝░░╚═════╝░╚═╝░░╚═╝╚══════╝
+</pre>
 
 Duke is a Command Line Interface (CLI) based application for keeping track of your tasks
 ___
@@ -37,13 +38,15 @@ ___
 3. Copy the file to the folder you want to use as the home folder for your Duke.
 4. Open a command terminal, cd into the folder you put the jar file in, and use the java -jar duke.jar command to run the application.
 5. Type the command in the command box and press Enter to execute it.
-    <br>Some example commands you can try:
+    <br/>Some example commands you can try:
     - `list`: Lists all tasks.
     - `todo read book`: Adds a Todo task named `read book` to the Task List.
     - `delete 1`: Deletes the 1st task in the current list.
     - `bye`: Exits the app.
 6. Refer to the [Features](#features) below for details of each command
+
 ___
+
 <!-- Feature List -->
 ## Features 
 
@@ -51,7 +54,7 @@ ___
 _3 types of tasks suppoted - Todo, Event and Deadline:_
 
 ### 1. Todo: `todo`
-Adds a todo task to the task list.<p>
+Adds a todo task to the task list.<br/>
 Format: `todo TASK_NAME`
 - `TASK_NAME` accepts a String of multiple words
 - `TASK_NAME` is compulsory
@@ -63,7 +66,7 @@ todo read
 ```
 
 ### 2. Event: `event`
-Adds an event task to the task list.<p>
+Adds an event task to the task list.<br/>
 Format: `event TASK_NAME /by BY_DATE`
 - `TASK_NAME` accepts a String of multiple words and is **compulsory**.
 - `/by` is **compulsory**.
@@ -81,7 +84,7 @@ deadline BTO /by 2025-08-01 1200
 ```
 
 ### 3. Deadline: `deadline`
-Adds a deadline task to the task list.<p>
+Adds a deadline task to the task list. <br/>
 Format: `deadline TASK_NAME /from FROM_DATE /to TO_DATE`
 - `TASK_NAME` accepts a String of multiple words and is **compulsory**.
 - `FROM_DATE` and `TO_DATE` accepts a string in the format of YYYY-MM-DD HHmm.
@@ -100,13 +103,13 @@ event Valorant Comp /from 2025-04-01 0800 /to 2025-04-10 1600
 <br/>
 
 ### List all tasks: `list`
-Shows a list of all tasks in the task list.<p>
+Shows a list of all tasks in the task list.<br/>
 Format: `list`
 
 <br/>
 
 ### Mark a task: `mark`
-Marks a specific task as done.<p>
+Marks a specific task as done.<br/>
 Format: `mark TASK_NUMBER`
 - `TASK_NUMBER` accepts positive integer from 1 to N (the number of tasks in the list)
 - The task number refers to the index number shown in the displayed `list`
@@ -117,7 +120,7 @@ Examples:
 <br/>
 
 ### Unmark a task: `unmark`
-Unmarks a specific task as not done.<p>
+Unmarks a specific task as not done.<br/>
 Format: `unmark TASK_NUMBER`
 - `TASK_NUMBER` accepts positive integer from 1 to N (the number of tasks in the list)
 - The task number refers to the index number shown in the displayed `list`
@@ -129,7 +132,7 @@ Examples:
 <br/>
 
 ### Delete a task: `delete`
-Deletes a specific task in the task list.<p>
+Deletes a specific task in the task list.<br/>
 Format: `delete TASK_NUMBER`
 - `TASK_NUMBER` accepts positive integer from 1 to N (the number of tasks in the list)
 - The task number refers to the index number shown in the displayed `list`
@@ -141,7 +144,7 @@ Examples:
 <br/>
 
 ### Find a task: `find`
-Searches the task list for all tasks containing the entered keyword.<p>
+Searches the task list for all tasks containing the entered keyword.<br/>
 Format: `find KEYWORD`
 - `KEYWORD` accepts a snlge `String` or multiple `Strings`
 - `KEYWORD` is not case-sensitive
@@ -158,23 +161,23 @@ find event
 <br/>
 
 ### Exit the program: `bye`
-Exits the program.<p>
+Exits the program.<br/>
 Format: `bye`
 
 <br/>
 
 ### Saving the data
-Duke data are saved in the hard disk automatically after exiting the program. <p>
+Duke data are saved in the hard disk automatically after exiting the program. <br/>
 There is no need to save manually.
 
 <br/>
 
 ### Editing the data file
 Duke data are saved as a .txt file in `[JAR file location]
-/data/duke.txt`. <p>
+/data/duke.txt`. <br/>
 Edits must be made according to the formatting of the data.
 
-</br>
+<br/>
 
 ___
 <!-- FAQs -->
