@@ -56,13 +56,34 @@ public class TaskParser {
     }
 
     /**
+     * Find a task based on the keyword specified.
+     *
+     * @param ui The Ui instance. Use to display messages to users.
+     * @param keyword The keyword specified by the user.
+     */
+    public void findTask(TextUi ui, String keyword) {
+        if (listOfTasks.isEmpty()){
+            ui.printMessage(Messages.MESSAGE_COMMAND_FIND_EMPTY_LIST);
+        } else {
+            ui.printMessage(Messages.MESSAGE_COMMAND_FIND_MATCH);
+            Task task;
+            for (int i = 0; i < listOfTasks.size(); i++) {
+                task = listOfTasks.get(i);
+                if(task.toString().contains(keyword)){
+                    System.out.println(i + 1 + "." + task);
+                }
+
+            }
+        }
+    }
+    /**
      * Mark the specified task as done.
      *
      * @param ui The Ui instance. Use to display messages to users.
      * @param storage The storage instance. Use to write data into the text file.
      * @param taskNumberInList The task number to be marked as done.
      */
-    public static void markTask(TextUi ui, Storage storage, int taskNumberInList) {
+    public void markTask(TextUi ui, Storage storage, int taskNumberInList) {
         Task task = listOfTasks.get(taskNumberInList);
         task.markAsDone();
         try {
@@ -81,7 +102,7 @@ public class TaskParser {
      * @param storage The storage instance. Use to write data into the text file.
      * @param taskNumberInList The task number to be unmarked.
      */
-    public static void unmarkTask(TextUi ui, Storage storage, int taskNumberInList) {
+    public void unmarkTask(TextUi ui, Storage storage, int taskNumberInList) {
         Task task = listOfTasks.get(taskNumberInList);
         task.markAsUndone();
         try {
@@ -100,7 +121,7 @@ public class TaskParser {
      * @param storage The storage instance. Use to write data into the text file.
      * @param taskNumberInList The task number to be removed from the list.
      */
-    public static void deleteAndPrintTask(TextUi ui, Storage storage, int taskNumberInList) {
+    public void deleteAndPrintTask(TextUi ui, Storage storage, int taskNumberInList) {
         Task task = listOfTasks.get(taskNumberInList);
         listOfTasks.remove(taskNumberInList);
         try {
@@ -120,7 +141,7 @@ public class TaskParser {
      * @param ui The Ui instance. Use to display messages to users.
      * @param storage The storage instance. Use to write data into the text file.
      */
-    public static void addAndPrintTask(Task task, TextUi ui, Storage storage) {
+    public void addAndPrintTask(Task task, TextUi ui, Storage storage) {
         listOfTasks.add(task);
         ui.printMessage(Messages.MESSAGE_COMMAND_ADD_TASK);
         System.out.println(task);
@@ -137,11 +158,11 @@ public class TaskParser {
      *
      * @param ui The Ui instance. Use to display messages to users.
      */
-    public static void listTasks(TextUi ui) {
+    public void listTasks(TextUi ui) {
         if (listOfTasks.isEmpty()){
             ui.printMessage(Messages.MESSAGE_COMMAND_LIST_EMPTY);
         } else {
-            ui.printMessage(Messages.MESSAGE_COMMAND_LIST_NOT_EMPTY);
+            ui.printMessage(Messages.MESSAGE_COMMAND_LIST_TASKS);
             Task task;
             for (int i = 0; i < listOfTasks.size(); i++) {
                 task = listOfTasks.get(i);
