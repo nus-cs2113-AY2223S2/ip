@@ -104,6 +104,10 @@ public class Duke {
                     ui.line();
                 }
                 break;
+            case "find":
+                userInputDetails = Parser.getUserInputDetails();
+                List.findInList(userInputDetails.trim());
+                break;
             case "bye":
                 break;
             default:
