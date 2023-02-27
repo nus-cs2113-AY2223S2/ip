@@ -1,5 +1,15 @@
 # User Guide
 
+## Quick Start
+
+Steps:
+
+1. Check that you have `Java 11` installed on your computer. Type `java --version` in the command prompt to see your
+   Java version.
+2. Download the ip.jar file and store it inside a new empty folder in your computer.
+3. Using the command prompt, change directory to the empty folder you have just created.
+4. To launch Duke, type the command `java -jar ip.jar` into the command prompt
+
 ## Features
 
 ### Support 3 different types of Task
@@ -68,7 +78,7 @@ Format:
 deadline [DESCRIPTION] /by [DEADLINE]
 ```
 
-**" /by " format has to be followed or the program would not recognise the input**
+**Note: " /by " format has to be followed or the program would not recognise the input**
 
 Example of usage:
 
@@ -105,7 +115,7 @@ Format:
 event [DESCRIPTION] /from [BEGIN] /to [END] 
 ```
 
-**" /from " and " /to " must be exactly in the above order or the program would not recognise the input**
+**Note: " /from " and " /to " must be exactly in the above order or the program would not recognise the input**
 
 Example of usage:
 
