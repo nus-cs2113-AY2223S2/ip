@@ -1,3 +1,5 @@
+package duke.task;
+
 public class Dateline extends Tasks {
     String dueDate;
     public Dateline(String item, boolean isMarked, String dueDate) {

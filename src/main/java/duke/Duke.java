@@ -1,3 +1,12 @@
+package duke;
+
+import duke.command.CommandManager;
+import duke.command.FolderNotFoundException;
+import duke.command.NoKeyException;
+import duke.task.Dateline;
+import duke.task.Event;
+import duke.task.Tasks;
+import duke.task.Todo;
 
 import java.io.File;
 import java.io.FileNotFoundException;
