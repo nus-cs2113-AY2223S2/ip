@@ -10,9 +10,6 @@ import task.Event;
 import task.Task;
 import task.ToDo;
 
-
-import java.util.Scanner;
-
 import java.util.ArrayList;
 
 public class Duke {

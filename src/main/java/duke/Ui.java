@@ -16,7 +16,7 @@ public class Ui {
 
         return input;
     }
-    public static void printDivider () {
+    public static void printDivider() {
         System.out.println("____________________________________________________________");
     }
 

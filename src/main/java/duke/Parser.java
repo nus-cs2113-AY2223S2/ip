@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class Parser {
 
-    public static void processCommand (String input, ArrayList<Task> tasks) throws CommandNotRecognisedException, IllegalCharacterException {
+    public static void processCommand(String input, ArrayList<Task> tasks) throws CommandNotRecognisedException, IllegalCharacterException {
         if (input.contains("|") || input.contains("-")) {
             throw new IllegalCharacterException();
         }
@@ -95,7 +95,7 @@ public class Parser {
         Ui.printDivider();
     }
 
-    public static void processCommandUnmark(String input, ArrayList<Task> tasks) {
+    private static void processCommandUnmark(String input, ArrayList<Task> tasks) {
         try {
             Duke.markTaskUndone(Integer.parseInt(input.split(" ")[1].trim())-1);
             tasks.get(Integer.parseInt(input.split(" ")[1].trim())-1).printUnmarkMessage();
@@ -109,7 +109,7 @@ public class Parser {
         Ui.printDivider();
     }
 
-    public static void processCommandMark(String input, ArrayList<Task> tasks) {
+    private static void processCommandMark(String input, ArrayList<Task> tasks) {
         try {
             Duke.markTaskDone(Integer.parseInt(input.split(" ")[1]) - 1);
             tasks.get(Integer.parseInt(input.split(" ")[1].trim())-1).printUnmarkMessage();
