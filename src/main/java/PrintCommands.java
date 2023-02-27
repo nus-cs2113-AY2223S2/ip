@@ -2,22 +2,14 @@ import Tasks.Task;
 
 public class PrintCommands {
 
-    public static void printWelcomeMessage() {
-        String logo = "\t ____   _              __    __ \n"
-                + "\t/  __\\ | |     _____  |   \\/   |\n"
-                + "\t| /    | |    /  _  \\ | |\\  /| |\n"
-                + "\t| \\ __ | |___ | |_| | | | \\/ | |\n"
-                + "\t\\____/ |____/ \\_____/ |_|    |_|\n";
-
-        System.out.println("\tHello from\n" + logo);
-
-        System.out.println("\tHello! I'm CLoM!\n");
-        System.out.print("\tWhat can I do for you?\n");
-        PrintCommands.printLine();
+    public static void printLine() {
+        System.out.println("\t==========================================");
     }
 
-    protected static void printLine() {
-        System.out.println("\t==========================================");
+    public static void printOutOfBoundsMessage() {
+        printLine();
+        System.out.println("\tIndex out of range, the list not so long");
+        printLine();
     }
 
     public static void printExitMessage() {
@@ -29,7 +21,7 @@ public class PrintCommands {
     public static void printList(Task t[], int counter) {
         printLine();
         System.out.println("\tHere are the tasks in your list:");
-        for (int i = 0; i < counter; i++) { // 0-base
+        for (int i = 0; i < counter; i++) {
             System.out.println("\t" + (i + 1) + "." + t[i].getDescription());
         }
         printLine();
@@ -37,9 +29,9 @@ public class PrintCommands {
 
     public static void printNumberOfTasks(int counter) {
         if (counter == 1) {
-            System.out.println("\tYou have a total of " + counter + " task in the list");
+            System.out.println("Now you have " + counter + " task in the list");
         } else {
-            System.out.println("\tYou have a total of " + counter + " tasks in the list");
+            System.out.println("\tNow you have " + counter + " tasks in the list");
         }
     }
 
@@ -67,9 +59,24 @@ public class PrintCommands {
         printLine();
     }
 
+    public static void printWelcomeMessage() {
+        String logo = "\t ____   _              __    __ \n"
+                + "\t/  __\\ | |     _____  |   \\/   |\n"
+                + "\t| /    | |    /  _  \\ | |\\  /| |\n"
+                + "\t| \\ __ | |___ | |_| | | | \\/ | |\n"
+                + "\t\\____/ |____/ \\_____/ |_|    |_|\n";
+
+        System.out.println("\tHello from\n" + logo);
+
+        System.out.println("\tHello! I'm CLoM!\n");
+        System.out.print("\tWhat can I do for you?\n");
+        PrintCommands.printLine();
+    }
+
     public static void printHelp() {
         printLine();
-            System.out.println("Will Implement Soon!");
+        System.out.println("To Implement Feature Soon");
         printLine();
     }
+
 }
