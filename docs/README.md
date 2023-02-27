@@ -64,8 +64,8 @@ Format: `todo TASK_NAME`
 
 Examples:
 ```js
-todo Complete CS2113 Ip Level
-todo Read
+todo complete CS2113 ip level
+todo read
 ```
 
 ### 2. Event: `event`
@@ -82,8 +82,8 @@ Format: `event TASK_NAME /by BY_DATE`
 
 Examples:
 ```js
-deadline CS2113 Homework /by 2023-06-26 2359
-deadline Apply Bto /by 2025-08-01 1200
+deadline CS2113 homework /by 2023-06-26 2359
+deadline apply BTO /by 2025-08-01 1200
 ```
 
 
@@ -100,8 +100,8 @@ Format: `deadline TASK_NAME /from FROM_DATE /to TO_DATE`
 
 Examples:
 ```js
-event Nus OpenDay /from 2023-07-01 1000 /to 2023-07-01 1600
-event Valorant Comp /from 2025-04-01 0800 /to 2025-04-10 1600
+event NUS open day /from 2023-07-01 1000 /to 2023-07-01 1600
+event valorant comp /from 2025-04-01 0800 /to 2025-04-10 1600
 ```
 
 <br/>
@@ -158,7 +158,7 @@ Format: `find KEYWORD`
 Examples:
 ```js
 find Book
-find Event
+find event
 ```
 
 
