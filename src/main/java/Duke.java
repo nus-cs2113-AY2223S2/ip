@@ -8,18 +8,15 @@ public class Duke {
     }
     
     public static void welcomeMessage() {
-        System.out.println("Hello! I'm Duke!\nWhat can I do for you?");
+        System.out.println(StrIntLib.welcomeText);
     }
     public static void byeMessage() {
-        System.out.println("See ya!");
+        System.out.println(StrIntLib.byeText);
     }
     public static void list(ArrayList<Task> tasksList) {
-        System.out.println("Here are the tasks in your list:");
+        System.out.println(StrIntLib.listText);
         int ID = 1;
         for (Task item : tasksList) {
-            if (item == null) {
-                break;
-            }
             System.out.println(ID + "." + printIconStatus(item));
             ID += 1;
         }
@@ -27,10 +24,10 @@ public class Duke {
 
     public static void uncheckDoneStatus(String[] stringsList, ArrayList<Task> taskList) {
         if (Integer.parseInt(stringsList[1]) > taskList.size()){
-            System.out.println("Item not found!");
+            System.out.println(StrIntLib.noItemText);
         } else {
             taskList.get(Integer.parseInt(stringsList[1]) - 1).markAsNotDone();
-            System.out.println("OK, I've marked this task as not done yet:");
+            System.out.println(StrIntLib.unmarkText);
             Task item = taskList.get(Integer.parseInt(stringsList[1]) - 1
             );
             System.out.println(printIconStatus(item));
@@ -39,10 +36,10 @@ public class Duke {
 
     public static void checkDoneStatus(String[] stringsList, ArrayList<Task> taskList) {
         if (Integer.parseInt(stringsList[1]) > taskList.size()){
-            System.out.println("Item not found!");
+            System.out.println(StrIntLib.noItemText);
         } else {
             taskList.get(Integer.parseInt(stringsList[1]) - 1).markAsDone();
-            System.out.println("Nice! I've marked this task as done:");
+            System.out.println(StrIntLib.markText);
             Task item = taskList.get(Integer.parseInt(stringsList[1]) - 1);
             System.out.println(printIconStatus(item));
         }
@@ -59,43 +56,43 @@ public class Duke {
     }
     private static ArrayList<Task> addDeadline(ArrayList<Task> taskList, String[] parts) {
         String content = parts[0];
-        String dueDate = parts[1].replace("by ", "by: ").trim();
+        String dueDate = parts[1].replace(StrIntLib.by, StrIntLib.byReplacement).trim();
         Deadlines newDeadline = new Deadlines(content, dueDate);
         ArrayList<Task> newTaskList = addTask(taskList, newDeadline);
-        System.out.println("Got it. I've added this task");
+        System.out.println(StrIntLib.addTaskText);
         System.out.println(printIconStatus(newDeadline));
-        System.out.println("Now you have " + newTaskList.size() + " taskList in the list.");
+        System.out.println(StrIntLib.taskCount1 + newTaskList.size() + StrIntLib.taskCount2);
         return newTaskList;
     }
 
     private static ArrayList<Task> addEvent(ArrayList<Task> taskList, String[] parts) {
         String content = parts[0];
-        String start = parts[1].replace("from ", "from: ").trim();
-        String end = parts[2].replace("to ", "to: ").trim();
+        String start = parts[1].replace(StrIntLib.from, StrIntLib.fromReplacement).trim();
+        String end = parts[2].replace(StrIntLib.to, StrIntLib.toReplacement).trim();
         Events newEvent = new Events(content, start, end);
         ArrayList<Task> newTaskList = addTask(taskList, newEvent);
-        System.out.println("Got it. I've added this task");
+        System.out.println(StrIntLib.addTaskText);
         System.out.println(printIconStatus(newEvent));
-        System.out.println("Now you have " + newTaskList.size() + " taskList in the list.");
+        System.out.println(StrIntLib.taskCount1 + newTaskList.size() + StrIntLib.taskCount2);
         return newTaskList;
     }
     private static ArrayList<Task> addToDo(ArrayList<Task> taskList, String[] inputs) {
         ToDos newToDo = new ToDos(inputs[1]);
         ArrayList<Task> newTaskList = addTask(taskList, newToDo);
-        System.out.println("Got it. I've added this task");
+        System.out.println(StrIntLib.addTaskText);
         System.out.println(printIconStatus(newToDo));
-        System.out.println("Now you have " + newTaskList.size() + " tasks in the list.");
+        System.out.println(StrIntLib.taskCount1 + newTaskList.size() + StrIntLib.taskCount2);
         return newTaskList;
     }
 
     private static ArrayList<Task> addTask(ArrayList<Task> taskList, String[] parts) {
         Task newTask = new Task(parts[0]);
         ArrayList<Task> newTaskList = addTask(taskList, newTask);
-        System.out.println("Task added!");
+        System.out.println(StrIntLib.taskAddedDebug);
         return newTaskList;
     }
     private static void invalidCommand() {
-        System.out.println("I beg your pardon?");
+        System.out.println(StrIntLib.invalidCmdText);
     }
 
     public static void main(String[] args) {
@@ -109,18 +106,33 @@ public class Duke {
             String command = inputs[0];
             String[] partsList = (inputs.length > 1) ? inputs[1].split("/") : null;
             switch (command) {
-            case "bye" -> {
+            case StrIntLib.cmdBye:
                 byeMessage();
                 return;
-            }
-            case "list" -> list(taskList);
-            case "mark" -> checkDoneStatus(inputs, taskList);
-            case "unmark" -> uncheckDoneStatus(inputs, taskList);
-            case "add" -> taskList = addTask(taskList, partsList);
-            case "todo" -> taskList = addToDo(taskList, inputs);
-            case "event" -> taskList = addEvent(taskList, partsList);
-            case "deadline" -> taskList = addDeadline(taskList, partsList);
-            default -> invalidCommand();
+            case StrIntLib.cmdList:
+                list(taskList);
+                break;
+            case StrIntLib.cmdMark:
+                checkDoneStatus(inputs, taskList);
+                break;
+            case StrIntLib.cmdUnmark:
+                uncheckDoneStatus(inputs, taskList);
+                break;
+            case StrIntLib.cmdAdd:
+                taskList = addTask(taskList, partsList);
+                break;
+            case StrIntLib.cmdToDo:
+                taskList = addToDo(taskList, inputs);
+                break;
+            case StrIntLib.cmdEvent:
+                taskList = addEvent(taskList, partsList);
+                break;
+            case StrIntLib.cmdDeadline:
+                taskList = addDeadline(taskList, partsList);
+                break;
+            default:
+                invalidCommand();
+                break;
             }
         }
     }
