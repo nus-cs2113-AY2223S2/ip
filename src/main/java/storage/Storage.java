@@ -1,14 +1,19 @@
 package storage;
 
+import common.Messages;
+import exceptions.CreateDirectoryException;
 import task.Deadline;
 import task.Event;
 import task.Task;
+import task.TaskParser;
 import task.Todo;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -17,13 +22,21 @@ public class Storage {
     private static final String FILENAME = "tasklist.txt";
     private static final String FILEPATH = FILE_DIRECTORY + "/" + FILENAME;
 
+    private Path dataDirectory;
+
+    public Storage(Path dataDirectory){
+        this.dataDirectory = dataDirectory;
+    }
     /**
      * Create a directory in the root project structure named "data" if directory is not found.
      */
-    public void createDirectory() {
-        File directoryName = new File(FILE_DIRECTORY);
-        if (!directoryName.exists()) {
-            directoryName.mkdir();
+    public void createDirectory() throws CreateDirectoryException {
+        try {
+            if (Files.notExists(dataDirectory)) {
+                Files.createDirectories(dataDirectory);
+            }
+        } catch (IOException e) {
+                throw new CreateDirectoryException(String.format(Messages.ERROR_CREATE_DIRECTORY, dataDirectory));
         }
     }
 
@@ -40,12 +53,12 @@ public class Storage {
     }
 
     /**
-     * @param listOfTasks An arraylist storing the list of tasks the user created.
      * @throws FileNotFoundException If file is not found, throw an exception. But file will be created if not found.
      */
-    public void readAndLoadFromFile(ArrayList<Task> listOfTasks) throws FileNotFoundException {
+    public TaskParser readAndLoadFromFile() throws FileNotFoundException {
         File file = new File(FILEPATH);
         Scanner in = new Scanner(file);
+        ArrayList<Task> listOfTasks = new ArrayList<>();
         Task task;
 
         while (in.hasNext()) {
@@ -77,5 +90,6 @@ public class Storage {
             }
 
         }
+        return new TaskParser(listOfTasks);
     }
 }

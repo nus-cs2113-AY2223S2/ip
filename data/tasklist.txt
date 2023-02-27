@@ -1,5 +1,10 @@
-D|1| return book | June 6th
-E|0| project meeting |from: Aug 6th to: 2pm
-T|1| playgame
-D|0| finish game | april
+T|0| playgame
 E|1| intern |from: May to: Aug
+T|1| abc
+E|0| |from: june to: july
+E|0| |from: asdlkfj;a
+E|0| |from: to:
+E|0| |from:
+T|0|  
+T|0| 
+T|0| play game
