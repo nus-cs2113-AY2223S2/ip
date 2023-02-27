@@ -33,25 +33,50 @@ public class TaskList {
         tasks.get(unmarkIndex).markAsNotDone();
     }
 
+    /**
+     * @param taskIndex Index of Task in Array List to retrieve
+     * @return Task that is retrieved
+     */
     public Task getTask(int taskIndex) {
         return tasks.get(taskIndex);
     }
 
+    /**
+     * Retrieve a Task that is located in the Task list
+     * @return ArrayList of Tasks
+     */
     public ArrayList<Task> getTaskList() {
         return tasks;
     }
 
+    /**
+     * Deletes a Task that is located in the Task list
+     *
+     * @param deleteIndex Index of Task in Array List to delete from
+     */
     public void deleteTask(int deleteIndex) {
         tasks.get(deleteIndex).remove();
         tasks.remove(deleteIndex);
     }
 
+    /**
+     * Creates a Todo based on what the user typed and save it into the ArrayList
+     *
+     * @param words original string that the user typed in
+     * @return Todo data type
+     */
     public Todo createTodo(String[] words) {
         Todo td = new Todo(words[1]);
         tasks.add(td);
         return td;
     }
 
+    /**
+     * Creates a Deadline based on what the user typed and save it into the ArrayList
+     *
+     * @param words original string that the user typed in
+     * @return Deadline data type
+     */
     public Deadline createDeadline(String[] words) {
 
         String line;
@@ -63,6 +88,12 @@ public class TaskList {
 
     }
 
+    /**
+     * Creates an Event based on what the user typed and save it into the ArrayList
+     *
+     * @param words original string that the user typed in
+     * @return Event data type
+     */
     public Event createEvent(String[] words) {
 
         String line;
@@ -77,6 +108,9 @@ public class TaskList {
         return e;
     }
 
+    /**
+     *  Print the current Task list
+     */
     public void printList() {
         int listIndex = 0;
         for (Task t : tasks) {
