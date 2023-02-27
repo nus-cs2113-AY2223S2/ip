@@ -104,6 +104,10 @@ public class Duke {
                     ui.line();
                 }
                 break;
+            case "find":
+                userInputParameter = Parser.getUserInputDetails();
+                TaskList.findInList(userInputParameter.trim());
+                break;
             case "bye":
                 break;
             default:
