@@ -15,11 +15,9 @@ public class Duke {
         while (isRunning) {
             Scanner command = new Scanner(System.in);
             String input_Command = command.nextLine();
-            // e.g. "todo borrow book"
 
             String[] first_Word_Array;
             first_Word_Array = input_Command.split(" ", 2);
-            // first_Word_Array[0,1] is now ["todo", "borrow book"]
             String first_Word = first_Word_Array[0];
             String[] tokens;
 
@@ -27,7 +25,7 @@ public class Duke {
 
             case "todo":
                 try {
-                    if (first_Word_Array.length == 1) { // means only have TODO
+                    if (first_Word_Array.length == 1) { 
                         throw new todoMissingException();
                     }
                     Todo todo_Word = new Todo(first_Word_Array[1]);
