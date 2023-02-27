@@ -3,7 +3,7 @@ package io.github.haoyangw.rica.task;
 import io.github.haoyangw.rica.exception.RicaStorageException;
 import io.github.haoyangw.rica.exception.RicaTaskException;
 import io.github.haoyangw.rica.ui.TextUi;
-import io.github.haoyangw.rica.util.StorageManager;
+import io.github.haoyangw.rica.storage.StorageManager;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package io.github.haoyangw.rica.util;
+package io.github.haoyangw.rica.storage;
 
 import io.github.haoyangw.rica.exception.RicaStorageException;
 import io.github.haoyangw.rica.task.Task;

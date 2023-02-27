@@ -2,7 +2,7 @@ package io.github.haoyangw.rica.task;
 
 import io.github.haoyangw.rica.exception.RicaSerializationException;
 import io.github.haoyangw.rica.exception.RicaStorageException;
-import io.github.haoyangw.rica.util.Serializable;
+import io.github.haoyangw.rica.storage.Serializable;
 
 public class Task implements Serializable {
     private static final String TYPE = "T";
