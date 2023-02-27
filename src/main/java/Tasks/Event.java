@@ -1,3 +1,5 @@
+package Tasks;
+
 public class Event extends Task {
 
     protected String from;
@@ -12,7 +14,7 @@ public class Event extends Task {
     @Override
     public String getType() {
         return "[E]";
-    }  
+    }
 
     @Override
     public String getDescription() {

@@ -1,6 +1,6 @@
-import java.io.ObjectInputStream.GetField;
+package Tasks;
 
-public class Todo extends Task{
+public class Todo extends Task {
 
     public Todo(String description) {
         super(description);
@@ -9,7 +9,7 @@ public class Todo extends Task{
     @Override
     public String getType() {
         return "[T]";
-    }  
+    }
 
     @Override
     public String getDescription() {

@@ -1,7 +1,9 @@
+package Tasks;
+
 public class Task {
-    protected String description;
-    protected boolean isDone;
-    protected String type;
+    public String description;
+    public boolean isDone;
+    public String type;
 
     public Task(String description) {
         this.description = description;
@@ -9,7 +11,7 @@ public class Task {
     }
 
     public String getStatusIcon() {
-        return (isDone ? "[X]" : "[ ] "); // mark done task with X
+        return (isDone ? "[X] " : "[ ] "); // mark done task with X
     }
 
     public void markAsDone() {

@@ -1,3 +1,5 @@
+package Tasks;
+
 public class Deadline extends Task {
 
     protected String by;
@@ -10,11 +12,10 @@ public class Deadline extends Task {
     @Override
     public String getType() {
         return "[D]";
-    }  
+    }
 
     @Override
     public String getDescription() {
         return "[D]" + getStatusIcon() + super.getDescription() + " (by: " + by + ")";
     }
 }
- 
