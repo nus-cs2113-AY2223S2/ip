@@ -1,6 +1,7 @@
 
 package DukeFunctions;
 
+import Exceptions.DukeError;
 import Exceptions.MissingInputException;
 
 /**
@@ -17,14 +18,16 @@ public class Deadline extends Todo {
      * @param inputContents the input contents of the deadline task, which includes a description and a deadline
      * @throws MissingInputException if there are insufficient inputs
      */
-    public Deadline(String inputContents) throws MissingInputException {
+    public Deadline(String inputContents) throws DukeError {
         super(inputContents);
         String[] parts = inputContents.split("/by");
-        String deliverable = parts[0];
+
+
         if (parts.length > 1) {
+            String deliverable = parts[0];
             this.by = parts[1].trim();
         } else {
-            throw new MissingInputException();
+            throw new DukeError("Missing inputs. Syntax for deadline: deadline <description> /by <time> ");
         }
         //this.by = (parts.length > 1) ? parts[1].trim() : throw new MissingInputException();
         this.deliverable = deliverable;

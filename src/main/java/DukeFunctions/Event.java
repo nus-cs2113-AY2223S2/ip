@@ -1,5 +1,6 @@
 package DukeFunctions;
 
+import Exceptions.DukeError;
 import Exceptions.MissingInputException;
 
 public class Event extends Todo {
@@ -14,15 +15,16 @@ public class Event extends Todo {
      * @param inputContents The input contents of the event.
      * @throws MissingInputException If the input is missing the "/from" or "/to" keywords.
      */
-    public Event(String inputContents) throws MissingInputException {
+    public Event(String inputContents) throws DukeError {
         super(inputContents);
         String[] parts = inputContents.split("/from|/to");
 
-        String deliverable = parts[0].trim();
+
         if (parts.length < 3) {
 
-            throw new MissingInputException();
+            throw new DukeError("Missing inputs. Syntax for event: event <description> /from <time> /to <time>");
         } else {
+            String deliverable = parts[0].trim();
             from = (parts.length > 1) ? parts[1].trim() : "";
             to = (parts.length > 2) ? parts[2].trim() : "";
         }

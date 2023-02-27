@@ -123,8 +123,6 @@ public class Storage {
 
         } catch (IOException e) {
             throw new DukeError("IOException");
-        } catch (MissingInputException e) {
-            throw new DukeError("missingInput");
         }
 
 

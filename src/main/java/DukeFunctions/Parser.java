@@ -128,8 +128,6 @@ public class Parser { //takes in a string input and executes the command within 
         } catch (NullPointerException e) {
             throw new DukeError("NullPointerException");
 
-        } catch (MissingInputException e) {
-            throw new DukeError("missing input");
         }
 
 
