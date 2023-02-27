@@ -52,9 +52,7 @@ public class Duke {
             }
         }
     }
-
-
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, NoKeyException {
         Scanner in = new Scanner(System.in);
         CommandManager.sayHi();
         try {
@@ -118,6 +116,9 @@ public class Duke {
                 }
                 break;
             case "event":
+                if (!userInput[1].contains(" /from ") | (!userInput[1].contains(" /to "))) {
+                    throw new NoKeyException();
+            }
                 String[] eventSlashDate = userInput[1].split(" /from | /to ", 3);
                 Tasks newEvent = new Event(eventSlashDate[0], false, eventSlashDate[1], eventSlashDate[2]);
                 Tasks.addToList(newEvent);
@@ -128,10 +129,14 @@ public class Duke {
                 command.printOutput();
                 break;
             case "delete":
-                Tasks toDelete = Tasks.getTaskList().get(Integer.parseInt(userInput[1]) - 1);
-                command.setKey("delete");
-                command.printOutput(toDelete);
-                Tasks.deleteFromList(Integer.parseInt(userInput[1]) - 1);
+                try {
+                    Tasks toDelete = Tasks.getTaskList().get(Integer.parseInt(userInput[1]) - 1);
+                    command.setKey("delete");
+                    command.printOutput(toDelete);
+                    Tasks.deleteFromList(Integer.parseInt(userInput[1]) - 1);
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("Delete failed. No items in list.");
+                }
                 break;
             default:
                 System.out.println("Try again!");

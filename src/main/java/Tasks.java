@@ -13,10 +13,11 @@ public abstract class Tasks {
     public static void addToList(Tasks task) {
         taskList.add(task);
     }
-    public static void deleteFromList(int pos){
+    public static void deleteFromList(int pos) {
         taskList.remove(pos);
         numberOfTasks--;
     }
+
     public static ArrayList<Tasks> getTaskList() {
         return taskList;
     }
