@@ -1,8 +1,26 @@
 package duke.tasks;
 
 public class Task {
+
     protected String description;
     protected boolean isDone;
+    protected String type;
+    protected String start;
+    protected String end;
+
+    public String getDescription() {
+        return description;
+    }
+    public String getType() {
+        return type;
+    }
+    public String getStart() {
+        return start;
+    }
+
+    public String getEnd() {
+        return end;
+    }
 
     public Task(String description) {
         this.description = description;

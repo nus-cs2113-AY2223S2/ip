@@ -6,6 +6,7 @@ import duke.exceptions.EmptyDescriptionException;
 import duke.exceptions.TaskToMarkDoesNotExistException;
 import duke.exceptions.UnknownCommandException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -136,6 +137,11 @@ public class Duke {
             }
             splitText = getInput();
         }
+        try {
+            Storage.updateFile(tasks);
+        } catch (IOException e){
+            System.out.println("Error updating data in file");
+        }
         System.out.println("Bye! Hope to see you again soon!");
     }
 
@@ -143,6 +149,11 @@ public class Duke {
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
         ArrayList<Task> tasks = new ArrayList<>();
+        try {
+            tasks = Storage.getData();
+        } catch (IOException e) {
+            System.out.println("Error obtaining data from file");
+        }
         try {
             editList(tasks);
         } catch (UnknownCommandException e) {
