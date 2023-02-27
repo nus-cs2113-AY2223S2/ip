@@ -126,7 +126,7 @@ Examples:
 - `delete 1` deletes the first task in the list.
 - `delete 2` deletes the second task in the list.
 
-### Starting a Pomodoro Timer: `timer`
+### Starting a Timer: `timer`
 
 Starts a 25 minute Pomodoro timer, hit enter to start a break timer
 
