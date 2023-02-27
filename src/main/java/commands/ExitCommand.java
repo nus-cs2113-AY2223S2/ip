@@ -4,7 +4,7 @@ import storage.Storage;
 import task.TaskParser;
 import ui.TextUi;
 
-public class ExitCommand extends Command{
+public class ExitCommand extends Command {
     public static final String COMMAND_WORD = "bye";
     private boolean isExit;
 

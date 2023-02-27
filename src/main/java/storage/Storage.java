@@ -17,6 +17,10 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * The storage class.
+ * To manage file and directory related operations.
+ */
 public class Storage {
     private static final String FILE_DIRECTORY = "data";
     private static final String FILENAME = "tasklist.txt";
@@ -24,9 +28,15 @@ public class Storage {
 
     private Path dataDirectory;
 
-    public Storage(Path dataDirectory){
+    /**
+     * Initialize the storage with the path to data directory.
+     *
+     * @param dataDirectory path to the data directory.
+     */
+    public Storage(Path dataDirectory) {
         this.dataDirectory = dataDirectory;
     }
+
     /**
      * Create a directory in the root project structure named "data" if directory is not found.
      */
@@ -36,11 +46,13 @@ public class Storage {
                 Files.createDirectories(dataDirectory);
             }
         } catch (IOException e) {
-                throw new CreateDirectoryException(String.format(Messages.ERROR_CREATE_DIRECTORY, dataDirectory));
+            throw new CreateDirectoryException(String.format(Messages.ERROR_CREATE_DIRECTORY, dataDirectory));
         }
     }
 
     /**
+     * Write the user tasks into a file.
+     *
      * @param listOfTasks An arraylist storing the list of tasks the user created.
      * @throws IOException Some IO Exception has occured.
      */
@@ -53,6 +65,8 @@ public class Storage {
     }
 
     /**
+     * Read and Load data from a file if it exists.
+     *
      * @throws FileNotFoundException If file is not found, throw an exception. But file will be created if not found.
      */
     public TaskParser readAndLoadFromFile() throws FileNotFoundException {

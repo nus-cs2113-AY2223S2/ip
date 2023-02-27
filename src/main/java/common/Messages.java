@@ -1,5 +1,8 @@
 package common;
 
+/**
+ * A class containing the list of messages that will be shown to the user.
+ */
 public class Messages {
     public static final String MESSAGE_VALID_COMMAND_LIST = "List of valid commands:" +
             "\nUsage: todo <description>" +
@@ -28,6 +31,7 @@ public class Messages {
             "\nUsage: event /from <specify from when> /to <specify to when>";
     public static final String ERROR_DEADLINE_COMMAND = "OOPS!!! please give me a deadline." +
             "\nUsage: deadline /by <specify by when>";
-    public static final String ERROR_CREATE_DIRECTORY = "Unable to create directory at %s";
-    public static final String GENERIC_ERROR = "Something went wrong please refer to below:\n %s";
+    public static final String ERROR_CREATE_DIRECTORY = "Unable to create directory at\n%s";
+    public static final String ERROR_STORAGE_FILE_NOT_FOUND = "File was not found. A new file will be created when a new task is added.";
+    public static final String GENERIC_ERROR = "Something went wrong please refer to below:\n%s";
 }

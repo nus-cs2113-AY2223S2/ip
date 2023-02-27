@@ -4,12 +4,26 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
 
+/**
+ * A Class to handle user related interactions.
+ */
 public class TextUi {
     private final Scanner in;
     private final PrintStream out;
+
+    /**
+     * Constructor to call the other constructor.
+     */
     public TextUi() {
         this(System.in, System.out);
     }
+
+    /**
+     * Set the scanner and printstream of TextUi
+     *
+     * @param in  the Scanner of TextUi.
+     * @param out the PrintStream of TextUi.
+     */
     public TextUi(InputStream in, PrintStream out) {
         this.in = new Scanner(in);
         this.out = out;
@@ -17,6 +31,7 @@ public class TextUi {
 
     /**
      * Checks what the user typed and ignore user inputs if they are empty, only spaces, or only line breaks.
+     *
      * @param fullUserInput What the user typed in as inputs.
      * @return true if inputs are empty, only spaces, or only line breaks.
      */
@@ -27,11 +42,12 @@ public class TextUi {
     /**
      * Ask the user for an input.
      * It ignores whitespaces and line breaks.
+     *
      * @return the command with the input the user typed.
      */
     public String getUserInput() {
         String fullUserInput = "";
-        while(shouldIgnoreEmpty(fullUserInput)){
+        while (shouldIgnoreEmpty(fullUserInput)) {
             System.out.print(">");
             fullUserInput = in.nextLine();
         }
@@ -39,6 +55,11 @@ public class TextUi {
         return fullUserInput;
     }
 
+    /**
+     * Print the specified message to the user.
+     *
+     * @param message The specified message to be shown to the user.
+     */
     public void printMessage(String message) {
         System.out.println(message);
     }
@@ -46,7 +67,7 @@ public class TextUi {
     /**
      * Print out the logo of the cmd application.
      */
-    public void printBanner(){
+    public void printBanner() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"

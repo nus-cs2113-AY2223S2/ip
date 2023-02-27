@@ -10,15 +10,18 @@ public class DeadlineCommand extends Command {
 
     private String description;
     private String by;
+
     public DeadlineCommand(String description, String by) {
         this.description = description;
         this.by = by;
     }
+
     @Override
     public void execute(TaskParser taskParser, TextUi ui, Storage storage) {
         Deadline deadline = taskParser.createDeadlineTask(description, by);
         taskParser.addAndPrintTask(deadline, ui, storage);
     }
+
     @Override
     public boolean isExit() {
         return false;
