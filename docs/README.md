@@ -43,7 +43,7 @@ _Example of adding Deadline Task_
 
 `[D][ ] EE2026 Graded Lab (by: Fri 2359)`
 
-` Now you have 1 in the list.`
+`Now you have 1 in the list.`
 
 ### 3. Event 
 Event tasks are tasks which contains a start time and an end time
