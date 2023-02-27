@@ -28,7 +28,7 @@ public class Duke {
         do {
             userInput = Ui.getUserInput();
             try {
-                processCommand(userInput);
+                Parser.processCommand(userInput, tasks);
             } catch (CommandNotRecognisedException e) {
                 System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
                 Ui.printDivider();
@@ -77,95 +77,6 @@ public class Duke {
         }
     }
 
-
-    public static void processCommand (String input) throws CommandNotRecognisedException, IllegalCharacterException {
-        if (input.contains("|") || input.contains("-")) {
-            throw new IllegalCharacterException();
-        }
-
-        String action = input.split(" ")[0];
-        String[] taskDesc;
-
-        switch (action) {
-        case Command.COMMAND_BYE:
-            Ui.printBye();
-            break;
-        case Command.COMMAND_LIST:
-            printTaskList();
-            break;
-        case Command.COMMAND_MARK:
-            try {
-                markTaskDone(Integer.parseInt(input.split(" ")[1]) - 1);
-                tasks.get(Integer.parseInt(input.split(" ")[1].trim())-1).printUnmarkMessage();
-            } catch (NumberFormatException e) {
-                System.out.println("☹ OOPS!!! Task number should be an integer.");
-            } catch (InvalidTaskNumberException e) {
-                System.out.println("☹ OOPS!!! The task specified does not exist in the task list.");
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("☹ OOPS!!! The description of 'mark' cannot be empty.");
-            }
-            Ui.printDivider();
-            break;
-        case Command.COMMAND_UNMARK:
-            try {
-                markTaskUndone(Integer.parseInt(input.split(" ")[1].trim())-1);
-                tasks.get(Integer.parseInt(input.split(" ")[1].trim())-1).printUnmarkMessage();
-            } catch (NumberFormatException e) {
-                System.out.println("☹ OOPS!!! Task number should be an integer.");
-            } catch (InvalidTaskNumberException e) {
-                System.out.println("☹ OOPS!!! The task specified does not exist in the task list.");
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("☹ OOPS!!! The description of 'unmark' cannot be empty.");
-            }
-            Ui.printDivider();
-            break;
-        case Command.COMMAND_TODO:
-            try {
-                addTodoTask(input.substring(Command.COMMAND_TODO.length()).trim());
-                //addTodoTask(input.split(" ")[1].trim());
-                printTaskAdded();
-            } catch (EmptyTaskException e) {
-                System.out.println("☹ OOPS!!! The description of 'todo' cannot be empty.");
-            }
-            Ui.printDivider();
-            break;
-        case Command.COMMAND_DEADLINE:
-            try {
-                taskDesc = input.split("/by");
-                addDeadlineTask(taskDesc[0].substring(Command.COMMAND_DEADLINE.length()).trim(), taskDesc[1].trim());
-                printTaskAdded();
-            } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("☹ OOPS!!! The description of 'deadline' should include a task and deadline.");
-            }
-            Ui.printDivider();
-            break;
-        case Command.COMMAND_EVENT:
-            try {
-                taskDesc = input.split("/from|/to");
-                addEventTask(taskDesc[0].substring(Command.COMMAND_EVENT.length()).trim()
-                        , taskDesc[1].trim(), taskDesc[2].trim());
-                printTaskAdded();
-            } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("☹ OOPS!!! The description of 'event' should include a task and time period.");
-            }
-            Ui.printDivider();
-            break;
-        case Command.COMMAND_DELETE:
-            try {
-                deleteTask(Integer.parseInt(input.split(" ")[1]) - 1);
-            } catch (NumberFormatException e) {
-                System.out.println("☹ OOPS!!! Task number should be an integer.");
-            } catch (InvalidTaskNumberException e) {
-                System.out.println("☹ OOPS!!! The task specified does not exist in the task list.");
-
-            }
-            Ui.printDivider();
-            break;
-        default:
-            throw new CommandNotRecognisedException();
-        }
-    }
-
     public static void printTaskList() {
         if (tasks.size() == 0) {
             System.out.println("You are free today :)");
@@ -179,7 +90,7 @@ public class Duke {
     }
 
 
-    private static void markTaskDone(Integer taskIndex) throws InvalidTaskNumberException {
+    public static void markTaskDone(Integer taskIndex) throws InvalidTaskNumberException {
         if (taskIndex < 0 || taskIndex > tasks.size()) {
             throw new InvalidTaskNumberException();
         } else {
@@ -188,7 +99,7 @@ public class Duke {
     }
 
 
-    private static void markTaskUndone(Integer taskIndex) throws InvalidTaskNumberException {
+    public static void markTaskUndone(Integer taskIndex) throws InvalidTaskNumberException {
         if (taskIndex < 0 || taskIndex > tasks.size()) {
             throw new InvalidTaskNumberException();
         } else {
@@ -197,7 +108,7 @@ public class Duke {
     }
 
 
-    private static void addTodoTask(String task) throws EmptyTaskException {
+    public static void addTodoTask(String task) throws EmptyTaskException {
         if (task.equals("")) {
                 throw new EmptyTaskException();
         } else {
@@ -206,20 +117,20 @@ public class Duke {
     }
 
 
-    private static void addDeadlineTask(String task, String deadline) {
+    public static void addDeadlineTask(String task, String deadline) {
         tasks.add(new Deadline(task, deadline));
     }
 
-    private static void addEventTask(String task, String fromDate, String byDate) {
+    public static void addEventTask(String task, String fromDate, String byDate) {
         tasks.add(new Event(task, fromDate, byDate));
     }
 
-    private static void printTaskAdded() {
+    public static void printTaskAdded() {
         System.out.println("Got it. I've added this task:\n " + tasks.get(tasks.size()-1)
                 + "\nNow you have " + tasks.size() + " tasks in the list.");
     }
 
-    private static void deleteTask(int taskIndex) throws InvalidTaskNumberException {
+    public static void deleteTask(int taskIndex) throws InvalidTaskNumberException {
         if (taskIndex < 0 || taskIndex >= tasks.size()) {
             throw new InvalidTaskNumberException();
         } else {
