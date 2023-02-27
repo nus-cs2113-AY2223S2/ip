@@ -21,5 +21,6 @@ public class Finder {
         for (int i = 0; i < listOfTasksMatchingKeyword.size(); i++) {
             Printer.printWholeTask(listOfTasksMatchingKeyword.get(i), indexes.get(i));
         }
+        Greeting.printHorizontalLines(Duke.isSinglish);
     }
 }
