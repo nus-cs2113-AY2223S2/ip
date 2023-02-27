@@ -19,41 +19,33 @@ Prerequisites: JDK 11, update Intellij to the most recent version.
 
 Hello from
 
-░█████╗░██╗░░██╗██████╗░░█████╗░███╗░░██╗░█████╗░░██████╗
-██╔══██╗██║░░██║██╔══██╗██╔══██╗████╗░██║██╔══██╗██╔════╝
-██║░░╚═╝███████║██████╔╝██║░░██║██╔██╗██║██║░░██║╚█████╗░
-██║░░██╗██╔══██║██╔══██╗██║░░██║██║╚████║██║░░██║░╚═══██╗
-╚█████╔╝██║░░██║██║░░██║╚█████╔╝██║░╚███║╚█████╔╝██████╔╝
-░╚════╝░╚═╝░░╚═╝╚═╝░░╚═╝░╚════╝░╚═╝░░╚══╝░╚════╝░╚═════╝░
+        ░█████╗░██╗░░██╗██████╗░░█████╗░███╗░░██╗░█████╗░░██████╗
+        ██╔══██╗██║░░██║██╔══██╗██╔══██╗████╗░██║██╔══██╗██╔════╝
+        ██║░░╚═╝███████║██████╔╝██║░░██║██╔██╗██║██║░░██║╚█████╗░
+        ██║░░██╗██╔══██║██╔══██╗██║░░██║██║╚████║██║░░██║░╚═══██╗
+        ╚█████╔╝██║░░██║██║░░██║╚█████╔╝██║░╚███║╚█████╔╝██████╔╝
+        ░╚════╝░╚═╝░░╚═╝╚═╝░░╚═╝░╚════╝░╚═╝░░╚══╝░╚════╝░╚═════╝░
 
-Tick, tick, boom! I'm Chronos, your personal time manager.
+        Tick, tick, boom! I'm Chronos, your personal time manager.
 
-=============================================================================================================== 
+        ===============================================================================================================
+        Here are some useful commands to get you started!
+        ===============================================================================================================
+        1. todo <task name> - Adds a todo task to the list.
+        2. deadline <task name> /due <date> - Adds a deadline task to the list.
+        3. event <task name> /start <date/time> /end <date/time> - Adds an event task to the list.
+        4. list - Lists all tasks in the list.
+        5. mark <task number> - Marks a task as done.
+        6. unmark <task_number>: Unmarks task as not done
+        7. help - If you forgot how to use me, don't be afraid to ask!.
+        8. Timer - starts a 25 minute Pomodoro timer
+        9. done - Exits Chronos.
+        10. find <keyword> - Finds a task and displays all tasks with corresponding keywords
+        ===============================================================================================================
 
-Here are some useful commands to get you started!
+        What is your name? (Please enter name)
 
-=============================================================================================================== 
-
-'list': Take a look at your To-Do list to get your day started!
-'mark <task number>': Marks task as done. Try entering 'mark 1' to mark your first task as done!
-'unmark <task_number>': Unmarks task as not done. Try entering 'unmark 1' to mark your first task as not done.
-'help': If you forgot how to use me, don't be afraid to ask!
-There are 3 types of tasks you can add to your list. Please follow the format given: 
-
-* Type 'todo' and I will add it into the list.
-
-** Type 'deadline' and the due date '/due' for me to register the deadline. 
-
-*** Type 'event' and the start time '/start' AND end time '/end' for me to register the event. 
-
-Type 'timer' to start a pomodoro timer and get to work!
-
-=============================================================================================================== 
-
-
-What is your name? (Please enter name)
-
->> 
+        >>
 
 ```
 
