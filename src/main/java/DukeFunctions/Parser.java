@@ -100,8 +100,12 @@ public class Parser { //takes in a string input and executes the command within 
                     break;
                 case "find":
 
-                    String keyword = words[1];
-                    tasks.find(ui, keyword);
+                    if (words.length > 1) {
+                        String keyword = words[1];
+                        tasks.find(ui, keyword);
+                    } else {
+                        throw new DukeError("No search keyword");
+                    }
 
 
                     break;
