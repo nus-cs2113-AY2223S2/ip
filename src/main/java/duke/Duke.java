@@ -18,6 +18,7 @@ public class Duke {
     public static final String UNMARK_COMMAND = "unmark";
     public static final String LIST_COMMAND = "list";
     public static final String DELETE_COMMAND = "delete";
+    public static final String FIND_COMMAND = "find";
     public static final String EMPTY_COMMAND_MESSAGE = "Command is empty!";
     public static final String OUTPUT_FILE = "outputfile.txt";
     public static final String IOEXCEPTION_ERROR_MESSAGE = "IOException Error";
@@ -107,6 +108,9 @@ public class Duke {
             break;
         case LIST_COMMAND:
             taskList.printList();
+            break;
+        case FIND_COMMAND:
+            taskList.printMatchedList(words);
             break;
         default:
             throw new UnknownCommandException();
