@@ -213,7 +213,7 @@ _Reopen App_
 
  
 Note: Duke Task Bot saves the given tasks as a .txt file in a "data" file as "duke.txt" in the 
-folder that it is in. 
+current directory the command line prompt is currently in.
 
 If either the directory of the .txt file does not exist, one will be created. 
 
