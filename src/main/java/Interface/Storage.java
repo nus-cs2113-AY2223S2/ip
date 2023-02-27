@@ -13,6 +13,13 @@ import java.util.Scanner;
 public class Storage {
     private static String FilePath = "data" ; //location of file to be read
     private static String File = "data/duke.txt";
+
+    /**
+     * Initializes the storage system, checks if directory and file exists, else create them.
+     * Runs readFromFile function responsible for loading the file.
+     *
+     * @throws IOException exception thrown when input/output error occurs
+     */
     public static void initFile() throws IOException {
         File dir = new File(FilePath);
         if(!dir.exists()) {
@@ -31,6 +38,13 @@ public class Storage {
             System.out.println(e.getMessage());
         }
     }
+
+    /**
+     * Copies entries from .txt file into ArrayList of tasks. Identifies type of task then adds
+     * them into task list accordingly
+     *
+     * @throws IOException exception thrown when input/output error occurs
+     */
     public static void readFromFile() throws IOException {
         ArrayList<Task> tasks = TaskList.getTasks();
         File f = new File(File);
@@ -72,6 +86,11 @@ public class Storage {
             }
         }
     }
+
+    /**
+     * Copies entries in ArrayList of tasks into a .txt file following a specified format.
+     * This is called everytime the list of tasks is changed.
+     */
     public static void writeToFile() {
         ArrayList<Task> tasks = TaskList.getTasks();
         try {
