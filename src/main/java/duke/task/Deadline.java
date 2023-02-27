@@ -31,7 +31,7 @@ public class Deadline extends Task {
         }
 
         return "[" + this.getType() + "][" + this.getStatusIcon() + "] " +
-                descriptionDetails + "(by: " + descriptionOutput + " )";
+                descriptionDetails + "(by: " + descriptionOutput + ")";
     }
 
 }
