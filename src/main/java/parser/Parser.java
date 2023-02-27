@@ -5,6 +5,7 @@ import commands.DeadlineCommand;
 import commands.DeleteCommand;
 import commands.EventCommand;
 import commands.ExitCommand;
+import commands.FindCommand;
 import commands.IncorrectCommand;
 import commands.ListCommand;
 import commands.MarkCommand;
@@ -47,15 +48,27 @@ public class Parser {
             return prepareUnmarkCommand(userInputNoCommand);
         case DeleteCommand.COMMAND_WORD:
             return prepareDeleteCommand(userInputNoCommand);
+        case FindCommand.COMMAND_WORD:
+            return prepareFindCommand(userInputNoCommand);
         default:
             return new IncorrectCommand();
         }
     }
 
     /**
+     * It will prepare the find command appropriately so that the command is ready to be executed.
+     *
+     * @param userInputNoCommand The raw input of what the user typed. Without the command portion.
+     * @return Command object in order for the program to know what command to execute.
+     */
+    private Command prepareFindCommand(String userInputNoCommand) {
+        String keyword = userInputNoCommand.trim();
+        return new FindCommand(keyword);
+    }
+    /**
      * It will prepare the delete command appropriately so that the command is ready to be executed.
      *
-     * @param userInputNoCommand The raw input of what the user typed.
+     * @param userInputNoCommand The raw input of what the user typed. Without the command portion.
      * @return Command object in order for the program to know what command to execute.
      */
     private Command prepareDeleteCommand(String userInputNoCommand) {
@@ -79,7 +92,7 @@ public class Parser {
     /**
      * It will prepare the unmark command appropriately so that the command is ready to be executed.
      *
-     * @param userInputNoCommand The raw input of what the user typed.
+     * @param userInputNoCommand The raw input of what the user typed. Without the command portion.
      * @return Command object in order for the program to know what command to execute.
      */
     private Command prepareUnmarkCommand(String userInputNoCommand) {
@@ -103,7 +116,7 @@ public class Parser {
     /**
      * It will prepare the mark command appropriately so that the command is ready to be executed.
      *
-     * @param userInputNoCommand The raw input of what the user typed.
+     * @param userInputNoCommand The raw input of what the user typed. Without the command portion.
      * @return Command object in order for the program to know what command to execute.
      */
     private Command prepareMarkCommand(String userInputNoCommand) {
@@ -127,7 +140,7 @@ public class Parser {
     /**
      * It will prepare the event command appropriately so that the command is ready to be executed.
      *
-     * @param userInputNoCommand The raw input of what the user typed.
+     * @param userInputNoCommand The raw input of what the user typed. Without the command portion.
      * @return Command object in order for the program to know what command to execute.
      */
     private Command prepareEventCommand(String userInputNoCommand) {
@@ -148,7 +161,7 @@ public class Parser {
     /**
      * It will prepare the deadline command appropriately so that the command is ready to be executed.
      *
-     * @param userInputNoCommand The raw input of what the user typed.
+     * @param userInputNoCommand The raw input of what the user typed. Without the command portion.
      * @return Command object in order for the program to know what command to execute.
      */
     private Command prepareDeadlineCommand(String userInputNoCommand) {
@@ -168,7 +181,7 @@ public class Parser {
     /**
      * It will prepare the todo command appropriately so that the command is ready to be executed.
      *
-     * @param userInputNoCommand The raw input of what the user typed.
+     * @param userInputNoCommand The raw input of what the user typed. Without the command portion.
      * @return Command object in order for the program to know what command to execute.
      */
     private Command prepareTodoCommand(String userInputNoCommand) {
