@@ -1,5 +1,5 @@
 package duke.common;
-import duke.file.FileClass;
+import duke.storage.Storage;
 import duke.tasktypes.Task;
 
 import java.util.ArrayList;
@@ -11,5 +11,5 @@ public class Common {
     public static final String WRITEFILE_EXCEPTION_MESSAGE = "OPPS!!! Something went wrong when you write to data file";
     public static final String INSTRUCTION = "Please give your command in the following format";
     public static ArrayList<Task> tasks = new ArrayList<>();
-    public static FileClass dataFile = new FileClass(FILE_PATH, tasks);
+    public static Storage dataFile = new Storage(FILE_PATH, tasks);
 }

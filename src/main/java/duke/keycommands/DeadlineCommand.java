@@ -6,7 +6,8 @@ import duke.tasktypes.Task;
 import duke.exception.EmptyDescription;
 
 public class DeadlineCommand {
-    private String[] separatedKeyWordAndContent;
+    private String content;
+    private String date;
     public static final String EMPTY_DEADLINE_DESCRIPTION = "OOPS!!! The description of a deadline cannot be empty.";
     private static final String ADDING_TASK = "Got it. I've added this task:";
     public static final String EMPTY_DEADLINE_TASK = "OOPS!!! the deadline can not be empty";
@@ -14,52 +15,18 @@ public class DeadlineCommand {
     private static final String DEADLINE_FORMAT = "Format: deadline {your task} /by {deadline date}\n";
     public static final String DEADLINE_INVALID_INPUT = INVALID_INPUT + DEADLINE_FORMAT;
 
-    public DeadlineCommand(String[] separatedKeyWordAndContent) {
-        this.separatedKeyWordAndContent = separatedKeyWordAndContent;
-        doDeadlineCommand();
+    public DeadlineCommand(String content, String date) {
+        this.content = content;
+        this.date = date;
+        addDeadlineTask();
     }
 
-    public void doDeadlineCommand() {
-        if (doesIndexOutOfBoundsOccur(separatedKeyWordAndContent,1, EMPTY_DEADLINE_DESCRIPTION)) {
-            return;
-        }
-        try {
-            addDeadlineTask(separatedKeyWordAndContent[1]);
-        } catch(EmptyDescription e) {
-            System.out.println(EMPTY_DEADLINE_TASK);
-        }
+    private void addDeadlineTask() {
+        Task task = new Deadline(content,date);
+        Common.tasks.add(task);
+        System.out.println(ADDING_TASK);
+        task.printTask();
+        System.out.println("Now you have " + Common.tasks.size() + " tasks in the list.");
+        Common.dataFile.appendTaskToDataFile(task.putInputToDataFile());
     }
-
-    private void addDeadlineTask(String content) throws EmptyDescription{
-        String[] seperatedWordsInContent = content.split(" /");
-        if (doesIndexOutOfBoundsOccur(seperatedWordsInContent, 1, DEADLINE_INVALID_INPUT)) {
-            return;
-        }
-        if (seperatedWordsInContent[1].startsWith("by ")) {
-            String date = seperatedWordsInContent[1].split(" ", 2)[1];
-            if (date.trim().isEmpty()) {
-                throw new EmptyDescription();
-            }
-            String taskName = seperatedWordsInContent[0];
-            Task task = new Deadline(taskName,date);
-            Common.tasks.add(task);
-            System.out.println(ADDING_TASK);
-            task.printTask();
-            System.out.println("Now you have " + Common.tasks.size() + " tasks in the list.");
-            Common.dataFile.appendTaskToDataFile(task.putInputToDataFile());
-        } else {
-            System.out.println(DEADLINE_INVALID_INPUT);
-        }
-    }
-
-    private boolean doesIndexOutOfBoundsOccur(String[] stringArray, int index, String outputMessage) {
-        try {
-            String test = stringArray[index];
-            return false;
-        } catch (ArrayIndexOutOfBoundsException error) {
-            System.out.println(outputMessage);
-            return true;
-        }
-    }
-
 }

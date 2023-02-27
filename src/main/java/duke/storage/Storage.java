@@ -1,4 +1,4 @@
-package duke.file;
+package duke.storage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -13,14 +13,14 @@ import duke.tasktypes.Event;
 import duke.tasktypes.ToDo;
 import duke.tasktypes.Task;
 
-public class FileClass {
+public class Storage {
     public File directory;
     public File file;
     public ArrayList<Task> tasks;
     public static final String FILE_PATH = "data.txt";
     public static final String WRITEFILE_EXCEPTION_MESSAGE = "OPPS!!! Something went wrong when you write to data file";
 
-    public FileClass(String filePath, ArrayList<Task> tasks) {
+    public Storage(String filePath, ArrayList<Task> tasks) {
         directory = new File("data");
         directory.mkdirs();
         file = new File(directory, filePath);
