@@ -1,6 +1,9 @@
 package duke;
 
 import duke.exceptions.TaskNumberOutOfRange;
+
+import java.io.IOException;
+
 import duke.exceptions.LackOfTaskDetail;
 
 public class Parser {
@@ -53,5 +56,103 @@ public class Parser {
         }
 
         return splittedDiscription;
+    }
+
+    public static boolean ParseCommand(String command, TaskList tasks, String path) {
+        String commandType = Parser.parseCommand(command);
+        boolean isEnd = false;
+
+        switch (commandType) {
+        case "list":
+            Ui.listTasks(tasks.fullList());
+            break;
+        case "mark":
+            try {
+                int index = Parser.getTaskIndex(tasks.getSize());
+                tasks.markThisTask(index);
+                Ui.showMark(tasks.getDescription(index));
+            } catch (TaskNumberOutOfRange e) {
+                System.out.print(e.getMessage());
+            } catch (NumberFormatException e) {
+                System.out.println("   > Please enter a valid NUMBER!");
+            }
+            try {
+                Storage.autoSave(tasks.fullList(), path);
+            } catch (IOException e) {
+                System.out.print(e.getMessage());
+            }
+            break;
+        case "unmark":
+            try {
+                int index = Parser.getTaskIndex(tasks.getSize());
+                tasks.unMarkThisTask(index);
+                Ui.showUnmark(tasks.getDescription(index));
+            } catch (TaskNumberOutOfRange e) {
+                System.out.print(e.getMessage());
+            } catch (NumberFormatException e) {
+                System.out.println("   > Please enter a valid NUMBER!");
+            }
+            try {
+                Storage.autoSave(tasks.fullList(), path);
+            } catch (IOException e) {
+                System.out.print(e.getMessage());
+            }
+            break;
+        case "bye":
+            isEnd = true;
+            break;
+        case "todo":
+            try {
+                String tododetail = Parser.getToDoDescription();
+                tasks.addToDo(tododetail);
+                Ui.showAddTask(tasks.latesttask(), tasks.getSize());
+            } catch (LackOfTaskDetail e) {
+                System.out.print(e.getMessage());
+            }
+            try {
+                Storage.autoSave(tasks.fullList(), path);
+            } catch (IOException e) {
+                System.out.print(e.getMessage());
+            }
+            break;
+        case "deadline":
+        case "event": {
+            String[] taskDetail = {};
+            try {
+                taskDetail = Parser.getTaskWithTime(commandType);
+                tasks.addTaskWithTime(taskDetail, commandType);
+                Ui.showAddTask(tasks.latesttask(), tasks.getSize());
+            } catch (LackOfTaskDetail e) {
+                System.out.print(e.getMessage());
+            }
+            try {
+                Storage.autoSave(tasks.fullList(), path);
+            } catch (IOException e) {
+                System.out.print(e.getMessage());
+            }
+        }
+            break;
+        case "delete":
+            try {
+                int index = Parser.getTaskIndex(tasks.getSize());
+                Ui.showDelete(tasks.getDescription(index), tasks.getSize());
+                tasks.deleteThisTask(index);
+            } catch (TaskNumberOutOfRange e) {
+                System.out.print(e.getMessage());
+            } catch (NumberFormatException e) {
+                System.out.print("   > Please enter a valid NUMBER!");
+            }
+            try {
+                Storage.autoSave(tasks.fullList(), path);
+            } catch (IOException e) {
+                System.out.print(e.getMessage());
+            }
+            break;
+        default:
+            Ui.printNoCommand();
+            break;
+        }
+
+        return isEnd;
     }
 }
