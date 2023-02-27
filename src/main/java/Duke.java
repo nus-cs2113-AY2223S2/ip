@@ -56,16 +56,16 @@ public class Duke {
             + "Example use : \"unmark 10\" \n \n \n"
             + "Hope this list has been informational to you! \n";
 
-    final static String UNRECOGNIZABLE_ERROR = "\n\uD83D\uDE16 OOPS!!! I'm sorry, but I don't know what that means \uD83D\uDE1E\n"
+    final static String UNRECOGNIZABLE_ERROR = "\nOOPS!!! I'm sorry, but I don't know what that means"
                                              + "Try typing \"help\" to see the valid commands you can use!\n";
-    final static String PREFIX_MISSING_INPUTS_ERROR = "\n\uD83D\uDE13 OOPS!!! The description of ";
+    final static String PREFIX_MISSING_INPUTS_ERROR = "\nOOPS!!! The description of ";
     final static String SUFFIX_MISSING_INPUTS_ERROR = " cannot be empty.\n";
-    final static String PREFIX_EMPTY_LIMIT_LIST_ERROR = "\n\uD83D\uDE20 HELLOO???!!! Your list is either EMPTY or does not contain tasks up to the index you inputted yet,\n"
-                                                      + " so you cannot use ";
+    final static String PREFIX_EMPTY_LIMIT_LIST_ERROR = "\nHELLOO???!!! Your list is either EMPTY or does not contain tasks up to the index you inputted yet,\n"
+                                                      + "so you cannot use the ";
     final static String SUFFIX_EMPTY_LIMIT_LIST_ERROR = " command yet!! Try filling up the list first!\n";
-    final static String FORMAT_CONVERT_ERROR = "\n\uD83D\uDE31 MATE!!! Either you are giving me too big of a number for me to handle or putting words when I am expecting a number.\n"
-                                             + "If it is the former I can only count up to 2147483647 for now... Please lower your expectations! \uD83D\uDE29 \n"
-                                             + "As for the latter, please give me proper inputs so that I can work things out for you okay? \uD83D\uDE11 \n";
+    final static String FORMAT_CONVERT_ERROR = "\nMATE!!! Either you are giving me too big of a number for me to handle or putting words when I am expecting a number.\n"
+                                             + "If it is the former I can only count up to 2147483647 for now... Please lower your expectations!\n"
+                                             + "As for the latter, please give me proper inputs so that I can work things out for you okay?\n";
     final static String PREFIX_MISSING_DESCRIPTION_ERROR = "\nError in inputs!\n"
                                                          + "Exception occurred: java.lang.StringIndexOutOfBoundsException: ";
     final static String SUFFIX_MISSING_DESCRIPTION_ERROR = " is missing the task description!\n";
