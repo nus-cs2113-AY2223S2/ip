@@ -10,9 +10,17 @@ import java.util.Scanner;
 
 public class Storage {
     private String filePath;
+
+    /**
+     * Constructor to initialise file path to use for storage.
+     */
     public Storage (String filePath) {
         this.filePath = filePath;
     }
+
+    /**
+     * Loads data into tasks from filePath.
+     */
     public void load() throws IOException {
         File folder = new File("data");
         if (!(folder.exists() && folder.isDirectory())) {
@@ -43,6 +51,9 @@ public class Storage {
         }
     }
 
+    /**
+     * Saves all tasks into filePath.
+     */
     public void save() throws IOException {
         File f = new File("data/duketasks.txt");
         if (f.exists()) {
@@ -57,6 +68,9 @@ public class Storage {
         writeFile.close();
     }
 
+    /**
+     * Greets the user and load the saved data.
+     */
     public void initialise() {
         Ui.greet();
         try {
