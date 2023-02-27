@@ -165,15 +165,7 @@ public class TaskManager {
      * yet
      */
     public void printTasks() {
-        if (!this.hasAnyTasks()) {
-            this.getTextUi().printlnWithIndent(" Hope I'm not amnesiac, but I don't remember any tasks?");
-        } else {
-            ArrayList<Task> tasks = this.getTasks();
-            this.getTextUi().printlnWithIndent(" I think you have these tasks:");
-            for (int i = 1; i <= tasks.size(); i += 1) {
-                this.getTextUi().printlnWithIndent(" " + i + "." + tasks.get(i - 1));
-            }
-        }
+        this.getTextUi().printTasks(this.getTasks());
     }
 
     public void rmTask(String command) throws RicaTaskException {
