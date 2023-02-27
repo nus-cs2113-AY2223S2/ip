@@ -15,8 +15,16 @@ public class Parser {
 
     final static String BARRIER = "____________________________________________________________";
 
+    /**
+     * Takes input from a user, parses it, and executes based on input.
+     * @param input the command submitted by the user.
+     * @throws noTasksException if a user prints the list with no tasks
+     * @throws invalidInputStructure if a user structures command syntax incorrectly
+     * @throws invalidNumberException if a user submits a non-numeric value incorrectly
+     */
     public void handleInput(String input) {
-        // Split user input to check for dynamism
+
+        // Split user input to check for dyanmic input
         String originalInput = input;
         String[] splitInput = input.split(" ");
         input = splitInput[0];
@@ -25,7 +33,10 @@ public class Parser {
         // Switch to check input
         switch(input){
 
-        // Lists all tasks using the Task class printAllTask() method
+        /**
+         * Lists all tasks using the TaskList class printAllTask() method.
+         * No interaction with dynamic input.
+         */
         case "list": {
             try {
                 if(numTasks == 0) { 
@@ -44,7 +55,10 @@ public class Parser {
             }
         }
 
-        // Marks a task as complete
+        /**
+         * Marks a task as complete. Throws an error if the user tries to submit a
+         * task number that is non-positive, non-numeric, or out or rnage of the list.
+         */
         case "mark": {
             try {
                 if (!isValidInput(splitInput[1])) {
@@ -60,7 +74,10 @@ public class Parser {
             }
         }
 
-        // Unmarks a previous completed task
+        /**
+         * Marks a task as incomplete. Throws an error if the user tries to submit a
+         * task number that is non-positive, non-numeric, or out or rnage of the list.
+         */
         case "unmark": {
             try {
                 if (!isValidInput(splitInput[1])) {
@@ -85,9 +102,6 @@ public class Parser {
         // Adds a new ToDo task
         case "todo": {
             try {
-                if(splitInput.length != 2) {
-                    throw new DukeExceptions.invalidInputStructure("Argh! Structure ye input correctly!");
-                }
                 System.out.println(BARRIER + "\n");
                 Todo temp = new Todo(originalInput);
                 System.out.println("added: " + temp.printTask());
@@ -98,22 +112,29 @@ public class Parser {
             }
         }
 
-        // Adds a new Deadline task
+        /**
+         * Creates a new deadline task. This will throw an error if
+         * the user does not submit a due date for the deadline.
+         */
         case "deadline": {
             try {
                 String[] slashInput = originalInput.split("/");
                 if(slashInput.length != 2) {
                     throw new DukeExceptions.invalidInputStructure("Argh! Structure ye input correctly!");
                 }
-                // Command input starts after '/'
-                int commandStart = originalInput.indexOf("/");
+                // The date starts after the first '/'
+                int dateStart = originalInput.indexOf("/");
+
                 // Due date starts after '/by '
-                String dueDate = originalInput.substring(commandStart + 4);
+                String dueDate = originalInput.substring(dateStart + 4);
                 dueDate = processDate(dueDate);
-                String parsedDescription = originalInput.substring(0, commandStart - 1);
+
+                String parsedDescription = originalInput.substring(0, dateStart - 1);
                 parsedDescription += " (by: " + dueDate + ")";
+
                 // Remove the word 'deadline' from the description
                 parsedDescription = parsedDescription.substring(parsedDescription.indexOf(" ") + 1);
+
                 System.out.println(BARRIER + "\n");
                 Deadline temp = new Deadline(parsedDescription, dueDate);
                 System.out.println("added: " + temp.printTask());
@@ -124,13 +145,17 @@ public class Parser {
             }
         }
 
-        // Adds a new Event task
+        /**
+         * Creates a new event task. This will throw an error if
+         * the user does not include a start and end time.
+         */
         case "event": {
             try {
                 String[] slashInput = originalInput.split("/");
                 if(slashInput.length != 3) {
                     throw new DukeExceptions.invalidInputStructure("Argh! Structure ye input correctly!");
                 }
+
                 // Split input into description, start, and end
                 String[] splitEventInput = originalInput.split("/");
                 
@@ -156,6 +181,10 @@ public class Parser {
             }
         }
 
+        /**
+         * Removes a task based on its number in the list
+         * Throws an error if the number is non-positive, non-numeric, or out of range.
+         */
         case "delete": {
             try {
                 if (!isValidInput(splitInput[1])) {
@@ -175,11 +204,11 @@ public class Parser {
             }
         }
 
+        /**
+         * Creates a subset of tasks containing an inputted keyword.
+         */
         case "find": {
             try {
-                if(splitInput.length != 2) {
-                    throw new DukeExceptions.invalidInputStructure("Argh! Structure ye input correctly!");
-                }
                 // Isolate search key
                 String searchKey = originalInput.substring(5);
 
@@ -218,7 +247,11 @@ public class Parser {
         // End of switch
         }
     }
-    public static void printHelpList() {
+
+    /**
+     * Prints out a list of commands.
+     */
+    private static void printHelpList() {
         String BARRIER = "____________________________________________________________";
         System.out.println(BARRIER + "\n\nAvast! Here be the commands ye can use to make me do yer bidding!" + 
                 "\n- list: lists all current tasks\n- mark x: marks task x as complete\n-" + 
@@ -229,7 +262,10 @@ public class Parser {
                 "shows all relevant tasks\n- delete 'num': removes task 'num' from list\n" + BARRIER + "\n");
     }
 
-    public static void printListLength() {
+    /**
+     * Prints the amount of tasks in the list. 
+     */
+    private static void printListLength() {
         int length = TaskList.getTasksArray().size();
         if (length == 1) {
             System.out.println("Now you have " + TaskList.getTasksArray().size() + " task in the list!");
@@ -238,7 +274,13 @@ public class Parser {
         }
     }
 
-    public static boolean isValidInput(String input) {
+    /**
+     * Checks if a numeric input is valid. Checks that the dynamic input
+     * is non-zero, in the range of the list, and is a numeric value.
+     * @param input Dynamic numeric input submitted by the user.
+     * @return true if the input is valid, false otherwise.
+     */
+    private static boolean isValidInput(String input) {
         char dynamicInput = input.charAt(0);
         boolean isOneChar = input.length() == 1;
         if (!isOneChar) {
@@ -251,7 +293,14 @@ public class Parser {
         return (isNumber && !isZero && isInRange);
     }
 
-    public static String processDate(String date) {
+    /**
+     * Checks if a date is submitted in the form YYYY-MM-DD.
+     * If so, converts it to a more readable format. Otherwise, returns it as is.
+     * 
+     * @param date The string form of the time.
+     * @return The parsed or original date.
+     */
+    private static String processDate(String date) {
         if (date.length() == 10 && date.charAt(4) == '-' && date.charAt(7) == '-') {
             LocalDate dateObj = LocalDate.parse(date);
             return dateObj.format(DateTimeFormatter.ofPattern("MMM d yyyy"));

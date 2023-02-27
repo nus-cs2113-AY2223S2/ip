@@ -6,7 +6,7 @@ public class TaskList {
 
     public static ArrayList<Task> tasks = new ArrayList<Task>();
 
-    // Accessor method
+    // Accessor method for TaskList
     public static ArrayList<Task> getTasksArray() {
         return tasks;
     }

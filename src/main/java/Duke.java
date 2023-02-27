@@ -6,6 +6,11 @@ import duke.input.*;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 
+/**
+ * Contains the main method to execute the program. Duke reads
+ * saved information from data.txt, greets the user, processes
+ * input, then ends and saves tasks to data.txt
+ */
 public class Duke {
     public static void main(String[] args) throws Exception {
 

@@ -3,6 +3,12 @@ import duke.exceptions.*;
 
 import java.util.ArrayList;
 
+/**
+ * Represents a task that needs to be done by the user.
+ * Has a description of the task, and a state variable isComplete to
+ * track the tasks completeness. There are many types of tasks,
+ * including ToDos, Deadlines, and Events.
+ */
 public class Task {
 
     // Task class attributes
@@ -33,7 +39,7 @@ public class Task {
         }
     }
 
-    // Changes task isComplete attribute to true
+    // Changes task isComplete attribute to false
     public void unmarkAsComplete() throws DukeExceptions.taskStatusException {
         try {
         if (!this.isComplete) {
