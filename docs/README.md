@@ -5,7 +5,7 @@ The user guide serves as a handbook for users who wish to do two main things:
 - Understand more about what Duke can/cannot do
 - Maximise their use cases for Duke as a personal Task Manager
 
-The handbook is catered to users who are new to CLI based platforms therefore most parts are kept concicse and are filled with examples, however some parts might appear verbose to advanced users. Regardless, users are encouraged to read the whole guide, in the order specified in the [Table of Contents](#table-of-contents). Advanced users can check out the apprendix which delves deeper into the kind of inputs the commands can handle.
+The handbook is catered to users who are new to CLI based platforms therefore most parts are kept concicse and are filled with examples, however some parts might appear verbose to advanced users. Regardless, users are encouraged to read the whole guide in the order specified in the [Table of Contents](#table-of-contents). Advanced users can check out the appendix which delves deeper into the kind of inputs the commands can handle.
 
 # Table of Contents
 - [User Guide](#user-guide)
