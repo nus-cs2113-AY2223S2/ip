@@ -1,5 +1,8 @@
 package duke.tasks;
 
+/**
+ * An extension of the task. Accepts a due data and description.
+ */
 public class Deadline extends Task {
     
     // New attribute

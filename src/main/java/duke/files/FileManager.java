@@ -8,31 +8,47 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-/* 
-    Upon cloning, user will have an empty data file data.txt
-    After first use, all tasks on the user list will save in data.txt
-    When Duke is restarted, all tasks from data.txt will load to the list
-*/
-
+/**
+ * Manages all file saving and uploading for Duke. Upon cloning,
+ * user will have an empty data file. When Duke is activated, any
+ * existing data will be added to the task list. When Duke is closed,
+ * any tasks in the list will be saved. When Duke is restarted,
+ * all tasks from data.txt will load to the list.
+ */
 public class FileManager {
 
     private static final String FILEPATH = "./data.txt";
 
-    // Write to a file
+    /**
+     * Writes data to a file at a designated path location.
+     * @param FILEPATH Path for file to be written on
+     * @param textToAdd Text to be added to the file
+     * @throws IOException Occurs when file can't be accessed
+     */
     private static void writeToFile(String FILEPATH, String textToAdd) throws IOException {
         FileWriter fw = new FileWriter(FILEPATH);
         fw.write(textToAdd);
         fw.close();
     }
 
-    // Append to a file
+    /**
+     * Writes data to a file at a designated path location.
+     * @param FILEPATH Path for file to be added on
+     * @param textToAppend Text to be added to the file
+     * @throws IOException Occurs when file can't be accessed
+     */
     private static void appendToFile(String FILEPATH, String textToAppend) throws IOException {
         FileWriter fw = new FileWriter(FILEPATH, true); // create a FileWriter in append mode
         fw.write(textToAppend);
         fw.close();
     }
 
-    // Retrieve the contents of a file as an array of strings where each line is a string
+    /**
+     * Creates an ArrayList of Strings of each line in a file
+     * @param FILEPATH Location of the file to be parsed
+     * @return ArrayList of strings of the file contents
+     * @throws FileNotFoundException if the file does not exist
+     */
     private static ArrayList<String> retrieveFileContents(String FILEPATH) throws FileNotFoundException {
         ArrayList<String> taskStrings = new ArrayList<String>(); 
         File f = new File(FILEPATH); // create a File for the given file path
@@ -43,7 +59,10 @@ public class FileManager {
         return taskStrings;
     }
 
-    // Parse a string and create and add a task from it
+    /**
+     * Given a string representing a task, creates the task.
+     * @param parsedTask The parsed version of the task
+     */
     private static void addTaskFromFile(String parsedTask) {
         char type = parsedTask.charAt(1); // Type will be at index 1 based on how data is saved
         char status = parsedTask.charAt(4); // Status will be at index 4
@@ -65,7 +84,10 @@ public class FileManager {
         }
     }
 
-    // Parse all tasks from the file to list
+    /**
+     * Moves all tasks from the file to the task list using helper methods.
+     * @throws Exception Occurs when a helper method hits an exception.
+     */
     public void populateTaskList() throws Exception {
         try {
             File f = new File(FILEPATH);
@@ -82,7 +104,10 @@ public class FileManager {
         }
     }
 
-    // Parse all tasks from list to file
+    /**
+     * Moves all tasks from the task list to a file using helper methods
+     * @throws IOException Occurs when file can't be accessed
+     */
     public void populateFile() throws IOException {
         ArrayList<Task> taskList = TaskList.getTasksArray();
         if (taskList.size() == 0) {
