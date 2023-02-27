@@ -1,5 +1,9 @@
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.IOException;
+import java.io.FileWriter;
+import java.io.File;
 
 public class Duke {
     public static final String DIVIDER  = "______________________________";
@@ -17,11 +21,13 @@ public class Duke {
     static final String COMMAND_BY = "/by";
     static final String COMMAND_FROM = "/from";
     static final String COMMAND_TO = "/to";
+    static final String TODO_ICON = "T";
+    static final String EVENT_ICON = "E";
+    static final String DEADLINE_ICON = "D";
+    static final String FILE_LOCATION = "";
 
     //Data
-    //static Task[] list = new Task[100];
     static ArrayList<Task> list = new ArrayList<>();
-    static int taskSum = 0;
 
     public static void printLogo() {
         String logoMessage = "Hello from\n" +
@@ -49,19 +55,15 @@ public class Duke {
     public static void printList() {
         String listMessage = DIVIDER + System.lineSeparator() + "Here are the tasks in your list:";
         System.out.println(listMessage);
-        for (int i = 0; i < taskSum; i++) {
-            //System.out.println((i+1) + "." + list[i].toString());
+        for (int i = 0; i < list.size(); i++) {
             System.out.println((i+1) + "." + list.get(i).toString());
         }
         System.out.println(DIVIDER);
     }
 
     public static void markTask(int taskNum) {
-        //list[taskNum-1].markAsDone();
         list.get(taskNum-1).markAsDone();
         System.out.println("Nice! I've marked this task as done:");
-        //System.out.println(DIVIDER + System.lineSeparator() + list[taskNum-1].toString()
-        //        + System.lineSeparator() + DIVIDER);
         System.out.println(DIVIDER + System.lineSeparator() + list.get(taskNum-1).toString()
                 + System.lineSeparator() + DIVIDER);
     }
@@ -73,21 +75,116 @@ public class Duke {
                 + System.lineSeparator() + DIVIDER);
     }
 
-    public static void acknowledgementMessage(int taskSum) {
+    public static void acknowledgementMessage() {
         String acknowledgement = DIVIDER + System.lineSeparator()
                 + "Got it. I've added this task: " + System.lineSeparator()
-                + list.get(taskSum).toString();
+                + list.get(list.size()-1).toString();
         System.out.println(acknowledgement);
-        System.out.println("Now you have " + (taskSum+1) + " task(s) in the list."
+        System.out.println("Now you have " + (list.size()) + " task(s) in the list."
                 + System.lineSeparator() + DIVIDER);
     }
 
     public static void deleteTask(int taskNum) {
         String acknowledge = DIVIDER + System.lineSeparator() + "Noted. I've removed this task: "
                 + System.lineSeparator() + list.get(taskNum-1).toString() + System.lineSeparator()
-                + "Now you have " + (taskSum-1) + " tasks in the list." + System.lineSeparator() + DIVIDER;
+                + "Now you have " + (list.size()-1) + " tasks in the list." + System.lineSeparator() + DIVIDER;
         System.out.println(acknowledge);
         list.remove(taskNum-1);
+    }
+
+    //Update the file
+    public static void updateFile() {
+        for (Task currentTask : list) {
+            String statusNum = currentTask.getStatusNum();
+            String taskDesc = currentTask.getTask();
+            String taskType = currentTask.getTaskIcon();
+
+            switch (taskType) {
+            case TODO_ICON:
+                try {
+                    writeToFile(taskType + ":" + statusNum + ":"
+                            + taskDesc);
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
+            case DEADLINE_ICON:
+                String deadlineBy = currentTask.getDeadlineBy();
+                try {
+                    writeToFile(taskType + ":" + statusNum + ":"
+                            + taskDesc + COMMAND_BY + deadlineBy);
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
+            case EVENT_ICON:
+                String eventStart = currentTask.getEventStart();
+                String eventEnd = currentTask.getEventEnd();
+                try {
+                    writeToFile(taskType + ":" + statusNum + ":"
+                            + taskDesc + COMMAND_FROM + eventStart
+                            + COMMAND_TO + eventEnd);
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
+            default:
+                System.out.println("Nothing to update!");
+                break;
+            }
+        }
+    }
+
+    private static void clearFile() throws IOException {
+        FileWriter fw = new FileWriter("duke.txt");
+        fw.write("");
+        fw.close();
+    }
+
+    public static void writeToFile(String textToAdd) throws IOException {
+        FileWriter fw = new FileWriter("duke.txt", true);
+        fw.write(textToAdd+System.lineSeparator());
+        fw.close();
+    }
+
+    public static void readFileContents(String filePath) throws FileNotFoundException {
+        //generates the text file input to new list each time user opens program.
+        File f = new File(filePath); // create a File for the given file path
+        Scanner s = new Scanner(f); // create a Scanner using the File as the source
+        while (s.hasNext()) {
+            String newLine = s.nextLine();
+            String[] newInput = newLine.split(":");
+            String taskType = newInput[0];
+            String taskMark = newInput[1];
+            String taskName = newInput[2];
+
+            switch (taskType) {
+            case TODO_ICON:
+                list.add(new Todo(taskName));
+                break;
+            case DEADLINE_ICON:
+                String[] deadlineSeparator = taskName.split(COMMAND_BY);
+                String deadlineTask = deadlineSeparator[0];
+                String deadlineBy = deadlineSeparator[1];
+                list.add(new Deadline(deadlineTask, deadlineBy));
+                break;
+            case EVENT_ICON:
+                String[] eventSeparator = taskName.split(COMMAND_FROM);
+                String eventTask = eventSeparator[0];
+                String eventDuration = eventSeparator[1];
+                String[] eventDurationSeparator = eventDuration.split(COMMAND_TO);
+                String eventStart = eventDurationSeparator[0];
+                String eventEnd = eventDurationSeparator[1];
+                list.add(new Event(eventTask, eventStart, eventEnd));
+                break;
+            default:
+                System.out.println("Error.");
+                break;
+            }
+            if (taskMark.equals("1")) {
+                list.get(list.size() - 1).markAsDone();
+            }
+        }
     }
 
     public static void taskManager() {
@@ -160,8 +257,7 @@ public class Duke {
                         throw new EmptyDescriptionException();
                     }
                     list.add(new Todo(taskDesc));
-                    acknowledgementMessage(taskSum);
-                    taskSum++;
+                    acknowledgementMessage();
                 } catch (EmptyDescriptionException e) {
                     e.emptyDescriptionTodo();
                 }
@@ -180,8 +276,7 @@ public class Duke {
                     String eventStart = eventStartAndEnd[0];
                     String eventEnd = eventStartAndEnd[1];
                     list.add(new Event(eventTaskDesc, eventStart, eventEnd));
-                    acknowledgementMessage(taskSum);
-                    taskSum++;
+                    acknowledgementMessage();
                 } catch (EmptyDescriptionException e) {
                     e.emptyDescriptionEvent();
                 } catch (ArrayIndexOutOfBoundsException e) {
@@ -201,8 +296,7 @@ public class Duke {
                     String deadlineTaskDesc = deadlineInput[0];
                     String deadlineDuration = deadlineInput[1];
                     list.add(new Deadline(deadlineTaskDesc, deadlineDuration));
-                    acknowledgementMessage(taskSum);
-                    taskSum++;
+                    acknowledgementMessage();
                 } catch (EmptyDescriptionException e) {
                     e.emptyDescriptionDeadline();
                 } catch (ArrayIndexOutOfBoundsException e) {
@@ -221,7 +315,6 @@ public class Duke {
                         throw new ArrayIndexOutOfBoundsException();
                     }
                     deleteTask(taskNum);
-                    taskSum--;
                 } catch (EmptyDescriptionException e) {
                     e.emptyDescriptionNumber();
                 } catch (ArrayIndexOutOfBoundsException e) {
@@ -240,9 +333,23 @@ public class Duke {
                 break;
             }
         }
+
+        try {
+            clearFile();
+        } catch (IOException e){
+            System.out.println(e.getMessage());
+        }
+        updateFile();
     }
 
     public static void main(String[] args) {
+        try {
+            //readFileContents("C:\\Lip Kuang\\NUS\\Year 2\\Y2S2\\CS2113\\Individual Project\\ip\\src\\main\\java\\data\\duke.txt");
+            readFileContents("duke.txt");
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found!");
+        }
+
         printLogo();
         greetUser();
         taskManager();
