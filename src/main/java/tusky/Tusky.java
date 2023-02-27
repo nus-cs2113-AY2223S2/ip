@@ -32,12 +32,15 @@ public class Tusky {
             } catch (IllegalArgumentException e) {
                 ui.showUnknownCommand();
             } catch (ArrayIndexOutOfBoundsException e) {
+                // something went wrong when parsing the command parameters
                 ui.showInvalidParameters();
             } catch (KeyNotFoundException e) {
                 ui.showKeyNotFound();
             } catch (EmptyDescriptionException e) {
-                ui.showEmptyDescription();
+                ui.showEmptyDescription(e);
             } catch (IndexOutOfBoundsException e) {
+                // an invalid index or index greater than the current length of
+                // task list was provided
                 ui.showInvalidIndex();
             } catch (Exception e) {
                 ui.showUnknownException(e);

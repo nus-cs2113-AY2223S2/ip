@@ -1,6 +1,7 @@
 package tusky.ui;
 
 import tusky.constants.Messages;
+import tusky.exceptions.EmptyDescriptionException;
 import tusky.tasks.Task;
 import tusky.tasks.TaskList;
 
@@ -72,8 +73,8 @@ public class Ui {
         printf(Messages.SMALL_INDENT + "%s\n", task.getDetailedString());
         printf(Messages.TASK_COUNT.toString(), size);
     }
-    public void showEmptyDescription () {
-        println(Messages.ERR_EMPTY_TASK_DESCRIPTION.toString());
+    public void showEmptyDescription (EmptyDescriptionException e) {
+        printf(e.getMessage());
     }
 
     public void showUnknownCommand () {
