@@ -1,10 +1,6 @@
 package duke.command;
 
-import duke.command.FolderNotFoundException;
-import duke.task.Dateline;
-import duke.task.Event;
-import duke.task.Tasks;
-import duke.task.Todo;
+import duke.task.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -42,25 +38,25 @@ public class Storage {
             }
             switch (taskIdentifier) {
                 case "[T][ ]":
-                    Tasks.addToList(new Todo(row.substring(7), false));
+                    TaskList.addToList(new Todo(row.substring(7), false));
                     break;
                 case "[T][X]":
-                    Tasks.addToList(new Todo(row.substring(7), true));
+                    TaskList.addToList(new Todo(row.substring(7), true));
                     break;
                 case "[D][ ]":
-                    Tasks.addToList(new Dateline(row.substring(7, posOfStartBracket - 1), false,
+                    TaskList.addToList(new Dateline(row.substring(7, posOfStartBracket - 1), false,
                             date));
                     break;
                 case "[D][X]":
-                    Tasks.addToList(new Dateline(row.substring(7, posOfStartBracket - 1), true,
+                    TaskList.addToList(new Dateline(row.substring(7, posOfStartBracket - 1), true,
                             date));
                     break;
                 case "[E][ ]":
-                    Tasks.addToList(new Event(row.substring(7, posOfStartBracket - 1), false,
+                    TaskList.addToList(new Event(row.substring(7, posOfStartBracket - 1), false,
                             timeSpan[0], timeSpan[1]));
                     break;
                 case "[E][X]":
-                    Tasks.addToList(new Event(row.substring(7, posOfStartBracket - 1), true,
+                    TaskList.addToList(new Event(row.substring(7, posOfStartBracket - 1), true,
                             timeSpan[0], timeSpan[1]));
                     break;
             }
@@ -68,8 +64,8 @@ public class Storage {
     }
     public void save() throws IOException {
         FileWriter fw = new FileWriter(filePath);
-        for (int num = 1; num <= Tasks.getNumberOfTasks(); ++num) {
-            Tasks thisTask = Tasks.getTaskList().get(num - 1);
+        for (int num = 1; num <= TaskList.getNumberOfTasks(); ++num) {
+            Tasks thisTask = TaskList.getTaskList().get(num - 1);
             fw.write(String.valueOf(thisTask));
             fw.write("\n");
         }
