@@ -2,6 +2,8 @@
 import exceptions.EmptyInputException;
 import exceptions.IllegalInputException;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 public class Duke {
@@ -52,19 +54,23 @@ public class Duke {
         taskCounter += 1;
         printAddTodo(todo, taskCounter);
     }
-    private static boolean readInput() throws EmptyInputException, IllegalInputException {
-        Scanner sc = new Scanner(System.in);
+    private static boolean readInput(String s) throws EmptyInputException, IllegalInputException {
         String input = "";
-        input = sc.nextLine();
+        if (s.equals("in")) {
+            Scanner sc = new Scanner(System.in);
+            input = sc.nextLine();
+        }
+        else {
+            input = s;
+        }
 
         int taskCounter = 0;
 
-
-        while (!input.equals("bye")) {
-
+        if (!input.equals("bye")) {
 
             String[] inputs = input.split(" ");
-            String command  = inputs[0];
+            String command = inputs[0];
+            int taskIndex;
 
             printLine();
 
@@ -73,16 +79,16 @@ public class Duke {
                 printList(taskCounter);
                 break;
             case "mark":
-                int taskIndex = Integer.parseInt(inputs[1]);
-                if (taskIndex > tasks.size() || taskIndex <= 0) throw  new IllegalInputException();
-                tasks.get(taskIndex-1).markAsDone();
+                taskIndex = Integer.parseInt(inputs[1]);
+                if (taskIndex > tasks.size() || taskIndex <= 0) throw new IllegalInputException();
+                tasks.get(taskIndex - 1).markAsDone();
                 System.out.println("I have marked this task as done");
                 printList(taskCounter);
                 break;
             case "unmark":
                 taskIndex = Integer.parseInt(inputs[1]);
-                if (taskIndex > tasks.size() || taskIndex <= 0) throw  new IllegalInputException();
-                tasks.get(taskIndex-1).markAsNotDone();
+                if (taskIndex > tasks.size() || taskIndex <= 0) throw new IllegalInputException();
+                tasks.get(taskIndex - 1).markAsNotDone();
                 System.out.println("I have unmarked this task");
                 printList(taskCounter);
                 break;
@@ -93,7 +99,7 @@ public class Duke {
                 String deadlineInput = "";
                 String deadlineDeadline = "";
                 boolean isDeadline = false;
-                for (int i = 1; i < inputs.length; i ++) {
+                for (int i = 1; i < inputs.length; i++) {
                     if (inputs[i].contains("/")) {
                         isDeadline = true;
                         continue;
@@ -101,22 +107,24 @@ public class Duke {
                     if (isDeadline) {
                         deadlineDeadline += inputs[i];
                         deadlineDeadline += " ";
-                    }
-                    else {
+                    } else {
                         deadlineInput += inputs[i];
                         deadlineInput += " ";
                     }
                 }
                 if (!isDeadline) throw new IllegalInputException();
                 Deadline deadline = new Deadline(deadlineInput, deadlineDeadline);
-                tasks.add(deadline); taskCounter += 1;
+                tasks.add(deadline);
+                taskCounter += 1;
                 printAddDeadline(deadline, taskCounter);
                 break;
             case "event":
                 String eventInput = "";
-                String eventFrom = ""; String eventTo = "";
-                boolean isFrom = false; boolean isTo = false;
-                for (int i = 1; i < inputs.length; i ++) {
+                String eventFrom = "";
+                String eventTo = "";
+                boolean isFrom = false;
+                boolean isTo = false;
+                for (int i = 1; i < inputs.length; i++) {
                     if (inputs[i].contains("/from")) {
                         isFrom = true;
                         continue;
@@ -128,23 +136,26 @@ public class Duke {
                     if (isTo) {
                         eventTo += inputs[i];
                         eventTo += " ";
-                    }
-                    else if (isFrom){
+                    } else if (isFrom) {
                         eventFrom += inputs[i];
                         eventFrom += " ";
-                    }
-                    else {
+                    } else {
                         eventInput += inputs[i];
                         eventInput += " ";
                     }
                 }
-                if (! (isTo && isFrom)) throw new IllegalInputException();
-                Event event = new Event(eventInput,eventFrom, eventTo);
-                tasks.add(event); taskCounter += 1;
+                if (!(isTo && isFrom)) throw new IllegalInputException();
+                Event event = new Event(eventInput, eventFrom, eventTo);
+                tasks.add(event);
+                taskCounter += 1;
                 printAddEvent(event, taskCounter);
                 break;
             case "delete":
-                System.out.print("I have removed");
+                taskIndex = Integer.parseInt(inputs[1]);
+                if (taskIndex > tasks.size() || taskIndex <= 0) throw new IllegalInputException();
+                tasks.remove(taskIndex - 1);
+                System.out.print("I have removed this item in index ");
+                System.out.println(taskIndex);
                 printList(taskCounter);
                 break;
             default:
@@ -152,17 +163,47 @@ public class Duke {
             }
 
             printLine();
-
-            input = sc.nextLine();
+            return false;
         }
-        return true;
+        else
+            return true;
     }
+    private static void printFileContents(String filePath) throws FileNotFoundException {
+        File f = new File(filePath); // create a File for the given file path
+        Scanner s = new Scanner(f); // create a Scanner using the File as the source
+
+        while (s.hasNext()) {
+            try {
+                boolean yes = readInput(s.nextLine());
+            }
+            catch (EmptyInputException e) {
+                System.out.println("Description Can Not Be Empty!");
+            }
+            catch (IllegalInputException e) {
+                System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+                printLine();
+            }
+        }
+        printList(0);
+        printLine();
+    }
+
     public static void main(String[] args) {
         printWelcomeMessage();
+        File f = new File("data/input.txt");
+        //populate
+        try {
+            printFileContents("data/input.txt");
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("File not found!");
+        }
+
         boolean isBye = false;
         while (!isBye) {
             try {
-                isBye = readInput();
+                String s = "in";
+                isBye = readInput(s);
             }
             catch (EmptyInputException e) {
                 System.out.println("Description Can Not Be Empty!");
