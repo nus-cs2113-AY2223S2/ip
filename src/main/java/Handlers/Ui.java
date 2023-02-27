@@ -92,12 +92,12 @@ public interface Ui {
     private static void printLineBreak() {
         System.out.println("==============================\n");
     }
-        
+
     public static void addedTodoMessage(Todo todoTask) {
         System.out.println("Got it. I've added this task:\n" + todoTask.describeTask());
         System.out.println("\nNow you have " + TaskManager.getTaskCount() + " tasks in the list.\n");
     }
-    
+
     public static void addedDeadlineMessage(Deadline deadlineTask) {
         System.out.println("Got it. I've added this task:\n" + deadlineTask.describeTask());
         System.out.println("\nNow you have " + TaskManager.getTaskCount() + " tasks in the list.\n");
@@ -131,6 +131,38 @@ public interface Ui {
 
     public static void fileErrorMessage() {
         System.out.println("Error reading file");
+    }
+
+    public static void taskNumberOutofBoundsMessage() {
+        System.out.println("task number does not exist.");
+    }
+
+    public static void taskNumberInvalidTypeMessage() {
+        System.out.println("task number must be a number.");
+    }
+
+    public static void taskNumberMissingMessage() {
+        System.out.println("task number must be stated.");
+    }
+    
+    public static void taskDescriptionEmptyMessage() {
+        System.out.println("task description for find function cannot be empty.");
+    }
+    
+    public static void todoDescriptionMissingMessage() {
+        System.out.println("description for todo cannot be empty.");
+    }
+
+    public static void deadlineDescriptionMissingMessage() {
+        System.out.println("description for deadline cannot be empty.");
+    }
+    
+    public static void eventDescriptionMissingMessage() {
+        System.out.println("description for event cannot be empty.");
+    }
+
+    public static void emptyTaskListMessage() {
+        System.out.println("You have no tasks in your list yet!");
     }
 
 }

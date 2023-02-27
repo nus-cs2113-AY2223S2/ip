@@ -44,12 +44,13 @@ public abstract class TaskManager {
         try {
             printTasksFromArray();
         } catch (EmptyListException e) {
-            System.out.println("You have no tasks in your list yet!");
+            Ui.emptyTaskListMessage();
         }
     }
 
     /**
-     * Prints out all tasks in the taskList Array for the user to read.
+     * Checks if the taskList Array is empty and prints out the tasks in the
+     * taskList Array.
      * 
      * @throws EmptyListException
      *             if the taskList Array is empty

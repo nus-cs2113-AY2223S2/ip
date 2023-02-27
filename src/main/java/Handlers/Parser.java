@@ -56,11 +56,11 @@ public abstract class Parser {
             index = Integer.parseInt(getSecondWord(line));
             isTaskNumberValid(index);
         } catch (TaskManagerException e) {
-            System.out.println("task number must be stated.");
+            Ui.taskNumberMissingMessage();
         } catch (NumberFormatException e) {
-            System.out.println("task number must be a number.");
+            Ui.taskNumberInvalidTypeMessage();
         } catch (InvalidTypeException e) {
-            System.out.println("task number does not exist.");
+            Ui.taskNumberOutofBoundsMessage();
         }
         return index;
     }
@@ -77,7 +77,7 @@ public abstract class Parser {
         try {
             description = getSecondWord(line);
         } catch (TaskManagerException e) {
-            System.out.println("task description for find function cannot be empty.");
+            Ui.taskDescriptionEmptyMessage();
         }
         return description;
     }
@@ -115,7 +115,7 @@ public abstract class Parser {
             TaskManager.addTask(todoTask);
             Ui.addedTodoMessage(todoTask);
         } catch (TaskManagerException e) {
-            System.out.println("description for todo cannot be empty.");
+            Ui.todoDescriptionMissingMessage();
         }
     }
 
@@ -133,10 +133,9 @@ public abstract class Parser {
             TaskManager.addTask(deadlineTask);
             Ui.addedDeadlineMessage(deadlineTask);
         } catch (TaskManagerException e) {
-            System.out.println("description for deadline cannot be empty.");
+            Ui.deadlineDescriptionMissingMessage();
         }
     }
-
     
     /** 
      * Takes in a string containing the deadline description and deadline date and
@@ -167,10 +166,9 @@ public abstract class Parser {
             TaskManager.addTask(eventTask);
             Ui.addedEventMessage(eventTask);
         } catch (TaskManagerException e) {
-            System.out.println("description for event cannot be empty.");
+            Ui.eventDescriptionMissingMessage();
         }
     }
-
     
     /** 
      * Takes in a string containing the event description, event start date and event
