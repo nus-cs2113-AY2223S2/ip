@@ -4,8 +4,8 @@ public class Event extends Task {
     protected String startTime;
     protected String finishTime;
 
-    public Event(String name, boolean isDone, int taskId, String startTime, String finishTime) {
-        super(name, isDone, taskId);
+    public Event(String name, boolean isDone, String startTime, String finishTime) {
+        super(name, isDone);
         this.startTime = startTime;
         this.finishTime = finishTime;
     }
@@ -21,9 +21,9 @@ public class Event extends Task {
 
     public void print() {
         if (this.isIsDone() == false) {
-            System.out.println((this.getTaskId() + 1) + "." + this.toString());
+            System.out.println("." + this.toString());
         } else {
-            System.out.println((this.getTaskId() + 1) + "." + this.toString());
+            System.out.println("." + this.toString());
         }
     }
 }

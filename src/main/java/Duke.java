@@ -12,8 +12,9 @@ public class Duke {
         System.out.println(
                 "event + \"event name\" + /from \"event start time\" + /to \"event finish time\" to add an event with a stant and finish time");
         System.out.println("list to list all events and tasks available");
-        System.out.println("mark + \"task number\" to mark a task");
-        System.out.println("mark + \"task number\" to unmark a task");
+        System.out.println("mark + \"task number\" to mark an item");
+        System.out.println("unmark + \"task number\" to unmark an item");
+        System.out.println("delete + \"task number\" to remove an item");
     }
 
     public static void printHorizontalLine() {
@@ -33,20 +34,20 @@ public class Duke {
         return a[0];
     }
 
-    public static void executeAddTodo(String s, int taskId, TaskManager listofItems) {
+    public static void executeAddTodo(String s, TaskManager listofItems) {
         try {
             s = s.substring("todo ".length(), s.length());
-            listofItems.addTask(s, taskId);
+            listofItems.addTask(s);
             System.out.println("Roger. The following todo has been added:");
             System.out.println("[T][ ] " + s);
-            System.out.println("You now have " + (taskId + 1) + " item in the list");
+            System.out.println("You now have " + listofItems.getSize() + " item in the list");
         } catch (StringIndexOutOfBoundsException e) {
             System.out.println("Missing todo item. Please read instructions again");
             printInstructions();
         }
     }
 
-    public static void executeAddDeadline(String s, int taskId, TaskManager listofItems) {
+    public static void executeAddDeadline(String s, TaskManager listofItems) {
         try {
             s = s.substring("deadline ".length(), s.length());
             String[] cmd = s.split(" /by ");
@@ -55,10 +56,10 @@ public class Duke {
                 printInstructions();
                 return;
             }
-            listofItems.addDeadline(cmd[0], cmd[1], taskId);
+            listofItems.addDeadline(cmd[0], cmd[1]);
             System.out.println("Roger. The following deadline has been added:");
             System.out.println("[D][ ] " + cmd[0] + " (by: " + cmd[1] + ")");
-            System.out.println("You now have " + (taskId + 1) + " item in the list");
+            System.out.println("You now have " + listofItems.getSize() + " item in the list");
         } catch (StringIndexOutOfBoundsException e) {
             System.out.println("Your task name is missing please try again!");
             printInstructions();
@@ -69,16 +70,16 @@ public class Duke {
 
     }
 
-    public static void executeAddEvent(String s, int taskId, TaskManager listofItems) {
+    public static void executeAddEvent(String s, TaskManager listofItems) {
         try {
             s = s.substring("event ".length(), s.length());
             String[] cmd = s.split(" /from ");
             String startTime = cmd[1].split(" /to ")[0];
             String endTime = cmd[1].split(" /to ")[1];
-            listofItems.addEvent(cmd[0], startTime, endTime, taskId);
+            listofItems.addEvent(cmd[0], startTime, endTime);
             System.out.println("Roger. The following event has been added:");
             System.out.println("[E][ ] " + cmd[0] + " (from: " + startTime + " to: " + endTime + ")");
-            System.out.println("You now have " + (taskId + 1) + " item in the list");
+            System.out.println("You now have " + listofItems.getSize() + " item in the list");
         } catch (StringIndexOutOfBoundsException e) {
             System.out.println("Your task name is missing please try again!");
             printInstructions();
@@ -107,23 +108,19 @@ public class Duke {
         Scanner scanObj = new Scanner(System.in);
         TaskManager listofItems = new TaskManager();
         String userCmd = scanObj.nextLine();
-        int taskId = 0;
         while (!userCmd.equals("bye")) {
             switch (firstWord(userCmd)) {
                 case "todo":
-                    executeAddTodo(userCmd, taskId, listofItems);
+                    executeAddTodo(userCmd, listofItems);
                     printHorizontalLine();
-                    taskId++;
                     break;
                 case "deadline":
-                    executeAddDeadline(userCmd, taskId, listofItems);
+                    executeAddDeadline(userCmd, listofItems);
                     printHorizontalLine();
-                    taskId++;
                     break;
                 case "event":
-                    executeAddEvent(userCmd, taskId, listofItems);
+                    executeAddEvent(userCmd, listofItems);
                     printHorizontalLine();
-                    taskId++;
                     break;
                 case "list":
                     listofItems.listTask();
@@ -137,6 +134,11 @@ public class Duke {
                 case "unmark":
                     String unmarkId[] = userCmd.split(" ");
                     listofItems.unmarkTask(Integer.parseInt(unmarkId[1]) - 1);
+                    printHorizontalLine();
+                    break;
+                case "delete":
+                    String deleteId[] = userCmd.split(" ");
+                    listofItems.deleteTask(Integer.parseInt(deleteId[1]) - 1);
                     printHorizontalLine();
                     break;
                 default:

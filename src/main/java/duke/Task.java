@@ -3,7 +3,6 @@ package duke;
 public class Task {
     private String name;
     private boolean isDone;
-    private int taskId;
     private char taskType;
 
     public boolean isIsDone() {
@@ -18,10 +17,9 @@ public class Task {
         this.taskType = taskType;
     }
 
-    public Task(String name, boolean isDone, int taskId) {
+    public Task(String name, boolean isDone) {
         this.name = name;
         this.isDone = isDone;
-        this.taskId = taskId;
     }
 
     public String getName() {
@@ -44,16 +42,8 @@ public class Task {
         this.isDone = isDone;
     }
 
-    public int getTaskId() {
-        return this.taskId;
-    }
-
-    public void setTaskId(int taskId) {
-        this.taskId = taskId;
-    }
-
     public String toString() {
-        if(this.isDone == true) {
+        if (this.isDone == true) {
             return " [T][X]" + this.name;
         } else {
             return " [T][ ]" + this.name;
@@ -62,9 +52,9 @@ public class Task {
 
     public void print() {
         if (this.isDone == false) {
-            System.out.println((this.taskId + 1) + "." + this.toString());
+            System.out.println("." + this.toString());
         } else {
-            System.out.println((this.taskId + 1) + "." + this.toString());
+            System.out.println("." + this.toString());
         }
     }
 }
