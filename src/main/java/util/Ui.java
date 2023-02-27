@@ -84,11 +84,17 @@ public class Ui {
         System.out.println("\t Now you have " + commands.size() + " tasks in the list.");
     }
 
-    public void printSearchResult(ArrayList<Integer> relatedIndexes,ArrayList<Task> commands){
+    /**
+     * Prints the specified tasks.
+     * 
+     * @param relatedIndexes the indexes of the tasks to be printed
+     * @param commands       the list of tasks
+     */
+    public void printSearchResult(ArrayList<Integer> relatedIndexes, ArrayList<Task> commands) {
         printDashLine();
         System.out.println("\t Here are the matching tasks in your list:");
-        for (int i:relatedIndexes){
-            printSpecificTask(i+1, commands, "");
+        for (int i : relatedIndexes) {
+            printSpecificTask(i + 1, commands, "");
         }
         printDashLine();
     }
