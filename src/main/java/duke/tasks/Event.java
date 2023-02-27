@@ -1,5 +1,8 @@
 package duke.tasks;
 
+/**
+ * An extension of the task. Accepts a description and start and end time.
+ */
 public class Event extends Task {
     
     // Attributes

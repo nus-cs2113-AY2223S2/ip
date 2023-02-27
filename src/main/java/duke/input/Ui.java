@@ -3,6 +3,9 @@ package duke.input;
 import duke.input.Parser;
 import java.util.Scanner;
 
+/**
+ * A class to handle greeting, exiting, and accepting input.
+ */
 public class Ui {
     
     final static String BARRIER = "____________________________________________________________";
@@ -23,6 +26,9 @@ public class Ui {
         System.out.println(EXIT);
     }
 
+    /**
+     * Creates a Scanner and reads input such that the commands isn't 'bye'
+     */
     public void takeInput() {
         final Scanner CONSOLE = new Scanner(System.in);
         String input = CONSOLE.nextLine();
