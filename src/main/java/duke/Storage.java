@@ -1,19 +1,28 @@
 package duke;
 
-import duke.task.List;
-import duke.task.Task;
+import duke.task.TaskList;
 import duke.task.TaskType;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-public class Data {
 
-    public static void loadData() {
+public class Storage {
+
+    private static String filePath = "data/data.txt";
+
+    public Storage(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public static TaskList loadData() {
+        TaskList tasks = new TaskList();
+
         try {
-            File myObj = new File("data/data.txt");
+            File myObj = new File(filePath);
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String rawData = myReader.nextLine();
@@ -21,13 +30,13 @@ public class Data {
 
                 switch (dataList[0].trim()) {
                 case "T":
-                    List.loadTask(dataList[1].trim(), dataList[2].trim(), TaskType.TODO);
+                    tasks.loadTask(dataList[1].trim(), dataList[2].trim(), TaskType.TODO);
                     break;
                 case "D":
-                    List.loadTask(dataList[1].trim(), dataList[2].trim(), TaskType.DEADLINE);
+                    tasks.loadTask(dataList[1].trim(), dataList[2].trim(), TaskType.DEADLINE);
                     break;
                 case "E":
-                    List.loadTask(dataList[1].trim(), dataList[2].trim(), TaskType.EVENT);
+                    tasks.loadTask(dataList[1].trim(), dataList[2].trim(), TaskType.EVENT);
                     break;
                 }
             }
@@ -35,11 +44,13 @@ public class Data {
         } catch (FileNotFoundException e) {
             createFile();
         }
+
+        return tasks;
     }
     public static void createFile() {
         try {
             if (new File("data").mkdirs()) {
-                File data = new File("data/data.txt");
+                File data = new File(filePath);
                 data.createNewFile();
             }
         } catch (IOException e) {
@@ -50,8 +61,8 @@ public class Data {
 
     public static void writeFile() {
         try {
-            FileWriter myWriter = new FileWriter("data/data.txt");
-            String data = List.writeTask();
+            FileWriter myWriter = new FileWriter(filePath);
+            String data = TaskList.writeTask();
             myWriter.write(data);
             myWriter.close();
         } catch (IOException e) {

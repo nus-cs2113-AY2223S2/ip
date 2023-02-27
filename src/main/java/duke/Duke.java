@@ -1,106 +1,117 @@
 package duke;
 
-import duke.command.Message;
+import duke.command.Ui;
 import duke.command.Parser;
-import duke.task.List;
+import duke.task.TaskList;
 import duke.task.TaskType;
 
 public class Duke {
+
+    private Storage storage;
+    private TaskList tasks;
+    private Ui ui;
+
+    public Duke(String filePath) {
+        ui = new Ui();
+        storage = new Storage(filePath);
+        tasks = storage.loadData();
+    }
     public static void main(String[] args) {
+        new Duke("data/data.txt").runDuke();
+    }
+
+    private void closeDuke() {
+        ui.line();
+        Storage.writeFile();
+        ui.bye();
+        ui.line();
+    }
+
+    private void startDuke() {
+        ui.line();
+        ui.hello();
+        ui.line();
+    }
+
+    private void runDuke() {
         startDuke();
-        runDuke();
-        closeDuke();
-    }
 
-    private static void closeDuke() {
-        Message.line();
-        Data.writeFile();
-        Message.bye();
-        Message.line();
-    }
-
-    private static void startDuke() {
-        Message.line();
-        Message.hello();
-        Data.loadData();
-        Message.line();
-    }
-
-    private static void runDuke() {
-        String userCommand, userInputDetails;
+        String userCommand, userInputParameter;
 
         do {
             Parser.getUserInput();
             userCommand = Parser.getUserCommand();
             switch(userCommand) {
             case "list":
-                userInputDetails = Parser.getUserInputDetails();
-                if (userInputDetails.equals("")) {
-                    List.printList();
+                userInputParameter = Parser.getUserInputDetails();
+                if (userInputParameter.equals("")) {
+                    TaskList.printList();
                 } else {
-                    Message.unknownCommandHandler();
+                    ui.unknownCommandHandler();
                 }
                 break;
             case "mark":
-                userInputDetails = Parser.getUserInputDetails();
+                userInputParameter = Parser.getUserInputDetails();
                 try {
-                    List.markDone(Integer.parseInt(userInputDetails.trim()));
+                    TaskList.markDone(Integer.parseInt(userInputParameter.trim()));
                 } catch (NumberFormatException e) {
-                    Message.line();
+                    ui.line();
                     System.out.println("Please input a list index to mark!");
-                    Message.line();
+                    ui.line();
                 } catch (IndexOutOfBoundsException e) {
-                    Message.line();
+                    ui.line();
                     System.out.println("The list index you have input is not in the list!");
-                    Message.line();
+                    ui.line();
                 }
                 break;
             case "unmark":
-                userInputDetails = Parser.getUserInputDetails();
+                userInputParameter = Parser.getUserInputDetails();
                 try {
-                    List.markUndone(Integer.parseInt(userInputDetails.trim()));
+                    TaskList.markUndone(Integer.parseInt(userInputParameter.trim()));
                 } catch (NumberFormatException e) {
-                    Message.line();
+                    ui.line();
                     System.out.println("Please input a list index to mark!");
-                    Message.line();
+                    ui.line();
                 } catch (IndexOutOfBoundsException e) {
-                    Message.line();
+                    ui.line();
                     System.out.println("The list index you have input is not in the list!");
-                    Message.line();
+                    ui.line();
                 }
                 break;
             case "todo":
-                userInputDetails = Parser.getUserInputDetails();
-                List.addTask(userInputDetails, TaskType.TODO);
+                userInputParameter = Parser.getUserInputDetails();
+                TaskList.addTask(userInputParameter, TaskType.TODO);
                 break;
             case "deadline":
-                userInputDetails = Parser.getUserInputDetails();
-                List.addTask(userInputDetails, TaskType.DEADLINE);
+                userInputParameter = Parser.getUserInputDetails();
+                TaskList.addTask(userInputParameter, TaskType.DEADLINE);
                 break;
             case "event":
-                userInputDetails = Parser.getUserInputDetails();
-                List.addTask(userInputDetails, TaskType.EVENT);
+                userInputParameter = Parser.getUserInputDetails();
+                TaskList.addTask(userInputParameter, TaskType.EVENT);
                 break;
             case "delete":
-                userInputDetails = Parser.getUserInputDetails();
+                userInputParameter = Parser.getUserInputDetails();
                 try {
-                    List.removeTask(Integer.parseInt(userInputDetails.trim()));
+                    TaskList.removeTask(Integer.parseInt(userInputParameter.trim()));
                 } catch (NumberFormatException e) {
-                    Message.line();
+                    ui.line();
                     System.out.println("Please input a list index to delete!");
-                    Message.line();
+                    ui.line();
                 } catch (IndexOutOfBoundsException e) {
-                    Message.line();
+                    ui.line();
                     System.out.println("The list index you have input is not in the list!");
-                    Message.line();
+                    ui.line();
                 }
                 break;
             case "bye":
                 break;
             default:
-                Message.unknownCommandHandler();
+                ui.unknownCommandHandler();
             }
-            Data.writeFile();
+            Storage.writeFile();
         } while (!(userCommand.equals("bye")));
+
+        closeDuke();
     }
 }

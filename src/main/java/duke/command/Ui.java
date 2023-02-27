@@ -1,6 +1,6 @@
 package duke.command;
 
-public class Message {
+public class Ui {
     public static final String HORIZONTAL_LINE = "____________________________________________________________";
 
     public static void logo() {
@@ -18,7 +18,7 @@ public class Message {
     }
 
     public static void hello() {
-        Message.logo();
+        Ui.logo();
         System.out.println("Hello! I'm Duke\nWhat can I do for you?");
     }
 
@@ -27,14 +27,14 @@ public class Message {
     }
 
     public static void echo(String userInput) {
-        Message.line();
+        Ui.line();
         System.out.println(userInput);
-        Message.line();
+        Ui.line();
     }
 
     public static void unknownCommandHandler() {
-        Message.line();
+        Ui.line();
         System.out.println("You have entered an unknown command! Please try again!");
-        Message.line();
+        Ui.line();
     }
 }
