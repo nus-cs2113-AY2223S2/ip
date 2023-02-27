@@ -7,6 +7,7 @@ import duke.files.FileManager;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Parser {
 
@@ -163,6 +164,33 @@ public class Parser {
                 break;
             }
         }
+
+        case "find": {
+            try {
+                if(splitInput.length != 2) {
+                    throw new DukeExceptions.invalidInputStructure("Argh! Structure ye input correctly!");
+                }
+                String searchKey = originalInput.substring(5);
+                ArrayList<Task> relevantTasks = new ArrayList<>();
+                for(int i = 0; i < TaskList.getTasksArray().size(); i++) {
+                    if (TaskList.getTasksArray().get(i).description.contains(searchKey)) {
+                        relevantTasks.add(TaskList.getTasksArray().get(i));
+                    }
+                }
+                if (relevantTasks.size() == 0) {
+                    System.out.println(BARRIER + "\n\n No tasks found!\n" + BARRIER + "\n");
+                    break;
+                }
+                System.out.println(BARRIER + "\n\nTasks found: ");
+                for(int i = 0; i < relevantTasks.size(); i++) {
+                    System.out.println(i+1 + ". " + relevantTasks.get(i).printTask());
+                }
+                System.out.println(BARRIER+"\n");
+            } finally {
+                break;
+            }
+        }
+
 
         // Adds a new task if no case is hit
         default: {
