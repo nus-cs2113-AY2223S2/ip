@@ -81,7 +81,6 @@ Format: `event <TASK_DESCRIPTION> /start <START_TIME> /end <END_TIME>`
   and end time `<END_TIME>` to the task list.
 - The `<TASK_DESCRIPTION>` should not be empty.
 - The `/from` and `/to` keywords are required.
-- The `<START_TIME>` and `<END_TIME>` should be in the format `YYYY-MM-DD HHmm`.
 
 Examples:
 - `event CS2113 Project Meeting /start 2023-03-15 1400 /end 2023-03-15 1500`
