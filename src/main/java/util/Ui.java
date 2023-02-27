@@ -4,10 +4,24 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import util.Task;
 
+/**
+ * 
+ * The Ui class handles all user interactions and outputs.
+ * It contains methods to display the command list, ask for user input, print
+ * dash lines,
+ * print welcome and bye messages, print specific task, and print the length of
+ * the task list.
+ * 
+ */
 public class Ui {
     public Ui() {
     }
-    
+
+    /**
+     * Displays the list of tasks.
+     * 
+     * @param commands the list of tasks to be displayed
+     */
     public void displayCommandsList(ArrayList<Task> commands) {
         int i = 1;
         System.out.println("\t_____________________________________________________");
@@ -18,6 +32,11 @@ public class Ui {
         System.out.println("\t_____________________________________________________");
     }
 
+    /**
+     * Asks for user input.
+     * 
+     * @return the user's input
+     */
     public String ask() {
         String line;
         Scanner in = new Scanner(System.in);
@@ -47,6 +66,13 @@ public class Ui {
         System.out.println("____________________________________________________________\n");
     }
 
+    /**
+     * Prints a specified message and a specific task.
+     * 
+     * @param index    the index of the task to be printed
+     * @param commands the list of tasks
+     * @param message  a message to be displayed before the task
+     */
     public void printSpecificTask(int index, ArrayList<Task> commands, String message) {
         if (!message.equals("")) {
             System.out.println("\t " + message);
@@ -58,11 +84,17 @@ public class Ui {
         System.out.println("\t Now you have " + commands.size() + " tasks in the list.");
     }
 
-    public void printSearchResult(ArrayList<Integer> relatedIndexes,ArrayList<Task> commands){
+    /**
+     * Prints the specified tasks.
+     * 
+     * @param relatedIndexes the indexes of the tasks to be printed
+     * @param commands       the list of tasks
+     */
+    public void printSearchResult(ArrayList<Integer> relatedIndexes, ArrayList<Task> commands) {
         printDashLine();
         System.out.println("\t Here are the matching tasks in your list:");
-        for (int i:relatedIndexes){
-            printSpecificTask(i+1, commands, "");
+        for (int i : relatedIndexes) {
+            printSpecificTask(i + 1, commands, "");
         }
         printDashLine();
     }

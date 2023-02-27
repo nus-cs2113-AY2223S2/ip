@@ -1,4 +1,5 @@
 package util;
+
 import java.util.ArrayList;
 import util.Task;
 import util.Deadline;
@@ -6,9 +7,18 @@ import util.Todo;
 import util.Event;
 import util.Ui;
 
+/**
+ * 
+ * The Parser class parses user input and generates appropriate output messages.
+ * It interacts with the Ui class and updates the Task list as required.
+ */
 public class Parser {
     protected boolean isExit;
     private Ui ui;
+
+    /**
+     * Constructor for Parser class. Initializes isExit to false.
+     */
     public Parser() {
         isExit = false;
     }
@@ -17,6 +27,14 @@ public class Parser {
         return isExit;
     }
 
+    /**
+     * Parses the user input and generates appropriate output messages.
+     * updates the Task list as required.
+     * 
+     * @param line     the user input string
+     * @param commands the ArrayList of Tasks
+     * @return the updated ArrayList of Tasks
+     */
     public ArrayList<Task> answerCommand(String line, ArrayList<Task> commands) {
         ui = new Ui();
         if (line.equals("bye")) {

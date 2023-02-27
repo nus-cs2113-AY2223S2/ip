@@ -7,10 +7,26 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * 
+ * The Storage class contains methods for reading and writing of tasks from/to
+ * the data file.
+ */
+
 public class Storage {
+    /**
+     * The path of the data file.
+     */
     public static final String DATAPATH = "data/duke.txt";
     public static final File DATAFILE = new File(DATAPATH);
+    /**
+     * The Ui object used for printing messages to the console.
+     */
     public Ui ui;
+
+    /**
+     * Initializes the data file and directory if they do not already exist.
+     */
     public static void initializeFile() {
         File dataDir = new File("data");
         Ui ui = new Ui();
@@ -32,6 +48,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Loads tasks from the data file into an ArrayList of Task objects.
+     *
+     * @return An ArrayList of Task objects representing the tasks in the data file.
+     * @throws FileNotFoundException if the data file is not found.
+     */
     public static ArrayList<Task> loadDataFromFile() throws FileNotFoundException {
         ArrayList<Task> commands = TaskList.createList();
         if (DATAFILE.length() > 0) {
@@ -67,12 +89,25 @@ public class Storage {
         return commands;
     }
 
+    /**
+     * Writes a string to the data file.
+     *
+     * @param textToAdd The string to be written to the data file.
+     * @param append    Whether to append to the data file or overwrite it.
+     * @throws IOException if an I/O error occurs.
+     */
     private static void writeToFile(String textToAdd, boolean append) throws IOException {
         FileWriter fw = new FileWriter(DATAPATH, append);
         fw.write(textToAdd);
         fw.close();
     }
 
+    /**
+     * Updates the data file with the tasks in the given ArrayList.
+     *
+     * @param commands The ArrayList of Task objects to write to the data file.
+     * @throws IOException if an I/O error occurs.
+     */
     public static void updateDatafile(ArrayList<Task> commands) throws IOException {
         writeToFile("", false);
         try {
