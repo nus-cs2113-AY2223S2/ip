@@ -20,9 +20,10 @@ public class Event extends Task {
     /**
      * Create an Event object, a subclass of Task.
      * Used to keep track of a Task's start and end times.
+     *
      * @param description String describing the Event
-     * @param from Datetime of the event's start
-     * @param to Datetime of the event's end
+     * @param from        Datetime of the event's start
+     * @param to          Datetime of the event's end
      */
     public Event(String description, String from, String to) {
         super(description);

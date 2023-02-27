@@ -18,8 +18,9 @@ public class Deadline extends Task {
     /**
      * Create a Deadline object, a subclass of Task.
      * Used to keep track of a Task's due date.
+     *
      * @param description String describing the Deadline
-     * @param dueDate Date that the deadline is due
+     * @param dueDate     Date that the deadline is due
      */
     public Deadline(String description, String dueDate) {
         super(description);
@@ -30,7 +31,7 @@ public class Deadline extends Task {
     @Override
     public String getDescription() {
         String description = ui.wrapMessage(getTaskLabel()) + super.getDescription();
-        description = description.concat( WRAPPER_BY+ this.dueDate + WRAPPER_END);
+        description = description.concat(WRAPPER_BY + this.dueDate + WRAPPER_END);
         return description;
     }
 

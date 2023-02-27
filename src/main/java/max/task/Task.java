@@ -13,7 +13,6 @@ import javax.print.DocFlavor;
  * 1. Store the description of the task
  * 2. Store the completion status of the task
  * 3. Return the description and metadata of the Task
- *
  */
 public abstract class Task {
     protected String description;
@@ -22,6 +21,7 @@ public abstract class Task {
     private static final String TASK_LABEL = "?";
     private static final String STATUS_DONE = "X";
     private static final String STATUS_NOT_DONE = " ";
+
     /**
      * Based on the task, returns the label representing the Task type
      *
