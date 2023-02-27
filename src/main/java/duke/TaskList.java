@@ -13,6 +13,12 @@ import java.util.ArrayList;
 public class TaskList {
     private static ArrayList<Task> tasks = new ArrayList<>();
 
+    /**
+     * Execute command specified by the command string.
+     *
+     * @param inputLine Input command from user.
+     * @param command String containing the task type.
+     */
     public void executeCommand(String[] inputLine, String command, Storage storage) {
         if (command.equals("bye")) {
             Ui.farewell();
@@ -72,13 +78,18 @@ public class TaskList {
         }
     }
 
-    public static void printList(ArrayList<Task> printTask) {
+    /**
+     * Prints all tasks.
+     *
+     * @param t List containing tasks to be printed.
+     */
+    public static void printList(ArrayList<Task> t) {
         System.out.println(Ui.LINE_BREAK);
         Ui.printlnWithIndentation("Here are the tasks in your list: ");
-        for (int i = 0; i < printTask.size(); ++i) {
+        for (int i = 0; i < t.size(); ++i) {
             int taskNumber = i + 1;
             System.out.println(Ui.INDENTATION + taskNumber + "." +
-                    printTask.get(i).toString());
+                    t.get(i).toString());
         }
         System.out.println(Ui.LINE_BREAK);
     }
@@ -228,6 +239,13 @@ public class TaskList {
         }
     }
 
+    /**
+     * Adds task from .txt file without outputs.
+     *
+     * @param fileLine String of action command.
+     * @param command Command string from the saved file.
+     * @throws IllegalCommandException if command is invalid.
+     */
     public static void addTaskFromFile(String fileLine, String command) throws IllegalCommandException {
         switch (command) {
         case "todo":
@@ -259,10 +277,20 @@ public class TaskList {
         }
     }
 
+    /**
+     * Sets the last task in the task list as done.
+     *
+     * @param isDone When true, task is set to done, else not done.
+     */
     public static void lastTaskSetDone(boolean isDone) {
-        tasks.get(tasks.size()-1).setDone(isDone);
+        tasks.get(tasks.size() - 1).setDone(isDone);
     }
 
+    /**
+     * Get an arraylist of commands used to initialise tasks from all tasks.
+     *
+     * @return Arraylist of strings to save.
+     */
     public static ArrayList<String> getSaveString() {
         ArrayList<String> saveStrings = new ArrayList<>();
         for (Task t : tasks) {

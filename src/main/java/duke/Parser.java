@@ -5,6 +5,11 @@ public class Parser {
         TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, HELP, INVALID, FIND
     }
 
+    /**
+     * Finds the task type of command.
+     *
+     * @param getCommand Command string from the user.
+     */
     public static taskType getTaskType (String getCommand) {
         String[] inputLine = getCommand.split(" ",2);
         switch (inputLine[0]) {

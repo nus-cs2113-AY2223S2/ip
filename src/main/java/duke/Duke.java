@@ -7,6 +7,9 @@ public class Duke {
     private TaskList tasks;
     private Ui ui;
 
+    /**
+     * Constructs ui, storage and tasks elements and initialises storage.
+     */
     public Duke (String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -14,6 +17,9 @@ public class Duke {
         storage.initialise();
     }
 
+    /**
+     * Continuously takes in and executes user commands.
+     */
     public void run() {
         while (true) {
             String[] inputLine = ui.getCommand().split(" ", 2);
@@ -22,6 +28,9 @@ public class Duke {
         }
     }
 
+    /**
+     * Creates a new duke element and execute the run command.
+     */
     public static void main(String[] args) {
         new Duke("data/duketasks.txt").run();
     }

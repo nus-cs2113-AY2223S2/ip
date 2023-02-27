@@ -13,6 +13,9 @@ public class Ui {
             "    help: no :D\n    bye: end the program\n    Please enter command:\n";
     public static Scanner in = new Scanner(System.in);
 
+    /**
+     * Greets the user with welcome message.
+     */
     public static void greet() {
         System.out.println(LINE_BREAK);
         printlnWithIndentation("Hello! I'm Duke");
@@ -20,22 +23,39 @@ public class Ui {
         System.out.println(LINE_BREAK);
     }
 
+    /**
+     * Takes in the next command.
+     *
+     * @return Command string from user.
+     */
     public String getCommand() {
         return in.nextLine().trim();
     }
 
+    /**
+     * Say goodbye to user.
+     */
     public static void farewell() {
         System.out.println(LINE_BREAK);
         printlnWithIndentation("Bye. Hope to see you again soon!");
         System.out.println(LINE_BREAK);
     }
 
+    /**
+     * Prints the error and help section that displays command usage and syntax.
+     * @param string String of error to output.
+     */
     public static void printException(String string) {
         System.out.println(LINE_BREAK);
         printlnWithIndentation(string);
         System.out.println(HELP_PAGE + LINE_BREAK);
     }
 
+    /**
+     * Prints a string with indentations and line breaks.
+     *
+     * @param string String to be output.
+     */
     public static void printlnWithIndentation(String string) {
         System.out.println(INDENTATION + string);
     }
