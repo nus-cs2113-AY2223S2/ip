@@ -1,6 +1,6 @@
 import java.util.Scanner;
 import java.io.FileNotFoundException;
-
+import java.util.ArrayList;
 public class Duke {
     final static String FILE_PATH = "data/duke.txt";
     private static Ui ui = new Ui();
@@ -16,6 +16,8 @@ public class Duke {
             ui.executeListCommand(taskList);
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
+            ArrayList<Task> emptyUserTasks = new ArrayList<>();
+            taskList = new TaskList(emptyUserTasks);
         }
         boolean isContinue = true;
         while (isContinue) {
