@@ -26,8 +26,6 @@ The app supports several types of tasks
 
 ### `todo` - Add a todo task
 
-do 2023
-
 Example of usage: 
 
 `todo do 2023`
@@ -41,8 +39,6 @@ Acknowledgment of task addition and display of new task.
 ```
 
 ### `deadline` - Add a deadline task
-
-Add a new deadline task.
 
 Example of usage: 
 
@@ -58,8 +54,6 @@ Acknowledgment of task addition and display of new task.
 
 ### `event` - Add an event task
 
-Add a new event task.
-
 Example of usage: 
 
 `event interview at McDonalds /from 4pm /to 6pm`
@@ -74,8 +68,6 @@ Acknowledgment of task addition and display of new task.
 
 ### `list` - List all tasks
 
-List all saved tasks.
-
 Example of usage: 
 
 `list`
@@ -89,5 +81,41 @@ List of all saved tasks.
 2. [D][ ] submit withdrawl form  (by: week 6)
 3. [E][ ] interview at McDonalds (from: 4pm to: 6pm)
 ```
+
+### `mark` or `unmark` - Mark task as done/undone
+Syntax: `mark <tasknumber>`/`unmark <tasknumber>`
+Example of usage: 
+
+`mark 1`
+
+Expected outcome:
+Acknowledgment of task mark.
+```
+目標達成！- [X] do 2023
+```
+Invoking `list` afterwards yields
+```
+1. [T][X] do 2023
+2. [D][ ] submit withdrawl form  (by: week 6)
+3. [E][ ] interview at McDonalds (from: 4pm to: 6pm)
+```
+
+similarly, invoking `unmark 1`
+
+Expected outcome:
+Acknowledgment of task undoing.
+```
+ええ。。。噓つき。- [ ] do 2023
+```
+
+Invoking `list` afterwards yields
+```
+1. [T][ ] do 2023
+2. [D][ ] submit withdrawl form  (by: week 6)
+3. [E][ ] interview at McDonalds (from: 4pm to: 6pm)
+```
+
+
+
 
 
