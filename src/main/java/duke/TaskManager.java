@@ -2,6 +2,10 @@ package duke;
 
 import java.util.*;
 
+
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class TaskManager {
     private ArrayList<Task> tasks = new ArrayList<>();
 
@@ -49,4 +53,18 @@ public class TaskManager {
     public int getSize() {
         return tasks.size();
     }
+
+    public void saveFile() throws IOException {
+        String filePath = "C:/repos/IP/src/main/java/duke/load.txt";
+        FileWriter fw = new FileWriter(filePath);
+        for (int i = 0; i < tasks.size(); i++) {
+            try {
+                fw.write(tasks.get(i).toString() + System.lineSeparator());
+            } catch (IOException e) {
+                System.out.println("Something went wrong: " + e.getMessage());
+            }
+        }
+        fw.close();
+    }
+
 }

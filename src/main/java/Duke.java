@@ -1,10 +1,13 @@
 
 import java.util.Scanner;
+import java.io.IOException;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 import duke.TaskManager;
 
 public class Duke {
-
+    
     public static void printInstructions() {
         System.out.println("LIST OF ALL COMMANDS:");
         System.out.println("todo + \"task name\" to add a task");
@@ -103,7 +106,7 @@ public class Duke {
         printHorizontalLine();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException{
         printGreeting();
         Scanner scanObj = new Scanner(System.in);
         TaskManager listofItems = new TaskManager();
@@ -113,33 +116,40 @@ public class Duke {
                 case "todo":
                     executeAddTodo(userCmd, listofItems);
                     printHorizontalLine();
+                    listofItems.saveFile();
                     break;
                 case "deadline":
                     executeAddDeadline(userCmd, listofItems);
                     printHorizontalLine();
+                    listofItems.saveFile();
                     break;
                 case "event":
                     executeAddEvent(userCmd, listofItems);
                     printHorizontalLine();
+                    listofItems.saveFile();
                     break;
                 case "list":
                     listofItems.listTask();
                     printHorizontalLine();
+                    listofItems.saveFile();
                     break;
                 case "mark":
                     String markId[] = userCmd.split(" ");
                     listofItems.markTask(Integer.parseInt(markId[1]) - 1);
                     printHorizontalLine();
+                    listofItems.saveFile();
                     break;
                 case "unmark":
                     String unmarkId[] = userCmd.split(" ");
                     listofItems.unmarkTask(Integer.parseInt(unmarkId[1]) - 1);
                     printHorizontalLine();
+                    listofItems.saveFile();
                     break;
                 case "delete":
                     String deleteId[] = userCmd.split(" ");
                     listofItems.deleteTask(Integer.parseInt(deleteId[1]) - 1);
                     printHorizontalLine();
+                    listofItems.saveFile();
                     break;
                 default:
                     printfalseInput();
@@ -149,6 +159,40 @@ public class Duke {
         }
         scanObj.close();
         printGoodbye();
+    }
+
+    public void loadFile(TaskManager listOfItems) throws FileNotFoundException {
+        String filePath = "C:/repos/IP/src/main/java/duke/load.txt";
+        File f = new File(filePath);
+        Scanner s = new Scanner(f);
+        while (s.hasNext()) {
+            String l = s.nextLine();
+            switch (l.substring(0,2)) {
+                case "[T]":
+                loadTodo(listOfItems, l);
+                break;
+                case "[D]":
+                loadDeadline(listOfItems, l);
+                break;
+                case "[E]":
+                loadEvent(listOfItems, l);
+                break;
+                default:
+                break;
+            }
+        }
+        s.close();
+    }
+
+    public void loadTodo(TaskManager listOfItems, String l) {
+    }
+
+    public void loadEvent(TaskManager listOfItems, String l) {
+        
+    }
+
+    public void loadDeadline(TaskManager listOfItems, String l) {
+        
     }
 
     private static void printGoodbye() {
