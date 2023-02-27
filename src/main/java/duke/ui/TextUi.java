@@ -10,6 +10,7 @@ public class TextUi {
     private static final String HELLO_IM_DUKE = "Hello! I'm Duke";
     private static final String KEYWORD_TO_SEE_THE_INSTRUCTIONS = "Please type 'help' if you want to see the instructions";
     private static final String ASKING_MESSAGE = "What can I do for you?";
+
     private String userInput;
     private Scanner in;
     private Parser parser;
@@ -28,7 +29,7 @@ public class TextUi {
         }
     }
 
-    public void getInput() {
+    private void getInput() {
         System.out.println(Common.HORIZONTAL_LINE);
         System.out.println();
         userInput = in.nextLine();
@@ -41,4 +42,5 @@ public class TextUi {
         System.out.println(KEYWORD_TO_SEE_THE_INSTRUCTIONS);
         System.out.println(ASKING_MESSAGE);
     }
+
 }

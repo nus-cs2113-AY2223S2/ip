@@ -1,5 +1,7 @@
 package duke.tasktypes;
 
+import duke.common.Common;
+
 public class Event extends Task {
     private String beginDate;
     private String endDate;
@@ -12,13 +14,13 @@ public class Event extends Task {
 
     @Override
     public String printTask() {
-        return "[E]" + this.getMarkingStatus() + " " + this.content + " (from: " + this.beginDate
+        return "[E]" + this.getMarkingStatus() + Common.WHITE_SPACE + this.content + " (from: " + this.beginDate
                 + " to " + this.endDate + ")";
     }
 
     @Override
     public String putInputToDataFile() {
-        return "E | " + this.convertMarkingStatusToNumber() + " | " + this.content + " | " + this.beginDate
-                + " | " + this.endDate + "\n";
+        return "E | " + this.convertMarkingStatusToNumber() + Common.VERTICAL_BAR
+                + this.content + Common.VERTICAL_BAR  + this.beginDate + Common.VERTICAL_BAR  + this.endDate + "\n";
     }
 }

@@ -2,14 +2,15 @@ package duke.keycommands;
 
 import duke.common.Common;
 import duke.tasktypes.Task;
-import duke.exception.EmptyDescription;
 import duke.tasktypes.ToDo;
 
 public class TodoCommand {
-    private String content;
+
     private static final String EMPTY_TODO_DESCRIPTION = "OOPS!!! The description of a todo cannot be empty.";
     private static final String EMPTY_TODO_TASK = "OOPS!!! your task can not be empty";
     private static final String ADDING_TASK = "Got it. I've added this task:";
+
+    private String content;
 
     public TodoCommand(String content) {
         this.content = content;

@@ -1,14 +1,18 @@
 package duke.parser;
 
 import duke.common.Common;
-import duke.keycommands.*;
+import duke.exception.InvalidTaskNumberException;
+import duke.keycommands.ChangeTaskStatusCommand;
+import duke.keycommands.DeleteCommand;
+import duke.keycommands.HelpCommand;
+import duke.keycommands.ListCommand;
+import duke.keycommands.TodoCommand;
+import duke.keycommands.DeadlineCommand;
+import duke.keycommands.EventCommand;
+import duke.keycommands.ByeCommand;
 
 public class Parser {
-    private String[] separatedKeyWordAndContent;
-    private String keyword;
-    private int taskNumber;
 
-    private static final String EMPTY_TODO_DESCRIPTION = "OOPS!!! The description of a todo cannot be empty.";
     public static final String BYE_COMMAND = "bye";
     public static final String HELP_COMMAND = "help";
     public static final String LIST_COMMAND = "list";
@@ -19,64 +23,86 @@ public class Parser {
     public static final String MARK_COMMAND = "mark";
     public static final String UNMARK_COMMAND = "unmark";
     public static final String INCORRECT_KEYWORD = "OOPS!!! I'm sorry, but I don't know what that means :-(";
-    public Parser() {
-    }
+    public static final String NEEDLESS_SENTENCE_AFTER_ONE_WORD_COMMAND = "I don't know the meaning of the sentence after the keyword";
+    public static final String REMINDING_MESSAGE_ABOUT_GIVING_TASK_NUMBER = "Please give me the task number";
+    public static final String THE_TASK_NUMBER_NOT_WITHIN_THE_LIST = "The task number is out of range";
+    public static final String REMINDING_MESSAGE_ABOUT_GIVING_TASK_CONTENT = "Please give me the task content";
+    public static final String REMINDING_MESSAGE_ABOUT_GIVING_DEADLINE_TIME = "Please give me the deadline time";
+    public static final String REMINDING_MESSAGE_ABOUT_GIVING_DESCRIPTION = "Please give me some description to perform the command";
+    public static final String REMINDING_MESSAGE_ABOUT_GIVING_TIME_TO_THE_EVENT = "Please give me the time for the event";
+    public static final String REMINDING_MESSAGE_ABOUT_GIVING_THE_BEGINNING_TIME = "Please give me the beginning time";
+    public static final String REMINDING_MESSAGE_ABOUT_GIVING_THE_END_TIME = "Please give me the end time";
+
+    private String[] separatedKeyWordAndContent;
+    private String keyword;
+    private int taskNumber;
+    
 
     public void splitKeywordAndContent(String userInput) {
         this.separatedKeyWordAndContent = userInput.split(" ", 2);
         this.keyword = separatedKeyWordAndContent[0];
     }
-    public boolean isOneWordInputInCorrectFormat() {
+    private boolean isOneWordInputInCorrectFormat() {
         if (separatedKeyWordAndContent.length > 1) {
-            System.out.println("I don't know the meaning after the keyword");
+            System.out.println(NEEDLESS_SENTENCE_AFTER_ONE_WORD_COMMAND);
             return false;
         }
         return true;
     }
 
-    public boolean isLocateTaskNumberCommandInCorrectFormat() {
+    private boolean isLocateTaskNumberCommandInCorrectFormat() {
         try{
             taskNumber = Integer.parseInt(separatedKeyWordAndContent[1]);
+            testTaskNumber();
             return true;
         } catch (NumberFormatException error) {
             System.out.println(Common.INSTRUCTION + "\n" + keyword + ": Number");
         } catch (IndexOutOfBoundsException error) {
-            System.out.println("Please give me some content for your command");
+            System.out.println(REMINDING_MESSAGE_ABOUT_GIVING_TASK_NUMBER);
+        } catch (InvalidTaskNumberException error) {
+            System.out.println(THE_TASK_NUMBER_NOT_WITHIN_THE_LIST);
         }
         return false;
     }
-
-    public void executeDeleteCommand() {
+    
+    // create a method to throw InvalidTaskNumberException when the task number is bigger than the number of tasks
+    private void testTaskNumber() throws InvalidTaskNumberException {
+        if (taskNumber > Common.tasks.size() || taskNumber <= 0) {
+            throw new InvalidTaskNumberException();
+        }
+    }
+    
+    private void executeDeleteCommand() {
         if (isLocateTaskNumberCommandInCorrectFormat()) {
             new DeleteCommand(taskNumber);
         }
     }
 
-
-    public void executeChangeTaskStatusCommand() {
+    private void executeChangeTaskStatusCommand() {
         if (isLocateTaskNumberCommandInCorrectFormat()) {
             new ChangeTaskStatusCommand(taskNumber, keyword);
         }
     }
-    public void executeByeCommand() {
+
+    private void executeByeCommand() {
         if (isOneWordInputInCorrectFormat()) {
             new ByeCommand();
         }
     }
 
-    public void executeHelpCommand() {
+    private void executeHelpCommand() {
         if (isOneWordInputInCorrectFormat()) {
             new HelpCommand();
         }
     }
 
-    public void executeListCommand() {
+    private void executeListCommand() {
         if (isOneWordInputInCorrectFormat()) {
             new ListCommand();
         }
     }
 
-    private boolean doesIndexOutOfBoundsOccur(String[] stringArray, int index, String outputMessage) {
+    private boolean isTheDescriptionEmpty(String[] stringArray, int index, String outputMessage) {
         try {
             String test = stringArray[index];
             return false;
@@ -86,55 +112,55 @@ public class Parser {
         }
     }
 
-    public void executeTodoCommand() {
-        if (doesIndexOutOfBoundsOccur(separatedKeyWordAndContent,1, EMPTY_TODO_DESCRIPTION)) {
+    private void executeTodoCommand() {
+        if (isTheDescriptionEmpty(separatedKeyWordAndContent,1, REMINDING_MESSAGE_ABOUT_GIVING_TASK_CONTENT)) {
             return;
         }
         new TodoCommand(separatedKeyWordAndContent[1]);
     }
 
-    public void executeDeadlineCommand() {
-        if (doesIndexOutOfBoundsOccur(separatedKeyWordAndContent,1, EMPTY_TODO_DESCRIPTION)) {
+    private void executeDeadlineCommand() {
+        if (isTheDescriptionEmpty(separatedKeyWordAndContent,1, REMINDING_MESSAGE_ABOUT_GIVING_DESCRIPTION)) {
             return;
         }
         // split separatedKeyWordAndContent[1] into description and date
-        String[] descriptionAndDate = separatedKeyWordAndContent[1].split(" /by ", 2);
+        String[] taskContentAndDate = separatedKeyWordAndContent[1].split(" /by ", 2);
         // check if description is empty
-        if (doesIndexOutOfBoundsOccur(descriptionAndDate,0,"empty description")) {
+        if (isTheDescriptionEmpty(taskContentAndDate,0, REMINDING_MESSAGE_ABOUT_GIVING_TASK_CONTENT)) {
             return;
         }
-        if (doesIndexOutOfBoundsOccur(descriptionAndDate,1, "add date after /by")) {
+        if (isTheDescriptionEmpty(taskContentAndDate,1, REMINDING_MESSAGE_ABOUT_GIVING_DEADLINE_TIME)) {
             return;
         }
-        new DeadlineCommand(descriptionAndDate[0], descriptionAndDate[1]);
+        new DeadlineCommand(taskContentAndDate[0], taskContentAndDate[1]);
     }
+
     //create a method executeEventCommand to handle event command in the format: event description /from beginning time /to end time
-    public void executeEventCommand() {
-        if (doesIndexOutOfBoundsOccur(separatedKeyWordAndContent,1, EMPTY_TODO_DESCRIPTION)) {
+    private void executeEventCommand() {
+        if (isTheDescriptionEmpty(separatedKeyWordAndContent,1, REMINDING_MESSAGE_ABOUT_GIVING_DESCRIPTION)) {
             return;
         }
         // split separatedKeyWordAndContent[1] into description and date
-        String[] descriptionAndDate = separatedKeyWordAndContent[1].split(" /from ", 2);
+        String[] taskContentAndDate = separatedKeyWordAndContent[1].split(" /from ", 2);
         // check if description is empty
-        if (doesIndexOutOfBoundsOccur(descriptionAndDate,0,"empty description")) {
+        if (isTheDescriptionEmpty(taskContentAndDate,0,REMINDING_MESSAGE_ABOUT_GIVING_TASK_CONTENT)) {
             return;
         }
-        if (doesIndexOutOfBoundsOccur(descriptionAndDate,1, "add date after /from")) {
+        if (isTheDescriptionEmpty(taskContentAndDate,1, REMINDING_MESSAGE_ABOUT_GIVING_TIME_TO_THE_EVENT)) {
             return;
         }
         //split descriptionAndDate[1] into beginning time and end time
-        String[] beginningTimeAndEndTime = descriptionAndDate[1].split(" /to ", 2);
+        String[] beginningTimeAndEndTime = taskContentAndDate[1].split(" /to ", 2);
         //check if beginning time is empty
-        if (doesIndexOutOfBoundsOccur(beginningTimeAndEndTime,0,"add beginning time after /from")) {
+        if (isTheDescriptionEmpty(beginningTimeAndEndTime,0, REMINDING_MESSAGE_ABOUT_GIVING_THE_BEGINNING_TIME)) {
             return;
         }
         //check if end time is empty
-        if (doesIndexOutOfBoundsOccur(beginningTimeAndEndTime,1,"add end time after /to")) {
+        if (isTheDescriptionEmpty(beginningTimeAndEndTime,1, REMINDING_MESSAGE_ABOUT_GIVING_THE_END_TIME)) {
             return;
         }
-        new EventCommand(descriptionAndDate[0], beginningTimeAndEndTime[0], beginningTimeAndEndTime[1]);
+        new EventCommand(taskContentAndDate[0], beginningTimeAndEndTime[0], beginningTimeAndEndTime[1]);
     }
-
 
     public void handleInput() {
         switch (this.keyword) {
@@ -167,4 +193,5 @@ public class Parser {
             System.out.println(INCORRECT_KEYWORD);
         }
     }
+
 }

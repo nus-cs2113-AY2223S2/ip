@@ -14,11 +14,15 @@ import duke.tasktypes.ToDo;
 import duke.tasktypes.Task;
 
 public class Storage {
+
+    public static final String FILE_PATH = "data.txt";
+    public static final String WRITEFILE_EXCEPTION_MESSAGE = "OPPS!!! Something went wrong when you write to data file";
+    public static final String BACKSLASH = "/";
+    public static final String PROBLEM_WITH_TRANSFERRING_DATA_TO_THE_ARRAYLIST = "There is a problem with transferring data to the arraylist";
+
     public File directory;
     public File file;
     public ArrayList<Task> tasks;
-    public static final String FILE_PATH = "data.txt";
-    public static final String WRITEFILE_EXCEPTION_MESSAGE = "OPPS!!! Something went wrong when you write to data file";
 
     public Storage(String filePath, ArrayList<Task> tasks) {
         directory = new File("data");
@@ -32,10 +36,11 @@ public class Storage {
             file.createNewFile();
             this.addTasks();
         } catch (Exception error) {
-            // no code needed here
+            System.out.println(PROBLEM_WITH_TRANSFERRING_DATA_TO_THE_ARRAYLIST);
         }
     }
-    public void addTasks() throws FileNotFoundException {
+
+    private void addTasks() throws FileNotFoundException {
         Scanner s = new Scanner(file); // create a Scanner using the file as the source
         while (s.hasNext()) {
             String line = s.nextLine();
@@ -43,7 +48,7 @@ public class Storage {
         }
     }
 
-    public void addToTaskList(String line) {
+    private void addToTaskList(String line) {
         String[] elements = line.split(Pattern.quote(" | "));
         if (elements[0].equals("T")) {
             addTodoToTaskList(elements);
@@ -80,8 +85,8 @@ public class Storage {
         }
     }
 
-    public void appendToFile(String textToAppend) throws IOException {
-        FileWriter fileWriter = new FileWriter(directory + "/" + FILE_PATH, true);
+    private void appendToFile(String textToAppend) throws IOException {
+        FileWriter fileWriter = new FileWriter(directory + BACKSLASH + FILE_PATH, true);
         fileWriter.write(textToAppend);
         fileWriter.close();
     }
@@ -93,6 +98,7 @@ public class Storage {
             System.out.println(WRITEFILE_EXCEPTION_MESSAGE);
         }
     }
+
     public void deleteTask(int lineNumber) throws IOException {
         Scanner s = new Scanner(file); // create a Scanner using the File as the source
         ArrayList<String> extractedTasks = new ArrayList<>();
@@ -109,7 +115,7 @@ public class Storage {
         for (String line : extractedTasks) {
             newFileContent += (line + "\n");
         }
-        FileWriter fileWriter = new FileWriter(directory + "/" + FILE_PATH);
+        FileWriter fileWriter = new FileWriter(directory + BACKSLASH + FILE_PATH);
         fileWriter.write(newFileContent);
         fileWriter.close();
     }
@@ -119,8 +125,9 @@ public class Storage {
         for (Task task : Common.tasks) {
             updatedFileContent += task.putInputToDataFile();
         }
-        FileWriter fileWriter = new FileWriter(directory + "/" + FILE_PATH);
+        FileWriter fileWriter = new FileWriter(directory + BACKSLASH + FILE_PATH);
         fileWriter.write(updatedFileContent);
         fileWriter.close();
     }
+
 }

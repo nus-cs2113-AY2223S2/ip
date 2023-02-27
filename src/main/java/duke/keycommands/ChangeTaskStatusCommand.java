@@ -5,8 +5,11 @@ import duke.common.Common;
 import java.io.IOException;
 
 public class ChangeTaskStatusCommand {
+
     private static final String FINISH_UNMARKING_MESSAGE = "Ok! I've marked this task as not done yet:";
     private static final String FINISH_MARKING_MESSAGE = "Nice! I've marked this task as done:";
+    public static final String UNMARK = "unmark";
+
     private int taskNumber;
     private String keyword;
 
@@ -16,16 +19,8 @@ public class ChangeTaskStatusCommand {
         changeTaskStatus();
     }
 
-
     private void changeTaskStatus() {
-        if (taskNumber > Common.tasks.size()) {
-            System.out.println(Common.BIG_NUMBER);
-            return;
-        } else if (taskNumber <= 0) {
-            System.out.println("Please give me a positive task number");
-            return;
-        }
-        boolean doesCommandContainsUnmark = keyword.equals("unmark");
+        boolean doesCommandContainsUnmark = keyword.equals(UNMARK);
         if (doesCommandContainsUnmark) {
             Common.tasks.get(taskNumber - 1).unMark();
             System.out.println(FINISH_UNMARKING_MESSAGE);

@@ -1,5 +1,7 @@
 package duke.tasktypes;
 
+import duke.common.Common;
+
 public class Deadline extends Task{
     private String date;
 
@@ -15,6 +17,7 @@ public class Deadline extends Task{
 
     @Override
     public String putInputToDataFile() {
-        return "D | " + this.convertMarkingStatusToNumber() + " | " + this.content + " | " + this.date + "\n";
+        return "D | " + this.convertMarkingStatusToNumber() + Common.VERTICAL_BAR  + this.content
+                + Common.VERTICAL_BAR  + this.date + "\n";
     }
 }

@@ -13,13 +13,6 @@ public class DeleteCommand {
     }
 
     private void deleteTask() {
-        if (taskNumber > Common.tasks.size()) {
-            System.out.println(Common.BIG_NUMBER);
-            return;
-        }   else if (taskNumber <= 0) {
-            System.out.println("Please give me a positive task number");
-            return;
-        }
         Task item = Common.tasks.get(taskNumber - 1);
         System.out.println(REMOVE_MESSAGE);
         System.out.println(item.printTask());
