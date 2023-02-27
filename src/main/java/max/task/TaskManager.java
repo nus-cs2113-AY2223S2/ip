@@ -4,6 +4,7 @@ import max.Ui.Ui;
 import max.command.Command;
 import max.data.Storage;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -17,6 +18,7 @@ import java.util.HashMap;
 public class TaskManager {
     private ArrayList<Task> tasks;
     private Ui ui;
+    private DateParser dateParser;
 
     // String literals definitions
     private static final String ERROR_MAKE_TASK_FAILED = "Throw me a bone here, I couldn't create a task!";
@@ -49,12 +51,17 @@ public class TaskManager {
             // Deadline task
             String description = commandMap.get(TASK_DEADLINE);
             String deadline = commandMap.get(TASK_DEADLINE_BY);
+            deadline = dateParser.formatInputString(deadline);
             newTask = new Deadline(description, deadline);
         } else if (command.equals(Command.TASK_EVENT)) {
             // Event task
             String description = commandMap.get(TASK_EVENT);
             String from = commandMap.get(TASK_EVENT_FROM);
             String to = commandMap.get(TASK_EVENT_TO);
+            // Format dates
+            dateParser.validateToFromDates(to, from);
+            from = dateParser.formatInputString(from);
+            to = dateParser.formatInputString(to);
             newTask = new Event(description, from, to);
         }
         if (newTask == null) {
@@ -148,5 +155,6 @@ public class TaskManager {
     public TaskManager() {
         tasks = new ArrayList<>();
         ui = new Ui();
+        dateParser = new DateParser();
     }
 }
