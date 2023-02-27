@@ -138,8 +138,8 @@ public class FileHandler {
     }
 
     /**
-     * Clears the existing file by rewriting the whole file with "". This method is called by {@link FileHandler#populateFile(TaskList)}
-     * in the process of updating data in the file.
+     * Clears the existing file by rewriting the whole file with "". This method is called by
+     * {@link FileHandler#populateFile(TaskList)} in the process of updating data in the file.
      *
      * @throws IOException In the event {@link FileHandler#clearFile()} is unable to write to the file.
      */
@@ -162,8 +162,8 @@ public class FileHandler {
     }
 
     /**
-     * Reads data from the file and converts each line into an instance of {@link Task}. Updates the {@link ArrayList<Task>}
-     * and returns it. Used by the <code>constructor</code> of {@link TaskList}
+     * Reads data from the file and converts each line into an instance of {@link Task}.
+     * Updates the {@link ArrayList<Task>} and returns it. Used by the <code>constructor</code> of {@link TaskList}
      *
      * @return An {@link ArrayList<Task>} containing processed data from the file (if any). If the file is empty,
      * returns an empty {@link ArrayList<Task>}

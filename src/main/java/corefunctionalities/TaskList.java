@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * A class that encapsulates an {@link ArrayList<Task>} which contains Tasks entered by the user, and associated functions
- * to use/modify the data.
+ * A class that encapsulates an {@link ArrayList<Task>} which contains Tasks entered by the user,
+ * and associated functions to use/modify the data.
  *
  * @author Muthya Narayanachary Akhil
  */
@@ -41,8 +41,8 @@ public class TaskList {
 
 
     /**
-     * Returns the size of the {@link TaskList#taskList}. This method is used by methods in {@link Ui} and {@link helpers.Command}
-     *
+     * Returns the size of the {@link TaskList#taskList}. This method is used by methods in {@link Ui}
+     * and {@link helpers.Command}
      * @return The size of the {@link TaskList#taskList}
      */
     public int getSize() {
@@ -50,7 +50,8 @@ public class TaskList {
     }
 
     /**
-     * Returns the index of an {@link Task} ele in the {@link TaskList#taskList}. This method is used in {@link TaskList#find(String, Ui)}
+     * Returns the index of an {@link Task} ele in the {@link TaskList#taskList}.
+     * This method is used in {@link TaskList#find(String, Ui)}
      *
      * @param ele The {@link Task} whose index is being sought out.
      * @return The index of the {@link Task} which is being sought out.
@@ -81,7 +82,9 @@ public class TaskList {
     }
 
     /**
-     * Processes {@link Task} from {@link TaskList#taskList} into file readable format using {@link TaskFileHandler#enCode()}
+     * Processes {@link Task} from {@link TaskList#taskList} into file readable format
+     * using {@link TaskFileHandler#enCode()}
+     *
      * Used by {@link FileHandler#populateFile(TaskList)}.
      *
      * @param fileObject In order to update the file with new data

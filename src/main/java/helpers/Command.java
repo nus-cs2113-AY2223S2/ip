@@ -29,7 +29,8 @@ import java.io.IOException;
 import java.time.format.DateTimeParseException;
 
 /**
- * The Command Class can execute all the commands and pass any exceptions to the {@link corefunctionalities.ExceptionHandler}
+ * The Command Class can execute all the commands and pass any exceptions
+ * to the {@link corefunctionalities.ExceptionHandler}
  *
  * @author Muthya Narayanachary Akhil
  */
@@ -88,7 +89,8 @@ public class Command {
      * @throws DateTimeParseException In case the /by date is in the wrong format
      * @throws WrongChrono In case the /by date is before the current date.
      */
-    public void commandDeadline(String userInput, TaskList taskList, FileHandler fileObject) throws EmptyDeadline, DeadlineMissingPhrase, DeadlineIsBlank, IOException, DateTimeParseException, WrongChrono {
+    public void commandDeadline(String userInput, TaskList taskList, FileHandler fileObject) throws EmptyDeadline,
+            DeadlineMissingPhrase, DeadlineIsBlank, IOException, DateTimeParseException, WrongChrono {
         String[] deadlineAndDescription = parser.getDeadline(userInput);
         exceptionGenerator.deadlineExceptionGenerator(deadlineAndDescription, userInput);
         ui.printLine();
@@ -115,7 +117,11 @@ public class Command {
      * @throws FromAfterTo In case the /from date is after the /to date
      * @throws WrongChrono In case /from or /to dates are before the current date.
      */
-    public void commandEvent(String userInput, TaskList taskList, FileHandler fileObject) throws EmptyEvent, EventMissingBothPhrases, EventMissingToPhrase, EventMissingFromPhrase, EventFromIsBlank, EventToIsBlank, IOException, DateTimeParseException, FromAfterTo, WrongChrono, ArrayIndexOutOfBoundsException {
+    public void commandEvent(String userInput, TaskList taskList, FileHandler fileObject) throws
+            EmptyEvent, EventMissingBothPhrases, EventMissingToPhrase, EventMissingFromPhrase, EventFromIsBlank,
+            EventToIsBlank, IOException, DateTimeParseException, FromAfterTo, WrongChrono,
+            ArrayIndexOutOfBoundsException {
+
         String [] eventDescription = parser.getEvent(userInput);
         exceptionGenerator.eventExceptionGenerator(eventDescription, userInput);
         ui.printLine();
@@ -136,7 +142,8 @@ public class Command {
      * @throws NumberFormatException In case the input is not numerical
      * @throws TaskMarked In case the task is already marked
      */
-    public void commandMarkTask(String userInput, TaskList taskList, FileHandler fileObject) throws MarkQualityException, IOException, NumberFormatException, TaskMarked {
+    public void commandMarkTask(String userInput, TaskList taskList, FileHandler fileObject) throws
+            MarkQualityException, IOException, NumberFormatException, TaskMarked {
         exceptionGenerator.markExceptionGenerator(userInput, taskList);
         taskList.getTask(Integer.parseInt(userInput.split(" ")[1]) - 1).markTask();
         fileObject.populateFile(taskList);
@@ -155,7 +162,8 @@ public class Command {
      * @throws TaskUnMarked In case the task is already unmarked
      */
 
-    public void commandUnMarkTask(String userInput, TaskList taskList, FileHandler fileObject) throws UnmarkQualityException, IOException, NumberFormatException, TaskUnMarked {
+    public void commandUnMarkTask(String userInput, TaskList taskList, FileHandler fileObject) throws
+            UnmarkQualityException, IOException, NumberFormatException, TaskUnMarked {
         exceptionGenerator.unMarkExceptionGenerator(userInput, taskList);
         taskList.getTask(Integer.parseInt(userInput.split(" ")[1]) - 1).unMarkTask();
         fileObject.populateFile(taskList);
@@ -172,7 +180,8 @@ public class Command {
      * @throws IOException In case fileObject cannot write to the file
      */
 
-    public void commandDeleteTask(String userInput, TaskList taskList, FileHandler fileObject) throws IndexOutOfBoundsException, NumberFormatException, IOException, EmptyList{
+    public void commandDeleteTask(String userInput, TaskList taskList, FileHandler fileObject) throws
+            IndexOutOfBoundsException, NumberFormatException, IOException, EmptyList{
         if(taskList.getSize()==0) {
             throw new EmptyList();
         }

@@ -52,7 +52,8 @@ public class ExceptionGenerator {
      * @throws DeadlineMissingPhrase In the case the /by phrase is missing
      * @throws DeadlineIsBlank In the case that the deadline is empty.
      */
-    public void deadlineExceptionGenerator(String[]  deadlineAndDescription, String userInput) throws EmptyDeadline, DeadlineMissingPhrase, DeadlineIsBlank{
+    public void deadlineExceptionGenerator(String[]  deadlineAndDescription, String userInput) throws
+            EmptyDeadline, DeadlineMissingPhrase, DeadlineIsBlank{
         if(!userInput.contains("/by ") && userInput.split(" ").length>1) {
             throw new DeadlineMissingPhrase();
         } else if(deadlineAndDescription.length==1 || deadlineAndDescription[0].isBlank()) {
@@ -75,7 +76,9 @@ public class ExceptionGenerator {
      * @throws EventToIsBlank In the case the /to date is missing
      */
 
-    public void eventExceptionGenerator(String [] eventDescription, String userInput) throws EmptyEvent, EventMissingBothPhrases, EventMissingToPhrase, EventMissingFromPhrase, EventFromIsBlank, EventToIsBlank, ArrayIndexOutOfBoundsException {
+    public void eventExceptionGenerator(String [] eventDescription, String userInput) throws
+            EmptyEvent, EventMissingBothPhrases, EventMissingToPhrase, EventMissingFromPhrase, EventFromIsBlank,
+            EventToIsBlank, ArrayIndexOutOfBoundsException {
         if(!userInput.contains("/from") && userInput.split(" ").length>1) {
             throw new EventMissingFromPhrase();
         } else if(!userInput.contains("/to") && userInput.split(" ").length>1) {
@@ -102,7 +105,8 @@ public class ExceptionGenerator {
      * @throws NumberFormatException In the case the serial number to be marked is not a number
      * @throws TaskMarked If the Task has already been marked
      */
-    public void markExceptionGenerator(String userInput, TaskList taskList) throws MarkQualityException, NumberFormatException, TaskMarked {
+    public void markExceptionGenerator(String userInput, TaskList taskList) throws
+            MarkQualityException, NumberFormatException, TaskMarked {
         if(parser.isInRange(userInput, taskList)==false) {
             throw new MarkQualityException();
         } else if(taskList.getTask(Integer.parseInt(userInput.split(" ")[1]) - 1).getStatus()==true) {
@@ -119,7 +123,8 @@ public class ExceptionGenerator {
      * @throws NumberFormatException In the case the serial number to be unmarked is not a number
      * @throws TaskUnMarked If the Task has already been unmarked
      */
-    public void unMarkExceptionGenerator(String userInput, TaskList taskList) throws UnmarkQualityException, NumberFormatException, TaskUnMarked {
+    public void unMarkExceptionGenerator(String userInput, TaskList taskList) throws
+            UnmarkQualityException, NumberFormatException, TaskUnMarked {
         if(parser.isInRange(userInput, taskList)==false) {
             throw new UnmarkQualityException();
         } else if(taskList.getTask(Integer.parseInt(userInput.split(" ")[1]) - 1).getStatus()==false) {

@@ -16,8 +16,8 @@ public class Deadlines extends Task implements TaskFileHandler {
     //protected LocalDateTime deadlineTesting;
 
     /**
-     * The constructor creates a new object of type {@link Deadlines}. This also prints out the content of the {@link Task}
-     * which was just instantiated.
+     * The constructor creates a new object of type {@link Deadlines}.
+     * This also prints out the content of the {@link Task} which was just instantiated.
      *
      * @param description A description of the {@link Task}.
      * @param deadline A deadline for the {@link Task} in the form of "yyyy-mm-dd".

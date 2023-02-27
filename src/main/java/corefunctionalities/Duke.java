@@ -14,8 +14,8 @@ public class Duke {
     private ExceptionHandler exceptionHandler;
 
     /**
-     * Constructor for an object of type <code>Duke</code>. Instantiates the various attributes of Duke such as {@link Ui},
-     * {@link FileHandler}, {@link ExceptionHandler} and {@link TaskList}
+     * Constructor for an object of type <code>Duke</code>. Instantiates the various attributes of Duke such as
+     * {@link Ui} ,{@link FileHandler}, {@link ExceptionHandler} and {@link TaskList}
      */
     public Duke() {
         ui = new Ui();

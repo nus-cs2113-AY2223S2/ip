@@ -85,7 +85,8 @@ public class ExceptionHandler {
             ui.printLine();
         } catch (EventMissingFromPhrase e) {
             ui.printLine();
-            System.out.println("\tPlease ensure that you include the '/from' phrase to indicate the start of the event!");
+            System.out.println("\tPlease ensure that you include the '/from' phrase to indicate the start of the " +
+                    "event!");
             ui.printLine();
         } catch (EventMissingToPhrase e) {
             ui.printLine();
@@ -93,7 +94,8 @@ public class ExceptionHandler {
             ui.printLine();
         } catch (EventMissingBothPhrases e) {
             ui.printLine();
-            System.out.println("\tPlease ensure that you include the '/from' and '/to' phrase to indicate the start and end of the event!");
+            System.out.println("\tPlease ensure that you include the '/from' and '/to' phrase to indicate the " +
+                    "start and end of the event!");
             ui.printLine();
         } catch (EventFromIsBlank e) {
             ui.printLine();

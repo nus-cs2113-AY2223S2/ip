@@ -18,7 +18,8 @@ public class Events extends Task implements TaskFileHandler {
     protected LocalDate to;
 
     /**
-     * The constructor creates a new object of type {@link Events} and also prints out the data with which it was instantiated.
+     * The constructor creates a new object of type {@link Events}
+     * and also prints out the data with which it was instantiated.
      *
      * @param description The description of the {@link Task}
      * @param from The {@link Events#from} date stored as a {@link LocalDate} Object

@@ -69,7 +69,8 @@ public class Parser {
      */
     public boolean isInRange(String userInput, TaskList taskList) throws NumberFormatException{
         boolean isReturn = false;
-        isReturn = Integer.parseInt(userInput.split(" ")[1])>0 && Integer.parseInt(userInput.split(" ")[1])<taskList.getSize()+1;
+        isReturn = Integer.parseInt(userInput.split(" ")[1])>0 &&
+                Integer.parseInt(userInput.split(" ")[1])<taskList.getSize()+1;
         return (isReturn);
     }
 

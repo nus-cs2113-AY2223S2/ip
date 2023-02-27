@@ -66,7 +66,8 @@ public class Ui {
     }
 
     /**
-     * This method list all the {@link Task} objects in the {@link TaskList#taskList}. This method is used by {@link helpers.Command#commandlistTasks(TaskList)}
+     * This method list all the {@link Task} objects in the {@link TaskList#taskList}.
+     * This method is used by {@link helpers.Command#commandlistTasks(TaskList)}
      *
      * @param taskList The {@link java.util.ArrayList<Task>} containing all the tasks.
      * @throws EmptyList If the list is empty.
@@ -85,7 +86,8 @@ public class Ui {
     }
 
     /**
-     * This prints the task which was unmarked by {@link helpers.Command#commandUnMarkTask(String, TaskList, FileHandler)}
+     * This prints the task which was unmarked
+     * by {@link helpers.Command#commandUnMarkTask(String, TaskList, FileHandler)}
      *
      * @param userInput The input command supplied by the user
      * @param taskList The {@link TaskList} containing the <code>taskList</code>
@@ -93,7 +95,8 @@ public class Ui {
     public void printUnmarkedTask(String userInput, TaskList taskList) {
         this.printLine();
         System.out.println("\tNice! I've marked this task as not done:");//modifying element in the tasklist
-        System.out.println("\t\t" + taskList.getTask(Integer.parseInt(userInput.split(" ")[1]) - 1).getStatusAndDescription());
+        System.out.println("\t\t" +
+                taskList.getTask(Integer.parseInt(userInput.split(" ")[1]) - 1).getStatusAndDescription());
         this.printLine();
     }
 
@@ -106,7 +109,8 @@ public class Ui {
     public void printMarkedTask(String userInput, TaskList taskList) {
         this.printLine();
         System.out.println("\tNice! I've marked this task as done:");//modifying element in the tasklist
-        System.out.println("\t\t" + taskList.getTask(Integer.parseInt(userInput.split(" ")[1]) - 1).getStatusAndDescription());
+        System.out.println("\t\t" +
+                taskList.getTask(Integer.parseInt(userInput.split(" ")[1]) - 1).getStatusAndDescription());
         this.printLine();
     }
 
@@ -153,27 +157,34 @@ public class Ui {
         this.printLine();
         System.out.println("\tlist - This would display all the existing Tasks in the Task List");
         this.printLine();
-        System.out.println("\ttodo - Creates a todo, use it by adding 'todo' and some description. An example is listed below:");
+        System.out.println("\ttodo - Creates a todo, use it by adding 'todo' and some description. " +
+                "An example is listed below:");
         System.out.println("\t\t'todo get milk'");
         this.printLine();
-        System.out.println("\tdeadline - Creates a deadline, use it by adding 'deadline' followed by some description and a deadline which follows '/by'");
+        System.out.println("\tdeadline - Creates a deadline, use it by adding 'deadline' followed by some description" +
+                " and a deadline which follows '/by'");
         System.out.println("\tNote that the dates must follow the following format: yyyy-mm-dd");
         System.out.println("\t\t'deadline get milk /by 2023-12-01'");
         this.printLine();
-        System.out.println("\tevent - Creates an event, use it by adding 'event' ,some description, a start date followed by '/from' and an end date followed by '/to'");
+        System.out.println("\tevent - Creates an event, use it by adding 'event' ,some description, " +
+                "a start date followed by '/from' and an end date followed by '/to'");
         System.out.println("\tNote that the dates must follow the following format: yyyy-mm-dd");
         System.out.println("\t\t'event get some milk /from 2023-03-01 /to 2023-03-02");
         this.printLine();
-        System.out.println("\tmark - mark would inform Duke to mark a task as complete. To invoke type 'mark' followed by the serial number of the specific task");
+        System.out.println("\tmark - mark would inform Duke to mark a task as complete. " +
+                "To invoke this, type 'mark' followed by the serial number of the specific task");
         System.out.println("\t\t 'mark 1'");
         this.printLine();
-        System.out.println("\tunmark - unmark would inform Duke to unmark a task as incomplete. To invoke type 'unmark' followed by the serial number of the specific task");
+        System.out.println("\tunmark - unmark would inform Duke to unmark a task as incomplete. To invoke this, " +
+                "type 'unmark' followed by the serial number of the specific task");
         System.out.println("\t\t 'unmark 1'");
         this.printLine();
-        System.out.println("\tdelete - delete would inform Duke to delete a task. To invoke type 'delete' followed by the serial number of the specific task");
+        System.out.println("\tdelete - delete would inform Duke to delete a task. " +
+                "To invoke this type 'delete' followed by the serial number of the specific task");
         System.out.println("\t\t 'delete 1'");
         this.printLine();
-        System.out.println("\tfind - find would inform Duke to look for a certain phrase across all the Tasks. To invoke type 'find' followed by the phrase you wish to look for");
+        System.out.println("\tfind - find would inform Duke to look for a certain phrase across all the Tasks. " +
+                "To invoke this type 'find' followed by the phrase you wish to look for");
         System.out.println("\t\t 'find book'");
         this.printLine();
         System.out.println("\tbye - to exit the program!");
@@ -203,7 +214,8 @@ public class Ui {
     }
 
     /**
-     * This method prints out the details of the {@link Task} Object which was deleted from the {@link TaskList#taskList}
+     * This method prints out the details of the {@link Task} Object which was
+     * deleted from the {@link TaskList#taskList}
      *
      * @param item The {@link Task} which needs to be deleted
      * @param taskList The {@link TaskList#taskList} containing all the <code>Tasks</code>

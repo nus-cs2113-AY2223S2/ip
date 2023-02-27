@@ -76,7 +76,8 @@ public class Task  implements TaskFileHandler {
     }
 
     /**
-     * Returns a {@link String} which can be added to the file and later re-read to populate the {@link corefunctionalities.TaskList}
+     * Returns a {@link String} which can be added to the file and
+     * later re-read to populate the {@link corefunctionalities.TaskList}
      *
      * @return A {@link String} formatted for entry into the file
      */
