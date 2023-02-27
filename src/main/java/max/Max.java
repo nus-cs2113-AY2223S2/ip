@@ -10,6 +10,13 @@ import max.task.*;
 import java.util.HashMap;
 import java.util.Scanner;
 
+/**
+ * MAX is a CLI personal productivity assistant, built as part of CS2113 iP
+ * <p>
+ * MAX allows users to track and manage their tasks, and offers persistent data storage.
+ * MAX can track tasks that are: Deadlines, events and todos that encompass most users' needs
+ * MAX also comes with a special DEBUG mode for developers who want to extend on MAX for testing
+ */
 public class Max {
     private static boolean isListening;
     private static boolean isDebugMode = false;

@@ -7,6 +7,13 @@ import max.data.Storage;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * TaskManager is the controller that contains and manages the user's task list
+ * <p>
+ * TaskManager helps with data management such as save/load
+ * and modifying task state (e.g. deletion, marking as complete)
+ *
+ */
 public class TaskManager {
     private ArrayList<Task> tasks;
     private Ui ui;

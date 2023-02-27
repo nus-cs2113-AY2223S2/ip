@@ -2,6 +2,9 @@ package max.command;
 
 import java.util.HashMap;
 
+/**
+ * CommandValidator helps check for the correctness the arguments that have been processed
+ */
 public class CommandValidator {
     private static final String MESSAGE_INVALID_ARG_NUM_EXPECTED = "Invalid number of arguments. Expected: ";
     private static final String MESSAGE_INVALID_ARG_NUM_GOT = ", Got: ";
