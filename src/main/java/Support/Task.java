@@ -2,9 +2,8 @@ package Support;
 
 import BasisSupport.Status;
 
-import java.util.Collection;
-
 public class Task {
+    // Task class has many attributes that can describe the information of a particular task
     protected String description;
     protected boolean isDone;
 
@@ -22,6 +21,7 @@ public class Task {
         this.isDone = isDone;
     }
 
+    // Related methods are used to set and get some information of the task
     public void setIsDone(boolean isDone) {
         this.isDone = isDone;
     }
@@ -46,6 +46,7 @@ public class Task {
         }
     }
 
+    // This method is to show the task in a particular format that will be stored in the txt file
     public String showTask() {
         return this.getStatus() + "[" + this.getStatusIcon() + "] " + this.description;
     }

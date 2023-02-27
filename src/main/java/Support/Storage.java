@@ -1,7 +1,6 @@
 package Support;
 
 import BasisSupport.Status;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -9,6 +8,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Storage {
+    // This class contains method related to read tasks in and store tasks in a txt file
     private static String filePath = "";
 
     public Storage(String filePath) {
@@ -60,10 +60,10 @@ public class Storage {
         }
     }
 
+    // We will make a directory first if the directory doesn't exist
     public static void makeDirectory() {
         File data = new File("data");
         boolean created = data.mkdir();
-        // System.out.println(data.getPath());
         if(!created) {
             System.out.println("Failed to create repository");
         }

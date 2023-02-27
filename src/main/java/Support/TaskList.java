@@ -3,6 +3,7 @@ package Support;
 import java.util.ArrayList;
 
 public class TaskList {
+    // This class is related to the class Task, that stores all the input tasks in it.
     private static ArrayList<Task> tasks = new ArrayList<>();
     private static int taskslength = 0;
 

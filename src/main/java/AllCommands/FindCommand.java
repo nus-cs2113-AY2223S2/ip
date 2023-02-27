@@ -1,5 +1,6 @@
 package AllCommands;
 
+import BasisSupport.Spliterator;
 import Support.TaskList;
 
 public class FindCommand {
@@ -8,8 +9,16 @@ public class FindCommand {
         FindCommand.line = line;
     }
 
+    /**
+     * This method is to deal with the user's request to find the task with some words.
+     * User's input will include the specific information included in some tasks.
+     * Necessary feedback from the system is done by the println functions.
+     * If the information is not found, system will also give correct feedback.
+     *
+     * @param tasks All the tasks we have in the storage
+     */
     public static void findCommandMethod(TaskList tasks) {
-        System.out.println("____________________________________________________________");
+        Spliterator.printSpliterator();
         String findTask = line.substring(5);
         boolean ifFindTask = false;
         System.out.println("Here are the matching tasks in your list:");
@@ -20,9 +29,10 @@ public class FindCommand {
                 ifFindTask = true;
             }
         }
+        // Give the feedback if the task is not found.
         if (!ifFindTask) {
             System.out.println("Oops! We can not find your task, please try again.");
         }
-        System.out.println("____________________________________________________________");
+        Spliterator.printSpliterator();
     }
 }
