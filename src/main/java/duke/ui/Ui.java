@@ -26,7 +26,7 @@ public class Ui {
 			"Nice! I've marked this task as done: ";
 	private final String TASK_UNDONE =
 			"Okay! I've unmarked this task: ";
-
+	private final String FIND_LINE = "Here are the matching tasks in your list: \n";
 	private static final String HELP = "    todo {description} --add todo" + System.lineSeparator()
 			+ "    deadline {description} /by {deadline} --add deadline" + System.lineSeparator()
 			+ "    event {description} /from {startTime} /to {endTime}  --add event" + System.lineSeparator()
@@ -83,5 +83,9 @@ public class Ui {
 
 	public void printTaskUndoneLine() {
 		System.out.println(TASK_UNDONE);
+	}
+
+	public void printFindLine() {
+		System.out.println(FIND_LINE);
 	}
 }
