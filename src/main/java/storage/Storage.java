@@ -59,7 +59,7 @@ public class Storage {
     public void writeToFile(ArrayList<Task> listOfTasks) throws IOException {
         FileWriter filewriter = new FileWriter(FILEPATH);
         for (Task task : listOfTasks) {
-            filewriter.write(task.saveStringToFile() + System.lineSeparator());
+            filewriter.write(task.savableString() + System.lineSeparator());
         }
         filewriter.close();
     }

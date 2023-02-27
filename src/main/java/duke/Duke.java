@@ -20,7 +20,7 @@ public class Duke {
     private static final Path DATA_DIRECTORY = Path.of(System.getProperty("user.dir"), "data");
 
     /**
-     * Main class to invoke the run method in the program.
+     * Main method to invoke the run method in the program.
      *
      * @param args
      */
@@ -29,7 +29,7 @@ public class Duke {
     }
 
     /**
-     * Run the program with 3 methods listed.
+     * Run the program with the 3 methods listed.
      */
     public void run() {
         start();
@@ -40,8 +40,8 @@ public class Duke {
     /**
      * Start of the program.
      * It will create a Ui instance.
-     * It will check if the directory can be created. It creates the directory if it does not exists.
-     * It will read and load from a file if it exist. Else it will create a the file when a new task is added.
+     * It will check if the directory can be created. It creates the directory if it does not exist.
+     * It will read and load from a file if it exists. Else it will create the file when a new task is added.
      * It will print the Ui Banner.
      */
     private void start() {
@@ -60,7 +60,7 @@ public class Duke {
     }
 
     /**
-     * The program will keep running until the user types the bye command.
+     * The program will keep running until the user types the "bye" command.
      */
     private void runCommandLoopUntilByeCommand() {
         boolean isExit = false;

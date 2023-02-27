@@ -37,7 +37,7 @@ public class TaskParser {
      * Creates a Deadline Task.
      *
      * @param description Description of the task.
-     * @param by The deadline of the task.
+     * @param by          The deadline of the task.
      * @return A Deadline object for the task.
      */
     public Deadline createDeadlineTask(String description, String by) {
@@ -48,7 +48,7 @@ public class TaskParser {
      * Creates a Event Task.
      *
      * @param description Description of the task.
-     * @param time The from and to time of the task.
+     * @param time        The from and to time of the task.
      * @return A Event object for the task.
      */
     public Event createEventTask(String description, String time) {
@@ -58,29 +58,30 @@ public class TaskParser {
     /**
      * Find a task based on the keyword specified.
      *
-     * @param ui The Ui instance. Use to display messages to users.
+     * @param ui      The Ui instance. Use to display messages to users.
      * @param keyword The keyword specified by the user.
      */
     public void findTask(TextUi ui, String keyword) {
-        if (listOfTasks.isEmpty()){
+        if (listOfTasks.isEmpty()) {
             ui.printMessage(Messages.MESSAGE_COMMAND_FIND_EMPTY_LIST);
         } else {
             ui.printMessage(Messages.MESSAGE_COMMAND_FIND_MATCH);
             Task task;
             for (int i = 0; i < listOfTasks.size(); i++) {
                 task = listOfTasks.get(i);
-                if(task.toString().contains(keyword)){
+                if (task.toString().contains(keyword)) {
                     System.out.println(i + 1 + "." + task);
                 }
 
             }
         }
     }
+
     /**
      * Mark the specified task as done.
      *
-     * @param ui The Ui instance. Use to display messages to users.
-     * @param storage The storage instance. Use to write data into the text file.
+     * @param ui               The Ui instance. Use to display messages to users.
+     * @param storage          The storage instance. Use to write data into the text file.
      * @param taskNumberInList The task number to be marked as done.
      */
     public void markTask(TextUi ui, Storage storage, int taskNumberInList) {
@@ -88,7 +89,7 @@ public class TaskParser {
         task.markAsDone();
         try {
             storage.writeToFile(listOfTasks);
-        } catch(IOException e){
+        } catch (IOException e) {
             ui.printMessage(String.format(Messages.GENERIC_ERROR, e));
         }
         ui.printMessage(Messages.MESSAGE_COMMAND_MARK);
@@ -98,8 +99,8 @@ public class TaskParser {
     /**
      * Unmark the specified task as undone.
      *
-     * @param ui The Ui instance. Use to display messages to users.
-     * @param storage The storage instance. Use to write data into the text file.
+     * @param ui               The Ui instance. Use to display messages to users.
+     * @param storage          The storage instance. Use to write data into the text file.
      * @param taskNumberInList The task number to be unmarked.
      */
     public void unmarkTask(TextUi ui, Storage storage, int taskNumberInList) {
@@ -107,7 +108,7 @@ public class TaskParser {
         task.markAsUndone();
         try {
             storage.writeToFile(listOfTasks);
-        } catch(IOException e){
+        } catch (IOException e) {
             ui.printMessage(String.format(Messages.GENERIC_ERROR, e));
         }
         ui.printMessage(Messages.MESSAGE_COMMAND_UNMARK);
@@ -117,8 +118,8 @@ public class TaskParser {
     /**
      * Delete the specified task and print the list of user tasks.
      *
-     * @param ui The Ui instance. Use to display messages to users.
-     * @param storage The storage instance. Use to write data into the text file.
+     * @param ui               The Ui instance. Use to display messages to users.
+     * @param storage          The storage instance. Use to write data into the text file.
      * @param taskNumberInList The task number to be removed from the list.
      */
     public void deleteAndPrintTask(TextUi ui, Storage storage, int taskNumberInList) {
@@ -126,7 +127,7 @@ public class TaskParser {
         listOfTasks.remove(taskNumberInList);
         try {
             storage.writeToFile(listOfTasks);
-        } catch(IOException e){
+        } catch (IOException e) {
             ui.printMessage(String.format(Messages.GENERIC_ERROR, e));
         }
         ui.printMessage(Messages.MESSAGE_COMMAND_DELETE);
@@ -137,8 +138,8 @@ public class TaskParser {
     /**
      * Add the user specified task and print out the list of user tasks.
      *
-     * @param task The task object to be added. (Todo, Deadline, Event)
-     * @param ui The Ui instance. Use to display messages to users.
+     * @param task    The task object to be added. (Todo, Deadline, Event)
+     * @param ui      The Ui instance. Use to display messages to users.
      * @param storage The storage instance. Use to write data into the text file.
      */
     public void addAndPrintTask(Task task, TextUi ui, Storage storage) {
@@ -148,7 +149,7 @@ public class TaskParser {
         ui.printMessage(String.format(Messages.MESSAGE_COMMAND_LIST_SIZE, listOfTasks.size()));
         try {
             storage.writeToFile(listOfTasks);
-        }catch(IOException e){
+        } catch (IOException e) {
             ui.printMessage(String.format(Messages.GENERIC_ERROR, e));
         }
     }
@@ -159,7 +160,7 @@ public class TaskParser {
      * @param ui The Ui instance. Use to display messages to users.
      */
     public void listTasks(TextUi ui) {
-        if (listOfTasks.isEmpty()){
+        if (listOfTasks.isEmpty()) {
             ui.printMessage(Messages.MESSAGE_COMMAND_LIST_EMPTY);
         } else {
             ui.printMessage(Messages.MESSAGE_COMMAND_LIST_TASKS);
@@ -178,7 +179,7 @@ public class TaskParser {
      * @return true if it is a number that exist in the list. false otherwise.
      */
     public static boolean isValidTaskNumber(int taskNumberInList) {
-        if(taskNumberInList >= 0 && taskNumberInList < listOfTasks.size()){
+        if (taskNumberInList >= 0 && taskNumberInList < listOfTasks.size()) {
             return true;
         }
         return false;

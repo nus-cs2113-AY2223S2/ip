@@ -65,6 +65,7 @@ public class Parser {
         String keyword = userInputNoCommand.trim();
         return new FindCommand(keyword);
     }
+
     /**
      * It will prepare the delete command appropriately so that the command is ready to be executed.
      *
