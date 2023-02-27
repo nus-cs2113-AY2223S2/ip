@@ -2,7 +2,6 @@ package duke.tasklist;
 
 import com.google.gson.*;
 import duke.exceptions.CorruptSaveDataException;
-import duke.parser.DateTimeParser;
 import duke.tasks.Deadline;
 import duke.tasks.Event;
 import duke.tasks.Task;
@@ -17,13 +16,7 @@ import java.util.Scanner;
  */
 public class JsonParser {
     private static final GsonBuilder GSON_BUILDER = new GsonBuilder()
-            .registerTypeAdapter(LocalDateTime.class,
-                    (JsonSerializer<LocalDateTime>) (json, type, jsonDeserializationContext)
-                            -> new JsonPrimitive(json.format(DateTimeParser.getFormatter())))
-            .registerTypeAdapter(LocalDateTime.class,
-                    (JsonDeserializer<LocalDateTime>) (json, type, jsonDeserializationContext)
-                            -> LocalDateTime.parse(json.getAsJsonPrimitive().getAsString(),
-                            DateTimeParser.getFormatter()))
+            .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
             .create().newBuilder();
     static final Gson GSON = GSON_BUILDER.create();
     private static final String TASK_DEADLINE = "DEADLINE";
