@@ -11,14 +11,23 @@ import siri.general.Storage;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+/**
+ * Entry point of the Task application.
+ * Initializes the application and starts the interaction with the user.
+ */
 public class Duke {
-    public static final String TASK_FILE = "data/tasklists.txt";
-    public Ui ui;
+
+    /** file path of the file that stores the lists*/
+    private static final String TASK_FILE = "data/tasklists.txt";
+    private Ui ui;
     public static Storage storage;
     public static TaskList tasks;
     public static int indexOfTask = 0;
     public static boolean isExit = false;
 
+    /**
+     * Reads the user command and executes it, until the user issues the exit command (isExit == true).
+     */
     public void runCommandLoopUntilExitCommand() {
         while (isExit == false) {
             String input = ui.readCommand();
@@ -29,12 +38,11 @@ public class Duke {
                 Parser p = new Parser(input);
                 p.parse();
             } catch (UnknownCommandException e) {
-                System.out.println("T^T OPPS!!! I'm sorry, but I don't know what that means");
+                ui.showError(e.printError());
             } catch (AddTaskIndexOutOfBounds e) {
-                e.printError();
+                ui.showError(e.printError());
             } catch (MarkerArrayIndexOutOfBoundsException e) {
-                System.out.println("Please enter the task number that you would like to mark / unmark, in the following format:");
-                System.out.println("For example if you want to mark / unmark task 2 as done / undone: mark 2 / unmark 2");
+                ui.showError(e.printError());
             } catch (NumberFormatException e) {
                 System.out.println("Please mark / unmark each task one by one, in the following format: ");
                 System.out.println("For example if you want to mark / unmark task 2 as done / undone: mark 2 / unmark 2");
@@ -53,6 +61,13 @@ public class Duke {
         }
     }
 
+    /**
+     * Read the file and load data (tasks) into task list.
+     * If file is not created, create a new file and create an empty task list.
+     *
+     * @param filePath
+     * @throws IOException
+     */
     public Duke(String filePath) throws IOException {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -64,6 +79,11 @@ public class Duke {
         }
     }
 
+    /**
+     * Runs the program until termination
+     *
+     * @throws IOException
+     */
     public void run() throws IOException {
         ui.greet();
         runCommandLoopUntilExitCommand();
