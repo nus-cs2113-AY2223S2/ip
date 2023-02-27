@@ -4,7 +4,7 @@ public class Deadline extends Task {
 	private String by;
 
 	public Deadline(String description, String by, boolean isComplete) {
-		super(description,isComplete);
+		super(description, isComplete);
 		this.by = by;
 	}
 
@@ -25,10 +25,11 @@ public class Deadline extends Task {
 		}
 		return taskStatus + getDescription() + " " + getBy();
 	}
-	public String writeTask(){
+
+	public String writeTask() {
 		String taskStatus;
 		if (isCompleted == false) {
-			taskStatus= "0";
+			taskStatus = "0";
 		} else {
 			taskStatus = "1";
 		}

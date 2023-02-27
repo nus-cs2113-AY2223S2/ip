@@ -13,18 +13,19 @@ public class Task {
 	public String getDescription() {
 		return description;
 	}
+
 	public boolean isCompleted() {
 		return isCompleted;
 	}
 
-	public String showTask(){
+	public String showTask() {
 		return getDescription();
 	}
 
-	public String writeTask(){
+	public String writeTask() {
 		String taskStatus;
 		if (isCompleted == false) {
-			taskStatus= "0";
+			taskStatus = "0";
 		} else {
 			taskStatus = "1";
 		}

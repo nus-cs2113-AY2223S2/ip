@@ -6,7 +6,7 @@ public class Event extends Task {
 
 
 	public Event(String description, String startTime, String endTime, boolean isCompleted) {
-		super(description,isCompleted);
+		super(description, isCompleted);
 		this.from = startTime;
 		this.to = endTime;
 	}
@@ -38,14 +38,15 @@ public class Event extends Task {
 		String time = "from: " + getStartTime() + " to: " + getEndTime();
 		return taskStatus + getDescription() + " " + time;
 	}
-	public String writeTask(){
+
+	public String writeTask() {
 		String taskStatus;
 		if (isCompleted == false) {
-			taskStatus= "0";
+			taskStatus = "0";
 		} else {
 			taskStatus = "1";
 		}
-		return "E | " + taskStatus + " | " + getDescription() + " | " + "from: " +
-				getStartTime() + " to: " + getEndTime() + "\n";
+		return "E | " + taskStatus + " | " + getDescription() + " | " +
+				getStartTime() + " | " + getEndTime() + "\n";
 	}
 }
