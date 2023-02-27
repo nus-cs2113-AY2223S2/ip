@@ -152,5 +152,13 @@ Exits Chronos.
 
 Format: `done`
 
+## FAQ
+
+**Q**: How do I save my data in my hard disk?  
+**A**: Chronos saves your data in your hard disk automatically after each command. Then, search for the file 'taskList.txt' 
+        in your PC search/spotlight (for MacOS) to obtain your list.
+        
+
+
 
 
