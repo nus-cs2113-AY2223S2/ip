@@ -14,6 +14,13 @@ public class InputParser {
      * @return The Command object created from the input string that has been parsed
      */
     public static Command parseInput(String input) {
+        /**
+         * Command object with several fields: action, details, start, end, and due.
+         * It does this by first splitting the input string on /, then splitting the
+         * first part on the first space to separate the action from any details.
+         * It then iterates over the remaining parts and checks for each one whether it
+         * corresponds to start, end, or due, and sets the appropriate field in the Command objects
+         */
         String[] parts = input.split(" /");
 
         String[] mainPart = parts[0].split(" ", 2);
@@ -42,7 +49,7 @@ public class InputParser {
                 due = optionValue;
                 break;
             default:
-                System.err.println("INVALID COMMAND FORMART");
+                System.err.println("INVALID COMMAND FORMAT");
             }
         }
 

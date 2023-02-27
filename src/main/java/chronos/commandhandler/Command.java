@@ -52,6 +52,13 @@ public class Command {
         return due;
     }
 
+    /**
+     * Returns a string representation of this command object.
+     * The string representation contains the type of the command,
+     * its body, start time, end time, and due date.
+     *
+     * @return a string representation of this command object
+     */
     @Override
     public String toString() {
         return String.format("Command[type=%s, body=%s, start=%s, end=%s, due=%s]", action, details, start, end, due);
