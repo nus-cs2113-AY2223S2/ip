@@ -95,12 +95,6 @@ public class Duke {
         writer.close();
     }
 
-    public static void appendFile(String filepath, String textAppend) throws IOException {
-        FileWriter writer = new FileWriter(filepath, true);
-        writer.write(textAppend);
-        writer.close();
-    }
-
     public static void updateFile(String filePath, ArrayList<Task> listOfTask) throws IOException {
         String newList = "";
         for (int i = 0; i < listOfTask.size(); i++) {
@@ -110,22 +104,16 @@ public class Duke {
     }
 
     public static void main(String[] args) throws IOException {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
 
-        System.out.println("Hello from\n" + logo);
-        System.out.println("Hello! I'm Duke");
-        System.out.println("What can I do for you\n");
+        Ui ui = new Ui();
+        ui.showWelcome();
 
         try {
             File file = new File("src/duke_list.txt");
             if (file.createNewFile()) {
-                System.out.println("the file has been created");
+                ui.showFileCreated();
             } else {
-                System.out.println("the file already exists");
+                ui.showFileExists();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -139,13 +127,12 @@ public class Duke {
         }
 
         try {
-            System.out.println("This is the current content of the duke_list file, if any:");
+            ui.showFileContent();
             printFile("src/duke_list.txt");
         } catch (FileNotFoundException e) {
-            System.out.println("File not found");
+            ui.showFileNotFoundError();
         }
-        System.out.println("----------------------End of file----------------------");
-        System.out.println("Please input your commands here: ");
+        ui.showWelcomeEnd();
         Scanner scan = new Scanner(System.in);
         String input = scan.nextLine();
 
@@ -163,36 +150,46 @@ public class Duke {
             } else if (input.length() > 5 && (input.substring(0,5)).equals("mark ") && input.substring(5, input.length()).matches("[0-9]+")) {
                     Integer order = Integer.valueOf(input.substring(5, input.length()));
                     if(order - 1 >= count) {
-                        System.out.println("You cannot mark a task that hasn't been made");
+                        //System.out.println("You cannot mark a task that hasn't been made");
+                        ui.showMarkTaskWarning();
                     } else {
                         Task task = listOfTask.get(order - 1);
+                        InputUi inputUi = new InputUi(task, count);
                         markTask(task);
                         listOfTask.set(order - 1, task);
                         updateFile(filePath, listOfTask);
-                        System.out.println("Nice! I've marked this task as done:\n" + task);
+                        inputUi.showMarkedTask();
+                        //System.out.println("Nice! I've marked this task as done:\n" + task);
                     }
             } else if (input.length() > 7 && (input.substring(0,7)).equals("unmark ") && input.substring(7, input.length()).matches("[0-9]+")) {
                     Integer order = Integer.valueOf(input.substring(7, input.length()));
                     if(order - 1 >= count) {
-                        System.out.println("You cannot unmark a task that hasn't been made");
+                        //System.out.println("You cannot unmark a task that hasn't been made");
+                        ui.showUnmarkTaskWarning();
                     } else {
                         Task task = listOfTask.get(order - 1);
+                        InputUi inputUi = new InputUi(task, count);
                         unmarkTask(task);
                         listOfTask.set(order - 1, task);
                         updateFile(filePath, listOfTask);
-                        System.out.println("OK, I've marked this task as not done yet:\n" + task);
+                        //System.out.println("OK, I've marked this task as not done yet:\n" + task);
+                        inputUi.showUnmarkedTask();
                     }
             } else if (input.length() > 7 && input.substring(0,7).equals("delete ") && input.substring(7, input.length()).matches("[0-9]+")) {
                 Integer order = Integer.valueOf(input.substring(7, input.length()));
                 if(order - 1 >= count) {
-                    System.out.println("You cannot delete a task that hasn't been made");
+                    //System.out.println("You cannot delete a task that hasn't been made");
+                    ui.showDeleteTaskWarning();
                 }
                 else {
-                    System.out.println("Noted, I've removed this task\n" + listOfTask.get(order - 1));
+                    InputUi inputUi = new InputUi(listOfTask.get(order - 1), count - 1);
+                    inputUi.showDeletedTask();
+                    //System.out.println("Noted, I've removed this task\n" + listOfTask.get(order - 1));
                     listOfTask.remove(order - 1);
                     updateFile(filePath, listOfTask);
                     count--;
-                    System.out.println("Now you have " + count + " tasks in the list");
+                    inputUi.showRemainingTasks();
+                    //System.out.println("Now you have " + count + " tasks in the list");
                 }
             } else {
                 if (input.length() > 3 && input.substring(0,4).equals("todo")) {
@@ -201,7 +198,9 @@ public class Duke {
                     task.isDone = false;
                     addTask(task);
                     updateFile(filePath, listOfTask);
-                    System.out.println("Got it. I've added this task: \n" + task + "\nNow you have " + (count + 1) + " tasks in your list." );
+                    InputUi inputUi = new InputUi(task, count);
+                    inputUi.showTaskAdded();
+                    //System.out.println("Got it. I've added this task: \n" + task + "\nNow you have " + (count + 1) + " tasks in your list." );
                     count++;
                 } else if (input.length() > 7 && input.substring(0,8).equals("deadline")) {
                     String info = input.substring(9,input.indexOf("/"));
@@ -210,7 +209,9 @@ public class Duke {
                     task.isDone = false;
                     addTask(task);
                     updateFile(filePath, listOfTask);
-                    System.out.println("Got it. I've added this task: \n" + task + "\nNow you have " + (count + 1) + " tasks in your list." );
+                    InputUi inputUi = new InputUi(task, count);
+                    inputUi.showTaskAdded();
+                    //System.out.println("Got it. I've added this task: \n" + task + "\nNow you have " + (count + 1) + " tasks in your list." );
                     count++;
                 } else if (input.length() > 4 && input.substring(0,5).equals("event")) {
                     String info = input.substring(6,input.indexOf("/"));
@@ -220,7 +221,9 @@ public class Duke {
                     task.isDone = false;
                     addTask(task);
                     updateFile(filePath, listOfTask);
-                    System.out.println("Got it. I've added this task: \n" + task + "\nNow you have " + (count + 1) + " tasks in your list." );
+                    InputUi inputUi = new InputUi(task, count);
+                    inputUi.showTaskAdded();
+                    //System.out.println("Got it. I've added this task: \n" + task + "\nNow you have " + (count + 1) + " tasks in your list." );
                     count++;
                 } else {
                     try {
@@ -232,6 +235,6 @@ public class Duke {
             }
             input = scan.nextLine();
         }
-        System.out.println("Bye. Hope to see you again soon!");
+        ui.showFarewell();
     }
 }
