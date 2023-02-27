@@ -10,6 +10,13 @@ import max.task.*;
 import java.util.HashMap;
 import java.util.Scanner;
 
+/**
+ * MAX is a CLI personal productivity assistant, built as part of CS2113 iP
+ * <p>
+ * MAX allows users to track and manage their tasks, and offers persistent data storage.
+ * MAX can track tasks that are: Deadlines, events and todos that encompass most users' needs
+ * MAX also comes with a special DEBUG mode for developers who want to extend on MAX for testing
+ */
 public class Max {
     private static boolean isListening;
     private static boolean isDebugMode = false;
@@ -17,16 +24,29 @@ public class Max {
     private static Ui ui;
     private static TaskManager taskManager;
 
+    private static final String MESSAGE_DEBUG_MODE = "MAX is now in debug mode. No data will be saved or loaded from disk.";
+    private static final String MESSAGE_DEBUG_HELP = "To exit debug mode, restart MAX.";
+    private static final String MESSAGE_GOODBYE = "Goodbye! Thank you for using MAX.";
+    private static final String MESSAGE_UNKNOWN_COMMAND = "Awoo? I don't understand that command.";
+
     public static void setIsListening(boolean isListening) {
         Max.isListening = isListening;
     }
 
+    /**
+     * Kill Max's event driver loop and print the goodbye message
+     */
     public static void exit() {
         setIsListening(false);
-        ui.printMessage("Goodbye! Thank you for using MAX.");
+        ui.printMessage(MESSAGE_GOODBYE);
     }
 
 
+    /**
+     * Takes in user input as a string, figures out what it is and executes the correct command action.
+     *
+     * @param command Unprocessed user input from console
+     */
     public static void handleCommand(String command) {
         CommandParser commandParser = new CommandParser();
         CommandValidator commandValidator = new CommandValidator();
@@ -59,11 +79,11 @@ public class Max {
             taskManager.printTasklist();
             break;
         case MARK:
-            String taskNumString = commandPayload.get("mark");
+            String taskNumString = commandPayload.get(mainCommand.getMainCommand());
             taskManager.markTask(taskNumString, true);
             break;
         case UNMARK:
-            taskNumString = commandPayload.get("unmark");
+            taskNumString = commandPayload.get(mainCommand.getMainCommand());
             taskManager.markTask(taskNumString, false);
             break;
         case TASK_EVENT:
@@ -76,15 +96,15 @@ public class Max {
             }
             break;
         case DELETE:
-            taskNumString = commandPayload.get("delete");
+            taskNumString = commandPayload.get(mainCommand.getMainCommand());
             taskManager.deleteTask(taskNumString);
             break;
         case DEBUG:
             isDebugMode = true;
             taskManager.resetTaskList();
             ui.notifyImportant();
-            ui.printMessage("MAX is now in debug mode. No data will be saved or loaded from disk.");
-            ui.printMessage("To exit debug mode, restart MAX.");
+            ui.printMessage(MESSAGE_DEBUG_MODE);
+            ui.printMessage(MESSAGE_DEBUG_HELP);
             break;
         case FIND:
         case FETCH:
@@ -93,7 +113,7 @@ public class Max {
             break;
         default:
             // { CommandType.UNKNOWN_COMMAND }
-            ui.printMessage("Awoo? I don't understand that command.");
+            ui.printMessage(MESSAGE_UNKNOWN_COMMAND);
             break;
         }
 
@@ -114,6 +134,7 @@ public class Max {
         // Greet when data has been loaded and problematic saved data has been highlighted
         ui.greet();
         setIsListening(true);
+
         // Init IO
         Scanner input = new Scanner(System.in);
 

@@ -8,42 +8,57 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * TaskManager is the controller that contains and manages the user's task list
+ * <p>
+ * TaskManager helps with data management such as save/load
+ * and modifying task state (e.g. deletion, marking as complete)
+ */
 public class TaskManager {
     private ArrayList<Task> tasks;
     private Ui ui;
     private DateParser dateParser;
 
-    private static String MESSAGE_MAX_CANNOT_FIND = "Max dug around everywhere but can't find anything!";
-    private static String MESSAGE_MAX_HAS_FOUND = "Max sniffed out these matching tasks:";
-    private static String MESSAGE_EMPTY_QUERY = "I'm gonna bite you. Your query is empty!";
-    private static String MESSAGE_REMOVE_TASK = "Woof woof this task will be rem-woofed:";
-    private static String MESSAGE_MARK_DONE = "Okay, marking this task as done: ";
-    private static String MESSAGE_UNMARK_DONE = "Okay, setting this task as undone: ";
-    private static String MESSAGE_SHOW_LIST = "Here's what's in your list:";
-    private static String MESSAGE_LIST_EMPTY = "There's nothing in your list. I'm gonna bite you.";
-    private static String MESSAGE_ADD_TASK = "Got it. Task added:";
-    private static String EXCEPTION_INVALID_NUMBER = "Invalid task number!";
-    private static String EXCEPTION_NOT_A_NUMBER = "I'm a dog, but even I know that you didn't enter a number.";
-    private static String EXCEPTION_ADD_TASK_FAILED = "Throw me a bone here, I couldn't create a task!";
+    // String literals definitions
+    private static final String ERROR_MISSING_NO = "I'm a dog, but even I know that you didn't enter a number.";
+    private static final String ERROR_BAD_TASK_NUM = "Invalid task number!";
+    private static final String TASK_TODO = "todo";
+    private static final String TASK_DEADLINE = "deadline";
+    private static final String TASK_EVENT = "event";
+    private static final String TASK_EVENT_FROM = "from";
+    private static final String TASK_EVENT_TO = "to";
+    private static final String TASK_DEADLINE_BY = "by";
+    private static final String MESSAGE_ADD_TASK = "Got it. Task added:";
+    private static final String MESSAGE_CURR_TASK = "You now have ";
+    private static final String MESSAGE_CURR_TASK_LEFT = " tasks in your list.";
+    private static final String MESSAGE_LIST_HEADER = "Here's what's in your list:";
+    private static final String MESSAGE_MARK_DONE = "Okay, marking this task as done: ";
+    private static final String MESSAGE_MARK_UNDONE = "Okay, setting this task as undone: ";
+    private static final String MESSAGE_REMOVE_TASK = "Woof woof this task will be rem-woofed:";
+    private static final String MESSAGE_MAX_CANNOT_FIND = "Max dug around everywhere but can't find anything!";
+    private static final String MESSAGE_MAX_HAS_FOUND = "Max sniffed out these matching tasks:";
+    private static final String MESSAGE_EMPTY_QUERY = "I'm gonna bite you. Your query is empty!";
+    private static final String MESSAGE_LIST_EMPTY = "There's nothing in your list. I'm gonna bite you.";
+    private static final String EXCEPTION_ADD_TASK_FAILED = "Throw me a bone here, I couldn't create a task!";
 
     public void createTask(HashMap<String, String> commandMap, Command command) throws TaskException {
         // Assertion: commandMap has the correct subcommands & length
         Task newTask = null;
         if (command.equals(Command.TASK_TODO)) {
             // To-do task
-            String description = commandMap.get("todo");
+            String description = commandMap.get(TASK_TODO);
             newTask = new Todo(description);
         } else if (command.equals(Command.TASK_DEADLINE)) {
             // Deadline task
-            String description = commandMap.get("deadline");
-            String deadline = commandMap.get("by");
+            String description = commandMap.get(TASK_DEADLINE);
+            String deadline = commandMap.get(TASK_DEADLINE_BY);
             deadline = dateParser.formatInputString(deadline);
             newTask = new Deadline(description, deadline);
         } else if (command.equals(Command.TASK_EVENT)) {
             // Event task
-            String description = commandMap.get("event");
-            String from = commandMap.get("from");
-            String to = commandMap.get("to");
+            String description = commandMap.get(TASK_EVENT);
+            String from = commandMap.get(TASK_EVENT_FROM);
+            String to = commandMap.get(TASK_EVENT_TO);
             // Format dates
             dateParser.validateToFromDates(to, from);
             from = dateParser.formatInputString(from);
@@ -57,7 +72,7 @@ public class TaskManager {
         tasks.add(newTask);
         ui.printMessage(MESSAGE_ADD_TASK);
         ui.printMessage(newTask.getDescription());
-        ui.printMessage("You now have " + tasks.size() + " tasks in your list.");
+        ui.printMessage(MESSAGE_CURR_TASK + tasks.size() + MESSAGE_CURR_TASK_LEFT);
     }
 
     public void printTasklist() {
@@ -65,7 +80,7 @@ public class TaskManager {
             ui.printMessage(MESSAGE_LIST_EMPTY);
             return;
         }
-        ui.printMessage(MESSAGE_SHOW_LIST);
+        ui.printMessage(MESSAGE_LIST_HEADER);
         for (int i = 0; i < tasks.size(); ++i) {
             // Print number, box, description in that order
             Task curr = tasks.get(i);
@@ -81,10 +96,10 @@ public class TaskManager {
         try {
             taskNum = Integer.parseInt(taskNumString) - 1; // Convert to 0-idx
         } catch (NumberFormatException exception) {
-            throw new TaskException(EXCEPTION_NOT_A_NUMBER);
+            throw new TaskException(ERROR_MISSING_NO);
         }
         if (taskNum < 0 || taskNum >= tasks.size()) {
-            throw new TaskException(EXCEPTION_INVALID_NUMBER);
+            throw new TaskException(ERROR_BAD_TASK_NUM);
         }
         return taskNum;
     }
@@ -104,7 +119,7 @@ public class TaskManager {
             ui.printMessage(MESSAGE_MARK_DONE);
         } else {
             tasks.get(taskNum).markAsUndone();
-            ui.printMessage(MESSAGE_UNMARK_DONE);
+            ui.printMessage(MESSAGE_MARK_UNDONE);
         }
         ui.printMessage(tasks.get(taskNum).getDescription());
     }
@@ -121,7 +136,7 @@ public class TaskManager {
         ui.printMessage(MESSAGE_REMOVE_TASK);
         ui.printMessage(tasks.get(taskNum).getDescription());
         tasks.remove(taskNum);
-        ui.printMessage("You have have " + tasks.size() + " tasks left.");
+        ui.printMessage(MESSAGE_CURR_TASK + tasks.size() + MESSAGE_CURR_TASK_LEFT);
     }
 
     public void loadData() {

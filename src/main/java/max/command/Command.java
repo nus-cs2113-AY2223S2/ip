@@ -1,13 +1,14 @@
-package max.command;/*
+package max.command;
+
+/*
  * Defines the structure of commands from user input
  * Generally, a user command consists of three components.
  * 1. Main Command
- * 2. Sub Command
+ * 2. Arguments
  * 3. Payload
  * User input can be abstracted into:
- * <MainCommand> (<Payload>) (--<Subcommand> (<Subcommand payload>) --(<Subcommand2> (...)) ... )
+ * <MainCommand> (<Payload>) (--<Argument> (<Argument payload>) --(<Argument> (...)) ... )
  */
-
 public enum Command {
     TASK_TODO(1, "todo", new String[]{}),
     TASK_DEADLINE(2, "deadline", new String[]{"by"}),
@@ -35,10 +36,21 @@ public enum Command {
         this.subcommandNames = subcommandNames;
     }
 
+    /**
+     * Get the number of arguments expected for a given command
+     *
+     * @return number of arguments expected
+     */
     public int getArgumentLength() {
         return argumentLength;
     }
 
+    /**
+     * Get the string format for an action (main command)
+     * e.g. list, delete, mark, deadline
+     *
+     * @return string value of the main command
+     */
     public String getMainCommand() {
         return mainCommand;
     }
