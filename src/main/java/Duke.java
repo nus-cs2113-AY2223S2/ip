@@ -1,10 +1,13 @@
 
 import java.util.Scanner;
+import java.io.IOException;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 import duke.TaskManager;
 
 public class Duke {
-
+    
     public static void printInstructions() {
         System.out.println("LIST OF ALL COMMANDS:");
         System.out.println("todo + \"task name\" to add a task");
@@ -33,10 +36,10 @@ public class Duke {
         return a[0];
     }
 
-    public static void executeAddTodo(String s, int taskId, TaskManager listofItems) {
+    public static void executeAddTodo(String s, int taskId, TaskManager listOfItems) {
         try {
             s = s.substring("todo ".length(), s.length());
-            listofItems.addTask(s, taskId);
+            listOfItems.addTask(s, taskId);
             System.out.println("Roger. The following todo has been added:");
             System.out.println("[T][ ] " + s);
             System.out.println("You now have " + (taskId + 1) + " item in the list");
@@ -102,7 +105,7 @@ public class Duke {
         printHorizontalLine();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException{
         printGreeting();
         Scanner scanObj = new Scanner(System.in);
         TaskManager listofItems = new TaskManager();
@@ -114,16 +117,19 @@ public class Duke {
                     executeAddTodo(userCmd, taskId, listofItems);
                     printHorizontalLine();
                     taskId++;
+                    listofItems.saveFile();
                     break;
                 case "deadline":
                     executeAddDeadline(userCmd, taskId, listofItems);
                     printHorizontalLine();
                     taskId++;
+                    listofItems.saveFile();
                     break;
                 case "event":
                     executeAddEvent(userCmd, taskId, listofItems);
                     printHorizontalLine();
                     taskId++;
+                    listofItems.saveFile();
                     break;
                 case "list":
                     listofItems.listTask();
@@ -133,11 +139,17 @@ public class Duke {
                     String markId[] = userCmd.split(" ");
                     listofItems.markTask(Integer.parseInt(markId[1]) - 1);
                     printHorizontalLine();
+                    listofItems.saveFile();
                     break;
                 case "unmark":
                     String unmarkId[] = userCmd.split(" ");
                     listofItems.unmarkTask(Integer.parseInt(unmarkId[1]) - 1);
                     printHorizontalLine();
+                    try {
+                    listofItems.saveFile();
+                    } catch (IOException e) {
+                        System.out.println("Something went wrong: " + e.getMessage());
+                    }
                     break;
                 default:
                     printfalseInput();
@@ -147,6 +159,40 @@ public class Duke {
         }
         scanObj.close();
         printGoodbye();
+    }
+
+    public void loadFile(TaskManager listOfItems) throws FileNotFoundException {
+        String filePath = "C:/repos/IP/src/main/java/duke/load.txt";
+        File f = new File(filePath);
+        Scanner s = new Scanner(f);
+        while (s.hasNext()) {
+            String l = s.nextLine();
+            switch (l.substring(0,2)) {
+                case "[T]":
+                loadTodo(listOfItems, l);
+                break;
+                case "[D]":
+                loadDeadline(listOfItems, l);
+                break;
+                case "[E]":
+                loadEvent(listOfItems, l);
+                break;
+                default:
+                break;
+            }
+        }
+        s.close();
+    }
+
+    public void loadTodo(TaskManager listOfItems, String l) {
+    }
+
+    public void loadEvent(TaskManager listOfItems, String l) {
+        
+    }
+
+    public void loadDeadline(TaskManager listOfItems, String l) {
+        
     }
 
     private static void printGoodbye() {

@@ -1,11 +1,19 @@
 package duke;
+
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class TaskManager {
-    private Task[] tasks = new Task[100];
+    private static Task[] tasks = new Task[100];
     private int taskCount = 0;
 
     public void addTask(String name, int id) {
         tasks[taskCount] = new Task(name, false, id);
         taskCount++;
+    }
+
+    public int getTaskCount() {
+        return this.taskCount;
     }
 
     public void addDeadline(String name, String deadline, int id) {
@@ -35,4 +43,18 @@ public class TaskManager {
             tasks[i].print();
         }
     }
+
+    public void saveFile() throws IOException {
+        String filePath = "C:/repos/IP/src/main/java/duke/load.txt";
+        FileWriter fw = new FileWriter(filePath);
+        for (int i = 0; i < taskCount; i++) {
+            try {
+                fw.write(tasks[i].toString() + System.lineSeparator());
+            } catch (IOException e) {
+                System.out.println("Something went wrong: " + e.getMessage());
+            }
+        }
+        fw.close();
+    }
+
 }
