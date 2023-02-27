@@ -11,20 +11,35 @@ import java.util.ArrayList;
 import static java.util.stream.Collectors.toList;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-
 
 public class TaskList {
     private static ArrayList<Task> tasks = new ArrayList<>();
+
+    /**
+     * Getter for ArrayList of tasks
+     *
+     * @return ArrayList of tasks of task type
+     */
     public static ArrayList<Task> getTasks() {
         return tasks;
     }
+
+    /**
+     * Lists out full descriptions of all tasks in list of tasks
+     */
     public static void listTasks() {
         System.out.println("Here are the tasks in your list:");
         for(int i = 0; i < tasks.size(); i += 1){
             System.out.println((i + 1) + ". " + tasks.get(i).fullDescription());
         }
     }
+
+    /**
+     * Parses the command for a task's specific type and adds it the list of tasks accordingly
+     *
+     * @param command user input to add a task
+     * @throws DukeException thrown as a warning message if input is incorrect
+     */
     public static void addToList(String command) throws DukeException {
         String[] arrayOfWords = command.split(" ", 2);
         String commandWord = arrayOfWords[0];
@@ -59,6 +74,11 @@ public class TaskList {
         System.out.println("Now you have " + tasks.size() + " task(s) in the list.");
         Storage.writeToFile();
     }
+
+    /**
+     * Adds event into list of tasks
+     * @param arrayOfWords String array of event input
+     */
     private static void addEvent(String[] arrayOfWords) {
         String[] arrayOfEvent = arrayOfWords[1].split("/from");
         String eventDescription = arrayOfEvent[0];
@@ -68,6 +88,11 @@ public class TaskList {
         System.out.print("added new event: ");
         System.out.println(eventDescription + "from " + eventStart + " to " + eventEnd);
     }
+
+    /**
+     * Adds deadline into list of tasks
+     * @param arrayOfWords String array of deadline input
+     */
     private static void addDeadline(String[] arrayOfWords) {
         try {
             String[] arrayOfDeadline = arrayOfWords[1].split("/by");
@@ -81,14 +106,25 @@ public class TaskList {
         } catch (DateTimeParseException e) {
             System.out.println("OOPS! Use case: deadline X /by yyyy-mm-dd (e.g. 2019-10-15)");
         }
-
     }
+
+    /**
+     * Adds todo into list of tasks
+     * @param arrayOfWords String array of todo input
+     */
     private static void addTodo(String[] arrayOfWords) {
         String todoDescription = arrayOfWords[1].trim();
         tasks.add(new Todo(todoDescription));
         System.out.print("added new todo: ");
         System.out.println(todoDescription);
     }
+
+    /**
+     * Convert user input to the task id that is to be marked and sets the task to done
+     *
+     * @param command user input to mark a task
+     * @throws DukeException thrown as a warning message if input is incorrect
+     */
     public static void mark(String command) throws DukeException {
         try {
             String[] arrOfCommand = command.split(" ");
@@ -101,6 +137,13 @@ public class TaskList {
             throw new DukeException("Use case: mark ITEM_NUMBER");
         }
     }
+
+    /**
+     * Convert user input to the task id that is to be unmarked and sets the task to not done
+     *
+     * @param command user input to unmark a task
+     * @throws DukeException thrown as a warning message if input is incorrect
+     */
     public static void unmark(String command) throws DukeException {
         try {
             String[] arrOfCommand = command.split(" ");
@@ -113,6 +156,14 @@ public class TaskList {
             throw new DukeException("Use case: unmark ITEM_NUMBER");
         }
     }
+
+    /**
+     * Convert user input to the task id that is to be deleted and removes the entry from the
+     * list of tasks
+     *
+     * @param command user input to delete as task
+     * @throws DukeException thrown as a warning message if input is incorrect
+     */
     public static void delete(String command) throws DukeException {
         try {
             String[] arrOfCommand = command.split(" ");
@@ -127,6 +178,13 @@ public class TaskList {
             throw new DukeException("Use case: delete ITEM_NUMBER");
         }
     }
+
+    /**
+     * Outputs list of tasks that have descriptions that match the user's keyword onto command line
+     *
+     * @param keyword user input as a keyword for the task
+     * @throws DukeException thrown as a warning message if input is incorrect
+     */
     public static void findTask(String keyword) throws DukeException {
         try {
             keyword = keyword.trim().toLowerCase();
