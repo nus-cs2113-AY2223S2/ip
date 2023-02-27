@@ -7,10 +7,19 @@ import util.Storage;
 import util.Parser;
 import util.TaskList;
 
+/**
+ * The main class of the Duke chatbot program. This class initializes the user
+ * interface,
+ * task list, and file storage. It then enters a loop where it receives user
+ * input,
+ * parses it, and executes the corresponding commands until the user exits the
+ * program.
+ */
 public class Duke {
     private Ui ui;
+
     public static void main(String[] args) {
-        Ui ui =new Ui();
+        Ui ui = new Ui();
         ui.printWelcomeMessage();
         Storage.initializeFile();
         ArrayList<Task> commands = TaskList.createList();
