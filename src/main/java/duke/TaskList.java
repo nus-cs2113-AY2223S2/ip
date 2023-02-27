@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public class TaskList {
 
-    protected ArrayList<Task> tasks;
-    public final String BY_DELIMITER = " /by ";
-    public final String FROM_DELIMITER = " /from ";
-    public final String TO_DELIMITER = " /to ";
+    protected static ArrayList<Task> tasks;
+    private static final String BY_DELIMITER = " /by ";
+    private static final String FROM_DELIMITER = " /from ";
+    private static final String TO_DELIMITER = " /to ";
 
     public TaskList() {
         tasks = new ArrayList<>();

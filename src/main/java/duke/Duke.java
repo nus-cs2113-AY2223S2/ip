@@ -22,6 +22,7 @@ public class Duke {
     public static final String EMPTY_COMMAND_MESSAGE = "Command is empty!";
     public static final String OUTPUT_FILE = "outputfile.txt";
     public static final String IOEXCEPTION_ERROR_MESSAGE = "IOException Error";
+    public static final String INDEX_DOES_NOT_EXIST_MESSAGE = "Index does not exist";
 
     private Ui ui;
     private Parser parser;
@@ -35,7 +36,7 @@ public class Duke {
         taskList = new TaskList();
     }
 
-    public void run() {
+    private void run() {
         ui.showWelcomeMessage();
         taskList = storage.load(OUTPUT_FILE);
         starting();
@@ -63,6 +64,8 @@ public class Duke {
                 System.out.println(MARK_UNMARK_INDEX_IS_NOT_A_NUMBER_MESSAGE);
             } catch (NullPointerException e) {
                 System.out.println(MARK_UNMARK_INDEX_DOES_NOT_EXIST_MESSAGE);
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println(INDEX_DOES_NOT_EXIST_MESSAGE);
             } catch (IOException e) {
                 System.out.println(IOEXCEPTION_ERROR_MESSAGE);
             }
@@ -71,7 +74,7 @@ public class Duke {
     }
 
 
-    public void processInput(String line) throws UnknownCommandException, IOException, EmptyCommandException {
+    private void processInput(String line) throws UnknownCommandException, IOException, EmptyCommandException {
         String[] words = line.split(" ", 2);
         String command = words[0];
         // words[0] is the command, words[n] is the next few words

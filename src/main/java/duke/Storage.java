@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Storage {
-    private TaskList initialTaskList;
-    public static final String FILE_NOT_FOUND_MESSAGE = "File Not Found";
+    private static TaskList initialTaskList;
+    private static final String FILE_NOT_FOUND_MESSAGE = "File Not Found";
 
     public Storage() {
         initialTaskList = new TaskList();
@@ -48,14 +48,14 @@ public class Storage {
         return initialTaskList;
     }
 
-    private void loadFileContents(File f) throws FileNotFoundException {
+    private static void loadFileContents(File f) throws FileNotFoundException {
         Scanner s = new Scanner(f); // create a Scanner using the File as the source
         while (s.hasNext()) {
             processFileContents(s.nextLine());
         }
     }
 
-    private void processFileContents(String line) {
+    private static void processFileContents(String line) {
         String[] words = line.split("\\|");
         String type = words[0];
         boolean isDone = false;
@@ -77,7 +77,7 @@ public class Storage {
         }
     }
 
-    private void loadDeadline(String[] words, boolean isDone) {
+    private static void loadDeadline(String[] words, boolean isDone) {
         Deadline deadline = new Deadline(words[2], words[3]);
         if (isDone) {
             deadline.markAsDone();
@@ -85,7 +85,7 @@ public class Storage {
         initialTaskList.addDeadline(deadline);
     }
 
-    private void loadEvent(String[] words, boolean isDone) {
+    private static void loadEvent(String[] words, boolean isDone) {
         Event event = new Event(words[2], words[3], words[4]);
         if (isDone) {
             event.markAsDone();
@@ -93,7 +93,7 @@ public class Storage {
         initialTaskList.addEvent(event);
     }
 
-    private void loadTodo(String[] words, boolean isDone) {
+    private static void loadTodo(String[] words, boolean isDone) {
         Todo todo = new Todo(words[2]);
         if (isDone) {
             todo.markAsDone();
