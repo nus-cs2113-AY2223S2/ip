@@ -3,13 +3,13 @@ debug
 todo Foobar
 deadline badArgument
 deadline badArgument -by foobar
-deadline deadline1 --by Sunday
-deadline deadline2 --by Some--day
+deadline deadline1 --by 2020-10-10 2359
+deadline deadline2 --by 2022-19-01 0000
 event badArgument
-event missingArg --from Foo
-event missingArg1 --by Foo
-event event1 --from Foo --to Bar
-event event2 --to Baz --from Zulu
+event missingArg --from 2020-10-10 2359
+event missingArg1 --by 2020-10-10 2359
+event event1 --from 2020-10-10 2359 --to 2020-11-10 0000
+event event2 --to 2020-11-10 0900 --from 2020-11-10 0001
 list
 mark -1
 mark 0

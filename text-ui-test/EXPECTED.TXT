@@ -41,13 +41,11 @@ Invalid number of arguments. Expected: 2, Got: 1
 ────────────────────────────────────────────────────────────
 ~$ ────────────────────────────────────────────────────────────
 Got it. Task added:
-[D][ ] deadline1 (by: Sunday)
+[D][ ] deadline1 (by: Oct 10 2359, 2020)
 You now have 2 tasks in your list.
 ────────────────────────────────────────────────────────────
 ~$ ────────────────────────────────────────────────────────────
-Got it. Task added:
-[D][ ] deadline2 (by: Some--day)
-You now have 3 tasks in your list.
+Max only accepts dates of format: yyyy-MM-dd HHmm
 ────────────────────────────────────────────────────────────
 ~$ ────────────────────────────────────────────────────────────
 Invalid number of arguments. Expected: 3, Got: 1
@@ -60,26 +58,20 @@ Invalid number of arguments. Expected: 3, Got: 2
 ────────────────────────────────────────────────────────────
 ~$ ────────────────────────────────────────────────────────────
 Got it. Task added:
-[E][ ] event1 (FROM: Foo, TO: Bar)
-You now have 4 tasks in your list.
+[E][ ] event1 (FROM: Oct 10 2359, 2020, TO: Nov 10 0000, 2020)
+You now have 3 tasks in your list.
 ────────────────────────────────────────────────────────────
 ~$ ────────────────────────────────────────────────────────────
 Got it. Task added:
-[E][ ] event2 (FROM: Zulu, TO: Baz)
-You now have 5 tasks in your list.
+[E][ ] event2 (FROM: Nov 10 0001, 2020, TO: Nov 10 0900, 2020)
+You now have 4 tasks in your list.
 ────────────────────────────────────────────────────────────
 ~$ ────────────────────────────────────────────────────────────
 Here's what's in your list:
 1. [T][ ] Foobar
-
-2. [D][ ] deadline1 (by: Sunday)
-
-3. [D][ ] deadline2 (by: Some--day)
-
-4. [E][ ] event1 (FROM: Foo, TO: Bar)
-
-5. [E][ ] event2 (FROM: Zulu, TO: Baz)
-
+2. [D][ ] deadline1 (by: Oct 10 2359, 2020)
+3. [E][ ] event1 (FROM: Oct 10 2359, 2020, TO: Nov 10 0000, 2020)
+4. [E][ ] event2 (FROM: Nov 10 0001, 2020, TO: Nov 10 0900, 2020)
 ────────────────────────────────────────────────────────────
 ~$ ────────────────────────────────────────────────────────────
 Awoo? Max dug up an error:
@@ -95,7 +87,7 @@ Okay, marking this task as done:
 ────────────────────────────────────────────────────────────
 ~$ ────────────────────────────────────────────────────────────
 Okay, marking this task as done: 
-[D][X] deadline1 (by: Sunday)
+[D][X] deadline1 (by: Oct 10 2359, 2020)
 ────────────────────────────────────────────────────────────
 ~$ ────────────────────────────────────────────────────────────
 Awoo? Max dug up an error:
@@ -104,15 +96,9 @@ Invalid task number!
 ~$ ────────────────────────────────────────────────────────────
 Here's what's in your list:
 1. [T][X] Foobar
-
-2. [D][X] deadline1 (by: Sunday)
-
-3. [D][ ] deadline2 (by: Some--day)
-
-4. [E][ ] event1 (FROM: Foo, TO: Bar)
-
-5. [E][ ] event2 (FROM: Zulu, TO: Baz)
-
+2. [D][X] deadline1 (by: Oct 10 2359, 2020)
+3. [E][ ] event1 (FROM: Oct 10 2359, 2020, TO: Nov 10 0000, 2020)
+4. [E][ ] event2 (FROM: Nov 10 0001, 2020, TO: Nov 10 0900, 2020)
 ────────────────────────────────────────────────────────────
 ~$ ────────────────────────────────────────────────────────────
 Awoo? Max dug up an error:
@@ -129,15 +115,9 @@ Invalid task number!
 ~$ ────────────────────────────────────────────────────────────
 Here's what's in your list:
 1. [T][ ] Foobar
-
-2. [D][X] deadline1 (by: Sunday)
-
-3. [D][ ] deadline2 (by: Some--day)
-
-4. [E][ ] event1 (FROM: Foo, TO: Bar)
-
-5. [E][ ] event2 (FROM: Zulu, TO: Baz)
-
+2. [D][X] deadline1 (by: Oct 10 2359, 2020)
+3. [E][ ] event1 (FROM: Oct 10 2359, 2020, TO: Nov 10 0000, 2020)
+4. [E][ ] event2 (FROM: Nov 10 0001, 2020, TO: Nov 10 0900, 2020)
 ────────────────────────────────────────────────────────────
 ~$ ────────────────────────────────────────────────────────────
 Got it. Task added:
