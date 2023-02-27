@@ -3,7 +3,7 @@ Duke is a Personal Assistant Chatbot that helps you to keep track of various thi
 
 ## Setting Up Duke
 1. Ensure you have Java 11 or above installed in your computer.
-2. Download the `Duke.jar`.
+2. Download the latest `Duke.jar` from [here] (https://github.com/saintzaw/ip/releases).
 3. Open your terminal and `cd` into the folder where `Duke.jar` exists.
 4. Once you are in the correct folder, run this command `java -jar Duke.jar` to run Duke.
 
