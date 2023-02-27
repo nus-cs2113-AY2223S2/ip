@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class TaskList {
 
+    private static final String MATCHING_TASK_MESSAGE = "Here are the matching tasks in your list:";
     protected static ArrayList<Task> tasks;
     private static final String BY_DELIMITER = " /by ";
     private static final String FROM_DELIMITER = " /from ";
@@ -115,6 +116,17 @@ public class TaskList {
         int listIndex = 0;
         for (Task t : tasks) {
             if (t != null) {
+                System.out.println(++listIndex + ". " + t);
+            }
+        }
+    }
+
+    public void printMatchedList(String[] words){
+        System.out.println(MATCHING_TASK_MESSAGE);
+        String keyword = words[1];
+        int listIndex = 0;
+        for (Task t : tasks) {
+            if (t != null && t.description.matches("(.*)"+keyword+"(.*)")) {
                 System.out.println(++listIndex + ". " + t);
             }
         }
