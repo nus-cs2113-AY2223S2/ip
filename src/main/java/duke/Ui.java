@@ -20,6 +20,7 @@ public class Ui {
         System.out.println(LINE_BREAK);
         printlnWithIndentation("Hello! I'm Duke");
         printlnWithIndentation("What can I do for you?");
+        printlnWithIndentation(HELP_PAGE);
         System.out.println(LINE_BREAK);
     }
 
