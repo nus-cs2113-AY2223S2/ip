@@ -106,6 +106,11 @@ public class Max {
             ui.printMessage(MESSAGE_DEBUG_MODE);
             ui.printMessage(MESSAGE_DEBUG_HELP);
             break;
+        case FIND:
+        case FETCH:
+            // Fetch is used as an alias for find for thematic consistency with MAX
+            taskManager.findTasks(commandPayload);
+            break;
         default:
             // { CommandType.UNKNOWN_COMMAND }
             ui.printMessage(MESSAGE_UNKNOWN_COMMAND);

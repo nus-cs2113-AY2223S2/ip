@@ -21,8 +21,6 @@ public class TaskManager {
     private DateParser dateParser;
 
     // String literals definitions
-    private static final String ERROR_MAKE_TASK_FAILED = "Throw me a bone here, I couldn't create a task!";
-    private static final String ERROR_NO_TASKS = "There's nothing in your list. I'm gonna bite you.";
     private static final String ERROR_MISSING_NO = "I'm a dog, but even I know that you didn't enter a number.";
     private static final String ERROR_BAD_TASK_NUM = "Invalid task number!";
     private static final String TASK_TODO = "todo";
@@ -38,7 +36,11 @@ public class TaskManager {
     private static final String MESSAGE_MARK_DONE = "Okay, marking this task as done: ";
     private static final String MESSAGE_MARK_UNDONE = "Okay, setting this task as undone: ";
     private static final String MESSAGE_REMOVE_TASK = "Woof woof this task will be rem-woofed:";
-
+    private static final String MESSAGE_MAX_CANNOT_FIND = "Max dug around everywhere but can't find anything!";
+    private static final String MESSAGE_MAX_HAS_FOUND = "Max sniffed out these matching tasks:";
+    private static final String MESSAGE_EMPTY_QUERY = "I'm gonna bite you. Your query is empty!";
+    private static final String MESSAGE_LIST_EMPTY = "There's nothing in your list. I'm gonna bite you.";
+    private static final String EXCEPTION_ADD_TASK_FAILED = "Throw me a bone here, I couldn't create a task!";
 
     public void createTask(HashMap<String, String> commandMap, Command command) throws TaskException {
         // Assertion: commandMap has the correct subcommands & length
@@ -66,7 +68,7 @@ public class TaskManager {
         }
         if (newTask == null) {
             // Safety check in case the assertion fails
-            throw new TaskException(ERROR_MAKE_TASK_FAILED);
+            throw new TaskException(EXCEPTION_ADD_TASK_FAILED);
         }
         tasks.add(newTask);
         ui.printMessage(MESSAGE_ADD_TASK);
@@ -76,7 +78,7 @@ public class TaskManager {
 
     public void printTasklist() {
         if (tasks.size() == 0) {
-            ui.printMessage(ERROR_NO_TASKS);
+            ui.printMessage(MESSAGE_LIST_EMPTY);
             return;
         }
         ui.printMessage(MESSAGE_LIST_HEADER);
@@ -150,6 +152,39 @@ public class TaskManager {
 
     public void resetTaskList() {
         tasks.clear();
+    }
+
+    public void findTasks(HashMap<String, String> commandPayload) {
+        // Naiively search for tasks that have exact matches with the query string
+        String query;
+        if (commandPayload.containsKey("find")) {
+            query = commandPayload.get("find");
+        } else {
+            query = commandPayload.get("fetch");
+        }
+        if (query.trim().length() == 0) {
+            ui.printMessage(MESSAGE_EMPTY_QUERY);
+            return;
+        }
+
+        ArrayList<Task> matchedTasks = new ArrayList<>();
+        for (Task task : tasks) {
+            String taskDescription = task.getDescription();
+            if (taskDescription.contains(query)) {
+                matchedTasks.add(task);
+            }
+        }
+        // Print all related items
+        if (matchedTasks.size() == 0) {
+            ui.printMessage(MESSAGE_MAX_CANNOT_FIND);
+        } else {
+            ui.printMessage(MESSAGE_MAX_HAS_FOUND);
+            for (int i = 0; i < matchedTasks.size(); ++i) {
+                Task curr = matchedTasks.get(i);
+                ui.printMessage(i + 1 + ". " + curr.getDescription());
+            }
+        }
+
     }
 
     public TaskManager() {

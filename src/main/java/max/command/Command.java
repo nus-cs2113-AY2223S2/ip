@@ -19,6 +19,8 @@ public enum Command {
     EXIT(1, "exit", new String[]{}),
     LIST(1, "list", new String[]{}),
     DEBUG(1, "debug", new String[]{}),
+    FIND(1, "find", new String[]{}),
+    FETCH(1, "fetch", new String[]{}),
     UNKNOWN_COMMAND(1, "", new String[]{});
 
 
