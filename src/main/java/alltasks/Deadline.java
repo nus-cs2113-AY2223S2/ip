@@ -1,3 +1,5 @@
+package alltasks;
+
 public class Deadline extends Task {
 
     public Deadline(String descriptor) {
