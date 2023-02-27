@@ -9,33 +9,33 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 /* 
-    Upon cloning, user will have an empty data file duke/files/data.txt
+    Upon cloning, user will have an empty data file data.txt
     After first use, all tasks on the user list will save in data.txt
     When Duke is restarted, all tasks from data.txt will load to the list
 */
 
 public class FileManager {
 
-    private static final String filePath = "./data.txt";
+    private static final String FILEPATH = "./data.txt";
 
     // Write to a file
-    private static void writeToFile(String filePath, String textToAdd) throws IOException {
-        FileWriter fw = new FileWriter(filePath);
+    private static void writeToFile(String FILEPATH, String textToAdd) throws IOException {
+        FileWriter fw = new FileWriter(FILEPATH);
         fw.write(textToAdd);
         fw.close();
     }
 
     // Append to a file
-    private static void appendToFile(String filePath, String textToAppend) throws IOException {
-        FileWriter fw = new FileWriter(filePath, true); // create a FileWriter in append mode
+    private static void appendToFile(String FILEPATH, String textToAppend) throws IOException {
+        FileWriter fw = new FileWriter(FILEPATH, true); // create a FileWriter in append mode
         fw.write(textToAppend);
         fw.close();
     }
 
     // Retrieve the contents of a file as an array of strings where each line is a string
-    private static ArrayList<String> retrieveFileContents(String filePath) throws FileNotFoundException {
+    private static ArrayList<String> retrieveFileContents(String FILEPATH) throws FileNotFoundException {
         ArrayList<String> taskStrings = new ArrayList<String>(); 
-        File f = new File(filePath); // create a File for the given file path
+        File f = new File(FILEPATH); // create a File for the given file path
         Scanner s = new Scanner(f); // create a Scanner using the File as the source
         while (s.hasNext()) {
             taskStrings.add(s.nextLine());
@@ -68,12 +68,12 @@ public class FileManager {
     // Parse all tasks from the file to list
     public void populateTaskList() throws Exception {
         try {
-            File f = new File(filePath);
+            File f = new File(FILEPATH);
             if (!f.exists()) {
-                FileWriter fw = new FileWriter(filePath);
+                FileWriter fw = new FileWriter(FILEPATH);
                 fw.write("");
             }
-            ArrayList<String> fileContents = retrieveFileContents(filePath);
+            ArrayList<String> fileContents = retrieveFileContents(FILEPATH);
             for(int i = 0; i<fileContents.size(); i++) {
                 addTaskFromFile(fileContents.get(i));
             }
@@ -86,14 +86,14 @@ public class FileManager {
     public void populateFile() throws IOException {
         ArrayList<Task> taskList = TaskList.getTasksArray();
         if (taskList.size() == 0) {
-            writeToFile(filePath, "");
+            writeToFile(FILEPATH, "");
             return;
         }
         for(int i = 0; i<taskList.size(); i++) {
             if (i == 0) {
-                writeToFile(filePath, taskList.get(i).printTask()+"\n");
+                writeToFile(FILEPATH, taskList.get(i).printTask()+"\n");
             } else {
-                appendToFile(filePath, taskList.get(i).printTask()+"\n");
+                appendToFile(FILEPATH, taskList.get(i).printTask()+"\n");
             }
         }
     }

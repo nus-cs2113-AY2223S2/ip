@@ -4,25 +4,13 @@ import duke.exceptions.*;
 import java.util.ArrayList;
 
 public class Task {
-    
-    /*
-     ArrayList of all tasks
-     All subclasses of Task call the parent constructor, which adds them to the list
-    */
 
     // Task class attributes
     public String description;
     public boolean isComplete;
 
     // Reusable barrier
-    public static final String BARRIER = "____________________________________________________________";
-
-    // Sets default task to no description and incomplete then adds to list
-    public Task() {
-        this.description = "";
-        this.isComplete = false;
-        TaskList.add(this);
-    }
+    static final String BARRIER = "____________________________________________________________";
 
     // Dynamic task constructor
     public Task(String description) {

@@ -4,8 +4,9 @@ import duke.input.Parser;
 import java.util.Scanner;
 
 public class Ui {
-    final String BARRIER = "____________________________________________________________";
-    final String LOGO = " ____        _        \n"
+    
+    final static String BARRIER = "____________________________________________________________";
+    final static String LOGO = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
                 + "| |_| | |_| |   <  __/\n"

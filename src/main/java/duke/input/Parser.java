@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter;
 
 public class Parser {
 
-    final String BARRIER = "____________________________________________________________";
+    final static String BARRIER = "____________________________________________________________";
 
     public void handleInput(String input) {
         // Split user input to check for dynamism
@@ -133,15 +133,19 @@ public class Parser {
                 }
                 // Split input into description, start, and end
                 String[] splitEventInput = originalInput.split("/");
+                
                 // Start time comes after '/from'
                 String start = splitEventInput[1].substring(5);
                 start = start.substring(0, start.length() - 1);
+                start = processDate(start);
+
                 // End time comes after '/to'
                 String end = splitEventInput[2].substring(3);
-                start = processDate(start);
                 end = processDate(end);
+
                 String parsedDescription = splitEventInput[0] + "(from: " + start + " to: " + end + ")";
                 parsedDescription = parsedDescription.substring(parsedDescription.indexOf(" ") + 1);
+
                 System.out.println(BARRIER + "\n");
                 Event temp = new Event(parsedDescription, start, end);
                 System.out.println("added: " + temp.printTask());
@@ -176,17 +180,24 @@ public class Parser {
                 if(splitInput.length != 2) {
                     throw new DukeExceptions.invalidInputStructure("Argh! Structure ye input correctly!");
                 }
+                // Isolate search key
                 String searchKey = originalInput.substring(5);
+
+                // Create and populate list of results
                 ArrayList<Task> relevantTasks = new ArrayList<>();
                 for(int i = 0; i < TaskList.getTasksArray().size(); i++) {
                     if (TaskList.getTasksArray().get(i).description.contains(searchKey)) {
                         relevantTasks.add(TaskList.getTasksArray().get(i));
                     }
                 }
+
+                // No results guard clause
                 if (relevantTasks.size() == 0) {
                     System.out.println(BARRIER + "\n\n No tasks found!\n" + BARRIER + "\n");
                     break;
                 }
+
+                // Output
                 System.out.println(BARRIER + "\n\nTasks found: ");
                 for(int i = 0; i < relevantTasks.size(); i++) {
                     System.out.println(i+1 + ". " + relevantTasks.get(i).printTask());
@@ -210,12 +221,12 @@ public class Parser {
     public static void printHelpList() {
         String BARRIER = "____________________________________________________________";
         System.out.println(BARRIER + "\n\nAvast! Here be the commands ye can use to make me do yer bidding!" + 
-                                    "\n- list: lists all current tasks\n- mark x: marks task x as complete\n-" + 
-                                    "unmark x: unmarks task x as complete\n- todo 'description': adds a task to do " + 
-                                    "with the given description\n- deadline 'description' /by 'deadline': adds a deadline" + 
-                                    " task with the given date and description\n- event 'description' /from 'start' /to 'end': " +
-                                    "adds an event with the start and endtime\n- bye: exits Duke\n- anything else: " + 
-                                    "adds a basic task with the given description\n" + BARRIER + "\n");
+                "\n- list: lists all current tasks\n- mark x: marks task x as complete\n-" + 
+                "unmark x: unmarks task x as complete\n- todo 'description': adds a task to do " + 
+                "with the given description\n- deadline 'description' /by 'deadline': adds a deadline" + 
+                " task with the given date and description\n- event 'description' /from 'start' /to 'end': " +
+                "adds an event with the start and endtime\n- bye: exits Duke\n- find 'searchKey': " + 
+                "shows all relevant tasks\n- delete 'num': removes task 'num' from list\n" + BARRIER + "\n");
     }
 
     public static void printListLength() {
