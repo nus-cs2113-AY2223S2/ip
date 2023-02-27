@@ -122,6 +122,13 @@ public class TaskList {
     }
 
     public static void findInList(String string) {
+        if (string.isEmpty()) {
+            Ui.line();
+            System.out.println("Please input a keyword to search!");
+            Ui.line();
+            return;
+        }
+
         if (tasks.size() > 0) {
             // Checks if any matches are found
             boolean isMatchFound = false;
