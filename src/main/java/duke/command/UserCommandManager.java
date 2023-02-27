@@ -28,7 +28,7 @@ public class UserCommandManager {
             command = new ListTasks();
             break;
         case "list-sorted":
-        case "ls -s":
+        case "ls-s":
             command = new PrintSortedTasks();
             break;
         case "find":

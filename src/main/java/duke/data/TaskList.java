@@ -105,8 +105,8 @@ public class TaskList {
      */
     public static class CustomComparator implements Comparator<Task> {
         @Override
-        public int compare(Task o1, Task o2) {
-            return o1.getEndTime().compareTo(o2.getEndTime());
+        public int compare(Task task1, Task task2) {
+            return task1.getEndTime().compareTo(task2.getEndTime());
         }
     }
 
