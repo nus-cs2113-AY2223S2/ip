@@ -23,7 +23,7 @@ public class Duke {
         System.out.println();
     }
 
-    public static void falseInput() {
+    public static void printfalseInput() {
         System.out.println("Sorry Duke could not understand your input :> please follow the instructions");
         printInstructions();
     }
@@ -140,7 +140,7 @@ public class Duke {
                     printHorizontalLine();
                     break;
                 default:
-                    falseInput();
+                    printfalseInput();
                     printHorizontalLine();
             }
             userCmd = scanObj.nextLine();

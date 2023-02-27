@@ -1,4 +1,5 @@
 package duke;
+
 public class Event extends Task {
     protected String startTime;
     protected String finishTime;
@@ -10,13 +11,12 @@ public class Event extends Task {
     }
 
     public String toString() {
-        if(this.getIsDone() == true) {
+        if (this.getIsDone() == true) {
             return " [E][X]" + this.getName() + " (from: " + this.startTime
-            + " to: " + this.finishTime + ")";
-        } else {
-            return " [E][ ]" + this.getName() + " (from: " + this.startTime
-            + " to: " + this.finishTime + ")";
+                    + " to: " + this.finishTime + ")";
         }
+        return " [E][ ]" + this.getName() + " (from: " + this.startTime
+                + " to: " + this.finishTime + ")";
     }
 
     public void print() {
