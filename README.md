@@ -38,7 +38,7 @@ Hello from
         5. mark <task number> - Marks a task as done.
         6. unmark <task_number>: Unmarks task as not done
         7. help - If you forgot how to use me, don't be afraid to ask!.
-        8. Timer - starts a 25 minute Pomodoro timer
+        8. timer - starts a 25 minute Pomodoro timer
         9. done - Exits Chronos.
         10. find <keyword> - Finds a task and displays all tasks with corresponding keywords
         ===============================================================================================================
