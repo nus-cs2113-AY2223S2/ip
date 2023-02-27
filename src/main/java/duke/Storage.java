@@ -30,7 +30,7 @@ public class Storage {
 
             String line;
             while((line=br.readLine())!=null) {
-                Duke.initialiseTaskList(line);
+                TaskList.initialiseTaskList(line);
             }
         } catch (FileNotFoundException e) {
             System.out.println("You have no pre-existing tasks :)");
@@ -44,11 +44,9 @@ public class Storage {
             PrintWriter pw = new PrintWriter(FILE_PATH);
             writeTaskToFile(pw, tasks);
         } catch (FileNotFoundException e) {
-            //File dir = new File("./data");
             if (!FILE_DIR.isDirectory()) {
                 System.out.println("Data directory not found. Creating new data directory");
                 Path path = Paths.get(String.valueOf(FILE_DIR));
-                //"./data");
                 try {
                     Files.createDirectories(path);
                 } catch (IOException f) {
@@ -58,7 +56,6 @@ public class Storage {
             if (!FILE_PATH.isFile()) {
                 System.out.println("File not found. Creating new text file");
                 Path fileLoc = Paths.get(String.valueOf(FILE_PATH));
-                //"./data/duke.txt");
                 try {
                     Files.createFile(fileLoc);
                 } catch (IOException f) {
@@ -67,7 +64,6 @@ public class Storage {
             }
         }
     }
-
 
     public static void writeTaskToFile(PrintWriter pw, ArrayList<Task> tasks) {
         for (Task t : tasks) {

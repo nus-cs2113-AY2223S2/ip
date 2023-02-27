@@ -1,9 +1,5 @@
 package duke;
 
-import command.Command;
-import exception.CommandNotRecognisedException;
-import exception.IllegalCharacterException;
-
 import java.util.Scanner;
 
 public class Ui {
@@ -28,7 +24,7 @@ public class Ui {
 
         printDivider();
         System.out.println("List Summary:");
-        Duke.printTaskList();
+        TaskList.printTaskList();
         System.out.print(logo);
         System.out.println("Hi, I'm Dave!\n"
                 + "What can I do for you?");

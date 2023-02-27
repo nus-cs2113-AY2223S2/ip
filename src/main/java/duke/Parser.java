@@ -23,7 +23,7 @@ public class Parser {
             Ui.printBye();
             break;
         case Command.COMMAND_LIST:
-            Duke.printTaskList();
+            TaskList.printTaskList();
             break;
         case Command.COMMAND_MARK:
             processCommandMark(input, tasks);
@@ -50,7 +50,7 @@ public class Parser {
 
     private static void processCommandDelete(String input) {
         try {
-            Duke.deleteTask(Integer.parseInt(input.split(" ")[1]) - 1);
+            TaskList.deleteTask(Integer.parseInt(input.split(" ")[1]) - 1);
         } catch (NumberFormatException e) {
             System.out.println("☹ OOPS!!! Task number should be an integer.");
         } catch (InvalidTaskNumberException e) {
@@ -64,9 +64,9 @@ public class Parser {
         String[] taskDesc;
         try {
             taskDesc = input.split("/from|/to");
-            Duke.addEventTask(taskDesc[0].substring(Command.COMMAND_EVENT.length()).trim()
+            TaskList.addEventTask(taskDesc[0].substring(Command.COMMAND_EVENT.length()).trim()
                     , taskDesc[1].trim(), taskDesc[2].trim());
-            Duke.printTaskAdded();
+            TaskList.printTaskAdded();
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("☹ OOPS!!! The description of 'event' should include a task and time period.");
         }
@@ -77,8 +77,8 @@ public class Parser {
         String[] taskDesc;
         try {
             taskDesc = input.split("/by");
-            Duke.addDeadlineTask(taskDesc[0].substring(Command.COMMAND_DEADLINE.length()).trim(), taskDesc[1].trim());
-            Duke.printTaskAdded();
+            TaskList.addDeadlineTask(taskDesc[0].substring(Command.COMMAND_DEADLINE.length()).trim(), taskDesc[1].trim());
+            TaskList.printTaskAdded();
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("☹ OOPS!!! The description of 'deadline' should include a task and deadline.");
         }
@@ -87,8 +87,8 @@ public class Parser {
 
     private static void processCommandTodo(String input) {
         try {
-            Duke.addTodoTask(input.substring(Command.COMMAND_TODO.length()).trim());
-            Duke.printTaskAdded();
+            TaskList.addTodoTask(input.substring(Command.COMMAND_TODO.length()).trim());
+            TaskList.printTaskAdded();
         } catch (EmptyTaskException e) {
             System.out.println("☹ OOPS!!! The description of 'todo' cannot be empty.");
         }
@@ -97,7 +97,7 @@ public class Parser {
 
     private static void processCommandUnmark(String input, ArrayList<Task> tasks) {
         try {
-            Duke.markTaskUndone(Integer.parseInt(input.split(" ")[1].trim())-1);
+            TaskList.markTaskUndone(Integer.parseInt(input.split(" ")[1].trim())-1);
             tasks.get(Integer.parseInt(input.split(" ")[1].trim())-1).printUnmarkMessage();
         } catch (NumberFormatException e) {
             System.out.println("☹ OOPS!!! Task number should be an integer.");
@@ -111,7 +111,7 @@ public class Parser {
 
     private static void processCommandMark(String input, ArrayList<Task> tasks) {
         try {
-            Duke.markTaskDone(Integer.parseInt(input.split(" ")[1]) - 1);
+            TaskList.markTaskDone(Integer.parseInt(input.split(" ")[1]) - 1);
             tasks.get(Integer.parseInt(input.split(" ")[1].trim())-1).printUnmarkMessage();
         } catch (NumberFormatException e) {
             System.out.println("☹ OOPS!!! Task number should be an integer.");
@@ -122,5 +122,4 @@ public class Parser {
         }
         Ui.printDivider();
     }
-
 }
