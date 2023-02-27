@@ -62,9 +62,10 @@ public class Duke {
     }
 
     public static void Delete(int index) {
+        Tasks currentTask = listOfTasks.get(index - 1);
         System.out.println("\n");
         System.out.println("Noted. I have deleted this task");
-        System.out.println(listOfTasks.get(index - 1).toString());
+        System.out.println(currentTask.toString());
         listOfTasks.remove(index - 1);
         counter--;
         System.out.println("You now have " + counter + " tasks in the list.");
@@ -108,7 +109,7 @@ public class Duke {
                 case "todo":
                     try {
                         Todo(command[1]);
-                    } catch (ArrayIndexOutOfBoundsException e) {
+                    } catch (IndexOutOfBoundsException e) {
                         System.out.println(":( There is an error (Index is out of bounds/negative)");
                     }
                     break;
@@ -118,7 +119,7 @@ public class Duke {
                         String d_description = d[0];
                         String d_by = d[1];
                         Deadline(d_description, d_by);
-                    } catch (ArrayIndexOutOfBoundsException e) {
+                    } catch (IndexOutOfBoundsException e) {
                         System.out.println(":( There is an error (Index is out of bounds/negative)");
                     }
                     break;
@@ -129,7 +130,7 @@ public class Duke {
                         String e_start = e[1];
                         String e_end = e[2];
                         Event(e_description, e_start, e_end);
-                    } catch (ArrayIndexOutOfBoundsException e) {
+                    } catch (IndexOutOfBoundsException e) {
                         System.out.println(":( There is an error (Index is out of bounds/negative)");
                     }
                     break;
@@ -146,7 +147,7 @@ public class Duke {
                         listOfTasks.get(m_index - 1).markAsDone();
                         System.out.println("Nice! This task is completed");
                         System.out.println(listOfTasks.get(m_index - 1).toString());
-                    } catch (ArrayIndexOutOfBoundsException e) {
+                    } catch (IndexOutOfBoundsException e) {
                         System.out.println(":( There is an error (Index is out of bounds/negative)");
                     }
                     break;
@@ -156,7 +157,7 @@ public class Duke {
                         listOfTasks.get(u_index - 1).markAsUnDone();
                         System.out.println("Nice! This task is completed");
                         System.out.println(listOfTasks.get(u_index - 1).toString());
-                    } catch (ArrayIndexOutOfBoundsException e) {
+                    } catch (IndexOutOfBoundsException e) {
                         System.out.println(":( There is an error (Index is out of bounds/negative)");
                     }
                     break;
@@ -164,7 +165,7 @@ public class Duke {
                     try {
                         Integer d_index = Integer.valueOf(command[1]);
                         Delete(d_index);
-                    } catch (ArrayIndexOutOfBoundsException e) {
+                    } catch (IndexOutOfBoundsException e) {
                         System.out.println(":( There is an error (Index is out of bounds/negative)");
                     }
                     break;
