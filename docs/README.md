@@ -15,8 +15,9 @@ The app supports several types of tasks
 
   1. Delete tasks
   2. Mark/unmark tasks as done
-  3. Search for tasks with a specific keyword
+  3. Find tasks with a specific keyword
   4. List all saved tasks
+  5. Clear the list of tasks
 
 ### Task data
 
@@ -80,6 +81,23 @@ List of all saved tasks.
 1. [T][ ] do 2023
 2. [D][ ] submit withdrawl form  (by: week 6)
 3. [E][ ] interview at McDonalds (from: 4pm to: 6pm)
+```
+
+### `Find` - searches for all tasks with a specific keyword in their decription
+
+Syntax: `find <keyword>`
+
+Example of usage: 
+
+`find withdrawal`
+
+Expected outcome:
+
+List of all tasks with the keyword
+
+```
+Here are the matching tasks: 
+1. [D][ ] submit withdrawl form  (by: week 6)
 ```
 
 ### `mark` or `unmark` - Mark task as done/undone
