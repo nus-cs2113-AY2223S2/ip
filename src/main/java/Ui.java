@@ -28,8 +28,8 @@ public class Ui {
                 userCommandList(taskList);
                 break;
             case "bye":
-                userCommandBye(taskList);
                 toContinue = false;
+                userCommandBye(taskList);
                 break;
             case "mark":
                 userCommandMark(taskList, userInputWords);
