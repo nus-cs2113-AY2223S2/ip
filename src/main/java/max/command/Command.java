@@ -1,4 +1,5 @@
 package max.command;
+
 /*
  * Defines the structure of commands from user input
  * Generally, a user command consists of three components.
@@ -26,6 +27,7 @@ public enum Command {
     private int argumentLength;
     private String mainCommand;
     private String[] subcommandNames;
+
     Command(int argumentLength, String commandName, String[] subcommandNames) {
         this.argumentLength = argumentLength;
         this.mainCommand = commandName;
@@ -34,6 +36,7 @@ public enum Command {
 
     /**
      * Get the number of arguments expected for a given command
+     *
      * @return number of arguments expected
      */
     public int getArgumentLength() {
