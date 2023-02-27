@@ -5,7 +5,7 @@ The user guide serves as a handbook for users who wish to do two main things:
 - Understand more about what Duke can/cannot do
 - Maximise their use cases for Duke as a personal Task Manager
 
-The handbook is catered to users who are new to CLI based platforms therefore most parts are kept concicse and are filled with examples, however some parts might appear verbose to advanced users. Regardless, users are encouraged to read the whole guide, in the order specified in the [Tabel of Contents](#table-of-contents). Advanced users can check out the apprendix which delves deeper into the kind of inputs the commands can handle.
+The handbook is catered to users who are new to CLI based platforms therefore most parts are kept concicse and are filled with examples, however some parts might appear verbose to advanced users. Regardless, users are encouraged to read the whole guide in the order specified in the [Table of Contents](#table-of-contents). Advanced users can check out the appendix which delves deeper into the kind of inputs the commands can handle.
 
 # Table of Contents
 - [User Guide](#user-guide)
@@ -31,6 +31,7 @@ If you're new to CLIs as a whole, fret not. Here is a list of things you would n
 - Next, you would need to check if your system has atleast java 11 running, any higher version is fine but `Duke` was built on java 11 so its good to know that.
 - Now you're ready to start running Duke! Head over to the directory where the `ip.jar` file is and run the following command `java -jar ip.jar`
 - You would see the following loading screen:
+
 ```
 Initializing Data collection sites......................
 Initializing Duke packages..............................
@@ -47,9 +48,10 @@ Initializing Deadlines..................................
 Initializing Todos......................................
 Initializing TaskFileHandler............................
 datatypes complete......................................
-
 ```
+
 - This means that Duke is up and booting, soon you would arrive at a screen that greets you like this:
+
 ```
 Hello from
  ____        _        
@@ -63,8 +65,8 @@ Hello! I'm Duke
 What can I do for you?
 If you are unsure of the commands, type 'help'
 ---------------------------------------------------------------------------------
-
 ```
+
 - The next part on the guide will inform you on what are some features and how should a user use them
 
 # Features
@@ -82,6 +84,7 @@ Hence this is the format of any todo:
 Here is an example of how todo is used:
 
 #### Normal todo example
+
 ```
 todo get milk
 	---------------------------------------------------------------------------------
@@ -89,8 +92,9 @@ todo get milk
 		[T][ ] get milk
 	Now you have 1 task in the list
 	---------------------------------------------------------------------------------
-
 ```
+
+
 In the case above, the description of the todo is *get milk*.
 
 More detailed examples of how Duke handles other `todo` outputs can be found in the [More examples on todo](Appendix#More-examples-on-todo) section.
@@ -104,6 +108,7 @@ The format of the deadline is as such:
 Here is an example of how `deadline` is used. 
 
 #### Normal Deadline Example
+
 ```
 deadline get milk /by 2023-02-27
 	---------------------------------------------------------------------------------
@@ -111,8 +116,8 @@ deadline get milk /by 2023-02-27
 		[D][ ] get milk (by: Feb 27 2023)
 	Now you have 2 tasks in the list
 	---------------------------------------------------------------------------------
-
 ```
+
 Note that `2023-02-27` follows the `yyyy-mm-dd` format
 
 More detailed examples of how Duke handles other `todo` outputs can be found in the [More examples on deadline](Appendix#More-examples-on-deadline) section.
@@ -126,6 +131,7 @@ The format of the event task is as such:
 An example is listed below:
 
 #### Normal Event Example
+
 ```
 event CS2113 midterms /from 2023-03-03 /to 2023-03-04
 	---------------------------------------------------------------------------------
@@ -134,6 +140,7 @@ event CS2113 midterms /from 2023-03-03 /to 2023-03-04
 	Now you have 1 task in the list
 	---------------------------------------------------------------------------------
 ```
+
 Note the formats of the `/from` and `/to` dates.
 
 More detailed examples of how Duke handles other `event` inputs can be found in the [More examples on event](Appendix#More-examples-on-event) section.
@@ -308,9 +315,13 @@ Todo get more milk
 
 ## More examples on deadline
 Here are some examples of deadline being used and the respective outputs:
+
 #### deadline example no description
+
 If the user forgets to enter the description the following happens:
-```deadline /by 2023-02-27
+
+```
+deadline /by 2023-02-27
 	---------------------------------------------------------------------------------
 	Please ensure that the deadline isn't empty!
 	---------------------------------------------------------------------------------
@@ -328,6 +339,7 @@ deadline get milk /by
 ```
 
 In the event the user decides to leave the deadline with all white spaces, the following happens:
+
 ```
 deadline get milk /by      
 	---------------------------------------------------------------------------------
@@ -336,6 +348,7 @@ deadline get milk /by
 
 ```
 #### deadline example missing `deadline` phrase
+
 If the deadline phrase was missing, this happens:
 ```
 get food /by 2023-07-22
@@ -346,6 +359,7 @@ get food /by 2023-07-22
 ```
 
 #### deadline example with missing `/by` phrase
+
 In the event the user forgets to enter the `/by` phrase
 ```
 deadine get food 2023-07-22
@@ -356,6 +370,7 @@ deadine get food 2023-07-22
 ```
 
 #### deadline example with the date in the wrong format
+
 In the event a user enters the date in the wrong format, the following happens:
 
 ```
@@ -366,6 +381,7 @@ deadline get food /by tomorrow
 
 ```
 #### deadline example with date in the past
+
 Duke is aware of the current date, it can access your systems date. Hence entering a deadline that is in the past would warrant a prompt from Duke:
 ```
 deadline travel to the past /by 2019-02-02
@@ -393,6 +409,7 @@ event
 #### event example with missing range of dates
 
 This is what would happen if the user missed on adding the dates to his task:
+
 ```
 event CS2113 Homework
 	---------------------------------------------------------------------------------
@@ -414,6 +431,7 @@ event    /from 2023-04-04 /to 2023-05-05
 
 #### event example with /from date in the wrong format
 This is what would happen if the /from date is in the wrong format:
+
 ```
 event CS2113 HW /from today /to 2023-12-02
 	---------------------------------------------------------------------------------
@@ -424,6 +442,7 @@ event CS2113 HW /from today /to 2023-12-02
 
 #### event example with /to date in the wrong format
 This is what would happen if the to date is in the wrong format:
+
 ```
 event CS2113 HW /from 2023-12-02 /to tomorrow
 	---------------------------------------------------------------------------------
@@ -433,6 +452,7 @@ event CS2113 HW /from 2023-12-02 /to tomorrow
 
 #### event examples with /from date after the /to date
 This is what would happen if the /from date is after the /to date:
+
 ```
 event CS2113 HW /from 2026-01-10 /to 2023-01-01
 	---------------------------------------------------------------------------------
@@ -443,7 +463,9 @@ event CS2113 HW /from 2026-01-10 /to 2023-01-01
 ```
 
 #### event examples with range of dates in the past
+
 This is what would happen if the dates are in the past:
+
 ```
 event CS2113 HW /from 2019-01-01 /to 2019-02-01
 	---------------------------------------------------------------------------------
