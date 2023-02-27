@@ -315,9 +315,13 @@ Todo get more milk
 
 ## More examples on deadline
 Here are some examples of deadline being used and the respective outputs:
+
 #### deadline example no description
+
 If the user forgets to enter the description the following happens:
-```deadline /by 2023-02-27
+
+```
+deadline /by 2023-02-27
 	---------------------------------------------------------------------------------
 	Please ensure that the deadline isn't empty!
 	---------------------------------------------------------------------------------
@@ -335,6 +339,7 @@ deadline get milk /by
 ```
 
 In the event the user decides to leave the deadline with all white spaces, the following happens:
+
 ```
 deadline get milk /by      
 	---------------------------------------------------------------------------------
@@ -343,6 +348,7 @@ deadline get milk /by
 
 ```
 #### deadline example missing `deadline` phrase
+
 If the deadline phrase was missing, this happens:
 ```
 get food /by 2023-07-22
@@ -353,6 +359,7 @@ get food /by 2023-07-22
 ```
 
 #### deadline example with missing `/by` phrase
+
 In the event the user forgets to enter the `/by` phrase
 ```
 deadine get food 2023-07-22
@@ -363,6 +370,7 @@ deadine get food 2023-07-22
 ```
 
 #### deadline example with the date in the wrong format
+
 In the event a user enters the date in the wrong format, the following happens:
 
 ```
@@ -373,6 +381,7 @@ deadline get food /by tomorrow
 
 ```
 #### deadline example with date in the past
+
 Duke is aware of the current date, it can access your systems date. Hence entering a deadline that is in the past would warrant a prompt from Duke:
 ```
 deadline travel to the past /by 2019-02-02
@@ -400,6 +409,7 @@ event
 #### event example with missing range of dates
 
 This is what would happen if the user missed on adding the dates to his task:
+
 ```
 event CS2113 Homework
 	---------------------------------------------------------------------------------
@@ -421,6 +431,7 @@ event    /from 2023-04-04 /to 2023-05-05
 
 #### event example with /from date in the wrong format
 This is what would happen if the /from date is in the wrong format:
+
 ```
 event CS2113 HW /from today /to 2023-12-02
 	---------------------------------------------------------------------------------
@@ -431,6 +442,7 @@ event CS2113 HW /from today /to 2023-12-02
 
 #### event example with /to date in the wrong format
 This is what would happen if the to date is in the wrong format:
+
 ```
 event CS2113 HW /from 2023-12-02 /to tomorrow
 	---------------------------------------------------------------------------------
@@ -440,6 +452,7 @@ event CS2113 HW /from 2023-12-02 /to tomorrow
 
 #### event examples with /from date after the /to date
 This is what would happen if the /from date is after the /to date:
+
 ```
 event CS2113 HW /from 2026-01-10 /to 2023-01-01
 	---------------------------------------------------------------------------------
@@ -450,7 +463,9 @@ event CS2113 HW /from 2026-01-10 /to 2023-01-01
 ```
 
 #### event examples with range of dates in the past
+
 This is what would happen if the dates are in the past:
+
 ```
 event CS2113 HW /from 2019-01-01 /to 2019-02-01
 	---------------------------------------------------------------------------------
