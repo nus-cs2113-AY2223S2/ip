@@ -7,25 +7,39 @@ import exception.IllegalCharacterException;
 
 public class Duke {
 
-    public static void main(String[] args) {
+    private final Storage storage;
+    private final TaskList taskList;
+    private final Ui ui;
+    private final Parser parser;
+    public Duke() {
+        ui = new Ui();
+        storage = new Storage();
+        taskList = new TaskList();
+        parser = new Parser();
+        storage.openFile(taskList);
+    }
 
-        Storage.openFile();
-        Ui.printStartMessage();
+    public void run() {
+        ui.printStartMessage();
 
         String userInput;
         do {
-            userInput = Ui.getUserInput();
+            userInput = ui.getUserInput();
             try {
-                Parser.processCommand(userInput, TaskList.tasks);
+                parser.processCommand(userInput, taskList);
             } catch (CommandNotRecognisedException e) {
                 System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
-                Ui.printDivider();
+                ui.printDivider();
             } catch (IllegalCharacterException e) {
                 System.out.println("☹ OOPS!!! Input should not contain '|' or '-'.");
-                Ui.printDivider();
+                ui.printDivider();
             }
         } while (!userInput.equals(Command.COMMAND_BYE));
 
-        Storage.writeToFile(TaskList.tasks);
+        storage.writeToFile(taskList);
+    }
+
+    public static void main(String[] args) {
+        new Duke().run();
     }
 }

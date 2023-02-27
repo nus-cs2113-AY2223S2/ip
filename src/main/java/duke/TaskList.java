@@ -10,10 +10,12 @@ import task.ToDo;
 import java.util.ArrayList;
 
 public class TaskList {
-    public static ArrayList<Task> tasks = new ArrayList<>();
+
+    private Ui ui = new Ui();
+    public ArrayList<Task> tasks = new ArrayList<>();
 
 
-    public static void initialiseTaskList(String line) {
+    public void initialiseTaskList(String line) {
         String[] task = line.split("[|\\-]");
 
         switch(task[0].trim()) {
@@ -37,18 +39,18 @@ public class TaskList {
                 markTaskDone(tasks.size()-1);
             } catch (NumberFormatException e) {
                 System.out.println("☹ OOPS!!! Task number should be an integer.");
-                Ui.printDivider();
+                ui.printDivider();
             } catch (InvalidTaskNumberException e) {
                 System.out.println("☹ OOPS!!! The task specified does not exist in the task list.");
-                Ui.printDivider();
+                ui.printDivider();
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("☹ OOPS!!! The description of 'mark' cannot be empty.");
-                Ui.printDivider();
+                ui.printDivider();
             }
         }
     }
 
-    public static void printTaskList() {
+    public void printTaskList() {
         if (tasks.size() == 0) {
             System.out.println("You are free today :)");
         } else {
@@ -57,11 +59,11 @@ public class TaskList {
                 System.out.println(tasks.get(i));
             }
         }
-        Ui.printDivider();
+        ui.printDivider();
     }
 
 
-    public static void markTaskDone(Integer taskIndex) throws InvalidTaskNumberException {
+    public void markTaskDone(Integer taskIndex) throws InvalidTaskNumberException {
         if (taskIndex < 0 || taskIndex > tasks.size()) {
             throw new InvalidTaskNumberException();
         } else {
@@ -70,7 +72,7 @@ public class TaskList {
     }
 
 
-    public static void markTaskUndone(Integer taskIndex) throws InvalidTaskNumberException {
+    public void markTaskUndone(Integer taskIndex) throws InvalidTaskNumberException {
         if (taskIndex < 0 || taskIndex > tasks.size()) {
             throw new InvalidTaskNumberException();
         } else {
@@ -79,7 +81,7 @@ public class TaskList {
     }
 
 
-    public static void addTodoTask(String task) throws EmptyTaskException {
+    public void addTodoTask(String task) throws EmptyTaskException {
         if (task.equals("")) {
             throw new EmptyTaskException();
         } else {
@@ -88,20 +90,20 @@ public class TaskList {
     }
 
 
-    public static void addDeadlineTask(String task, String deadline) {
+    public void addDeadlineTask(String task, String deadline) {
         tasks.add(new Deadline(task, deadline));
     }
 
-    public static void addEventTask(String task, String fromDate, String byDate) {
+    public void addEventTask(String task, String fromDate, String byDate) {
         tasks.add(new Event(task, fromDate, byDate));
     }
 
-    public static void printTaskAdded() {
+    public void printTaskAdded() {
         System.out.println("Got it. I've added this task:\n " + tasks.get(tasks.size()-1)
                 + "\nNow you have " + tasks.size() + " tasks in the list.");
     }
 
-    public static void deleteTask(int taskIndex) throws InvalidTaskNumberException {
+    public void deleteTask(int taskIndex) throws InvalidTaskNumberException {
         if (taskIndex < 0 || taskIndex >= tasks.size()) {
             throw new InvalidTaskNumberException();
         } else {

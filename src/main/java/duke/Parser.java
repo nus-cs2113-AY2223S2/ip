@@ -5,13 +5,13 @@ import exception.CommandNotRecognisedException;
 import exception.EmptyTaskException;
 import exception.IllegalCharacterException;
 import exception.InvalidTaskNumberException;
-import task.Task;
-
-import java.util.ArrayList;
 
 public class Parser {
 
-    public static void processCommand(String input, ArrayList<Task> tasks) throws CommandNotRecognisedException, IllegalCharacterException {
+    private Ui ui = new Ui();
+
+    public void processCommand(String input, TaskList taskList) throws CommandNotRecognisedException, IllegalCharacterException {
+
         if (input.contains("|") || input.contains("-")) {
             throw new IllegalCharacterException();
         }
@@ -20,85 +20,85 @@ public class Parser {
 
         switch (action) {
         case Command.COMMAND_BYE:
-            Ui.printBye();
+            ui.printBye();
             break;
         case Command.COMMAND_LIST:
-            TaskList.printTaskList();
+            taskList.printTaskList();
             break;
         case Command.COMMAND_MARK:
-            processCommandMark(input, tasks);
+            processCommandMark(input, taskList);
             break;
         case Command.COMMAND_UNMARK:
-            processCommandUnmark(input, tasks);
+            processCommandUnmark(input, taskList);
             break;
         case Command.COMMAND_TODO:
-            processCommandTodo(input);
+            processCommandTodo(input, taskList);
             break;
         case Command.COMMAND_DEADLINE:
-            processCommandDeadline(input);
+            processCommandDeadline(input, taskList);
             break;
         case Command.COMMAND_EVENT:
-            processCommandEvent(input);
+            processCommandEvent(input, taskList);
             break;
         case Command.COMMAND_DELETE:
-            processCommandDelete(input);
+            processCommandDelete(input, taskList);
             break;
         default:
             throw new CommandNotRecognisedException();
         }
     }
 
-    private static void processCommandDelete(String input) {
+    private void processCommandDelete(String input, TaskList taskList) {
         try {
-            TaskList.deleteTask(Integer.parseInt(input.split(" ")[1]) - 1);
+            taskList.deleteTask(Integer.parseInt(input.split(" ")[1]) - 1);
         } catch (NumberFormatException e) {
             System.out.println("☹ OOPS!!! Task number should be an integer.");
         } catch (InvalidTaskNumberException e) {
             System.out.println("☹ OOPS!!! The task specified does not exist in the task list.");
 
         }
-        Ui.printDivider();
+        ui.printDivider();
     }
 
-    private static void processCommandEvent(String input) {
+    private void processCommandEvent(String input, TaskList taskList) {
         String[] taskDesc;
         try {
             taskDesc = input.split("/from|/to");
-            TaskList.addEventTask(taskDesc[0].substring(Command.COMMAND_EVENT.length()).trim()
+            taskList.addEventTask(taskDesc[0].substring(Command.COMMAND_EVENT.length()).trim()
                     , taskDesc[1].trim(), taskDesc[2].trim());
-            TaskList.printTaskAdded();
+            taskList.printTaskAdded();
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("☹ OOPS!!! The description of 'event' should include a task and time period.");
         }
-        Ui.printDivider();
+        ui.printDivider();
     }
 
-    private static void processCommandDeadline(String input) {
+    private void processCommandDeadline(String input, TaskList taskList) {
         String[] taskDesc;
         try {
             taskDesc = input.split("/by");
-            TaskList.addDeadlineTask(taskDesc[0].substring(Command.COMMAND_DEADLINE.length()).trim(), taskDesc[1].trim());
-            TaskList.printTaskAdded();
+            taskList.addDeadlineTask(taskDesc[0].substring(Command.COMMAND_DEADLINE.length()).trim(), taskDesc[1].trim());
+            taskList.printTaskAdded();
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("☹ OOPS!!! The description of 'deadline' should include a task and deadline.");
         }
-        Ui.printDivider();
+        ui.printDivider();
     }
 
-    private static void processCommandTodo(String input) {
+    private void processCommandTodo(String input, TaskList taskList) {
         try {
-            TaskList.addTodoTask(input.substring(Command.COMMAND_TODO.length()).trim());
-            TaskList.printTaskAdded();
+            taskList.addTodoTask(input.substring(Command.COMMAND_TODO.length()).trim());
+            taskList.printTaskAdded();
         } catch (EmptyTaskException e) {
             System.out.println("☹ OOPS!!! The description of 'todo' cannot be empty.");
         }
-        Ui.printDivider();
+        ui.printDivider();
     }
 
-    private static void processCommandUnmark(String input, ArrayList<Task> tasks) {
+    private void processCommandUnmark(String input, TaskList taskList) {
         try {
-            TaskList.markTaskUndone(Integer.parseInt(input.split(" ")[1].trim())-1);
-            tasks.get(Integer.parseInt(input.split(" ")[1].trim())-1).printUnmarkMessage();
+            taskList.markTaskUndone(Integer.parseInt(input.split(" ")[1].trim())-1);
+            taskList.tasks.get(Integer.parseInt(input.split(" ")[1].trim())-1).printUnmarkMessage();
         } catch (NumberFormatException e) {
             System.out.println("☹ OOPS!!! Task number should be an integer.");
         } catch (InvalidTaskNumberException e) {
@@ -106,13 +106,13 @@ public class Parser {
         } catch (IndexOutOfBoundsException e) {
             System.out.println("☹ OOPS!!! The description of 'unmark' cannot be empty.");
         }
-        Ui.printDivider();
+        ui.printDivider();
     }
 
-    private static void processCommandMark(String input, ArrayList<Task> tasks) {
+    private void processCommandMark(String input, TaskList taskList) {
         try {
-            TaskList.markTaskDone(Integer.parseInt(input.split(" ")[1]) - 1);
-            tasks.get(Integer.parseInt(input.split(" ")[1].trim())-1).printUnmarkMessage();
+            taskList.markTaskDone(Integer.parseInt(input.split(" ")[1]) - 1);
+            taskList.tasks.get(Integer.parseInt(input.split(" ")[1].trim())-1).printUnmarkMessage();
         } catch (NumberFormatException e) {
             System.out.println("☹ OOPS!!! Task number should be an integer.");
         } catch (InvalidTaskNumberException e) {
@@ -120,6 +120,6 @@ public class Parser {
         } catch (IndexOutOfBoundsException e) {
             System.out.println("☹ OOPS!!! The description of 'mark' cannot be empty.");
         }
-        Ui.printDivider();
+        ui.printDivider();
     }
 }

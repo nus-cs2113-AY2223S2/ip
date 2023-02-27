@@ -11,26 +11,25 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 
 public class Storage {
 
     public static final File FILE_PATH = new File("./data/duke.txt");
     public static final File FILE_DIR = new File("./data");
 
-    public static void openFile() {
+    public void openFile(TaskList taskList) {
         File file = new File(String.valueOf(FILE_PATH));
-        readFile(file);
+        readFile(file, taskList);
     }
 
-    public static void readFile(File file) {
+    public void readFile(File file, TaskList taskList) {
         try {
             java.io.FileReader fr = new java.io.FileReader(file);
             BufferedReader br = new BufferedReader(fr);
 
             String line;
             while((line=br.readLine())!=null) {
-                TaskList.initialiseTaskList(line);
+                taskList.initialiseTaskList(line);
             }
         } catch (FileNotFoundException e) {
             System.out.println("You have no pre-existing tasks :)");
@@ -39,10 +38,10 @@ public class Storage {
         }
     }
 
-    public static void writeToFile(ArrayList<Task> tasks) {
+    public void writeToFile(TaskList taskList) {
         try {
             PrintWriter pw = new PrintWriter(FILE_PATH);
-            writeTaskToFile(pw, tasks);
+            writeTaskToFile(pw, taskList);
         } catch (FileNotFoundException e) {
             if (!FILE_DIR.isDirectory()) {
                 System.out.println("Data directory not found. Creating new data directory");
@@ -65,8 +64,8 @@ public class Storage {
         }
     }
 
-    public static void writeTaskToFile(PrintWriter pw, ArrayList<Task> tasks) {
-        for (Task t : tasks) {
+    public void writeTaskToFile(PrintWriter pw, TaskList taskList) {
+        for (Task t : taskList.tasks) {
             pw.println(t.printToFile());
         }
         pw.close();
