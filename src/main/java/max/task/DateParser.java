@@ -48,6 +48,7 @@ public class DateParser {
      * Converts a LocalDateTime to the user-friendly output date format
      * <p>
      * Output date format is defined as "MMM dd HHmm, yyyy"
+     *
      * @param dateTime dateTime to be converted to output format
      * @return String of date format "MMM dd HHmm, yyyy"
      */
@@ -65,7 +66,7 @@ public class DateParser {
     /**
      * Checks that user has input start and end dates that make sense
      *
-     * @param toString user input for ending date
+     * @param toString   user input for ending date
      * @param fromString user input for starting date
      * @throws TaskException end date is before start date
      */

@@ -13,7 +13,6 @@ import java.util.HashMap;
  * <p>
  * TaskManager helps with data management such as save/load
  * and modifying task state (e.g. deletion, marking as complete)
- *
  */
 public class TaskManager {
     private ArrayList<Task> tasks;
