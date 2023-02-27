@@ -1,25 +1,30 @@
 package Handlers;
 
 import java.util.Scanner;
+import Tasks.Task;
+import Tasks.Todo;
+import Tasks.Deadline;
+import Tasks.Event;
 
-public class Ui {
+public interface Ui {
+
     /**
      * Takes in user inputs, extracts the command and calls the relevant methods in
      * TaskManager
      */
     public static void takeUserInputs() {
-    
+
         boolean isComplete = false;
         Scanner in = new Scanner(System.in);
-    
+
         printHello();
         printLineBreak();
-    
+
         while (!isComplete) {
-    
+
             String line = in.nextLine();
             String firstWord = Parser.getFirstWord(line);
-    
+
             switch (firstWord) {
             case "mark":
                 TaskManager.markTask(Parser.getTaskNumber(line));
@@ -35,13 +40,13 @@ public class Ui {
                 TaskManager.listTask();
                 break;
             case "todo":
-                Parser.getTodoDetails(line);
+                Parser.addTodoTask(line);
                 break;
             case "deadline":
-                Parser.getDeadlineDetails(line);
+                Parser.addDeadlineTask(line);
                 break;
             case "event":
-                Parser.getEventDetails(line);
+                Parser.addEventTask(line);
                 break;
             case "find":
                 TaskManager.findTask(Parser.getTaskDescription(line));
@@ -53,14 +58,14 @@ public class Ui {
                 System.out.println("Unrecognized command. Please try again.");
                 break;
             }
-    
+
             Ui.printLineBreak();
         }
-    
+
         printBye();
         in.close();
     }
-    
+
     /**
      * Prints the welcome message
      */
@@ -86,6 +91,46 @@ public class Ui {
      */
     private static void printLineBreak() {
         System.out.println("==============================\n");
+    }
+        
+    public static void addedTodoMessage(Todo todoTask) {
+        System.out.println("Got it. I've added this task:\n" + todoTask.describeTask());
+        System.out.println("\nNow you have " + TaskManager.getTaskCount() + " tasks in the list.\n");
+    }
+    
+    public static void addedDeadlineMessage(Deadline deadlineTask) {
+        System.out.println("Got it. I've added this task:\n" + deadlineTask.describeTask());
+        System.out.println("\nNow you have " + TaskManager.getTaskCount() + " tasks in the list.\n");
+    }
+
+    public static void addedEventMessage(Event eventTask) {
+        System.out.println("Got it. I've added this task:\n" + eventTask.describeTask());
+        System.out.println("\nNow you have " + TaskManager.getTaskCount() + " tasks in the list.\n");
+    }
+
+    public static void deletedTaskMessage(int index) {
+        System.out.println(
+                "Noted. I've removed this task:\n" + TaskManager.getTaskList().get(index - 1).describeTask() + "\n");
+    }
+
+    public static void taskCountMessage() {
+        System.out.println("\nYou have " + TaskManager.getTaskCount() + " tasks in the list.\n");
+    }
+
+    public static void markTaskMessage(Task task) {
+        System.out.println("Nice! I've marked this task as done:\n" + task.describeTask() + "\n");
+    }
+
+    public static void unmarkTaskMessage(Task task) {
+        System.out.println("OK, Ive marked this task as not done yet:\n" + task.describeTask() + "\n");
+    }
+
+    public static void describeTaskMessage(int existingTaskCount, Task item) {
+        System.out.println(existingTaskCount + ". " + item.describeTask());
+    }
+
+    public static void fileErrorMessage() {
+        System.out.println("Error reading file");
     }
 
 }

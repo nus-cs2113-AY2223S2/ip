@@ -6,13 +6,13 @@ import Tasks.Todo;
 import Tasks.Deadline;
 import Tasks.Event;
 
-public class Parser {
+public abstract class Parser {
 
-    
-    /** 
+    /**
      * Extracts the first word of the user input
      * 
-     * @param line the user input
+     * @param line
+     *            the user input
      * @return the first word of the user input
      */
     public static String getFirstWord(String line) {
@@ -20,17 +20,18 @@ public class Parser {
         return words[0];
     }
 
-    
-    /** 
+    /**
      * Extracts the second word of the user input
      * 
-     * @param line the user input
+     * @param line
+     *            the user input
      * @return String the second word of the user input
-     * @throws TaskManagerException if the user input does not contain a second word
+     * @throws TaskManagerException
+     *             if the user input does not contain a second word
      */
     public static String getSecondWord(String line) throws TaskManagerException {
         String[] words = line.split("\\s+");
-        if (words.length < 2) {
+        if (isLessThanTwo(words)) {
             throw new TaskManagerException();
         }
         int index = line.indexOf(" ");
@@ -38,11 +39,15 @@ public class Parser {
         return sub;
     }
 
-    
-    /** 
+    private static boolean isLessThanTwo(String[] words) {
+        return words.length < 2;
+    }
+
+    /**
      * Gets the task number from the user input.
      * 
-     * @param line the user input
+     * @param line
+     *            the user input
      * @return int the task number
      */
     public static int getTaskNumber(String line) {
@@ -60,11 +65,11 @@ public class Parser {
         return index;
     }
 
-    
-    /** 
+    /**
      * Gets the task description or task title from the user input.
      * 
-     * @param line the user input
+     * @param line
+     *            the user input
      * @return String the task description or task title
      */
     public static String getTaskDescription(String line) {
@@ -77,55 +82,56 @@ public class Parser {
         return description;
     }
 
-    
-    /** 
-     * Checks if the task number is between 1 and the number of tasks in the task list.
+    /**
+     * Checks if the task number is between 1 and the number of tasks in the task
+     * list.
      * 
-     * @param taskNumber the task number taken from user input
-     * @throws InvalidTypeException if the task number does not meet above conditions
+     * @param taskNumber
+     *            the task number taken from user input
+     * @throws InvalidTypeException
+     *             if the task number does not meet above conditions
      */
     public static void isTaskNumberValid(int taskNumber) throws InvalidTypeException {
-        if (taskNumber < 1 || taskNumber > TaskManager.getTaskCount()) {
+        if (isTaskNumberOutOfBounds(taskNumber)) {
             throw new InvalidTypeException();
         }
     }
 
-    
-    /** 
-     * Gets the todo description from the user input then adds the event to the task list.
+    private static boolean isTaskNumberOutOfBounds(int taskNumber) {
+        return taskNumber < 1 || taskNumber > TaskManager.getTaskCount();
+    }
+
+    /**
+     * Gets the todo description from the user input, creates a todo object
+     * then adds the event to the task list.
      * 
      * @param line the user input
      */
-    public static void getTodoDetails(String line) {
+    public static void addTodoTask(String line) {
         String todoLine = "";
         try {
             todoLine = getSecondWord(line);
             Todo todoTask = new Todo(todoLine);
             TaskManager.addTask(todoTask);
-            System.out.println("Got it. I've added this task:\n" + todoTask.describeTask());
-            System.out.println("\nNow you have " + TaskManager.getTaskCount() + " tasks in the list.\n");
+            Ui.addedTodoMessage(todoTask);
         } catch (TaskManagerException e) {
             System.out.println("description for todo cannot be empty.");
         }
     }
 
-    
-    /** 
-     * Gets the deadline description and deadline date from the user input then adds the event to the task list.
+    /**
+     * Gets the deadline description and deadline date from the user input, creates a
+     * deadline object then adds the event to the task list. 
      * 
      * @param line the user input
      */
-    public static void getDeadlineDetails(String line) {
+    public static void addDeadlineTask(String line) {
         String deadlineLine = "";
         try {
             deadlineLine = getSecondWord(line);
-            String[] deadlineDetails = deadlineLine.split("/by");
-            String deadlineDescription = deadlineDetails[0].trim();
-            String deadlineDate = deadlineDetails[1].trim();
-            Deadline deadlineTask = new Deadline(deadlineDescription, deadlineDate);
+            Deadline deadlineTask = getDeadlineObject(deadlineLine);
             TaskManager.addTask(deadlineTask);
-            System.out.println("Got it. I've added this task:\n" + deadlineTask.describeTask());
-            System.out.println("\nNow you have " + TaskManager.getTaskCount() + " tasks in the list.\n");
+            Ui.addedDeadlineMessage(deadlineTask);
         } catch (TaskManagerException e) {
             System.out.println("description for deadline cannot be empty.");
         }
@@ -133,26 +139,53 @@ public class Parser {
 
     
     /** 
-     * Gets the event description, event start date and event end date from the user input then adds the event to the task list.
+     * Takes in a string containing the deadline description and deadline date and
+     * returns a Deadline object.
+     * 
+     * @param deadlineLine the deadline description and deadline date 
+     * @return Deadline the Deadline object
+     */
+    private static Deadline getDeadlineObject(String deadlineLine) {
+        String[] deadlineDetails = deadlineLine.split("/by");
+        String deadlineDescription = deadlineDetails[0].trim();
+        String deadlineDate = deadlineDetails[1].trim();
+        Deadline deadlineTask = new Deadline(deadlineDescription, deadlineDate);
+        return deadlineTask;
+    }
+
+    /**
+     * Gets the event description, event start date and event end date from the user
+     * input, creates an event object then adds the event to the task list.
      * 
      * @param line the user input
      */
-    public static void getEventDetails(String line) {
+    public static void addEventTask(String line) {
         String eventLine = "";
         try {
             eventLine = getSecondWord(line);
-            String[] eventDetails = eventLine.split("/from");
-            String[] eventTiming = eventDetails[1].split("/to");
-            String eventDescription = eventDetails[0].trim();
-            String eventFrom = eventTiming[0].trim();
-            String eventTo = eventTiming[1].trim();
-            Event eventTask = new Event(eventDescription, eventFrom, eventTo);
+            Event eventTask = getEventObject(eventLine);
             TaskManager.addTask(eventTask);
-            System.out.println("Got it. I've added this task:\n" + eventTask.describeTask());
-            System.out.println("\nNow you have " + TaskManager.getTaskCount() + " tasks in the list.\n");
+            Ui.addedEventMessage(eventTask);
         } catch (TaskManagerException e) {
             System.out.println("description for event cannot be empty.");
         }
     }
 
+    
+    /** 
+     * Takes in a string containing the event description, event start date and event
+     * end date and returns an Event object.
+     * 
+     * @param eventLine the event description, event start date and event end date
+     * @return Event the Event object
+     */
+    private static Event getEventObject(String eventLine) {
+        String[] eventDetails = eventLine.split("/from");
+        String[] eventTiming = eventDetails[1].split("/to");
+        String eventDescription = eventDetails[0].trim();
+        String eventFrom = eventTiming[0].trim();
+        String eventTo = eventTiming[1].trim();
+        Event eventTask = new Event(eventDescription, eventFrom, eventTo);
+        return eventTask;
+    }
 }

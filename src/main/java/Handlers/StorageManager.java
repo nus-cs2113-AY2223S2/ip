@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class StorageManager {
+public abstract class StorageManager {
 
     private static final String FILE_PATH = "./data/duke.txt";
 
@@ -53,7 +53,7 @@ public class StorageManager {
     }
 
     /**
-     * Reads the file data and load the tasks into the taskList in TaskManager
+     * Reads every line of the file and load each task into the taskList in TaskManager
      * 
      * @param f the file to be read
      * @throws FileNotFoundException if the file is not found
@@ -68,7 +68,7 @@ public class StorageManager {
     }
 
     /**
-     * Writes the tasks in the taskList in TaskManager into the file
+     * Writes every task in the taskList in TaskManager into the file
      * 
      * @throws IOException if there is an error writing to the file
      */
