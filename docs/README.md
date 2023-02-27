@@ -115,7 +115,40 @@ Invoking `list` afterwards yields
 3. [E][ ] interview at McDonalds (from: 4pm to: 6pm)
 ```
 
+### `delete` - Delete a task
 
+Delete a task.
 
+syntax: `delete <tasknumber>`
 
+Example of usage: 
 
+`delete 1`
+
+Expected outcome:
+
+Acknowledgment of task deletion.
+
+```
+deleted this task: do 2023
+```
+
+### `clearlist` - Clear all tasks
+
+Clear all saved tasks.
+
+Example of usage: 
+
+`clearlist`
+
+Expected outcome:
+
+Acknowledgment of all tasks being cleared.
+```
+List cleared
+```
+
+invoking `list` afterwards yields
+```
+何もいない。。。頭のように。。。(list is empty)
+```
