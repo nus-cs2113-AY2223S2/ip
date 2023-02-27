@@ -68,6 +68,10 @@ public class Parser {
             commands.remove(index - 1);
             ui.printLenghtOfTaskList(commands);
             ui.printDashLine();
+        } else if (line.split(" ")[0].equals("find")) {
+            String keyword=line.split(" ")[1];
+            ArrayList<Integer> relatedIndexes=TaskList.find(keyword,commands);
+            ui.printSearchResult(relatedIndexes,commands);
         } else {
             ui.printDashLine();
             System.out.println("\t OOPS!!! I'm sorry, but I don't know what that means :-(");
