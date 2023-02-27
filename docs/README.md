@@ -1,4 +1,4 @@
-# :scroll: <span style="color:DarkMagenta">User Guide</span> 
+# 📜 <span style="color:DarkMagenta">User Guide</span> 
 
 <pre>
 ██████╗░██╗░░░██╗██╗░░██╗███████╗
@@ -14,7 +14,7 @@ Duke is a Command Line Interface (CLI) based application for keeping track of yo
 ___
 
 <!-- Table of Contents -->
-##  <span style="color:DarkMagenta">Table of Contents</span> :notebook_with_decorative_cover:
+##  <span style="color:DarkMagenta">Table of Contents</span> 📔
 - [Quick Start](#quick-start)
 - [Features](#features)
     + [Adding a Task](#adding-a-task)
@@ -35,7 +35,7 @@ ___
 ___
 
 <!-- Quick Start guide -->
-## <span style="color:DarkMagenta">Quick Start</span> :gear:
+## <span style="color:DarkMagenta">Quick Start</span> ⚙️
 1. Ensure you have Java 11 or above installed in your Computer.
 2. Download the latest `duke.jar` from here.
 3. Copy the file to the folder you want to use as the home folder for your Duke.
@@ -51,7 +51,7 @@ ___
 ___
 
 <!-- Feature List -->
-## <span style="color:DarkMagenta">Features</span> :space_invader:
+## <span style="color:DarkMagenta">Features</span> 👾
 
 ### Adding a Task:
 _3 types of tasks suppoted - Todo, Event and Deadline:_
@@ -185,14 +185,14 @@ Edits must be made according to the formatting of the data.
 
 ___
 <!-- FAQs -->
-## <span style="color:DarkMagenta">FAQ</span> :computer:
+## <span style="color:DarkMagenta">FAQ</span> 💻
 > Q: How do I transfer my data to another Computer?
 >
 > A: In your new application folder in the new Computer, paste the copied `/data/duke.txt` file from your old Computer into the same folder as the new `duke.jar`.
 
 ___
 <!-- Summary of Commands -->
-## <span style="color:DarkMagenta">Command Summary</span> :key:
+## <span style="color:DarkMagenta">Command Summary</span> 🔑
 
 | Command      | Format                                        |
 |--------------|-----------------------------------------------|
