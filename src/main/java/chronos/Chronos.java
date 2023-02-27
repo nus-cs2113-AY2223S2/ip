@@ -13,7 +13,7 @@ import java.io.IOException;
 
 
 public class Chronos {
-    //dummy commit to level-6 branch
+
     private static Input inOut;
     private static Stash stash;
     private static TaskManager taskManager;
@@ -32,7 +32,7 @@ public class Chronos {
     }
 
     private static void fileInit() {
-        File file = new File("src/main/java/chronos/taskList.txt");
+        File file = new File("./taskList.txt");
         try {
             file.createNewFile();
         } catch (IOException e) {

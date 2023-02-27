@@ -6,11 +6,13 @@ package chronos.commandhandler;
  * will contain the due date/time
  */
 public class Command {
-    private String action;
-    private String details;
-    private String start;
-    private String end;
-    private String due;
+
+    private static final String EXAMPLE = "event EE2026 midterms /start 4 March 3 pm /end 4 March 4.30pm";
+    private String action; //the type of task or command
+    private String details; //the accompanying details after the user has defined the action
+    private String start; //for an event, if applicable
+    private String end; // for an event, if applicable
+    private String due; //for a deadline, if applicable
 
     /**
      * Constructs a Command object with the given action, details, start time, end time, and due time.
@@ -50,6 +52,13 @@ public class Command {
         return due;
     }
 
+    /**
+     * Returns a string representation of this command object.
+     * The string representation contains the type of the command,
+     * its body, start time, end time, and due date.
+     *
+     * @return a string representation of this command object
+     */
     @Override
     public String toString() {
         return String.format("Command[type=%s, body=%s, start=%s, end=%s, due=%s]", action, details, start, end, due);
