@@ -5,7 +5,7 @@ The user guide serves as a handbook for users who wish to do two main things:
 - Understand more about what Duke can/cannot do
 - Maximise their use cases for Duke as a personal Task Manager
 
-The handbook is catered to users who are new to CLI based platforms therefore most parts are kept concicse and are filled with examples, however some parts might appear verbose to advanced users. Regardless, users are encouraged to read the whole guide, in the order specified in the [Tabel of Contents](#table-of-contents). Advanced users can check out the apprendix which delves deeper into the kind of inputs the commands can handle.
+The handbook is catered to users who are new to CLI based platforms therefore most parts are kept concicse and are filled with examples, however some parts might appear verbose to advanced users. Regardless, users are encouraged to read the whole guide, in the order specified in the [Table of Contents](#table-of-contents). Advanced users can check out the apprendix which delves deeper into the kind of inputs the commands can handle.
 
 # Table of Contents
 - [User Guide](#user-guide)
@@ -31,6 +31,7 @@ If you're new to CLIs as a whole, fret not. Here is a list of things you would n
 - Next, you would need to check if your system has atleast java 11 running, any higher version is fine but `Duke` was built on java 11 so its good to know that.
 - Now you're ready to start running Duke! Head over to the directory where the `ip.jar` file is and run the following command `java -jar ip.jar`
 - You would see the following loading screen:
+
 ```
 Initializing Data collection sites......................
 Initializing Duke packages..............................
@@ -47,9 +48,10 @@ Initializing Deadlines..................................
 Initializing Todos......................................
 Initializing TaskFileHandler............................
 datatypes complete......................................
-
 ```
+
 - This means that Duke is up and booting, soon you would arrive at a screen that greets you like this:
+
 ```
 Hello from
  ____        _        
@@ -63,8 +65,8 @@ Hello! I'm Duke
 What can I do for you?
 If you are unsure of the commands, type 'help'
 ---------------------------------------------------------------------------------
-
 ```
+
 - The next part on the guide will inform you on what are some features and how should a user use them
 
 # Features
@@ -82,6 +84,7 @@ Hence this is the format of any todo:
 Here is an example of how todo is used:
 
 #### Normal todo example
+
 ```
 todo get milk
 	---------------------------------------------------------------------------------
@@ -89,8 +92,9 @@ todo get milk
 		[T][ ] get milk
 	Now you have 1 task in the list
 	---------------------------------------------------------------------------------
-
 ```
+
+
 In the case above, the description of the todo is *get milk*.
 
 More detailed examples of how Duke handles other `todo` outputs can be found in the [More examples on todo](Appendix#More-examples-on-todo) section.
@@ -104,6 +108,7 @@ The format of the deadline is as such:
 Here is an example of how `deadline` is used. 
 
 #### Normal Deadline Example
+
 ```
 deadline get milk /by 2023-02-27
 	---------------------------------------------------------------------------------
@@ -111,8 +116,8 @@ deadline get milk /by 2023-02-27
 		[D][ ] get milk (by: Feb 27 2023)
 	Now you have 2 tasks in the list
 	---------------------------------------------------------------------------------
-
 ```
+
 Note that `2023-02-27` follows the `yyyy-mm-dd` format
 
 More detailed examples of how Duke handles other `todo` outputs can be found in the [More examples on deadline](Appendix#More-examples-on-deadline) section.
@@ -126,6 +131,7 @@ The format of the event task is as such:
 An example is listed below:
 
 #### Normal Event Example
+
 ```
 event CS2113 midterms /from 2023-03-03 /to 2023-03-04
 	---------------------------------------------------------------------------------
@@ -134,6 +140,7 @@ event CS2113 midterms /from 2023-03-03 /to 2023-03-04
 	Now you have 1 task in the list
 	---------------------------------------------------------------------------------
 ```
+
 Note the formats of the `/from` and `/to` dates.
 
 More detailed examples of how Duke handles other `event` inputs can be found in the [More examples on event](Appendix#More-examples-on-event) section.
