@@ -24,7 +24,6 @@ public class Todo extends Task {
     @Override
     public String getDescription() {
         String wrappedTask = ui.wrapMessage(getTaskLabel());
-        wrappedTask += ui.getSingleSpace();
         return wrappedTask + super.getDescription();
     }
 

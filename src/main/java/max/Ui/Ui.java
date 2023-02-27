@@ -29,7 +29,7 @@ public class Ui {
     private static final String NEWLINE = "\n";
     private static final String SINGLE_SPACE = " ";
     private static final String WRAPPER_OPEN = "[";
-    private static final String WRAPPER_CLOSE = "] ";
+    private static final String WRAPPER_CLOSE = "]";
 
     /**
      * Construts a Ui object to handle console output

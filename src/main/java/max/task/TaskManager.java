@@ -84,7 +84,7 @@ public class TaskManager {
         for (int i = 0; i < tasks.size(); ++i) {
             // Print number, box, description in that order
             Task curr = tasks.get(i);
-            ui.printMessage(i + 1 + ". " + curr.getDescription() + ui.getNewline());
+            ui.printMessage(i + 1 + ". " + curr.getDescription());
         }
     }
 
