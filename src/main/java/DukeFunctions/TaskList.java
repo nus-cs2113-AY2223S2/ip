@@ -75,7 +75,7 @@ public class TaskList {
 
         TaskList searchResults = new TaskList();
         this.TodoList.forEach(todo -> {
-            if (todo.description.contains(keyword)) {
+            if (todo.getDescription().contains(keyword)) {
                 searchResults.add(todo);
             }
         });
