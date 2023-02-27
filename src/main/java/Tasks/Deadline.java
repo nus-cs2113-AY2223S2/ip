@@ -1,12 +1,7 @@
 package Tasks;
 
 public class Deadline extends Task{
-    protected String type = "D";
     protected String by;
-
-    public String getType() {
-        return type;
-    }
 
     public String getBy() {
         return by;
@@ -17,12 +12,12 @@ public class Deadline extends Task{
     }
 
     public Deadline(String description, String doneBy) {
-        super(description);
+        super(description, "D");
         by = doneBy;
     }
     @Override
     public String toString() {
-        return '[' + type + "]" + super.toString() + "(by:" + by + ')';
+        return '[' + super.getType() + "]" + super.toString() + "(by: " + by + ')';
     }
 
 }
