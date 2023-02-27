@@ -21,4 +21,12 @@ unmark -1
 unmark 1
 unmark 100
 list
+todo seven--eleven
+todo handle seven errors
+find seven
+fetch seven
+find dead
+fetch dead
+find foobar
+fetch foobar
 exit
