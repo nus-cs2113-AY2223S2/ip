@@ -6,9 +6,11 @@ package common;
 public class Messages {
     public static final String MESSAGE_VALID_COMMAND_LIST = "List of valid commands:" +
             "\nUsage: todo <description>" +
-            "\nUsage: mark/unmark <task number>" +
             "\nUsage: deadline /by <specify by when>" +
             "\nUsage: event /from <specify from when> /to <specify to when>" +
+            "\nUsage: mark <task number>" +
+            "\nUsage: unmark <task number>" +
+            "\nUsage: list" +
             "\nUsage: find <keyword>" +
             "\nUsage: delete <integer>" +
             "\nUsage: bye";
