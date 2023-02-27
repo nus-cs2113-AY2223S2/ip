@@ -40,7 +40,6 @@ public class Time {
         String stringDateTime = year + "-" + month + "-" + day + "T"
                 + time.substring(0,2) + ":" + time.substring(2) + ":00";
         this.datetime = LocalDateTime.parse(stringDateTime);
-        System.out.println(this.datetime);
     }
 
     public String transformLocalDate() {

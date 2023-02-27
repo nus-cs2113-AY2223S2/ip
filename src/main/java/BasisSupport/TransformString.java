@@ -82,8 +82,6 @@ public class TransformString {
                 }
 
             }
-            System.out.println(substituteStart);
-            System.out.println(substituteEnd);
 
             transformedLine = transformedLine.substring(0, substituteStart) + dateDisplay
                     + transformedLine.substring(substituteEnd);
