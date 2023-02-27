@@ -35,7 +35,6 @@ public class FileHandler {
             System.out.println("Whoops, couldn't create/locate file");
         }
         try {
-            System.out.print("\033\143");
             Thread.sleep(250);
             System.out.println("Initializing Data collection sites......................");
             Thread.sleep(250);
@@ -117,7 +116,6 @@ public class FileHandler {
             Thread.sleep(250);
             System.out.println("You're all set to go!!\n");
             Thread.sleep(1000);
-            System.out.print("\033\143");
             System.out.flush();
         } catch (InterruptedException ie) {
             Thread.currentThread().interrupt();
