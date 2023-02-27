@@ -13,9 +13,6 @@ import java.util.Scanner;
 public class Duke {
 
     public static final String EXIT_PROGRAM = "bye";
-    public static final String BY_DELIMITER = " /by ";
-    public static final String FROM_DELIMITER = " /from ";
-    public static final String TO_DELIMITER = " /to ";
     public static final String UNKNOWN_COMAMND_MESSAGE = "OOPS!!! I'm sorry, but I don't know what that means :-(";
     public static final String MARK_UNMARK_INDEX_IS_NOT_A_NUMBER_MESSAGE = "mark/unmark index is not a number";
     public static final String MARK_UNMARK_INDEX_DOES_NOT_EXIST_MESSAGE = "mark/unmark index does not exist";
@@ -31,17 +28,19 @@ public class Duke {
     public static final String IOEXCEPTION_ERROR_MESSAGE = "IOException Error";
     public static final String FILE_NOT_FOUND_MESSAGE = "File Not Found";
 
-    private static ArrayList<Task> tasks = new ArrayList<>();
-
     private Ui ui;
+    private Parser parser;
+    private TaskList taskList;
 
     public Duke() {
         ui = new Ui();
+        parser = new Parser();
+        taskList = new TaskList();
     }
 
     public void run() {
         ui.showWelcomeMessage();
-        Duke.load(OUTPUT_FILE);
+        load(OUTPUT_FILE);
         starting();
         ui.showEndingMessage();
         System.exit(0);
@@ -77,8 +76,6 @@ public class Duke {
     }
 
 
-
-
     public void processInput(String line) throws UnknownCommandException, IOException, EmptyCommandException {
 
         String[] words = line.split(" ", 2);
@@ -87,20 +84,17 @@ public class Duke {
         checkIfCommandEmpty(words);
         switch (command) {
         case TODO_COMMAND:
-            Todo td = getTodo(words);
-            tasks.add(td);
+            Todo td = taskList.createTodo(words);
             ui.printAddTaskMessage(td);
             save(OUTPUT_FILE);
             break;
         case DEADLINE_COMMAND:
-            Deadline d = getDeadline(words);
-            tasks.add(d);
+            Deadline d = taskList.createDeadline(words);
             ui.printAddTaskMessage(d);
             save(OUTPUT_FILE);
             break;
         case EVENT_COMMAND:
-            Event e = getEvent(words);
-            tasks.add(e);
+            Event e = taskList.createEvent(words);
             ui.printAddTaskMessage(e);
             save(OUTPUT_FILE);
             break;
@@ -109,20 +103,19 @@ public class Duke {
             save(OUTPUT_FILE);
             break;
         case MARK_COMMAND:
-
             int markIndex = Integer.parseInt(words[1]) - 1; // 0 indexing
-            tasks.get(markIndex).markAsDone();
-            ui.printMarkedMessage(tasks.get(markIndex));
+            taskList.markIndexAsDone(markIndex);
+            ui.printMarkedMessage(taskList.getTask(markIndex));
             save(OUTPUT_FILE);
             break;
         case UNMARK_COMMAND:
             int unmarkIndex = Integer.parseInt(words[1]) - 1; // 0 indexing
-            tasks.get(unmarkIndex).markAsNotDone();
-            ui.printUnmarkedMessage(tasks.get(unmarkIndex));
+            taskList.unmarkIndexAsDone(unmarkIndex);
+            ui.printUnmarkedMessage(taskList.getTask(unmarkIndex));
             save(OUTPUT_FILE);
             break;
         case LIST_COMMAND:
-            printList();
+            taskList.printList();
             break;
 
         default:
@@ -133,11 +126,9 @@ public class Duke {
 
     private void deleteTask(String[] words) {
         int deleteIndex = Integer.parseInt(words[1]) - 1; // 0 indexing
-        String taskDescription = String.valueOf(tasks.get(deleteIndex));
-        Task toDelete = tasks.get(deleteIndex);
-        int taskLeft = tasks.get(0).getNumberOfTasks() - 1;
-        toDelete.remove();
-        tasks.remove(deleteIndex);
+        String taskDescription = String.valueOf(taskList.getTask(deleteIndex));
+        int taskLeft = taskList.getTask(0).getNumberOfTasks() - 1;
+        taskList.deleteTask(deleteIndex);
         ui.printDeleteTaskMessage(taskDescription, taskLeft);
     }
 
@@ -150,23 +141,10 @@ public class Duke {
         }
     }
 
-    private static Todo getTodo(String[] words) {
-        Todo td = new Todo(words[1]);
-        return td;
-    }
 
-    private static void printList() {
-        int listIndex = 0;
-        for (Task t : tasks) {
-            if (t != null) {
-                System.out.println(++listIndex + ". " + t);
-            }
-        }
-    }
-
-
-    private static void writeTasksToFile(String filePath) throws IOException {
+    private void writeTasksToFile(String filePath) throws IOException {
         FileWriter fw = new FileWriter(filePath);
+        ArrayList<Task> tasks = taskList.getTaskList();
         for (Task t : tasks) {
             if (t != null) {
                 fw.write(t.saveFormat() + System.lineSeparator());
@@ -176,7 +154,7 @@ public class Duke {
         fw.close();
     }
 
-    private static void save(String filename) throws IOException {
+    private void save(String filename) throws IOException {
         try {
             writeTasksToFile(filename);
         } catch (IOException e) {
@@ -184,7 +162,7 @@ public class Duke {
         }
     }
 
-    private static void load(String filename) {
+    private void load(String filename) {
         File f = new File(filename);
 
         if (f.exists()) {
@@ -196,14 +174,14 @@ public class Duke {
         }
     }
 
-    private static void loadFileContents(File f) throws FileNotFoundException {
+    private void loadFileContents(File f) throws FileNotFoundException {
         Scanner s = new Scanner(f); // create a Scanner using the File as the source
         while (s.hasNext()) {
             processFileContents(s.nextLine());
         }
     }
 
-    private static void processFileContents(String line) {
+    private void processFileContents(String line) {
         String[] words = line.split("\\|");
         String type = words[0];
         boolean isDone = false;
@@ -225,48 +203,29 @@ public class Duke {
         }
     }
 
-    private static void loadDeadline(String[] words, boolean isDone) {
+    private void loadDeadline(String[] words, boolean isDone) {
         Deadline deadline = new Deadline(words[2], words[3]);
         if (isDone) {
             deadline.markAsDone();
         }
-        tasks.add(deadline);
+        taskList.addDeadline(deadline);
     }
 
-    private static void loadEvent(String[] words, boolean isDone) {
+    private void loadEvent(String[] words, boolean isDone) {
         Event event = new Event(words[2], words[3], words[4]);
         if (isDone) {
             event.markAsDone();
         }
-        tasks.add(event);
+        taskList.addEvent(event);
     }
 
-    private static void loadTodo(String[] words, boolean isDone) {
+    private void loadTodo(String[] words, boolean isDone) {
         Todo todo = new Todo(words[2]);
         if (isDone) {
             todo.markAsDone();
         }
-        tasks.add(todo);
+        taskList.addTodo(todo);
     }
 
-    private static Deadline getDeadline(String[] words) {
-        String line;
-        line = words[1]; // to remove the command
-        String[] deadlineDetails = line.split(BY_DELIMITER);
-        Deadline d = new Deadline(deadlineDetails[0], deadlineDetails[1]);
-        return d;
-    }
-
-    private static Event getEvent(String[] words) {
-        String line;
-        line = words[1]; // to remove the command
-        String[] eventDetails = line.split(FROM_DELIMITER);
-        String eventName = eventDetails[0];
-        String from = line.substring(line.indexOf(FROM_DELIMITER) + FROM_DELIMITER.length(), line.indexOf(TO_DELIMITER));
-        eventDetails = line.split(TO_DELIMITER);
-        String to = eventDetails[1];
-        Event e = new Event(eventName, from, to);
-        return e;
-    }
 
 }

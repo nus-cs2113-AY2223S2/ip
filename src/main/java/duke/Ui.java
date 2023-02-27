@@ -1,6 +1,6 @@
 package duke;
 
-import java.sql.SQLOutput;
+import java.util.ArrayList;
 
 public class Ui {
     public static final String LOGO = "   _____  .__   _____                   .___\n" +
@@ -19,13 +19,13 @@ public class Ui {
     public static final String DELETED_THIS_TASK = "Noted. I've removed this task:";
 
 
-    public void showWelcomeMessage(){
+    public void showWelcomeMessage() {
         System.out.println(WELCOME_MESSAGE + LOGO);
         System.out.println(DIVIDER + GREETINGS + DIVIDER);
 
     }
 
-    public void showEndingMessage(){
+    public void showEndingMessage() {
         System.out.println(ENDING + DIVIDER);
     }
 
@@ -33,15 +33,16 @@ public class Ui {
         System.out.println(ADDED_TASK + t + "\nNow you have " + t.getNumberOfTasks() + " tasks in the list.");
     }
 
-    public void printMarkedMessage(Task task){
+    public void printMarkedMessage(Task task) {
         System.out.println(MARKED_THIS_TASK_AS_DONE + "\n" + task);
     }
 
-    public void printUnmarkedMessage(Task task){
+    public void printUnmarkedMessage(Task task) {
         System.out.println(UNMARKED_THIS_TASK_AS_DONE + "\n" + task);
     }
 
-    public void printDeleteTaskMessage(String taskDescription, int taskLeft){
+    public void printDeleteTaskMessage(String taskDescription, int taskLeft) {
         System.out.println(DELETED_THIS_TASK + "\n" + taskDescription + "\nNow you have " + taskLeft + " tasks in the list.");
     }
+
 }
