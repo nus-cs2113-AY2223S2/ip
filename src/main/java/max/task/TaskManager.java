@@ -4,12 +4,14 @@ import max.Ui.Ui;
 import max.command.Command;
 import max.data.Storage;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TaskManager {
     private ArrayList<Task> tasks;
     private Ui ui;
+    private DateParser dateParser;
 
     public void createTask(HashMap<String, String> commandMap, Command command) throws TaskException {
         // Assertion: commandMap has the correct subcommands & length
@@ -22,12 +24,17 @@ public class TaskManager {
             // Deadline task
             String description = commandMap.get("deadline");
             String deadline = commandMap.get("by");
+            deadline = dateParser.formatInputString(deadline);
             newTask = new Deadline(description, deadline);
         } else if (command.equals(Command.TASK_EVENT)) {
             // Event task
             String description = commandMap.get("event");
             String from = commandMap.get("from");
             String to = commandMap.get("to");
+            // Format dates
+            dateParser.validateToFromDates(to, from);
+            from = dateParser.formatInputString(from);
+            to = dateParser.formatInputString(to);
             newTask = new Event(description, from, to);
         }
         if (newTask == null) {
@@ -49,7 +56,7 @@ public class TaskManager {
         for (int i = 0; i < tasks.size(); ++i) {
             // Print number, box, description in that order
             Task curr = tasks.get(i);
-            ui.printMessage(i + 1 + ". " + curr.getDescription() + '\n');
+            ui.printMessage(i + 1 + ". " + curr.getDescription());
         }
     }
 
@@ -121,5 +128,6 @@ public class TaskManager {
     public TaskManager() {
         tasks = new ArrayList<>();
         ui = new Ui();
+        dateParser = new DateParser();
     }
 }
