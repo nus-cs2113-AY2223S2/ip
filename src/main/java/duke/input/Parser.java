@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Parser {
 
@@ -107,6 +109,7 @@ public class Parser {
                 int commandStart = originalInput.indexOf("/");
                 // Due date starts after '/by '
                 String dueDate = originalInput.substring(commandStart + 4);
+                dueDate = processDate(dueDate);
                 String parsedDescription = originalInput.substring(0, commandStart - 1);
                 parsedDescription += " (by: " + dueDate + ")";
                 // Remove the word 'deadline' from the description
@@ -132,9 +135,12 @@ public class Parser {
                 String[] splitEventInput = originalInput.split("/");
                 // Start time comes after '/from'
                 String start = splitEventInput[1].substring(5);
+                start = start.substring(0, start.length() - 1);
                 // End time comes after '/to'
                 String end = splitEventInput[2].substring(3);
-                String parsedDescription = splitEventInput[0] + "(from: " + start + "to: " + end + ")";
+                start = processDate(start);
+                end = processDate(end);
+                String parsedDescription = splitEventInput[0] + "(from: " + start + " to: " + end + ")";
                 parsedDescription = parsedDescription.substring(parsedDescription.indexOf(" ") + 1);
                 System.out.println(BARRIER + "\n");
                 Event temp = new Event(parsedDescription, start, end);
@@ -232,5 +238,14 @@ public class Parser {
         boolean isZero = dynamicInput == '0';
         boolean isInRange = index <= TaskList.getTasksArray().size() - 1;
         return (isNumber && !isZero && isInRange);
+    }
+
+    public static String processDate(String date) {
+        if (date.length() == 10 && date.charAt(4) == '-' && date.charAt(7) == '-') {
+            LocalDate dateObj = LocalDate.parse(date);
+            return dateObj.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
+        } else {
+            return date;
+        }
     }
 }
