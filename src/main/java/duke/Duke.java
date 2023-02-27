@@ -28,6 +28,10 @@ public class Duke {
     private TaskList taskList;
     private Storage storage;
 
+    /**
+     *
+     * Creates the Duke class by initializing the other classes
+     */
     public Duke() {
         ui = new Ui();
         parser = new Parser();
@@ -113,6 +117,11 @@ public class Duke {
         }
     }
 
+    /**
+     * Deletes a task from the TaskList and prints out the task that was deleted
+     *
+     * @param words original string that the user typed in
+     */
     private void deleteTask(String[] words) {
         int deleteIndex = Integer.parseInt(words[1]) - 1; // 0 indexing
         String taskDescription = String.valueOf(taskList.getTask(deleteIndex));

@@ -27,6 +27,13 @@ public class Storage {
         fw.close();
     }
 
+    /**
+     * Save the current List to a file
+     *
+     * @param taskList the list of Tasks to save
+     * @param filename the filename to save to
+     * @throws IOException if there is any IO error
+     */
     public void save(TaskList taskList, String filename) throws IOException {
         try {
             writeTasksToFile(taskList, filename);
@@ -35,6 +42,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Loads any prior list of Tasks from a file
+     *
+     * @param filename the filename to load
+     * @return loaded list of Tasks from the file
+     */
     public TaskList load(String filename) {
         File f = new File(filename);
 
