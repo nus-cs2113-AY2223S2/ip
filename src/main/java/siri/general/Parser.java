@@ -9,11 +9,12 @@ import java.io.IOException;
 import static siri.Duke.storage;
 import static siri.Duke.tasks;
 import static siri.Duke.indexOfTask;
-import static siri.Duke.TASK_FILE;
 import static siri.Duke.isExit;
 
+/**
+ * Parse the user command into different parts.
+ */
 public class Parser {
-
     protected String userInput;
     protected Ui ui;
     public Parser(String command){
@@ -21,6 +22,14 @@ public class Parser {
         this.ui = new Ui();
     }
 
+    /**
+     * Parse the user input into task command and command description.
+     *
+     * @throws MarkerArrayIndexOutOfBoundsException
+     * @throws AddTaskIndexOutOfBounds
+     * @throws UnknownCommandException
+     * @throws IOException
+     */
     public void parse() throws MarkerArrayIndexOutOfBoundsException, AddTaskIndexOutOfBounds, UnknownCommandException, IOException {
         String[] command = userInput.split(" ", 2);
         switch (command[0]) {
@@ -36,10 +45,12 @@ public class Parser {
             if (command.length == 1) {
                 throw new MarkerArrayIndexOutOfBoundsException();
             }
-            tasks.markTask(command[0], command[1]);
+            int taskNumber_m = Integer.parseInt(command[1]);
+            tasks.markTask(command[0], taskNumber_m);
             break;
         case "delete":
-            tasks.deleteTask(command[1]);
+            int taskNumber_d = Integer.parseInt(command[1]);
+            tasks.deleteTask(taskNumber_d);
             break;
         case "todo":
         case "deadline":
@@ -48,7 +59,7 @@ public class Parser {
                 throw new AddTaskIndexOutOfBounds(command[0]);
             }
             tasks.addTask(command[0], command[1]);
-            storage.appendToFile(TASK_FILE, tasks.getTaskList().get(indexOfTask).toFileString());
+            storage.appendToFile(tasks.getTaskList().get(indexOfTask).toFileString());
             tasks.printNewTask();
             indexOfTask++;
             break;
