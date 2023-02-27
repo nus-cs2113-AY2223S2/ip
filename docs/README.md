@@ -86,9 +86,9 @@
 
 <br>
 
-### Mark task as done by index in taskslist.
-### Format: `mark INDEX`
-### Examples:
+#### Mark task as done by index in taskslist.
+#### Format: `mark INDEX`
+#### Examples:
 >* #### `mark 1`
 ![Mark Screenshot](MarkSS.png)
 
