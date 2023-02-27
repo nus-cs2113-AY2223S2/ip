@@ -1,3 +1,5 @@
+package duke;
+
 import duke.tasks.Task;
 import duke.tasks.Deadline;
 import duke.tasks.Event;
@@ -146,7 +148,7 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-        System.out.println("Hello! I'm Duke");
+        System.out.println("Hello! I'm duke.Duke");
         System.out.println("What can I do for you?");
         ArrayList<Task> tasks = new ArrayList<>();
         try {
