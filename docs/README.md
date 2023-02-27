@@ -47,7 +47,7 @@ _Example of adding Deadline Task_
 
 ### 3. Event 
 Event tasks are tasks which contains a start time and an end time
-> Syntax: **event** *"Name of Task"* **/from** *"start time"* **/to** *"end time"*
+> Syntax: **event** *[Name of Task]* **/from** *[start time]* **/to** *[end time]*
 
 _Example of adding Event Task_
 
