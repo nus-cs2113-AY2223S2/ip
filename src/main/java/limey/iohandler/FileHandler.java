@@ -14,11 +14,22 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FileHandler {
+    /**
+     * Creates an empty text file in the given filePath
+     *
+     * @param filePath the path where the empty text file will be saved
+     */
     public static void clearFile(String filePath) throws IOException {
         FileWriter fw = new FileWriter(filePath);
         fw.write(System.lineSeparator());
         fw.close();
     }
+    /**
+     * Converts the task list to a text file to be saved in the given filePath and converts it to be saved for future retrieval
+     *
+     * @param filePath the path where the text file will be saved
+     * @param tasks task list to convert and save as text file
+     */
     public static void writeToFile(String filePath, ArrayList<Task> tasks) throws IOException {
         FileWriter fw = new FileWriter(filePath);
         for (Integer i = 0; i < Task.numTasks; i++) {
@@ -45,7 +56,13 @@ public class FileHandler {
         }
         fw.close();
     }
-
+    /**
+     * Reads in text from the file in a given filePath and converts it to array list of Task objects
+     * To retrieve and update the current task list to match the one saved from memory
+     *
+     * @param filePath the path from which the previously saved list is to be extracted from
+     * @param tasks task list to be updated to match the one saved in the file
+     */
     public static void readFileToTasks(String filePath, ArrayList<Task> tasks) throws FileNotFoundException {
         File f = new File(filePath); // create a File for the given file path
         Scanner s = new Scanner(f); // create a Scanner using the File as the source

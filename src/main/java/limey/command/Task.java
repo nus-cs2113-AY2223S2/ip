@@ -36,10 +36,19 @@ public class Task {
         return taskIdentity;
     }
 
+    /**
+     * Sets the task to the given task name
+     *
+     * @param taskName the name of the task
+     */
     public void setTaskName(String taskName) {
         this.taskName = taskName;
     }
-
+    /**
+     * Sets the isDone boolean of the task to the respective input isDone
+     *
+     * @param isDone updated status of the task
+     */
     public void setDone(boolean isDone) {
         this.isDone = isDone;
     }

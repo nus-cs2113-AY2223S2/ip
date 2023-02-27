@@ -36,7 +36,7 @@ public class Limey {
         String firstWord;
         String[] wordList;
         //start user interface
-        Speech.sayHi();
+        Speech.introMessage();
         Scanner in = new Scanner(System.in);
         inLine = in.nextLine().trim();
         wordList = Parser.splitInput(inLine);
@@ -75,7 +75,13 @@ public class Limey {
         Speech.sayBye();
     }
 
-
+    /**
+     * Creates and adds a new task with the corresponding name
+     * to the current tasks arraylist
+     *
+     * @param tasks the full array list of current tasks
+     * @param inLine input line read from the user input on the command line interface
+     */
     private static void makeNewTask(ArrayList<Task> tasks, String inLine, String firstWord) throws commandNotFoundException {
         Task taskIn;
         inLine = inLine.substring(inLine.indexOf(" ") + 1);
@@ -107,7 +113,20 @@ public class Limey {
         Speech.printAdded(taskIn, Task.numTasks);
     }
 
-
+    /**
+     * Reads every input line from the command line interface to detect for any
+     * given command (find, list, mark, unmark, delete, help, bye, todo, deadline, event)
+     *
+     * If input command is not "bye", the respective function of the command will be done
+     * and it will wait for the next command. If the input command is "bye"
+     * the program will terminate
+     *
+     * @param firstWord the command given by the user input
+     * @param tasks the list of current tasks
+     * @param wordList string array of individual words given by the user input
+     * @param inLine input line read from the user input on the command line interface
+     * @param in the scanner to read new input lines from Command Line Interface
+     */
     private static void initialiseLimey(String firstWord, ArrayList<Task> tasks, String[] wordList, String inLine, Scanner in) {
         while (!firstWord.equals("bye")) { //loop until input 'bye'
             switch (firstWord) { //switch case to decide what to do
@@ -141,6 +160,9 @@ public class Limey {
             case "delete":
                 printDeleteTask(tasks, wordList);
                 break;
+            case "help":
+                Speech.helpMessage();
+                break;
             default:
                 try {
                     makeNewTask(tasks, inLine.trim(), firstWord);
@@ -156,7 +178,12 @@ public class Limey {
             firstWord = wordList[0];
         }
     }
-
+    /**
+     * Attempts to unmark a given task, if it fails, will print the relevant error message
+     *
+     * @param tasks the list of current tasks
+     * @param wordList string array of individual words given by the user input
+     */
     private static void printUnmarkTask(ArrayList<Task> tasks, String[] wordList) {
         try {
             unmarkTask(tasks, wordList);
@@ -166,7 +193,12 @@ public class Limey {
             Speech.invalidMessage("Index given is not a number.");
         }
     }
-
+    /**
+     * Unmarks a given task
+     *
+     * @param tasks the list of current tasks
+     * @param wordList string array of individual words given by the user input, whereby index 1 item is the list index of the task to unmark
+     */
     private static void unmarkTask(ArrayList<Task> tasks, String[] wordList) {
         String inLine;
         int taskIndex;
@@ -176,6 +208,12 @@ public class Limey {
         Speech.printUnmarked(tasks.get(taskIndex));
     }
 
+    /**
+     * Attempts to mark a given task, if it fails, will print the relevant error message
+     *
+     * @param tasks the list of current tasks
+     * @param wordList string array of individual words given by the user input
+     */
     private static void printMarkTask(ArrayList<Task> tasks, String[] wordList) {
         try {
             markTask(tasks, wordList);
@@ -185,7 +223,12 @@ public class Limey {
             Speech.invalidMessage("Index given is not a number.");
         }
     }
-
+    /**
+     * Attempts to delete a given task, if it fails, will print the relevant error message
+     *
+     * @param tasks the list of current tasks
+     * @param wordList string array of individual words given by the user input
+     */
     private static void printDeleteTask(ArrayList<Task> tasks, String[] wordList) {
         try {
             deleteTask(tasks, wordList);
@@ -195,7 +238,12 @@ public class Limey {
             Speech.invalidMessage("Index given is not a number.");
         }
     }
-
+    /**
+     * Deletes a given task
+     *
+     * @param tasks the list of current tasks
+     * @param wordList string array of individual words given by the user input, whereby index 1 item is the list index of the task to delete
+     */
     private static void deleteTask(ArrayList<Task> tasks, String[] wordList) {
         String inLine;
         int taskIndex;
@@ -205,7 +253,12 @@ public class Limey {
         tasks.remove(taskIndex);
         Task.numTasks--;
     }
-
+    /**
+     * Marks a given task
+     *
+     * @param tasks the list of current tasks
+     * @param wordList string array of individual words given by the user input, whereby index 1 item is the list index of the task to mark
+     */
     private static void markTask(ArrayList<Task> tasks, String[] wordList) {
         int taskIndex;
         String inLine;

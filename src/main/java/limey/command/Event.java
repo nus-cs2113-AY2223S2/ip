@@ -17,6 +17,11 @@ public class Event extends Task{
     public void setToDate(String toDate) {
         this.toDate= LocalDateTime.parse(toDate.trim());
     }
+    /**
+     * Creates a new Event object with the proper name and from and to dates if valid dates are given
+     *
+     * @param inLine user input without the command term (ie just the event name and its from and to dates)
+     */
     public Event(String inLine) throws invalidDateException{
             super(inLine);
             if(!inLine.contains("/from") |  !inLine.contains("/to")) {

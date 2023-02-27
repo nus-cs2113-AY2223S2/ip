@@ -3,6 +3,12 @@ package limey.iohandler;
 import java.util.Arrays;
 
 public class Parser {
+    /**
+     * Returns the first word (space separated) from a given string in lower case
+     *
+     * @param line string of which the first word is to be extracted from
+     * @return first word in a given string
+     */
     public static String getFirstWord(String line) {
         String firstWord;
         int firstSpace = line.indexOf(' ');
@@ -13,6 +19,12 @@ public class Parser {
         }
         return firstWord;
     }
+    /**
+     * Returns the words (space separated) from a given string
+     *
+     * @param inLine string of which the words are to be extracted from
+     * @return string array of space separated words from inLine
+     */
     public static String[] splitInput(String inLine){
         int nextSpace = inLine.indexOf(' ');
         int numStrings = 1;
@@ -29,12 +41,4 @@ public class Parser {
         return wordList;
     }
 
-    public static boolean isParsable(String input) {
-        try {
-            Integer.parseInt(input);
-            return true;
-        } catch (final NumberFormatException e) {
-            return false;
-        }
-    }
 }
