@@ -152,6 +152,37 @@ public class TaskList {
         }
     }
 
+    public static void findInList(String string) {
+        if (tasks.size() > 0) {
+            // Checks if any matches are found
+            boolean isMatchFound = false;
+            for (int i = 0; i < tasks.size(); i++) {
+                if (tasks.get(i).description.contains(string)) {
+                    isMatchFound = true;
+                    break;
+                }
+            }
+            Message.line();
+            if (isMatchFound) {
+                System.out.println("Here are the tasks in your list:");
+                int listIndex = 1;
+                for (int i = 0; i < tasks.size(); i++) {
+                    if (tasks.get(i).description.contains(string)) {
+                        System.out.println(Integer.toString(listIndex) + "." + tasks.get(i));
+                        listIndex += 1;
+                    }
+                }
+            } else {
+                System.out.println("No matches are found for your keyword, please search another keyword!");
+            }
+            Message.line();
+        } else {
+            Message.line();
+            System.out.println("You have no tasks at the moment. Please add some tasks before searching!");
+            Message.line();
+        }
+    }
+
     public static void markDone(int index) {
         tasks.get(index - 1).setIsDone(true);
         Ui.line();
