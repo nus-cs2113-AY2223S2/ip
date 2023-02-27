@@ -1,0 +1,2 @@
+D|0| | june
+E|1| |from: june to: (april)

@@ -1,4 +1,0 @@
-T|1| play game
-E|0| |from: june 6th to: july 5th
-D|1| | july
-E|0| |from: to:
