@@ -1,4 +1,4 @@
-package Tasks;
+package DukeManager.data.Tasks;
 
 public class Event extends Task {
     protected String to;

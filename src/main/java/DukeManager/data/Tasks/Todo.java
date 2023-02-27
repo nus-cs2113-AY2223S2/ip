@@ -1,4 +1,4 @@
-package Tasks;
+package DukeManager.data.Tasks;
 
 public class Todo extends Task{
     public Todo(String name) {

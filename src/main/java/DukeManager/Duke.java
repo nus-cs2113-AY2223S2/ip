@@ -1,9 +1,13 @@
-// packages import
-import DukeErrors.BlankListException;
-import Tasks.Deadline;
-import Tasks.Event;
-import Tasks.Task;
-import Tasks.Todo;
+package DukeManager;// packages import
+import DukeManager.Commands.Cmd;
+import DukeManager.Ui.TextUi;
+import DukeManager.data.DukeErrors.BlankListException;
+import DukeManager.data.TaskList;
+import DukeManager.data.Tasks.Deadline;
+import DukeManager.data.Tasks.Event;
+import DukeManager.data.Tasks.Task;
+import DukeManager.data.Tasks.Todo;
+import org.w3c.dom.Text;
 
 // java library import
 import java.io.File;
@@ -15,50 +19,9 @@ import java.util.Scanner;
 
 public class Duke {
 
-	private static final Scanner in = new Scanner(System.in);
+	/*private static final Scanner in = new Scanner(System.in);
 	private static final ArrayList<Task> taskList = new ArrayList<>();
-	private static final String LINE_PARTITION = "    ____________________________________________________________\n";
-	private static final String FAREWELL = LINE_PARTITION +
-			"\t  Bye. Hope to see you again soon!\n" +
-			LINE_PARTITION;
-	private static final String GREET = LINE_PARTITION +
-			"\t  Hello! I'm kimo\n" +
-			"\t  What can I do for you?\n" +
-			LINE_PARTITION;
-	private static final String FILE_PATH = "taskList.txt";
 
-	//ERROR MESSAGE FINAL STRINGS
-	private static final String ERROR_FACE = " (ಠ_ಠ) ";
-	private static final String INVALID_ARGS_MSG = LINE_PARTITION +
-			"\t  " + ERROR_FACE + "You did not enter an integer.\n" +
-			"\t  Try again.\n" +
-			LINE_PARTITION;
-	private static final String CMD_FORMAT_ERROR = LINE_PARTITION +
-			"\t  " + ERROR_FACE + "You have entered the wrong format for this command.\n" +
-			"\t  Please type \"help\" to see the list of commands and the relevant formats.\n" +
-			LINE_PARTITION;
-	private static final String INVALID_CMD = LINE_PARTITION +
-			"\t  " + ERROR_FACE + "You have entered an invalid command.\n" +
-			"\t  Please type \"help\" to see the available list of commands and the relevant formats\n" +
-			LINE_PARTITION;
-	private static final String EMPTY_LIST_ERROR_MSG = LINE_PARTITION +
-			"\t  " + ERROR_FACE + "Your list is empty. Please add items first.\n" +
-			LINE_PARTITION;
-
-
-	//HELP MESSAGE
-	private static final String HELP_LIST = LINE_PARTITION +
-			"\t  These are the valid commands and the relevant formats for each:\n" +
-			"\t  list : displays the current tasklist of tasks you have entered, with each tasks' statuses shown." +
-			"\t  mark (no.) : marks task number (no.) as completed.\n" +
-			"\t  unmark (no.) : marks task number (no.) as incomplete.\n" +
-			"\t  todo (task) : adds task with description (task) to the tasklist.\n" +
-			"\t  deadline (task) /by (date) : adds task with description (task) and due date (date) to the tasklist" +
-			".\n" +
-			"\t  event (task) /from (date1) /to (date2) : adds task with description (task) " +
-			"and start date (date1) and end date (date2)\n" +
-			"\t  help : shows list of available commands\n" +
-			LINE_PARTITION;
 
 	//MAIN CODE
 	public static void main(String[] args) {
@@ -317,5 +280,41 @@ public class Duke {
 
 	private static void invalidCmd() {
 		System.out.print(INVALID_CMD);
+	}*/
+	private Storage storage;
+	private TaskList tasks;
+	private Ui ui;
+
+	public Duke(String filePath) {
+		ui = new TextUi();
+		storage = new Storage(filePath);
+		try {
+			tasks = new TaskList(storage.load());
+		} catch (DukeException e) {
+			ui.showLoadingError();
+			tasks = new TaskList();
+		}
+	}
+
+	public void run() {
+		ui.showWelcome();
+		boolean isExit = false;
+		while (!isExit) {
+			try {
+				String fullCommand = ui.readCommand();
+				ui.showLine(); // show the divider line ("_______")
+				Cmd c = Parser.parse(fullCommand);
+				c.execute(tasks, ui, storage);
+				isExit = c.isExit();
+			} catch (DukeException e) {
+				ui.showError(e.getMessage());
+			} finally {
+				ui.showLine();
+			}
+		}
+	}
+
+	public static void main(String[] args) {
+		new Duke("data/tasks.txt").run();
 	}
 }

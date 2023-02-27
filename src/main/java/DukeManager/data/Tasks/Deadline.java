@@ -1,4 +1,4 @@
-package Tasks;
+package DukeManager.data.Tasks;
 
 public class Deadline extends Task {
     protected String by;
