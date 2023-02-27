@@ -1,7 +1,5 @@
 package duke;
 
-import java.util.ArrayList;
-
 public class Ui {
     public static final String LOGO = "   _____  .__   _____                   .___\n" +
             "  /  _  \\ |  |_/ ____\\______   ____   __| _/\n" +
