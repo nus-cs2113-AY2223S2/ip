@@ -43,6 +43,7 @@ public class Parser {
      * Handles the command based on user input.
      *
      * @param taskList List containing the tasks input by user.
+     * @param storage Storage object to save the task list.
      */
     public void handleCommand(TaskList taskList, Storage storage) throws InvalidTaskException {
         String command = parseCommand();
