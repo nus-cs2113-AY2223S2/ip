@@ -1,10 +1,5 @@
 package duke.command;
-
 import duke.task.Tasks;
-
-import java.io.FileWriter;
-import java.io.IOException;
-
 public class CommandManager {
     //print Duke
     //get user input
@@ -66,7 +61,6 @@ public class CommandManager {
                     + DIVIDER);
         }
     }
-
     public void printOutput() {
         int totalNumberOfTasks = Tasks.getNumberOfTasks();
         System.out.println(DIVIDER + "\n\t Here are the tasks in your list:");
@@ -75,15 +69,6 @@ public class CommandManager {
             System.out.println("\t  " + num + ". " + thisTask);
         }
         System.out.println(DIVIDER);
-    }
-    public static void writeToFile(String filePath) throws IOException {
-        FileWriter fw = new FileWriter(filePath);
-        for (int num = 1; num <= Tasks.getNumberOfTasks(); ++num) {
-            Tasks thisTask = Tasks.getTaskList().get(num - 1);
-            fw.write(String.valueOf(thisTask));
-            fw.write("\n");
-        }
-        fw.close();
     }
 }
 

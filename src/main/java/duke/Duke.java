@@ -3,77 +3,29 @@ package duke;
 import duke.command.CommandManager;
 import duke.command.FolderNotFoundException;
 import duke.command.NoKeyException;
+import duke.command.Storage;
 import duke.task.Dateline;
 import duke.task.Event;
 import duke.task.Tasks;
 import duke.task.Todo;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
 public class Duke {
-    private static void readFromFile() throws FileNotFoundException, FolderNotFoundException {
-        File folder = new File("data");
-        if (!folder.exists()) {
-            throw new FolderNotFoundException();
-        }
-        File f = new File("data/Duke.txt"); // create a File for the given file path
-        Scanner s = new Scanner(f); // create a Scanner using the File as the source
-        while (s.hasNext()) {
-            String row = s.nextLine();
-            int posOfStartBracket = row.indexOf("(");
-            int posOfEndBracket = row.indexOf(")");
-            String[] timeSpan = new String[2]; //String array of size 2;
-            String date = new String();
-            if (row.contains("[E]")) {
-                timeSpan = (row.substring(posOfStartBracket + 1, posOfEndBracket)).split(" To: ", 2);
-                timeSpan[0] = timeSpan[0].replaceFirst("From: ", "");
-            }
-            if (row.contains("D")) {
-                date = row.substring(posOfStartBracket + 1, posOfEndBracket).replace("By: ", "");
-            }
-            String taskIdentifier = row.substring(0, 6);
-            switch (taskIdentifier) {
-            case "[T][ ]":
-                Tasks.addToList(new Todo(row.substring(7), false));
-                break;
-            case "[T][X]":
-                Tasks.addToList(new Todo(row.substring(7), true));
-                break;
-            case "[D][ ]":
-                Tasks.addToList(new Dateline(row.substring(7, posOfStartBracket - 1), false,
-                        date));
-                break;
-            case "[D][X]":
-                Tasks.addToList(new Dateline(row.substring(7, posOfStartBracket - 1), true,
-                        date));
-                break;
-            case "[E][ ]":
-                Tasks.addToList(new Event(row.substring(7, posOfStartBracket - 1), false,
-                        timeSpan[0], timeSpan[1]));
-                break;
-            case "[E][X]":
-                Tasks.addToList(new Event(row.substring(7, posOfStartBracket - 1), true,
-                        timeSpan[0], timeSpan[1]));
-                break;
-            }
-        }
-    }
     public static void main(String[] args) throws IOException, NoKeyException {
+        Storage storage = new Storage("data", "data/Duke.txt");
         Scanner in = new Scanner(System.in);
         CommandManager.sayHi();
         try {
-            readFromFile();
+            storage.load();
         } catch (FileNotFoundException e) {
             System.out.println("Duke.txt file does not exist in /data. Creating one for you...");
-            File f = new File("data/Duke.txt");
-            f.createNewFile();
+            storage.createNewFile();
         } catch (FolderNotFoundException e) {
             System.out.println("data folder does not exist. Creating one for you...");
-            File folder = new File("data");
-            folder.mkdir();
+            storage.createNewFolder();
         }
         CommandManager command = new CommandManager();
         command.setUserInput(in.nextLine());
@@ -151,7 +103,7 @@ public class Duke {
                 System.out.println("Try again!");
             }
             try {
-                CommandManager.writeToFile("data/Duke.txt");
+                storage.save();
             } catch (IOException e) {
                 System.out.println("Something went wrong: " + e.getMessage());
             }
