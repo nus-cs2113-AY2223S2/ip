@@ -152,3 +152,21 @@ invoking `list` afterwards yields
 ```
 何もいない。。。頭のように。。。(list is empty)
 ```
+
+### `bye` - Exit the app
+
+Exit the application.
+
+Example of usage: 
+
+`bye`
+
+Expected outcome:
+
+Application exits.
+```
+じゃねえ～ (bye)
+
+Process finished with exit code 0
+```
+
