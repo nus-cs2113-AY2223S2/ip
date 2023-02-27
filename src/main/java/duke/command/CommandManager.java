@@ -1,4 +1,5 @@
 package duke.command;
+import duke.task.TaskList;
 import duke.task.Tasks;
 public class CommandManager {
     //print Duke
@@ -51,21 +52,21 @@ public class CommandManager {
         case "add":
             System.out.println(DIVIDER + "\n\t Got it. I've added this task:\n\t  "
                     + task);
-            System.out.println("\t Now you have " + Tasks.getNumberOfTasks() + " in your list.\n"
+            System.out.println("\t Now you have " + TaskList.getNumberOfTasks() + " in your list.\n"
                     + DIVIDER);
             break;
         case "delete":
             System.out.println(DIVIDER + "\n\t Got it. I've deleted this task:\n\t  "
                     + task);
-            System.out.println("\t Now you have " + (Tasks.getNumberOfTasks() - 1) + " in your list.\n"
+            System.out.println("\t Now you have " + (TaskList.getNumberOfTasks() - 1) + " in your list.\n"
                     + DIVIDER);
         }
     }
     public void printOutput() {
-        int totalNumberOfTasks = Tasks.getNumberOfTasks();
+        int totalNumberOfTasks = TaskList.getNumberOfTasks();
         System.out.println(DIVIDER + "\n\t Here are the tasks in your list:");
         for (int num = 1; num <= totalNumberOfTasks; ++num) {
-            Tasks thisTask = Tasks.getTaskList().get(num - 1);
+            Tasks thisTask = TaskList.getTaskList().get(num - 1);
             System.out.println("\t  " + num + ". " + thisTask);
         }
         System.out.println(DIVIDER);

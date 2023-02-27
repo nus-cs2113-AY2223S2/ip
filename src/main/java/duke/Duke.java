@@ -4,10 +4,7 @@ import duke.command.CommandManager;
 import duke.command.FolderNotFoundException;
 import duke.command.NoKeyException;
 import duke.command.Storage;
-import duke.task.Dateline;
-import duke.task.Event;
-import duke.task.Tasks;
-import duke.task.Todo;
+import duke.task.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -32,10 +29,11 @@ public class Duke {
         while (!command.getUserInput().equals("bye")) {
             String[] userInput = command.getUserInput().split(" ", 2);
             String key = userInput[0];
+            //parse String command
             switch (key) {
             case "mark":
                 try {
-                    Tasks markTask = Tasks.getTaskList().get(Integer.parseInt(userInput[1]) - 1);
+                    Tasks markTask = TaskList.getTaskList().get(Integer.parseInt(userInput[1]) - 1);
                     markTask.setMarked(true);
                     command.setKey("mark");
                     command.printOutput(markTask);
@@ -46,7 +44,7 @@ public class Duke {
                 break;
             case "unmark":
                 try {
-                    Tasks unMarkTask = Tasks.getTaskList().get(Integer.parseInt(userInput[1]) - 1);
+                    Tasks unMarkTask = TaskList.getTaskList().get(Integer.parseInt(userInput[1]) - 1);
                     unMarkTask.setMarked(false);
                     command.setKey("unmark");
                     command.printOutput(unMarkTask);
@@ -58,7 +56,7 @@ public class Duke {
             case "todo":
                 try {
                     Tasks newToDo = new Todo(userInput[1], false);
-                    Tasks.addToList(newToDo);
+                    TaskList.addToList(newToDo);
                     command.setKey("add");
                     command.printOutput(newToDo);
                 } catch (ArrayIndexOutOfBoundsException e) {
@@ -69,7 +67,7 @@ public class Duke {
                 try {
                     String[] taskDate = userInput[1].split(" /by ", 2);
                     Tasks newDeadline = new Dateline(taskDate[0], false, taskDate[1]);
-                    Tasks.addToList(newDeadline);
+                    TaskList.addToList(newDeadline);
                     command.setKey("add");
                     command.printOutput(newDeadline);
                 } catch (ArrayIndexOutOfBoundsException e) {
@@ -82,7 +80,7 @@ public class Duke {
             }
                 String[] eventSlashDate = userInput[1].split(" /from | /to ", 3);
                 Tasks newEvent = new Event(eventSlashDate[0], false, eventSlashDate[1], eventSlashDate[2]);
-                Tasks.addToList(newEvent);
+                TaskList.addToList(newEvent);
                 command.setKey("add");
                 command.printOutput(newEvent);
                 break;
@@ -91,10 +89,10 @@ public class Duke {
                 break;
             case "delete":
                 try {
-                    Tasks toDelete = Tasks.getTaskList().get(Integer.parseInt(userInput[1]) - 1);
+                    Tasks toDelete = TaskList.getTaskList().get(Integer.parseInt(userInput[1]) - 1);
                     command.setKey("delete");
                     command.printOutput(toDelete);
-                    Tasks.deleteFromList(Integer.parseInt(userInput[1]) - 1);
+                    TaskList.deleteFromList(Integer.parseInt(userInput[1]) - 1);
                 } catch (IndexOutOfBoundsException e) {
                     System.out.println("Delete failed. No items in list.");
                 }
