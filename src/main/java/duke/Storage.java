@@ -4,20 +4,35 @@ import duke.task.TaskList;
 import duke.task.TaskType;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * The <code>Storage</code> object handles the creation of the data file
+ * as well as manages the loading and writing of the data file.
+ */
 public class Storage {
 
     private static String filePath = "data/data.txt";
 
+    /**
+     * The class constructor that instantiates the <code>Storage</code> object with a specified file path.
+     *
+     * @param filePath The file path of the data file.
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
 
+    /**
+     * Loads the data from the data file into a <code>TaskList</code> object.
+     * If the data file or folder is missing a new folder and/or data file will be created.
+     * If the data file is empty, an empty <code>TaskList</code> will be returned.
+     *
+     * @return The <code>TaskList</code> object.
+     */
     public static TaskList loadData() {
         TaskList tasks = new TaskList();
 
@@ -47,6 +62,10 @@ public class Storage {
 
         return tasks;
     }
+
+    /**
+     * Creates a new data file and folder if needed.
+     */
     public static void createFile() {
         try {
             if (new File("data").mkdirs()) {
@@ -59,6 +78,9 @@ public class Storage {
         }
     }
 
+    /**
+     * Writes data to the data file using the list of tasks stored in <code>TaskList</code> object.
+     */
     public static void writeFile() {
         try {
             FileWriter myWriter = new FileWriter(filePath);
