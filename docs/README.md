@@ -146,7 +146,7 @@ Format: `find <KEYWORD>`
 Examples:
 - `find midterms` returns tasks with descriptions containing the word "midterms".
 
-### Exiting the program: `bye`
+### Exiting the program: `done`
 
 Exits Chronos.
 
