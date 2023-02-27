@@ -134,9 +134,11 @@ public class KeqingStorage {
     public static ArrayList<Task> loadFile() throws IOException, ArrayIndexOutOfBoundsException {
         ArrayList<Task> copyList = new ArrayList<Task>();
         File f = new File(filePath);
+        //check whether the directory exists
         if (!f.getParentFile().exists()) {
             f.getParentFile().mkdir();
         }
+        //check whether the file exists
         if (f.exists()) {
             Scanner s = new Scanner(f);
             while (s.hasNext()) {
