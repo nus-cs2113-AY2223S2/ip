@@ -121,6 +121,11 @@ public class TaskList {
         }
     }
 
+    /**
+     * Prints the current list of tasks that matches the keyword that the user typed
+     *
+     * @param words Original string that the user typed in
+     */
     public void printMatchedList(String[] words){
         System.out.println(MATCHING_TASK_MESSAGE);
         String keyword = words[1];
