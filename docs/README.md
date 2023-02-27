@@ -63,8 +63,8 @@ Format: `todo TASK_NAME`
 - `TASK_NAME` is compulsory
 
 Examples:
-```ruby
-todo Complete CS2113 IP Level
+```js
+todo Complete CS2113 Ip Level
 todo Read
 ```
 
@@ -81,9 +81,9 @@ Format: `event TASK_NAME /by BY_DATE`
 - `BY_DATE` **must** be entered in the correct format.
 
 Examples:
-```ruby
+```js
 deadline CS2113 Homework /by 2023-06-26 2359
-deadline BTO /by 2025-08-01 1200
+deadline Apply Bto /by 2025-08-01 1200
 ```
 
 
@@ -99,8 +99,8 @@ Format: `deadline TASK_NAME /from FROM_DATE /to TO_DATE`
 - `FROM_DATE` and `TO_DATE` **must** be entered in the correct format.
 
 Examples:
-```ruby
-event NUS OpenDay /from 2023-07-01 1000 /to 2023-07-01 1600
+```js
+event Nus OpenDay /from 2023-07-01 1000 /to 2023-07-01 1600
 event Valorant Comp /from 2025-04-01 0800 /to 2025-04-10 1600
 ```
 
@@ -156,9 +156,9 @@ Format: `find KEYWORD`
 - If no matches are found `Duke Error: No tasks fit the filter KEYWORD` is returned
 
 Examples:
-```ruby
+```js
 find Book
-find event
+find Event
 ```
 
 
