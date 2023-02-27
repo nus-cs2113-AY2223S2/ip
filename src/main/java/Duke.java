@@ -11,7 +11,7 @@ public class Duke {
         System.out.println("How can I help you today?\n____________________________________________________________");
 
         // store in array
-        String[] list = new String[100];
+        String[] todos = new String[100];
         // num of items in list
         int num;
         num = 0;
@@ -25,60 +25,50 @@ public class Duke {
         while (!(cmd.equals("bye"))) {
             if (cmd.equals("list")) {
                 System.out.println("____________________________________________________________");
-                System.out.println("Here are the tasks in your list:");
 
                 // store in list
                 for (int i = 1; num >= i; i += 1) {
-                    System.out.println(i + ". " + list[i - 1]);
+                    System.out.println(i + ". " + todos[i - 1]);
                 }
 
                 System.out.println("____________________________________________________________");
                 // read next command
-                cmd = in.nextLine();
+                //cmd = in.nextLine();
             } else {
-                String arr[] = cmd.split(" ",2);
+                String list[] = cmd.split(" ",2);
 
-                // marking test as done
-                if (arr[0].equals("unmark")) {
-                    int x;
-                    x = Integer.parseInt(arr[1]);
-                    String val[] = list[x-1].split("] ");
-                    list[x-1] = "[ ] " + val[1];
-
+                if (list[0].equals("unmark")) {
+                    int pt;
+                    pt = Integer.parseInt(list[1]);
+                    String command[] = todos[pt-1].split("] ");
+                    todos[pt-1] = "[ ] " + command[1];
                     System.out.println("____________________________________________________________");
-                    System.out.println("Ok! Marking this task as not done yet");
-                    System.out.println(list[x-1]);
+                    System.out.println("This task is marked as undone:");
+                    System.out.println(todos[pt-1]);
                     System.out.println("____________________________________________________________");
-
-
-
-                } else if (arr[0].equals("mark")) {
-                    int x;
-                    x = Integer.parseInt(arr[1]);
-
-                    String val[] = list[x-1].split("] ");
-                    list[x-1] = "[X] " + val[1];
+                } else if (list[0].equals("mark")) {
+                    int pt;
+                    pt = Integer.parseInt(list[1]);
+                    String command[] = todos[pt-1].split("] ");
+                    todos[pt-1] = "[X] " + command[1];
                     System.out.println("____________________________________________________________");
-                    System.out.println("Ok! Marking this task as done");
-                    System.out.println(list[x-1]);
+                    System.out.println("This task is marked as done:");
+                    System.out.println(todos[pt-1]);
+                    System.out.println("____________________________________________________________");
+                } else {
+                    System.out.println("____________________________________________________________");
+                    System.out.println("added: " + cmd);
                     System.out.println("____________________________________________________________");
 
-
-
-
+                    todos[num] = "[ ] " + cmd;
+                    num += 1;
                 }
-                System.out.println("____________________________________________________________");
-                System.out.println("added: " + cmd);
-                System.out.println("____________________________________________________________");
-
-                list[num] = cmd;
-                num += 1;
-                // read next command
-                cmd = in.nextLine();
             }
+            // read next command
+            cmd = in.nextLine();
         }
 
-        System.out.println("____________________________________________________________\nBye! Hope to see you again soon!");
+        System.out.println("____________________________________________________________\nBye! See you soon!");
         System.out.println("____________________________________________________________");
     }
 }
