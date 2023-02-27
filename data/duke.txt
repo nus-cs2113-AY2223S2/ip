@@ -1,2 +1,3 @@
-T , EE2211 , false
-T , CS2113 Lecture , false
+T , CS2113 Quiz 7 , false
+D , EE2026 Graded Lab , false , Friday 6pm
+E , CG2023 Mid Terms , false , Thursday 2 pm , Thursday 3 pm
