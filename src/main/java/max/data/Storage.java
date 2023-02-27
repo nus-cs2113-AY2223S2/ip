@@ -85,10 +85,10 @@ public class Storage {
 
     /**
      * Takes in a list of Tasks to tokenize into a string <br>
-     *
+     * <p>
      * Each task will be tokenized in this format: <br>
      * {Label} -- {isDone} -- {description} { -- [otherArgs] ...} <br>
-     *
+     * <p>
      * The command validator filters out rogue usage of '--' between words. <br>
      * This guarantees that all our task inputs can be properly delimited by '--' <br>
      *
@@ -140,7 +140,7 @@ public class Storage {
 
     /**
      * Processes a tokenized string and formats it into a list of Tasks <br>
-     *
+     * <p>
      * The Tasks will be loaded on a best-effort basis. <br>
      * Instead of throwing an exception, problematic taskStrings will be <i>skipped</i>. <br>
      * All problematic tokens will be printed afterwards for the user's information.
