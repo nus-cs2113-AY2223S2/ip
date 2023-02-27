@@ -1,13 +1,11 @@
+import Exceptions.FileParseReadingException;
 import Exceptions.IncompleteInputException;
 import Tasks.Deadline;
 import Tasks.Event;
 import Tasks.Task;
 import Tasks.ToDo;
+import storage.Storage;
 import java.io.FileNotFoundException;
-import java.io.File;
-import java.io.FileWriter;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 
 import java.util.ArrayList;
@@ -71,8 +69,9 @@ public class Duke {
     final static String PREFIX_MISSING_DESCRIPTION_ERROR = "\nError in inputs!\n"
                                                          + "Exception occurred: java.lang.StringIndexOutOfBoundsException: ";
     final static String SUFFIX_MISSING_DESCRIPTION_ERROR = " is missing the task description!\n";
-    public static void printList(ArrayList<Task> l1, int currListIndex) {
-        int index;
+
+    //private static FilesMain files = new FilesMain();
+    public static void printList(ArrayList<Task> l1) {
         if (l1.size() == 0) {
             System.out.println('\n' + "MATE! \uD83D\uDE24 Your list is empty!" + '\n');
             return;
@@ -86,20 +85,50 @@ public class Duke {
         System.out.println();
     }
 
-    public static void printMarked(boolean isChanged, String icon, String description) {
+    public static void printMarked(boolean isChanged, Task t) {
         if (!isChanged) {
             System.out.println('\n' + "Task is originally marked as done." + '\n');
         } else {
             System.out.println('\n' + "Nice! I've marked this task as done:");
-            System.out.println("  [" + icon + "] " + description + '\n');
+            ToDo t1;
+            Deadline d1;
+            Event e1;
+            switch (t.getType()){
+            case "T":
+                t1 = (ToDo) t;
+                System.out.println("  " + t1 + '\n');
+                break;
+            case "D":
+                d1 = (Deadline) t;
+                System.out.println("  " + d1 + '\n');
+                break;
+            case "E":
+                e1 = (Event) t;
+                System.out.println("  " + e1 + '\n');
+            }
         }
     }
-    public static void printUnmarked(boolean isChanged, String icon, String description) {
+    public static void printUnmarked(boolean isChanged, Task t) {
         if (!isChanged) {
             System.out.println('\n' + "Task is originally marked as not done." + '\n');
         } else {
             System.out.println('\n' + "OK, I've marked this task as not done yet:");
-            System.out.println("  [" + icon + "] " + description + '\n');
+            ToDo t1;
+            Deadline d1;
+            Event e1;
+            switch (t.getType()){
+            case "T":
+                t1 = (ToDo) t;
+                System.out.println("  " + t1 + '\n');
+                break;
+            case "D":
+                d1 = (Deadline) t;
+                System.out.println("  " + d1 + '\n');
+                break;
+            case "E":
+                e1 = (Event) t;
+                System.out.println("  " + e1 + '\n');
+            }
         }
     }
 
@@ -122,7 +151,7 @@ public class Duke {
         return lineSpaced;
     }
     public static String[] parseDeadline(String description) throws IncompleteInputException {
-        String[] parsed = description.split(" /by");
+        String[] parsed = description.split(" /by ");
         if (parsed.length < 2 || parsed[1].isEmpty()) {
             throw new IncompleteInputException("deadline is missing \"BY\"!\n");
         }
@@ -134,25 +163,21 @@ public class Duke {
         if (parsed.length < 3) {
             throw new IncompleteInputException("event is missing either \"FROM\" or \"TO\"!\n");
         }
-        parsed[1] = parsed[1].substring(4);
+        parsed[1] = parsed[1].substring(5);
         if (parsed[1].isEmpty()) {
             throw new IncompleteInputException("event is missing \"FROM\"!\n");
         }
-        parsed[2] = parsed[2].substring(2);
+        parsed[2] = parsed[2].substring(3);
         if (parsed[2].isEmpty()) {
             throw new IncompleteInputException("event is missing \"TO\"!\n");
         }
         return parsed;
     }
 
-    public static void printLineSpaced(String [] line) {
-        for (String a : line) {
-            System.out.print(a + " ");
-        }
-    }
 
     public static void main(String[] args) {
 
+        Storage files = new Storage();
         System.out.println(WELCOME_MESSAGE);
         ArrayList<Task> tasksList = new ArrayList<>();
         Scanner in = new Scanner(System.in);
@@ -160,16 +185,25 @@ public class Duke {
         int taskListIndex, currTaskNumber;
         Task tempTask;
         String[] lineSpaced;
-        boolean isChanged = false;
+        boolean isChanged;
 
+        try {
+            tasksList = Storage.readFileContents();
+        } catch (FileNotFoundException e) {
+            System.out.println("\nError in finding file!");
+            System.out.println("Exception occurred: " + e);
+        } catch (FileParseReadingException fe) {
+            System.out.println("\nError in reading file!");
+            System.out.println("Exception occurred: " + fe);
+        }
         line = in.nextLine();
         lineSpaced = parseCommands(line);
-        currTaskNumber = 0;
+        currTaskNumber = tasksList.size();
         while(!lineSpaced[0].equals("bye")) {
             commandWord = lineSpaced[0];
             switch (commandWord) {
             case "list":
-                printList(tasksList, currTaskNumber);
+                printList(tasksList);
                 break;
             case "mark":
                 try {
@@ -185,7 +219,7 @@ public class Duke {
                         tasksList.get(taskListIndex).markAsDone();
                         isChanged = true;
                     }
-                    printMarked(isChanged, tasksList.get(taskListIndex).getStatusIcon(), tasksList.get(taskListIndex).getDescription());
+                    printMarked(isChanged, tasksList.get(taskListIndex));
                 } catch (NullPointerException nu) {
                     System.out.println(PREFIX_EMPTY_LIMIT_LIST_ERROR + commandWord + SUFFIX_EMPTY_LIMIT_LIST_ERROR);
                 } catch (IndexOutOfBoundsException ex) {
@@ -208,7 +242,7 @@ public class Duke {
                         tasksList.get(taskListIndex).markAsUndone();
                         isChanged = true;
                     }
-                    printUnmarked(isChanged, tasksList.get(taskListIndex).getStatusIcon(), tasksList.get(taskListIndex).getDescription());
+                    printUnmarked(isChanged, tasksList.get(taskListIndex));
                 } catch (NullPointerException nu) {
                     System.out.println(PREFIX_EMPTY_LIMIT_LIST_ERROR + commandWord + SUFFIX_EMPTY_LIMIT_LIST_ERROR);
                 } catch (IndexOutOfBoundsException ex) {
@@ -287,9 +321,16 @@ public class Duke {
             default:
                 System.out.println(UNRECOGNIZABLE_ERROR);
             }
+            Storage.saveToFiles(tasksList);
             line = in.nextLine();
             lineSpaced = parseCommands(line);
         }
+////        for debug printing saved file
+//        try {
+//            Storage.printFileContents();
+//        } catch (FileNotFoundException e) {
+//            throw new RuntimeException(e);
+//        }
         System.out.println('\n' + "Bye. Hope to see you again soon!");
     }
 }

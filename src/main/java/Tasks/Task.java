@@ -1,10 +1,14 @@
 package Tasks;
 
+import javax.swing.plaf.PanelUI;
+
 public class Task {
 
+    protected String type;
     protected String description;
     protected boolean isDone;
 
+    public String getType() { return type; }
     public String getDescription() {
         return description;
     }
@@ -15,9 +19,10 @@ public class Task {
 
 
     // class initialization
-    public Task(String description) {
+    public Task(String description, String type) {
         this.description = description;
         this.isDone = false;
+        this.type = type;
     }
 
     // class modifiers
@@ -33,6 +38,8 @@ public class Task {
     public String getStatusIcon() {
         return (isDone ? "X" : " ");
     }
+
+    public String getStatusFileIcon() { return (isDone ? "1" : "0"); }
 
     public String toString() {
         return '[' + getStatusIcon() + "] "+ description + " ";
