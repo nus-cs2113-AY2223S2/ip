@@ -52,6 +52,7 @@ public class Storage {
         }
         return taskToAdd;
     }
+
     public static ArrayList<Task> getData() throws IOException {
         ArrayList<Task> currentList = new ArrayList<>();
         File f = new File(filepath);
@@ -68,35 +69,24 @@ public class Storage {
         return currentList;
     }
 
-    public static String formatTask(ArrayList<Task> list) {
+    public static String getNumberIcon(Task task) {
+        if (task.getStatusIcon().equals("X")) {
+            return "1";
+        }
+        return "0";
+    }
+
+    public static String formatTask(ArrayList<Task> tasks) throws IOException {
         String text = null;
-        for (Task i : list) {
+        for (Task i : tasks) {
             if (i.getType().equals("todo")) {
-                text = "T" + " | ";
-                if (i.getStatusIcon().equals("X")) {
-                    text += "1";
-                } else {
-                    text += "0";
-                }
-                text += " | " + i.getDescription();
+                text = "T" + " | " + getNumberIcon(i) + " | " + i.getDescription();
             }
             if (i.getType().equals("deadline")) {
-                text = "D" + " | ";
-                if (i.getStatusIcon().equals("X")) {
-                    text += "1";
-                } else {
-                    text += "0";
-                }
-                text += " | " + i.getDescription() + " | " + i.getEnd();
+                text = "D" + " | " + getNumberIcon(i) + " | " + i.getDescription() + " | " + i.getEnd();
             }
             if (i.getType().equals("event")) {
-                text = "E" + " | ";
-                if (i.getStatusIcon().equals("X")) {
-                    text += "1";
-                } else {
-                    text += "0";
-                }
-                text += " | " + i.getDescription() + " | " + i.getStart() + "-" + i.getEnd();
+                text = "E" + " | " + getNumberIcon(i) + " | " + i.getDescription() + " | " + i.getStart() + "-" + i.getEnd();
             }
         }
         return text;
