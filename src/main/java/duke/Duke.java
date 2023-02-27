@@ -4,7 +4,6 @@ import duke.exceptions.EmptyCommandException;
 import duke.exceptions.UnknownCommandException;
 
 import java.io.IOException;
-import java.util.Scanner;
 
 public class Duke {
 
@@ -49,10 +48,7 @@ public class Duke {
     }
 
     private void starting() {
-        Scanner input = new Scanner(System.in);
-        String line = "";
-
-        line = input.nextLine();
+        String line = parser.getInput();
         while (!line.equals(EXIT_PROGRAM)) {
             try {
                 processInput(line);
@@ -69,16 +65,14 @@ public class Duke {
             } catch (IOException e) {
                 System.out.println(IOEXCEPTION_ERROR_MESSAGE);
             }
-            line = input.nextLine();
+            line = parser.getInput();
         }
     }
 
 
     private void processInput(String line) throws UnknownCommandException, IOException, EmptyCommandException {
-        String[] words = line.split(" ", 2);
-        String command = words[0];
-        // words[0] is the command, words[n] is the next few words
-        checkIfCommandEmpty(words);
+        String[] words = parser.splitCommandsIntoWords(line);
+        String command = words[0]; // words[0] is the command, words[n] is the next few words
         switch (command) {
         case TODO_COMMAND:
             Todo td = taskList.createTodo(words);
@@ -126,15 +120,5 @@ public class Duke {
         taskList.deleteTask(deleteIndex);
         ui.printDeleteTaskMessage(taskDescription, taskLeft);
     }
-
-    private static void checkIfCommandEmpty(String[] words) throws EmptyCommandException {
-        if (words[0].equals(LIST_COMMAND)) {
-            return;
-        }
-        if (words.length < 2 || words[1].equals("")) {
-            throw new EmptyCommandException();
-        }
-    }
-
 
 }
