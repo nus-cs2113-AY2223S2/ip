@@ -9,8 +9,6 @@ import keqing.tasks.ToDo;
 import java.util.ArrayList;
 
 import static keqing.Keqing.LINE;
-import static keqing.KeqingUI.echoAdd;
-import static keqing.KeqingUI.echoDelete;
 import static keqing.KeqingParser.isNumeric;
 import static keqing.tasks.Task.getTaskCount;
 
@@ -83,13 +81,14 @@ public class KeqingArrayList {
      * @throws IllegalInputException
      */
     public static void addToDo(String content) throws IllegalInputException {
+        KeqingUI ui = new KeqingUI();
         if (content.equals("todo")) {
             throw new IllegalInputException("Keqing doesn't understand what you actually want to do...");
         }
         else {
             ToDo toDoTask = new ToDo(content);
             tasks.add(toDoTask);
-            echoAdd();
+            ui.echoAdd();
         }
     }
 
@@ -100,6 +99,7 @@ public class KeqingArrayList {
      * @throws IllegalInputException
      */
     public static void addDeadline(String content) throws IllegalInputException {
+        KeqingUI ui = new KeqingUI();
         if (content.contains("/by")) {
             int indexOfBy = content.indexOf("/by");
             if (indexOfBy + 3 < content.length()) {
@@ -107,7 +107,7 @@ public class KeqingArrayList {
                 String by = content.substring(indexOfBy + 3).trim();
                 Deadline deadlineTask = new Deadline(description, by);
                 tasks.add(deadlineTask);
-                echoAdd();
+                ui.echoAdd();
             }
             else {
                 throw new IllegalInputException("Keqing doesn't think your input makes sense...");
@@ -125,6 +125,7 @@ public class KeqingArrayList {
      * @throws IllegalInputException
      */
     public static void addEvent(String content) throws IllegalInputException {
+        KeqingUI ui = new KeqingUI();
         if (content.contains("/from") && content.contains("/to")) {
             int indexOfFrom = content.indexOf("/from");
             int indexOfTo = content.indexOf("/to");
@@ -134,7 +135,7 @@ public class KeqingArrayList {
                 String to = content.substring(indexOfTo + 3).trim();
                 Event eventTask = new Event(description, from, to);
                 tasks.add(eventTask);
-                echoAdd();
+                ui.echoAdd();
             }
             else {
                 throw new IllegalInputException("Keqing doens't think your input makes sense...");
@@ -152,17 +153,20 @@ public class KeqingArrayList {
      * @throws IllegalInputException
      */
     public static void deleteTask(String content) throws IllegalInputException {
-        if (content.equals("all")) {
+        KeqingUI ui = new KeqingUI();
+        if (content.trim().equals("all")) {
             for (int i = 0; i < tasks.size(); i++) {
                 tasks.remove(i);
             }
+            Task.setTaskCount(0);
+            ui.echoDeleteAll();
         }
         if (isNumeric(content)) {
             int index = Integer.parseInt(content) - 1;    //switch to 0-based.
-            if (index < getTaskCount()) {
-                echoDelete(index);
-                tasks.remove(index);
+            if (index <= getTaskCount()) {
                 Task.setTaskCount(getTaskCount() - 1);
+                ui.echoDelete(index);
+                tasks.remove(index);
             }
             else {
                 throw new IllegalInputException("It's out of bound!!!");

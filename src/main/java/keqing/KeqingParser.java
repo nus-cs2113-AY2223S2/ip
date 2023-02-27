@@ -12,6 +12,7 @@ public class KeqingParser {
      * @throws IllegalInputException
      */
     public static void doCommand(String text) throws IllegalInputException {
+        KeqingUI ui = new KeqingUI();
         String[] splittedText = text.split(" ", 2);
         String command = splittedText[0];
         String content = splittedText[splittedText.length - 1];
@@ -20,7 +21,7 @@ public class KeqingParser {
             KeqingArrayList.printTaskList();
             break;
         case "menu":
-            KeqingUI.printMenu();
+            ui.printMenu();
             break;
         case "mark":
             //Fallthrough

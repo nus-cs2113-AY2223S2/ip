@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 public class KeqingStorage {
     private static final String filePath = "./data/Keqing.txt";
-    private static final String SEPERATOR = " ";
+    private static final String SEPERATOR = "/";
 
     /**
      * To delete the text file for storage.
@@ -98,14 +98,14 @@ public class KeqingStorage {
             else {
                 content += "0";
             }
-            content += (SEPERATOR + currentTask.getDescription() + SEPERATOR);
+            content += (SEPERATOR + currentTask.getDescription());
             ArrayList<String> attributes = new ArrayList<>();
             attributes = currentTask.returnAttribute();
             if (currentTask.getTaskType().equals("D")) {
-                content += (attributes.get(0));
+                content += (SEPERATOR + attributes.get(0));
             }
             if (currentTask.getTaskType().equals("E")) {
-                content += (attributes.get(0) + SEPERATOR + attributes.get(1));
+                content += (SEPERATOR + attributes.get(0) + SEPERATOR + attributes.get(1));
             }
             content += (System.lineSeparator());
         }

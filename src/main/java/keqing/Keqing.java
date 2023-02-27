@@ -34,7 +34,8 @@ public class Keqing {
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
-        KeqingUI.printStartingGreet();
+        KeqingUI ui = new KeqingUI();
+        ui.printStartingGreet();
         try {
             KeqingArrayList.tasks = KeqingStorage.loadFile();
         } catch (IOException e) {
@@ -44,6 +45,6 @@ public class Keqing {
             KeqingStorage.deleteStorage();
         }
         loopCommand();
-        KeqingUI.printExitingGreet();
+        ui.printExitingGreet();
     }
 }
