@@ -15,6 +15,11 @@ public class Storage {
     public static final String FILEPATH = "duke.txt";
     public static final String LINE = "    ____________________________________________________________\n";
 
+    /**
+     * Takes the list of tasks the user has input and writes it to the data file at the default file path.
+     * @param tasks the list of tasks the user has stored.
+     * @throws IOException The exception will be thrown if there are errors when trying to write to the data file.
+     */
     public static void writeToFile(ArrayList<Task> tasks) throws IOException {
         BufferedWriter outputWriter;
         outputWriter = new BufferedWriter(new FileWriter(FILEPATH));
@@ -32,6 +37,13 @@ public class Storage {
             System.out.println("Something went wrong: " + e.getMessage());
         }
     }
+
+    /**
+     * Reads data stored in the data.txt file, then processes and stores the data in
+     * the ArrayList<Task></Task> tasks.
+     * @param tasks the list of tasks the user has stored.
+     * @throws IOException The exception will be thrown if the data file cannot be found or read.
+     */
     private static void readFile(ArrayList<Task> tasks) throws IOException {
         String line;
         File f = new File(FILEPATH);
@@ -65,6 +77,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Checks if a data file exists in the default file path. If not a new data file will be
+     * created at the default file path.
+     * @throws IOException The exception will be thrown if there is errors in creating the new file.
+     */
     private static void createFile() throws IOException {
         File file = new File(FILEPATH);
         if (file.createNewFile()) {

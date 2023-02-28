@@ -13,6 +13,10 @@ public class Duke {
     static ArrayList<Task> tasks = new ArrayList<>();
     public static final String LINE = "    ____________________________________________________________\n";
 
+    /**
+     * Processes inputs from user and executes command based on the input.
+     * @param line a line input by the user that contains commands and descriptions.
+     */
     private static void processCommands(String line) {
         while (!line.equals("bye")) {
             String[] words = line.split(" ", 2);
@@ -69,6 +73,10 @@ public class Duke {
         }
     }
 
+    /**
+     * Initialises an ui to read user commands and to print messages to the terminal.
+     * Initialises a storage space to store user inputs as well as reads past inputs.
+     */
     private void run(){
         ui = new Ui();
         storage = new Storage();
