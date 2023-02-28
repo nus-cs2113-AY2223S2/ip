@@ -5,6 +5,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Storage {
+    /**
+     * Writes the tasks in the tasks list to a file.
+     * Each task is written in a line in the following format:
+     * type icon/completion status/description/by or from-to (depending on the task type)
+     */
     public static void writeToFile() {
         try {
             FileWriter writer = new FileWriter("tasks.txt");
@@ -40,6 +45,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Loads the tasks from a file and updates the tasks list.
+     * Each line in the file represents a task and is in the format:
+     * type icon/completion status/description/by or from-to (depending on the task type)
+     */
     public static void loadFromFile() {
         ArrayList<Task> tasksList = new ArrayList<>();
         try {
