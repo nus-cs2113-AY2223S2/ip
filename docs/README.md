@@ -24,8 +24,8 @@
 2. Download the latest JAR file.
 3. Copy the file to the folder you want to use as the home folder for Duke.
 4. Open a command terminal, cd into the folder you put the jar file in, and use the java -jar ip.jar command to run the application.
-   <br/>
-   <br/>
+<br/><br/>
+   
 ## Features 
 <br/><br/>
 ### Add a new Todo: `todo`
