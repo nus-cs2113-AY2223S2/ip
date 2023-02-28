@@ -2,7 +2,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Storage {
-    private FileReading fileReading;
+    private static FileReading fileReading;
 
     public void load() {
         try {
@@ -12,7 +12,7 @@ public class Storage {
         }
     }
 
-    public void write() {
+    public static void write() {
         try {
             fileReading.writeToFile();
         } catch (IOException e) {

@@ -23,8 +23,7 @@ public class Task {
     }
 
     public void markAsDone(String action) {
-        System.out.println(line);
-        if (action.startsWith("unmark")) {
+        if (action.equals("unmark")) {
             this.isDone = false;
             //System.out.println("Ok, I've marked this task as not done yet:");
         } else {
@@ -32,8 +31,8 @@ public class Task {
             //System.out.println("Nice! I've marked this task as done:");
         }
         //System.out.println("  [" + getStatusIcon() + "] " + description);
-        toString();
-        System.out.println(line);
+//        toString();
+//        System.out.println(line);
     }
 
 //    public void getTask(String text) throws NullPointerException {
@@ -44,7 +43,7 @@ public class Task {
 //            this.description = text.substring(7);
 //            this.type = text.substring(1, 2); //2nd char in string
 //            if (this.type == "T") {
-//                Task t = new Todo(description);
+//                Task t = new //Todo(description);
 //            } else if (this.type == "E") {
 //                Task t = new Event;
 //            }
