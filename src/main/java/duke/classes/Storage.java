@@ -5,9 +5,12 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static duke.classes.Duke.addTask;
-import static duke.classes.Duke.markTask;
-import static duke.classes.Duke.unmarkTask;
+//import static duke.classes.Duke.addTask;
+//import static duke.classes.Duke.markTask;
+//import static duke.classes.Duke.unmarkTask;
+import static duke.classes.Tasklist.addTask;
+import static duke.classes.Tasklist.markTask;
+import static duke.classes.Tasklist.unmarkTask;
 
 public class Storage {
     protected static String filepath;

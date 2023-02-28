@@ -33,7 +33,15 @@ public class Parser {
         }
     }
 
-    public Integer getOrder(String input) {
+    public Integer getOrderMark(String input) {
+        return Integer.valueOf(input.substring(5, input.length()));
+    }
+
+    public Integer getOrderUnmark(String input) {
+        return Integer.valueOf(input.substring(7, input.length()));
+    }
+
+    public Integer getOrderDelete(String input) {
         return Integer.valueOf(input.substring(7, input.length()));
     }
 

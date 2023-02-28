@@ -20,25 +20,7 @@ public class Duke {
     }
 
     private static ArrayList<Task> listOfTask = new ArrayList<Task>();
-
-    static void addTask(Task task) {
-        listOfTask.add(task);
-    }
-
-    static void markTask(Task task) {
-        task.isDone = true;
-    }
-
-    static void unmarkTask(Task task) {
-        task.isDone = false;
-    }
-    private static void printTasks() {
-        int order = 1;
-        for (int i = 0; i < listOfTask.size(); i++) {
-            System.out.println(order + "." + listOfTask.get(i));
-            order++;
-        }
-    }
+    static Tasklist tasklist = new Tasklist(listOfTask);
 
     public static void printFile(String filePath) throws FileNotFoundException {
         File file = new File(filePath);
@@ -63,28 +45,28 @@ public class Duke {
                 } else {
                     task.isDone = false;
                 }
-                addTask(task);
+                tasklist.addTask(task);
             } else if (type.equals("D")) {
                 String info = temp.substring(7, temp.indexOf("("));
                 String timeBy = temp.substring(temp.indexOf("(")+1, temp.length() - 1);
                 Deadline task = new Deadline(info, timeBy);
                 if (status.equals("X")) {
-                    markTask(task);
+                    tasklist.markTask(task);
                 } else {
-                    unmarkTask(task);
+                    tasklist.unmarkTask(task);
                 }
-                addTask(task);
+                tasklist.addTask(task);
             } else if (type.equals("E")) {
                 String info = temp.substring(7,temp.indexOf("("));
                 String timeFrom = temp.substring(temp.indexOf("(")+1, temp.lastIndexOf(","));
                 String timeBy = temp.substring(temp.lastIndexOf(",")+1, temp.length() - 1);
                 Event task = new Event(info, timeFrom, timeBy);
                 if (status.equals("X")) {
-                    markTask(task);
+                    tasklist.markTask(task);
                 } else {
-                    unmarkTask(task);
+                    tasklist.unmarkTask(task);
                 }
-                addTask(task);
+                tasklist.addTask(task);
             }
         }
     }
@@ -121,8 +103,6 @@ public class Duke {
         int count = 0;
         String filePath = "src/duke_list.txt";
         foundationList(filePath, listOfTask);
-        //Storage storage = new Storage(filePath, listOfTask);
-        //storage.getStorage();
 
         for (int i = 0; i < listOfTask.size(); i++) {
             count++;
@@ -148,37 +128,37 @@ public class Duke {
                 break;
             } else if (Objects.equals(parser.getInputType(), "list")) {
                 ui.showTasksMessage();
-                printTasks();
+                tasklist.printTasks();
 
             } else if (Objects.equals(parser.getInputType(), "mark")) {
-                    if(parser.getOrder(input) - 1 >= count) {
+                    if(parser.getOrderMark(input) - 1 >= count) {
                         ui.showMarkTaskWarning();
                     } else {
-                        Task task = listOfTask.get(parser.getOrder(input) - 1);
+                        Task task = listOfTask.get(parser.getOrderMark(input) - 1);
                         InputUi inputUi = new InputUi(task, count);
-                        markTask(task);
-                        listOfTask.set(parser.getOrder(input) - 1, task);
+                        tasklist.markTask(task);
+                        listOfTask.set(parser.getOrderMark(input) - 1, task);
                         updateFile(filePath, listOfTask);
                         inputUi.showMarkedTask();
                     }
             } else if (Objects.equals(parser.getInputType(), "unmark")) {
-                    if(parser.getOrder(input) - 1 >= count) {
+                    if(parser.getOrderUnmark(input) - 1 >= count) {
                         ui.showUnmarkTaskWarning();
                     } else {
-                        Task task = listOfTask.get(parser.getOrder(input) - 1);
+                        Task task = listOfTask.get(parser.getOrderUnmark(input) - 1);
                         InputUi inputUi = new InputUi(task, count);
-                        unmarkTask(task);
-                        listOfTask.set(parser.getOrder(input) - 1, task);
+                        tasklist.unmarkTask(task);
+                        listOfTask.set(parser.getOrderUnmark(input) - 1, task);
                         updateFile(filePath, listOfTask);
                         inputUi.showUnmarkedTask();
                     }
             } else if (Objects.equals(parser.getInputType(), "delete")) {
-                if(parser.getOrder(input) - 1 >= count) {
+                if(parser.getOrderDelete(input) - 1 >= count) {
                     ui.showDeleteTaskWarning();
                 } else {
-                    InputUi inputUi = new InputUi(listOfTask.get(parser.getOrder(input) - 1), count - 1);
+                    InputUi inputUi = new InputUi(listOfTask.get(parser.getOrderDelete(input) - 1), count - 1);
                     inputUi.showDeletedTask();
-                    listOfTask.remove(parser.getOrder(input) - 1);
+                    listOfTask.remove(parser.getOrderDelete(input) - 1);
                     updateFile(filePath, listOfTask);
                     count--;
                     inputUi.showRemainingTasks();
@@ -187,7 +167,7 @@ public class Duke {
                 if (Objects.equals(parser.getInputType(), "todo")) {
                     Todo task = new Todo(parser.getTodoInfo(input));
                     task.isDone = false;
-                    addTask(task);
+                    tasklist.addTask(task);
                     updateFile(filePath, listOfTask);
                     InputUi inputUi = new InputUi(task, count);
                     inputUi.showTaskAdded();
@@ -195,7 +175,7 @@ public class Duke {
                 } else if (Objects.equals(parser.getInputType(), "deadline")) {
                     Deadline task = new Deadline(parser.getDeadlineInfo(input), parser.getDeadlineTimeBy(input));
                     task.isDone = false;
-                    addTask(task);
+                    tasklist.addTask(task);
                     updateFile(filePath, listOfTask);
                     InputUi inputUi = new InputUi(task, count);
                     inputUi.showTaskAdded();
@@ -203,7 +183,7 @@ public class Duke {
                 } else if (Objects.equals(parser.getInputType(), "event")) {
                     Event task = new Event(parser.getEventInfo(input), parser.getEventTimeFrom(input), parser.getEventTimeBy(input));
                     task.isDone = false;
-                    addTask(task);
+                    tasklist.addTask(task);
                     updateFile(filePath, listOfTask);
                     InputUi inputUi = new InputUi(task, count);
                     inputUi.showTaskAdded();
