@@ -9,6 +9,7 @@ import tusky.storage.Storage;
 import tusky.tasks.TaskList;
 import tusky.ui.Ui;
 
+import java.io.IOException;
 import java.nio.file.NoSuchFileException;
 
 import java.io.FileNotFoundException;
@@ -35,7 +36,7 @@ public class Tusky {
                 // something went wrong when parsing the command parameters
                 ui.showInvalidParameters();
             } catch (KeyNotFoundException e) {
-                ui.showKeyNotFound();
+                ui.showKeyNotFound(e.getMessage());
             } catch (EmptyDescriptionException e) {
                 ui.showEmptyDescription(e);
             } catch (IndexOutOfBoundsException e) {
@@ -44,6 +45,7 @@ public class Tusky {
                 ui.showInvalidIndex();
             } catch (Exception e) {
                 ui.showUnknownException(e);
+                e.printStackTrace();
             } finally {
                 ui.showLine();
             }
@@ -54,7 +56,7 @@ public class Tusky {
 
     public static void main (String[] args) {
         ui = new Ui();
-        storage = new Storage("data/tusky.json");
+        storage = new Storage("data/tusky.json", ui);
 
         ui.showLine();
         ui.showWelcome();
@@ -65,6 +67,10 @@ public class Tusky {
             tasks = new TaskList();
             storage.writeFile(tasks);
             ui.showFileCreated();
+        } catch (IOException e){
+            ui.showFileLoadError();
+            tasks = new TaskList();
+            storage.writeFile(tasks);
         }
         ui.showLine();
 

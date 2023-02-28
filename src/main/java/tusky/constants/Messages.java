@@ -23,9 +23,10 @@ public enum Messages {
     ERR_UNKNOWN_COMMAND(" Sorry I don't recognise that command."),
     ERR_UNKNOWN_EXCEPTION(" Something went wrong: "),
     ERR_EMPTY_TASK_DESCRIPTION(" The body of a %s cannot be empty!\n"),
-    ERR_INVALID_PARAMETERS(" Sorry something is wrong with your input, please try again\n");
+    ERR_INVALID_PARAMETERS(" Sorry something is wrong with your input, please try again\n"),
+    ERR_INVALID_DATE(" Error: Task \"%s\" had an invalid date, defaulting to current time\n"),
 
-
+    ERR_LOADING_FILE(" Something went wrong while reading from the file");
 
     private final String text;
 
