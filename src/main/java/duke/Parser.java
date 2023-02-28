@@ -8,7 +8,7 @@ import exception.InvalidTaskNumberException;
 
 public class Parser {
 
-    private Ui ui = new Ui();
+    private final Ui ui = new Ui();
 
     public void processCommand(String input, TaskList taskList) throws CommandNotRecognisedException, IllegalCharacterException {
 

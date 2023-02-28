@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class TaskList {
 
-    private Ui ui = new Ui();
+    private final Ui ui = new Ui();
     public ArrayList<Task> tasks = new ArrayList<>();
 
 
