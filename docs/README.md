@@ -103,7 +103,7 @@ Deletes a specified task from the current task list.
 
 Format: `delete INDEX`
 
- > :bulb: **Tip:** If you are unsure of the index of the task to be deleted, use the `list` command first to obtain the index.
+ > **Tip:** If you are unsure of the index of the task to be deleted, use the `list` command first to obtain the index.
 
 Example: 
 * `delete 1`
@@ -144,9 +144,9 @@ Here are the matching tasks in your list:
 1.  [E][ ] complete CS2113 assignment (from: 26/02/2023 9pm to: 27/02/2023 10pm)
 2.  [E][ ] CS2113 tutorial (from: 3pm to: 4pm)
 ```
- > :bulb: **Tip:** The search is NOT case-sensitive. `cs` will recognise `CS` as shown above.
+ > **Tip:** The search is NOT case-sensitive. `cs` will recognise `CS` as shown above.
  
- > :memo: **Note:** The keyword to filter on may contain more than 1 word. For example, `CS 2113` is allowed.
+ > **Note:** The keyword to filter on may contain more than 1 word. For example, `CS 2113` is allowed.
  
  <br/><br/>
 ### Marking a task as done: `mark`
