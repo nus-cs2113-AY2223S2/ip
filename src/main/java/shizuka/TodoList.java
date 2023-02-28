@@ -13,6 +13,7 @@ public class TodoList {
     static final String BY_COMMAND = " /by ";
     static final String FROM_COMMAND = " /from ";
     static final String TO_COMMAND = " /to ";
+    static final String SPECIFIC_ITEMS = "Here are the items you are looking for. \n";
     private int numberOfTasks;
     private final ArrayList<Todo> todos;
 
@@ -122,4 +123,19 @@ public class TodoList {
         this.todos.add(new Event(args));
         numberOfTasks += 1;
     }
+
+    public void find(String keyword) {
+        ArrayList<Integer> foundItems = new ArrayList<Integer>();
+        for (int i = 0; i < numberOfTasks; i += 1) {
+            if (todos.get(i).description.contains(keyword)) {
+                foundItems.add(i);
+            }
+        }
+        System.out.print(LINE_BREAK + SPECIFIC_ITEMS + LINE_BREAK);
+        for (int index : foundItems) {
+            System.out.println(index + 1 + "." + this.todos.get(index).printTask());
+        }
+        System.out.print(LINE_BREAK);
+    }
+
 }
