@@ -1,6 +1,7 @@
 package tusky.ui;
 
 import tusky.constants.Messages;
+import tusky.exceptions.EmptyDescriptionException;
 import tusky.tasks.Task;
 import tusky.tasks.TaskList;
 
@@ -82,8 +83,8 @@ public class Ui {
     }
 
     // Errors
-    public void showEmptyDescription () {
-        println(Messages.ERR_EMPTY_TASK_DESCRIPTION.toString());
+    public void showEmptyDescription (EmptyDescriptionException e) {
+        printf(e.getMessage());
     }
 
     public void showUnknownCommand () {
@@ -97,11 +98,19 @@ public class Ui {
         println(Messages.ERR_INVALID_PARAMETERS.toString());
     }
 
-    public void showKeyNotFound () {
-        println(Messages.ERR_KEY_NOT_FOUND.toString());
+    public void showKeyNotFound (String message) {
+        println(message);
     }
     public void showUnknownException (Exception e) {
         println(Messages.ERR_UNKNOWN_EXCEPTION + e.getMessage());
+        e.printStackTrace();
+    }
+
+    public void showInvalidDate(String description){
+        printf(Messages.ERR_INVALID_DATE.toString(), description);
+    }
+    public void showFileLoadError(){
+        println(Messages.ERR_LOADING_FILE.toString());
     }
 
     @Override

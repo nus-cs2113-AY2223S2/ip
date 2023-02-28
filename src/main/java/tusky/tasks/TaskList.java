@@ -2,6 +2,7 @@ package tusky.tasks;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Collections;
 
 public class TaskList {
     private final ArrayList<Task> tasks;
@@ -12,6 +13,8 @@ public class TaskList {
 
     public TaskList(ArrayList<Task> tasks) {
         this.tasks = Objects.requireNonNullElseGet(tasks, ArrayList::new);
+        // remove all null entries in the list
+        this.tasks.removeAll(Collections.singleton(null));
     }
 
     public ArrayList<Task> getTasks() {
@@ -57,5 +60,12 @@ public class TaskList {
             }
         }
         return foundTasks;
+    }
+
+    @Override
+    public String toString () {
+        return "TaskList{" +
+                "tasks=" + tasks +
+                '}';
     }
 }

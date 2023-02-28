@@ -24,7 +24,7 @@ public class Parser {
             throw new IllegalArgumentException(Messages.ERR_UNKNOWN_COMMAND.toString());
         }
         if (inputs.length > 1) {
-            String[] args = inputs[1].split("/");
+            String[] args = inputs[1].split(" /");
             body = args[0].trim();
             for (int i = 1; i < args.length; i++) {
                 String[] words = args[i].split(" ", 2);
@@ -71,8 +71,8 @@ public class Parser {
 
         case DEADLINE:
             try {
-                if (!valueMap.containsKey("to")) {
-                    throw new KeyNotFoundException("to");
+                if (!valueMap.containsKey("by")) {
+                    throw new KeyNotFoundException("by");
                 }
                 return new AddCommand(new Deadline("false", body, valueMap.get("by")));
             } catch (EmptyDescriptionException e) {
