@@ -2,12 +2,11 @@ package task;
 
 import java.util.ArrayList;
 import exceptions.DukeException;
-import task.Task;
 
 public class TaskList {
-    private static String LINE = "____________________________________________________________";
-    private static String errorMessage = "☹ OOPS!!! I'm sorry, but I don't know what that means :-(";
-    private static String todoError = "☹ OOPS!!! The description of a todo cannot be empty.";
+    private static final String LINE = "____________________________________________________________";
+    private static final String errorMessage = "☹ OOPS!!! I'm sorry, but I don't know what that means :-(";
+    private static final String todoError = "☹ OOPS!!! The description of a todo cannot be empty.";
     public static ArrayList<Task> list;
 
     public TaskList() {
@@ -36,6 +35,7 @@ public class TaskList {
         System.out.println("What!?!? OK, I've marked this task as not done yet:");
         System.out.println("[" + list.get(index).getStatusIcon() + "] " + list.get(index).description);
     }
+
     public static void addTodo(String input) throws DukeException {
         try {
             Todo task = new Todo(input);
@@ -109,6 +109,21 @@ public class TaskList {
             System.out.println(LINE);
         } else {
             System.out.println("Here are the tasks in your list:");
+            for (int i = 0; i < list.size(); i++) {
+                System.out.println((i+1) + "." + list.get(i).toString());
+            }
+            System.out.println(LINE);
+        }
+    }
+
+    public static void loadSaveList() {
+        System.out.println(LINE);
+        int numTask = list.size();
+        if (numTask == 0) {
+            System.out.println("No saved task recorded");
+            System.out.println(LINE);
+        } else {
+            System.out.println("Here are the tasks in your save list:");
             for (int i = 0; i < list.size(); i++) {
                 System.out.println((i+1) + "." + list.get(i).toString());
             }

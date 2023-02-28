@@ -8,11 +8,10 @@ import java.io.IOException;
 import java.util.Scanner;
 import static storage.DataParser.*;
 import static task.TaskList.*;
+import static ui.UI.*;
 
 
 public class TaskStorage {
-    private static final String loadSaveDataERROR = "LOAD SAVE DATA ERROR";
-    private static final String writeSaveDataERROR = "WRITE SAVE DATA ERROR";
     public static String dataPath;
     private static FileWriter dataFile;
 
@@ -41,7 +40,7 @@ public class TaskStorage {
             }
             dataFile.close();
         } catch (IOException e) {
-            System.out.println(writeSaveDataERROR);
+            writeSaveDataERROR();
         }
     }
 
@@ -61,10 +60,11 @@ public class TaskStorage {
                         parseEvent(data);
                     }
                 }
-                printList();
+                greet();
+                loadSaveList();
             }
         } catch (IOException e) {
-            System.out.println(loadSaveDataERROR);
+            loadSaveDataERROR();
         }
     }
 }

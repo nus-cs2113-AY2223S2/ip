@@ -7,6 +7,7 @@ public class Deadline extends Task{
     private String getDate() {
         return this.description.split("/by")[1];
     }
+
     private String getTask() {
         return this.description.split("/by")[0].split(" ",2)[1];
     }

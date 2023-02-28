@@ -7,9 +7,11 @@ public class Event extends Task {
     private String getStartEvent() {
         return this.description.split("/from")[1].split("/")[0];
     }
+
     private String getEndEvent() {
         return this.description.split("/from")[1].split("/to")[1];
     }
+
     private String getTask() {
         return this.description.split("/from")[0].split(" ",2)[1];
     }
