@@ -59,14 +59,14 @@ public class Storage {
                 TaskList.addToList(todo);
             } else if (command.matches("^deadline.*$")) {
                 try {
-                    Deadline deadline = TaskList.createDeadline(command, isDone);
+                    Deadline deadline = TaskList.createDeadline(command, isDone, true);
                     TaskList.addToList(deadline);
                 } catch (Exception e) {
                     System.out.println("ERROR");
                 }
             } else {
                 try {
-                    Event event = TaskList.createEvent(command, isDone);
+                    Event event = TaskList.createEvent(command, isDone, true);
                     TaskList.addToList(event);
                 } catch (Exception e) {
                     System.out.println("ERROR");
@@ -80,24 +80,24 @@ public class Storage {
         try {
             FileWriter writer = new FileWriter(FILE_PATH);
             for (Task task : tasks) {
-                String class_name = task.getClass().getName();
+                String className = task.getClass().getName();
                 String done;
                 if (task.isDone()) {
                     done = "X";
                 } else {
                     done = "N";
                 }
-                if (class_name.equals("ChatTPG.ToDo")) {
+                if (className.equals("ChatTPG.ToDo")) {
                     writer.write(done + "todo " + task.getDescription() + "\n");
-                } else if (class_name.equals("ChatTPG.Deadline")) {
+                } else if (className.equals("ChatTPG.Deadline")) {
                     Deadline deadline = (Deadline) task;
                     writer.write(done + "deadline " + deadline.getDescription()
-                                    + " /by " + deadline.getBy() + "\n");
+                                    + " /by  " + deadline.getBy() + "\n");
                 } else {
                     Event event = (Event) task;
                     writer.write(done + "event " + event.getDescription()
-                                    + " /from " + event.getFrom()
-                                    + " /to " + event.getTo() + "\n");
+                                    + " /from  " + event.getFrom()
+                                    + " /to  " + event.getTo() + "\n");
                 }
             }
             writer.close();

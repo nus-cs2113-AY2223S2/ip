@@ -5,40 +5,39 @@ import java.util.ArrayList;
 public class TaskList {
 
     private static ArrayList<Task> tasks = new ArrayList<Task>();
-    private static int task_count = 0;
+    private static int taskCount = 0;
 
     public static ToDo createToDo(String command, boolean isDone) {
         ToDo todo = new ToDo(command.substring(5), isDone);
         return todo;
     }
 
-    public static Deadline createDeadline(String command, boolean isDone)
+    public static Deadline createDeadline(String command, boolean isDone, boolean processed)
             throws InvalidDateFormat {
-        int separator_idx = command.indexOf("/by");
-        String description = command.substring(9, separator_idx - 1);
-        String by = command.substring(separator_idx + 5);
-        String end = DateTimeParser.processDateTime(by);
+        int separatorIndex = command.indexOf("/by");
+        String description = command.substring(9, separatorIndex - 1);
+        String by = command.substring(separatorIndex + 5);
+        String end = DateTimeParser.processDateTime(by, processed);
         Deadline deadline = new Deadline(description, isDone, end);
         return deadline;
     }
 
-    public static Event createEvent(String command, boolean isDone)
+    public static Event createEvent(String command, boolean isDone, boolean processed)
             throws InvalidDateFormat, InvalidStartEnd {
-        int from_idx = command.indexOf("/from");
-        int to_idx = command.indexOf("/to");
-        String description = command.substring(6, from_idx - 1);
-        String from = command.substring(from_idx + 7, to_idx - 1);
-        String to = command.substring(to_idx + 5);
-        String begin = DateTimeParser.processDateTime(from);
-        String end = DateTimeParser.processDateTime(to);
-        DateTimeParser.verifyDateInterval(from, to);
+        int fromIndex = command.indexOf("/from");
+        int toIndex = command.indexOf("/to");
+        String description = command.substring(6, fromIndex - 1);
+        String from = command.substring(fromIndex + 7, toIndex - 1);
+        String to = command.substring(toIndex + 5);
+        String begin = DateTimeParser.processDateTime(from, processed);
+        String end = DateTimeParser.processDateTime(to, processed);
         Event event = new Event(description, isDone, begin, end);
         return event;
     }
 
     public static void addToList(Task task) {
         tasks.add(task);
-        task_count++;
+        taskCount++;
         Storage.saveData(tasks);
     }
 
@@ -49,40 +48,40 @@ public class TaskList {
     }
 
     public static void displayNumberOfTasks() {
-        if (task_count == 1) {
+        if (taskCount == 1) {
             System.out.println("Now you have 1 task in the list.");
         } else {
-            System.out.printf("Now you have %d tasks in the list.\n", task_count);
+            System.out.printf("Now you have %d tasks in the list.\n", taskCount);
         }
     }
 
-    public static void markTask(int task_number) {
-        tasks.get(task_number).setDone(true);
+    public static void markTask(int taskNumber) {
+        tasks.get(taskNumber).setDone(true);
         System.out.println("Nice! I've marked this task as done:");
-        System.out.println(tasks.get(task_number).toString());
+        System.out.println(tasks.get(taskNumber).toString());
         Storage.saveData(tasks);
     }
 
-    public static void unmarkTask(int task_number) {
-        tasks.get(task_number).setDone(false);
+    public static void unmarkTask(int taskNumber) {
+        tasks.get(taskNumber).setDone(false);
         System.out.println("OK, I've marked this task as not done yet:");
-        System.out.println(tasks.get(task_number).toString());
+        System.out.println(tasks.get(taskNumber).toString());
         Storage.saveData(tasks);
     }
 
-    public static void deleteTask(int task_number) {
-        String description = tasks.get(task_number).toString();
-        tasks.remove(task_number);
+    public static void deleteTask(int taskNumber) {
+        String description = tasks.get(taskNumber).toString();
+        tasks.remove(taskNumber);
         System.out.println("Noted. I've removed this task:");
         System.out.println(description);
-        task_count--;
+        taskCount--;
         displayNumberOfTasks();
         Storage.saveData(tasks);
     }
 
     public static void listTasks() {
         System.out.println("Here are the tasks in your list:");
-        for (int idx = 0; idx < task_count; idx++) {
+        for (int idx = 0; idx < taskCount; idx++) {
             System.out.println(tasks.get(idx).toString());
         }
     }

@@ -7,8 +7,8 @@ public class Parser {
         } else if (command.matches("^mark.*$")) {
             try {
                 verifyMarkCommand(command);
-                int task_number = Integer.parseInt(command.substring(5)) - 1;
-                TaskList.markTask(task_number);
+                int taskNumber = Integer.parseInt(command.substring(5)) - 1;
+                TaskList.markTask(taskNumber);
             } catch (InvalidCommandFormat e) {
                 System.out.println("ERROR: command must be of the following form:");
                 System.out.println("mark <number>");
@@ -18,8 +18,8 @@ public class Parser {
         } else if (command.matches("^unmark.*$")) {
             try {
                 verifyUnmarkCommand(command);
-                int task_number = Integer.parseInt(command.substring(7)) - 1;
-                TaskList.unmarkTask(task_number);
+                int taskNumber = Integer.parseInt(command.substring(7)) - 1;
+                TaskList.unmarkTask(taskNumber);
             } catch (InvalidCommandFormat e) {
                 System.out.println("ERROR: command must be of the following form:");
                 System.out.println("mark <number>");
@@ -41,7 +41,7 @@ public class Parser {
         } else if (command.matches("^deadline.*$")) {
             try {
                 verifyDeadlineCommand(command);
-                Deadline deadline = TaskList.createDeadline(command, false);
+                Deadline deadline = TaskList.createDeadline(command, false, false);
                 TaskList.addToList(deadline);
                 TaskList.notifyTaskAdded(deadline);
             } catch (InvalidCommandFormat e) {
@@ -50,13 +50,13 @@ public class Parser {
             } catch (CommandMissingArguments e) {
                 System.out.println("☹ OOPS!!! The description of a deadline cannot be empty.");
             } catch (InvalidDateFormat e) {
-                System.out.println("ERROR: command must be of the following form:");
+                System.out.println("ERROR: date must be of the following form:");
                 System.out.println("<YYYY-MM-DD>");
             }
         } else if (command.matches("^event.*$")) {
             try {
                 verifyEventCommand(command);
-                Event event = TaskList.createEvent(command, false);
+                Event event = TaskList.createEvent(command, false, false);
                 TaskList.addToList(event);
                 TaskList.notifyTaskAdded(event);
             } catch (InvalidCommandFormat e) {
@@ -65,7 +65,7 @@ public class Parser {
             } catch (CommandMissingArguments e) {
                 System.out.println("☹ OOPS!!! The description of an event cannot be empty.");
             } catch (InvalidDateFormat e) {
-                System.out.println("ERROR: command must be of the following form:");
+                System.out.println("ERROR: dates must be of the following form:");
                 System.out.println("<YYYY-MM-DD>");
             } catch (InvalidStartEnd e) {
                 System.out.println("ERROR: start date cannot occur after end date.");
@@ -73,8 +73,8 @@ public class Parser {
         } else if (command.matches("^delete.*$")) {
             try {
                 verifyDeleteCommand(command);
-                int task_number = Integer.parseInt(command.substring(7)) - 1;
-                TaskList.deleteTask(task_number);
+                int taskNumber = Integer.parseInt(command.substring(7)) - 1;
+                TaskList.deleteTask(taskNumber);
             } catch (InvalidCommandFormat e) {
                 System.out.println("ERROR: command must be of the following form:");
                 System.out.println("delete <number>");
