@@ -2,6 +2,9 @@ package tasks;
 
 import java.util.ArrayList;
 
+/**
+ * Represents the complete list of tasks.
+ */
 public class Tasks {
     public static final String DELETE_TASK_ALERT = "Noted. I have removed the following task:";
     public static final String UNMARK_TASK_ALERT = "OK, I've marked this task as not done yet:";
@@ -11,10 +14,13 @@ public class Tasks {
     protected static ArrayList<Task> tasks;
     private static int tasksCount;
     
+    /**
+     * Initialises an ArrayList of tasks to store the list
+     * @implNote 1-based indexing implemented to allow for easier access to the numbering, 0 should be ignored
+     */
     public Tasks() {
-        // implement 1-based indexing, ignore list[0], allows for easier use of numbering
         tasks = new ArrayList<Task>();
-        tasks.add(null);
+        tasks.add(null); // to implement 1-based indexing
         tasksCount = 0;
     }
     
@@ -27,11 +33,13 @@ public class Tasks {
     }
     
     public void printTask(int taskNumber) {
-        System.out.println(taskNumber + "." + tasks.get(taskNumber).toString());
+        String taskMessage = taskNumber + "." + tasks.get(taskNumber).toString();
+        System.out.println(taskMessage);
     }
     
     public void printListCount() {
-        System.out.println("Now you have " + tasksCount + " tasks in the list.");
+        String listCount = "Now you have " + tasksCount + " tasks in the list.";
+        System.out.println(listCount);
     }
     
     public Task getTask(int taskCount) {
