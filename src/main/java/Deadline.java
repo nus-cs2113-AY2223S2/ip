@@ -11,9 +11,9 @@ public class Deadline extends Task {
         return super.toString() + "(by: " + by +")";
     }
 
-    public void readTask(String text) {
-        super.readTask(text);
-        this.description = text.substring(7, text.indexOf("(from: ")-1);
-        this.by = text.substring(text.indexOf("(by: ")+1,text.indexOf(")")-1);
-    }
+//    public void getTask(String text) {
+//        super.getTask(text);
+//        this.description = text.substring(7, text.indexOf("(from: ")-1);
+//        this.by = text.substring(text.indexOf("(by: ")+1,text.indexOf(")")-1);
+//    }
 }

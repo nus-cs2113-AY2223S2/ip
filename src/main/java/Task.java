@@ -36,10 +36,22 @@ public class Task {
         System.out.println(line);
     }
 
-    public void readTask(String text) {
-        this.type = text.substring(1, 2); //2nd char in string
-        this.isDone = (text.substring(4,5).equals("X")) ? true : false; //4th char in string
-        this.description = text.substring(7, text.length());
-    }
+//    public void getTask(String text) throws NullPointerException {
+//        System.out.println(text);
+//        if (!text.isEmpty()) {
+//            System.out.println("Trying to read...");
+//            this.isDone = (text.substring(4, 5).equals("X")) ? true : false; //4th char in string
+//            this.description = text.substring(7);
+//            this.type = text.substring(1, 2); //2nd char in string
+//            if (this.type == "T") {
+//                Task t = new Todo(description);
+//            } else if (this.type == "E") {
+//                Task t = new Event;
+//            }
+//
+//        } else {
+//            throw new NullPointerException();
+//        }
+//    }
 }
 

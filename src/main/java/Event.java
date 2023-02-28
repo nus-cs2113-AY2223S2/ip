@@ -13,10 +13,10 @@ public class Event extends Task{
         return super.toString() + "(from: " + from.replace("from ", "") + " to: " + to + ")";
     }
 
-    public void readTask(String text) {
-        super.readTask(text);
-        this.description = text.substring(7, text.indexOf("(from: ")-1);
-        this.from = text.substring(text.indexOf("(from: ")+1,text.indexOf("to: ")-1);
-        this.to = text.substring(text.indexOf("to: ")+1, text.indexOf(")")-1);
-    }
+//    public void getTask(String text) {
+//        super.getTask(text);
+//        this.description = text.substring(7, text.indexOf("(from: ")-1);
+//        this.from = text.substring(text.indexOf("(from: ")+1,text.indexOf("to: ")-1);
+//        this.to = text.substring(text.indexOf("to: ")+1, text.indexOf(")")-1);
+//    }
 }
