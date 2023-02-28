@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.io.File;
 /**
  * this class is mainly in charge of printing messages for the user
  */
@@ -65,5 +66,10 @@ public class UserInterface {
             System.out.println(taskDescription);
         }
         System.out.println(DASH);
+    }
+
+    public static void newFileCreatedMessage(File file){
+        System.out.println("It's the first time we're working together so I created a text file in:\n"+
+                file.getAbsolutePath()+ "\nThis text file is used to store the list of tasks!\n"+DASH);
     }
 }

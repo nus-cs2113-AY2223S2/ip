@@ -9,7 +9,6 @@ public class Goot {
     }
     catch (IOException e){
         GootExceptionHandler.fileNotFound();
-        Storage.makeNewFile();
     }
     while (true) {
         Scanner scan = new Scanner(System.in);

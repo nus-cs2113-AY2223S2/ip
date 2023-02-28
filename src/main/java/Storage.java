@@ -11,9 +11,15 @@ public class Storage {
     private static File file;
 
     public Storage(){
-        file =new File("C:\\Users\\leong\\Desktop\\Comp_eng\\Y2S2\\CS2113\\Duke\\ip\\src\\data.txt");
+        file = new File("tasks.txt");
+        try{
+            if(file.createNewFile()){
+                UserInterface.newFileCreatedMessage(file);
+            }
+        }catch(IOException e){
+            e.printStackTrace();
+        }
     }
-
     /**
      * example of format for event entries in the file : taskNumber.taskType.taskIsDone.taskName.from.to
      * @throws FileNotFoundException
@@ -43,13 +49,7 @@ public class Storage {
         }
     }
 
-    public static void makeNewFile(){
-        try{
-            file.createNewFile();
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-    }
+
 
     /**
      * this function converts the tasks in the taskArray into entry format (Eg:taskNumber.taskType.taskIsDone.taskName)
