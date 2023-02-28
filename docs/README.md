@@ -157,6 +157,9 @@ Format: `done`
 **A**: Chronos saves your data in your hard disk automatically after each command. Then, search for the file 'taskList.txt' 
         in your PC search/spotlight (for MacOS) to obtain your list.
         
+**Q**: Why is there a ? next to each item of the list?
+**A**: There should not be a problem for MacOS. For some versions of Windows OS, the empty `☐` may appear as a `?` due to ASCII limitations. Refer to:            https://stackoverflow.com/questions/5100250/extended-ascii-doesnt-work-in-console 
+        
 
 
 
