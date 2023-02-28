@@ -1,17 +1,20 @@
 package tasks;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 /**
  * A Deadline object is a Task object that has a due date.
  */
 public class Deadline extends Task{
-    private String by;
+    private LocalDate by;
 
     public String getBy() {
-        return by;
+        return by.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
     public void setBy(String by) {
-        this.by = by;
+        this.by = LocalDate.parse(by.trim());
     }
 
     /** Upon creating the Deadline, the by date will be concatenated into the displayed description.
@@ -21,6 +24,6 @@ public class Deadline extends Task{
     public Deadline(String description, String by, boolean isDone) {
         super(description, isDone);
         setBy(by);
-        setFormattedDescription(description + '(' + by + ')');
+        setFormattedDescription(description + "(by: " + getBy() + ')');
     }
 }

@@ -8,6 +8,7 @@ import tasks.Todo;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -126,20 +127,24 @@ public class DukeNUS {
             break;
         case "deadline":
             try {
-                String[] deadlineInput = userInputWords[1].split("/", 2);
+                String[] deadlineInput = userInputWords[1].split("/by", 2);
                 addDeadline(new Deadline(deadlineInput[0], deadlineInput[1], false));
             } catch (ArrayIndexOutOfBoundsException exception) {
                 DukeNUSPrinter.printMessage("☹ Error: incorrect syntax. Correct usage: " +
                         "`deadline [description] /by [deadline]`.");
+            } catch (DateTimeParseException exception) {
+                DukeNUSPrinter.printMessage("☹ Error: invalid date format. Try the yyyy-MM-dd format (eg. 2000-12-31)");
             }
             break;
         case "event":
             try {
-                String[] eventInput = userInputWords[1].split("/", 3);
+                String[] eventInput = userInputWords[1].split("/from|/to", 3);
                 addEvent(new Event(eventInput[0], eventInput[1], eventInput[2], false));
             } catch (ArrayIndexOutOfBoundsException exception) {
                 DukeNUSPrinter.printMessage("☹ Error: incorrect syntax. Correct usage: " +
                         "`event [description] /from [start_date] /to [end_date]`.");
+            } catch (DateTimeParseException exception) {
+                DukeNUSPrinter.printMessage("☹ Error: invalid date format. Try the yyyy-MM-dd format (eg. 2000-12-31)");
             }
             break;
         default:

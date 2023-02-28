@@ -1,23 +1,26 @@
 package tasks;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Event extends Task {
-    private String from;
-    private String to;
+    private LocalDate from;
+    private LocalDate to;
 
     public String getFrom() {
-        return from;
+        return from.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
     public void setFrom(String from) {
-        this.from = from;
+        this.from = LocalDate.parse(from.trim());
     }
 
     public String getTo() {
-        return to;
+        return to.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
     public void setTo(String to) {
-        this.to = to;
+        this.to = LocalDate.parse(to.trim());
     }
 
     /** Upon creating the event, the from and to dates will be concatenated to the displayed description.
@@ -29,6 +32,6 @@ public class Event extends Task {
         super(description, isDone);
         setFrom(from);
         setTo(to);
-        setFormattedDescription(description + '(' + from + to + ')');
+        setFormattedDescription(description + "(from: " + getFrom() + " > to: " + getTo() + ')');
     }
 }
