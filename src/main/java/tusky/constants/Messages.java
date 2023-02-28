@@ -9,6 +9,7 @@ public enum Messages {
     TASK_ADDED(" Got it. I've added this task:\n"),
     TASK_COUNT(" Now you have %d tasks in the list.\n"),
     TASK_LIST(" Here are the tasks in your list:"),
+    TASK_FIND(" Here are the matching tasks in your list:"),
     TASK_MARKED(" Nice! I've marked this task as done:"),
     TASK_UNMARKED(" OK, I've marked this task as not done yet:"),
     TASK_DELETED(" Noted. I've removed this task:"),

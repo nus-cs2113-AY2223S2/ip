@@ -1,6 +1,7 @@
 package tusky.tasks;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class TaskList {
     private final ArrayList<Task> tasks;
@@ -10,7 +11,7 @@ public class TaskList {
     }
 
     public TaskList(ArrayList<Task> tasks) {
-        this.tasks = tasks;
+        this.tasks = Objects.requireNonNullElseGet(tasks, ArrayList::new);
     }
 
     public ArrayList<Task> getTasks() {
