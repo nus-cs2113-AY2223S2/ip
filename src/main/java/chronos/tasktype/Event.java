@@ -45,7 +45,7 @@ public class Event extends Task {
     public Event(String description, String start, String end, boolean isDone) {
         super(isDone, description);
         try {
-            if (start == null || end == null|| description == null) {
+            if (start == null || end == null) {
                 throw new ChronosExceptions(start);
             }
             this.end = end;

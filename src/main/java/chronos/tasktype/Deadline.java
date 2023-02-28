@@ -17,14 +17,7 @@ public class Deadline extends Task {
      */
     public Deadline(String description, String due) {
         super(description);
-        try {
-            if (due == null||description == null) {
-                throw new ChronosExceptions(null);
-            }
             this.due = due;
-        } catch (ChronosExceptions e) {
-            System.out.println("DESCRIPTION OR DUE DATE IS MISSING. PLEASE VIEW HELP MENU FOR PROPER FORMAT. REMOVE THE INVALID TASK");
-        }
     }
 
     /**
@@ -35,14 +28,8 @@ public class Deadline extends Task {
      */
     public Deadline(String description, String due, boolean isDone) {
         super(isDone, description);
-        try {
-            if (due == null || description == null) {
-                throw new ChronosExceptions(null);
-            }
             this.due = due;
-        } catch(ChronosExceptions error){
-            System.out.println("DESCRIPTION OR DUE DATE IS MISSING. PLEASE VIEW HELP MENU FOR PROPER FORMAT. REMOVE THE INVALID TASK");
-        }
+
     }
 
 
