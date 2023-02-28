@@ -16,6 +16,7 @@ public class IO {
 	 */
 	public void printBye(){
 		System.out.println("Bye. Hope to see you again soon!");
+		System.exit(0);
 	}
 	/**
 	 *Prints an acknowledgement message for adding a task to the list.
