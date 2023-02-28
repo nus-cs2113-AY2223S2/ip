@@ -23,8 +23,19 @@ Prerequisites: JDK 11, update Intellij to the most recent version.
    |____/ \__,_|_|\_\___|
    ```
 
-User's input accepted:
+## User's input accepted:
 1. If you want to add task, you can type:
    - todo
    - deadline
-   - event
+   - event<br>
+   And your task status will be shown as T, D, E respectively.<br>
+   e.g., event do homework /by no idea :wuwu: [E][ ] do homework (by: no idea :wuwu)<br>
+   If you want to add time to your task, you can do so:<br>
+   e.g., deadline return book /by 2/12/2019 1800: <br>
+   or deadline return book /by 2/12/2019: <br>
+
+
+
+
+
+
