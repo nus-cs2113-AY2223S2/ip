@@ -1,8 +1,6 @@
 package duke.parser;
 
-import duke.command.AddCommand;
-import duke.command.Command;
-import duke.command.IndexCommand;
+import duke.command.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,9 +19,13 @@ public interface Parser {
             int taskNum = Integer.parseInt(inputWords[1]) - 1;
             IndexCommand indexCommand = new IndexCommand(command, taskNum);
             return indexCommand;
+        } else if (command.equals("find")){
+            String keyword = inputWords[1];
+            FindCommand findCommand = new FindCommand(command, keyword);
+            return findCommand;
         }
-        Command newCommand = new Command(command);
-        return newCommand;
+        SingleWordCommand singleWordCommand = new SingleWordCommand(command);
+        return singleWordCommand;
     }
     public static List<String> parseDeadline(String taskField){
         taskField = taskField.replaceFirst("deadline", "").trim();

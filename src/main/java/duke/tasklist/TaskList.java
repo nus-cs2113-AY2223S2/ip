@@ -6,6 +6,8 @@ import duke.ui.UI;
 
 import java.util.ArrayList;
 
+import static duke.data.textImage.HORIZONTAL_LINE;
+
 public class TaskList {
     public ArrayList<Task> tasksList;
 
@@ -52,6 +54,13 @@ public class TaskList {
         }
         UI.printMessage("Here are the tasks in your list:");
         UI.printList(returnTasks());
+    }
+
+    public void findInList(String keyword) throws EmptyListError{
+        if (tasksList.isEmpty()) {
+            throw new EmptyListError();
+        }
+        UI.printFindInList(tasksList, keyword);
     }
 
     public ArrayList<Task> returnTasks(){
