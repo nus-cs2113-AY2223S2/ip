@@ -14,17 +14,17 @@ public class AddTodoCommand extends Command {
         this.description = description;
 
     }
-    public void execute(TaskList tasks, Storage storage) {
+    public void execute(TaskList tasks, Storage storage, UI ui) {
 
         try {
 
-            UI.printAddTask();
+            ui.printAddTask();
 
             Task task = new Todo(description);
             tasks.addTask(task);
 
-            UI.printTask(task);
-            UI.printNoOfTasks(tasks.getSize());
+            ui.printTask(task);
+            ui.printNoOfTasks(tasks.getSize());
             storage.saveData(tasks);
 
         }   catch (IOException e) {

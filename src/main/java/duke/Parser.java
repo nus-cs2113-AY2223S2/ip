@@ -4,13 +4,12 @@ import duke.command.*;
 
 public class Parser {
 
-    public static Command parse(String input) {
+    public static Command parse(String input, UI ui) {
         String[] command = input.split(" ", 2);
 
         switch (command[0]) {
         case "bye":
             return new ByeCommand();
-        //isRunning = false;
 
         case "list":
             return new ListCommand();
@@ -44,8 +43,8 @@ public class Parser {
 
         case "todo":
             try {
-                AddTodoCommand todoCommand = new AddTodoCommand(command[1]);
-                return todoCommand;
+                //AddTodoCommand todoCommand = new AddTodoCommand(command[1]);
+                return new AddTodoCommand(command[1]);
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("OOPS!!! The description of a todo cannot be empty.");
                 //throw new DukeException("OOPS!!! The description of a todo cannot be empty.");
@@ -57,8 +56,8 @@ public class Parser {
 
                 if (command[1].contains("/by")) {
                     String[] components = command[1].split(" /by");
-                    AddDeadlineCommand deadlineCommand = new AddDeadlineCommand(components[0], components[1]);
-                    return deadlineCommand;
+                    //AddDeadlineCommand deadlineCommand = new AddDeadlineCommand(components[0], components[1]);
+                    return new AddDeadlineCommand(components[0], components[1]);
                 }
 
                 else {
@@ -79,8 +78,8 @@ public class Parser {
                 if (command[1].matches("(.*)" + "/from" + "(.*)" + "/to" + "(.*)")) {
                     try {
                         String[] components = command[1].split(" /from | /to "); //split string using "/from" and "/to"
-                        AddEventCommand eventCommand = new AddEventCommand(components[0], components[1], components[2]);
-                        return eventCommand;
+                        //AddEventCommand eventCommand = new AddEventCommand(components[0], components[1], components[2]);
+                        return new AddEventCommand(components[0], components[1], components[2]);
                     } catch (ArrayIndexOutOfBoundsException e) {
                         System.out.println("Please specify both the starting and ending time of the event");
                     }
@@ -91,8 +90,15 @@ public class Parser {
                 System.out.println("OOPS!!! The description of an event cannot be empty.");
             }
             break;
+        case "find":
+            try {
+                return new FindCommand(command[1]);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("Please specify the keyword to be searched.");
+            }
+
         default:
-            UI.printInvalidMessage();
+            ui.printInvalidMessage();
         }
         return new Command();
     }

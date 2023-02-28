@@ -16,13 +16,13 @@ public class UnmarkTaskCommand extends Command {
         this.taskNumber = taskNumber;
     }
 
-    public void execute(TaskList tasks, Storage storage) {
+    public void execute(TaskList tasks, Storage storage, UI ui) {
 
         try {
             Task task = tasks.getTask(taskNumber);
             task.unmarkAsDone();
-            UI.printMarkNotDone();
-            UI.printTask(task);
+            ui.printMarkNotDone();
+            ui.printTask(task);
 
         } catch (IndexOutOfBoundsException e) {
             System.out.println("The given task number does not exist. ):");

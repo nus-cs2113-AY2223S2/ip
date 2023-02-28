@@ -1,12 +1,12 @@
 package duke;
-
 import duke.task.Task;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UI {
     public static final Scanner in = new Scanner(System.in);
-    public static void printAllTasks(TaskList tasks) {
+    public void printAllTasks(TaskList tasks) {
         if (tasks.getSize() == 0) {
             System.out.println("No tasks in the list.");
             return;
@@ -19,37 +19,53 @@ public class UI {
             count += 1;
         }
     }
-    public static void printTask(Task task) {
+
+    public void printFoundTasks (ArrayList<Task> foundTasks) {
+
+        if (foundTasks.size() == 0) {
+            System.out.println("No tasks in the list.");
+            return;
+        }
+
+        int count = 1;
+        System.out.println("Here are the matching tasks in your list:");
+        for (Task task: foundTasks) {
+            System.out.println(count + "." + task);
+            count += 1;
+        }
+
+    }
+    public void printTask(Task task) {
         System.out.println(task);
     }
-    public static void printAddTask() {
+    public void printAddTask() {
         System.out.println("Got it. I've added this task:");
     }
-    public static void printMarkDone() {
+    public void printMarkDone() {
         System.out.println("Nice! I've marked this task as done:");
     }
-    public static void printMarkNotDone() {
+    public void printMarkNotDone() {
         System.out.println("OK, I've marked this task as not done yet:");
     }
 
-    public static void printDeleteTask() {
+    public void printDeleteTask() {
         System.out.println("Noted. I've removed this task:");
     }
-    public static void printNoOfTasks(int size) {
+    public void printNoOfTasks(int size) {
         System.out.println("Now you have " + size + " tasks in the list");
     }
-    public static void printInvalidMessage() {
+    public void printInvalidMessage() {
         System.out.println("I don't know what that means :-(");
     }
 
-    public static void printInvalidFileRead() {
+    public void printInvalidFileRead() {
         System.out.println("Unable to read from file");
     }
 
-    public static void printBye() {
+    public void printBye() {
         System.out.println("Bye. Hope to see you again soon!");
     }
-    public static void printWelcome() {
+    public void printWelcome() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"

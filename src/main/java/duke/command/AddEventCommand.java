@@ -20,16 +20,16 @@ public class AddEventCommand extends Command {
 
     }
 
-    public void execute(TaskList tasks, Storage storage) {
+    public void execute(TaskList tasks, Storage storage, UI ui) {
 
         try {
 
             Task task = new Event(description, from, to);
             tasks.addTask(task);
 
-            UI.printAddTask();
-            UI.printTask(task);
-            UI.printNoOfTasks(tasks.getSize());
+            ui.printAddTask();
+            ui.printTask(task);
+            ui.printNoOfTasks(tasks.getSize());
             storage.saveData(tasks);
 
         } catch (IOException e) {

@@ -18,9 +18,11 @@ public class Duke implements Serializable {
     private static TaskList tasks = new TaskList();
     private static Storage storage = new Storage();
 
+    private static UI ui = new UI();
+
     public static void main(String[] args) throws IOException {
 
-        UI.printWelcome();
+        ui.printWelcome();
         start();
 
         String input;
@@ -30,8 +32,8 @@ public class Duke implements Serializable {
 
         while (isRunning) {
             input = in.nextLine();
-            Command command = Parser.parse(input);
-            command.execute(tasks, storage);
+            Command command = Parser.parse(input, ui);
+            command.execute(tasks, storage, ui);
 
             if (command instanceof ByeCommand) {
                 isRunning = false;
@@ -41,7 +43,7 @@ public class Duke implements Serializable {
 
     public static void start() {
         try {
-            storage.loadData(tasks);
+            storage.loadData(tasks, ui);
 
         } catch (IOException e) {
             System.out.println("Unable to load");
