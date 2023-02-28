@@ -17,10 +17,10 @@ public class TaskList {
                 System.out.println("From now on, I will record your tasks here.");
             } else{
                 Scanner scanner = new Scanner(file);
-                ArrayList<String[]> existingTasks = new ArrayList<>();
+                ArrayList<String> existingTasks = new ArrayList<>();
                 while(scanner.hasNext()){
-                    String task = scanner.nextLine().substring(8);
-                    String[] taskInfo = task.split("/");
+                    String data = scanner.nextLine();
+                    String taskInfo = data.substring(6,7) + "/" + data.substring(8);
                     existingTasks.add(taskInfo);
                 }
                 loadData(existingTasks);
@@ -127,17 +127,22 @@ public class TaskList {
         }
     }
 
-    public void loadData(ArrayList<String[]> existingTasks){
-        for(String[] taskInfo : existingTasks){
-            switch(taskInfo.length){
+    public void loadData(ArrayList<String> existingTasks){
+        for(String taskInfo : existingTasks){
+            String taskState = taskInfo.substring(0,1);
+            String[] taskContent = taskInfo.substring(3).split("/");
+            switch(taskContent.length){
                 case 1:
-                    addTodo(taskInfo);
+                    addTodo(taskContent);
+                    if(taskState.equals("O")) markTask(totalTaskNum);
                     break;
                 case 2:
-                    addDeadline(taskInfo);
+                    addDeadline(taskContent);
+                    if(taskState.equals("O")) markTask(totalTaskNum);
                     break;
                 case 3:
-                    addEvent(taskInfo);
+                    addEvent(taskContent);
+                    if(taskState.equals("O")) markTask(totalTaskNum);
                     break;
             }
         }
