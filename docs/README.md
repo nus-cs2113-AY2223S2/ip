@@ -12,7 +12,7 @@ Dude is a light-weight task-managing application that can be used on a command l
 
 ## Features 
 
-### List out all tasks: `list`
+### 1. List out all tasks: `list`
 
 Format: `list`
 
@@ -20,7 +20,7 @@ Displays the full list being tracked.
 
 Use case: `list`
 
-### Add a Todo task: `todo`
+### 2. Add a Todo task: `todo`
 
 Format: `todo {DESCRIPTION} `
 
@@ -28,7 +28,7 @@ Adds a todo to the list with a description of the task.
 
 Use case: `todo homework tonight`
 
-### Add a Deadline task: `deadline`
+### 3. Add a Deadline task: `deadline`
 
 Format: `deadline {DESCRIPTION} /by {DEADLINE}`
 
@@ -38,7 +38,7 @@ Adds a deadline to the list with a description of the task and a deadline.
 
 Use case: `deadline homework /by 2023-03-04`
 
-### Add a Event task: `event`
+### 4. Add a Event task: `event`
 
 Format: `event {DESCRIPTION} /from {START} /to {END}`
 
@@ -46,7 +46,7 @@ Adds an event to the list with a description of the task, a start time and an en
 
 Use case: `event homework /from 5pm /to 8pm`
 
-### Mark task as done: `mark`
+### 5. Mark task as done: `mark`
 
 Format: `mark {TASK_ID}`
 
@@ -56,7 +56,7 @@ Marks the task with a specified id in the list as done.
 
 Use case: `mark 1`
 
-### Mark task as not done: `unmark`
+### 6. Mark task as not done: `unmark`
 
 Format: `unmark {TASK_ID}`
 
@@ -66,7 +66,7 @@ Marks the task with a specified id in the list as not done.
 
 Use case: `unmark 2`
 
-### Delete a task: `delete`
+### 7. Delete a task: `delete`
 
 Format: `delete {TASK_ID}`
 
@@ -76,7 +76,7 @@ Deletes the task with a specified id in the list and removes it from the list.
 
 Use case: `delete 1`
 
-### Search for task using keyword: `find`
+### 8. Search for task using keyword: `find`
 
 Format: `find {KEYWORD}`
 
@@ -86,7 +86,7 @@ Displays the list of tasks that contains a given keyword from the user.
 
 Use case: `find home`
 
-### Exit program: `bye`
+### 9. Exit program: `bye`
 
 Format: `bye`
 
@@ -94,7 +94,7 @@ Exits the program.
 
 Use case: `bye`
 
-### Loading and Saving of data
+### 10. Loading and Saving of data
 
 The task list is updated as a `duke.txt` file and saved in `data/duke.txt` when the task list
 is changed. 
