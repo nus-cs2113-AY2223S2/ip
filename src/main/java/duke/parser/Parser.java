@@ -10,6 +10,7 @@ import duke.keycommands.TodoCommand;
 import duke.keycommands.DeadlineCommand;
 import duke.keycommands.EventCommand;
 import duke.keycommands.ByeCommand;
+import duke.keycommands.FindCommand;
 
 public class Parser {
 
@@ -17,6 +18,7 @@ public class Parser {
     public static final String HELP_COMMAND = "help";
     public static final String LIST_COMMAND = "list";
     public static final String DELETE_COMMAND = "delete";
+    public static final String FIND_COMMAND = "find";
     public static final String TODO_COMMAND = "todo";
     public static final String DEADLINE_COMMAND = "deadline";
     public static final String EVENT_COMMAND = "event";
@@ -32,22 +34,88 @@ public class Parser {
     public static final String REMINDING_MESSAGE_ABOUT_GIVING_TIME_TO_THE_EVENT = "Please give me the time for the event";
     public static final String REMINDING_MESSAGE_ABOUT_GIVING_THE_BEGINNING_TIME = "Please give me the beginning time";
     public static final String REMINDING_MESSAGE_ABOUT_GIVING_THE_END_TIME = "Please give me the end time";
+    public static final String REMINDING_MESSAGE_ABOUT_GIVING_KEYWORD_TO_FIND = "Please give me the keyword to find";
 
     private String[] separatedKeyWordAndContent;
     private String keyword;
     private int taskNumber;
-    
+
+    public void handleInput() {
+        switch (this.keyword) {
+        case BYE_COMMAND:
+            executeByeCommand();
+            break;
+        case HELP_COMMAND:
+            executeHelpCommand();
+            break;
+        case LIST_COMMAND:
+            executeListCommand();
+            break;
+        case DELETE_COMMAND:
+            executeDeleteCommand();
+            break;
+        case FIND_COMMAND:
+            executeFindCommand();
+            break;
+        case TODO_COMMAND:
+            executeTodoCommand();
+            break;
+        case DEADLINE_COMMAND:
+            executeDeadlineCommand();
+            break;
+        case EVENT_COMMAND:
+            executeEventCommand();
+            break;
+        case MARK_COMMAND:
+        case UNMARK_COMMAND:
+            executeChangeTaskStatusCommand();
+            break;
+        default:
+            System.out.println(INCORRECT_KEYWORD);
+        }
+    }
 
     public void splitKeywordAndContent(String userInput) {
         this.separatedKeyWordAndContent = userInput.split(" ", 2);
         this.keyword = separatedKeyWordAndContent[0];
     }
+
     private boolean isOneWordInputInCorrectFormat() {
         if (separatedKeyWordAndContent.length > 1) {
             System.out.println(NEEDLESS_SENTENCE_AFTER_ONE_WORD_COMMAND);
             return false;
         }
         return true;
+    }
+
+    private void executeByeCommand() {
+        if (isOneWordInputInCorrectFormat()) {
+            new ByeCommand();
+        }
+    }
+
+    private void executeHelpCommand() {
+        if (isOneWordInputInCorrectFormat()) {
+            new HelpCommand();
+        }
+    }
+
+    private void executeListCommand() {
+        if (isOneWordInputInCorrectFormat()) {
+            new ListCommand();
+        }
+    }
+
+    private void executeDeleteCommand() {
+        if (isLocateTaskNumberCommandInCorrectFormat()) {
+            new DeleteCommand(taskNumber);
+        }
+    }
+
+    private void executeChangeTaskStatusCommand() {
+        if (isLocateTaskNumberCommandInCorrectFormat()) {
+            new ChangeTaskStatusCommand(taskNumber, keyword);
+        }
     }
 
     private boolean isLocateTaskNumberCommandInCorrectFormat() {
@@ -71,36 +139,15 @@ public class Parser {
             throw new InvalidTaskNumberException();
         }
     }
-    
-    private void executeDeleteCommand() {
-        if (isLocateTaskNumberCommandInCorrectFormat()) {
-            new DeleteCommand(taskNumber);
+
+    // create a method to parse the input of find command
+    private void executeFindCommand() {
+        if (isTheDescriptionEmpty(separatedKeyWordAndContent,1, REMINDING_MESSAGE_ABOUT_GIVING_KEYWORD_TO_FIND)){
+            return;
         }
+        new FindCommand(separatedKeyWordAndContent[1]);
     }
 
-    private void executeChangeTaskStatusCommand() {
-        if (isLocateTaskNumberCommandInCorrectFormat()) {
-            new ChangeTaskStatusCommand(taskNumber, keyword);
-        }
-    }
-
-    private void executeByeCommand() {
-        if (isOneWordInputInCorrectFormat()) {
-            new ByeCommand();
-        }
-    }
-
-    private void executeHelpCommand() {
-        if (isOneWordInputInCorrectFormat()) {
-            new HelpCommand();
-        }
-    }
-
-    private void executeListCommand() {
-        if (isOneWordInputInCorrectFormat()) {
-            new ListCommand();
-        }
-    }
 
     private boolean isTheDescriptionEmpty(String[] stringArray, int index, String outputMessage) {
         try {
@@ -160,38 +207,6 @@ public class Parser {
             return;
         }
         new EventCommand(taskContentAndDate[0], beginningTimeAndEndTime[0], beginningTimeAndEndTime[1]);
-    }
-
-    public void handleInput() {
-        switch (this.keyword) {
-        case BYE_COMMAND:
-            executeByeCommand();
-            break;
-        case HELP_COMMAND:
-            executeHelpCommand();
-            break;
-        case LIST_COMMAND:
-            executeListCommand();
-            break;
-        case DELETE_COMMAND:
-            executeDeleteCommand();
-            break;
-        case TODO_COMMAND:
-            executeTodoCommand();
-            break;
-        case DEADLINE_COMMAND:
-            executeDeadlineCommand();
-            break;
-        case EVENT_COMMAND:
-            executeEventCommand();
-            break;
-        case MARK_COMMAND:
-        case UNMARK_COMMAND:
-            executeChangeTaskStatusCommand();
-            break;
-        default:
-            System.out.println(INCORRECT_KEYWORD);
-        }
     }
 
 }

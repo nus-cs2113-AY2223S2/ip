@@ -16,6 +16,8 @@ public class HelpCommand {
     private static final String EVENT_FORMAT = "Format: event {your task} /from {begin date} /to {end date}\n";
     private static final String DELETE_USAGE = "delete: to delete a task";
     private static final String DELETE_FORMAT = "Format: delete {Number}\n";
+    private static final String FIND_USAGE = "find: to find all the tasks' content that contain a piece of keyword";
+    private static final String FIND_FORMAT = "Format: find {keyword}\n";
     private static final String INTRODUCTION_TO_HELP_COMMAND = "This is the list of our commands\n";
 
     public HelpCommand() {
@@ -39,6 +41,8 @@ public class HelpCommand {
         System.out.println(EVENT_FORMAT);
         System.out.println(DELETE_USAGE);
         System.out.println(DELETE_FORMAT);
+        System.out.println(FIND_USAGE);
+        System.out.println(FIND_FORMAT);
     }
 
 }
